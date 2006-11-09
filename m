@@ -4,58 +4,95 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: [PATCH] Documentation: reorganize cvs-migration.txt
-Date: Thu, 7 Dec 2006 10:21:44 -0500
-Message-ID: <20061207152144.GA13613@fieldses.org>
-References: <20061206.105251.144349770.wl@gnu.org> <Pine.LNX.4.63.0612061325320.28348@wbgn013.biozentrum.uni-wuerzburg.de> <4576D92A.80307@xs4all.nl> <20061206145802.GC1714@fieldses.org> <Pine.LNX.4.63.0612061613460.28348@wbgn013.biozentrum.uni-wuerzburg.de> <20061206171950.GD1714@fieldses.org> <20061206172450.GE1714@fieldses.org> <7v7ix47wbr.fsf@assigned-by-dhcp.cox.net> <20061207041805.GC3457@fieldses.org> <7vu008uucx.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 7 Dec 2006 15:22:45 +0000 (UTC)
-Cc: git@vger.kernel.org
+From: Petr Baudis <pasky@suse.cz>
+Subject: [PATCH] Nicer error messages in case saving an object to db goes wrong
+Date: Thu, 09 Nov 2006 13:52:05 +0100
+Message-ID: <20061109125205.25131.50211.stgit@machine.or.cz>
+Content-Type: text/plain; charset=utf-8; format=fixed
+Content-Transfer-Encoding: 8bit
+NNTP-Posting-Date: Thu, 9 Nov 2006 12:52:19 +0000 (UTC)
+Cc: <git@vger.kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <7vu008uucx.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+User-Agent: StGIT/0.11
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33588>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GsL53-0006UR-0w for gcvg-git@gmane.org; Thu, 07 Dec
- 2006 16:22:37 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31197>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gi9O7-0004BI-Fl for gcvg-git@gmane.org; Thu, 09 Nov
+ 2006 13:52:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S937978AbWLGPVr (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
- 10:21:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937980AbWLGPVr
- (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 10:21:47 -0500
-Received: from mail.fieldses.org ([66.93.2.214]:59753 "EHLO
- pickle.fieldses.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S937978AbWLGPVq (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec 2006
- 10:21:46 -0500
-Received: from bfields by pickle.fieldses.org with local (Exim 4.63)
- (envelope-from <bfields@fieldses.org>) id 1GsL4D-0003Zn-0l; Thu, 07 Dec 2006
- 10:21:45 -0500
+ S965970AbWKIMwI (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 9 Nov 2006
+ 07:52:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965969AbWKIMwH
+ (ORCPT <rfc822;git-outgoing>); Thu, 9 Nov 2006 07:52:07 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:34714 "EHLO machine.or.cz") by
+ vger.kernel.org with ESMTP id S965970AbWKIMwG (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 9 Nov 2006 07:52:06 -0500
+Received: (qmail 25141 invoked from network); 9 Nov 2006 13:52:05 +0100
+Received: from localhost (HELO machine.or.cz) (xpasky@127.0.0.1) by localhost
+ with SMTP; 9 Nov 2006 13:52:05 +0100
 To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-On Wed, Dec 06, 2006 at 09:51:10PM -0800, Junio C Hamano wrote:
-> "J. Bruce Fields" <bfields@fieldses.org> writes:
-> 
-> > diff --git a/Documentation/cvs-migration.txt b/Documentation/cvs-migration.txt
-> > index 6812683..773fc99 100644
-> > --- a/Documentation/cvs-migration.txt
-> > +++ b/Documentation/cvs-migration.txt
-> > @@ -1,113 +1,21 @@
-> 
-> This conflicted in a funny way with your own commit but I think
-> this version (773fc99 blob) supersedes its contents.
+Currently the error e.g. when pushing to a read-only repository is quite
+confusing, this attempts to clean it up, unifies error reporting between
+various object writers and uses error() on couple more places.
 
-Oh, yeah, sorry, I should have made an incremental patch.
+Signed-off-by: Petr Baudis <pasky@suse.cz>
+---
 
-> I munged only one line, though.  The title of this section 
-> should not be "a CVS repository" but "a shared repository" for
-> obvious reasons ;-).
+ sha1_file.c |   21 ++++++++++++---------
+ 1 files changed, 12 insertions(+), 9 deletions(-)
 
-Oops, yes, thanks!
-
+diff --git a/sha1_file.c b/sha1_file.c
+index 6ea59b5..09456d2 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -1455,8 +1455,7 @@ int move_temp_to_file(const char *tmpfil
+ 	unlink(tmpfile);
+ 	if (ret) {
+ 		if (ret != EEXIST) {
+-			fprintf(stderr, "unable to write sha1 filename %s: %s\n", filename, strerror(ret));
+-			return -1;
++			return error("unable to write sha1 filename %s: %s\n", filename, strerror(ret));
+ 		}
+ 		/* FIXME!!! Collision check here ? */
+ 	}
+@@ -1566,16 +1565,17 @@ int write_sha1_file(void *buf, unsigned
+ 	}
+ 
+ 	if (errno != ENOENT) {
+-		fprintf(stderr, "sha1 file %s: %s\n", filename, strerror(errno));
+-		return -1;
++		return error("sha1 file %s: %s\n", filename, strerror(errno));
+ 	}
+ 
+ 	snprintf(tmpfile, sizeof(tmpfile), "%s/obj_XXXXXX", get_object_directory());
+ 
+ 	fd = mkstemp(tmpfile);
+ 	if (fd < 0) {
+-		fprintf(stderr, "unable to create temporary sha1 filename %s: %s\n", tmpfile, strerror(errno));
+-		return -1;
++		if (errno == EPERM)
++			return error("insufficient permission for adding an object to repository database %s\n", get_object_directory());
++		else
++			return error("unable to create temporary sha1 filename %s: %s\n", tmpfile, strerror(errno));
+ 	}
+ 
+ 	/* Set it up */
+@@ -1690,9 +1690,12 @@ int write_sha1_from_fd(const unsigned ch
+ 	snprintf(tmpfile, sizeof(tmpfile), "%s/obj_XXXXXX", get_object_directory());
+ 
+ 	local = mkstemp(tmpfile);
+-	if (local < 0)
+-		return error("Couldn't open %s for %s",
+-			     tmpfile, sha1_to_hex(sha1));
++	if (local < 0) {
++		if (errno == EPERM)
++			return error("insufficient permission for adding an object to repository database %s\n", get_object_directory());
++		else
++			return error("unable to create temporary sha1 filename %s: %s\n", tmpfile, strerror(errno));
++	}
+ 
+ 	memset(&stream, 0, sizeof(stream));
