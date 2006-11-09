@@ -1,63 +1,77 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [RFC] Submodules in GIT
-Date: Fri, 01 Dec 2006 17:38:44 +0100
-Message-ID: <45705A94.2070509@op5.se>
-References: <20061130170625.GH18810@admingilde.org> <200612010902.51264.andyparkins@gmail.com> <20061201110032.GL18810@admingilde.org> <45701B8D.1030508@b-i-t.de> <20061201121234.GQ18810@admingilde.org> <4570289D.9050802@b-i-t.de> <20061201133558.GU18810@admingilde.org> <45703174.8000609@op5.se> <20061201134610.GW18810@admingilde.org> <457041AD.4010601@op5.se> <20061201150045.GZ18810@admingilde.org>
+From: Dave Dillow <dave@thedillows.org>
+Subject: Re: What's in git.git
+Date: Wed, 08 Nov 2006 22:45:31 -0500
+Message-ID: <1163043931.2943.4.camel@obelisk.thedillows.org>
+References: <dlang@digitalinsight.com>
+	 <200611090228.kA92SMqw006666@laptop13.inf.utfsm.cl>
+	 <7vslgtpbx0.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Fri, 1 Dec 2006 16:39:02 +0000 (UTC)
-Cc: sf <sf@b-i-t.de>, git@vger.kernel.org
+NNTP-Posting-Date: Thu, 9 Nov 2006 03:45:46 +0000 (UTC)
+Cc: "Horst H. von Brand" <vonbrand@laptop13.inf.utfsm.cl>,
+	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
-In-Reply-To: <20061201150045.GZ18810@admingilde.org>
+X-Authentication-Warning: obelisk.thedillows.org: il1 set sender to dave@thedillows.org using -f
+In-Reply-To: <7vslgtpbx0.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Evolution 2.2.3 (2.2.3-4.fc4) 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32942>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31178>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GqBPV-0007LW-RF for gcvg-git@gmane.org; Fri, 01 Dec
- 2006 17:38:50 +0100
+ esmtp (Exim 4.43) id 1Gi0rC-0003cM-WD for gcvg-git@gmane.org; Thu, 09 Nov
+ 2006 04:45:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S936525AbWLAQir (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
- 11:38:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936526AbWLAQir
- (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 11:38:47 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:61596 "EHLO
- smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S936525AbWLAQiq (ORCPT
- <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 11:38:46 -0500
-Received: from [192.168.1.20] (unknown [213.88.215.14]) by smtp-gw1.op5.se
- (Postfix) with ESMTP id 42C026BCC5; Fri,  1 Dec 2006 17:38:45 +0100 (CET)
-To: Martin Waitz <tali@admingilde.org>
+ S964769AbWKIDpf (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 8 Nov 2006
+ 22:45:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965668AbWKIDpf
+ (ORCPT <rfc822;git-outgoing>); Wed, 8 Nov 2006 22:45:35 -0500
+Received: from smtp.knology.net ([24.214.63.101]:65444 "EHLO
+ smtp.knology.net") by vger.kernel.org with ESMTP id S964769AbWKIDpe (ORCPT
+ <rfc822;git@vger.kernel.org>); Wed, 8 Nov 2006 22:45:34 -0500
+Received: (qmail 31215 invoked by uid 0); 9 Nov 2006 03:45:32 -0000
+Received: from unknown (HELO obelisk.thedillows.org) (69.73.92.192) by
+ smtp2.knology.net with SMTP; 9 Nov 2006 03:45:32 -0000
+Received: from obelisk.thedillows.org (localhost [127.0.0.1]) by
+ obelisk.thedillows.org (8.13.7/8.13.4) with ESMTP id kA93jVxR003471; Wed, 8
+ Nov 2006 22:45:31 -0500
+Received: (from il1@localhost) by obelisk.thedillows.org
+ (8.13.7/8.13.7/Submit) id kA93jVwV003470; Wed, 8 Nov 2006 22:45:31 -0500
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Martin Waitz wrote:
-> hoi :)
+On Wed, 2006-11-08 at 18:54 -0800, Junio C Hamano wrote:
+> "Horst H. von Brand" <vonbrand@laptop13.inf.utfsm.cl> writes:
 > 
-> On Fri, Dec 01, 2006 at 03:52:29PM +0100, Andreas Ericsson wrote:
->>> Remember: if you git-pull in the supermodule, you want to update the
->>> whole thing, including all submodules.
->>>
->> Only if the new commits I pull into the supermodule DAG has commits 
->> which includes a new shapshot of the submodule, otherwise it wouldn't be 
->> necessary.
+> > David Lang <dlang@digitalinsight.com> wrote:
+> >> On Tue, 7 Nov 2006, Junio C Hamano wrote:
+> >> 
+> >> > [pu]
+> >> >
+> >> >  Johannes's shallow clone work now should rebase cleanly on top
+> >> >  of 'master' although I haven't done so yet.  As he said
+> >> >  himself the series is waiting for people who have needs for
+> >> >  such a feature to raise hands.
+> >> 
+> >> I haven't been watching this recently, but if this is what I
+> >> understand it to be (the ability to get a partial repository from
+> >> upstream and work normally from there with the result of data-mineing
+> >> tools sometimes reporting 'that's part of the truncated history' if
+> >> they hit the cutoff) consider my hand raised.
+> >
+> > +1
 > 
-> Of course.
-> 
-> But if the supermodule contains changes to the submodule, you still
-> have to change the submodule.  And this implies changing the submodule
-> HEAD or some branch.
-> 
+> What does that plus one mean?  I do not know where people picked
+> up this annoying plus or minus one business, but could you all
+> stop that?
 
-Not really. I fail to see why HEAD needs to be changed so long as the 
-commit is in the submodule's odb.
+Horst can speak for himself, but I'd wager he's using the Apache voting
+conventions:
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
