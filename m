@@ -1,69 +1,71 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: [git failure] failure pulling latest Linus tree
-Date: Wed, 25 Oct 2006 10:36:54 -0700
-Message-ID: <453FA0B6.4040403@zytor.com>
-References: <yq0d58g92u0.fsf@jaguar.mkp.net>	<Pine.LNX.4.64.0610250746000.3962@g5.osdl.org>	<453F8630.2000608@zytor.com> <7v3b9ce1tk.fsf@assigned-by-dhcp.cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: protect blob and diff output lines from controls.
+Date: Thu, 9 Nov 2006 11:02:55 +0100
+Message-ID: <200611091102.56565.jnareb@gmail.com>
+References: <7vpsbxqzre.fsf@assigned-by-dhcp.cox.net> <200611091024.35019.jnareb@gmail.com> <7vlkmlkkq8.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 25 Oct 2006 17:37:17 +0000 (UTC)
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Thu, 9 Nov 2006 10:02:20 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
-In-Reply-To: <7v3b9ce1tk.fsf@assigned-by-dhcp.cox.net>
-X-Virus-Scanned: ClamAV 0.88.5/2098/Wed Oct 25 06:14:20 2006 on terminus.zytor.com
-X-Virus-Status: Clean
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:cc:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=WL5pyhwU+/6TKSMpdr+BQPSzhOiw+u4bUF7rk2B18qOz98fF7nxhvwfKW7O08ftmeEjvtWSNphZDjsxPlsjfaCNSC4gcXAUbW4licnr0KeZ19awwL/FB09+UF+oBioPgEqIr4ggVpy0U1kvrTsj1WdLkyJjRd1GvqDyUuosfzq0=
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vlkmlkkq8.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30083>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31190>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gcmgi-0004VQ-VX for gcvg-git@gmane.org; Wed, 25 Oct
- 2006 19:37:13 +0200
+ esmtp (Exim 4.43) id 1Gi6jc-0007bI-A6 for gcvg-git@gmane.org; Thu, 09 Nov
+ 2006 11:02:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1160995AbWJYRhJ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 25 Oct 2006
- 13:37:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161215AbWJYRhJ
- (ORCPT <rfc822;git-outgoing>); Wed, 25 Oct 2006 13:37:09 -0400
-Received: from terminus.zytor.com ([192.83.249.54]:25815 "EHLO
- terminus.zytor.com") by vger.kernel.org with ESMTP id S1160995AbWJYRhG (ORCPT
- <rfc822;git@vger.kernel.org>); Wed, 25 Oct 2006 13:37:06 -0400
-Received: from [10.0.6.0] (yardgnome.c2micro.com [69.104.58.50])
- (authenticated bits=0) by terminus.zytor.com (8.13.7/8.13.7) with ESMTP id
- k9PHavLH017823 (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256
- verify=NO); Wed, 25 Oct 2006 10:36:57 -0700
+ S1754777AbWKIKCJ convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Thu, 9 Nov 2006 05:02:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754778AbWKIKCJ
+ (ORCPT <rfc822;git-outgoing>); Thu, 9 Nov 2006 05:02:09 -0500
+Received: from ug-out-1314.google.com ([66.249.92.172]:2782 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1754777AbWKIKCH
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 9 Nov 2006 05:02:07 -0500
+Received: by ug-out-1314.google.com with SMTP id m3so169266ugc for
+ <git@vger.kernel.org>; Thu, 09 Nov 2006 02:02:05 -0800 (PST)
+Received: by 10.67.100.17 with SMTP id c17mr1044847ugm.1163066524937; Thu, 09
+ Nov 2006 02:02:04 -0800 (PST)
+Received: from host-81-190-24-209.torun.mm.pl ( [81.190.24.209]) by
+ mx.google.com with ESMTP id 30sm610685ugf.2006.11.09.02.02.04; Thu, 09 Nov
+ 2006 02:02:04 -0800 (PST)
 To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
 Junio C Hamano wrote:
-> "H. Peter Anvin" <hpa@zytor.com> writes:
-> 
->> For some reason which we haven't been able to track down yet, the
->> recent load imposed by FC6 caused zeus1's load to skyrocket, but not
->> zeus2's... it's largely a mystery.
-> 
-> Would kernel.org prefer RPM cut on a FC6 box now?
-> 
+> [...] =A0There is another
+> thing I noticed while testing it with an artifitial test that I
+> haven't fixed, but I think you already know about it (when the
+> commitdiff is completely empty except mode changes, we end up
+> with unbalanced div). =A0My test's tip can be found at
+> 'gitweb-test-funny-char' branch temporarily in the git.git
+> repository.
 
-No; since we have now (finally) archieved "OS parity" we're going to 
-keep hera, zeus1, and zeus2 in sync going forward.
+Damn. I thought I corrected this on resend...
 
->> HOWEVER, git 1.4.3 seems to have been bad chicken.  When we ran it we
->> got a neverending stream of segfaults in the logs.
-> 
-> If that is git-daemon dying when talking to older clients, that
-> has been fixed in 1.4.3.2 (it's virtual hosting support had an
-> off-by-one wrong check to tell older clients from newer one).
-> 
-> Sorry about that -- we heard about the incompatibility this
-> Monday.
-
-This stuff happens... it's dealt with now.
-
-	-hpa
+	if ($patch_found) {
+		# close extended header for previous empty patch
+		if ($in_header) {
+			print "</div>\n" # class=3D"diff extended_header"
+		}
+		# close previous patch
+		print "</div>\n"; # class=3D"patch"
+	}
+--=20
+Jakub Narebski
