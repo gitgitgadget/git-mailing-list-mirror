@@ -1,84 +1,118 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: [RFC] Submodules in GIT
-Date: Tue, 21 Nov 2006 00:29:07 +0100
-Message-ID: <20061120232904.GC20736@admingilde.org>
-References: <20061120215116.GA20736@admingilde.org> <ejt9dh$kfm$1@sea.gmane.org> <7v7ixp20za.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611201501230.3338@woody.osdl.org>
+From: sf <sf@b-i-t.de>
+Subject: Non-ASCII paths and git-cvsserver
+Date: Thu, 09 Nov 2006 12:11:42 +0100
+Message-ID: <45530CEE.6030008@b-i-t.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="WfZ7S8PLGjBY9Voh"
-NNTP-Posting-Date: Mon, 20 Nov 2006 23:29:42 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, Jakub Narebski <jnareb@gmail.com>,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 9 Nov 2006 11:13:35 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0611201501230.3338@woody.osdl.org>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 72
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: ip-213157015184.dialin.heagmedianet.de
+User-Agent: Thunderbird 1.5.0.7 (X11/20060927)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31196>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GmIZg-0002CO-0R for gcvg-git@gmane.org; Tue, 21 Nov
- 2006 00:29:17 +0100
+ esmtp (Exim 4.43) id 1Gi7q0-0003jY-G0 for gcvg-git@gmane.org; Thu, 09 Nov
+ 2006 12:12:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1030375AbWKTX3M (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 20 Nov 2006
- 18:29:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030465AbWKTX3M
- (ORCPT <rfc822;git-outgoing>); Mon, 20 Nov 2006 18:29:12 -0500
-Received: from agent.admingilde.org ([213.95.21.5]:60298 "EHLO
- mail.admingilde.org") by vger.kernel.org with ESMTP id S1030375AbWKTX3M
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 20 Nov 2006 18:29:12 -0500
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1) id
- 1GmIZY-00049A-VJ; Tue, 21 Nov 2006 00:29:09 +0100
-To: Linus Torvalds <torvalds@osdl.org>
+ S932802AbWKILMt (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 9 Nov 2006
+ 06:12:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932803AbWKILMt
+ (ORCPT <rfc822;git-outgoing>); Thu, 9 Nov 2006 06:12:49 -0500
+Received: from main.gmane.org ([80.91.229.2]:48273 "EHLO ciao.gmane.org") by
+ vger.kernel.org with ESMTP id S932802AbWKILMs (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 9 Nov 2006 06:12:48 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1Gi7pc-0003fl-8Y for git@vger.kernel.org; Thu, 09 Nov 2006 12:12:28 +0100
+Received: from ip-213157015184.dialin.heagmedianet.de ([213.157.15.184]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Thu, 09 Nov 2006 12:12:28 +0100
+Received: from sf by ip-213157015184.dialin.heagmedianet.de with local
+ (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Thu, 09
+ Nov 2006 12:12:28 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
+Hello,
 
---WfZ7S8PLGjBY9Voh
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I want to access a git repository via git-cvsserver. The problem is that 
+the repository contains paths with umlauts. These paths come out quoted 
+and escaped when checked out with cvs.
 
-hoi :)
+Test case:
 
-On Mon, Nov 20, 2006 at 03:05:47PM -0800, Linus Torvalds wrote:
-> Now, to get everything to work seamlessly within such a commit thing=20
-> might be a fair amount of work, but I'm not sure you even _need_ to. It=
-=20
-> might be ok to just say "subproject 'xyzzy' differs" in the diff, for=20
-> example, and have some rudimentary support for "git status" etc talking=
-=20
-> about subprojects that need to be committed.
+#! /bin/sh
 
-this is exactly the status of my implementation at the moment ;-)
+set -e -u -x
 
-Well, it does not yet explicitly tell that a subproject diffs,
-but it just creates a diff of the two commit objects.
+WORK='/tmp/gittest'
+FILE=$'\303\244'
 
-I guess we need some command line option to say if we only want
-to know about that the submodule changes or if the diff should
-recurse into it.
+mkdir "${WORK}"
+mkdir "${WORK}/git"
 
---=20
-Martin Waitz
+#trap 'rm -r "${WORK}"' EXIT
 
---WfZ7S8PLGjBY9Voh
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
+cd "${WORK}/git"
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
+git init-db
+git repo-config gitcvs.enabled 1
+git repo-config gitcvs.logfile "${WORK}/git/.git/cvslog.txt"
 
-iD8DBQFFYjpAj/Eaxd/oD7IRApi7AJ0b+SQR5lTy9vMqE9xSBwIQ2D9YSACdHU/r
-Fkl8UixrighAoR6io1Vpt4k=
-=ySBz
------END PGP SIGNATURE-----
+touch "${FILE}"
+git add "${FILE}"
+git commit -a -mx
 
+cd "${WORK}"
+
+CVS_SERVER='git-cvsserver'
+export CVS_SERVER
+
+cvs -d ":fork:${WORK}/git/.git" co master
+
+ls master
+
+### end
+
+
+This is what I get:
+
++ WORK=/tmp/gittest
++ FILE=$'\303\244'
++ mkdir /tmp/gittest
++ mkdir /tmp/gittest/git
++ cd /tmp/gittest/git
++ git init-db
+defaulting to local storage area
++ git repo-config gitcvs.enabled 1
++ git repo-config gitcvs.logfile /tmp/gittest/git/.git/cvslog.txt
++ touch $'\303\244'
++ git add $'\303\244'
++ git commit -a -mx
+Committing initial tree 23d6145738bba135994775c19d6e8ae707d399ee
++ cd /tmp/gittest
++ CVS_SERVER=git-cvsserver
++ export CVS_SERVER
++ cvs -d :fork:/tmp/gittest/git/.git co master
+cvs checkout: Updating master
+U master/"\303\244"
++ ls master
+"\303\244"  CVS
+
+
+I do not speak perl so can anyone help?
+
+Regards
+
+Stephan
