@@ -5,185 +5,178 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] xdl_merge(): fix and simplify conflict handling
-Date: Tue, 05 Dec 2006 14:10:46 -0800
-Message-ID: <7vvekqf0yh.fsf@assigned-by-dhcp.cox.net>
-References: <456FD461.4080002@saville.com>
-	<Pine.LNX.4.64.0611302330000.3695@woody.osdl.org>
-	<456FDF24.1070001@saville.com>
-	<Pine.LNX.4.64.0612012018490.3476@woody.osdl.org>
-	<7vejri20mf.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0612021131140.28348@wbgn013.biozentrum.uni-wuerzburg.de>
-	<4575B32F.5060108@ramsay1.demon.co.uk>
-	<Pine.LNX.4.64.0612051023460.3542@woody.osdl.org>
-	<Pine.LNX.4.63.0612051949290.28348@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7vac22glzz.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0612052209030.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+Subject: Re: Non-ASCII paths and git-cvsserver
+Date: Fri, 10 Nov 2006 11:49:26 -0800
+Message-ID: <7vvelnjd4p.fsf@assigned-by-dhcp.cox.net>
+References: <45530CEE.6030008@b-i-t.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 5 Dec 2006 22:11:01 +0000 (UTC)
-Cc: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+NNTP-Posting-Date: Fri, 10 Nov 2006 19:49:48 +0000 (UTC)
+Cc: git@vger.kernel.org, "Martin Langhoff" <martin.langhoff@gmail.com>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <Pine.LNX.4.63.0612052209030.28348@wbgn013.biozentrum.uni-wuerzburg.de>
-	(Johannes Schindelin's message of "Tue, 5 Dec 2006 22:15:35 +0100
-	(CET)")
+In-Reply-To: <45530CEE.6030008@b-i-t.de> (sf@b-i-t.de's message of "Thu, 09
+	Nov 2006 12:11:42 +0100")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33377>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GriV2-0004T2-3B for gcvg-git@gmane.org; Tue, 05 Dec
- 2006 23:10:52 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31209>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GicNY-0007wt-CC for gcvg-git@gmane.org; Fri, 10 Nov
+ 2006 20:49:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1757574AbWLEWKt (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 5 Dec 2006
- 17:10:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758542AbWLEWKt
- (ORCPT <rfc822;git-outgoing>); Tue, 5 Dec 2006 17:10:49 -0500
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:60537 "EHLO
- fed1rmmtao05.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1757574AbWLEWKs (ORCPT <rfc822;git@vger.kernel.org>); Tue, 5 Dec 2006
- 17:10:48 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao05.cox.net
+ S1946755AbWKJTt2 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 10 Nov 2006
+ 14:49:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946765AbWKJTt2
+ (ORCPT <rfc822;git-outgoing>); Fri, 10 Nov 2006 14:49:28 -0500
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:23950 "EHLO
+ fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP id S1946755AbWKJTt1
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 10 Nov 2006 14:49:27 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao08.cox.net
  (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061205221048.TQGF20330.fed1rmmtao05.cox.net@fed1rmimpo02.cox.net>; Tue, 5
- Dec 2006 17:10:48 -0500
+ <20061110194927.HKHU18207.fed1rmmtao08.cox.net@fed1rmimpo02.cox.net>; Fri, 10
+ Nov 2006 14:49:27 -0500
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id vAAx1V00F1kojtg0000000; Tue, 05 Dec 2006
- 17:10:58 -0500
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+ fed1rmimpo02.cox.net with bizsmtp id l7pY1V00e1kojtg0000000; Fri, 10 Nov 2006
+ 14:49:33 -0500
+To: sf <sf@b-i-t.de>
 Sender: git-owner@vger.kernel.org
 
-Thanks.
+sf <sf@b-i-t.de> writes:
 
-Looking at some other cases after applying your patch, I noticed
-that I really like one thing that your version does over what
-RCS merge does.
+> I want to access a git repository via git-cvsserver. The problem is
+> that the repository contains paths with umlauts. These paths come out
+> quoted and escaped when checked out with cvs.
 
-With RCS merge, a run of lines that are modified the same way in
-both branches appear twice, like this:
+I think this is because the cvsserver invokes diff-tree and
+ls-tree without -z and the output from these command quote
+non-ascii letters as unsafe.
 
-	<<< orig
-        alpha
-        bravo
-        charlie
-        ...
-	x-ray
-	yankee
-        zulu
-        ===
-        alpha
-        bravo
-        charlie
-        ...
-        x-ray
-        yankee
-        zebra
-        >>> new
+Martin's sqlite may probably be needed as well, but regardless
+of that something like this patch is needed -- otherwise what 
+populates sqlite database will be quoted to begin with so it
+would not help much.
 
-The common part at the beginning (or at the end for that
-matter) can be hoisted outside, to produce:
+I've tested with your reproduction recipe, but otherwise not
+tested this patch.
 
-        alpha
-        bravo
-        charlie
-        ...
-	x-ray
-	yankee
-	<<< orig
-        zulu
-        ===
-        zebra
-        >>> new
+-- >8 --
 
-and your version seems to get this right.
-
-When I had to deal with this kind of conflicts, I ended up
-splitting the buffer in two, and ran M-x compare-windows to find
-the true differences between the choices.  It was frustrating.
-(I admit a big reason is I do not normally work in X environment
-and do not tend to use xdiff -U or Kompare).
-
-This is especially noticeable when recreating diff-delta.c merge
-conflict in commit b485db98.  It's fun to see this large hunk
-reduced down to only two lines ;-).
-
-<<<<<<< HEAD/diff-delta.c
-	/*
-	 * Determine a limit on the number of entries in the same hash
-	 * bucket.  This guard us against patological data sets causing
-	 * really bad hash distribution with most entries in the same hash
-	 * bucket that would bring us to O(m*n) computing costs (m and n
-	 * corresponding to reference and target buffer sizes).
-	 *
-	 * The more the target buffer is large, the more it is important to
-	 * have small entry lists for each hash buckets.  With such a limit
-	 * the cost is bounded to something more like O(m+n).
-	 */
-	hlimit = (1 << 26) / trg_bufsize;
-	if (hlimit < 16)
-		hlimit = 16;
-
-	/*
-	 * Now make sure none of the hash buckets has more entries than
-	 * we're willing to test.  Otherwise we short-circuit the entry
-	 * list uniformly to still preserve a good repartition across
-	 * the reference buffer.
-	 */
-	for (i = 0; i < hsize; i++) {
-		if (hash_count[i] < hlimit)
-			continue;
-		entry = hash[i];
-		do {
-			struct index *keep = entry;
-			int skip = hash_count[i] / hlimit / 2;
-			do {
-				entry = entry->next;
-			} while(--skip && entry);
-			keep->next = entry;
-		} while(entry);
-	}
-	free(hash_count);
-
-	return hash;
-=======
-	/*
-	 * Determine a limit on the number of entries in the same hash
-	 * bucket.  This guard us against patological data sets causing
-	 * really bad hash distribution with most entries in the same hash
-	 * bucket that would bring us to O(m*n) computing costs (m and n
-	 * corresponding to reference and target buffer sizes).
-	 *
-	 * The more the target buffer is large, the more it is important to
-	 * have small entry lists for each hash buckets.  With such a limit
-	 * the cost is bounded to something more like O(m+n).
-	 */
-	hlimit = (1 << 26) / trg_bufsize;
-	if (hlimit < 16)
-		hlimit = 16;
-
-	/*
-	 * Now make sure none of the hash buckets has more entries than
-	 * we're willing to test.  Otherwise we short-circuit the entry
-	 * list uniformly to still preserve a good repartition across
-	 * the reference buffer.
-	 */
-	for (i = 0; i < hsize; i++) {
-		if (hash_count[i] < hlimit)
-			continue;
-		entry = hash[i];
-		do {
-			struct index *keep = entry;
-			int skip = hash_count[i] / hlimit / 2;
-			do {
-				entry = entry->next;
-			} while(--skip && entry);
-			keep->next = entry;
-		} while(entry);
-	}
-	free(hash_count);
-
-	return hash-1;
->>>>>>> 38fd0721d0a2a1a723bc28fc0817e3571987b1ef/diff-delta.c
-
+diff --git a/git-cvsserver.perl b/git-cvsserver.perl
+index 8817f8b..ca519b7 100755
+--- a/git-cvsserver.perl
++++ b/git-cvsserver.perl
+@@ -2343,67 +2343,72 @@ sub update
+ 
+         if ( defined ( $lastpicked ) )
+         {
+-            my $filepipe = open(FILELIST, '-|', 'git-diff-tree', '-r', $lastpicked, $commit->{hash}) or die("Cannot call git-diff-tree : $!");
++            my $filepipe = open(FILELIST, '-|', 'git-diff-tree', '-z', '-r', $lastpicked, $commit->{hash}) or die("Cannot call git-diff-tree : $!");
++	    local ($/) = "\0";
+             while ( <FILELIST> )
+             {
+-                unless ( /^:\d{6}\s+\d{3}(\d)\d{2}\s+[a-zA-Z0-9]{40}\s+([a-zA-Z0-9]{40})\s+(\w)\s+(.*)$/o )
++		chomp;
++                unless ( /^:\d{6}\s+\d{3}(\d)\d{2}\s+[a-zA-Z0-9]{40}\s+([a-zA-Z0-9]{40})\s+(\w)$/o )
+                 {
+                     die("Couldn't process git-diff-tree line : $_");
+                 }
++		my ($mode, $hash, $change) = ($1, $2, $3);
++		my $name = <FILELIST>;
++		chomp($name);
+ 
+-                # $log->debug("File mode=$1, hash=$2, change=$3, name=$4");
++                # $log->debug("File mode=$mode, hash=$hash, change=$change, name=$name");
+ 
+                 my $git_perms = "";
+-                $git_perms .= "r" if ( $1 & 4 );
+-                $git_perms .= "w" if ( $1 & 2 );
+-                $git_perms .= "x" if ( $1 & 1 );
++                $git_perms .= "r" if ( $mode & 4 );
++                $git_perms .= "w" if ( $mode & 2 );
++                $git_perms .= "x" if ( $mode & 1 );
+                 $git_perms = "rw" if ( $git_perms eq "" );
+ 
+-                if ( $3 eq "D" )
++                if ( $change eq "D" )
+                 {
+-                    #$log->debug("DELETE   $4");
+-                    $head->{$4} = {
+-                        name => $4,
+-                        revision => $head->{$4}{revision} + 1,
++                    #$log->debug("DELETE   $name");
++                    $head->{$name} = {
++                        name => $name,
++                        revision => $head->{$name}{revision} + 1,
+                         filehash => "deleted",
+                         commithash => $commit->{hash},
+                         modified => $commit->{date},
+                         author => $commit->{author},
+                         mode => $git_perms,
+                     };
+-                    $self->insert_rev($4, $head->{$4}{revision}, $2, $commit->{hash}, $commit->{date}, $commit->{author}, $git_perms);
++                    $self->insert_rev($name, $head->{$name}{revision}, $hash, $commit->{hash}, $commit->{date}, $commit->{author}, $git_perms);
+                 }
+-                elsif ( $3 eq "M" )
++                elsif ( $change eq "M" )
+                 {
+-                    #$log->debug("MODIFIED $4");
+-                    $head->{$4} = {
+-                        name => $4,
+-                        revision => $head->{$4}{revision} + 1,
+-                        filehash => $2,
++                    #$log->debug("MODIFIED $name");
++                    $head->{$name} = {
++                        name => $name,
++                        revision => $head->{$name}{revision} + 1,
++                        filehash => $hash,
+                         commithash => $commit->{hash},
+                         modified => $commit->{date},
+                         author => $commit->{author},
+                         mode => $git_perms,
+                     };
+-                    $self->insert_rev($4, $head->{$4}{revision}, $2, $commit->{hash}, $commit->{date}, $commit->{author}, $git_perms);
++                    $self->insert_rev($name, $head->{$name}{revision}, $hash, $commit->{hash}, $commit->{date}, $commit->{author}, $git_perms);
+                 }
+-                elsif ( $3 eq "A" )
++                elsif ( $change eq "A" )
+                 {
+-                    #$log->debug("ADDED    $4");
+-                    $head->{$4} = {
+-                        name => $4,
++                    #$log->debug("ADDED    $name");
++                    $head->{$name} = {
++                        name => $name,
+                         revision => 1,
+-                        filehash => $2,
++                        filehash => $hash,
+                         commithash => $commit->{hash},
+                         modified => $commit->{date},
+                         author => $commit->{author},
+                         mode => $git_perms,
+                     };
+-                    $self->insert_rev($4, $head->{$4}{revision}, $2, $commit->{hash}, $commit->{date}, $commit->{author}, $git_perms);
++                    $self->insert_rev($name, $head->{$name}{revision}, $hash, $commit->{hash}, $commit->{date}, $commit->{author}, $git_perms);
+                 }
+                 else
+                 {
+-                    $log->warn("UNKNOWN FILE CHANGE mode=$1, hash=$2, change=$3, name=$4");
++                    $log->warn("UNKNOWN FILE CHANGE mode=$mode, hash=$hash, change=$change, name=$name");
+                     die;
+                 }
+             }
+@@ -2412,10 +2417,12 @@ sub update
+             # this is used to detect files removed from the repo
+             my $seen_files = {};
+ 
+-            my $filepipe = open(FILELIST, '-|', 'git-ls-tree', '-r', $commit->{hash}) or die("Cannot call git-ls-tree : $!");
++            my $filepipe = open(FILELIST, '-|', 'git-ls-tree', '-z', '-r', $commit->{hash}) or die("Cannot call git-ls-tree : $!");
++	    local $/ = "\0";
+             while ( <FILELIST> )
+             {
+-                unless ( /^(\d+)\s+(\w+)\s+([a-zA-Z0-9]+)\s+(.*)$/o )
++		chomp;
++                unless ( /^(\d+)\s+(\w+)\s+([a-zA-Z0-9]+)\t(.*)$/o )
+                 {
+                     die("Couldn't process git-ls-tree line : $_");
+                 }
