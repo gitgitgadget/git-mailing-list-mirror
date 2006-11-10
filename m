@@ -1,76 +1,85 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Adding a new file as if it had existed
-Date: Tue, 12 Dec 2006 14:20:32 +0100
-Message-ID: <457EACA0.7050208@op5.se>
-References: <7ac1e90c0612120205k38b2fc14jbfd8ea682406efb2@mail.gmail.com> <7vhcw1whfx.fsf@assigned-by-dhcp.cox.net> <7ac1e90c0612120332o20d6778bsa16a788fdc04a3a1@mail.gmail.com> <200612121226.32772.andyparkins@gmail.com>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: Non-ASCII paths and git-cvsserver
+Date: Fri, 10 Nov 2006 15:59:09 -0300
+Message-ID: <46a038f90611101059h1844bae8o9cc9d986eaaddd7b@mail.gmail.com>
+References: <45530CEE.6030008@b-i-t.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Tue, 12 Dec 2006 13:20:49 +0000 (UTC)
+NNTP-Posting-Date: Fri, 10 Nov 2006 18:59:26 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
-In-Reply-To: <200612121226.32772.andyparkins@gmail.com>
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=dopiydOoVo2Aqn5jvcikdkye8mT8zDe0hMFKCSwRIv/2xHbXUPcS1QA3R/i4FVbz97e7yaQwM83bkqXzeij0aWau9r5wfofC8R8NqtUbieM3trI0N8oLNRxn+968UsUO/jbqfoQMjZXGJrTNJmHU4Qsm+ukZoIyzhoTAmFJLvdA=
+In-Reply-To: <45530CEE.6030008@b-i-t.de>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34097>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gu7Ym-0007OR-4A for gcvg-git@gmane.org; Tue, 12 Dec
- 2006 14:20:40 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31207>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gibb0-0006zM-RH for gcvg-git@gmane.org; Fri, 10 Nov
+ 2006 19:59:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751322AbWLLNUf (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 12 Dec 2006
- 08:20:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751324AbWLLNUf
- (ORCPT <rfc822;git-outgoing>); Tue, 12 Dec 2006 08:20:35 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:57374 "EHLO
- smtp-gw1.op5.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
- S1751322AbWLLNUe (ORCPT <rfc822;git@vger.kernel.org>); Tue, 12 Dec 2006
- 08:20:34 -0500
-Received: from [192.168.1.20] (unknown [213.88.215.14]) by smtp-gw1.op5.se
- (Postfix) with ESMTP id F3C6F6BCBE; Tue, 12 Dec 2006 14:20:32 +0100 (CET)
-To: Andy Parkins <andyparkins@gmail.com>
+ S1946306AbWKJS7N (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 10 Nov 2006
+ 13:59:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946800AbWKJS7N
+ (ORCPT <rfc822;git-outgoing>); Fri, 10 Nov 2006 13:59:13 -0500
+Received: from nf-out-0910.google.com ([64.233.182.191]:60091 "EHLO
+ nf-out-0910.google.com") by vger.kernel.org with ESMTP id S1946306AbWKJS7N
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 10 Nov 2006 13:59:13 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so1436137nfa for
+ <git@vger.kernel.org>; Fri, 10 Nov 2006 10:59:11 -0800 (PST)
+Received: by 10.48.254.10 with SMTP id b10mr3320364nfi.1163185149974; Fri, 10
+ Nov 2006 10:59:09 -0800 (PST)
+Received: by 10.49.60.1 with HTTP; Fri, 10 Nov 2006 10:59:09 -0800 (PST)
+To: sf <sf@b-i-t.de>
 Sender: git-owner@vger.kernel.org
 
-Andy Parkins wrote:
-> On Tuesday 2006 December 12 11:32, Bahadir Balban wrote:
-> 
->> If I don't know which files I may be touching in the future for
->> implementing some feature, then I am obliged to add all the files even
->> if they are irrelevant. I said "performance reasons" assuming all the
->> file hashes need checked for every commit -a to see if they're
->> changed, but I just tried on a PIII and it seems not so slow.
-> 
-> Here's a handy rule of thumb I've learned in my use of git:
-> 
->  "git is fast.  Really fast."
-> 
+On 11/9/06, sf <sf@b-i-t.de> wrote:
+> I want to access a git repository via git-cvsserver. The problem is that
+> the repository contains paths with umlauts. These paths come out quoted
+> and escaped when checked out with cvs.
 
-Almost alarmingly so. When I started using git (back in May/June last 
-year, when git was 2 - 3 months old), I was worried at first because it 
-didn't seem to actually *do* anything, but just returned me to the 
-prompt immediately.
+Thanks for the detailed report! I am travelling right now, so with
+"high latency" and on a machine that's missing sqlite libs :-/
 
-> 
-> As to your direct concern: git doesn't hash every file at every commit.  There 
-> is no need.  git has an "index" that is used to prepare a commit; at the time 
-> you do the actual commit, git already knows which files are being checked in.  
-> 
-> In short - don't worry about making life easy for git - it's a workhorse and 
-> does a grand job.
-> 
+But I'll give it a go anyway.
 
-Yup. Now I've gone the other way around and think other scm's are broken 
-when they chew disk for 10 seconds whenever I try to do anything with 
-them. I usually end up importing the other repo into git and do my work 
-there.
+Does this mini-patch help? You'll need Perl 5.8.x and probably a
+recent SQLite for this.
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
+diff --git a/git-cvsserver.perl b/git-cvsserver.perl
+index 8817f8b..c534de5 100755
+--- a/git-cvsserver.perl
++++ b/git-cvsserver.perl
+@@ -22,6 +22,9 @@ use Fcntl;
+ use File::Temp qw/tempdir tempfile/;
+ use File::Basename;
+
++binmode(STDIN,  ':utf8');
++binmode(STDOUT, ':utf8');
++
+ my $log = GITCVS::log->new();
+ my $cfg;
+
+@@ -2104,6 +2107,11 @@ sub new
+         $self->{tables}{$table} = 1;
+     }
+
++    # this will set the encoding for new DBs
++    # or return false for existing DBs that are not
++    # utf-8
++    $self->{dbh}->do('PRAGMA encoding = "UTF-8"');
++
+     # Construct the revision table if required
+     unless ( $self->{tables}{revision} )
