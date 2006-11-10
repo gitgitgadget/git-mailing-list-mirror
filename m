@@ -1,79 +1,96 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: Subprojects tasks
-Date: Mon, 18 Dec 2006 08:45:56 +0100
-Message-ID: <20061218074556.GK12411@admingilde.org>
-References: <7vzm9nelob.fsf@assigned-by-dhcp.cox.net> <200612171529.03165.jnareb@gmail.com> <20061217195417.GI12411@admingilde.org> <200612180027.25308.Josef.Weidendorfer@gmx.de>
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Luben Tuikov <ltuikov@yahoo.com>
+Subject: Re: [PATCH] gitweb: protect blob and diff output lines from controls.
+Date: Fri, 10 Nov 2006 02:22:14 -0800 (PST)
+Message-ID: <976905.27021.qm@web31807.mail.mud.yahoo.com>
+References: <7vlkmlkkq8.fsf@assigned-by-dhcp.cox.net>
+Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="BEa57a89OpeoUzGD"
-NNTP-Posting-Date: Mon, 18 Dec 2006 07:46:02 +0000 (UTC)
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <junkio@cox.net>
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+NNTP-Posting-Date: Fri, 10 Nov 2006 10:22:28 +0000 (UTC)
+Cc: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>,
+	Luben Tuikov <ltuikov@yahoo.com>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <200612180027.25308.Josef.Weidendorfer@gmx.de>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=X-YMail-OSG:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
+  b=SaPzGijxvlMJMdiucYtO/+EiTH1wrTpoQnnUIToMUWSnMVs3qgfeD2zeB4DU9k3mPeoU9y16r55pScshNEfTwppscW+8wzXMNeNhwaxlTg1BEfjGzwWUcy6dUueej6t8o4dnqUX54GRzzdXEuhllv11FvrLYJ65uKBv+a+qOgLo=  ;
+X-YMail-OSG: WRfvIQkVM1mddwlMXqjsdhNGvjOKSVc8d2RVFgq7DOi_XfASFcgnCAvBxauxOJ59dRgFkRuUTiLt12sR_9oZtT9zMlSP4X0qIPLeDU0HlV5C5oPjjnchiOGs_nTJlg9pWfqVndf5CNA-
+In-Reply-To: <7vlkmlkkq8.fsf@assigned-by-dhcp.cox.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34723>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GwDCC-00089q-Uf for gcvg-git@gmane.org; Mon, 18 Dec
- 2006 08:46:01 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31206>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GiTWd-0007MK-F1 for gcvg-git@gmane.org; Fri, 10 Nov
+ 2006 11:22:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753470AbWLRHp6 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 18 Dec 2006
- 02:45:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753471AbWLRHp6
- (ORCPT <rfc822;git-outgoing>); Mon, 18 Dec 2006 02:45:58 -0500
-Received: from mail.admingilde.org ([213.95.32.147]:43627 "EHLO
- mail.admingilde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1753470AbWLRHp5 (ORCPT <rfc822;git@vger.kernel.org>); Mon, 18 Dec 2006
- 02:45:57 -0500
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1) id
- 1GwDC9-0004Wd-0g; Mon, 18 Dec 2006 08:45:57 +0100
-To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+ S1946304AbWKJKWR (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 10 Nov 2006
+ 05:22:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946307AbWKJKWR
+ (ORCPT <rfc822;git-outgoing>); Fri, 10 Nov 2006 05:22:17 -0500
+Received: from web31807.mail.mud.yahoo.com ([68.142.207.70]:17496 "HELO
+ web31807.mail.mud.yahoo.com") by vger.kernel.org with SMTP id
+ S1946304AbWKJKWP (ORCPT <rfc822;git@vger.kernel.org>); Fri, 10 Nov 2006
+ 05:22:15 -0500
+Received: (qmail 27150 invoked by uid 60001); 10 Nov 2006 10:22:15 -0000
+Received: from [71.80.233.118] by web31807.mail.mud.yahoo.com via HTTP; Fri,
+ 10 Nov 2006 02:22:14 PST
+To: Junio C Hamano <junkio@cox.net>, Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
+--- Junio C Hamano <junkio@cox.net> wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+> 
+> > Jakub Narebski wrote:
+> >> I'm not sure what quoting to choose for esc_attr, but there we could
+> >> use even --no-control-chars quoting (replacing any control character
+> >> by '?');  but perhaps in some cases like git_print_page_path
+> >> subroutine CEC is better.
+> 
+> To be honest, I do not have strong preference between the
+> escaping style.  If the gitweb cabal feel it is more natural to
+> see "^L" in blobs and "\f" in path, I will very happily accept
+> such a patch.
 
---BEa57a89OpeoUzGD
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I've little preference either, as long as the intention
+of the original name is preserved across gitweb (to a user's
+git-repo/download).
 
-On Mon, Dec 18, 2006 at 12:27:25AM +0100, Josef Weidendorfer wrote:
-> On Sunday 17 December 2006 20:54, Martin Waitz wrote:
-> > I added a symlink .git/refs/module/<submodule> -> <submodule>/.git/refs,
-> > so that the submodule branch is also available as
-> > refs/module/<submodule>/heads/master in the supermodule.
->=20
-> Ah.
-> What is "<submodule>" in your implementation?
-> Is this some encoding of the path where the submodule currently lives
-> in the supermodule, or are you giving the submodules unique names
-> in the context of the supermodule?
+> Yes.  It is unfortunate that there needs different types of
+> quoting.  I think the first step would be to stop calling
+> esc_html in esc_path.  I think it was a mistake, and I did not
+> correct it when I started touching it.
 
-At the moment, it's just the path inside the parent.
+When Jakub mentioned "to_qtext" he meant this patch:
+http://marc.theaimsgroup.com/?l=git&m=116016249121781&w=2
 
---=20
-Martin Waitz
+   Luben
 
---BEa57a89OpeoUzGD
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFFhkc0j/Eaxd/oD7IRAtoCAJ9qIsU+7T9kJPfbpW6JKOYTElDDRQCffQN9
-+iD3LYsdGI6udolAe/6pXHE=
-=0GdE
------END PGP SIGNATURE-----
-
+> Somehow I ended up spending sizeable part of my git day this
+> week on fixing up blob/blame/tag/commit message view regarding
+> this "make controls visible and safe" issues on the 'master'
+> branch, but I have been consciously staying out of gitweb/ part
+> of the system, primarily because there are many other people who
+> are more interested and qualified in it than myself.
+> 
+> I'll step aside and try not to get in the way.  There is another
+> thing I noticed while testing it with an artifitial test that I
+> haven't fixed, but I think you already know about it (when the
+> commitdiff is completely empty except mode changes, we end up
+> with unbalanced div).  My test's tip can be found at
+> 'gitweb-test-funny-char' branch temporarily in the git.git
+> repository.
+> 
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
