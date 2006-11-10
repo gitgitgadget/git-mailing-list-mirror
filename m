@@ -1,110 +1,123 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Some advanced index playing
-Date: Sun, 3 Dec 2006 10:34:40 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0612031024480.3476@woody.osdl.org>
-References: <200612031701.15594.alan@chandlerfamily.org.uk>
+From: "Aneesh Kumar K.V" <aneesh.kumar@gmail.com>
+Subject: Re: shallow clone failed git pull
+Date: Fri, 10 Nov 2006 11:28:27 +0530
+Message-ID: <45541503.4020604@gmail.com>
+References: <4552A865.5000201@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Sun, 3 Dec 2006 18:34:55 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: multipart/mixed;
+ boundary="------------030101040605040004020101"
+NNTP-Posting-Date: Fri, 10 Nov 2006 05:59:00 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <200612031701.15594.alan@chandlerfamily.org.uk>
-X-MIMEDefang-Filter: osdl$Revision: 1.161 $
-X-Scanned-By: MIMEDefang 2.36
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:user-agent:mime-version:to:subject:references:in-reply-to:content-type;
+        b=Gufh1nZ5LO4uGBAwspHz5daNc3Z7Hr+HvTQn8T+77JRKUJ0jvlwOF/UmE6tAgJylo1gPDLlGwYn9+92N/iGyFPcF4GiRXoKtY7tPH5fo60jkh91xkXzNTK99GzVsverbS/PicPnBagCjq3kQ+IpI11ztEPogCt5IPJ+AgB5y+gM=
+User-Agent: Thunderbird 1.5.0.7 (X11/20060918)
+In-Reply-To: <4552A865.5000201@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33126>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GqwAv-0001wz-4q for gcvg-git@gmane.org; Sun, 03 Dec
- 2006 19:34:53 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31204>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GiPPd-0007DT-Cr for gcvg-git@gmane.org; Fri, 10 Nov
+ 2006 06:58:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1758482AbWLCSes (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 3 Dec 2006
- 13:34:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758892AbWLCSes
- (ORCPT <rfc822;git-outgoing>); Sun, 3 Dec 2006 13:34:48 -0500
-Received: from smtp.osdl.org ([65.172.181.25]:31946 "EHLO smtp.osdl.org") by
- vger.kernel.org with ESMTP id S1758482AbWLCSer (ORCPT
- <rfc822;git@vger.kernel.org>); Sun, 3 Dec 2006 13:34:47 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
- smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kB3IYejQ028502
- (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Sun, 3
- Dec 2006 10:34:41 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
- shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kB3IYeSo026474; Sun, 3 Dec
- 2006 10:34:40 -0800
-To: Alan Chandler <alan@chandlerfamily.org.uk>
+ S1161051AbWKJF6o (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 10 Nov 2006
+ 00:58:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966086AbWKJF6o
+ (ORCPT <rfc822;git-outgoing>); Fri, 10 Nov 2006 00:58:44 -0500
+Received: from ug-out-1314.google.com ([66.249.92.170]:26899 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S966046AbWKJF6n
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 10 Nov 2006 00:58:43 -0500
+Received: by ug-out-1314.google.com with SMTP id m3so442483ugc for
+ <git@vger.kernel.org>; Thu, 09 Nov 2006 21:58:42 -0800 (PST)
+Received: by 10.78.48.16 with SMTP id v16mr2179587huv.1163138322176; Thu, 09
+ Nov 2006 21:58:42 -0800 (PST)
+Received: from ?217.172.219.183? ( [156.153.255.234]) by mx.google.com with
+ ESMTP id 39sm2549906hug.2006.11.09.21.58.39; Thu, 09 Nov 2006 21:58:42 -0800
+ (PST)
+To: "Aneesh Kumar K.V" <aneesh.kumar@gmail.com>, git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
+This is a multi-part message in MIME format.
+--------------030101040605040004020101
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 
-
-On Sun, 3 Dec 2006, Alan Chandler wrote:
+Aneesh Kumar K.V wrote:
+> I was using the pu branch i tried to update the git repository and i got 
+> this error.
 > 
-> c) Revert the entire index back to the state it was at the last commit so I 
-> can selectively add back in the files that I have editted.
+> alk 9e950efa20dc8037c27509666cba6999da9368e8
+> walk 3b6a792f6ace33584897d1af08630c9acc0ce221
+> * refs/heads/origin: fast forward to branch 'master' of 
+> http://repo.or.cz/r/linux-2.6
+>  old..new: 3d42488..088406b
+> Auto-following refs/tags/v2.6.19-rc5
+> shallow clone with http not supported
 > 
-> The command to do that seems to be
 > 
-> git-read-tree HEAD 
+> This repository was not cloned with -depth. I only updated the git tools 
+> using the pu branch
+> 
 
-A side note on this..
+The attached patch gets it working. I am not sure whether the fix is the right one. I 
+am a little bit confused regarding the $depth being incremented. 
 
-It definitely works, but it's not really the right thing to do for a few 
-reasons:
+-aneesh
 
- - it isn't even what you wanted. You didn't want to reset _all_ the index 
-   values, you only really wanted to reset a few of them. So as mentioned 
-   in the previous email, the command sequence you'd wanted for that 
-   operation is
+--------------030101040605040004020101
+Content-Type: text/x-patch;
+ name="git-fetch.sh.diff"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline;
+ filename="git-fetch.sh.diff"
 
-	git ls-tree <tree> -- <path pattern list> |
-		git update-index --index-info
-
-But, that said, if you actually want to reset the whole index, 
-"git-read-tree HEAD" works, but is not what you should do:
-
- - you really want to keep the index "stat()" cache valid, and 
-   git-read-tree will throw that all out. So you would need to do a
-
-	git update-index --refresh
-
-   after you've reset the index ("git status" will do it for you, and if 
-   you don't do either "git status" or the above,  
-
- - instead of re-reading the index 100% and then having to refresh it back 
-   to mostly the same stat() into it already had, you can _merge_ the old 
-   index with the information in HEAD, by using
-
-	git read-tree -m HEAD
-
-   which basically does a merge from the old index and the HEAD tree.
-
- - However, that actually fails if the old index wasn't just dirty, but 
-   had unmerged paths etc, because then a "merge" would throw away that 
-   unmerged information. So what you _really_ want to do is
-
-	git read-tree --reset HEAD
-
-   which (as the flag implies) will _reset_ the index to the tree in HEAD, 
-   and this will do exactly what you were looking for: keep the "stat()" 
-   information alone, but reset the actual index contents.
-
- - HOWEVER. This is exactly what "git reset" does.
-
-So in short, you should just have done "git reset", and you'd have reset 
-your index back to the state of your last commit.
-
-So "git reset" is generally your friend whenever something goes wrong. If 
-you also want to reset your checked-out files (which you did NOT want to 
-do in this case, of course), you would have added the "--hard" flag to git 
-reset.
-
-And that (finally) concludes this particularly boring "git usage 101" 
-session.
+diff --git a/git-fetch.sh b/git-fetch.sh
+index 8b46e73..6459994 100755
+--- a/git-fetch.sh
++++ b/git-fetch.sh
+@@ -21,7 +21,7 @@ update_head_ok=
+ exec=
+ upload_pack=
+ keep=
+-depth=
++depth=0
+ while case "$#" in 0) break ;; esac
+ do
+ 	case "$1" in
+@@ -304,7 +304,7 @@ fetch_main () {
+       # There are transports that can fetch only one head at a time...
+       case "$remote" in
+       http://* | https://* | ftp://*)
+-	  test -n "$depth" && die "shallow clone with http not supported"
++	  [ x"$depth" != x0 ] && die "shallow clone with http not supported"
+ 	  proto=`expr "$remote" : '\([^:]*\):'`
+ 	  if [ -n "$GIT_SSL_NO_VERIFY" ]; then
+ 	      curl_extra_args="-k"
+@@ -325,7 +325,7 @@ fetch_main () {
+ 	      print "$u";
+ 	  ' "$head")
+ 	    head=$(curl -nsfL $curl_extra_args $noepsv_opt "$remote/$remote_name_quoted")
+-	    depth=$( expr \( $depth + 1 \) )
++	   # depth=$( expr \( $depth + 1 \) )
+ 	  done
+ 	  expr "z$head" : "z$_x40\$" >/dev/null ||
+ 	      die "Failed to fetch $remote_name from $remote"
+@@ -333,7 +333,7 @@ fetch_main () {
+ 	  git-http-fetch -v -a "$head" "$remote/" || exit
+ 	  ;;
+       rsync://*)
+-	  test -n "$depth" && die "shallow clone with rsync not supported"
++	  [ x"$depth" != x0 ] && die "shallow clone with http not supported"
+ 	  TMP_HEAD="$GIT_DIR/TMP_HEAD"
+ 	  rsync -L -q "$remote/$remote_name" "$TMP_HEAD" || exit 1
+ 	  head=$(git-rev-parse --verify TMP_HEAD)
 
