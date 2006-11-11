@@ -2,92 +2,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] Add branch.*.localmerge and documentation update
-Date: Fri, 08 Dec 2006 22:48:17 +0100
-Organization: At home
-Message-ID: <elcmen$pm6$1@sea.gmane.org>
-References: <cc723f590612052051r62111c4cgfd7ee893cb00f84a@mail.gmail.com> <8aa486160612071756s18f9530cr7ed26e4b7b47d1de@mail.gmail.com> <200612081823.45565.Josef.Weidendorfer@gmx.de> <200612082012.19167.Josef.Weidendorfer@gmx.de> <8aa486160612081252t1e245104x58c8a6654d887af5@mail.gmail.com> <7vr6vagja6.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Build in shortlog
+Date: Sat, 11 Nov 2006 13:36:05 -0800
+Message-ID: <7virhlis3e.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.63.0610221322370.14200@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Fri, 8 Dec 2006 21:50:27 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Sat, 11 Nov 2006 21:36:34 +0000 (UTC)
+Cc: git@vger.kernel.org, Alex Riesen <raa.lkml@gmail.com>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 41
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-25-107.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+In-Reply-To: <Pine.LNX.4.63.0610221322370.14200@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Sun, 22 Oct 2006 13:23:31 +0200
+	(CEST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33753>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gsnbl-0002AH-5K for gcvg-git@gmane.org; Fri, 08 Dec
- 2006 22:50:17 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31241>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gj0WX-0001Yy-VG for gcvg-git@gmane.org; Sat, 11 Nov
+ 2006 22:36:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1947388AbWLHVuO convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006 16:50:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1947392AbWLHVuN
- (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 16:50:13 -0500
-Received: from main.gmane.org ([80.91.229.2]:56726 "EHLO ciao.gmane.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1947388AbWLHVuM
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Dec 2006 16:50:12 -0500
-Received: from root by ciao.gmane.org with local (Exim 4.43) id
- 1GsnbW-0002Z2-Bb for git@vger.kernel.org; Fri, 08 Dec 2006 22:50:02 +0100
-Received: from host-81-190-25-107.torun.mm.pl ([81.190.25.107]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Fri, 08 Dec 2006 22:50:02 +0100
-Received: from jnareb by host-81-190-25-107.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Fri, 08 Dec 2006
- 22:50:02 +0100
-To: git@vger.kernel.org
+ S1947310AbWKKVgJ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 11 Nov 2006
+ 16:36:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1947309AbWKKVgI
+ (ORCPT <rfc822;git-outgoing>); Sat, 11 Nov 2006 16:36:08 -0500
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:47847 "EHLO
+ fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP id S1754877AbWKKVgG
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 11 Nov 2006 16:36:06 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao07.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061111213606.MTJZ27894.fed1rmmtao07.cox.net@fed1rmimpo02.cox.net>; Sat, 11
+ Nov 2006 16:36:06 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id lZcB1V00M1kojtg0000000; Sat, 11 Nov 2006
+ 16:36:12 -0500
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-<opublikowany i wys=B3any>
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Junio C Hamano wrote:
+> diff --git a/path-list.c b/path-list.c
+> index 0c332dc..f8800f8 100644
+> --- a/path-list.c
+> +++ b/path-list.c
+> @@ -57,7 +57,7 @@ struct path_list_item *path_list_insert(
+>  	int index = add_entry(list, path);
+>  
+>  	if (index < 0)
+> -		index = 1 - index;
+> +		index = -1 - index;
+>  
+>  	return list->items + index;
+>  }
 
-> "Santi B=E9jar" <sbejar@gmail.com> writes:
->=20
->> On 12/8/06, Josef Weidendorfer <Josef.Weidendorfer@gmx.de> wrote:
->>> Clarify the meaning of branch.*.merge option and add a similar
->>> branch.*.localmerge option, which can be used to specify a local
->>> tracking branch to be merged by default.
->>>
->>> Previously, if branch.*.merge was specified but did not match any
->>> ref, the message "No changes." was not really helpful regarding
->>> the misconfiguration. This now gives a warning.
-[...]
->>
->> Ack for the documentation part. But the localmerge part is almost
->> equivalent to my patch to allow the branch.<name>.remote equal to ".=
-".
->=20
-> I am not so sure about the "localmerge" stuff anymore.
->=20
-> What convenience would it buy us (including but not limited to
-> new people), and if there is any, would that outweigh the
-> potential confusion factor to have two different configuration
-> variables that do exactly the same thing whose sole difference
-> is which side of the fetched branch namespace it uses to specify
-> the merge source?
+This part looks like a genuine bugfix and unrelated to
+shortlog.
 
-What about my proposal to allow for full refspec, or :<localbranch>
-to be specified? I.e. allow all the following forms:
-  branch.<name>.merge =3D refs/heads/<remotebranch>
-  branch.<name>.merge =3D refs/heads/<remotebranch>:refs/remotes/<remot=
-e>/<localbranch>
-  branch.<name>.merge =3D :refs/remotes/<remote>/<localbranch>
+Many callers of path_list_insert() seem to ignore its return
+value, but merge_recursive.c seems to use it in three places, to
+find an entry to hang cached rename information to in
+insert_stage_data().
 
-By the way, if branch.*.remote is equal to ".", remote branch is
-local branch.
---=20
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+I haven't come up with an example to demonstrate the breakage of
+not having this fix in the existing git-merge-recursive, but I
+think this needs to be applied to even 'maint'.
+
 
