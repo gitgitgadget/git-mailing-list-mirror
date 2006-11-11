@@ -1,78 +1,65 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,BODY_URI_ONLY,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: Cleaning up git user-interface warts
-Date: Wed, 15 Nov 2006 13:49:14 -0500
-Message-ID: <20061115184914.GA24122@spearce.org>
-References: <Pine.LNX.4.64.0611141518590.2591@xanadu.home> <87bqn9u43s.wl%cworth@cworth.org> <ejdcg5$4fl$1@sea.gmane.org> <Pine.LNX.4.64.0611141633430.2591@xanadu.home> <7vbqn9y6w6.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611142007010.2591@xanadu.home> <7v3b8ltq7r.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611142306090.2591@xanadu.home> <Pine.LNX.4.64.0611150950170.3349@woody.osdl.org> <Pine.LNX.4.64.0611151315291.2591@xanadu.home>
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+From: Tom Prince <tom.prince@ualberta.net>
+Subject: Re: check if a commit is ascendent of a specific commit
+Date: Sat, 11 Nov 2006 12:23:21 -0700
+Message-ID: <20061111192321.GJ4862@socrates.priv>
+References: <fcaeb9bf0611110308l577d70bfo5046d7d7eb09ac58@mail.gmail.com>
+ <7virhlken0.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 15 Nov 2006 18:49:47 +0000 (UTC)
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+NNTP-Posting-Date: Sat, 11 Nov 2006 19:24:34 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0611151315291.2591@xanadu.home>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+In-reply-to: <7virhlken0.fsf@assigned-by-dhcp.cox.net>
+Mail-followup-to: git@vger.kernel.org
+Content-disposition: inline
+User-Agent: Mutt/1.5.11-2006-05-17
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31466>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31238>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GkPpH-0001ye-RG for gcvg-git@gmane.org; Wed, 15 Nov
- 2006 19:49:37 +0100
+ esmtp (Exim 4.43) id 1GiySl-0003z0-MG for gcvg-git@gmane.org; Sat, 11 Nov
+ 2006 20:24:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1030865AbWKOSt3 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
- 13:49:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030861AbWKOSt3
- (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 13:49:29 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:7662 "EHLO
- corvette.plexpod.net") by vger.kernel.org with ESMTP id S1030865AbWKOSt1
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 13:49:27 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1GkPor-0000fb-77; Wed, 15 Nov 2006 13:49:09 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- 5604220FB0B; Wed, 15 Nov 2006 13:49:14 -0500 (EST)
-To: Nicolas Pitre <nico@cam.org>
+ S1946270AbWKKTYR (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 11 Nov 2006
+ 14:24:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1947299AbWKKTYR
+ (ORCPT <rfc822;git-outgoing>); Sat, 11 Nov 2006 14:24:17 -0500
+Received: from shawidc-mo1.cg.shawcable.net ([24.71.223.10]:42872 "EHLO
+ pd5mo2so.prod.shaw.ca") by vger.kernel.org with ESMTP id S1946270AbWKKTYQ
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 11 Nov 2006 14:24:16 -0500
+Received: from pd2mr8so.prod.shaw.ca (pd2mr8so-qfe3.prod.shaw.ca
+ [10.0.141.11]) by l-daemon (Sun ONE Messaging Server 6.0 HotFix 1.01 (built
+ Mar 15 2004)) with ESMTP id <0J8K002MPZ70W310@l-daemon> for
+ git@vger.kernel.org; Sat, 11 Nov 2006 12:23:24 -0700 (MST)
+Received: from pn2ml5so.prod.shaw.ca ([10.0.121.149]) by
+ pd2mr8so.prod.shaw.ca (Sun Java System Messaging Server 6.2-2.05 (built Apr
+ 28 2005)) with ESMTP id <0J8K00JVHZ6ZJXL1@pd2mr8so.prod.shaw.ca> for
+ git@vger.kernel.org; Sat, 11 Nov 2006 12:23:24 -0700 (MST)
+Received: from socrates.priv ([68.148.57.191]) by l-daemon (Sun ONE Messaging
+ Server 6.0 HotFix 1.01 (built Mar 15 2004)) with ESMTP id
+ <0J8K00KQMZ6ZBK50@l-daemon> for git@vger.kernel.org; Sat, 11 Nov 2006
+ 12:23:23 -0700 (MST)
+Received: from socrates.priv (localhost [127.0.0.1]) by socrates.priv
+ (8.13.4/8.13.4) with ESMTP id kABJNLpo030202	for <git@vger.kernel.org>; Sat,
+ 11 Nov 2006 12:23:21 -0700
+Received: (from cougar@localhost)	by socrates.priv (8.13.4/8.13.4/Submit) id
+ kABJNLVM030201	for git@vger.kernel.org; Sat, 11 Nov 2006 12:23:21 -0700
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Nicolas Pitre <nico@cam.org> wrote:
-> As for the fraction of people complaining being a small fraction of 
-> current GIT users: that is easily explainable by the fact that most 
-> people who would have grown the complainers group are simply not GIT 
-> users anymore since they were turned away by GIT's current user 
-> interface issues.  The only complainers remaining are those who see 
-> value in the GIT technology but who would like to bring more 
-> intuitiveness to the GIT interface instead of going for the alternative 
-> technology.  And those kind of people are always few.
+On Sat, Nov 11, 2006 at 10:43:47AM -0800, Junio C Hamano wrote:
+> "Nguyen Thai Ngoc Duy" <pclouds@gmail.com> writes:
+> 
+> > Hi,
+> > I want to create "git-amend-commit" to be able to amend commits before
+> > HEAD. So I need to check whether the commit I'm going to amend is
+> > ascendent of HEAD. Is there any way to check that?
+> 
+> Ascendant is a word from astorology -- you mean ancestor ;-).
 
-Or they are by proxy.
-
-*I* don't see that much of a problem with git pull; I can use it
-without trouble at this point.  But I find it difficult to teach
-to others.
-
-My complaints about git pull/fetch/push are by proxy for about 10
-other users who aren't on the mailing list but whom I interact with
-through Git.  They don't like pull/fetch/push very much.
-
-So count my complaints 10 times.  :)
-
-Ok, that's still a drop in the bucket of current Git users.
-But still, I'm sure there are others.  I think Carl was recently
-talking about complaints from some Fedora folks...
-
--- 
