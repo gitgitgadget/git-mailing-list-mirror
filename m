@@ -4,66 +4,58 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: What's in git.git
-Date: Thu, 26 Oct 2006 14:08:24 +0200
-Message-ID: <20061026120824.GO20017@pasky.or.cz>
-References: <7vk62npipb.fsf@assigned-by-dhcp.cox.net> <ehpu4t$ch2$1@sea.gmane.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: check if a commit is ascendent of a specific commit
+Date: Sat, 11 Nov 2006 12:12:42 -0800
+Message-ID: <7v64dlkait.fsf@assigned-by-dhcp.cox.net>
+References: <fcaeb9bf0611110308l577d70bfo5046d7d7eb09ac58@mail.gmail.com>
+	<7virhlken0.fsf@assigned-by-dhcp.cox.net>
+	<20061111192321.GJ4862@socrates.priv>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 26 Oct 2006 12:08:40 +0000 (UTC)
+NNTP-Posting-Date: Sat, 11 Nov 2006 20:13:07 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <ehpu4t$ch2$1@sea.gmane.org>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <20061111192321.GJ4862@socrates.priv> (Tom Prince's message of
+	"Sat, 11 Nov 2006 12:23:21 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30198>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31239>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gd42A-0002OW-9C for gcvg-git@gmane.org; Thu, 26 Oct
- 2006 14:08:30 +0200
+ esmtp (Exim 4.43) id 1GizDq-0004X0-KR for gcvg-git@gmane.org; Sat, 11 Nov
+ 2006 21:13:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1423336AbWJZMI1 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
- 08:08:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423329AbWJZMI0
- (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 08:08:26 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:3529 "EHLO machine.or.cz") by
- vger.kernel.org with ESMTP id S1423336AbWJZMI0 (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 08:08:26 -0400
-Received: (qmail 8046 invoked by uid 2001); 26 Oct 2006 14:08:24 +0200
-To: Jakub Narebski <jnareb@gmail.com>
+ S1754451AbWKKUMo (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 11 Nov 2006
+ 15:12:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754862AbWKKUMo
+ (ORCPT <rfc822;git-outgoing>); Sat, 11 Nov 2006 15:12:44 -0500
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:35047 "EHLO
+ fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP id S1754451AbWKKUMn
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 11 Nov 2006 15:12:43 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao04.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061111201243.QLCW7494.fed1rmmtao04.cox.net@fed1rmimpo02.cox.net>; Sat, 11
+ Nov 2006 15:12:43 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id lYCo1V01J1kojtg0000000; Sat, 11 Nov 2006
+ 15:12:49 -0500
+To: Tom Prince <tom.prince@ualberta.net>
 Sender: git-owner@vger.kernel.org
 
-Dear diary, on Thu, Oct 26, 2006 at 11:12:36AM CEST, I got a letter
-where Jakub Narebski <jnareb@gmail.com> said that...
-> This unfortunately means that I cannot test gitweb based on 'master'
-> branch using _released_ git core, git version 1.4.3.3, as it doesn't have
-> git-for-each-ref nor git-show-ref.
-> 
-> BTW. do people often use latest gitweb with older git binaries? Should
-> we try to wait for core feature to mature to released version before using
-> it in gitweb? Or perhaps we should add some kind of version checking, and
-> provide workrounds, e.g. using $ENV{GIT_DIR} if git core doesn't support
-> --git-dir option, pathlimit filtering using git-rev-list piped to 
-> git-diff-tree --stdin in git_history if there is no --full-history
-> option, show always HEAD activity if there is no git-for-each-ref
-> etc.; well the latest we can do without checking for git core version, just
-> 
->         if -x qx($GIT --exec-path)/git-for-each-ref
+Tom Prince <tom.prince@ualberta.net> writes:
 
-I can't imagine a situation where you would _want_ to use latest gitweb
-but refuse to use older git binaries - can you explain why do you want
-to do that?
+> On Sat, Nov 11, 2006 at 10:43:47AM -0800, Junio C Hamano wrote:
+>> "Nguyen Thai Ngoc Duy" <pclouds@gmail.com> writes:
+>> 
+>> > Hi,
+>> > I want to create "git-amend-commit" to be able to amend commits before
+>> > HEAD. So I need to check whether the commit I'm going to amend is
+>> > ascendent of HEAD. Is there any way to check that?
+>> 
+>> Ascendant is a word from astorology -- you mean ancestor ;-).
+>
+> Or antecedent.
 
-If you don't want to install the latest master systemwide, that's
-reasonable, but you can just keep the latest master for the gitweb
-script and/or your personal use.
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
-$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
+Sorry, there is no "or" here -- check our documentation ;-).
