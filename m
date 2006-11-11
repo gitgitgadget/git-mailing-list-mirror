@@ -1,107 +1,102 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 1/3] diff_tree_sha1(): avoid rereading trees if possible
-Date: Sun, 10 Dec 2006 00:55:34 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612100055160.28348@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20061207101707.GA19139@spearce.org>
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: [ANNOUNCE] qgit-1.5.3
+Date: Sat, 11 Nov 2006 09:06:20 +0100
+Message-ID: <e5bfff550611110006p44494ed4h2979232bfc8e957c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Sat, 9 Dec 2006 23:55:54 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Sat, 11 Nov 2006 08:07:06 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <20061207101707.GA19139@spearce.org>
-X-Y-GMX-Trusted: 0
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=c8zkq7L9Ve860kWWa5BR6YWMM1H4sdgbajYst608ooYwS1iw7KFU8aLir2H+zWGbmdliXzKWCIcBOeMJ8GfDtvlfl7E7xaBth/X5eH8lHeQo0MNAdM/Tc/Bq0Obn2D/DevY72MNr3BvoosoP5XMuwf5ZW1rsuKBav57lc13ALpo=
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33850>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GtC2j-0001An-JX for gcvg-git@gmane.org; Sun, 10 Dec
- 2006 00:55:45 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31210>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GintE-0004Vs-TJ for gcvg-git@gmane.org; Sat, 11 Nov
+ 2006 09:07:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1757734AbWLIXzh (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 9 Dec 2006
- 18:55:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758826AbWLIXzh
- (ORCPT <rfc822;git-outgoing>); Sat, 9 Dec 2006 18:55:37 -0500
-Received: from mail.gmx.net ([213.165.64.20]:39443 "HELO mail.gmx.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S1757734AbWLIXzg
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 9 Dec 2006 18:55:36 -0500
-Received: (qmail invoked by alias); 09 Dec 2006 23:55:35 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp035) with SMTP; 10 Dec 2006 00:55:35 +0100
-To: "Shawn O. Pearce" <spearce@spearce.org>
+ S1947147AbWKKIG4 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 11 Nov 2006
+ 03:06:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1947150AbWKKIG4
+ (ORCPT <rfc822;git-outgoing>); Sat, 11 Nov 2006 03:06:56 -0500
+Received: from py-out-1112.google.com ([64.233.166.182]:23909 "EHLO
+ py-out-1112.google.com") by vger.kernel.org with ESMTP id S1947148AbWKKIGy
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 11 Nov 2006 03:06:54 -0500
+Received: by py-out-1112.google.com with SMTP id a29so392071pyi for
+ <git@vger.kernel.org>; Sat, 11 Nov 2006 00:06:21 -0800 (PST)
+Received: by 10.35.70.2 with SMTP id x2mr5323321pyk.1163232380927; Sat, 11
+ Nov 2006 00:06:20 -0800 (PST)
+Received: by 10.35.42.4 with HTTP; Sat, 11 Nov 2006 00:06:20 -0800 (PST)
+To: "Git Mailing List" <git@vger.kernel.org>, linux-kernel@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
+qgit it's a graphical git repositories viewer built on Qt libraries.
 
-If the tree has already been read, no need to read it into memory
-again.
+This is mostly a bug fix release.
 
-This also helps when this function is called on temporary trees;
-these no longer have to be written to disk.
+Several issues has been fixed, also some crash bugs, so an update is
+strongly suggested.
 
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
----
- tree-diff.c |   33 ++++++++++++++++++++++-----------
- 1 files changed, 22 insertions(+), 11 deletions(-)
+To note is the new possibility to set the font used by patch and file
+content viewers.
 
-diff --git a/tree-diff.c b/tree-diff.c
-index 9d80dfb..54a6b44 100644
---- a/tree-diff.c
-+++ b/tree-diff.c
-@@ -195,23 +195,34 @@ int diff_tree(struct tree_desc *t1, struct tree_desc *t2, const char *base, stru
- 	return 0;
- }
- 
-+static int get_tree_desc_from_sha1(const unsigned char *sha1,
-+		struct tree_desc *t)
-+{
-+	struct object *o;
-+
-+	o = lookup_object(sha1);
-+	if (o && o->type == OBJ_TREE && o->parsed) {
-+		struct tree *tree = (struct tree *)o;
-+		t->size = tree->size;
-+		t->buf = xmalloc(t->size);
-+		memcpy(t->buf, tree->buffer, t->size);
-+	} else {
-+		t->buf = read_object_with_reference(sha1,
-+				tree_type, &t->size, NULL);
-+		if (!t->buf)
-+			die("unable to read source tree (%s)",
-+					sha1_to_hex(sha1));
-+	}
-+}
-+
- int diff_tree_sha1(const unsigned char *old, const unsigned char *new, const char *base, struct diff_options *opt)
- {
--	void *tree1, *tree2;
- 	struct tree_desc t1, t2;
- 	int retval;
- 
--	tree1 = read_object_with_reference(old, tree_type, &t1.size, NULL);
--	if (!tree1)
--		die("unable to read source tree (%s)", sha1_to_hex(old));
--	tree2 = read_object_with_reference(new, tree_type, &t2.size, NULL);
--	if (!tree2)
--		die("unable to read destination tree (%s)", sha1_to_hex(new));
--	t1.buf = tree1;
--	t2.buf = tree2;
-+	get_tree_desc_from_sha1(old, &t1);
-+	get_tree_desc_from_sha1(new, &t2);
- 	retval = diff_tree(&t1, &t2, base, opt);
--	free(tree1);
--	free(tree2);
- 	return retval;
- }
- 
--- 
-1.4.4.2.g0f32-dirty
+Thanks to Pavel Roskin and Josef Weidendorfer for their help and patches.
+
+
+Download tarball from http://www.sourceforge.net/projects/qgit
+or directly from git public repository
+git://git.kernel.org/pub/scm/qgit/qgit.git
+
+Please refer to http://digilander.libero.it/mcostalba/ for additional
+information.
+
+	Marco
+
+
+ChangeLog from 1.5.2
+
+- use a smaller tab close button and a smaller icon (Pavel Roskin)
+
+- fix a crash in case of repo change while in filtered view
+
+- fix a crash due to evil static pointers
+
+- clear all the panes if search from the toolbar doesn't find anything
+
+- silence a Qt warning when closing a tab
+
+- let the user to set the typewriter (fixed width) font used
+  with patch and file content viewers
+
+- fix broken StGit 'pop' command interface
+
+- do not use "--keep" option of git-am as default
+
+- fix issues with tag marks when changing graph size
+
+- fix filenames cache data saving in case of bare repositories
+
+- rewrite and simplify graph drawing code (Josef Weidendorfer)
+
+- fix issues with file names with spaces
+
+- adjust columns width when changing window size
+
+- fetch file history from all trees instead of only current
+
+- early exit update cycle when a new request arrives
+
+- correctly order tags in start-up input range dialog
 
