@@ -4,79 +4,259 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: What's in git.git (stable)
-Date: Thu, 14 Dec 2006 04:36:37 -0500
-Message-ID: <20061214093637.GC1747@spearce.org>
-References: <7v4przfpir.fsf@assigned-by-dhcp.cox.net> <200612132237.10051.andyparkins@gmail.com> <elpvro$rvj$1@sea.gmane.org> <200612140927.27259.andyparkins@gmail.com>
+From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
+Subject: [PATCH 1/3] Ask git for author and committer name
+Date: Sun, 12 Nov 2006 00:30:46 +0100
+Message-ID: <20061111233046.17760.62871.stgit@localhost>
+References: <20061111232322.17760.26214.stgit@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 14 Dec 2006 09:37:04 +0000 (UTC)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Sat, 11 Nov 2006 23:31:31 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <200612140927.27259.andyparkins@gmail.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+In-Reply-To: <20061111232322.17760.26214.stgit@localhost>
+User-Agent: StGIT/0.11
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34293>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gun1K-0007r6-Eh for gcvg-git@gmane.org; Thu, 14 Dec
- 2006 10:36:54 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31249>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gj2Jn-0006qf-Eg for gcvg-git@gmane.org; Sun, 12 Nov
+ 2006 00:31:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932178AbWLNJgv (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
- 04:36:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932177AbWLNJgv
- (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 04:36:51 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:60576 "EHLO
- corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S932178AbWLNJgu (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006
- 04:36:50 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1Gun15-0001Fo-U7; Thu, 14 Dec 2006 04:36:40 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- D5BDF20FB65; Thu, 14 Dec 2006 04:36:38 -0500 (EST)
-To: Andy Parkins <andyparkins@gmail.com>
+ S1947326AbWKKXbH convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Sat, 11 Nov 2006 18:31:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1947325AbWKKXbG
+ (ORCPT <rfc822;git-outgoing>); Sat, 11 Nov 2006 18:31:06 -0500
+Received: from mxfep01.bredband.com ([195.54.107.70]:35281 "EHLO
+ mxfep01.bredband.com") by vger.kernel.org with ESMTP id S1947326AbWKKXbD
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 11 Nov 2006 18:31:03 -0500
+Received: from ironport.bredband.com ([195.54.107.82] [195.54.107.82]) by
+ mxfep01.bredband.com with ESMTP id
+ <20061111233101.YGDC9747.mxfep01.bredband.com@ironport.bredband.com> for
+ <git@vger.kernel.org>; Sun, 12 Nov 2006 00:31:01 +0100
+Received: from ua-83-227-180-148.cust.bredbandsbolaget.se (HELO
+ yoghurt.hemma.treskal.com) ([83.227.180.148]) by ironport.bredband.com with
+ ESMTP; 12 Nov 2006 00:31:01 +0100
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by
+ yoghurt.hemma.treskal.com (Postfix) with ESMTP id 536D54C04D; Sun, 12 Nov
+ 2006 00:31:01 +0100 (CET)
+To: Catalin Marinas <catalin.marinas@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Andy Parkins <andyparkins@gmail.com> wrote:
-> I think the problem in most cases is that git outputs _too much_.  Also, I'm 
-> not imagining that "git-add ." would list every file that it added - who is 
-> that going to help?  It should say "added X files to index" or similar.  You 
-> surely can't be arguing that that slows down your expert workflow?
+=46rom: Karl Hasselstr=C3=B6m <kha@treskal.com>
 
-git-commit-tree's "committing initial tree" and git-init-db's
-"defaulting to local storage area" are both probably too verbose
-and should just get removed.
+Consistently do the following to get hold of default user and
+committer:
 
-The progress meters in git-pack-objects that you see during clone,
-repack, fetch and push at least keep the user amused.  I do read
-the output of repack every so often, but in general I don't care
-about the output of clone, fetch or push - all I care about is
-that my objects got to the remote system and were accepted, or not.
-Which means that at least for me the output could be reduced down
-to just the bandwidth transfer meter, for really slow links.
+  1. Use the value specified on the command line, if any.
 
-But I'm not sure that git-add should output anything.  Last I checked
-the 'mv' command in Linux doesn't say "Move 5 files" when I move 5
-files into a directory.  Likewise I don't think that knowing that
-6781 files were added is useful, what if it should have really been
-6782 files?  I'm unlikely to know, care, or realize it.
+  1. Otherwise, use the value from stgitrc, if available.
 
-Your niggle list (is that what you called it) has been useful
-fodder for discussion.  I'm glad you took the time to write it up,
-and to argue it so well on the list.  There's a number of items on
-it that I'd like to see happen too; enough that I may code some of
-them if nobody beats me to it.
+  2. Otherwise, ask git for the value. git will produce the value from
+     on of its config files, from environment variables, or make it
+     up. It might be asking the spirits of the dead for all we care.
 
--- 
+Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
+---
+
+ stgit/commands/mail.py |   19 ++------------
+ stgit/git.py           |   63 ++++++++++++++++++++++++++++++++++++++++=
+++++++++
+ stgit/stack.py         |   32 ++++--------------------
+ 3 files changed, 70 insertions(+), 44 deletions(-)
+
+diff --git a/stgit/commands/mail.py b/stgit/commands/mail.py
+index 154df9c..78abfa4 100644
+--- a/stgit/commands/mail.py
++++ b/stgit/commands/mail.py
+@@ -127,17 +127,6 @@ options =3D [make_option('-a', '--all',
+                        action =3D 'store_true')]
+=20
+=20
+-def __get_maintainer():
+-    """Return the 'authname <authemail>' string as read from the
+-    configuration file
+-    """
+-    if config.has_option('stgit', 'authname') \
+-           and config.has_option('stgit', 'authemail'):
+-        return '%s <%s>' % (config.get('stgit', 'authname'),
+-                            config.get('stgit', 'authemail'))
+-    else:
+-        return None
+-
+ def __parse_addresses(addresses):
+     """Return a two elements tuple: (from, [to])
+     """
+@@ -301,9 +290,7 @@ def edit_message(msg):
+ def __build_cover(tmpl, total_nr, msg_id, options):
+     """Build the cover message (series description) to be sent via SMT=
+P
+     """
+-    maintainer =3D __get_maintainer()
+-    if not maintainer:
+-        maintainer =3D ''
++    maintainer =3D git.user()
+=20
+     if options.version:
+         version_str =3D ' %s' % options.version
+@@ -370,9 +357,7 @@ def __build_message(tmpl, patch, patch_n
+     short_descr =3D descr_lines[0].rstrip()
+     long_descr =3D '\n'.join(descr_lines[1:]).lstrip()
+=20
+-    maintainer =3D __get_maintainer()
+-    if not maintainer:
+-        maintainer =3D '%s <%s>' % (p.get_commname(), p.get_commemail(=
+))
++    maintainer =3D git.user()
+=20
+     if options.version:
+         version_str =3D ' %s' % options.version
+diff --git a/stgit/git.py b/stgit/git.py
+index 8d88769..a6e1a63 100644
+--- a/stgit/git.py
++++ b/stgit/git.py
+@@ -33,6 +33,35 @@ class GitException(Exception):
+ #
+ # Classes
+ #
++
++class Person:
++    """An author, committer, etc."""
++    def __init__(self, name =3D None, email =3D None, date =3D None,
++                 desc =3D None):
++        if name or email or date:
++            assert not desc
++            self.name =3D name
++            self.email =3D email
++            self.date =3D date
++        elif desc:
++            assert not (name or email or date)
++            def parse_desc(s):
++                m =3D re.match(r'^(.+)<(.+)>(.*)$', s)
++                assert m
++                return [x.strip() or None for x in m.groups()]
++            self.name, self.email, self.date =3D parse_desc(desc)
++    def set_name(self, val):
++        if val:
++            self.name =3D val
++    def set_email(self, val):
++        if val:
++            self.email =3D val
++    def __str__(self):
++        if self.name and self.email:
++            return '%s <%s>' % (self.name, self.email)
++        else:
++            raise Exception, 'not enough identity data'
++
+ class Commit:
+     """Handle the commit objects
+     """
+@@ -402,6 +431,40 @@ def rm(files, force =3D False):
+         if files:
+             __run('git-update-index --force-remove --', files)
+=20
++def var(key):
++    """Ask git-var for the value of a variable."""
++    return _output_one_line(['git-var', key])
++
++def repo_config(key):
++    """Ask git-repo-config for the value of a variable."""
++    return _output_one_line(['git-repo-config', key])
++
++__cached_git_persons =3D {}
++def __git_person(p):
++    if not p in __cached_git_persons:
++        __cached_git_persons[p] =3D {
++            'author': lambda: Person(desc =3D var('GIT_AUTHOR_IDENT'))=
+,
++            'committer': lambda: Person(desc =3D var('GIT_COMMITTER_ID=
+ENT')),
++            'user': lambda: Person(repo_config('user.name'),
++                                   repo_config('user.email')),
++            }[p]()
++    return __cached_git_persons[p]
++
++__cached_stgit_persons =3D {}
++def __stgit_person(p, name_key, email_key):
++    if not p in __cached_stgit_persons:
++        person =3D __git_person(p)
++        if config.has_option('stgit', name_key):
++            person.set_name(config.get('stgit', name_key))
++        if config.has_option('stgit', email_key):
++            person.set_email(config.get('stgit', email_key))
++        __cached_stgit_persons[p] =3D person
++    return __cached_stgit_persons[p]
++
++def author(): return __stgit_person('author', 'authname', 'authemail')
++def committer(): return __stgit_person('committer', 'commname', 'comme=
+mail')
++def user(): return __stgit_person('user', 'authname', 'authemail')
++
+ def update_cache(files =3D None, force =3D False):
+     """Update the cache information for the given files
+     """
+diff --git a/stgit/stack.py b/stgit/stack.py
+index a477e7d..fee1316 100644
+--- a/stgit/stack.py
++++ b/stgit/stack.py
+@@ -238,53 +238,31 @@ class Patch:
+         return self.__get_field('authname')
+=20
+     def set_authname(self, name):
+-        if not name:
+-            if config.has_option('stgit', 'authname'):
+-                name =3D config.get('stgit', 'authname')
+-            elif 'GIT_AUTHOR_NAME' in os.environ:
+-                name =3D os.environ['GIT_AUTHOR_NAME']
+-        self.__set_field('authname', name)
++        self.__set_field('authname', name or git.author().name)
+=20
+     def get_authemail(self):
+         return self.__get_field('authemail')
+=20
+     def set_authemail(self, address):
+-        if not address:
+-            if config.has_option('stgit', 'authemail'):
+-                address =3D config.get('stgit', 'authemail')
+-            elif 'GIT_AUTHOR_EMAIL' in os.environ:
+-                address =3D os.environ['GIT_AUTHOR_EMAIL']
+-        self.__set_field('authemail', address)
++        self.__set_field('authemail', address or git.author().email)
+=20
+     def get_authdate(self):
+         return self.__get_field('authdate')
+=20
+     def set_authdate(self, date):
+-        if not date and 'GIT_AUTHOR_DATE' in os.environ:
+-            date =3D os.environ['GIT_AUTHOR_DATE']
+-        self.__set_field('authdate', date)
++        self.__set_field('authdate', date or git.author().date)
+=20
+     def get_commname(self):
+         return self.__get_field('commname')
+=20
+     def set_commname(self, name):
+-        if not name:
+-            if config.has_option('stgit', 'commname'):
+-                name =3D config.get('stgit', 'commname')
+-            elif 'GIT_COMMITTER_NAME' in os.environ:
+-                name =3D os.environ['GIT_COMMITTER_NAME']
+-        self.__set_field('commname', name)
++        self.__set_field('commname', name or git.committer().name)
+=20
+     def get_commemail(self):
+         return self.__get_field('commemail')
+=20
+     def set_commemail(self, address):
+-        if not address:
+-            if config.has_option('stgit', 'commemail'):
+-                address =3D config.get('stgit', 'commemail')
+-            elif 'GIT_COMMITTER_EMAIL' in os.environ:
+-                address =3D os.environ['GIT_COMMITTER_EMAIL']
+-        self.__set_field('commemail', address)
++        self.__set_field('commemail', address or git.committer().email=
+)
+=20
+     def get_log(self):
