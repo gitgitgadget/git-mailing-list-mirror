@@ -4,62 +4,52 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jan Harkes <jaharkes@cs.cmu.edu>
-Subject: Re: WARNING: THIS PATCH CAN BREAK YOUR REPO, was Re: [PATCH 2/3] Only repack active packs by skipping over kept packs.
-Date: Mon, 30 Oct 2006 17:55:00 -0500
-Message-ID: <20061030225500.GG3617@delft.aura.cs.cmu.edu>
-References: <20061029093754.GD3847@spearce.org> <Pine.LNX.4.64.0610301332440.11384@xanadu.home> <20061030202611.GA5775@spearce.org> <20061030205200.GA20236@delft.aura.cs.cmu.edu> <7v3b95wjmg.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Mon, 30 Oct 2006 22:55:17 +0000 (UTC)
+From: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
+Subject: StGIT repository not clonable?
+Date: Sat, 11 Nov 2006 00:56:47 -0300
+Message-ID: <200611110359.kAB3ul02013227@laptop13.inf.utfsm.cl>
+NNTP-Posting-Date: Sat, 11 Nov 2006 12:24:24 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Mail-Followup-To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <7v3b95wjmg.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.5  (beta27)
+X-Greylist: Delayed for 57:57:34 by milter-greylist-2.0.2 (inti.inf.utfsm.cl [200.1.19.1]); Sat, 11 Nov 2006 09:24:08 -0300 (CLST)
+X-Virus-Scanned: ClamAV version 0.88.5, clamav-milter version 0.88.5 on inti.inf.utfsm.cl
+X-Virus-Status: Clean
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30545>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31218>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Geg27-0007gf-NB for gcvg-git@gmane.org; Mon, 30 Oct
- 2006 23:55:08 +0100
+ esmtp (Exim 4.43) id 1GiruF-0001mA-0O for gcvg-git@gmane.org; Sat, 11 Nov
+ 2006 13:24:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1422732AbWJ3WzE (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 30 Oct 2006
- 17:55:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422733AbWJ3WzD
- (ORCPT <rfc822;git-outgoing>); Mon, 30 Oct 2006 17:55:03 -0500
-Received: from DELFT.AURA.CS.CMU.EDU ([128.2.206.88]:30172 "EHLO
- delft.aura.cs.cmu.edu") by vger.kernel.org with ESMTP id S1422732AbWJ3WzC
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 30 Oct 2006 17:55:02 -0500
-Received: from jaharkes by delft.aura.cs.cmu.edu with local (Exim 4.63)
- (envelope-from <jaharkes@cs.cmu.edu>) id 1Geg20-0000e3-Qv; Mon, 30 Oct 2006
- 17:55:00 -0500
-To: Junio C Hamano <junkio@cox.net>
+ S1424572AbWKKMYN (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 11 Nov 2006
+ 07:24:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1424573AbWKKMYN
+ (ORCPT <rfc822;git-outgoing>); Sat, 11 Nov 2006 07:24:13 -0500
+Received: from inti.inf.utfsm.cl ([200.1.21.155]:6096 "EHLO
+ inti.inf.utfsm.cl") by vger.kernel.org with ESMTP id S1424572AbWKKMYK (ORCPT
+ <rfc822;git@vger.kernel.org>); Sat, 11 Nov 2006 07:24:10 -0500
+Received: from laptop13.inf.utfsm.cl (as5300-s60-113.cnt.entelchile.net
+ [164.77.158.123]) by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id
+ kABCO7cV001951 (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256
+ verify=NO) for <git@vger.kernel.org>; Sat, 11 Nov 2006 09:24:08 -0300
+Received: from laptop13.inf.utfsm.cl (laptop13.inf.utfsm.cl [127.0.0.1]) by
+ laptop13.inf.utfsm.cl (8.13.8/8.13.8) with ESMTP id kAB3ul02013227; Sat, 11
+ Nov 2006 00:59:27 -0300
+To: catalin.marinas@gmail.com
 Sender: git-owner@vger.kernel.org
 
-On Mon, Oct 30, 2006 at 01:59:03PM -0800, Junio C Hamano wrote:
-> Jan Harkes <jaharkes@cs.cmu.edu> writes:
-> 
-> > The following patch does fix the problem Nicolas reported, but for some
-> > reason I'm still getting only 102 objects (only tags and the commits
-> > they refer to?) with your test.
-> 
-> One potential downside of this is that this makes an obscure but
-> useful "gitk --unpacked" useless (robs performance).
-> 
-> http://thread.gmane.org/gmane.comp.version-control.git/19197/focus=19207
+I'm trying to update my StGIT repo here, and get a crash from
+git-http-fetch (git 1.4.3.4). Trying to clone it anew gives:
 
-If I use 'git fetch' followed later on by a 'git fetch -k', the result
-from --unpacked would not include the unpacked objects created by the
-first fetch. Although it may have been fast, it seems to be somewhat
-counter-intuitive.
 
-> But other than that, I think it is an Ok change.  The original
-> semantics of --unpacked (with or without "pretend as if objects
-> in this pack are loose") were, eh, "strange".
+[vonbrand@laptop13 tmp]$ git-clone http://homepage.ntlworld.com/cmarinas/stgit.git
+error: Unable to start request
+error: Could not interpret heads/master as something to pull
 
-Do you need a resend with a proper 'Signed-Off-By' line?
-
-Jan
+What am I doing wrong?
+-- 
+Dr. Horst H. von Brand                   User #22616 counter.li.org
+Departamento de Informatica                    Fono: +56 32 2654431
+Universidad Tecnica Federico Santa Maria             +56 32 2654239
