@@ -1,73 +1,69 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [RFC \ WISH] Add -o option to git-rev-list
-Date: Mon, 11 Dec 2006 12:40:37 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0612111238560.3515@woody.osdl.org>
-References: <e5bfff550612100338ye2ca2a0u1c8f29bbc59c5431@mail.gmail.com>
- <Pine.LNX.4.64.0612111003140.12500@woody.osdl.org>
- <e5bfff550612111059g35f1aa2dmdead17a60f5dfca8@mail.gmail.com>
- <200612112128.06485.Josef.Weidendorfer@gmx.de>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: information for a 60-minute "intro to git" needed
+Date: Sat, 11 Nov 2006 19:49:44 -0300
+Message-ID: <46a038f90611111449g63ab5b41p8dc669beea864e51@mail.gmail.com>
+References: <8664dmxdrf.fsf@blue.stonehenge.com>
+	 <20061111143304.GA7201@pasky.or.cz> <ej4teo$bjo$1@sea.gmane.org>
+	 <7vac2xkdgi.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Mon, 11 Dec 2006 20:41:12 +0000 (UTC)
-Cc: Marco Costalba <mcostalba@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <junkio@cox.net>,
-	Alex Riesen <raa.lkml@gmail.com>,
-	Shawn Pearce <spearce@spearce.org>
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Sat, 11 Nov 2006 22:49:54 +0000 (UTC)
+Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>, jnareb@gmail.com,
+	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <200612112128.06485.Josef.Weidendorfer@gmx.de>
-X-MIMEDefang-Filter: osdl$Revision: 1.162 $
-X-Scanned-By: MIMEDefang 2.36
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=khF6GXIxuuDjJtgvet+MCXA1o4NOGSqcPi4QPSF371nGOJzuNGmRGY6LnVmZg95n7tsF0lCo8Y4DXM4tAgIBFK2oWRmdiIdhTwxoPCW9SXrKf201P0KESdbiN0P8aSoS2VcHRdlJ4354ERmgl9ZBkBhW+vEusdqRYWNCOZxl4q8=
+In-Reply-To: <7vac2xkdgi.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34032>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GtrxJ-0003EA-Hz for gcvg-git@gmane.org; Mon, 11 Dec
- 2006 21:40:57 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31246>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gj1fZ-0002Fi-Mt for gcvg-git@gmane.org; Sat, 11 Nov
+ 2006 23:49:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S937020AbWLKUky (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 11 Dec 2006
- 15:40:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763090AbWLKUky
- (ORCPT <rfc822;git-outgoing>); Mon, 11 Dec 2006 15:40:54 -0500
-Received: from smtp.osdl.org ([65.172.181.25]:34799 "EHLO smtp.osdl.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1762949AbWLKUkx
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 11 Dec 2006 15:40:53 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
- smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kBBKecID001404
- (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Mon, 11
- Dec 2006 12:40:43 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
- shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kBBKebYQ006674; Mon, 11 Dec
- 2006 12:40:37 -0800
-To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+ S1754890AbWKKWtr (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 11 Nov 2006
+ 17:49:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754891AbWKKWtq
+ (ORCPT <rfc822;git-outgoing>); Sat, 11 Nov 2006 17:49:46 -0500
+Received: from nf-out-0910.google.com ([64.233.182.191]:31647 "EHLO
+ nf-out-0910.google.com") by vger.kernel.org with ESMTP id S1754890AbWKKWtq
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 11 Nov 2006 17:49:46 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so1736119nfa for
+ <git@vger.kernel.org>; Sat, 11 Nov 2006 14:49:45 -0800 (PST)
+Received: by 10.48.142.8 with SMTP id p8mr7476824nfd.1163285384542; Sat, 11
+ Nov 2006 14:49:44 -0800 (PST)
+Received: by 10.49.60.1 with HTTP; Sat, 11 Nov 2006 14:49:44 -0800 (PST)
+To: "Junio C Hamano" <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
+On 11/11/06, Junio C Hamano <junkio@cox.net> wrote:
+> I think Martin Langhoff promised to make his presentation done
+> in Mexico available to us sometime ago, but I wonder what
+> happened to it...
+
+Hola! You are right, I never published anything... The Mexico
+presentation was a combination of your original slides (I ended up
+using the PDF directly as I didn't have OOv2) plus a version of my
+older talk notes, updated and in Spanish. So I swapped the two
+around.... "live".
+
+The old, outdated talk is based on Cogito, and can be found here. I
+still use it for my inhouse team --
+http://wellington.pm.org/archive/200510/git/
+
+cheers,
 
 
-On Mon, 11 Dec 2006, Josef Weidendorfer wrote:
-> 
-> A general question: How many context switches are involved in such
-> a producer/consumer scenario, given that the consumer writes one
-> line at a time, and the consumer uses poll/select to wait for the
-> data?
-> Is there some possibility to make the kernel write-combine single
-> small producer writes into bigger chunks, which will be delivered
-> at once (or smaller data only after a small timeout)?
-
-The data will be write-combined.
-
-The kernel doesn't context-switch after a write() to a pipe if there is 
-space left (and usually the pipe buffer is 64kB with current kernels, so 
-there obviously will be), unless the reader has a higher priority for some 
-reason (ie the reader has been waiting a long time).
-
-So _normally_ you'll see many many writes in one go, and only see context 
-switching when the kernel pipe buffer fills up.
 
