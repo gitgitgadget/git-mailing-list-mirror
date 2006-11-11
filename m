@@ -1,71 +1,63 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: Author name and e-mail address in .stgitrc
-Date: Sat, 11 Nov 2006 23:02:04 +0000
-Message-ID: <b0943d9e0611111502q2f68be67l1a2441d84923a732@mail.gmail.com>
-References: <20061111113553.GA11224@diana.vm.bytemark.co.uk>
-	 <20061111141530.GF11224@diana.vm.bytemark.co.uk>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: gitk feature request..
+Date: Sat, 11 Nov 2006 16:20:22 +0100
+Organization: At home
+Message-ID: <ej4pll$vo9$1@sea.gmane.org>
+References: <452A37FB.60507@adelaide.edu.au> <17745.1213.22769.420355@cargo.ozlabs.ibm.com> <7vslgu28do.fsf@assigned-by-dhcp.cox.net> <e5bfff550611110708r1ad9559ewf35b8abaceb21cc4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Sat, 11 Nov 2006 23:03:15 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+NNTP-Posting-Date: Sat, 11 Nov 2006 15:19:38 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=mDed3RCzr0RYro6c0Xok0jf3sn0iYzKIF2fLXDB06vbOgeGmNNMEBAjEOvZNfOXtZMqcfv4YGIwJ/iBC9mncHJS9SY0OM9O3olJTGjJ+L2gy8kDqOfe4/FPnk3wH3Sha3h0n2ff0zEIU/jKv0loNE0MJ1YGXlYOA+btvlet/I0s=
-In-Reply-To: <20061111141530.GF11224@diana.vm.bytemark.co.uk>
-Content-Disposition: inline
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 13
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31247>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31230>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gj1sN-0003YR-Le for gcvg-git@gmane.org; Sun, 12 Nov
- 2006 00:03:04 +0100
+ esmtp (Exim 4.43) id 1Giudt-0006yc-Jc for gcvg-git@gmane.org; Sat, 11 Nov
+ 2006 16:19:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1754897AbWKKXCi convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Sat, 11 Nov 2006 18:02:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754901AbWKKXCi
- (ORCPT <rfc822;git-outgoing>); Sat, 11 Nov 2006 18:02:38 -0500
-Received: from py-out-1112.google.com ([64.233.166.180]:24477 "EHLO
- py-out-1112.google.com") by vger.kernel.org with ESMTP id S1754897AbWKKXCh
- convert rfc822-to-8bit (ORCPT <rfc822;git@vger.kernel.org>); Sat, 11 Nov 2006
- 18:02:37 -0500
-Received: by py-out-1112.google.com with SMTP id a29so487056pyi for
- <git@vger.kernel.org>; Sat, 11 Nov 2006 15:02:04 -0800 (PST)
-Received: by 10.35.59.5 with SMTP id m5mr7038825pyk.1163286124125; Sat, 11
- Nov 2006 15:02:04 -0800 (PST)
-Received: by 10.35.109.8 with HTTP; Sat, 11 Nov 2006 15:02:03 -0800 (PST)
-To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
+ S1424008AbWKKPTd (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 11 Nov 2006
+ 10:19:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1424009AbWKKPTd
+ (ORCPT <rfc822;git-outgoing>); Sat, 11 Nov 2006 10:19:33 -0500
+Received: from main.gmane.org ([80.91.229.2]:6124 "EHLO ciao.gmane.org") by
+ vger.kernel.org with ESMTP id S1424008AbWKKPTd (ORCPT
+ <rfc822;git@vger.kernel.org>); Sat, 11 Nov 2006 10:19:33 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1Giudk-0006x7-2S for git@vger.kernel.org; Sat, 11 Nov 2006 16:19:28 +0100
+Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Sat, 11 Nov 2006 16:19:28 +0100
+Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Sat, 11 Nov 2006
+ 16:19:28 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On 11/11/06, Karl Hasselstr=F6m <kha@treskal.com> wrote:
-> Is there any particular reason to have the author and committer names
-> in ~/.stgitrc? Simply taking them from the same place git does would
-> probably be a usability enhancement (unless they're specified on the
-> command line, of course).
+Marco Costalba wrote:
 
-At the time I added these to .stgitrc, the only place git was taking
-them from was the environment variables and I wanted to put them in a
-single place. I also didn't like the idea of having the committer
-e-mail address be some username@local-machine as I don't think the
-name of the machine where I create patches is relevant. I also define
-the committer/author per repository in the .git/stgitrc file (i.e. I
-use @arm.com for Linux patches and @gmail.com for StGIT).
+> Regarding the local / private views problem, perhaps we could use a
+> local, i.e. out of .git directory, config file that _extends_ and
+> _overrides_ the repository config file.
 
-I use StGIT almost exclusively, even in "maintainer" mode and I would
-like not to spread the configuration options over many files. It is on
-my todo list to use the same configuration file as git (with a [stgit]
-section) since it has a format that should be understood by the Python
-config module.
+~/.gitconfig ? Since quite a bit of time, undocumented.
 
---=20
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
+
