@@ -4,163 +4,64 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: [RFC] Submodules in GIT
-Date: Fri, 1 Dec 2006 19:48:02 +0100
-Message-ID: <20061201184801.GG18810@admingilde.org>
-References: <20061201110032.GL18810@admingilde.org> <45701B8D.1030508@b-i-t.de> <20061201121234.GQ18810@admingilde.org> <4570289D.9050802@b-i-t.de> <20061201133558.GU18810@admingilde.org> <45703375.4050500@b-i-t.de> <20061201145817.GY18810@admingilde.org> <45704EA3.40203@b-i-t.de> <20061201165418.GD18810@admingilde.org> <45706758.2020907@b-i-t.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: information for a 60-minute "intro to git" needed
+Date: Sat, 11 Nov 2006 11:09:17 -0800
+Message-ID: <7vac2xkdgi.fsf@assigned-by-dhcp.cox.net>
+References: <8664dmxdrf.fsf@blue.stonehenge.com>
+	<20061111143304.GA7201@pasky.or.cz> <ej4teo$bjo$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="yRy5AYMdKszmZQyZ"
-NNTP-Posting-Date: Fri, 1 Dec 2006 18:48:13 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Sat, 11 Nov 2006 19:09:32 +0000 (UTC)
+Cc: jnareb@gmail.com, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <45706758.2020907@b-i-t.de>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <ej4teo$bjo$1@sea.gmane.org> (Jakub Narebski's message of "Sat,
+	11 Nov 2006 17:24:56 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32955>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31237>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GqDQf-0007qm-ID for gcvg-git@gmane.org; Fri, 01 Dec
- 2006 19:48:09 +0100
+ esmtp (Exim 4.43) id 1GiyEG-0000q5-Gf for gcvg-git@gmane.org; Sat, 11 Nov
+ 2006 20:09:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1031663AbWLASsG (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
- 13:48:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031684AbWLASsF
- (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 13:48:05 -0500
-Received: from agent.admingilde.org ([213.95.21.5]:17111 "EHLO
- mail.admingilde.org") by vger.kernel.org with ESMTP id S1031663AbWLASsD
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 13:48:03 -0500
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1) id
- 1GqDQY-0000PM-6g; Fri, 01 Dec 2006 19:48:02 +0100
-To: Stephan Feder <sf@b-i-t.de>
+ S1424595AbWKKTJT (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 11 Nov 2006
+ 14:09:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1424597AbWKKTJT
+ (ORCPT <rfc822;git-outgoing>); Sat, 11 Nov 2006 14:09:19 -0500
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:42648 "EHLO
+ fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP id S1424595AbWKKTJS
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 11 Nov 2006 14:09:18 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao09.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061111190918.WGCA18767.fed1rmmtao09.cox.net@fed1rmimpo02.cox.net>; Sat, 11
+ Nov 2006 14:09:18 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id lX9P1V00n1kojtg0000000; Sat, 11 Nov 2006
+ 14:09:24 -0500
+To: merlyn@stonehenge.com (Randal L. Schwartz)
 Sender: git-owner@vger.kernel.org
 
+Jakub Narebski <jnareb@gmail.com> writes:
 
---yRy5AYMdKszmZQyZ
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Petr Baudis wrote:
+>
+>> and http://git.or.cz/gitwiki/GitLinks for links to plenty
+>> of "using git" pages for various projects and other introductory
+>> articles.
+>
+> GitLinks has now links to junio, jdl and pasky slides from OLS,
+> and junio slides from OSDL Japan Linux Symposium.
 
-On Fri, Dec 01, 2006 at 06:33:12PM +0100, Stephan Feder wrote:
-> We are in agreement about two fundamental parts of the implementation=20
-> and their meaning:
->=20
-> 1. A submodule is stored as a commit id in a tree object.
->=20
-> 2. Every object that is reachable from the submodule's commit are=20
-> reachable from the supermodule's repository.
+The OSDL Japan one is much more suitable for stealing tutorial
+material from than the OLS one, but they took the pages on old
+seminars down without telling me, it seems.  I've updated the
+link in GitLinks page.  The presentation is designed to be run
+in 25 minutes using the first half of slides (pretty pictures),
+followed by a 25 minutes demo (reproducing the second half of
+slides).
 
-Correct.
-
-> >>For example, git has the subproject xdiff. If git had been able to work=
-=20
-> >>with subprojects as I envision, and if xdiff had been published as a gi=
-t=20
-> >>repository (not necessarily subproject enabled), it could have been=20
-> >>pulled in git's subdirectory xdiff as a subproject.
-> >
-> >This could have been done if submodule support would have been available
-> >at the time xdiff was introduced, yes.
-> >
-> >>There would not have been a separate branch or even repository for
-> >>xdiff in the git repository.
-> >
-> >What separate branch or repository are you talking about?
->=20
-> That's it: There is no need for a separate branch or repository. If you=
-=20
-> have the subproject's commit in the superproject's object database (and=
-=20
-> we really have that, see 1. and 2. above), why do you _have to_ store it=
-=20
-> elsewhere?
-
-Let's see if I understand you correctly:
-
-You don't want to create an additional .git directory for the submodule
-and just handle everything with one toplevel .git repository for the
-whole project.
-Without the .git directory, you of course do not have refs/heads inside
-the submodule.
-
-So this is a different user-interface approach to submodules when
-compared to my approach.  But the basis is the same and both could
-inter-operate.
-
-Now your submodule is no longer seen as an independent git repository
-and I think this would cause problems when you want to push/pull between
-the submodule and its upstream repository.
-No technical problems, but UI-problems because now your submodule is
-handled completly different to a "normal" repository.
-
-
-> >Yes, but if it would have been integrated as a submodule it obviously
-> >would have been committed to the xdiff submodule inside the git
-> >repository.
->=20
-> No. The xdiff submodule would only exist as part of the git repository.=
-=20
-
-But you could still call the "xdiff" part of the git repository a
-submodule.  And then changes to the xdiff directory result in a new
-submodule commit, even when there is no direct reference to it.
-So you'd still "commit to the xdiff submodule".
-
-> You could, f.e., access the xdiff commit in git HEAD as HEAD:xdiff//=20
-> (again my proposed syntax). HEAD:xdiff//~2:xemit.c would give you the=20
-> grandparent of xemit.c in the xdiff submodule.
-
-git-cat-file commit HEAD:xdiff already works out of the box (even
-cat-file tree to get the submodule tree).  But up to now revision
-parsing follows the file name only once.
-
-What about just separating things with "/"?
-
-commit HEAD
-tree   HEAD/
-blob   HEAD/Makefile
-commit HEAD/xdiff
-tree   HEAD/xdiff/
-blob   HEAD/xdiff~2/xemit.c
-
-this may add some confusion when used with hierarchical branches, but
-it's still unique:
-
-	refs/heads/master/xdiff/xemit.c
-
-Just use as many path components until a matching reference is found,
-then start peeling.
-Or just use / between super and submodule:
-
-	refs/heads/master:xdiff/xemit.c
-
-I think this is easier to read then
-
-	refs/heads/master:xdiff//:xemit.c
-
-
-> If you mean the submodule repository created by init-module I=20
-> understand. But why create this "helper repository at all"?
-
-Because it helps "normal" git operations ;-)
-
---=20
-Martin Waitz
-
---yRy5AYMdKszmZQyZ
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFFcHjhj/Eaxd/oD7IRAgb7AJwP+SFMUG9H8mpM6rsbKtNgiEz2jgCfRvxw
-9zP65bdwjLyoZkXNcVYp9ns=
-=az8n
------END PGP SIGNATURE-----
-
+I think Martin Langhoff promised to make his presentation done
+in Mexico available to us sometime ago, but I wonder what
+happened to it...
