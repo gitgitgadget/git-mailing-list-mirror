@@ -1,62 +1,76 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [PATCH] Add a MIME-Version header to e-mails
-Date: Sat, 11 Nov 2006 13:24:03 +0100
-Message-ID: <20061111122403.GC11224@diana.vm.bytemark.co.uk>
-References: <eile19$p7r$1@sea.gmane.org> <20061106074532.10376.60478.stgit@localhost> <b0943d9e0611070153s2a52f65k6ed4643e60a144b3@mail.gmail.com> <b0943d9e0611071109w584f4f7fv3ba1b7dbd9413717@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: check if a commit is ascendent of a specific commit
+Date: Sat, 11 Nov 2006 10:43:47 -0800
+Message-ID: <7virhlken0.fsf@assigned-by-dhcp.cox.net>
+References: <fcaeb9bf0611110308l577d70bfo5046d7d7eb09ac58@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Sat, 11 Nov 2006 12:24:26 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Sat, 11 Nov 2006 18:44:00 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <b0943d9e0611071109w584f4f7fv3ba1b7dbd9413717@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <fcaeb9bf0611110308l577d70bfo5046d7d7eb09ac58@mail.gmail.com>
+	(Nguyen Thai Ngoc Duy's message of "Sat, 11 Nov 2006 18:08:56 +0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31219>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31236>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Giru7-0001lf-EI for gcvg-git@gmane.org; Sat, 11 Nov
- 2006 13:24:12 +0100
+ esmtp (Exim 4.43) id 1GixpY-0004Tn-V0 for gcvg-git@gmane.org; Sat, 11 Nov
+ 2006 19:43:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1424571AbWKKMYH convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Sat, 11 Nov 2006 07:24:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1424573AbWKKMYH
- (ORCPT <rfc822;git-outgoing>); Sat, 11 Nov 2006 07:24:07 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:56329 "EHLO
- diana.vm.bytemark.co.uk") by vger.kernel.org with ESMTP id S1424571AbWKKMYF
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 11 Nov 2006 07:24:05 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1
- (Debian)) id 1Girtz-0003Ov-00; Sat, 11 Nov 2006 12:24:03 +0000
-To: Catalin Marinas <catalin.marinas@gmail.com>
+ S1424601AbWKKSnu (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 11 Nov 2006
+ 13:43:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1424602AbWKKSnt
+ (ORCPT <rfc822;git-outgoing>); Sat, 11 Nov 2006 13:43:49 -0500
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:6840 "EHLO
+ fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP id S1424601AbWKKSns
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 11 Nov 2006 13:43:48 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao10.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061111184348.MKVL5575.fed1rmmtao10.cox.net@fed1rmimpo02.cox.net>; Sat, 11
+ Nov 2006 13:43:48 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id lWjt1V00R1kojtg0000000; Sat, 11 Nov 2006
+ 13:43:54 -0500
+To: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-On 2006-11-07 19:09:06 +0000, Catalin Marinas wrote:
+"Nguyen Thai Ngoc Duy" <pclouds@gmail.com> writes:
 
-> I re-implemented parts of the mail and import commands (inspiring
-> from your patches). They now use the email Python package. The mail
-> command encodes the body to 7 or 8bit depending on non-ascii
-> characters. The headers are QP-encoded. The import command can
-> decode messages properly and can also handle multipart e-mails.
->
-> I still have to write a test script but my simple tests showed that
-> it works. Please let me know if there is anything wrong (especially
-> with the QP-encoding of the mail headers).
+> Hi,
+> I want to create "git-amend-commit" to be able to amend commits before
+> HEAD. So I need to check whether the commit I'm going to amend is
+> ascendent of HEAD. Is there any way to check that?
 
-One potentially hazardous thing: you encode the mail before letting
-the user edit it (with the -e and -E switches). This means that the
-user can insert non-ascii characters in the body after you've already
-decided it's safe to use 7bit encoding. It also means that the user
-must be careful to rfc2047-encode any changes to the Subject: and
-=46rom: headers.
+Ascendant is a word from astorology -- you mean ancestor ;-).
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
+"git-merge-base A B === A" when A is an ancestor of B.
+
+Provided if the history between A and B is linear, and you do
+not have trouble making your co-workers adjusting to your
+history change after A (including the cases where you do not
+have any co-workers or you have not made history between A and B
+public), you could do one of these three things:
+
+ - use "stg uncommit" until you pop A, make a change there and
+   "stg refresh", and then "stg push" everything back.
+
+ - "git format-patch A && git reset --hard A", edit the patches
+   and then "git am" them.
+
+ - "git tag -f Anchor && git reset --hard A", edit and "git
+   commit --amend".  Look at "git show-branch Anchor HEAD", and
+   repeatedly "git cherry-pick Anchor~$n" from older to newer
+   from Anchor, and then "git tag -d Anchor".
+
+
+
+
+
