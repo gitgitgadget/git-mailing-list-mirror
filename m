@@ -1,65 +1,83 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Non-ASCII paths and git-cvsserver
-Date: Mon, 13 Nov 2006 15:20:44 +0100
-Organization: At home
-Message-ID: <ej9utk$44p$1@sea.gmane.org>
-References: <45530CEE.6030008@b-i-t.de> <7vvelnjd4p.fsf@assigned-by-dhcp.cox.net> <45587A09.3020605@b-i-t.de>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: gitk feature request..
+Date: Sat, 11 Nov 2006 18:42:42 +0100
+Message-ID: <20061111174242.GB7201@pasky.or.cz>
+References: <452A37FB.60507@adelaide.edu.au> <17745.1213.22769.420355@cargo.ozlabs.ibm.com> <7vslgu28do.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-NNTP-Posting-Date: Mon, 13 Nov 2006 14:20:00 +0000 (UTC)
+NNTP-Posting-Date: Sat, 11 Nov 2006 17:43:25 +0000 (UTC)
+Cc: Paul Mackerras <paulus@samba.org>, git@vger.kernel.org,
+	Pierre Marc Dumuid <pierre.dumuid@adelaide.edu.au>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 15
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+Content-Disposition: inline
+In-Reply-To: <7vslgu28do.fsf@assigned-by-dhcp.cox.net>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31300>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31234>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gjcf9-0002Zi-EQ for gcvg-git@gmane.org; Mon, 13 Nov
- 2006 15:19:53 +0100
+ esmtp (Exim 4.43) id 1Giwst-0000s2-Q8 for gcvg-git@gmane.org; Sat, 11 Nov
+ 2006 18:43:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1754739AbWKMOTs (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 13 Nov 2006
- 09:19:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754745AbWKMOTs
- (ORCPT <rfc822;git-outgoing>); Mon, 13 Nov 2006 09:19:48 -0500
-Received: from main.gmane.org ([80.91.229.2]:46017 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S1754739AbWKMOTr (ORCPT
- <rfc822;git@vger.kernel.org>); Mon, 13 Nov 2006 09:19:47 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1Gjcf1-0002XW-IN for git@vger.kernel.org; Mon, 13 Nov 2006 15:19:43 +0100
-Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Mon, 13 Nov 2006 15:19:43 +0100
-Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Mon, 13 Nov 2006
- 15:19:43 +0100
-To: git@vger.kernel.org
+ S1424590AbWKKRmp (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 11 Nov 2006
+ 12:42:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1424592AbWKKRmp
+ (ORCPT <rfc822;git-outgoing>); Sat, 11 Nov 2006 12:42:45 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:3032 "EHLO machine.or.cz") by
+ vger.kernel.org with ESMTP id S1424590AbWKKRmo (ORCPT
+ <rfc822;git@vger.kernel.org>); Sat, 11 Nov 2006 12:42:44 -0500
+Received: (qmail 10149 invoked by uid 2001); 11 Nov 2006 18:42:42 +0100
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-sf wrote:
+On Tue, Nov 07, 2006 at 11:34:59PM CET, Junio C Hamano wrote:
+> Paul Mackerras <paulus@samba.org> writes:
+> 
+> > Good idea.  Junio, is there a canonical place under .git where gitk
+> > should put such things?
+> 
+> Well, we do not design things in advance but tend to let things
+> evolve, which probably is a bad habit but I am not sure how else
+> we can avoid overdesigning before knowing the needs.
+> 
+> The existing state-keeping programs seem to keep their stuff
+> immediately under $GIT_DIR.  Examples are:
+> 
+> 	.git/description (gitweb)
+>         .git/cvs-authors (cvsimport)
+>         .git/gitcvs.<branch>.sqlite (cvsserver)
+> 
+> So, .git/gitk-<foo> (or .git/gitk/<bar>) would be in line with
+> others.  We _might_ want to have a standard plan to keep
+> Porcelains stepping on each other's toes, and probably migrating
+> everybody to .git/aux/{common,gitcvs,gitk,...}/<foo> would be a
+> sane thing to do.  description and cvs-authors could probably be
+> shared across Porcelains, so I do not think we mind leaving them
+> in the current place or throw them in .git/aux/common/
 
-> Thanks, Junio. Paths with umlauts are returned correctly now both in 
-> UTF-8 and ISO-8859-1. I guess git-cvsserver is now as encoding agnostic 
-> as git core.
+I think the porcelains tend to use pretty specific names for their stuff
+and a risk of conflict is pretty small, so I don't think it's worth the
+compatibility problems. Also, over time it's bound that qgit will
+something like start to peek and poke at some gitk stuff and learn about
+CVS imports so it'll peek at gitcvs as well, etc., so I'm not sure if
+the net benefit would really be that large or rather give the porcelains
+a false illusion of safety and privacy.
 
-By the way, now that git has per user config file, ~/.gitconfig, perhaps
-it is time to add i18n.filesystemEncoding configuration variable, to
-automatically convert between filesystem encoding (somthing you usually
-don't have any control over) and UTF-8 encoding of paths in tree objects.
+Except for cg-merge which is quite a pig when it comes to its state and
+.git files; I guess it should use a .git/cg-merge-state/ directory
+instead. And the hooks space where cg sort of hoped that git would reuse
+its hooks names but it didn't play out.
+
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
-
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
+$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
