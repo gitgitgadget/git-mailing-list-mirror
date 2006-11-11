@@ -1,62 +1,86 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-svn bug?
-Date: Wed, 15 Nov 2006 13:43:30 -0800
-Message-ID: <7vejs4jshp.fsf@assigned-by-dhcp.cox.net>
-References: <op.ti2svo0ozidtg1@rygel.lnxi.com>
+From: Alexandre Julliard <julliard@winehq.org>
+Subject: Re: Shallow clone
+Date: Sat, 11 Nov 2006 14:57:23 +0100
+Message-ID: <87zmaynl18.fsf@wine.dyndns.org>
+References: <7v8ximwrm3.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0611072009220.2601@qynat.qvtvafvgr.pbz>
+	<45520872.3090506@gmail.com> <45521AE9.7050902@gmail.com>
+	<7vac31p8om.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 15 Nov 2006 21:43:54 +0000 (UTC)
-Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
+NNTP-Posting-Date: Sat, 11 Nov 2006 13:57:44 +0000 (UTC)
+Cc: "Aneesh Kumar K.V" <aneesh.kumar@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <op.ti2svo0ozidtg1@rygel.lnxi.com> (Troy Telford's message of
-	"Wed, 15 Nov 2006 14:05:37 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+In-Reply-To: <7vac31p8om.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's message of "Wed\, 08 Nov 2006 20\:04\:25 -0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.90 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31506>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31222>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GkSXu-0007a2-L0 for gcvg-git@gmane.org; Wed, 15 Nov
- 2006 22:43:51 +0100
+ esmtp (Exim 4.43) id 1GitMa-0000EJ-G7 for gcvg-git@gmane.org; Sat, 11 Nov
+ 2006 14:57:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1161748AbWKOVnr (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
- 16:43:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161749AbWKOVnr
- (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 16:43:47 -0500
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:25014 "EHLO
- fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP id S1161748AbWKOVnq
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 16:43:46 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao10.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061115214346.CAWP5575.fed1rmmtao10.cox.net@fed1rmimpo02.cox.net>; Wed, 15
- Nov 2006 16:43:46 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id n9js1V00E1kojtg0000000; Wed, 15 Nov 2006
- 16:43:52 -0500
-To: "Troy Telford" <ttelford.groups@gmail.com>
+ S1754838AbWKKN5h (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 11 Nov 2006
+ 08:57:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754837AbWKKN5h
+ (ORCPT <rfc822;git-outgoing>); Sat, 11 Nov 2006 08:57:37 -0500
+Received: from mail.codeweavers.com ([216.251.189.131]:12440 "EHLO
+ mail.codeweavers.com") by vger.kernel.org with ESMTP id S1754838AbWKKN5g
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 11 Nov 2006 08:57:36 -0500
+Received: from adsl-84-227-4-69.adslplus.ch ([84.227.4.69]
+ helo=wine.dyndns.org) by mail.codeweavers.com with esmtpsa
+ (TLS-1.0:DHE_RSA_AES_256_CBC_SHA:32) (Exim 4.50) id 1GitMM-0005uv-Hu; Sat, 11
+ Nov 2006 07:57:27 -0600
+Received: by wine.dyndns.org (Postfix, from userid 1000) id 3FE0910A151; Sat,
+ 11 Nov 2006 14:57:23 +0100 (CET)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-"Troy Telford" <ttelford.groups@gmail.com> writes:
+Junio C Hamano <junkio@cox.net> writes:
 
-> (using git 1.4.4, svn 1.3.1 on a SLES 10 box)
-> fatal: Not a valid object name 92e2e0c50bbbacb0a3426b2c0f8b3e043eb4830a~1
-> 32768 at /usr/lib/perl5/5.8.8/Memoize.pm line 269
->...
-> I couldn't find an object named
-> "92e2e0c50bbbacb0a3426b2c0f8b3e043eb4830a~1" in .git/
+> But it seems to need some more work.  I just tried to clone
+> git.git with --depth=1 and it cauterizes each branch with two
+> commits (I think that is what depth=1 means -- the latest and
+> one behind it), but it pulled almost the whole repository
+> anyway, and it turns out that "git log v1.4.3-rc1" gives me the
+> full history leading to it.
 
-Troy, do you have object 92e2e0c5?  Is it a root commit (i.e. a
-commit that does not have a parent)? 
+That's apparently because tags are not considered when truncating the
+commit list. The patch below fixes it, and fetches the right number of
+commits for each tag. However the correct fix is probably to not fetch
+historical tags at all.
 
-The only place that mentions ~1 in git-svn seems to be inside
-dcommit but it seems that it unconditionally appends ~1 to the
-rev.  I do not know how the code guarantees it does not go down
-to the root commit.
+There's also a problem with the packing, a clone --depth 1 currently
+results in a pack that's about 3 times as large as it should be.
 
-Eric, any clues?
+---
+diff --git a/shallow.c b/shallow.c
+index 58a7b20..2db1dc4 100644
+--- a/shallow.c
++++ b/shallow.c
+@@ -1,5 +1,6 @@
+ #include "cache.h"
+ #include "commit.h"
++#include "tag.h"
+ 
+ static int is_shallow = -1;
+ 
+@@ -54,7 +55,7 @@ struct commit_list *get_shallow_commits(
+ 		if (!commit) {
+ 			if (i < heads->nr) {
+ 				commit = (struct commit *)
+-					heads->objects[i++].item;
++					deref_tag(heads->objects[i++].item, NULL, 0);
+ 				if (commit->object.type != OBJ_COMMIT) {
+ 					commit = NULL;
+ 					continue;
+
+-- 
+Alexandre Julliard
