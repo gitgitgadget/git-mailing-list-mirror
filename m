@@ -2,60 +2,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Re: Moving a directory into another fails
-Date: Mon, 4 Dec 2006 20:03:46 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612042001320.28348@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <9e4733910607260800v618edf0em7b0f5c3332bf8fc5@mail.gmail.com>
- <20060726223459.GA30601@vsectoor.geht-ab-wie-schnitzel.de>
- <9e4733910607261603m6772602cr333d8c58f555edaa@mail.gmail.com>
- <20060728014350.GI13776@pasky.or.cz> <f3d7535d0612041019q4bda01a1k9938b056d51f8a78@mail.gmail.com>
- <el1qtr$bca$1@sea.gmane.org>
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: [PATCH] Adapt to fuse in kernel 2.6.17
+Date: Sun, 12 Nov 2006 19:45:19 +0100
+Message-ID: <20061112184519.8713.7707.stgit@lathund.dewire.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Mon, 4 Dec 2006 19:04:00 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Sun, 12 Nov 2006 18:45:50 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <el1qtr$bca$1@sea.gmane.org>
-X-Y-GMX-Trusted: 0
+X-Virus-Scanned: amavisd-new at localhost.localdomain
+User-Agent: StGIT/0.11
+X-Virus-Scanned: by amavisd-new at dewire.com
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33219>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GrJ6Z-0001wp-Dz for gcvg-git@gmane.org; Mon, 04 Dec
- 2006 20:03:55 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31269>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GjKKq-00037i-R0 for gcvg-git@gmane.org; Sun, 12 Nov
+ 2006 19:45:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S937294AbWLDTDw (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
- 14:03:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937295AbWLDTDw
- (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 14:03:52 -0500
-Received: from mail.gmx.net ([213.165.64.20]:39265 "HELO mail.gmx.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S937294AbWLDTDv
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006 14:03:51 -0500
-Received: (qmail invoked by alias); 04 Dec 2006 19:03:47 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp038) with SMTP; 04 Dec 2006 20:03:47 +0100
-To: Jakub Narebski <jnareb@gmail.com>
+ S1752629AbWKLSph (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 12 Nov 2006
+ 13:45:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752636AbWKLSph
+ (ORCPT <rfc822;git-outgoing>); Sun, 12 Nov 2006 13:45:37 -0500
+Received: from [83.140.172.130] ([83.140.172.130]:46122 "EHLO
+ torino.dewire.com") by vger.kernel.org with ESMTP id S1752629AbWKLSpg (ORCPT
+ <rfc822;git@vger.kernel.org>); Sun, 12 Nov 2006 13:45:36 -0500
+Received: from localhost (localhost [127.0.0.1]) by torino.dewire.com
+ (Postfix) with ESMTP id 0C95B802806 for <git@vger.kernel.org>; Sun, 12 Nov
+ 2006 19:42:07 +0100 (CET)
+Received: from torino.dewire.com ([127.0.0.1]) by localhost (torino
+ [127.0.0.1]) (amavisd-new, port 10024) with ESMTP id 06519-05 for
+ <git@vger.kernel.org>; Sun, 12 Nov 2006 19:42:06 +0100 (CET)
+Received: from lathund.dewire.com (unknown [10.9.0.2]) by torino.dewire.com
+ (Postfix) with ESMTP id A9584802803 for <git@vger.kernel.org>; Sun, 12 Nov
+ 2006 19:42:04 +0100 (CET)
+Received: from localhost (lathund.dewire.com [127.0.0.1]) by
+ lathund.dewire.com (Postfix) with ESMTP id 4546028FC9 for
+ <git@vger.kernel.org>; Sun, 12 Nov 2006 19:47:12 +0100 (CET)
+Received: from lathund.dewire.com ([127.0.0.1]) by localhost
+ (lathund.dewire.com [127.0.0.1]) (amavisd-new, port 10025) with LMTP id
+ 7iIfzAPp30S8 for <git@vger.kernel.org>; Sun, 12 Nov 2006 19:47:09 +0100 (CET)
+Received: from lathund.dewire.com (lathund.dewire.com [127.0.0.1]) by
+ lathund.dewire.com (Postfix) with ESMTP id A8DE628BC8 for
+ <git@vger.kernel.org>; Sun, 12 Nov 2006 19:47:09 +0100 (CET)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Hi,
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
 
-On Mon, 4 Dec 2006, Jakub Narebski wrote:
 
-> [...] git should acquire core.filesystemEncoding configuration variable 
-> which would encode from filesystem encoding used in working directory 
-> and perhaps index to UTF-8 encoding used in repository (in tree objects) 
-> and perhaps index.
+---
 
-So, you want to pull in all thinkable encodings? Of course, you could rely 
-on libiconv, adding yet another dependency to git. (Yes, I know, mailinfo 
-uses it already. But I never use mailinfo, so I do not need libiconv.)
+ Makefile   |    2 +-
+ api-fuse.c |    6 +++---
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-Ciao,
-Dscho
+diff --git a/Makefile b/Makefile
+index 8668a03..e80661f 100644
+--- a/Makefile
++++ b/Makefile
+@@ -5,7 +5,7 @@ GITCFLAGS = '-DSHA1_HEADER=<openssl/sha.
+ GITLDFLAGS = $(GITDIR)/libgit.a -lcrypto -lz
+ 
+ # What flags are required to build against FUSE
+-FUSECFLAGS = '-DFUSE_HEADER="/usr/src/linux-2.6.14.4/include/linux/fuse.h"'
++FUSECFLAGS = '-DFUSE_HEADER="/usr/src/linux-2.6.17-5mdv/include/linux/fuse.h"'
+ 
+ OBJS = gitobj.o api-fuse.o gnode.o topdir.o util.o tagdir.o autotree.o \
+        gitdir.o main.o worktree.o openfile.o gitworker.o rbtree.o pcbuf.o \
+diff --git a/api-fuse.c b/api-fuse.c
+index aba5088..28c5da0 100644
+--- a/api-fuse.c
++++ b/api-fuse.c
+@@ -146,7 +146,7 @@ struct fuse_out {
+ 		struct fuse_write_out write;
+ 		struct fuse_statfs_out statfs;
+ 		struct fuse_getxattr_out getxattr;
+-		struct fuse_init_in_out init;
++		struct fuse_init_in init;
+ 		char read[0];
+ 	} arg;
+ };
+@@ -307,7 +307,7 @@ struct fuse_in {
+ 			struct fuse_getxattr_in chdr;
+ 			char name[0];
+ 		} getxattr;
+-		struct fuse_init_in_out init;
++		struct fuse_init_in init;
+ 		/*
+ 		 * lookup, unlink, rmdir, and removexattr just take a
+ 		 * string; no per-command header.  symlink takes two
+@@ -980,7 +980,7 @@ enum service_result api_service_poll(voi
+ {
+ 	union {
+ 		struct fuse_in f;
+-		unsigned char storage[FUSE_MAX_IN];
++		unsigned char storage[FUSE_MIN_READ_BUFFER];
+ 	} in;
+ 	int rv = read(fuse_fd, in.storage, sizeof(in.storage));
