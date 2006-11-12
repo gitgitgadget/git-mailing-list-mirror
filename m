@@ -4,104 +4,58 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Whitcroft <apw@shadowen.org>
-Subject: Re: can I remove or move a tag in a remote repository?
-Date: Wed, 29 Nov 2006 11:47:55 +0000
-Message-ID: <456D736B.3040707@shadowen.org>
-References: <87wt5rffbm.fsf@rho.meyering.net>	<7virgz1bz7.fsf@assigned-by-dhcp.cox.net>	<Pine.LNX.4.63.0611291040590.30004@wbgn013.biozentrum.uni-wuerzburg.de> <87u00imsin.fsf@rho.meyering.net>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [PATCH] Adapt to fuse in kernel 2.6.17
+Date: Sun, 12 Nov 2006 21:01:28 +0100
+Organization: Dewire
+Message-ID: <200611122101.28910.robin.rosenberg.lists@dewire.com>
+References: <20061112184519.8713.7707.stgit@lathund.dewire.com> <200611121956.25481.robin.rosenberg.lists@dewire.com> <455776A7.6050707@garzik.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 29 Nov 2006 11:48:18 +0000 (UTC)
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Sun, 12 Nov 2006 20:00:14 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.7 (X11/20060927)
-In-Reply-To: <87u00imsin.fsf@rho.meyering.net>
-X-Enigmail-Version: 0.94.0.0
-OpenPGP: url=http://www.shadowen.org/~apw/public-key
+User-Agent: KMail/1.9.4
+In-Reply-To: <455776A7.6050707@garzik.org>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new at dewire.com
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32636>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31274>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GpNv0-0003Ql-8B for gcvg-git@gmane.org; Wed, 29 Nov
- 2006 12:48:02 +0100
+ esmtp (Exim 4.43) id 1GjLUr-0001dE-7z for gcvg-git@gmane.org; Sun, 12 Nov
+ 2006 21:00:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S966223AbWK2Lr7 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 29 Nov 2006
- 06:47:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966284AbWK2Lr7
- (ORCPT <rfc822;git-outgoing>); Wed, 29 Nov 2006 06:47:59 -0500
-Received: from hellhawk.shadowen.org ([80.68.90.175]:3088 "EHLO
- hellhawk.shadowen.org") by vger.kernel.org with ESMTP id S966223AbWK2Lr7
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 29 Nov 2006 06:47:59 -0500
-Received: from localhost ([127.0.0.1]) by hellhawk.shadowen.org with esmtp
- (Exim 4.50) id 1GpNu9-0006g6-Of; Wed, 29 Nov 2006 11:47:09 +0000
-To: Jim Meyering <jim@meyering.net>
+ S1753013AbWKLT7y convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Sun, 12 Nov 2006 14:59:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753017AbWKLT7y
+ (ORCPT <rfc822;git-outgoing>); Sun, 12 Nov 2006 14:59:54 -0500
+Received: from [83.140.172.130] ([83.140.172.130]:10540 "EHLO
+ torino.dewire.com") by vger.kernel.org with ESMTP id S1753003AbWKLT7y convert
+ rfc822-to-8bit (ORCPT <rfc822;git@vger.kernel.org>); Sun, 12 Nov 2006
+ 14:59:54 -0500
+Received: from localhost (localhost [127.0.0.1]) by torino.dewire.com
+ (Postfix) with ESMTP id 85CA5802806; Sun, 12 Nov 2006 20:56:24 +0100 (CET)
+Received: from torino.dewire.com ([127.0.0.1]) by localhost (torino
+ [127.0.0.1]) (amavisd-new, port 10024) with ESMTP id 07086-06; Sun, 12 Nov
+ 2006 20:56:24 +0100 (CET)
+Received: from [10.9.0.2] (unknown [10.9.0.2]) by torino.dewire.com (Postfix)
+ with ESMTP id 44A9E800784; Sun, 12 Nov 2006 20:56:22 +0100 (CET)
+To: Jeff Garzik <jeff@garzik.org>
 Sender: git-owner@vger.kernel.org
 
-Jim Meyering wrote:
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
->> On Tue, 28 Nov 2006, Junio C Hamano wrote:
-> ...
->>> I think this is due to overeager receive.denyNonFastForwards
->>> configuration setting at the repository you are pushing into.
-> 
-> Junio, thank you for following up on this!
-> 
->>> I _think_ what receive-pack does in this case is totally wrong.
->>> It should either:
->>>
->>>  (1) deny overwriting existing tags -- tags are meant to be
->>>      immutable so it should not allow them to be "updated"
->>>      regardless of fast-forwardness, or
->>>
->>>  (2) allow overwriting things under refs/tags/ without any
->>>      fast-forward checking.  After all, a tag could point at a
->>>      tree or a blob, and there is no fast-forwardness among
->>>      trees.
->>>
->>> The client side check in "git fetch" takes the latter viewpoint,
->>> and I think we should be consistent with it.
-> 
->>> Johannes, what do you think?  Does the following patch look sane
->>> to you?
->> It does if you agree that (2) is correct.
->>
->> But I don't agree. cvs-head really should be a head IMHO, not a tag,
->> because cvs-head really tracks a branch.
->>
->> I also think that git-fetch silently updating tags is wrong. Rather, it
->> should warn that the tags are different. But I've been wrong before.
-> 
-> AFAIK, no one wants git-fetch to update tags _silently_.
-> I expected it give a diagnostic and fail by default -- and it already
-> does that.  Pushing moved tags is serious business.  I was hoping to be
-> able to use --force to override that fail-safe.
-> 
-> My goal is to maintain a symbolic reference "cvs-head" that points
-> to the newest git trunk node that's been mirrored to a CVS repository.
-> Without even considering any other option, I chose to use a lightweight
-> tag for that purpose, since I have a conceptual view that it's a label I
-> can move from one referent to another.  It strikes me as counter-intuitive
-> to use a temporary git "branch" that way.  Would that even work, removing
-> it and recreating it all the time?  Hmm.. or maybe you mean to create the
-> branch once and then to merge from the trunk repeatedly.  That seems
-> like unnecessary work, when all I want is a movable label.
+s=C3=B6ndag 12 november 2006 20:31 skrev Jeff Garzik:
+> Robin Rosenberg wrote:
+> > This was a patch to GITFS, which may be somewhat unclear from the S=
+ubject
+> > line :)
+>
+> I blinked, and I missed it.  Where can I find gitfs?  I've long thoug=
+ht
+> about doing something like that myself.
 
-Well remember that all heads are simply references into the DAG, they
-are all labels.  'heads' you are allowed to move and change, commit to
-etc, but they are still just name -> sha1 mechanisms.
-
-If the merge is a ff then there is no work.  You could always use
-'reset' instead to move the branch to the right place in the DAG.
-
-> 
-> I admit that I like the idea of release tags being immutable, but even
-> there, it's happened that I've made-but-not-published a release, then
-> realized that it wasn't quite complete.  I was glad to be able to go
-> back and re-tag after making corrections.
-> 
-> I wouldn't mind having a way to specify that a pushed tag is *not*
-> immutable, with the default being it is immutable.
+It's listed on the wiki and located at=20
+http://www.sfgoth.com/~mitch/linux/gitfs/
 
