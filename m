@@ -1,81 +1,60 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Sergey Vlasov <vsu@altlinux.ru>
-Subject: [PATCH 2/2] git-send-email: Read the default SMTP server from the GIT config file
-Date: Sun, 29 Oct 2006 22:31:39 +0300
-Message-ID: <11621503001930-git-send-email-vsu@altlinux.ru>
-References: <11621502993406-git-send-email-vsu@altlinux.ru>
-NNTP-Posting-Date: Sun, 29 Oct 2006 19:32:07 +0000 (UTC)
-Cc: Ryan Anderson <rda@google.com>, git@vger.kernel.org,
-	Sergey Vlasov <vsu@altlinux.ru>
+From: Junio C Hamano <junkio@cox.net>
+Subject: gitweb some known issues
+Date: Sat, 11 Nov 2006 22:28:44 -0800
+Message-ID: <7virhlgov7.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Sun, 12 Nov 2006 06:29:23 +0000 (UTC)
+Cc: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>,
+	Luben Tuikov <ltuikov@yahoo.com>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Mailer: git-send-email 1.4.3.3.ge502
-In-Reply-To: <11621502993406-git-send-email-vsu@altlinux.ru>
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30442>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31257>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GeGNo-00006V-Qk for gcvg-git@gmane.org; Sun, 29 Oct
- 2006 20:31:49 +0100
+ esmtp (Exim 4.43) id 1Gj8q9-0000rw-4l for gcvg-git@gmane.org; Sun, 12 Nov
+ 2006 07:29:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S965349AbWJ2Tbo (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 29 Oct 2006
- 14:31:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965352AbWJ2Tbn
- (ORCPT <rfc822;git-outgoing>); Sun, 29 Oct 2006 14:31:43 -0500
-Received: from master.altlinux.org ([62.118.250.235]:30993 "EHLO
- master.altlinux.org") by vger.kernel.org with ESMTP id S965349AbWJ2Tbn (ORCPT
- <rfc822;git@vger.kernel.org>); Sun, 29 Oct 2006 14:31:43 -0500
-Received: by master.altlinux.org (Postfix, from userid 584) id 107DDE3A65;
- Sun, 29 Oct 2006 22:31:42 +0300 (MSK)
-To: Junio C Hamano <junkio@cox.net>
+ S1754987AbWKLG2q (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 12 Nov 2006
+ 01:28:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754989AbWKLG2q
+ (ORCPT <rfc822;git-outgoing>); Sun, 12 Nov 2006 01:28:46 -0500
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:7152 "EHLO
+ fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP id S1754987AbWKLG2p
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 12 Nov 2006 01:28:45 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao07.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061112062845.BRWX27894.fed1rmmtao07.cox.net@fed1rmimpo01.cox.net>; Sun, 12
+ Nov 2006 01:28:45 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id liUK1V00E1kojtg0000000; Sun, 12 Nov 2006
+ 01:28:20 -0500
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Make the default value for --smtp-server configurable through the
-'sendemail.smtpserver' option in .git/config (or $HOME/.gitconfig).
+Visit git.git gitweb page (http://repo.or.cz/w/git.git would
+work fine if git.kernel.org is too busy), and click on "GIT 1.4.4-rc1"
+to view the tag (not the commit).
 
-Signed-off-by: Sergey Vlasov <vsu@altlinux.ru>
----
- Documentation/git-send-email.txt |    8 +++++---
- git-send-email.perl              |    3 +++
- 2 files changed, 8 insertions(+), 3 deletions(-)
+The navigation bar has commit/commitdiff/tree with explicit h
+and hb object names that point at 'master', which feels wrong.
+When the tag that is displayed points at a commit, perhaps we
+would want to use that commit for commit and commitdiff?  When
+the tag does not point at a commit (which is admittably very
+rare), probably not showing these links is the right thing to do
+(if tag points at tree it might make sense to give tree,
+though).
 
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index ec0e201..4c8d907 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -68,9 +68,11 @@ The options available are:
- --smtp-server::
- 	If set, specifies the outgoing SMTP server to use.  A full
- 	pathname of a sendmail-like program can be specified instead;
--	the program must support the `-i` option.  Defaults to
--	`/usr/sbin/sendmail` or `/usr/lib/sendmail` if such program is
--	available, or to `localhost` otherwise.
-+	the program must support the `-i` option.  Default value can
-+	be specified by the 'sendemail.smtpserver' configuration
-+	option; the built-in default is `/usr/sbin/sendmail` or
-+	`/usr/lib/sendmail` if such program is available, or
-+	`localhost` otherwise.
- 
- --subject::
-    	Specify the initial subject of the email thread.
-diff --git a/git-send-email.perl b/git-send-email.perl
-index c42dc3b..4c87c20 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -231,6 +231,9 @@ if (!defined $initial_reply_to && $promp
- }
- 
- if (!$smtp_server) {
-+	$smtp_server = $repo->config('sendemail.smtpserver');
-+}
-+if (!$smtp_server) {
- 	foreach (qw( /usr/sbin/sendmail /usr/lib/sendmail )) {
- 		if (-x $_) {
- 			$smtp_server = $_;
--- 
-1.4.3.3.ge502
+Also shortlog/log links do not say where to begin the log with,
+which means start digging from HEAD.  When we display a commit
+or commitdiff, we seem to give a link to start log at that
+commit, so doing the same as above for shortlog/log may make
+them more consistent.
