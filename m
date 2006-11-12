@@ -1,64 +1,62 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-2.5 required=3.0 tests=BAYES_00,DKIM_ADSP_NXDOMAIN,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
-From: Pazu <pazu@pazu.com.br>
-Subject: Re: [PATCH 1.2/2 (fixed)] git-svn: fix output reporting from the delta fetcher
-Date: Tue, 28 Nov 2006 18:47:50 -0200
-Message-ID: <9e7ab7380611281247h723a16fapc5a9898e8a4c7e1f@mail.gmail.com>
-References: <loom.20061124T143148-286@post.gmane.org>
-	 <20061128054448.GA396@soma> <20061128102958.GA5207@soma>
-	 <20061128105017.GA20366@soma>
-	 <9e7ab7380611280445r4ebe344cw69cbc18a74c6122f@mail.gmail.com>
-	 <9e7ab7380611280732k4e940380tbf2a96146807d671@mail.gmail.com>
-	 <m2bqmr1rnw.fsf@ziti.fhcrc.org> <20061128201605.GA1369@localdomain>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Shallow clone
+Date: Sun, 12 Nov 2006 12:04:42 -0800
+Message-ID: <7vodrcctyd.fsf@assigned-by-dhcp.cox.net>
+References: <7v8ximwrm3.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0611072009220.2601@qynat.qvtvafvgr.pbz>
+	<45520872.3090506@gmail.com> <45521AE9.7050902@gmail.com>
+	<20061112131209.GC7201@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Tue, 28 Nov 2006 20:48:17 +0000 (UTC)
-Cc: "Seth Falcon" <sethfalcon@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Sun, 12 Nov 2006 20:04:54 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=nOlBFTpKIaEwII2Kn4KTVzRcbAVl3AgoUsfm/sSxxo40S+d97FEuEAt+SnPDG6qqYICAbiHhzz+IS69EZlymg0d9SPDKOg0XPAYVtR/PvOfeIkWwUOsCSVQ8v/Z4YL79wSDtoRFl6Saq7+yDHSkTzLCaWpNfkue7yzJtXRxvQW4=
-In-Reply-To: <20061128201605.GA1369@localdomain>
-Content-Disposition: inline
-X-Google-Sender-Auth: d7888054b8faefa9
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32576>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31275>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gp9rw-0001Lw-Dl for gcvg-git@gmane.org; Tue, 28 Nov
- 2006 21:47:57 +0100
+ esmtp (Exim 4.43) id 1GjLZR-0002iq-4r for gcvg-git@gmane.org; Sun, 12 Nov
+ 2006 21:04:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1755296AbWK1Urw (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 28 Nov 2006
- 15:47:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755467AbWK1Urw
- (ORCPT <rfc822;git-outgoing>); Tue, 28 Nov 2006 15:47:52 -0500
-Received: from nf-out-0910.google.com ([64.233.182.187]:723 "EHLO
- nf-out-0910.google.com") by vger.kernel.org with ESMTP id S1755296AbWK1Urw
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2006 15:47:52 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so2686644nfa for
- <git@vger.kernel.org>; Tue, 28 Nov 2006 12:47:50 -0800 (PST)
-Received: by 10.49.107.3 with SMTP id j3mr13040623nfm.1164746870185; Tue, 28
- Nov 2006 12:47:50 -0800 (PST)
-Received: by 10.48.216.6 with HTTP; Tue, 28 Nov 2006 12:47:50 -0800 (PST)
-To: "Eric Wong" <normalperson@yhbt.net>
+ S1753022AbWKLUEo (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 12 Nov 2006
+ 15:04:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753025AbWKLUEo
+ (ORCPT <rfc822;git-outgoing>); Sun, 12 Nov 2006 15:04:44 -0500
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:25787 "EHLO
+ fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP id S1753034AbWKLUEn
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 12 Nov 2006 15:04:43 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao02.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061112200443.YXDV97.fed1rmmtao02.cox.net@fed1rmimpo01.cox.net>; Sun, 12
+ Nov 2006 15:04:43 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id lw4J1V0011kojtg0000000; Sun, 12 Nov 2006
+ 15:04:18 -0500
+To: Petr Baudis <pasky@suse.cz>
 Sender: git-owner@vger.kernel.org
 
-On 11/28/06, Eric Wong <normalperson@yhbt.net> wrote:
+Petr Baudis <pasky@suse.cz> writes:
 
-> Git itself cannot easily track empty directories (at least as far as
-> update-index and checkout) goes.
-> [...]
-> Is that something the git community wants?
+> On Wed, Nov 08, 2006 at 06:59:05PM CET, Aneesh Kumar K.V wrote:
+>> diff --git a/Documentation/repository-layout.txt b/Documentation/repository-layout.txt
+>> index 275d18b..03a6f77 100644
+>> --- a/Documentation/repository-layout.txt
+>> +++ b/Documentation/repository-layout.txt
+>> @@ -141,3 +141,9 @@ logs/refs/heads/`name`::
+>>  
+>>  logs/refs/tags/`name`::
+>>  	Records all changes made to the tag named `name`.
+>> +
+>> +shallow::
+>
+> Hmm, shouldn't the shallow file rather belong to the info/ subdirectory?
 
-No, I guess not. I detailed the real problem in my previous message,
-and it had nothing to do with empty directories, but with git-svn
-recording broken revisions from svn. Did you get it, or Trogdor ate my
-email?
-
+I think that makes sense.
