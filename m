@@ -4,90 +4,79 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Make cvsexportcommit work with filenames with spaces and non-ascii characters.
-Date: Sat, 09 Dec 2006 17:18:48 -0800
-Message-ID: <7v3b7o8s5j.fsf@assigned-by-dhcp.cox.net>
-References: <20061209232919.31863.58547.stgit@lathund.dewire.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: StGIT repository not clonable?
+Date: Sun, 12 Nov 2006 16:36:40 +0100
+Message-ID: <20061112153640.GD7201@pasky.or.cz>
+References: <200611110359.kAB3ul02013227@laptop13.inf.utfsm.cl> <20061111123634.GD11224@diana.vm.bytemark.co.uk> <b0943d9e0611111359t994d688w9bc6aae8e9183fd3@mail.gmail.com> <ej5jt1$9tf$1@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sun, 10 Dec 2006 01:19:00 +0000 (UTC)
-Cc: git@vger.kernel.org
+NNTP-Posting-Date: Sun, 12 Nov 2006 15:37:02 +0000 (UTC)
+Cc: git@vger.kernel.org, catalin.marinas@gmail.com
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061209232919.31863.58547.stgit@lathund.dewire.com> (Robin
-	Rosenberg's message of "Sun, 10 Dec 2006 00:29:19 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Content-Disposition: inline
+In-Reply-To: <ej5jt1$9tf$1@sea.gmane.org>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33861>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GtDLA-0008CZ-Rb for gcvg-git@gmane.org; Sun, 10 Dec
- 2006 02:18:53 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31261>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GjHO8-00011K-GL for gcvg-git@gmane.org; Sun, 12 Nov
+ 2006 16:36:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1758877AbWLJBSu (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 9 Dec 2006
- 20:18:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758882AbWLJBSu
- (ORCPT <rfc822;git-outgoing>); Sat, 9 Dec 2006 20:18:50 -0500
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:64592 "EHLO
- fed1rmmtao07.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1758877AbWLJBSt (ORCPT <rfc822;git@vger.kernel.org>); Sat, 9 Dec 2006
- 20:18:49 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao07.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061210011848.HHWY22053.fed1rmmtao07.cox.net@fed1rmimpo02.cox.net>; Sat, 9
- Dec 2006 20:18:48 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id wpJz1V00J1kojtg0000000; Sat, 09 Dec 2006
- 20:18:59 -0500
-To: Robin Rosenberg <robin.rosenberg@dewire.com>
+ S932928AbWKLPgn (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 12 Nov 2006
+ 10:36:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932931AbWKLPgn
+ (ORCPT <rfc822;git-outgoing>); Sun, 12 Nov 2006 10:36:43 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:13448 "EHLO machine.or.cz") by
+ vger.kernel.org with ESMTP id S932928AbWKLPgm (ORCPT
+ <rfc822;git@vger.kernel.org>); Sun, 12 Nov 2006 10:36:42 -0500
+Received: (qmail 12800 invoked by uid 2001); 12 Nov 2006 16:36:40 +0100
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Robin Rosenberg <robin.rosenberg@dewire.com> writes:
+On Sat, Nov 11, 2006 at 11:48:04PM CET, Jakub Narebski wrote:
+> Catalin Marinas wrote:
+> 
+> > IIRC, there was some advise in some GIT document
+> > or e-mail saying that you shouldn't pack if the export is over a dumb
+> > protocol. That's good for people pulling regularly but bad for
+> > cloning.
+> 
+> By the way, does dumb protocols download _whole_ packs only? Or do they
+> download parts of packs (curl can do that, I think)?
 
-> This patch uses git-apply to do the patching which simplifies the code a lot.
->
-> Removed the test for checking for matching binary files when deleting them
-> since git-apply happily deletes the file. This is matter of taste since we
-> allow some fuzz for text patches also.
->
-> Error handling was cleaned up, but not much tested.
+curl can, but it might very easily get even much more expensive than
+downloading the whole patch unless your latency is very small and
+bandwidth very tight, which would be quite a unusual situation.
 
-Interesting.
+It's true that repacking can hurt dumb protocols - if you repack often,
+dumb clients will have to re-fetch the single whole patck with all the
+stuff they already have plus the few additional objects they are
+missing.
 
-I think you should be able to generate the patchfile once, and
-use git-apply to figure out additions, deletions and binaryness,
-and then use the same patchfile to apply the changes.  Currently
-checking for binaryness is not easy with git-apply, so we would
-want to fix git-apply first, instead of forcing you to have a
-change like this:
+But at least packing once can be a huge improvement and won't hurt the
+dumb clients since their problem is with incremental fetches.
+Furthermore, if you do just repack, not repack -a, the cost for dumb
+protocols is quite small (though it's not optimal packing strategy):
 
-   # the --binary format is harder to grok for names of binary
-   # files so we execute a new diff
-   # if it looks like binary files exists to find out
-   if (grep /^GIT binary patch$/, @diff) {
-       @binfiles = grep m/^Binary files/,
-       safe_pipe_capture('git-diff-tree', '-p', $parent, $commit);
+It is not unlikely at all that if you have set of unpacked objects A,
+client fetches that, then you create set of objects B and then repack,
+creating pack(A \cup B), this pack will still be much smaller than the
+set of objects B (even if |A| >> |B|) so it's more beneficial even for
+the dumb clients to refetch the A objects contained in the pack, instead
+of fetching just the unpacked B objects.
 
-which is way too ugly.
+By the way, in case of glibc-cvs the pack sice is 104M, and after
+importing new CVS changes after few days, the repository size doubled to
+200M.  git-repack -a -d brought that _back_ to 104M!
 
-	... goes to look and comes back, with a big grin ...
+Packs are a funny thing.
 
-Well, have you tried this?
-
-	git diff-tree -p --binary fe142b3a | git apply --summary --numstat
-
-The numstat part would let you see the binaryness, so we do not
-have to "fix" git-apply.
-
-Another thing that _might_ be interesting is to use rename
-detection when preparing the patch, and make the matching rename
-on the CVS side, but I do not recall the details of how one
-would make CVS pretend to support renamed paths ;-).  I think it
-involved copying the ,v file to a new name, and marking the
-older revisions in that new ,v file as nonexistent or something
-like that, but I did it only in my distant past and forgot the
-details.
-
-By the way, I am not sure if giving fuzz by default is such a
-good idea, though.
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
+$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
