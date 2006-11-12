@@ -1,144 +1,70 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] xdiff: add xdl_merge() (was: (unknown))
-Date: Wed, 22 Nov 2006 10:29:55 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0611221005470.30004@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0611212316080.26827@wbgn013.biozentrum.uni-wuerzburg.de>
- <ek0170$h53$1@sea.gmane.org>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: "Anand Kumria" <wildfire@progsoc.org>
+Subject: when is a remote a branch?
+Date: Sun, 12 Nov 2006 15:50:02 +0000 (UTC)
+Message-ID: <ej7fra$8ca$2@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="-1148973799-1598645148-1164187795=:30004"
-NNTP-Posting-Date: Wed, 22 Nov 2006 09:30:25 +0000 (UTC)
-Cc: Davide Libenzi <davidel@xmailserver.org>, git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Sun, 12 Nov 2006 15:50:30 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <ek0170$h53$1@sea.gmane.org>
-X-Y-GMX-Trusted: 0
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 21
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: backup.global.cn
+User-Agent: pan 0.117 (We'll fly and we'll fall and we'll burn)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32074>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31263>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GmoQo-0000PL-IV for gcvg-git@gmane.org; Wed, 22 Nov
- 2006 10:30:14 +0100
+ esmtp (Exim 4.43) id 1GjHbF-0003u8-ES for gcvg-git@gmane.org; Sun, 12 Nov
+ 2006 16:50:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1755563AbWKVJaB (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 22 Nov 2006
- 04:30:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755573AbWKVJaB
- (ORCPT <rfc822;git-outgoing>); Wed, 22 Nov 2006 04:30:01 -0500
-Received: from mail.gmx.de ([213.165.64.20]:19591 "HELO mail.gmx.net") by
- vger.kernel.org with SMTP id S1755563AbWKVJaA (ORCPT
- <rfc822;git@vger.kernel.org>); Wed, 22 Nov 2006 04:30:00 -0500
-Received: (qmail invoked by alias); 22 Nov 2006 09:29:59 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp032) with SMTP; 22 Nov 2006 10:29:59 +0100
-To: Jakub Narebski <jnareb@gmail.com>
+ S932939AbWKLPuU convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Sun, 12 Nov 2006 10:50:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932940AbWKLPuU
+ (ORCPT <rfc822;git-outgoing>); Sun, 12 Nov 2006 10:50:20 -0500
+Received: from main.gmane.org ([80.91.229.2]:54218 "EHLO ciao.gmane.org") by
+ vger.kernel.org with ESMTP id S932939AbWKLPuS (ORCPT
+ <rfc822;git@vger.kernel.org>); Sun, 12 Nov 2006 10:50:18 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1GjHax-0003pY-C8 for git@vger.kernel.org; Sun, 12 Nov 2006 16:50:07 +0100
+Received: from backup.global.cn ([195.224.169.69]) by main.gmane.org with
+ esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>;
+ Sun, 12 Nov 2006 16:50:07 +0100
+Received: from wildfire by backup.global.cn with local (Gmexim 0.1 (Debian))
+ id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Sun, 12 Nov 2006 16:50:07
+ +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
-
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
----1148973799-1598645148-1164187795=:30004
-Content-Type: TEXT/PLAIN; charset=iso-8859-1
-Content-Transfer-Encoding: 8BIT
 
 Hi,
 
-On Wed, 22 Nov 2006, Jakub Narebski wrote:
+I generally tend to use cogito -- it does all the heavy lifting, like
+recovering from interrupted fetchs (usually) for me.  One thing I haven=
+'t
+really gotten my head around is the difference between a branch and a
+remote.
 
-> Johannes Schindelin wrote:
-> 
-> > [PATCH] xdiff: add xdl_merge()
-> 
-> Shouldn't this be in the subject of message?
+git-branch knows of 'remotes' (via the -r parameter) and these to be
+unrelated to what cogito thinks remotes are (it seems to look for thing=
+s
+in .git/refs/head/<name> and then a corresponding .git/branches/<name>/
+which it then declares a remote).
 
-Did I mention that I was tired and hungry?
+Yet, git-init-db creates both .git/remotes and .git/branches
 
-> > This new function implements the functionality of RCS merge, but 
-> > in-memory. It returns < 0 on error, otherwise the number of conflicts.
-> 
-> Only RCS merge, or can you implement whole diff3 (from GNU diffutils) 
-> functionality with that?
+What is the difference between the two. From my (na=C3=AFve) perspectiv=
+e the
+two tools (git and cogito) regarded them very differently.
 
-As I am interested only in the in-memory merge, only RCS merge. Which 
-feature would you be interested in? An ed script? :-)
+Any explanation, or pointer to some documentation, would be helpful.
 
-> > Finding the conflicting lines can be a very expensive task. You can
-> > control the eagerness of this algorithm:
-> > 
-> > - a level value of 0 means that all overlapping changes are treated
-> >   as conflicts,
-> > - a value of 1 means that if the overlapping changes are identical,
-> >   it is not treated as a conflict.
-> > - If you set level to 2, overlapping changes will be analyzed, so that
-> >   almost identical changes will not result in huge conflicts. Rather,
-> >   only the conflicting lines will be shown inside conflict markers.
-> > 
-> > With each increasing level, the algorithm gets slower, but more accurate.
-> > Note that the code for level 2 depends on the simple definition of
-> > mmfile_t specific to git, and therefore it will be harder to port that
-> > to LibXDiff.
-> 
-> How it compares performance with RCS merge/GNU diff3?
-
-Speedwise, I have no clue. It was enough work for a day.
-
-Accuracywise: often I sent a patch (series) which was in my current git 
-tree (no topic branch), and Junio did some minor adjustments. I _hated_ 
-the fact that RCS merge marked _all_ overlapping changes as conflicts, 
-even when there was just a minor correction here and there. And "git diff 
---ours" does not help at all.
-
-Here is where my implementation should help. With level 2, it will look 
-again at these conflicting regions, and only output the actual differences 
-as conflicts.
-
-> It is really nice to have that. Bram Cohen (of Codeville, SCM built around
-> sophisticated merge algorithm) wrote about recursive three-way merge in
-> http://revctrl.org/CrissCrossMerge
-> 
->    Recursive three-way merge _usually_ provides the right answer, however
->    there are some edge cases. For example, conflict markers can be matched
->    incorrectly, because they aren't given any special semantic meaning for
->    the merge algorithm, and are simply treated as lines. In particular,
->    there are (somewhat complicated) cases where the conflict markers of two
->    unrelated conflicts get matched against each other, even though the
->    content sections of them are totally unrelated.
-> 
-> I'm not sure if he has specific examples, or is it just theoretical talk,
-> but having built-in merge would certainly help revursive merge strategy
-> (and perhaps also git-rerere).
-
-It should be easy to construct such an example. However, the relevance in 
-practice is about zero.
-
-Git was built from the beginning to aim to do a merge as good as possible, 
-but not perfect. There is no such thing as a perfect merge algorithm. You 
-will always be able to construct cases which are mismerged.
-
-Thus, git takes the pragmatic approach and stops "early": merges work in 
-99% of the time, and in 99% of the remaining 1% the merge will fail so 
-that you know you have to fix it manually. (Take these numbers with a 
-grain of salt, please.) The advantage of stopping there is that we can 
-make it really fast.
-
-You could probably raise the 99% to 99.5%, by implementing a "rebasing 
-merge", i.e. cherry-picking the branch-to-be-merged committing only in the 
-end (if there has not been any conflict). Obviously, this is slow as 
-Parnell's pitch[1].
-
-As for git-rerere: I could not use it everywhere, because of some Perl 
-dependencies which I could not compile on some platforms. However, IMHO 
-git-rerere does not necessarily depend on merge being available in libgit.
-
-Ciao,
-Dscho
-
-Footnote 1: http://www.physics.uq.edu.au/pitchdrop/pitchdrop.shtml
-
+Thanks,
+Anand
