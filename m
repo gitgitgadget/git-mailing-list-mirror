@@ -4,66 +4,49 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Introduce git-mirror, a tool for exactly mirroring another repository.
-Date: Wed, 01 Nov 2006 08:15:53 -0800
-Message-ID: <7vodrr2ldy.fsf@assigned-by-dhcp.cox.net>
-References: <20060925044641.GB15757@spearce.org>
-	<20061031174225.3c7c1e77.vsu@altlinux.ru>
-	<7vac3covlf.fsf@assigned-by-dhcp.cox.net> <ei8s19$e04$1@sea.gmane.org>
-	<20061101151859.0e984d3f.vsu@altlinux.ru>
+From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
+Subject: [StGIT PATCH 0/2] mail and import tests
+Date: Sun, 12 Nov 2006 22:14:34 +0100
+Message-ID: <20061112211434.19362.66077.stgit@localhost>
+References: <b0943d9e0611080212q35dae8d0w2642ed1d0189f8fe@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 1 Nov 2006 16:16:46 +0000 (UTC)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Sun, 12 Nov 2006 21:16:03 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061101151859.0e984d3f.vsu@altlinux.ru> (Sergey Vlasov's
-	message of "Wed, 1 Nov 2006 15:18:59 +0300")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+In-Reply-To: <b0943d9e0611080212q35dae8d0w2642ed1d0189f8fe@mail.gmail.com>
+User-Agent: StGIT/0.11
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30646>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31276>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GfIkw-000706-9x for gcvg-git@gmane.org; Wed, 01 Nov
- 2006 17:15:58 +0100
+ esmtp (Exim 4.43) id 1GjMgK-0007g7-SL for gcvg-git@gmane.org; Sun, 12 Nov
+ 2006 22:16:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1946919AbWKAQPz (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 1 Nov 2006
- 11:15:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946920AbWKAQPz
- (ORCPT <rfc822;git-outgoing>); Wed, 1 Nov 2006 11:15:55 -0500
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:42135 "EHLO
- fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP id S1946919AbWKAQPy
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 1 Nov 2006 11:15:54 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao10.cox.net
- (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
- <20061101161554.TVYI18985.fed1rmmtao10.cox.net@fed1rmimpo02.cox.net>; Wed, 1
- Nov 2006 11:15:54 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id hUFy1V00B1kojtg0000000 Wed, 01 Nov 2006
- 11:15:58 -0500
-To: Sergey Vlasov <vsu@altlinux.ru>
+ S1753140AbWKLVPu convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Sun, 12 Nov 2006 16:15:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753190AbWKLVPu
+ (ORCPT <rfc822;git-outgoing>); Sun, 12 Nov 2006 16:15:50 -0500
+Received: from mxfep03.bredband.com ([195.54.107.76]:5833 "EHLO
+ mxfep03.bredband.com") by vger.kernel.org with ESMTP id S1753140AbWKLVPt
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 12 Nov 2006 16:15:49 -0500
+Received: from ironport.bredband.com ([195.54.107.82] [195.54.107.82]) by
+ mxfep03.bredband.com with ESMTP id
+ <20061112211547.KXSH25623.mxfep03.bredband.com@ironport.bredband.com> for
+ <git@vger.kernel.org>; Sun, 12 Nov 2006 22:15:47 +0100
+Received: from ua-83-227-180-148.cust.bredbandsbolaget.se (HELO
+ yoghurt.hemma.treskal.com) ([83.227.180.148]) by ironport.bredband.com with
+ ESMTP; 12 Nov 2006 22:15:47 +0100
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by
+ yoghurt.hemma.treskal.com (Postfix) with ESMTP id A18AF4CC24; Sun, 12 Nov
+ 2006 22:15:46 +0100 (CET)
+To: Catalin Marinas <catalin.marinas@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Sergey Vlasov <vsu@altlinux.ru> writes:
+Tests for "stg import" and "stg mail". The later test is not very
+ambitious, but it can always be extended later.
 
-> What name format should be used for such saved refs?  refs/old/`date -I`
-> is not unique enough; probably `date --utc +%Y.%m.%d-%H.%M.%S`?  And it
-> would be good if multiple refs which were deleted or modified in a
-> non-fast-forward way during a single operation (like git-mirror) would
-> be saved together - which may be tricky if they are saved at the lower
-> level (in update-ref).
->
-> Adding the fast-forward check into update-ref also does not look nice,
-> but this check is required for full safety.
-
-I wasn't going to suggest doing the check or even naming at such
-a low level.  From the usability point of view, the caller
-should decide if the discarded refs are even saved at all, and
-if so in which namespace.  That way commit_lock_file() can just
-notice the old version of the locked file (it is always sitting
-next to it) and hardlink the discarded one to the purgatory
-before renaming the newly created .lock file there.
-
-
-
+--=20
+Karl Hasselstr=C3=B6m, kha@treskal.com
