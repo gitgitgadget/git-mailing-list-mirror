@@ -1,93 +1,96 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Documentation/git-commit.txt
-Date: Fri, 08 Dec 2006 20:25:24 -0800
-Message-ID: <7vpsatelvv.fsf@assigned-by-dhcp.cox.net>
-References: <7vy7pik51b.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0612082141260.2630@xanadu.home>
+From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
+Subject: [StGIT PATCH 2/2] Regression test for "stg mail"
+Date: Sun, 12 Nov 2006 22:15:57 +0100
+Message-ID: <20061112211556.19362.68287.stgit@localhost>
+References: <20061112211434.19362.66077.stgit@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sat, 9 Dec 2006 04:25:44 +0000 (UTC)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Sun, 12 Nov 2006 21:16:09 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <Pine.LNX.4.64.0612082141260.2630@xanadu.home> (Nicolas Pitre's
-	message of "Fri, 08 Dec 2006 21:58:14 -0500 (EST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+In-Reply-To: <20061112211434.19362.66077.stgit@localhost>
+User-Agent: StGIT/0.11
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33797>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GstmM-0004nI-99 for gcvg-git@gmane.org; Sat, 09 Dec
- 2006 05:25:38 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31277>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GjMgL-0007g7-L6 for gcvg-git@gmane.org; Sun, 12 Nov
+ 2006 22:16:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1758356AbWLIEZ0 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
- 23:25:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758389AbWLIEZ0
- (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 23:25:26 -0500
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:56194 "EHLO
- fed1rmmtao02.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1758356AbWLIEZZ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Dec 2006
- 23:25:25 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao02.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061209042525.KROD97.fed1rmmtao02.cox.net@fed1rmimpo01.cox.net>; Fri, 8 Dec
- 2006 23:25:25 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id wUQo1V0081kojtg0000000; Fri, 08 Dec 2006
- 23:24:48 -0500
-To: Nicolas Pitre <nico@cam.org>
+ S1753190AbWKLVP7 convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Sun, 12 Nov 2006 16:15:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753194AbWKLVP7
+ (ORCPT <rfc822;git-outgoing>); Sun, 12 Nov 2006 16:15:59 -0500
+Received: from mxfep03.bredband.com ([195.54.107.76]:57289 "EHLO
+ mxfep03.bredband.com") by vger.kernel.org with ESMTP id S1753190AbWKLVP7
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 12 Nov 2006 16:15:59 -0500
+Received: from ironport2.bredband.com ([195.54.107.84] [195.54.107.84]) by
+ mxfep03.bredband.com with ESMTP id
+ <20061112211557.KXTJ25623.mxfep03.bredband.com@ironport2.bredband.com> for
+ <git@vger.kernel.org>; Sun, 12 Nov 2006 22:15:57 +0100
+Received: from ua-83-227-180-148.cust.bredbandsbolaget.se (HELO
+ yoghurt.hemma.treskal.com) ([83.227.180.148]) by ironport2.bredband.com with
+ ESMTP; 12 Nov 2006 22:15:57 +0100
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by
+ yoghurt.hemma.treskal.com (Postfix) with ESMTP id 12B724CC24; Sun, 12 Nov
+ 2006 22:15:57 +0100 (CET)
+To: Catalin Marinas <catalin.marinas@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Nicolas Pitre <nico@cam.org> writes:
+=46rom: Karl Hasselstr=C3=B6m <kha@treskal.com>
 
-> Frankly I feel unconfortable with this.
->
-> 1) too many examples.
->
-> Yes, examples are good, but somehow there is something in the current 
-> text that make me feel they are not providing the clarification they 
-> should.  Dunno... I think I'd still push them after option list.
 
-Hmmm.  I was merely trying to respond with recent requests on
-the list (might have been #git log) to make common usage
-examples more prominent.  While I feel that following the UNIXy
-manpage tradition to push examples down is the right thing to
-do, you and I are not the primary audience of Porcelain
-manpages, so...
 
-> 2) explanation of how to resolve and commit a conflicting merge should 
->    really be found in git-merge.txt not in git-commit.txt.
->
-> It feels a bit awkward to suddenly start talking about git ls-files and 
-> merge here.
+Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
+---
 
-I agree that it looks a bit out of place; the primary reason I
-talked about the merge was to make it clear that a conflicted
-merge will still stage the changes for cleanly auto-resolved
-paths.  In other words, it makes me feel uneasy that there is no
-mention of it in the list in your version that follows this
-sentence:
+ t/t1900-mail.sh |   34 ++++++++++++++++++++++++++++++++++
+ 1 files changed, 34 insertions(+), 0 deletions(-)
 
-> +... All changes
-> +to be committed must be explicitly identified using one of the following
-> +methods:
-
-It would make me happier if you had, at the end of enumeration,
-something like:
-
-	Note that the contents of the paths that resolved
-        cleanly by a conflicted merge are automatically staged
-        for the next commit; you still need to explicitly
-        identify what you want in the resulting commit using one
-        of the above methods before concluding the merge.
-
-Another reason I described the merge workflow is it would become
-much less clear why --only is useless in merge situation if the
-reader does not know that a conflicted merge stages the
-auto-resolved changes.
+diff --git a/t/t1900-mail.sh b/t/t1900-mail.sh
+new file mode 100755
+index 0000000..6a950b4
+--- /dev/null
++++ b/t/t1900-mail.sh
+@@ -0,0 +1,34 @@
++#!/bin/sh
++# Copyright (c) 2006 Karl Hasselstr=C3=B6m
++test_description=3D'Test the mail command'
++. ./test-lib.sh
++
++test_expect_success \
++    'Initialize the StGIT repository' \
++    '
++    for i in 1 2 3 4 5; do
++      touch foo.txt &&
++      echo "line $i" >> foo.txt &&
++      git add foo.txt &&
++      git commit -a -m "Patch $i"
++    done &&
++    stg init &&
++    stg uncommit -n 5 foo
++    '
++
++test_expect_success \
++    'Put all the patches in an mbox' \
++    'stg mail --to=3D"Inge Str=C3=B6m <inge@example.com>" -a -m \
++       -t ../../templates/patchmail.tmpl > mbox0'
++
++test_expect_success \
++    'Import the mbox and compare' \
++    '
++    t1=3D$(git cat-file -p $(stg id) | grep ^tree)
++    stg pop -a &&
++    stg import -M mbox0 &&
++    t2=3D$(git cat-file -p $(stg id) | grep ^tree) &&
++    [ "$t1" =3D=3D "$t2" ]
++    '
++
