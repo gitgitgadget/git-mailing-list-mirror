@@ -1,91 +1,76 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Yann Dirson <ydirson@altern.org>
-Subject: "stgit clean" has problems with removed generated files
-Date: Thu, 23 Nov 2006 17:11:35 +0100
-Message-ID: <20061123161135.GK5443@nan92-1-81-57-214-146.fbx.proxad.net>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: Getting new branches from remote repo.
+Date: Mon, 13 Nov 2006 12:44:57 -0500
+Message-ID: <20061113174457.GA16979@spearce.org>
+References: <6e1787fe0611122033p49671e13xf5b7f95beeba8b06@mail.gmail.com> <7v8xigar36.fsf@assigned-by-dhcp.cox.net> <20061113091736.GA31693@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 23 Nov 2006 16:12:53 +0000 (UTC)
-Cc: GIT list <git@vger.kernel.org>
+NNTP-Posting-Date: Mon, 13 Nov 2006 17:45:57 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>,
+	Alexander Litvinov <litvinov2004@gmail.com>,
+	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <20061113091736.GA31693@diana.vm.bytemark.co.uk>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32145>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31305>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GnHBh-0007t5-6Q for gcvg-git@gmane.org; Thu, 23 Nov
- 2006 17:12:34 +0100
+ esmtp (Exim 4.43) id 1Gjfru-0006aN-3Y for gcvg-git@gmane.org; Mon, 13 Nov
+ 2006 18:45:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1756194AbWKWQM3 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 23 Nov 2006
- 11:12:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757399AbWKWQM3
- (ORCPT <rfc822;git-outgoing>); Thu, 23 Nov 2006 11:12:29 -0500
-Received: from smtp1-g19.free.fr ([212.27.42.27]:29057 "EHLO
- smtp1-g19.free.fr") by vger.kernel.org with ESMTP id S1756194AbWKWQM3 (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 23 Nov 2006 11:12:29 -0500
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net
- [81.57.214.146]) by smtp1-g19.free.fr (Postfix) with ESMTP id B85409B596;
- Thu, 23 Nov 2006 17:12:25 +0100 (CET)
-Received: by gandelf.nowhere.earth (Postfix, from userid 1000) id 6E7981F066;
- Thu, 23 Nov 2006 17:11:35 +0100 (CET)
-To: Catalin Marinas <catalin.marinas@gmail.com>
+ S932164AbWKMRpJ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 13 Nov 2006
+ 12:45:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932144AbWKMRpI
+ (ORCPT <rfc822;git-outgoing>); Mon, 13 Nov 2006 12:45:08 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:4243 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S932164AbWKMRpH
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 13 Nov 2006 12:45:07 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1GjfrZ-0005Nf-NN; Mon, 13 Nov 2006 12:44:53 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ A13B220FB0B; Mon, 13 Nov 2006 12:44:57 -0500 (EST)
+To: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
 Sender: git-owner@vger.kernel.org
 
-I recently encountered a problem with "stgit clean", but it really is a
-generic issue, which can also impact other subcommands.
+Karl Hasselstr?m <kha@treskal.com> wrote:
+> On 2006-11-12 20:49:33 -0800, Junio C Hamano wrote:
+> > After finding out $that_new_branch's name, add either
+> >
+> >       Pull: refs/heads/$that_new_branch:refs/heads/$that_new_branch
+> >
+> > or if you are in "separate remote" school, then perhaps
+> >
+> >       Pull: refs/heads/$that_new_branch:refs/remotes/origin/$that_new_branch
+> >
+> > to .git/remotes/origin and running git fetch would give you what you
+> > want, I think.
+> 
+> There really should be a flag to make git fetch do this job. And if we
+> use separate remotes, the flag should probably default to "on".
 
-In a kernel tree, the precise problem I had is due to generated files
-committed by error in an upstream branch (a BSP from a well-known
-vendor, indeed ;).  The first patch in my stgir stack does some cleanup
-by removing them from git control (so that "make dep" does not cause
-them to change every so often).
+And also to automatically stop fetching any branch which is no longer
+listed on the remote system, rather than reporting a "Fetch failure".
 
-Now when I want to run "stg clean" for applied patches, stgit first
-wants to pop the whole stack, including that patch, which triggers the
-following error:
+I probably would keep the local ref (they are cheap) just in case
+the user was counting on that branch and then the remote system
+pulled the rug out from under them.  :-)
 
-fatal: Untracked working tree file 'include/asm-arm/constants.h' would be                                                                                                              overwritten by merge.                                                                                                                                                                  stg clean: git-read-tree failed (local changes maybe?)                                                                                                                                 
-
-
-Obviously, removing all such files by hand allows to run "stg clean", as
-does (floating and) popping that patch and deleting it, or running "stg clean
---unappplied".  The 1st approach is intrusive, and forces the user to
-rerun "make dep", which is not very friendy; the 2nd one is too error-prone for
-an operation that ought to be risk-less (delete has no --undo).  The 3rd option
-is probably the best, but is surely not so intuitive.
-
-The root issue seems to be that stgit has problem with such generated
-files, ie., files that were removed from version-control, but can still
-legitimately exist in the tree.  Dealing with them could possibly be
-done (eg. allowing to back them up, and restore them when pushing the
-annoying patch), but is not a trivial issue (eg. we still need to guard
-the user against real conflicts).
-
-At least we could put a notice about this case in the doc, so users
-don't get too surprised.
-
-
-I could think of several (non-exclusive) possibilities to deal with the
-precise problem I got, which should allow.
-
-First, when cleaning patches, we could first look up which patches are
-to be removed, and only pop the necessary ones.
-
-Second, we could generalize the "clean" subcommand to accept arbitrary
-ranges, not only the "applied" and "unapplied" ones.  A special case
-would be "stg clean that-patch", which would be a secure version of "stg
-delete".
-
-BTW, maybe it would those make sense to allowthose special ranges in
-most places a range is valid.
-
-
-Best regards,
 -- 
