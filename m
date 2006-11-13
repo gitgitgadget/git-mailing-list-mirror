@@ -1,71 +1,63 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: What's in git.git "next"
-Date: Fri, 27 Oct 2006 19:09:20 -0700
-Message-ID: <7vr6wtb38v.fsf@assigned-by-dhcp.cox.net>
+From: Jon Loeliger <jdl@freescale.com>
+Subject: Re: information for a 60-minute "intro to git" needed
+Date: Mon, 13 Nov 2006 12:58:39 -0600
+Message-ID: <1163444316.4665.212.camel@cashmere.sps.mot.com>
+References: <8664dmxdrf.fsf@blue.stonehenge.com>
+	 <20061111143304.GA7201@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sat, 28 Oct 2006 02:13:21 +0000 (UTC)
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Mon, 13 Nov 2006 19:09:18 +0000 (UTC)
+Cc: Git List <git@vger.kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+In-Reply-To: <20061111143304.GA7201@pasky.or.cz>
+X-Mailer: Ximian Evolution 1.4.6 (1.4.6-2.ydl.1) 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30358>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31312>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GdddZ-0004wo-2E for gcvg-git@gmane.org; Sat, 28 Oct
- 2006 04:09:30 +0200
+ esmtp (Exim 4.43) id 1Gjh9X-000863-Go for gcvg-git@gmane.org; Mon, 13 Nov
+ 2006 20:07:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751606AbWJ1CJW (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 27 Oct 2006
- 22:09:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751611AbWJ1CJW
- (ORCPT <rfc822;git-outgoing>); Fri, 27 Oct 2006 22:09:22 -0400
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:11731 "EHLO
- fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP id S1751606AbWJ1CJV
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 27 Oct 2006 22:09:21 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao11.cox.net
- (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
- <20061028020920.DSOL13992.fed1rmmtao11.cox.net@fed1rmimpo01.cox.net>; Fri, 27
- Oct 2006 22:09:20 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id fe921V00S1kojtg0000000 Fri, 27 Oct 2006
- 22:09:03 -0400
-To: git@vger.kernel.org
+ S932792AbWKMTHZ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 13 Nov 2006
+ 14:07:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755336AbWKMTHZ
+ (ORCPT <rfc822;git-outgoing>); Mon, 13 Nov 2006 14:07:25 -0500
+Received: from az33egw01.freescale.net ([192.88.158.102]:35070 "EHLO
+ az33egw01.freescale.net") by vger.kernel.org with ESMTP id S1755337AbWKMTHY
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 13 Nov 2006 14:07:24 -0500
+Received: from az33smr01 (az33smr01.freescale.net [10.64.34.199]) by
+ az33egw01.freescale.net (8.12.11/az33egw01) with ESMTP id kADJ7GlT019932;
+ Mon, 13 Nov 2006 12:07:16 -0700 (MST)
+Received: from [10.82.19.2] (cashmere.am.freescale.net [10.82.19.2]) by
+ az33smr01 (8.13.1/8.13.0) with ESMTP id kADJ7FRU004138; Mon, 13 Nov 2006
+ 13:07:15 -0600 (CST)
+To: Petr Baudis <pasky@suse.cz>
 Sender: git-owner@vger.kernel.org
 
-I've fixed up merge-recursive not to warn "working file will be
-clobbered" when unneeded, and merged it to "next" tonight.  This
-is a usability fix but if done incorrectly we can break a safety
-valve.
+On Sat, 2006-11-11 at 08:33, Petr Baudis wrote:
 
-The "next" version changes behaviour from the traditional one
-when (1) paths that are untracked in our branch exists in the
-common ancestor and the other branch we merge into our branch,
-(2) the other branch did not make any changes to these paths,
-and (3) the working tree has these paths as untracked files.
+> 
+>   see
+> 
+> 	http://news.gmane.org/find-root.php?message_id=<7vvepqi6x6.fsf@assigned-by-dhcp.cox.net>
+> 
+> and replies for some slides from OLS (dunno if jdl's made his
+> available?), and http://git.or.cz/gitwiki/GitLinks for links to plenty
+> of "using git" pages for various projects and other introductory
+> articles.
 
-Under this condition, 3-way merge decides the path should not
-exist in the result.  This has not been changed (and shouldn't
-be).  But what is being fixed is what "should not exist" means.
-We used to say "we have that path in our working tree, which
-will be lost by the merge, so we won't merge".  Which was
-perhaps safer but was inconvenient.  The corrected behaviour
-should be "the path is not tracked in our branch, and the result
-of the merge won't have it tracked either, and we will leave
-those untracked working tree files as they were".
+All of my git papers published in Linux Magazine as well
+as my OLS presentation are available off of www.jdl.com.
+(Yes, I still need to make them available off of
+opensource.freescale.com as well still.  *sigh*)
 
-I added a handful tests to t6022 to catch potential breakages,
-and the code still passes them, but that does not mean it is
-perfect.  If the program refuses to proceed when it can, you
-found a safer breakage I do not worry too much about.  If the
-program overwrites or loses an untracked working tree file as a
-result of the merge, then that means the updated merge-recursive
-relaxed the check too much.
+jdl
 
-So please handle this with a bit of extra care than usual; I'd
-appreciate extra sets of eyeballs to sanity check.
