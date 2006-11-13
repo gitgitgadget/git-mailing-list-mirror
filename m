@@ -1,75 +1,64 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Michael Loeffler <loeffler@ls-itc.de>
-Subject: [PATCH 2/3] git-fetch: do not use "*" for fetching multiple refs
-Date: Mon, 04 Dec 2006 20:38:22 +0100
-Message-ID: <1165261102.20055.9.camel@ibook.zvpunry.de>
+From: "Alexander Litvinov" <litvinov2004@gmail.com>
+Subject: Getting new branches from remote repo.
+Date: Mon, 13 Nov 2006 10:33:52 +0600
+Message-ID: <6e1787fe0611122033p49671e13xf5b7f95beeba8b06@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Mon, 4 Dec 2006 19:38:39 +0000 (UTC)
+NNTP-Posting-Date: Mon, 13 Nov 2006 04:35:57 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Mailer: Evolution 2.6.3 
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=A0mqsPbCjCxYxgS0OmZHJPRqw3Q6/HLL3WvdZn8Yt/j0IuniFiv9VS90iadpXXkkR2Xt7sM72HUWZFyl0z650Xx5pD+G17Eca7P0CnAsdtJU1G3aXAyWDmNIWFj0MDie3OfeLXZhOT7BX/S/AeCz9u35f58oGvQWDf3JGIXzOYg=
+Content-Disposition: inline
+X-Virus-Scanned: ClamAV 0.88.5/2188/Sun Nov 12 20:32:01 2006 on zeus1.kernel.org
+X-Virus-Status: Clean
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33227>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GrJe9-00004z-G4 for gcvg-git@gmane.org; Mon, 04 Dec
- 2006 20:38:37 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31286>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GjTXz-0004AJ-3R for gcvg-git@gmane.org; Mon, 13 Nov
+ 2006 05:35:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1759339AbWLDTif (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
- 14:38:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759442AbWLDTie
- (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 14:38:34 -0500
-Received: from mx01.ap-wdsl.de ([88.198.184.82]:46116 "EHLO mx01.ap-wdsl.de"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1759339AbWLDTie
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006 14:38:34 -0500
+ S1753877AbWKMEfX (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 12 Nov 2006
+ 23:35:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753885AbWKMEfX
+ (ORCPT <rfc822;git-outgoing>); Sun, 12 Nov 2006 23:35:23 -0500
+Received: from zeus1.kernel.org ([204.152.191.4]:36001 "EHLO
+ zeus1.kernel.org") by vger.kernel.org with ESMTP id S1753877AbWKMEfW (ORCPT
+ <rfc822;git@vger.kernel.org>); Sun, 12 Nov 2006 23:35:22 -0500
+Received: from py-out-1112.google.com (py-out-1112.google.com
+ [64.233.166.181]) by zeus1.kernel.org (8.13.7/8.13.1) with ESMTP id
+ kAD4Z9tH010411 for <git@vger.kernel.org>; Mon, 13 Nov 2006 04:35:22 GMT
+Received: by py-out-1112.google.com with SMTP id a29so675049pyi for
+ <git@vger.kernel.org>; Sun, 12 Nov 2006 20:34:09 -0800 (PST)
+Received: by 10.35.53.18 with SMTP id f18mr9320568pyk.1163392433665; Sun, 12
+ Nov 2006 20:33:53 -0800 (PST)
+Received: by 10.35.108.4 with HTTP; Sun, 12 Nov 2006 20:33:52 -0800 (PST)
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-The trailing / is enough to decide if this should map everything under
-refs/heads/ to refs/somewhere/.
+Hello list,
 
-The "*" should be reserved for the use as regex operator.
+I have a trouble I don't know how to solve. When I am cloning remote
+repo I automatically get all it's branches stored at my repo (they are
+listed at .git/remotes/origin). When someone adds new branch(es) to
+remote repo git pull (git fetch) does not automatically add them to my
+repo. I have a tool to list all remote branches (git ls-remote --heads
+origin) but I can't find how to add interesting (or all) branches to
+by repo.
 
-Signed-off-by: Michael Loeffler <zvpunry@zvpunry.de>
----
-I want to use regular expressions to match remote refs, so I try to
-implement this. But the current globfetch syntax needs the '*'.
-
-Maybe it is not to late to change the syntax to this:
-Pull: refs/heads/:refs/remotes/origin/
-
-What do you think?
-
-
-diff --git a/git-parse-remote.sh b/git-parse-remote.sh
-index da064a5..38af4cb 100755
---- a/git-parse-remote.sh
-+++ b/git-parse-remote.sh
-@@ -101,13 +101,13 @@ expand_refs_wildcard () {
- 	do
- 		lref=${ref#'+'}
- 		# a non glob pattern is given back as-is.
--		expr "z$lref" : 'zrefs/.*/\*:refs/.*/\*$' >/dev/null || {
-+		expr "z$lref" : 'zrefs/.*/:refs/.*/$' >/dev/null || {
- 			echo "$ref"
- 			continue
- 		}
- 
--		from=`expr "z$lref" : 'z\(refs/.*/\)\*:refs/.*/\*$'`
--		to=`expr "z$lref" : 'zrefs/.*/\*:\(refs/.*/\)\*$'`
-+		from=`expr "z$lref" : 'z\(refs/.*/\):refs/.*/$'`
-+		to=`expr "z$lref" : 'zrefs/.*/:\(refs/.*/\)$'`
- 		local_force=
- 		test "z$lref" = "z$ref" || local_force='+'
- 		echo "$ls_remote_result" |
--- 
-1.4.4
-
+By the way, how can I clone remote repo created by cloning another
+repo using git clone --use-separate-remotes ? Even git ls-remote
+--heads origin does not show all branches taken from that another
+repo.
 
