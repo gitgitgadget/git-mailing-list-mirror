@@ -1,81 +1,64 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: [RFC] Submodules in GIT
-Date: Sat, 2 Dec 2006 00:07:32 +0100
-Message-ID: <20061201230732.GO18810@admingilde.org>
-References: <20061130170625.GH18810@admingilde.org> <200612012306.41410.Josef.Weidendorfer@gmx.de> <Pine.LNX.4.64.0612011423100.3695@woody.osdl.org> <200612012355.03493.Josef.Weidendorfer@gmx.de>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Getting new branches from remote repo.
+Date: Mon, 13 Nov 2006 19:40:51 +0100
+Organization: At home
+Message-ID: <ejae5a$5qb$1@sea.gmane.org>
+References: <6e1787fe0611122033p49671e13xf5b7f95beeba8b06@mail.gmail.com> <7v8xigar36.fsf@assigned-by-dhcp.cox.net> <20061113091736.GA31693@diana.vm.bytemark.co.uk> <7vr6w78b4x.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="4mzJX4knSlzCkV+j"
-NNTP-Posting-Date: Fri, 1 Dec 2006 23:07:44 +0000 (UTC)
-Cc: Linus Torvalds <torvalds@osdl.org>, sf <sf@b-i-t.de>,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Mon, 13 Nov 2006 18:44:37 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <200612012355.03493.Josef.Weidendorfer@gmx.de>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 14
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32982>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31310>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GqHTl-0001i0-Es for gcvg-git@gmane.org; Sat, 02 Dec
- 2006 00:07:37 +0100
+ esmtp (Exim 4.43) id 1Gjgls-0002O1-7k for gcvg-git@gmane.org; Mon, 13 Nov
+ 2006 19:43:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1161145AbWLAXHf (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
- 18:07:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161179AbWLAXHe
- (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 18:07:34 -0500
-Received: from agent.admingilde.org ([213.95.21.5]:38860 "EHLO
- mail.admingilde.org") by vger.kernel.org with ESMTP id S1161145AbWLAXHe
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 18:07:34 -0500
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1) id
- 1GqHTg-0002dx-I6; Sat, 02 Dec 2006 00:07:32 +0100
-To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+ S932722AbWKMSm7 convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Mon, 13 Nov 2006 13:42:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755320AbWKMSm7
+ (ORCPT <rfc822;git-outgoing>); Mon, 13 Nov 2006 13:42:59 -0500
+Received: from main.gmane.org ([80.91.229.2]:47281 "EHLO ciao.gmane.org") by
+ vger.kernel.org with ESMTP id S1755319AbWKMSm6 (ORCPT
+ <rfc822;git@vger.kernel.org>); Mon, 13 Nov 2006 13:42:58 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1Gjgki-000257-W1 for git@vger.kernel.org; Mon, 13 Nov 2006 19:41:52 +0100
+Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Mon, 13 Nov 2006 19:41:52 +0100
+Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Mon, 13 Nov 2006
+ 19:41:52 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
+Junio C Hamano wrote:
 
---4mzJX4knSlzCkV+j
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> =A0- We need to remember old branches that the user is not
+> =A0 =A0interested in, so that we do not even ask to add it only
+> =A0 =A0because it does not have a local tracking branch.
 
-hoi :)
-
-On Fri, Dec 01, 2006 at 11:55:03PM +0100, Josef Weidendorfer wrote:
-> What about my other argument for a submodule namespace:
-> You want to be able to move the relative root path of a submodule
-> inside of your supermodule, but yet want to have a unique name
-> for the submodule:
-> - to be able to just clone a submodule without having to know
-> the current position in HEAD
-> - more practically, e.g. to be able to name a submodule
-> independent from any current commit you are on in the supermodule,
-> e.g. to be able to store some meta information about a submodule:
-> - "Where is the official upstream of this submodule?"
-
-you can always have a bare repository for all used modules lying around
-in some defined location.  There is no need for a unique submodule-name.
-
+Wouldn't it be easier just to add --all flag to git-fetch,
+which would fetch _all_ the branches, and --save to write remotes
+file... or rather appropriate config entry?
 --=20
-Martin Waitz
-
---4mzJX4knSlzCkV+j
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFFcLWzj/Eaxd/oD7IRAr15AJ0cg59w49qpcBt6CaD1w79gp72xxACfXqFO
-j3/E/HE4bm2f0TS10ISbxpA=
-=KuSw
------END PGP SIGNATURE-----
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
 
