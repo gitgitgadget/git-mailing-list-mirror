@@ -1,62 +1,59 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Steven Grimm <koreth@midwinter.com>
-Subject: Re: egit/jgit wishlist
-Date: Mon, 04 Dec 2006 13:19:42 -0800
-Message-ID: <457490EE.30606@midwinter.com>
-References: <20061204172836.GB6011@spearce.org> <Pine.LNX.4.63.0612041841280.14187@alpha.polcom.net> <20061204182902.GG6011@spearce.org>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: Non-ASCII paths and git-cvsserver
+Date: Mon, 13 Nov 2006 15:22:46 -0300
+Message-ID: <46a038f90611131022l105b5df3ycdf7aa33016b336e@mail.gmail.com>
+References: <45530CEE.6030008@b-i-t.de>
+	 <7vvelnjd4p.fsf@assigned-by-dhcp.cox.net> <45587A09.3020605@b-i-t.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Mon, 4 Dec 2006 21:19:48 +0000 (UTC)
+NNTP-Posting-Date: Mon, 13 Nov 2006 18:23:22 +0000 (UTC)
+Cc: "Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=200606; d=midwinter.com;
-  b=gFcabYcXA7/8V+eCN7oF8/aIq0HTpP48o7/ekG08qesmsqRAlqHWFjmuBlBMF3CB  ;
-User-Agent: Mail/News 1.5.0.2 (Macintosh/20060324)
-In-Reply-To: <20061204182902.GG6011@spearce.org>
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=HYyoRNEK1Pw08vm5cs6H0Wvvi2X9NfBhS60eTbS9zK/mmV8JeTQ8lxhWpxzx9El+Yxx7lUPqs6m9PpEyCO8Ds39JydmjIbTe4zkenXzNyYkwnStclmUAtCJodp4nL4dY+XXiqJRM/l2wticDPUuU+lZX7cXHJ3B8oX3YwQtLv/A=
+In-Reply-To: <45587A09.3020605@b-i-t.de>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33253>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GrLDy-0007un-RZ for gcvg-git@gmane.org; Mon, 04 Dec
- 2006 22:19:43 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31308>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GjgSX-0006WY-Tl for gcvg-git@gmane.org; Mon, 13 Nov
+ 2006 19:23:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S967177AbWLDVTk (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
- 16:19:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937399AbWLDVTk
- (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 16:19:40 -0500
-Received: from tater.midwinter.com ([216.32.86.90]:51159 "HELO midwinter.com"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S937398AbWLDVTj
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006 16:19:39 -0500
-Received: (qmail 31713 invoked from network); 4 Dec 2006 21:19:38 -0000
-Received: from localhost (HELO ?127.0.0.1?) (koreth@127.0.0.1) by localhost
- with SMTP; 4 Dec 2006 21:19:38 -0000
-To: git@vger.kernel.org
+ S1755314AbWKMSWt (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 13 Nov 2006
+ 13:22:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755316AbWKMSWt
+ (ORCPT <rfc822;git-outgoing>); Mon, 13 Nov 2006 13:22:49 -0500
+Received: from nf-out-0910.google.com ([64.233.182.190]:28301 "EHLO
+ nf-out-0910.google.com") by vger.kernel.org with ESMTP id S1755314AbWKMSWs
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 13 Nov 2006 13:22:48 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so2242550nfa for
+ <git@vger.kernel.org>; Mon, 13 Nov 2006 10:22:47 -0800 (PST)
+Received: by 10.49.3.10 with SMTP id f10mr10282269nfi.1163442166119; Mon, 13
+ Nov 2006 10:22:46 -0800 (PST)
+Received: by 10.49.60.1 with HTTP; Mon, 13 Nov 2006 10:22:46 -0800 (PST)
+To: sf <sf@b-i-t.de>
 Sender: git-owner@vger.kernel.org
 
-Shawn Pearce wrote:
-> I personally want to avoid calling external programs
-> as much as possible here, and that means staying with a 100% pure
-> Java implementation.  
+On 11/13/06, sf <sf@b-i-t.de> wrote:
+> Martin, are you sure your patch is needed? (see below)
 
-I think that's exactly the right decision.
+Not 100% sure. I was just making sure we crossed all the Ts and dotted
+the Is. I gather you have tried my patch and it didn't make any
+difference. What SQLite and Perl versions are you using?
 
-One big advantage of doing it this way is that it will be reasonably 
-cross-platform from the start. As soon as you start running external 
-programs, you introduce all the system dependencies of the Git 
-command-line tools, especially acute if you're running some of the non-C 
-porcelain commands (which will then require a working shell or Perl 
-environment to be installed.)
+cheers,
 
-With a wrapper-based implementation, the temptation would probably be 
-pretty great to just leave some stuff implemented as wrappers and not 
-bother porting them, which would potentially kill portability. Insisting 
-on 100% pure Java means that particular temptation is never an issue.
+
 
