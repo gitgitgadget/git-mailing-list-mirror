@@ -1,93 +1,76 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: Cleaning up git user-interface warts
-Date: Wed, 15 Nov 2006 12:28:56 +0100
-Message-ID: <200611151128.57917.andyparkins@gmail.com>
-References: <87k61yt1x2.wl%cworth@cworth.org> <200611151033.57415.andyparkins@gmail.com> <20061115104858.GG5453@diana.vm.bytemark.co.uk>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: Non-ASCII paths and git-cvsserver
+Date: Mon, 13 Nov 2006 19:30:18 +0100
+Organization: Dewire
+Message-ID: <200611131930.18300.robin.rosenberg.lists@dewire.com>
+References: <45530CEE.6030008@b-i-t.de> <45587A09.3020605@b-i-t.de> <ej9utk$44p$1@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Wed, 15 Nov 2006 11:29:24 +0000 (UTC)
+NNTP-Posting-Date: Mon, 13 Nov 2006 18:30:44 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=Jw2CyeJ789RmvWigFtPhSwDdWr/uVlvrN0NlnXFUDFVFctiZ8oJKdQTQS8GcU1PgBElWHSmvmh69DRYk373/FoLfPBcFPULZZ37uHMqotqV6zWfnaBIVW6JyktZEUFeUw75NjbR4+QuQM7sPOLeafPkP1P+yPrLyUL5MOEGPH/4=
-User-Agent: KMail/1.9.5
-In-Reply-To: <20061115104858.GG5453@diana.vm.bytemark.co.uk>
+User-Agent: KMail/1.9.4
+In-Reply-To: <ej9utk$44p$1@sea.gmane.org>
 Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new at dewire.com
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31437>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31309>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GkIx2-0005KI-HI for gcvg-git@gmane.org; Wed, 15 Nov
- 2006 12:29:10 +0100
+ esmtp (Exim 4.43) id 1GjgYL-0007r2-3X for gcvg-git@gmane.org; Mon, 13 Nov
+ 2006 19:29:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1030391AbWKOL3E convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006 06:29:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030395AbWKOL3E
- (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 06:29:04 -0500
-Received: from ug-out-1314.google.com ([66.249.92.174]:29304 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1030391AbWKOL3D
- convert rfc822-to-8bit (ORCPT <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006
- 06:29:03 -0500
-Received: by ug-out-1314.google.com with SMTP id m3so103956ugc for
- <git@vger.kernel.org>; Wed, 15 Nov 2006 03:29:02 -0800 (PST)
-Received: by 10.67.103.7 with SMTP id f7mr1536456ugm.1163590141906; Wed, 15
- Nov 2006 03:29:01 -0800 (PST)
-Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
- ESMTP id e34sm713415ugd.2006.11.15.03.29.01; Wed, 15 Nov 2006 03:29:01 -0800
- (PST)
-To: git@vger.kernel.org
+ S1755318AbWKMS2m convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Mon, 13 Nov 2006 13:28:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755319AbWKMS2m
+ (ORCPT <rfc822;git-outgoing>); Mon, 13 Nov 2006 13:28:42 -0500
+Received: from [83.140.172.130] ([83.140.172.130]:3665 "EHLO
+ torino.dewire.com") by vger.kernel.org with ESMTP id S1755318AbWKMS2l convert
+ rfc822-to-8bit (ORCPT <rfc822;git@vger.kernel.org>); Mon, 13 Nov 2006
+ 13:28:41 -0500
+Received: from localhost (localhost [127.0.0.1]) by torino.dewire.com
+ (Postfix) with ESMTP id 17574800784; Mon, 13 Nov 2006 19:25:11 +0100 (CET)
+Received: from torino.dewire.com ([127.0.0.1]) by localhost (torino
+ [127.0.0.1]) (amavisd-new, port 10024) with ESMTP id 21613-06; Mon, 13 Nov
+ 2006 19:25:10 +0100 (CET)
+Received: from [10.9.0.2] (unknown [10.9.0.2]) by torino.dewire.com (Postfix)
+ with ESMTP id A7A858003E1; Mon, 13 Nov 2006 19:25:08 +0100 (CET)
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-On Wednesday 2006 November 15 10:48, Karl Hasselstr=F6m wrote:
+m=E5ndag 13 november 2006 15:20 skrev Jakub Narebski:
+> sf wrote:
+> > Thanks, Junio. Paths with umlauts are returned correctly now both i=
+n
+> > UTF-8 and ISO-8859-1. I guess git-cvsserver is now as encoding agno=
+stic
+> > as git core.
+>
+> By the way, now that git has per user config file, ~/.gitconfig, perh=
+aps
+> it is time to add i18n.filesystemEncoding configuration variable, to
+> automatically convert between filesystem encoding (somthing you usual=
+ly
+> don't have any control over) and UTF-8 encoding of paths in tree obje=
+cts.
 
-> To me, "origin" just means "where <whatever we're talking about>
-> originated". If you think of it that way, it's perfectly obvious that
-> each repository can have its own origin.
+I'd prefer git to store filenames and comments in UTF-8 and convert on=20
+input/output when and if it is necessary rather than forcing everybody =
+to=20
+take the hit. Most systems, but far from all, already use UTF-8 so it's=
+ a=20
+noop for them. The only reason I want conversion is for the years to co=
+me=20
+where we still live in two worlds of non-utf-8 and utf-8 and then forge=
+t=20
+about everything non-utf-8, rather than carry around the baggage foreve=
+r.
 
-Of course.  I wasn't saying that I didn't understand why origin was cho=
-sen. =20
-It's not a completely crazy name - it does have /a/ meaning.  However, =
-it's=20
-not an unambiguous meaning.  What if the repository I clone was itself =
-a=20
-clone?  What if the repository it cloned was pulling from three other=20
-repositories?  What if those three repositories pull/push from/to each =
-other?
-
-  * -- * -- *
-   \   |   / \
-    \  |  /  /
-     \ | /  /=20
-       *   /
-       |  /=20
-       | /
-       * <--- "origin"
-       |
-       * <--- cloned repository
-
-The name "origin" is too close to having an "ultimate source" feel to i=
-t IMO. =20
-In a distributed system, it's not the right idea to be pushing.  After =
-the=20
-clone is complete, the "origin" is no more special than any other repos=
-itory,=20
-and if you felt like it you could change the URL for "origin" and it wo=
-uld=20
-make very little difference to you.
-
-In short: I don't think "origin" is wrong, I just think it's not right.
-
-
-Andy
---=20
-Dr Andy Parkins, M Eng (hons), MIEE
