@@ -1,100 +1,85 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-diff opens too many files?
-Date: Mon, 20 Nov 2006 11:51:22 -0800
-Message-ID: <7vvel928xx.fsf@assigned-by-dhcp.cox.net>
-References: <fcaeb9bf0611200212s6ddb0518k24f85223acfed08b@mail.gmail.com>
-	<Pine.LNX.4.64.0611200832450.3692@woody.osdl.org>
+From: Seth Falcon <sethfalcon@gmail.com>
+Subject: Re: gitk broken or user error?
+Date: Mon, 13 Nov 2006 14:38:57 -0800
+Message-ID: <m2y7qfezum.fsf@ziti.local>
+References: <m2irhkr467.fsf@ziti.local>
+	<17752.60467.854884.206737@cargo.ozlabs.ibm.com>
+	<m27ixzgex4.fsf@ziti.local>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Mon, 20 Nov 2006 19:51:35 +0000 (UTC)
-Cc: git@vger.kernel.org, Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+NNTP-Posting-Date: Mon, 13 Nov 2006 22:39:23 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <Pine.LNX.4.64.0611200832450.3692@woody.osdl.org> (Linus
-	Torvalds's message of "Mon, 20 Nov 2006 09:00:55 -0800 (PST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:to:cc:subject:references:from:date:in-reply-to:message-id:user-agent:mime-version:content-type;
+        b=Er4W8zS3oqUpoa5t6cqcY+nXqeRuBQxr7/a3ZNS6hCwTkZlvvgRiAvWlxHthmnFL6rMOXsiQLXOim6xx6vzMBjBVXRxn6zI6nearP+TRab2+d6J/jS+VpiSkbSJzI3z0rzmqJriyv5bIGM/iwf3PAOJyLx+HQS8fItwiEoCrO/c=
+In-Reply-To: <m27ixzgex4.fsf@ziti.local> (Seth Falcon's message of "Mon, 13 Nov 2006 14:28:07 -0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (darwin)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31931>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31326>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GmFAz-0000gJ-D5 for gcvg-git@gmane.org; Mon, 20 Nov
- 2006 20:51:33 +0100
+ esmtp (Exim 4.43) id 1GjkSK-0003qF-K0 for gcvg-git@gmane.org; Mon, 13 Nov
+ 2006 23:39:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S966586AbWKTTvY (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 20 Nov 2006
- 14:51:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966562AbWKTTvY
- (ORCPT <rfc822;git-outgoing>); Mon, 20 Nov 2006 14:51:24 -0500
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:22238 "EHLO
- fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP id S966586AbWKTTvX
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 20 Nov 2006 14:51:23 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao07.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061120195122.GVUG27894.fed1rmmtao07.cox.net@fed1rmimpo01.cox.net>; Mon, 20
- Nov 2006 14:51:22 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id p7qt1V00F1kojtg0000000; Mon, 20 Nov 2006
- 14:50:54 -0500
-To: Linus Torvalds <torvalds@osdl.org>
+ S933092AbWKMWjF (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 13 Nov 2006
+ 17:39:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933093AbWKMWjE
+ (ORCPT <rfc822;git-outgoing>); Mon, 13 Nov 2006 17:39:04 -0500
+Received: from nf-out-0910.google.com ([64.233.182.189]:16286 "EHLO
+ nf-out-0910.google.com") by vger.kernel.org with ESMTP id S933092AbWKMWjC
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 13 Nov 2006 17:39:02 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so34837nfa for
+ <git@vger.kernel.org>; Mon, 13 Nov 2006 14:39:01 -0800 (PST)
+Received: by 10.49.12.4 with SMTP id p4mr218395nfi.1163457540796; Mon, 13 Nov
+ 2006 14:39:00 -0800 (PST)
+Received: from ziti.local ( [140.107.181.122]) by mx.google.com with ESMTP id
+ o53sm280604nfa.2006.11.13.14.38.59; Mon, 13 Nov 2006 14:39:00 -0800 (PST)
+To: Paul Mackerras <paulus@samba.org>
 Sender: git-owner@vger.kernel.org
 
-Linus Torvalds <torvalds@osdl.org> writes:
+Seth Falcon <sethfalcon@gmail.com> writes:
+> I tried this patch:
 
-> Anyway, there's two possible solutions:
->
->  - simply make sure that you can have that many open files. 
->
->    If it's a Linux system, just increase the value of the file
->    /proc/sys/fs/file-max, and you're done. Of course, if you're not the 
->    admin of the box, you may need to ask somebody else to do it for you..
->
->  - we could try to make git not keep them mmap'ed for the whole time. 
->
-> Junio? This is your speciality, I'm not sure how painful it would be to 
-> unmap and remap on demand.. (or switch it to some kind of "keep the last 
-> <n> mmaps active" kind of thing to avoid having thousands and thousands of 
-> mmaps active).
+And then I used grep :-)
 
-60,000 files 1kB each is 60MB which is a peanuts these days, but
-10kB each would be already nontrivial burden on 32-bit (20%
-under 3+1 split), so even if we do the "read in small files
-instead of mapping" we would need diff_unpopulate_filespec() calls.
+This patch seems to get the view menu items working.  The only strange
+thing I see now is that if I create a new view and then try to delete
+it, it stays around in the menu.
 
-I think after diffcore_rename() runs, the data in filespec is
-used only once during final textual diff generation.  We would
-use once more before diff generation if diffcore_pickaxe() is in
-use.  These codepaths begin with diff_populate_filespec(), so if
-we unpopulate them after diffcore_rename() runs nobody would
-notice (other than performance degradation and strace showing us
-reading the same thing twice).
++ seth
 
-The diffcore_rename() matrix code expects all filespecs involved
-can be populated at the same time, but it should not be too hard
-to change it to keep one dst and all src candidates populated
-but others dropped if space gets tight.  I need to look at the
-code for the details.
-
-But Nguyen's command line did not have -M; I think the filespecs
-are populated only during the text generation in that case, so
-the above would not help him while it would be a worthwhile
-change.
-
-Because there is _no_ processing that comes after textual diff
-generation that looks at the data, I think diff_flush_patch()
-after calling run_diff() can unpopulate the data from the
-filepair *p before returning without harming performance.
-
-I think diff_flush_stat() and diff_flush_checkdiff() would have
-the same issue, though.  Ideally these should be able to do
-their processing while the main textual diff holds the data in
-memory for its processing but that is currently not the way the
-code is structured.
-
-
-
-
+diff --git a/gitk b/gitk
+index ab383b3..d9df0a3 100755
+--- a/gitk
++++ b/gitk
+@@ -1632,8 +1632,8 @@ proc showview {n} {
+ 
+     set curview $n
+     set selectedview $n
+-    .bar.view entryconf 2 -state [expr {$n == 0? "disabled": "normal"}]
+-    .bar.view entryconf 3 -state [expr {$n == 0? "disabled": "normal"}]
++    .bar.view entryconf "Edit*" -state [expr {$n == 0? "disabled": "normal"}]
++    .bar.view entryconf "Delete*" -state [expr {$n == 0? "disabled": "normal"}]
+ 
+     if {![info exists viewdata($n)]} {
+        set pending_select $selid
+@@ -6305,8 +6305,8 @@ if {$cmdline_files ne {} || $revtreeargs
+     set viewargs(1) $revtreeargs
+     set viewperm(1) 0
+     addviewmenu 1
+-    .bar.view entryconf 2 -state normal
+-    .bar.view entryconf 3 -state normal
++    .bar.view entryconf "Edit*" -state normal
++    .bar.view entryconf "Delete*" -state normal
+ }
+ 
