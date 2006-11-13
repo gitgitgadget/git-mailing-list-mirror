@@ -1,86 +1,64 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] (experimental) per-topic shortlog.
-Date: Fri, 1 Dec 2006 03:11:17 -0500
-Message-ID: <20061201081117.GA20025@coredump.intra.peff.net>
-References: <7v8xhxsopp.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611261652520.30076@woody.osdl.org> <Pine.LNX.4.63.0611280040480.30004@wbgn013.biozentrum.uni-wuerzburg.de> <7v7ixge8j2.fsf@assigned-by-dhcp.cox.net> <20061128131139.GA10874@coredump.intra.peff.net> <7v1wnnysrn.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 1 Dec 2006 08:11:36 +0000 (UTC)
-Cc: git@vger.kernel.org
+From: Johannes Sixt <j.sixt@eudaptics.com>
+Subject: [PATCH] test-lib.sh: A command dying due to a signal is an unexpected failure.
+Date: Mon, 13 Nov 2006 13:50:04 +0000 (UTC)
+Message-ID: <11634257784001-git-send-email-j.sixt@eudaptics.com>
+Reply-To: Johannes Sixt <j.sixt@eudaptics.com>
+NNTP-Posting-Date: Mon, 13 Nov 2006 13:50:04 +0000 (UTC)
+Cc: Johannes Sixt <johannes.sixt@telecom.at>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <7v1wnnysrn.fsf@assigned-by-dhcp.cox.net>
+Original-Date: Mo, 13 Nov 2006 14:49:37 +0100
+X-Mailer: git-send-email 1.4.1.rc1.g47e5
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32867>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31298>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gq3UZ-0003U3-4b for gcvg-git@gmane.org; Fri, 01 Dec
- 2006 09:11:31 +0100
+ esmtp (Exim 4.43) id 1GjcC4-0004T8-0j for gcvg-git@gmane.org; Mon, 13 Nov
+ 2006 14:49:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S967359AbWLAILU (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
- 03:11:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967496AbWLAILU
- (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 03:11:20 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:48053
- "HELO peff.net") by vger.kernel.org with SMTP id S967359AbWLAILT (ORCPT
- <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 03:11:19 -0500
-Received: (qmail 32079 invoked from network); 1 Dec 2006 03:11:28 -0500
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2) by
- 66-23-211-5.clients.speedfactory.net with SMTP; 1 Dec 2006 03:11:28 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 01 Dec
- 2006 03:11:17 -0500
-To: Junio C Hamano <junkio@cox.net>
+ S1754649AbWKMNtn (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 13 Nov 2006
+ 08:49:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754653AbWKMNtn
+ (ORCPT <rfc822;git-outgoing>); Mon, 13 Nov 2006 08:49:43 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160]:38180 "EHLO
+ linz.eudaptics.com") by vger.kernel.org with ESMTP id S1754649AbWKMNtm (ORCPT
+ <rfc822;git@vger.kernel.org>); Mon, 13 Nov 2006 08:49:42 -0500
+Received: from srv.linz.eudaptics (srv.linz.eudaptics [192.168.1.4]) by
+ linz.eudaptics.com (Postfix) with ESMTP id 92D1D10038; Mon, 13 Nov 2006
+ 14:49:39 +0100 (CET)
+Received: by srv.linz.eudaptics (Postfix, from userid 503) id B5EA3104; Mon,
+ 13 Nov 2006 14:49:38 +0100 (CET)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On Tue, Nov 28, 2006 at 04:57:00PM -0800, Junio C Hamano wrote:
+From: Johannes Sixt <johannes.sixt@telecom.at>
 
-> > The top 15 for v1.4.3 to v1.4.4 are:
-> >
-> > 1604 6973dcaee76ef7b7bfcabd2f26e76205aae07858 Libify diff-files.
-> 
-> Something is SERIOUSLY wrong.
-> 
-> That commit is not even between v1.4.3 and v1.4.4.
+When test_expect_failure detects that a command failed, it still has to
+treat a program that crashed from a signal as unexpected failure.
 
-Hmm, you're right. I haven't quite figured out what went wrong with the
-script I posted. However, a somewhat simpler approach is to just use the
-revision limiting in git-blame. The problem with this is that commits
-whose parents aren't in the revision range end up getting blamed for a
-lot of lines they're not responsible for.
+Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
+---
+ t/test-lib.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-As a quick hack, I just threw out any revisions whose parents weren't in
-range. This is wrong, since those revisions probably _do_ have some
-correctly blamed lines. It made me wonder about a possible feature for
-git-blame: when we can't pass the blame up further, instead of taking
-responsibility, output a "no responsibility line" (blaming on commit
-0{40}, or some other format). I think this should be more informative
-when there is a limit on the range of revisions.
-
-The top of the "blamedness" list for v1.4.3..v1.4.4 is below. Important
-things do seem to float to the top, but it would probably be much more
-accurate if we were scoring groups of commits (generated by some other
-analysis).
-
--Peff
-
--- >8 --
-1050 cee7f245dcaef6dade28464f59420095a9949aac git-pickaxe: blame rewritten.
-223 fe142b3a4577a6692a39e2386ed649664ad8bd20 Rework cvsexportcommit to handle binary files for all cases.
-219 c31820c26b8f164433e67d28c403ca0df0316055 Make git-branch a builtin
-216 636171cb80255682bdfc9bf5a98c9e66d4c0444a make index-pack able to complete thin packs.
-182 b1f33d626501c3e080b324e182f1da76f49b5bf9 Swap the porcelain and plumbing commands in the git man page
-173 744d0ac33ab579845808b8b01e526adc4678a226 gitweb: New improved patchset view
-169 e30496dfcb98a305a57b835c248cbc3aa2376bfc gitweb: Support for 'forks'
-142 5b329a5f5e3625cdc204e3d274c89646816f384c t6022: ignoring untracked files by merge-recursive when they do not matter
-134 c0990ff36f0b9b8e806c8f649a0888d05bb22c37 Add man page for git-show-ref
-128 780e6e735be189097dad4b223d8edeb18cce1928 make pack data reuse compatible with both delta types
-121 2d477051ef260aad352d63fc7d9c07e4ebb4359b add the capability for index-pack to read from a stream
-116 576162a45f35e157427300066b0ff566ff698a0f remove .keep pack lock files when done with refs update
-110 e827633a5d7d627eb1170b2d0c71e944d0d56faf Built-in cherry
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 07cb706..3895f16 100755
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -129,7 +129,7 @@ test_expect_failure () {
+ 	error "bug in the test script: not 2 parameters to test-expect-failure"
+ 	say >&3 "expecting failure: $2"
+ 	test_run_ "$2"
+-	if [ "$?" = 0 -a "$eval_ret" != 0 ]
++	if [ "$?" = 0 -a "$eval_ret" != 0 -a "$eval_ret" -lt 129 ]
+ 	then
+ 		test_ok_ "$1"
+ 	else
+-- 
+1.4.1.rc1.g47e5
