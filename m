@@ -1,68 +1,76 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [RFC] git-add update with all-0 object
-Date: Thu, 30 Nov 2006 17:49:27 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0611301747330.9647@xanadu.home>
-References: <Pine.LNX.4.64.0611301634080.20138@iabervon.org>
- <Pine.LNX.4.64.0611301733460.9647@xanadu.home> <eknmju$9ok$1@sea.gmane.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Getting new branches from remote repo.
+Date: Sun, 12 Nov 2006 20:49:33 -0800
+Message-ID: <7v8xigar36.fsf@assigned-by-dhcp.cox.net>
+References: <6e1787fe0611122033p49671e13xf5b7f95beeba8b06@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-NNTP-Posting-Date: Thu, 30 Nov 2006 22:50:11 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Mon, 13 Nov 2006 04:49:55 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-reply-to: <eknmju$9ok$1@sea.gmane.org>
-X-X-Sender: nico@xanadu.home
+In-Reply-To: <6e1787fe0611122033p49671e13xf5b7f95beeba8b06@mail.gmail.com>
+	(Alexander Litvinov's message of "Mon, 13 Nov 2006 10:33:52 +0600")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32827>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31288>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gpuii-00018J-MH for gcvg-git@gmane.org; Thu, 30 Nov
- 2006 23:49:33 +0100
+ esmtp (Exim 4.43) id 1GjTlX-0006KM-6C for gcvg-git@gmane.org; Mon, 13 Nov
+ 2006 05:49:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1031571AbWK3Wt3 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
- 17:49:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031608AbWK3Wt3
- (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 17:49:29 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:11581 "EHLO
- relais.videotron.ca") by vger.kernel.org with ESMTP id S1031571AbWK3Wt2
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 17:49:28 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
- <0J9K0094CFEF2W40@VL-MO-MR001.ip.videotron.ca> for git@vger.kernel.org; Thu,
- 30 Nov 2006 17:49:28 -0500 (EST)
-To: Jakub Narebski <jnareb@gmail.com>
+ S1753891AbWKMEtk (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 12 Nov 2006
+ 23:49:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753918AbWKMEtk
+ (ORCPT <rfc822;git-outgoing>); Sun, 12 Nov 2006 23:49:40 -0500
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:58270 "EHLO
+ fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP id S1753891AbWKMEtj
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 12 Nov 2006 23:49:39 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao02.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061113044939.SMFN97.fed1rmmtao02.cox.net@fed1rmimpo01.cox.net>; Sun, 12
+ Nov 2006 23:49:39 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id m4pD1V00Q1kojtg0000000; Sun, 12 Nov 2006
+ 23:49:13 -0500
+To: "Alexander Litvinov" <litvinov2004@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-On Thu, 30 Nov 2006, Jakub Narebski wrote:
+"Alexander Litvinov" <litvinov2004@gmail.com> writes:
 
-> Nicolas Pitre wrote:
-> 
-> > On Thu, 30 Nov 2006, Daniel Barkalow wrote:
-> > 
-> >> One thing that I think is non-intuitive to a lot of users (either novice 
-> >> or who just don't do it much) is that it matters where in the process you 
-> >> do "git add <path>" if you're also changing the file. Even if you 
-> >> understand the index, you may not realize (or may not have internalized 
-> >> the fact) that what git-add does is update the index with what's there 
-> >> now.
-> > 
-> > And actually I think this is a good thing.  This is what makes the index 
-> > worth it.  Better find a way to make it obvious to people what's 
-> > happening.
-> 
-> Still, perhaps (perhaps!) it would be useful to have "intent to add"
-> git-add.
+> I have a trouble I don't know how to solve. When I am cloning remote
+> repo I automatically get all it's branches stored at my repo (they are
+> listed at .git/remotes/origin). When someone adds new branch(es) to
+> remote repo git pull (git fetch) does not automatically add them to my
+> repo. I have a tool to list all remote branches (git ls-remote --heads
+> origin) but I can't find how to add interesting (or all) branches to
+> by repo.
 
-Well, sure.  It could be an argument to git-add.  But surely not the 
-default?
+After finding out $that_new_branch's name, add either
 
-git-add --latest maybe?
+	Pull: refs/heads/$that_new_branch:refs/heads/$that_new_branch
 
+or if you are in "separate remote" school, then perhaps
 
+	Pull: refs/heads/$that_new_branch:refs/remotes/origin/$that_new_branch
+
+to .git/remotes/origin and running git fetch would give you what
+you want, I think.
+
+> By the way, how can I clone remote repo created by cloning another
+> repo using git clone --use-separate-remotes ? Even git ls-remote
+> --heads origin does not show all branches taken from that another
+> repo.
+
+Well, the point of "separate remote" is not to pollute local
+heads/ namespace with refs that merely track remote repository,
+so if you say "ls-remote --heads" you would not see them.  They
+are not "heads" in that repository.
+
+You would still see them if you say "ls-remote" without --heads.
