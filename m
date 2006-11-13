@@ -1,83 +1,102 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH/RFC (take 2)] gitweb: New improved patchset view
-Date: Mon, 30 Oct 2006 01:34:53 +0100
-Message-ID: <200610300134.53668.jnareb@gmail.com>
-References: <200610291122.30852.jnareb@gmail.com> <200610300051.37896.jnareb@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Getting new branches from remote repo.
+Date: Mon, 13 Nov 2006 10:17:02 -0800
+Message-ID: <7vr6w78b4x.fsf@assigned-by-dhcp.cox.net>
+References: <6e1787fe0611122033p49671e13xf5b7f95beeba8b06@mail.gmail.com>
+	<7v8xigar36.fsf@assigned-by-dhcp.cox.net>
+	<20061113091736.GA31693@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Mon, 30 Oct 2006 00:35:08 +0000 (UTC)
-Cc: Junio Hamano <junkio@cox.net>, Luben Tuikov <ltuikov@yahoo.com>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Mon, 13 Nov 2006 18:20:03 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:references:in-reply-to:cc:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=Llcho3rRkh679F90LcPnrhC4qr265I/CerHah+dVXV3/v/V2j+Ki7uRSMOcLKIEZXb0/uO3VHx7RUcO6G1Th/zgVPX7+kQOjprA5U3HEHngBtZiVu86LDdTCHrsId22biY99pR9a4yOVJ6hqar0yjSKWPF6hkceA5UfeUbObxsg=
-User-Agent: KMail/1.9.3
-In-Reply-To: <200610300051.37896.jnareb@gmail.com>
-Content-Disposition: inline
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30476>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31307>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GeL7I-0003RW-05 for gcvg-git@gmane.org; Mon, 30 Oct
- 2006 01:35:04 +0100
+ esmtp (Exim 4.43) id 1GjgMp-0005O2-4M for gcvg-git@gmane.org; Mon, 13 Nov
+ 2006 19:17:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S965353AbWJ3Ae7 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 29 Oct 2006
- 19:34:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965400AbWJ3Ae7
- (ORCPT <rfc822;git-outgoing>); Sun, 29 Oct 2006 19:34:59 -0500
-Received: from ug-out-1314.google.com ([66.249.92.174]:35972 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S965353AbWJ3Ae6
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 29 Oct 2006 19:34:58 -0500
-Received: by ug-out-1314.google.com with SMTP id 32so1030892ugm for
- <git@vger.kernel.org>; Sun, 29 Oct 2006 16:34:57 -0800 (PST)
-Received: by 10.66.220.17 with SMTP id s17mr3274415ugg; Sun, 29 Oct 2006
- 16:34:56 -0800 (PST)
-Received: from host-81-190-18-116.torun.mm.pl ( [81.190.18.116]) by
- mx.google.com with ESMTP id 28sm2253922ugc.2006.10.29.16.34.56; Sun, 29 Oct
- 2006 16:34:56 -0800 (PST)
-To: git@vger.kernel.org
+ S932575AbWKMSRH convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Mon, 13 Nov 2006 13:17:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755309AbWKMSRH
+ (ORCPT <rfc822;git-outgoing>); Mon, 13 Nov 2006 13:17:07 -0500
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:58084 "EHLO
+ fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP id S1755310AbWKMSRD
+ convert rfc822-to-8bit (ORCPT <rfc822;git@vger.kernel.org>); Mon, 13 Nov 2006
+ 13:17:03 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao05.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061113181703.MUPS20330.fed1rmmtao05.cox.net@fed1rmimpo01.cox.net>; Mon, 13
+ Nov 2006 13:17:03 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id mJGd1V0051kojtg0000000; Mon, 13 Nov 2006
+ 13:16:37 -0500
+To: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
 Sender: git-owner@vger.kernel.org
 
-Few other questions, probably to be adressed in the future patches, and 
-not added to this one.
+Karl Hasselstr=F6m <kha@treskal.com> writes:
 
-0. git-ls-tree and git-diff-tree without -z does quote not only !isprint 
-characters like LF '\n' and non-space whitespace characters like TAB 
-'\t' (and of course quoting characters '\' and '"'), but for example 
-also UTF-8 characters. See for example git-ls-tree output for 
-gitweb/test directory. This screws somewhat idea how we should treat 
-filenames which are quoted.
+>> After finding out $that_new_branch's name, add either
+>>
+>>       Pull: refs/heads/$that_new_branch:refs/heads/$that_new_branch
+>>
+>> or if you are in "separate remote" school, then perhaps
+>>
+>>       Pull: refs/heads/$that_new_branch:refs/remotes/origin/$that_ne=
+w_branch
+>>
+>> to .git/remotes/origin and running git fetch would give you what you
+>> want, I think.
+>
+> There really should be a flag to make git fetch do this job. And if w=
+e
+> use separate remotes, the flag should probably default to "on".
 
-[BTW. How git should deal with being deployed in the environment where 
-filesystem pathnames coding might not be UTF-8, and console (terminal) 
-coding might be not UTF-8?]
+While I do not necessarily agree that "git fetch" is the place
+to do so, I think it is sensible to have a way to easily manage
+remotes/$origin file.
 
+Things to consider are:
 
-1. Current version doesn't display empty patches (i.e. pure rename and 
-mode change combinations) and doesn't provide links to them from 
-difftree. This is legacy of old /usr/bin/diff using code, which did not 
-generated extended diff header, which is only output for "empty 
-patches". Should we change this, or leave as is?
+ - We need to notice new branches at the other end.
 
-2. Schould we change syntax highlighting of chunk header line, namely 
-changing slightly syntax coloring of "in which function are we" part of 
-chunk header?
+ - We need to remember old branches that the user is not
+   interested in, so that we do not even ask to add it only
+   because it does not have a local tracking branch.
 
-3. Should we make from-range/to-range in chunk header hyperlink to the 
-start of given bunch of lines in appropriate file? Or perhaps to the 
-middle of the bunch of lines? Or to first changed line (omitting 
-context)?
+ - We need to notice branches that disappeared at the other
+   end.  We may want to offer the choice between droping the
+   local tracking branch and keeping it in the 'the last
+   fetched' state.
 
--- 
-Jakub Narebski
+So from the UI point of view, considering that "git fetch" might
+be called as a part of "git pull", a sensible thing to do would
+be:
+
+ - Add "Pull-ignored:" lines to list remote branches that the
+   user is not interested in to .git/remotes/$origin file, and
+   teach existing tools to ignore them.
+
+ - Make "git fetch" to always run "ls-remote" (we would need to
+   do this anyway to enable commit walkers to fetch from a
+   repository that has packed and then pruned its refs) upfront,
+   and do the "noticing" part and issue an info message when
+   there are new branches (we should only do this when a
+   shorthand from .git/remotes/ is used).
+
+ - Add "git maint-remote" command that lets the user compare
+   ls-remote output and Pull: lines from remotes/$origin file,
+   and add/modify/delete the mapping to local tracking branches.
+
+I think the last one is probably the easiest for the users if
+done with something like dialog or whiptail.
