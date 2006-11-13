@@ -2,58 +2,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: svn versus git
-Date: Thu, 14 Dec 2006 17:23:01 -0500
-Message-ID: <20061214222301.GB26202@spearce.org>
-References: <200612132200.41420.andyparkins@gmail.com> <200612142000.54409.arekm@maven.pl> <4581CB38.8050401@op5.se> <200612142313.27741.arekm@maven.pl>
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: win2k/cygwin cannot handle even moderately sized packs
+Date: Mon, 13 Nov 2006 13:45:16 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0611131333000.13772@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <81b0412b0611070302h50541cd5mf0758afe0d6befda@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 14 Dec 2006 22:23:19 +0000 (UTC)
-Cc: Andreas Ericsson <ae@op5.se>, Andy Parkins <andyparkins@gmail.com>,
-	git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Mon, 13 Nov 2006 12:45:53 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <200612142313.27741.arekm@maven.pl>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <81b0412b0611070302h50541cd5mf0758afe0d6befda@mail.gmail.com>
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34417>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Guyyu-0001cJ-Gi for gcvg-git@gmane.org; Thu, 14 Dec
- 2006 23:23:12 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31296>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GjbBm-0007ED-RV for gcvg-git@gmane.org; Mon, 13 Nov
+ 2006 13:45:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S964910AbWLNWXJ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
- 17:23:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964925AbWLNWXJ
- (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 17:23:09 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:39142 "EHLO
- corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S964910AbWLNWXI (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006
- 17:23:08 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1Guyyc-00072P-Nt; Thu, 14 Dec 2006 17:22:54 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- 3CCA320FB65; Thu, 14 Dec 2006 17:23:02 -0500 (EST)
-To: Arkadiusz Miskiewicz <arekm@maven.pl>
+ S1754584AbWKMMpU (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 13 Nov 2006
+ 07:45:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754514AbWKMMpT
+ (ORCPT <rfc822;git-outgoing>); Mon, 13 Nov 2006 07:45:19 -0500
+Received: from mail.gmx.net ([213.165.64.20]:43488 "HELO mail.gmx.net") by
+ vger.kernel.org with SMTP id S1754584AbWKMMpS (ORCPT
+ <rfc822;git@vger.kernel.org>); Mon, 13 Nov 2006 07:45:18 -0500
+Received: (qmail invoked by alias); 13 Nov 2006 12:45:16 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp020) with SMTP; 13 Nov 2006 13:45:16 +0100
+To: Alex Riesen <raa.lkml@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Arkadiusz Miskiewicz <arekm@maven.pl> wrote:
-> > We no longer require external merge tools. 
-> Starting from which version?
+Hi,
 
-Not released yet, its sitting in 'next'.  Hopefully 1.5.
+On Tue, 7 Nov 2006, Alex Riesen wrote:
 
--- 
+> For me, it fails even on 332Mb pack:
+> 
+> $ git reset --hard 61bb7fcb
+> fatal: packfile .git/objects/pack/pack-ad37...pack cannot be mapped.
+> 
+> Instrumenting the code reveals that it fails on 348876870 bytes.
+> Strangely enough, a cygwin program which just reads that pack
+> many times without freeing the mem goes up to 1395507480 (1330Mb).
+> 
+> If I replace the malloc (cygwin) with native VirtualAlloc(MEM_COMMIT)
+> it reports that "Not enough storage is available to process this command",
+> which is just ENOMEM, I think.
+
+This looks to me as if you have NO_MMAP=1 set in your Makefile (which I 
+also do automatically when compiling on cygwin).
+
+The old problem: Windows does not have fork.
+
+<digression> And before somebody starts cygwin bashing: don't. It is not 
+cygwin's problem, it is Windows'. The cygwin people worked long and hard 
+on something truly useful, and it helps me _every_ time I have to work on 
+a Windows platform (which _is_ utter crap). Some problems of Windows are 
+so unhideable though, that even cygwin cannot work around them. 
+</digression>
+
+Cygwin provides a mmap(), which works remarkably well even with the 
+emulated fork(), but one thing is not possible: since mmap()ed files 
+have to be _reopened_ after a fork(), and git uses the 
+open-temp-file-then-delete-it-but-continue-to-use-it paradigm quite often, 
+we work around it by setting NO_MMAP=1. Again, this is _not_ Cygwin's 
+fault!
+
+And I think that a mmap() of 332MB would not fail.
+
+Long time ago (to be precise, July 18th), Linus suggested (in Message-Id: 
+<Pine.LNX.4.64.0607180837260.3386@evo.osdl.org>) to find out which mmap() 
+calls are _not_ used before a fork(), and not emulate them by malloc().
+
+I never came around to do that, but maybe others do?
+
+Ciao,
+Dscho
