@@ -1,72 +1,67 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: git-format-patch little gripe
-Date: Sat, 4 Nov 2006 02:05:21 +0100
-Message-ID: <200611040205.22305.jnareb@gmail.com>
-References: <7vwt6cbwzq.fsf@assigned-by-dhcp.cox.net> <eigjql$ql$2@sea.gmane.org> <Pine.LNX.4.64.0611031640140.25218@g5.osdl.org>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: Cleaning up git user-interface warts
+Date: Tue, 14 Nov 2006 20:47:07 +0100
+Message-ID: <20061114194707.GH7201@pasky.or.cz>
+References: <87k61yt1x2.wl%cworth@cworth.org> <455A1137.8030301@shadowen.org> <87hcx1u934.wl%cworth@cworth.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sat, 4 Nov 2006 01:05:11 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Tue, 14 Nov 2006 19:47:25 +0000 (UTC)
+Cc: Andy Whitcroft <apw@shadowen.org>, Junio C Hamano <junkio@cox.net>,
+	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=T81Ir6K7pNXJQthyy+2Ctp1hG+6/+C4z1wy4f0c4evXmXbbCKKtihbeIUWtLXXR43Vm9Cwk7pe7z9SkLcbeZx/Ej9PGUXIRLKSFVZfB2xC1S27tTX6H2rr9go/0FnhXe+ee4hH8JjeGYOSMUzPT+Hvft9X/9iKsc6F+h97Cqn4A=
-User-Agent: KMail/1.9.3
-In-Reply-To: <Pine.LNX.4.64.0611031640140.25218@g5.osdl.org>
 Content-Disposition: inline
+In-Reply-To: <87hcx1u934.wl%cworth@cworth.org>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30902>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31366>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gg9y0-0004Xl-O1 for gcvg-git@gmane.org; Sat, 04 Nov
- 2006 02:05:01 +0100
+ esmtp (Exim 4.43) id 1Gk4FW-0006em-Cu for gcvg-git@gmane.org; Tue, 14 Nov
+ 2006 20:47:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932554AbWKDBE5 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 3 Nov 2006
- 20:04:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932551AbWKDBE5
- (ORCPT <rfc822;git-outgoing>); Fri, 3 Nov 2006 20:04:57 -0500
-Received: from ug-out-1314.google.com ([66.249.92.172]:51145 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S932554AbWKDBE4
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 3 Nov 2006 20:04:56 -0500
-Received: by ug-out-1314.google.com with SMTP id m3so548065ugc for
- <git@vger.kernel.org>; Fri, 03 Nov 2006 17:04:55 -0800 (PST)
-Received: by 10.67.121.18 with SMTP id y18mr3612191ugm.1162602294912; Fri, 03
- Nov 2006 17:04:54 -0800 (PST)
-Received: from host-81-190-18-116.torun.mm.pl ( [81.190.18.116]) by
- mx.google.com with ESMTP id 32sm1675094ugf.2006.11.03.17.04.54; Fri, 03 Nov
- 2006 17:04:54 -0800 (PST)
-To: Linus Torvalds <torvalds@osdl.org>
+ S1754811AbWKNTrK (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 14 Nov 2006
+ 14:47:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754830AbWKNTrJ
+ (ORCPT <rfc822;git-outgoing>); Tue, 14 Nov 2006 14:47:09 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:64169 "EHLO machine.or.cz") by
+ vger.kernel.org with ESMTP id S1754811AbWKNTrI (ORCPT
+ <rfc822;git@vger.kernel.org>); Tue, 14 Nov 2006 14:47:08 -0500
+Received: (qmail 13830 invoked by uid 2001); 14 Nov 2006 20:47:07 +0100
+To: Carl Worth <cworth@cworth.org>
 Sender: git-owner@vger.kernel.org
 
-Linus Torvalds wrote:
+On Tue, Nov 14, 2006 at 08:22:39PM CET, Carl Worth wrote:
+> For reference, the latest potential batch of new users that I'm
+> dealing with is the set of Fedora package maintainers who are looking
+> at replacing CVS for their tree of package-building scripts. They are
+> currently evaluating systems and liking the interface of hg. Here's
+> the top of the current thread:
 > 
-> On Sat, 4 Nov 2006, Jakub Narebski wrote:
->>
->> YAUO, Yet Another Undocumented Option. ::sigh::
+> https://www.redhat.com/archives/fedora-maintainers/2006-November/msg00030.html
 > 
-> The "--pretty=xxx" is certainly not new, and it's not even totally 
-> undocumented. It's mentioned in several of the examples in various forms.
+> Here's the report about "git commit -a" confusion that led to my patch
+> above:
 > 
-> All the logging commands take the "pretty" argument.
+> https://www.redhat.com/archives/fedora-maintainers/2006-November/msg00141.html
 > 
-> Try
+> And here's my reply where I suggest that git UI might still be
+> improved in these areas:
 > 
-> 	git log --pretty={oneline,short,medium,full,fuller,raw}
-> 
-> (and the same things work for "git whatchanged" and "git show" etc)
+> https://www.redhat.com/archives/fedora-maintainers/2006-November/msg00149.html
 
-I meant git show --pretty=email option. Sorry for confusion.
+Hmm, did they (not) consider Cogito? They wouldn't have those issues.
+;-)
 
 -- 
-Jakub Narebski
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
+$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
