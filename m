@@ -1,60 +1,77 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: Re: [PATCH/RFC] gitweb: New improved patchset view
-Date: Sun, 29 Oct 2006 11:33:15 -0800 (PST)
-Message-ID: <952802.95154.qm@web31802.mail.mud.yahoo.com>
-References: <7viri34a3k.fsf@assigned-by-dhcp.cox.net>
-Reply-To: ltuikov@yahoo.com
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: Cleaning up git user-interface warts
+Date: Tue, 14 Nov 2006 15:52:47 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0611141518590.2591@xanadu.home>
+References: <87k61yt1x2.wl%cworth@cworth.org> <455A1137.8030301@shadowen.org>
+ <87hcx1u934.wl%cworth@cworth.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
-NNTP-Posting-Date: Sun, 29 Oct 2006 19:33:43 +0000 (UTC)
-Cc: git@vger.kernel.org
+NNTP-Posting-Date: Tue, 14 Nov 2006 20:52:59 +0000 (UTC)
+Cc: Andy Whitcroft <apw@shadowen.org>, Junio C Hamano <junkio@cox.net>,
+	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=X-YMail-OSG:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
-  b=Dqj9hf87tejH14MirqGz3L8IBSA9tp5OUDwESqYaVHuSC2PQyt1BIguzK3fhVL4YWeQDAS/mvKKiERQi709bfWUuguRbGr8pNvVS1O5eYvIGIpdypzyD6JKkopgPqNUmUtjY/DD/cLrswogio9vM44TOOZ+u9wSuobJEeR+CDFI=  ;
-X-YMail-OSG: tPvkJ.kVM1l1_wN.n13kZHFvNnt7X_sZFn_EbeEE3C1O5botlonDGz6sEF4m07HAF16g.h7vmal_6RzO0IsbhOJAIx4n6VHhLPkFh5Vdknarg3lASQ1Mm_GiJBeWxgZPLKKDs3dSilo-
-In-Reply-To: <7viri34a3k.fsf@assigned-by-dhcp.cox.net>
+In-reply-to: <87hcx1u934.wl%cworth@cworth.org>
+X-X-Sender: nico@xanadu.home
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30445>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31373>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GeGPI-0000SF-Lp for gcvg-git@gmane.org; Sun, 29 Oct
- 2006 20:33:21 +0100
+ esmtp (Exim 4.43) id 1Gk5H2-0003sQ-7R for gcvg-git@gmane.org; Tue, 14 Nov
+ 2006 21:52:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S965334AbWJ2TdR (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 29 Oct 2006
- 14:33:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965338AbWJ2TdR
- (ORCPT <rfc822;git-outgoing>); Sun, 29 Oct 2006 14:33:17 -0500
-Received: from web31802.mail.mud.yahoo.com ([68.142.207.65]:40067 "HELO
- web31802.mail.mud.yahoo.com") by vger.kernel.org with SMTP id S965334AbWJ2TdR
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 29 Oct 2006 14:33:17 -0500
-Received: (qmail 96313 invoked by uid 60001); 29 Oct 2006 19:33:16 -0000
-Received: from [71.80.233.118] by web31802.mail.mud.yahoo.com via HTTP; Sun,
- 29 Oct 2006 11:33:15 PST
-To: Junio C Hamano <junkio@cox.net>, Jakub Narebski <jnareb@gmail.com>
+ S966256AbWKNUwt (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 14 Nov 2006
+ 15:52:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966258AbWKNUwt
+ (ORCPT <rfc822;git-outgoing>); Tue, 14 Nov 2006 15:52:49 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:63191 "EHLO
+ relais.videotron.ca") by vger.kernel.org with ESMTP id S966256AbWKNUws (ORCPT
+ <rfc822;git@vger.kernel.org>); Tue, 14 Nov 2006 15:52:48 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR004.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
+ <0J8Q0088HNBZ16A0@VL-MO-MR004.ip.videotron.ca> for git@vger.kernel.org; Tue,
+ 14 Nov 2006 15:52:48 -0500 (EST)
+To: Carl Worth <cworth@cworth.org>
 Sender: git-owner@vger.kernel.org
 
---- Junio C Hamano <junkio@cox.net> wrote:
-> It somehow feels that deviating from what "git diff" gives makes
-> it very distracting; I would feel better if "/-rw-r--r-- (file)"
-> were not there.
+On Tue, 14 Nov 2006, Carl Worth wrote:
 
-Agree.
+> Anyway, now I've just gone and blown all my secret plans for changing
+> git in ways to make it less intimidating for new users.
 
-> Also I think arguing over 7 or 8 hexdigits is pointless; if you
-> are reading this from "git diff", it is probably the easiest to
-> match what "git diff" gave you.  One thing we _might_ want to do
+I just cannot do otherwise than cheer this with applause.
 
-Agree.
+Even if I have a clear preference for GIT's _technology_, I still think 
+that the HG user interface is more convivial.  I even been thinking 
+about writing something like an hg-like frontend to GIT from time to 
+time just so that GIT could then be better compared to (and actually 
+just used like) HG.
 
-    Luben
+I still think that the GIT user interface sucks in many ways.  The 
+confusion between pull, fetch and push is still my favorite, along with 
+the locale vs remote branch issue.  Maybe we'll better handle the branch 
+issue eventually, but it would be so much intuitive to split branch 
+merging out of git-pull, and make git-pull be the same as git-fetch 
+(maybe deprecating git-fetch in the process) so push and pull are really 
+_only_ opposite of each other.
+
+If the fetch+merge behavior (which I think should really be refered as 
+pull+merge) is still desirable, then it should be called git-update and 
+be no more than a single shell script line such as
+
+	git_pull && git_merge"
+
+This is really what most people expect from such a command name based 
+on obvious historical reasons.  The lack of any branch argument to 
+git-pull and git-merge could be defined as using the first defined 
+remote branch by default.  But having git-pull performing merges is IMHO 
+overloading the word and goes against most people's expectations.
+
+
