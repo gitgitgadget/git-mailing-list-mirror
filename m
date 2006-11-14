@@ -1,66 +1,77 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jeff King <peff@peff.net>
-Subject: Re: Change in git-svn dcommit semantics?
-Date: Wed, 20 Dec 2006 06:57:32 -0500
-Message-ID: <20061220115731.GA29786@coredump.intra.peff.net>
-References: <m2mz5jegka.fsf@ziti.local> <94FF72E0-F8BD-4773-803E-F179754BF0ED@silverinsanity.com> <Pine.LNX.4.63.0612200053550.19693@wbgn013.biozentrum.uni-wuerzburg.de> <C2881A17-27F7-467C-B353-189BB7DBFD1E@silverinsanity.com> <7v3b7bnz6q.fsf@assigned-by-dhcp.cox.net> <emb77h$cf2$1@sea.gmane.org> <360A3F7A-0849-4BCE-8550-1F05BB9821C5@silverinsanity.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Missing features in git
+Date: Tue, 14 Nov 2006 18:15:23 +0100
+Message-ID: <200611141815.24236.jnareb@gmail.com>
+References: <20061114134958.5326.qmail@science.horizon.com> <ejcl6l$bo0$1@sea.gmane.org> <20061114154739.GB5453@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 20 Dec 2006 11:57:40 +0000 (UTC)
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Tue, 14 Nov 2006 17:14:41 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=R3bFIAL+5YM6R5DNPm7FYwctJVGBZBkDGEqIzKBHhnv/Sczd+CW0gaDlcm2BWWyh0BzW7wemV8YpixrWQAK3iwzbnZcHYyw8PSjS5Vsd3cfLViA5fEOQQU/WlgjptwXHNFEzXL/sKteQSsPBT/5uppWwvPMjdmH76Bnmr4nFHyE=
+User-Agent: KMail/1.9.3
+In-Reply-To: <20061114154739.GB5453@diana.vm.bytemark.co.uk>
 Content-Disposition: inline
-In-Reply-To: <360A3F7A-0849-4BCE-8550-1F05BB9821C5@silverinsanity.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34919>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gx04n-0008AQ-VO for gcvg-git@gmane.org; Wed, 20 Dec
- 2006 12:57:38 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31352>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gk1ro-0000sF-7F for gcvg-git@gmane.org; Tue, 14 Nov
+ 2006 18:14:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1754447AbWLTL5f (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 20 Dec 2006
- 06:57:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964956AbWLTL5f
- (ORCPT <rfc822;git-outgoing>); Wed, 20 Dec 2006 06:57:35 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:53106
- "HELO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id
- S1754447AbWLTL5e (ORCPT <rfc822;git@vger.kernel.org>); Wed, 20 Dec 2006
- 06:57:34 -0500
-Received: (qmail 825 invoked from network); 20 Dec 2006 06:57:33 -0500
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2) by
- 66-23-211-5.clients.speedfactory.net with SMTP; 20 Dec 2006 06:57:33 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 20 Dec
- 2006 06:57:32 -0500
-To: Brian Gernhardt <benji@silverinsanity.com>
+ S933458AbWKNROc convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Tue, 14 Nov 2006 12:14:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933460AbWKNROc
+ (ORCPT <rfc822;git-outgoing>); Tue, 14 Nov 2006 12:14:32 -0500
+Received: from nf-out-0910.google.com ([64.233.182.185]:20152 "EHLO
+ nf-out-0910.google.com") by vger.kernel.org with ESMTP id S933458AbWKNROc
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 14 Nov 2006 12:14:32 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so351123nfa for
+ <git@vger.kernel.org>; Tue, 14 Nov 2006 09:14:27 -0800 (PST)
+Received: by 10.49.43.2 with SMTP id v2mr1372046nfj.1163524466027; Tue, 14
+ Nov 2006 09:14:26 -0800 (PST)
+Received: from host-81-190-24-209.torun.mm.pl ( [81.190.24.209]) by
+ mx.google.com with ESMTP id y24sm2498612nfb.2006.11.14.09.14.25; Tue, 14 Nov
+ 2006 09:14:25 -0800 (PST)
+To: Karl =?iso-8859-1?q?Hasselstr=F6m?= <kha@treskal.com>
 Sender: git-owner@vger.kernel.org
 
-On Wed, Dec 20, 2006 at 06:47:45AM -0500, Brian Gernhardt wrote:
+Karl Hasselstr=F6m wrote:
+> On 2006-11-14 15:53:18 +0100, Jakub Narebski wrote:
+>=20
+>> linux@horizon.com wrote:
+>>
+>>> Then you could check out an arbitrary version without any of the
+>>> annoyance above; I could "git checkout tags/foo" or even "git
+>>> checkout deadbeef~3". I wouldn't be on a current branch (which
+>>> would necessitate changing "git branch" output), so HEAD would
+>>> simply contain an object ID directly rather than being a
+>>> symlink/symref.
+>>
+>> And what would happen if you want to checkout other branch? Where
+>> the ID in the HEAD would go to? HEAD just _has_ to be reference to
+>> _branch_.
+>=20
+> The id that used to be HEAD would not be saved anywhere. It would
+> still be reachable from your refs, presumably, just like before you
+> checked it out. (It would not be the case that you had made commits o=
+n
+> an unnamed branch that would now get lost, because the tool would
+> refuse to commit until you had created a name for the branch.)
 
-> >>The --full-diff option helps because it shows the diff for other
-> >>files (that do not have different number of substring COLLISION
-> >>in the pre and postimage) in the same commit as well.
-> >
-> >Yet another undocumented option. Sigh...
-> 
-> I'd send in a patch to fix that (little gnome work is what I do in  
-> Wikipedia, and seems to be what I do here), but the option seems to  
-> be in setup_revision.c:setup_revisions, which is used in several  
-> places.  Is there a central place to put that in the documentation?   
-> Should there be?
-
-Please read the rest of the thread for some explanation from Junio on
-how this option works.
-
-I think it makes sense to group the porcelain-ish options together for
-git-log/git-whatchanged (and potentially git-show). Really, they can
-take any of the diff-options or any of the rev-list options.  The
-rev-list options are not currently grouped for inclusion in another man
-page. The diff options are available in diff-options.txt, but are not
-included by the log manpages.  They probably should be.
-
+If HEAD would contain an commit ID directly, then you shouldn't be able
+to commit at all. Not very useful, it is.
+--=20
+Jakub Narebski
