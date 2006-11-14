@@ -1,89 +1,103 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: Some tips for doing a CVS importer
-Date: Thu, 23 Nov 2006 20:45:06 +0100
-Organization: Dewire
-Message-ID: <200611232045.06974.robin.rosenberg.lists@dewire.com>
-References: <9e4733910611201349s4d08b984g772c64982f148bfa@mail.gmail.com> <456359E2.8010403@cc.jyu.fi> <20061121200508.GB22461@spearce.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 4/5] allow deepening of a shallow repository
+Date: Mon, 13 Nov 2006 23:24:53 -0800
+Message-ID: <7vy7qeze0q.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.63.0610302009390.26682@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 23 Nov 2006 19:44:08 +0000 (UTC)
-Cc: lamikr <lamikr@cc.jyu.fi>, Jon Smirl <jonsmirl@gmail.com>,
-	Carl Worth <cworth@cworth.org>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Tue, 14 Nov 2006 07:25:14 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: KMail/1.9.4
-In-Reply-To: <20061121200508.GB22461@spearce.org>
-Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new at dewire.com
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32155>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31338>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GnKTt-0004ZU-2V for gcvg-git@gmane.org; Thu, 23 Nov
- 2006 20:43:33 +0100
+ esmtp (Exim 4.43) id 1GjsfD-0001dU-Qw for gcvg-git@gmane.org; Tue, 14 Nov
+ 2006 08:25:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S933572AbWKWTnT (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 23 Nov 2006
- 14:43:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933590AbWKWTnT
- (ORCPT <rfc822;git-outgoing>); Thu, 23 Nov 2006 14:43:19 -0500
-Received: from [83.140.172.130] ([83.140.172.130]:42265 "EHLO
- torino.dewire.com") by vger.kernel.org with ESMTP id S933572AbWKWTnQ (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 23 Nov 2006 14:43:16 -0500
-Received: from localhost (localhost [127.0.0.1]) by torino.dewire.com
- (Postfix) with ESMTP id ADCD1802810; Thu, 23 Nov 2006 20:39:33 +0100 (CET)
-Received: from torino.dewire.com ([127.0.0.1]) by localhost (torino
- [127.0.0.1]) (amavisd-new, port 10024) with ESMTP id 21277-08; Thu, 23 Nov
- 2006 20:39:33 +0100 (CET)
-Received: from [10.9.0.3] (unknown [10.9.0.3]) by torino.dewire.com (Postfix)
- with ESMTP id 2365D800784; Thu, 23 Nov 2006 20:39:31 +0100 (CET)
-To: Shawn Pearce <spearce@spearce.org>
+ S933239AbWKNHYz (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 14 Nov 2006
+ 02:24:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933240AbWKNHYz
+ (ORCPT <rfc822;git-outgoing>); Tue, 14 Nov 2006 02:24:55 -0500
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:39619 "EHLO
+ fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP id S933239AbWKNHYy
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 14 Nov 2006 02:24:54 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao05.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061114072454.WQAX20330.fed1rmmtao05.cox.net@fed1rmimpo02.cox.net>; Tue, 14
+ Nov 2006 02:24:54 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id mXR01V0091kojtg0000000; Tue, 14 Nov 2006
+ 02:25:00 -0500
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-tisdag 21 november 2006 21:05 skrev Shawn Pearce:
-> lamikr <lamikr@cc.jyu.fi> wrote:
-> > Shawn Pearce wrote:
-> > >   - No GUI.
-> >
-> > QGIT allows using some commands. I plan to try out the GIT eclipse
-> > plugin in near future myself.
-> > This mail list have some discussion and download link to it's repo in
-> > archives.
-> > (title: Java GIT/Eclipse GIT version 0.1.1, )
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+
+> Now, by saying "git fetch -depth <n> <repo>" you can deepen
+> a shallow repository.
 >
-> I'm the author of that plugin.  :-)
->
-> Its not even capable of making a commit yet.  The underling plumbing
-> (aka jgit) can make commits but the Eclipse GUI has no function to
-> actually invoke that plumbing and make a commit to the repository.
->
-> The Eclipse plugin has apparently been a low priority for me.
-> I haven't worked on it very recently.  Robin Rosenburg has supposedly
-> gotten the revision compare interface to work, but its slow as a
-> duck in November due to jgit's pack reading code not running as
-> fast as it should.
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  commit.c      |   13 +++++++++++++
+>  commit.h      |    3 ++-
+>  fetch-pack.c  |   22 ++++++++++++++++------
+>  git-fetch.sh  |   12 +++++++++++-
+>  shallow.c     |    8 ++++++--
+>  upload-pack.c |   57 ++++++++++++++++++++++++++++++++++++++++++++++-----------
+> diff --git a/upload-pack.c b/upload-pack.c
+> index ebe1e5a..162dd34 100644
+> --- a/upload-pack.c
+> +++ b/upload-pack.c
+> @@ -134,6 +134,7 @@ static void create_pack_file(void)
+>  		} else {
+>  			for (i = 0; i < want_obj.nr; i++) {
+>  				struct object *o = want_obj.objects[i].item;
+> +				o->flags &= ~UNINTERESTING;
+>  				add_pending_object(&revs, o, NULL);
+>  			}
+>  			for (i = 0; i < have_obj.nr; i++) {
 
-Slow it is. It is somewhat usable though, especially the quickdiff. I worked 
-the whole day with help from quickdiff today. The diff is computed against 
-HEAD^ (i.e. I get to see the changes that my topmost StGit patch introduces).
+I am puzzled why this is needed in this series.  In other words,
+do we have a bug in the current upload-pack that does not have
+shallow already by not clearing UNINTERESTING bit?  In yet other
+words, I haven't figured out which part of the shallow series
+makes it necessary to clear UNINTERESTING bit from wanted
+object.
 
-The project contains 20000+ files and six years of history.  Reading the whole 
-history is out of the question with the current performance so I restrict 
-reading to 500 entries which is just about bearable. That's enough for 
-practical use with quickdiff and compare though. Improving jgit's speed 50 
-times will probably be enough to make jgit shine. 
+> @@ -547,23 +554,51 @@ static void receive_needs(void)
+>...
+> +		for (i = 0; i < shallows.nr; i++) {
+> +			struct object *object = shallows.objects[i].item;
+> +			if (object->flags & NOT_SHALLOW) {
+> +				struct commit_list *parents;
+> +				packet_write(1, "unshallow %s",
+> +					sha1_to_hex(object->sha1));
+> +				object->flags &= ~CLIENT_SHALLOW;
+> +				/* make sure the real parents are parsed */
+> +				unregister_shallow(object->sha1);
+> +				parse_commit((struct commit *)object);
+> +				parents = ((struct commit *)object)->parents;
+> +				while (parents) {
+> +					add_object_array(&parents->item->object,
+> +							NULL, &want_obj);
+> +					parents = parents->next;
+> +				}
+> +			}
 
-Activating the Git connection seems to be a problem with the egit projects, 
-i.e. it works sometimes, but not with my much bigger repo. The only problem 
-is that the first time is dog slow. The structure is different though, as my 
-repo has .project at the top, not one level down.
+I doubt unregister_shallow() is enough to ensure that the next
+parse_commit() re-parses to recover its parents.  parse_commit()
+says "if (item->object.parsed) return 0" upfront.  Don't you
+need to do:
 
+	object->parsed = 0;
+
+before parse_commit()?
