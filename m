@@ -1,63 +1,62 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Fredrik Kuivinen" <frekui@gmail.com>
-Subject: Re: [RFC] Teach git-branch howto rename a branch
-Date: Sat, 25 Nov 2006 11:39:03 +0100
-Message-ID: <4c8ef70611250239h4e03b9c7k971b60187aa0f56d@mail.gmail.com>
-References: <1164409429445-git-send-email-hjemli@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 2/5] support fetching into a shallow repository
+Date: Tue, 14 Nov 2006 09:42:34 -0800
+Message-ID: <7vu011zzzp.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.63.0610302008520.26682@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7vac2u1oee.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0611141140530.13772@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sat, 25 Nov 2006 10:39:17 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Tue, 14 Nov 2006 17:42:48 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=pfYeZDUJCLu8U7PEpHrnorqCsoBfnyGzIxyt8yqFkm52Yx2w7WJV1RNt6hm7pDktiFa6S9ynD3xcZuCve3O+2tl1qq1+xhMOA1svW82reuwhPsvc1nLkt23ZBwgDYiRJyysYGU2u7Jbn3LJ4jGqlsFVj2cUYMcPPlm9Sr0k5ChU=
-In-Reply-To: <1164409429445-git-send-email-hjemli@gmail.com>
-Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0611141140530.13772@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Tue, 14 Nov 2006 11:43:31 +0100
+	(CET)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32279>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31354>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GnuwB-0007Kz-8T for gcvg-git@gmane.org; Sat, 25 Nov
- 2006 11:39:11 +0100
+ esmtp (Exim 4.43) id 1Gk2Ix-0006xU-Pi for gcvg-git@gmane.org; Tue, 14 Nov
+ 2006 18:42:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S966417AbWKYKjH (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 25 Nov 2006
- 05:39:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966420AbWKYKjH
- (ORCPT <rfc822;git-outgoing>); Sat, 25 Nov 2006 05:39:07 -0500
-Received: from wx-out-0506.google.com ([66.249.82.234]:42077 "EHLO
- wx-out-0506.google.com") by vger.kernel.org with ESMTP id S966417AbWKYKjF
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 25 Nov 2006 05:39:05 -0500
-Received: by wx-out-0506.google.com with SMTP id h27so1129959wxd for
- <git@vger.kernel.org>; Sat, 25 Nov 2006 02:39:04 -0800 (PST)
-Received: by 10.70.56.4 with SMTP id e4mr2746353wxa.1164451144304; Sat, 25
- Nov 2006 02:39:04 -0800 (PST)
-Received: by 10.70.49.14 with HTTP; Sat, 25 Nov 2006 02:39:03 -0800 (PST)
-To: "Lars Hjemli" <hjemli@gmail.com>
+ S1755464AbWKNRmg (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 14 Nov 2006
+ 12:42:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755466AbWKNRmg
+ (ORCPT <rfc822;git-outgoing>); Tue, 14 Nov 2006 12:42:36 -0500
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:64171 "EHLO
+ fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP id S1755464AbWKNRmf
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 14 Nov 2006 12:42:35 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao11.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061114174235.BPZA296.fed1rmmtao11.cox.net@fed1rmimpo02.cox.net>; Tue, 14
+ Nov 2006 12:42:35 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id mhih1V00F1kojtg0000000; Tue, 14 Nov 2006
+ 12:42:41 -0500
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-On 11/25/06, Lars Hjemli <hjemli@gmail.com> wrote:
-> This adds a '--rename' option to git branch. If specified, branch
-> creation becomes branch renaming.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+
+>> I think the "commit = p->item" part is trying to do a tail
+>> recursion optimization, but this is a bit too clever to my
+>> liking (at first I mistook that the code forgot to re-point p at
+>> its parents list and incrementing cur_depth).
 >
-> With a single branchname, the current branch is renamed and .git/HEAD is
-> updated.
+> I take it as a compliment ;-)
 >
-> With two branchnames, the second name is renamed to the first.
+> Seriously again, would you like me to add a comment, or rather do away 
+> with the tail recursion optimization? It is not a huge optimization 
+> anyway. Maybe a cleverer way would be to use an object_array instead of a 
+> commit_list?
 
-Nice idea. But wouldn't it be more sensible to rename the first branch to the
-second instead of the other way around? That is, the syntax would be
-
-    git branch --rename FROM TO
-
-which is more similar to how "mv" works.
-
+Leaving it as a compliment is just fine.
