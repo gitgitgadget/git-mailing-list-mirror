@@ -2,81 +2,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-Subject: Re: git pull and merging.
-Date: Thu, 7 Dec 2006 23:54:01 +0100
-Message-ID: <200612072354.01830.Josef.Weidendorfer@gmx.de>
-References: <cc723f590612052051r62111c4cgfd7ee893cb00f84a@mail.gmail.com> <200612071227.46194.Josef.Weidendorfer@gmx.de> <7vhcw7ttj9.fsf@assigned-by-dhcp.cox.net>
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [ANNOUNCE] Git Queues 0.10
+Date: Tue, 14 Nov 2006 14:13:31 +0100
+Message-ID: <4559C0FB.5010103@op5.se>
+References: <20061114101037.GA8075@filer.fsl.cs.sunysb.edu>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 7 Dec 2006 22:54:28 +0000 (UTC)
-Cc: "Aneesh Kumar K.V" <aneesh.kumar@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
+NNTP-Posting-Date: Tue, 14 Nov 2006 13:13:48 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: KMail/1.9.5
-In-Reply-To: <7vhcw7ttj9.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay1.informatik.tu-muenchen.de
+User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
+In-Reply-To: <20061114101037.GA8075@filer.fsl.cs.sunysb.edu>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33644>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GsS8D-0002aG-G0 for gcvg-git@gmane.org; Thu, 07 Dec
- 2006 23:54:21 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31345>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gjy6g-0002Hr-1c for gcvg-git@gmane.org; Tue, 14 Nov
+ 2006 14:13:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1163559AbWLGWyI (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
- 17:54:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1163563AbWLGWyI
- (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 17:54:08 -0500
-Received: from mailout1.informatik.tu-muenchen.de ([131.159.0.18]:36119 "EHLO
- mailout1.informatik.tu-muenchen.de" rhost-flags-OK-OK-OK-OK) by
- vger.kernel.org with ESMTP id S1163559AbWLGWyE (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 7 Dec 2006 17:54:04 -0500
-Received: from dhcp-3s-46.lrr.in.tum.de (dhcp-3s-46.lrr.in.tum.de
- [131.159.35.46]) by mail.in.tum.de (Postfix) with ESMTP id 3D0842236; Thu,  7
- Dec 2006 23:54:03 +0100 (MET)
-To: Junio C Hamano <junkio@cox.net>
+ S965599AbWKNNNi (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 14 Nov 2006
+ 08:13:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965604AbWKNNNi
+ (ORCPT <rfc822;git-outgoing>); Tue, 14 Nov 2006 08:13:38 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:17888 "EHLO
+ smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S965599AbWKNNNi (ORCPT
+ <rfc822;git@vger.kernel.org>); Tue, 14 Nov 2006 08:13:38 -0500
+Received: by smtp-gw1.op5.se (Postfix, from userid 588) id 16A7A6BE35; Tue,
+ 14 Nov 2006 14:13:36 +0100 (CET)
+Received: from [192.168.1.20] (unknown [213.88.215.14]) by smtp-gw1.op5.se
+ (Postfix) with ESMTP id 295C36BE36; Tue, 14 Nov 2006 14:13:34 +0100 (CET)
+To: Josef Sipek <jsipek@fsl.cs.sunysb.edu>
 Sender: git-owner@vger.kernel.org
 
-On Thursday 07 December 2006 20:06, you wrote:
-> Once you place something like "branch.*.merge" in configuration
-> file (either $GIT_DIR/config, or a $GIT_DIR/remotes/* file), you
-> are talking about other repositories you regularly interact
-> with, so it might be probably Ok to require the user to use a
-> tracking branch if he wants the convenience of "branch.*.merge",
-> and make its value name the local tracking branch instead of the
-> remote branch.
-> 
-> But that means I would never be able to benefit from the
-> convenience of "branch.*.merge";
+Josef Sipek wrote:
+> Git Queues (aka. gq) is a series of bash scripts which add a Mercurial
+> queues-like [1] functionality and interface to git.
 
-Hmm... that's true; actually, I did not thought about people
-which do not want to have any tracking branches (again!). So
+gq-project.org
 
-[remote "repo"]
-  url = ...
-  fetch = branch1
-  fetch = branch2
+Might I suggest gitq or giq instead? gq is a fairly widespread and 
+established tool already.
 
-[branch "mybranch1"]
-  remote = repo
-  merge = branch1
-
-actually looks fine, and is the only possible way.
-But still, this does not work. You have to specify
-
-  merge = refs/heads/branch1
-
-That's confusing (perhaps I can come up with a patch
-to allow "branch1" alone).
-
-So probably the best way is to write some more detailed
-explanation into the docu ...
-
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
