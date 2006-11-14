@@ -1,109 +1,88 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: how to revert changes in working tree?
-Date: Wed, 6 Dec 2006 11:20:24 +0100
-Message-ID: <81b0412b0612060220n11fb7e19hc6ed202759962bd3@mail.gmail.com>
-References: <4576680B.7030500@gmail.com>
-	 <81b0412b0612060043t488d356du8f5fcdd164a45eb5@mail.gmail.com>
-	 <45769417.70601@gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: git-rev-list: --objects list inconsistency
+Date: Tue, 14 Nov 2006 10:26:46 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0611141020480.3327@woody.osdl.org>
+References: <4559E6A9.9A30A236@eudaptics.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 6 Dec 2006 10:20:37 +0000 (UTC)
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Tue, 14 Nov 2006 18:27:23 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=YvWh6AvfXlbEkIq+xJvkE1MeLJYXEyczXQcEqOZ2tsSukXWWyt4xV5K35TkL9LFgHkA2403SfikCdZipH5PrBl5Isd1f7LUk6t/zeMj0aeW1DsiSxNEI5pdpEJ8+kh8LJoazcgoxb5lwYWw7mw4iaTXlrZFZ3pRwN/21Fna4tSs=
-In-Reply-To: <45769417.70601@gmail.com>
-Content-Disposition: inline
+In-Reply-To: <4559E6A9.9A30A236@eudaptics.com>
+X-MIMEDefang-Filter: osdl$Revision: 1.156 $
+X-Scanned-By: MIMEDefang 2.36
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33426>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Grtt9-0001s4-1j for gcvg-git@gmane.org; Wed, 06 Dec
- 2006 11:20:31 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31359>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gk2zw-0008RD-6Y for gcvg-git@gmane.org; Tue, 14 Nov
+ 2006 19:27:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1760446AbWLFKU2 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
- 05:20:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760443AbWLFKU2
- (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 05:20:28 -0500
-Received: from ug-out-1314.google.com ([66.249.92.171]:29920 "EHLO
- ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1760444AbWLFKU1 (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec
- 2006 05:20:27 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so95089uga for
- <git@vger.kernel.org>; Wed, 06 Dec 2006 02:20:25 -0800 (PST)
-Received: by 10.78.204.20 with SMTP id b20mr413693hug.1165400424958; Wed, 06
- Dec 2006 02:20:24 -0800 (PST)
-Received: by 10.78.135.3 with HTTP; Wed, 6 Dec 2006 02:20:24 -0800 (PST)
-To: "Liu Yubao" <yubao.liu@gmail.com>
+ S966252AbWKNS1A (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 14 Nov 2006
+ 13:27:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966259AbWKNS1A
+ (ORCPT <rfc822;git-outgoing>); Tue, 14 Nov 2006 13:27:00 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:39097 "EHLO smtp.osdl.org") by
+ vger.kernel.org with ESMTP id S966252AbWKNS07 (ORCPT
+ <rfc822;git@vger.kernel.org>); Tue, 14 Nov 2006 13:26:59 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
+ smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kAEIQooZ011913
+ (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Tue, 14
+ Nov 2006 10:26:51 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
+ shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kAEIQleI010755; Tue, 14 Nov
+ 2006 10:26:49 -0800
+To: Johannes Sixt <J.Sixt@eudaptics.com>
 Sender: git-owner@vger.kernel.org
 
-On 12/6/06, Liu Yubao <yubao.liu@gmail.com> wrote:
-> Alex Riesen wrote:
-> > On 12/6/06, Liu Yubao <yubao.liu@gmail.com> wrote:
-> >> I'm confused how to revert changes in working tree:
-> >>
-> >> $ git fetch
-> >> $ git merge "sync with origin" HEAD origin
-> >> ....conflict....
-> >
-> > You may want to consider git pull. It'd do exactly the same
->
-> It's said somewhere "git pull" has strange behaviour and fetch+pull
-> is recommended.
 
-So why do you use fetch+merge?
 
-> sorry, I made a mistake, that should come from "git merge",
+On Tue, 14 Nov 2006, Johannes Sixt wrote:
+> 
+> As you can see, without --objects, master^^..master and --max-count=2
+> list the same two commits.
 
-so, you just have an unresolved merge.
-It was discussed on this mailing list very recently
-(and actually is being discussed), so just look at
-the archives.
+"--max-count=X" and "master^^..master" are two TOTALLY different things.
 
-> > They problem is the exec-bit which windows does not
-> > have and cygwin failed to correctly workaround the
-> > limitation.
-> >
-> > Do a "git repo-config core.filemode false" to almost
-> > disable the checks for exec bit.
-> >
->
-> It has been set. I guess the cause is a interrupted merge
-> operation that leads to textual difference.
+The fact that they happened to give the same results without "--objects" 
+is a random thing, and not at all guaranteed. For example, if "master" (or 
+its parent) had been a merge, it probably wouldn't have given the same 
+result even _without_ "--objects".
 
-yes, though what I can't understand is why don't you have
-unmerged entries... Maybe it comes from playing with
-all these commands you mentioned in the original mail.
+> But with --objects I get different object lists. I don't even know which
+> one is the one to expect, but I certainly would not have expected the
+> lists to be different. What's wrong here?
 
-> After run "git reset --hard", all deleted files come back, but I reach
-> the old state:
-> $ git status
+Nothing is wrong. You're asking for two totally different things.
 
-When? Immediately after git reset --hard? Then you very
-likely have no permission to write (or lost it somehow) into
-the working directory, otherwise I don't see could this be
-possible. git reset --hard rewrites everything.
+With "--max-count=2", you're saying "I want the first two commits", and 
+then the "--objects" part extends that to all the other object types too.
 
-> HEAD: commit 088406bcf66d6c7fd8a5c04c00aa410ae9077403
-> master: commit 088406bcf66d6c7fd8a5c04c00aa410ae9077403
-> origin: commit ff51a98799931256b555446b2f5675db08de6229
-> "git diff --cached" shows nothing;
+So you get two commits _and_ every single object reachable from those two 
+commits.
 
-which is correct.
+In contrast, with "master^^..master", you're saying "I want everything 
+that is reachable from "master", but _not_ reachable from it's 
+grand-parent. And the "--objects" flag extends that to all the other 
+object types too.
 
-> "git diff" shows many diffs:
+So you get (in this case) two commits _and_ all the objects that are 
+reachable from those two commits but that are _not_ reachable from the 
+grandparent.
 
-and this is not. You do have changes, which could not be reset.
-I fail to see why. Are you sure you haven't accidentally repeated
-the merge after doing git reset --hard? And what was _exactly_
+That's a totally different thing, obviously. There's likely to be a lot of 
+objects in common between "master" and its grandparent, and you literally 
+asked to not be shown those objects. In the first case, you didn't ask for 
+the exclusion of the grandparent.
+
+So you should expect a big difference in almost all cases. In one case, 
+you ask for an exclusion, in the other case, you just say "just the first 
+two commits, please". Not at all equivalent.
+
