@@ -2,103 +2,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-Subject: Re: Subprojects tasks
-Date: Mon, 18 Dec 2006 00:23:45 +0100
-Message-ID: <200612180023.45815.Josef.Weidendorfer@gmx.de>
-References: <7vzm9nelob.fsf@assigned-by-dhcp.cox.net> <200612171401.10585.jnareb@gmail.com> <20061217134848.GH12411@admingilde.org>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sun, 17 Dec 2006 23:24:31 +0000 (UTC)
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <junkio@cox.net>
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: linux@horizon.com
+Subject: Re: Missing features in git
+Date: 14 Nov 2006 16:38:00 -0500
+Message-ID: <20061114213800.28716.qmail@science.horizon.com>
+References: <20061114195559.40967ee4.froese@gmx.de>
+NNTP-Posting-Date: Tue, 14 Nov 2006 21:38:16 +0000 (UTC)
+Cc: linux@horizon.com
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #352111
-User-Agent: KMail/1.9.5
-In-Reply-To: <20061217134848.GH12411@admingilde.org>
-Content-Disposition: inline
-X-Y-GMX-Trusted: 0
+In-Reply-To: <20061114195559.40967ee4.froese@gmx.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34711>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gw5Ml-0002JE-BA for gcvg-git@gmane.org; Mon, 18 Dec
- 2006 00:24:23 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31381>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gk5yp-0004hj-Va for gcvg-git@gmane.org; Tue, 14 Nov
+ 2006 22:38:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753213AbWLQXYV (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 17 Dec 2006
- 18:24:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753214AbWLQXYU
- (ORCPT <rfc822;git-outgoing>); Sun, 17 Dec 2006 18:24:20 -0500
-Received: from mail.gmx.net ([213.165.64.20]:40413 "HELO mail.gmx.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S1753213AbWLQXYU
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 17 Dec 2006 18:24:20 -0500
-Received: (qmail invoked by alias); 17 Dec 2006 23:24:18 -0000
-Received: from p549680A1.dip0.t-ipconnect.de (EHLO noname) [84.150.128.161]
- by mail.gmx.net (mp019) with SMTP; 18 Dec 2006 00:24:18 +0100
-To: Martin Waitz <tali@admingilde.org>
+ S966380AbWKNViE (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 14 Nov 2006
+ 16:38:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966381AbWKNViE
+ (ORCPT <rfc822;git-outgoing>); Tue, 14 Nov 2006 16:38:04 -0500
+Received: from science.horizon.com ([192.35.100.1]:16444 "HELO
+ science.horizon.com") by vger.kernel.org with SMTP id S966380AbWKNViC (ORCPT
+ <rfc822;git@vger.kernel.org>); Tue, 14 Nov 2006 16:38:02 -0500
+Received: (qmail 28717 invoked by uid 1000); 14 Nov 2006 16:38:00 -0500
+To: git@vger.kernel.org, torvalds@osdl.org
 Sender: git-owner@vger.kernel.org
 
-On Sunday 17 December 2006 14:48, Martin Waitz wrote:
-> The version tracked by the supermodule is completely independent from
-> any branches you define in your submodule.
-> It is of course possible to use different versions of your submodule in
-> different branches of your supermodule.  But the supermodule does not
-> know the name of these branches.
+>>> Another solution would be to be able to put non-head ref in HEAD,
+>>> but allow to commit only if the prefix is refs/heads/
+>> 
+>> That's not a bad idea.  Then you can checkout a tag and have
+>> 'ref: refs/tags/v1.11' in HEAD, which means anyone who puts
+>> $(git-symbolic-ref) calls into their PS1 will see "refs/tags/v1.11"
+>> as their current branch, reminding them they are looking at the past.
 
-I see that you always use "refs/heads/master" in the submodule.
-What happens if you do development in the submodule, create a new commit
-there, and want to switch supermodule branch afterwards?
-Wouldn't you lose your new work, as "refs/heads/master" has to be reset
-to another commit when you switch the supermodule branch?
-
-IMHO it would be nice to have refs in the submodule matching all the
-branches/tags of the supermodule.
-Meaning: "this is the commit which is used by branch/tag XYZ in the
-supermodule". This can be valuable information, and a "gitk --all" in
-the submodule would show you all the uses of your subproject in the
-scope of the given superproject.
-We could occupy the local refs namespace of the
-submodule with the same refs as there are in the supermodule. But that
-is no problem as the original branches of the subproject would be
-in "refs/remotes/".
-
-When switching branches in the supermodule, it simply would switch
-to the same name in submodules. The submodule refs would not need
-to match the submodule object in the tree of the supermodule; instead,
-it would represent the development done in the submodule while on a
-given branch in the supermodule. Thus, this would allow to do bug fix commits
-for a submodule at all places where the supermodule has a branch, without
-the need to switch supermodule branches.
-However, "git commit" in branch X in the supermodule should give a warning
-when submodules are not all at the same branch X, as the commit would use
-branch X for committing.
-
-> > Second, if you want to do some independent work on the module not related
-> > to work on submodule you should really clone (clone -l -s) submodule
-> > and work in separate checkout;
+> I agree. This would probably be a good way to do "read-only branches".
 > 
-> Yes.
-> But I really like the possibility to switch one module to a branch which
-> is not tracked by the parent, because it perhaps contains some debugging
-> code which is needed to debug some other submodule.  You can't move it
-> out because you need the common build infrastructure but you don't want
-> to branch the entire toplevel project because you don't want your
-> debugging changes to ever become visible at that level.
+> Allowing people to do a "git checkout" on anything committish, but then 
+> not allowing them to commit to that, is probably the right thing to do.
+> 
+> Together with a nice readable error message from "git commit" (and merge, 
+> and pull - although you might well allow "fetch" to update the thing that 
+> current HEAD points to, though), this would be a lot easier to use for 
+> people who just follow somebody elses branch.
 
-In general, I agree with not following submodule's HEAD for supermodule
-commits. As you cannot store any submodule branch names, this really
-would be confusing, as after switching to another supermodule branch
-and back again, the submodule branch name would reset to a given name
-("master" in your current implementation).
+This certainly seems like a popular idea.  I think the vote is to symlink
+(symref) to a non-refs/heads/ object if possible, but allow an arbitrary
+object ID as well.  In either case, commits would be forbidden.
 
-But why wouldn't you create a temporary branch "debug_submodule1" in the
-supermodule for your use case? Branches are cheap with git, even in supermodules.
-Supermodule branches also are pure local, you never have to publish
-it somewhere, and can delete it afterwards.
+The only reason I had avoided symlinking before was in case the tag was
+deleted, but that can be fixed easily enough.  (Either make git-tag -d/-f
+fail, or have it replace the HEAD symref with a raw hex object.
+Actually, you could do the same with git branch -d.  Any opinions?)
 
+I can try to write the patch if there are no better volunteers, although
+it'll take me a lot longer that someone more comfortable with the code.
+
+Um.. for example, I'm not sure what the git fetch problem could
+possibly be.  It only updates heads, no?  Or are you thinking
+of the new refs/remotes thing that I'm not familiar with?
+
+I'll have to examine the callers of git-symbolic-ref to see what
+it should do.  Return the hex object ID and fail are the obvious
+possibilities.
+
+
+Note that NOT having any sort of bisect label (and just using HEAD
+itself as a raw pointer) solves the "git reset --hard" problem; I can
+"git checkout HEAD^" and have debug hacks preserved.
+
+It also removes a paragraph of excuses from some "using git" docs
+I'm writing.  It's a lot easier to explain why you can't commit
+if you're not on a branch than to explain why you can't not be
+on a branch.
+
+Oh, and as I mentioned, not that "git checkout -b <newbranch>" is
+exactly painful, but I think a "-b <newbranch>" option to git-commit
+would be a convenience.  (An interesting question is whether it should
+create the new branch even if there is nothing to.  I'm thinking "yes"
