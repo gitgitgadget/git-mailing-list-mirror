@@ -1,136 +1,84 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_ADSP_NXDOMAIN,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
-From: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
-Subject: [PATCH] Document git-runstatus
-Date: Sat, 18 Nov 2006 15:15:49 +0100
-Message-ID: <455F1595.9020009@lsrfire.ath.cx>
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [GIT PATCH] Makefile missing git-runstatus in PROGRAMS list
+Date: Tue, 14 Nov 2006 14:40:56 -0800
+Message-ID: <7vmz6ty7lz.fsf@assigned-by-dhcp.cox.net>
+References: <FE74AC4E0A23124DA52B99F17F44159701A11D63@PA-EXCH03.vmware.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sat, 18 Nov 2006 14:15:41 +0000 (UTC)
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jeff King <peff@peff.net>
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Tue, 14 Nov 2006 22:41:22 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.8 (Windows/20061025)
+In-Reply-To: <FE74AC4E0A23124DA52B99F17F44159701A11D63@PA-EXCH03.vmware.com>
+	(Bhavesh Davda's message of "Tue, 14 Nov 2006 12:55:16 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31772>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31388>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GlQyp-0002Wk-Gx for gcvg-git@gmane.org; Sat, 18 Nov
- 2006 15:15:39 +0100
+ esmtp (Exim 4.43) id 1Gk6xh-0000nh-BM for gcvg-git@gmane.org; Tue, 14 Nov
+ 2006 23:41:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1754653AbWKROPc (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 18 Nov 2006
- 09:15:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754660AbWKROPc
- (ORCPT <rfc822;git-outgoing>); Sat, 18 Nov 2006 09:15:32 -0500
-Received: from static-ip-217-172-187-230.inaddr.intergenia.de
- ([217.172.187.230]:5595 "EHLO neapel230.server4you.de") by vger.kernel.org
- with ESMTP id S1754653AbWKROPb (ORCPT <rfc822;git@vger.kernel.org>); Sat, 18
- Nov 2006 09:15:31 -0500
-Received: from [10.0.1.3] (p508E406F.dip.t-dialin.net [80.142.64.111]) by
- neapel230.server4you.de (Postfix) with ESMTP id D63082600C; Sat, 18 Nov 2006
- 15:15:29 +0100 (CET)
-To: Junio C Hamano <junkio@cox.net>
+ S966197AbWKNWk6 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 14 Nov 2006
+ 17:40:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966410AbWKNWk5
+ (ORCPT <rfc822;git-outgoing>); Tue, 14 Nov 2006 17:40:57 -0500
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:14278 "EHLO
+ fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP id S966197AbWKNWk5
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 14 Nov 2006 17:40:57 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao07.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061114224056.ODKJ27894.fed1rmmtao07.cox.net@fed1rmimpo02.cox.net>; Tue, 14
+ Nov 2006 17:40:56 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id mmh21V00i1kojtg0000000; Tue, 14 Nov 2006
+ 17:41:03 -0500
+To: "Bhavesh Davda" <bhavesh@vmware.com>
 Sender: git-owner@vger.kernel.org
 
-I copied most of the text from git-status.txt.
+"Bhavesh Davda" <bhavesh@vmware.com> writes:
 
-Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
----
- Documentation/git-runstatus.txt |   66 +++++++++++++++++++++++++++++++++++++++
- builtin-runstatus.c             |    2 +-
- 2 files changed, 67 insertions(+), 1 deletions(-)
+> Noticed this when trying to use qgit on Linus's kernel git repository. The
+> script git-status depends on git-runstatus being in the path.
+>
+> Adding git-runstatus to the PROGRAMS list in the Makefile, so that it gets
+> installed along with the other git executables.
+>
+> After a "sudo make install", qgit is now happy, since git-status is now able
+> to find git-runstatus in /usr/bin.
+>
+> Thanks
+>
+> - Bhavesh
+>
+> Bhavesh P. Davda
+>
+>
+>
+> diff --git a/Makefile b/Makefile
+> index 36ce8cd..24a0dc7 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -202,7 +202,7 @@ PROGRAMS = \
+>  	git-upload-pack$X git-verify-pack$X \
+>  	git-pack-redundant$X git-var$X \
+>  	git-describe$X git-merge-tree$X git-imap-send$X \
+> -	git-merge-recursive$X \
+> +	git-merge-recursive$X git-runstatus$X \
+>  	$(EXTRA_PROGRAMS)
+>  
+>  # Empty...
 
-diff --git a/Documentation/git-runstatus.txt b/Documentation/git-runstatus.txt
-new file mode 100644
-index 0000000..c144c7b
---- /dev/null
-+++ b/Documentation/git-runstatus.txt
-@@ -0,0 +1,66 @@
-+git-runstatus(1)
-+================
-+
-+NAME
-+----
-+git-runstatus - Show working tree status
-+
-+
-+SYNOPSIS
-+--------
-+'git-runstatus' [--color|--nocolor] [--amend] [--verbose] [--untracked]
-+
-+
-+DESCRIPTION
-+-----------
-+Examines paths in the working tree that has changes unrecorded
-+to the index file, and changes between the index file and the
-+current HEAD commit.  The former paths are what you _could_
-+commit by running 'git-update-index' before running 'git
-+commit', and the latter paths are what you _would_ commit by
-+running 'git commit'.
-+
-+If there is no path that is different between the index file and
-+the current HEAD commit, the command exits with non-zero
-+status.
-+
-+
-+OPTIONS
-+-------
-+--color::
-+	Show colored status, highlighting modified file names.
-+
-+--nocolor::
-+	Turn off coloring.
-+
-+--amend::
-+	Show status based on HEAD^1, not HEAD, i.e. show what
-+	'git-commit --amend' would do.
-+
-+--verbose::
-+	Show unified diff of all file changes.
-+
-+--untracked::
-+	Show files in untracked directories, too.  Without this
-+	option only its name and a trailing slash are displayed
-+	for each untracked directory.
-+
-+
-+OUTPUT
-+------
-+The output from this command is designed to be used as a commit
-+template comments, and all the output lines are prefixed with '#'.
-+
-+
-+Author
-+------
-+Written by Jeff King.
-+
-+Documentation
-+--------------
-+Documentation by David Greaves, Junio C Hamano and the git-list <git@vger.kernel.org>.
-+
-+GIT
-+---
-+Part of the gitlink:git[7] suite
-+
-diff --git a/builtin-runstatus.c b/builtin-runstatus.c
-index 303c556..0b63037 100644
---- a/builtin-runstatus.c
-+++ b/builtin-runstatus.c
-@@ -4,7 +4,7 @@
- extern int wt_status_use_color;
- 
- static const char runstatus_usage[] =
--"git-runstatus [--color|--nocolor] [--amend] [--verbose]";
-+"git-runstatus [--color|--nocolor] [--amend] [--verbose] [--untracked]";
- 
- int cmd_runstatus(int argc, const char **argv, const char *prefix)
- {
--- 
-1.4.4
+This cannot be right.  There is builtin-runstatus.o defined as
+part of BUILTIN_OBJS so you already should have git-runstatus as
+a hardlink to other binaries such as git-add, git-apply
+etc. in the same directory as you have them.
+
+I seem to have 55 hardlinks to that file under my ~/bin/.
+
