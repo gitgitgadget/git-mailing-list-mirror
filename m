@@ -1,101 +1,74 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: fetching packs and storing them as packs
-Date: Thu, 26 Oct 2006 23:00:54 -0400
-Message-ID: <20061027030054.GB28407@spearce.org>
-References: <Pine.LNX.4.64.0610252333540.12418@xanadu.home> <4540CA0C.6030300@tromer.org> <Pine.LNX.4.64.0610261105200.12418@xanadu.home> <45413209.2000905@tromer.org> <Pine.LNX.4.64.0610262038320.11384@xanadu.home> <20061027014229.GA28407@spearce.org> <45417205.6020805@tromer.org>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: Re: Cleaning up git user-interface warts
+Date: Wed, 15 Nov 2006 22:12:35 +0100
+Message-ID: <200611152212.35978.Josef.Weidendorfer@gmx.de>
+References: <87k61yt1x2.wl%cworth@cworth.org> <200611152131.14883.Josef.Weidendorfer@gmx.de> <20061115203517.GN7201@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 27 Oct 2006 03:01:20 +0000 (UTC)
-Cc: Nicolas Pitre <nico@cam.org>, Junio C Hamano <junkio@cox.net>,
-	git@vger.kernel.org
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Wed, 15 Nov 2006 21:12:54 +0000 (UTC)
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
+	Linus Torvalds <torvalds@osdl.org>,
+	Nicolas Pitre <nico@cam.org>, Junio C Hamano <junkio@cox.net>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+X-Authenticated: #352111
+User-Agent: KMail/1.9.3
+In-Reply-To: <20061115203517.GN7201@pasky.or.cz>
 Content-Disposition: inline
-In-Reply-To: <45417205.6020805@tromer.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30283>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31498>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GdHy1-0001mJ-FM for gcvg-git@gmane.org; Fri, 27 Oct
- 2006 05:01:09 +0200
+ esmtp (Exim 4.43) id 1GkS3n-000121-RP for gcvg-git@gmane.org; Wed, 15 Nov
+ 2006 22:12:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1161441AbWJ0DBF (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
- 23:01:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161475AbWJ0DBF
- (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 23:01:05 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:48280 "EHLO
- corvette.plexpod.net") by vger.kernel.org with ESMTP id S1161441AbWJ0DBC
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 23:01:02 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1GdHxc-0008HN-VT; Thu, 26 Oct 2006 23:00:45 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- 0135E20E45B; Thu, 26 Oct 2006 23:00:54 -0400 (EDT)
-To: Eran Tromer <git2eran@tromer.org>
+ S1161689AbWKOVMk (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
+ 16:12:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161690AbWKOVMk
+ (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 16:12:40 -0500
+Received: from mail.gmx.net ([213.165.64.20]:32986 "HELO mail.gmx.net") by
+ vger.kernel.org with SMTP id S1161689AbWKOVMj (ORCPT
+ <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 16:12:39 -0500
+Received: (qmail invoked by alias); 15 Nov 2006 21:12:37 -0000
+Received: from p5496A980.dip0.t-ipconnect.de (EHLO noname) [84.150.169.128]
+ by mail.gmx.net (mp010) with SMTP; 15 Nov 2006 22:12:37 +0100
+To: Petr Baudis <pasky@suse.cz>
 Sender: git-owner@vger.kernel.org
 
-Eran Tromer <git2eran@tromer.org> wrote:
-> > Unfortunately I don't have a solution.  I tried to come up with
-> > one but didn't.  :-)
+On Wednesday 15 November 2006 21:35, Petr Baudis wrote:
+> On Wed, Nov 15, 2006 at 09:31:13PM CET, Josef Weidendorfer wrote:
+> > Often, I find myself doing "git branch" just to make sure that I am on
+> > "master", so that a following pull does not do a bogus merge.
+> > 
+> > Can we please disable this behavior, e.g. by allowing a fake first
+> > Pull line like "Pull: (not-for-merge)" to prohibit any merge?
 > 
-> Here's one way to do it.
-> Change git-repack to follow references under $GIT_DIR/tmp/refs/ too.
-> To receive or fetch a pack:
-> 1. Add references to the new heads in
->    `mktemp $GIT_DIR/tmp/refs/XXXXXX`.
-> 2. Put the new .pack under $GIT_DIR/objects/pack/.
-> 3. Put the new .idx under $GIT_DIR/objects/pack/.
-> 4. Update the relevant heads under $GIT_DIR/refs/.
-> 5. Delete the references from step 1.
-> 
-> This is repack-safe and never corrupts the repo. The worst-case failure
-> mode is if you die before cleaning the refs from $GIT_DIR/tmp/refs. That
-> may mean some packed objects will never be removed by "repack -a -d"
-> even if they lose all references from $GIT_DIR/refs, so do "tmpwatch -m
-> 240 $GIT_DIR/tmp/refs" to take care of that.
+> Wait, if you don't want pull to merge, why do you pull and not fetch?
 
-That was actually my (and also Sean's) solution.  Except I would
-put the temporary refs as "$GIT_DIR/refs/ref_XXXXXX" as this is
-less code to change and its consistent with how temporary loose
-objects are created.
+I am not really opposed to pull doing a merge. It only should work in
+a useful way: ie. only do the merge of updated origin branch when
+current branch is master (given "Pull: master:origin").
 
-Unfortunately it does not completely work.
+I want "git pull" being harmless if I find myself accidently on a
+branch != master. I always can do "git checkout master; git pull . origin"
+afterwards.
 
-What happens when the incoming pack (steps #2 and #3) takes 15
-minutes to upload (slow ADSL modem, lots of objects) and the
-background repack process sees those temporary refs and starts
-trying to include those objects?  It can't walk the DAG that those
-refs point at because the objects aren't in the current repository.
+For this to work, I currently need to specify a "branch.<name>.merge"
+config for _every_ branch I have, as otherwise I get this bogus pull
+merge behavior. This is not needed if there was a way to configure no
+merge at all as default pull behavior.
 
-From what I know of that code the pack-objects process will fail to
-find the object pointed at by the ref, rescan the packs directory,
-find no new packs, look for the object again, and abort over the
-"corruption".
+I just noted that allowing such a config option would be kind of a
+working compromise for all the people which want
+pull to be the opposite of push.
 
-OK so the repository won't get corrupted but the repack would be
-forced to abort.
-
-
-Another issue I just thought about tonight is we may need a
-count-packs utility that like count-objects lists the number
-of active packs and their total size.  If we start hanging onto
-every pack we receive over the wire the pack directory is going to
-grow pretty fast and we'll need a way to tell us when its time to
-`repack -a -d`.
-
--- 
