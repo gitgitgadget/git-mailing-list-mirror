@@ -1,71 +1,112 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: [PATCH] "master" should be treated no differently from any other branch
-Date: Thu, 14 Dec 2006 16:25:07 +0000
-Message-ID: <200612141625.08485.andyparkins@gmail.com>
-References: <200612141519.44294.andyparkins@gmail.com> <Pine.LNX.4.63.0612141627090.3635@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Cleaning up git user-interface warts
+Date: Wed, 15 Nov 2006 10:03:18 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0611150950170.3349@woody.osdl.org>
+References: <87k61yt1x2.wl%cworth@cworth.org> <455A1137.8030301@shadowen.org>
+ <87hcx1u934.wl%cworth@cworth.org> <Pine.LNX.4.64.0611141518590.2591@xanadu.home>
+ <87bqn9u43s.wl%cworth@cworth.org> <ejdcg5$4fl$1@sea.gmane.org>
+ <Pine.LNX.4.64.0611141633430.2591@xanadu.home> <7vbqn9y6w6.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0611142007010.2591@xanadu.home> <7v3b8ltq7r.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0611142306090.2591@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 14 Dec 2006 16:25:23 +0000 (UTC)
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Wed, 15 Nov 2006 18:04:44 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=tJBcAkcP1mRSoUEuGm5o8pwlhwSQ6ggNLIpnAX6Hg9k/8Kz6G8ZlwuBbzXjF7+j/dq8bK0/6LkxLU6lAWM/ciB/vVvbmGK/RtW6ZqZqjANm2myWvgQ5RT1dyJSzMra3pSz2hAE5WZX5VIk1KR49gmUc09wDCpychs7b0QlZXYXk=
-User-Agent: KMail/1.9.5
-In-Reply-To: <Pine.LNX.4.63.0612141627090.3635@wbgn013.biozentrum.uni-wuerzburg.de>
-Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0611142306090.2591@xanadu.home>
+X-MIMEDefang-Filter: osdl$Revision: 1.156 $
+X-Scanned-By: MIMEDefang 2.36
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34363>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GutOZ-0006i1-F9 for gcvg-git@gmane.org; Thu, 14 Dec
- 2006 17:25:19 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31455>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GkP7i-0000Kg-K1 for gcvg-git@gmane.org; Wed, 15 Nov
+ 2006 19:04:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932857AbWLNQZQ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
- 11:25:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932859AbWLNQZQ
- (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 11:25:16 -0500
-Received: from ug-out-1314.google.com ([66.249.92.169]:29411 "EHLO
- ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S932857AbWLNQZN (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec
- 2006 11:25:13 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so544853uga for
- <git@vger.kernel.org>; Thu, 14 Dec 2006 08:25:12 -0800 (PST)
-Received: by 10.67.100.17 with SMTP id c17mr1659499ugm.1166113511984; Thu, 14
- Dec 2006 08:25:11 -0800 (PST)
-Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
- ESMTP id 28sm2217955ugc.2006.12.14.08.25.11; Thu, 14 Dec 2006 08:25:11 -0800
- (PST)
-To: git@vger.kernel.org
+ S1030779AbWKOSEa (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
+ 13:04:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030792AbWKOSEa
+ (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 13:04:30 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:34720 "EHLO smtp.osdl.org") by
+ vger.kernel.org with ESMTP id S1030779AbWKOSE3 (ORCPT
+ <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 13:04:29 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
+ smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kAFI3MoZ014778
+ (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Wed, 15
+ Nov 2006 10:03:22 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
+ shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kAFI3I3V023167; Wed, 15 Nov
+ 2006 10:03:20 -0800
+To: Nicolas Pitre <nico@cam.org>
 Sender: git-owner@vger.kernel.org
 
-On Thursday 2006 December 14 15:29, Johannes Schindelin wrote:
 
-> I do not agree. There is usually a principal branch, where you collect the
-> topics, and you do want to treat that special. As for the name: better
 
-While there might _usually_ be a principal branch; the special casing is 
-_always_ hard coded.
+On Tue, 14 Nov 2006, Nicolas Pitre wrote:
+> 
+> But the fact is that HG (which has a growing crowd of happy campers, 
+> maybe even larger than the BK crowd now) did work with and got used to a 
+> sensible definition of what a "pull" is.
 
-> have a convention here than configurability. You would not want "git" to
-> be called "guitar" for some users, just because they happen to like that
-> name more, either, right?
+Guys, before you start thinking this way, the fact is, there's a lot of 
+happy git users. 
 
-You're correct; but we're talking about branch names not program names.  
-Making "master" special rather than simply a default means git is dictating 
-policy.  It isn't git's place to decide what my branches are called, 
-especially as it is git itself that lets me choose freely to begin with.
+So the reason for using "git pull" is
 
-Andy
--- 
-Dr Andy Parkins, M Eng (hons), MIEE
+ - bk did it that way, and like it or not, bk was the first usable 
+   distributed system. hg is totally uninteresting.
+
+ - git itself has now done it that way for the last 18 months, and the 
+   fact is, the people _complaining_ are a small subset of the people who 
+   actually use git on a daily basis and don't complain.
+
+So don't fall for the classic "second system syndrome". The classic reason 
+for getting the second system wrong is because you focus on the issues 
+people complain about, and not on the issues that work well (because the 
+issues that work fine are obviously not getting a lot of attention).
+
+If you think "pull" is confusing, I can guarantee you that _changing_ the 
+name is a hell of a lot more confusing. In fact, I think a lot of the 
+confusion comes from cogito, not from git - the fact that cogito used 
+different names and different syntax was a mistake, I think.
+
+And that '#' for branch naming in particular was (and is) total 
+braindamage. The native git branch naming convention is just fundamentally 
+much better, and allows you to very naturally fetch multiple branches at 
+once, in a way that cogito's syntax does not.
+
+So when I see suggestions of using that brain-damaged cogito syntax as an 
+"improvement", I know for a fact that somebody hasn't thought things 
+through, and only thinks it's a better syntax beause of totally bogus 
+reasons.
+
+I do agree that we probably could/should re-use the "git merge" name. The 
+current "git merge" is an esoteric internal routine, and I doubt a lot of 
+people use it as-is. I don't think it would be a mistake to make "git 
+merge" basically be an alias for "git pull", for example, and I doubt many 
+people would really even notice.
+
+But the fact is, git isn't really that hard to work out, and the commands 
+aren't that complicated. There's no reason to rename them. We do have 
+other problems:
+
+ - default branch selection for merging is broken (it should definitely 
+   take the current branch into account). When I do "git pull" with no 
+   branch specification, and I happen to be on a branch that is associated 
+   with something else than "master" in the remote, I shouldn't merge with 
+   master.
+
+ - I agree that having to create temporary branches to just look at a tag 
+   that you don't want to actually develop on is just unnecessarily 
+   bothersome.
+
+But trying to rename "pull" (or the "git" name itself) is just going to 
+cause more confusion than you fix.
+
