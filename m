@@ -1,61 +1,92 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Han-Wen Nienhuys <hanwen@xs4all.nl>
-Subject: Re: multi-project repos (was Re: Cleaning up git user-interface 
-  warts)
-Date: Fri, 17 Nov 2006 00:40:03 +0100
-Message-ID: <455CF6D3.9050507@xs4all.nl>
-References: <87k61yt1x2.wl%cworth@cworth.org> <455A1137.8030301@shadowen.org> <87hcx1u934.wl%cworth@cworth.org> <Pine.LNX.4.64.0611141518590.2591@xanadu.home> <87bqn9u43s.wl%cworth@cworth.org> <ejdcg5$4fl$1@sea.gmane.org> <Pine.LNX.4.64.0611141633430.2591@xanadu.home> <7vbqn9y6w6.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611142007010.2591@xanadu.home> <7v3b8ltq7r.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611142306090.2591@xanadu.home> <Pine.LNX.4.64.0611150950170.3349@woody.osdl.org> <455BBCE9.4050503@xs4all.nl> <Pine.LNX.4.64.0611151908130.3349@woody.osdl.org> <455C412D.1030408@xs4all.nl> <Pine.LNX.4.64.0611160814560.3349@woody.osdl.org> <455C94FA.3050903@xs4all.nl> <Pine.LNX.4.64.0611160904010.3349@woody.osdl.org> <455CA2A8.5010700@xs4all.nl> <Pine.LNX.4.64.0611160958170.3349@woody.osdl.org> <Pine.LNX.4.63.0611162315110.13772@wbgn013.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.64.
- 0611161436230.3349@woody.osdl.org>
-Reply-To: hanwen@xs4all.nl
+From: "Bhavesh Davda" <bhavesh@vmware.com>
+Subject: RE: [GIT PATCH] Makefile missing git-runstatus in PROGRAMS list
+Date: Wed, 15 Nov 2006 10:42:27 -0800
+Message-ID: <FE74AC4E0A23124DA52B99F17F44159701A11D6D@PA-EXCH03.vmware.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 16 Nov 2006 23:42:00 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+NNTP-Posting-Date: Wed, 15 Nov 2006 18:44:04 +0000 (UTC)
+Cc: <git@vger.kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.8 (X11/20061107)
-Original-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <Pine.LNX.4.64.0611161436230.3349@woody.osdl.org>
-X-Virus-Scanned: by XS4ALL Virus Scanner
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: [GIT PATCH] Makefile missing git-runstatus in PROGRAMS list
+Thread-Index: AccI4/8MstcF80A5Raaz4tkVDWiYCQAAMiLQ
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31638>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31464>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gkqq7-0001e6-U5 for gcvg-git@gmane.org; Fri, 17 Nov
- 2006 00:40:16 +0100
+ esmtp (Exim 4.43) id 1GkPje-0000c0-Hw for gcvg-git@gmane.org; Wed, 15 Nov
+ 2006 19:43:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1424557AbWKPXkL (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 16 Nov 2006
- 18:40:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1424569AbWKPXkL
- (ORCPT <rfc822;git-outgoing>); Thu, 16 Nov 2006 18:40:11 -0500
-Received: from smtp-vbr4.xs4all.nl ([194.109.24.24]:24075 "EHLO
- smtp-vbr4.xs4all.nl") by vger.kernel.org with ESMTP id S1424557AbWKPXkJ
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 16 Nov 2006 18:40:09 -0500
-Received: from [192.168.123.187] (muurbloem.xs4all.nl [213.84.26.127])
- (authenticated bits=0) by smtp-vbr4.xs4all.nl (8.13.8/8.13.8) with ESMTP id
- kAGNdx2T023989; Fri, 17 Nov 2006 00:40:01 +0100 (CET) (envelope-from
- hanwen@xs4all.nl)
-To: Linus Torvalds <torvalds@osdl.org>
+ S1030848AbWKOSn0 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
+ 13:43:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030846AbWKOSn0
+ (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 13:43:26 -0500
+Received: from mailout1.vmware.com ([65.113.40.130]:61579 "EHLO
+ mailout1.vmware.com") by vger.kernel.org with ESMTP id S1030849AbWKOSnX
+ convert rfc822-to-8bit (ORCPT <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006
+ 13:43:23 -0500
+Received: from mailhost2.vmware.com (mailhost2.vmware.com [10.16.64.160]) by
+ mailout1.vmware.com (Postfix) with ESMTP id 3D5BC60A4; Wed, 15 Nov 2006
+ 10:43:40 -0800 (PST)
+Received: from PA-EXCH03.vmware.com (pa-exch-node04.vmware.com
+ [10.16.64.143]) by mailhost2.vmware.com (Postfix) with ESMTP id 800719041E;
+ Wed, 15 Nov 2006 10:49:13 -0800 (PST)
+To: "Junio C Hamano" <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Linus Torvalds escreveu:
-> A lot of the complaints seem to not be about the interfaces, but about 
-> people not _understanding_ and knowing what the interfaces do. If you were 
+> 
+> > Attached is my attempt at the same command "make 
+> prefix=/var/tmp/ggg clean
+> > all install"
+> >
+> > make install failes for the templates directory, leading to 
+> the entire make
+> > install failing:
+> >
+> > make -C templates DESTDIR='' install
+> > make[1]: Entering directory `/VMware/kernel/git/git/templates'
+> > : no custom templates yet
+> > install -d -m755 '/var/tmp/ggg/share/git-core/templates/'
+> > (cd blt && tar cf - .) | \
+> > (cd '/var/tmp/ggg/share/git-core/templates/' && tar xf -)
+> > tar: This does not look like a tar archive
+> > tar: Skipping to next header
+> > tar: Archive contains obsolescent base-64 headers
+> > tar: Error exit delayed from previous errors
+> 
+> I have a feeling that you have CDPATH exported to the
+> environment, which is a braindamage.  It is a fine usability
+> helper for interactive shells so I do not have problem with
+> people setting that in shell as shell variables, though.
+> 
+> In other words, never do "export CDPATH=..." nor "export CDPATH".
+> 
+> 
 
-From the point of view of a user, there is not really a difference
-between the two.  As a user, you form a mental model of how things
-work by looking at the interface. If the interface is bad, the user
-creates a faulty model in his head, and starts doing things that
-are perfectly logical in the faulty model, but stupid and silly when
-you consider the actual internals.
+Indeed! I had "export CDPATH=.:$HOME" in my $HOME/.bash_profile.
 
-A nice book about this is "The Design of Everyday Things" by Donald
-Norman.
+"export -n CDPATH", and now "make install" works, setting up those hard links
+too.
 
--- 
+If this is a common gotcha in building and installing git, maybe you should
+add it near the top of the INSTALL instructions.
+
+I haven't run into this issue with other projects. Is there something that
+can be changed in git's Makefile so it works even if CDPATH is set and
+exported in people's environments? What about simply not naming the subdir
+blt for both source and install directories under templates?
+
+Thanks!
+
