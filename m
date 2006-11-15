@@ -2,72 +2,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: VCS comparison table
-Date: Fri, 27 Oct 2006 10:46:56 -0400
-Message-ID: <20061027144656.GA32451@fieldses.org>
-References: <200610270202.k9R22Wxf004208@laptop13.inf.utfsm.cl> <4541D291.5020205@op5.se>
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 3/5] allow cloning a repository "shallowly"
+Date: Wed, 15 Nov 2006 11:57:38 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0611151153490.13772@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0610302009160.26682@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7v4pt21oe9.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0611141145390.13772@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vpsbpzzse.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 27 Oct 2006 14:48:36 +0000 (UTC)
-Cc: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
-	bazaar-ng@lists.canonical.com
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Wed, 15 Nov 2006 10:57:58 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <4541D291.5020205@op5.se>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <7vpsbpzzse.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30330>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31436>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GdSzD-0003HM-MF for gcvg-git@gmane.org; Fri, 27 Oct
- 2006 16:47:08 +0200
+ esmtp (Exim 4.43) id 1GkISe-0007ZW-GA for gcvg-git@gmane.org; Wed, 15 Nov
+ 2006 11:57:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752209AbWJ0OrD (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 27 Oct 2006
- 10:47:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752232AbWJ0OrD
- (ORCPT <rfc822;git-outgoing>); Fri, 27 Oct 2006 10:47:03 -0400
-Received: from mail.fieldses.org ([66.93.2.214]:52446 "EHLO
- pickle.fieldses.org") by vger.kernel.org with ESMTP id S1752209AbWJ0OrB
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 27 Oct 2006 10:47:01 -0400
-Received: from bfields by pickle.fieldses.org with local (Exim 4.63)
- (envelope-from <bfields@fieldses.org>) id 1GdSz2-0000Xh-5Q; Fri, 27 Oct 2006
- 10:46:56 -0400
-To: Andreas Ericsson <ae@op5.se>
+ S966784AbWKOK5l (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
+ 05:57:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966785AbWKOK5l
+ (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 05:57:41 -0500
+Received: from mail.gmx.de ([213.165.64.20]:40390 "HELO mail.gmx.net") by
+ vger.kernel.org with SMTP id S966784AbWKOK5k (ORCPT
+ <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 05:57:40 -0500
+Received: (qmail invoked by alias); 15 Nov 2006 10:57:39 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp046) with SMTP; 15 Nov 2006 11:57:39 +0100
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-On Fri, Oct 27, 2006 at 11:34:09AM +0200, Andreas Ericsson wrote:
-> Horst H. von Brand wrote:
-> >Jakub Narebski <jnareb@gmail.com> wrote:
-> >>19. Ease of Use. Hmmm... I don't know for Git. I personally find it very
-> >>easy to use, but I have not much experiences with other SCM. I wonder why
-> >>Bazaar has "No" there...
-> >
-> >Extremely subjective. Easy to learn doesn't cut it either.
+Hi,
+
+On Tue, 14 Nov 2006, Junio C Hamano wrote:
+
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> This one just needs to go.
+> >> I understand "no need making it shallow", but I am not sure if a
+> >> non-NULL return from lookup_object() tells us that.
+> >
+> > You are probably right, how about has_sha1_file()?
+> >
+> >> I think register_shallow() can take commits that are already shallow() 
+> >> so maybe we can remove this "if() continue"?
+> >
+> > Yes, it can, but that is not necessarily correct: since .git/shallow is 
+> > constructed from the registered shallow commits, we would make a commit 
+> > shallow which is really not shallow.
+> >
+> > So, how about
+> >
+> >> > +				if (lookup_object(sha1) || has_sha1_file(sha1))
+> >> > +					continue;
+> 
+> If I understand the code correctly, this loop is reading what
+> the other side thinks your shallows should be (based on your
+> earlier "deepen" request or if this is initial fetch based on
+> your depth).  Even if we already have that object, if that
+> object _is_ shallow on our end, don't we need to keep it marked
+> as shallow?  Will we get ancestors of this commit from the other
+> end (and "shallow" lines for some of them to properly cauterize
+> the chain)?
 
-It's certainly a hard question to answer, and will never be answered
-completely, but unfortunately it's also a really *important* question.
-The best SCM in the world isn't much use if I can't convince my
-coworkers to learn the thing.
+My thinking was: if we have that object already, and it is _not_ marked as 
+shallow, we probably have either all its ancestors, or at least all 
+ancestors up until shallow commit(s).
 
-So I think it's helpful to attempt to find out whether we have a problem
-here or not, even if the problem is more one of perception than reality.
-Though obviously it would be more helpful to have something more
-detailed than just a yes or no answer to "is git easy to use?"
+Thinking about it again, it seems very fragile: on purpose, we only trust 
+to have the objects which are reachable by at least one ref, so that an 
+interrupted fetch does not corrupt the repository.
 
-> Could possibly be replaced with "Has tutorial/documentation online" or
-> some such. No SCM is really intuitive to users that haven't
-> experienced any of them before, so the only thing that really matters
-> is how much documentation one can find online and how up-to-date it
-> is.
+So yes, I agree, that "if() continue;" should go away. Even if all of a 
+sudden, commits we already have are no longer reachable.
 
-Documentation helps, though sometimes extensive documentation is a sign
-of a problem--it takes a lot more documentation to explain how to manage
-a branch in CVS than it does in any sensible system....
-
+Ciao,
+Dscho
