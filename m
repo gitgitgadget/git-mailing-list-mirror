@@ -1,86 +1,92 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: What's in git.git (stable)
-Date: Sat, 16 Dec 2006 15:10:53 -0800
-Message-ID: <7vtzzva136.fsf@assigned-by-dhcp.cox.net>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: Cleaning up git user-interface warts
+Date: Tue, 14 Nov 2006 23:20:51 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0611142306090.2591@xanadu.home>
+References: <87k61yt1x2.wl%cworth@cworth.org> <455A1137.8030301@shadowen.org>
+ <87hcx1u934.wl%cworth@cworth.org>
+ <Pine.LNX.4.64.0611141518590.2591@xanadu.home>
+ <87bqn9u43s.wl%cworth@cworth.org> <ejdcg5$4fl$1@sea.gmane.org>
+ <Pine.LNX.4.64.0611141633430.2591@xanadu.home>
+ <7vbqn9y6w6.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0611142007010.2591@xanadu.home>
+ <7v3b8ltq7r.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sat, 16 Dec 2006 23:11:49 +0000 (UTC)
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+NNTP-Posting-Date: Wed, 15 Nov 2006 04:21:04 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+In-reply-to: <7v3b8ltq7r.fsf@assigned-by-dhcp.cox.net>
+X-X-Sender: nico@xanadu.home
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34654>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gvih0-0008Q9-VU for gcvg-git@gmane.org; Sun, 17 Dec
- 2006 00:11:47 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31411>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GkCGe-0008So-Ea for gcvg-git@gmane.org; Wed, 15 Nov
+ 2006 05:20:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1422712AbWLPXK7 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 16 Dec 2006
- 18:10:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422770AbWLPXK7
- (ORCPT <rfc822;git-outgoing>); Sat, 16 Dec 2006 18:10:59 -0500
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:43553 "EHLO
- fed1rmmtao09.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1422712AbWLPXK5 (ORCPT <rfc822;git@vger.kernel.org>); Sat, 16 Dec 2006
- 18:10:57 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao09.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061216231053.QTWB18767.fed1rmmtao09.cox.net@fed1rmimpo02.cox.net>; Sat, 16
- Dec 2006 18:10:53 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id zbB51V00M1kojtg0000000; Sat, 16 Dec 2006
- 18:11:05 -0500
-To: git@vger.kernel.org
+ S966574AbWKOEUx (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 14 Nov 2006
+ 23:20:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966576AbWKOEUx
+ (ORCPT <rfc822;git-outgoing>); Tue, 14 Nov 2006 23:20:53 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:20474 "EHLO
+ relais.videotron.ca") by vger.kernel.org with ESMTP id S966574AbWKOEUw (ORCPT
+ <rfc822;git@vger.kernel.org>); Tue, 14 Nov 2006 23:20:52 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR001.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
+ <0J8R001TK82RWEF0@VL-MO-MR001.ip.videotron.ca> for git@vger.kernel.org; Tue,
+ 14 Nov 2006 23:20:51 -0500 (EST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-At the end is a list of stuff merged to 'master' since the last
-announcement.
+On Tue, 14 Nov 2006, Junio C Hamano wrote:
 
-----------------------------------------------------------------
+> Nicolas Pitre <nico@cam.org> writes:
+> 
+> > "You pull the remote changes with 'git-pull upstream,, then you can 
+> > merge them in your current branch with 'git-merge upstream'."
+> >
+> > Isn't it much simpler to understand (and to teach) that way?
+> 
+> If it were "you download the remote changes with 'git download
+> upstream' and then merge with 'git merge'", then perhaps, but if
+> you used the word "pull" or "fetch", I do not think so.
+> 
+> I would be all for changing the semantics of "pull" from one
+> thing to another, if the new semantics were (1) what everybody
+> welcomed, (2) what "pull" traditionally meant everywhere else.
+> In that case, we have been misusing it to be confusing to
+> outsiders and I agree it makes a lot of sense to remove the
+> source of confusion.  But I do not think CVS nor SVN ever used
+> the term, and I was told that BK was what introduced the term,
+> and the word meant something different from what you are
+> proposing.
+> 
+> You have to admit both pull and fetch have been contaminated
+> with loaded meanings from different backgrounds. I was talking
+> about killing the source of confusion in the longer term by
+> removing fetch/pull/push, so we are still on the same page.
+> 
+> That's where my "you download from the upstream and merge" comes
+> from.
 
-Andy Parkins (1):
-      git-status always says what branch it's on
+But the fact is that HG (which has a growing crowd of happy campers, 
+maybe even larger than the BK crowd now) did work with and got used to a 
+sensible definition of what a "pull" is.  This means that their 
+definition is becoming rather more relevant with time than what it used 
+to, and because it is a saner definition than what GIT has for the same 
+word which HG users really have no issue with, I think we really should 
+leverage the "common wisdom" and consider aligning ourselves with them 
+in this case rather than trying to go into a totally different 
+direction.  We simply won't gain anything trying to teach people "a pull 
+in HG is a download in GIT".  If a pull becomes the same thing for both 
+then it's one less oddball in the GIT interface.
 
-Brian Gernhardt (2):
-      Add --add option to git-repo-config
-      Make git-diff documentation use [--] when it should.
-
-Johannes Schindelin (3):
-      INSTALL: no need to have GNU diff installed
-      git-show: grok blobs, trees and tags, too
-      Document git-merge-file
-
-Junio C Hamano (7):
-      Revert "git-diff: Introduce --index and deprecate --cached."
-      git-svn: allow both diff.color and color.diff
-      Update git-diff documentation
-      git-fetch: make it work from within a subdirectory.
-      git-reset: make it work from within a subdirectory.
-      git-reset [--mixed] <tree> [--] <paths>...
-      merge: give a bit prettier merge message to "merge branch~$n"
-
-Luben Tuikov (1):
-      Export PERL_PATH
-
-Nicolas Pitre (2):
-      repacked packs should be read-only
-      make commit message a little more consistent and conforting
-
-Quy Tonthat (1):
-      git-clone documentation
-
-Shawn Pearce (7):
-      Bypass expensive content comparsion during rename detection.
-      Avoid accessing a slow working copy during diffcore operations.
-      Provide more meaningful output from 'git init-db'.
-      Enable reflogs by default in any repository with a working directory.
-      Teach bash the new features of 'git show'.
-      Suggest use of "git add file1 file2" when there is nothing to commit.
-      Align section headers of 'git status' to new 'git add'.
 
