@@ -1,84 +1,95 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Push and remote refs
-Date: Sun, 05 Nov 2006 13:31:54 -0800
-Message-ID: <7vveltoa0l.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0611051333210.9789@iabervon.org>
-	<7vhcxdu1ln.fsf@assigned-by-dhcp.cox.net>
-	<20061105210607.GA28320@coredump.intra.peff.net>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: Cleaning up git user-interface warts
+Date: Wed, 15 Nov 2006 18:58:50 +0000
+Message-ID: <200611151858.51833.andyparkins@gmail.com>
+References: <87k61yt1x2.wl%cworth@cworth.org> <Pine.LNX.4.64.0611142306090.2591@xanadu.home> <Pine.LNX.4.64.0611150950170.3349@woody.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sun, 5 Nov 2006 21:32:26 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Wed, 15 Nov 2006 19:02:03 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061105210607.GA28320@coredump.intra.peff.net> (Jeff King's
-	message of "Sun, 5 Nov 2006 16:06:07 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=qZd2ps7GQi7L9pg1munFHL/AJjGfMc4XTn3iCqmvi8jjxDjLkOCVNGoLrUNpCTqafeSKd61knSrC9s0nz9/hOAkrKELCz6kIlc333ziwy6LDbe4nDeGrxt6i7UMBfTYBSjW8neKzxPkDe1CPNQj3EHi4EHN9Q0DzyrzYjN6Dajk=
+User-Agent: KMail/1.9.5
+In-Reply-To: <Pine.LNX.4.64.0611150950170.3349@woody.osdl.org>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30984>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31467>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Ggpay-0005rK-As for gcvg-git@gmane.org; Sun, 05 Nov
- 2006 22:32:00 +0100
+ esmtp (Exim 4.43) id 1GkQ1A-0004aL-JG for gcvg-git@gmane.org; Wed, 15 Nov
+ 2006 20:01:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1422691AbWKEVb5 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 5 Nov 2006
- 16:31:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422683AbWKEVb5
- (ORCPT <rfc822;git-outgoing>); Sun, 5 Nov 2006 16:31:57 -0500
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:25825 "EHLO
- fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP id S1422694AbWKEVb4
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 5 Nov 2006 16:31:56 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao12.cox.net
- (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
- <20061105213155.JMLD18180.fed1rmmtao12.cox.net@fed1rmimpo02.cox.net>; Sun, 5
- Nov 2006 16:31:55 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id j9Y01V00G1kojtg0000000 Sun, 05 Nov 2006
- 16:32:00 -0500
-To: Jeff King <peff@peff.net>
+ S1030879AbWKOTBb (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
+ 14:01:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030882AbWKOTBb
+ (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 14:01:31 -0500
+Received: from ug-out-1314.google.com ([66.249.92.171]:10770 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1030879AbWKOTBa
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 14:01:30 -0500
+Received: by ug-out-1314.google.com with SMTP id m3so228167ugc for
+ <git@vger.kernel.org>; Wed, 15 Nov 2006 11:01:28 -0800 (PST)
+Received: by 10.66.216.6 with SMTP id o6mr3465246ugg.1163617288316; Wed, 15
+ Nov 2006 11:01:28 -0800 (PST)
+Received: from grissom.internal.parkins.org.uk ( [84.201.153.164]) by
+ mx.google.com with ESMTP id u6sm1307914uge.2006.11.15.11.01.27; Wed, 15 Nov
+ 2006 11:01:27 -0800 (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Wednesday 2006, November 15 18:03, Linus Torvalds wrote:
 
-> On Sun, Nov 05, 2006 at 11:37:08AM -0800, Junio C Hamano wrote:
->
->> I recall discussing this exact behaviour with Pasky when he
->> added it to Cogito.  I think we concluded that it is a very
->> sensible thing to pretend we fetched immediately after we
->> successfully pushed and got the same thing back, and there is no
->> risk of data loss or user confusion, as long as we catch failure
->> from the push and refrain from doing this update, which Cogito
->> did implement correctly when we discussed this.
->
-> Is it possible for hooks on the receiving side to change the tip commit
-> in some way? For example, the 'update' hook could do some markup on the
-> commit message or contents, creating a new commit and using it instead
-> of the pushed one; in this case, the sending side ends up with an
-> incorrect (and unrelated) SHA1. Is this simply too insane to worry
-> about?
+> Guys, before you start thinking this way, the fact is, there's a lot of
+> happy git users.
 
-I do not think it is sane for the update hook to muck with tips
-in any way (they are meant for making policy decision whether to
-allow the push -- we do not enforce this, partly because the
-majorly lockless nature of git makes it impossible to, but then
-update hook is free to invoke "rm -rf $GIT_DIR" and nobody
-prevents it from doing so.  It is the same kind of user shooting
-at his foot).
+I'm a happy user, doesn't mean I wouldn't like changes.  In fact, by that 
+argument, that there are happy users means that there is no need to ever make 
+changes.
 
-The post-update hook is free to do anything what it wants.  But
-that does not make the Cogito's "pretend we have fetched
-immediately after we pushed" semantics invalid.  If the
-post-update hook rewinds the tip we just pushed, it is the same
-thing as in the case where the post-update hook did not do
-anything but somebody else, a human user, did the equivalent
-rewinding of the branch, and the pretended fetch happened
-between the time the push successfull finished and the time that
-somebody else did the rewinding, so this is nothing new.  The
-next push would notice that the tip does not fast forward in
-either case.
+>  - git itself has now done it that way for the last 18 months, and the
+>    fact is, the people _complaining_ are a small subset of the people who
+>    actually use git on a daily basis and don't complain.
+
+That's awfully like the argument I hear off my bank whenever I complain to 
+them too - "well lots of other people don't complain so we must be right".  
+The people who complain are a subset of the people who have complaints.  I 
+don't think never changing is a good argument - leaving aside the actual 
+changes under discussion - in another 18 months lets say there are double the 
+number of git users, and 18 months after that double again - in that case the 
+potential new users needs outweigh the current users needs.
+
+> If you think "pull" is confusing, I can guarantee you that _changing_ the
+> name is a hell of a lot more confusing. In fact, I think a lot of the
+
+> But the fact is, git isn't really that hard to work out, and the commands
+
+On the one hand you're arguing that git syntax is easy to learn, and on the 
+other that no one will be able to learn a new syntax just as easily.
+
+> aren't that complicated. There's no reason to rename them. We do have
+> other problems:
+
+That there are other problems doesn't negate these problems.
+
+> But trying to rename "pull" (or the "git" name itself) is just going to
+> cause more confusion than you fix.
+
+I don't think so.  Mainly because the proposed new git pull would be a subset 
+of the existing git pull.  It's not changing function, it's just reducing in 
+function.
+
+
+Andy
+-- 
+Dr Andrew Parkins, M Eng (Hons), AMIEE
