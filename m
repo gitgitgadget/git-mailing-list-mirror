@@ -1,68 +1,55 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH 1/4] git-svn: let libsvn_ls_fullurl return properties too
-Date: Mon, 4 Dec 2006 17:04:28 -0800
-Message-ID: <20061205010428.GA26687@soma>
-References: <20061204235724.46FD7139B0C@magnus.utsl.gen.nz> <7v3b7vnqtv.fsf@assigned-by-dhcp.cox.net>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH] gitweb: Put back shortlog instead of graphiclog in the project list.
+Date: Wed, 15 Nov 2006 22:34:33 +0100
+Message-ID: <20061115213433.GV18879@pasky.or.cz>
+References: <87irhgla3l.fsf@wine.dyndns.org> <7vac2sl9jj.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 5 Dec 2006 01:04:42 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+NNTP-Posting-Date: Wed, 15 Nov 2006 21:35:12 +0000 (UTC)
+Cc: Alexandre Julliard <julliard@winehq.org>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Content-Disposition: inline
-In-Reply-To: <7v3b7vnqtv.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <7vac2sl9jj.fsf@assigned-by-dhcp.cox.net>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33273>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GrOjZ-0004hF-SR for gcvg-git@gmane.org; Tue, 05 Dec
- 2006 02:04:34 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31504>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GkSP2-0005hT-8s for gcvg-git@gmane.org; Wed, 15 Nov
+ 2006 22:34:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1758394AbWLEBEb (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
- 20:04:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967931AbWLEBEb
- (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 20:04:31 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:42521 "EHLO hand.yhbt.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1758394AbWLEBEa
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006 20:04:30 -0500
-Received: from hand.yhbt.net (localhost [127.0.0.1]) by hand.yhbt.net
- (Postfix) with SMTP id 8869C2DC034; Mon,  4 Dec 2006 17:04:28 -0800 (PST)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Mon,  4 Dec 2006
- 17:04:28 -0800
-To: Sam Vilain <sam@vilain.net>
+ S1161734AbWKOVeg (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
+ 16:34:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161735AbWKOVeg
+ (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 16:34:36 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:9702 "EHLO machine.or.cz") by
+ vger.kernel.org with ESMTP id S1161734AbWKOVef (ORCPT
+ <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 16:34:35 -0500
+Received: (qmail 12693 invoked by uid 2001); 15 Nov 2006 22:34:33 +0100
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano <junkio@cox.net> wrote:
-> Thanks.
+On Wed, Nov 15, 2006 at 09:49:52PM CET, Junio C Hamano wrote:
+> Alexandre Julliard <julliard@winehq.org> writes:
 > 
-> Please CC people who are primarily working on the part of the
-> system you are improving.  In the case of git-svn that would be
-> Eric Wong.
+> > Looks like a repo.or.cz-specific change slipped in.
+> >
+> > Signed-off-by: Alexandre Julliard <julliard@winehq.org>
+> 
+> Sorry and thanks.
 
-Yes, CCs regarding git-svn would be much appreciated, thanks.
-
-> As I almost never touch git-svn myself, I'll queue these four
-> changes in 'pu' while waiting Ack from Eric on them.
-
-Ack on what the patches do, but not as-is.
-
-Please fix the coding style so that it's consistent with the rest of
-git-svn:
-
-a) indentation is done with hard tabs
-b) no spaces around parentheses: "if ($foo) {" vs "if ( $foo ) {"
-
-Also, adding tests would be helpful in helping me maintain it (I'm not
-a regular svk user, so I don't want to break anything you've done down
-the line).
-
-Thanks.
+Sorry from me too. :-)
 
 -- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
+$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
