@@ -1,93 +1,89 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] git-explain
-Date: Mon, 04 Dec 2006 22:09:17 -0800
-Message-ID: <7v1wnekh6a.fsf@assigned-by-dhcp.cox.net>
-References: <200612031701.15594.alan@chandlerfamily.org.uk>
-	<Pine.LNX.4.64.0612031024480.3476@woody.osdl.org>
-	<7v1wngwws6.fsf@assigned-by-dhcp.cox.net>
-	<7vwt57j94c.fsf_-_@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0612042253250.2630@xanadu.home>
-	<20061205035721.GA26735@fieldses.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Cleaning up git user-interface warts
+Date: Wed, 15 Nov 2006 11:18:36 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0611151111250.3349@woody.osdl.org>
+References: <87k61yt1x2.wl%cworth@cworth.org> <Pine.LNX.4.64.0611142306090.2591@xanadu.home>
+ <Pine.LNX.4.64.0611150950170.3349@woody.osdl.org> <200611151858.51833.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 5 Dec 2006 06:09:26 +0000 (UTC)
-Cc: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Wed, 15 Nov 2006 19:19:10 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061205035721.GA26735@fieldses.org> (J. Bruce Fields's message
-	of "Mon, 4 Dec 2006 22:57:21 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+In-Reply-To: <200611151858.51833.andyparkins@gmail.com>
+X-MIMEDefang-Filter: osdl$Revision: 1.156 $
+X-Scanned-By: MIMEDefang 2.36
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33306>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GrTUY-0005zN-3x for gcvg-git@gmane.org; Tue, 05 Dec
- 2006 07:09:22 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31475>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GkQHf-0000Rs-2a for gcvg-git@gmane.org; Wed, 15 Nov
+ 2006 20:18:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S967151AbWLEGJT (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 5 Dec 2006
- 01:09:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967865AbWLEGJT
- (ORCPT <rfc822;git-outgoing>); Tue, 5 Dec 2006 01:09:19 -0500
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:47649 "EHLO
- fed1rmmtao01.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S967151AbWLEGJS (ORCPT <rfc822;git@vger.kernel.org>); Tue, 5 Dec 2006
- 01:09:18 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao01.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061205060917.DCVT9173.fed1rmmtao01.cox.net@fed1rmimpo02.cox.net>; Tue, 5
- Dec 2006 01:09:17 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id uu9T1V00Y1kojtg0000000; Tue, 05 Dec 2006
- 01:09:28 -0500
-To: "J. Bruce Fields" <bfields@fieldses.org>, Nicolas Pitre <nico@cam.org>
+ S1030915AbWKOTSv (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
+ 14:18:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030922AbWKOTSu
+ (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 14:18:50 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:58813 "EHLO smtp.osdl.org") by
+ vger.kernel.org with ESMTP id S1030915AbWKOTSt (ORCPT
+ <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 14:18:49 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
+ smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kAFJIeoZ020717
+ (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Wed, 15
+ Nov 2006 11:18:40 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
+ shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kAFJIaKU025962; Wed, 15 Nov
+ 2006 11:18:38 -0800
+To: Andy Parkins <andyparkins@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-"J. Bruce Fields" <bfields@fieldses.org> writes:
 
-> On Mon, Dec 04, 2006 at 10:55:49PM -0500, Nicolas Pitre wrote:
->> ...
->> > [PATCH] git-explain
->> > ...
->> 
->> What about calling it git-whatsup instead?
+
+On Wed, 15 Nov 2006, Andy Parkins wrote:
 >
-> No, clearly it should be git-wtf.
+> On the one hand you're arguing that git syntax is easy to learn, and on the 
+> other that no one will be able to learn a new syntax just as easily.
 
-Should I take these responses to mean that you two are negative
-about the approach of spending extra cycles to commands that can
-leave the working tree in a "in the middle of doing something"
-state to help having a unified command to explain what the
-situation is and suggest the user possible exits, or are you
-saying that it might be a good idea but "git explain" is a bad
-name?
+I'm saying that people who are new to git will _have_ to learn new 
+concepts ANYWAY.
 
-An issue with this approach is that this can be the beginning of
-hardwiring the official "right way of doing things" in the set
-of tools.  Pursuing this approach would enhance the set of state
-markers like "FAILED_MERGE" in the example, which means:
+I don't think the naming is the hard part. 
 
- - more commands would actively record what they were attempting
-   to do, obviously;
+The fact is, git is one of the very few (essentially _only_) SCM's that 
+make it very clear that all real operations are local and that if you want 
+to work with other repositories, you have to "fetch" those into local 
+branches first. The fact that "pull" exists at all is really just 
+shorthand.
 
- - over time "git explain" will learn about these state markers,
-   and we would hardwire the "best current practice" exits from
-   various states in the help messages;
+If people have trouble explaining this to others, and have trouble 
+grasping "pull", then I will bet that the _real_ issue has nothing at all 
+to do with naming at all, and the real issue is that people are being 
+_taught_ the concepts in the wrong order.
 
- - also commands other than "git explain" would learn about the
-   state markers of other commands, and change their behaviour.
-   For example, "git am" might learn to refuse running while a
-   merge in progress much earlier than with the current
-   implementation.
+Before you learn "pull", you should learn "fetch". Don't even _mention_ 
+"pull" until the person got what "fetch" means. Because the fact is, 
+"fetch" is really the much more fundamental operation, and once you 
+really understand what "fetch" does, "pull" is obvious.
 
-The last point can easily become a double-edged sword.
+So I'll argue that the problem isn't naming, the "problem" is really that 
+git has a few fundamnetal concepts that people aren't used to. The most 
+fundamnetal of those is the notion of the local branch-space. EVERY other 
+(broken) SCM has branches as being some kind of totally idiotic separate 
+subdirectories, or doesn't really support branches at all (ie neither BK 
+nor CVS really support "branches" - even if a concept of that name exists 
+in CVS, it has nothing at all in common with the git model of branches).
 
-Hardwiring the recommended workflow in the tools would reduce
-chances of mistakes, but it could rob the flexibility from them
-if we are not careful and forget to take into account some
-useful combination of tools when adding such safety valves.
+But once you understand branches, and understand "fetch" (and it really 
+isn't _that_ complicated: fetch really does exactly what the name says, so 
+if you understand local branches, you will understand "fetch"), then it's 
+a much smaller step to explain "pull = fetch + merge".
+
+But I bet people don't teach it that way. They _start_ by teaching "pull". 
+Right?
+
