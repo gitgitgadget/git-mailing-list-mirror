@@ -1,72 +1,86 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: [PATCH] Avoid accessing a slow working copy during diffcore operations.
-Date: Thu, 14 Dec 2006 15:49:38 +0100
-Message-ID: <81b0412b0612140649i71643aaar847460ca9e4cea48@mail.gmail.com>
-References: <20061214111557.GA24297@spearce.org>
-	 <81b0412b0612140557u225ca00du5b15823d05fda4b9@mail.gmail.com>
-	 <Pine.LNX.4.63.0612141511110.3635@wbgn013.biozentrum.uni-wuerzburg.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 14 Dec 2006 14:49:49 +0000 (UTC)
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	"Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
+From: asf@boinkor.net
+Subject: [PATCH] gitweb: Make RSS feed output prettier
+Date: Wed, 15 Nov 2006 01:10:36 +0100
+Message-ID: <11635494363452-git-send-email-asf@boinkor.net>
+NNTP-Posting-Date: Wed, 15 Nov 2006 00:10:54 +0000 (UTC)
+Cc: Andreas Fuchs <asf@boinkor.net>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=hlEWukUBGvlKEGzMc3dQ5io0DanL5Zn562vPwPhMyoVNY61c6bcSCwoJ6k1Bl9R7IweNNjUM2EkTYqYI9EbQeu3L0rvJviOCTvgVt7fS0sdLd/DTKdupt0ejyxIxlLK/achX6KwVTC+XSB0Kea45gpmFspVUzjuo+Y19G0pTavI=
-In-Reply-To: <Pine.LNX.4.63.0612141511110.3635@wbgn013.biozentrum.uni-wuerzburg.de>
-Content-Disposition: inline
+X-Mailer: git-send-email 1.4.3.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34343>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Guru5-0007FB-Mr for gcvg-git@gmane.org; Thu, 14 Dec
- 2006 15:49:46 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31393>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gk8MU-0003HZ-Ua for gcvg-git@gmane.org; Wed, 15 Nov
+ 2006 01:10:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932766AbWLNOtk (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
- 09:49:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932774AbWLNOtk
- (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 09:49:40 -0500
-Received: from an-out-0708.google.com ([209.85.132.240]:1218 "EHLO
- an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S932766AbWLNOtj (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec
- 2006 09:49:39 -0500
-Received: by an-out-0708.google.com with SMTP id b33so159161ana for
- <git@vger.kernel.org>; Thu, 14 Dec 2006 06:49:38 -0800 (PST)
-Received: by 10.78.166.7 with SMTP id o7mr776194hue.1166107778248; Thu, 14
- Dec 2006 06:49:38 -0800 (PST)
-Received: by 10.78.135.3 with HTTP; Thu, 14 Dec 2006 06:49:38 -0800 (PST)
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+ S966511AbWKOAKj (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 14 Nov 2006
+ 19:10:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966512AbWKOAKj
+ (ORCPT <rfc822;git-outgoing>); Tue, 14 Nov 2006 19:10:39 -0500
+Received: from baker.boinkor.net ([86.59.21.99]:11921 "EHLO
+ baker.boinkor.net") by vger.kernel.org with ESMTP id S966511AbWKOAKi (ORCPT
+ <rfc822;git@vger.kernel.org>); Tue, 14 Nov 2006 19:10:38 -0500
+Received: by baker.boinkor.net (Postfix, from userid 1000) id 9A9189195; Wed,
+ 15 Nov 2006 01:10:36 +0100 (CET)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On 12/14/06, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > > If Git is compiled with NO_FAST_WORKING_DIRECTORY set then we will
-> > > avoid looking at the working directory when the blob in question
-> > > is available within a packfile and the caller doesn't need the data
-> > > unpacked into a temporary file.
-> >
-> > Why can't it be useful in generic code? What are the downsides?
->
-> It is usually cheaper to just read the file, especially if it is still
-> cached, because the alternative means unpacking the loose object, or
-> worse, unpacking the packed object _along_ with the objects in its delta
-> chain.
+From: Andreas Fuchs <asf@boinkor.net>
 
-But you have to read less, and even that could be in cache as well
-and unpacking in userspace could be faster than open/write temporary/
-read temporary/close/unlink temporary file on a normal system
+* Wrap the commit message in <pre>
+* Make file names into an unordered list
+* Add links (diff, conditional blame, history) to the file list.
+---
+ gitweb/gitweb.perl |   22 ++++++++++++++++------
+ 1 files changed, 16 insertions(+), 6 deletions(-)
 
-> Not every OS sucks cache-wise, and you should not make others suffer for
-> Redmond's shortcomings.
-
-I'm just do not understand why avoiding temporary file wouldn't help
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index e54a29e..2a79895 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -4134,20 +4134,30 @@ XML
+ 		      "<content:encoded>" .
+ 		      "<![CDATA[\n";
+ 		my $comment = $co{'comment'};
++		print "<pre>\n";
+ 		foreach my $line (@$comment) {
+-			$line = to_utf8($line);
+-			print "$line<br/>\n";
++			$line = to_utf8(esc_html($line));
++			print "$line\n";
+ 		}
+-		print "<br/>\n";
++		print "</pre><ul>\n";
+ 		foreach my $line (@difftree) {
+ 			if (!($line =~ m/^:([0-7]{6}) ([0-7]{6}) ([0-9a-fA-F]{40}) ([0-9a-fA-F]{40}) (.)([0-9]{0,3})\t(.*)$/)) {
+ 				next;
+ 			}
+-			my $file = esc_path(unquote($7));
++			my $file_name = unquote($7);
++			my $file = esc_html($file_name);
++			my $parent = $co{'parent'};
++			my $hash = git_get_hash_by_path($commit, $file_name);
++			my $hashparent = git_get_hash_by_path($parent, $file_name);
++
+ 			$file = to_utf8($file);
+-			print "$file<br/>\n";
++			print "<li>$file ";
++			print "[<a href=\"". esc_html("$my_url?p=$project;a=blobdiff;f=$file;h=$hash;hp=$hashparent;hb=$commit;hpb=$parent") ."\">diff</a>] ";
++			print "[<a href=\"". esc_html("$my_url?p=$project;a=blame;f=$file;hb=$commit") ."\">blame</a>] " if gitweb_check_feature('blame');
++			print "[<a href=\"". esc_html("$my_url?p=$project;a=history;f=$file;h=$commit") ."\">history</a>] ";
++			print "</li>\n";
+ 		}
+-		print "]]>\n" .
++		print "</ul>]]>\n" .
+ 		      "</content:encoded>\n" .
+ 		      "</item>\n";
+ 	}
+-- 
+1.4.3.2
