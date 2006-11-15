@@ -1,59 +1,83 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-Subject: cache for copy/rename detection
-Date: Sun, 26 Nov 2006 19:59:31 +0700
-Message-ID: <fcaeb9bf0611260459t7afa68eerf4dc66d7eb7fdcc1@mail.gmail.com>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: Cleaning up git user-interface warts
+Date: Wed, 15 Nov 2006 17:00:54 -0500
+Message-ID: <20061115220054.GA24861@spearce.org>
+References: <87k61yt1x2.wl%cworth@cworth.org> <455A1137.8030301@shadowen.org> <87hcx1u934.wl%cworth@cworth.org> <20061114194707.GH7201@pasky.or.cz> <87d57pu4qa.wl%cworth@cworth.org> <7v3b8lv9c9.fsf@assigned-by-dhcp.cox.net> <87wt5wsabs.wl%cworth@cworth.org> <ejfutp$cgc$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sun, 26 Nov 2006 12:59:52 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Wed, 15 Nov 2006 22:01:12 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=X3tF89yPM/6PrsFMQXofDliN6Jt4MnRTunSRk2CvQitz5vt6NVoXJaSXZ34HpqNxhOIlsFCGPKnIHjtV/ls8VYXQoA87m2kzEIKEtMsqKy8ZKAvi6vrHwpteCm/FCTjzoeNSngqUalEWKos8WzggfqAeBj3sJzpfw7ySBWIQY+A=
 Content-Disposition: inline
+In-Reply-To: <ejfutp$cgc$1@sea.gmane.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32343>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31511>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GoJbh-0000HU-EQ for gcvg-git@gmane.org; Sun, 26 Nov
- 2006 13:59:42 +0100
+ esmtp (Exim 4.43) id 1GkSoY-00026U-Bd for gcvg-git@gmane.org; Wed, 15 Nov
+ 2006 23:01:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S935381AbWKZM7d (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 26 Nov 2006
- 07:59:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935382AbWKZM7d
- (ORCPT <rfc822;git-outgoing>); Sun, 26 Nov 2006 07:59:33 -0500
-Received: from nf-out-0910.google.com ([64.233.182.185]:63848 "EHLO
- nf-out-0910.google.com") by vger.kernel.org with ESMTP id S935381AbWKZM7d
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 26 Nov 2006 07:59:33 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so1862077nfa for
- <git@vger.kernel.org>; Sun, 26 Nov 2006 04:59:32 -0800 (PST)
-Received: by 10.78.127.2 with SMTP id z2mr12273010huc.1164545971428; Sun, 26
- Nov 2006 04:59:31 -0800 (PST)
-Received: by 10.78.100.8 with HTTP; Sun, 26 Nov 2006 04:59:31 -0800 (PST)
-To: git@vger.kernel.org
+ S1161787AbWKOWA7 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
+ 17:00:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161811AbWKOWA7
+ (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 17:00:59 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:6058 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S1161787AbWKOWA6
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 17:00:58 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1GkSoJ-0005gb-TB; Wed, 15 Nov 2006 17:00:47 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ B623A20FB0B; Wed, 15 Nov 2006 17:00:54 -0500 (EST)
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-I thought about this lately. git's expensive copy/rename detection can
-be run once and the results are kept somewhere in .git. Copy/rename
-detection depends on tree objects and git detection algorithm. Tree
-objects are immutable and git algorithm change rate is low IMO. So
-cache invalidation is unlikely to happen.
+Jakub Narebski <jnareb@gmail.com> wrote:
+> Carl Worth wrote:
+> >On Tue, 14 Nov 2006 16:31:50 -0800, Junio C Hamano wrote:
+> >>
+> >> For another example, having a commit command to commit
+> >> everything by default is disastrous for people who allow their
+> >> workflows to often be interrupted.
+> > 
+> > Workflow-interruption is an important thing to support, but separating
+> > update-index and commit really doesn't address it nearly as much as I
+> > would like. The lack of really good workflow-interruption support has
+> > been one of my longest-running annoyances with git, (perhaps because I
+> > have a problem with trying to do too many things at once). Git can
+> > create and change branches fast enough that it really should be able
+> > to help me better with this. The only missing piece is being able to
+> > stash the dirty stuff on the current branch, to be able to come back
+> > to it later. I've talked a bit about what I would like in this area
+> > before, and I really just need to code it up.
+> 
+> There is git-stash/git-unstash floating somewhere in the archive.
 
-Another thing I want to do with this cache is ability to manually
-inject some hints to git. For example, I remove a file. Several
-commits later, I revive that file in another place. I know that two
-files are the same but can't tell git (and I don't think Git will
-detect this pattern). With this cache, I can tell git this file is a
-copy of that file.
+I find that a "git commit -a -m parked; git checkout -b ..." works
+well to stash my current stuff off.  Then I just amend the commit
+when I come back to that branch.
 
-What do you think?
+
+The problem I just ran into today was "git checkout" doesn't double
+check the file stat data against the index before switching branches.
+If the file is unchanged between the two branches there's no error.
+So I switched branches with dirty files that I forgot to park on
+the old branch.
+
 -- 
