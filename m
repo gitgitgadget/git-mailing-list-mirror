@@ -1,92 +1,132 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] cvs-migration document: make the need for "push" more obvious
-Date: Wed, 6 Dec 2006 14:27:57 +0100
-Message-ID: <200612061427.58065.jnareb@gmail.com>
-References: <4574AC9E.3040506@gmail.com> <el6d50$p7e$2@sea.gmane.org> <Pine.LNX.4.63.0612061411380.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Cleaning up git user-interface warts
+Date: Tue, 14 Nov 2006 20:33:03 -0800
+Message-ID: <7vd57ps51c.fsf@assigned-by-dhcp.cox.net>
+References: <87k61yt1x2.wl%cworth@cworth.org> <455A1137.8030301@shadowen.org>
+	<87hcx1u934.wl%cworth@cworth.org> <20061114194707.GH7201@pasky.or.cz>
+	<87d57pu4qa.wl%cworth@cworth.org>
+	<7v3b8lv9c9.fsf@assigned-by-dhcp.cox.net>
+	<20061115040852.GL7201@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 6 Dec 2006 13:26:07 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Wed, 15 Nov 2006 04:33:16 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=ZzHeQYcfZ/z1vJnhilvjGfhwksJWtrxoCraZn7qLMC3XPWnEd3uyUGzc3DH0nZxu//ltcBn/N/uUOF9qURTH7zMjhFNA18nbqRF57lHKqlmyT9ELEC5rjxYdIM6UsfxBVjJAeJjUProiVeLrbmCaBUdQ8Zveb/7QBanRglplSto=
-User-Agent: KMail/1.9.3
-In-Reply-To: <Pine.LNX.4.63.0612061411380.28348@wbgn013.biozentrum.uni-wuerzburg.de>
-Content-Disposition: inline
+In-Reply-To: <20061115040852.GL7201@pasky.or.cz> (Petr Baudis's message of
+	"Wed, 15 Nov 2006 05:08:52 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33456>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Grwma-0000u9-J9 for gcvg-git@gmane.org; Wed, 06 Dec
- 2006 14:25:56 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31413>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GkCSU-00023m-FQ for gcvg-git@gmane.org; Wed, 15 Nov
+ 2006 05:33:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1760596AbWLFNZy (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
- 08:25:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760599AbWLFNZy
- (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 08:25:54 -0500
-Received: from ug-out-1314.google.com ([66.249.92.170]:40625 "EHLO
- ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1760596AbWLFNZx (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec
- 2006 08:25:53 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so138891uga for
- <git@vger.kernel.org>; Wed, 06 Dec 2006 05:25:52 -0800 (PST)
-Received: by 10.67.26.7 with SMTP id d7mr779352ugj.1165411551769; Wed, 06 Dec
- 2006 05:25:51 -0800 (PST)
-Received: from host-81-190-24-209.torun.mm.pl ( [81.190.24.209]) by
- mx.google.com with ESMTP id 20sm10046885uga.2006.12.06.05.25.51; Wed, 06 Dec
- 2006 05:25:51 -0800 (PST)
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+ S966583AbWKOEdH (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 14 Nov 2006
+ 23:33:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966586AbWKOEdG
+ (ORCPT <rfc822;git-outgoing>); Tue, 14 Nov 2006 23:33:06 -0500
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:55685 "EHLO
+ fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP id S966583AbWKOEdF
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 14 Nov 2006 23:33:05 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao09.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061115043304.YSSH18767.fed1rmmtao09.cox.net@fed1rmimpo02.cox.net>; Tue, 14
+ Nov 2006 23:33:04 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id msZA1V00m1kojtg0000000; Tue, 14 Nov 2006
+ 23:33:11 -0500
+To: Petr Baudis <pasky@suse.cz>
 Sender: git-owner@vger.kernel.org
 
-Hi!
+Petr Baudis <pasky@suse.cz> writes:
 
-Johannes Schindelin wrote:
-
-> On Wed, 6 Dec 2006, Jakub Narebski wrote:
-> 
->> Johannes Schindelin wrote:
+> On Wed, Nov 15, 2006 at 01:31:50AM CET, Junio C Hamano wrote:
 >> 
->>> +  * Since every working tree contains a repository, a commit will not
->>> +    publish your changes; it will only create a revision. You have to
->>> +    "push" your changes to a public repository to make them visible
->>> +    to others.
->>> +
+>> I am of two minds here.
+>> 
+>> I do not think the Porcelain-ish UI that is shipped with git
+>> should be taken with the same degree of "authority" as git
+>> Plumbing.
+> ..snip passage about workflows..
+>
+> Controversy's fun, so...
+>
+> <Cogito maintainer hat _off_> (But yeah, it still looks silly that I'm
+> saying this.)
 
-I'd perhaps add here that it doesn't "push" your changes to a repository
-you cloned from / you fetch from.
- 
->> I'm not sure about context of this addition, but it is simply not
->> true if you publish your working repository.
-> 
-> Remember, you are talking to CVS users. They are not dumb, but sooo used 
-> to the CVS ways. So, they do not publish their working directory.
+It appears that you are not grumpy as you were anymore ;-).  I
+mostly agree with what you said in your message.
 
-So we are talking in context of having CVS-like one central repository
-from which they pull / fetch, and to which they push?
- 
-> Later, when they became familiar with Git, you can tell them: "BTW you can 
-> also publish your working directory, but then you have to be extra careful 
-> with git-commit --amend, and if you allow pushing into your repo you have 
-> to add hooks to prevent updating your current HEAD, etc."
+> (i) Clearly divided porcelain/plumbing interface, so that you can
+> really isolate the two UI-wise; endless confusion reigns there now. Is
+> git-update-index porcelain or plumbing? _You_ call git-merge a proper
+> porcelain? From my perspective, git-update-ref is as plumbing as it
+> gets, but it's classified as porcelain. Etc, etc. This would be by far
+> the most important advantage.
 
-I'd rather say that "publish your working repository", not "working
-directory" here.
+Yes.  The current "merge" started its life as Linus's porcelain
+(we did not have fetch and pull infrastructure back then) but
+quickly has become just a helper for pull to produce a merge
+commit.  If anybody thinks its UI is good as a general end-user
+level command, there is a need for "head examination".
 
-> Give them a chance to get used to the concepts of Git.
+As you say, update-ref is as plumbing as it gets and it should
+not be listed as Porcelain; I am a bit surprised that it is
+labelled as such myself.
 
-Well, it would be best to teach them concepts of git along.
+No disagreement here, nor (ii) nor (iii).
 
--- 
-Jakub Narebski
+>   (ii) The plumbing and porcelain would not share the same namespace,
+> leading to clearer UI. (I'm just inflating (i).)
+>
+>   (iii) The documentation would not be a strange mix of porcelain and
+> plumbing. (More (i) inflation.)
+>
+>   (iv) (i) is troublesome because I have a feeling that Junio declared
+> several times that he doesn't care that much about stable API for
+> porcelain compared to the plumbing. But with the current mix it's
+> desirable to use some porcelain even in other porcelains and in scripts.
+
+This is true and it is a problem.
+
+While we encourage Porcelain writers to use plumbing in order to
+give git Porcelain-ish more freedom to evolve to give better UI
+for humans, not having a clear distinction between the two makes
+it harder.
+
+>   (v) Git would be properly libified by now. If you wanted to convert
+> bits of porcelain to C, it would be at least much higher priority.
+
+I am not sure about "libified" part and I do not know what bits
+of porcelain wants to become C right now.  But I do not think
+this point is important part of your list.
+
+>   (vi) You wouldn't need to make the gruesome choice on what is the
+> canonical workflow the _the_ Git porcelain supports (see the snipped
+> passage). Or you would, but it would have less impact.
+
+Yes.  This is really important.
+
+Linus and me having done Porcelain-ish that supports integrator
+role workflow better than other workflows such as contributor
+role should not discourage people from working on alternative or
+complementary Porcelains to help other workflows better (see the
+snipped passage).
+
+StGIT sets a great example, and efforts like it is encoraged
+more.
+
+I think both Linus and myself tried to make it clear that the
+purpose of Porcelain-ish that comes with core git is 50% to make
+plumbing (perhaps minimally) usable and the other 50% to serve
+as an example for Porcelain writers to learn how to use the
+plumbing, but we should probably have stressed the latter
+better.
