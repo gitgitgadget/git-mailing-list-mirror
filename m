@@ -1,62 +1,95 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,MSGID_FROM_MTA_HEADER,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
-From: Sean <seanlkml@sympatico.ca>
-Subject: Re: [PATCH] Colourise git-branch output
-Date: Mon, 11 Dec 2006 19:38:57 -0500
-Message-ID: <BAYC1-PASMTP114CF00792AB16B95C1597AED70@CEZ.ICE>
-References: <200612112210.08327.andyparkins@gmail.com>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: Cleaning up git user-interface warts
+Date: Tue, 14 Nov 2006 20:48:09 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0611142007010.2591@xanadu.home>
+References: <87k61yt1x2.wl%cworth@cworth.org> <455A1137.8030301@shadowen.org>
+ <87hcx1u934.wl%cworth@cworth.org>
+ <Pine.LNX.4.64.0611141518590.2591@xanadu.home>
+ <87bqn9u43s.wl%cworth@cworth.org> <ejdcg5$4fl$1@sea.gmane.org>
+ <Pine.LNX.4.64.0611141633430.2591@xanadu.home>
+ <7vbqn9y6w6.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Tue, 12 Dec 2006 00:39:15 +0000 (UTC)
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+NNTP-Posting-Date: Wed, 15 Nov 2006 01:48:52 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Originating-IP: [65.93.43.74]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Original-Message-Id: <20061211193857.976f3660.seanlkml@sympatico.ca>
-In-Reply-To: <200612112210.08327.andyparkins@gmail.com>
-X-Mailer: Sylpheed version 2.2.10 (GTK+ 2.10.4; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 12 Dec 2006 00:49:11.0265 (UTC) FILETIME=[56844D10:01C71D87]
+In-reply-to: <7vbqn9y6w6.fsf@assigned-by-dhcp.cox.net>
+X-X-Sender: nico@xanadu.home
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gtvfn-0001so-Nr for gcvg-git@gmane.org; Tue, 12 Dec
- 2006 01:39:08 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31401>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gk9t2-0006Gb-56 for gcvg-git@gmane.org; Wed, 15 Nov
+ 2006 02:48:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1750767AbWLLAjE (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 11 Dec 2006
- 19:39:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750780AbWLLAjE
- (ORCPT <rfc822;git-outgoing>); Mon, 11 Dec 2006 19:39:04 -0500
-Received: from bayc1-pasmtp11.bayc1.hotmail.com ([65.54.191.171]:61925 "EHLO
- BAYC1-PASMTP11.BAYC1.HOTMAIL.COM" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
- with ESMTP id S1750767AbWLLAjB (ORCPT <rfc822;git@vger.kernel.org>); Mon, 11
- Dec 2006 19:39:01 -0500
-Received: from linux1.attic.local ([65.93.43.74]) by
- BAYC1-PASMTP11.BAYC1.HOTMAIL.COM over TLS secured channel with Microsoft
- SMTPSVC(6.0.3790.1830); Mon, 11 Dec 2006 16:49:11 -0800
-Received: from guru.attic.local ([10.10.10.28]) by linux1.attic.local with
- esmtp (Exim 4.43) id 1GtujX-00033o-Fi; Mon, 11 Dec 2006 18:38:55 -0500
-To: Andy Parkins <andyparkins@gmail.com>
+ S966620AbWKOBsM (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 14 Nov 2006
+ 20:48:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966622AbWKOBsM
+ (ORCPT <rfc822;git-outgoing>); Tue, 14 Nov 2006 20:48:12 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:56802 "EHLO
+ relais.videotron.ca") by vger.kernel.org with ESMTP id S966620AbWKOBsK (ORCPT
+ <rfc822;git@vger.kernel.org>); Tue, 14 Nov 2006 20:48:10 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
+ <0J8R00BSR1094E40@VL-MO-MR003.ip.videotron.ca> for git@vger.kernel.org; Tue,
+ 14 Nov 2006 20:48:10 -0500 (EST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-On Mon, 11 Dec 2006 22:10:08 +0000
-Andy Parkins <andyparkins@gmail.com> wrote:
+On Tue, 14 Nov 2006, Junio C Hamano wrote:
 
-> +int git_branch_config(const char *var, const char *value)
-> +{
-> +	if (!strcmp(var, "branch.color")) {
-> +		branch_use_color = git_config_colorbool(var, value);
-> +		return 0;
-> +	}
-> +	return git_default_config(var, value);
-> +}
+> Nicolas Pitre <nico@cam.org> writes:
+> 
+> > On Tue, 14 Nov 2006, Jakub Narebski wrote:
+> >
+> >> The git interface refactoring should be I think the cause for git 2.0.0
+> >> release...
+> >
+> > Good idea indeed.
+> 
+> We need to avoid user confusion, so making a command that used
+> to do one thing to suddenly do something completely different is
+> a no-no.  However, I do not think it needs to wait for 2.0.0.
+> We can start with a separate namespace (or even a separate
+> "Improved git UI project") and introduce the "improved UI set"
+> in 1.5.0 timeframe.
 
-As Junio already highlighted, the "branch.*" namespace is for actual
-branch names.  This config option should go into "color.branch" or some
-other spot.
+Dunno.  I feel this is a bit overboard.  Actually the naming problem is 
+rather localized to one command, namely git-pull.  In my opinion going 
+with yet another namespace which would rather add to the confusion not 
+clear it.
+
+The best way to avoid user confusion is to remove the source of the 
+confusion not let it live.  In other words I think we should _fix_ 
+git-pull instead of replacing it.  People are already confused about it 
+so simply fixing this command will have a net confusion reduction.  Yet 
+we're not talking about "suddenly doing something completely different" 
+either.  If git-pull doesn't merge automatically anymore it is easy to 
+tell people to use git-merge after a pull.
+
+"You pull the remote changes with 'git-pull upstream,, then you can 
+merge them in your current branch with 'git-merge upstream'."
+
+Isn't it much simpler to understand (and to teach) that way?
+
+Also I don't think using git-upload and git-download is much better.  
+This adds yet more commands that do almost the same as existing ones but 
+with a different name which is yet not necessarily fully adequate.  I 
+for example would think that "download" is more like git-clone than 
+git-fetch or git-pull.
+
+Let's face it: HG got it right with pull and push and newbies have much 
+less difficulty grokking it.  We screwed it by not using the most 
+intuitive semantic of a pull and locking the word "pull" away is not the 
+better solution given all considerations. Why just not admit it and 
+avoid being different than HG just for the sake of it?
+
 
