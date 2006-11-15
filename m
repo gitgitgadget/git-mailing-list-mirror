@@ -4,68 +4,78 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Ignacio Arenaza <iarenuno@eteo.mondragon.edu>
-Subject: Re: [PATCH] git-cvsimport: add suport for CVS pserver method  
-	HTTP/1.x  proxying
-Date: Fri, 24 Nov 2006 10:05:38 +0100
-Message-ID: <67hcwp6wpp.fsf@poseidon.eteo.mondragon.edu>
-References: <11642344172790-git-send-email-iarenuno@eteo.mondragon.edu><7v64
-	d5keke.fsf@assigned-by-dhcp.cox.net><67mz6h6xmb.fsf@poseidon.eteo.mond 
-	ragon.edu><7vfyc9cjci.fsf@assigned-by-dhcp.cox.net>
+From: Joakim Tjernlund <Joakim.Tjernlund@transmode.se>
+Subject: Re: git-svn and rebase causes duplicate  log entries in svn
+Date: Wed, 15 Nov 2006 11:14:51 +0100
+Message-ID: <455AE89B.2030201@transmode.se>
+References: <00ff01c70836$ba7e3d00$1e67a8c0@Jocke> <m2zmatiqon.fsf@ziti.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Fri, 24 Nov 2006 09:05:52 +0000 (UTC)
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Wed, 15 Nov 2006 10:15:19 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <7vfyc9cjci.fsf@assigned-by-dhcp.cox.net> (Junio C. 
-	Hamano'smessage of "Fri, 24 Nov 2006 00:57:49 -0800")
-User-Agent: Gnus/5.1002 (Gnus v5.10.2) Emacs/21.4 (gnu/linux)
-X-imss-version: 2.044
-X-imss-result: Passed
-X-imss-scores: Clean:68.92211 C:2 M:3 S:5 R:5
-X-imss-settings: Baseline:1 C:1 M:1 S:1 R:1 (0.0000 0.0000)
+User-Agent: Thunderbird 1.5.0.7 (X11/20061017)
+In-Reply-To: <m2zmatiqon.fsf@ziti.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32202>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31430>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GnX0H-0002fE-3G for gcvg-git@gmane.org; Fri, 24 Nov
- 2006 10:05:49 +0100
+ esmtp (Exim 4.43) id 1GkHnN-0008FH-3C for gcvg-git@gmane.org; Wed, 15 Nov
+ 2006 11:15:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S934522AbWKXJFp convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Fri, 24 Nov 2006 04:05:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934523AbWKXJFp
- (ORCPT <rfc822;git-outgoing>); Fri, 24 Nov 2006 04:05:45 -0500
-Received: from mx.eteo.mondragon.edu ([193.146.78.131]:38101 "EHLO
- mx.eteo.mondragon.edu") by vger.kernel.org with ESMTP id S934522AbWKXJFo
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 24 Nov 2006 04:05:44 -0500
-Received: by mx.eteo.mondragon.edu (Postfix, from userid 1001) id ECF0CB6B5;
- Fri, 24 Nov 2006 10:05:42 +0100 (CET)
-Received: from poseidon.eteo.mondragon.edu (poseidon.eteo.mondragon.edu
- [172.31.3.4]) by mx.eteo.mondragon.edu (Postfix) with ESMTP id 2CE02B6B1;
- Fri, 24 Nov 2006 10:05:39 +0100 (CET)
-Received: from poseidon.eteo.mondragon.edu (localhost [127.0.0.1]) by
- localhost.eteo.mondragon.edu (Postfix) with ESMTP id 054112FD65; Fri, 24 Nov
- 2006 10:05:39 +0100 (CET)
-Received: by poseidon.eteo.mondragon.edu (Postfix, from userid 1072)id 
- E75012FD15; Fri, 24 Nov 2006 10:05:38 +0100 (CET)
-To: Junio C Hamano <junkio@cox.net>
+ S965964AbWKOKO5 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
+ 05:14:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966111AbWKOKO5
+ (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 05:14:57 -0500
+Received: from [212.105.56.244] ([212.105.56.244]:16350 "EHLO
+ dmz.lumentis.net") by vger.kernel.org with ESMTP id S965964AbWKOKO4 (ORCPT
+ <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 05:14:56 -0500
+Received: from [192.168.1.15] (146.175.241.83.in-addr.dgcsystems.net
+ [83.241.175.146]) (authenticated bits=0) by dmz.lumentis.net (8.12.8/8.12.8)
+ with ESMTP id kAFAEpTI014774 (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA
+ bits=256 verify=NO); Wed, 15 Nov 2006 11:14:52 +0100
+To: Seth Falcon <sethfalcon@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano <junkio@cox.net> writes:
+Seth Falcon wrote:
+> Hi Joakim,
+>
+> "Joakim Tjernlund" <joakim.tjernlund@transmode.se> writes:
+>   
+>> Now I want to rebase my svn branch against latest u-boot and commit
+>> my rebased svn branch to svn.
+>>
+>> I use git-svn commit -b svn -q remotes/git-svn..svn to commit my latest
+>> changes and when I do so I see my local changes once more in the svn
+>> log:
+>> Any way to avoid that?
+>>     
+>
+> I think you want to use git-svn dcommit, and not commit.  See the
+> notes in the git-svn man page.  The basic workflow
+> that I've been using is:
+>
+> git-svn fetch  
+> git rebase remotes/git-svn  ## on mybranch
+> ## make commits on mybranch
+> git-svn dcommit remotes/git-svn..mybranch
+>
+> This results in each commit that I made on mybranch being sent to svn
+> as a separate commit.
+>
+> + seth
+>   
+Thanks, but for some reson I can't make dcommit work. I just get
+git-svn dcommit  -q remotes/git-svn..svn
+Unable to extract revision information from commit
+3643783f1f2fbdec1514b5e842e97b27622ae8b8~1
 
-> Let's save a bit of trouble from you.  Here is what I've queued
-> for 'master', with fixes from the discussion so far.
-
-Looks good to me, but it seems you missed the 'if(...) {' and
-'if(...){' formating issues you raised before.
-
-Saludos. I=F1aki.
-
---=20
-School of Management
-Mondragon University
-20560 O=F1ati - Spain
-+34 943 718009 (ext. 225)
-
+My workflow is perhaps a little diffrent I do all dev in git and then
+commit to SVN.
+I start with creating an empty SVN tree and then do a
+   git-svn commit <commit id where my dev started from u-boot>
+then I do a
+   git-svn commit  -q remotes/git-svn..svn
+to add all my own commits.
