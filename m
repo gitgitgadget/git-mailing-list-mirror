@@ -1,57 +1,67 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: StGit repo & gitweb, was Re: [PATCH] merge-recursive: add/add really  is modify/modify with an empty base
-Date: Tue, 19 Dec 2006 19:50:15 +0100
-Message-ID: <20061219185015.GK9399@pasky.or.cz>
-References: <20061207101707.GA19139@spearce.org> <Pine.LNX.4.63.0612100056090.28348@wbgn013.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.63.0612100114440.28348@wbgn013.biozentrum.uni-wuerzburg.de> <7vmz5w5tuw.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0612122347590.2807@wbgn013.biozentrum.uni-wuerzburg.de> <7vvekgog0r.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0612130402300.2807@wbgn013.biozentrum.uni-wuerzburg.de> <7vvekgl2z2.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0612131232270.3635@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Cleaning up git user-interface warts
+Date: Wed, 15 Nov 2006 11:05:26 +0100
+Organization: At home
+Message-ID: <ejeomr$vrj$2@sea.gmane.org>
+References: <87k61yt1x2.wl%cworth@cworth.org> <455A1137.8030301@shadowen.org> <87hcx1u934.wl%cworth@cworth.org> <20061114194707.GH7201@pasky.or.cz> <87d57pu4qa.wl%cworth@cworth.org> <7v3b8lv9c9.fsf@assigned-by-dhcp.cox.net> <20061115040852.GL7201@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 19 Dec 2006 18:57:13 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
-	Catalin Marinas <catalin.marinas@gmail.com>
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Wed, 15 Nov 2006 10:05:15 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Tue, 19 Dec 2006 13:56:57 EST
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0612131232270.3635@wbgn013.biozentrum.uni-wuerzburg.de>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 15
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34839>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gwk9B-0004bf-BP for gcvg-git@gmane.org; Tue, 19 Dec
- 2006 19:57:05 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31428>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GkHdT-0005tr-8k for gcvg-git@gmane.org; Wed, 15 Nov
+ 2006 11:04:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932849AbWLSS46 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
- 13:56:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932894AbWLSS46
- (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 13:56:58 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:42974 "EHLO machine.or.cz"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S932849AbWLSS46
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec 2006 13:56:58 -0500
-Received: (qmail 4350 invoked by uid 2001); 19 Dec 2006 19:50:15 +0100
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+ S966733AbWKOKEs convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006 05:04:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966734AbWKOKEs
+ (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 05:04:48 -0500
+Received: from main.gmane.org ([80.91.229.2]:41871 "EHLO ciao.gmane.org") by
+ vger.kernel.org with ESMTP id S966733AbWKOKEr (ORCPT
+ <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 05:04:47 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1GkHd4-0005nj-E2 for git@vger.kernel.org; Wed, 15 Nov 2006 11:04:27 +0100
+Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Wed, 15 Nov 2006 11:04:26 +0100
+Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Wed, 15 Nov 2006
+ 11:04:26 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On Wed, Dec 13, 2006 at 12:46:56PM CET, Johannes Schindelin wrote:
-> Not that it matters: repo.or.cz has a nice mirror. Pasky, how powerful is 
-> that machine? I am a happy user of the gitweb interface on that box...
+Petr Baudis wrote:
 
-See http://repo.or.cz/about.html - two-processor P3 800MHz with 2G RAM,
-and it does quite some work besides doing repo.or.cz as well - there are
-no load problems so far, though. The gitweb load in particular is pretty
-low, though - I think it's about 350 requests per day; the periodical
-mirroring is far more intensive, but the intervals for this could be
-reduced greatly if that would become a problem.
+> =A0 (i) Clearly divided porcelain/plumbing interface, so that you can
+> really isolate the two UI-wise; endless confusion reigns there now. I=
+s
+> git-update-index porcelain or plumbing? _You_ call git-merge a proper
+> porcelain? From my perspective, git-update-ref is as plumbing as it
+> gets, but it's classified as porcelain. Etc, etc. This would be by fa=
+r
+> the most important advantage.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-The meaning of Stonehenge in Traflamadorian, when viewed from above, is:
-"Replacement part being rushed with all possible speed."
+The problem is that one man's plumbing is another man porcelain.
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
+
