@@ -1,156 +1,56 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: StGIT and rerere
-Date: Thu, 26 Oct 2006 10:21:55 -0700
-Message-ID: <7vfydbkn64.fsf@assigned-by-dhcp.cox.net>
-References: <200610210039.10215.robin.rosenberg.lists@dewire.com>
-	<tnxu01r2fzv.fsf@arm.com>
+From: "Michael K. Edwards" <medwards.linux@gmail.com>
+Subject: git fetch --reference?
+Date: Tue, 14 Nov 2006 16:38:26 -0800
+Message-ID: <f2b55d220611141638k5f4a0aeas1a43301e4b40bf59@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 26 Oct 2006 17:22:26 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Wed, 15 Nov 2006 00:38:36 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=D5y8LvU0oqWzWW1DYCh9uVSqJsGfhp3UGDEkxz2P2YPheWtLoCDMQ1tHCID3Upib9/L+uajFGF7PJMonmZ5kv4lwJO7DjNEaxYTN5X/5FHoT4aTmuyQriBAbDSCMI0ncIQjVR/VIXdw3etuD3yWY5w5Lwx1gIVmqlwioveJQd5o=
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30244>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31396>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gd8vY-00030M-PK for gcvg-git@gmane.org; Thu, 26 Oct
- 2006 19:22:01 +0200
+ esmtp (Exim 4.43) id 1Gk8nP-0000XI-GS for gcvg-git@gmane.org; Wed, 15 Nov
+ 2006 01:38:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1423627AbWJZRV5 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
- 13:21:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423629AbWJZRV5
- (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 13:21:57 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:54220 "EHLO
- fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP id S1423627AbWJZRV4
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 13:21:56 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao01.cox.net
- (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
- <20061026172155.JBQI6077.fed1rmmtao01.cox.net@fed1rmimpo01.cox.net>; Thu, 26
- Oct 2006 13:21:55 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id f5Me1V0051kojtg0000000 Thu, 26 Oct 2006
- 13:21:38 -0400
-To: Catalin Marinas <catalin.marinas@gmail.com>
+ S966545AbWKOAi2 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 14 Nov 2006
+ 19:38:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966543AbWKOAi2
+ (ORCPT <rfc822;git-outgoing>); Tue, 14 Nov 2006 19:38:28 -0500
+Received: from wx-out-0506.google.com ([66.249.82.231]:11854 "EHLO
+ wx-out-0506.google.com") by vger.kernel.org with ESMTP id S966545AbWKOAi1
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 14 Nov 2006 19:38:27 -0500
+Received: by wx-out-0506.google.com with SMTP id s7so15434wxc for
+ <git@vger.kernel.org>; Tue, 14 Nov 2006 16:38:27 -0800 (PST)
+Received: by 10.90.105.19 with SMTP id d19mr1845298agc.1163551106979; Tue, 14
+ Nov 2006 16:38:26 -0800 (PST)
+Received: by 10.90.25.4 with HTTP; Tue, 14 Nov 2006 16:38:26 -0800 (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Catalin Marinas <catalin.marinas@arm.com> writes:
+When setting up a working area for kernel integration for a new
+embedded target, I generally do a "git clone --reference" so that the
+new area has its own repository (and its own branch structure) but
+most of the blobs come from a local reference copy.  But now that I'm
+integrating bits from several non-trivially divergent trees (mtd-2.6,
+netdev-2.6, linux-2.6.16.y, etc.), it would be nice to avoid
+re-downloading blobs for these additional remote branches, which are
+also available in the local reference copy.  Is it feasible to
+implement "git fetch --reference" for this purpose?  Or is there a
+better way to manage this sort of integration effort?
 
-> I didn't know it exists. I've been thinking at a way to avoid
-> duplicating the conflict fixing but haven't got to any results. This
-> looks like a good idea.
-> ...
-> My problem was with maintaining a public branch where re-basing
-> patches is not welcomed but I would still like to use StGIT in my
-> development branch. When pulling from upstream in my devel branch, I
-> get conflicts in some patches. The problem is that I get the same
-> conflicts in the patches already merged in the public branch where the
-> patches were previously checked in.
->
-> Another case is several branches with common patches that generate
-> conflicts.
-> ...
-> Note, however, that I haven't looked at how git-rerere works and I
-> might have misunderstood its functionality.
-
-I think Documentation/git-rerere.txt describes its operation in
-enough details for the end user, but if there is anything
-unclear please ask away.
-
-There are two details that are not mentoined in the end-user
-documentation.
-
-* Identifying "same" conflicts.
-
-This is done by hashing the text inside the conflict markers:
-
-	<<<<<<<
-        a
-        =======
-	b
-        >>>>>>>
-
-Each conflicted section like the above are first canonicalized
-so that section "a" sorts alphabetically earlier than section
-"b" (in other words, if the conflict were <<< b === a >>> then
-they are swapped to read <<< a === b >>>), concatenated and fed
-into SHA-1 digest.  The final digest after conflicted file is
-read as a whole becomes the name of the conflict, and naming is
-done per file.
-
-The reason for this canonicalization is because the order in the
-conflicted section depends on the direction of the merge (if
-you pull test into master you get the conflict marked the other
-way from the case you pulled master into test).
-
-* rerere's resolution can affect outside conflict markers.
-
-If an earlier conflict read like this:
-
-	...
-	z
-	<<<<<<<
-        a
-        =======
-        b
-        >>>>>>>
-        c
-	d
-	e
-        f
-        g
-	...
-        
-and your earlier resolution was like this:
-
-	...
-	w
-        b
-        dd
-        e
-        f
-        g
-	...
-
-That is what rerere records (i.e. including removal of c and
-change from z to w).
-
-Then, when you see the same conflict like this (notice that g is
-now h):
-
-	...
-	z
-	<<<<<<<
-        a
-        =======
-        b
-        >>>>>>>
-        c
-	d
-	e
-        f
-        h
-	...
-
-it is resolved like this:
-
-	...
-	w
-        b
-        d
-        e
-        f
-        h
-	...
-
-This is often useful when e.g. a <<< === >>> section changes
-function signature of a (static) function; parts outside the
-conflicted section needs matching changes to adjust to it and
-that is recorded and replayed by rerere.
+Cheers,
