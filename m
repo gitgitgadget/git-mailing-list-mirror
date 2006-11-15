@@ -1,73 +1,93 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: [BUG] StGit removed git branch of the same name as StGit branch
-Date: Tue, 21 Nov 2006 09:26:52 +0000
-Message-ID: <b0943d9e0611210126x493848d9xae006af835fc62c7@mail.gmail.com>
-References: <200611202201.45521.jnareb@gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Cleaning up git user-interface warts
+Date: Wed, 15 Nov 2006 13:45:58 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0611151339500.3349@woody.osdl.org>
+References: <87k61yt1x2.wl%cworth@cworth.org> <Pine.LNX.4.64.0611142306090.2591@xanadu.home>
+ <Pine.LNX.4.64.0611150950170.3349@woody.osdl.org> <200611151858.51833.andyparkins@gmail.com>
+ <Pine.LNX.4.64.0611151111250.3349@woody.osdl.org>
+ <f2b55d220611151139v66fba16ax97ce6b9966b33ce7@mail.gmail.com>
+ <Pine.LNX.4.64.0611151203450.3349@woody.osdl.org> <Pine.LNX.4.64.0611151516360.2591@xanadu.home>
+ <Pine.LNX.4.64.0611151226590.3349@woody.osdl.org> <87velgs9hx.wl%cworth@cworth.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Tue, 21 Nov 2006 09:28:28 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Wed, 15 Nov 2006 21:46:40 +0000 (UTC)
+Cc: Nicolas Pitre <nico@cam.org>,
+	"Michael K. Edwards" <medwards.linux@gmail.com>,
+	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=nqotNMXdWgNdS0aY3weP7/Hb8m90+ozuphugIDskRG6Vmyw6n00eQDUJrQ/I1PSCtalltJOe6yBa5ivCw+TXwdVwTgWGWp5EI+Ag3XyZLD/0XKvPLmgtW8HXZH71S6xXNaQe353EaJq3kAmaS9evxqdDDzf3XtaR/hZG2SKiLUU=
-In-Reply-To: <200611202201.45521.jnareb@gmail.com>
-Content-Disposition: inline
+In-Reply-To: <87velgs9hx.wl%cworth@cworth.org>
+X-MIMEDefang-Filter: osdl$Revision: 1.156 $
+X-Scanned-By: MIMEDefang 2.36
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31979>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31507>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GmRvJ-0006DV-22 for gcvg-git@gmane.org; Tue, 21 Nov
- 2006 10:28:13 +0100
+ esmtp (Exim 4.43) id 1GkSaH-00085X-S0 for gcvg-git@gmane.org; Wed, 15 Nov
+ 2006 22:46:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S966948AbWKUJ1t (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 21 Nov 2006
- 04:27:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966946AbWKUJ1t
- (ORCPT <rfc822;git-outgoing>); Tue, 21 Nov 2006 04:27:49 -0500
-Received: from wx-out-0506.google.com ([66.249.82.225]:27080 "EHLO
- wx-out-0506.google.com") by vger.kernel.org with ESMTP id S966948AbWKUJ1s
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2006 04:27:48 -0500
-Received: by wx-out-0506.google.com with SMTP id s7so2143027wxc for
- <git@vger.kernel.org>; Tue, 21 Nov 2006 01:27:47 -0800 (PST)
-Received: by 10.90.86.10 with SMTP id j10mr4872627agb.1164101267319; Tue, 21
- Nov 2006 01:27:47 -0800 (PST)
-Received: by 10.35.109.8 with HTTP; Tue, 21 Nov 2006 01:26:52 -0800 (PST)
-To: "Jakub Narebski" <jnareb@gmail.com>
+ S1161750AbWKOVqO (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
+ 16:46:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161751AbWKOVqO
+ (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 16:46:14 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:29844 "EHLO smtp.osdl.org") by
+ vger.kernel.org with ESMTP id S1161750AbWKOVqO (ORCPT
+ <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 16:46:14 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
+ smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kAFLjxoZ000530
+ (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Wed, 15
+ Nov 2006 13:46:00 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
+ shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kAFLjwgi031168; Wed, 15 Nov
+ 2006 13:45:58 -0800
+To: Carl Worth <cworth@cworth.org>
 Sender: git-owner@vger.kernel.org
 
-On 20/11/06, Jakub Narebski <jnareb@gmail.com> wrote:
-> I have used StGit (wonderfull tool) to manage patches on git branch
-> gitweb/web. Unfortunately, I have named stg branch the same as git
-> branch.
 
-Well, there is no such thing as a stg branch. StGIT shares the branch
-structure with GIT and the "branch" command works on the whole GIT
-branch, with some additional things for handling the patches. Once a
-GIT branch is StGIT-initialised (either by being created with "stg
-branch" or by "stg init") it will always remain a StGIT branch and get
-a reference in refs/bases/.
 
-> When removing stg branch (I wanted to remove
-> heads/base/gitweb/web) using "stg branch --delete gitweb/web" it
-> deleted also git branch when I wanted to remove only the StGit managed
-> indicator. Fortunately I was able to recover the branch from reflog, as
-> StGit didn't delete reflog with deletion of git branch.
->
-> Perhaps that is correct behavior... but certainly unexpected.
+On Wed, 15 Nov 2006, Carl Worth wrote:
+> 
+> Well, one of the problems is that with current git I can teach, (and I
+> have), that there's a conceptual:
+> 
+> 	pull = fetch + merge
+> 
+> But then shortly after I have to teach an interface notion:
+> 
+> 	merge = pull .
 
-I've never thought anyone would see a different meaing for the
-"branch" command. What you wanted to do was the reverse of the "init"
-command. Maybe something like "uninit" or a "--uninit" option to
-"branch".
+This is why I would suggest teaching the _concept_ of the "merge", and not 
+the actual command.
 
--- 
+I don't think you should basically ever use the "git merge" command 
+itself, not in teaching, and not in real life. So after talking about 
+branches and having taught people to use "git fetch", the next stage is 
+not so much to teach people to use "git merge", but to explain to them the 
+_concept_ of merging. 
+
+I really think that's a fairly quick thing, partly exactly _because_ you 
+shouldn't at that point need to worry about syntax or details or anything 
+like that at all. You just tell them that there's a notion of "merging" 
+two branches by joining them together and havign the result have the 
+changes from both branches. So it's a _conceptual_ issue, and that's why I 
+said I think you should just totally gloss over the whole issue of "git 
+merge" syntax.
+
+Once you've explained the _concept_ of merging, you then introduce the 
+command to actually _execute_ the merge: it's "git pull".
+
+See? No circular thinking at all. One is a _concept_ ("join two branches 
+together by including both in the result") and the other is a command 
+("pull will fetch the remote data if any, and merge it into the current 
+branch").
+
+If you explain it that way, then _obviously_ if you don't need to fetch 
+any remote data, doing "git pull . xyzzy" will merge the local branch 
+"xyzzy" into the current branch.
+
