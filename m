@@ -1,59 +1,79 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-Subject: Re: [RFC] Submodules in GIT
-Date: Sun, 3 Dec 2006 02:11:16 +0100
-Message-ID: <200612030211.17159.Josef.Weidendorfer@gmx.de>
-References: <20061130170625.GH18810@admingilde.org> <Pine.LNX.4.64.0612021245081.3476@woody.osdl.org> <20061202205853.GW18810@admingilde.org>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Cleaning up git user-interface warts
+Date: Wed, 15 Nov 2006 13:31:32 +0100
+Organization: At home
+Message-ID: <ejf18p$tbt$1@sea.gmane.org>
+References: <87k61yt1x2.wl%cworth@cworth.org> <455A1137.8030301@shadowen.org> <87hcx1u934.wl%cworth@cworth.org> <Pine.LNX.4.64.0611141518590.2591@xanadu.home> <87bqn9u43s.wl%cworth@cworth.org> <7vr6w5y7to.fsf@assigned-by-dhcp.cox.net> <7virhhy76h.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611142048350.2591@xanadu.home> <455B04DE.1040107@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sun, 3 Dec 2006 01:12:11 +0000 (UTC)
-Cc: Linus Torvalds <torvalds@osdl.org>, sf <sf-gmane@stephan-feder.de>,
-	Git Mailing List <git@vger.kernel.org>,
-	Andy Parkins <andyparkins@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+NNTP-Posting-Date: Wed, 15 Nov 2006 12:31:25 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #352111
-User-Agent: KMail/1.9.3
-In-Reply-To: <20061202205853.GW18810@admingilde.org>
-Content-Disposition: inline
-X-Y-GMX-Trusted: 0
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 29
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33074>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31439>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GqftT-0000S4-Hq for gcvg-git@gmane.org; Sun, 03 Dec
- 2006 02:11:49 +0100
+ esmtp (Exim 4.43) id 1GkJv0-0000kh-3q for gcvg-git@gmane.org; Wed, 15 Nov
+ 2006 13:31:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S936608AbWLCBLg (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 2 Dec 2006
- 20:11:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936609AbWLCBLg
- (ORCPT <rfc822;git-outgoing>); Sat, 2 Dec 2006 20:11:36 -0500
-Received: from mail.gmx.net ([213.165.64.20]:7060 "HELO mail.gmx.net") by
- vger.kernel.org with SMTP id S936608AbWLCBLf (ORCPT
- <rfc822;git@vger.kernel.org>); Sat, 2 Dec 2006 20:11:35 -0500
-Received: (qmail invoked by alias); 03 Dec 2006 01:11:33 -0000
-Received: from p5496B2C8.dip0.t-ipconnect.de (EHLO noname) [84.150.178.200]
- by mail.gmx.net (mp001) with SMTP; 03 Dec 2006 02:11:33 +0100
-To: Martin Waitz <tali@admingilde.org>
+ S1752367AbWKOMau (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
+ 07:30:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966804AbWKOMat
+ (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 07:30:49 -0500
+Received: from main.gmane.org ([80.91.229.2]:19352 "EHLO ciao.gmane.org") by
+ vger.kernel.org with ESMTP id S1752367AbWKOMat (ORCPT
+ <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 07:30:49 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1GkJuO-0000bh-3H for git@vger.kernel.org; Wed, 15 Nov 2006 13:30:28 +0100
+Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Wed, 15 Nov 2006 13:30:28 +0100
+Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Wed, 15 Nov 2006
+ 13:30:28 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On Saturday 02 December 2006 21:58, Martin Waitz wrote:
-> So I was not against the link object itself (initially I wanted to do it
-> this way, too), only agains the information which was proposed to be
-> stored there.  Up to now I haven't found anything which makes sense to
-> store next to the submodule commit to define the identity of the
-> submodule.
+Andreas Ericsson wrote:
 
-Isn't it enough reason that a porcelain probably wants to store meta
-information for a given submodule, giving the need to put a name/identity
-to it?
+> Nicolas Pitre wrote:
+> 
+> [ axed a lot of stuff that I didn't fully grok ]
+> 
+>> 
+>> This becomes formalized as:
+>> 
+>>      git_pull [<URL>] [<local_name>]
+>> 
+>> If <URL> includes a branch name then <local_name> is a single branch 
+>> name.  If <URL> doesn't include any branch name then <local_name> 
+>> becomes a local branch group name containing all branches in the remote 
+>> repository.
+> 
+> I would change that so "local_name" is always a branch group name, but 
+> branch group names can be used as refs. That is,
+> 
+> git pull startrek.com/kirk.git:master kirk
 
-Josef
+I'd rather use Cogito (not gitweb) notation startrek.com/kirk.git#master
+This way we can change the name of local branch
+   startrek.com/kirk.git#master:kirk
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
+
