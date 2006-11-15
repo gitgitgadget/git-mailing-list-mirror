@@ -4,112 +4,108 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: If I were redoing git from scratch...
-Date: Sat, 4 Nov 2006 08:44:02 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0611040829040.25218@g5.osdl.org>
-References: <7vpsc3xx65.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Cleaning up git user-interface warts
+Date: Wed, 15 Nov 2006 09:55:26 -0800
+Message-ID: <7vk61woar5.fsf@assigned-by-dhcp.cox.net>
+References: <87k61yt1x2.wl%cworth@cworth.org>
+	<7virhhy76h.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0611142048350.2591@xanadu.home>
+	<200611150917.23756.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Sat, 4 Nov 2006 16:44:25 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Wed, 15 Nov 2006 17:56:10 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <7vpsc3xx65.fsf@assigned-by-dhcp.cox.net>
-X-MIMEDefang-Filter: osdl$Revision: 1.155 $
-X-Scanned-By: MIMEDefang 2.36
+In-Reply-To: <200611150917.23756.andyparkins@gmail.com> (Andy Parkins's
+	message of "Wed, 15 Nov 2006 10:17:22 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30929>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31453>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GgOcx-00032v-Lx for gcvg-git@gmane.org; Sat, 04 Nov
- 2006 17:44:16 +0100
+ esmtp (Exim 4.43) id 1GkOzL-0006eV-Vd for gcvg-git@gmane.org; Wed, 15 Nov
+ 2006 18:55:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S965545AbWKDQoK (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 4 Nov 2006
- 11:44:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965548AbWKDQoK
- (ORCPT <rfc822;git-outgoing>); Sat, 4 Nov 2006 11:44:10 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:43909 "EHLO smtp.osdl.org") by
- vger.kernel.org with ESMTP id S965545AbWKDQoI (ORCPT
- <rfc822;git@vger.kernel.org>); Sat, 4 Nov 2006 11:44:08 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
- smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kA4Gi4oZ025461
- (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Sat, 4
- Nov 2006 08:44:05 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
- shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kA4Gi39S026384; Sat, 4 Nov
- 2006 08:44:04 -0800
-To: Junio C Hamano <junkio@cox.net>
+ S1030778AbWKORz2 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
+ 12:55:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030781AbWKORz2
+ (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 12:55:28 -0500
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:44279 "EHLO
+ fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP id S1030774AbWKORz1
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 12:55:27 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao08.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061115175527.TVEM18207.fed1rmmtao08.cox.net@fed1rmimpo02.cox.net>; Wed, 15
+ Nov 2006 12:55:27 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id n5vZ1V0011kojtg0000000; Wed, 15 Nov 2006
+ 12:55:33 -0500
+To: Andy Parkins <andyparkins@gmail.com>
 Sender: git-owner@vger.kernel.org
 
+Andy Parkins <andyparkins@gmail.com> writes:
 
+>> 3) remote branch handling should become more straight forward.
+>
+> I was completely confused by this origin/master/clone stuff when I started 
+> with git.  In hindsight, now I understand git a bit more, this is what I 
+> would have liked:
+>
+>  * Don't use the name "origin" twice.  In fact, don't use it at all.  In a 
+> distributed system there is no such thing as a true origin.
+>
+>  * .git/remotes/origin should be ".git/remotes/default".   "origin" is only 
+> special because it is the default to push and pull - it's very nice to have a 
+> default, but it should therefore be /called/ "default".
 
-On Sat, 4 Nov 2006, Junio C Hamano wrote:
-> 
-> The biggest one is that we use too many static (worse, function
-> scope static) variables that live for the life of the process,
-> which makes many things very nice and easy ("run-once and let
-> exit clean up the mess" mentality), but because of this it
-> becomes awkward to do certain things.  Examples are:
-> 
->  - Multiple invocations of merge-bases (needs clearing the
->    marks left on commit objects by earlier traversal),
+I think the naming is just a minor detail and can be overridden
+with "clone --origin" already.  Renaming it to default is just
+like making separate-remote the default to me -- it is fine as
+long as it does not break people's expectations.
 
-Well, quite frankly, I dare anybody to do it differently, yet have good 
-performance with millions of objects.
+>  * If clone really wants to have a non-read-only master, then that should 
+> be .git/refs/heads/master and will initialise 
+> to .git/refs/remotes/$name/master after cloning.  Personally I think this is 
+> dangerous because it assumes there is a "master" upstream - which git doesn't 
+> mandate at all.  Maybe it would be better to take the upstream HEAD and 
+> create a local branch for /that/ branch rather than require that it is 
+> called "master".
 
-The fact is, I don't think it _can_ be done. I would seriously suggest 
-re-visiting this in five years, just because CPU's and memory will by then 
-hopefully have gotten an order of magnitude faster/bigger.
+I think the latter is what clone has done always; take remote's
+HEAD and use that to initialize local master (there is no
+confusion coming from multiple peer repositories because you
+clone from only one place to initialize the repository -- that
+one _is_ the origin), and we even keep the HEAD pointing at the
+remote's master or whatever it points at at the remote.  Using
+"$name" as an object name uses .git/refs/remotes/$name/HEAD.
 
-The thing is, the object database when we read it in really needs to be 
-pretty compact-sized, and we need to remember objects we've seen earlier 
-(exactly _because_ we depend on the flags). So there's exactly two 
-alternatives:
- - global life-time allocations of objects like we do now
- - magic memory management with unknown lifetimes and keeping track of all 
-   pointers.
+>  * git-clone should really just be a small wrapper around
+>...
+> If git-clone does anything that can't be done with settings in the config 
+> and the remotes/default file then it's wrong.  The reason I say this is that 
+> as soon as git-clone has special capabilities (like --shared, --local 
+> and --reference) then you are prevented from doing magic with existing 
+> repositories.
 
-And I'd like to point out that the memory management right now is simply 
-not realistic:
+That is not entirely true.  clone has convenience because people
+asked.  It does not have to mean you are not allowed to give
+similar convenience to other commands.  Patches?
 
- - it's too damn hard. A simple garbage collector based on the approach we 
-   have now would simply not be able to do anything, since all objects are 
-   _by_definition_ reachable from the hash chains, so there's nothing to 
-   collect. The lifetime of an object fundamentally _is_ the whole process 
-   lifetime, exactly because we expect the objects (and the object flags 
-   in particular) to be meaningful.
+> branches from two other local repositories that have the objects hard linked?
 
- - pretty much all garbage collection schemes tend to have a memory 
-   footprint that is about twice what a static footprint is under any 
-   normal load. Think about what we already do with "git pack-objects" for 
-   something like the mozilla repository: I worked quite a lot on getting 
-   the memory footprint down, and it's _still_ several hundred MB. 
+fetch by second local repository with git-local-fetch perhaps.
 
-In other words, I can pretty much guarantee that some kind of "smarter" 
-memory management would be a huge step backwards. Yes, we now have to do 
-some things explicitly, but exactly because we do them explicitly we can 
-_afford_ to have the stupid and simple and VERY EFFICIENT memory 
-management ("lack of memory management") that we have now.
+> There have been lots of "wishlist" posts lately; would it be
+> useful if I tried to collect all these suggestions from
+> various people into one place to try and get a picture of any
+> consensus?
 
-The memory use of git had an very real correlation with performance when I 
-was doing the memory shrinking a few months back (back in June). I realize 
-that it's perhaps awkward, but I would really want people to realize that 
-it's a huge performance issue. It was a clear performance issue for me 
-(and I use machines with 2GB of RAM, so I was never swapping), it would be 
-an even bigger one for anybody where the size meant that you needed to 
-start doing paging.
+A list of common things wished by people certainly is a handy
+thing to have.
 
-So I would seriously ask you not to even consider changing the object 
-model. Maybe add a few more helper routines to clear all object flags or 
-something, but the "every object is global and will never be de-allocated" 
-is really a major deal.
-
-Five years from now, or for somebody who re-implements git in Java (where 
-performance isn't going to be the major issue anyway, and you probably do 
-"small" things like "commit" and "diff", and never do full-database things 
-like "git repack"), _then_ you can happily look at having something 
-fancier. Right now, it's too easy to just look at cumbersome interfaces, 
-and forget about the fact that those interfaces is sometimes what allows 
-us to practically do some things in the first place.
-
+A consensus would not write code and it generally does not take
+technology into account to tell what is realistic and what is
+not, so the result needs to be take with a grain of salt,
+though.
