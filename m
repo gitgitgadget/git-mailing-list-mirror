@@ -1,133 +1,93 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [RFD] making separate-remote layout easier to use
-Date: Sun, 26 Nov 2006 01:13:28 -0800
-Message-ID: <7v1wnqwoxz.fsf@assigned-by-dhcp.cox.net>
-References: <7v1wnr19do.fsf@assigned-by-dhcp.cox.net>
-	<ekafpm$fs7$1@sea.gmane.org> <20061126033433.GD29394@spearce.org>
-	<7vvel2yi2u.fsf@assigned-by-dhcp.cox.net>
-	<20061126042311.GB30001@spearce.org>
-	<7vk61iyeq4.fsf@assigned-by-dhcp.cox.net>
-	<20061126073942.GA30518@spearce.org>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: Cleaning up git user-interface warts
+Date: Wed, 15 Nov 2006 12:28:56 +0100
+Message-ID: <200611151128.57917.andyparkins@gmail.com>
+References: <87k61yt1x2.wl%cworth@cworth.org> <200611151033.57415.andyparkins@gmail.com> <20061115104858.GG5453@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sun, 26 Nov 2006 09:13:52 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Wed, 15 Nov 2006 11:29:24 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=Jw2CyeJ789RmvWigFtPhSwDdWr/uVlvrN0NlnXFUDFVFctiZ8oJKdQTQS8GcU1PgBElWHSmvmh69DRYk373/FoLfPBcFPULZZ37uHMqotqV6zWfnaBIVW6JyktZEUFeUw75NjbR4+QuQM7sPOLeafPkP1P+yPrLyUL5MOEGPH/4=
+User-Agent: KMail/1.9.5
+In-Reply-To: <20061115104858.GG5453@diana.vm.bytemark.co.uk>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32335>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31437>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GoG51-0004I0-3l for gcvg-git@gmane.org; Sun, 26 Nov
- 2006 10:13:43 +0100
+ esmtp (Exim 4.43) id 1GkIx2-0005KI-HI for gcvg-git@gmane.org; Wed, 15 Nov
+ 2006 12:29:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S934343AbWKZJNb (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 26 Nov 2006
- 04:13:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935244AbWKZJNb
- (ORCPT <rfc822;git-outgoing>); Sun, 26 Nov 2006 04:13:31 -0500
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:10424 "EHLO
- fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP id S934343AbWKZJNa
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 26 Nov 2006 04:13:30 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao03.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061126091329.UQON4817.fed1rmmtao03.cox.net@fed1rmimpo02.cox.net>; Sun, 26
- Nov 2006 04:13:29 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id rMDd1V0091kojtg0000000; Sun, 26 Nov 2006
- 04:13:38 -0500
-To: Shawn Pearce <spearce@spearce.org>
+ S1030391AbWKOL3E convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006 06:29:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030395AbWKOL3E
+ (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 06:29:04 -0500
+Received: from ug-out-1314.google.com ([66.249.92.174]:29304 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1030391AbWKOL3D
+ convert rfc822-to-8bit (ORCPT <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006
+ 06:29:03 -0500
+Received: by ug-out-1314.google.com with SMTP id m3so103956ugc for
+ <git@vger.kernel.org>; Wed, 15 Nov 2006 03:29:02 -0800 (PST)
+Received: by 10.67.103.7 with SMTP id f7mr1536456ugm.1163590141906; Wed, 15
+ Nov 2006 03:29:01 -0800 (PST)
+Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
+ ESMTP id e34sm713415ugd.2006.11.15.03.29.01; Wed, 15 Nov 2006 03:29:01 -0800
+ (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Shawn Pearce <spearce@spearce.org> writes:
+On Wednesday 2006 November 15 10:48, Karl Hasselstr=F6m wrote:
 
->> Strictly speaking, however, the config file is a wrong place to
->> store it.  For one thing it has core.sharedrepository and
->> receive.denynonfastforwards that are true configuration to
->> control the behaviour of git _at_ _the_ _repository_ the
->> configuration is at.  The new "branch property" are primarily to
->> help the other end, and the "filtering rewinding ones" we want
->> at the clone/fetch side wants that information only and not
->> interested in the true configuration information at that
->> repository.
->
-> Yes, of course.  I never suggested copy the entire configuration
-> as is.
+> To me, "origin" just means "where <whatever we're talking about>
+> originated". If you think of it that way, it's perfectly obvious that
+> each repository can have its own origin.
 
-I never misunderstood your plan as such.  I was more worried
-about a case where you clone from a not-so-public repository and
-the config file has some information of sensitive nature.
-Currently we do not have any such variable, so I am probably
-being a bit paranoid here, but using the config for the purpose
-of what we are discussing right now closes the door to store
-sensitive information and declare that the config file at the
-remote is "none of the cloner's business".
+Of course.  I wasn't saying that I didn't understand why origin was cho=
+sen. =20
+It's not a completely crazy name - it does have /a/ meaning.  However, =
+it's=20
+not an unambiguous meaning.  What if the repository I clone was itself =
+a=20
+clone?  What if the repository it cloned was pulling from three other=20
+repositories?  What if those three repositories pull/push from/to each =
+other?
 
-However,...
+  * -- * -- *
+   \   |   / \
+    \  |  /  /
+     \ | /  /=20
+       *   /
+       |  /=20
+       | /
+       * <--- "origin"
+       |
+       * <--- cloned repository
 
-> Besides of which, lets not forget that something like:
->
->   [branch "master"]
->       rewinds = false
->   [branch "pu"]
->       rewinds = true
->
-> is not only data for the client to examine.  It can be useful in
-> say git-receive-pack as a much more fine-grained alternative to
-> receive.denynonfastforwards.  If the server's policy is to not
-> rewind a branch then receive-pack shouldn't let a remote user
-> rewind it.  At which point its useful to have that branch data
-> in $GIT_DIR/config.  :-)
+The name "origin" is too close to having an "ultimate source" feel to i=
+t IMO. =20
+In a distributed system, it's not the right idea to be pushing.  After =
+the=20
+clone is complete, the "origin" is no more special than any other repos=
+itory,=20
+and if you felt like it you could change the URL for "origin" and it wo=
+uld=20
+make very little difference to you.
 
-This is a good point.  If we want to ever have a 'not to be
-leaked' configuration per repository, we can have a separate,
-private, configuration file to store that, so I probably should
-not worry too much about this at this point.  I'm Ok with having
-this in the usual config -- the convenience outweighs the
-purity.
+In short: I don't think "origin" is wrong, I just think it's not right.
 
-To summarize:
 
- * A repository can have branch."foo".rewinds configuration to
-   mark the "foo" branch to be subject to rewinding.  This
-   configuration variable defaults to false.
-
- * Receive.denynonfastforwards is currently a boolean but a new
-   value, "per-branch", is also allowed.  When it is set to
-   "per-branch", non fast-forward update is allowed only when
-   branch."foo".rewinds is true for the branch.
-
- * A cloner creates "Pull: refs/heads/*:refs/remotes/origin/*"
-   (or config equivalent) upon cloning.  When it clones, it
-   downloads the config from the remote in order to see which
-   are marked as "rewinds".  It makes tracking branches for only
-   the ones that are not marked as "rewinds" by default.  We
-   might have an option to do '+' variant glob, and clone all
-   branches.
-
- * Subsequent fetch, when the glob is not '+' variant, would
-   download the config from the remote in order to see which are
-   marked as "rewinds", and ignores the branches that are marked
-   as such.
-
-I am a bit unhappy that subsequent fetches have to re-read the
-remote config every time.  I can sort-of-see we can cram the
-"this is expected to be rewound" information as part of
-peek-remote exchange to avoid the overhead, but I do not think
-it is easily doable for dumb transports without breaking the
-backward compatibility.
-
-To avoid this, we need to remember what remote branches we have
-seen but decided not to track, perhaps because they were marked
-as "rewinds".  Subsequent fetches first learn what are on the
-remote side, and only when it sees a branch that we do not track
-and we have not seen, it needs to re-read the remote config to
-see if that is to be tracked (in which case we would create a
-new tracking branch) or ignored (in which case we would remember
-that we will ignore this branch in the future fetches).
+Andy
+--=20
+Dr Andy Parkins, M Eng (hons), MIEE
