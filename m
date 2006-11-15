@@ -2,86 +2,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: branch rebase and push
-Date: Tue, 19 Dec 2006 10:57:35 +0100
-Organization: At home
-Message-ID: <em8cti$nff$1@sea.gmane.org>
-References: <45875EFC.5090408@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Cleaning up git user-interface warts
+Date: Tue, 14 Nov 2006 18:10:16 -0800
+Message-ID: <7v3b8ltq7r.fsf@assigned-by-dhcp.cox.net>
+References: <87k61yt1x2.wl%cworth@cworth.org> <455A1137.8030301@shadowen.org>
+	<87hcx1u934.wl%cworth@cworth.org>
+	<Pine.LNX.4.64.0611141518590.2591@xanadu.home>
+	<87bqn9u43s.wl%cworth@cworth.org> <ejdcg5$4fl$1@sea.gmane.org>
+	<Pine.LNX.4.64.0611141633430.2591@xanadu.home>
+	<7vbqn9y6w6.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0611142007010.2591@xanadu.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-NNTP-Posting-Date: Tue, 19 Dec 2006 09:55:47 +0000 (UTC)
+NNTP-Posting-Date: Wed, 15 Nov 2006 02:10:50 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 37
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-25-107.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+In-Reply-To: <Pine.LNX.4.64.0611142007010.2591@xanadu.home> (Nicolas Pitre's
+	message of "Tue, 14 Nov 2006 20:48:09 -0500 (EST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34807>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31403>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gwbh5-0001wx-VE for gcvg-git@gmane.org; Tue, 19 Dec
- 2006 10:55:32 +0100
+ esmtp (Exim 4.43) id 1GkAEJ-0001wD-GA for gcvg-git@gmane.org; Wed, 15 Nov
+ 2006 03:10:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932734AbWLSJz3 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
- 04:55:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932740AbWLSJz3
- (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 04:55:29 -0500
-Received: from main.gmane.org ([80.91.229.2]:59133 "EHLO ciao.gmane.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S932734AbWLSJz2
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec 2006 04:55:28 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1Gwbgo-0001ud-Sw for git@vger.kernel.org; Tue, 19 Dec 2006 10:55:15 +0100
-Received: from host-81-190-25-107.torun.mm.pl ([81.190.25.107]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Tue, 19 Dec 2006 10:55:14 +0100
-Received: from jnareb by host-81-190-25-107.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Tue, 19 Dec 2006
- 10:55:14 +0100
-To: git@vger.kernel.org
+ S966462AbWKOCKT (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 14 Nov 2006
+ 21:10:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966464AbWKOCKT
+ (ORCPT <rfc822;git-outgoing>); Tue, 14 Nov 2006 21:10:19 -0500
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:54421 "EHLO
+ fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP id S966462AbWKOCKR
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 14 Nov 2006 21:10:17 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao08.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061115021017.IOEJ18207.fed1rmmtao08.cox.net@fed1rmimpo02.cox.net>; Tue, 14
+ Nov 2006 21:10:17 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id mqAP1V00C1kojtg0000000; Tue, 14 Nov 2006
+ 21:10:23 -0500
+To: Nicolas Pitre <nico@cam.org>
 Sender: git-owner@vger.kernel.org
 
-SungHyun Nam wrote:
+Nicolas Pitre <nico@cam.org> writes:
 
-> Can I push a branch after rebase?
-> I got a error message:
->    error: remote 'refs/heads/br' is not a strict subset of local ref
->    'refs/heads/br'. maybe you are not up-to-date and need to pull first?
-> 
-> It worked fine if I did:
->   $ git checkout -b br
->   $ git pull . master
->   $ git checkout master
->   $ git pull
->   $ git push
-> 
-> But I got above error message if I did:
->   $ git checkout br
->   $ git rebase master
->   $ git checkout master
->   $ git pull
->   $ git push
+> "You pull the remote changes with 'git-pull upstream,, then you can 
+> merge them in your current branch with 'git-merge upstream'."
+>
+> Isn't it much simpler to understand (and to teach) that way?
 
-The problem you have is with _push_, not branch, I think.
+If it were "you download the remote changes with 'git download
+upstream' and then merge with 'git merge'", then perhaps, but if
+you used the word "pull" or "fetch", I do not think so.
 
-Does repository you pull from has rebased branch 'br'? If yes, is it
-pulled with + in pull/fetch line? Perhaps (but read documentation first,
-please) "git push --force" is what you want, provided that other side
-doesn't forbid non fast-forward pushes.
+I would be all for changing the semantics of "pull" from one
+thing to another, if the new semantics were (1) what everybody
+welcomed, (2) what "pull" traditionally meant everywhere else.
+In that case, we have been misusing it to be confusing to
+outsiders and I agree it makes a lot of sense to remove the
+source of confusion.  But I do not think CVS nor SVN ever used
+the term, and I was told that BK was what introduced the term,
+and the word meant something different from what you are
+proposing.
 
-Bu you usually don't rebase published branch (don't change history
-of published branch). Equivalently, you don't publish rebased branch
-until it is ready (or merged in ;-).
+You have to admit both pull and fetch have been contaminated
+with loaded meanings from different backgrounds. I was talking
+about killing the source of confusion in the longer term by
+removing fetch/pull/push, so we are still on the same page.
 
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+That's where my "you download from the upstream and merge" comes
+from.
 
