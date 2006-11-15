@@ -1,74 +1,76 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Lars Hjemli" <hjemli@gmail.com>
-Subject: Re: [ANNOUNCE] CGit v0.1-pre
-Date: Mon, 11 Dec 2006 09:33:36 +0100
-Message-ID: <8c5c35580612110033y4f6260c9xffeaf4457f4ead21@mail.gmail.com>
-References: <8c5c35580612101542n72d300c7o106e53e219670510@mail.gmail.com>
-	 <Pine.LNX.4.64.0612101653420.12500@woody.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [GIT PATCH] Makefile missing git-runstatus in PROGRAMS list
+Date: Wed, 15 Nov 2006 11:04:39 -0800
+Message-ID: <7vodr8mszc.fsf@assigned-by-dhcp.cox.net>
+References: <FE74AC4E0A23124DA52B99F17F44159701A11D6D@PA-EXCH03.vmware.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Mon, 11 Dec 2006 08:34:04 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Wed, 15 Nov 2006 19:05:58 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=nMzjfzpTVkIohbnsA7mq/vXRBXM1RWBRb4vpt+tLAGNRvYR3TzWTPtkiZE45aRT0JIvgRcK9HuNxLxO6OQZP0UlFqurP8OcHYBgNk5NbYO7LrbwY/20+Ipyf2fl4XxQLsOTiv9uCrLvrA+upg4B9UiB5lXPFhkRxDQ24w973eyQ=
-In-Reply-To: <Pine.LNX.4.64.0612101653420.12500@woody.osdl.org>
-Content-Disposition: inline
+In-Reply-To: <FE74AC4E0A23124DA52B99F17F44159701A11D6D@PA-EXCH03.vmware.com>
+	(Bhavesh Davda's message of "Wed, 15 Nov 2006 10:42:27 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33978>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gtgbk-0000zD-Cl for gcvg-git@gmane.org; Mon, 11 Dec
- 2006 09:33:56 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31469>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GkQ4x-0005Zz-3f for gcvg-git@gmane.org; Wed, 15 Nov
+ 2006 20:05:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1762653AbWLKIdj (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 11 Dec 2006
- 03:33:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762655AbWLKIdj
- (ORCPT <rfc822;git-outgoing>); Mon, 11 Dec 2006 03:33:39 -0500
-Received: from nf-out-0910.google.com ([64.233.182.184]:20821 "EHLO
- nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1762653AbWLKIdi (ORCPT <rfc822;git@vger.kernel.org>); Mon, 11 Dec
- 2006 03:33:38 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so1930082nfa for
- <git@vger.kernel.org>; Mon, 11 Dec 2006 00:33:37 -0800 (PST)
-Received: by 10.82.139.17 with SMTP id m17mr444042bud.1165826016515; Mon, 11
- Dec 2006 00:33:36 -0800 (PST)
-Received: by 10.82.171.10 with HTTP; Mon, 11 Dec 2006 00:33:36 -0800 (PST)
-To: "Linus Torvalds" <torvalds@osdl.org>
+ S1030893AbWKOTEw (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
+ 14:04:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030895AbWKOTEw
+ (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 14:04:52 -0500
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:20722 "EHLO
+ fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP id S1030893AbWKOTEv
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 14:04:51 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao06.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061115190450.TSGA7157.fed1rmmtao06.cox.net@fed1rmimpo02.cox.net>; Wed, 15
+ Nov 2006 14:04:50 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id n74w1V00R1kojtg0000000; Wed, 15 Nov 2006
+ 14:04:56 -0500
+To: "Bhavesh Davda" <bhavesh@vmware.com>
 Sender: git-owner@vger.kernel.org
 
-On 12/11/06, Linus Torvalds <torvalds@osdl.org> wrote:
-> you really want to re-check the existence after you got the lock,
-> otherwise you would race with somebody else that got the lock, generated
-> the data, and then unlocked (and you got the lock _after_ the data was
-> generated, so now you generate it unnecessarily).
+"Bhavesh Davda" <bhavesh@vmware.com> writes:
 
-Yes, you're right. Thanks for noticing.
-
-But this also applies to the case where the cachefile has expired,
-right? In that case, after getting the lock, I have to recheck that
-the cachefile is _still_ expired.
-
-Anyway, I must say I find it rather unlikely for these cases to occur
-(frequently) in real life. That would seem to imply that the caching
-isn't really needed at all.
-
+> Indeed! I had "export CDPATH=.:$HOME" in my $HOME/.bash_profile.
 >
-> As a side note: how do you release your caches?
+> "export -n CDPATH", and now "make install" works, setting up those hard links
+> too.
 >
+> If this is a common gotcha in building and installing git, maybe you should
+> add it near the top of the INSTALL instructions.
+>
+> I haven't run into this issue with other projects. Is there something that
+> can be changed in git's Makefile so it works even if CDPATH is set and
+> exported in people's environments?
 
-Simple timeouts (time()-stat.st_mtime), depending on what kind of page
-was requested. If anyone cares about invalid cache content (branch
-head moving), relevant cachefiles can be deleted with an update-hook.
+I think we already had this discussed twice on this list.
 
--- 
+The problem is not just Makefile, but any command implemented as
+shell scripts, if it needs to "cd" inside, is bitten by exported
+CDPATH not just because it gives unwanted output to stdout
+(which is already stupid -- CDPATH is purely convenience for
+interactive session) but also because it would take the process
+to unexpected places.
+
+You can solve it by three ways.  (1) unset CDPATH at the
+beginning of every shell script; (2) write all internal "cd" in
+such a way that CDPATH would not try to interfere with it; (3)
+teach users to fix their broken environment.
+
+We do (1) for our shell scripts with git-sh-setup which almost
+all other script sources, along with a comment for (3) at that
+place.  As you say we should probably add the same to INSTALL
+instructions.
