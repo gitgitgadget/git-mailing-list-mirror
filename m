@@ -1,82 +1,88 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Alan Chandler <alan@chandlerfamily.org.uk>
-Subject: Re: Some advanced index playing
-Date: Sun, 3 Dec 2006 20:11:25 +0000
-Message-ID: <200612032011.25922.alan@chandlerfamily.org.uk>
-References: <200612031701.15594.alan@chandlerfamily.org.uk> <Pine.LNX.4.64.0612031008360.3476@woody.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Cleaning up git user-interface warts
+Date: Wed, 15 Nov 2006 10:16:02 -0800
+Message-ID: <7vbqn8o9st.fsf@assigned-by-dhcp.cox.net>
+References: <87k61yt1x2.wl%cworth@cworth.org> <455A1137.8030301@shadowen.org>
+	<87hcx1u934.wl%cworth@cworth.org>
+	<Pine.LNX.4.64.0611141518590.2591@xanadu.home>
+	<87bqn9u43s.wl%cworth@cworth.org>
+	<7vr6w5y7to.fsf@assigned-by-dhcp.cox.net>
+	<7virhhy76h.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0611142048350.2591@xanadu.home>
+	<7vu011qnl6.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0611151454250.13772@wbgn013.biozentrum.uni-wuerzburg.de>
+	<Pine.LNX.4.64.0611151000460.2591@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sun, 3 Dec 2006 20:12:03 +0000 (UTC)
-Cc: Linus Torvalds <torvalds@osdl.org>, Junio C Hamano <junkio@cox.net>
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Wed, 15 Nov 2006 18:16:31 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: KMail/1.9.5
-In-Reply-To: <Pine.LNX.4.64.0612031008360.3476@woody.osdl.org>
-Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0611151000460.2591@xanadu.home> (Nicolas Pitre's
+	message of "Wed, 15 Nov 2006 10:10:50 -0500 (EST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33136>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gqxgo-00022o-TB for gcvg-git@gmane.org; Sun, 03 Dec
- 2006 21:11:55 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31458>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GkPIw-00031L-HR for gcvg-git@gmane.org; Wed, 15 Nov
+ 2006 19:16:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1760057AbWLCULo (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 3 Dec 2006
- 15:11:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760058AbWLCULo
- (ORCPT <rfc822;git-outgoing>); Sun, 3 Dec 2006 15:11:44 -0500
-Received: from 82-44-22-127.cable.ubr06.croy.blueyonder.co.uk
- ([82.44.22.127]:65206 "EHLO home.chandlerfamily.org.uk") by vger.kernel.org
- with ESMTP id S1760057AbWLCULn (ORCPT <rfc822;git@vger.kernel.org>); Sun, 3
- Dec 2006 15:11:43 -0500
-Received: from kanger.home ([192.168.0.21]) by home.chandlerfamily.org.uk
- with esmtp (Exim 4.63) (envelope-from <alan@chandlerfamily.org.uk>) id
- 1Gqxgb-0000Sq-W6; Sun, 03 Dec 2006 20:11:42 +0000
-To: git@vger.kernel.org
+ S1030802AbWKOSQG (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
+ 13:16:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030804AbWKOSQG
+ (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 13:16:06 -0500
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:53210 "EHLO
+ fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP id S1030802AbWKOSQD
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 13:16:03 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao01.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061115181602.PGKS9173.fed1rmmtao01.cox.net@fed1rmimpo02.cox.net>; Wed, 15
+ Nov 2006 13:16:02 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id n6G81V00v1kojtg0000000; Wed, 15 Nov 2006
+ 13:16:09 -0500
+To: Nicolas Pitre <nico@cam.org>
 Sender: git-owner@vger.kernel.org
 
-On Sunday 03 December 2006 18:24, Linus Torvalds wrote:
-> On Sun, 3 Dec 2006, Alan Chandler wrote:
-> > With all the discussion about the index file in the last few days I would
-> > have thought that this issue would have come up.  But I don't think it
-> > has.
-> >
-> > I have been editing a set of files to make a commit, and after editing
-> > each one had done a git update-index.
-> >
-> > At this point I am just about to commit when I realise that one of the
-> > files has changes in it that really ought to be a separate commit.
-> >
-> > So effectively, I want to do one of three things
-> >
-> > a) git-commit <that-file>
-> >
-> > Except I can't because there is a safety valve that prevents this and
-> > there is no force option.
-...
+Nicolas Pitre <nico@cam.org> writes:
+
+>> Why not do something like "get/put" instead? It is
+>> 
+>> - easier to remember
+>> - not bogus (AFAICT the meaning is not used in diametrical senses)
+>> - shorter to type than download/upload
 >
-> 	git ls-tree HEAD -- that-file | git update-index --index-info
-> 	git commit that-file
+> Well, of all compromizes this is probably the best one so far.  I would 
+> have prefered to bite the bullet and fix "pull" instead of adding yet 
+> more commands.  But if the consensus is that there is no way on earth 
+> that "pull" can be salvaged then get/put is probably more enjoyable than 
+> download/upload.  This way pull/fetch/push could still be available 
+> (albeit burried somewhere out of sight).
 
-I don't quite understand this - maybe it should be
+I still think in the long run you would be better off giving
+separate names to Porcelains because I am sure you are going to
+find the next command to "fix", you cannot suddenly change the
+semantics of the command, and you soon run out of alternative
+ways to name the action and you in addition have to explain the
+differences between fetch and get to new users.  At least, with
+"ig pull", you can dismiss all the broken git-x Porcelain-ish by
+saying "Oh, git-x user-level commands had inconsistent semantics
+and broken UI so do not use them anymore -- they are still there
+only to help old timers transition.  The user level commands are
+now called ig-x and ig stands for improved git".
 
-git ls-tree HEAD -- that-file | git update-index --index-info
-git commit
-git commit -a
+But that's a very minor detail and can be fixed when we hit the
+wall, so let's wait and see what happens.  Please consider my
+gh/gu/cg/whatever dropped.
 
-either I want to ONLY commit that file at the working tree state (and index 
-before these commands), or I want to commit ALL except this file (so I can 
-later come and commit just that file)
-
-so having reset the index to the state of HEAD for "that-file" then the commit 
-should make a commit with all the other changes in the index (but NOT 
-that-file) and then the git commit -a picks up "that-file"
-
--- 
-Alan Chandler
+I think get/put is much better than suddenly changing what pull
+means and is shorter to type than x-load; I am Ok with them.
+Although I think these words are tainted by SCCS, I do not think
+anybody cares.
