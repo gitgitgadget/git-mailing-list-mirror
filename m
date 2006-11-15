@@ -1,80 +1,82 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: Cleaning up git user-interface warts
-Date: Wed, 15 Nov 2006 18:03:21 -0800
-Message-ID: <7vhcx0gnbq.fsf@assigned-by-dhcp.cox.net>
+Date: Wed, 15 Nov 2006 12:50:10 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0611151243030.3349@woody.osdl.org>
 References: <87k61yt1x2.wl%cworth@cworth.org> <455A1137.8030301@shadowen.org>
-	<87hcx1u934.wl%cworth@cworth.org>
-	<Pine.LNX.4.64.0611141518590.2591@xanadu.home>
-	<87bqn9u43s.wl%cworth@cworth.org> <ejdcg5$4fl$1@sea.gmane.org>
-	<Pine.LNX.4.64.0611141633430.2591@xanadu.home>
-	<7vbqn9y6w6.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0611142007010.2591@xanadu.home>
-	<7v3b8ltq7r.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0611142306090.2591@xanadu.home>
-	<Pine.LNX.4.64.0611150950170.3349@woody.osdl.org>
-	<455BBCE9.4050503@xs4all.nl>
+ <87hcx1u934.wl%cworth@cworth.org> <Pine.LNX.4.64.0611141518590.2591@xanadu.home>
+ <87bqn9u43s.wl%cworth@cworth.org> <ejdcg5$4fl$1@sea.gmane.org>
+ <Pine.LNX.4.64.0611141633430.2591@xanadu.home> <7vbqn9y6w6.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0611142007010.2591@xanadu.home> <7v3b8ltq7r.fsf@assigned-by-dhcp.cox.net>
+ <20061115201227.GM7201@pasky.or.cz> <Pine.LNX.4.64.0611151524000.2591@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 16 Nov 2006 02:03:34 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Wed, 15 Nov 2006 20:51:30 +0000 (UTC)
+Cc: Petr Baudis <pasky@suse.cz>, Junio C Hamano <junkio@cox.net>,
+	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <455BBCE9.4050503@xs4all.nl> (Han-Wen Nienhuys's message of "Thu,
-	16 Nov 2006 02:20:41 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+In-Reply-To: <Pine.LNX.4.64.0611151524000.2591@xanadu.home>
+X-MIMEDefang-Filter: osdl$Revision: 1.156 $
+X-Scanned-By: MIMEDefang 2.36
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31543>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31493>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GkWb9-0006DE-Iv for gcvg-git@gmane.org; Thu, 16 Nov
- 2006 03:03:27 +0100
+ esmtp (Exim 4.43) id 1GkRin-0004tD-Qi for gcvg-git@gmane.org; Wed, 15 Nov
+ 2006 21:51:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1162160AbWKPCDY (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
- 21:03:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1162165AbWKPCDX
- (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 21:03:23 -0500
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:3789 "EHLO
- fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP id S1162160AbWKPCDX
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 21:03:23 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao01.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061116020322.NUPG9173.fed1rmmtao01.cox.net@fed1rmimpo02.cox.net>; Wed, 15
- Nov 2006 21:03:22 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id nE3U1V00c1kojtg0000000; Wed, 15 Nov 2006
- 21:03:29 -0500
-To: hanwen@xs4all.nl
+ S1161439AbWKOUuc (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
+ 15:50:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030985AbWKOUuc
+ (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 15:50:32 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:24549 "EHLO smtp.osdl.org") by
+ vger.kernel.org with ESMTP id S1030987AbWKOUua (ORCPT
+ <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 15:50:30 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
+ smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kAFKoBoZ027958
+ (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Wed, 15
+ Nov 2006 12:50:12 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
+ shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kAFKoAQD029225; Wed, 15 Nov
+ 2006 12:50:10 -0800
+To: Nicolas Pitre <nico@cam.org>
 Sender: git-owner@vger.kernel.org
 
-Han-Wen Nienhuys <hanwen@xs4all.nl> writes:
 
-> FWIW, I regularly mess up with the differences between fetching,
-> pulling and merging.  In particular, having to do a two step process
-> to get remote changes in,
->
->   git pull url-to-server master:master
->      ..error message about not being a fast-forward..
->
->   git pull --update-head-ok url-to-server master:master
->      ..still an error message about update not being a fast-forward..
->
->       (sigh)
 
-Sigh indeed.
+On Wed, 15 Nov 2006, Nicolas Pitre wrote:
+> 
+> I think "fetch" is sane.  Its only problem is a missing symetrical 
+> counterpart verb, like "get" and "put".
 
-Why don't you do the simple and obvious
+If you're a dog owner, the obvious counterpart for "fetch" is "throw" ;)
 
-	git pull url master
+I think "get" and "put" would be bad, just because of confusion with 
+"sccs get" (ie it has that "get this file" connotations).
 
-or "git pull url" if you already know the master is the branch
-you are interested in.
+Maybe "fetch" and "push" aren't totally diametrically opposite, but 
+really, I don't think they are that hard to understand either. We do have 
+the BK legacy of "pull" implying a merge, and that's fairly fundamental. 
 
-The more advanced form of using tracking branches are there and
-documentation talks about them for completeness but that does
-not mean you have to use it.
+It's also true that in a lot of usage schenarios, what people actually 
+_use_ is "pull" and "push", and no, they aren't mirror images (since push 
+will _not_ do the merge), but at the same time, from a _usage_ standpoint 
+they really _are_ each others opposites. 
+
+You "pull" to get other peoples data into your branch (and once you've 
+internalized local branches and the merge thing, you know what this 
+means), and you "push" to push your changes out. It really _is_ the usage 
+schenario, and using "opposite" words really _does_ make sense.
+
+It's true that _technically_ "fetch" is the opposite of "push", but at the 
+same time, that really is about technology, not about usage models. You 
+normally wouldn't do a "git fetch + git push" pair. You _can_ do so, but 
+it's not the natural way to work - unless you're just doing a mirror 
+service.
+
