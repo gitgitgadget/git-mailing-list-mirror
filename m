@@ -2,95 +2,152 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: What's cooking in git.git (topics)
-Date: Thu, 7 Dec 2006 00:42:42 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612070035570.28348@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <7vvekoyb79.fsf@assigned-by-dhcp.cox.net>
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Make cvsexportcommit work with filenames with spaces and non-ascii characters.
+Date: Tue, 14 Nov 2006 22:08:45 -0800
+Message-ID: <7v8xidqm1e.fsf@assigned-by-dhcp.cox.net>
+References: <20061115005530.26560.18222.stgit@lathund.dewire.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Wed, 6 Dec 2006 23:42:55 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Wed, 15 Nov 2006 06:09:03 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7vvekoyb79.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+In-Reply-To: <20061115005530.26560.18222.stgit@lathund.dewire.com> (Robin
+	Rosenberg's message of "Wed, 15 Nov 2006 01:55:30 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33538>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gs6Pc-0005Zo-De for gcvg-git@gmane.org; Thu, 07 Dec
- 2006 00:42:52 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31418>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GkDx5-00007D-RD for gcvg-git@gmane.org; Wed, 15 Nov
+ 2006 07:08:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S937813AbWLFXmq (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
- 18:42:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937812AbWLFXmq
- (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 18:42:46 -0500
-Received: from mail.gmx.net ([213.165.64.20]:60683 "HELO mail.gmx.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S937813AbWLFXmp
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec 2006 18:42:45 -0500
-Received: (qmail invoked by alias); 06 Dec 2006 23:42:44 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp012) with SMTP; 07 Dec 2006 00:42:44 +0100
-To: Junio C Hamano <junkio@cox.net>
+ S966526AbWKOGIs (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
+ 01:08:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932816AbWKOGIs
+ (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 01:08:48 -0500
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:64212 "EHLO
+ fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP id S932815AbWKOGIr
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 01:08:47 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao09.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061115060846.EAQD18767.fed1rmmtao09.cox.net@fed1rmimpo02.cox.net>; Wed, 15
+ Nov 2006 01:08:46 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id mu8r1V0201kojtg0000000; Wed, 15 Nov 2006
+ 01:08:52 -0500
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
 Sender: git-owner@vger.kernel.org
 
-Hi,
+Robin Rosenberg <robin.rosenberg@dewire.com> writes:
 
-On Wed, 6 Dec 2006, Junio C Hamano wrote:
-
-> Here is a list of topics that are cooking; the commits marked
-> with '+' are in 'next', '-' are in 'pu'.  Dates are when the
-> topic was last touched [*1*].
-
-I like the combined pu/next "What's new".
-
-> * ap/clone-origin (Wed Dec 6 12:07:23 2006 +0000)
-> [...]
->  I think it is sensible to merge to 'master' after that change.
-
-Me, too. I really would like this to go in.
-
-> * jc/3way (Wed Nov 29 18:53:13 2006 -0800)
->  + git-merge: preserve and merge local changes when doing fast forward
-> [...]
->  It has been in next for some time and unless we hear somebody scream I 
->  think it is Ok to merge to 'master'.
-
-This is something I am looking forward to to test. Maybe in "next" for 
-while before putting it into "master"?
-
-> * jc/explain (Mon Dec 4 19:35:04 2006 -0800)
->  - git-explain
-
-I vote for putting this into "next" for a wider audience. It also would 
-help people to submit patches (it is kind of a hassle to branch "pu", so I 
-rarely do it myself, whereas my git is based on "next" at all times).
-
-> * js/merge (Wed Dec 6 16:45:42 2006 +0100)
+> From: Robin Rosenberg <robin.rosenberg@dewire.com>
 >
->  merge-recursive that does not rely on RCS "merge".  I use this
->  exclusively these days.  Perhaps cook a little further and
->  merge to 'master'.
+> This patch uses git-apply to do the patching which simplifies the code a lot.
+>
+> Removed the test for checking for matching binary files when deleting them
+> since git-apply happily deletes the file. This is matter of taste since we
+> allow some fuzz for text patches also.
+>
+> Error handling was cleaned up, but not much testd (it did not work before).
+>
+> Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
 
-Yes, definitely cook it for at least a week; maybe I find the time to 
-check the conflicted merges in git.git at least.
+Thanks.  Allow me to put this in freezer for a few days while
+releasing v1.4.4.
 
-> * js/shallow (Fri Nov 24 16:00:13 2006 +0100)
-> 
->  Probably with a better documentation of its limitations and caveats, 
->  this should be mergeable to 'master'.
+Some comments below.
 
-The more I see the missing reaction, the less sure I am this is a sensible 
-thing to do.
+> @@ -116,12 +115,18 @@ if ($opt_a) {
+>  close MSG;
+>  
+>  my (@afiles, @dfiles, @mfiles, @dirs);
+> -my @files = safe_pipe_capture('git-diff-tree', '-r', $parent, $commit);
+> -#print @files;
+> +my $files = safe_pipe_capture_blob('git-diff-tree', '-z', '-r', $parent, $commit);
+>  $? && die "Error in git-diff-tree";
+> +while ($files =~ m/(.*?\000.*?\000)/g) {
+> +    my $f=$1;
+> +    $f =~ m/^(\S+) (\S+) (\S+) (\S+) (\S+)\000(.*)\000/;
+> +    my @fields = ();
+> +    $fields[++$#fields] = $1;
+> +    $fields[++$#fields] = $2;
+> +    $fields[++$#fields] = $3;
+> +    $fields[++$#fields] = $4;
+> +    $fields[++$#fields] = $5;
+> +    $fields[++$#fields] = $6;
 
-And it would need more safety valves, not just documentation. For example, 
-I am not sure if a push from/to a shalow repo is safe.
+my @fields = ($f =~ m/^.../);
 
-Ciao,
-Dscho
+>  my (@binfiles, @abfiles, @dbfiles, @bfiles, @mbfiles);
+>  @binfiles = grep m/^Binary files/, safe_pipe_capture('git-diff-tree', '-p', $parent, $commit);
+>  map { chomp } @binfiles;
+>  @abfiles = grep s/^Binary files \/dev\/null and b\/(.*) differ$/$1/, @binfiles;
+>  @dbfiles = grep s/^Binary files a\/(.*) and \/dev\/null differ$/$1/, @binfiles;
+>  @mbfiles = grep s/^Binary files a\/(.*) and b\/(.*) differ$/$1/, @binfiles;
+> +push @abfiles, grep s/^Binary files \/dev\/null and "b\/(.*)" differ$/$1/, @binfiles;
+> +push @dbfiles, grep s/^Binary files "a\/(.*)" and \/dev\/null differ$/$1/, @binfiles;
+> +push @mbfiles, grep s/^Binary files "a\/(.*)" and \"b\/(.*)\" differ$/$1/, @binfiles;
+> +map { s/\\([\d]{3})/sprintf('%c',oct $1)/eg; } @abfiles;
+> +map { s/\\([\d]{3})/sprintf('%c',oct $1)/eg; } @dbfiles;
+> +map { s/\\([\d]{3})/sprintf('%c',oct $1)/eg; } @mbfiles;
+> +
+
+Logically these map {} should be done only on the c-quoted
+names, but it is Ok because the names that have backslash with
+octal are quoted.  However, what's inside the map is not correct
+c dequoting (see how Jakub does it in gitweb -- you need to
+worry about \\, \" and such).
+
+I think it is perhaps safer to parse "diff --git" and remember
+the filenames of the "current patch" and then notice only
+/^Binary files / part of the message.
+
+But all of the above shows deficiency in the current set of
+tools -- they are not helping Porcelain writers enough.  I think
+we should enhance 'apply --numstat' to let it show binary diffs
+differently:
+
+	git diff-tree -p $parent $commit >.tmpfile
+        git apply --numstat -z <.tmpfile
+
+would currently say "0 0" for binary files (the primary benefit
+of using "--numstat -z" here is that it would give Perl scripts
+pathnames parsable without C dequoting).  We should somehow have
+a way to show it differently from text files without any
+added/deleted lines (e.g. only the mode change), and that would
+make the life of Porcelain writers who needs to write something
+like the above code much more pleasant.  Perhaps show "- -"
+instead of "0 0", since there is no notion of lines in "binary
+files differ" case?
+
+> -    `cvs add $d`;
+> -    if ($?) {
+> -	$dirty = 1;
+> +    print "Adding directory $d";
+> +    if (system('cvs','add',$d)) {
+> +	$dirtypatch = 1;
+
+Good.
+
+>  ## apply non-binary changes
+>  my $fuzz = $opt_p ? 0 : 2;
+>  
+> -print "Patching non-binary files\n";
+> +print "Patching\n";
+
+Leftover comment that does not apply anymore.
+
+>  if (scalar(@afiles)+scalar(@dfiles)+scalar(@mfiles) != scalar(@bfiles)) {
+> +    `git-diff-tree --binary -z -p $parent -p $commit >.cvsexportcommit.diff`;
+
+Haven't you run this diff before to grep for "Binary files..."
+Maybe doing a temporary file upfront once and using it would
+make sense.
+
+Also why multiple -p?  I do not think -z is wanted here, as -z
+affects only output side of git apply and not input side (see
+the above comment on --numstat -z).
