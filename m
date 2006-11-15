@@ -4,81 +4,67 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: should git download missing objects?
-Date: Mon, 13 Nov 2006 15:10:27 -0500
-Message-ID: <20061113201027.GE17244@spearce.org>
-References: <ej7fgp$8ca$1@sea.gmane.org> <7vwt60bggs.fsf@assigned-by-dhcp.cox.net> <20061113194532.GA4547@steel.home> <20061113195414.GD17244@spearce.org> <20061113200358.GF7201@pasky.or.cz>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Cleaning up git user-interface warts
+Date: Wed, 15 Nov 2006 13:15:26 +0100
+Message-ID: <455B04DE.1040107@op5.se>
+References: <87k61yt1x2.wl%cworth@cworth.org> <455A1137.8030301@shadowen.org> <87hcx1u934.wl%cworth@cworth.org> <Pine.LNX.4.64.0611141518590.2591@xanadu.home> <87bqn9u43s.wl%cworth@cworth.org> <7vr6w5y7to.fsf@assigned-by-dhcp.cox.net> <7virhhy76h.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611142048350.2591@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Mon, 13 Nov 2006 20:11:39 +0000 (UTC)
-Cc: Alex Riesen <raa.lkml@gmail.com>, Junio C Hamano <junkio@cox.net>,
-	Anand Kumria <wildfire@progsoc.org>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Wed, 15 Nov 2006 12:15:40 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
+	Andy Whitcroft <apw@shadowen.org>,
+	Carl Worth <cworth@cworth.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <20061113200358.GF7201@pasky.or.cz>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
+In-Reply-To: <Pine.LNX.4.64.0611142048350.2591@xanadu.home>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31318>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31438>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gji8m-000574-6e for gcvg-git@gmane.org; Mon, 13 Nov
- 2006 21:10:49 +0100
+ esmtp (Exim 4.43) id 1GkJfy-0006BQ-LP for gcvg-git@gmane.org; Wed, 15 Nov
+ 2006 13:15:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1754324AbWKMUKp (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 13 Nov 2006
- 15:10:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755242AbWKMUKp
- (ORCPT <rfc822;git-outgoing>); Mon, 13 Nov 2006 15:10:45 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:11956 "EHLO
- corvette.plexpod.net") by vger.kernel.org with ESMTP id S1754324AbWKMUKo
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 13 Nov 2006 15:10:44 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1Gji8M-00008f-8C; Mon, 13 Nov 2006 15:10:22 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- 8B57720FB0B; Mon, 13 Nov 2006 15:10:27 -0500 (EST)
-To: Petr Baudis <pasky@suse.cz>
+ S1030421AbWKOMPb (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
+ 07:15:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030431AbWKOMPb
+ (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 07:15:31 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:22697 "EHLO
+ smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1030421AbWKOMPa (ORCPT
+ <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 07:15:30 -0500
+Received: by smtp-gw1.op5.se (Postfix, from userid 588) id A1DD86BD9B; Wed,
+ 15 Nov 2006 13:15:29 +0100 (CET)
+Received: from [192.168.1.20] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
+ by smtp-gw1.op5.se (Postfix) with ESMTP id DC9516BD18; Wed, 15 Nov 2006
+ 13:15:26 +0100 (CET)
+To: Nicolas Pitre <nico@cam.org>
 Sender: git-owner@vger.kernel.org
 
-Petr Baudis <pasky@suse.cz> wrote:
-> On Mon, Nov 13, 2006 at 08:54:14PM CET, Shawn Pearce wrote:
-> > Copying the one bad object from another repository immediately fixed
-> > the breakage caused, but it was very annoying to not be able to run a
-> > "git fetch --missing-objects" or some such.  Fortunately it was just
-> > the one object and it was also still loose in another repository.
-> > scp was handy.  :-)
+Nicolas Pitre wrote:
+
+[ axed a lot of stuff that I didn't fully grok ]
+
 > 
-> If it's over ssh, this is still where the heavily dusty (and heavily
-> "plumby") git-ssh-fetch command is useful, since it can get passed an
-> undocumented --recover argument and then it will fetch _all_ the objects
-> you are missing, not assuming anything.
+> This becomes formalized as:
+> 
+> 	git_pull [<URL>] [<local_name>]
+> 
+> If <URL> includes a branch name then <local_name> is a single branch 
+> name.  If <URL> doesn't include any branch name then <local_name> 
+> becomes a local branch group name containing all branches in the remote 
+> repository.
 
-Interesting.  Since its undocumented I didn't know it existed
-until now.  :)
+I would change that so "local_name" is always a branch group name, but 
+branch group names can be used as refs. That is,
 
-I'm thinking though that a --recover should just be part of
-git-fetch, and that it should work on all transports, not just SSH.
+git pull startrek.com/kirk.git:master kirk
 
-Of course you could get into a whole world of hurt where you keep
-doing fsck-objects --full (listing out the missing), fetching them,
-only to find more missing, etc.  After a coule of cycles of that it
-may just be better to claim to the other end that you have nothing
-but want everything (e.g. an initial clone) and get a new pack from
-which you can pull objects.
-
-But I think that was sort of Junio's point on this topic.  I'm just
-trying to throw in my +1 in favor of a feature that would have
-recovered that sole missing object without making the end user
-reclone their entire repository and move pack files around by hand.
-And I'm being more verbose about it than just +1.  :)
+would always create the branch-head .git/refs/remote/kirk/master which 
+for short can be referenced as just "kirk" (barring clashes ofc), so 
+long as it only has one branch tracked.
 
 -- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
