@@ -1,55 +1,52 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [RFC] git-add update with all-0 object
-Date: Thu, 30 Nov 2006 17:34:58 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0611301733460.9647@xanadu.home>
-References: <Pine.LNX.4.64.0611301634080.20138@iabervon.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] gitweb: Put back shortlog instead of graphiclog in the project list.
+Date: Wed, 15 Nov 2006 12:49:52 -0800
+Message-ID: <7vac2sl9jj.fsf@assigned-by-dhcp.cox.net>
+References: <87irhgla3l.fsf@wine.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-NNTP-Posting-Date: Thu, 30 Nov 2006 22:35:15 +0000 (UTC)
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Wed, 15 Nov 2006 20:50:20 +0000 (UTC)
+Cc: git@vger.kernel.org, pasky@suse.cz
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-reply-to: <Pine.LNX.4.64.0611301634080.20138@iabervon.org>
-X-X-Sender: nico@xanadu.home
+In-Reply-To: <87irhgla3l.fsf@wine.dyndns.org> (Alexandre Julliard's message of
+	"Wed, 15 Nov 2006 21:37:50 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32819>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31492>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GpuUi-00072q-Jj for gcvg-git@gmane.org; Thu, 30 Nov
- 2006 23:35:04 +0100
+ esmtp (Exim 4.43) id 1GkRi5-0004iB-Kr for gcvg-git@gmane.org; Wed, 15 Nov
+ 2006 21:50:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1031586AbWK3WfA (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
- 17:35:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031587AbWK3WfA
- (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 17:35:00 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:55532 "EHLO
- relais.videotron.ca") by vger.kernel.org with ESMTP id S1031586AbWK3We7
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 17:34:59 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
- <0J9K006W2EQA4K90@VL-MO-MR002.ip.videotron.ca> for git@vger.kernel.org; Thu,
- 30 Nov 2006 17:34:58 -0500 (EST)
-To: Daniel Barkalow <barkalow@iabervon.org>
+ S1161445AbWKOUuM (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
+ 15:50:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030987AbWKOUuL
+ (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 15:50:11 -0500
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:42155 "EHLO
+ fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP id S1030994AbWKOUuI
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 15:50:08 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao08.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061115205008.DIBB18207.fed1rmmtao08.cox.net@fed1rmimpo02.cox.net>; Wed, 15
+ Nov 2006 15:50:08 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id n8qE1V00F1kojtg0000000; Wed, 15 Nov 2006
+ 15:50:14 -0500
+To: Alexandre Julliard <julliard@winehq.org>
 Sender: git-owner@vger.kernel.org
 
-On Thu, 30 Nov 2006, Daniel Barkalow wrote:
+Alexandre Julliard <julliard@winehq.org> writes:
 
-> One thing that I think is non-intuitive to a lot of users (either novice 
-> or who just don't do it much) is that it matters where in the process you 
-> do "git add <path>" if you're also changing the file. Even if you 
-> understand the index, you may not realize (or may not have internalized 
-> the fact) that what git-add does is update the index with what's there 
-> now.
+> Looks like a repo.or.cz-specific change slipped in.
+>
+> Signed-off-by: Alexandre Julliard <julliard@winehq.org>
 
-And actually I think this is a good thing.  This is what makes the index 
-worth it.  Better find a way to make it obvious to people what's 
-happening.
-
+Sorry and thanks.
 
