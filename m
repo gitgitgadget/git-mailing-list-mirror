@@ -4,79 +4,59 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: StGIT repository not clonable?
-Date: Sun, 12 Nov 2006 16:36:40 +0100
-Message-ID: <20061112153640.GD7201@pasky.or.cz>
-References: <200611110359.kAB3ul02013227@laptop13.inf.utfsm.cl> <20061111123634.GD11224@diana.vm.bytemark.co.uk> <b0943d9e0611111359t994d688w9bc6aae8e9183fd3@mail.gmail.com> <ej5jt1$9tf$1@sea.gmane.org>
+From: Han-Wen Nienhuys <hanwen@xs4all.nl>
+Subject: Re: git tag: don't complain of empty messages
+Date: Wed, 15 Nov 2006 17:05:22 +0100
+Message-ID: <455B3AC2.10107@xs4all.nl>
+References: <ejfc1t$6am$1@sea.gmane.org> <Pine.LNX.4.63.0611151657570.13772@wbgn013.biozentrum.uni-wuerzburg.de>
+Reply-To: hanwen@xs4all.nl
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sun, 12 Nov 2006 15:37:02 +0000 (UTC)
-Cc: git@vger.kernel.org, catalin.marinas@gmail.com
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Wed, 15 Nov 2006 16:05:50 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <ej5jt1$9tf$1@sea.gmane.org>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+User-Agent: Thunderbird 1.5.0.8 (X11/20061107)
+Original-Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <Pine.LNX.4.63.0611151657570.13772@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Virus-Scanned: by XS4ALL Virus Scanner
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31261>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31449>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GjHO8-00011K-GL for gcvg-git@gmane.org; Sun, 12 Nov
- 2006 16:36:52 +0100
+ esmtp (Exim 4.43) id 1GkNGT-000727-7v for gcvg-git@gmane.org; Wed, 15 Nov
+ 2006 17:05:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932928AbWKLPgn (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 12 Nov 2006
- 10:36:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932931AbWKLPgn
- (ORCPT <rfc822;git-outgoing>); Sun, 12 Nov 2006 10:36:43 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:13448 "EHLO machine.or.cz") by
- vger.kernel.org with ESMTP id S932928AbWKLPgm (ORCPT
- <rfc822;git@vger.kernel.org>); Sun, 12 Nov 2006 10:36:42 -0500
-Received: (qmail 12800 invoked by uid 2001); 12 Nov 2006 16:36:40 +0100
-To: Jakub Narebski <jnareb@gmail.com>
+ S1030624AbWKOQFY (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
+ 11:05:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030625AbWKOQFY
+ (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 11:05:24 -0500
+Received: from smtp-vbr5.xs4all.nl ([194.109.24.25]:46862 "EHLO
+ smtp-vbr5.xs4all.nl") by vger.kernel.org with ESMTP id S1030624AbWKOQFX
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 11:05:23 -0500
+Received: from [192.168.123.187] (muurbloem.xs4all.nl [213.84.26.127])
+ (authenticated bits=0) by smtp-vbr5.xs4all.nl (8.13.8/8.13.8) with ESMTP id
+ kAFG5KSJ054197; Wed, 15 Nov 2006 17:05:20 +0100 (CET) (envelope-from
+ hanwen@xs4all.nl)
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-On Sat, Nov 11, 2006 at 11:48:04PM CET, Jakub Narebski wrote:
-> Catalin Marinas wrote:
+Johannes Schindelin escreveu:
+> Hi,
 > 
-> > IIRC, there was some advise in some GIT document
-> > or e-mail saying that you shouldn't pack if the export is over a dumb
-> > protocol. That's good for people pulling regularly but bad for
-> > cloning.
+> On Wed, 15 Nov 2006, Han-Wen Nienhuys wrote:
 > 
-> By the way, does dumb protocols download _whole_ packs only? Or do they
-> download parts of packs (curl can do that, I think)?
+>> GIT refuses to set annotated tags without a comment. I think this is a silly
+>> restriction when the message is explicitly set to the empty string.
+> 
+> I think that this behaviour is on purpose: The tag will be identified 
+> (like all objects in git) by its contents. The rationale: the filename 
+> does not matter, since the tag _object_ is not identified by it. So, in 
+> case you lose your .git/refs/tags/ directory, you can still reconstruct 
+> the tags with "git-fsck-objects --full".
 
-curl can, but it might very easily get even much more expensive than
-downloading the whole patch unless your latency is very small and
-bandwidth very tight, which would be quite a unusual situation.
-
-It's true that repacking can hurt dumb protocols - if you repack often,
-dumb clients will have to re-fetch the single whole patck with all the
-stuff they already have plus the few additional objects they are
-missing.
-
-But at least packing once can be a huge improvement and won't hurt the
-dumb clients since their problem is with incremental fetches.
-Furthermore, if you do just repack, not repack -a, the cost for dumb
-protocols is quite small (though it's not optimal packing strategy):
-
-It is not unlikely at all that if you have set of unpacked objects A,
-client fetches that, then you create set of objects B and then repack,
-creating pack(A \cup B), this pack will still be much smaller than the
-set of objects B (even if |A| >> |B|) so it's more beneficial even for
-the dumb clients to refetch the A objects contained in the pack, instead
-of fetching just the unpacked B objects.
-
-By the way, in case of glibc-cvs the pack sice is 104M, and after
-importing new CVS changes after few days, the repository size doubled to
-200M.  git-repack -a -d brought that _back_ to 104M!
-
-Packs are a funny thing.
+Without a message, the tag can still be identified by its name, which is 
+in the tag object contents.
 
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
-$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
