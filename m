@@ -1,152 +1,106 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: should git download missing objects?
-Date: Sun, 12 Nov 2006 11:41:23 -0800
-Message-ID: <7vwt60bggs.fsf@assigned-by-dhcp.cox.net>
-References: <ej7fgp$8ca$1@sea.gmane.org>
+From: "Bhavesh Davda" <bhavesh@vmware.com>
+Subject: RE: [GIT PATCH] Makefile missing git-runstatus in PROGRAMS list
+Date: Tue, 14 Nov 2006 20:09:49 -0800
+Message-ID: <FE74AC4E0A23124DA52B99F17F44159701A11D6A@PA-EXCH03.vmware.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sun, 12 Nov 2006 19:41:40 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+NNTP-Posting-Date: Wed, 15 Nov 2006 04:10:07 +0000 (UTC)
+Cc: <git@vger.kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: [GIT PATCH] Makefile missing git-runstatus in PROGRAMS list
+Thread-Index: AccIPfwv6kyWKY5BTqiRwvpzVwS6vgALOTPg
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31272>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31410>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GjLCq-0006Nv-6z for gcvg-git@gmane.org; Sun, 12 Nov
- 2006 20:41:28 +0100
+ esmtp (Exim 4.43) id 1GkC5x-0006Ni-GS for gcvg-git@gmane.org; Wed, 15 Nov
+ 2006 05:09:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752926AbWKLTlZ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 12 Nov 2006
- 14:41:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752933AbWKLTlZ
- (ORCPT <rfc822;git-outgoing>); Sun, 12 Nov 2006 14:41:25 -0500
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:65018 "EHLO
- fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP id S1752926AbWKLTlY
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 12 Nov 2006 14:41:24 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao10.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061112194124.ZUJP5575.fed1rmmtao10.cox.net@fed1rmimpo01.cox.net>; Sun, 12
- Nov 2006 14:41:24 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id lvgy1V00F1kojtg0000000; Sun, 12 Nov 2006
- 14:40:58 -0500
-To: "Anand Kumria" <wildfire@progsoc.org>
+ S966569AbWKOEJu (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 14 Nov 2006
+ 23:09:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966568AbWKOEJu
+ (ORCPT <rfc822;git-outgoing>); Tue, 14 Nov 2006 23:09:50 -0500
+Received: from mailout1.vmware.com ([65.113.40.130]:4769 "EHLO
+ mailout1.vmware.com") by vger.kernel.org with ESMTP id S966567AbWKOEJt
+ convert rfc822-to-8bit (ORCPT <rfc822;git@vger.kernel.org>); Tue, 14 Nov 2006
+ 23:09:49 -0500
+Received: from mailhost2.vmware.com (mailhost.vmware.com [10.16.64.160]) by
+ mailout1.vmware.com (Postfix) with ESMTP id C26EA6033; Tue, 14 Nov 2006
+ 20:10:06 -0800 (PST)
+Received: from PA-EXCH03.vmware.com (pa-exch-node04.vmware.com
+ [10.16.64.143]) by mailhost2.vmware.com (Postfix) with ESMTP id E103D905A3;
+ Tue, 14 Nov 2006 20:15:34 -0800 (PST)
+To: "Junio C Hamano" <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-"Anand Kumria" <wildfire@progsoc.org> writes:
+> > diff --git a/Makefile b/Makefile
+> > index 36ce8cd..24a0dc7 100644
+> > --- a/Makefile
+> > +++ b/Makefile
+> > @@ -202,7 +202,7 @@ PROGRAMS = \
+> >  	git-upload-pack$X git-verify-pack$X \
+> >  	git-pack-redundant$X git-var$X \
+> >  	git-describe$X git-merge-tree$X git-imap-send$X \
+> > -	git-merge-recursive$X \
+> > +	git-merge-recursive$X git-runstatus$X \
+> >  	$(EXTRA_PROGRAMS)
+> >  
+> >  # Empty...
+> 
+> This cannot be right.  There is builtin-runstatus.o defined as
+> part of BUILTIN_OBJS so you already should have git-runstatus as
+> a hardlink to other binaries such as git-add, git-apply
+> etc. in the same directory as you have them.
+> 
+> I seem to have 55 hardlinks to that file under my ~/bin/.
+> 
 
-> I did an initial clone of Linus' linux-2.6.git tree, via the git protocol,
-> and then managed to accidently delete one of the .pack and
-> corresponding .idx files.
->
-> I thought that 'cg-fetch' would do the job of bring down the missing pack
-> again, and all would be well. Alas this isn't the case.
->
-> <http://pastebin.ca/246678>
->
-> Pasky, on IRC, indicated that this might be because git-fetch-pack isn't
-> downloading missing objects when the git:// protocol is being used.
+So I just blew away /usr/bin/git*, and removed my Makefile patch, and did
+another:
 
-There are the invariants between refs and objects:
+make prefix=/usr all (as myself)
 
- - objects that its refs (files under .git/refs/ hierarchy that
-   record 40-byte hexadecimal object names) point at are never
-   missing, or the repository is corrupt.
+and then
 
- - objects that are reachable via pointers in another object
-   that is not missing (a tag points at another object, a commit
-   points at its tree and its parent commits, and a tree points
-   at its subtrees and blobs) are never missing, or the repository
-   is corrupt.
+sudo make prefix=/usr install
 
-Git tools first fetch missing objects and then update your refs
-only when fetch succeeds completely, in order to maintain the
-above invariants (a partial fetch does not update your refs).
-And these invariants are why:
+I now *don't* have /usr/bin/git-runstatus.
 
- - fsck-objects start reachability check from the refs;
+And none of the files under /usr/bin/git* are hard links. There are in all 79
+files beginning with /usr/bin/git*:
 
- - commit walkers can stop at your existing refs;
+git git-am git-applymbox git-applypatch git-archimport git-bisect
+git-checkout git-cherry-pick git-clean git-clone git-commit
+git-convert-objects git-cvsexportcommit git-cvsimport git-cvsserver
+git-daemon git-describe git-fetch git-fetch-pack git-fsck-objects
+git-hash-object git-http-fetch git-http-push git-imap-send git-index-pack
+git-instaweb git-local-fetch git-lost-found git-ls-remote git-merge
+git-merge-base git-merge-index git-merge-octopus git-merge-one-file
+git-merge-ours git-merge-recur git-merge-recursive git-merge-recursive-old
+git-merge-resolve git-merge-stupid git-merge-tree git-mktag git-mktree
+git-pack-redundant git-parse-remote git-patch-id git-peek-remote git-pull
+git-quiltimport git-rebase git-receive-pack git-relink git-repack
+git-request-pull git-rerere git-reset git-resolve git-revert git-send-email
+git-send-pack git-sh-setup git-shell git-shortlog git-show-index
+git-ssh-fetch git-ssh-pull git-ssh-push git-ssh-upload git-status git-svn
+git-svnimport git-tag git-unpack-file git-update-server-info git-upload-pack
+git-var git-verify-pack git-verify-tag gitk
 
- - git native protocols only need to tell the other end what
-   refs you have, in order for the other end to exclude what you
-   already have from the set of objects it sends you.
+I haven't tried make -p yet, but can do that to see why git-runstatus isn't
+installed under /usr/bin
 
-What's missing needs to be determined in a reasonably efficient
-manner, and the above invariants allow us not have to do the
-equivalent of fsck-objects every time.  Being able to trust refs
-is fairly fundamental in the fetch operation of git.
+Thanks
 
-I am not opposed to the idea of a new tool to fix a corrupted
-repository that has broken the above invariants, perhaps caused
-by accidental removal of objects and packs by end users.  What
-it needs to do would be:
-
- - run fsck-objects to notice what are missing, by noting
-   "broken link from foo to bar" output messages.  Object 'bar'
-   is what you _ought_ to have according to your refs but you
-   don't (because you removed the objects that should be there),
-   and everything that is reachable from it from the other side
-   needs to be retrieved.  Because you do not have 'bar', your
-   end cannot determine what other objects you happen to have in
-   your object store are reachable from it and would result in
-   redundant download.
-
- - run fetch-pack equivalent to get everything reachable
-   starting at the above missing objects, pretending you do not
-   have any object, because your refs are not trustworthy.
-
- - run fsck-objects again to make sure that your refs can now be
-   trusted again.
-
-To implement the second step above, you need to implement a
-modified fetch-pack that does not trust any of your refs.  It
-also needs to ignore what are offered from the other end but
-asks the objects you know are missing ('bar' in the above
-example).  This program needs to talk to a modified upload-pack
-running at the other end (let's call it upload-pack-recover),
-because usual upload-pack does not serve starting from a random
-object that happen to be in its repository, but only starting
-from objects that are pointed by its own set of refs to ensure
-integrity.
-
-The upload-pack-recover program would need to start traversal
-from object 'bar' in the above example, and when it does so, it
-should not just run 'rev-list --objects' starting at 'bar'.  It
-first needs to prove that its object store has everything that
-is reachable from 'bar' (the recipient would still end up with
-an incomplete repository if it didn't).
-
-What this means is that it needs to prove some of its refs can
-reach 'bar' (again, on the upstream end, only refs are trusted,
-not mere existence of object is not enough) before sending
-objects back.  Usual upload-pack do not have to do it because it
-refuses to serve starting from anything but what its refs point
-at (and by the invariants, the objects pointed at by refs are
-guaranteed to be complete [an object is "complete" if no object
-that can be reachable is not missing]).
-
-This is needed because the repository might have discarded
-branch that used to reach 'bar', and while the object 'bar' was
-in a pack but some of its ancestors or component trees and/or
-blobs were loose and subsequent git-prune have removed the
-latter without removing 'bar'.  Mere existence of the object
-'bar' does not mean 'bar' is complete.
-
-So coming up with such a pair of programs is not a rocket
-science, but it is fairly delicate.  I would rather have them as
-specialized commands, not a part of everyday commands, even if
-you were to implement it.
-
-Since this is not everyday anyway, a far easier way would be to
-clone-pack from the upstream into a new repository, take the
-pack you downloaded from that new repository and mv it into your
-corrupt repository.  You can run fsck-objects to see if you got
-back everything you lost earlier.
