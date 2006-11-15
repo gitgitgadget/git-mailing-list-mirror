@@ -4,67 +4,83 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Han-Wen Nienhuys <hanwen@xs4all.nl>
+From: Nicolas Pitre <nico@cam.org>
 Subject: Re: Cleaning up git user-interface warts
-Date: Fri, 24 Nov 2006 13:26:58 +0100
-Message-ID: <4566E512.4010405@xs4all.nl>
-References: <87k61yt1x2.wl%cworth@cworth.org> <455A1137.8030301@shadowen.org>	<87hcx1u934.wl%cworth@cworth.org>	<Pine.LNX.4.64.0611141518590.2591@xanadu.home>	<87bqn9u43s.wl%cworth@cworth.org> <ejdcg5$4fl$1@sea.gmane.org>	<Pine.LNX.4.64.0611141633430.2591@xanadu.home>	<7vbqn9y6w6.fsf@assigned-by-dhcp.cox.net>	<Pine.LNX.4.64.0611142007010.2591@xanadu.home>	<7v3b8ltq7r.fsf@assigned-by-dhcp.cox.net>	<Pine.LNX.4.64.0611142306090.2591@xanadu.home>	<Pine.LNX.4.64.0611150950170.3349@woody.osdl.org>	<455BBCE9.4050503@xs4all.nl>	<Pine.LNX.4.64.0611151908130.3349@woody.osdl.org>	<455C412D.1030408@xs4all.nl> <7v7ixvbq80.fsf@assigned-by-dhcp.cox.net> <455C618A.7080309@xs4all.nl> <ejkd6g$vog$1@sea.gmane.org>
-Reply-To: hanwen@xs4all.nl
+Date: Wed, 15 Nov 2006 10:10:50 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0611151000460.2591@xanadu.home>
+References: <87k61yt1x2.wl%cworth@cworth.org> <455A1137.8030301@shadowen.org>
+ <87hcx1u934.wl%cworth@cworth.org>
+ <Pine.LNX.4.64.0611141518590.2591@xanadu.home>
+ <87bqn9u43s.wl%cworth@cworth.org> <7vr6w5y7to.fsf@assigned-by-dhcp.cox.net>
+ <7virhhy76h.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0611142048350.2591@xanadu.home>
+ <7vu011qnl6.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0611151454250.13772@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-2
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Fri, 24 Nov 2006 12:27:34 +0000 (UTC)
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+NNTP-Posting-Date: Wed, 15 Nov 2006 15:11:15 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
+	Andy Whitcroft <apw@shadowen.org>,
+	Carl Worth <cworth@cworth.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 21
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: muurbloem.xs4all.nl
-User-Agent: Thunderbird 1.5.0.8 (X11/20061107)
-In-Reply-To: <ejkd6g$vog$1@sea.gmane.org>
+In-reply-to: <Pine.LNX.4.63.0611151454250.13772@wbgn013.biozentrum.uni-wuerzburg.de>
+X-X-Sender: nico@xanadu.home
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32214>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31444>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gna9M-0004ku-OF for gcvg-git@gmane.org; Fri, 24 Nov
- 2006 13:27:25 +0100
+ esmtp (Exim 4.43) id 1GkMPq-0003Oo-Gv for gcvg-git@gmane.org; Wed, 15 Nov
+ 2006 16:11:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S934473AbWKXM1S (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 24 Nov 2006
- 07:27:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934479AbWKXM1S
- (ORCPT <rfc822;git-outgoing>); Fri, 24 Nov 2006 07:27:18 -0500
-Received: from main.gmane.org ([80.91.229.2]:18891 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S934473AbWKXM1R (ORCPT
- <rfc822;git@vger.kernel.org>); Fri, 24 Nov 2006 07:27:17 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1Gna91-0004ew-6M for git@vger.kernel.org; Fri, 24 Nov 2006 13:27:03 +0100
-Received: from muurbloem.xs4all.nl ([213.84.26.127]) by main.gmane.org with
- esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>;
- Fri, 24 Nov 2006 13:27:03 +0100
-Received: from hanwen by muurbloem.xs4all.nl with local (Gmexim 0.1 (Debian))
- id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Fri, 24 Nov 2006 13:27:03
- +0100
-To: git@vger.kernel.org
+ S1030543AbWKOPKw (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
+ 10:10:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030548AbWKOPKv
+ (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 10:10:51 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:329 "EHLO
+ relais.videotron.ca") by vger.kernel.org with ESMTP id S1030543AbWKOPKv
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 10:10:51 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
+ <0J8S00FOU262KGF0@VL-MO-MR002.ip.videotron.ca> for git@vger.kernel.org; Wed,
+ 15 Nov 2006 10:10:50 -0500 (EST)
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-Jakub Narebski escreveu:
+On Wed, 15 Nov 2006, Johannes Schindelin wrote:
 
->>   - --pretty option with wholly uninformative options full, medium, 
->> short, raw.  It's not even documented what each option does.
+> On Tue, 14 Nov 2006, Junio C Hamano wrote:
 > 
-> And 'oneline' and undocumented 'email'. True, git lacks documentation (and
-> this one of main complaints in git survey).
+> > Nicolas Pitre <nico@cam.org> writes:
+> > 
+> > > 2) "pull" and "push" should be symmetrical operations
+> > 
+> > I think that makes a lot of sense to have "gh pull" and "gh
+> > push" as symmetric operations, and make "gh merge" do the
+> > fast-forward and 3-way merge magic done in the current "git
+> > pull".  These three words would have a lot saner meaning.
+> 
+> I am really opposed to do "gh pull". Not only because of "gh" being 
+> completely confusing (we already _have_ "git", and for porcelains 
+> different TLAs), but "pull" _really_ is confusing by now. And Mercurial 
+> did not help one wit by insisting on their own interpretation.
 
-The recently posted patch documenting is an improvement, but why not
-add an option so you can do
+I completely agree that creating yet another command prefix for 
+basically the same tools would be a disaster.  We have "git" already so 
+let's stick to it and make its usage just more sane.
 
-  --format 'committer %c\nauthor %a\n'
-  
-this catches all combinations, and is easier for scripting.
+> Why not do something like "get/put" instead? It is
+> 
+> - easier to remember
+> - not bogus (AFAICT the meaning is not used in diametrical senses)
+> - shorter to type than download/upload
 
-Right now, I have some scripts that have to munge log output with
-regular expressions to strip out the "author:"  prefixes.
+Well, of all compromizes this is probably the best one so far.  I would 
+have prefered to bite the bullet and fix "pull" instead of adding yet 
+more commands.  But if the consensus is that there is no way on earth 
+that "pull" can be salvaged then get/put is probably more enjoyable than 
+download/upload.  This way pull/fetch/push could still be available 
+(albeit burried somewhere out of sight).
 
 
--- 
- Han-Wen Nienhuys - hanwen@xs4all.nl - http://www.xs4all.nl/~hanwen
