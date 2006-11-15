@@ -1,75 +1,51 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: [PATCH] Uninstall rule for top level Makefile
-Date: Tue, 12 Dec 2006 12:51:31 +0000
-Message-ID: <200612121251.33051.andyparkins@gmail.com>
-References: <200612112214.09735.andyparkins@gmail.com> <Pine.LNX.4.63.0612121325000.2807@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Timur Tabi <timur@freescale.com>
+Subject: Is there a way to trim old SHAs from a git tree (so it's not so large)?
+Date: Wed, 15 Nov 2006 16:11:57 -0600
+Organization: Freescale
+Message-ID: <455B90AD.3060707@freescale.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Tue, 12 Dec 2006 12:51:51 +0000 (UTC)
+NNTP-Posting-Date: Wed, 15 Nov 2006 22:12:35 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=oWrhFPBLWOEFSpvsg+EvlMf7lVoUM+REYFTeE762NtJC6cpqnt+H714MixNXUe7Wnco+uyiwI7+y7QZ+vXSWbgcvkDGYG6kNCFpcViLHTw7kCgxS8QVKtmfZPqL3eTOmXRwA0rTsZ8tP77cYYQilco4bmc7/aPvH2E3H6FgP1to=
-User-Agent: KMail/1.9.5
-In-Reply-To: <Pine.LNX.4.63.0612121325000.2807@wbgn013.biozentrum.uni-wuerzburg.de>
-Content-Disposition: inline
+User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.8.1) Gecko/20061101 SeaMonkey/1.1b
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34095>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gu76k-0003KF-2R for gcvg-git@gmane.org; Tue, 12 Dec
- 2006 13:51:42 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31513>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GkSzG-00046L-TN for gcvg-git@gmane.org; Wed, 15 Nov
+ 2006 23:12:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751259AbWLLMvj (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 12 Dec 2006
- 07:51:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751287AbWLLMvj
- (ORCPT <rfc822;git-outgoing>); Tue, 12 Dec 2006 07:51:39 -0500
-Received: from ug-out-1314.google.com ([66.249.92.168]:29930 "EHLO
- ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1751259AbWLLMvi (ORCPT <rfc822;git@vger.kernel.org>); Tue, 12 Dec
- 2006 07:51:38 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so1653140uga for
- <git@vger.kernel.org>; Tue, 12 Dec 2006 04:51:38 -0800 (PST)
-Received: by 10.66.216.1 with SMTP id o1mr1140010ugg.1165927896961; Tue, 12
- Dec 2006 04:51:36 -0800 (PST)
-Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
- ESMTP id 30sm8639163ugf.2006.12.12.04.51.36; Tue, 12 Dec 2006 04:51:36 -0800
- (PST)
+ S1161909AbWKOWMB (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
+ 17:12:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161881AbWKOWMB
+ (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 17:12:01 -0500
+Received: from de01egw02.freescale.net ([192.88.165.103]:57064 "EHLO
+ de01egw02.freescale.net") by vger.kernel.org with ESMTP id S1161883AbWKOWL7
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 17:11:59 -0500
+Received: from de01smr02.am.mot.com (de01smr02.freescale.net [10.208.0.151])
+ by de01egw02.freescale.net (8.12.11/de01egw02) with ESMTP id kAFMPvRp025436
+ for <git@vger.kernel.org>; Wed, 15 Nov 2006 15:25:57 -0700 (MST)
+Received: from [10.82.19.119] (ld0169-tx32.am.freescale.net [10.82.19.119])
+ by de01smr02.am.mot.com (8.13.1/8.13.0) with ESMTP id kAFMBwID011014 for
+ <git@vger.kernel.org>; Wed, 15 Nov 2006 16:11:58 -0600 (CST)
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On Tuesday 2006 December 12 12:25, Johannes Schindelin wrote:
+After doing a "make mrproper" in my Linux git tree, the result is still 1.1GB 
+of files.  Compare that with just the tarball, which is just one-forth the size.
 
-> see http://article.gmane.org/gmane.comp.version-control.git/8682 for a
-> discussion about an uninstall target.
-
-I read that thread, but don't see its relevance.  Have I missed something?
-
-In summary:
-
-"uninstall" is not useful in lieu of a package manager, but for developer 
-types (like those on this mailing list) it is useful when you install in the 
-wrong place (as I did just before I felt the need for an uninstall recipe).
-
-The thread you linked to seemed to want the uninstall to not have hard-coded 
-filenames.  That's what I did.
-
-I assume I've missed something in the linked thread - what was it you wanted 
-me to pick up from it?
-
-
-Andy
+Is there a way to "trim away" old commits from the repository, so that it just 
+doesn't take up that much space?  I don't care about any commits made in 2005. 
+  As long as I can still do "git pull" from the source repo to update mine, 
+that's good enough.
 
 -- 
-Dr Andy Parkins, M Eng (hons), MIEE
+Timur Tabi
