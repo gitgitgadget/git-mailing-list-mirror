@@ -1,80 +1,110 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: [PATCH] Allow hand-editing of patches before sending
-Date: Fri, 3 Nov 2006 14:37:29 +0000
-Message-ID: <b0943d9e0611030637x6162ede8sc9efb3297474885e@mail.gmail.com>
-References: <20061101090046.1107.81105.stgit@localhost>
-	 <b0943d9e0611020232x1e343bbco9451c8183c84d68@mail.gmail.com>
-	 <20061102113631.GA30507@diana.vm.bytemark.co.uk>
-	 <b0943d9e0611030139i7be9569bh4a29596a768e82a3@mail.gmail.com>
-	 <20061103095859.GC16721@diana.vm.bytemark.co.uk>
-	 <b0943d9e0611030444w13e04586u185413c2562d45bc@mail.gmail.com>
-	 <20061103130259.GA20611@diana.vm.bytemark.co.uk>
-	 <b0943d9e0611030525t5da2cce7nf7b41323411e8d2d@mail.gmail.com>
-	 <20061103133329.GB21202@diana.vm.bytemark.co.uk>
-	 <b0943d9e0611030556v4c49868ct5e553240a5f1d63@mail.gmail.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: Cleaning up git user-interface warts
+Date: Wed, 15 Nov 2006 16:18:21 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0611151559470.2591@xanadu.home>
+References: <87k61yt1x2.wl%cworth@cworth.org> <455A1137.8030301@shadowen.org>
+ <87hcx1u934.wl%cworth@cworth.org>
+ <Pine.LNX.4.64.0611141518590.2591@xanadu.home>
+ <87bqn9u43s.wl%cworth@cworth.org> <ejdcg5$4fl$1@sea.gmane.org>
+ <Pine.LNX.4.64.0611141633430.2591@xanadu.home>
+ <7vbqn9y6w6.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0611142007010.2591@xanadu.home>
+ <7v3b8ltq7r.fsf@assigned-by-dhcp.cox.net> <20061115201227.GM7201@pasky.or.cz>
+ <Pine.LNX.4.64.0611151524000.2591@xanadu.home>
+ <Pine.LNX.4.64.0611151243030.3349@woody.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Fri, 3 Nov 2006 14:40:46 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+NNTP-Posting-Date: Wed, 15 Nov 2006 21:18:35 +0000 (UTC)
+Cc: Petr Baudis <pasky@suse.cz>, Junio C Hamano <junkio@cox.net>,
+	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=tFtNE0Ak3eQOz5U7sgccHt/+vwF6hPf1B1uZlnyAh6w4YOhdixujbe4SAfkdhk/Cyp+F/qdzL2zoL9GWTp88f1zuLTRRJTkTOIzQPzn+S/22+b36+oDIt+48hFGs/XSuYX5pts93tfqY2V4QY1SnlKSlXtg0OL6FOFucrv4dGMw=
-In-Reply-To: <b0943d9e0611030556v4c49868ct5e553240a5f1d63@mail.gmail.com>
-Content-Disposition: inline
+In-reply-to: <Pine.LNX.4.64.0611151243030.3349@woody.osdl.org>
+X-X-Sender: nico@xanadu.home
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30857>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31501>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gg0Ao-0005B5-Rz for gcvg-git@gmane.org; Fri, 03 Nov
- 2006 15:37:36 +0100
+ esmtp (Exim 4.43) id 1GkS9K-0002Kh-FL for gcvg-git@gmane.org; Wed, 15 Nov
+ 2006 22:18:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753251AbWKCOhb convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Fri, 3 Nov 2006 09:37:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753252AbWKCOhb
- (ORCPT <rfc822;git-outgoing>); Fri, 3 Nov 2006 09:37:31 -0500
-Received: from nz-out-0102.google.com ([64.233.162.198]:54556 "EHLO
- nz-out-0102.google.com") by vger.kernel.org with ESMTP id S1753251AbWKCOhb
- convert rfc822-to-8bit (ORCPT <rfc822;git@vger.kernel.org>); Fri, 3 Nov 2006
- 09:37:31 -0500
-Received: by nz-out-0102.google.com with SMTP id z3so376853nzf for
- <git@vger.kernel.org>; Fri, 03 Nov 2006 06:37:30 -0800 (PST)
-Received: by 10.35.51.13 with SMTP id d13mr3435891pyk.1162564650207; Fri, 03
- Nov 2006 06:37:30 -0800 (PST)
-Received: by 10.35.77.5 with HTTP; Fri, 3 Nov 2006 06:37:29 -0800 (PST)
-To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
+ S1030998AbWKOVSX (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
+ 16:18:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031001AbWKOVSX
+ (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 16:18:23 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:34642 "EHLO
+ relais.videotron.ca") by vger.kernel.org with ESMTP id S1030998AbWKOVSW
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 16:18:22 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR001.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
+ <0J8S00K45J6L8X50@VL-MO-MR001.ip.videotron.ca> for git@vger.kernel.org; Wed,
+ 15 Nov 2006 16:18:21 -0500 (EST)
+To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 
-On 03/11/06, Catalin Marinas <catalin.marinas@gmail.com> wrote:
-> On 03/11/06, Karl Hasselstr=F6m <kha@treskal.com> wrote:
-> > On 2006-11-03 13:25:36 +0000, Catalin Marinas wrote:
-> > > I understand this and I think we should get this fixed. In the
-> > > meantime, you can always run git-format-patch/git-send-email on t=
-he
-> > > StGIT patches (the id would be "patches/<branch>/<patch>").
-> >
-> > Does that mean that "stg mail" with my QP patch generates output th=
-at
-> > even git-am can't read? I had guessed from what you said earlier th=
-at
-> > git-am _could_ read them.
->
-> Yes, git-am was able to apply them but after using Gnus to write them
-> to an mbox file.
+On Wed, 15 Nov 2006, Linus Torvalds wrote:
 
-I changed your patch slightly to add "Content-Disposition: inline" and
-QUOTED-PRINTABLE instead of quoted-printable. It seems that Gnus can
-show it properly now (but import still fails, of course).
+> 
+> 
+> On Wed, 15 Nov 2006, Nicolas Pitre wrote:
+> > 
+> > I think "fetch" is sane.  Its only problem is a missing symetrical 
+> > counterpart verb, like "get" and "put".
+> 
+> If you're a dog owner, the obvious counterpart for "fetch" is "throw" ;)
 
---=20
+Yeah.  You could always throw a branch to your dog.
+
+Or maybe we should introduce the concept of "bones" to GIT in place of 
+branches?  ;-)
+
+> I think "get" and "put" would be bad, just because of confusion with 
+> "sccs get" (ie it has that "get this file" connotations).
+
+Has SCCS really had a similar level of influence than BK or CVS in that 
+matter?
+
+> Maybe "fetch" and "push" aren't totally diametrically opposite, but 
+> really, I don't think they are that hard to understand either. We do have 
+> the BK legacy of "pull" implying a merge, and that's fairly fundamental. 
+> 
+> It's also true that in a lot of usage schenarios, what people actually 
+> _use_ is "pull" and "push", and no, they aren't mirror images (since push 
+> will _not_ do the merge), but at the same time, from a _usage_ standpoint 
+> they really _are_ each others opposites. 
+
+The problem is the "usage standpoint" distinction that has to be made.  
+Exactly because in GIT it is a bit distorted from what most people 
+expect from other standpoints.
+
+> You "pull" to get other peoples data into your branch (and once you've 
+> internalized local branches and the merge thing, you know what this 
+> means), and you "push" to push your changes out. It really _is_ the usage 
+> schenario, and using "opposite" words really _does_ make sense.
+
+But that's exactly why newbies have problems.  Instead of simply 
+understanding the bare operation (fetch data in a branch _then_ merge 
+it) they sort of need to abstract the concept of branch away because a 
+"pull" does it all automagically.  Which is fine as long as you're 
+willing to ignore branch concepts altogether.  But once branches are 
+back in the picture for more involved operations then the "pull" word 
+simply feels odd.  Even more so with the local merge syntax.
+
+When I say to someone "just merge branch weezee with your current 
+branch" the most intuitive command would be:
+
+	git merge weezee
+
+But because "pull" mixes two concepts together this makes the thing more 
+esoteric.  Unless, of course, you get used to the mental model you 
+outlined above, but IMHO simply needing a mental model to explain the 
+tool is a sign that something is mapped wrong.
+
+
