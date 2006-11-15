@@ -1,73 +1,52 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] git-diff: don't add trailing blanks (i.e., do what GNU diff -u now does)
-Date: Sun, 17 Dec 2006 21:54:41 +0100
-Organization: At home
-Message-ID: <em4all$b2c$1@sea.gmane.org>
-References: <87y7p6nwsh.fsf@rho.meyering.net> <Pine.LNX.4.64.0612171200290.3479@woody.osdl.org> <7vtzzu5lp1.fsf@assigned-by-dhcp.cox.net>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: Cleaning up git user-interface warts
+Date: Wed, 15 Nov 2006 21:12:27 +0100
+Message-ID: <20061115201227.GM7201@pasky.or.cz>
+References: <87k61yt1x2.wl%cworth@cworth.org> <455A1137.8030301@shadowen.org> <87hcx1u934.wl%cworth@cworth.org> <Pine.LNX.4.64.0611141518590.2591@xanadu.home> <87bqn9u43s.wl%cworth@cworth.org> <ejdcg5$4fl$1@sea.gmane.org> <Pine.LNX.4.64.0611141633430.2591@xanadu.home> <7vbqn9y6w6.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611142007010.2591@xanadu.home> <7v3b8ltq7r.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-NNTP-Posting-Date: Sun, 17 Dec 2006 20:52:21 +0000 (UTC)
+NNTP-Posting-Date: Wed, 15 Nov 2006 20:12:51 +0000 (UTC)
+Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 23
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-25-107.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+Content-Disposition: inline
+In-Reply-To: <7v3b8ltq7r.fsf@assigned-by-dhcp.cox.net>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34708>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gw2zb-0004g3-Cs for gcvg-git@gmane.org; Sun, 17 Dec
- 2006 21:52:19 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31480>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GkR7Z-0004nu-Qt for gcvg-git@gmane.org; Wed, 15 Nov
+ 2006 21:12:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751822AbWLQUwQ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 17 Dec 2006
- 15:52:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751834AbWLQUwQ
- (ORCPT <rfc822;git-outgoing>); Sun, 17 Dec 2006 15:52:16 -0500
-Received: from main.gmane.org ([80.91.229.2]:44187 "EHLO ciao.gmane.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1751822AbWLQUwQ
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 17 Dec 2006 15:52:16 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1Gw2zV-0004Hs-7S for git@vger.kernel.org; Sun, 17 Dec 2006 21:52:13 +0100
-Received: from host-81-190-25-107.torun.mm.pl ([81.190.25.107]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Sun, 17 Dec 2006 21:52:13 +0100
-Received: from jnareb by host-81-190-25-107.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Sun, 17 Dec 2006
- 21:52:13 +0100
-To: git@vger.kernel.org
+ S1030951AbWKOUMa (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
+ 15:12:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030953AbWKOUMa
+ (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 15:12:30 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:60817 "EHLO machine.or.cz") by
+ vger.kernel.org with ESMTP id S1030951AbWKOUM3 (ORCPT
+ <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 15:12:29 -0500
+Received: (qmail 5167 invoked by uid 2001); 15 Nov 2006 21:12:27 +0100
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano wrote:
+On Wed, Nov 15, 2006 at 03:10:16AM CET, Junio C Hamano wrote:
+> You have to admit both pull and fetch have been contaminated
+> with loaded meanings from different backgrounds. I was talking
+> about killing the source of confusion in the longer term by
+> removing fetch/pull/push, so we are still on the same page.
 
-> Linus Torvalds <torvalds@osdl.org> writes:
-> 
->> On Sun, 17 Dec 2006, Jim Meyering wrote:
->>>
->>> You may recall that GNU diff -u changed recently so that it no
->>> longer outputs any trailing space unless the input data has it.
->>
->> I still consider that to be a bug in GNU "diff -u".
->>
->> We work around that bug when applying patches, but I don't think we should 
->> replicate it.
-> 
-> Me neither.
-
-Perhaps with --gnu-diff-compatibility then? 
+How was/is fetch contaminated?
 
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
-
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
+$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
