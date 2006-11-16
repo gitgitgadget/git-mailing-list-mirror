@@ -1,83 +1,71 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: git bug? + question
-Date: Fri, 3 Nov 2006 09:12:32 +0100
-Message-ID: <20061103081232.GB15972@diana.vm.bytemark.co.uk>
-References: <buoejsme6ho.fsf@dhapc248.dev.necel.com> <7v4pthmew1.fsf@assigned-by-dhcp.cox.net> <20061102224549.499610d1.seanlkml@sympatico.ca>
+From: Seth Falcon <sethfalcon@gmail.com>
+Subject: Re: git-svn bug?
+Date: Thu, 16 Nov 2006 07:32:07 -0800
+Message-ID: <m2wt5v9zm0.fsf@ziti.local>
+References: <op.ti2svo0ozidtg1@rygel.lnxi.com> <m2psbocpbo.fsf@ziti.local>
+	<20061115223709.GG24861@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Fri, 3 Nov 2006 08:12:53 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, Miles Bader <miles@gnu.org>,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Thu, 16 Nov 2006 15:33:21 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <20061102224549.499610d1.seanlkml@sympatico.ca>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:to:subject:references:from:date:in-reply-to:message-id:user-agent:mime-version:content-type;
+        b=k9hVHGwapTO6BzZFns8SwF4wuN0QplMOP4N4K2+q5Hc7WS0eTn5gEk/+byQIz8Pvhny311VnYNXkJAx5i9c1Qo9UKwsr5t+uMCzAPzkGAF/vh02R6Hg81jOcQxVZgm2Zd2yG4ZFv0DudiUlInt8Ja2zQCp3j6vMrazbBCilVuS0=
+In-Reply-To: <20061115223709.GG24861@spearce.org> (Shawn Pearce's message of "Wed, 15 Nov 2006 17:37:10 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (darwin)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30793>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31589>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GfuAQ-000536-Cl for gcvg-git@gmane.org; Fri, 03 Nov
- 2006 09:12:46 +0100
+ esmtp (Exim 4.43) id 1GkjDs-0005Jx-7K for gcvg-git@gmane.org; Thu, 16 Nov
+ 2006 16:32:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1750944AbWKCIMn convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Fri, 3 Nov 2006 03:12:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751375AbWKCIMn
- (ORCPT <rfc822;git-outgoing>); Fri, 3 Nov 2006 03:12:43 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:22796 "EHLO
- diana.vm.bytemark.co.uk") by vger.kernel.org with ESMTP id S1750944AbWKCIMm
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 3 Nov 2006 03:12:42 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1
- (Debian)) id 1GfuAC-0004Gv-00; Fri, 03 Nov 2006 08:12:32 +0000
-To: Sean <seanlkml@sympatico.ca>
+ S1424165AbWKPPcN (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 16 Nov 2006
+ 10:32:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1424012AbWKPPcN
+ (ORCPT <rfc822;git-outgoing>); Thu, 16 Nov 2006 10:32:13 -0500
+Received: from wr-out-0506.google.com ([64.233.184.234]:27923 "EHLO
+ wr-out-0506.google.com") by vger.kernel.org with ESMTP id S1424165AbWKPPcM
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 16 Nov 2006 10:32:12 -0500
+Received: by wr-out-0506.google.com with SMTP id i22so225762wra for
+ <git@vger.kernel.org>; Thu, 16 Nov 2006 07:32:11 -0800 (PST)
+Received: by 10.65.237.1 with SMTP id o1mr492398qbr.1163691130495; Thu, 16
+ Nov 2006 07:32:10 -0800 (PST)
+Received: from ziti.local ( [67.171.24.140]) by mx.google.com with ESMTP id
+ q19sm2876717qbq.2006.11.16.07.32.09; Thu, 16 Nov 2006 07:32:10 -0800 (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On 2006-11-02 22:45:49 -0500, Sean wrote:
-
-> One thing that would make separate-remotes nicer to work with is to
-> have an automatic mapping between any local branch and one of the
-> same name in remotes.
+Shawn Pearce <spearce@spearce.org> writes:
+> Seth Falcon <sethfalcon@gmail.com> wrote:
+>> I always send commits as:
+>> 
+>> git-svn dcommit remotes/git-svn..master
+>> 
+>> Possibly replacing master with whatever git branch I'm working on.
 >
-> So for instance, if you have a local branch named pu checked out and
-> you pull from origin, remotes/origin/pu would be merged after the
-> fetch unless a manual mapping was defined in the remotes or config
-> file.
+> Or just:
+>
+>    git-svn dcommit remotes/git-svn..
+>
+> to send the current branch.
 
-I would rather see the default pull source of a branch being
-determined by which branch it was branched off of. But this should
-mean the same thing in this case. We'd just have to have the heuristic
-that default pulls from a remotes/*/* branch causes a fetch, while a
-default pull from a local branch does not.
+Yes, but be warned.  As I just discovered, dcommit always commits up
+to the HEAD of the current branch.  So I just did:
 
-> Maybe even going as far as automatically creating a local branch for
-> each remote branch on clone is worth considering.
+git-svn dcommit remotes/git-svn..HEAD~3
 
-Yes, maybe. It should make for a good default for beginners, at least.
+And the ~3 was ignored.  :-(
+Not a bug, as the doc says that dcommit operates on HEAD, but it would
+be convenient to have this work -- especially since reviewing with
+diff (or better log -p) seems natural.
 
-> On a peripherally related topic, someone on the xorg list was
-> complaining that after the initial clone, there is no easy way to
-> track branches that get added/deleted from the remote repo. It would
-> be nice if pull had an option to automatically add and remove remote
-> branches from the remotes/<remote>/xxx namespace.
-
-That would definitely be useful. But I want it in fetch, not pull. :-)
-Well, I suppose it could be in both.
-
-Hmm, I think my dislike of remote pulls can be summed up as: I find it
-convoluted to have a command that will fetch multiple remote branches,
-then merge just one of them into my current branch. (I have no problem
-with pull when the branches to pull are specified explicitly, since in
-that case they are all merged.) With explicitly specified default pull
-sources it would get better, since then I would know that the correct
-branch would be merged, but I still don't quite like it.
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
