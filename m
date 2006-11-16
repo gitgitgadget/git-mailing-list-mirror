@@ -1,93 +1,60 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] Make git-clone --use-separate-remote the default
-Date: Fri, 24 Nov 2006 00:42:03 +0100
-Message-ID: <20061123234203.GN7201@pasky.or.cz>
-References: <20061123225835.30071.99265.stgit@machine.or.cz> <7vejrtiwqd.fsf@assigned-by-dhcp.cox.net>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: how to authenticate with git-svn on a subversion repository
+Date: Thu, 16 Nov 2006 19:59:10 +1300
+Message-ID: <46a038f90611152259w6914c633u8de4adeca5dfa176@mail.gmail.com>
+References: <4559D37E.1070703@archlinuxfr.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 23 Nov 2006 23:42:20 +0000 (UTC)
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 16 Nov 2006 06:59:24 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=geiNN9w8MWgQ/FoknLR6/XmgQY4huORh1dx7zG3ED/kAxoIKMsrhVqsiQ20JURWTZJk0051EzeLellI9Y+wWVUgYS/q1XtqBd1z2IzBqPjQAATlkc1XxORx1XO01vuMG5TaWyKbMfj8tUL8W6rLsa9p11IGaQgRf388vmLLnS+g=
+In-Reply-To: <4559D37E.1070703@archlinuxfr.org>
 Content-Disposition: inline
-In-Reply-To: <7vejrtiwqd.fsf@assigned-by-dhcp.cox.net>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32178>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31562>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GnOCq-0004sl-J1 for gcvg-git@gmane.org; Fri, 24 Nov
- 2006 00:42:12 +0100
+ esmtp (Exim 4.43) id 1GkbDQ-0007FI-Tv for gcvg-git@gmane.org; Thu, 16 Nov
+ 2006 07:59:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1757498AbWKWXmJ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 23 Nov 2006
- 18:42:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757499AbWKWXmJ
- (ORCPT <rfc822;git-outgoing>); Thu, 23 Nov 2006 18:42:09 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:28067 "EHLO machine.or.cz") by
- vger.kernel.org with ESMTP id S1757498AbWKWXmG (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 23 Nov 2006 18:42:06 -0500
-Received: (qmail 1878 invoked by uid 2001); 24 Nov 2006 00:42:03 +0100
-To: Junio C Hamano <junkio@cox.net>
+ S1161941AbWKPG7N (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 16 Nov 2006
+ 01:59:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161942AbWKPG7N
+ (ORCPT <rfc822;git-outgoing>); Thu, 16 Nov 2006 01:59:13 -0500
+Received: from nf-out-0910.google.com ([64.233.182.184]:17095 "EHLO
+ nf-out-0910.google.com") by vger.kernel.org with ESMTP id S1161941AbWKPG7M
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 16 Nov 2006 01:59:12 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so888629nfa for
+ <git@vger.kernel.org>; Wed, 15 Nov 2006 22:59:11 -0800 (PST)
+Received: by 10.49.13.19 with SMTP id q19mr216394nfi.1163660350648; Wed, 15
+ Nov 2006 22:59:10 -0800 (PST)
+Received: by 10.49.60.1 with HTTP; Wed, 15 Nov 2006 22:59:10 -0800 (PST)
+To: "=?ISO-8859-1?Q?Com=E8te?=" <comete@archlinuxfr.org>
 Sender: git-owner@vger.kernel.org
 
-On Fri, Nov 24, 2006 at 12:12:10AM CET, Junio C Hamano wrote:
-> Petr Baudis <pasky@suse.cz> writes:
-> 
-> > and --use-immingled-remote can be used to get the original behaviour;
-> > it is also implied by --bare.
-> 
-> What's immingled?
+Hi Comete,
 
-One dictionary says
+authentication with the SVN stuff is really weird. git-svn and
+git-svnimport use the SVN libraries so that means that if you do
 
-   Immingle \Im*min"gle\, v. t.
-      To mingle; to mix; to unite; to blend. [R.] --Thomson.
+   svn login proto://host/path/to/repo
+   git-svn proto://host/path/to/repo
 
-but perhaps it's too much an obscure word... better suggestions
-welcomed.
+it works because svn magic cookies get stored in ~/.svn.
 
-> > We get confused, frustrated and data-losing users *daily* on #git now
-> > because git-clone still produces the crippled repositories having the
-> > remote and local heads freely mixed together.
-> >
-> > Signed-off-by: Petr Baudis <pasky@suse.cz>
-> 
-> Being strongly opinionated, not giving enough credit for the
-> evolutionary process behind the history and venting frustration
-> in the proposed commit log message is never a good strategy to
-> get the patch applied.
+cheers,
 
-Yes, sorry, the last days were a bit tiring to me.
 
-I'm not sure what evolutionary process should I describe, though...
-
-> Even though I fully agree that use-separate-remotes should be
-> the default, to the point that I do not think we do not even
-> need a backward compatibility option.  People who want to use
-> traditional layout for simple one-remote-branch-only project
-> would not suffer anyway because 'origin' still means origin in
-> the new layout (refs/remotes/origin/HEAD).
-
-I don't know, we still at least need to keep the functionality for
---bare.
-
-> We would need to update the tutorials to match this,though.  I
-> think it talks about the traditional layout and say 'See, now
-> you can run "ls .git/refs/heads/{master,origin}"' or something
-> like that.
-
-Oops, yes. I can try to go through the tutorials during tomorrow or the
-next week...
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-The meaning of Stonehenge in Traflamadorian, when viewed from above, is:
-"Replacement part being rushed with all possible speed."
