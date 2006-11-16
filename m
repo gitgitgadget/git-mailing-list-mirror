@@ -4,184 +4,93 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Chris Riddoch <chris@syntacticsugar.org>
-Subject: [PATCH] Move --pretty options into Documentation/pretty-formats.txt
-Date: Tue, 21 Nov 2006 16:49:15 -0700
-Message-ID: <11641529553903-git-send-email-chris@syntacticsugar.org>
-NNTP-Posting-Date: Tue, 21 Nov 2006 23:53:03 +0000 (UTC)
-Cc: Chris Riddoch <chris@syntacticsugar.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: Cleaning up git user-interface warts
+Date: Wed, 15 Nov 2006 22:43:58 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0611152228540.2591@xanadu.home>
+References: <Pine.LNX.4.64.0611150950170.3349@woody.osdl.org>
+ <200611151858.51833.andyparkins@gmail.com>
+ <Pine.LNX.4.64.0611151111250.3349@woody.osdl.org>
+ <f2b55d220611151139v66fba16ax97ce6b9966b33ce7@mail.gmail.com>
+ <Pine.LNX.4.64.0611151203450.3349@woody.osdl.org>
+ <Pine.LNX.4.64.0611151516360.2591@xanadu.home>
+ <Pine.LNX.4.64.0611151226590.3349@woody.osdl.org>
+ <87velgs9hx.wl%cworth@cworth.org>
+ <Pine.LNX.4.64.0611151339500.3349@woody.osdl.org>
+ <87psbos4pb.wl%cworth@cworth.org> <20061115230252.GH24861@spearce.org>
+ <Pine.LNX.4.64.0611151523290.3349@woody.osdl.org>
+ <Pine.LNX.4.64.0611151905460.2591@xanadu.home>
+ <Pine.LNX.4.64.0611151859370.3349@woody.osdl.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+NNTP-Posting-Date: Thu, 16 Nov 2006 03:44:31 +0000 (UTC)
+Cc: Shawn Pearce <spearce@spearce.org>, Carl Worth <cworth@cworth.org>,
+	"Michael K. Edwards" <medwards.linux@gmail.com>,
+	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Mailer: git-send-email 1.4.4
+In-reply-to: <Pine.LNX.4.64.0611151859370.3349@woody.osdl.org>
+X-X-Sender: nico@xanadu.home
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32058>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31553>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GmfPt-0002gB-3q for gcvg-git@gmane.org; Wed, 22 Nov
- 2006 00:52:42 +0100
+ esmtp (Exim 4.43) id 1GkYAe-00063O-1Z for gcvg-git@gmane.org; Thu, 16 Nov
+ 2006 04:44:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1031308AbWKUXwa (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 21 Nov 2006
- 18:52:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031362AbWKUXwa
- (ORCPT <rfc822;git-outgoing>); Tue, 21 Nov 2006 18:52:30 -0500
-Received: from hinegardner.org ([216.17.180.14]:65098 "EHLO
- planchet.hinegardner.org") by vger.kernel.org with ESMTP id S1031299AbWKUXw3
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2006 18:52:29 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1]) by
- planchet.hinegardner.org (Postfix) with ESMTP id 8E63E1599EE7; Tue, 21 Nov
- 2006 16:53:07 -0700 (MST)
-To: git@vger.kernel.org
+ S1031089AbWKPDoA (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
+ 22:44:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031090AbWKPDoA
+ (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 22:44:00 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:48982 "EHLO
+ relais.videotron.ca") by vger.kernel.org with ESMTP id S1031089AbWKPDn7
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 22:43:59 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR001.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
+ <0J8T00H1611AEBE0@VL-MO-MR001.ip.videotron.ca> for git@vger.kernel.org; Wed,
+ 15 Nov 2006 22:43:58 -0500 (EST)
+To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 
-Asciidoc-include it into the manuals for programs that use the
---pretty command-line option, for consistency among the docs.
+On Wed, 15 Nov 2006, Linus Torvalds wrote:
 
-This describes all the pretty-formats currently listed in the cmit_fmt
-enum in commit.h, and also briefly describes the presence and format
-of the 'Merge: ' line in some pretty formats.
+> 
+> 
+> On Wed, 15 Nov 2006, Nicolas Pitre wrote:
+> > 
+> > That is an implementation detail that should be easily overcome once the 
+> > notion of tracking branch with URL attribute is implemented.
+> 
+> Nope.
+> 
+> I simply don't _have_ those branches.
+> 
+> Why? Because the kernel is _distributed_. There is no central place 
+> (certainly not my repository) that tracks all the possible branches that 
+> might get merged.
+> 
+> In other words, I repeat: in a TRULY DISTRIBUTED ENVIRONMENT it makes more 
+> sense to have a "pull" that fetches and merges, over something that 
+> fetches separately and then merges.
+[...]
 
-There's a hedge that limiting your view of history can affect what
-goes in the Merge: line, and that --abbrev/--no-abbrev do nothing to
-the 'raw' format.
+OK fine.  git-pull is there to stay and let's make sure it remains the 
+same.
 
-Signed-off-by: Chris Riddoch <chris@syntacticsugar.org>
----
- Documentation/git-diff-tree.txt  |    5 +--
- Documentation/git-log.txt        |    4 +-
- Documentation/git-rev-list.txt   |    6 +---
- Documentation/git-show.txt       |    5 +--
- Documentation/pretty-formats.txt |   60 ++++++++++++++++++++++++++++++++++++++
- 5 files changed, 65 insertions(+), 15 deletions(-)
+Let's see if, for example, git-merge can be made more useful in the mean 
+time for those evidently inferior people that would prefer an interface 
+that maps more closely to the actual operation that is being performed.  
+And although I do understand what "pull" does, I think I should qualify 
+myself as one of those inferior people nevertheless since /pull . blah" 
+really irritates me.  OK I must be really dumb to let myself being 
+disturbed by such an insignificant detail... but apparently I'm not 
+alone.
 
-diff --git a/Documentation/git-diff-tree.txt b/Documentation/git-diff-tree.txt
-index f7e8ff2..5d6e9dc 100644
---- a/Documentation/git-diff-tree.txt
-+++ b/Documentation/git-diff-tree.txt
-@@ -73,10 +73,7 @@ separated with a single space are given.
- 	This flag causes "git-diff-tree --stdin" to also show
- 	the commit message before the differences.
- 
----pretty[=(raw|medium|short)]::
--	This is used to control "pretty printing" format of the
--	commit message.  Without "=<style>", it defaults to
--	medium.
-+include::pretty-formats.txt[]
- 
- --no-commit-id::
- 	git-diff-tree outputs a line with the commit ID when
-diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
-index c9ffff7..79643ac 100644
---- a/Documentation/git-log.txt
-+++ b/Documentation/git-log.txt
-@@ -24,8 +24,8 @@ This manual page describes only the most
- 
- OPTIONS
- -------
----pretty=<format>::
--	Controls the way the commit log is formatted.
-+
-+include::pretty-formats.txt[]
- 
- --max-count=<n>::
- 	Limits the number of commits to show.
-diff --git a/Documentation/git-rev-list.txt b/Documentation/git-rev-list.txt
-index 00a95e2..ec43c0b 100644
---- a/Documentation/git-rev-list.txt
-+++ b/Documentation/git-rev-list.txt
-@@ -79,11 +79,7 @@ Using these options, gitlink:git-rev-lis
- more specialized family of commit log tools: gitlink:git-log[1],
- gitlink:git-show[1], and gitlink:git-whatchanged[1]
- 
----pretty[='<format>']::
--
--	Pretty print the contents of the commit logs in a given format,
--	where '<format>' can be one of 'raw', 'medium', 'short', 'full',
--	and 'oneline'. When left out the format default to 'medium'.
-+include::pretty-formats.txt[]
- 
- --relative-date::
- 
-diff --git a/Documentation/git-show.txt b/Documentation/git-show.txt
-index 2b4df3f..4c880a8 100644
---- a/Documentation/git-show.txt
-+++ b/Documentation/git-show.txt
-@@ -26,10 +26,7 @@ OPTIONS
- <commitid>::
- 	ID of the commit to show.
- 
----pretty=<format>::
--	Controls the output format for the commit logs.
--	<format> can be one of 'raw', 'medium', 'short', 'full',
--	and 'oneline'.
-+include::pretty-formats.txt[]
- 
- Author
- ------
-diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
-new file mode 100644
-index 0000000..4496c87
---- /dev/null
-+++ b/Documentation/pretty-formats.txt
-@@ -0,0 +1,60 @@
-+--pretty[='<format>']::
-+
-+        Pretty-prints the details of a commit.  The default format is
-+        'medium'.  If the commit is a merge, and if the pretty-format
-+        is not 'oneline', 'email' or 'raw', an additional line is
-+        inserted before the 'Author:' line.  This line begins with
-+        "Merge: " and the sha1s of ancestral commits are printed,
-+        separated by spaces.  Note that the listed commits may not
-+        necessarily be the list of the *direct* parent commits if you
-+        have limited your view of history: for example, if you are
-+        only interested in changes related to a certain directory or
-+        file.
-+
-+        * 'oneline'
-+
-+            <sha1> <title line>
-+
-+        * 'short'
-+
-+            commit <sha1>
-+            Author: <author>
-+            <title line>
-+
-+        * 'medium'
-+
-+            commit <sha1>
-+            Author: <author>
-+            Date: <date>
-+            <full commit message>
-+
-+        * 'full'
-+
-+            commit <sha1>
-+            Author: <author>
-+            Commit: <committer>
-+            <full commit message>
-+
-+        * 'fuller'
-+
-+           commit <sha1>
-+           Author: <author>
-+           AuthorDate: <date & time>
-+           Commit: <committer>
-+           CommitDate: <date & time>
-+           <full commit message>
-+
-+        * 'email'
-+
-+           from <sha1> <date>
-+           From: <author>
-+           Date: <date & time>
-+           Subject: [PATCH] <title line>
-+
-+          <full commit message>
-+
-+        * 'raw'
-+
-+           The entire commit exactly as stored in the commit object
-+           The SHA1s are displayed in full, regardless of whether
-+           --abbrev or --no-abbrev are used.
--- 
-1.4.4
+But I promise to never change the "pull" behavior if I ever attempt to 
+fix the "merge" command for the inferior mortals as myself.  All power 
+to those with superior minds shall never be removed.
+
+;-)
+
+
