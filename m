@@ -1,77 +1,77 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-2.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,MSGID_FROM_MTA_HEADER,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
-From: Sean <seanlkml@sympatico.ca>
-Subject: Re: multi-project repos (was Re: Cleaning up git user-interface
-Date: Fri, 17 Nov 2006 00:42:10 -0500
-Message-ID: <BAYC1-PASMTP0363A52FA4E6EE87232B20AEE80@CEZ.ICE>
-References: <20061117051157.27896.qmail@science.horizon.com>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: "Anand Kumria" <wildfire@progsoc.org>
+Subject: Re: Cleaning up git user-interface warts
+Date: Thu, 16 Nov 2006 01:51:05 +0000 (UTC)
+Message-ID: <ejgg69$bm7$3@sea.gmane.org>
+References: <87k61yt1x2.wl%cworth@cworth.org>
+	<455A1137.8030301@shadowen.org> <87hcx1u934.wl%cworth@cworth.org>
+	<Pine.LNX.4.64.0611141518590.2591@xanadu.home>
+	<87bqn9u43s.wl%cworth@cworth.org> <ejdcg5$4fl$1@sea.gmane.org>
+	<Pine.LNX.4.64.0611141633430.2591@xanadu.home>
+	<7vbqn9y6w6.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0611142007010.2591@xanadu.home>
+	<7v3b8ltq7r.fsf@assigned-by-dhcp.cox.net>
+	<20061115201227.GM7201@pasky.or.cz>
+	<Pine.LNX.4.64.0611151524000.2591@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Fri, 17 Nov 2006 05:44:21 +0000 (UTC)
-Cc: hanwen@xs4all.nl, git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+NNTP-Posting-Date: Thu, 16 Nov 2006 01:52:35 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Originating-IP: [65.93.43.81]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Original-Message-Id: <20061117004210.e8fd1045.seanlkml@sympatico.ca>
-In-Reply-To: <20061117051157.27896.qmail@science.horizon.com>
-X-Mailer: Sylpheed version 2.2.9 (GTK+ 2.10.4; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 17 Nov 2006 05:42:12.0746 (UTC) FILETIME=[2191A6A0:01C70A0B]
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 21
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 88-110-175-230.dynamic.dsl.as9105.com
+User-Agent: pan 0.117 (We'll fly and we'll fall and we'll burn)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31540>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GkwWM-000182-EB for gcvg-git@gmane.org; Fri, 17 Nov
- 2006 06:44:15 +0100
+ esmtp (Exim 4.43) id 1GkWQ4-0000In-7G for gcvg-git@gmane.org; Thu, 16 Nov
+ 2006 02:52:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1424770AbWKQFmt (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 17 Nov 2006
- 00:42:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1424773AbWKQFmZ
- (ORCPT <rfc822;git-outgoing>); Fri, 17 Nov 2006 00:42:25 -0500
-Received: from bayc1-pasmtp03.bayc1.hotmail.com ([65.54.191.163]:27414 "EHLO
- BAYC1-PASMTP03.bayc1.hotmail.com") by vger.kernel.org with ESMTP id
- S1424770AbWKQFmN (ORCPT <rfc822;git@vger.kernel.org>); Fri, 17 Nov 2006
- 00:42:13 -0500
-Received: from linux1.attic.local ([65.93.43.81]) by
- BAYC1-PASMTP03.bayc1.hotmail.com over TLS secured channel with Microsoft
- SMTPSVC(6.0.3790.1830); Thu, 16 Nov 2006 21:42:12 -0800
-Received: from guru.attic.local ([10.10.10.28]) by linux1.attic.local with
- esmtp (Exim 4.43) id 1GkvYH-00082T-VS; Thu, 16 Nov 2006 23:42:10 -0500
-To: linux@horizon.com
+ S1031064AbWKPBv5 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
+ 20:51:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031061AbWKPBv5
+ (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 20:51:57 -0500
+Received: from main.gmane.org ([80.91.229.2]:41671 "EHLO ciao.gmane.org") by
+ vger.kernel.org with ESMTP id S1031064AbWKPBv4 (ORCPT
+ <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 20:51:56 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1GkWPb-0000AE-Ri for git@vger.kernel.org; Thu, 16 Nov 2006 02:51:33 +0100
+Received: from 88-110-175-230.dynamic.dsl.as9105.com ([88.110.175.230]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Thu, 16 Nov 2006 02:51:31 +0100
+Received: from wildfire by 88-110-175-230.dynamic.dsl.as9105.com with local
+ (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Thu, 16
+ Nov 2006 02:51:31 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On 17 Nov 2006 00:11:57 -0500
-linux@horizon.com wrote:
+On Wed, 15 Nov 2006 15:26:44 -0500, Nicolas Pitre wrote:
 
-> "The only intuitive user interface is the nipple; all else is learned."
+> On Wed, 15 Nov 2006, Petr Baudis wrote:
+> 
+>> On Wed, Nov 15, 2006 at 03:10:16AM CET, Junio C Hamano wrote:
+>> > You have to admit both pull and fetch have been contaminated
+>> > with loaded meanings from different backgrounds. I was talking
+>> > about killing the source of confusion in the longer term by
+>> > removing fetch/pull/push, so we are still on the same page.
+>> 
+>> How was/is fetch contaminated?
+> 
+> I think "fetch" is sane.  Its only problem is a missing symetrical 
+> counterpart verb, like "get" and "put".
 
-The thing is that other SCM's like hg look a lot more like a nipple than
-Git.  And they have the same conceptual models, more or less, to deal with
-as Git.
+"throw" ?
 
-So why is it so many people think Git has a UI problem where the same
-complaint isn't levelled at Mercurial?  The thing is, the focus of
-Git has been different, it's been about creating great plumbing.  It's
-had great success at doing that, and anyone who warms up to Git is well
-rewarded with a tool that gives them a lot of power and flexibility.
+But I think "I'll just 'throw' this set of patches at you" is a lot
+harshers sounding than "I'll just 'push' this set of patches at you".
 
-But Junio and others that have done most of the work have gone so far
-as to say Git is basically now feature complete.. the plumbing is more
-or less done.
-
-So now it's time to make that plumbing more accessible and less
-intimidating to the uninitiated.  And blaming them for having the wrong
-mental model is just fundamentally the wrong approach.  No amount of
-documentation is going to replace having tools that are the least
-surprising they can be and Just Work more often than not.  Other
-modern SCM's have managed to do a better job of this than Git, and
-there's no reason Git can't do better than it has.
-
-As long as no damage is done to the underlying architecture and
-principles of Git there really shouldn't be _any harm_ in trying
-to do a better job of the porcelain layer.
-
+Anand
