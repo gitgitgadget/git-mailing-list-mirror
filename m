@@ -6,93 +6,85 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: StGit repo & gitweb, was Re: [PATCH] merge-recursive: add/add
- really is modify/modify with an empty base
-Date: Thu, 14 Dec 2006 00:50:19 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612140048120.3635@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20061207101707.GA19139@spearce.org> 
- <Pine.LNX.4.63.0612100056090.28348@wbgn013.biozentrum.uni-wuerzburg.de> 
- <Pine.LNX.4.63.0612100114440.28348@wbgn013.biozentrum.uni-wuerzburg.de> 
- <7vmz5w5tuw.fsf@assigned-by-dhcp.cox.net> 
- <Pine.LNX.4.63.0612122347590.2807@wbgn013.biozentrum.uni-wuerzburg.de> 
- <7vvekgog0r.fsf@assigned-by-dhcp.cox.net> 
- <Pine.LNX.4.63.0612130402300.2807@wbgn013.biozentrum.uni-wuerzburg.de> 
- <7vvekgl2z2.fsf@assigned-by-dhcp.cox.net> 
- <Pine.LNX.4.63.0612131232270.3635@wbgn013.biozentrum.uni-wuerzburg.de>
- <b0943d9e0612131409x4a894f72if9c4d44cfa970be@mail.gmail.com>
+Subject: Re: multi-project repos (was Re: Cleaning up git user-interface
+ warts)
+Date: Thu, 16 Nov 2006 23:21:55 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0611162315110.13772@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <87k61yt1x2.wl%cworth@cworth.org> <455A1137.8030301@shadowen.org>
+ <87hcx1u934.wl%cworth@cworth.org> <Pine.LNX.4.64.0611141518590.2591@xanadu.home>
+ <87bqn9u43s.wl%cworth@cworth.org> <ejdcg5$4fl$1@sea.gmane.org>
+ <Pine.LNX.4.64.0611141633430.2591@xanadu.home> <7vbqn9y6w6.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0611142007010.2591@xanadu.home> <7v3b8ltq7r.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0611142306090.2591@xanadu.home> <Pine.LNX.4.64.0611150950170.3349@woody.osdl.org>
+ <455BBCE9.4050503@xs4all.nl> <Pine.LNX.4.64.0611151908130.3349@woody.osdl.org>
+ <455C412D.1030408@xs4all.nl> <Pine.LNX.4.64.0611160814560.3349@woody.osdl.org>
+ <455C94FA.3050903@xs4all.nl> <Pine.LNX.4.64.0611160904010.3349@woody.osdl.org>
+ <455CA2A8.5010700@xs4all.nl> <Pine.LNX.4.64.0611160958170.3349@woody.osdl.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Wed, 13 Dec 2006 23:50:31 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
-	Petr Baudis <pasky@suse.cz>
+NNTP-Posting-Date: Thu, 16 Nov 2006 22:22:18 +0000 (UTC)
+Cc: Han-Wen Nienhuys <hanwen@xs4all.nl>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 X-Authenticated: #1490710
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <b0943d9e0612131409x4a894f72if9c4d44cfa970be@mail.gmail.com>
+In-Reply-To: <Pine.LNX.4.64.0611160958170.3349@woody.osdl.org>
 X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34264>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gudrk-0003mP-T8 for gcvg-git@gmane.org; Thu, 14 Dec
- 2006 00:50:25 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31628>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GkpcT-0004g9-5Q for gcvg-git@gmane.org; Thu, 16 Nov
+ 2006 23:22:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751668AbWLMXuW (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 13 Dec 2006
- 18:50:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751672AbWLMXuW
- (ORCPT <rfc822;git-outgoing>); Wed, 13 Dec 2006 18:50:22 -0500
-Received: from mail.gmx.net ([213.165.64.20]:38891 "HELO mail.gmx.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S1751668AbWLMXuV
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 13 Dec 2006 18:50:21 -0500
-Received: (qmail invoked by alias); 13 Dec 2006 23:50:19 -0000
+ S1424748AbWKPWV7 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 16 Nov 2006
+ 17:21:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1424746AbWKPWV7
+ (ORCPT <rfc822;git-outgoing>); Thu, 16 Nov 2006 17:21:59 -0500
+Received: from mail.gmx.net ([213.165.64.20]:29374 "HELO mail.gmx.net") by
+ vger.kernel.org with SMTP id S1424745AbWKPWV6 (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 16 Nov 2006 17:21:58 -0500
+Received: (qmail invoked by alias); 16 Nov 2006 22:21:56 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp039) with SMTP; 14 Dec 2006 00:50:19 +0100
-To: Catalin Marinas <catalin.marinas@gmail.com>
+ [132.187.25.13] by mail.gmx.net (mp028) with SMTP; 16 Nov 2006 23:21:56 +0100
+To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 
 Hi,
 
-On Wed, 13 Dec 2006, Catalin Marinas wrote:
+On Thu, 16 Nov 2006, Linus Torvalds wrote:
 
-> On 13/12/06, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > On Tue, 12 Dec 2006, Junio C Hamano wrote:
+> On Thu, 16 Nov 2006, Han-Wen Nienhuys wrote:
 > > 
-> > > Although I would feel very happy about this change, Catalin
-> > > might want to be informed about potential interaction this
-> > > change might have with his commit 8d41555 in StGIT.
+> > * why are objects downloaded twice?  If I do
 > > 
-> > Indeed. Catalin, do you have any suggestion how to proceed? Do you want to
-> > introduce a check if the file exists prior to re-generating it? Or do you
-> > need some version check?
+> >   git --bare fetch git://git.sv.gnu.org/lilypond.git web/master
+> > 
+> > it downloads stuff, but I don't get a branch.
 > 
-> It currently checks whether the file exists and, if it doesn't, it is
-> re-generated. I think the patch is good idea.
+> A "fetch" by default won't actually generate a local branch unless you 
+> told it to.
 
-Thanks.
+This is actually a perfect example for
 
-> > BTW why is StGit not on kernel.org?
-> 
-> Why would it be? Unless you know who to talk to for this :-), it's not 
-> really a derivative of the Linux kernel.
+- a script that is porcelain as well as plumbing (you are supposed to use 
+it directly, or via pull), and for
 
-There is plenty of stuff on kernel.org which is only related to the Linux 
-kernel. And StGit (even if I did not try it yet), seems to be very 
-valuable for working on the kernel.
+- a terrible UI.
 
-> > Not that it matters: repo.or.cz has a nice mirror. Pasky, how powerful is
-> > that machine? I am a happy user of the gitweb interface on that box...
-> 
-> Hopefully, when I get a bit of time, I'll try to give up the
-> http-hosted repository and use Pasky's one exclusively.
-> 
-> BTW, how can I notify people that only pull from the http repository 
-> that it will no longer be updated (rather than them thinking the 
-> development stopped)? One solution would be to create a file with a 
-> meaningful name in the top dir and hope people will notice it.
+_If_ you use git-fetch directly you virtually always want to store the 
+result. I was tempted quite often to submit a patch which adds a command 
+line switch --no-warn, which is passed to git-fetch by git-pull, and 
+without which git-fetch complains if the branch-to-be-fetched is not 
+stored right away (and refuses to go along).
 
-IMHO removing it altogether would be a good idea. The website should carry 
-the news of the new repository site.
+_Also_, git-pull not storing the fetched branches at least temporarily 
+often annoyed me: the pull did not work, and the SHA1 was so far away I 
+could not even scroll to it. The result: I had to pull (and fetch!) the 
+whole darned objects again. Again, I was tempted quite often to submit a 
+patch which makes git-pull fetch the branches into refs/fetch-temp/* and 
+only throw them away when the merge succeeded.
 
 Ciao,
 Dscho
