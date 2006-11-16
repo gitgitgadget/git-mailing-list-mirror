@@ -1,115 +1,116 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: [RFC/PATCH] Implement poor-man's submodule support in pre-commit hook
-Date: Wed, 20 Dec 2006 09:01:30 +0000
-Message-ID: <200612200901.30584.andyparkins@gmail.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: Cleaning up git user-interface warts
+Date: Thu, 16 Nov 2006 04:53:38 +0100
+Message-ID: <20061116035338.GS7201@pasky.or.cz>
+References: <87k61yt1x2.wl%cworth@cworth.org> <7virhhy76h.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611142048350.2591@xanadu.home> <200611150917.23756.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 20 Dec 2006 09:01:48 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Thu, 16 Nov 2006 03:53:49 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-TUID: 73cd9cabeb401690
-X-UID: 197
-X-Length: 2796
 Content-Disposition: inline
-X-OriginalArrivalTime: 20 Dec 2006 09:03:39.0716 (UTC) FILETIME=[BD98A840:01C72415]
+In-Reply-To: <200611150917.23756.andyparkins@gmail.com>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34912>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GwxKT-0003mw-Vm for gcvg-git@gmane.org; Wed, 20 Dec
- 2006 10:01:38 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31555>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GkYJs-0007YT-M5 for gcvg-git@gmane.org; Thu, 16 Nov
+ 2006 04:53:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S964943AbWLTJBf (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 20 Dec 2006
- 04:01:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964944AbWLTJBf
- (ORCPT <rfc822;git-outgoing>); Wed, 20 Dec 2006 04:01:35 -0500
-Received: from mail.360visiontechnology.com ([194.70.53.226]:25345 "EHLO
- 369run02s.360vision.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with
- ESMTP id S964943AbWLTJBe (ORCPT <rfc822;git@vger.kernel.org>); Wed, 20 Dec
- 2006 04:01:34 -0500
-Received: from dvr.360vision.com ([192.189.1.24]) by 369run02s.360vision.com
- with Microsoft SMTPSVC(5.0.2195.6713); Wed, 20 Dec 2006 09:03:39 +0000
-Received: from localhost ([127.0.0.1]) by dvr.360vision.com with esmtp (Exim
- 3.36 #1 (Debian)) id 1GwxKO-0007Q4-00 for <git@vger.kernel.org>; Wed, 20 Dec
- 2006 09:01:32 +0000
-To: git@vger.kernel.org
+ S1031102AbWKPDxl (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
+ 22:53:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031103AbWKPDxl
+ (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 22:53:41 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:5272 "EHLO machine.or.cz") by
+ vger.kernel.org with ESMTP id S1031102AbWKPDxk (ORCPT
+ <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 22:53:40 -0500
+Received: (qmail 12429 invoked by uid 2001); 16 Nov 2006 04:53:38 +0100
+To: Andy Parkins <andyparkins@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Make a file called .gitmodules.  In it, list the paths containing a
-submodule.  Add that file to the index.
+On Wed, Nov 15, 2006 at 10:17:22AM CET, Andy Parkins wrote:
+> On Wednesday 2006 November 15 04:32, Nicolas Pitre wrote:
+> 
+> > 3) remote branch handling should become more straight forward.
+> 
+> I was completely confused by this origin/master/clone stuff when I started 
+> with git.  In hindsight, now I understand git a bit more, this is what I 
+> would have liked:
+> 
+>  * Don't use the name "origin" twice.  In fact, don't use it at all.  In a 
+> distributed system there is no such thing as a true origin.
+> 
+>  * .git/remotes/origin should be ".git/remotes/default".   "origin" is only 
+> special because it is the default to push and pull - it's very nice to have a 
+> default, but it should therefore be /called/ "default".
 
-This addition to the pre-commit hook finds that file and pulls the HEAD
-hash out of each of the listed submodule repositories.  That hash is
-then listed to the .gitmodules file along with the submodule name and
-.gitmodules is added back to the repository.
+  But "default" is way too generic a name, it's much more confusing I
+think. As the one guilty of inventing master and origin, I agree that
+they are somewhat silly, but if I would have to pick which one to
+replace with something "better", I'd much rather pick master.
 
-You've now got poor-man's submodule support.  Any commits to the
-submodule will change the hash and hence the .gitmodules file will be
-different and therefore will show up as "modified" to git.
+  Yes, Git can operate in a completely distributed manner. People do use
+it as it. And there are also people that have no origin branch in their
+repository. But the vast (overwhelming!) majority of people _does_ work
+in some kind of hierarchical setup, and for them origin does have a
+meaning. And origin URL can even change over time!
 
-It's not got any nice UI for checking out (obviously) or merging; but it
-does at least record the state of a project with a bit of manual work to
-check out the right commit in the submodule.
+>  * git-clone should really just be a small wrapper around
+>     - git-init-db
+>     - create .git/remotes/default
+>     - maybe create specific .git/config
+>     - git-fetch default
+>    If git-clone does anything that can't be done with settings in the config 
+> and the remotes/default file then it's wrong.  The reason I say this is that 
+> as soon as git-clone has special capabilities (like --shared, --local 
+> and --reference) then you are prevented from doing magic with existing 
+> repositories.  For example; how do you create a repository that contains 
+> branches from two other local repositories that have the objects hard linked?
 
-Problems:
- - git-prune in the submodule could destroy supermodule-referenced
-   commits
- - no checkout support
- - no merge support (other than what git provides for the .gitmodule
-   file)
- - no check for dirty submodule before commit
+  Here I think that modulo the lack of remotes support (which is not a
+fundamental thing here), the general setup of how Cogito does stuff is
+much more saner than the current Git mess. It does basically exactly
+what you've said above, and even the fetching itself is IMHO written
+much more cleanly than in Git. In an ideal world, Git would just take
+Cogito's code here. :-)
 
-Signed-off-by: Andy Parkins <andyparkins@gmail.com>
----
- templates/hooks--pre-commit |   31 ++++++++++++++++++++++++++++++-
- 1 files changed, 30 insertions(+), 1 deletions(-)
+> While I'm writing wishes, I'd like to jump on Junio's integration with other 
+> fetch-backends wish.  I use git-svn, and it would be fantastic if I could 
+> replace:
+> 
+> git-svn init --id upstream/trunk svn://host/path/trunk
+> git-svn fetch --id upstream/trunk
+> git-svn init --id upstream/stable svn://host/path/branches/stable
+> git-svn fetch --id upstream/stable
+> 
+> With a .git/remotes/svn
+>  SVN-URL: svn://host/path
+>  Pull: trunk:refs/remotes/upstream/trunk
+>  Pull: branches/stable:refs/remotes/upstream/stable
+> and
+>  git fetch svn
+> 
+> Obviously, the syntax is just made up; but you get the idea.  Even better, 
+> would be if it could cope with my "*" syntax suggested above:
+>  SVN-URL: svn://host/path
+>  Pull: trunk:refs/remotes/upstream/trunk
+>  Pull: branches/*:refs/remotes/upstream/*
 
-diff --git a/templates/hooks--pre-commit b/templates/hooks--pre-commit
-index 723a9ef..7a71d81 100644
---- a/templates/hooks--pre-commit
-+++ b/templates/hooks--pre-commit
-@@ -67,5 +67,34 @@ perl -e '
- 	}
-     }
-     exit($found_bad);
--'
-+' || exit 1
-+
-+# Enable poor-man's submodule support when .gitmodules is present
-+# Simply create a .gitmodules file listing the paths in your repository
-+# that contain other git repositories; each line will be replaced with the
-+# path followed by the hash of the current HEAD of the submodule.
-+# When the submodule changes hash this file will be different from the
-+# version in the repository and a change will be noted - voila, submodules.
-+# Of course there is no checkout support, but at least the current state
-+# will be accurately recorded
-+if [ -f .gitmodules ]; then
-+	cat .gitmodules |
-+	while read subdir hash
-+	do
-+		# XXX: check if the line is a comment
-+
-+		# XXX: really need a check here and quit if the submodule is
-+		# dirty
-+
-+		echo "$subdir $(GIT_DIR=$subdir/.git git-rev-parse HEAD)"
-+	done > .gitmodules
-+
-+	# This relies on the .gitmodules file having already been added to
-+	# the repository - perhaps this should be automated?
-+	git-update-index .gitmodules ||
-+	(
-+	echo "Submodule tracker file is not tracked by this repository." >&2
-+	exit 1
-+	)
-+fi
- 
+  It shouldn't be hard to do at all. Have the porcelain call "protocol
+drivers" based on protocol in some generic way, like
+/usr/lib/git/protocol/$proto.
+
 -- 
-1.4.4.2.g95ee-dirty
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
+$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
