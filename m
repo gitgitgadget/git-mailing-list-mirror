@@ -1,70 +1,91 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] git-cvsimport: add suport for CVS pserver method HTTP/1.x  proxying
-Date: Thu, 23 Nov 2006 14:01:37 -0800
-Message-ID: <7v64d5keke.fsf@assigned-by-dhcp.cox.net>
-References: <11642344172790-git-send-email-iarenuno@eteo.mondragon.edu>
+From: Johannes Sixt <johannes.sixt@telecom.at>
+Subject: Is cp -al safe with git?
+Date: Thu, 16 Nov 2006 19:47:20 +0100
+Message-ID: <ejibnp$mmq$1@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 23 Nov 2006 22:01:49 +0000 (UTC)
-Cc: git@vger.kernel.org, Martin Langhoff <martin@catalyst.net.nz>
+Content-Transfer-Encoding: 7Bit
+NNTP-Posting-Date: Thu, 16 Nov 2006 18:55:24 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <11642344172790-git-send-email-iarenuno@eteo.mondragon.edu>
-	(Inaki Arenaza's message of "Wed, 22 Nov 2006 23:26:57 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 45
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: at00d01-adsl-194-118-045-019.nextranet.at
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32160>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31617>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GnMda-0002AJ-JJ for gcvg-git@gmane.org; Thu, 23 Nov
- 2006 23:01:42 +0100
+ esmtp (Exim 4.43) id 1GkmOO-0004AT-0U for gcvg-git@gmane.org; Thu, 16 Nov
+ 2006 19:55:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S934138AbWKWWBj (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 23 Nov 2006
- 17:01:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934147AbWKWWBj
- (ORCPT <rfc822;git-outgoing>); Thu, 23 Nov 2006 17:01:39 -0500
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:57311 "EHLO
- fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP id S934138AbWKWWBj
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 23 Nov 2006 17:01:39 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao10.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061123220138.HFMK5575.fed1rmmtao10.cox.net@fed1rmimpo02.cox.net>; Thu, 23
- Nov 2006 17:01:38 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id qN1m1V0081kojtg0000000; Thu, 23 Nov 2006
- 17:01:46 -0500
-To: Inaki Arenaza <iarenuno@eteo.mondragon.edu>
+ S1424348AbWKPSzO (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 16 Nov 2006
+ 13:55:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1424343AbWKPSzO
+ (ORCPT <rfc822;git-outgoing>); Thu, 16 Nov 2006 13:55:14 -0500
+Received: from main.gmane.org ([80.91.229.2]:61364 "EHLO ciao.gmane.org") by
+ vger.kernel.org with ESMTP id S1424354AbWKPSzM (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 16 Nov 2006 13:55:12 -0500
+Received: from root by ciao.gmane.org with local (Exim 4.43) id
+ 1GkmO6-00045L-K7 for git@vger.kernel.org; Thu, 16 Nov 2006 19:55:02 +0100
+Received: from at00d01-adsl-194-118-045-019.nextranet.at ([194.118.45.19]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Thu, 16 Nov 2006 19:55:02 +0100
+Received: from johannes.sixt by at00d01-adsl-194-118-045-019.nextranet.at
+ with local (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Thu, 16 Nov 2006 19:55:02 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Thanks.  The patch looks very sane, isolated to be safe enough,
-and useful.
+For one reason or another I would like to "clone" a local repo including the
+checked-out working tree with cp -al instead of cg-clone/git-clone, i.e.
+have all files hard-linked instead of copied.
 
-Except that this statement made me go "huh?" wondering what it
-would do to the $filehandle to evaluate <$filehandle> in a void
-context:
+Can the copies be worked on independently without interference (with the git
+tool set)?
 
-+			# Skip the empty line of the proxy server output
-+			<$s>;
+One thing I noticed is that git-reset or probably git-checkout-index breaks
+links of files that need not be changed by the reset. Example:
 
-and I ended up looking in perlop.pod and came up empty.
+# make 2 files, commit
+$ mkdir orig && cd orig
+$ git-init-db 
+defaulting to local storage area
+$ echo foo > a && cp a b && git-add a b && git-commit -a -m 1
+Committing initial tree 99b876dbe094cb7d3850f1abe12b4c5426bb63ea
 
-The "I/O Operators" section talks about evaluating <$s> in a
-scalar context (i.e. "$rep = <$s>"), which we all know would
-return a single line, and in list context, which swallows
-everything up to EOF, an obvious disaster for this particular
-use.  I couldn't find how it is defined to behave in a void
-context.  By experiments I know this returns only one line, but
-it leaves me feeling somewhat uneasy.
+# 2nd commit modifies only one file:
+$ echo bar > a && git-commit -a -m 2
 
-Also it has a style inconsistency between "if(expression) {" and
-"if(expression){", and I do not like either of them, but fixing
-that should be left to a separate patch.
+# create the copy:
+$ cd ..
+$ cp -al orig copy
+$ cd copy
 
-I'll apply this unless Martin or other people on the list who
-have stake in cvsimport objects.
+# working files are hard-linked:
+$ ls -l
+total 8
+-rw-r--r-- 2 jsixt users 4 Nov 16 19:24 a
+-rw-r--r-- 2 jsixt users 4 Nov 16 19:23 b
+
+# nuke a commit:
+$ git-reset --hard HEAD^
+$ ls -l
+total 8
+-rw-r--r-- 1 jsixt users 4 Nov 16 19:24 a
+-rw-r--r-- 1 jsixt users 4 Nov 16 19:24 b
+
+I'd have expected that the hard-link of b remained and only a's link were
+broken. Does it mean that git-reset writes every single file also for large
+trees like the kernel? I cannot believe this. Can someone scratch the
+tomatoes off my eyes please?
+
+-- Hannes
+
