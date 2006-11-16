@@ -1,95 +1,140 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] index-pack usage of mmap() is unacceptably slower on many OSes other than Linux
-Date: Wed, 20 Dec 2006 12:17:20 -0800
-Message-ID: <7vbqlye2zz.fsf@assigned-by-dhcp.cox.net>
-References: <86y7p57y05.fsf@blue.stonehenge.com>
-	<Pine.LNX.4.64.0612181251020.3479@woody.osdl.org>
-	<86r6uw9azn.fsf@blue.stonehenge.com>
-	<Pine.LNX.4.64.0612181625140.18171@xanadu.home>
-	<86hcvs984c.fsf@blue.stonehenge.com>
-	<Pine.LNX.4.64.0612181414200.3479@woody.osdl.org>
-	<8664c896xv.fsf@blue.stonehenge.com>
-	<Pine.LNX.4.64.0612181511260.3479@woody.osdl.org>
-	<Pine.LNX.4.64.0612181906450.18171@xanadu.home>
-	<20061219051108.GA29405@thunk.org>
-	<Pine.LNX.4.64.0612182234260.3479@woody.osdl.org>
-	<Pine.LNX.4.63.0612190930460.19693@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7v1wmwtfmk.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0612191027270.18171@xanadu.home>
-	<7vk60npv7x.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0612191409500.18171@xanadu.home>
-	<Pine.LNX.4.64.0612191148270.3483@woody.osdl.org>
-	<4588453A.3060904@garzik.org>
-	<7vzm9jo1df.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0612191640010.6766@woody.osdl.org>
-	<7v7iwnnzed.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: Cleaning up git user-interface warts
+Date: Thu, 16 Nov 2006 03:11:59 -0800
+Message-ID: <7v7ixvbq80.fsf@assigned-by-dhcp.cox.net>
+References: <87k61yt1x2.wl%cworth@cworth.org> <455A1137.8030301@shadowen.org>
+	<87hcx1u934.wl%cworth@cworth.org>
+	<Pine.LNX.4.64.0611141518590.2591@xanadu.home>
+	<87bqn9u43s.wl%cworth@cworth.org> <ejdcg5$4fl$1@sea.gmane.org>
+	<Pine.LNX.4.64.0611141633430.2591@xanadu.home>
+	<7vbqn9y6w6.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0611142007010.2591@xanadu.home>
+	<7v3b8ltq7r.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0611142306090.2591@xanadu.home>
+	<Pine.LNX.4.64.0611150950170.3349@woody.osdl.org>
+	<455BBCE9.4050503@xs4all.nl>
+	<Pine.LNX.4.64.0611151908130.3349@woody.osdl.org>
+	<455C412D.1030408@xs4all.nl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 20 Dec 2006 20:17:27 +0000 (UTC)
-Cc: Linus Torvalds <torvalds@osdl.org>, Nicolas Pitre <nico@cam.org>,
-	"Randal L. Schwartz" <merlyn@stonehenge.com>, git@vger.kernel.org
+NNTP-Posting-Date: Thu, 16 Nov 2006 11:12:16 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <7v7iwnnzed.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Tue, 19 Dec 2006 17:12:42 -0800")
+In-Reply-To: <455C412D.1030408@xs4all.nl> (Han-Wen Nienhuys's message of "Thu,
+	16 Nov 2006 11:45:01 +0100")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34958>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gx7sT-0001qs-JH for gcvg-git@gmane.org; Wed, 20 Dec
- 2006 21:17:25 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31570>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GkfAC-00042D-FQ for gcvg-git@gmane.org; Thu, 16 Nov
+ 2006 12:12:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1030349AbWLTURX (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 20 Dec 2006
- 15:17:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030351AbWLTURW
- (ORCPT <rfc822;git-outgoing>); Wed, 20 Dec 2006 15:17:22 -0500
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:58930 "EHLO
- fed1rmmtao03.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1030349AbWLTURW (ORCPT <rfc822;git@vger.kernel.org>); Wed, 20 Dec 2006
- 15:17:22 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao03.cox.net
+ S1031157AbWKPLMC (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 16 Nov 2006
+ 06:12:02 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031160AbWKPLMB
+ (ORCPT <rfc822;git-outgoing>); Thu, 16 Nov 2006 06:12:01 -0500
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:9119 "EHLO
+ fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP id S1031157AbWKPLMA
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 16 Nov 2006 06:12:00 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao04.cox.net
  (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061220201721.YCUW29122.fed1rmmtao03.cox.net@fed1rmimpo01.cox.net>; Wed, 20
- Dec 2006 15:17:21 -0500
+ <20061116111159.LHFE7494.fed1rmmtao04.cox.net@fed1rmimpo02.cox.net>; Thu, 16
+ Nov 2006 06:11:59 -0500
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id 18Gf1W00X1kojtg0000000; Wed, 20 Dec 2006
- 15:16:40 -0500
-To: Jeff Garzik <jeff@garzik.org>
+ fed1rmimpo02.cox.net with bizsmtp id nPC51V00E1kojtg0000000; Thu, 16 Nov 2006
+ 06:12:06 -0500
+To: hanwen@xs4all.nl
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano <junkio@cox.net> writes:
+Han-Wen Nienhuys <hanwen@xs4all.nl> writes:
 
-> Linus Torvalds <torvalds@osdl.org> writes:
->
->> On Tue, 19 Dec 2006, Junio C Hamano wrote:
->>
->>> Jeff Garzik <jeff@garzik.org> writes:
->>> 
->>> > If you are going to do this, you have to audit -every- file, to make
->>> > sure git-compat-util.h is -always- the first header.
->>> 
->>> Will do.
->>
->> Well, since any cases where it isn't (and where we'd care) will  show up 
->> as just a compiler warning, I doubt we really even need to. We can fix 
->> things up as they get reported too..
->
-> True, but I've done it already, so... 
->
-> Test compile especially on non Linux boxes are appreciated (I'll
-> do one on an OpenBSD bochs tomorrow myself anyway, though).
+You claim it is _an interface_ issue but it is not.
 
-I've pushed the results out, along with the index-pack updates
-from Linus/Nico.
+> With GIT, this is what happens
+>
+> [hanwen@haring y]$ git pull ../x
+> fatal: Needed a single revision
+> Pulling into a black hole?
 
-I needed to fix the changes to git-compat-util.h a bit from the
-version I sent earlier to make OpenBSD happy (sys/types.h there
-did not expose u_int unless _BSD_SOURCE was set, and
-netinet/in.h was duplicated by mistake).
+You asked it to fetch from the neighbour repository and merge it
+into your current branch which does not exist (I presume that
+you omitted to describe what you did in directory y/ and I am
+assuming you did "mkdir y && cd y && git initdb" and nothing
+else).  You are pulling into a black hole.
+
+> [hanwen@haring y]$ git fetch ../x
+>...
+> [hanwen@haring y]$ git checkout
+
+You fetched without telling it in which tracking branch to store
+what you fetched, and as a result your HEAD is not updated, so
+your current branch still does not exist.  A failure from
+checking out nothingness is not an interface issue; expectation
+for it to work is a concept level issue.
+
+> [hanwen@haring y]$ git branch master
+> fatal: Needed a single revision
+
+You are not at any commit yet and you try to create a branch?
+
+Of course, the "right" (in some sense of the word) thing is to
+do "git clone x y" in the parent directory, without creating y
+upfront.
+
+If you have an empty y to begin with, then you can do this:
+
+	$ git fetch ../x :origin
+        $ git reset --hard origin
+
+which would mirror a part of what "git clone" would have done
+for you.  It copies from the other repository, stores the tip in
+your tracking branch called "origin", and make your HEAD to be
+the same as origin.  After these two commands, you would have
+two branches, origin and master, and you will be on master.
+
+You can name 'origin' any way you want.  You might want to name
+it 'x' to make it clear (to yourself) that it is used to track
+what will happen in the neighboring repository 'x'.  Also, you
+would most likely be fetching and merging from the same ../x
+from now on, so it might be handy to set up the remotes for it:
+
+	$ cat >.git/remotes/x <<EOF
+        URL: ../x
+        Pull: master:origin
+	EOF
+
+Then subsequent work of yours would be done on 'master' branch
+(you have only two branches, and origin is a tracking branch so
+you will never make commits on it, which means the above is a
+logical consequence), and from time to time you would sync with
+whoever is working in ../x
+
+	$ git pull x
+
+Here, 'x' is just a shorthand which looks up the URL: and Pull: line
+through .git/remotes/x.  If your .git/remotes/ file was named origin
+(not x), you could even have written:
+
+	$ git pull
+
+because pull defaults to 'origin' (without any other configuration).
+
+>> Let's face it, you could just alias "merge" to "pull", and it
+>> wouldn't really change ANYTHING.
+>
+> I don't want ANYTHING to really change, I just want a sane interface to it.
+
+I agree that you do not want to change anything.  You just
+needed a bit of handholding, because you deviated from the
+cookbook usage, to correct your course.
+
+
+
