@@ -4,79 +4,94 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: git-fetching from a big repository is slow
-Date: Thu, 14 Dec 2006 16:06:05 +0100
-Message-ID: <4581685D.1070407@op5.se>
-References: <200612141340.43925.andyparkins@gmail.com> <4581573E.40803@op5.se> <Pine.LNX.4.63.0612141513130.3635@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Han-Wen Nienhuys <hanwen@xs4all.nl>
+Subject: Re: git tag: don't complain of empty messages
+Date: Thu, 16 Nov 2006 02:27:37 +0100
+Message-ID: <455BBE89.6070005@xs4all.nl>
+References: <ejfc1t$6am$1@sea.gmane.org> <7v64dgo9gj.fsf@assigned-by-dhcp.cox.net> <455BAD80.1080108@xs4all.nl> <ejgbrq$o5u$1@sea.gmane.org>
+Reply-To: hanwen@xs4all.nl
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 14 Dec 2006 15:06:39 +0000 (UTC)
-Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
+NNTP-Posting-Date: Thu, 16 Nov 2006 01:28:00 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
-In-Reply-To: <Pine.LNX.4.63.0612141513130.3635@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 48
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: muurbloem.xs4all.nl
+User-Agent: Thunderbird 1.5.0.8 (X11/20061107)
+In-Reply-To: <ejgbrq$o5u$1@sea.gmane.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34344>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GusAL-0001iZ-G0 for gcvg-git@gmane.org; Thu, 14 Dec
- 2006 16:06:33 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31538>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GkW2g-0003JR-4P for gcvg-git@gmane.org; Thu, 16 Nov
+ 2006 02:27:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932786AbWLNPGI (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
- 10:06:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932785AbWLNPGI
- (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 10:06:08 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:35118 "EHLO
- smtp-gw1.op5.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
- S932774AbWLNPGH (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006
- 10:06:07 -0500
-Received: from [192.168.1.20] (unknown [213.88.215.14]) by smtp-gw1.op5.se
- (Postfix) with ESMTP id 6EC006BCBC; Thu, 14 Dec 2006 16:06:05 +0100 (CET)
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+ S1031036AbWKPB1q (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
+ 20:27:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031038AbWKPB1q
+ (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 20:27:46 -0500
+Received: from main.gmane.org ([80.91.229.2]:28331 "EHLO ciao.gmane.org") by
+ vger.kernel.org with ESMTP id S1031036AbWKPB1q (ORCPT
+ <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 20:27:46 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1GkW2Y-0003IC-Ds for git@vger.kernel.org; Thu, 16 Nov 2006 02:27:42 +0100
+Received: from muurbloem.xs4all.nl ([213.84.26.127]) by main.gmane.org with
+ esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>;
+ Thu, 16 Nov 2006 02:27:42 +0100
+Received: from hanwen by muurbloem.xs4all.nl with local (Gmexim 0.1 (Debian))
+ id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Thu, 16 Nov 2006 02:27:42
+ +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Johannes Schindelin wrote:
-> Hi,
+Jakub Narebski escreveu:
+> Han-Wen Nienhuys wrote:
 > 
-> On Thu, 14 Dec 2006, Andreas Ericsson wrote:
+>> Junio C Hamano escreveu:
+>>> I do not have a strong objection against allowing tags without
+>>> messages, but at the same time I do not see a compelling reason
+>>> to allow them either.  Care to explain what workflow is helped
+>>> by an empty tag?
+>> the tagname usually is enough of a description, but I want the tags to 
+>> end up in the object DB, eg.:
+>>
+>>    git tag release/2.10.0 HEAD
+>>
+>> now I have to use
+>>
+>>    git tag -m "this really sucks"  release/2.10.0 HEAD
 > 
->> Andy Parkins wrote:
->>> Hello,
->>>
->>> I've got a big repository.  I've got two computers.  One has the repository
->>> up-to-date (164M after repack); one is behind (30M ish).
->>>
->>> I used git-fetch to try and update; and the sync took HOURS.  I zipped the
->>> .git directory and transferred that and it took about 15 minutes to
->>> transfer.
->>>
->>> Am I doing something wrong?  The git-fetch was done with a git+ssh:// URL.
->>> The zip transfer with scp (so ssh shouldn't be a factor).
->>>
->> This seems to happen if your repository consists of many large binary files,
->> especially many large binary files of several versions that do not deltify
->> well against each other. Perhaps it's worth adding gzip compression detecion
->> to git? I imagine more people than me are tracking gzipped/bzip2'ed content
->> that pretty much never deltifies well against anything else.
+> Why not
 > 
-> Or we add something like the heuristics we discovered in another thread, 
-> where rename detection (which is related to delta candidate searching) is 
-> not started if the sizes differ drastically.
+>    git tag -m "release 2.10.0" release/2.10.0 HEAD
 > 
+> This way you would know what tag points to even if you loose it's
+> reference...
 
-It wouldn't work for this particular case though. In our distribution 
-repository we have ~300 bzip2 compressed tarballs with an average size 
-of 3MiB. 240 of those are between 2.5 and 4 MiB, so they don't 
-drastically differ, but neither do they delta well.
+that would double, given that the tag name is already in the tag object. 
+Currently, I have
 
-One option would be to add some sort of config option to skip attempting 
-deltas of files with a certain suffix. That way we could just tell it to 
-ignore *.gz,*.tgz,*.bz2 and everything would work just as it does today, 
-but a lot faster.
+**
+[lilydev@haring gub]$ cat .git/refs/tags/gubrelease-2.9.29-2
+1ac5c78609a9f79787825b62c9576542eedce795
+
+
+[lilydev@haring gub]$ git cat-file tag 
+1ac5c78609a9f79787825b62c9576542eedce795
+
+
+object b75db784e3d6a9e1d2cff3f77036aaa88598b53c
+type commit
+tag gub-2.9.29-2
+tagger Han-Wen Nienhuys <lilydev@haring.localdomain> 1162921716 +0100
+
+build and upload
+**
+
+'build and upload' is a polite way of saying 'this really sucks'.
 
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
+  Han-Wen Nienhuys - hanwen@xs4all.nl - http://www.xs4all.nl/~hanwen
