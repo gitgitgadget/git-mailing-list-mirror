@@ -1,85 +1,95 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: Easy shell question: how to make a script killing all his childs when killed?
-Date: Sun, 10 Dec 2006 00:06:34 +0100
-Message-ID: <e5bfff550612091506g41e40e87n6356b8ddd5e16a5d@mail.gmail.com>
-References: <e5bfff550612090716p215167b9r2277b09c09b18894@mail.gmail.com>
-	 <20061209173703.GA12373@steel.home>
-	 <e5bfff550612090951l43a83a00o7ea2e244ca562c77@mail.gmail.com>
-	 <20061209213937.GB12373@steel.home>
+From: Richard CURNOW <richard.curnow@st.com>
+Subject: Re: Cleaning up git user-interface warts
+Date: Thu, 16 Nov 2006 07:51:53 +0000
+Message-ID: <20061116075153.GA29363@tigerwolf.bri.st.com>
+References: <Pine.LNX.4.64.0611151111250.3349@woody.osdl.org> <f2b55d220611151139v66fba16ax97ce6b9966b33ce7@mail.gmail.com> <Pine.LNX.4.64.0611151203450.3349@woody.osdl.org> <Pine.LNX.4.64.0611151516360.2591@xanadu.home> <Pine.LNX.4.64.0611151226590.3349@woody.osdl.org> <87velgs9hx.wl%cworth@cworth.org> <Pine.LNX.4.64.0611151339500.3349@woody.osdl.org> <87psbos4pb.wl%cworth@cworth.org> <20061115180722.83ff8990.seanlkml@sympatico.ca> <20061115231542.GB25270@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sat, 9 Dec 2006 23:06:56 +0000 (UTC)
-Cc: "Git Mailing List" <git@vger.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Thu, 16 Nov 2006 07:53:15 +0000 (UTC)
+Cc: Shawn Pearce <spearce@spearce.org>, Sean <seanlkml@sympatico.ca>,
+	Carl Worth <cworth@cworth.org>,
+	Linus Torvalds <torvalds@osdl.org>,
+	Nicolas Pitre <nico@cam.org>,
+	"Michael K. Edwards" <medwards.linux@gmail.com>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=WOD5uC0GEMcSlo34W4eqnpZS9qu05s695DJuWI3dYRd6DC/LhMlZA01w70IPD7N3wgbstriL/FzcEPdnNXVTyGueUAAbd2Bkr3D8uMAc8cytSt5soeAgpyWpFykBur2HmpGAU9OWyS/JwrAayqVegmBfZgZdNGvYGRNsIfUrpZo=
-In-Reply-To: <20061209213937.GB12373@steel.home>
 Content-Disposition: inline
+In-Reply-To: <20061115231542.GB25270@spearce.org>
+User-Agent: mutt-ng/devel-r804 (Linux)
+X-O-Spoofed: Not Scanned
+X-O-General-Status: No
+X-O-Spam1-Status: Not Scanned
+X-O-Spam2-Status: Not Scanned
+X-O-URL-Status: Not Scanned
+X-O-Virus1-Status: No
+X-O-Virus2-Status: Not Scanned
+X-O-Virus3-Status: No
+X-O-Virus4-Status: No
+X-O-Virus5-Status: Not Scanned
+X-O-Image-Status: Not Scanned
+X-O-Attach-Status: Not Scanned
+X-SpheriQ-Ver: 4.2.04
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33845>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GtBHP-0005Uw-8I for gcvg-git@gmane.org; Sun, 10 Dec
- 2006 00:06:51 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31563>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gkc3b-0006wb-Ad for gcvg-git@gmane.org; Thu, 16 Nov
+ 2006 08:53:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1759712AbWLIXGg (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 9 Dec 2006
- 18:06:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759714AbWLIXGg
- (ORCPT <rfc822;git-outgoing>); Sat, 9 Dec 2006 18:06:36 -0500
-Received: from py-out-1112.google.com ([64.233.166.182]:43267 "EHLO
- py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1759712AbWLIXGf (ORCPT <rfc822;git@vger.kernel.org>); Sat, 9 Dec
- 2006 18:06:35 -0500
-Received: by py-out-1112.google.com with SMTP id a29so643239pyi for
- <git@vger.kernel.org>; Sat, 09 Dec 2006 15:06:35 -0800 (PST)
-Received: by 10.35.76.9 with SMTP id d9mr8696712pyl.1165705595032; Sat, 09
- Dec 2006 15:06:35 -0800 (PST)
-Received: by 10.35.93.11 with HTTP; Sat, 9 Dec 2006 15:06:34 -0800 (PST)
-To: "Alex Riesen" <raa.lkml@gmail.com>
+ S1161966AbWKPHw5 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 16 Nov 2006
+ 02:52:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161965AbWKPHw5
+ (ORCPT <rfc822;git-outgoing>); Thu, 16 Nov 2006 02:52:57 -0500
+Received: from lon-del-02.spheriq.net ([195.46.50.98]:21457 "EHLO
+ lon-del-02.spheriq.net") by vger.kernel.org with ESMTP id S1161966AbWKPHw4
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 16 Nov 2006 02:52:56 -0500
+Received: from lon-out-01.spheriq.net ([195.46.50.129]) by
+ lon-del-02.spheriq.net with ESMTP id kAG7qrWV023433 for
+ <git@vger.kernel.org>; Thu, 16 Nov 2006 07:52:54 GMT
+Received: from lon-cus-02.spheriq.net (lon-cus-02.spheriq.net [195.46.50.38])
+ by lon-out-01.spheriq.net with ESMTP id kAG7qoUT019696 for
+ <git@vger.kernel.org>; Thu, 16 Nov 2006 07:52:53 GMT
+Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35]) by
+ lon-cus-02.spheriq.net with ESMTP id kAG7qmp8030464 (version=TLSv1/SSLv3
+ cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=OK); Thu, 16 Nov 2006 07:52:50
+ GMT
+Received: from zeta.dmz-eu.st.com (ns2.st.com [164.129.230.9]) by
+ beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id 1CCDCDA52; Thu, 16 Nov
+ 2006 07:52:04 +0000 (GMT)
+Received: from mail1.bri.st.com (mail1.bri.st.com [164.129.8.218]) by
+ zeta.dmz-eu.st.com (STMicroelectronics) with ESMTP id 33E8A4724D; Thu, 16 Nov
+ 2006 07:52:02 +0000 (GMT)
+Received: from tigerwolf (tigerwolf.bri.st.com [164.129.15.46]) by
+ mail1.bri.st.com (MOS 3.7.5a-GA) with ESMTP id CIF54211 (AUTH curnowr); Thu,
+ 16 Nov 2006 07:52:00 GMT
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On 12/9/06, Alex Riesen <fork0@t-online.de> wrote:
->
-> Why do you need to save it in temporary file at all? Why don't you
-> read the output like gitk does?  You can take a look at popen(3). It's
-> known to be portable among operating systems and libc's.  Or, BTW, why
-> don't you just read qprocess.h, use processIdentifier()/pid(),
-> read*()-methods and the like?  (though, looking at the QProcess in
-> qt3, I wouldn't really blame you)
->
+* Shawn Pearce <spearce@spearce.org> [2006-11-15]:
+> 
+> So what about making git-merge take a -m "msg" argument to supply
+> the commit message, in which case it does the current behavior
+> (and thus git-pull needs to change to supply -m); and then make
+> git-merge without any -m parameter invoke "git pull . $@" ?
 
-Well, I _used_ QProcess interface until last week. It's socket based
-and it's quite fast (much more then gitk BTW), but due to some
-internal buffering not so fast as reading from a file (in my last post
-regarding git-rev-list access there are some performance numbers to
-document this). It seems that socket/pipe based IPC is not as fast as
-file write/read. Of course we are talking of OS cached files, no disk
-access must be involved to keep the speed.
+Sounds good to me.
 
-Probably someone more versed in IPC and OS internals could comment on
-this, I just base my arguments on experimental testing of various IPC
-systems without going deep in the reasons why the number are like
-this, also because I don't have the necessary knowledge.
+When I'm merging in my own projects, I currently always use merge
+(possibly preceded by fetch) rather than pull.  Why?  Because I don't
+want my history full of commit messages like
 
-But the fact is that with temporary (in memory) data exchange file the
-load time has been reduced by 40% against socket based QProcess
-interface.
+Merge branch "trial_hack" from "../scratch_dir_with_silly_name"
 
-Regarding gitk we are at least one order of magnitude faster both with
-QProcess and, more, with temporary files, so it's not a useful
-reference in this case.
+In contrast to Linus's case of wanting to record where the remote merge
+came from, I expressly don't want to record that - I want the merge
+commit to describe conceptually what was being merged with what.
 
-  Marco
-
-P.S: I didn't experiment with popen(). Thanks for the hint, I will
+OK, I could use probably use pull with --no-commit, but I've already
+trained my fingers to type out the merge syntax.  They'd be happier with
+'git merge -m "Merge feature foo with fixes for bar" bar" though.
