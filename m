@@ -1,108 +1,84 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: [RFC] Submodules in GIT
-Date: Sat, 2 Dec 2006 21:40:12 +0100
-Message-ID: <20061202204012.GU18810@admingilde.org>
-References: <20061130170625.GH18810@admingilde.org> <200612012154.33834.andyparkins@gmail.com> <20061201220821.GL18810@admingilde.org> <200612021004.22236.andyparkins@gmail.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [ANNOUNCE] qgit-1.5.3
+Date: Thu, 16 Nov 2006 01:42:17 +0100
+Message-ID: <455BB3E9.4000809@op5.se>
+References: <e5bfff550611110006p44494ed4h2979232bfc8e957c@mail.gmail.com>	 <45585749.5030200@op5.se> <e5bfff550611150723p691fc480m874cce9ad4d64476@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="XbOGSHoyTtRSevGh"
-NNTP-Posting-Date: Sat, 2 Dec 2006 20:40:26 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 16 Nov 2006 00:42:30 +0000 (UTC)
+Cc: Git Mailing List <git@vger.kernel.org>,
+	linux-kernel@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <200612021004.22236.andyparkins@gmail.com>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
+In-Reply-To: <e5bfff550611150723p691fc480m874cce9ad4d64476@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33044>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31534>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gqben-0000eV-3J for gcvg-git@gmane.org; Sat, 02 Dec
- 2006 21:40:21 +0100
+ esmtp (Exim 4.43) id 1GkVKk-0003Ai-Tq for gcvg-git@gmane.org; Thu, 16 Nov
+ 2006 01:42:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1162265AbWLBUkP (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 2 Dec 2006
- 15:40:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1162461AbWLBUkP
- (ORCPT <rfc822;git-outgoing>); Sat, 2 Dec 2006 15:40:15 -0500
-Received: from agent.admingilde.org ([213.95.21.5]:30372 "EHLO
- mail.admingilde.org") by vger.kernel.org with ESMTP id S1162265AbWLBUkN
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 2 Dec 2006 15:40:13 -0500
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1) id
- 1Gqbee-0004iF-PC; Sat, 02 Dec 2006 21:40:12 +0100
-To: Andy Parkins <andyparkins@gmail.com>
+ S1162119AbWKPAmX (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
+ 19:42:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1162123AbWKPAmX
+ (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 19:42:23 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:28618 "EHLO
+ smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1162119AbWKPAmW (ORCPT
+ <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 19:42:22 -0500
+Received: by smtp-gw1.op5.se (Postfix, from userid 588) id 699486BD52; Thu,
+ 16 Nov 2006 01:42:21 +0100 (CET)
+Received: from [192.168.1.20] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
+ by smtp-gw1.op5.se (Postfix) with ESMTP id 358AC6BD21; Thu, 16 Nov 2006
+ 01:42:18 +0100 (CET)
+To: Marco Costalba <mcostalba@gmail.com>
 Sender: git-owner@vger.kernel.org
 
+Marco Costalba wrote:
+> On 11/13/06, Andreas Ericsson <ae@op5.se> wrote:
+>> Marco Costalba wrote:
+>> >
+>> > Download tarball from http://www.sourceforge.net/projects/qgit
+>> > or directly from git public repository
+>> > git://git.kernel.org/pub/scm/qgit/qgit.git
+>> >
+>>
+>> Love the tool, but can't fetch the tag. Did you forget to
+>>
+>>         $ git push origin 1.5.3
+>>
+> 
+> I think I have pushed the new tag, indeed the gitweb interface on
+> kernel.org/git shows correctly the 1.5.3 tag (and also two new commits
+> after that).
+> 
+> I've also pulled from kernel.org/git/qgit in a test repository and got
+> the tag succesfully.
+> 
+> I'm not able to reproduce this, in any case I will push again the tags.
+> 
 
---XbOGSHoyTtRSevGh
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+That's odd. Here's my .git/remotes/origin
+---8<---8<---8<---
+URL: git://git.kernel.org/pub/scm/qgit/qgit.git
+Pull: master:origin
+---8<---8<---8<---
 
-hoi :)
+I got the tag now, by doing
 
-On Sat, Dec 02, 2006 at 10:04:20AM +0000, Andy Parkins wrote:
-> On Friday 2006, December 01 22:08, Martin Waitz wrote:
->=20
-> > > echo $SUBMODULE_HASH >
-> > > submodule/.git/refs/supermodules/commit$SUPERMODULE_HASH
-> >
-> > I guess you are aware that you have to scan _all_ trees inside _all_
-> > supermodule commits for possible references.
->=20
-> No you don't; you do it as part of the appropriate normal operations.
->=20
->  * supermodule commit - scan the current tree for "link" objects in the
->    tree.  If you find one write the reference in the submodule.
->  * adding a new submodule - if this is a new submodule there can't be any
->    references in the supermodule already.
->  * cloning a supermodule, every new commit that gets written in the=20
->    supermodule gets checked from "link" objects.
+$ git fetch --tags
 
- * removing a branch from the supermodule.
-   OK, this is an infrequent operation and it can be handled by redoing
-   everything.
+although that didn't work last time I fetched the objects (which was 
+after you had posted the announcement). Strange. This was with git 
+version 1.4.3.rc3.gb32db.
 
-I just don't like to duplicate information which is already available
-easily.  We'd need much to many special cases, just to correctly support
-reachablility analysis.
-KISS.
-
-> > So what do you do with deleted submodules?
-> > You wouldn't want them to still sit around in your working directory,
-> > but you still have to preserve them.
->=20
-> Now that is a tricky one.  Mind you, I think that problem exists for any=
-=20
-> implementation.  I haven't got a good answer for that.
-
-If you just keep it in a shared object repository you don't have any
-problems.
-
-Please note that it is not required to keep it in one physical location.
-You can still use alternates/whatever to store some objects in another
-repository, but you need to be able to access all objects from the
-supermodule.
-
---=20
-Martin Waitz
-
---XbOGSHoyTtRSevGh
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFFceSsj/Eaxd/oD7IRAl9+AJ9AeFrDFLiVUDJ8Q4HwWJHUOqNhogCePSp4
-FkvK2pM/prnQQcuU/AdSLbY=
-=3j0e
------END PGP SIGNATURE-----
-
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
