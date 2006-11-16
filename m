@@ -1,212 +1,116 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC] Submodules in GIT
-Date: Sat, 02 Dec 2006 21:16:42 +0100
-Organization: At home
-Message-ID: <eksmrf$c33$1@sea.gmane.org>
-References: <20061120215116.GA20736@admingilde.org>
+From: Han-Wen Nienhuys <hanwen@xs4all.nl>
+Subject: Re: Cleaning up git user-interface warts
+Date: Thu, 16 Nov 2006 14:03:06 +0100
+Message-ID: <455C618A.7080309@xs4all.nl>
+References: <87k61yt1x2.wl%cworth@cworth.org> <455A1137.8030301@shadowen.org>	<87hcx1u934.wl%cworth@cworth.org>	<Pine.LNX.4.64.0611141518590.2591@xanadu.home>	<87bqn9u43s.wl%cworth@cworth.org> <ejdcg5$4fl$1@sea.gmane.org>	<Pine.LNX.4.64.0611141633430.2591@xanadu.home>	<7vbqn9y6w6.fsf@assigned-by-dhcp.cox.net>	<Pine.LNX.4.64.0611142007010.2591@xanadu.home>	<7v3b8ltq7r.fsf@assigned-by-dhcp.cox.net>	<Pine.LNX.4.64.0611142306090.2591@xanadu.home>	<Pine.LNX.4.64.0611150950170.3349@woody.osdl.org>	<455BBCE9.4050503@xs4all.nl>	<Pine.LNX.4.64.0611151908130.3349@woody.osdl.org>	<455C412D.1030408@xs4all.nl> <7v7ixvbq80.fsf@assigned-by-dhcp.cox.net>
+Reply-To: hanwen@xs4all.nl
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-NNTP-Posting-Date: Sat, 2 Dec 2006 20:14:58 +0000 (UTC)
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 16 Nov 2006 13:04:04 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 162
+Original-Lines: 66
 Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+X-Gmane-NNTP-Posting-Host: muurbloem.xs4all.nl
+User-Agent: Thunderbird 1.5.0.8 (X11/20061107)
+In-Reply-To: <7v7ixvbq80.fsf@assigned-by-dhcp.cox.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33040>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31579>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GqbGC-0003nl-Iq for gcvg-git@gmane.org; Sat, 02 Dec
- 2006 21:14:56 +0100
+ esmtp (Exim 4.43) id 1GkguD-0001PM-VH for gcvg-git@gmane.org; Thu, 16 Nov
+ 2006 14:03:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1031778AbWLBUOx (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 2 Dec 2006
- 15:14:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031777AbWLBUOx
- (ORCPT <rfc822;git-outgoing>); Sat, 2 Dec 2006 15:14:53 -0500
-Received: from main.gmane.org ([80.91.229.2]:30354 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S1031762AbWLBUOw (ORCPT
- <rfc822;git@vger.kernel.org>); Sat, 2 Dec 2006 15:14:52 -0500
+ S1423998AbWKPNDr (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 16 Nov 2006
+ 08:03:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423995AbWKPNDr
+ (ORCPT <rfc822;git-outgoing>); Thu, 16 Nov 2006 08:03:47 -0500
+Received: from main.gmane.org ([80.91.229.2]:41665 "EHLO ciao.gmane.org") by
+ vger.kernel.org with ESMTP id S1423998AbWKPNDp (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 16 Nov 2006 08:03:45 -0500
 Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1GqbG3-0003lg-Cn for git@vger.kernel.org; Sat, 02 Dec 2006 21:14:47 +0100
-Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Sat, 02 Dec 2006 21:14:47 +0100
-Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Sat, 02 Dec 2006
- 21:14:47 +0100
+ 1Gkgtt-0001Kv-DP for git@vger.kernel.org; Thu, 16 Nov 2006 14:03:29 +0100
+Received: from muurbloem.xs4all.nl ([213.84.26.127]) by main.gmane.org with
+ esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>;
+ Thu, 16 Nov 2006 14:03:29 +0100
+Received: from hanwen by muurbloem.xs4all.nl with local (Gmexim 0.1 (Debian))
+ id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Thu, 16 Nov 2006 14:03:29
+ +0100
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Few thoughts on this topic. Some of those are repeating what
-was said eaelier
+Junio C Hamano escreveu:
+> You claim it is _an interface_ issue but it is not.
 
-1. Submodule (subproject) as commit-in-a-tree
+ >> I don't want ANYTHING to really change, I just want a sane interface 
+ >> to it.
+ >
+ > I agree that you do not want to change anything.  You just
+ > needed a bit of handholding, because you deviated from the
+ > cookbook usage, to correct your course.
 
-Let's try to paint a little diagram (attribution missing):
+Users (well, I do at least) start fiddling with systems to find out how 
+they work.   Reading the manual is usually done as a last resort. I 
+think this is pretty well documented in usability research.
 
-belonging to:
-/--------- supermodule -------\    /---- submodule -------\
+I'm trying to show how GIT is badly suited to this. Your response is to 
+explain to me what I should have done. That's nice, but that approach 
+doesn't scale, because you don't reach the dozens of users out there who 
+try the same, fail and give up.
 
-commit -> tree +-> blob
-  |            +-> tree -> ...
-  |            +-----------------> commit -> tree -> ...
-  v                                  |
-commit -> tree +-> ...               v
-  |            +-----------------> commit -> ...
-  v                        /         |
-commit -> tree +-> ...    /          |
-  |            +---------/           v
-  |                                commit -> ...
-  v                                  |
-commit -> tree +-> ...               v
-               +-----------------> commit
+If you really want to find out the weaknesses, you'd have to sit someone 
+new to git in front of a computer, and let him figure how to operate it, 
+while videotaping everything.
 
-Both have their independent history, but they are linked as some
-submodule versions are part of the supermodule tree.
-
-
-2. Working area for project with submodules
-
-Submodule as separate repository model
-supermodule
-+ .git/  <------------------------.
-  + HEAD                          |
-  + index                         |
-  + objects/                      |
-  + objects/info/alternates ---.  |
-+ subdir1/                     |  |
-  + sub1file                   |  ^                   
-+ submodule/                   |  |
-  + .git                       v  |
-    + HEAD                     |  |
-    + index                    |  |
-    + objects/  <--------------'  |
-    +[objects/info/borrowers] ----'
-  + subsubdir/
-    + submfile
-+ file
-
-Embedded submodule model
-supermodule
-+ .git/
-  + HEAD
-  + index
-  + objects/
-  +[refs/submodules/submodule/HEAD]
-  +[refs/submodules/submodule/index]
-+ subdir1/
-  + sub1file
-+ submodule/
-  + subsubdir/
-    + submfile
-+ file
-
-The [fictional] borrowers file is for git-prune and friends (also
-git-repack with -d option) to not remove objects needed by supermodule
-(when for example submodule history got rewritten). But you can do
-without it, as long as you don't rewind or don't prune in
-supermodule.
-
-The problem with submodule as separate git repository is that if you
-move submodule (subproject) somewhere else in the repository (or just
-rename it), you have to update alternates file... and this happens not
-only on move itself, but also on checkout and reset. But that can be
-managed by having in alternates all possible places the submodule ends
-into. I don't know if it is truly a problem.
-
-Alternate solution would be to have submodule objects [also] in the
-main (superproject) object database (for example fetched from
-submodule object repository on supermodule commit with changing
-submodule).
-
-Perhaps instead of objects/info/alternates we should use
-objects/info/modules, or even modules file (as top .git dir).
+Writing a manual for newbies is also an effective (and simpler and 
+cheaper) approach of figuring out what needs to be changed.
 
 
-The problem with embedded submodule model is ensuring that changes in
-submodule go to submodule (using submodule refs; at least HEAD and
-submodule index). And there are troubles with treating submodule
-separately, for example cloning submodule only, or fetching from
-submodule only.
+
+As another example:  annoyances regarding program invocation
+
+  - option handling: -x -f -z != -xfz , "--max-count 1" doesn't work, 
+but needs an '='
+
+  - git --help lists an unordered set, which is too long scan quickly. 
+I'd expect that list to either contain everything or the minimum set for 
+daily use. I.e. the set introduced in a first tutorial.  Why are merge, 
+prune, verify-tag there?
+
+Try "bzr help" for comparison.
+
+  - --pretty option with wholly uninformative options full, medium, 
+short, raw.  It's not even documented what each option does.
 
 
-3. Output of git-ls-tree and git-ls-files (git-ls-index ;-) for
-project with submodules.
-
-$ git ls-tree HEAD
-040000 tree 959dd5d97e665998eb26c764d3a889ae7903d9c2    subdir1
-140000 subm ccddf1d4b0cf7fd3a699d8b33cf5bc4c5c4435b7    submodule
-100644 blob a57a33b81ac6c9cb5ec0c833edc21bd66428d976    file
-
-$ git ls-tree -r -t HEAD
-040000 tree 959dd5d97e665998eb26c764d3a889ae7903d9c2    subdir1
-100644 blob 70d8b9838a7333bc5a1edb93cf0e9abdbcf146cc    subdir1/sub1file
-140000 subm ccddf1d4b0cf7fd3a699d8b33cf5bc4c5c4435b7    submodule
-040000 tree 959dd5d97e665998eb26c764d3a889ae7903d9c2    submodule/subsubdir
-100755 blob 6579f06b05c91f00f4f45015894f2bfab1076bf6    submodule/subsubdir/submfile
-100644 blob a57a33b81ac6c9cb5ec0c833edc21bd66428d976    file
-
-$ git ls-files --stages
-100644 70d8b9838a7333bc5a1edb93cf0e9abdbcf146cc 0   subdir1/sub1file
-140000 ccddf1d4b0cf7fd3a699d8b33cf5bc4c5c4435b7 0   submodule
-100644 a57a33b81ac6c9cb5ec0c833edc21bd66428d976 0   file
+I can go on with listing idiosyncrasies, but my point is not to get help 
+from you, but rather to show how git can be improved.
 
 
-4. Workflow(s) for project with submodules
+>> With GIT, this is what happens
+>>
+>> [hanwen@haring y]$ git pull ../x
+>> fatal: Needed a single revision
+>> Pulling into a black hole?
+> 
+> You asked it to fetch from the neighbour repository and merge it
+> into your current branch which does not exist (I presume that
+> you omitted to describe what you did in directory y/ and I am
+> assuming you did "mkdir y && cd y && git initdb" and nothing
+> else).  You are pulling into a black hole.
 
-$ cd submodule
-submodule$ edit subsubdir/submfile
-submodule$ git update-index subsubdir/submfile  # this updates submodule index
-submodule$ git commit -m "Submodule change"     # this changes submodule HEAD
-submodule$ cd ..
-$ git update-index submodule                    # this updates index 
-                                                  to submodule HEAD version
-$ git commit -m "Change in submodule"           # this updates HEAD
-
-Of course as usual you should be able to do "git commit -a" to skip
-"git update-index". One has to remember that "git update-index
-submodule" and "git commit submodule" uses HEAD version of submodule,
-not the working area version.
-
-There was an idea to update superproject index not to HEAD version
-but to some specified branch version.
-
-
-5. Extended sha1 syntax for submodules
-
-For [almost] all commands the commit-in-tree should
-be viewed as tree-ish, for example in HEAD:submodule/subsubdir (is a
-tree), or HEAD:submodule/subsubdir/submfile (is a blob).
-
-Currently a suffix ':' followed by a path names the blob or tree (or
-commit) at the given path in the tree-ish object named by the part
-before the colon. You cannot currently use it recirsively, i.e. use
-<tree-ish>:<path> to refer to tree (or commit), and use ':' after
-that, e.g. <tree-ish>:<path>:<subpath>... well, currently this has not
-much sense, as you can (and have to) use '/' as a separator.
-
-There was proposal to use '//' as a way to force commit object in the
-tree to be treated as commit-ish, not as a tree, so you can apply all
-the extended sha1 machinery suitable for commits like ^, ^n, ~n and
-also probably ^@, but perhaps not @{n}. Then making ':' resursive
-would be useful, for example:
-
-  HEAD^:submodule//~2:subsubdir/submfile
-
+as you remark in the other reply, there is IMO no reason for not having 
+an empty 'master' branch. If master + HEAD gets created on the first 
+commit, it might as well be created on the init-db.
 
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
-
+  Han-Wen Nienhuys - hanwen@xs4all.nl - http://www.xs4all.nl/~hanwen
