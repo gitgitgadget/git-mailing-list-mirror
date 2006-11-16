@@ -1,162 +1,153 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: bug: git-sh-setup should not be in $PATH
-Date: Wed, 6 Dec 2006 15:51:51 +0100
-Message-ID: <200612061551.51603.jnareb@gmail.com>
-References: <el6c6o$oa7$1@sea.gmane.org> <el6eh6$vg7$2@sea.gmane.org> <4576D0CB.7090408@xs4all.nl>
+From: Han-Wen Nienhuys <hanwen@xs4all.nl>
+Subject: Re: Cleaning up git user-interface warts
+Date: Thu, 16 Nov 2006 11:45:01 +0100
+Message-ID: <455C412D.1030408@xs4all.nl>
+References: <87k61yt1x2.wl%cworth@cworth.org> <455A1137.8030301@shadowen.org> <87hcx1u934.wl%cworth@cworth.org> <Pine.LNX.4.64.0611141518590.2591@xanadu.home> <87bqn9u43s.wl%cworth@cworth.org> <ejdcg5$4fl$1@sea.gmane.org> <Pine.LNX.4.64.0611141633430.2591@xanadu.home> <7vbqn9y6w6.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611142007010.2591@xanadu.home> <7v3b8ltq7r.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611142306090.2591@xanadu.home> <Pine.LNX.4.64.0611150950170.3349@woody.osdl.org> <455BBCE9.4050503@xs4all.nl> <Pine.LNX.4.64.0611151908130.3349@woody.osdl.org>
+Reply-To: hanwen@xs4all.nl
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 6 Dec 2006 14:50:13 +0000 (UTC)
-Cc: git@vger.kernel.org
+NNTP-Posting-Date: Thu, 16 Nov 2006 10:45:59 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=gdFhEW5EvHJnxjhCTG7L5kqHZ+vXDa+7lqsodKetGJ0yXvx3YNZnNcE3xS2q2xkMvkHJrUKGtZADUrem+ZbGmzrvzW7tq25ezqg6+UK3UJBGLqu0OSgkrUq//XQ2S0Yhy07ld2vxJ7b7lap7jH5x71dI5qaWbrJ888KHUCJBxRg=
-User-Agent: KMail/1.9.3
-In-Reply-To: <4576D0CB.7090408@xs4all.nl>
-Content-Disposition: inline
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 103
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: muurbloem.xs4all.nl
+User-Agent: Thunderbird 1.5.0.8 (X11/20061107)
+In-Reply-To: <Pine.LNX.4.64.0611151908130.3349@woody.osdl.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33462>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gry65-00053l-MH for gcvg-git@gmane.org; Wed, 06 Dec
- 2006 15:50:10 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31568>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gkeka-00070l-RM for gcvg-git@gmane.org; Thu, 16 Nov
+ 2006 11:45:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1760664AbWLFOts (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
- 09:49:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760669AbWLFOts
- (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 09:49:48 -0500
-Received: from ug-out-1314.google.com ([66.249.92.168]:42093 "EHLO
- ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1760664AbWLFOtr (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec
- 2006 09:49:47 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so161497uga for
- <git@vger.kernel.org>; Wed, 06 Dec 2006 06:49:45 -0800 (PST)
-Received: by 10.67.97.18 with SMTP id z18mr900074ugl.1165416585689; Wed, 06
- Dec 2006 06:49:45 -0800 (PST)
-Received: from host-81-190-24-209.torun.mm.pl ( [81.190.24.209]) by
- mx.google.com with ESMTP id m1sm30270559ugc.2006.12.06.06.49.44; Wed, 06 Dec
- 2006 06:49:45 -0800 (PST)
-To: Han-Wen Nienhuys <hanwen@xs4all.nl>
+ S1161980AbWKPKpY (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 16 Nov 2006
+ 05:45:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161991AbWKPKpY
+ (ORCPT <rfc822;git-outgoing>); Thu, 16 Nov 2006 05:45:24 -0500
+Received: from main.gmane.org ([80.91.229.2]:60891 "EHLO ciao.gmane.org") by
+ vger.kernel.org with ESMTP id S1161980AbWKPKpX (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 16 Nov 2006 05:45:23 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1Gkek5-0006v1-6B for git@vger.kernel.org; Thu, 16 Nov 2006 11:45:13 +0100
+Received: from muurbloem.xs4all.nl ([213.84.26.127]) by main.gmane.org with
+ esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>;
+ Thu, 16 Nov 2006 11:45:13 +0100
+Received: from hanwen by muurbloem.xs4all.nl with local (Gmexim 0.1 (Debian))
+ id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Thu, 16 Nov 2006 11:45:13
+ +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Han-Wen Nienhuys wrote::
-> Jakub Narebski escreveu:
->> Han-Wen Nienhuys wrote:
->> 
->>> Subject: [PATCH] Install git-sh-setup.sh into $(prefix)/share/git-core. Call with explicit path.
->> 
->> I like it... but could you check if you don't need to change
->> config.mak.in accordingly for ./configure script to generate proper
->> config.mak.autogen?
+Linus Torvalds escreveu:
+>>>  - git itself has now done it that way for the last 18 months, and the
+>>> fact is, the people _complaining_ are a small subset of the people who
+>>> actually use git on a daily basis and don't complain.
+>>
+>> that's not a good argument; the set of git users is a small subset of those
+>> that looked at git, and dismissed it because they couldn't wrap their heads
+>> around it. 
 > 
-> I couldn't see anything, but while I was looking at it, I also added
-> support for non-srcdir builds.
+> And I've said this again, and I'll say it once more: that has basically 
+> _nothing_ to do with whether you spell "pull" as "pull" or "merge".
+> 
+> The reason people have trouble wrapping their heads around git is because 
+> they have been braindamaged by CVS and SVN, and just don't understand the 
+> fairly fundamental new concepts and workflow.
 
-[...]
-> From 7bbd698891d9102fa26ae53848c9812f6d1b665e Mon Sep 17 00:00:00 2001
-> From: Han-Wen Nienhuys <hanwen@lilypond.org>
-> Date: Wed, 6 Dec 2006 15:14:08 +0100
-> Subject: [PATCH] Allow non-srcdir builds using cd $builddir && $srcdir/configure
+ > I claim that those "annoying little issues" are totally made up by
+ > people
+ > who had trouble wrapping their minds about git, and then make up
+ > reasons
+ > that have nothing to do with reality for why that might be so.
 
-Please add some longer commit message.
+Let me put this more personally: I continue to be bitten by stupid 
+naming issues, and the myriad of little mostly non-orthogonal commands.
+My head is doing just fine otherwise, and has no problems wrapping it 
+around the core of GIT.  I've also used Darcs for almost a year. Darcs, 
+which is much less overwhelming.
 
-> Signed-off-by: Han-Wen Nienhuys <hanwen@xs4all.nl>
-> ---
->  Makefile            |   19 +++++++++++--------
->  config.mak.in       |    5 +----
->  configure.ac        |   31 ++++++++++++++++++++++++++++++-
->  generate-cmdlist.sh |    2 +-
->  perl/Makefile       |    2 +-
->  5 files changed, 44 insertions(+), 15 deletions(-)
-[...]
-> diff --git a/config.mak.in b/config.mak.in
-> index 9a57840..902a392 100644
-> --- a/config.mak.in
-> +++ b/config.mak.in
-[...]
-> @@ -10,9 +10,6 @@ TAR = @TAR@
->  prefix = @prefix@
->  exec_prefix = @exec_prefix@
->  bindir = @bindir@
-> -#gitexecdir = @libexecdir@/git-core/
-> -datarootdir = @datarootdir@
-> -template_dir = @datadir@/git-core/templates/
->  
->  mandir=@mandir@
+This is not about CVS or SVN, so don't put them up as a strawman.
+If you want to argue that my brain is warped, use other distributed VCs 
+as an example.
 
-Why have you removed setting datarootdir and template_dir? I would
-have thought that you would rather change it to
+The following
 
-  #gitexecdir = @libexecdir@/git-core/
-  datarootdir = @datarootdir@
-  GIT_datadir = @datadir@/git-core/
-  template_dir= @datadir@/git-core/templates/
-  
-in config.mak.in
+   mkdir x y
+   cd x
+   hg init
+   echo hoi > bla
+   hg add
+   hg commit -m 'yes, I am also too stupid to refuse explicit empty 
+commit messages'
+   cd ../y
+   hg init
+   hg pull ../x
 
-I have been told that setting 'datarootdir' is required to avoid
-warnings with new versions of autoconf.
+pretty much works the same in Darcs, bzr and mercurial.
 
-> diff --git a/configure.ac b/configure.ac
-> index 34e3478..ccf9374 100644
-> --- a/configure.ac
-> +++ b/configure.ac
-> @@ -5,11 +5,13 @@ AC_PREREQ(2.59)
->  AC_INIT([git], [@@GIT_VERSION@@], [git@vger.kernel.org])
->  
->  AC_CONFIG_SRCDIR([git.c])
-> -
-> +srcdir=`cd $srcdir && pwd`
->  config_file=config.mak.autogen
->  config_append=config.mak.append
+With GIT, this is what happens
 
-AC_CONFIG_SRCDIR should set 'srcdir' correctly.
+[hanwen@haring y]$ git pull ../x
+fatal: Needed a single revision
+Pulling into a black hole?
 
-> @@ -330,10 +332,37 @@ GIT_PARSE_WITH(iconv))
-[...]
-> +## generate subdirectories and sub Makefiles. 
-> +for d in `cd $srcdir &&  find . -type d -print | grep -v '\.git'` ;
-> +do
-> +  if test ! -d  $d ; then
-> +    echo creating $d 
-> +    mkdir $d
-> +  fi
-> +  
-> +  if test -f $srcdir/$d/Makefile ; then
-> +    
-> +    dnl [[]] is to keep m4 happy
-> +    depth=`echo $d/ | sed -e 's!^\./!!g' -e 's![[^/]]*/!../!g'`
-> +    echo creating $d/Makefile
-> +    cat << EOF > $d/Makefile
-> +include ${depth}config.mak.autogen
-> +here-srcdir=\$(srcdir)/$d/
-> +VPATH=\$(here-srcdir)
-> +include \$(here-srcdir)/Makefile
-> +EOF
-> +
-> +  fi 
-> +done
-> +exit 1
+[hanwen@haring y]$ git fetch ../x
+warning: no common commits
+remote: Generating pack...
+Done counting 3 objects.
+Deltifying 3 objects.
+  100% (3/3) done
+Total 3, wremote: ritten 3 (delta 0), reused 0 (delta 0)
+Unpacking 3 objects
+  100% (3/3) done
 
-What is this for? The ./configure script, generated by autoconf from
-configure.ac (by "make configure"), generates config.mak.autogen file
-from config.mak.in, which is included in main (top) Makefile.
+[hanwen@haring y]$ git checkout
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the 
+working tree.
+Use '--' to separate paths from revisions
+fatal: Not a valid object name HEAD
 
-The variables defined in config.mak.autogen are of course visible in
-make in subdirectories (make invoked from main makefile). Why the change?
-What about user-generated config.mak?
+[hanwen@haring y]$ git branch master
+fatal: Needed a single revision
 
-This part IMHO has no sense, and has no place here.
+at this point, I resort to adding a bogus commit and/or editing 
+.git/HEAD by hand. I'm sure there is a saner way of doing it, but I 
+still haven't found out what it is.
+
+This might not be typical GIT use, but it does show the typical GIT user 
+experience, at least mine.
+
+If you want to have another example of how not to design a 
+user-interface, try the above on Monotone.
+
+> That's totally different from then arguing about stupid naming issues.
+> 
+> Peopel seem to believe that changign a few names or doing other totally 
+> _minimal_ UI changes would somehow magically make things understandable. I 
+> claim that isn't so at all. The fact is, git is different from CVS and 
+> SVN, and git _has_ to be different from CVS and SVN. It has to be 
+> different because the whole model of CVS and SVN is simpyl fundamentally 
+> BROKEN.
+> 
+>> It's worth trying to get those on board by fixing the annoying
+>> little issues that have popped up in this thread.
+> 
+> 
+> Let's face it, you could just alias "merge" to "pull", and it wouldn't 
+> really change ANYTHING.
+
+I don't want ANYTHING to really change, I just want a sane interface to it.
+
+
 -- 
-Jakub Narebski
+  Han-Wen Nienhuys - hanwen@xs4all.nl - http://www.xs4all.nl/~hanwen
