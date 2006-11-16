@@ -1,76 +1,64 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: Re: [PATCH] editor: make sure $EDITOR is executed as a command
-Date: Sun, 10 Dec 2006 15:04:57 +0100
-Message-ID: <20061210140457.GA13173@kzelldran.dyndns.org>
-References: <20061210135753.GA12905@kzelldran.dyndns.org>
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Seth Falcon <sethfalcon@gmail.com>
+Subject: Re: how to authenticate with git-svn on a subversion repository
+Date: Thu, 16 Nov 2006 07:27:57 -0800
+Message-ID: <m24pszbede.fsf@ziti.local>
+References: <4559D37E.1070703@archlinuxfr.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sun, 10 Dec 2006 14:04:10 +0000 (UTC)
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Thu, 16 Nov 2006 15:29:18 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <20061210135753.GA12905@kzelldran.dyndns.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-OriginalArrivalTime: 10 Dec 2006 14:03:56.0991 (UTC) FILETIME=[089924F0:01C71C64]
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:to:subject:references:from:date:in-reply-to:message-id:user-agent:mime-version:content-type:content-transfer-encoding;
+        b=V9yWWXgDmytLJcnfBrfcFAw9zk5wk+VDfQgRxEHvn3kMZZID6s05/9C34fxSNnfx5GkQiVLGH1nnRp6jAwKgXzzosWxXXIZugKtcSIfmyX2jUBY9O3xAJ3/8GNKEJ/x35lTiffMswqX3YNzDTEWHwTtfNqrRDr43P+yKPaXbEm8=
+In-Reply-To: <4559D37E.1070703@archlinuxfr.org> (=?iso-8859-1?Q?Com=E8te's?=
+ message of "Tue, 14 Nov 2006 15:32:30 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (darwin)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33890>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GtPHj-0002XQ-C2 for gcvg-git@gmane.org; Sun, 10 Dec
- 2006 15:04:07 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31588>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GkjAK-0004KH-9z for gcvg-git@gmane.org; Thu, 16 Nov
+ 2006 16:28:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1760783AbWLJOD6 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 10 Dec 2006
- 09:03:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760786AbWLJOD6
- (ORCPT <rfc822;git-outgoing>); Sun, 10 Dec 2006 09:03:58 -0500
-Received: from postman.fh-hagenberg.at ([193.170.124.96]:50865 "EHLO
- postman.fh-hagenberg.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1760783AbWLJOD6 (ORCPT <rfc822;git@vger.kernel.org>); Sun, 10 Dec
- 2006 09:03:58 -0500
-Received: from kzelldran.dyndns.org ([84.154.115.16]) by
- postman.fh-hagenberg.at over TLS secured channel with Microsoft
- SMTPSVC(6.0.3790.1830); Sun, 10 Dec 2006 15:03:56 +0100
-Received: from drizzd by kzelldran.dyndns.org with local (Exim 4.63)
- (envelope-from <drizzd@kzelldran.dyndns.org>) id 1GtPIY-0003dd-06 for
- git@vger.kernel.org; Sun, 10 Dec 2006 15:04:58 +0100
+ S1424156AbWKPP2J convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Thu, 16 Nov 2006 10:28:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1424165AbWKPP2J
+ (ORCPT <rfc822;git-outgoing>); Thu, 16 Nov 2006 10:28:09 -0500
+Received: from ug-out-1314.google.com ([66.249.92.174]:55156 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1424156AbWKPP2G
+ convert rfc822-to-8bit (ORCPT <rfc822;git@vger.kernel.org>); Thu, 16 Nov 2006
+ 10:28:06 -0500
+Received: by ug-out-1314.google.com with SMTP id m3so461937ugc for
+ <git@vger.kernel.org>; Thu, 16 Nov 2006 07:28:04 -0800 (PST)
+Received: by 10.78.139.1 with SMTP id m1mr671275hud.1163690884322; Thu, 16
+ Nov 2006 07:28:04 -0800 (PST)
+Received: from ziti.local ( [67.171.24.140]) by mx.google.com with ESMTP id
+ y18sm2030916hua.2006.11.16.07.28.03; Thu, 16 Nov 2006 07:28:04 -0800 (PST)
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Hi,
+Com=E8te <comete@archlinuxfr.org> writes:
 
-Sorry about the missing subject.
+> hello !
+>
+> i would like to use git-svn to commit some modifications to a
+> Subversion repository but i don't know where i can enter my username
+> and password to commit to the repository ? Is there any special file
+> to put them.
+> For now i get an error:
 
-Make sure $EDITOR is executed as a command. Otherwise, _editor may fail if
-$EDITOR is set to something like 'editor', which is also a function within
-cg-Xlib.
+There may be a better way, but if you just use the svn command line
+client to create a small working copy from the repository, you will
+have a place to enter credentials and they will be cached in
+~/.subversion and git-svn will find them.
 
-Signed-off-by: Clemens Buchacher <drizzd@aon.at>
----
-commit 942341e051fdcbb77a6abfbc58cf08ef8cab388d
-tree 96e8fd08cdc7c59b0d3d55d7cb5b4302db443aff
-parent b6a6e87cb3e1368ad0f78c18fdb6c29dde4ae83e
-author Clemens Buchacher <drizzd@aon.at> Sun, 10 Dec 2006 14:37:37 +0100
-committer Clemens Buchacher <drizzd@aon.at> Sun, 10 Dec 2006 14:37:37 +0100
-
- cg-Xlib |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/cg-Xlib b/cg-Xlib
-index c1262bf..9d04eb4 100755
---- a/cg-Xlib
-+++ b/cg-Xlib
-@@ -568,7 +568,7 @@ _editor()
- 	actionname="$1"; shift
- 	actionkey="$1"; shift
- 
--	${EDITOR:-vi} "$LOGMSG2"
-+	command ${EDITOR:-vi} "$LOGMSG2"
- 	[ -z "$force" ] || return 0
- 	[ ! "$LOGMSG2" -nt "$LOGMSG" ] || return 0
