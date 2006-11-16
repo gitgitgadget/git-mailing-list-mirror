@@ -2,138 +2,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 4/5] allow deepening of a shallow repository
-Date: Tue, 14 Nov 2006 12:03:39 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0611141150010.13772@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0610302009390.26682@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vy7qeze0q.fsf@assigned-by-dhcp.cox.net>
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Han-Wen Nienhuys <hanwen@xs4all.nl>
+Subject: Re: Cleaning up git user-interface warts
+Date: Thu, 16 Nov 2006 02:20:41 +0100
+Message-ID: <455BBCE9.4050503@xs4all.nl>
+References: <87k61yt1x2.wl%cworth@cworth.org> <455A1137.8030301@shadowen.org> <87hcx1u934.wl%cworth@cworth.org> <Pine.LNX.4.64.0611141518590.2591@xanadu.home> <87bqn9u43s.wl%cworth@cworth.org> <ejdcg5$4fl$1@sea.gmane.org> <Pine.LNX.4.64.0611141633430.2591@xanadu.home> <7vbqn9y6w6.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611142007010.2591@xanadu.home> <7v3b8ltq7r.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611142306090.2591@xanadu.home> <Pine.LNX.4.64.0611150950170.3349@woody.osdl.org>
+Reply-To: hanwen@xs4all.nl
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Tue, 14 Nov 2006 11:03:55 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 16 Nov 2006 01:21:07 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7vy7qeze0q.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+User-Agent: Thunderbird 1.5.0.8 (X11/20061107)
+Original-Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <Pine.LNX.4.64.0611150950170.3349@woody.osdl.org>
+X-Virus-Scanned: by XS4ALL Virus Scanner
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31344>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31537>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gjw4x-0000XV-ON for gcvg-git@gmane.org; Tue, 14 Nov
- 2006 12:03:48 +0100
+ esmtp (Exim 4.43) id 1GkVw4-00021A-UL for gcvg-git@gmane.org; Thu, 16 Nov
+ 2006 02:21:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S933412AbWKNLDo (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 14 Nov 2006
- 06:03:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933413AbWKNLDn
- (ORCPT <rfc822;git-outgoing>); Tue, 14 Nov 2006 06:03:43 -0500
-Received: from mail.gmx.de ([213.165.64.20]:6597 "HELO mail.gmx.net") by
- vger.kernel.org with SMTP id S933412AbWKNLDn (ORCPT
- <rfc822;git@vger.kernel.org>); Tue, 14 Nov 2006 06:03:43 -0500
-Received: (qmail invoked by alias); 14 Nov 2006 11:03:41 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp037) with SMTP; 14 Nov 2006 12:03:41 +0100
-To: Junio C Hamano <junkio@cox.net>
+ S1162149AbWKPBU6 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
+ 20:20:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1162150AbWKPBU5
+ (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 20:20:57 -0500
+Received: from smtp-vbr9.xs4all.nl ([194.109.24.29]:22021 "EHLO
+ smtp-vbr9.xs4all.nl") by vger.kernel.org with ESMTP id S1162149AbWKPBU5
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 20:20:57 -0500
+Received: from [192.168.123.187] (muurbloem.xs4all.nl [213.84.26.127])
+ (authenticated bits=0) by smtp-vbr9.xs4all.nl (8.13.8/8.13.8) with ESMTP id
+ kAG1KiDd066910; Thu, 16 Nov 2006 02:20:46 +0100 (CET) (envelope-from
+ hanwen@xs4all.nl)
+To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 
-Hi,
+Linus Torvalds escreveu:
+>  - git itself has now done it that way for the last 18 months, and the 
+>    fact is, the people _complaining_ are a small subset of the people who 
+>    actually use git on a daily basis and don't complain.
 
-On Mon, 13 Nov 2006, Junio C Hamano wrote:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > Now, by saying "git fetch -depth <n> <repo>" you can deepen
-> > a shallow repository.
-> >
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> >  commit.c      |   13 +++++++++++++
-> >  commit.h      |    3 ++-
-> >  fetch-pack.c  |   22 ++++++++++++++++------
-> >  git-fetch.sh  |   12 +++++++++++-
-> >  shallow.c     |    8 ++++++--
-> >  upload-pack.c |   57 ++++++++++++++++++++++++++++++++++++++++++++++-----------
-> > diff --git a/upload-pack.c b/upload-pack.c
-> > index ebe1e5a..162dd34 100644
-> > --- a/upload-pack.c
-> > +++ b/upload-pack.c
-> > @@ -134,6 +134,7 @@ static void create_pack_file(void)
-> >  		} else {
-> >  			for (i = 0; i < want_obj.nr; i++) {
-> >  				struct object *o = want_obj.objects[i].item;
-> > +				o->flags &= ~UNINTERESTING;
-> >  				add_pending_object(&revs, o, NULL);
-> >  			}
-> >  			for (i = 0; i < have_obj.nr; i++) {
-> 
-> I am puzzled why this is needed in this series.  In other words,
-> do we have a bug in the current upload-pack that does not have
-> shallow already by not clearing UNINTERESTING bit?  In yet other
-> words, I haven't figured out which part of the shallow series
-> makes it necessary to clear UNINTERESTING bit from wanted
-> object.
+that's not a good argument; the set of git users is a small subset of 
+those that looked at git, and dismissed it because they couldn't wrap 
+their heads around it.   It's worth trying to get those on board by 
+fixing the annoying little issues that have popped up in this thread. 
+The technical base for GIT is excellent, and the only reason for not 
+using it is its arcane interface.
 
-IIRC (has been a long time, hasn't it?) the test failed without that line, 
-and I was too lazy to investigate why. But ICRI ;-)
+A version control system is often only tangentially related to the real 
+work that needs to be done, so the incentive to learn it well is small, 
+   and a steep learning curve only makes it worse.
 
-> > @@ -547,23 +554,51 @@ static void receive_needs(void)
-> >...
-> > +		for (i = 0; i < shallows.nr; i++) {
-> > +			struct object *object = shallows.objects[i].item;
-> > +			if (object->flags & NOT_SHALLOW) {
-> > +				struct commit_list *parents;
-> > +				packet_write(1, "unshallow %s",
-> > +					sha1_to_hex(object->sha1));
-> > +				object->flags &= ~CLIENT_SHALLOW;
-> > +				/* make sure the real parents are parsed */
-> > +				unregister_shallow(object->sha1);
-> > +				parse_commit((struct commit *)object);
-> > +				parents = ((struct commit *)object)->parents;
-> > +				while (parents) {
-> > +					add_object_array(&parents->item->object,
-> > +							NULL, &want_obj);
-> > +					parents = parents->next;
-> > +				}
-> > +			}
-> 
-> I doubt unregister_shallow() is enough to ensure that the next
-> parse_commit() re-parses to recover its parents.  parse_commit()
-> says "if (item->object.parsed) return 0" upfront.  Don't you
-> need to do:
-> 
-> 	object->parsed = 0;
-> 
-> before parse_commit()?
+FWIW, I regularly mess up with the differences between fetching, pulling 
+and merging.  In particular, having to do a two step process to get 
+remote changes in,
 
-Yes. Somehow, an important part of unregister_shallow() went missing (yet 
-another proof that my poor-man's-StGit does not always work). I think that 
-the "object->parsed = 0;" should go into unregister_shallow() like this:
+   git pull url-to-server master:master
+      ..error message about not being a fast-forward..
 
-diff --git a/commit.c b/commit.c
-index d5103cd..4451376 100644
---- a/commit.c
-+++ b/commit.c
-@@ -258,6 +258,7 @@ int write_shallow_commits(int fd, int us
- int unregister_shallow(const unsigned char *sha1)
- {
- 	int pos = commit_graft_pos(sha1);
-+	struct commit *commit = lookup_commit(sha1);
- 	if (pos < 0)
- 		return -1;
- 	if (pos + 1 < commit_graft_nr)
-@@ -265,6 +266,8 @@ int unregister_shallow(const unsigned ch
- 				sizeof(struct commit_graft *)
- 				* (commit_graft_nr - pos - 1));
- 	commit_graft_nr--;
-+	if (commit)
-+		commit->object.parsed = 0;
- 	return 0;
- }
- 
-Ciao,
-Dscho
+   git pull --update-head-ok url-to-server master:master
+      ..still an error message about update not being a fast-forward..
+
+       (sigh)
+
+   git pull url-to-server master:scrap-branch
+
+   git pull . scrap-branch:my-current-branch
+
+       (make mental note of deleting scrap-branch)
+
+
+-- 
