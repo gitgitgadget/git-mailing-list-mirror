@@ -1,120 +1,62 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [RFC] Submodules in GIT
-Date: Tue, 21 Nov 2006 14:51:56 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0611211437430.3338@woody.osdl.org>
-References: <20061120215116.GA20736@admingilde.org> <ejt9dh$kfm$1@sea.gmane.org>
- <7v7ixp20za.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611201501230.3338@woody.osdl.org>
- <20061121223130.GA24909@nan92-1-81-57-214-146.fbx.proxad.net>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: [StGIT PATCH] StGIT bash completion
+Date: Thu, 16 Nov 2006 14:21:27 +0000
+Message-ID: <b0943d9e0611160621g60a0cac2r5205e37ed7d9fe9f@mail.gmail.com>
+References: <20061112211813.19959.73406.stgit@localhost>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Tue, 21 Nov 2006 22:53:43 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, Jakub Narebski <jnareb@gmail.com>,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Thu, 16 Nov 2006 14:22:14 +0000 (UTC)
+Cc: git@vger.kernel.org, "Shawn Pearce" <spearce@spearce.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061121223130.GA24909@nan92-1-81-57-214-146.fbx.proxad.net>
-X-MIMEDefang-Filter: osdl$Revision: 1.159 $
-X-Scanned-By: MIMEDefang 2.36
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=tCqGQVoJMafnyC33vFvnt1ngXuQtaH7aPKw7qOpmD8VE60C9XRsL1orGg7HK8yJexppsKLikfi/fngpTou7980cJ2hWhzDafedhNKOyHf+EaR1tcyepVTWkk0jRiz1p8WQeNT2dANvt+OlVYiHCef18iDijH4b3kFdHonipVvpQ=
+In-Reply-To: <20061112211813.19959.73406.stgit@localhost>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32050>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31586>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GmeUY-0006OF-BU for gcvg-git@gmane.org; Tue, 21 Nov
- 2006 23:53:26 +0100
+ esmtp (Exim 4.43) id 1Gki7j-0002fP-ER for gcvg-git@gmane.org; Thu, 16 Nov
+ 2006 15:21:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1031292AbWKUWwS (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 21 Nov 2006
- 17:52:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031290AbWKUWwQ
- (ORCPT <rfc822;git-outgoing>); Tue, 21 Nov 2006 17:52:16 -0500
-Received: from smtp.osdl.org ([65.172.181.25]:37096 "EHLO smtp.osdl.org") by
- vger.kernel.org with ESMTP id S1031275AbWKUWwH (ORCPT
- <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2006 17:52:07 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
- smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kALMpvix007178
- (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Tue, 21
- Nov 2006 14:51:58 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
- shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kALMpu8d012237; Tue, 21 Nov
- 2006 14:51:57 -0800
-To: Yann Dirson <ydirson@altern.org>
+ S1424098AbWKPOVa convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Thu, 16 Nov 2006 09:21:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1424079AbWKPOVa
+ (ORCPT <rfc822;git-outgoing>); Thu, 16 Nov 2006 09:21:30 -0500
+Received: from nz-out-0102.google.com ([64.233.162.194]:15228 "EHLO
+ nz-out-0102.google.com") by vger.kernel.org with ESMTP id S1424093AbWKPOV3
+ convert rfc822-to-8bit (ORCPT <rfc822;git@vger.kernel.org>); Thu, 16 Nov 2006
+ 09:21:29 -0500
+Received: by nz-out-0102.google.com with SMTP id l1so291784nzf for
+ <git@vger.kernel.org>; Thu, 16 Nov 2006 06:21:28 -0800 (PST)
+Received: by 10.35.111.14 with SMTP id o14mr862871pym.1163686887649; Thu, 16
+ Nov 2006 06:21:27 -0800 (PST)
+Received: by 10.35.109.8 with HTTP; Thu, 16 Nov 2006 06:21:27 -0800 (PST)
+To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
 Sender: git-owner@vger.kernel.org
 
+On 12/11/06, Karl Hasselstr=F6m <kha@treskal.com> wrote:
+> A minimal bash completion script for StGIT. It completes the
+> subcommand names, and options and patch names for some subcommands.
 
+Thanks for the patch. I modified it slightly to automatically generate
+the options for other commands as well (by invoking "stg help
+<command>" and it doesn't seem to be slow). I'll try to push it
+tonight.
 
-On Tue, 21 Nov 2006, Yann Dirson wrote:
-> 
-> I'm not sure I get the reason why the submodule should not be recorded
-> on "commit level".
+Thanks for the other patches as well. I included some but haven't
+finished them yet.
 
-Because that would be STUPID.
-
-What does the submodules have to do with the commit level? Nothing. Nada. 
-Zero.
-
-Submodules are _directories_. They can be anywhere in the directory tree. 
-If you try to encode that in a commit message, you're going to totally 
-break the whole notion of trying to "diff" two trees. 
-
-All of git is designed around the notion that a tree is the directory 
-structure. If you put directory structure somewhere else, you totally 
-screw all abstractions.
-
-Now, if that weren't enough, let me enumerate _another_ reason why it's 
-idiotic and wrong, namely the fact that a "commit" is fundamnetally the 
-wrong place to add something like that _anyway_. Quite apart from the fact 
-that we describe directory trees with (wait for it): "tree objects", the 
-thing is, a commit is about a totally different _dimension_ altogether. 
-
-The only and _whole_ point of a "commit" is to describe the "time 
-dimension". Something that doesn't always change in time should not be in 
-a commit object, because it is by definition not what a commit is all 
-about. A commit should describe the relationship of itself to other 
-commits, ie it's a "how did this change".
-
-And a sub-project simply doesn't even _do_ that. Much of the time, a 
-subproject stays constant, and is not something that comes and goes on an 
-individual commit basis. 
-
-I don't understand why people are so fixated with putting things in the 
-wrong object. WHY do people want to put crap in the "commit" object? 
-People have wanted to put "rename" information there (which is stupid for 
-all the same reasons: renames _remain_. They aren't a one-time event. If 
-something was renamed in commit X, it will _remain_ renamed in commit X+1, 
-so it's clearly not really a "commit X" thing)
-
-Think of it this way:
-
- - if something _only_ makes sense on an _individual commit_ level, it 
-   goes into the "commit object". But if it makes sense for "git diff",
-   then it MUST NOT be in a commit object, because you do "git diff" over
-   a big _range_ of commit objects.
-
-Think "git show". The "author" of a commit is only associated with a 
-_single_ commit. It thus goes into the commit object, and nowhere else. 
-Same goes for time, and commit message. A commit message is fundamentally 
-a "this explains this _one_ commit".
-
-But anything that you expect to have in a "range" of commits MUST NOT be 
-in a "commit object". If I do "git diff v2.6.13..v2.6.14", and I expect 
-the behaviour you want to encode to show up (and dammit, subprojects very 
-much fall under that heading - exactly the same way renames must have 
-meaning _outside_ of a single commit) then clearly it is NOT something 
-that is associated with any individual commits. It's something that is 
-associated with the _state_ of the project.
-
-And the _state_ of the project is the "tree". Not the commit. The commit 
-is about the _history_ of the project.
-
-So please understand this: "commit" is about the time-dimension 
-("history"). "tree" is about the space-dimension ("state"). The two are 
-_related_, but they are also very much different concepts, and "related" 
-does not mean "you can mix them up".
-
-Sub-projects are clearly not about "time". They are about "state".
-
+--=20
