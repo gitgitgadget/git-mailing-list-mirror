@@ -1,93 +1,77 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: Is there a way to trim old SHAs from a git tree (so it's not so large)?
-Date: Tue, 21 Nov 2006 13:39:41 -0500
-Message-ID: <20061121183941.GB22283@spearce.org>
-References: <455B90AD.3060707@freescale.com> <20061117103611.183640@gmx.net> <45632957.5070205@freescale.com> <20061121163206.GA22006@spearce.org> <45632EC6.5030902@freescale.com> <20061121165656.GC22006@spearce.org> <456330CD.9080503@freescale.com>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Cleaning up git user-interface warts
+Date: Fri, 17 Nov 2006 00:00:18 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0611162353250.13772@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <87k61yt1x2.wl%cworth@cworth.org> <455A1137.8030301@shadowen.org>
+ <87hcx1u934.wl%cworth@cworth.org> <Pine.LNX.4.64.0611141518590.2591@xanadu.home>
+ <87bqn9u43s.wl%cworth@cworth.org> <ejdcg5$4fl$1@sea.gmane.org>
+ <Pine.LNX.4.64.0611141633430.2591@xanadu.home> <7vbqn9y6w6.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0611142007010.2591@xanadu.home> <7v3b8ltq7r.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0611142306090.2591@xanadu.home> <Pine.LNX.4.64.0611150950170.3349@woody.osdl.org>
+ <455BBCE9.4050503@xs4all.nl> <Pine.LNX.4.64.0611151908130.3349@woody.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 21 Nov 2006 18:40:17 +0000 (UTC)
-Cc: Thomas Kolejka <Thomas.Kolejka@gmx.at>, git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Thu, 16 Nov 2006 23:00:54 +0000 (UTC)
+Cc: Han-Wen Nienhuys <hanwen@xs4all.nl>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <456330CD.9080503@freescale.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <Pine.LNX.4.64.0611151908130.3349@woody.osdl.org>
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32016>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31631>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GmaXD-0002qv-6u for gcvg-git@gmane.org; Tue, 21 Nov
- 2006 19:39:55 +0100
+ esmtp (Exim 4.43) id 1GkqDX-0003sW-QF for gcvg-git@gmane.org; Fri, 17 Nov
+ 2006 00:00:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1031288AbWKUSjs (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 21 Nov 2006
- 13:39:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031289AbWKUSjr
- (ORCPT <rfc822;git-outgoing>); Tue, 21 Nov 2006 13:39:47 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:37337 "EHLO
- corvette.plexpod.net") by vger.kernel.org with ESMTP id S1031288AbWKUSjq
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2006 13:39:46 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1GmaWu-0003nx-FC; Tue, 21 Nov 2006 13:39:36 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- DADDC20FB09; Tue, 21 Nov 2006 13:39:41 -0500 (EST)
-To: Timur Tabi <timur@freescale.com>
+ S1755490AbWKPXAU (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 16 Nov 2006
+ 18:00:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755491AbWKPXAU
+ (ORCPT <rfc822;git-outgoing>); Thu, 16 Nov 2006 18:00:20 -0500
+Received: from mail.gmx.de ([213.165.64.20]:60586 "HELO mail.gmx.net") by
+ vger.kernel.org with SMTP id S1755490AbWKPXAT (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 16 Nov 2006 18:00:19 -0500
+Received: (qmail invoked by alias); 16 Nov 2006 23:00:18 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp027) with SMTP; 17 Nov 2006 00:00:18 +0100
+To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 
-Timur Tabi <timur@freescale.com> wrote:
-> Shawn Pearce wrote:
-> >Timur Tabi <timur@freescale.com> wrote:
-> >>>Shallow clone is a development feature still being working on in
-> >>>Junio's 'pu' branch of git.git.  It has a few issues still to be
-> >>>worked out so it hasn't been made part of one of the more stable
-> >>>branches yet (like 'next', 'master', or 'maint').
-> >>Well, until it's available on an official git release, it doesn't help me.
-> >
-> >One of the reasons its hanging out in 'pu' still is that there is
-> >a lack of people who are interested in the feature, and thus not
-> >enough people are testing it.  Perhaps you might be able to lend
-> >a hand in that regard?
-> 
-> Sure, I can do that!  Can you give me some pointers?  I've never done 
-> development on git itself, so I don't know Junio or his pu (sorry, I 
-> couldn't resist :-)).
+Hi,
 
-Junio C Hamano is the Git maintainer.  His published Git repository
-is here:
+On Wed, 15 Nov 2006, Linus Torvalds wrote:
 
-	http://www.kernel.org/pub/scm/git/git.git/
+> Peopel seem to believe that changign a few names or doing other totally 
+> _minimal_ UI changes would somehow magically make things understandable. 
 
-though it oddly has pack files from Jun 2006 in the wrong directory.
-Weird.  Anyway...
+Never ever underestimate pet peeves. If we give many people an obvious 
+reason (however trivial and bike-shed-coloured) to complain, they will 
+complain.
 
-If you clone from that URL, or better though the native Git protocol:
+If we pull (pun intended) that reason away under their collective 
+backsides, they will have to find another reason to complain. But by the 
+time they found something, they will already be happy git users!
 
-	git://www.kernel.org/pub/scm/git/git.git
+But since you just provided a patch to make life easier on non-gitters, I 
+guess you agree with that already.
 
-you will get a branch called `pu`, which is the set of "Proposed
-Updates" to Git that Junio and others are currently working on.
-You can then checkout a branch off that, and build it:
+And hopefully you also agree that enhancing the syntax of git-merge to 
+grok "git-merge [-m message] <branch>" and "git-merge [-m message] 
+<url-or-remote> <branch>" would be a lovely thing, luring even more 
+people into using git.
 
-	git checkout -b pu-build pu
-	make
+Maybe they even start complaining about subversion and CVS calling a merge 
+"update", who knows?
 
-finally you can either run from that directory (see INSTALL file)
-or you can install the binary somewhere else.  We don't really
-recommend using `pu` for production level work, so make sure you
-have a backup of any repository you run it on.  :)
-
--- 
+Ciao,
+Dscho
