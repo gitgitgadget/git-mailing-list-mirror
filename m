@@ -1,68 +1,108 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-blame: handling of revisions and filenames
-Date: Wed, 29 Nov 2006 10:29:07 -0800
-Message-ID: <7v8xhuqf7w.fsf@assigned-by-dhcp.cox.net>
-References: <20061115215225.GA4595@steel.home>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: Cleaning up git user-interface warts
+Date: Thu, 16 Nov 2006 23:20:08 +0100
+Message-ID: <20061116222008.GA7201@pasky.or.cz>
+References: <87k61yt1x2.wl%cworth@cworth.org> <455A1137.8030301@shadowen.org> <87hcx1u934.wl%cworth@cworth.org> <Pine.LNX.4.64.0611141518590.2591@xanadu.home> <87bqn9u43s.wl%cworth@cworth.org> <7vr6w5y7to.fsf@assigned-by-dhcp.cox.net> <20061116051240.GV7201@pasky.or.cz> <7vr6w33vv3.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 29 Nov 2006 18:29:30 +0000 (UTC)
-Cc: git@vger.kernel.org
+NNTP-Posting-Date: Thu, 16 Nov 2006 22:20:46 +0000 (UTC)
+Cc: Carl Worth <cworth@cworth.org>, git@vger.kernel.org,
+	Andy Whitcroft <apw@shadowen.org>, Nicolas Pitre <nico@cam.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061115215225.GA4595@steel.home> (Alex Riesen's message of
-	"Wed, 15 Nov 2006 22:52:25 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Content-Disposition: inline
+In-Reply-To: <7vr6w33vv3.fsf@assigned-by-dhcp.cox.net>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32655>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31627>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GpUBN-0006EH-OR for gcvg-git@gmane.org; Wed, 29 Nov
- 2006 19:29:22 +0100
+ esmtp (Exim 4.43) id 1Gkpak-0004IX-MH for gcvg-git@gmane.org; Thu, 16 Nov
+ 2006 23:20:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S967520AbWK2S3L (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 29 Nov 2006
- 13:29:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967523AbWK2S3L
- (ORCPT <rfc822;git-outgoing>); Wed, 29 Nov 2006 13:29:11 -0500
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:51159 "EHLO
- fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP id S967520AbWK2S3I
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 29 Nov 2006 13:29:08 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao08.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061129182907.ROPF18207.fed1rmmtao08.cox.net@fed1rmimpo02.cox.net>; Wed, 29
- Nov 2006 13:29:07 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id siVG1V00c1kojtg0000000; Wed, 29 Nov 2006
- 13:29:17 -0500
-To: Alex Riesen <raa.lkml@gmail.com>
+ S1424740AbWKPWUM (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 16 Nov 2006
+ 17:20:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1424741AbWKPWUM
+ (ORCPT <rfc822;git-outgoing>); Thu, 16 Nov 2006 17:20:12 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:40919 "EHLO machine.or.cz") by
+ vger.kernel.org with ESMTP id S1424740AbWKPWUK (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 16 Nov 2006 17:20:10 -0500
+Received: (qmail 9826 invoked by uid 2001); 16 Nov 2006 23:20:08 +0100
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-fork0@t-online.de (Alex Riesen) writes:
+On Thu, Nov 16, 2006 at 10:49:36PM CET, Junio C Hamano wrote:
+> I would like to keep it that way.
 
-> And I afraid the patch has a small chance of crashing: I don't check
-> if there is enough space in argv (don't actually even know how to),
+I agree - I certainly don't want to infect Git with bash dependency.
 
-Actually this is a safe thing to do because we already know (and
-removed) the "path" argument from the command line at that
-point.  If the original command line did not have "path" we have
-already rejected it.  So unk at that point never exceeds argc.
+> And "POSIX says shell should behave that way" is _not_ what I want to
+> hear about.
 
-> diff --git a/builtin-blame.c b/builtin-blame.c
-> index 066dee7..83c8905 100644
-> --- a/builtin-blame.c
-> +++ b/builtin-blame.c
-> @@ -1787,6 +1787,7 @@ int cmd_blame(int argc, const char **arg
->         /* Now we got rev and path.  We do not want the path pruning
->          * but we may want "bottom" processing.
->          */
-> +       argv[unk++] = "--";
->         argv[unk] = NULL;
->  
->         init_revisions(&revs, NULL);
+Actually, which sane platforms we care about have /bin/sh that is NOT
+POSIX compatible?
 
-Thanks.
+> Things I would want to change:
+
+What about [ instead of test? And
+
+	if foo; then
+
+instead of
+
+	if foo
+	then
+
+?
+
+
+Am I the only one who hates
+
+case "$log_given" in
+tt*)
+        die "Only one of -c/-C/-F can be used." ;;
+*tm*|*mt*)
+        die "Option -m cannot be combined with -c/-C/-F." ;;
+esac
+
+instead of having this stuff in explicit variables and writing out some
+explicit boolean expressions? (There _are_ few cases where the case is
+cool, but they are rare.)
+
+
+It would be really great if Git would have something alike the Cogito's
+optparse infrastructure. I'm not sure if you can implement it in Bourne
+sh with reasonable performance, though...
+
+
+I think addressing these three particular points would make the scripts
+hugely more coder-friendly. (And well, I usually say that coding style
+is not *that* important and is frequently overemphasised. But that holds
+only to a certain point. ;-)
+
+
+> Things I do not want to change:
+..snip all those I agree with..
+>  - Do not use locals.
+
+It's a pity. :-( Which shell doesn't support them?
+
+It's not that huge a deal, though.
+
+>  - Do not use shell arrays.
+
+This is quite a larger deal, I think; but the portability concerns are
+very real, I guess. :|
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
+$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
