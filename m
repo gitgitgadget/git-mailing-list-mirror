@@ -5,56 +5,62 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH qgit] Remove obsoleted includes
-Date: Fri, 27 Oct 2006 03:51:21 +0200
-Message-ID: <20061027015121.GW20017@pasky.or.cz>
-References: <e5bfff550610261147t61de387bqc591624aaa3b1282@mail.gmail.com>
+Subject: Re: Cleaning up git user-interface warts
+Date: Thu, 16 Nov 2006 04:21:57 +0100
+Message-ID: <20061116032157.GR7201@pasky.or.cz>
+References: <87k61yt1x2.wl%cworth@cworth.org> <Pine.LNX.4.64.0611151000460.2591@xanadu.home> <7vbqn8o9st.fsf@assigned-by-dhcp.cox.net> <200611151902.16358.andyparkins@gmail.com> <7vr6w4lcpr.fsf@assigned-by-dhcp.cox.net> <87y7qcsbsa.wl%cworth@cworth.org> <7vmz6sjtw8.fsf@assigned-by-dhcp.cox.net> <87r6w4s5ga.wl%cworth@cworth.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 27 Oct 2006 02:06:31 +0000 (UTC)
-Cc: Git Mailing List <git@vger.kernel.org>
+NNTP-Posting-Date: Thu, 16 Nov 2006 03:22:20 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>,
+	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Content-Disposition: inline
-In-Reply-To: <e5bfff550610261147t61de387bqc591624aaa3b1282@mail.gmail.com>
+In-Reply-To: <87r6w4s5ga.wl%cworth@cworth.org>
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30275>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31550>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GdGsY-00028G-9t for gcvg-git@gmane.org; Fri, 27 Oct
- 2006 03:51:30 +0200
+ esmtp (Exim 4.43) id 1GkXpR-00028G-BW for gcvg-git@gmane.org; Thu, 16 Nov
+ 2006 04:22:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1946102AbWJ0BvX (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
- 21:51:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946104AbWJ0BvX
- (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 21:51:23 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:38321 "EHLO machine.or.cz") by
- vger.kernel.org with ESMTP id S1946102AbWJ0BvW (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 21:51:22 -0400
-Received: (qmail 8277 invoked by uid 2001); 27 Oct 2006 03:51:21 +0200
-To: Marco Costalba <mcostalba@gmail.com>
+ S1031068AbWKPDWA (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
+ 22:22:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031067AbWKPDWA
+ (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 22:22:00 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:724 "EHLO machine.or.cz") by
+ vger.kernel.org with ESMTP id S1031068AbWKPDV7 (ORCPT
+ <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 22:21:59 -0500
+Received: (qmail 9444 invoked by uid 2001); 16 Nov 2006 04:21:57 +0100
+To: Carl Worth <cworth@cworth.org>
 Sender: git-owner@vger.kernel.org
 
-Dear diary, on Thu, Oct 26, 2006 at 08:47:08PM CEST, I got a letter
-where Marco Costalba <mcostalba@gmail.com> said that...
-> Also small code cleanup
+On Wed, Nov 15, 2006 at 11:36:21PM CET, Carl Worth wrote:
+> On Wed, 15 Nov 2006 13:13:11 -0800, Junio C Hamano wrote:
+> > That is a very fine example, but I do not see why it is a
+> > problem.  I do not think the goal of Porcelain is to make it
+> > totally unnecessary for users to know about the plumbing.
 > 
-> Signed-off-by: Marco Costalba <mcostalba@gmail.com>
+> If not, then the promise of the porcelain fails. If cogito offers
+> "Here are 40 commands so you don't have to learn git's 140" and then
+> next says "Oh, and you'll still want to learn all those git commands
+> too", then its existence only makes the "too much stuff to learn"
+> problem worse, not better.
 
-(It's whitespace-damaged.)
+I didn't get this argument before either - why do you need to learn "all
+those git commands" too? You'll never have to learn "git add" or even
+"git commit". If you want to pick specific git commands later (like "git
+bisect", which even seeks in a Cogito-compatible way), that's fine, go
+ahead! But you by no means have to learn _other_ commands than those you
+need. If you want to bisect, you have to learn no other Git commands
+than "git bisect".
 
-> ---
-> 
-> Still unable to push to public repo :(
-
-Hey, we're using this beautiful distributed version control system,
-aren't we? :-) We could make use of it being fully distributed for once,
-too - you can push to any other public repo until the original one
-becomes available.
-
-There's e.g. repo.or.cz. ;-)
+Another point is, if using _just_ _git_ requires you to learn "all those
+git commands too" from git-commit-tree up (yes it does! if you want your
+authorship information to be correct), something is wrong.
 
 -- 
 				Petr "Pasky" Baudis
