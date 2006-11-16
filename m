@@ -2,56 +2,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-Subject: Re: Subprojects tasks
-Date: Mon, 18 Dec 2006 00:27:25 +0100
-Message-ID: <200612180027.25308.Josef.Weidendorfer@gmx.de>
-References: <7vzm9nelob.fsf@assigned-by-dhcp.cox.net> <200612171529.03165.jnareb@gmail.com> <20061217195417.GI12411@admingilde.org>
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: "Anand Kumria" <wildfire@progsoc.org>
+Subject: Re: Cleaning up git user-interface warts
+Date: Thu, 16 Nov 2006 01:40:59 +0000 (UTC)
+Message-ID: <ejgfjb$bm7$2@sea.gmane.org>
+References: <87k61yt1x2.wl%cworth@cworth.org>
+	<Pine.LNX.4.64.0611142306090.2591@xanadu.home>
+	<Pine.LNX.4.64.0611150950170.3349@woody.osdl.org>
+	<200611151858.51833.andyparkins@gmail.com>
+	<Pine.LNX.4.64.0611151111250.3349@woody.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sun, 17 Dec 2006 23:27:48 +0000 (UTC)
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <junkio@cox.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+NNTP-Posting-Date: Thu, 16 Nov 2006 01:45:05 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #352111
-User-Agent: KMail/1.9.5
-In-Reply-To: <20061217195417.GI12411@admingilde.org>
-Content-Disposition: inline
-X-Y-GMX-Trusted: 0
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 35
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 88-110-175-230.dynamic.dsl.as9105.com
+User-Agent: pan 0.117 (We'll fly and we'll fall and we'll burn)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34712>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gw5Py-0002zt-24 for gcvg-git@gmane.org; Mon, 18 Dec
- 2006 00:27:42 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31539>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GkWIh-00076w-7h for gcvg-git@gmane.org; Thu, 16 Nov
+ 2006 02:44:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753220AbWLQX1j (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 17 Dec 2006
- 18:27:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753216AbWLQX1i
- (ORCPT <rfc822;git-outgoing>); Sun, 17 Dec 2006 18:27:38 -0500
-Received: from mail.gmx.net ([213.165.64.20]:38697 "HELO mail.gmx.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S1753220AbWLQX1i
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 17 Dec 2006 18:27:38 -0500
-Received: (qmail invoked by alias); 17 Dec 2006 23:27:36 -0000
-Received: from p549680A1.dip0.t-ipconnect.de (EHLO noname) [84.150.128.161]
- by mail.gmx.net (mp004) with SMTP; 18 Dec 2006 00:27:36 +0100
-To: Martin Waitz <tali@admingilde.org>
+ S1031046AbWKPBoC (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
+ 20:44:02 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031050AbWKPBoB
+ (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 20:44:01 -0500
+Received: from main.gmane.org ([80.91.229.2]:56805 "EHLO ciao.gmane.org") by
+ vger.kernel.org with ESMTP id S1031046AbWKPBoA (ORCPT
+ <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 20:44:00 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1GkWGd-0006fy-AY for git@vger.kernel.org; Thu, 16 Nov 2006 02:42:16 +0100
+Received: from 88-110-175-230.dynamic.dsl.as9105.com ([88.110.175.230]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Thu, 16 Nov 2006 02:42:15 +0100
+Received: from wildfire by 88-110-175-230.dynamic.dsl.as9105.com with local
+ (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Thu, 16
+ Nov 2006 02:42:15 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On Sunday 17 December 2006 20:54, Martin Waitz wrote:
-> I added a symlink .git/refs/module/<submodule> -> <submodule>/.git/refs,
-> so that the submodule branch is also available as
-> refs/module/<submodule>/heads/master in the supermodule.
+On Wed, 15 Nov 2006 11:18:36 -0800, Linus Torvalds wrote:
 
-Ah.
-What is "<submodule>" in your implementation?
-Is this some encoding of the path where the submodule currently lives
-in the supermodule, or are you giving the submodules unique names
-in the context of the supermodule?
+> On Wed, 15 Nov 2006, Andy Parkins wrote:
+>>
+>> On the one hand you're arguing that git syntax is easy to learn, and on the 
+>> other that no one will be able to learn a new syntax just as easily.
+> 
+> I'm saying that people who are new to git will _have_ to learn new 
+> concepts ANYWAY.
+> 
+> I don't think the naming is the hard part. 
 
+It isn't - the unexpectedness of what happens is.
+
+I've started by teaching how to do stuff locally, then "pushing" it out to
+others (me).  All the while being able to point out how this is either all
+local, or sends stuff (without any local modifications) to others.
+
+Come up to 'pull' and ere you have to point out that not only will you get
+the remote changes but they are also merged into your repository. On the
+wrong branch?
+
+Too bad.
+
+The problem with git-pull behaving illogically drove me to look at cogito
+(an aside, perhaps cg-throw should be the corrollary to cg-fetch?)
+instead. Alas it has problems with a cogito branch not being something you
+can mentally map back to a git branch.
+
+> But I bet people don't teach it that way. They _start_ by teaching "pull". 
+> Right?
+
+Nope.
+
+Anand
