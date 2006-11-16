@@ -1,87 +1,48 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: Did anyone have trouble learning the idea of local vs. remote branches?
-Date: Wed, 8 Nov 2006 01:10:20 -0500
-Message-ID: <20061108061020.GF28498@spearce.org>
-References: <20061107172450.GA26591@spearce.org> <eiqi3f$ouq$1@sea.gmane.org>
+From: "Alexander Litvinov" <litvinov2004@gmail.com>
+Subject: Re: Git can't merge two identical move file operation
+Date: Thu, 16 Nov 2006 18:25:18 +0600
+Message-ID: <6e1787fe0611160425l6ed76a5cncbb0236cbf0b5161@mail.gmail.com>
+References: <6e1787fe0611160226r2d51d980t6899f1a1018b5fe5@mail.gmail.com>
+	 <7v1wo3bp99.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 8 Nov 2006 06:10:41 +0000 (UTC)
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 16 Nov 2006 12:25:29 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=erYoerb/VNiDgSd4rU389xulfrwjdGbM7xGzIBP6k2oz/lbYia91oWLq/M0avMREU7VakeVRS7JVj8tom+UAiSsHRUtGzXddeJ7wcNXSJlV4esRK1qdcilOVR9euuzk0T42Iz9trVDMMvMuYPZQgm8ay//Z6Rv+12Wc76e0U+Fk=
+In-Reply-To: <7v1wo3bp99.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
-In-Reply-To: <eiqi3f$ouq$1@sea.gmane.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31123>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31578>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Ghgdt-0006y4-99 for gcvg-git@gmane.org; Wed, 08 Nov
- 2006 07:10:33 +0100
+ esmtp (Exim 4.43) id 1GkgJ2-0002S1-EQ for gcvg-git@gmane.org; Thu, 16 Nov
+ 2006 13:25:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1754345AbWKHGK0 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 8 Nov 2006
- 01:10:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754344AbWKHGK0
- (ORCPT <rfc822;git-outgoing>); Wed, 8 Nov 2006 01:10:26 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:52422 "EHLO
- corvette.plexpod.net") by vger.kernel.org with ESMTP id S1754345AbWKHGKZ
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 8 Nov 2006 01:10:25 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1Ghgdj-0002f9-Lo; Wed, 08 Nov 2006 01:10:23 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- B899A20E487; Wed,  8 Nov 2006 01:10:20 -0500 (EST)
-To: Salikh Zakirov <Salikh.Zakirov@Intel.com>
+ S1161912AbWKPMZV (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 16 Nov 2006
+ 07:25:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161198AbWKPMZU
+ (ORCPT <rfc822;git-outgoing>); Thu, 16 Nov 2006 07:25:20 -0500
+Received: from nz-out-0102.google.com ([64.233.162.197]:10878 "EHLO
+ nz-out-0102.google.com") by vger.kernel.org with ESMTP id S1161912AbWKPMZT
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 16 Nov 2006 07:25:19 -0500
+Received: by nz-out-0102.google.com with SMTP id l1so266526nzf for
+ <git@vger.kernel.org>; Thu, 16 Nov 2006 04:25:19 -0800 (PST)
+Received: by 10.35.18.4 with SMTP id v4mr645419pyi.1163679918793; Thu, 16 Nov
+ 2006 04:25:18 -0800 (PST)
+Received: by 10.35.83.2 with HTTP; Thu, 16 Nov 2006 04:25:18 -0800 (PST)
+To: "Junio C Hamano" <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Salikh Zakirov <Salikh.Zakirov@Intel.com> wrote:
-> I think that the particular issue with the workflow in my organization
-> could have been solved by the git-checkout and git-clone hybrid
-> 
->     git-checkout ssh://path.to/repo.git#branch [work_dir]
-> 
-> which would clone repository with just one branch and setup the remotes
-> file accordingly (The syntax is completely made up, of course)
-
-Right; that would help us to but developers really want two mainline
-branches locally (stable and slightly less stable) as they access
-them frequently.
-
-Hence the "git clone --only a,b" syntax that was floating around
-on the mailing list the past few days.  Of course no implementation
-exists yet...
- 
-> - there is a "mainline" branch of development, kept as ssh-shared git repository
-> - mainline commits require some pre-commit testing, which takes ~1.5 hours,
->   so people tend not to commit to mainline too often. On average, a given
->   person commits to mainline once or twice a week.
-> - mainlines commits also require a fellow developer review, that's where
->   topic branches come in handy. Topic branches are also useful for testing,
->   as pre-commit testing should be run on several different platforms, thus
->   on a different machines. Topic branches are kept on the same shared server.
-
-Pretty much the same workflow here; except that instead of a 1.5
-hour testing requirement to move code into the mainline we have a
-several day manual process where humans redo the changes that were
-already made in git in the "real" SCM.
-
-Usually humans screw up redoing those changes and it takes a few more
-days to figure out why a topic branch it Git that works correctly
-fails to even compile in the mainline.  So we don't push to the
-mainline often.
-
--- 
