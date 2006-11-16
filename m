@@ -4,46 +4,88 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: latest update to git-svn blows up for me
-Date: Tue, 5 Dec 2006 01:13:15 -0800
-Message-ID: <20061205091315.GD27236@soma>
-References: <20061204181241.GA27342@soma> <86zma3lahj.fsf@blue.stonehenge.com> <20061204195452.GB27342@soma> <86slfvl95j.fsf@blue.stonehenge.com> <20061204200844.GC30316@hand.yhbt.net> <86odqjl8vp.fsf@blue.stonehenge.com> <20061204205126.GA23853@hand.yhbt.net> <20061205040844.GA6826@localdomain> <86slfvj7oi.fsf@blue.stonehenge.com> <86odqjj70y.fsf@blue.stonehenge.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Cleaning up git user-interface warts
+Date: Wed, 15 Nov 2006 19:07:11 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0611151859370.3349@woody.osdl.org>
+References: <Pine.LNX.4.64.0611150950170.3349@woody.osdl.org>
+ <200611151858.51833.andyparkins@gmail.com> <Pine.LNX.4.64.0611151111250.3349@woody.osdl.org>
+ <f2b55d220611151139v66fba16ax97ce6b9966b33ce7@mail.gmail.com>
+ <Pine.LNX.4.64.0611151203450.3349@woody.osdl.org> <Pine.LNX.4.64.0611151516360.2591@xanadu.home>
+ <Pine.LNX.4.64.0611151226590.3349@woody.osdl.org> <87velgs9hx.wl%cworth@cworth.org>
+ <Pine.LNX.4.64.0611151339500.3349@woody.osdl.org> <87psbos4pb.wl%cworth@cworth.org>
+ <20061115230252.GH24861@spearce.org> <Pine.LNX.4.64.0611151523290.3349@woody.osdl.org>
+ <Pine.LNX.4.64.0611151905460.2591@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 5 Dec 2006 09:13:26 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Thu, 16 Nov 2006 03:07:38 +0000 (UTC)
+Cc: Shawn Pearce <spearce@spearce.org>, Carl Worth <cworth@cworth.org>,
+	"Michael K. Edwards" <medwards.linux@gmail.com>,
+	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <86odqjj70y.fsf@blue.stonehenge.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <Pine.LNX.4.64.0611151905460.2591@xanadu.home>
+X-MIMEDefang-Filter: osdl$Revision: 1.156 $
+X-Scanned-By: MIMEDefang 2.36
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33327>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GrWMb-0007nX-CI for gcvg-git@gmane.org; Tue, 05 Dec
- 2006 10:13:21 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31547>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GkXbA-0008IP-RZ for gcvg-git@gmane.org; Thu, 16 Nov
+ 2006 04:07:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S968142AbWLEJNS (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 5 Dec 2006
- 04:13:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S968144AbWLEJNS
- (ORCPT <rfc822;git-outgoing>); Tue, 5 Dec 2006 04:13:18 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:43124 "EHLO hand.yhbt.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S968142AbWLEJNR
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 5 Dec 2006 04:13:17 -0500
-Received: from hand.yhbt.net (localhost [127.0.0.1]) by hand.yhbt.net
- (Postfix) with SMTP id 45A7C2DC034; Tue,  5 Dec 2006 01:13:15 -0800 (PST)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Tue,  5 Dec 2006
- 01:13:15 -0800
-To: "Randal L. Schwartz" <merlyn@stonehenge.com>
+ S1031045AbWKPDH3 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
+ 22:07:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031039AbWKPDH3
+ (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 22:07:29 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:52368 "EHLO smtp.osdl.org") by
+ vger.kernel.org with ESMTP id S1030950AbWKPDH2 (ORCPT
+ <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 22:07:28 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
+ smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kAG37CoZ023115
+ (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Wed, 15
+ Nov 2006 19:07:13 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
+ shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kAG37Bqs009205; Wed, 15 Nov
+ 2006 19:07:11 -0800
+To: Nicolas Pitre <nico@cam.org>
 Sender: git-owner@vger.kernel.org
 
-"Randal L. Schwartz" <merlyn@stonehenge.com> wrote:
+
+
+On Wed, 15 Nov 2006, Nicolas Pitre wrote:
 > 
->     no blob information
+> That is an implementation detail that should be easily overcome once the 
+> notion of tracking branch with URL attribute is implemented.
 
-Can you make Data::Dumper display $fb where it dies with that message?
-Thanks.
+Nope.
 
--- 
+I simply don't _have_ those branches.
+
+Why? Because the kernel is _distributed_. There is no central place 
+(certainly not my repository) that tracks all the possible branches that 
+might get merged.
+
+In other words, I repeat: in a TRULY DISTRIBUTED ENVIRONMENT it makes more 
+sense to have a "pull" that fetches and merges, over something that 
+fetches separately and then merges. Because in a truly distributed 
+environment, you simply DO NOT HAVE static branches that you can associate 
+with particular sources.
+
+See?
+
+And the thing is, I think the git design should be geared towards true 
+distribution. It should NOT be geared toward a fairly static set of 
+branches that all have a fairly static set of other repositories 
+associated with them. Can you see the difference?
+
+I'm personally convinced that one of the reasons people tend to use git in 
+a centralized manner is just a mental disease that has its roots in how 
+they used _other_ SCM's. I don't want git design to be polluted by such a 
+centralized notion.
+
+So to repeat: you can always make "pull" boil down to "pull from myself" 
+(aka just "merge"), but you can _not_ make "fetch + merge" boil down to 
+"pull" without meking up extra state to track separately. In other words, 
+"pull" really is the strictly more powerful operation.
+
