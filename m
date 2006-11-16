@@ -1,70 +1,80 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: [PATCH] Improve git-prune -n output
-Date: Thu, 26 Oct 2006 18:37:23 +0100
-Message-ID: <200610261837.31356.andyparkins@gmail.com>
-References: <200610261138.24761.andyparkins@gmail.com> <7vlkn3kn65.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Cleaning up git user-interface warts
+Date: Wed, 15 Nov 2006 18:03:21 -0800
+Message-ID: <7vhcx0gnbq.fsf@assigned-by-dhcp.cox.net>
+References: <87k61yt1x2.wl%cworth@cworth.org> <455A1137.8030301@shadowen.org>
+	<87hcx1u934.wl%cworth@cworth.org>
+	<Pine.LNX.4.64.0611141518590.2591@xanadu.home>
+	<87bqn9u43s.wl%cworth@cworth.org> <ejdcg5$4fl$1@sea.gmane.org>
+	<Pine.LNX.4.64.0611141633430.2591@xanadu.home>
+	<7vbqn9y6w6.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0611142007010.2591@xanadu.home>
+	<7v3b8ltq7r.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0611142306090.2591@xanadu.home>
+	<Pine.LNX.4.64.0611150950170.3349@woody.osdl.org>
+	<455BBCE9.4050503@xs4all.nl>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 26 Oct 2006 17:40:26 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Thu, 16 Nov 2006 02:03:34 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=MIjqejyXRlAhYwRkJ4m6tFuGTtEEw0BGihBDb3//B/2UsoX+KMOyb77nFhrWJywa3kbuFHVw5ryWjp0VblNPiqkd+7VJyktLu2K5voP7Usip4743/JQpWfQn1f+IaO9TDmSEmzXw1z0NjCc3jiBmerOeKzL4y+UTX7jv2Q/GdAM=
-User-Agent: KMail/1.9.5
-In-Reply-To: <7vlkn3kn65.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+In-Reply-To: <455BBCE9.4050503@xs4all.nl> (Han-Wen Nienhuys's message of "Thu,
+	16 Nov 2006 02:20:41 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30252>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31543>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gd9DA-0006WH-7X for gcvg-git@gmane.org; Thu, 26 Oct
- 2006 19:40:12 +0200
+ esmtp (Exim 4.43) id 1GkWb9-0006DE-Iv for gcvg-git@gmane.org; Thu, 16 Nov
+ 2006 03:03:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1423465AbWJZRkI (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
- 13:40:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423686AbWJZRkH
- (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 13:40:07 -0400
-Received: from ug-out-1314.google.com ([66.249.92.173]:58684 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1423465AbWJZRkB
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 13:40:01 -0400
-Received: by ug-out-1314.google.com with SMTP id 32so437995ugm for
- <git@vger.kernel.org>; Thu, 26 Oct 2006 10:40:00 -0700 (PDT)
-Received: by 10.67.117.2 with SMTP id u2mr3256422ugm; Thu, 26 Oct 2006
- 10:39:59 -0700 (PDT)
-Received: from grissom.internal.parkins.org.uk ( [84.201.153.164]) by
- mx.google.com with ESMTP id u1sm570474uge.2006.10.26.10.39.58; Thu, 26 Oct
- 2006 10:39:59 -0700 (PDT)
-To: git@vger.kernel.org
+ S1162160AbWKPCDY (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
+ 21:03:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1162165AbWKPCDX
+ (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 21:03:23 -0500
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:3789 "EHLO
+ fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP id S1162160AbWKPCDX
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 21:03:23 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao01.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061116020322.NUPG9173.fed1rmmtao01.cox.net@fed1rmimpo02.cox.net>; Wed, 15
+ Nov 2006 21:03:22 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id nE3U1V00c1kojtg0000000; Wed, 15 Nov 2006
+ 21:03:29 -0500
+To: hanwen@xs4all.nl
 Sender: git-owner@vger.kernel.org
 
-On Thursday 2006, October 26 18:21, Junio C Hamano wrote:
+Han-Wen Nienhuys <hanwen@xs4all.nl> writes:
 
-> I do not have an objection to what this does, except I wonder if
-> somebody's script relies on parsing this output already.
+> FWIW, I regularly mess up with the differences between fetching,
+> pulling and merging.  In particular, having to do a two step process
+> to get remote changes in,
+>
+>   git pull url-to-server master:master
+>      ..error message about not being a fast-forward..
+>
+>   git pull --update-head-ok url-to-server master:master
+>      ..still an error message about update not being a fast-forward..
+>
+>       (sigh)
 
-I did think of that, but the existing output looked pretty non-useful for easy 
-parsing because of the fact that filenames where being printed instead of 
-hashes.  If I were given free reign I think I'd want to drop the "would 
-prune" message as well.
+Sigh indeed.
 
-> It is customary to have one empty line before the S-o-b: line.
+Why don't you do the simple and obvious
 
-I didn't do it.  Git did :-)  I'll keep an eye out for it from now on.  
-Apologies (as usual)
+	git pull url master
 
+or "git pull url" if you already know the master is the branch
+you are interested in.
 
-Andy
--- 
-Dr Andrew Parkins, M Eng (Hons), AMIEE
+The more advanced form of using tracking branches are there and
+documentation talks about them for completeness but that does
+not mean you have to use it.
