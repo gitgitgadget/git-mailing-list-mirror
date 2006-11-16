@@ -1,75 +1,109 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: kernel.org mirroring (Re: [GIT PULL] MMC update)
-Date: Sat, 9 Dec 2006 14:28:25 +1300
-Message-ID: <46a038f90612081728s65d65ccewe64fa1a496de76fa@mail.gmail.com>
-References: <Pine.LNX.4.64.0612020835110.3476@woody.osdl.org>
-	 <4578722E.9030402@zytor.com> <4579611F.5010303@dawes.za.net>
-	 <200612081438.25493.jnareb@gmail.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: Cleaning up git user-interface warts
+Date: Thu, 16 Nov 2006 14:58:28 +0100
+Message-ID: <20061116135828.GY7201@pasky.or.cz>
+References: <87k61yt1x2.wl%cworth@cworth.org> <455A1137.8030301@shadowen.org> <87hcx1u934.wl%cworth@cworth.org> <Pine.LNX.4.64.0611141518590.2591@xanadu.home> <87bqn9u43s.wl%cworth@cworth.org> <7vr6w5y7to.fsf@assigned-by-dhcp.cox.net> <7virhhy76h.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611142048350.2591@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sat, 9 Dec 2006 01:28:35 +0000 (UTC)
-Cc: "Rogan Dawes" <discard@dawes.za.net>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	"Linus Torvalds" <torvalds@osdl.org>,
-	"Kernel Org Admin" <ftpadmin@kernel.org>,
-	"Git Mailing List" <git@vger.kernel.org>,
-	"Petr Baudis" <pasky@ucw.cz>
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Thu, 16 Nov 2006 13:58:48 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
+	Andy Whitcroft <apw@shadowen.org>,
+	Carl Worth <cworth@cworth.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=JT2Pa/yTE8xr/MYQ4VVCSzcd7ydmHLn8oc3Begr9ag2D38eDzs8w5jtZJxFirAM0HrAI3eLAE9tMHEuHS1R2TVF4jONOf8d2hp2kFkAP/AMSW66wKdTdmI0MDizlOW86qGZcBHw8ptPXCOKgIbRBWupFDycsQRs5ln0tKTApCpw=
-In-Reply-To: <200612081438.25493.jnareb@gmail.com>
 Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0611142048350.2591@xanadu.home>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33785>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gsr0x-0000G0-Ej for gcvg-git@gmane.org; Sat, 09 Dec
- 2006 02:28:31 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31584>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GkhlD-0005Cv-12 for gcvg-git@gmane.org; Thu, 16 Nov
+ 2006 14:58:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1947619AbWLIB22 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
- 20:28:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1947624AbWLIB22
- (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 20:28:28 -0500
-Received: from nf-out-0910.google.com ([64.233.182.184]:53286 "EHLO
- nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1947619AbWLIB21 (ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Dec
- 2006 20:28:27 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so1287557nfa for
- <git@vger.kernel.org>; Fri, 08 Dec 2006 17:28:26 -0800 (PST)
-Received: by 10.49.80.12 with SMTP id h12mr1142326nfl.1165627705902; Fri, 08
- Dec 2006 17:28:25 -0800 (PST)
-Received: by 10.49.51.10 with HTTP; Fri, 8 Dec 2006 17:28:25 -0800 (PST)
-To: "Jakub Narebski" <jnareb@gmail.com>
+ S1424062AbWKPN6b (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 16 Nov 2006
+ 08:58:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1424064AbWKPN6b
+ (ORCPT <rfc822;git-outgoing>); Thu, 16 Nov 2006 08:58:31 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:31130 "EHLO machine.or.cz") by
+ vger.kernel.org with ESMTP id S1424062AbWKPN6a (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 16 Nov 2006 08:58:30 -0500
+Received: (qmail 25788 invoked by uid 2001); 16 Nov 2006 14:58:28 +0100
+To: Nicolas Pitre <nico@cam.org>
 Sender: git-owner@vger.kernel.org
 
-On 12/9/06, Jakub Narebski <jnareb@gmail.com> wrote:
-> Perhaps gitweb should generate it's own ETag instead of messing with
-> 'expires' header?
+On Wed, Nov 15, 2006 at 05:32:06AM CET, Nicolas Pitre wrote:
+> 1) make "git init" an alias for "git init-db".
+> 
+> What's the point of "-db"?  Sure we're initializing the GIT database.  
+> But who cares?  The user doesn't care if GIT uses a "database" or 
+> whatever.  And according to some people's definition of a "database" it 
+> could be argued that GIT doesn't use a database at all in the purist 
+> sense of it. What the user wants is to get started and "init" (without 
+> the "-db" is so much more to the point. Doesn't matter if incidentally 
+> it happens to be the same keyword HG uses for the same operation because 
+> we are not afflicted by the NIH disease, right? And it has 3 chars less 
+> to type which is for sure a premium improvement to the very first GIT 
+> user experience!
 
-That'll be the winning solution. A combination of
+(This is somewhat related to the HEAD issue, e.g.
+<7v1wo3d6g4.fsf@assigned-by-dhcp.cox.net>, by virtue of basically
+eliminating it.)
 
- - cache SHA1-based requests forever
- - cache ref-based requests a longish time,  setting an ETag that
-contains headname+SHA1
- - on 'revalidate', check the ETag vs the ref and only recompute if
-things have changed
+Let's see. If you are adding the alias, you can as well add some
+porcelain stuffing in it, too.
 
-In the meantime, the code on kernel.org needs to be updated to the
-latest gitweb. On our server, I'd say the newer gitweb is 3~4 times
-faster serving the "expensive" summary pages. And much smarter in
-terms of caching headers.
+What are the 99% of use cases when doing "init"?
 
-cheers
+(a) You are going to do an initial commit right away; the repository is
+at this point basically useless for anything but initial commit. So you
+might have "init" well just perform it for you right away.
+
+(b) You are setting up a bare repository on a server and you will push
+to it in a minute. Cogito has a separate cg-admin-setuprepo command for
+it, which will also prepare it for usage by dumb servers and optionally
+for shared usage in a group of users. Git could have something similar.
 
 
+> 2) "pull" and "push" should be symmetrical operations
+..snip..
+> Conclusion:  git-pull must not perform any merge.  It is the symmetrical 
+> operation of a push meaning that it pulls content from a remote branch 
+> and does no more.  People understands that pretty well, .  This makes 
+> git-fetch redundant (or an alias to git-pull) in that case, and again we 
+> don't mind it becoming similar to in HG because we admit HG was right 
+> about it.
+
+If you _really_ want to do it in Git, the only sensible way to do it is
+to stop using the "pull" verb for a command name altogether for at least
+some rather long period of time, otherwise that's a blatant backwards
+compatibility breakage.
+
+> 3) remote branch handling should become more straight forward.
+> 
+> OK! Now that we've solved the pull issue and that everybody agrees with 
+> me (how can't you all agree with me anyway) let's have a look at remote 
+> branches.  It should be simple:
+..snip..
+
+By the way, due to the way you describe it, it's not all that clear to
+me how is this (in)compatible with the current way we do it, on other
+than the usage and git-pull's auto-creation magic level.
+
+Is it that what you are describing _is_ in fact what we do support now,
+with "branch groups" meaning "remotes" etc, and you are only proposing
+some enhancements to automatically create remotes in git-pull, or are
+there some other differences I've missed?
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
+$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
