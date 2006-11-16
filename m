@@ -1,108 +1,102 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Problem compiling: that perl thing again
-Date: Fri, 08 Dec 2006 12:49:49 -0800
-Message-ID: <7vvekmgljm.fsf@assigned-by-dhcp.cox.net>
-References: <805469.91804.qm@web31805.mail.mud.yahoo.com>
+From: Theodore Tso <tytso@mit.edu>
+Subject: Re: Cleaning up git user-interface warts
+Date: Wed, 15 Nov 2006 20:14:11 -0500
+Message-ID: <20061116011411.GB10512@thunk.org>
+References: <87hcx1u934.wl%cworth@cworth.org> <Pine.LNX.4.64.0611141518590.2591@xanadu.home> <87bqn9u43s.wl%cworth@cworth.org> <ejdcg5$4fl$1@sea.gmane.org> <Pine.LNX.4.64.0611141633430.2591@xanadu.home> <7vbqn9y6w6.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611142007010.2591@xanadu.home> <7v3b8ltq7r.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611142306090.2591@xanadu.home> <Pine.LNX.4.64.0611150950170.3349@woody.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 8 Dec 2006 20:49:59 +0000 (UTC)
-Cc: git@vger.kernel.org
+NNTP-Posting-Date: Thu, 16 Nov 2006 03:47:12 +0000 (UTC)
+Cc: Nicolas Pitre <nico@cam.org>, Junio C Hamano <junkio@cox.net>,
+	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <805469.91804.qm@web31805.mail.mud.yahoo.com> (Luben Tuikov's
-	message of "Fri, 8 Dec 2006 12:36:28 -0800 (PST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0611150950170.3349@woody.osdl.org>
+User-Agent: Mutt/1.5.12-2006-07-14
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33742>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GsmfJ-00035P-L1 for gcvg-git@gmane.org; Fri, 08 Dec
- 2006 21:49:53 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31554>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GkYDL-0006VM-Sr for gcvg-git@gmane.org; Thu, 16 Nov
+ 2006 04:47:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1761197AbWLHUtv (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
- 15:49:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946575AbWLHUtv
- (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 15:49:51 -0500
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:34024 "EHLO
- fed1rmmtao05.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1761197AbWLHUtu (ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Dec 2006
- 15:49:50 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao05.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061208204950.CPLX15640.fed1rmmtao05.cox.net@fed1rmimpo01.cox.net>; Fri, 8
- Dec 2006 15:49:50 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id wLpD1V00H1kojtg0000000; Fri, 08 Dec 2006
- 15:49:13 -0500
-To: ltuikov@yahoo.com
+ S1031092AbWKPDqy (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
+ 22:46:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031093AbWKPDqy
+ (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 22:46:54 -0500
+Received: from THUNK.ORG ([69.25.196.29]:5076 "EHLO thunker.thunk.org") by
+ vger.kernel.org with ESMTP id S1031092AbWKPDqx (ORCPT
+ <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 22:46:53 -0500
+Received: from root (helo=candygram.thunk.org) by thunker.thunk.org with
+ local-esmtps  (tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1
+ (Debian)) id 1GkYGP-0005ca-61; Wed, 15 Nov 2006 22:50:10 -0500
+Received: from tytso by candygram.thunk.org with local (Exim 4.62)
+ (envelope-from <tytso@thunk.org>) id 1GkVpT-00060C-Cw; Wed, 15 Nov 2006
+ 20:14:11 -0500
+To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 
-Luben Tuikov <ltuikov@yahoo.com> writes:
+On Wed, Nov 15, 2006 at 10:03:18AM -0800, Linus Torvalds wrote:
+> So the reason for using "git pull" is
+> 
+>  - bk did it that way, and like it or not, bk was the first usable 
+>    distributed system. hg is totally uninteresting.
 
-> Over the last 2 months each time I pull, check out next and compile,
-> I'm seeing _some_ kind of problem with compiling the perl section
-> of git.  Sometimes git-reset --hard, or a fresh checkout, or git-clean
-> resolve the situation.  But not this time.
-> ...
-> So, where is "perl.mak"?
+Yes, "bk pull" had an implied merge.  But, the reason why bk pull was
+never really a problem with Bitkeeper is because it didn't really have
+support for multiple branches active within the same repository ---
+what Larry called "lines of development".  Or rather, Larry started
+down the path of implementing lines of development, and then never
+fully supported it, mainly because making it easy for people to use
+was the tricky part.   
 
-This particular breakage cannot be "last two months", but there
-was a recent breakage by commit f848718a last week on the 'master'
-branch.
+So with Bitkeeper, with "bk pull" there was never any question about
+which branch ("line of development") you would be merging into after
+doing a "bk pull", since there was only one LOD, and given that BK had
+the rule that a within a LOD only one tip was allowed, a "bk pull"
+_had_ to do do a merge operation.   
 
----
-Junio C Hamano <junkio@cox.net> writes:
-> merlyn@stonehenge.com (Randal L. Schwartz) writes:
->
->>>>>>> "Alex" == Alex Riesen <raa.lkml@gmail.com> writes:
->>
->> Alex> Strange. You seem to have the old, generated Makefile you perl/
->> Alex> directory. Haven't your pull failed? If so, I suspect that
->>
->> Alex>  rm perl/Makefile
->> Alex>  git reset --hard
->> Alex>  git pull git...
->>
->> I ended up having to do another reset afterward.
->>
->> Definitely something went weird when Makefile was removed
->> from .gitignore.
->
-> Yes, perl/Makefile is getting overwritten by what Makefile.PL
-> generates.  I thought the point of Alex's patch was to have it
-> muck with perl.mak and leave the tracked Makefile alone?
+The moment you start supporting multiple unmerged tips in a repository
+i.e., branches, it raises the question, "which branch should the pull
+operation merge onto"?  And git's answer, "the current branch", is
+often not the right one.  *That's* why always doing a merge isn't
+always the right answer, and so in the git world, people are told, use
+"git fetch" instead, and in the hg world, "hg pull" doesn't do the
+merge.  IMO, it's a fundamental result of the fact that both git and
+hg have chosen to support mulitple LOD's, whereas BK punted on the
+concept.
 
-Now, I am CLUELESS about what MakeMaker does, but would this
-help?
+If you are operating on your local development branch, the reality is
+that merging is probably not the right answer in the general case,
+which is why the hg world have omitted doing the merge.  And by
+telling people, use "git fetch" instead, that's also an implicit
+admission that merging onto the current branch is often not the Right
+Thing.
 
---- 
-diff --git a/perl/Makefile b/perl/Makefile
-index bd483b0..099beda 100644
---- a/perl/Makefile
-+++ b/perl/Makefile
-@@ -29,7 +29,7 @@ $(makfile): ../GIT-CFLAGS Makefile
- 	echo '	echo $(instdir_SQ)' >> $@
- else
- $(makfile): Makefile.PL ../GIT-CFLAGS
--	'$(PERL_PATH_SQ)' $< FIRST_MAKEFILE='$@' PREFIX='$(prefix_SQ)'
-+	'$(PERL_PATH_SQ)' $< PREFIX='$(prefix_SQ)'
- endif
- 
- # this is just added comfort for calling make directly in perl dir
-diff --git a/perl/Makefile.PL b/perl/Makefile.PL
-index de73235..4168775 100644
---- a/perl/Makefile.PL
-+++ b/perl/Makefile.PL
-@@ -24,5 +24,6 @@ WriteMakefile(
- 	NAME            => 'Git',
- 	VERSION_FROM    => 'Git.pm',
- 	PM		=> \%pm,
-+	MAKEFILE	=> 'perl.mak',
- 	%extra
- );
+The problem is that "pull" is a very evocative word, especially given
+the existence "push", and so in the git world we are reduced to
+telling people, "you really don't want to use pull, trust me".  
+
+Is this a major issue?  Not really; I can think of a number of other
+issues that make git hard to learn, and why hg has a more gentle
+learning curve, and the "don't use pull" is probably a relatively
+minor annoyance in the grand scheme of things.
+
+If people are looking for a simple way out, maybe it would be enough
+to have an option where if "git pull" is called from an interactive
+terminal, and the "novice user" option is enabled, "git pull" returns
+a warning message, "You probably want to use 'git fetch' instead; are
+you sure?"  If people are saying that we shouldn't be teaching "git
+pull" until fairly late in the game, maybe we should have a way of
+discouraging novices from using, simply because they they are used to
+seeing "pull" from other distributed SCM's.
+
