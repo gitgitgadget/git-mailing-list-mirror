@@ -1,64 +1,72 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: For all you darcs lovers: git-hunk-commit
-Date: Fri, 8 Dec 2006 16:37:30 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612081634570.28348@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0612051936480.28348@wbgn013.biozentrum.uni-wuerzburg.de>
-  <45760CA3.9060003@xs4all.nl>  <Pine.LNX.4.63.0612060129310.28348@wbgn013.biozentrum.uni-wuerzburg.de>
- <1165568153.21747.11.camel@localhost.localdomain>
+From: Marko Macek <marko.macek@gmx.net>
+Subject: Re: Cleaning up git user-interface warts
+Date: Thu, 16 Nov 2006 07:07:47 +0100
+Message-ID: <455C0033.2020309@gmx.net>
+References: <Pine.LNX.4.64.0611141518590.2591@xanadu.home>	<87bqn9u43s.wl%cworth@cworth.org> <ejdcg5$4fl$1@sea.gmane.org>	<Pine.LNX.4.64.0611141633430.2591@xanadu.home>	<7vbqn9y6w6.fsf@assigned-by-dhcp.cox.net>	<Pine.LNX.4.64.0611142007010.2591@xanadu.home>	<7v3b8ltq7r.fsf@assigned-by-dhcp.cox.net>	<Pine.LNX.4.64.0611142306090.2591@xanadu.home>	<Pine.LNX.4.64.0611150950170.3349@woody.osdl.org>	<Pine.LNX.4.64.0611151315291.2591@xanadu.home>	<20061115184914.GA24122@spearce.org> <455B64F7.9040506@gmx.net> <7vejs4l9wy.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Fri, 8 Dec 2006 15:37:56 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 16 Nov 2006 06:10:41 +0000 (UTC)
+Cc: Shawn Pearce <spearce@spearce.org>,
+	Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org,
+	cworth@cworth.org, pasky@suse.cz
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <1165568153.21747.11.camel@localhost.localdomain>
+X-Authenticated: #420190
+User-Agent: Thunderbird 1.5.0.7 (X11/20060909)
+Original-Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <7vejs4l9wy.fsf@assigned-by-dhcp.cox.net>
 X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33699>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GshnM-0007Cb-9n for gcvg-git@gmane.org; Fri, 08 Dec
- 2006 16:37:52 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31561>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GkaSJ-0000Ce-Hj for gcvg-git@gmane.org; Thu, 16 Nov
+ 2006 07:10:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1425578AbWLHPhd (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
- 10:37:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1425585AbWLHPhd
- (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 10:37:33 -0500
-Received: from mail.gmx.net ([213.165.64.20]:49005 "HELO mail.gmx.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S1425578AbWLHPhc
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Dec 2006 10:37:32 -0500
-Received: (qmail invoked by alias); 08 Dec 2006 15:37:31 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp049) with SMTP; 08 Dec 2006 16:37:31 +0100
-To: Matthias Kestenholz <lists@spinlock.ch>
+ S1161859AbWKPGK2 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 16 Nov 2006
+ 01:10:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031076AbWKPGK2
+ (ORCPT <rfc822;git-outgoing>); Thu, 16 Nov 2006 01:10:28 -0500
+Received: from mail.gmx.net ([213.165.64.20]:49095 "HELO mail.gmx.net") by
+ vger.kernel.org with SMTP id S1031015AbWKPGK1 (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 16 Nov 2006 01:10:27 -0500
+Received: (qmail invoked by alias); 16 Nov 2006 06:10:25 -0000
+Received: from BSN-77-245-67.dial-up.dsl.siol.net (EHLO [192.168.2.7])
+ [193.77.245.67] by mail.gmx.net (mp038) with SMTP; 16 Nov 2006 07:10:25 +0100
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Hi,
-
-On Fri, 8 Dec 2006, Matthias Kestenholz wrote:
-
-> On Wed, 2006-12-06 at 01:36 +0100, Johannes Schindelin wrote:
-> > But in this case, bash was faster to script and debug, and unless people 
-> > speak up, saying "I want that feature badly!", I do not plan to do 
-> > anything with it.
+Junio C Hamano wrote:
+> Marko Macek <marko.macek@gmx.net> writes:
 > 
-> This feature is _very_ handy and I think it would be great if this
-> became part of the default git distribution.
+>> For people switching from CVS and SVN it would be much better if the
+>> index was hidden behind the scenes by using different defaults:
+>>
+>> git-commit -a
+>> git-status -a
+>> git-diff HEAD
+>>
+>> BTW, currently there's a minor bug: git-diff HEAD doesn't work before
+>> you make the first commit. Perhaps this should be special cased.
+> 
+> That's only a _bug_ in your implementation of the synonym for
+> "svn diff" which blindly used "git diff HEAD".
 
-Note that it requires a relatively new bash version ATM, because of the 
-"while read line; do ...; done < <(cmd)" construct. I have another version 
-which substitutes a temporary file for that, but I keep thinking that a 
-graphical tool, such as git-gui, would be more appropriate. BTW I just did 
-it in bash, because I wanted to learn about these famous bash arrays.
 
-Ciao,
-Dscho
+My "implementation" is taken from git-diff man page. It seems obvious
+that the situation before the first commit is just a special case if 
+we consider git-diff to be Porcelain (which I do).
+
+ 
+> This "there is no HEAD yet" is not related to the index, but I
+
+I agree, this is a separate issue.
+
