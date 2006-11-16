@@ -1,61 +1,79 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
-Subject: Re: svn versus git
-Date: Thu, 14 Dec 2006 21:58:33 -0300
-Message-ID: <200612150058.kBF0wX23005507@laptop13.inf.utfsm.cl>
-References: <arekm@maven.pl>
-NNTP-Posting-Date: Fri, 15 Dec 2006 00:59:29 +0000 (UTC)
-Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
+X-Spam-Status: No, score=-2.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,MSGID_FROM_MTA_HEADER,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+From: Sean <seanlkml@sympatico.ca>
+Subject: Re: Cleaning up git user-interface warts
+Date: Thu, 16 Nov 2006 12:44:14 -0500
+Message-ID: <BAYC1-PASMTP082D56B2460EFED9DA6D3BAEE90@CEZ.ICE>
+References: <87k61yt1x2.wl%cworth@cworth.org>
+	<Pine.LNX.4.64.0611142306090.2591@xanadu.home>
+	<Pine.LNX.4.64.0611150950170.3349@woody.osdl.org>
+	<200611151858.51833.andyparkins@gmail.com>
+	<Pine.LNX.4.64.0611151111250.3349@woody.osdl.org>
+	<f2b55d220611151139v66fba16ax97ce6b9966b33ce7@mail.gmail.com>
+	<Pine.LNX.4.64.0611151203450.3349@woody.osdl.org>
+	<Pine.LNX.4.64.0611151516360.2591@xanadu.home>
+	<Pine.LNX.4.64.0611151226590.3349@woody.osdl.org>
+	<20061116042639.GA23026@thunk.org>
+	<455C5079.3010701@op5.se>
+	<Pine.LNX.4.64.0611160824040.3349@woody.osdl.org>
+	<87ejs3s4vn.wl%cworth@cworth.org>
+	<Pine.LNX.4.64.0611160924250.3349@woody.osdl.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 16 Nov 2006 17:44:32 +0000 (UTC)
+Cc: Carl Worth <cworth@cworth.org>, Andreas Ericsson <ae@op5.se>,
+	Theodore Tso <tytso@mit.edu>, Nicolas Pitre <nico@cam.org>,
+	"Michael K. Edwards" <medwards.linux@gmail.com>,
+	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: Message from Arkadiusz Miskiewicz <arekm@maven.pl> 
-   of "Thu, 14 Dec 2006 20:00:54 BST." <200612142000.54409.arekm@maven.pl> 
-X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.5  (beta27)
-X-Greylist: Delayed for 00:00:01 by milter-greylist-2.0.2 (inti.inf.utfsm.cl [200.1.19.1]); Thu, 14 Dec 2006 21:58:50 -0300 (CLST)
-X-Virus-Scanned: ClamAV version 0.88.5, clamav-milter version 0.88.5 on inti.inf.utfsm.cl
-X-Virus-Status: Clean
+X-Originating-IP: [65.93.43.81]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Original-Message-Id: <20061116124414.a1fdd6dd.seanlkml@sympatico.ca>
+In-Reply-To: <Pine.LNX.4.64.0611160924250.3349@woody.osdl.org>
+X-Mailer: Sylpheed version 2.2.9 (GTK+ 2.10.4; i386-redhat-linux-gnu)
+X-OriginalArrivalTime: 16 Nov 2006 17:53:39.0390 (UTC) FILETIME=[25A255E0:01C709A8]
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34458>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gv1Q5-0003E5-Tf for gcvg-git@gmane.org; Fri, 15 Dec
- 2006 01:59:26 +0100
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GklHh-0003sb-8w for gcvg-git@gmane.org; Thu, 16 Nov
+ 2006 18:44:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932675AbWLOA7K (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
- 19:59:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932636AbWLOA7J
- (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 19:59:09 -0500
-Received: from inti.inf.utfsm.cl ([200.1.21.155]:35825 "EHLO
- inti.inf.utfsm.cl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
- S932681AbWLOA7I (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006
- 19:59:08 -0500
-Received: from laptop13.inf.utfsm.cl (pc-173-245-83-200.cm.vtr.net
- [200.83.245.173]) by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id
- kBF0wlnO005321 (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256
- verify=NO); Thu, 14 Dec 2006 21:58:50 -0300
-Received: from laptop13.inf.utfsm.cl (laptop13.inf.utfsm.cl [127.0.0.1]) by
- laptop13.inf.utfsm.cl (8.13.8/8.13.8) with ESMTP id kBF0wX23005507; Thu, 14
- Dec 2006 21:58:34 -0300
-To: Arkadiusz Miskiewicz <arekm@maven.pl>
+ S1162065AbWKPRoS (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 16 Nov 2006
+ 12:44:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1162067AbWKPRoS
+ (ORCPT <rfc822;git-outgoing>); Thu, 16 Nov 2006 12:44:18 -0500
+Received: from bayc1-pasmtp08.bayc1.hotmail.com ([65.54.191.168]:10654 "EHLO
+ BAYC1-PASMTP08.CEZ.ICE") by vger.kernel.org with ESMTP id S1162065AbWKPRoR
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 16 Nov 2006 12:44:17 -0500
+Received: from linux1.attic.local ([65.93.43.81]) by BAYC1-PASMTP08.CEZ.ICE
+ over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830); Thu, 16 Nov
+ 2006 09:53:39 -0800
+Received: from guru.attic.local ([10.10.10.28]) by linux1.attic.local with
+ esmtp (Exim 4.43) id 1GkkLW-0006xy-36; Thu, 16 Nov 2006 11:44:14 -0500
+To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 
-Arkadiusz Miskiewicz <arekm@maven.pl> wrote:
+On Thu, 16 Nov 2006 09:30:47 -0800 (PST)
+Linus Torvalds <torvalds@osdl.org> wrote:
 
-[...]
+> Yeah. Each branch should
+> 
+>  (a) have a "default source" initialized on the initial "clone"
+>
+> (b) have a way to set the source afterwards
+>
+> (c) error out if you do just a "git pull" or "git pull remotename" if 
+>     there is no default branch for the current local branch for that 
+>     remote.
 
-> ps. I'm blind or there is no documentation about what utilities are needed to 
-> get git fully working? (like sed, coreutils, grep, rcs package (merge tool 
-> afaik needed)...). 
+This would be _great_.  You just shouldn't have to hack at the
+.git/config file to get reasonable default sources after a clone.
+Or even for that matter after fetching a new branch into an
+existing repo.
 
-Look at the .spec (or .spec.in) file, they record what the running git
-needs.
--- 
-Dr. Horst H. von Brand                   User #22616 counter.li.org
-Departamento de Informatica                    Fono: +56 32 2654431
-Universidad Tecnica Federico Santa Maria             +56 32 2654239
-Casilla 110-V, Valparaiso, Chile               Fax:  +56 32 2797513
