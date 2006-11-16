@@ -5,111 +5,70 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: What's the meaning of `parenthood' in git commits?
-Date: Tue, 7 Nov 2006 16:58:43 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0611071644430.3667@g5.osdl.org>
-References: <878ximbwm3.fsf@hades.wkstn.nix>
+Subject: Re: Cleaning up git user-interface warts
+Date: Thu, 16 Nov 2006 10:28:35 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0611161027020.3349@woody.osdl.org>
+References: <87k61yt1x2.wl%cworth@cworth.org> <455A1137.8030301@shadowen.org>
+ <87hcx1u934.wl%cworth@cworth.org> <Pine.LNX.4.64.0611141518590.2591@xanadu.home>
+ <87bqn9u43s.wl%cworth@cworth.org> <ejdcg5$4fl$1@sea.gmane.org>
+ <Pine.LNX.4.64.0611141633430.2591@xanadu.home> <7vbqn9y6w6.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0611142007010.2591@xanadu.home> <7v3b8ltq7r.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0611142306090.2591@xanadu.home> <Pine.LNX.4.64.0611150950170.3349@woody.osdl.org>
+ <455BBCE9.4050503@xs4all.nl> <Pine.LNX.4.64.0611151908130.3349@woody.osdl.org>
+ <455C412D.1030408@xs4all.nl> <Pine.LNX.4.64.0611160814560.3349@woody.osdl.org>
+ <455C94FA.3050903@xs4all.nl> <Pine.LNX.4.64.0611160904010.3349@woody.osdl.org>
+ <Pine.LNX.4.64.0611160932340.3349@woody.osdl.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Wed, 8 Nov 2006 00:58:55 +0000 (UTC)
-Cc: git@vger.kernel.org
+NNTP-Posting-Date: Thu, 16 Nov 2006 18:29:18 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <878ximbwm3.fsf@hades.wkstn.nix>
-X-MIMEDefang-Filter: osdl$Revision: 1.155 $
+In-Reply-To: <Pine.LNX.4.64.0611160932340.3349@woody.osdl.org>
+X-MIMEDefang-Filter: osdl$Revision: 1.156 $
 X-Scanned-By: MIMEDefang 2.36
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31106>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31613>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GhbmI-00063i-31 for gcvg-git@gmane.org; Wed, 08 Nov
- 2006 01:58:54 +0100
+ esmtp (Exim 4.43) id 1Gklyr-0005bV-Po for gcvg-git@gmane.org; Thu, 16 Nov
+ 2006 19:28:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752916AbWKHA6v (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 7 Nov 2006
- 19:58:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752503AbWKHA6v
- (ORCPT <rfc822;git-outgoing>); Tue, 7 Nov 2006 19:58:51 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:9621 "EHLO smtp.osdl.org") by
- vger.kernel.org with ESMTP id S1752916AbWKHA6u (ORCPT
- <rfc822;git@vger.kernel.org>); Tue, 7 Nov 2006 19:58:50 -0500
+ S1162115AbWKPS2z (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 16 Nov 2006
+ 13:28:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1162117AbWKPS2z
+ (ORCPT <rfc822;git-outgoing>); Thu, 16 Nov 2006 13:28:55 -0500
+Received: from smtp.osdl.org ([65.172.181.4]:54658 "EHLO smtp.osdl.org") by
+ vger.kernel.org with ESMTP id S1162115AbWKPS2y (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 16 Nov 2006 13:28:54 -0500
 Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
- smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kA80wioZ028166
- (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Tue, 7
- Nov 2006 16:58:45 -0800
+ smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kAGISaoZ020122
+ (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Thu, 16
+ Nov 2006 10:28:36 -0800
 Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
- shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kA80wieh024734; Tue, 7 Nov
- 2006 16:58:44 -0800
-To: Nix <nix@esperi.org.uk>
+ shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kAGISZgK001146; Thu, 16 Nov
+ 2006 10:28:35 -0800
+To: Han-Wen Nienhuys <hanwen@xs4all.nl>
 Sender: git-owner@vger.kernel.org
 
 
 
-On Wed, 8 Nov 2006, Nix wrote:
-> 
-> [ Nix explains what he's doing now with SCCS ]: you may be
-> sick now.
+On Thu, 16 Nov 2006, Linus Torvalds wrote:
+> @@ -95,6 +100,12 @@ case "$merge_head" in
+>  	;;
+>  esac
+>  
+> +if test -z "$orig_head"
+> +then
+> +	git-update-ref -m "initial pull" HEAD $merge_head "" || exit 1
+> +	exit
+> +fi
+> +
 
-Wow. You've got some strange setup there, Nix.
+So this is the place that probably wants a "git-checkout" before the 
+exit, otherwise you'd (illogically) have to do it by hand for that 
+particular case.
 
-> After all that setup, my question's simple. Does a `parent' in git
-> terminology simply mean `this commit was derived in some way from the
-> commit listed here'?
-
-Well, strictly speaking, git doesn't itself assign much any real meaning 
-to "parent" at all. It has the obvious meanings:
-
- - the parent pointers act as reachability graph edges (so fsck cares 
-   about it a lot, of course)
-
- - listing the "log" of a commit will show everything reachable from that 
-   commit and it's parents, of course (with the commit date-stamp being 
-   used as a "ordering" when having multiple choices of commits to show)
-
- - it has the obvious meanings for the "revision arithmetic", ie revision 
-   name parsing (ie "commit~3^2")
-
- - parenthood will be used to show the diff ("git show", "git log -p" and 
-   friends)
-
- - the "merge-base" algorithms obviously use it to find the most recent 
-   common ancestor, and that in turn impacts the normal merge strategies, 
-   of course.
-
-so parenthood does obviously have a number of very specific technical 
-meanings for different programs, but at the same time, no, git doesn't 
-really "care". You can happily generate your own parenthood if you want 
-to, and git will just continue to follow the above rules.
-
-> If so, I suppose I can list heads/some-change-foo as one parent on these 
-> merge commits, even though the `merging' mechanism is so odd that I 
-> expect to be pelted with rotten vegetables as soon as I post this.
-
-Yeah, git won't care. If you screw up parenthood, you have a few problems:
-
- - the diffs may look really strange. In particular, if you list multiple 
-   parents, the git "diff" functions will all just assume that it's a 
-   merge, and a "git show" will start showing the combined diff (which is 
-   usually empty).
-
-   So if you end up having multiple parents, not because it was "really" a 
-   merge, but because you use the other parent pointer to point to some 
-   "source" for the patch, things like "git log -p" won't give nice output 
-   any more. You need to manually ask for the diff with something like
-
-	# show diff from second parent
-	git diff commit^2..commit
-
-   instead.
-
- - listing too _few_ parents is potentially more serious, if you have 
-   reachability issues (ie you wanted to keep the other source around, but 
-   since you didn't list it as a parent, git won't know that it had 
-   anything to do with your commit, so it may be pruned away unless you 
-   have some other way to reach it)
-
-but if you just have a really strange merge algorithm, and the _data_ 
-associated with the parents is "surprising" from the standpoint of the 
-default merge, git really won't care at all.
-
-Your usage does sound a bit strange.
+Of course, we should _not_ do it if the "--bare" flag has been set, so you 
+migth want to tweak the exact logic here.
 
