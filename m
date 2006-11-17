@@ -4,100 +4,99 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: [RFC] Two conceptually distinct commit commands
-Date: Mon, 4 Dec 2006 22:51:23 -0500
-Message-ID: <20061205035123.GA8831@thunk.org>
-References: <87d56z32e1.wl%cworth@cworth.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Cleaning up git user-interface warts
+Date: Thu, 16 Nov 2006 23:32:18 -0800
+Message-ID: <7v64dev88t.fsf@assigned-by-dhcp.cox.net>
+References: <87k61yt1x2.wl%cworth@cworth.org>
+	<7v3b8ltq7r.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0611142306090.2591@xanadu.home>
+	<Pine.LNX.4.64.0611150950170.3349@woody.osdl.org>
+	<455BBCE9.4050503@xs4all.nl>
+	<Pine.LNX.4.64.0611151908130.3349@woody.osdl.org>
+	<Pine.LNX.4.63.0611162353250.13772@wbgn013.biozentrum.uni-wuerzburg.de>
+	<Pine.LNX.4.64.0611161508530.3349@woody.osdl.org>
+	<455CFCBD.8040901@xs4all.nl>
+	<f2b55d220611161734m49136e6fneda5b002eb67618b@mail.gmail.com>
+	<f2b55d220611162242s48dc42d6g4cbfd9173e712ff8@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 5 Dec 2006 03:51:43 +0000 (UTC)
+NNTP-Posting-Date: Fri, 17 Nov 2006 07:32:30 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <87d56z32e1.wl%cworth@cworth.org>
-User-Agent: Mutt/1.5.12-2006-07-14
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+In-Reply-To: <f2b55d220611162242s48dc42d6g4cbfd9173e712ff8@mail.gmail.com>
+	(Michael K. Edwards's message of "Thu, 16 Nov 2006 22:42:55 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33294>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GrRLF-0002Sk-4A for gcvg-git@gmane.org; Tue, 05 Dec
- 2006 04:51:37 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31672>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GkyD4-000433-AL for gcvg-git@gmane.org; Fri, 17 Nov
+ 2006 08:32:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S968071AbWLEDv3 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
- 22:51:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S968072AbWLEDv3
- (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 22:51:29 -0500
-Received: from thunk.org ([69.25.196.29]:36886 "EHLO thunker.thunk.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S968071AbWLEDv1
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006 22:51:27 -0500
-Received: from root (helo=candygram.thunk.org) by thunker.thunk.org with
- local-esmtps  (tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1
- (Debian)) id 1GrROm-0001C7-3j; Mon, 04 Dec 2006 22:55:16 -0500
-Received: from tytso by candygram.thunk.org with local (Exim 4.62)
- (envelope-from <tytso@thunk.org>) id 1GrRL2-0004ov-6e; Mon, 04 Dec 2006
- 22:51:24 -0500
-To: Carl Worth <cworth@cworth.org>
+ S1755538AbWKQHcU (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 17 Nov 2006
+ 02:32:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755539AbWKQHcU
+ (ORCPT <rfc822;git-outgoing>); Fri, 17 Nov 2006 02:32:20 -0500
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:25266 "EHLO
+ fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP id S1755538AbWKQHcT
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 17 Nov 2006 02:32:19 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao01.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061117073219.XQEA9173.fed1rmmtao01.cox.net@fed1rmimpo02.cox.net>; Fri, 17
+ Nov 2006 02:32:19 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id njYR1V00l1kojtg0000000; Fri, 17 Nov 2006
+ 02:32:26 -0500
+To: "Michael K. Edwards" <medwards.linux@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-On Mon, Dec 04, 2006 at 11:08:22AM -0800, Carl Worth wrote:
->
-> Here are the two commit commands I would like to see in git:
-> 
->   commit-index-content [paths...]
-> 
->     Commits the content of the index for the given paths, (or all
->     paths in the index). The index content can be manipulated with
->     "git add", "git rm", "git mv", and "git update-index".
-> 
->   commit-working-tree-content [paths...]
-> 
->     Commits the content of the working tree for the given paths, (or
->     all tracked paths). Untracked files can be committed for the first
->     time by specifying their names on the command-line or by using
->     "git add" to add them just prior to the commit. Any rename or
->     removal of a tracked file will be detected and committed
->     automatically.
+"Michael K. Edwards" <medwards.linux@gmail.com> writes:
 
-I think this is a very interesting proposal, although I think I
-disagree with the last part:
+> Presumably "git branch -D" should inspect everything under
+> .git/remotes to see whether one or more Pull: lines need to be
+> deleted along with the branch.
 
-      Any [rename or] removal of a tracked file will be detected and
-      committed automatically.
+I am not sure what you mean.  .git/remotes files do not describe
+any relationship between local branches (and that is where one
+of the problem raised in recent thread -- pull does not notice
+on which branch you are on and change its behaviour depending on
+it), so I do not think there is anything gained for "git branch
+-D" by going through them.
 
-If adds aren't going done automatically (because otherwise you have
-problems with foo.c~ accidentally getting checked it), then it's
-non-symmetric to expect that deletes will also happen automatically.
-It's relatively rare that files are removed or renamed, and sometimes
-files accidentally disappear.  
+> Currently, it looks like "remotes" entries are
+> created only by "git clone" or by hand.  Junio, are there any plans to
+> manage the contents of "remotes" through the tool instead of by hand?
 
-So in the case where there are no pathnames given to "git
-commit-working-tree-content", I would argue that it does not do any
-implicit "git add" on new files NOR any implicit "git rm" on missing
-files unless the user actually specifies an --implicit-add or
---implicit-delete option, respectively.  If users want to make
---implicit-add and/or --implicit-delete the default, that could be a
-configuration option, but I don't think it should be a default.
+I muttered something in a near-by thread
 
+	Message-ID: <7vr6w78b4x.fsf@assigned-by-dhcp.cox.net>
 
-A second issue which you left unspecified is what should
-commit-working-tree-content do if the index != HEAD.  In particular,
-in this case:
+I am reasonably sure a separate tool (what I tentatively called
+"maint-remote" in the message) is necessary, because, while it
+would be relatively easy to make "git fetch" and friends to add
+new mappings in the default way under a new option, people with
+different workflows would want differnt "default mappings", and
+adding new mappings for _all_ remote branches is useful only for
+people who work in one particular way (namely, the CVS-style
+"the central distribution point is where everybody meet" model).
 
-edit foo.c
-git update-index
-edit foo.c
-git commit-working-tree-content foo.c
+The tool, under "interactive" mode, would probably take one
+parameter, the short name of a remote ($name), and would give
+you a form to update its URL:, shows ls-remote output against
+that repository and would let you:
 
-What should happen to foo.c in the index?  Should it be stay the same?
-Should the contents be replaced with version of foo.c that has just
-been commited?  The latter seems to make sense, but runs the risk of
-losing the data (what was in the index).  The former has the downside
-that the index might have a version of foo.c which is older than what
-has been just commited, which could be confusing.  Or should git
-commit-working-tree abort with an error message if index != HEAD?
+ - update the URL: which would probably cause the ls-remote to
+   be re-run;
+
+ - remove existing mappings;
+
+ - add mappings for a remote branch for which you do not have a
+   corresponding tracking branch, with a straightforward default
+   mapping:
+
+   	refs/heads/$branch:refs/remotes/$name/$branch
+
+But I haven't thought things through yet.
 
