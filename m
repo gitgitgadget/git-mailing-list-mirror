@@ -1,66 +1,88 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Corrupt pack file using older versions of git on a newer repo..
-Date: Wed, 20 Dec 2006 10:30:52 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0612201024370.18171@xanadu.home>
-References: <BAYC1-PASMTP11ADF6C984028A9DED853FAECF0@CEZ.ICE>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: git-svn bug?
+Date: Fri, 17 Nov 2006 00:55:10 -0800
+Message-ID: <20061117085509.GA29644@localdomain>
+References: <op.ti2svo0ozidtg1@rygel.lnxi.com> <7vejs4jshp.fsf@assigned-by-dhcp.cox.net> <op.ti2xykijzidtg1@rygel.lnxi.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-NNTP-Posting-Date: Wed, 20 Dec 2006 15:31:18 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Fri, 17 Nov 2006 08:55:22 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-reply-to: <BAYC1-PASMTP11ADF6C984028A9DED853FAECF0@CEZ.ICE>
-X-X-Sender: nico@xanadu.home
+Content-Disposition: inline
+In-Reply-To: <op.ti2xykijzidtg1@rygel.lnxi.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34938>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gx3PW-0006zt-Hr for gcvg-git@gmane.org; Wed, 20 Dec
- 2006 16:31:14 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31676>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GkzVG-000073-Nj for gcvg-git@gmane.org; Fri, 17 Nov
+ 2006 09:55:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S964870AbWLTPbL (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 20 Dec 2006
- 10:31:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964963AbWLTPbL
- (ORCPT <rfc822;git-outgoing>); Wed, 20 Dec 2006 10:31:11 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:41658 "EHLO
- relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S964870AbWLTPbK (ORCPT <rfc822;git@vger.kernel.org>); Wed, 20 Dec 2006
- 10:31:10 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
- <0JAK006AMWFGEKL0@VL-MO-MR003.ip.videotron.ca> for git@vger.kernel.org; Wed,
- 20 Dec 2006 10:30:52 -0500 (EST)
-To: Sean <seanlkml@sympatico.ca>
+ S1755542AbWKQIzO (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 17 Nov 2006
+ 03:55:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755543AbWKQIzO
+ (ORCPT <rfc822;git-outgoing>); Fri, 17 Nov 2006 03:55:14 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:46755 "EHLO hand.yhbt.net") by
+ vger.kernel.org with ESMTP id S1755542AbWKQIzM (ORCPT
+ <rfc822;git@vger.kernel.org>); Fri, 17 Nov 2006 03:55:12 -0500
+Received: from hand.yhbt.net (localhost [127.0.0.1]) by hand.yhbt.net
+ (Postfix) with SMTP id 754297DC098; Fri, 17 Nov 2006 00:55:10 -0800 (PST)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Fri, 17 Nov 2006
+ 00:55:10 -0800
+To: Troy Telford <ttelford.groups@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-On Wed, 20 Dec 2006, Sean wrote:
+Sorry for the late replies, I've been caught up with other things.
 
+Troy Telford <ttelford.groups@gmail.com> wrote:
+> On Wed, 15 Nov 2006 14:43:30 -0700, Junio C Hamano <junkio@cox.net> wrote:
 > 
-> This is probably expected behavior, but when bisecting another Git
-> issue[1], i found that after a fresh clone of the git repository using
-> 1.4.4.2 I got the following corrupt pack file when accessing that repo
-> with an old version of git:
+> >"Troy Telford" <ttelford.groups@gmail.com> writes:
+> >
+> >>(using git 1.4.4, svn 1.3.1 on a SLES 10 box)
+> >>fatal: Not a valid object name  
+> >>92e2e0c50bbbacb0a3426b2c0f8b3e043eb4830a~1
+> >>32768 at /usr/lib/perl5/5.8.8/Memoize.pm line 269
+> >>...
+> >>I couldn't find an object named
+> >>"92e2e0c50bbbacb0a3426b2c0f8b3e043eb4830a~1" in .git/
+> >
+> >Troy, do you have object 92e2e0c5?  Is it a root commit (i.e. a
+> >commit that does not have a parent)?
+
+dcommit expects to be run on a git-svn fetch-ed HEAD that is linear
+superset of remotes/git-svn.  That is: remotes/git-svn..HEAD should
+(ideally) contain no merges, and no root commits.  git-svn currently
+does no checking for root commits, but it should.
+
+> I'll have to admit I'm stabbing in the dark on how to get the correct  
+> answer this, but here goes:
 > 
-> $ git --version
-> git version 1.4.2
+> * `git cat-file -t 92e2e0...` returns 'commit'
+> * 'git cat-file -p 92e2e0...` returns: (minus the header/footer asterisks)
+> *********************************************
+> tree 4b825dc642cb6eb9a060e54bf8d69288fbee4904
+> author unknown <unknown> 961088898 +0000
+> committer unknown <unknown> 961088898 +0000
 > 
-> $ git log
-> fatal: corrupted pack file .git/objects/pack/pack-d75f6a8307f8d8ce9727fe27107486839c54aef6.pack
+> New repository initialized by cvs2svn.
+> *********************************************
 
-To make that repository accessible with older git versions simply run 
-git-repack -a -d using version 1.4.4.2.
+This commit is missing the git-svn-id: line at the bottom.  If you
+simply left it out (private svn repository info), can you check that the
+URL in this line is actually for the SVN repository you want to commit
+to?
 
-The clone with version 1.4.4.2 added OBJ_OFS_DELTA objects to the pack 
-which older git versions don't know about.  Those objects are used for 
-pack transport when both ends know about them as they take less space.  
-But the repack doesn't use them by default so a full repack will get rid 
-of them automatically.
+It seems like your usage of dcommit would actually cause the issue
+you're experiencing to be triggered on the dummy repository, and not the
+real one.  My other guess would be that you somehow merged commits from
+your dummy svn repo into your master branch.
 
-
+-- 
