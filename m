@@ -1,97 +1,66 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: What's in git.git (stable)
-Date: Sun, 17 Dec 2006 23:26:18 -0800
-Message-ID: <7v64c93bs5.fsf@assigned-by-dhcp.cox.net>
+From: "Michael K. Edwards" <medwards.linux@gmail.com>
+Subject: [PATCH] Make "git checkout <branch> <path>" work when <path> is a directory.
+Date: Thu, 16 Nov 2006 21:49:21 -0800
+Message-ID: <f2b55d220611162149m719079f3ubdaeac43fe9798cb@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Mon, 18 Dec 2006 07:26:24 +0000 (UTC)
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Fri, 17 Nov 2006 05:49:29 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-maint-at: 7da41f48c8acea834e8204917fe59da2b975903b
-X-master-at: 64fe031a7a78894955af217335b46059a36a582d
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=WscioDism9xLkbd0HI/M+xE5ntlIxBfKq7QR6XbvcPwMNJwB2JWbd6GQpXui4Yv14hFOMOfEN44ux/Zcv2GqzNZht4cB++SHdW0JXkX7ZkoojBWH4opt3zOdTMA8DvlaJRFvXVtBFtMoP8HYtrzWaHEddacTcqt1CeNg2LitBKE=
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34719>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GwCtD-0005sj-1n for gcvg-git@gmane.org; Mon, 18 Dec
- 2006 08:26:23 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31666>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GkwbM-0001eo-TD for gcvg-git@gmane.org; Fri, 17 Nov
+ 2006 06:49:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753440AbWLRH0U (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 18 Dec 2006
- 02:26:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753441AbWLRH0U
- (ORCPT <rfc822;git-outgoing>); Mon, 18 Dec 2006 02:26:20 -0500
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:53407 "EHLO
- fed1rmmtao11.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1753440AbWLRH0T (ORCPT <rfc822;git@vger.kernel.org>); Mon, 18 Dec 2006
- 02:26:19 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao11.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061218072618.QMHA25875.fed1rmmtao11.cox.net@fed1rmimpo02.cox.net>; Mon, 18
- Dec 2006 02:26:18 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id 07SW1W00p1kojtg0000000; Mon, 18 Dec 2006
- 02:26:31 -0500
+ S1424776AbWKQFtW (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 17 Nov 2006
+ 00:49:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1424778AbWKQFtW
+ (ORCPT <rfc822;git-outgoing>); Fri, 17 Nov 2006 00:49:22 -0500
+Received: from wx-out-0506.google.com ([66.249.82.238]:53221 "EHLO
+ wx-out-0506.google.com") by vger.kernel.org with ESMTP id S1424776AbWKQFtV
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 17 Nov 2006 00:49:21 -0500
+Received: by wx-out-0506.google.com with SMTP id s7so840447wxc for
+ <git@vger.kernel.org>; Thu, 16 Nov 2006 21:49:21 -0800 (PST)
+Received: by 10.90.89.5 with SMTP id m5mr1190830agb.1163742561153; Thu, 16
+ Nov 2006 21:49:21 -0800 (PST)
+Received: by 10.90.25.4 with HTTP; Thu, 16 Nov 2006 21:49:21 -0800 (PST)
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-I've updated 'master' with a handful topics along with a few
-fixes:
+This improves the workflow for, say, kernel subsystem backporting.
 
- - Jakub's gitweb updates;
+Signed-off-by: Michael K. Edwards <medwards-linux@gmail.com>
+---
+ git-checkout.sh |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
 
- - blame A..B's output shows lines attributed to the boundary
-   commit with commit SHA-1 prefixed with '^';
-
- - "branch -m $old $new" renames branch.$old.* configuration
-   variables to branch.$new.*;
-
- - "git add A/B C", when A and C/D used to be tracked files, now
-   properly works, it used to result in a bogus index you cannot
-   write-tree out;
-
- - "git show-branch --reflog=<n> <branch>" shows latest n entries
-   of the reflog of the branch.
-
- - "git fetch" between repositories with tons of refs had huge
-   performance problem; hopefully fixed.
-
-* The 'master' branch has these since the last announcement.
-
-   Jakub Narebski (8):
-      gitweb: Don't use Content-Encoding: header in git_snapshot
-      gitweb: Show target of symbolic link in "tree" view
-      gitweb: Add generic git_object subroutine to display object of any type
-      gitweb: Hyperlink target of symbolic link in "tree" view (if possible)
-      gitweb: SHA-1 in commit log message links to "object" view
-      gitweb: Do not show difftree for merges in "commit" view
-      gitweb: Add title attribute to ref marker with full ref name
-      gitweb: Add "next" link to commit view
-
-   Johannes Schindelin (2):
-      add a function to rename sections in the config
-      git-branch: rename config vars branch.<branch>.*, too
-
-   Junio C Hamano (11):
-      git-blame: show lines attributed to boundary commits differently.
-      update-index: make D/F conflict error a bit more verbose.
-      git-add: remove conflicting entry when adding.
-      Fix check_file_directory_conflict().
-      Fix mis-mark-up in git-merge-file.txt documentation
-      markup fix in svnimport documentation.
-      Teach show-branch how to show ref-log data.
-      git-fetch: Avoid reading packed refs over and over again
-      avoid accessing _all_ loose refs in git-show-ref --verify
-      show-ref: fix --quiet --verify
-      show-ref: fix --verify --hash=length
-
-   Quy Tonthat (1):
-      Documentation: new option -P for git-svnimport
-
-   Shawn Pearce (1):
-      Default GIT_COMMITTER_NAME to login name in recieve-pack.
+diff --git a/git-checkout.sh b/git-checkout.sh
+index dd47724..5866604 100755
+--- a/git-checkout.sh
++++ b/git-checkout.sh
+@@ -106,7 +106,8 @@ Did you intend to checkout '$@' which ca
+ 		git-ls-tree --full-name -r "$new" "$@" |
+ 		git-update-index --index-info || exit $?
+ 	fi
+-	git-checkout-index -f -u -- "$@"
++	git-ls-files "$@" |
++	git-checkout-index -f -u --stdin
+ 	exit $?
+ else
+ 	# Make sure we did not fall back on $arg^{tree} codepath
+-- 
