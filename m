@@ -1,95 +1,71 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-Subject: Re: [RFC] Submodules in GIT
-Date: Sun, 3 Dec 2006 01:55:08 +0100
-Message-ID: <200612030155.09630.Josef.Weidendorfer@gmx.de>
-References: <20061130170625.GH18810@admingilde.org> <200612020017.44275.Josef.Weidendorfer@gmx.de> <20061202202428.GT18810@admingilde.org>
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: [ANNOUNCE] Cogito-0.18.2
+Date: Fri, 17 Nov 2006 14:44:47 +1300
+Message-ID: <46a038f90611161744q6c535218n5b815ef1fc5228b6@mail.gmail.com>
+References: <20061117004930.GC7201@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sun, 3 Dec 2006 00:55:34 +0000 (UTC)
-Cc: Linus Torvalds <torvalds@osdl.org>, sf <sf@b-i-t.de>,
-	git@vger.kernel.org
+NNTP-Posting-Date: Fri, 17 Nov 2006 01:46:33 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #352111
-User-Agent: KMail/1.9.3
-In-Reply-To: <20061202202428.GT18810@admingilde.org>
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=QHthr4N9ttPWKfNaV8+ATYALmAREBhNRbScKdHKl4YZ3C1b5c5SA/prPTS8qzDDd5nU1bgW8d0f/54ydJ6S0EPMN26Y7wM86ozeR0/rm6Y6oqelk6qhxEdvWJsZ1j1QW1Cazw/Y4nffPIV+VbzRrEOx8ul+BdbEe8l2Cj60Ly+U=
+In-Reply-To: <20061117004930.GC7201@pasky.or.cz>
 Content-Disposition: inline
-X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33071>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31658>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gqfde-0006Mh-Lh for gcvg-git@gmane.org; Sun, 03 Dec
- 2006 01:55:27 +0100
+ esmtp (Exim 4.43) id 1Gksmp-0003b3-AG for gcvg-git@gmane.org; Fri, 17 Nov
+ 2006 02:45:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1424814AbWLCAzO (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 2 Dec 2006
- 19:55:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1424898AbWLCAzN
- (ORCPT <rfc822;git-outgoing>); Sat, 2 Dec 2006 19:55:13 -0500
-Received: from mail.gmx.net ([213.165.64.20]:29620 "HELO mail.gmx.net") by
- vger.kernel.org with SMTP id S1424814AbWLCAzM (ORCPT
- <rfc822;git@vger.kernel.org>); Sat, 2 Dec 2006 19:55:12 -0500
-Received: (qmail invoked by alias); 03 Dec 2006 00:55:11 -0000
-Received: from p5496B2C8.dip0.t-ipconnect.de (EHLO noname) [84.150.178.200]
- by mail.gmx.net (mp029) with SMTP; 03 Dec 2006 01:55:11 +0100
-To: Martin Waitz <tali@admingilde.org>
+ S1424899AbWKQBoz (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 16 Nov 2006
+ 20:44:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1424901AbWKQBoz
+ (ORCPT <rfc822;git-outgoing>); Thu, 16 Nov 2006 20:44:55 -0500
+Received: from nf-out-0910.google.com ([64.233.182.186]:6117 "EHLO
+ nf-out-0910.google.com") by vger.kernel.org with ESMTP id S1424899AbWKQBoy
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 16 Nov 2006 20:44:54 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so1180990nfa for
+ <git@vger.kernel.org>; Thu, 16 Nov 2006 17:44:53 -0800 (PST)
+Received: by 10.49.19.5 with SMTP id w5mr937204nfi.1163727892724; Thu, 16 Nov
+ 2006 17:44:52 -0800 (PST)
+Received: by 10.49.60.1 with HTTP; Thu, 16 Nov 2006 17:44:47 -0800 (PST)
+To: "Petr Baudis" <pasky@suse.cz>
 Sender: git-owner@vger.kernel.org
 
-On Saturday 02 December 2006 21:24, Martin Waitz wrote:
-> On Sat, Dec 02, 2006 at 12:17:44AM +0100, Josef Weidendorfer wrote:
-> > After some thinking, a submodule namespace even is important for checking
-> > out only parts of a supermodule, exactly because the root of a submodule
-> > potentially can change at every commit.
-> 
-> have you ever thought about the idea that the location may be an
-> important thing to consider for your decision.
+On 11/17/06, Petr Baudis <pasky@suse.cz> wrote:
 
-Which decision, for what? Sorry, I do not understand.
+> * cg-log does not follow history across renames anymore; it never really
+>   actually worked and was instead causing problems and random error
+>   messages. There needs to be git-core support for this funcionality,
+>   hacking it with a perl filter is bad design, so I'm not going to fix
+>   the filter (but I'd take patches if someone else did ;).
 
-Do you want to say that relative submodule root paths should be kept fix
-the whole lifetime of a supermodule?
-Ie. a submodule "identity" is bound to its relative path, and when we
-move it, it should be seen as deleting at and creating a totally new,
-different submodule?
+I was looking at the follow renames Perl script last week (hey, I was
+bored!) and while I could tell it didn't work, I did get the feeling
+that it wasn't an impossible task, at least for the 'explicit paths'
+case. For the 'whole tree' and subpath cases it _is_ tricky, and would
+be faster to solve within git, but not impossible.
 
-That's fine.
-But you have to handle submodule creation/deletion neverless. And while
-you are at a commit which has a given submodule deleted, you have to
-keep the submodule data somewhere - referencing it with a name.
-I do not speak here about the object database, that could be combined;
-but about all the other files in .git/ of the currently not checked out
-submodule.
+And even then, I am tempted to think that git log could provide some
+better hints than it does today when walking the whole tree or
+subpaths, so that cg-log or gitk can ask [if relevant] for selective
+rename info.
 
-> Perhaps the submodule is now used for something else (this is why it was
-> moved) and that now you'd like to keep it?
+I am curious as to why you see it as bad design...
 
-Can you give a usage szenario? What do you mean here?
+cheers,
 
-
-> Anyway, you can just create several supermodules or implement generic
-> partial tree support for git.  I do not see any reason to special case
-> submodules here.
-
-What should such a general partial tree support look like? I suppose you
-want to configure paths which should not be checked out. As long as you
-say that a given submodule always has to exist at a given path, you are
-right: then, you can say: "Please, do not check out this submodule" which
-is the same as "Do not check out this path". 
-
-But I think it is quite restrictive to not allow to move submodules around.
-When the supermodule upstream decides to move a submodule, your partial
-tree config to not check out a submodule will be lost.
-But more important, if you made changes to a given submodule, and pull from
-upstream which changed the submodule position in-between, your changes will
-be not taken over to the new position, as the move is seen as creation of
-a totally independent submodule.
 
