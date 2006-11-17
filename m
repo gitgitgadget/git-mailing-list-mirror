@@ -1,68 +1,60 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Michael S. Tsirkin" <mst@mellanox.co.il>
-Subject: Re: how to pass ssh options to git?
-Date: Thu, 2 Nov 2006 13:27:20 +0200
-Message-ID: <20061102112720.GA8469@mellanox.co.il>
-References: <20061102110639.G523a966f@leonov.stosberg.net>
-Reply-To: "Michael S. Tsirkin" <mst@mellanox.co.il>
+From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+Subject: Re: [DRAFT] Branching and merging with git
+Date: Fri, 17 Nov 2006 23:19:23 +0700
+Message-ID: <fcaeb9bf0611170819j57cda9e1ia4ecd4cd13956447@mail.gmail.com>
+References: <20061116221701.4499.qmail@science.horizon.com>
+	 <20061117153246.GA20065@thunk.org>
+	 <BAYC1-PASMTP07C8A8D8E5E78173953CA9AEE80@CEZ.ICE>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 2 Nov 2006 11:25:05 +0000 (UTC)
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Fri, 17 Nov 2006 16:20:06 +0000 (UTC)
+Cc: git@vger.kernel.org, "Petr Baudis" <pasky@suse.cz>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=pC2kV606hdq5G557nLpv1yZKAqKYP1rGapJuqRvIQBU0P9KU0sggpQZ0uRrarafWgToSCobbcpWXaGTRznue843Ui506ZXzcEJl3N1bWJzjxORohJI7nqM0XABrihlXCq1ZGAy0PjhiYeoeP4qpEj2ZUfnC9cSegOLXq/ZtKuHk=
+In-Reply-To: <BAYC1-PASMTP07C8A8D8E5E78173953CA9AEE80@CEZ.ICE>
 Content-Disposition: inline
-In-Reply-To: <20061102110639.G523a966f@leonov.stosberg.net>
-User-Agent: Mutt/1.4.2.1i
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30736>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31702>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gfagi-0006fY-Bw for gcvg-git@gmane.org; Thu, 02 Nov
- 2006 12:24:48 +0100
+ esmtp (Exim 4.43) id 1Gl6RJ-0007LP-1v for gcvg-git@gmane.org; Fri, 17 Nov
+ 2006 17:19:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752771AbWKBLYo (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 2 Nov 2006
- 06:24:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752785AbWKBLYo
- (ORCPT <rfc822;git-outgoing>); Thu, 2 Nov 2006 06:24:44 -0500
-Received: from dev.mellanox.co.il ([194.90.237.44]:10112 "EHLO
- dev.mellanox.co.il") by vger.kernel.org with ESMTP id S1752771AbWKBLYn (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 2 Nov 2006 06:24:43 -0500
-Received: from mellanox.co.il ([194.90.237.34]) by dev.mellanox.co.il
- (8.13.1/8.13.1) with SMTP id kA2BORoc017295; Thu, 2 Nov 2006 13:24:28 +0200
-Received: by mellanox.co.il (sSMTP sendmail emulation); Thu,  2 Nov 2006
- 13:27:20 +0200
-To: Dennis Stosberg <dennis@stosberg.net>
+ S933684AbWKQQTZ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 17 Nov 2006
+ 11:19:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933699AbWKQQTZ
+ (ORCPT <rfc822;git-outgoing>); Fri, 17 Nov 2006 11:19:25 -0500
+Received: from ug-out-1314.google.com ([66.249.92.174]:31250 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S933698AbWKQQTY
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 17 Nov 2006 11:19:24 -0500
+Received: by ug-out-1314.google.com with SMTP id m3so742563ugc for
+ <git@vger.kernel.org>; Fri, 17 Nov 2006 08:19:23 -0800 (PST)
+Received: by 10.78.203.13 with SMTP id a13mr2060351hug.1163780363157; Fri, 17
+ Nov 2006 08:19:23 -0800 (PST)
+Received: by 10.78.100.8 with HTTP; Fri, 17 Nov 2006 08:19:23 -0800 (PST)
+To: Sean <seanlkml@sympatico.ca>
 Sender: git-owner@vger.kernel.org
 
-Quoting r. Dennis Stosberg <dennis@stosberg.net>:
-> Subject: Re: how to pass ssh options to git?
-> 
-> Michael S. Tsirkin wrote:
-> 
-> > I know, problem is I want to use different options at different times.
-> > I could use -F configfile ssh option, but how to pass *that* to git?
->  
-> You can set the path of the ssh executable to use with the GIT_SSH
-> environment variable.  Create a shell script like
-> 
-> #!/bin/sh
-> exec ssh --your-options-- $*
-> 
-> and make GIT_SSH point to it.
+On 11/17/06, Sean <seanlkml@sympatico.ca> wrote:
+> It would be nice to post this information on the Git website and not
+> have it overshadowed by Cogito examples with paragraphs explaining how
+> Cogito makes things easier.  The current website distracts users away
+> from learning Git or ever reading about this kind of information.
+> Maybe we can pass a hat around for some funds for a separate Cogito
+> website. ;o)
 
-Thanks, I'll try that.
-BTW, just grep for GIT_SSH gets me some more:
-GIT_SSH_UPLOAD, GIT_SSH_PUSH, GIT_SSH_PULL, GIT_SSH_FETCH.
-None of which appear to be documented.
-
-
-
-
-
+Or.. find a way to merge cogito back to git :-)
+/me runs into a nearest bush.
 -- 
