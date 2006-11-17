@@ -2,98 +2,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 3/5] allow cloning a repository "shallowly"
-Date: Tue, 14 Nov 2006 11:49:55 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0611141145390.13772@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0610302009160.26682@wbgn013.biozentrum.uni-wuerzburg.de>
- <7v4pt21oe9.fsf@assigned-by-dhcp.cox.net>
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: multi-project repos (was Re: Cleaning up git user-interface
+ warts)
+Date: Fri, 17 Nov 2006 08:45:39 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0611170836120.3349@woody.osdl.org>
+References: <Pine.LNX.4.64.0611150950170.3349@woody.osdl.org>
+ <455BBCE9.4050503@xs4all.nl> <Pine.LNX.4.64.0611151908130.3349@woody.osdl.org>
+ <455C412D.1030408@xs4all.nl> <Pine.LNX.4.64.0611160814560.3349@woody.osdl.org>
+ <455C94FA.3050903@xs4all.nl> <Pine.LNX.4.64.0611160904010.3349@woody.osdl.org>
+ <455CA2A8.5010700@xs4all.nl> <Pine.LNX.4.64.0611160958170.3349@woody.osdl.org>
+ <Pine.LNX.4.64.0611161039160.3349@woody.osdl.org> <20061117162605.GA32597@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Tue, 14 Nov 2006 10:50:37 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: MULTIPART/MIXED; BOUNDARY="-1463790079-1309599992-1163781939=:3349"
+NNTP-Posting-Date: Fri, 17 Nov 2006 16:47:21 +0000 (UTC)
+Cc: Han-Wen Nienhuys <hanwen@xs4all.nl>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7v4pt21oe9.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+In-Reply-To: <20061117162605.GA32597@spearce.org>
+X-MIMEDefang-Filter: osdl$Revision: 1.159 $
+X-Scanned-By: MIMEDefang 2.36
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31343>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31707>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gjvs8-0006yP-CO for gcvg-git@gmane.org; Tue, 14 Nov
- 2006 11:50:32 +0100
+ esmtp (Exim 4.43) id 1Gl6qp-0005Ie-Mm for gcvg-git@gmane.org; Fri, 17 Nov
+ 2006 17:46:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S933400AbWKNKt6 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 14 Nov 2006
- 05:49:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933401AbWKNKt6
- (ORCPT <rfc822;git-outgoing>); Tue, 14 Nov 2006 05:49:58 -0500
-Received: from mail.gmx.net ([213.165.64.20]:63901 "HELO mail.gmx.net") by
- vger.kernel.org with SMTP id S933400AbWKNKt5 (ORCPT
- <rfc822;git@vger.kernel.org>); Tue, 14 Nov 2006 05:49:57 -0500
-Received: (qmail invoked by alias); 14 Nov 2006 10:49:55 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp040) with SMTP; 14 Nov 2006 11:49:55 +0100
-To: Junio C Hamano <junkio@cox.net>
+ S933667AbWKQQqA (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 17 Nov 2006
+ 11:46:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933721AbWKQQqA
+ (ORCPT <rfc822;git-outgoing>); Fri, 17 Nov 2006 11:46:00 -0500
+Received: from [65.172.181.25] ([65.172.181.25]:45793 "EHLO smtp.osdl.org")
+ by vger.kernel.org with ESMTP id S933667AbWKQQqA (ORCPT
+ <rfc822;git@vger.kernel.org>); Fri, 17 Nov 2006 11:46:00 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
+ smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kAHGjeix012749
+ (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Fri, 17
+ Nov 2006 08:45:41 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
+ shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kAHGjeNL006368; Fri, 17 Nov
+ 2006 08:45:40 -0800
+To: Shawn Pearce <spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 
-Hi,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Mon, 13 Nov 2006, Junio C Hamano wrote:
+---1463790079-1309599992-1163781939=:3349
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Content-Transfer-Encoding: 8BIT
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+
+
+On Fri, 17 Nov 2006, Shawn Pearce wrote:
 > 
-> > By specifying a depth, you can now clone a repository such that
-> > all fetched ancestor-chains' length is at most "depth". For example,
-> > if the upstream repository has only 2 branches ("A" and "B"), which
-> > are linear, and you specify depth 3, you will get A, A~1, A~2, A~3,
-> > B, B~1, B~2, and B~3. The ends are automatically made shallow
-> > commits.
-> >
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> >  fetch-pack.c  |   61 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
-> >  git-clone.sh  |   19 +++++++++++++++--
-> >  upload-pack.c |   21 ++++++++++++++++++-
-> >  3 files changed, 96 insertions(+), 5 deletions(-)
-> >
-> > diff --git a/fetch-pack.c b/fetch-pack.c
-> > index 488adc9..9619d6e 100644
-> > --- a/fetch-pack.c
-> > +++ b/fetch-pack.c
-> >...
-> > +		while ((len = packet_read_line(fd[0], line, sizeof(line)))) {
-> > +			if (!strncmp("shallow ", line, 8)) {
-> > +				if (get_sha1_hex(line + 8, sha1))
-> > +					die("invalid shallow line: %s", line);
-> > +				/* no need making it shallow if we have it already */
-> > +				if (lookup_object(sha1))
-> > +					continue;
-> > +				register_shallow(sha1);
-> > +			}
-> > +		}
-> > +	}
+> Although if you have reflog enabled on your current branch there
+> is a 1 character shorter syntax:
 > 
-> I understand "no need making it shallow", but I am not sure if a
-> non-NULL return from lookup_object() tells us that.
+> 	gitk HEAD@{1}..
 
-You are probably right, how about has_sha1_file()?
+Heh. With a finnish keyboard, that "@" is AltGr+'2', and the '{'/'}' is 
+AltGr+'7'/'0', I guarantee that it's not "1 character shorter", it's 
+"three pretty complicated characters longer" and "off the normal path 
+where you hold your fingers on the keyboard ;)
 
-> I think register_shallow() can take commits that are already shallow() 
-> so maybe we can remove this "if() continue"?
+And that's not even mentioning that '{'/'}' is a magic sequence for 
+filename expansion to the shell, so every time I see that, I have to think 
+about it (and it turns out that because there is no comma in between 
+there, it's ok. Otherwise you would need to quote it or escape them...)
 
-Yes, it can, but that is not necessarily correct: since .git/shallow is 
-constructed from the registered shallow commits, we would make a commit 
-shallow which is really not shallow.
+So the reflog syntax is fine, but it's definitely not a "simple" syntax. 
+I'd only use it for things where I want something that ORIG_HEAD won't 
+give me ("ORIG_HEAD" you can type by just holding the shift key down all 
+the time, and letting your fingers dance over the keyboard, both on a US 
+and a Finnish keyboard).
 
-So, how about
+And yes, I actually use a Finnish keyboard, still. Don't ask me why. I 
+don't actually need the едц characters often enough for it to matter, and 
+I have used US keyboards elsewhere enough that I can switch between the 
+two without thinking, but I still ended up having my sister ship me a 
+keyboard from Finland when I wanted to upgrade..
 
-> > +				if (lookup_object(sha1) || has_sha1_file(sha1))
-> > +					continue;
-
-Ciao,
-Dscho
+			Linus
