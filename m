@@ -1,82 +1,74 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: kernel.org mirroring (Re: [GIT PULL] MMC update)
-Date: Mon, 11 Dec 2006 09:59:55 +0100
-Message-ID: <200612110959.56492.jnareb@gmail.com>
-References: <Pine.LNX.4.64.0612020835110.3476@woody.osdl.org> <200612102359.20083.jnareb@gmail.com> <46a038f90612101816j33870bb1j39182358440aaa40@mail.gmail.com>
+X-Spam-Status: No, score=-2.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,MSGID_FROM_MTA_HEADER,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+From: Sean <seanlkml@sympatico.ca>
+Subject: Re: [DRAFT] Branching and merging with git
+Date: Fri, 17 Nov 2006 11:34:04 -0500
+Message-ID: <BAYC1-PASMTP021B5A7CD192CD4D37A152AEE80@CEZ.ICE>
+References: <20061116221701.4499.qmail@science.horizon.com>
+	<20061117153246.GA20065@thunk.org>
+	<BAYC1-PASMTP07C8A8D8E5E78173953CA9AEE80@CEZ.ICE>
+	<fcaeb9bf0611170819j57cda9e1ia4ecd4cd13956447@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Mon, 11 Dec 2006 08:57:50 +0000 (UTC)
-Cc: "Jeff Garzik" <jeff@garzik.org>,
-	"Git Mailing List" <git@vger.kernel.org>,
-	"Linus Torvalds" <torvalds@osdl.org>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	"Rogan Dawes" <discard@dawes.za.net>,
-	"Kernel Org Admin" <ftpadmin@kernel.org>
+NNTP-Posting-Date: Fri, 17 Nov 2006 16:35:16 +0000 (UTC)
+Cc: git@vger.kernel.org, "Petr Baudis" <pasky@suse.cz>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=W5LQVGGjmK4foTHAiY8Cv5KVb3e7WVFJfPG1vtx2mWBkO29XOH+9S7ZkLu8GHY8CvbiZtrktsEAxANqPqVxbUK8LKyUqVgnobHv2hMX1Xrcsz9KFbmtGntabB2OEujErFgcCXhRRmEkviKxOr0BIa5yyEmOT4ZCBkMNX/9RS8Ms=
-User-Agent: KMail/1.9.3
-In-Reply-To: <46a038f90612101816j33870bb1j39182358440aaa40@mail.gmail.com>
-Content-Disposition: inline
+X-Originating-IP: [65.93.43.81]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Original-Message-Id: <20061117113404.810fd4ea.seanlkml@sympatico.ca>
+In-Reply-To: <fcaeb9bf0611170819j57cda9e1ia4ecd4cd13956447@mail.gmail.com>
+X-Mailer: Sylpheed version 2.2.9 (GTK+ 2.10.4; i386-redhat-linux-gnu)
+X-OriginalArrivalTime: 17 Nov 2006 16:34:06.0342 (UTC) FILETIME=[3316C260:01C70A66]
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33979>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gtgyn-0003MI-NF for gcvg-git@gmane.org; Mon, 11 Dec
- 2006 09:57:46 +0100
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gl6fP-0002Vt-6a for gcvg-git@gmane.org; Fri, 17 Nov
+ 2006 17:34:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1762661AbWLKI5l (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 11 Dec 2006
- 03:57:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762662AbWLKI5k
- (ORCPT <rfc822;git-outgoing>); Mon, 11 Dec 2006 03:57:40 -0500
-Received: from hu-out-0506.google.com ([72.14.214.234]:11120 "EHLO
- hu-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1762661AbWLKI5k (ORCPT <rfc822;git@vger.kernel.org>); Mon, 11 Dec
- 2006 03:57:40 -0500
-Received: by hu-out-0506.google.com with SMTP id 36so822183hui for
- <git@vger.kernel.org>; Mon, 11 Dec 2006 00:57:38 -0800 (PST)
-Received: by 10.67.19.20 with SMTP id w20mr9487387ugi.1165827458400; Mon, 11
- Dec 2006 00:57:38 -0800 (PST)
-Received: from host-81-190-25-107.torun.mm.pl ( [81.190.25.107]) by
- mx.google.com with ESMTP id p32sm5336540ugc.2006.12.11.00.57.37; Mon, 11 Dec
- 2006 00:57:38 -0800 (PST)
-To: "Martin Langhoff" <martin.langhoff@gmail.com>
+ S933715AbWKQQeK (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 17 Nov 2006
+ 11:34:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932946AbWKQQeK
+ (ORCPT <rfc822;git-outgoing>); Fri, 17 Nov 2006 11:34:10 -0500
+Received: from bayc1-pasmtp02.bayc1.hotmail.com ([65.54.191.162]:60854 "EHLO
+ BAYC1-PASMTP02.CEZ.ICE") by vger.kernel.org with ESMTP id S933717AbWKQQeG
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 17 Nov 2006 11:34:06 -0500
+Received: from linux1.attic.local ([65.93.43.81]) by BAYC1-PASMTP02.CEZ.ICE
+ over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830); Fri, 17 Nov
+ 2006 08:34:06 -0800
+Received: from guru.attic.local ([10.10.10.28]) by linux1.attic.local with
+ esmtp (Exim 4.43) id 1Gl5j9-0000tv-H1; Fri, 17 Nov 2006 10:34:03 -0500
+To: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Martin Langhoff wrote:
-> On 12/11/06, Jakub Narebski <jnareb@gmail.com> wrote:
->>
->> Even if Apache does execute CGI script to completion every time, it might
->> not send the output of the script, but HTTP 304 Not Modified reply. Might.
->> I don't know if it does.
-> 
-> It is up to the script (CGI or via mod_perl) to set the status to 304
-> and finish execution. Just setting the status to 304 does not
-> forcefully end execution as you may want to cleanup, log, etc.
+On Fri, 17 Nov 2006 23:19:23 +0700
+"Nguyen Thai Ngoc Duy" <pclouds@gmail.com> wrote:
 
-I was thinking not about ending execution, but about not sending script
-output but sending HTTP 304 Not Modified reply by Apache.
 
-I meant the following sequence of events:
- 1. Script sends headers, among those Last-Modified and/or ETag
- 2. Apache scans headers (e.g. to add its own), notices that Last-Modified
-    is earlier or equal to If-Modified-Since: sent by browser or reverse
-    proxy, or ETag matches If-None-Match:, and sends 304 instead of script
-    output
- 3. Script finishes execution, it's output sent to /dev/null
+> Or.. find a way to merge cogito back to git :-)
+> /me runs into a nearest bush.
 
-Again, I don't know if Apache (or any other web server) does that. 
--- 
-Jakub Narebski
+Pasky has already given a lot to Git, and it would be great to see even
+more merged back into Git where a consensus can be reached.  In fact
+Pasky has said that his plan is to push a lot more towards Git and
+make Cogito a thinner UI layer.  Either way, there's absolutely nothing
+wrong with people choosing to use Cogito rather than Git.  It's just
+that the separate Cogito tool shouldn't have a place on the Git website
+any more prominent than say StGit does.
+
+The Git website should be a place where Git makes the best case
+it can for _itself_, not for its sister tools.  It's a distraction
+and gets in the way of promoting Git as a stand alone tool.  At
+least one new user has complained that it was confusing.
+
+Personally I have nothing against Cogito, I just think Pasky should
+separate his role as Git webmaster from his role as Cogito author.
+If people have good ideas for Git documentation, the website would be
+a natural place for it, and it shouldn't have to compete with Cogito
+tutorials etc.
+
