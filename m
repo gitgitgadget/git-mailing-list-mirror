@@ -1,74 +1,75 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: StGIT repository not clonable?
-Date: Sat, 11 Nov 2006 21:59:32 +0000
-Message-ID: <b0943d9e0611111359t994d688w9bc6aae8e9183fd3@mail.gmail.com>
-References: <200611110359.kAB3ul02013227@laptop13.inf.utfsm.cl>
-	 <20061111123634.GD11224@diana.vm.bytemark.co.uk>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: multi-project repos (was Re: Cleaning up git user-interface warts)
+Date: Fri, 17 Nov 2006 12:08:36 -0500
+Message-ID: <20061117170836.GD32597@spearce.org>
+References: <Pine.LNX.4.64.0611151908130.3349@woody.osdl.org> <455C412D.1030408@xs4all.nl> <Pine.LNX.4.64.0611160814560.3349@woody.osdl.org> <455C94FA.3050903@xs4all.nl> <Pine.LNX.4.64.0611160904010.3349@woody.osdl.org> <455CA2A8.5010700@xs4all.nl> <Pine.LNX.4.64.0611160958170.3349@woody.osdl.org> <Pine.LNX.4.64.0611161039160.3349@woody.osdl.org> <20061117162605.GA32597@spearce.org> <Pine.LNX.4.64.0611170836120.3349@woody.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Sat, 11 Nov 2006 21:59:49 +0000 (UTC)
-Cc: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Fri, 17 Nov 2006 17:09:30 +0000 (UTC)
+Cc: Han-Wen Nienhuys <hanwen@xs4all.nl>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=N38DMAPGmCBhGtmPrqbBM475tHR7KVxnkU0FhgWxaLOG5nTTsBjQM6c6+/ehuk9z/sEo5QyZUsTJL29PprgPXhyGe4t3gJGLWxgd1npawQQ0QMR+a3ROq8354/HXebJSv3mq5a7aveGk6+c96s+NcidcnDzEgHMAO4Ff8HU2yw0=
-In-Reply-To: <20061111123634.GD11224@diana.vm.bytemark.co.uk>
 Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0611170836120.3349@woody.osdl.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31242>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31714>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gj0t4-00043G-ON for gcvg-git@gmane.org; Sat, 11 Nov
- 2006 22:59:43 +0100
+ esmtp (Exim 4.43) id 1Gl7Cq-0002CF-Gb for gcvg-git@gmane.org; Fri, 17 Nov
+ 2006 18:08:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1947314AbWKKV7e convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Sat, 11 Nov 2006 16:59:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1947319AbWKKV7e
- (ORCPT <rfc822;git-outgoing>); Sat, 11 Nov 2006 16:59:34 -0500
-Received: from py-out-1112.google.com ([64.233.166.180]:25142 "EHLO
- py-out-1112.google.com") by vger.kernel.org with ESMTP id S1947314AbWKKV7d
- convert rfc822-to-8bit (ORCPT <rfc822;git@vger.kernel.org>); Sat, 11 Nov 2006
- 16:59:33 -0500
-Received: by py-out-1112.google.com with SMTP id a29so480978pyi for
- <git@vger.kernel.org>; Sat, 11 Nov 2006 13:59:33 -0800 (PST)
-Received: by 10.35.9.2 with SMTP id m2mr6859249pyi.1163282372775; Sat, 11 Nov
- 2006 13:59:32 -0800 (PST)
-Received: by 10.35.109.8 with HTTP; Sat, 11 Nov 2006 13:59:32 -0800 (PST)
-To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
+ S933725AbWKQRIp (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 17 Nov 2006
+ 12:08:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933740AbWKQRIp
+ (ORCPT <rfc822;git-outgoing>); Fri, 17 Nov 2006 12:08:45 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:32660 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S933725AbWKQRIp
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 17 Nov 2006 12:08:45 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1Gl7Cd-0003su-9O; Fri, 17 Nov 2006 12:08:35 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 84C1420E469; Fri, 17 Nov 2006 12:08:36 -0500 (EST)
+To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 
-On 11/11/06, Karl Hasselstr=F6m <kha@treskal.com> wrote:
-> On 2006-11-11 00:56:47 -0300, Horst H. von Brand wrote:
-> > I'm trying to update my StGIT repo here, and get a crash from
-> > git-http-fetch (git 1.4.3.4). Trying to clone it anew gives:
->
-> It works for me, with
->
->   $ git --version
->   git version 1.4.3.3.g8387
->
-> But it's horribly slow. Catalin, have you ever packed that repository=
-?
+Linus Torvalds <torvalds@osdl.org> wrote:
+> On Fri, 17 Nov 2006, Shawn Pearce wrote:
+> > 
+> > Although if you have reflog enabled on your current branch there
+> > is a 1 character shorter syntax:
+> > 
+> > 	gitk HEAD@{1}..
+> 
+> Heh. With a finnish keyboard, that "@" is AltGr+'2', and the '{'/'}' is 
+> AltGr+'7'/'0', I guarantee that it's not "1 character shorter", it's 
+> "three pretty complicated characters longer" and "off the normal path 
+> where you hold your fingers on the keyboard ;)
 
-I've never packed it. IIRC, there was some advise in some GIT document
-or e-mail saying that you shouldn't pack if the export is over a dumb
-protocol. That's good for people pulling regularly but bad for
-cloning.
+I forgot that you use a finnish keyboard.  :-)
 
-Anyway, thanks to Pasky, you can now pull/clone it over the git
-protocol directly - git://repo.or.cz/stgit.git. This repository is up
-to date. I have a plan to move the main StGIT repository to Pasky's
-server but I'm a bit busy with other things at the moment.
+I agree with you; its not easier to type, for you.  Me, I'm a dumb
+American who uses a Kinesis keyboard, therefore my left foot is
+my shift key and its in sync with my fingers.  I have no extra
+pinky load for either syntax.  And since the reflog syntax works
+in a lot more contexts (e.g. after a fetch into a tracking branch)
+I have just forgotten about ORIG_HEAD entirely.  Oh sure, I know
+its there, but its not something I think about using...
 
---=20
+-- 
