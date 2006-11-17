@@ -1,117 +1,101 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Restore a single file in the index back to HEAD
-Date: Wed, 01 Nov 2006 14:08:40 -0800
-Message-ID: <7vodrq251z.fsf@assigned-by-dhcp.cox.net>
-References: <200610261641.11239.andyparkins@gmail.com>
-	<200611012029.41869.andyparkins@gmail.com>
-	<7vbqnq51v4.fsf@assigned-by-dhcp.cox.net>
-	<200611012118.11558.andyparkins@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: Atom feeds
+Date: Fri, 17 Nov 2006 12:36:18 +0100
+Message-ID: <200611171236.19030.jnareb@gmail.com>
+References: <11635494363452-git-send-email-asf@boinkor.net> <ejim5q$31b$1@sea.gmane.org> <7v4psysazy.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 1 Nov 2006 22:08:53 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Fri, 17 Nov 2006 11:35:21 +0000 (UTC)
+Cc: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <200611012118.11558.andyparkins@gmail.com> (Andy Parkins's
-	message of "Wed, 1 Nov 2006 21:18:10 +0000")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=PXx3gGovx38+ReegJ6p2NkECjALHMuU6fqQNolftk2asi2U3HHijb53Gsu5qA8FvzLHyt2mN25s2Lu3Y5OaKi3M/E3kOTWmM+uuKWrPIdlfMgA5QdFHdSEkqLjC9LizlOtKKcXPdsxgkh585U+vRnegNxmaI4Ks6RfWCbQpyglY=
+User-Agent: KMail/1.9.3
+In-Reply-To: <7v4psysazy.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30668>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31690>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GfOGL-0005wT-OP for gcvg-git@gmane.org; Wed, 01 Nov
- 2006 23:08:46 +0100
+ esmtp (Exim 4.43) id 1Gl1zz-0003MD-Mx for gcvg-git@gmane.org; Fri, 17 Nov
+ 2006 12:35:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752518AbWKAWIm (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 1 Nov 2006
- 17:08:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752520AbWKAWIm
- (ORCPT <rfc822;git-outgoing>); Wed, 1 Nov 2006 17:08:42 -0500
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:2529 "EHLO
- fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP id S1752518AbWKAWIl
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 1 Nov 2006 17:08:41 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao08.cox.net
- (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
- <20061101220841.CFNX22977.fed1rmmtao08.cox.net@fed1rmimpo02.cox.net>; Wed, 1
- Nov 2006 17:08:41 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id ha8l1V00A1kojtg0000000 Wed, 01 Nov 2006
- 17:08:45 -0500
-To: Andy Parkins <andyparkins@gmail.com>
+ S1755694AbWKQLfA (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 17 Nov 2006
+ 06:35:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933531AbWKQLfA
+ (ORCPT <rfc822;git-outgoing>); Fri, 17 Nov 2006 06:35:00 -0500
+Received: from ug-out-1314.google.com ([66.249.92.174]:23335 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1755694AbWKQLfA
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 17 Nov 2006 06:35:00 -0500
+Received: by ug-out-1314.google.com with SMTP id m3so672511ugc for
+ <git@vger.kernel.org>; Fri, 17 Nov 2006 03:34:58 -0800 (PST)
+Received: by 10.66.221.6 with SMTP id t6mr1895260ugg.1163763298241; Fri, 17
+ Nov 2006 03:34:58 -0800 (PST)
+Received: from host-81-190-24-209.torun.mm.pl ( [81.190.24.209]) by
+ mx.google.com with ESMTP id e33sm2987615ugd.2006.11.17.03.34.57; Fri, 17 Nov
+ 2006 03:34:58 -0800 (PST)
+To: Junio C Hamano <junkio@cox.net>, Andreas Fuchs <asf@boinkor.net>
 Sender: git-owner@vger.kernel.org
 
-Andy Parkins <andyparkins@gmail.com> writes:
+Junio C Hamano wrote:
 
-> On Wednesday 2006, November 01 20:49, Junio C Hamano wrote:
->
->> >> 	git-reset [--hard | --mixed] HEAD^ oops/file1
->> While that perfect makes sense from mechanical point of view, I
->> am not sure what it _means_ to keep some paths from now
->> abandoned future while having some other paths reset to the
->> rewound commit, from the point of view of end-user operation.
->
-> Isn't that exactly what the user would be asking for when they are doing a 
-> per-file reset?  This is a contrived example as git makes it easier to do it 
-> in far more sensible ways; but I've done this before now in subversion...  
-> What if I want to try out some radical change?  It goes like this:
->
-> x --- y --- z
+> Andreas Fuchs <asf@boinkor.net> writes:
+> 
+>> Jakub Narebski wrote:
+>>> Andreas Fuchs <asf@boinkor.net> wrote:
+>>> 
+>>>> * Wrap the commit message in <pre>
+>>> We use <div class="pre"> in "commit" view if I remember correctly.
+>>
+>> That's ok for rendered HTML output, but in my experience, the way feed
+>> readers interpret that ranges from "badly" to "not at all"; it's better
+>> to stick to explicit structure hints only in feeds. /-:
 
-I assume when you do the following operation your .git/HEAD
-points at 'y' which is already committed, and 'z' does not exist
-yet (it does not come into the scenario you describe below).
+True. "<pre>" in RSS feed is better (I don't know if you can give CSS
+for RSS, be it RSS 2.01 or Atom; rather not).
 
-> Where x is some stable commit; y is a load of crazy changes;
-> we discover that the crazy changes are all fine except for
-> one, and so want to rollback one file, without yet commiting:
->
->  git-reset --hard HEAD^ frotz
->
-> Git would get frotz from HEAD^ and write it to the working directory and the 
-> index (or just index with --mixed).
+>> So, this is the only thing I haven't fixed in the attached patch (:
 
-You forgot to mention at the same time it makes .git/HEAD point
-at 'x'.  That's the part I am not so sure about.
+Good.
 
-Ah (lightbulb goes on).  So after the above reset, you would do
-a "git commit" with or without -a to create a fixed-up 'y' that
-does not have changes to 'frotz'?
+>> In addition to the above points, the attached patch emits a
+>> Last-Changed: HTTP response header field, and doesn't compute the feed
+>> body if the HTTP request type was HEAD. This helps keep the web server
+>> load down for well-behaved feed readers that check if the feed needs
+>> updating.
 
-Then it sort of makes sense.  --soft with paths specifier does
-not make much sense (paths specifier is a no-op in that case
-because --soft does not touch index nor working tree), but I
-wonder what workflow --mixed would help.  It resets the index
-for frotz from 'x', while your crazy changes of 'y' is still in
-the working tree.  You can "git commit" without -a to create the
-same fixed-up 'y' that does not have changes to 'frotz', and
-then keep working on 'y' to make it into less crazy.
+Very nice.
 
-Ok, that workflow certainly makes sense.
+>> Hope you like it,
+> 
+> Seems sane to me.  Jakub, how do you like this one?  
 
->> In other words, I do not have a good explanation on what "git
->> reset [--hard|--mixed] <commit> <path>..." does that I can write
->> in the documentation.
->
->  --mixed
->    Resets the index but not the working tree (i.e., the changed files are
->    preserved but not marked for commit) and reports what has not been
->    updated. This is the default action.  If <path> is given then only that
->    path will be reset to the state that <path> had in <commit-ish>.  The
->    working tree will be untouched.
->
->  --hard
->    Matches the working tree and index to that of the tree being switched to.
->    Any changes to tracked files in the working tree since <commit-ish> are
->    lost.  If <path> is given then only that path will be reset in both the
->    working tree and the index to the state that <path> had in <commit-ish>.
+I like it. Ack.
 
-That's the "mechanical point of view only" description I was
-afraid of having.  While I think I now see why they can be
-useful, we would need to extend the examples section to
-demonstrate how they help workflows to readers.
+> If it looks  Ok to you, please arrange to include your one-liner
+> that this depends on and forward a readily applicable patch with
+> appropriate commit log message.
 
+Which one liner? As far as I can see the patch does NOT use
+href(-full=>1,...) but esc_url(...).
+
+Perhaps this is for next patch.
+
+
+BTW I have encountered something calles Atom Publishing Protocol (APP):
+perhaps we should also add this in addition to currently used OPML.
+-- 
+Jakub Narebski
+Torun, Poland
