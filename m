@@ -1,74 +1,79 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Martin Langhoff <martin@catalyst.net.nz>
-Subject: [PATCH] cvsimport: don't pass --cvs-direct if user options contradict us
-Date: Wed, 12 Oct 2005 16:18:55 +1300
-Message-ID: <11290871353300-git-send-email-martin@catalyst.net.nz>
-Reply-To: Martin Langhoff <martin@catalyst.net.nz>
+From: "Chris Riddoch" <riddochc@gmail.com>
+Subject: Re: [DRAFT] Branching and merging with git
+Date: Fri, 17 Nov 2006 15:36:25 -0700
+Message-ID: <6efbd9b70611171436t1e0cadf2j7e9387ca77f85538@mail.gmail.com>
+References: <20061116221701.4499.qmail@science.horizon.com>
+	 <20061117153246.GA20065@thunk.org>
+	 <BAYC1-PASMTP07C8A8D8E5E78173953CA9AEE80@CEZ.ICE>
+	 <fcaeb9bf0611170819j57cda9e1ia4ecd4cd13956447@mail.gmail.com>
+	 <20061117113404.810fd4ea.seanlkml@sympatico.ca>
+	 <20061117165333.GR4842@pasky.or.cz>
+	 <20061117120154.3eaf5611.seanlkml@sympatico.ca>
+	 <20061117213125.GG7201@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-NNTP-Posting-Date: Wed, 12 Oct 2005 03:20:44 +0000 (UTC)
-Cc: Martin Langhoff <martin@catalyst.net.nz>
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Fri, 17 Nov 2006 22:36:33 +0000 (UTC)
+Cc: Sean <seanlkml@sympatico.ca>,
+	"Nguyen Thai Ngoc Duy" <pclouds@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
-X-Mailer: git-send-email
-In-Reply-To: 
+Envelope-to: gcvg-git@gmane.org
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=q/b0/od7gYQfQty7+CVNvx1Mi+7gjqoYaJ/tuFiM3ifJYBZ/K4nAcd3BeEjVcCcYehxyMj5w2ngG536xLaLPvQ0RRDP9vN8oXkvNbt7WPi2dXd7wAppHAIQ9T7EBs90Lf81UUblkZu3lt74gJdkDg/KlVCVV/HfULIQU/hyO5SU=
+In-Reply-To: <20061117213125.GG7201@pasky.or.cz>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/10000>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31736>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1EPX9I-0004WU-TP for gcvg-git@gmane.org; Wed, 12 Oct
- 2005 05:19:25 +0200
+ esmtp (Exim 4.43) id 1GlCJy-0006MU-BB for gcvg-git@gmane.org; Fri, 17 Nov
+ 2006 23:36:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932384AbVJLDSv (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 11 Oct 2005
- 23:18:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932386AbVJLDSv
- (ORCPT <rfc822;git-outgoing>); Tue, 11 Oct 2005 23:18:51 -0400
-Received: from godel.catalyst.net.nz ([202.78.240.40]:53672 "EHLO
- mail1.catalyst.net.nz") by vger.kernel.org with ESMTP id S932384AbVJLDSu
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 11 Oct 2005 23:18:50 -0400
-Received: from leibniz.catalyst.net.nz ([202.78.240.7]
- helo=aporo.wgtn.cat-it.co.nz) by mail1.catalyst.net.nz with smtp (Exim 4.50)
- id 1EPX8j-0006Ag-4T; Wed, 12 Oct 2005 16:18:49 +1300
-To: git@vger.kernel.org
+ S1751803AbWKQWg0 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 17 Nov 2006
+ 17:36:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753375AbWKQWg0
+ (ORCPT <rfc822;git-outgoing>); Fri, 17 Nov 2006 17:36:26 -0500
+Received: from wx-out-0506.google.com ([66.249.82.231]:41605 "EHLO
+ wx-out-0506.google.com") by vger.kernel.org with ESMTP id S1751803AbWKQWgZ
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 17 Nov 2006 17:36:25 -0500
+Received: by wx-out-0506.google.com with SMTP id s7so1097528wxc for
+ <git@vger.kernel.org>; Fri, 17 Nov 2006 14:36:25 -0800 (PST)
+Received: by 10.70.35.1 with SMTP id i1mr3965002wxi.1163802985220; Fri, 17
+ Nov 2006 14:36:25 -0800 (PST)
+Received: by 10.70.59.14 with HTTP; Fri, 17 Nov 2006 14:36:25 -0800 (PST)
+To: "Petr Baudis" <pasky@suse.cz>
 Sender: git-owner@vger.kernel.org
 
-Detecting if the user passed --no-cvs-direct and don't force the mode.
-It allows us to support all the protocol that the standard cvs client
-supports at the snail speed you should expect.
+On 11/17/06, Petr Baudis <pasky@suse.cz> wrote:
+> If someone writes a crash course in pure Git covering the same grounds
+> as the current ones (possibly by just extending/retouching the tutorial)
+> (it does not necessarily need to be a "refugee" crash course, it can
+> build up from scratch), I can add it on the web. If it becomes as easy
+> to use and with as mild learning curve as Cogito, it means Cogito got
+> mostly obsolete and I'll happily remove the Cogito crash courses from
+> the web.
 
-This only affects the rlog reading stage.
+As a relatively new user myself, I ran into the same confusion when I
+came to the website for the first time.  One of the most prominent
+things on the front page is the "Git Crash Courses."  Clicking on that
+gives me the crash courses, all of which are about Cogito, not for
+Git.  So why doesn't the front page say "Cogito Crash Courses"
+instead?
 
-Signed-off-by: Martin Langhoff <martin@catalyst.net.nz>
+And I don't think it matters much whether Cogito makes things easier
+or not -- the Git website really should make Git's documentation more
+prominent than Cogito's.  I'd expect the opposite of Cogito's website.
 
+It *is* unnecessarily confusing.
 
----
-
- git-cvsimport.perl |    5 ++++-
- 1 files changed, 4 insertions(+), 1 deletions(-)
-
-applies-to: c3f42ea5a9df4c1c520b0f32d4e3808d4f000ed7
-35587b31ee78ae96a54b10107c5ea3ce21eaa6b1
-diff --git a/git-cvsimport.perl b/git-cvsimport.perl
-index f35c0d0..f7c3a51 100755
---- a/git-cvsimport.perl
-+++ b/git-cvsimport.perl
-@@ -487,7 +487,10 @@ unless($pid) {
- 	my @opt;
- 	@opt = split(/,/,$opt_p) if defined $opt_p;
- 	unshift @opt, '-z', $opt_z if defined $opt_z;
--	exec("cvsps",@opt,"-u","-A","--cvs-direct",'--root',$opt_d,$cvs_tree);
-+	unless ($opt_p =~ m/--no-cvs-direct/) {
-+		push @opt, '--cvs-direct';
-+	}
-+	exec("cvsps",@opt,"-u","-A",'--root',$opt_d,$cvs_tree);
- 	die "Could not start cvsps: $!\n";
- }
- 
----
-0.99.8.GIT
-
+-- 
+epistemological humility
