@@ -1,97 +1,73 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: [RFC] Submodules in GIT
-Date: Thu, 30 Nov 2006 12:40:17 +0000
-Message-ID: <200611301240.22938.andyparkins@gmail.com>
-References: <20061121223130.GA24909@nan92-1-81-57-214-146.fbx.proxad.net> <200611292000.23778.andyparkins@gmail.com> <456ECBA5.7010409@op5.se>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: Cleaning up git user-interface warts
+Date: Fri, 17 Nov 2006 11:58:49 -0500
+Message-ID: <20061117165849.GC32597@spearce.org>
+References: <Pine.LNX.4.64.0611151339500.3349@woody.osdl.org> <87psbos4pb.wl%cworth@cworth.org> <20061115230252.GH24861@spearce.org> <Pine.LNX.4.64.0611151523290.3349@woody.osdl.org> <87fycjs5yg.wl%cworth@cworth.org> <f2b55d220611160957s2e68059dk99bbe902e7e1f416@mail.gmail.com> <87r6w3b68p.wl%cworth@cworth.org> <7vu00ysbwi.fsf@assigned-by-dhcp.cox.net> <87ejs2qvmb.wl%cworth@cworth.org> <Pine.LNX.4.63.0611171103150.13772@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-15"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 30 Nov 2006 12:42:07 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Fri, 17 Nov 2006 17:00:23 +0000 (UTC)
+Cc: Carl Worth <cworth@cworth.org>, Junio C Hamano <junkio@cox.net>,
+	"Michael K. Edwards" <medwards.linux@gmail.com>,
+	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=V5JOrBlkCR9inkO6VPtKWyYEb8HXgDLwxXtuWbf64J3TmMWP2cYF+Tlng2VAgvC/CMiILYY2awiib8SSUfBP9TAArWXB/uyw9oZwByAn246X/YDusgn6RRS4jw+XWJQ9wnr8BKwz0sGB8J9D5COj0vpAc8fRWE6Xb1RRCuihvjo=
-User-Agent: KMail/1.9.5
-In-Reply-To: <456ECBA5.7010409@op5.se>
 Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0611171103150.13772@wbgn013.biozentrum.uni-wuerzburg.de>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32733>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31712>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GplEW-0007TW-OF for gcvg-git@gmane.org; Thu, 30 Nov
- 2006 13:41:45 +0100
+ esmtp (Exim 4.43) id 1Gl73N-0008Ls-4i for gcvg-git@gmane.org; Fri, 17 Nov
+ 2006 17:59:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S936295AbWK3Mkc (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
- 07:40:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936292AbWK3Mkb
- (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 07:40:31 -0500
-Received: from ug-out-1314.google.com ([66.249.92.169]:26763 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S936295AbWK3Mk3
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 07:40:29 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so2097627uga for
- <git@vger.kernel.org>; Thu, 30 Nov 2006 04:40:28 -0800 (PST)
-Received: by 10.66.243.4 with SMTP id q4mr5324743ugh.1164890427593; Thu, 30
- Nov 2006 04:40:27 -0800 (PST)
-Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
- ESMTP id 30sm23542272ugf.2006.11.30.04.40.26; Thu, 30 Nov 2006 04:40:26 -0800
- (PST)
-To: git@vger.kernel.org
+ S933731AbWKQQ65 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 17 Nov 2006
+ 11:58:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933732AbWKQQ65
+ (ORCPT <rfc822;git-outgoing>); Fri, 17 Nov 2006 11:58:57 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:56722 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S933731AbWKQQ64
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 17 Nov 2006 11:58:56 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1Gl737-0002mb-I2; Fri, 17 Nov 2006 11:58:45 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ A762520E469; Fri, 17 Nov 2006 11:58:49 -0500 (EST)
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-On Thursday 2006 November 30 12:16, Andreas Ericsson wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> I introduced the remote.<nick>.{url,fetch,push} entries into the config 
+> with the goal to enhance -fetch to remember the current command line with 
+> a setting. I was the only one to find that useful.
+> 
+> BTW I still would argue that it is better to write the remote information 
+> into the config, because you have a saner way to manipulate that from 
+> scripts than .git/remotes/<nick>.
 
-> > What is the "right" branch though?  As I said above, if you're tracking
-> > one branch in the submodule then you've effectively locked that submodule
-> > to that branch for all supermodule uses.  Or you've made yourself a big
-> > rod to beat yourself with everytime you want to do some development on an
-> > "off" branch on the submodule.
->
-> Perhaps I'm just daft, but I fail to see how you can safely track a
-> topic-branch that might get rewinded or rebased in the submodule without
-> crippling the supermodule. Wasn't the intention that the supermodule has
+I'm *fully* in favor of the remote.<nick>.{url,fetch,push} entries
+in the config file.  I've pretty much switched every repository to
+that format at this point.
 
-Who said anything but rebase/rewind?  As it happens though, I don't see why 
-you can't (it wouldn't be pleasant though).  A rebase or rewind still leaves 
-the original commit in the object database, so provided no one runs 
-git-prune, there is no catastrophic failure.
+In writing git-gui I'm finding it much, much easier to manage
+things through repo-config than to do any mucking around in the
+.git/remotes directory.  Yes, the remote files have simple format,
+but I can get everything in one "git repo-config --list" pull it
+all into a Tcl array and work with it; using .git/remotes means I
+have to open the file and read each line too.  :-(
 
-> a new tree object (called "submodule") that points to a commit in the
-> submodule from where it gets its tree and stuff? Is the intention that
-> the supermodule pulls all of the submodules history into its own ODB? If
-> so, what's the difference between just having one large repository. If
-> not, how can you make it not break in case the commit it references in
-> the submodule is pruned away?
-
-I certainly never suggested anything /but/ storing a submodule type that 
-stores the commit.  The current debate is about whether the supermodule 
-should track HEAD or some defined branch in the submodule.
-
-> but then you're in trouble because the supermodule will have the same
-> files as all the submodules stored in its own tree. I'm confused. Could
-> someone shed some light on how this sub-/super-module connection is
-> supposed to work in the supermodule's commit objects?
-
-I don't really know, I only joined in to stand up against commit in the 
-supermodule triggering commits in the submodule.  That lead to me trying to 
-get an understanding of how it would work.
-
-As far as I can see, the only way a submodule is any use is if it is always a 
-submodule-commit-hash that is noted in the supermodule tree object.  That 
-means that the supermodule will only commit clean submodules.  The rest is 
-just UI to show something useful in the difficult cases when the submodule 
-tree is dirty.
-
-
-Andy
 -- 
-Dr Andy Parkins, M Eng (hons), MIEE
