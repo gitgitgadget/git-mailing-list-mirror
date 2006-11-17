@@ -1,59 +1,90 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [PATCH] Allow hand-editing of patches before sending
-Date: Fri, 3 Nov 2006 14:25:46 +0100
-Message-ID: <20061103132546.GA21202@diana.vm.bytemark.co.uk>
-References: <20061101090046.1107.81105.stgit@localhost> <b0943d9e0611020232x1e343bbco9451c8183c84d68@mail.gmail.com> <20061102113631.GA30507@diana.vm.bytemark.co.uk> <b0943d9e0611030139i7be9569bh4a29596a768e82a3@mail.gmail.com> <20061103095859.GC16721@diana.vm.bytemark.co.uk> <b0943d9e0611030444w13e04586u185413c2562d45bc@mail.gmail.com> <20061103130259.GA20611@diana.vm.bytemark.co.uk> <b0943d9e0611030516v43a25b76y4c07f82b33411a6e@mail.gmail.com>
+From: Nicolas Vilz <niv@iaglans.de>
+Subject: Re: git-PS1 bash prompt setting
+Date: Fri, 17 Nov 2006 10:52:37 +0100
+Message-ID: <20061117095237.GD11468@fry.bender.fht>
+References: <20061116130111.921396df.seanlkml@sympatico.ca> <20061117083801.GB11468@fry.bender.fht> <20061117042051.d2fbddb6.seanlkml@sympatico.ca>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Fri, 3 Nov 2006 13:26:35 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Fri, 17 Nov 2006 09:52:58 +0000 (UTC)
+Cc: git@vger.kernel.org, Theodore Tso <tytso@mit.edu>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Content-Disposition: inline
-In-Reply-To: <b0943d9e0611030516v43a25b76y4c07f82b33411a6e@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <20061117042051.d2fbddb6.seanlkml@sympatico.ca>
+X-message-flag: Please send plain text messages only. Thank you.
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at hs-esslingen.de
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30849>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31683>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gfz3Q-00029G-AF for gcvg-git@gmane.org; Fri, 03 Nov
- 2006 14:25:53 +0100
+ esmtp (Exim 4.43) id 1Gl0Op-0000OJ-OV for gcvg-git@gmane.org; Fri, 17 Nov
+ 2006 10:52:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752977AbWKCNZs convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Fri, 3 Nov 2006 08:25:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752979AbWKCNZs
- (ORCPT <rfc822;git-outgoing>); Fri, 3 Nov 2006 08:25:48 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:22543 "EHLO
- diana.vm.bytemark.co.uk") by vger.kernel.org with ESMTP id S1752977AbWKCNZr
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 3 Nov 2006 08:25:47 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1
- (Debian)) id 1Gfz3K-0005Ws-00; Fri, 03 Nov 2006 13:25:46 +0000
-To: Catalin Marinas <catalin.marinas@gmail.com>
+ S1755632AbWKQJwk (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 17 Nov 2006
+ 04:52:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755633AbWKQJwk
+ (ORCPT <rfc822;git-outgoing>); Fri, 17 Nov 2006 04:52:40 -0500
+Received: from mail.hs-esslingen.de ([134.108.32.78]:43473 "EHLO
+ mail.hs-esslingen.de") by vger.kernel.org with ESMTP id S1755631AbWKQJwj
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 17 Nov 2006 04:52:39 -0500
+Received: from localhost (mail.hs-esslingen.de [134.108.32.78]) by
+ mail.hs-esslingen.de (Postfix) with ESMTP id E749813EB0; Fri, 17 Nov 2006
+ 10:52:38 +0100 (CET)
+Received: from mail.hs-esslingen.de ([134.108.32.78]) by localhost (rslx211
+ [127.0.0.1]) (amavisd-new, port 10024) with ESMTP id 16490-01; Fri, 17 Nov
+ 2006 10:52:38 +0100 (CET)
+Received: from localhost (ovpngp1162.hs-esslingen.de [134.108.121.162])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by mail.hs-esslingen.de (Postfix) with ESMTP id
+ 272D213E5E; Fri, 17 Nov 2006 10:52:38 +0100 (CET)
+To: Sean <seanlkml@sympatico.ca>
 Sender: git-owner@vger.kernel.org
 
-On 2006-11-03 13:16:08 +0000, Catalin Marinas wrote:
+On Fri, Nov 17, 2006 at 04:20:51AM -0500, Sean wrote:
+> On Fri, 17 Nov 2006 09:38:02 +0100
+> Nicolas Vilz <niv@iaglans.de> wrote:
+> 
+> > Just a note:
+> > 
+> > this doesn't work with bash 3.2. I think they altered the way of
+> > trimming variables in this version.
+> > 
+> > on systems with bash 3.2 installed, i get
+> > [master!linus-2.6/vm/vm]$ 
+> > with the example above.
+> > 
+> > on systems with bash 3.1, it works properly.
+> 
+> Sorry bout that, I knew it was a bit fragile.  Was rather
+> comical reading Junio's recent message about all the things not
+> to do if you want portable shell code and noticing my 6 line script
+> did 90% of them ;o)  Strange though, I downloaded Bash 3.2
+> and gave it a try and didn't see the problem here..
+> 
+> Wanna try this small change, to see if it helps? :
+> 
+> #!/bin/bash
+> BR=$(git symbolic-ref HEAD 2>/dev/null) || { echo "$@" ; exit ; }
+> BR=${BR#refs/heads/}
+> REL=$(git rev-parse --show-prefix)
+> REL="${REL%\/}"
+> LOC="${PWD%/$REL}"
+> echo "[$BR!${LOC/*\/}${REL:+/$REL}]$ "
+> 
 
-> On 03/11/06, Karl Hasselstr=F6m <kha@treskal.com> wrote:
->
-> > Or try to use the git plumbing directly, if reasonable. Mail
-> > encoding and decoding isn't my idea of fun -- I just want it to
-> > not break. And I don't see much point in StGIT replicating core
-> > GIT functionality when there's no reason to.
->
-> As I said in my reply to Junio, I really like to keep the e-mail
-> templates functionality of StGIT. This is not available in
-> git-format-patch.
+That one did the job... funny, removing these two // did the job, for
+both versions, 
+GNU bash, version 3.1.17(1)-release (powerpc-unknown-linux-gnu) and
+GNU bash, version 3.2.5(1)-release (x86_64-pc-linux-gnu).
 
-=46air enough. How about e-mail importing -- is there a good reason to
-not use the git plumbing there?
+Thx for fixing that script. It really helps me.
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
+Sincerly
+Nicolas
