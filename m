@@ -4,78 +4,77 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Restore a single file in the index back to HEAD
-Date: Wed, 01 Nov 2006 15:39:33 -0800
-Message-ID: <7vejsmzqh6.fsf@assigned-by-dhcp.cox.net>
-References: <200610261641.11239.andyparkins@gmail.com>
-	<200611012118.11558.andyparkins@gmail.com>
-	<7vodrq251z.fsf@assigned-by-dhcp.cox.net>
-	<200611012309.42675.andyparkins@gmail.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [DRAFT] Branching and merging with git
+Date: Fri, 17 Nov 2006 23:50:37 +0100
+Message-ID: <20061117225037.GI7201@pasky.or.cz>
+References: <20061116221701.4499.qmail@science.horizon.com> <20061117153246.GA20065@thunk.org> <BAYC1-PASMTP07C8A8D8E5E78173953CA9AEE80@CEZ.ICE> <fcaeb9bf0611170819j57cda9e1ia4ecd4cd13956447@mail.gmail.com> <20061117113404.810fd4ea.seanlkml@sympatico.ca> <20061117165333.GR4842@pasky.or.cz> <20061117120154.3eaf5611.seanlkml@sympatico.ca> <20061117213125.GG7201@pasky.or.cz> <6efbd9b70611171436t1e0cadf2j7e9387ca77f85538@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 1 Nov 2006 23:39:47 +0000 (UTC)
-Cc: git@vger.kernel.org
+NNTP-Posting-Date: Fri, 17 Nov 2006 22:50:57 +0000 (UTC)
+Cc: Sean <seanlkml@sympatico.ca>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <200611012309.42675.andyparkins@gmail.com> (Andy Parkins's
-	message of "Wed, 1 Nov 2006 23:09:41 +0000")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Content-Disposition: inline
+In-Reply-To: <6efbd9b70611171436t1e0cadf2j7e9387ca77f85538@mail.gmail.com>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30674>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31737>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GfPgK-0007lx-65 for gcvg-git@gmane.org; Thu, 02 Nov
- 2006 00:39:40 +0100
+ esmtp (Exim 4.43) id 1GlCXj-0000OF-Bi for gcvg-git@gmane.org; Fri, 17 Nov
+ 2006 23:50:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1750840AbWKAXjf (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 1 Nov 2006
- 18:39:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752574AbWKAXjf
- (ORCPT <rfc822;git-outgoing>); Wed, 1 Nov 2006 18:39:35 -0500
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:47828 "EHLO
- fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP id S1750840AbWKAXjf
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 1 Nov 2006 18:39:35 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao08.cox.net
- (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
- <20061101233934.FZPI22977.fed1rmmtao08.cox.net@fed1rmimpo02.cox.net>; Wed, 1
- Nov 2006 18:39:34 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id hbfe1V00b1kojtg0000000 Wed, 01 Nov 2006
- 18:39:39 -0500
-To: Andy Parkins <andyparkins@gmail.com>
+ S1755990AbWKQWuk (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 17 Nov 2006
+ 17:50:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756008AbWKQWuk
+ (ORCPT <rfc822;git-outgoing>); Fri, 17 Nov 2006 17:50:40 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:18911 "EHLO machine.or.cz") by
+ vger.kernel.org with ESMTP id S1755990AbWKQWuj (ORCPT
+ <rfc822;git@vger.kernel.org>); Fri, 17 Nov 2006 17:50:39 -0500
+Received: (qmail 16462 invoked by uid 2001); 17 Nov 2006 23:50:37 +0100
+To: Chris Riddoch <riddochc@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Andy Parkins <andyparkins@gmail.com> writes:
+On Fri, Nov 17, 2006 at 11:36:25PM CET, Chris Riddoch wrote:
+> On 11/17/06, Petr Baudis <pasky@suse.cz> wrote:
+> >If someone writes a crash course in pure Git covering the same grounds
+> >as the current ones (possibly by just extending/retouching the tutorial)
+> >(it does not necessarily need to be a "refugee" crash course, it can
+> >build up from scratch), I can add it on the web. If it becomes as easy
+> >to use and with as mild learning curve as Cogito, it means Cogito got
+> >mostly obsolete and I'll happily remove the Cogito crash courses from
+> >the web.
+> 
+> As a relatively new user myself, I ran into the same confusion when I
+> came to the website for the first time.  One of the most prominent
+> things on the front page is the "Git Crash Courses."  Clicking on that
+> gives me the crash courses, all of which are about Cogito, not for
+> Git.  So why doesn't the front page say "Cogito Crash Courses"
+> instead?
+> 
+> And I don't think it matters much whether Cogito makes things easier
+> or not -- the Git website really should make Git's documentation more
+> prominent than Cogito's.  I'd expect the opposite of Cogito's website.
 
-> On Wednesday 2006, November 01 22:08, Junio C Hamano wrote:
->
->> That's the "mechanical point of view only" description I was
->> afraid of having.  While I think I now see why they can be
->
-> I must have a "mechanical point of view" brain.  I can't see
-> any further than the gear wheels.
+I think the difference here is the Git _tool_ vs. the Git version
+control system. Cogito is an element of the second: To use Git, you can
+either use the Git tool or the Cogito tool or the StGIT tool or even
+just the qgit tool (which also lets you inspect the working copy and
+commit). I believe the tool best suited for general usage by newbies _at
+this point_ is Cogito, so that's what I use for introduction to Git. I'm
+not saying this is ideal situation and I and others are/will be working
+to fix it.
 
-I care more about how something is useful than how faithfully
-something is implemented to the specification, which in turn
-means the specification needs to obviously indicate why it is
-useful.
+I'm all for making it more obvious what's going on at the website, I
+think the current wording is better. Also, if people believe that a
+crash course for core Git would help things, I'm all for it as well.
 
-A gadget may pick up a nearby baseball bat and jump up and down
-three times while holding it, but I do not want to have a
-description about the gadget that just says it is designed to do
-that.  I want the the description to be obvious that everybody
-who reads it understands why that gadget is useful in what
-situations.  That's why I feel the examples need to be extended.
-
-But if I understand correctly, you are suggesting two different
-modes of operation, namely, with path limiters HEAD is not
-moved?
-
-That is not something other git commands with pathspec does.
-Path limiters tell command to "do your thing only for paths that
-match these patterns, while you usually handle all paths; your
-behaviour shall otherwise not be any different in other aspects
-between the case you got no limiter and the case you got _all_
-paths as limiters."  So I do not think making path-only mode and
-pathless mode behave differently is a good idea from the UI
-point of view.
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
+$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
