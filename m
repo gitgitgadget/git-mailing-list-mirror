@@ -1,74 +1,164 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Yann Dirson <ydirson@altern.org>
-Subject: Re: Collection of stgit issues and wishes
-Date: Mon, 18 Dec 2006 00:21:14 +0100
-Message-ID: <20061217232113.GC16838@nan92-1-81-57-214-146.fbx.proxad.net>
-References: <20061208221744.GA3288@nan92-1-81-57-214-146.fbx.proxad.net> <b0943d9e0612120143j7d0c1026rab046c8f44ec43ca@mail.gmail.com> <87y7pc2rc7.fsf@morpheus.local> <457FD3E4.3090104@op5.se> <20061213110314.GA22670@diana.vm.bytemark.co.uk>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [RFC] gitweb TODO
+Date: Fri, 17 Nov 2006 19:01:40 +0100
+Message-ID: <200611171901.40839.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sun, 17 Dec 2006 23:21:37 +0000 (UTC)
-Cc: Andreas Ericsson <ae@op5.se>,
-	David K?gedal <davidk@lysator.liu.se>, git@vger.kernel.org
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Fri, 17 Nov 2006 18:01:02 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=SLJyN7GdCMvXy3pHOoKCY//h74prUVqXnJgi1QRuBVGrUGhkKiOWW8OfmWWObOALGjxEs2PNjVdGfko8gw0n1Qqgc7MgaYo13NFDVX/OLax7gdlmKnoz7p51206StiV31Qz2IU2+IoqH3zWlx97SASm4ZlYtkRqqul1UytkozlY=
+User-Agent: KMail/1.9.3
 Content-Disposition: inline
-In-Reply-To: <20061213110314.GA22670@diana.vm.bytemark.co.uk>
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34710>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gw5K2-0001ll-2F for gcvg-git@gmane.org; Mon, 18 Dec
- 2006 00:21:34 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31720>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gl81D-0004Mn-TL for gcvg-git@gmane.org; Fri, 17 Nov
+ 2006 19:00:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753209AbWLQXVb (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 17 Dec 2006
- 18:21:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753208AbWLQXVa
- (ORCPT <rfc822;git-outgoing>); Sun, 17 Dec 2006 18:21:30 -0500
-Received: from smtp1-g19.free.fr ([212.27.42.27]:36954 "EHLO
- smtp1-g19.free.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
- S1753209AbWLQXVa (ORCPT <rfc822;git@vger.kernel.org>); Sun, 17 Dec 2006
- 18:21:30 -0500
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net
- [81.57.214.146]) by smtp1-g19.free.fr (Postfix) with ESMTP id DD172AFB; Mon,
- 18 Dec 2006 00:21:28 +0100 (CET)
-Received: by gandelf.nowhere.earth (Postfix, from userid 1000) id 141811F092;
- Mon, 18 Dec 2006 00:21:14 +0100 (CET)
-To: Karl Hasselstr?m <kha@treskal.com>
+ S933755AbWKQSAV (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 17 Nov 2006
+ 13:00:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933756AbWKQSAV
+ (ORCPT <rfc822;git-outgoing>); Fri, 17 Nov 2006 13:00:21 -0500
+Received: from ug-out-1314.google.com ([66.249.92.173]:46441 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S933755AbWKQSAT
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 17 Nov 2006 13:00:19 -0500
+Received: by ug-out-1314.google.com with SMTP id m3so770939ugc for
+ <git@vger.kernel.org>; Fri, 17 Nov 2006 10:00:17 -0800 (PST)
+Received: by 10.66.242.20 with SMTP id p20mr2490404ugh.1163786417703; Fri, 17
+ Nov 2006 10:00:17 -0800 (PST)
+Received: from host-81-190-24-209.torun.mm.pl ( [81.190.24.209]) by
+ mx.google.com with ESMTP id 39sm3832246ugb.2006.11.17.10.00.17; Fri, 17 Nov
+ 2006 10:00:17 -0800 (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On Wed, Dec 13, 2006 at 12:03:14PM +0100, Karl Hasselstr?m wrote:
-> > > That approach can cause problems later on. If "stgit st" is
-> > > currently a unique prefix of "stgit status", people might use it
-> > > in scripts. Then, one day, you add the "stgit store" command, or
-> > > whatever, and their scripts start breaking for no good reason.
+These are a few gitweb issues and features I'm currently working on 
+(or plan working on).
 
-Such shortcuts are *definitely* not for script writers.
+1. New patchset view (commitdiff, blobdiff)
 
-> > People who use abbreviations of commands in scripts ought to be
-> > shot, not catered to, especially if they know this abbreviation is
-> > automagically calculated.
-> 
-> Well, yes, but there's no reason to not shoot them _politely_ ...
+In "old" gitweb commitdiff view was generated by iterating over lines of 
+git-diff-tree raw format output, and generating diffs using 
+git-cat-file and external diff utility (/usr/bin/diff). This required 
+having temporary directory for diff generation, and of course diffs 
+didn't have extended git headers.
 
-At least we could shoot them when stdout is not a tty ?
-Not sure there is a good way of detecting if we're being run directly 
-from an interactive shell.
+The "new" commitdiff view is generated from single git-diff-tree 
+--raw-with-path output. But I have made incorrect assumption that one 
+line from "raw" diff-tree output always corresponds to only one patch 
+in the patchset part of output. This is not the case. I'm not sure if 
+those are the only cases when patch is broken, but changing file into 
+symlink or symlink into file ('T' status), and explicit breaking ('B' 
+status) generates two patches to one line of raw difftree output. The 
+second is not of much importance for gitweb, unless yoy add -B to 
+@diff_opts, but the first is important; it is currently broken, see
+   http://tinyurl.com/y3cfop
+(commit 4c52c0d31f0f7142d81a465c40789befc2e86548 on 
+gitweb-test-funny-char branch in git.git repository).
+
+I have thought of the following (mutually exclusive) ways to fix this
+
+ a. Change core git git-diff-tree command to not break (some?) of T
+    changes into two patches. From what gitster said on #git this 
+    feature is for git-diff patches to be patch(1) compatibile; but
+    -M already causes patches to be incompatibile with patch. I'm
+    thinking here about adding some kind of -s/--single-patch
+    --do-not-break-patch-into-two-please command line option for
+    git-diff
+
+ b. Check the raw difftree line for status and perhaps other info
+    to know if the line generates more than one patch. It needs detailed
+    knowledge about _when_ git-diff generates more than one patch to one
+    "raw" format line, and would break if core diff changes in that
+    detail. Simplest to implement, I think...
+
+    Could you tell me all the cases when git generates more than one
+    patch for one "raw" diff format line, please?
+
+ c. "Cache" git diff header, or the whole patch, or the whole patchset.
+    It is enough to cache (write lines to "buffer"/"cache" array) up to
+    the extended header "^index" line, which can be used to check if to
+    go to the next dofftree "raw" line (or wven which of "raw" difftree
+    lines this particular patch corresponds to). Does not require
+    changes in diff core, and is less fragile, less susceptible to
+    breakage.
+
+Which of those would be the best to implement?
 
 
-> I'd prefer hand-picked command abbreviations to reduce namespace
-> clutter. That way, it's even possible to have "ambiguous" shortcuts --
-> for example, "stg st" -> "stg status" even if "stg store" exists. And
-> shortcuts that aren't prefixes, like "stg ua" -> "stg unapplied". And
-> the user doesn't need to retrain her fingers just because a prefix
-> gets ambiguous.
+2. Difftree combined diff gitweb "raw" format
 
-Sure, I'd hate having to type "stg sta" :)
+Currently "commitdiff" view consist of the gitweb representation of 
+"raw" git-diff output (list of changed files a la git-whatchanged), and 
+the patchset (a la git-show). "commit" view has only list of changed 
+files, nearly exacttly the same as in "commitdiff" view (but with links 
+to blobdiff view instead of links to appropriate patch in "commitdiff" 
+view).
 
-Best regards,
+I have though about using one of the combined diff outputs for merge 
+commits. The problem is how to represent the whatchanged part. Which 
+parts of gitweb difftree output to leave? And what about the fact that 
+we have raw output for -c/--combined diff format, but not for chunk 
+simplifying --cc (compact combined) output?
+
+
+3. Committags support (and implementation)
+
+There was some proposed implementation here, both by me and by Junio, 
+but no definite patches were accepted. We have the following mutually 
+exclusive ways to do this:
+
+ a. Do esc_html first, then do all committags simultaneously. The
+    advantage is that it is perhaps slightly faster, the disadvantages
+    is additional complication in code, and the fact that regexp
+    defining committags have to be either on esc_html-ed pattern, or be
+    converted to esc_html-ed input.
+
+ b. Have a chain of committags, and do committags sequentially. This
+    means that we have to divide output into part to be further parsed,
+    and the part which should not be parsed further; here Junio proposed
+    wondefull idea of list mixed of strings (to be committags parsed)
+    and string references (to be left as is). As the last "committag"
+    we perform esc_html (uless for example some project stores commit
+    messages in HTML, XML, or some structured text like AsciiDoc or
+    reStructuredText).
+
+Which of those would be better to implement?
+
+
+4. Feeds (RSS, Atom,...)
+
+There is new Atom format feed, there was request for per-branch feeds.
+The feed output certainly needs cleanup. The questions are: 
+
+a.) What should be in the feed (only commit message + authorship, or 
+also whatchanged; what format use for whatchanged; do add information 
+about tags created with given window of time, etc.)? 
+
+b.) Should we use "text/xml" or (unstandarized) "application/rss+xml" as 
+type/Content-Type for RSS 2.01 format, should we use 
+"application/atom+xml" for Atom format?
+
+c.) Should we add APP (Atom Publishing Protocol) support in addition to 
+OPML?
+
+d.) Should we put log, shortlog, history, rss, atom views together in 
+one subroutine, and select the view using $format parameter of this 
+subroutine?
+
 -- 
+Jakub Narebski
