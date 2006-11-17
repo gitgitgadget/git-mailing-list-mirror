@@ -2,83 +2,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: git-PS1 bash prompt setting
-Date: Mon, 27 Nov 2006 08:49:31 +0100
-Organization: At home
-Message-ID: <eke571$ng2$1@sea.gmane.org>
-References: <BAYC1-PASMTP037FDA6C6465F0541AC613AEE90@CEZ.ICE> <Pine.LNX.4.63.0611261524130.30004@wbgn013.biozentrum.uni-wuerzburg.de> <20061126094212.fde8cce7.seanlkml@sympatico.ca> <20061127065400.GA19174@spearce.org>
+From: Jon Loeliger <jdl@freescale.com>
+Subject: Re: information for a 60-minute "intro to git" needed
+Date: Fri, 17 Nov 2006 13:24:08 -0600
+Message-ID: <1163791447.4665.293.camel@cashmere.sps.mot.com>
+References: <8664dmxdrf.fsf@blue.stonehenge.com>
+	 <20061111143304.GA7201@pasky.or.cz>
+	 <1163444316.4665.212.camel@cashmere.sps.mot.com>
+	 <46d6db660611131341x40b1fea5m64818cc6ff67c7e2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-NNTP-Posting-Date: Mon, 27 Nov 2006 07:48:26 +0000 (UTC)
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Fri, 17 Nov 2006 19:33:50 +0000 (UTC)
+Cc: Git List <git@vger.kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 34
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+In-Reply-To: <46d6db660611131341x40b1fea5m64818cc6ff67c7e2@mail.gmail.com>
+X-Mailer: Ximian Evolution 1.4.6 (1.4.6-2.ydl.1) 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32388>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31724>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GobDz-0007EA-5Q for gcvg-git@gmane.org; Mon, 27 Nov
- 2006 08:48:23 +0100
+ esmtp (Exim 4.43) id 1Gl9Sy-0004Lp-Kz for gcvg-git@gmane.org; Fri, 17 Nov
+ 2006 20:33:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1757265AbWK0HsO (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 27 Nov 2006
- 02:48:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757266AbWK0HsO
- (ORCPT <rfc822;git-outgoing>); Mon, 27 Nov 2006 02:48:14 -0500
-Received: from main.gmane.org ([80.91.229.2]:18576 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S1757265AbWK0HsO (ORCPT
- <rfc822;git@vger.kernel.org>); Mon, 27 Nov 2006 02:48:14 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1GobDd-0007Ad-J2 for git@vger.kernel.org; Mon, 27 Nov 2006 08:48:01 +0100
-Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Mon, 27 Nov 2006 08:48:01 +0100
-Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Mon, 27 Nov 2006
- 08:48:01 +0100
-To: git@vger.kernel.org
+ S1755823AbWKQTdN (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 17 Nov 2006
+ 14:33:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755832AbWKQTdN
+ (ORCPT <rfc822;git-outgoing>); Fri, 17 Nov 2006 14:33:13 -0500
+Received: from az33egw02.freescale.net ([192.88.158.103]:17798 "EHLO
+ az33egw02.freescale.net") by vger.kernel.org with ESMTP id S1755823AbWKQTdL
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 17 Nov 2006 14:33:11 -0500
+Received: from az33smr02.freescale.net (az33smr02.freescale.net
+ [10.64.34.200]) by az33egw02.freescale.net (8.12.11/az33egw02) with ESMTP id
+ kAHJXACe022878; Fri, 17 Nov 2006 12:33:10 -0700 (MST)
+Received: from [10.82.19.2] (cashmere.am.freescale.net [10.82.19.2]) by
+ az33smr02.freescale.net (8.13.1/8.13.0) with ESMTP id kAHJX8qE001210; Fri, 17
+ Nov 2006 13:33:09 -0600 (CST)
+To: Christian MICHON <christian.michon@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Shawn Pearce wrote:
-
-> Sean <seanlkml@sympatico.ca> wrote:
->> On Sun, 26 Nov 2006 15:27:07 +0100 (CET)
->> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
->> 
->>> But there really is no good place to put it: most commands need a git 
->>> repository, and those which do not, are inappropriate to put an option 
->>> "--show-ps1" into. Except maybe repo-config. Thoughts?
->> 
->> What about just making it an option to the git wrapper?
+On Mon, 2006-11-13 at 15:41, Christian MICHON wrote:
+> On 11/13/06, Jon Loeliger <jdl@freescale.com> wrote:
+> > All of my git papers published in Linux Magazine as well
+> > as my OLS presentation are available off of www.jdl.com.
+> > (Yes, I still need to make them available off of
+> > opensource.freescale.com as well still.  *sigh*)
+> >
 > 
-> I'm using something like this, and will be adding it to
-> git-completion.bash tonight:
-> 
->       __git_ps1 ()
->       {
->               local b="$(git symbolic-ref HEAD 2>/dev/null)"
->               if [ -n "$b" ]; then echo "(${b##refs/heads/})"; fi
->       }
->       PS1='[\u@\h \W$(__git_ps1)]\$ '
-> 
-> it works very well...
+> excellent articles :)
 
-Perhaps, as it was proposed somewhere else in this thread, instead of
-\u@\h use $(git repo-config --get user.email)?
+Thank you!
 
-And I would add \!: at the beginning of prompt, but that might be
-just me.
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+> glad to see other people from the semiconductor industry
+> use/excel with git.
+
+For the record, no MS products were used in the
+creation of those papers, nor the presentations.
+I wrote plain ASCII text for the papers, and the
+presentation was done in OpenOffice.  After that,
+however, I don't know how Linux Magazine produced
+the PDF files for the articles. :-)
+
+jdl
 
