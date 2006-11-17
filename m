@@ -1,71 +1,89 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-Subject: Re: git and bzr
-Date: Thu, 30 Nov 2006 16:01:27 +0700
-Message-ID: <fcaeb9bf0611300101s51a53b75lc7e771b067ba6e33@mail.gmail.com>
-References: <45357CC3.4040507@utoronto.ca>
-	 <Pine.LNX.4.64.0611281346490.4244@woody.osdl.org>
-	 <456CB197.2030201@onlinehome.de>
-	 <Pine.LNX.4.64.0611281413310.4244@woody.osdl.org>
-	 <Pine.LNX.4.63.0611291149440.30004@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <Pine.LNX.4.64.0611290922410.3513@woody.osdl.org>
-	 <456DD76C.4010902@gmx.net>
-	 <Pine.LNX.4.64.0611291235590.3513@woody.osdl.org>
-	 <87bqmpvlxf.wl%cworth@cworth.org> <456E8147.9070304@gmx.net>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [ANNOUNCE] Cogito-0.18.2
+Date: Fri, 17 Nov 2006 02:58:06 +0100
+Message-ID: <20061117015806.GE7201@pasky.or.cz>
+References: <20061117004930.GC7201@pasky.or.cz> <46a038f90611161744q6c535218n5b815ef1fc5228b6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 30 Nov 2006 09:01:43 +0000 (UTC)
-Cc: "Carl Worth" <cworth@cworth.org>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Fri, 17 Nov 2006 01:59:06 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=IArhHB9fySZngodH2KFz8ljXbtArDUbve8ytaQEQa9OQU5y3/jqrwZc3ArqDPoNaNiVnlhkgEiwf8bffV/Uf1PQAalxNKNXHIWqqGAIzRnIr2Usw39gIFdcILSTR6dGYAlD8CyQD+dlB94xO8rkaSoUU18eUgV3LP454pIexTvE=
-In-Reply-To: <456E8147.9070304@gmx.net>
 Content-Disposition: inline
+In-Reply-To: <46a038f90611161744q6c535218n5b815ef1fc5228b6@mail.gmail.com>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32710>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31661>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GphnT-000053-VP for gcvg-git@gmane.org; Thu, 30 Nov
- 2006 10:01:36 +0100
+ esmtp (Exim 4.43) id 1Gkszd-0007o6-4s for gcvg-git@gmane.org; Fri, 17 Nov
+ 2006 02:58:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1759185AbWK3JB3 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
- 04:01:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759186AbWK3JB3
- (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 04:01:29 -0500
-Received: from ug-out-1314.google.com ([66.249.92.174]:21296 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1759185AbWK3JB3
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 04:01:29 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so2047822uga for
- <git@vger.kernel.org>; Thu, 30 Nov 2006 01:01:27 -0800 (PST)
-Received: by 10.78.171.13 with SMTP id t13mr3300830hue.1164877287549; Thu, 30
- Nov 2006 01:01:27 -0800 (PST)
-Received: by 10.78.100.8 with HTTP; Thu, 30 Nov 2006 01:01:27 -0800 (PST)
-To: "Raimund Bauer" <ray007@gmx.net>
+ S1424908AbWKQB6K (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 16 Nov 2006
+ 20:58:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1424909AbWKQB6J
+ (ORCPT <rfc822;git-outgoing>); Thu, 16 Nov 2006 20:58:09 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:3025 "EHLO machine.or.cz") by
+ vger.kernel.org with ESMTP id S1424908AbWKQB6I (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 16 Nov 2006 20:58:08 -0500
+Received: (qmail 9300 invoked by uid 2001); 17 Nov 2006 02:58:06 +0100
+To: Martin Langhoff <martin.langhoff@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-On 11/30/06, Raimund Bauer <ray007@gmx.net> wrote:
-> * Carl Worth wrote, On 30.11.2006 01:05:
-> > Let's help people do exactly that by making the behavior of "git
-> > commit -a" be the default for "git commit".
-> >
-> Maybe we could do that _only_ if the index matches HEAD, and otherwise
-> keep current behavior?
+On Fri, Nov 17, 2006 at 02:44:47AM CET, Martin Langhoff wrote:
+> On 11/17/06, Petr Baudis <pasky@suse.cz> wrote:
+> 
+> >* cg-log does not follow history across renames anymore; it never really
+> >  actually worked and was instead causing problems and random error
+> >  messages. There needs to be git-core support for this funcionality,
+> >  hacking it with a perl filter is bad design, so I'm not going to fix
+> >  the filter (but I'd take patches if someone else did ;).
+> 
+> I was looking at the follow renames Perl script last week (hey, I was
+> bored!) and while I could tell it didn't work, I did get the feeling
+> that it wasn't an impossible task, at least for the 'explicit paths'
+> case.
 
-I hate the if clause. Suppose I prefer update-index way, I would have
-to check whether HEAD matches index everytime I do a commit to make
-sure it won't do the other way.
-Either -a or -i is the default, not if please.
+Yes. It's fixable, but IIRC the current script is fairly broken; I'd
+have to look at it again to remember why, but I think I wrote it to a
+comment inside there somewhere.
 
-By the way I do use the update-index way, but vote -a by default. I
-don't mind adding " -i" after every commit commands.
+It would be cool if someone would fix it, of course.
+
+> For the 'whole tree' and subpath cases it _is_ tricky, and would
+> be faster to solve within git, but not impossible.
+> 
+> And even then, I am tempted to think that git log could provide some
+> better hints than it does today when walking the whole tree or
+> subpaths, so that cg-log or gitk can ask [if relevant] for selective
+> rename info.
+> 
+> I am curious as to why you see it as bad design...
+
+Exactly because this information is really something core Git should
+provide, and I'm feeling bad for not pushing this kind of functionality
+to core Git and instead going at lengths implementing it in Cogito.
+
+The conceptually proper solution I'd imagine is
+
+	http://news.gmane.org/find-root.php?message_id=<20060515203700.GB4497@c165.ib.student.liu.se>
+
+(I didn't look at the actual code though), currently in limbo and
+waiting for someone to fight for it. :-)
+
+OTOH doing it in a filter simulates greatly how powerful the Git's
+pipeline architecture is, and has certain undeniable cool factor
+associated. ;-)
+
 -- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
+$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
