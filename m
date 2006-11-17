@@ -1,86 +1,81 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: [PATCH/RFC] Make git-commit cleverer - have it figure out whether it needs -a automatically
-Date: Fri, 1 Dec 2006 15:17:59 +0000
-Message-ID: <200612011518.00575.andyparkins@gmail.com>
-References: <200611301259.32387.andyparkins@gmail.com> <200612011052.48784.andyparkins@gmail.com> <81b0412b0612010507r5e6ee226t3a1e61113bf15d43@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Cleaning up git user-interface warts
+Date: Fri, 17 Nov 2006 03:41:06 -0800
+Message-ID: <7vpsbmmhbh.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0611150950170.3349@woody.osdl.org>
+	<Pine.LNX.4.64.0611151203450.3349@woody.osdl.org>
+	<Pine.LNX.4.64.0611151516360.2591@xanadu.home>
+	<Pine.LNX.4.64.0611151226590.3349@woody.osdl.org>
+	<87velgs9hx.wl%cworth@cworth.org>
+	<Pine.LNX.4.64.0611151339500.3349@woody.osdl.org>
+	<87psbos4pb.wl%cworth@cworth.org> <20061115230252.GH24861@spearce.org>
+	<Pine.LNX.4.64.0611151523290.3349@woody.osdl.org>
+	<87fycjs5yg.wl%cworth@cworth.org>
+	<f2b55d220611160957s2e68059dk99bbe902e7e1f416@mail.gmail.com>
+	<87r6w3b68p.wl%cworth@cworth.org>
+	<7vu00ysbwi.fsf@assigned-by-dhcp.cox.net>
+	<87ejs2qvmb.wl%cworth@cworth.org>
+	<Pine.LNX.4.63.0611171103150.13772@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Fri, 1 Dec 2006 15:18:39 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Fri, 17 Nov 2006 11:41:54 +0000 (UTC)
+Cc: Carl Worth <cworth@cworth.org>,
+	"Michael K. Edwards" <medwards.linux@gmail.com>,
+	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=chb3tzWZgUntdpodKVtfj3u7kmN5wvHLDj6dkykPdGNCdClA6QmMnY4ZQbqhJW8jQk7LC1Wyz4aOIBXTJLjjoWx9UZPB/sRCfLk/yp8Ne22v60Mfe6huz7PwOz7wlkZf/vRp/FtYbc5edH5LStfCa1vr/eTPZ55xejQ/lCkLHGA=
-User-Agent: KMail/1.9.5
-In-Reply-To: <81b0412b0612010507r5e6ee226t3a1e61113bf15d43@mail.gmail.com>
-Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0611171103150.13772@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Fri, 17 Nov 2006 11:11:19 +0100
+	(CET)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32936>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31692>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GqA9V-0008QU-Oq for gcvg-git@gmane.org; Fri, 01 Dec
- 2006 16:18:14 +0100
+ esmtp (Exim 4.43) id 1Gl25r-0004ZK-1P for gcvg-git@gmane.org; Fri, 17 Nov
+ 2006 12:41:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S936383AbWLAPSK (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
- 10:18:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936452AbWLAPSJ
- (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 10:18:09 -0500
-Received: from ug-out-1314.google.com ([66.249.92.169]:4567 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S936383AbWLAPSI
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 10:18:08 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so2448296uga for
- <git@vger.kernel.org>; Fri, 01 Dec 2006 07:18:07 -0800 (PST)
-Received: by 10.66.232.10 with SMTP id e10mr7444830ugh.1164986284784; Fri, 01
- Dec 2006 07:18:04 -0800 (PST)
-Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
- ESMTP id b35sm21857252ugd.2006.12.01.07.18.03; Fri, 01 Dec 2006 07:18:03
- -0800 (PST)
-To: git@vger.kernel.org
+ S933529AbWKQLlK (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 17 Nov 2006
+ 06:41:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932877AbWKQLlK
+ (ORCPT <rfc822;git-outgoing>); Fri, 17 Nov 2006 06:41:10 -0500
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:48104 "EHLO
+ fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP id S933529AbWKQLlI
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 17 Nov 2006 06:41:08 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao11.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061117114107.XWT296.fed1rmmtao11.cox.net@fed1rmimpo02.cox.net>; Fri, 17
+ Nov 2006 06:41:07 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id nnhD1V00a1kojtg0000000; Fri, 17 Nov 2006
+ 06:41:14 -0500
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-On Friday 2006 December 01 13:07, Alex Riesen wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> Of course it is. It's just that the problem is not solved yet,
-> and if -a becomes git-commit's default a simple git-commit
-> will be a real annoying thing.
-
-There was talk of making git-commit -a; bear in mind that this patch was to 
-completely sidestep making that default.  This patch has no effect on 
-existing behaviour save for one special case: when commit would otherwise 
-have done nothing, it now does "git-commit -a".
-
-If you have a problem with git-commit -a, then presumably you are already 
-using git-update-index for all your commit needs; in which case this patch 
-has zero impact on you.
-
-> > Wasn't the whole point of this to avoid needing another config option?
+>> 5. Adding something like git-fetch --all to allow it to pick up all new
+>>    branches
 >
-> was it it the point of breaking existing setups?
+> IIRC this idea was rejected, but I would find it useful. Especially with 
+> what Han-Wen said: you can store the branches you fetch with "git fetch 
+> --all <nick>" under .git/refs/remotes/<nick>/<branchname>.
 
-Of course it isn't; I have no intention of breaking yours or anybody else's 
-setup.  However, as your complaint is that this patch highlights another bug, 
-I would think the solution is fix the other bug, instead of botch around it 
-in this patch.
+With separate-remote layout, this can be done without risk of
+tracking refname clashing with local refname, which was the
+primary reason for an earlier reluctance.  
 
-Perhaps I was a little terse; what I should have said was - I don't really 
-want to solve this executable bit problem with a config option; as that's 
-papering over the cracks.  If executable bits are a problem, well why not 
-detect when that's the case automatically.  I don't have a cygwin environment 
-so I have no way to test what you ask for.
-
-
-
-Andy
-
--- 
-Dr Andy Parkins, M Eng (hons), MIEE
+While separate-remote layout also solves Carl's "do not want to
+track tracking branches remote has" problem, local branch
+namespace can have both for-others (not necessarily "public" but
+could be "for colleagues") and throwaway branches, so --all is
+probably not the right thing to do in most cases.  But I am Ok
+with the approach of seeing how well it works out in practice by
+doing the simplest "--all" and giving options to restrict it
+later.
