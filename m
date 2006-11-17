@@ -4,92 +4,76 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] Allow subcommand.color and color.subcommand color configuration
-Date: Wed, 13 Dec 2006 15:42:56 -0800
-Message-ID: <20061213234256.GA10423@soma>
-References: <200612130913.28917.andyparkins@gmail.com> <7vodq7e90z.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Cleaning up git user-interface warts
+Date: Thu, 16 Nov 2006 16:13:44 -0800
+Message-ID: <7vmz6r2amf.fsf@assigned-by-dhcp.cox.net>
+References: <87k61yt1x2.wl%cworth@cworth.org> <455A1137.8030301@shadowen.org>
+	<87hcx1u934.wl%cworth@cworth.org>
+	<Pine.LNX.4.64.0611141518590.2591@xanadu.home>
+	<87bqn9u43s.wl%cworth@cworth.org> <ejdcg5$4fl$1@sea.gmane.org>
+	<Pine.LNX.4.64.0611141633430.2591@xanadu.home>
+	<7vbqn9y6w6.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0611142007010.2591@xanadu.home>
+	<7v3b8ltq7r.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0611142306090.2591@xanadu.home>
+	<Pine.LNX.4.64.0611150950170.3349@woody.osdl.org>
+	<455BBCE9.4050503@xs4all.nl>
+	<Pine.LNX.4.64.0611151908130.3349@woody.osdl.org>
+	<Pine.LNX.4.63.0611162353250.13772@wbgn013.biozentrum.uni-wuerzburg.de>
+	<Pine.LNX.4.64.0611161508530.3349@woody.osdl.org>
+	<455CFCBD.8040901@xs4all.nl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 13 Dec 2006 23:43:14 +0000 (UTC)
-Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
+NNTP-Posting-Date: Fri, 17 Nov 2006 00:13:58 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <7vodq7e90z.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <455CFCBD.8040901@xs4all.nl> (Han-Wen Nienhuys's message of "Fri,
+	17 Nov 2006 01:05:17 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34260>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gudkh-0002uP-Ky for gcvg-git@gmane.org; Thu, 14 Dec
- 2006 00:43:08 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31642>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GkrMe-0006hP-8n for gcvg-git@gmane.org; Fri, 17 Nov
+ 2006 01:13:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751803AbWLMXnF (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 13 Dec 2006
- 18:43:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751759AbWLMXnD
- (ORCPT <rfc822;git-outgoing>); Wed, 13 Dec 2006 18:43:03 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:55689 "EHLO hand.yhbt.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1751804AbWLMXnB
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 13 Dec 2006 18:43:01 -0500
-Received: from hand.yhbt.net (localhost [127.0.0.1]) by hand.yhbt.net
- (Postfix) with SMTP id E03C42DC034; Wed, 13 Dec 2006 15:42:56 -0800 (PST)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Wed, 13 Dec 2006
- 15:42:56 -0800
-To: Junio C Hamano <junkio@cox.net>
+ S1424797AbWKQANr (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 16 Nov 2006
+ 19:13:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1424798AbWKQANr
+ (ORCPT <rfc822;git-outgoing>); Thu, 16 Nov 2006 19:13:47 -0500
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:2179 "EHLO
+ fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP id S1424797AbWKQANq
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 16 Nov 2006 19:13:46 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao10.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061117001345.MJNY5575.fed1rmmtao10.cox.net@fed1rmimpo02.cox.net>; Thu, 16
+ Nov 2006 19:13:45 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id ncDr1V00a1kojtg0000000; Thu, 16 Nov 2006
+ 19:13:52 -0500
+To: hanwen@xs4all.nl
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano <junkio@cox.net> wrote:
-> Andy Parkins <andyparkins@gmail.com> writes:
-> 
-> > While adding colour to the branch command it was pointed out that a
-> > config option like "branch.color" conflicts with the pre-existing
-> > "branch.something" namespace used for specifying default merge urls and
-> > branches.  The suggested solution was to flip the order of the
-> > components to "color.branch", which I did for colourising branch.
-> > ...
-> > Unfortunately git-svn reads "diff.color" and "pager.color"; which I
-> > don't like to change unilaterally.
-> 
-> I think doing the same makes sense.  Something like this?
+Han-Wen Nienhuys <hanwen@xs4all.nl> writes:
 
-It works great for me after I fixed some syntax errors (patch below).
+>  - clone but not a put-clone,
 
-> -- >8 --
-> git-svn: allow both diff.color and color.diff
-> 
-> The list concensus is to group color related configuration under
-> "color.*" so let's be consistent.
-> 
-> Inspired by Andy Parkins's patch to do the same for diff/log
-> family.
-> 
-> Signed-off-by: Junio C Hamano <junkio@cox.net>
+What's put-clone?  Care to explain?
 
-Signed-off-by: Eric Wong <normalperson@yhbt.net> (with the following
-fixes of course :)
+>  - pull = merge + fetch, but no command for merge + throw
 
-diff --git a/git-svn.perl b/git-svn.perl
-index 2893e3b..73ab8d8 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -926,7 +926,7 @@ sub cmt_showable {
- sub log_use_color {
- 	return 1 if $_color;
- 	my ($dc, $dcvar);
--	$dcvar = 'color.diff'
-+	$dcvar = 'color.diff';
- 	$dc = `git-repo-config --get $dcvar`;
- 	if ($dc eq '') {
- 		# nothing at all; fallback to "diff.color"
-@@ -948,7 +948,7 @@ sub log_use_color {
- 			}
- 		}
- 		chomp($pc);
--		if (-t *STDOUT || (defined $_pager && $pc eq 'true') {
-+		if (-t *STDOUT || (defined $_pager && $pc eq 'true')) {
- 			return ($ENV{TERM} && $ENV{TERM} ne 'dumb');
- 		}
- 		return 0;
+What's merge+throw?  Care to explain?
 
--- 
+>  - clone for getting all branches of a repo, but no command for
+>    updating all branches of a repo.  
+
+This one I can understand, but how would you propose to "update
+all branches", in other words what's your design for mapping
+remote branch names to local branch namespaces?
+
+It would be nice if the design does not straightjacket different
+repository layouts different people seem to like, but I think it
+would be Ok to limit ourselves only to support the straight
+one-to-one mapping and support only separate-remote layout.
