@@ -1,68 +1,78 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: svn versus git
-Date: Wed, 13 Dec 2006 18:26:37 -0500
-Message-ID: <20061213232637.GF32568@spearce.org>
-References: <200612132200.41420.andyparkins@gmail.com> <20061213225627.GC32568@spearce.org> <elq1ig$4ie$1@sea.gmane.org>
+X-Spam-Status: No, score=-2.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,MSGID_FROM_MTA_HEADER,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+From: Sean <seanlkml@sympatico.ca>
+Subject: Re: [DRAFT] Branching and merging with git
+Date: Fri, 17 Nov 2006 12:01:54 -0500
+Message-ID: <BAYC1-PASMTP07E3595705250158235B01AEE80@CEZ.ICE>
+References: <20061116221701.4499.qmail@science.horizon.com>
+	<20061117153246.GA20065@thunk.org>
+	<BAYC1-PASMTP07C8A8D8E5E78173953CA9AEE80@CEZ.ICE>
+	<fcaeb9bf0611170819j57cda9e1ia4ecd4cd13956447@mail.gmail.com>
+	<20061117113404.810fd4ea.seanlkml@sympatico.ca>
+	<20061117165333.GR4842@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 13 Dec 2006 23:27:04 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Fri, 17 Nov 2006 17:03:41 +0000 (UTC)
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <elq1ig$4ie$1@sea.gmane.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+X-Originating-IP: [65.93.43.81]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Original-Message-Id: <20061117120154.3eaf5611.seanlkml@sympatico.ca>
+In-Reply-To: <20061117165333.GR4842@pasky.or.cz>
+X-Mailer: Sylpheed version 2.2.9 (GTK+ 2.10.4; i386-redhat-linux-gnu)
+X-OriginalArrivalTime: 17 Nov 2006 17:08:13.0500 (UTC) FILETIME=[F74A47C0:01C70A6A]
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34256>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GudV2-0000wc-H3 for gcvg-git@gmane.org; Thu, 14 Dec
- 2006 00:26:56 +0100
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gl76H-0000c2-AX for gcvg-git@gmane.org; Fri, 17 Nov
+ 2006 18:02:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751747AbWLMX0l (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 13 Dec 2006
- 18:26:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751795AbWLMX0l
- (ORCPT <rfc822;git-outgoing>); Wed, 13 Dec 2006 18:26:41 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:39617 "EHLO
- corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1751747AbWLMX0k (ORCPT <rfc822;git@vger.kernel.org>); Wed, 13 Dec 2006
- 18:26:40 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1GudUb-0000kS-MX; Wed, 13 Dec 2006 18:26:29 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- 9BE8920FB6E; Wed, 13 Dec 2006 18:26:37 -0500 (EST)
-To: Jakub Narebski <jnareb@gmail.com>
+ S933739AbWKQRB5 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 17 Nov 2006
+ 12:01:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933740AbWKQRB5
+ (ORCPT <rfc822;git-outgoing>); Fri, 17 Nov 2006 12:01:57 -0500
+Received: from bayc1-pasmtp07.bayc1.hotmail.com ([65.54.191.167]:28230 "EHLO
+ BAYC1-PASMTP07.CEZ.ICE") by vger.kernel.org with ESMTP id S933739AbWKQRB4
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 17 Nov 2006 12:01:56 -0500
+Received: from linux1.attic.local ([65.93.43.81]) by BAYC1-PASMTP07.CEZ.ICE
+ over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830); Fri, 17 Nov
+ 2006 09:08:13 -0800
+Received: from guru.attic.local ([10.10.10.28]) by linux1.attic.local with
+ esmtp (Exim 4.43) id 1Gl6A5-0000yl-Mf; Fri, 17 Nov 2006 11:01:53 -0500
+To: Petr Baudis <pasky@suse.cz>
 Sender: git-owner@vger.kernel.org
 
-Jakub Narebski <jnareb@gmail.com> wrote:
-> Shawn Pearce wrote:
+On Fri, 17 Nov 2006 17:53:33 +0100
+Petr Baudis <pasky@suse.cz> wrote:
+
+> On Fri, Nov 17, 2006 at 05:34:04PM CET, Sean wrote:
+> > It's just that the separate Cogito tool shouldn't have a place on the
+> > Git website any more prominent than say StGit does.
 > 
-> >   git cat-file -p $REV:$file
-> > 
-> > not sure how much easier it gets than that.  Load in the bash
-> > completion from contrib/completion and you can even tab complete
-> > the $file part.
+> It doesn't - look at the "Maintaining external patches" crash course.
 > 
-> Actually, tab completion allows to complete both $REV and $file part.
+> Porcelains are integral part of the Git environment. I think several
+> people have already tried to explain it before.
+> 
 
-Good point.  Unless $REV is a SHA1 in hex format, as tab completion
-for commits in hex SHA1 isn't supported.
+There is enough native Git documentation and hopefully more coming
+that third party tools should be pushed behind the scenes a bit.
+At least on the GIT website.
 
-Though I have thought about implementing it.  ;-)
+Of course there is nothing wrong with having information there, but
+the main thrust should be about Git and how to use it directly without
+porcelains.  Especially in the light that people have recently
+expressed a desire to advocate and document the use of native Git
+more strongly.
 
--- 
+Having a link to Cogito off the front page of the Git website that
+says... Cogito makes things "easier", no matter how much you
+personally believe it, isn't the way everyone feels and is at
+odds with the native-git message and improvement effort.
+
