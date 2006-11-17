@@ -4,48 +4,90 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: Re: Commit f84871 breaks build on OS X
-Date: Fri, 8 Dec 2006 06:51:08 -0500
-Message-ID: <2EB26FE2-C6AC-4C2E-9586-AD43B1E05175@silverinsanity.com>
-References: <2D096A57-D7B3-49C7-81E4-EB47A0D933B2@silverinsanity.com> <81b0412b0612070633i7aec43dse7a8beda64437103@mail.gmail.com> <86ejrbihnr.fsf@blue.stonehenge.com> <7vmz5zqqo7.fsf@assigned-by-dhcp.cox.net> <7virgnqpt5.fsf@assigned-by-dhcp.cox.net> <81b0412b0612072340w6af9df37y25a1d15773a3f8d8@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Fri, 8 Dec 2006 11:51:23 +0000 (UTC)
-Cc: git@vger.kernel.org
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Cleaning up git user-interface warts
+Date: Thu, 16 Nov 2006 17:49:10 -0800
+Message-ID: <7vejs2zvu1.fsf@assigned-by-dhcp.cox.net>
+References: <87k61yt1x2.wl%cworth@cworth.org> <455A1137.8030301@shadowen.org>
+	<87hcx1u934.wl%cworth@cworth.org>
+	<Pine.LNX.4.64.0611141518590.2591@xanadu.home>
+	<87bqn9u43s.wl%cworth@cworth.org>
+	<7vr6w5y7to.fsf@assigned-by-dhcp.cox.net>
+	<20061116051240.GV7201@pasky.or.cz>
+	<7vr6w33vv3.fsf@assigned-by-dhcp.cox.net>
+	<20061116222008.GA7201@pasky.or.cz>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Fri, 17 Nov 2006 01:53:04 +0000 (UTC)
+Cc: Carl Worth <cworth@cworth.org>, git@vger.kernel.org,
+	Andy Whitcroft <apw@shadowen.org>, Nicolas Pitre <nico@cam.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <81b0412b0612072340w6af9df37y25a1d15773a3f8d8@mail.gmail.com>
-X-Mailer: Apple Mail (2.752.3)
+In-Reply-To: <20061116222008.GA7201@pasky.or.cz> (Petr Baudis's message of
+	"Thu, 16 Nov 2006 23:20:08 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33690>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GseG4-0001ox-K6 for gcvg-git@gmane.org; Fri, 08 Dec
- 2006 12:51:16 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31659>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gksr2-00054k-Rb for gcvg-git@gmane.org; Fri, 17 Nov
+ 2006 02:49:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S938049AbWLHLvO (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
- 06:51:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S938051AbWLHLvO
- (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 06:51:14 -0500
-Received: from vs072.rosehosting.com ([216.114.78.72]:41971 "EHLO
- silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
- S938049AbWLHLvN (ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Dec 2006
- 06:51:13 -0500
-Received: from [IPv6???1] (localhost [127.0.0.1]) (using TLSv1 with cipher
- AES128-SHA (128/128 bits)) (No client certificate requested) by
- silverinsanity.com (Postfix) with ESMTP id 521631FFD203; Fri,  8 Dec 2006
- 11:51:12 +0000 (UTC)
-To: Alex Riesen <raa.lkml@gmail.com>
+ S1424691AbWKQBtR (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 16 Nov 2006
+ 20:49:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1424892AbWKQBtR
+ (ORCPT <rfc822;git-outgoing>); Thu, 16 Nov 2006 20:49:17 -0500
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:24568 "EHLO
+ fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP id S1424691AbWKQBtR
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 16 Nov 2006 20:49:17 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao02.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061117014911.MXJL97.fed1rmmtao02.cox.net@fed1rmimpo02.cox.net>; Thu, 16
+ Nov 2006 20:49:11 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id ndpH1V00b1kojtg0000000; Thu, 16 Nov 2006
+ 20:49:18 -0500
+To: Petr Baudis <pasky@suse.cz>
 Sender: git-owner@vger.kernel.org
 
-On Dec 8, 2006, at 2:40 AM, Alex Riesen wrote:
->> Now, I am CLUELESS about what MakeMaker does, but would this
->> help?
+Petr Baudis <pasky@suse.cz> writes:
+
+You already said this kind of details are subjective so I'd omit
+the usual "I would think" and answer them without worrying about
+a big style flamewar.  People, please be civil ;-).
+
+> What about [ instead of test?
+
+[ ] is not more readable.
+
+> 	if foo; then
 >
-> Much better.
-> Works here. Others?
+> instead of
+>
+> 	if foo
+> 	then
 
-Perfect!
+Having "then" on the beginning of line is much more readable.
 
+> Am I the only one who hates
+>
+> case "$log_given" in
+> tt*)
+>         die "Only one of -c/-C/-F can be used." ;;
+> *tm*|*mt*)
+>         die "Option -m cannot be combined with -c/-C/-F." ;;
+> esac
+
+This is much more readable without "case".  "abandon the old
+rule that told us to avoid if when case would do" applies.
+Although it is about multiple possibility switch (so a case can
+be made that "case" is appropriate here), we should reduce the
+use of "case" to cases like the outermost big "case" you find in
+git-merge-one-file-script.
+
+> It would be really great if Git would have something alike the Cogito's
+> optparse infrastructure. I'm not sure if you can implement it in Bourne
+> sh with reasonable performance, though...
+
+getopt(1) is fine, unless somebody screams that it is not
+available on his platform.
