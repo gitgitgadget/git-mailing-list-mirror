@@ -6,80 +6,89 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: using xdl_merge(), was Re: Resolving conflicts
-Date: Wed, 6 Dec 2006 11:47:25 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612061145220.28348@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <456FD461.4080002@saville.com> <Pine.LNX.4.64.0611302330000.3695@woody.osdl.org>
- <456FDF24.1070001@saville.com> <Pine.LNX.4.64.0612012018490.3476@woody.osdl.org>
- <7vejri20mf.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0612021131140.28348@wbgn013.biozentrum.uni-wuerzburg.de>
- <4575B32F.5060108@ramsay1.demon.co.uk> <Pine.LNX.4.64.0612051023460.3542@woody.osdl.org>
- <Pine.LNX.4.63.0612051949290.28348@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vac22glzz.fsf@assigned-by-dhcp.cox.net> <7vwt5573sy.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0612061058360.28348@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vlkll72no.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: multi-project repos
+Date: Fri, 17 Nov 2006 01:29:14 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0611170048270.13772@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <87k61yt1x2.wl%cworth@cworth.org> <455A1137.8030301@shadowen.org>
+ <87hcx1u934.wl%cworth@cworth.org> <Pine.LNX.4.64.0611141518590.2591@xanadu.home>
+ <87bqn9u43s.wl%cworth@cworth.org> <ejdcg5$4fl$1@sea.gmane.org>
+ <Pine.LNX.4.64.0611141633430.2591@xanadu.home> <7vbqn9y6w6.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0611142007010.2591@xanadu.home> <7v3b8ltq7r.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0611142306090.2591@xanadu.home> <Pine.LNX.4.64.0611150950170.3349@woody.osdl.org>
+ <455BBCE9.4050503@xs4all.nl> <Pine.LNX.4.64.0611151908130.3349@woody.osdl.org>
+ <455C412D.1030408@xs4all.nl> <Pine.LNX.4.64.0611160814560.3349@woody.osdl.org>
+ <455C94FA.3050903@xs4all.nl> <Pine.LNX.4.64.0611160904010.3349@woody.osdl.org>
+ <455CA2A8.5010700@xs4all.nl> <Pine.LNX.4.64.0611160958170.3349@woody.osdl.org>
+ <Pine.LNX.4.63.0611162315110.13772@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vmz6r3tat.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Wed, 6 Dec 2006 10:47:33 +0000 (UTC)
+NNTP-Posting-Date: Fri, 17 Nov 2006 00:29:28 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 X-Authenticated: #1490710
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7vlkll72no.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <7vmz6r3tat.fsf@assigned-by-dhcp.cox.net>
 X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33432>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GruJH-0005Fa-00 for gcvg-git@gmane.org; Wed, 06 Dec
- 2006 11:47:31 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31644>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gkrbc-0000Me-E6 for gcvg-git@gmane.org; Fri, 17 Nov
+ 2006 01:29:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1760467AbWLFKr2 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
- 05:47:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760468AbWLFKr2
- (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 05:47:28 -0500
-Received: from mail.gmx.net ([213.165.64.20]:39412 "HELO mail.gmx.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S1760466AbWLFKr1
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec 2006 05:47:27 -0500
-Received: (qmail invoked by alias); 06 Dec 2006 10:47:25 -0000
+ S1424808AbWKQA3R (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 16 Nov 2006
+ 19:29:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1424812AbWKQA3R
+ (ORCPT <rfc822;git-outgoing>); Thu, 16 Nov 2006 19:29:17 -0500
+Received: from mail.gmx.de ([213.165.64.20]:19075 "HELO mail.gmx.net") by
+ vger.kernel.org with SMTP id S1424808AbWKQA3Q (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 16 Nov 2006 19:29:16 -0500
+Received: (qmail invoked by alias); 17 Nov 2006 00:29:14 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp048) with SMTP; 06 Dec 2006 11:47:25 +0100
+ [132.187.25.13] by mail.gmx.net (mp035) with SMTP; 17 Nov 2006 01:29:14 +0100
 To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
 Hi,
 
-On Wed, 6 Dec 2006, Junio C Hamano wrote:
+On Thu, 16 Nov 2006, Junio C Hamano wrote:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > Originally, I thought that building in git-merge-one-file, and enhancing 
-> > it to recognize by the parameters if it should act as a merge replacement, 
-> > would be the way to go. Should I do this, or rather add 
-> > builtin-merge-file?
-> 
-> All in-tree users of git-merge-one-file is of this pattern:
-> 
-> 	git merge-index -o git-merge-one-file -a
-> 
-> so I was hoping we can capture this whole thing as a single
-> command (merge-index would fork+exec a merge-one-file per
-> unmerged path), instead of doing merge-one-file as a built-in.
+> I think the earlier write-up by Linus on magic HEADs would help 
+> documenting FETCH_HEAD better.
 
-Yes, this was also my thinking. But notice how git-merge-one-file does 
-much more than just merge? So, you end up rewriting it in C anyway, if you 
-want to make merge-index not fork unless "-o cmd" is passed.
+I am not sure that documenting FETCH_HEAD better would help. As Han-Wen 
+pointed out (and some colleagues of mine who would never subscribe to a 
+mailing list), people do not read the manual, but rather try to wrap their 
+heads around the inner workings from the interface. And FETCH_HEAD just 
+does not meet _any_ expectation a sane (read: untainted) user might have.
 
-> In any case, the way your xdl-merge engine is done, it should be almost 
-> trivial to write a pure 'RCS merge replacement' as a totally separate 
-> program -- the bulk of the new code would be parsing parameters, opening 
-> the three input files, populating mmfile structures and writing the 
-> result out, and there would be almost no "smart" in that part of the 
-> code you would want to share with the git-aware version.
+While I'm at it: the problem I pointed out with -pull may annoy just me.
 
-Actually, I just did that. I will add some test cases (to reflect your 
-option (3) in another thread), and submit.
+But there is another problem with "git fetch": a common work flow is 
+tracking other peoples branches. And since git makes it so easy to 
+have multiple branches, chances are that you track more than one 
+branch per remote repository.
+
+Now, an old gripe of mine was the lack of "git fetch --all". I wrote a 
+script for that (Linus would be proud of me!), which just does "git 
+ls-remote" and constructs a command line for "git fetch" from that.
+
+But even if you agree with the common story that you should specify the 
+branches you want to track: it is hard!
+
+If I were new to git, after reading some tutorials I would _expect_ "git 
+fetch" to be the tool to track branches. (I posted a patch to at least be 
+able to store the current "git fetch" command line under a nick IIRC). But 
+it does not.
+
+(Of course, after reading several documentation, as a new user I would 
+eventually find that I should edit .git/remotes/<nick>, or even 
+edit/-repo-config the remotes information in the config, but I would fully 
+expect a new user to give up before reaching that stage.)
+
+But maybe I got it all wrong and this is not the common expectation...
 
 Ciao,
 Dscho
