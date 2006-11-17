@@ -2,75 +2,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Petr Baudis <pasky@suse.cz>
-Subject: Git manuals
-Date: Sun, 19 Nov 2006 18:59:52 +0100
-Message-ID: <20061119175952.GX7201@pasky.or.cz>
-References: <20061116221701.4499.qmail@science.horizon.com> <20061117153246.GA20065@thunk.org> <20061117182157.GC11882@fieldses.org> <20061119175040.GB15608@fieldses.org>
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: multi-project repos (was Re: Cleaning up git user-interface
+Date: Fri, 17 Nov 2006 11:02:02 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0611171058190.13772@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20061117051157.27896.qmail@science.horizon.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sun, 19 Nov 2006 18:00:04 +0000 (UTC)
-Cc: Theodore Tso <tytso@mit.edu>, linux@horizon.com,
-	git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Fri, 17 Nov 2006 10:02:20 +0000 (UTC)
+Cc: hanwen@xs4all.nl, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <20061119175040.GB15608@fieldses.org>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <20061117051157.27896.qmail@science.horizon.com>
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31845>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31685>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GlqxT-0003F8-4u for gcvg-git@gmane.org; Sun, 19 Nov
- 2006 18:59:59 +0100
+ esmtp (Exim 4.43) id 1Gl0Xx-0002Ho-KI for gcvg-git@gmane.org; Fri, 17 Nov
+ 2006 11:02:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932615AbWKSR7z (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 19 Nov 2006
- 12:59:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932638AbWKSR7z
- (ORCPT <rfc822;git-outgoing>); Sun, 19 Nov 2006 12:59:55 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:49585 "EHLO machine.or.cz") by
- vger.kernel.org with ESMTP id S932615AbWKSR7y (ORCPT
- <rfc822;git@vger.kernel.org>); Sun, 19 Nov 2006 12:59:54 -0500
-Received: (qmail 8809 invoked by uid 2001); 19 Nov 2006 18:59:52 +0100
-To: "J. Bruce Fields" <bfields@fieldses.org>
+ S1755638AbWKQKCG (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 17 Nov 2006
+ 05:02:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755640AbWKQKCG
+ (ORCPT <rfc822;git-outgoing>); Fri, 17 Nov 2006 05:02:06 -0500
+Received: from mail.gmx.de ([213.165.64.20]:36530 "HELO mail.gmx.net") by
+ vger.kernel.org with SMTP id S1755638AbWKQKCF (ORCPT
+ <rfc822;git@vger.kernel.org>); Fri, 17 Nov 2006 05:02:05 -0500
+Received: (qmail invoked by alias); 17 Nov 2006 10:02:03 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp031) with SMTP; 17 Nov 2006 11:02:03 +0100
+To: linux@horizon.com
 Sender: git-owner@vger.kernel.org
 
-On Sun, Nov 19, 2006 at 06:50:40PM CET, J. Bruce Fields wrote:
-> On Fri, Nov 17, 2006 at 01:21:57PM -0500, bfields wrote:
-> > On Fri, Nov 17, 2006 at 10:32:46AM -0500, Theodore Tso wrote:
-> > > It would be nice if there was an easy way to direct users through the
-> > > documentation in a way which makes good pedagogical sense.
-> ....
-> > How about this as a strawman "git user's manual" outline:
+Hi,
 
-(I was briefly discussing Git Book with Junio at OLS, I think the result
-was "yeah, would be nice, perhaps we can start poking it soon". I
-started to think about it once again in the last few weeks.)
+On Fri, 17 Nov 2006, linux@horizon.com wrote:
 
-> In fact, I'm tempted to submit a patch that just assigns a chapter
-> number to everything under Documentation/, slaps a single table of
-> contents on the front, and calls the result "the git user's manual."
-> 
-> Of course, the moment people started trying to read the thing they'd
-> complain that it was a mess--some stuff referenced without being
-> introduced, other stuff introduced too many times.  But then over time
-> maybe that'd force us to mold it into some sort of logical sequence.
+> How do you explain the point of an electric screwdriver to someone who's 
+> never seen a screw?  He'll think it's a silly way to wind up yarn.
 
-Sequencing isn't the only problem. A _manual_ is different from
-_reference documentation_ in that it does not usually describe command
-after command, but rather concept after concept. So instead of slamming
-git-*-pack commands together, you have a section "Handling Packs" where
-you try to coherently describe the commands together.
+I show him how to use it. And that's actually a fine analogy: While the 
+principle of a screw is quite clever, working with it -- even with an 
+electric screwdriver -- is easy. And the most important part: I never read 
+instructions on how to use it. I saw somebody use it and -- voila! -- I 
+can use it myself.
 
-Your approach is fine for something you would call "Git Reference
-Manual", but it is something really different from "The Git Book" or
-"Git User's Manual".
+> I'll be the first to explain that the git docs have some major problems. 
+> "git show" is a really useful command.  It has a zillion options to do 
+> cool things.  Have you read the man page?
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-The meaning of Stonehenge in Traflamadorian, when viewed from above, is:
-"Replacement part being rushed with all possible speed."
+I think that the importance of documentation is overrated. Users have come 
+to expect to use programs without reading a manual. DWIM comes to mind.
+
+Ciao,
