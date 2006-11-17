@@ -2,119 +2,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: Make RSS feed output prettier
-Date: Wed, 15 Nov 2006 01:24:23 +0100
-Organization: At home
-Message-ID: <ejdmlb$77s$1@sea.gmane.org>
-References: <11635494363452-git-send-email-asf@boinkor.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Cleaning up git user-interface warts
+Date: Fri, 17 Nov 2006 03:29:32 -0800
+Message-ID: <7v3b8inwf7.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0611150950170.3349@woody.osdl.org>
+	<Pine.LNX.4.64.0611151203450.3349@woody.osdl.org>
+	<Pine.LNX.4.64.0611151516360.2591@xanadu.home>
+	<Pine.LNX.4.64.0611151226590.3349@woody.osdl.org>
+	<87velgs9hx.wl%cworth@cworth.org>
+	<Pine.LNX.4.64.0611151339500.3349@woody.osdl.org>
+	<87psbos4pb.wl%cworth@cworth.org> <20061115230252.GH24861@spearce.org>
+	<Pine.LNX.4.64.0611151523290.3349@woody.osdl.org>
+	<87fycjs5yg.wl%cworth@cworth.org>
+	<f2b55d220611160957s2e68059dk99bbe902e7e1f416@mail.gmail.com>
+	<87r6w3b68p.wl%cworth@cworth.org>
+	<7vu00ysbwi.fsf@assigned-by-dhcp.cox.net>
+	<87ejs2qvmb.wl%cworth@cworth.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-NNTP-Posting-Date: Wed, 15 Nov 2006 00:23:38 +0000 (UTC)
+NNTP-Posting-Date: Fri, 17 Nov 2006 11:29:54 +0000 (UTC)
+Cc: "Michael K. Edwards" <medwards.linux@gmail.com>,
+	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 70
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+In-Reply-To: <87ejs2qvmb.wl%cworth@cworth.org> (Carl Worth's message of "Fri,
+	17 Nov 2006 01:18:36 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31394>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31689>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gk8Ys-0005yL-IY for gcvg-git@gmane.org; Wed, 15 Nov
- 2006 01:23:30 +0100
+ esmtp (Exim 4.43) id 1Gl1ui-000272-PW for gcvg-git@gmane.org; Fri, 17 Nov
+ 2006 12:29:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S966523AbWKOAX1 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 14 Nov 2006
- 19:23:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966524AbWKOAX1
- (ORCPT <rfc822;git-outgoing>); Tue, 14 Nov 2006 19:23:27 -0500
-Received: from main.gmane.org ([80.91.229.2]:22464 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S966523AbWKOAX0 (ORCPT
- <rfc822;git@vger.kernel.org>); Tue, 14 Nov 2006 19:23:26 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1Gk8Yf-0005va-00 for git@vger.kernel.org; Wed, 15 Nov 2006 01:23:17 +0100
-Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Wed, 15 Nov 2006 01:23:16 +0100
-Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Wed, 15 Nov 2006
- 01:23:16 +0100
-To: git@vger.kernel.org
+ S1755645AbWKQL3f (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 17 Nov 2006
+ 06:29:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755693AbWKQL3e
+ (ORCPT <rfc822;git-outgoing>); Fri, 17 Nov 2006 06:29:34 -0500
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:11174 "EHLO
+ fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP id S1755645AbWKQL3d
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 17 Nov 2006 06:29:33 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao02.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061117112933.YKFS97.fed1rmmtao02.cox.net@fed1rmimpo02.cox.net>; Fri, 17
+ Nov 2006 06:29:33 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id nnVf1V00E1kojtg0000000; Fri, 17 Nov 2006
+ 06:29:40 -0500
+To: Carl Worth <cworth@cworth.org>
 Sender: git-owner@vger.kernel.org
 
-Andreas Fuchs <asf@boinkor.net> wrote:
+Carl Worth <cworth@cworth.org> writes:
 
-> * Wrap the commit message in <pre>
-We use <div class="pre"> in "commit" view if I remember correctly.
+> What I have been doing up to this point is a little script I wrote
+> that does git-ls-remote on the repository I want to track and writes a
+> .git/remotes file to bring in all their branches. So if I want to see
+> what behdad is up to, I first refresh his .git/remotes file with my:
+>
+> 	cairo-git-setup-remotes behdad
+> then:
+> 	git fetch behdad
+>
+> And I end up with a bunch of branch names with "behdad-" prefixes that
+> I can explore or blow away if I'm no longer interested, (could have
+> used a "behdad/" prefix as well).
 
-> * Make file names into an unordered list
-Good idea.
+I would suggest refs/remotes/behdad.
 
-> * Add links (diff, conditional blame, history) to the file list.
-I'd rather keep RSS output as simple as possible, no frills.
+> So, yes, I'll definitely look into improving this. I think the details
+> will involve:
+>
+> 1. Making clone do the --use-separate-remotes behavior by default
+>
+> 2. Taking advantage of that consistently for all branches instead of a
+>    special master:origin mapping in clone
 
-> ---
->  gitweb/gitweb.perl |   22 ++++++++++++++++------
->  1 files changed, 16 insertions(+), 6 deletions(-)
-> 
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index e54a29e..2a79895 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -4134,20 +4134,30 @@ XML
->                     "<content:encoded>" .
->                     "<![CDATA[\n";
->               my $comment = $co{'comment'};
-> +             print "<pre>\n";
->               foreach my $line (@$comment) {
-> -                     $line = to_utf8($line);
-> -                     print "$line<br/>\n";
-> +                     $line = to_utf8(esc_html($line));
-esc_html does to_utf8, so to_utf8 is unnecessary (and spurious).
-But it is a good catch: esc_html is certainly needed.
+This already should be the case if you use separate-remote.  I
+haven't run "clone --separate-remote" myself for a long time,
+but the design was certainly to make it behave that way.
+Specifically, map everything in refs/heads/ at remote to
+refs/remotes/$origin/ with corresponding names, one-to-one.
 
-> +                     print "$line\n";
->               }
-> -             print "<br/>\n";
-> +             print "</pre><ul>\n";
->               foreach my $line (@difftree) {
->                       if (!($line =~ m/^:([0-7]{6}) ([0-7]{6}) ([0-9a-fA-F]{40}) ([0-9a-fA-F]{40}) (.)([0-9]{0,3})\t(.*)$/)) {
->                               next;
->                       }
-> -                     my $file = esc_path(unquote($7));
-> +                     my $file_name = unquote($7);
-> +                     my $file = esc_html($file_name);
-We have introduced esc_path for escaping pathnames. Use it!
+I do not see much reason to change the mapping of master:origin
+which is done for the traditional layout.  The traditional
+layout is not suitable for your workflow anyway, and that is why
+you prefer separate-remote layout for your project, and I fully
+agree it would suit you better.
 
-> +                     my $parent = $co{'parent'};
-> +                     my $hash = git_get_hash_by_path($commit, $file_name);
-> +                     my $hashparent = git_get_hash_by_path($parent, $file_name);
-Two unnecessary calls to git command. Use 
-     my %difftree = parse_difftree_raw_line($line)
-instead. The conditions would probably be 
-     next if (!$difftree{'from_id'});
-(or equivalent).
+> 3. Enhancing git-fetch (or other) to modify .git/remotes, (or was
+>    there a desire for some other branch-specific section in the config
+>    file?)
+>
+> 4. Making git-fetch handle the disappearance of a remote branch
+>    gracefully
+>
+> 5. Adding something like git-fetch --all to allow it to pick up all new
+>    branches
 
-> +
->                       $file = to_utf8($file);
-> -                     print "$file<br/>\n";
-> +                     print "<li>$file ";
-> +                     print "[<a href=\"". esc_html("$my_url?p=$project;a=blobdiff;f=$file;h=$hash;hp=$hashparent;hb=$commit;hpb=$parent") ."\">diff</a>] ";
-> +                     print "[<a href=\"". esc_html("$my_url?p=$project;a=blame;f=$file;hb=$commit") ."\">blame</a>] " if gitweb_check_feature('blame');
-> +                     print "[<a href=\"". esc_html("$my_url?p=$project;a=history;f=$file;h=$commit") ."\">history</a>] ";
-> +                     print "</li>\n";
-esc_url, not esc_html here. Or use the href() subroutine with -full=>1
-option (after applying the patch I send which added this to href()).
+These three are easily done for separate-remote layout but at
+that point you would not want --all but more powerful --mirror
+(or --update if you want to use that word), which goes the whole
+nine yards of noticing disappearance of remote branch, making
+matching deletion of local tracking branch, updating
+.git/remotes, etc.  I've muttered something similar in a nearby
+thread; see below.
 
-P.S. Please reply also to git mailing list.
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+> 6. Adding a "git update" that does a fetch for all appropriately
+>    marked remotes.
+>
+> On this last point, maybe we do something like:
+>
+> 	update=no|yes|all
+>
+> in .git/remotes. Then git-clone would set this up with update=all for
+> origin so git-update would do a "fetch --all" on the origin
+> repository. Then step 3 above would have to provide for setting this
+> update option as appropriate.
 
+I would prefer this to be kept in contrib/; it feels like it is
+filling rather very narrow need.
+
+> Anyway, something along those lines perhaps. Any feedback?
+
+I muttered something less elaborate in the nearby thread.
+
+	Message-ID: <7vr6w78b4x.fsf@assigned-by-dhcp.cox.net>
+	Message-ID: <7v64dev88t.fsf@assigned-by-dhcp.cox.net>
+
+The part that deals with manual configuration (the last point in
+the first message, and the second in message its entirety) is
+something your workflow would not need nor want to worry about,
+but I think it is necessary for different ref namespace layouts
+and different workflows.  I think the automatable part (the
+first two points in the "sensible thing to do" list in the first
+message) is very relevant to what you talked about in your
+message.
