@@ -1,57 +1,62 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: On removing files and "git-rm is pointless"
-Date: Mon, 04 Dec 2006 17:08:25 -0800
-Message-ID: <7v8xhnm9o6.fsf@assigned-by-dhcp.cox.net>
-References: <87odqm2ppv.wl%cworth@cworth.org>
-	<Pine.LNX.4.64.0612020919400.3476@woody.osdl.org>
-	<4571DB40.6020800@vilain.net>
-	<Pine.LNX.4.64.0612022246310.2630@xanadu.home>
-	<7vd570q888.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0612040737120.3476@woody.osdl.org>
+From: Han-Wen Nienhuys <hanwen@xs4all.nl>
+Subject: Re: Cleaning up git user-interface warts
+Date: Fri, 17 Nov 2006 01:11:17 +0100
+Message-ID: <455CFE25.8040705@xs4all.nl>
+References: <87k61yt1x2.wl%cworth@cworth.org> <455A1137.8030301@shadowen.org> <87hcx1u934.wl%cworth@cworth.org> <Pine.LNX.4.64.0611141518590.2591@xanadu.home> <87bqn9u43s.wl%cworth@cworth.org> <7vr6w5y7to.fsf@assigned-by-dhcp.cox.net> <20061116051240.GV7201@pasky.or.cz>
+Reply-To: hanwen@xs4all.nl
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 5 Dec 2006 01:08:35 +0000 (UTC)
-Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org,
-	Carl Worth <cworth@cworth.org>, Sam Vilain <sam@vilain.net>
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Fri, 17 Nov 2006 00:11:56 +0000 (UTC)
+Cc: Carl Worth <cworth@cworth.org>, git@vger.kernel.org,
+	Andy Whitcroft <apw@shadowen.org>, Nicolas Pitre <nico@cam.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+User-Agent: Thunderbird 1.5.0.8 (X11/20061107)
+Original-Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <20061116051240.GV7201@pasky.or.cz>
+X-Virus-Scanned: by XS4ALL Virus Scanner
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33274>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GrOnP-00058B-1f for gcvg-git@gmane.org; Tue, 05 Dec
- 2006 02:08:31 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31641>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GkrKX-0006Lo-Ff for gcvg-git@gmane.org; Fri, 17 Nov
+ 2006 01:11:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S967942AbWLEBI2 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
- 20:08:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967945AbWLEBI1
- (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 20:08:27 -0500
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:64504 "EHLO
- fed1rmmtao02.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S967942AbWLEBI1 (ORCPT <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006
- 20:08:27 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao02.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061205010827.OEUG97.fed1rmmtao02.cox.net@fed1rmimpo02.cox.net>; Mon, 4 Dec
- 2006 20:08:27 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id up8c1V00B1kojtg0000000; Mon, 04 Dec 2006
- 20:08:36 -0500
-To: Linus Torvalds <torvalds@osdl.org>
+ S1424787AbWKQALh (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 16 Nov 2006
+ 19:11:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1424792AbWKQALh
+ (ORCPT <rfc822;git-outgoing>); Thu, 16 Nov 2006 19:11:37 -0500
+Received: from smtp-vbr6.xs4all.nl ([194.109.24.26]:28435 "EHLO
+ smtp-vbr6.xs4all.nl") by vger.kernel.org with ESMTP id S1424787AbWKQALg
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 16 Nov 2006 19:11:36 -0500
+Received: from [192.168.123.187] (muurbloem.xs4all.nl [213.84.26.127])
+ (authenticated bits=0) by smtp-vbr6.xs4all.nl (8.13.8/8.13.8) with ESMTP id
+ kAH0BDRm091355; Fri, 17 Nov 2006 01:11:13 +0100 (CET) (envelope-from
+ hanwen@xs4all.nl)
+To: Petr Baudis <pasky@suse.cz>
 Sender: git-owner@vger.kernel.org
 
-Linus Torvalds <torvalds@osdl.org> writes:
+Petr Baudis escreveu:
+> (vi) Coding issues. This is probably very subjective, but a blocker for
+> me. I have no issues about C here, but about the shell part of Git.
+> Well, how to say it... It's just fundamentally incompatible with me. I
 
-> If it doesn't match HEAD, we can't get it back as easily, so maybe that's 
-> the case when we want to have "git rm -f filename".
+(on a tangent)
 
-Hmph.  Wouldn't this lossage the same as the lossage we are
-removing the "safety valve" for, when "commit --only" jumps the
-index?
+I concur, but probably in a different way.
+
+some 10 years ago I vowed never to write perl code again, and some 5
+years ago, I made the same pledge for shell scripts, because I spent
+inordinate amounts of time debugging them.
+
+When I see the GIT shell scripts, my hands start to itch to make a
+nice object oriented Python wrapper for it.
+
+-- 
