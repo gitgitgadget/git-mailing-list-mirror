@@ -4,62 +4,82 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH 2/2] Teach receive-pack how to keep pack files based on
- object count.
-Date: Tue, 31 Oct 2006 14:56:50 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0610311447250.11384@xanadu.home>
-References: <20061031075704.GB7691@spearce.org>
+From: Nicolas Vilz <niv@iaglans.de>
+Subject: Re: git-PS1 bash prompt setting
+Date: Fri, 17 Nov 2006 09:38:02 +0100
+Message-ID: <20061117083801.GB11468@fry.bender.fht>
+References: <20061116130111.921396df.seanlkml@sympatico.ca>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-NNTP-Posting-Date: Tue, 31 Oct 2006 19:57:59 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Fri, 17 Nov 2006 08:41:29 +0000 (UTC)
+Cc: git@vger.kernel.org, Theodore Tso <tytso@mit.edu>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-reply-to: <20061031075704.GB7691@spearce.org>
-X-X-Sender: nico@xanadu.home
+Content-Disposition: inline
+In-Reply-To: <20061116130111.921396df.seanlkml@sympatico.ca>
+X-message-flag: Please send plain text messages only. Thank you.
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at hs-esslingen.de
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30594>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31674>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GezjD-0003wd-Cc for gcvg-git@gmane.org; Tue, 31 Oct
- 2006 20:56:55 +0100
+ esmtp (Exim 4.43) id 1GkzHZ-0005mM-46 for gcvg-git@gmane.org; Fri, 17 Nov
+ 2006 09:41:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1945928AbWJaT4w (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 31 Oct 2006
- 14:56:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1945929AbWJaT4w
- (ORCPT <rfc822;git-outgoing>); Tue, 31 Oct 2006 14:56:52 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:11483 "EHLO
- relais.videotron.ca") by vger.kernel.org with ESMTP id S1945928AbWJaT4v
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 31 Oct 2006 14:56:51 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
- <0J800020ZNEQW9C1@VL-MH-MR002.ip.videotron.ca> for git@vger.kernel.org; Tue,
- 31 Oct 2006 14:56:50 -0500 (EST)
-To: Shawn Pearce <spearce@spearce.org>
+ S1753270AbWKQIk4 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 17 Nov 2006
+ 03:40:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755509AbWKQIk4
+ (ORCPT <rfc822;git-outgoing>); Fri, 17 Nov 2006 03:40:56 -0500
+Received: from mail.hs-esslingen.de ([134.108.32.78]:16577 "EHLO
+ mail.hs-esslingen.de") by vger.kernel.org with ESMTP id S1753270AbWKQIk4
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 17 Nov 2006 03:40:56 -0500
+Received: from localhost (mail.hs-esslingen.de [134.108.32.78]) by
+ mail.hs-esslingen.de (Postfix) with ESMTP id F038713EB9; Fri, 17 Nov 2006
+ 09:40:54 +0100 (CET)
+Received: from mail.hs-esslingen.de ([134.108.32.78]) by localhost (rslx211
+ [127.0.0.1]) (amavisd-new, port 10024) with ESMTP id 30977-08; Fri, 17 Nov
+ 2006 09:38:03 +0100 (CET)
+Received: from localhost (ovpngp1162.hs-esslingen.de [134.108.121.162])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by mail.hs-esslingen.de (Postfix) with ESMTP id
+ 555C913EB4; Fri, 17 Nov 2006 09:38:03 +0100 (CET)
+To: Sean <seanlkml@sympatico.ca>
 Sender: git-owner@vger.kernel.org
 
-On Tue, 31 Oct 2006, Shawn Pearce wrote:
+On Thu, Nov 16, 2006 at 01:01:11PM -0500, Sean wrote:
 
-> Since keeping a pushed pack or exploding it into loose objects
-> should be a local repository decision this teaches receive-pack
-> to decide if it should call unpack-objects or index-pack --stdin
-> --fix-thin based on the setting of receive.unpackLimit and the
-> number of objects contained in the received pack.
+> [branch!repo/relative/path]$ 
+> 
+> Where "repo" is the basename of the path to the root of your repo.
+> An example would look like this:
+> 
+> [master!linus-2.6/Documentation/vm]$ 
+> 
+> Cheers,
+> Sean
+> 
+> 
+> #!/bin/bash
+> BR=$(git symbolic-ref HEAD 2>/dev/null) || { echo "$@" ; exit ; }
+> BR=${BR#refs/heads/}
+> REL=$(git rev-parse --show-prefix) 
+> REL="${REL//%\/}"
+> LOC="${PWD%/$REL}"
+> echo "[$BR!${LOC/*\/}${REL:+/$REL}]$ "
 
-This works fine when used with my replacement patch for your [1/2] one.
+Just a note:
 
-> Currently this leaves every received pack as a kept pack.  We really
-> don't want that as received packs will tend to be small.  Instead we
-> want to delete the .keep file automatically after all refs have
-> been updated.  That is being left as room for future improvement.
+this doesn't work with bash 3.2. I think they altered the way of
+trimming variables in this version.
 
-I think this should be solved before rx packs are actually stored as 
-packs though.  Otherwise people will end up with unwanted .keep files 
-left around.  Maybe having a much bigger default for object number 
-treshold for the time being?  (unless this patch is applied to "next" at 
-the same time as another one that actually deals with those .keep 
-files).
+on systems with bash 3.2 installed, i get
+[master!linus-2.6/vm/vm]$ 
+with the example above.
 
+on systems with bash 3.1, it works properly.
 
+unfortunatelly, i am not so good in bash scripting, so it will take some
+time for me to fix it.
+
+Sincerly
