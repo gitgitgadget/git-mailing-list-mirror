@@ -4,71 +4,61 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: Subprojects tasks
-Date: Sun, 17 Dec 2006 00:01:08 +0100
-Message-ID: <20061216230108.GE12411@admingilde.org>
-References: <7vzm9nelob.fsf@assigned-by-dhcp.cox.net> <em1erl$pne$1@sea.gmane.org>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="IMjqdzrDRly81ofr"
-NNTP-Posting-Date: Sat, 16 Dec 2006 23:01:24 +0000 (UTC)
-Cc: git@vger.kernel.org
+From: Petr Baudis <pasky@suse.cz>
+Subject: [PATCH] Fix git-for-each-refs broken for tags
+Date: Sat, 18 Nov 2006 03:56:52 +0100
+Message-ID: <20061118025652.2970.10571.stgit@machine.or.cz>
+Content-Type: text/plain; charset=utf-8; format=fixed
+Content-Transfer-Encoding: 8bit
+NNTP-Posting-Date: Sat, 18 Nov 2006 02:57:18 +0000 (UTC)
+Cc: <git@vger.kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <em1erl$pne$1@sea.gmane.org>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+User-Agent: StGIT/0.11
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34652>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GviWv-0007SY-Q6 for gcvg-git@gmane.org; Sun, 17 Dec
- 2006 00:01:22 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31749>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GlGO3-0005iB-Ab for gcvg-git@gmane.org; Sat, 18 Nov
+ 2006 03:57:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932645AbWLPXBL (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 16 Dec 2006
- 18:01:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932646AbWLPXBK
- (ORCPT <rfc822;git-outgoing>); Sat, 16 Dec 2006 18:01:10 -0500
-Received: from mail.admingilde.org ([213.95.32.147]:56907 "EHLO
- mail.admingilde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S932645AbWLPXBJ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 16 Dec 2006
- 18:01:09 -0500
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1) id
- 1GviWi-0005N8-Ba; Sun, 17 Dec 2006 00:01:08 +0100
-To: Jakub Narebski <jnareb@gmail.com>
+ S1756170AbWKRC4y (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 17 Nov 2006
+ 21:56:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756171AbWKRC4y
+ (ORCPT <rfc822;git-outgoing>); Fri, 17 Nov 2006 21:56:54 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:58497 "EHLO machine.or.cz") by
+ vger.kernel.org with ESMTP id S1756170AbWKRC4x (ORCPT
+ <rfc822;git@vger.kernel.org>); Fri, 17 Nov 2006 21:56:53 -0500
+Received: (qmail 2980 invoked from network); 18 Nov 2006 03:56:52 +0100
+Received: from localhost (HELO machine.or.cz) (xpasky@127.0.0.1) by localhost
+ with SMTP; 18 Nov 2006 03:56:52 +0100
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
+Unfortunately, git-for-each-refs is currently unusable for peeking into tag
+comments, since it uses freed pointers, so it just prints out all sort of
+garbage.
 
---IMjqdzrDRly81ofr
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This makes it strdup() contents and body values.
 
-hoi :)
+Signed-off-by: Petr Baudis <pasky@suse.cz>
+---
 
-On Sat, Dec 16, 2006 at 07:45:11PM +0100, Jakub Narebski wrote:
-> Or .gitlink file, if we decide to implement it (as lightweight checkout a=
-nd
-> support for submodules which one can easily move/rename).
+ builtin-for-each-ref.c |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-I still don't get the advantage of a .gitlink file over an ordinary
-repository with alternates or a symlink.
-
---=20
-Martin Waitz
-
---IMjqdzrDRly81ofr
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFFhHq0j/Eaxd/oD7IRAuz2AJwIoJplSGcNQok4aqyq6XenGelaegCdH5kf
-UtBoZ5B1qOnbW2TqBaVUC9M=
-=bNxH
------END PGP SIGNATURE-----
-
+diff --git a/builtin-for-each-ref.c b/builtin-for-each-ref.c
+index 173bf38..227aa3c 100644
+--- a/builtin-for-each-ref.c
++++ b/builtin-for-each-ref.c
+@@ -478,9 +478,9 @@ static void grab_sub_body_contents(struc
+ 		if (!strcmp(name, "subject"))
+ 			v->s = copy_line(subpos);
+ 		else if (!strcmp(name, "body"))
+-			v->s = bodypos;
++			v->s = xstrdup(bodypos);
+ 		else if (!strcmp(name, "contents"))
+-			v->s = subpos;
++			v->s = xstrdup(subpos);
+ 	}
+ }
