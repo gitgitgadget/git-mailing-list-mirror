@@ -1,63 +1,86 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: multi-project repos (was Re: Cleaning up git user-interface
-Date: Fri, 17 Nov 2006 11:02:02 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0611171058190.13772@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20061117051157.27896.qmail@science.horizon.com>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Fri, 17 Nov 2006 10:02:20 +0000 (UTC)
-Cc: hanwen@xs4all.nl, git@vger.kernel.org
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH 4/5] gitweb: Default to $hash_base or HEAD for $hash in "commit" and "commitdiff"
+Date: Sat, 18 Nov 2006 23:35:41 +0100
+Message-ID: <11638893462704-git-send-email-jnareb@gmail.com>
+References: <1163889342877-git-send-email-jnareb@gmail.com>
+NNTP-Posting-Date: Sat, 18 Nov 2006 22:34:53 +0000 (UTC)
+Cc: Jakub Narebski <jnareb@gmail.com>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <20061117051157.27896.qmail@science.horizon.com>
-X-Y-GMX-Trusted: 0
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=VRFH+AQb4O2W2pXRVGwpalJAI/7JQYBf0URZathCZslo637AIncu8Zbb8AuaXUe7vu7nR5MAtjR0cpDT9djuqBYGDjCdL4eoa/gdk6M9OD6x4rfSNc2sH28gxaeiSXSkos+pZdHVT3hd5f+IuwwmZemSlzK0sGq786KFfjfhatk=
+X-Mailer: git-send-email 1.4.3.4
+In-Reply-To: <1163889342877-git-send-email-jnareb@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31685>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31809>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gl0Xx-0002Ho-KI for gcvg-git@gmane.org; Fri, 17 Nov
- 2006 11:02:10 +0100
+ esmtp (Exim 4.43) id 1GlYlf-0001jk-2C for gcvg-git@gmane.org; Sat, 18 Nov
+ 2006 23:34:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1755638AbWKQKCG (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 17 Nov 2006
- 05:02:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755640AbWKQKCG
- (ORCPT <rfc822;git-outgoing>); Fri, 17 Nov 2006 05:02:06 -0500
-Received: from mail.gmx.de ([213.165.64.20]:36530 "HELO mail.gmx.net") by
- vger.kernel.org with SMTP id S1755638AbWKQKCF (ORCPT
- <rfc822;git@vger.kernel.org>); Fri, 17 Nov 2006 05:02:05 -0500
-Received: (qmail invoked by alias); 17 Nov 2006 10:02:03 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp031) with SMTP; 17 Nov 2006 11:02:03 +0100
-To: linux@horizon.com
+ S1755274AbWKRWeZ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 18 Nov 2006
+ 17:34:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755275AbWKRWeY
+ (ORCPT <rfc822;git-outgoing>); Sat, 18 Nov 2006 17:34:24 -0500
+Received: from ug-out-1314.google.com ([66.249.92.169]:12050 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1755274AbWKRWeV
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 18 Nov 2006 17:34:21 -0500
+Received: by ug-out-1314.google.com with SMTP id m3so953027ugc for
+ <git@vger.kernel.org>; Sat, 18 Nov 2006 14:34:21 -0800 (PST)
+Received: by 10.67.99.1 with SMTP id b1mr5177230ugm.1163889260912; Sat, 18
+ Nov 2006 14:34:20 -0800 (PST)
+Received: from roke.D-201 ( [81.190.24.209]) by mx.google.com with ESMTP id
+ b35sm2288919ugd.2006.11.18.14.34.20; Sat, 18 Nov 2006 14:34:20 -0800 (PST)
+Received: from roke.D-201 (localhost.localdomain [127.0.0.1]) by roke.D-201
+ (8.13.4/8.13.4) with ESMTP id kAIMZkfv015359; Sat, 18 Nov 2006 23:35:47 +0100
+Received: (from jnareb@localhost) by roke.D-201 (8.13.4/8.13.4/Submit) id
+ kAIMZkWa015358; Sat, 18 Nov 2006 23:35:46 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Hi,
+Set $hash parameter to $hash_base || "HEAD" if it is not set (if it is
+not true to be more exact). This allows [hand-edited] URLs with 'action'
+"commit" or "commitdiff" but without 'hash' parameter.
 
-On Fri, 17 Nov 2006, linux@horizon.com wrote:
+If there is 'h' (hash) parameter provided, then gitweb tries
+to use this. HEAD is used _only_ if nether hash, nor hash_base
+are provided, i.e. for URL like below
+  URL?p=project.git;a=commit
+i.e. without neither 'h' nor 'hb'.
 
-> How do you explain the point of an electric screwdriver to someone who's 
-> never seen a screw?  He'll think it's a silly way to wind up yarn.
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+ gitweb/gitweb.perl |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
 
-I show him how to use it. And that's actually a fine analogy: While the 
-principle of a screw is quite clever, working with it -- even with an 
-electric screwdriver -- is easy. And the most important part: I never read 
-instructions on how to use it. I saw somebody use it and -- voila! -- I 
-can use it myself.
-
-> I'll be the first to explain that the git docs have some major problems. 
-> "git show" is a really useful command.  It has a zillion options to do 
-> cool things.  Have you read the man page?
-
-I think that the importance of documentation is overrated. Users have come 
-to expect to use programs without reading a manual. DWIM comes to mind.
-
-Ciao,
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index eadaa31..5875ba0 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -3450,6 +3450,7 @@ sub git_log {
+ }
+ 
+ sub git_commit {
++	$hash ||= $hash_base || "HEAD";
+ 	my %co = parse_commit($hash);
+ 	if (!%co) {
+ 		die_error(undef, "Unknown commit object");
+@@ -3727,6 +3728,7 @@ sub git_blobdiff_plain {
+ 
+ sub git_commitdiff {
+ 	my $format = shift || 'html';
++	$hash ||= $hash_base || "HEAD";
+ 	my %co = parse_commit($hash);
+ 	if (!%co) {
+ 		die_error(undef, "Unknown commit object");
+-- 
+1.4.3.4
