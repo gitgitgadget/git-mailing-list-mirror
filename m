@@ -1,63 +1,87 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Steven Grimm <koreth@midwinter.com>
-Subject: Re: git-add fails after file type change
-Date: Sat, 16 Dec 2006 16:19:04 -0800
-Message-ID: <45848CF8.4000704@midwinter.com>
-References: <458437E0.1050501@midwinter.com> <45843C5A.8020501@gmail.com>
+X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,MSGID_FROM_MTA_HEADER,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+From: Sean <seanlkml@sympatico.ca>
+Subject: Re: [PATCH] Document git-runstatus
+Date: Sat, 18 Nov 2006 15:04:31 -0500
+Message-ID: <BAYC1-PASMTP103AEE0623ACD61079E916AEEF0@CEZ.ICE>
+References: <455F1595.9020009@lsrfire.ath.cx>
+	<20061118092644.a9f15669.seanlkml@sympatico.ca>
+	<20061118143511.GM7201@pasky.or.cz>
+	<455F210B.8000107@lsrfire.ath.cx>
+	<BAYC1-PASMTP06C814AB518D7544770C01AEEF0@CEZ.ICE>
+	<455F4F06.3090902@gmail.com>
+	<BAYC1-PASMTP06DE3E6CFF9E49C2BF16C7AEEF0@CEZ.ICE>
+	<455F60EA.2080009@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sun, 17 Dec 2006 00:19:05 +0000 (UTC)
-Cc: Git Mailing List <git@vger.kernel.org>
+NNTP-Posting-Date: Sat, 18 Nov 2006 20:04:50 +0000 (UTC)
+Cc: A Large Angry SCM <gitzilla@gmail.com>,
+	Rene Scharfe <rene.scharfe@lsrfire.ath.cx>,
+	Petr Baudis <pasky@suse.cz>, Junio C Hamano <junkio@cox.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jeff King <peff@peff.net>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.8 (Macintosh/20061025)
-In-Reply-To: <45843C5A.8020501@gmail.com>
+X-Originating-IP: [65.93.43.81]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Original-Message-Id: <20061118150431.81076072.seanlkml@sympatico.ca>
+In-Reply-To: <455F60EA.2080009@gmail.com>
+X-Mailer: Sylpheed version 2.2.9 (GTK+ 2.10.4; i386-redhat-linux-gnu)
+X-OriginalArrivalTime: 18 Nov 2006 20:08:33.0859 (UTC) FILETIME=[5323C930:01C70B4D]
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34667>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gvjk5-0005fl-Kj for gcvg-git@gmane.org; Sun, 17 Dec
- 2006 01:19:01 +0100
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GlWQZ-0007SS-7m for gcvg-git@gmane.org; Sat, 18 Nov
+ 2006 21:04:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751362AbWLQAS6 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 16 Dec 2006
- 19:18:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751357AbWLQAS6
- (ORCPT <rfc822;git-outgoing>); Sat, 16 Dec 2006 19:18:58 -0500
-Received: from tater.midwinter.com ([216.32.86.90]:39661 "HELO midwinter.com"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S1751362AbWLQAS5
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 16 Dec 2006 19:18:57 -0500
-Received: (qmail 10086 invoked from network); 17 Dec 2006 00:18:53 -0000
-Received: from c-76-21-17-123.hsd1.ca.comcast.net (HELO ?192.168.0.128?)
- (koreth@76.21.17.123) by tater.midwinter.com with SMTP; 17 Dec 2006 00:18:51
- -0000
-To: A Large Angry SCM <gitzilla@gmail.com>
+ S1756419AbWKRUEf (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 18 Nov 2006
+ 15:04:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756420AbWKRUEe
+ (ORCPT <rfc822;git-outgoing>); Sat, 18 Nov 2006 15:04:34 -0500
+Received: from bayc1-pasmtp10.bayc1.hotmail.com ([65.54.191.170]:43401 "EHLO
+ BAYC1-PASMTP10.bayc1.hotmail.com") by vger.kernel.org with ESMTP id
+ S1756416AbWKRUEe (ORCPT <rfc822;git@vger.kernel.org>); Sat, 18 Nov 2006
+ 15:04:34 -0500
+Received: from linux1.attic.local ([65.93.43.81]) by
+ BAYC1-PASMTP10.bayc1.hotmail.com over TLS secured channel with Microsoft
+ SMTPSVC(6.0.3790.1830); Sat, 18 Nov 2006 12:08:33 -0800
+Received: from guru.attic.local ([10.10.10.28]) by linux1.attic.local with
+ esmtp (Exim 4.43) id 1GlVUN-00035f-5Z; Sat, 18 Nov 2006 14:04:31 -0500
+To: Git Mailing List <git@vger.kernel.org>
 Sender: git-owner@vger.kernel.org
 
-A Large Angry SCM wrote:
-> Did you try "git-update-index --replace dir"?
+On Sat, 18 Nov 2006 11:37:14 -0800
+A Large Angry SCM <gitzilla@gmail.com> wrote:
 
-Turns out that doesn't work. It gives me the same error I get without 
-the --replace option:
+> I disagree. If a command is install on a system, it's man 
+> pages/documentation should also be installed.
 
-error: dir: cannot add to the index - missing --add option?
-fatal: Unable to process file dir
+Well this isn't a huge issue.  One point you made though that struck
+a chord is that many of the commands should probably not be in
+section 1.
 
-However, "git rm" followed by "git add" does seem to work. So for now it 
-looks like that'll be the best bet when I run into this problem (should 
-be possible to automate it, even.) The better error message from Junio's 
-patch will at least make the failure less mysterious.
+> I'm also not convinced that there are a "large number of commands [...] 
+> that should only ever be accessed as plumbing". I am convinced, however, 
+> that there are a number of relatively low level commands with poor user 
+> interfaces that are useful on their own.
 
-IMO it'd still be nice if the porcelain could provide a "make the index 
-look like the working directory" operation that worked even in the face 
-of changes like this, adding and/or removing files as needed. But it's 
-possible that my crazy git-as-backup-device setup is the only place 
-where this is even an issue; typical git users can use "git mv" and 
-never run into the problem.
+Is there really a reason for a git user to access these from the
+command line rather than a script:
 
--Steve
+commit-tree, diff-files, diff-index, diff-tree, for-each-ref,
+hash-object, http-fetch, http-push, index-pack, local-fetch,
+merge-base, merge-index, merge-octopus, merge-one-file, merge-ours,
+merge-recur, merge-recursive, merge-recursive-old, merge-resolve,
+merge-stupid, merge-tree, receive-pack, runstatus, ssh-fetch, ssh-pull,
+ssh-push, ssh-upload, symbolic-ref, unpack-file, unpack-objects,
+update-ref, upload-archive, upload-pack, upload-tar, write-tree
+
+Not a complete list, and maybe i overlooked something in there
+that is needed from the command line, but for the most part 
+these could be installed somewhere other than the users path.
+
