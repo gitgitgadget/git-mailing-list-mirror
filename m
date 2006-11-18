@@ -1,88 +1,75 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: using xdl_merge(), was Re: Resolving conflicts
-Date: Wed, 6 Dec 2006 11:02:10 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612061058360.28348@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <456FD461.4080002@saville.com> <Pine.LNX.4.64.0611302330000.3695@woody.osdl.org>
- <456FDF24.1070001@saville.com> <Pine.LNX.4.64.0612012018490.3476@woody.osdl.org>
- <7vejri20mf.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0612021131140.28348@wbgn013.biozentrum.uni-wuerzburg.de>
- <4575B32F.5060108@ramsay1.demon.co.uk> <Pine.LNX.4.64.0612051023460.3542@woody.osdl.org>
- <Pine.LNX.4.63.0612051949290.28348@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vac22glzz.fsf@assigned-by-dhcp.cox.net> <7vwt5573sy.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Wed, 6 Dec 2006 10:02:27 +0000 (UTC)
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>, git@vger.kernel.org
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH 1/5] gitweb: Protect against possible warning in git_commitdiff
+Date: Sat, 18 Nov 2006 23:35:38 +0100
+Message-ID: <11638893431855-git-send-email-jnareb@gmail.com>
+References: <1163889342877-git-send-email-jnareb@gmail.com>
+NNTP-Posting-Date: Sat, 18 Nov 2006 22:34:51 +0000 (UTC)
+Cc: Jakub Narebski <jnareb@gmail.com>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7vwt5573sy.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=k2bhkp+JtWIc+ZFoty8zYKO6xUSgyf/R7wfJCI3VV5WZ3cw4FexZmQiD5zFjWaDSEym8UCoLfXMrnAPP8rXjEoKd4T4qG02Zrd4PXrMYfqKcvRJ0B1ymM/IR6zN9gjuH34u6SIKvcYJh1wYvxd3yuQSToAehFgQnAkkl7/1WHUI=
+X-Mailer: git-send-email 1.4.3.4
+In-Reply-To: <1163889342877-git-send-email-jnareb@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33417>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GrtbX-00087E-BY for gcvg-git@gmane.org; Wed, 06 Dec
- 2006 11:02:19 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31807>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GlYla-0001jk-EY for gcvg-git@gmane.org; Sat, 18 Nov
+ 2006 23:34:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1760413AbWLFKCO (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
- 05:02:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760417AbWLFKCO
- (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 05:02:14 -0500
-Received: from mail.gmx.net ([213.165.64.20]:33459 "HELO mail.gmx.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S1760418AbWLFKCM
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec 2006 05:02:12 -0500
-Received: (qmail invoked by alias); 06 Dec 2006 10:02:11 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp016) with SMTP; 06 Dec 2006 11:02:11 +0100
-To: Junio C Hamano <junkio@cox.net>
+ S1755271AbWKRWeU (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 18 Nov 2006
+ 17:34:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755274AbWKRWeU
+ (ORCPT <rfc822;git-outgoing>); Sat, 18 Nov 2006 17:34:20 -0500
+Received: from ug-out-1314.google.com ([66.249.92.169]:12050 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1755271AbWKRWeT
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 18 Nov 2006 17:34:19 -0500
+Received: by ug-out-1314.google.com with SMTP id m3so953027ugc for
+ <git@vger.kernel.org>; Sat, 18 Nov 2006 14:34:17 -0800 (PST)
+Received: by 10.66.216.20 with SMTP id o20mr3566333ugg.1163889257836; Sat, 18
+ Nov 2006 14:34:17 -0800 (PST)
+Received: from roke.D-201 ( [81.190.24.209]) by mx.google.com with ESMTP id
+ e23sm2272849ugd.2006.11.18.14.34.17; Sat, 18 Nov 2006 14:34:17 -0800 (PST)
+Received: from roke.D-201 (localhost.localdomain [127.0.0.1]) by roke.D-201
+ (8.13.4/8.13.4) with ESMTP id kAIMZh3K015347; Sat, 18 Nov 2006 23:35:43 +0100
+Received: (from jnareb@localhost) by roke.D-201 (8.13.4/8.13.4/Submit) id
+ kAIMZhQb015346; Sat, 18 Nov 2006 23:35:43 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Hi,
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+I'm not sure _when_ this eror (warning) occur, as it happened to me
+once, but I couldn't repeat it; but I didn't try too hard.
 
-On Wed, 6 Dec 2006, Junio C Hamano wrote:
+I think it is better coding practice, and more readable.
 
-> Junio C Hamano <junkio@cox.net> writes:
-> 
-> > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> >
-> >> On Tue, 5 Dec 2006, Linus Torvalds wrote:
-> >>
-> >>>  - take every single merge in git (or the kernel, if you want even more)
-> >
-> > The attached is the script I am using.  The test checks the
-> > output from 'master' (merge from RCS) and 'next' (with xdl-merge)
-> > and also tries to see how different the conflicts look like.
-> >
-> > In the git.git archive, there is no "clean" merge on which
-> > 'master' and 'next' did not agree.  It is not a proof of
-> > correctness at all but it gives a sense of assurance.
-> 
-> And all merges in linux-2.6.git archive either result in
-> conflict with both 'merge' implementations, or cleanly resolves
-> the same way with both 'merge' implementations.  I have not
-> compared the conflicted cases yet, but at least it gives me a
-> warm fuzzy feeling to see that autocommitted stuff are sensible.
+ gitweb/gitweb.perl |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
 
-Thank you! Slowly I also get a warm fuzzy feeling...
-
-My idea, to have an inbuilt work-alike to RCS merge, was not only 
-instigated by my liking the zealous option, but also to be able to add 
-relatively fast tests.
-
-Originally, I thought that building in git-merge-one-file, and enhancing 
-it to recognize by the parameters if it should act as a merge replacement, 
-would be the way to go. Should I do this, or rather add 
-builtin-merge-file?
-
-Ciao,
-Dscho
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 7587595..b2482fe 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -3731,7 +3731,8 @@ sub git_commitdiff {
+ 			$hash_parent, $hash, "--"
+ 			or die_error(undef, "Open git-diff-tree failed");
+ 
+-		while (chomp(my $line = <$fd>)) {
++		while (my $line = <$fd>) {
++			chomp $line;
+ 			# empty line ends raw part of diff-tree output
+ 			last unless $line;
+ 			push @difftree, $line;
+-- 
+1.4.3.4
