@@ -2,73 +2,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: What's in git.git
-Date: Wed, 29 Nov 2006 11:21:21 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0611291118160.30004@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <7vzmaf3kdl.fsf@assigned-by-dhcp.cox.net> <87zmabv0i7.wl%cworth@cworth.org>
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Move --pretty options into Documentation/pretty-formats.txt
+Date: Sat, 18 Nov 2006 11:39:43 -0800
+Message-ID: <7virhccznk.fsf@assigned-by-dhcp.cox.net>
+References: <11638310552964-git-send-email-chris@syntacticsugar.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Wed, 29 Nov 2006 10:22:07 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Sat, 18 Nov 2006 19:39:58 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <87zmabv0i7.wl%cworth@cworth.org>
-X-Y-GMX-Trusted: 0
+In-Reply-To: <11638310552964-git-send-email-chris@syntacticsugar.org> (Chris
+	Riddoch's message of "Fri, 17 Nov 2006 23:24:15 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32629>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31795>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GpMZD-0005Ii-Mc for gcvg-git@gmane.org; Wed, 29 Nov
- 2006 11:21:28 +0100
+ esmtp (Exim 4.43) id 1GlW2W-0001rC-WB for gcvg-git@gmane.org; Sat, 18 Nov
+ 2006 20:39:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S966872AbWK2KVZ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 29 Nov 2006
- 05:21:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966874AbWK2KVY
- (ORCPT <rfc822;git-outgoing>); Wed, 29 Nov 2006 05:21:24 -0500
-Received: from mail.gmx.net ([213.165.64.20]:63454 "HELO mail.gmx.net") by
- vger.kernel.org with SMTP id S966872AbWK2KVY (ORCPT
- <rfc822;git@vger.kernel.org>); Wed, 29 Nov 2006 05:21:24 -0500
-Received: (qmail invoked by alias); 29 Nov 2006 10:21:22 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp045) with SMTP; 29 Nov 2006 11:21:22 +0100
-To: Carl Worth <cworth@cworth.org>
+ S1756402AbWKRTjp (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 18 Nov 2006
+ 14:39:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756403AbWKRTjp
+ (ORCPT <rfc822;git-outgoing>); Sat, 18 Nov 2006 14:39:45 -0500
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:28916 "EHLO
+ fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP id S1756402AbWKRTjo
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 18 Nov 2006 14:39:44 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao03.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061118193944.RBOY4817.fed1rmmtao03.cox.net@fed1rmimpo01.cox.net>; Sat, 18
+ Nov 2006 14:39:44 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id oKfG1V0061kojtg0000000; Sat, 18 Nov 2006
+ 14:39:16 -0500
+To: Chris Riddoch <chris@syntacticsugar.org>
 Sender: git-owner@vger.kernel.org
 
-Hi,
+Chris Riddoch <chris@syntacticsugar.org> writes:
 
-On Tue, 28 Nov 2006, Carl Worth wrote:
+> This describes all the pretty-formats currently listed in the cmit_fmt
+> enum in commit.h, and also briefly describes the presence and format
+> of the 'Merge: ' line in some pretty formats.
 
-> On Sat, 25 Nov 2006 02:12:38 -0800, Junio C Hamano wrote:
-> >  * The new "--depth $n" parameter to git clone/fetch tries to
-> >    limit the commit ancestry depth to $n.
-> [...]
-> Has though been given to make the depth selection consistent with
-> other limiting options for rev-parse and rev-list? For example, I'd
-> like to be able to use --since to get a shallow clone, (so should
-> --depth instead be --max-count?, and can we re-use some existing
-> machinery here?).
+Thanks.  Getting much warmer.
 
-I briefly considered that, but decided against it, for two reasons: 1) it 
-puts the burden of calculation on the server, and 2) I was not at all sure 
-if the whole shallow stuff would be useful to begin with (and therefore 
-avoided complicated stuff as much as possible).
+> @@ -0,0 +1,56 @@
+> +--pretty[='<format>']::
+> +
+> +        Pretty-prints the details of a commit.  The default format is
+> +        'medium'.  If the commit is a merge, and the pretty-format is
+> +        not 'oneline', 'email' or 'raw', an additional line is
+> +        inserted before the 'Author:' line.  This line begins with
 
-> >    Petr Baudis (1):
-> >       Make git-clone --use-separate-remote the default
-> ...
-> >    Junio C Hamano (19):
-> >       git-merge: make it usable as the first class UI
-> 
-> Also very exciting. Please do keep up the user-interface improvements, 
-> everybody.
+> +        "Merge: " and the sha1s of each parent commit are printed,
+> +        separated by spaces.  These sha1's are abbreviated to 8
+> +        characters; use the --abbrev or --no-abbrev options to alter
+> +        this behavior.
 
-I concur.
+The default abbreviation depends on the command.  Porcelain-ish
+commands default to abbreviate but plumbing commands tend to
+show unabbreviated.
 
-Ciao,
-Dscho
+A few other things to note.
+
+ - When --parents option is in effect, you will see the list of
+   parent commits on "commit" line after the commit itself.
+
+ - The list of parents shown on "Merge:" may be different from
+   the true parents when the command's revision traversal is
+   limited with paths parameters; they show simplified parents.
+   This rule also applies to the parents on the "commit" line
+   under --parents option.
+
+ - The history simplification does not affect "parent" line of
+   "--pretty=raw" format.  You can use this to find the
+   simplified parents from "commit" line and the true parents
+   from "parent" lines with --pretty=raw.
+
+Here are some examples from git.git repository to illustrate
+differences between various combinations.
+
+    C=2a54323
+
+    git diff-tree -s -m --pretty=$format $C
+    git diff-tree -s -m --pretty=$format --abbrev $C
+    git diff-tree -s -m --pretty=$format --abbrev --abbrev-commit $C
+
+    git log --pretty=$format --parents -n 1 --abbrev-commit $C
+
+    git log --pretty=$format --parents -n 1 $C
+    git log --pretty=$format --parents -n 1 $C -- t/
+
