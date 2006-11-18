@@ -1,75 +1,112 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 2/3] git-fetch: do not use "*" for fetching multiple refs
-Date: Wed, 06 Dec 2006 10:37:45 -0800
-Message-ID: <7vejrc50qu.fsf@assigned-by-dhcp.cox.net>
-References: <1165261102.20055.9.camel@ibook.zvpunry.de>
-	<el1tud$n07$2@sea.gmane.org>
-	<1165422865.29714.13.camel@ibook.zvpunry.de>
-	<el6sni$re3$1@sea.gmane.org>
-	<1165429001.993.35.camel@ibook.zvpunry.de>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: [WISH] Store also tag dereferences in packed-refs
+Date: Sat, 18 Nov 2006 19:47:40 +0100
+Message-ID: <e5bfff550611181047w6712774fkccc697d312b87c7e@mail.gmail.com>
+References: <e5bfff550611180115j135746a1h916e8ae029d1374d@mail.gmail.com>
+	 <7vmz6oeh2k.fsf@assigned-by-dhcp.cox.net>
+	 <20061118184345.GO7201@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 6 Dec 2006 18:38:01 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Sat, 18 Nov 2006 18:47:59 +0000 (UTC)
+Cc: "Junio C Hamano" <junkio@cox.net>,
+	"Git Mailing List" <git@vger.kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <1165429001.993.35.camel@ibook.zvpunry.de> (Michael Loeffler's
-	message of "Wed, 06 Dec 2006 19:16:40 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=ZCG/IWBixivVCkCdcst5gyRjgDkdTszi6vNRJlMAFyVCO4WIsnPXoQguSuiUW1Qc05GNn2+L/HmRCA+3yw3qEmpz9yaMUyAIJ+0qJdeROt+mgqsFOBI+ffVq5m1Nq9CW0rLDGOik/H+qv8YczIRjZzcuXxYush5DZG1nHw8pP1Y=
+In-Reply-To: <20061118184345.GO7201@pasky.or.cz>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33504>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gs1eS-0001pk-1p for gcvg-git@gmane.org; Wed, 06 Dec
- 2006 19:37:52 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31789>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GlVEK-00085o-G4 for gcvg-git@gmane.org; Sat, 18 Nov
+ 2006 19:47:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S937083AbWLFShs (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
- 13:37:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937084AbWLFShs
- (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 13:37:48 -0500
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:41402 "EHLO
- fed1rmmtao01.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S937083AbWLFShr (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec 2006
- 13:37:47 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao01.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061206183746.LGYS9173.fed1rmmtao01.cox.net@fed1rmimpo02.cox.net>; Wed, 6
- Dec 2006 13:37:46 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id vWdw1V00B1kojtg0000000; Wed, 06 Dec 2006
- 13:37:56 -0500
-To: Michael Loeffler <zvpunry@zvpunry.de>
+ S1755318AbWKRSrn (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 18 Nov 2006
+ 13:47:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756367AbWKRSrn
+ (ORCPT <rfc822;git-outgoing>); Sat, 18 Nov 2006 13:47:43 -0500
+Received: from py-out-1112.google.com ([64.233.166.180]:58908 "EHLO
+ py-out-1112.google.com") by vger.kernel.org with ESMTP id S1755318AbWKRSrl
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 18 Nov 2006 13:47:41 -0500
+Received: by py-out-1112.google.com with SMTP id a29so654390pyi for
+ <git@vger.kernel.org>; Sat, 18 Nov 2006 10:47:41 -0800 (PST)
+Received: by 10.35.39.13 with SMTP id r13mr4785327pyj.1163875660364; Sat, 18
+ Nov 2006 10:47:40 -0800 (PST)
+Received: by 10.35.42.4 with HTTP; Sat, 18 Nov 2006 10:47:40 -0800 (PST)
+To: "Petr Baudis" <pasky@suse.cz>
 Sender: git-owner@vger.kernel.org
 
-Michael Loeffler <zvpunry@zvpunry.de> writes:
-
->> Just a thought.
-> I would prefer the following ways to do this globfetch stuff:
+On 11/18/06, Petr Baudis <pasky@suse.cz> wrote:
+> On Sat, Nov 18, 2006 at 07:38:11PM CET, Junio C Hamano wrote:
+> > "Marco Costalba" <mcostalba@gmail.com> writes:
+> >
+> > > Time needed to execute git-peek-remote in my box with cold cache currently is:
+> > >
+> > > - git tree 2.347 ms
+> > > - linux tree 2.144 ms
+> > >
+> > > And refs are *already* packed in both repos.
+> > >
+> > > Looking at packed-refs file, it contains something like:
+> > >
+> > > d9b0f913ce0508fcc83e642e0241f373428368e5 refs/tags/v1.4.3
+> > > 4314f5982d2aac08001a977fc0b1b611e858e025 refs/tags/v1.4.3-rc1
+> > >
+> > > while I would need something like git-peek-remote output,
+> > >
+> > > d9b0f913ce0508fcc83e642e0241f373428368e5        refs/tags/v1.4.3
+> > > e0b0830726286287744cc9e1a629a534bbe75452        refs/tags/v1.4.3^{}
+> > > 4314f5982d2aac08001a977fc0b1b611e858e025        refs/tags/v1.4.3-rc1
+> > > 1965efb1599f59b8e3380335d1fa395e2008a30b        refs/tags/v1.4.3-rc1^{}
+> > >
+> > > Because the sha value a tag points to is needed to match against
+> > > git-rev-list output so to identify tagged revisions.
+> > >
+> > > Would be possible to store in packed-refs also the dereferenced tag
+> > > info, so that cold opening of a repository would be much faster?
+> > >
+> > > Just to give an idea, with warmed up cache, refs reading times are:
+> > >
+> > > - git tree 43 ms
+> > > - linux tree 28 ms
+> > >
+> > > Thanks
+> > > Marco
+> > >
+> > > P.S: In case it's not clear I don't suggest to read directly the
+> > > packed-refs file with the added info, but always to use
+> > > git-peek-remote that _would_ became much faster.
+> >
+> > I think the question is why you would want to run peek-remote.
+> > Do you use the ^{} peeled-onion information and if so how and
+> > why?
 >
-> 1.) The original refspec:
->     Pull: refs/heads/master:refs/remotes/origin/master
+> My wild guess would be to attach tags to the right commits in qgit?
 >
-> 2.) The one with "prefix match":
->     Pull: refs/heads/:refs/remotes/origin/
+Yes. It is. From a list like
+
+> > > d9b0f913ce0508fcc83e642e0241f373428368e5        refs/tags/v1.4.3
+> > > e0b0830726286287744cc9e1a629a534bbe75452        refs/tags/v1.4.3^{}
+> > > 4314f5982d2aac08001a977fc0b1b611e858e025        refs/tags/v1.4.3-rc1
+> > > 1965efb1599f59b8e3380335d1fa395e2008a30b        refs/tags/v1.4.3-rc1^{}
 >
-> 3.) The one with extended regex:
->     Pull: refs/heads/(.*):refs/remotes/origin/\1
+qgit (but also gitk FWIK) extracts
 
-Please, don't do regex when talking about paths.  Uniformly
-using fnmatch/glob is less confusing.  I do not see anything
-wrong with Andy's refspec glob we already have.  Although I
-agree that the second asterisk in "src/*:dst/*" has a certain
-"Huh?" factor to UNIX-trained eyes, I think it is quite obvious
-even to new people what it does.
+e0b0830726286287744cc9e1a629a534bbe75452
+1965efb1599f59b8e3380335d1fa395e2008a30b
 
-Also, while I agree that (2) is logical and less typing, I would
-avoid cases where foo and foo/ behave differently when "foo"
-itself is a directory/tree like thing.  Doing otherwise easily
-invites mistakes.
+Stores in a quick look-up container and then checks against loaded
+commits to, as Pasky says, attach the nice green markers to tags.
 
