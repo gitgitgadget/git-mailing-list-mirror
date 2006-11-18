@@ -1,86 +1,89 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_ADSP_NXDOMAIN,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Cleaning up git user-interface warts
-Date: Wed, 15 Nov 2006 10:10:50 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0611151000460.2591@xanadu.home>
-References: <87k61yt1x2.wl%cworth@cworth.org> <455A1137.8030301@shadowen.org>
- <87hcx1u934.wl%cworth@cworth.org>
- <Pine.LNX.4.64.0611141518590.2591@xanadu.home>
- <87bqn9u43s.wl%cworth@cworth.org> <7vr6w5y7to.fsf@assigned-by-dhcp.cox.net>
- <7virhhy76h.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0611142048350.2591@xanadu.home>
- <7vu011qnl6.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0611151454250.13772@wbgn013.biozentrum.uni-wuerzburg.de>
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+From: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH] Document git-runstatus
+Date: Sat, 18 Nov 2006 16:04:43 +0100
+Message-ID: <455F210B.8000107@lsrfire.ath.cx>
+References: <455F1595.9020009@lsrfire.ath.cx> <20061118092644.a9f15669.seanlkml@sympatico.ca> <20061118143511.GM7201@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-NNTP-Posting-Date: Wed, 15 Nov 2006 15:11:15 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
-	Andy Whitcroft <apw@shadowen.org>,
-	Carl Worth <cworth@cworth.org>
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Sat, 18 Nov 2006 15:04:52 +0000 (UTC)
+Cc: Sean <seanlkml@sympatico.ca>,
+	Git Mailing List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jeff King <peff@peff.net>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-reply-to: <Pine.LNX.4.63.0611151454250.13772@wbgn013.biozentrum.uni-wuerzburg.de>
-X-X-Sender: nico@xanadu.home
+User-Agent: Thunderbird 1.5.0.8 (Windows/20061025)
+In-Reply-To: <20061118143511.GM7201@pasky.or.cz>
+X-Enigmail-Version: 0.94.0.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31444>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31775>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GkMPq-0003Oo-Gv for gcvg-git@gmane.org; Wed, 15 Nov
- 2006 16:11:07 +0100
+ esmtp (Exim 4.43) id 1GlRkG-0000xd-CY for gcvg-git@gmane.org; Sat, 18 Nov
+ 2006 16:04:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1030543AbWKOPKw (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
- 10:10:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030548AbWKOPKv
- (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 10:10:51 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:329 "EHLO
- relais.videotron.ca") by vger.kernel.org with ESMTP id S1030543AbWKOPKv
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 10:10:51 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
- <0J8S00FOU262KGF0@VL-MO-MR002.ip.videotron.ca> for git@vger.kernel.org; Wed,
- 15 Nov 2006 10:10:50 -0500 (EST)
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+ S1756353AbWKRPEZ convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Sat, 18 Nov 2006 10:04:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756352AbWKRPEZ
+ (ORCPT <rfc822;git-outgoing>); Sat, 18 Nov 2006 10:04:25 -0500
+Received: from static-ip-217-172-187-230.inaddr.intergenia.de
+ ([217.172.187.230]:42132 "EHLO neapel230.server4you.de") by vger.kernel.org
+ with ESMTP id S1756350AbWKRPEY (ORCPT <rfc822;git@vger.kernel.org>); Sat, 18
+ Nov 2006 10:04:24 -0500
+Received: from [10.0.1.3] (p508E406F.dip.t-dialin.net [80.142.64.111]) by
+ neapel230.server4you.de (Postfix) with ESMTP id 5631C3C005; Sat, 18 Nov 2006
+ 16:04:23 +0100 (CET)
+To: Petr Baudis <pasky@suse.cz>, Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-On Wed, 15 Nov 2006, Johannes Schindelin wrote:
+Petr Baudis schrieb:
+> On Sat, Nov 18, 2006 at 03:26:44PM CET, Sean wrote:
+>> On Sat, 18 Nov 2006 15:15:49 +0100
+>> Rene Scharfe <rene.scharfe@lsrfire.ath.cx> wrote:
+>>
+>>> I copied most of the text from git-status.txt.
+>> [...]=09
+>>> +git-runstatus - Show working tree status
+>=20
+> Don't forget to add it to the list of commands.
 
-> On Tue, 14 Nov 2006, Junio C Hamano wrote:
-> 
-> > Nicolas Pitre <nico@cam.org> writes:
-> > 
-> > > 2) "pull" and "push" should be symmetrical operations
-> > 
-> > I think that makes a lot of sense to have "gh pull" and "gh
-> > push" as symmetric operations, and make "gh merge" do the
-> > fast-forward and 3-way merge magic done in the current "git
-> > pull".  These three words would have a lot saner meaning.
-> 
-> I am really opposed to do "gh pull". Not only because of "gh" being 
-> completely confusing (we already _have_ "git", and for porcelains 
-> different TLAs), but "pull" _really_ is confusing by now. And Mercurial 
-> did not help one wit by insisting on their own interpretation.
+Good catch, thanks.  An incremental patch follows below.
 
-I completely agree that creating yet another command prefix for 
-basically the same tools would be a disaster.  We have "git" already so 
-let's stick to it and make its usage just more sane.
+>> How is git-runstatus different from "git status"?
+>=20
+> I have the same question.
 
-> Why not do something like "get/put" instead? It is
-> 
-> - easier to remember
-> - not bogus (AFAICT the meaning is not used in diametrical senses)
-> - shorter to type than download/upload
+git-status is a wrapper around git-runstatus that takes the same
+options as git-commit.  It could have been named 'git-commit --dry-run'=
+=2E
 
-Well, of all compromizes this is probably the best one so far.  I would 
-have prefered to bite the bullet and fix "pull" instead of adding yet 
-more commands.  But if the consensus is that there is no way on earth 
-that "pull" can be salvaged then get/put is probably more enjoyable than 
-download/upload.  This way pull/fetch/push could still be available 
-(albeit burried somewhere out of sight).
+>> Should this command be viewed simply as plumbing, and if so does it
+>> deserve a man page or just textual documentation in the source?
+>=20
+> All commands deserve a man page.
+
+Exactly.  Even plumbers read manuals ;-).  Well, me at least.
+
+Ren=E9
 
 
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index 52bc05a..63b1746 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -424,6 +424,9 @@ gitlink:git-pack-redundant[1]::
+ gitlink:git-rev-list[1]::
+ 	Lists commit objects in reverse chronological order.
+=20
++gitlink:git-runstatus[1]::
++	Show working tree status.
++
+ gitlink:git-show-index[1]::
+ 	Displays contents of a pack idx file.
