@@ -1,75 +1,73 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Rationale for the "Never commit to the right side of a Pull
- line" rule
-Date: Thu, 26 Oct 2006 10:11:50 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0610261003590.3962@g5.osdl.org>
-References: <ehqp1u$j4$1@sea.gmane.org>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH] Do not ignore hidden refs
+Date: Sat, 18 Nov 2006 20:55:20 +0100
+Message-ID: <20061118195520.GQ7201@pasky.or.cz>
+References: <20061118041137.6064.75827.stgit@machine.or.cz> <7v8xi9fjw9.fsf@assigned-by-dhcp.cox.net> <20061118045323.GK7201@pasky.or.cz> <7vzmapdxki.fsf@assigned-by-dhcp.cox.net> <20061118192830.GP7201@pasky.or.cz> <7vejs0cz5s.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Thu, 26 Oct 2006 17:12:36 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Sat, 18 Nov 2006 19:55:46 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <ehqp1u$j4$1@sea.gmane.org>
-X-MIMEDefang-Filter: osdl$Revision: 1.155 $
-X-Scanned-By: MIMEDefang 2.36
+Content-Disposition: inline
+In-Reply-To: <7vejs0cz5s.fsf@assigned-by-dhcp.cox.net>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30241>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31798>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gd8lx-0001FI-0Q for gcvg-git@gmane.org; Thu, 26 Oct
- 2006 19:12:05 +0200
+ esmtp (Exim 4.43) id 1GlWHh-0005IP-GF for gcvg-git@gmane.org; Sat, 18 Nov
+ 2006 20:55:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1423504AbWJZRLz (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
- 13:11:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423514AbWJZRLz
- (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 13:11:55 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:22434 "EHLO smtp.osdl.org") by
- vger.kernel.org with ESMTP id S1423504AbWJZRLy (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 13:11:54 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
- smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k9QHBpPo032555
- (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Thu, 26
- Oct 2006 10:11:51 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
- shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k9QHBoTY021607; Thu, 26 Oct
- 2006 10:11:50 -0700
-To: Jerome Lovy <t2a2e9z8ncbs9qg@brefemail.com>
+ S1756407AbWKRTzY (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 18 Nov 2006
+ 14:55:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756410AbWKRTzY
+ (ORCPT <rfc822;git-outgoing>); Sat, 18 Nov 2006 14:55:24 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:32918 "EHLO machine.or.cz") by
+ vger.kernel.org with ESMTP id S1756409AbWKRTzW (ORCPT
+ <rfc822;git@vger.kernel.org>); Sat, 18 Nov 2006 14:55:22 -0500
+Received: (qmail 28416 invoked by uid 2001); 18 Nov 2006 20:55:20 +0100
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-
-
-On Thu, 26 Oct 2006, Jerome Lovy wrote:
+On Sat, Nov 18, 2006 at 08:50:23PM CET, Junio C Hamano wrote:
+> Petr Baudis <pasky@suse.cz> writes:
 > 
-> Could someone please point me to / give me the rationale for the "Never commit
-> to the right side of a Pull line" rule ?
+> > On Sat, Nov 18, 2006 at 08:27:09AM CET, Junio C Hamano wrote:
+> >> ...  I do not think it is a great
+> >> enough convention to be promoted as the official BCP, but it has
+> >> been good enough for me, ...
+> >
+> > That's way too arbitrary for my taste, I think I needn't explain why.
+> 
+> Because _I_ explained why already ;-).
 
-It's not a technical rule per se.
+Oops. ;-) Me too sloppy today, sorry.
 
-It's just a way to avoid what will almost inevitably otherwise be a 
-horribly horribly confusing situation.
+> > What about leading underscore?
+> 
+> I would rather prefer to do refs/{heads,private}/ and allow
+> checkout to treat either of them as branches.  We are talking
+> about allowing checkout to go to a non-branch by storing a raw
+> commit object name in HEAD instead of leaving it as a symref, so
+> we know we are going to touch that area already.
 
-I say "almost inevitably", because if you really have worked with git 
-enough, and understand how it works on a very fundamental level, there are 
-actually no problems at all with doing so, and maybe you could have 
-perfectly fine reasons to break the rule, and commit to a branch that is 
-officially "maintained in another repository" and then push it out.
+Cogito _heavily_ assumes on a lot of places that heads live in
+refs/heads/ and tags live in refs/tags/. Besides, I think private tags
+are much more useful to support than private heads (not that you would
+necessarily make more private tags than private heads, but you are more
+likely to want tags autopushed than heads; or perhaps that just in my
+head?). So what about refs/{heads,tags}/private/? :-)
 
-But it's a good rule in general, just because it makes a certain common 
-workflow explicit. In fact, we really probably should start to always use 
-the "refs/remote/origin/HEAD" kind of syntax by default, where you can't 
-even _switch_ to the branch maintained in the remote repository, because 
-it's not a real branch locally.
-
-So normally you should consider the "origin" branch to be a pointer to 
-WHAT YOU FETCHED LAST - and that implies that you shouldn't commit to it, 
-because then it loses that meaning (now it's "what you fetched last and 
-then committed your own work on top of", which is something totally 
-different).
-
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+The meaning of Stonehenge in Traflamadorian, when viewed from above, is:
+"Replacement part being rushed with all possible speed."
