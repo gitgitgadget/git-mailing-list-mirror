@@ -1,92 +1,74 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] (experimental) per-topic shortlog.
-Date: Sun, 26 Nov 2006 17:06:08 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0611261652520.30076@woody.osdl.org>
-References: <7v8xhxsopp.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, score=-2.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,MSGID_FROM_MTA_HEADER,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+From: Sean <seanlkml@sympatico.ca>
+Subject: Re: [PATCH] Document git-runstatus
+Date: Sat, 18 Nov 2006 13:49:25 -0500
+Message-ID: <BAYC1-PASMTP06DE3E6CFF9E49C2BF16C7AEEF0@CEZ.ICE>
+References: <455F1595.9020009@lsrfire.ath.cx>
+	<20061118092644.a9f15669.seanlkml@sympatico.ca>
+	<20061118143511.GM7201@pasky.or.cz>
+	<455F210B.8000107@lsrfire.ath.cx>
+	<BAYC1-PASMTP06C814AB518D7544770C01AEEF0@CEZ.ICE>
+	<455F4F06.3090902@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Mon, 27 Nov 2006 01:07:00 +0000 (UTC)
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Sat, 18 Nov 2006 18:49:40 +0000 (UTC)
+Cc: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>,
+	Petr Baudis <pasky@suse.cz>, Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jeff King <peff@peff.net>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <7v8xhxsopp.fsf@assigned-by-dhcp.cox.net>
-X-MIMEDefang-Filter: osdl$Revision: 1.160 $
-X-Scanned-By: MIMEDefang 2.36
+X-Originating-IP: [65.93.43.81]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Original-Message-Id: <20061118134925.3be201f1.seanlkml@sympatico.ca>
+In-Reply-To: <455F4F06.3090902@gmail.com>
+X-Mailer: Sylpheed version 2.2.9 (GTK+ 2.10.4; i386-redhat-linux-gnu)
+X-OriginalArrivalTime: 18 Nov 2006 18:52:54.0718 (UTC) FILETIME=[C199D5E0:01C70B42]
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32376>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GoUxN-00047Q-GV for gcvg-git@gmane.org; Mon, 27 Nov
- 2006 02:06:50 +0100
+ esmtp (Exim 4.43) id 1GlVFt-0008ON-MA for gcvg-git@gmane.org; Sat, 18 Nov
+ 2006 19:49:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1755735AbWK0BGp (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 26 Nov 2006
- 20:06:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755758AbWK0BGp
- (ORCPT <rfc822;git-outgoing>); Sun, 26 Nov 2006 20:06:45 -0500
-Received: from smtp.osdl.org ([65.172.181.25]:28627 "EHLO smtp.osdl.org") by
- vger.kernel.org with ESMTP id S1755735AbWK0BGp (ORCPT
- <rfc822;git@vger.kernel.org>); Sun, 26 Nov 2006 20:06:45 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
- smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kAR169ix022023
- (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Sun, 26
- Nov 2006 17:06:19 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
- shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kAR168tF015538; Sun, 26 Nov
- 2006 17:06:09 -0800
-To: Junio C Hamano <junkio@cox.net>
+ S1756373AbWKRSta (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 18 Nov 2006
+ 13:49:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756371AbWKRSta
+ (ORCPT <rfc822;git-outgoing>); Sat, 18 Nov 2006 13:49:30 -0500
+Received: from bayc1-pasmtp06.bayc1.hotmail.com ([65.54.191.166]:51987 "EHLO
+ BAYC1-PASMTP06.bayc1.hotmail.com") by vger.kernel.org with ESMTP id
+ S1756370AbWKRSt3 (ORCPT <rfc822;git@vger.kernel.org>); Sat, 18 Nov 2006
+ 13:49:29 -0500
+Received: from linux1.attic.local ([65.93.43.81]) by
+ BAYC1-PASMTP06.bayc1.hotmail.com over TLS secured channel with Microsoft
+ SMTPSVC(6.0.3790.1830); Sat, 18 Nov 2006 10:52:54 -0800
+Received: from guru.attic.local ([10.10.10.28]) by linux1.attic.local with
+ esmtp (Exim 4.43) id 1GlUJh-0002z7-0n; Sat, 18 Nov 2006 12:49:25 -0500
+To: gitzilla@gmail.com
 Sender: git-owner@vger.kernel.org
 
+On Sat, 18 Nov 2006 10:20:54 -0800
+A Large Angry SCM <gitzilla@gmail.com> wrote:
 
 
-On Sun, 26 Nov 2006, Junio C Hamano wrote:
->
-> This implements an experimental "git log-fpc" command that shows
-> short-log style output sorted by topics.
+> Are you suggesting that all non section 1 man pages should not exist?
 > 
-> A "topic" is identified by going through the first-parent
-> chains; this ignores the fast-forward case, but for a top-level
-> integrator it often is good enough.
 
-Umm. May I suggest that you try this with the kernel repo too..
+No...  I was wrong to suggest there shouldn't be a man page.. I
+guess my real concern was why this particular command was needed
+at all.
 
-There, the "first parent chain" tends to be less interesting than a lot of 
-other heuristics:
+Really, it's not the man pages that are the problem but rather
+the large number of commands that are installed into the standard
+path that should only ever be accessed as plumbing.
 
- - committer
-
-   If the committer changes, you should probably consider it a break, the 
-   same way a second parent would be a break. You probably won't see this 
-   in the git archive, because there tends to be a single committer, but 
-   on something like the kernel where we really merge other peoples repos, 
-   it's going to be as good (or better) than looking at "other parents".
-
- - subdirectory heuristics
-
-   Again, with git it's not very interesting, but I bet that you'd be able 
-   to use heuristics like "the bulk of the changes were contained within 
-   this directory tree" for projects like the kernel, and automatically 
-   decide on "topics" like drivers/scsi, fs/ext3 etc.
-
-In other words, I don't think the "fpc" decision is even very interesting. 
-If you _really_ want to do a cool shortlogger, I bet it can be done, but I 
-suspect that it would be a LOT cooler to do some automatic bayesian 
-clustering based on committer, author and list of filenames changed.
-
-Of course, such a thing done well would probably be worthy of a doctoral 
-thesis or something. Maybe somebody on this list who is into bayesian 
-clustering and doesn't have a thesis subject...
-
-(Of course, since I haven't been in a University setting for the last ten 
-years, maybe bayesian clustering isn't the cool thing to work on any 
-more).
-
-Anyway, "topics" really should be something that is extremely open to 
-various clustering models, bayesian or not ..
+The plumbing-only commands should really be installed somewhere
+else, and man pages for them need only be installed in a
+-devel package, not in the standard install.
 
