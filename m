@@ -1,82 +1,67 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: git-fetch fails with error code 128
-Date: Thu, 14 Dec 2006 23:08:43 +0000
-Message-ID: <200612142308.45376.andyparkins@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [DRAFT] Branching and merging with git
+Date: Sat, 18 Nov 2006 01:32:25 +0100
+Organization: At home
+Message-ID: <ejlk82$av5$1@sea.gmane.org>
+References: <20061117182157.GC11882@fieldses.org> <20061118001355.23488.qmail@science.horizon.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 14 Dec 2006 23:11:40 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+NNTP-Posting-Date: Sat, 18 Nov 2006 00:31:39 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=ZMCb0Jx2UFHAD2Yxp7gJ2xgAz9q6oA/K5ckt9jZnWCtJJDoPlhCSNNoerajMHLFdpPuJ5WzWgY589Sgv0CySxYwwDrm2rdlIiFhRCPvCvAlsgfqlbmZXSxZC5P0anfsQqAz6QeP2M83ewl1yzR8ETelYCQxdsuUajbQr8hcOsdo=
-User-Agent: KMail/1.9.5
-Content-Disposition: inline
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 17
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34431>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Guzje-0007rU-2o for gcvg-git@gmane.org; Fri, 15 Dec
- 2006 00:11:30 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31741>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GlE7N-0003U0-BJ for gcvg-git@gmane.org; Sat, 18 Nov
+ 2006 01:31:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751762AbWLNXL1 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
- 18:11:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751768AbWLNXL1
- (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 18:11:27 -0500
-Received: from ug-out-1314.google.com ([66.249.92.175]:43673 "EHLO
- ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1751762AbWLNXL0 (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec
- 2006 18:11:26 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so649990uga for
- <git@vger.kernel.org>; Thu, 14 Dec 2006 15:11:26 -0800 (PST)
-Received: by 10.67.21.11 with SMTP id y11mr102964ugi.1166137885934; Thu, 14
- Dec 2006 15:11:25 -0800 (PST)
-Received: from grissom.internal.parkins.org.uk ( [84.201.153.164]) by
- mx.google.com with ESMTP id k30sm3292133ugc.2006.12.14.15.11.25; Thu, 14 Dec
- 2006 15:11:25 -0800 (PST)
+ S1756106AbWKRAbY (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 17 Nov 2006
+ 19:31:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756111AbWKRAbX
+ (ORCPT <rfc822;git-outgoing>); Fri, 17 Nov 2006 19:31:23 -0500
+Received: from main.gmane.org ([80.91.229.2]:41658 "EHLO ciao.gmane.org") by
+ vger.kernel.org with ESMTP id S1756106AbWKRAbW (ORCPT
+ <rfc822;git@vger.kernel.org>); Fri, 17 Nov 2006 19:31:22 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1GlE6z-0003Pp-6w for git@vger.kernel.org; Sat, 18 Nov 2006 01:31:13 +0100
+Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Sat, 18 Nov 2006 01:31:13 +0100
+Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Sat, 18 Nov 2006
+ 01:31:13 +0100
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Hello,
+linux@horizon.com wrote:
 
-This is with my big "every linux patch" repository that I talked about in 
-another thread.  To bring you up to speed:
+[...]
+> (Are there any octopus merges in git's history?  If not, could I ask
+> for one for pedagogical value?)
 
- 1. Made repository
- 2. Made a zip of the .git directory
- 3. Copied the zip elsewhere
- 4. Extracted it into a temporary directory
- 5. Went to an out-of-date version of this repository
- 6. Used git-fetch to update it.
+See commit d425142e2a045a9dd7879d028ec68bd748df48a3 (most legged octopus
+I found in git.git repository). Doing git-rev-parse --parents -all, or 
+git log --all and greppoing for merges is a good idea to find octopi.
 
-This gave me the following output:
-
-$ git fetch
-remote: Generating pack...
-remote: Done counting 189146 objects.
-remote: Result has 186566 objects.
-remote: Deltifying 186566 objects.
-remote:  100% (186566/186566) done
-Unpacking 186566 objects
-fatal: failed to apply delta
-fatal: unpack-objects died with error code 128
-Fetch failure: /home/andyp/projects/temp/.git
-
-What does that mean?  I ran fsck --full on the source repository, but it's 
-made no difference.
-
-
-
-Andy
+The commit is both v1.1.2-gd425142 (git describe) and tags/v1.2.0^0~143 
+(git name-rev --tags)
 -- 
-Dr Andrew Parkins, M Eng (Hons), AMIEE
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
+
