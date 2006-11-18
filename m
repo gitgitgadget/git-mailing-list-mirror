@@ -2,61 +2,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Documentation: Update information about <format> in
- git-for-each-ref
-Date: Wed, 1 Nov 2006 16:48:37 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0611011646070.1670@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <200610281930.05889.jnareb@gmail.com> <7vslh86uz9.fsf@assigned-by-dhcp.cox.net>
- <200610282323.57797.jnareb@gmail.com> <45485A0F.3040807@op5.se>
- <7vd5877duh.fsf@assigned-by-dhcp.cox.net> <454875AC.6060300@op5.se>
- <7vac3b5gn8.fsf@assigned-by-dhcp.cox.net>
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] Do not ignore hidden refs
+Date: Sat, 18 Nov 2006 09:35:18 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0611180933360.3692@woody.osdl.org>
+References: <20061118041137.6064.75827.stgit@machine.or.cz>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Wed, 1 Nov 2006 15:49:09 +0000 (UTC)
-Cc: Andreas Ericsson <ae@op5.se>, git@vger.kernel.org,
-	Jakub Narebski <jnareb@gmail.com>
+NNTP-Posting-Date: Sat, 18 Nov 2006 17:35:40 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7vac3b5gn8.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+In-Reply-To: <20061118041137.6064.75827.stgit@machine.or.cz>
+X-MIMEDefang-Filter: osdl$Revision: 1.159 $
+X-Scanned-By: MIMEDefang 2.36
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30644>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31780>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GfIKe-0000zf-8E for gcvg-git@gmane.org; Wed, 01 Nov
- 2006 16:48:48 +0100
+ esmtp (Exim 4.43) id 1GlU6G-0002nx-0W for gcvg-git@gmane.org; Sat, 18 Nov
+ 2006 18:35:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1946909AbWKAPsj (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 1 Nov 2006
- 10:48:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992607AbWKAPsj
- (ORCPT <rfc822;git-outgoing>); Wed, 1 Nov 2006 10:48:39 -0500
-Received: from mail.gmx.de ([213.165.64.20]:51917 "HELO mail.gmx.net") by
- vger.kernel.org with SMTP id S1946909AbWKAPsi (ORCPT
- <rfc822;git@vger.kernel.org>); Wed, 1 Nov 2006 10:48:38 -0500
-Received: (qmail invoked by alias); 01 Nov 2006 15:48:36 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp046) with SMTP; 01 Nov 2006 16:48:36 +0100
-To: Junio C Hamano <junkio@cox.net>
+ S1755179AbWKRRf2 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 18 Nov 2006
+ 12:35:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755219AbWKRRf2
+ (ORCPT <rfc822;git-outgoing>); Sat, 18 Nov 2006 12:35:28 -0500
+Received: from smtp.osdl.org ([65.172.181.25]:65455 "EHLO smtp.osdl.org") by
+ vger.kernel.org with ESMTP id S1755179AbWKRRf2 (ORCPT
+ <rfc822;git@vger.kernel.org>); Sat, 18 Nov 2006 12:35:28 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
+ smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kAIHZJix002768
+ (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Sat, 18
+ Nov 2006 09:35:19 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
+ shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kAIHZIZC011477; Sat, 18 Nov
+ 2006 09:35:18 -0800
+To: Petr Baudis <pasky@suse.cz>
 Sender: git-owner@vger.kernel.org
 
-Hi,
 
-On Wed, 1 Nov 2006, Junio C Hamano wrote:
 
-> By the way, I think "a compares to b" is also a verb, not just
-> "i compare a and b and found these differences".
+On Sat, 18 Nov 2006, Petr Baudis wrote:
+>
+> Some of the ref manipulation tools (git-for-each-ref and git-show-ref in
+> particular) would not handle hidden (~ /^\./) refs. This may be an
+> acceptable or possibly even desirable behaviour for the ref walkers and
+> repackers, but git-show-ref hiddenrefname must work.
 
-In mathematics, "a compares to b" means that "a" and "b" are comparable. 
-There are uncomparable things like "0" and "sky". What is greater?
+No.
 
-Of course, there is also a song with the title "Nothing compares to you" 
-which is sung by a native speaker, so go figure.
+Refnames MUST NOT start with a ".". 
 
-Ciao,
-Dscho
+It's not even about the traditional unix "hidden file" thing. It's simply 
+a syntactic issue. A ref cannot start with a ".", because we use things 
+like ".." and "..." to separate them.
+
+For the same reason, a ref must not contain - anywhere in its name - a "^" 
+or a ".." or the other magic characters.
+
+If you want to hide refs, you should do so some other way.
+
