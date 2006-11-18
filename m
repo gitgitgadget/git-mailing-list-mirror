@@ -1,79 +1,65 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Petr 'Patch Proxy' Baudis <pasky@ucw.cz>
-Subject: [PATCH] git-fetch.sh: fix fetching of tags that point directly to commits
-Date: Sun, 19 Nov 2006 03:59:21 +0100
-Message-ID: <20061119025921.GU7201@pasky.or.cz>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH] Do not ignore hidden refs
+Date: Sat, 18 Nov 2006 20:28:30 +0100
+Message-ID: <20061118192830.GP7201@pasky.or.cz>
+References: <20061118041137.6064.75827.stgit@machine.or.cz> <7v8xi9fjw9.fsf@assigned-by-dhcp.cox.net> <20061118045323.GK7201@pasky.or.cz> <7vzmapdxki.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sun, 19 Nov 2006 03:01:09 +0000 (UTC)
+NNTP-Posting-Date: Sat, 18 Nov 2006 19:28:49 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Content-Disposition: inline
+In-Reply-To: <7vzmapdxki.fsf@assigned-by-dhcp.cox.net>
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31823>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31794>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Glcu8-0000RD-0b for gcvg-git@gmane.org; Sun, 19 Nov
- 2006 03:59:37 +0100
+ esmtp (Exim 4.43) id 1GlVrk-0007tV-1O for gcvg-git@gmane.org; Sat, 18 Nov
+ 2006 20:28:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1755686AbWKSC7X (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 18 Nov 2006
- 21:59:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755737AbWKSC7X
- (ORCPT <rfc822;git-outgoing>); Sat, 18 Nov 2006 21:59:23 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:46001 "EHLO machine.or.cz") by
- vger.kernel.org with ESMTP id S1755618AbWKSC7W (ORCPT
- <rfc822;git@vger.kernel.org>); Sat, 18 Nov 2006 21:59:22 -0500
-Received: (qmail 8952 invoked by uid 2001); 19 Nov 2006 03:59:21 +0100
-To: git@vger.kernel.org
+ S1756389AbWKRT2d (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 18 Nov 2006
+ 14:28:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756395AbWKRT2d
+ (ORCPT <rfc822;git-outgoing>); Sat, 18 Nov 2006 14:28:33 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:28615 "EHLO machine.or.cz") by
+ vger.kernel.org with ESMTP id S1756389AbWKRT2c (ORCPT
+ <rfc822;git@vger.kernel.org>); Sat, 18 Nov 2006 14:28:32 -0500
+Received: (qmail 23030 invoked by uid 2001); 18 Nov 2006 20:28:30 +0100
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-git-fetch used to fetch only tags that pointed to tag objects,
-because it required a ^{} suffix from git-ls-remote's output.
+On Sat, Nov 18, 2006 at 08:27:09AM CET, Junio C Hamano wrote:
+> I think, however, if we (collectively as all the Porcelain
+> writers although I am not really one of them) are to support it,
+> they should not make distinction to the core, and it should be
+> handled with the agreed-upon convention.
 
-Not signed off.
----
+I guess I agree.
 
-For similar issue in Cogito, please see
+> Personally I established a convention to treat heads/??/* as
+> "private namespace" while using heads/* as public refs for my
+> own work (I do that for git.git as people know, and I do that
+> for my day job project as well).  I do not think it is a great
+> enough convention to be promoted as the official BCP, but it has
+> been good enough for me, especially commands like "show-branch"
+> and "tag -l" understands the shell-style filegrobs (e.g
+> "show-branch master heads/??/*" would show what's yet to be
+> polished and merged).
 
-	http://news.gmane.org/find-root.php?message_id=<20060427105251.AA4B2353DAC@atlas.denx.de>
+That's way too arbitrary for my taste, I think I needn't explain why.
+:-)
 
-Curiously enough, Junio himself posted a patch. Perhaps given his state
-as of then he forgot to fix Git as well. ;-)
 
-I did not write this patch. One fellow IRCer did, but for personal
-reasons he does not wish to disclose his realname. I think the patch is
-trivial enough that copyright problems should not be a issue.
-
- git-fetch.sh |    8 ++++++--
- 1 files changed, 6 insertions(+), 2 deletions(-)
-
-diff --git a/git-fetch.sh b/git-fetch.sh
-index 7442dd2..9074b3f 100755
---- a/git-fetch.sh
-+++ b/git-fetch.sh
-@@ -430,9 +430,13 @@ case "$no_tags$tags" in
- 	*:refs/*)
- 		# effective only when we are following remote branch
- 		# using local tracking branch.
--		taglist=$(IFS=" " &&
-+		# If we get both refs/tags/foo and refs/tags/foo^{},
-+		# use only the latter and strip the ^{} suffix.
-+		taglist=$(
-+		IFS=" "; export LC_COLLATE=C
- 		git-ls-remote $upload_pack --tags "$remote" |
--		sed -ne 's|^\([0-9a-f]*\)[ 	]\(refs/tags/.*\)^{}$|\1 \2|p' |
-+		sed -ne 's|^\([0-9a-f]*\)[ \t]\(refs/tags/.*\)$|\1 \2|p' |
-+		sort -k2 -r | sed -e 's/\^{}$//' | uniq -f1 |
- 		while read sha1 name
- 		do
- 			git-show-ref --verify --quiet -- $name && continue
+What about leading underscore?
 
 -- 
 				Petr "Pasky" Baudis
