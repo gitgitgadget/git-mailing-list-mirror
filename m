@@ -1,71 +1,62 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/2] Allow '-' in config variable names
-Date: Tue, 31 Oct 2006 10:49:54 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0610311047250.26682@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.64.0610300823250.25218@g5.osdl.org>
- <7vodrtv2wy.fsf@assigned-by-dhcp.cox.net> <7vfyd5rxvg.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_ADSP_NXDOMAIN,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+From: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+Subject: [PATCH] sparse fix: Using plain integer as NULL pointer
+Date: Sat, 18 Nov 2006 13:06:56 +0100
+Message-ID: <455EF760.6040505@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Tue, 31 Oct 2006 09:50:15 +0000 (UTC)
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Sat, 18 Nov 2006 12:06:59 +0000 (UTC)
+Cc: Git Mailing List <git@vger.kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7vfyd5rxvg.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+User-Agent: Thunderbird 1.5.0.8 (Windows/20061025)
+X-Enigmail-Version: 0.94.0.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30576>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31769>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GeqG0-0002vK-PO for gcvg-git@gmane.org; Tue, 31 Oct
- 2006 10:50:09 +0100
+ esmtp (Exim 4.43) id 1GlOyA-0002Qz-0G for gcvg-git@gmane.org; Sat, 18 Nov
+ 2006 13:06:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1423037AbWJaJt6 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 31 Oct 2006
- 04:49:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423045AbWJaJt6
- (ORCPT <rfc822;git-outgoing>); Tue, 31 Oct 2006 04:49:58 -0500
-Received: from mail.gmx.de ([213.165.64.20]:8603 "HELO mail.gmx.net") by
- vger.kernel.org with SMTP id S1423037AbWJaJt5 (ORCPT
- <rfc822;git@vger.kernel.org>); Tue, 31 Oct 2006 04:49:57 -0500
-Received: (qmail invoked by alias); 31 Oct 2006 09:49:55 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp019) with SMTP; 31 Oct 2006 10:49:55 +0100
+ S1754498AbWKRMGm (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 18 Nov 2006
+ 07:06:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754505AbWKRMGm
+ (ORCPT <rfc822;git-outgoing>); Sat, 18 Nov 2006 07:06:42 -0500
+Received: from static-ip-217-172-187-230.inaddr.intergenia.de
+ ([217.172.187.230]:13992 "EHLO neapel230.server4you.de") by vger.kernel.org
+ with ESMTP id S1754498AbWKRMGl (ORCPT <rfc822;git@vger.kernel.org>); Sat, 18
+ Nov 2006 07:06:41 -0500
+Received: from [10.0.1.3] (p508E406F.dip.t-dialin.net [80.142.64.111]) by
+ neapel230.server4you.de (Postfix) with ESMTP id 93E4C23001; Sat, 18 Nov 2006
+ 13:06:40 +0100 (CET)
 To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Hi,
+Z_NULL is defined as 0, use a proper NULL pointer in its stead.
 
-On Mon, 30 Oct 2006, Junio C Hamano wrote:
+Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+---
+ archive-zip.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-> Junio C Hamano <junkio@cox.net> writes:
-> 
-> > Linus Torvalds <torvalds@osdl.org> writes:
-> >
-> >> I need this in order to allow aliases of the same form as "ls-tree", 
-> >> "rev-parse" etc, so that I can use
-> >>
-> >> 	[alias]
-> >> 		my-cat=--paginate cat-file -p
-> >>
-> >> to add a "git my-cat" command.
-> >
-> Seconds?
-
-I personally dislike any name with "_" or "-" in it, since I am stuck with 
-different keyboard layouts and keep mistyping them. I even often find 
-myself hitting <TAB> just to complete a _single_ "-", since the position 
-of the <TAB> key is not wildly jumping around between different keyboard 
-layouts.
-
-So I can live without it.
-
-Ciao,
-Dscho
+diff --git a/archive-zip.c b/archive-zip.c
+index 28e7352..ae5572a 100644
+--- a/archive-zip.c
++++ b/archive-zip.c
+@@ -160,7 +160,7 @@ static int write_zip_entry(const unsigne
+ 	void *buffer = NULL;
+ 	void *deflated = NULL;
+ 
+-	crc = crc32(0, Z_NULL, 0);
++	crc = crc32(0, NULL, 0);
+ 
+ 	path = construct_path(base, baselen, filename, S_ISDIR(mode), &pathlen);
+ 	if (verbose)
+-- 
+1.4.4
