@@ -1,97 +1,80 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: multiple branches or  multiple repositories
-Date: Thu, 2 Nov 2006 23:11:53 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0611022301380.25218@g5.osdl.org>
-References: <eie7ae$ib6$1@sea.gmane.org>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: [WISH] Store also tag dereferences in packed-refs
+Date: Sat, 18 Nov 2006 10:15:12 +0100
+Message-ID: <e5bfff550611180115j135746a1h916e8ae029d1374d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Fri, 3 Nov 2006 07:12:04 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Sat, 18 Nov 2006 09:15:33 +0000 (UTC)
+Cc: "Git Mailing List" <git@vger.kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <eie7ae$ib6$1@sea.gmane.org>
-X-MIMEDefang-Filter: osdl$Revision: 1.155 $
-X-Scanned-By: MIMEDefang 2.36
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=Dej9ijx4N3wZHgwRsczJ9aa33N19SSqSsewPc9WmvZ40PkE/mYFBcShyk4tOv3tEuTUsvgRk8YS85AJWZFEZ9XnNqT+SZL9gIoypCwS9TMYz2DKUGExW1LnWiT7ULM19lbZGaoJ9BpDfitzUKrgbaIEhdHrp3A8pVsh9FG6clfQ=
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30790>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31766>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GftDb-0001i7-PC for gcvg-git@gmane.org; Fri, 03 Nov
- 2006 08:12:01 +0100
+ esmtp (Exim 4.43) id 1GlMII-0003Rd-Gf for gcvg-git@gmane.org; Sat, 18 Nov
+ 2006 10:15:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753159AbWKCHL4 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 3 Nov 2006
- 02:11:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753178AbWKCHL4
- (ORCPT <rfc822;git-outgoing>); Fri, 3 Nov 2006 02:11:56 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:9628 "EHLO smtp.osdl.org") by
- vger.kernel.org with ESMTP id S1753159AbWKCHL4 (ORCPT
- <rfc822;git@vger.kernel.org>); Fri, 3 Nov 2006 02:11:56 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
- smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kA37BsoZ009608
- (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Thu, 2
- Nov 2006 23:11:54 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
- shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kA37BrM3012152; Thu, 2 Nov
- 2006 23:11:54 -0800
-To: Han-Wen Nienhuys <hanwen@xs4all.nl>
+ S1756249AbWKRJPO (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 18 Nov 2006
+ 04:15:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756251AbWKRJPO
+ (ORCPT <rfc822;git-outgoing>); Sat, 18 Nov 2006 04:15:14 -0500
+Received: from wx-out-0506.google.com ([66.249.82.227]:21957 "EHLO
+ wx-out-0506.google.com") by vger.kernel.org with ESMTP id S1756249AbWKRJPN
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 18 Nov 2006 04:15:13 -0500
+Received: by wx-out-0506.google.com with SMTP id s7so1222566wxc for
+ <git@vger.kernel.org>; Sat, 18 Nov 2006 01:15:12 -0800 (PST)
+Received: by 10.70.15.15 with SMTP id 15mr4911803wxo.1163841312469; Sat, 18
+ Nov 2006 01:15:12 -0800 (PST)
+Received: by 10.35.42.4 with HTTP; Sat, 18 Nov 2006 01:15:12 -0800 (PST)
+To: "Junio C Hamano" <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
+Time needed to execute git-peek-remote in my box with cold cache currently is:
 
+- git tree 2.347 ms
+- linux tree 2.144 ms
 
-On Fri, 3 Nov 2006, Han-Wen Nienhuys wrote:
-> 
-> We're in the process of converting the LilyPond CVS repository at
-> savannah.gnu.org to GIT.  One of the questions we need to deal with, is how
-> handle modules.
-> 
-> There seem to be two approaches:
-> 
->  - for each module, create a separate git repository.  Inside the repository,
->    each subproject has its own branching
-> 
->  - put each module as a separate branch in a shared repository.
-> 
-> I think the first option is the most natural one, but are there any issues,
-> besides namespace pollution to the second option?
+And refs are *already* packed in both repos.
 
-There are no real issues either way, and perhaps more importantly, it's 
-not even something you have to decide on day one.
+Looking at packed-refs file, it contains something like:
 
-You can easily do it one way or the other, and either
- - switch around as needed
- - or even _mix_ the two approaches where it makes sense.
+d9b0f913ce0508fcc83e642e0241f373428368e5 refs/tags/v1.4.3
+4314f5982d2aac08001a977fc0b1b611e858e025 refs/tags/v1.4.3-rc1
 
-For example, it may be entirely sensible to have the common "distribution 
-points" use a single shared repository that contains all modules as 
-separate branches within the same repository.
+while I would need something like git-peek-remote output,
 
-But even though such a central distribution point repository is set up 
-that way, individual developers may well decide that they are happier 
-having separate repositories for different modules. The two approaches are 
-not mutually incompatible, and you can fetch data and push it back out 
-between both different kinds of repositories.
+d9b0f913ce0508fcc83e642e0241f373428368e5        refs/tags/v1.4.3
+e0b0830726286287744cc9e1a629a534bbe75452        refs/tags/v1.4.3^{}
+4314f5982d2aac08001a977fc0b1b611e858e025        refs/tags/v1.4.3-rc1
+1965efb1599f59b8e3380335d1fa395e2008a30b        refs/tags/v1.4.3-rc1^{}
 
-The namespace pollution - especially of tags - is indeed likely to be the 
-worst issue. If you expect to have many independent modules in the same 
-repository, you obviously shouldn't use tag-names like the Linux kernel 
-uses (ie "v2.6.18"), since those would not be unambiguous in such a shared 
-repo. 
+Because the sha value a tag points to is needed to match against
+git-rev-list output so to identify tagged revisions.
 
-(The same is true of branches too, but perhaps less so if only because 
-people are _already_ using different branch names between different 
-repositories, and we have good support for translating a local branch 
-name "X" into a remote branch name "Y" when transferring data between the 
-two. In contrast, tagnames are kind of expected to be "shared")
+Would be possible to store in packed-refs also the dereferenced tag
+info, so that cold opening of a repository would be much faster?
 
-But if you're ok with always just naming tags "modulename/release-1.2.3" 
-or similar, you shouldn't really have any issues either way. And most 
-importantly, if you do decide to go one way, and then later figure out 
-that it would have been easier the other way, you can just switch between 
-the two models, exactly because mixing them isn't really a problem.
+Just to give an idea, with warmed up cache, refs reading times are:
 
+- git tree 43 ms
+- linux tree 28 ms
+
+Thanks
+Marco
+
+P.S: In case it's not clear I don't suggest to read directly the
+packed-refs file with the added info, but always to use
