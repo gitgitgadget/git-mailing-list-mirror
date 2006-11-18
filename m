@@ -1,91 +1,66 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Improve git-prune -n output
-Date: Fri, 27 Oct 2006 02:09:04 -0700
-Message-ID: <7vslhagm6n.fsf@assigned-by-dhcp.cox.net>
-References: <200610261138.24761.andyparkins@gmail.com>
-	<4540F16F.4060604@shadowen.org>
-	<200610270920.06064.andyparkins@gmail.com>
+Subject: Re: [PATCH] Do not ignore hidden refs
+Date: Sat, 18 Nov 2006 10:35:47 -0800
+Message-ID: <7vr6w0eh6k.fsf@assigned-by-dhcp.cox.net>
+References: <20061118041137.6064.75827.stgit@machine.or.cz>
+	<Pine.LNX.4.64.0611180933360.3692@woody.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 27 Oct 2006 09:09:33 +0000 (UTC)
-Cc: git@vger.kernel.org
+NNTP-Posting-Date: Sat, 18 Nov 2006 18:36:00 +0000 (UTC)
+Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <200610270920.06064.andyparkins@gmail.com> (Andy Parkins's
-	message of "Fri, 27 Oct 2006 09:19:51 +0100")
+In-Reply-To: <Pine.LNX.4.64.0611180933360.3692@woody.osdl.org> (Linus
+	Torvalds's message of "Sat, 18 Nov 2006 09:35:18 -0800 (PST)")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30314>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31785>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GdNiK-0003J8-KP for gcvg-git@gmane.org; Fri, 27 Oct
- 2006 11:09:21 +0200
+ esmtp (Exim 4.43) id 1GlV2h-0005ln-J2 for gcvg-git@gmane.org; Sat, 18 Nov
+ 2006 19:35:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1946254AbWJ0JJH (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 27 Oct 2006
- 05:09:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946255AbWJ0JJG
- (ORCPT <rfc822;git-outgoing>); Fri, 27 Oct 2006 05:09:06 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:43926 "EHLO
- fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP id S1946254AbWJ0JJF
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 27 Oct 2006 05:09:05 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao06.cox.net
- (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
- <20061027090905.ILNP6235.fed1rmmtao06.cox.net@fed1rmimpo02.cox.net>; Fri, 27
- Oct 2006 05:09:05 -0400
+ S1755309AbWKRSfu (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 18 Nov 2006
+ 13:35:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755310AbWKRSfu
+ (ORCPT <rfc822;git-outgoing>); Sat, 18 Nov 2006 13:35:50 -0500
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:17574 "EHLO
+ fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP id S1755309AbWKRSft
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 18 Nov 2006 13:35:49 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao04.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061118183548.RJDN7494.fed1rmmtao04.cox.net@fed1rmimpo01.cox.net>; Sat, 18
+ Nov 2006 13:35:48 -0500
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id fM991V0011kojtg0000000 Fri, 27 Oct 2006
- 05:09:09 -0400
-To: Andy Parkins <andyparkins@gmail.com>
+ fed1rmimpo01.cox.net with bizsmtp id oJbL1V00D1kojtg0000000; Sat, 18 Nov 2006
+ 13:35:20 -0500
+To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 
-Andy Parkins <andyparkins@gmail.com> writes:
+Linus Torvalds <torvalds@osdl.org> writes:
 
-> The only problem with that is that the type string is of
-> variable width, while the hash is fixed; hence <hash> <type>
-> is more visually appealing than <type> <hash>.
+> On Sat, 18 Nov 2006, Petr Baudis wrote:
+>>
+>> Some of the ref manipulation tools (git-for-each-ref and git-show-ref in
+>> particular) would not handle hidden (~ /^\./) refs. This may be an
+>> acceptable or possibly even desirable behaviour for the ref walkers and
+>> repackers, but git-show-ref hiddenrefname must work.
 >
-> Does it really matter anyway?
-
-I would rather question if the alignment really matters.  You
-could always printf("%10s %s\n", type, hex) if you really cared,
-though.
-
-> ... Some sort of processing would have to happen 
-> before using git-prune output as git-cat-file parameters...
+> No.
 >
-> git-prune -n |
-> while read hash type
-> do
->  git-cat-file $type $hash
-> done
+> Refnames MUST NOT start with a ".". 
+>
+> It's not even about the traditional unix "hidden file" thing. It's simply 
+> a syntactic issue. A ref cannot start with a ".", because we use things 
+> like ".." and "..." to separate them.
 
-which is probably not the way in which the command output is
-going to be used.  I'd expect a sequence more like:
-
-	$ git prune -n
-	blob deadbeefdeadbeef...
-        commit deadbeefdeadbeef...
-        ...
-
-The user would not just pipe all of the output to cat-file, but
-would pick ones that are meaningful to be cat'ed (commit and
-perhaps blob but definitely not tree).  And the cue to pick
-which ones would likely to be the object type not hash, so in
-that sense type-then-hash might be easier to read.
-
-Having said that, a potentially useful application would be "a
-backup before prune" which can be done more easily if you use
-hash-then-type: "git prune -n | git pack-objects backup"
-
-So while I do not think it matters that much, I slightly prefer
-hash-then-type better than type-then-hash.
-
-
-
-
+We do not forbid a refname that ends with a ".", but I think it
+was a mistake.  We _can_ disambiguate the ones that begin with a
+"." by saying "whatever..heads/.I-begin-with-dot", but not the
+ones that end with "heads/I-end-with-dot...end-of-range".
