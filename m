@@ -1,74 +1,75 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: [RFC] Submodules in GIT
-Date: Sun, 3 Dec 2006 21:46:44 +0100
-Message-ID: <20061203204644.GZ18810@admingilde.org>
-References: <20061130170625.GH18810@admingilde.org> <4570AF8F.1000801@stephan-feder.de> <Pine.LNX.4.64.0612011505190.3695@woody.osdl.org> <200612020036.08826.Josef.Weidendorfer@gmx.de> <Pine.LNX.4.64.0612011540010.3695@woody.osdl.org> <20061202201826.GR18810@admingilde.org> <Pine.LNX.4.64.0612021242080.3476@woody.osdl.org>
+From: "Michael K. Edwards" <medwards.linux@gmail.com>
+Subject: Re: Cleaning up git user-interface warts
+Date: Fri, 17 Nov 2006 17:24:45 -0800
+Message-ID: <f2b55d220611171724u616ac6ft300abd066682ef22@mail.gmail.com>
+References: <87k61yt1x2.wl%cworth@cworth.org>
+	 <Pine.LNX.4.64.0611150950170.3349@woody.osdl.org>
+	 <455BBCE9.4050503@xs4all.nl>
+	 <Pine.LNX.4.64.0611151908130.3349@woody.osdl.org>
+	 <Pine.LNX.4.63.0611162353250.13772@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <Pine.LNX.4.64.0611161508530.3349@woody.osdl.org>
+	 <455CFCBD.8040901@xs4all.nl>
+	 <f2b55d220611161734m49136e6fneda5b002eb67618b@mail.gmail.com>
+	 <f2b55d220611162242s48dc42d6g4cbfd9173e712ff8@mail.gmail.com>
+	 <7v64dev88t.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="muH0jftA0RW8bb09"
-NNTP-Posting-Date: Sun, 3 Dec 2006 20:47:06 +0000 (UTC)
-Cc: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>,
-	sf <sf-gmane@stephan-feder.de>, git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Sat, 18 Nov 2006 01:25:07 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=hiurx0I2xGVPC9PgMjaMBxyREF/jhksqwathJ9R2M+aSzi2U6QjGMxzjo4REg4Gc53xS8Zb85QsGgZGQyJ5Ug5usYce0JavvWErk306Oa0QrU/3Gl5gy5nH1j7AMKoemdjOiBWkLEXc3869DujuIV6MaLrOB6ExeygNGSClXhow=
+In-Reply-To: <7v64dev88t.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0612021242080.3476@woody.osdl.org>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33142>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GqyEn-0005He-ET for gcvg-git@gmane.org; Sun, 03 Dec
- 2006 21:47:01 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31747>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GlEww-0003cG-8D for gcvg-git@gmane.org; Sat, 18 Nov
+ 2006 02:24:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1760087AbWLCUqr (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 3 Dec 2006
- 15:46:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757961AbWLCUqq
- (ORCPT <rfc822;git-outgoing>); Sun, 3 Dec 2006 15:46:46 -0500
-Received: from agent.admingilde.org ([213.95.21.5]:31707 "EHLO
- mail.admingilde.org") by vger.kernel.org with ESMTP id S1760087AbWLCUqq
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 3 Dec 2006 15:46:46 -0500
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1) id
- 1GqyEW-0007rN-L5; Sun, 03 Dec 2006 21:46:44 +0100
-To: Linus Torvalds <torvalds@osdl.org>
+ S1756118AbWKRBYr (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 17 Nov 2006
+ 20:24:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756119AbWKRBYr
+ (ORCPT <rfc822;git-outgoing>); Fri, 17 Nov 2006 20:24:47 -0500
+Received: from wx-out-0506.google.com ([66.249.82.229]:18840 "EHLO
+ wx-out-0506.google.com") by vger.kernel.org with ESMTP id S1756118AbWKRBYq
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 17 Nov 2006 20:24:46 -0500
+Received: by wx-out-0506.google.com with SMTP id s7so1141536wxc for
+ <git@vger.kernel.org>; Fri, 17 Nov 2006 17:24:45 -0800 (PST)
+Received: by 10.90.50.1 with SMTP id x1mr2373579agx.1163813085507; Fri, 17
+ Nov 2006 17:24:45 -0800 (PST)
+Received: by 10.90.25.4 with HTTP; Fri, 17 Nov 2006 17:24:45 -0800 (PST)
+To: "Junio C Hamano" <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
+On 11/16/06, Junio C Hamano <junkio@cox.net> wrote:
+> "Michael K. Edwards" <medwards.linux@gmail.com> writes:
+>
+> > Presumably "git branch -D" should inspect everything under
+> > .git/remotes to see whether one or more Pull: lines need to be
+> > deleted along with the branch.
+>
+> I am not sure what you mean.  .git/remotes files do not describe
+> any relationship between local branches (and that is where one
+> of the problem raised in recent thread -- pull does not notice
+> on which branch you are on and change its behaviour depending on
+> it), so I do not think there is anything gained for "git branch
+> -D" by going through them.
 
---muH0jftA0RW8bb09
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+.git/remotes/foo does contain Pull: lines which indicate the local
+branch onto which to _fetch_ remote changes.  It's the subsequent
+_merge_ that doesn't notice which branch you have checked out.
 
-hoi :)
-
-On Sat, Dec 02, 2006 at 12:44:20PM -0800, Linus Torvalds wrote:
-> And watch the memory usage.
-
-hmm, really sad, it was such a nice concept until now...
-You are right, I have to think more about scalability. O(N) anywhere is
-really bad for submodules.  They really should be able to bundle the kernel,
-mozilla, qt and whatnot into one project and that will get huge.
-
---=20
-Martin Waitz
-
---muH0jftA0RW8bb09
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFFcze0j/Eaxd/oD7IRApyxAJ9aaaovXI2kWWu4SCPbaKQ++Z0f5gCcCKeu
-gx34fc8D6A3lZDyTzWUAbOA=
-=n2s2
------END PGP SIGNATURE-----
-
+Cheers,
