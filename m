@@ -2,75 +2,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] Document git-runstatus
-Date: Mon, 20 Nov 2006 09:11:48 +0100
-Organization: At home
-Message-ID: <ejrntd$kj$1@sea.gmane.org>
-References: <455F1595.9020009@lsrfire.ath.cx> <20061118092644.a9f15669.seanlkml@sympatico.ca> <20061118143511.GM7201@pasky.or.cz> <455F210B.8000107@lsrfire.ath.cx> <BAYC1-PASMTP06C814AB518D7544770C01AEEF0@CEZ.ICE> <455F4F06.3090902@gmail.com> <BAYC1-PASMTP06DE3E6CFF9E49C2BF16C7AEEF0@CEZ.ICE> <455F60EA.2080009@gmail.com> <20061118150431.81076072.seanlkml@sympatico.ca> <20061119181307.GY7201@pasky.or.cz> <20061120071529.GF3315@always.joy.eth.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Do not ignore hidden refs
+Date: Sat, 18 Nov 2006 12:05:12 -0800
+Message-ID: <7vy7q8bjwn.fsf@assigned-by-dhcp.cox.net>
+References: <20061118041137.6064.75827.stgit@machine.or.cz>
+	<7v8xi9fjw9.fsf@assigned-by-dhcp.cox.net>
+	<20061118045323.GK7201@pasky.or.cz>
+	<7vzmapdxki.fsf@assigned-by-dhcp.cox.net>
+	<20061118192830.GP7201@pasky.or.cz>
+	<7vejs0cz5s.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-NNTP-Posting-Date: Mon, 20 Nov 2006 08:10:51 +0000 (UTC)
+NNTP-Posting-Date: Sat, 18 Nov 2006 20:05:37 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 26
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+In-Reply-To: <7vejs0cz5s.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Sat, 18 Nov 2006 11:50:23 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31885>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31801>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gm4El-0007D9-A0 for gcvg-git@gmane.org; Mon, 20 Nov
- 2006 09:10:43 +0100
+ esmtp (Exim 4.43) id 1GlWRE-0007a0-Lb for gcvg-git@gmane.org; Sat, 18 Nov
+ 2006 21:05:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S933829AbWKTIKk (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 20 Nov 2006
- 03:10:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933994AbWKTIKk
- (ORCPT <rfc822;git-outgoing>); Mon, 20 Nov 2006 03:10:40 -0500
-Received: from main.gmane.org ([80.91.229.2]:39058 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S933829AbWKTIKj (ORCPT
- <rfc822;git@vger.kernel.org>); Mon, 20 Nov 2006 03:10:39 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1Gm4EZ-0007AF-6W for git@vger.kernel.org; Mon, 20 Nov 2006 09:10:31 +0100
-Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Mon, 20 Nov 2006 09:10:31 +0100
-Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Mon, 20 Nov 2006
- 09:10:31 +0100
-To: git@vger.kernel.org
+ S1755241AbWKRUFP (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 18 Nov 2006
+ 15:05:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755244AbWKRUFO
+ (ORCPT <rfc822;git-outgoing>); Sat, 18 Nov 2006 15:05:14 -0500
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:58072 "EHLO
+ fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP id S1755241AbWKRUFN
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 18 Nov 2006 15:05:13 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao04.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061118200513.TEXI7494.fed1rmmtao04.cox.net@fed1rmimpo01.cox.net>; Sat, 18
+ Nov 2006 15:05:13 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id oL4k1V00M1kojtg0000000; Sat, 18 Nov 2006
+ 15:04:45 -0500
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Joshua N Pritikin wrote:
+Junio C Hamano <junkio@cox.net> writes:
 
-> On Sun, Nov 19, 2006 at 07:13:08PM +0100, Petr Baudis wrote:
->> BTW, I've finally found a fine example of situation parallel to Git:
->> TeX!  There are the core TeX commands (plumbing) and plain TeX (basic
->> porcelain) on top of that as well as a bunch of other macro sets (other
->> porcelains). Now I need to dig out The TeXbook from wherever I've put it
->> to see how did Knuth deal with it, documentation-wise.
-> 
-> Gahh! Please don't use TeX as an example. As far as I know, TeX doesn't 
-> offer lexical scope. 
+>> What about leading underscore?
+>
+> I would rather prefer to do refs/{heads,private}/ and allow
+> checkout to treat either of them as branches.  We are talking
+> about allowing checkout to go to a non-branch by storing a raw
+> commit object name in HEAD instead of leaving it as a symref, so
+> we know we are going to touch that area already.
 
-It offers grouping.
+Oops.  Consider this rescinded.  I myself already talked about
+"not necessarily just public vs private".  Silly me.
 
-> Hence, action-at-a-distance is commonplace which  
-> makes program execution extremely difficult for mere mortals to 
-> predict. I am constantly amazed at popularity of TeX, in spite of its 
-> grave deficiencies. Perhaps there isn't a good alternative yet.
+I think this is related to the common gripe of "why can't Junio
+mark pu to be rewinded in his public repository".  We should be
+able to leave the branch grouping to users.
 
-TeX (even plain TeX) is like assembler of programming languages. One does
-usually use one of the TeX macros sets, like LaTeX, ConTeXt or texinfo.
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Not just public vs private, but I can see an organization that
+uses something like this:
 
+    heads/1.5/{maint,master,next,pu} are to maintain and advance 1.5 series
+    heads/1.5/topics/{foo,bar} are topics applicable to 1.5
+    heads/2.0/{maint,master,next,pu} are to maintain and advance 2.0 series
+    heads/2.0/topics/{foo,bar} are topics applicable only to 2.0
+    heads/topics/{frotz,nitfol} are topics applicable to both
+
+and wanting to view all the topics, only things related to 1.5,
+etc.  So Porcelains _can_ enforce their own policies to arrange
+things differently but we should also be able to let the users
+(and project branch naming policy) to do what we've been talking
+about by saying:
+
+	use heads/private/ for your own stuff.  And have
+	configuration that says "heads/private/" are private
+	branches that are not subject to default
+	pushing/pulling.
+
+The real instruction from the project would say what the syntax
+for telling that to git but I think you got the idea...
