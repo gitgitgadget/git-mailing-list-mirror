@@ -1,88 +1,89 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Restore a single file in the index back to HEAD
-Date: Wed, 01 Nov 2006 12:22:01 +0100
-Organization: At home
-Message-ID: <eia008$aup$1@sea.gmane.org>
-References: <200610261641.11239.andyparkins@gmail.com> <20061027073834.GC29057@spearce.org> <4541BE8E.5050605@op5.se> <20061027081545.GF29057@spearce.org> <81b0412b0610270245w6c29b3c3va7967991f53db298@mail.gmail.com> <4541D670.6000900@op5.se> <7vac3igjpd.fsf@assigned-by-dhcp.cox.net> <fcaeb9bf0610312358g1176e4d8q8962b08c2e8ff2c6@mail.gmail.com> <7vpsc78ua3.fsf@assigned-by-dhcp.cox.net> <7vvelz7eg2.fsf@assigned-by-dhcp.cox.net> <fcaeb9bf0611010109t6281a120qeed21e0d3b29ad0c@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-NNTP-Posting-Date: Wed, 1 Nov 2006 11:22:26 +0000 (UTC)
+From: Petr Baudis <pasky@suse.cz>
+Subject: [PATCH] Documentation: Define symref and update HEAD description
+Date: Sat, 18 Nov 2006 20:44:08 +0100
+Message-ID: <20061118194408.27106.65771.stgit@machine.or.cz>
+Content-Type: text/plain; charset=utf-8; format=fixed
+Content-Transfer-Encoding: 8bit
+NNTP-Posting-Date: Sat, 18 Nov 2006 19:44:21 +0000 (UTC)
+Cc: <git@vger.kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 38
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-18-116.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+User-Agent: StGIT/0.11
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30632>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31796>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GfEAp-0004Zf-Hg for gcvg-git@gmane.org; Wed, 01 Nov
- 2006 12:22:23 +0100
+ esmtp (Exim 4.43) id 1GlW6o-0002c7-83 for gcvg-git@gmane.org; Sat, 18 Nov
+ 2006 20:44:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1946799AbWKALWT (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 1 Nov 2006
- 06:22:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946794AbWKALWT
- (ORCPT <rfc822;git-outgoing>); Wed, 1 Nov 2006 06:22:19 -0500
-Received: from main.gmane.org ([80.91.229.2]:23726 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S1946799AbWKALWS (ORCPT
- <rfc822;git@vger.kernel.org>); Wed, 1 Nov 2006 06:22:18 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1GfEAZ-0004Xb-Sh for git@vger.kernel.org; Wed, 01 Nov 2006 12:22:07 +0100
-Received: from host-81-190-18-116.torun.mm.pl ([81.190.18.116]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Wed, 01 Nov 2006 12:22:07 +0100
-Received: from jnareb by host-81-190-18-116.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Wed, 01 Nov 2006
- 12:22:07 +0100
-To: git@vger.kernel.org
+ S1756406AbWKRToL (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 18 Nov 2006
+ 14:44:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756407AbWKRToL
+ (ORCPT <rfc822;git-outgoing>); Sat, 18 Nov 2006 14:44:11 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:50867 "EHLO machine.or.cz") by
+ vger.kernel.org with ESMTP id S1756405AbWKRToK (ORCPT
+ <rfc822;git@vger.kernel.org>); Sat, 18 Nov 2006 14:44:10 -0500
+Received: (qmail 27116 invoked from network); 18 Nov 2006 20:44:08 +0100
+Received: from localhost (HELO machine.or.cz) (xpasky@127.0.0.1) by localhost
+ with SMTP; 18 Nov 2006 20:44:08 +0100
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Nguyen Thai Ngoc Duy wrote:
+HEAD was still described as a symlink instead of a symref.
 
-> On 11/1/06, Junio C Hamano <junkio@cox.net> wrote:
+Signed-off-by: Petr Baudis <pasky@suse.cz>
+---
 
->> I think at the UI level, the most appropriate place would be
->> "git reset".  Checkout is a Porcelainish that is primarily about
->> working tree and it updates the index as a side effect (from the
->> UI point of view); you can update the working tree without
->> modifying index or you can update both index and the working
->> tree, but updating only index and not working tree does not
->> belong there.
-> 
-> Then perhaps git-reset should do "co HEAD path" too if --index is not
-specified?
-> To sum up:
->  - git reset HEAD path -> git checkout HEAD path
->  - git reset --index HEAD path -> git-ls-files HEAD path|git
-> update-index --index-info
->  - git reset HEAD (without path) -> the current behaviour
-> 
-> Because  <commit-ish>  may be missing, there is some ambiguation here.
+ Documentation/glossary.txt          |    7 +++++++
+ Documentation/repository-layout.txt |   14 +++++++++-----
+ 2 files changed, 16 insertions(+), 5 deletions(-)
 
-Currently "git reset --soft <commit-ish>" updates current head only, 
-"git reset <commit-ish>" is "git reset --mixed <commit-ish>" and updates
-head and index, and "git reset --hard <commit-ish>" updates head, index
-and working tree.
-
-The same should be the case for "git reset [--soft|--mixed|--hard]
-[<commit-ish>] [--] [paths...]", with the exception that it wouldn't
-never update current head. (So --soft with pathspec wouldn't make sense).
-
-On the other hand git-reset is mainly about resetting current head,
-so perhaps git-reset isn't the best place to update fragments of index
-from HEAD branch.
--- 
-Jakub Narebski
-ShadeHawk on #git
-Poland
+diff --git a/Documentation/glossary.txt b/Documentation/glossary.txt
+index 7e560b0..894883d 100644
+--- a/Documentation/glossary.txt
++++ b/Documentation/glossary.txt
+@@ -282,6 +282,13 @@ SCM::
+ SHA1::
+ 	Synonym for object name.
+ 
++symref::
++	Symbolic reference: instead of containing the SHA1 id itself, it
++	is of the format 'ref: refs/some/thing' and when referenced, it
++	recursively dereferences to this reference. 'HEAD' is a prime
++	example of a symref. Symbolic references are manipulated with
++	the gitlink:git-symbolic-ref[1] command.
++
+ topic branch::
+ 	A regular git branch that is used by a developer to
+ 	identify a conceptual line of development.  Since branches
+diff --git a/Documentation/repository-layout.txt b/Documentation/repository-layout.txt
+index 275d18b..fd9f406 100644
+--- a/Documentation/repository-layout.txt
++++ b/Documentation/repository-layout.txt
+@@ -70,12 +70,16 @@ refs/tags/`name`::
+ 	object, or a tag object that points at a commit object).
+ 
+ HEAD::
+-	A symlink of the form `refs/heads/'name'` to point at
+-	the current branch, if exists.  It does not mean much if
+-	the repository is not associated with any working tree
++	A symref (see glossary) to the `refs/heads/` namespace
++	describing the currently active branch.  It does not mean
++	much if the repository is not associated with any working tree
+ 	(i.e. a 'bare' repository), but a valid git repository
+-	*must* have such a symlink here.  It is legal if the
+-	named branch 'name' does not (yet) exist.
++	*must* have the HEAD file; some porcelains may use it to
++	guess the designated "default" branch of the repository
++	(usually 'master').  It is legal if the named branch
++	'name' does not (yet) exist.  In some legacy setups, it is
++	a symbolic link instead of a symref, but this has been
++	deprecated long ago.
+ 
+ branches::
