@@ -4,57 +4,82 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [PATCH] Print progress message to stderr, not stdout
-Date: Tue, 5 Dec 2006 10:06:08 +0100
-Message-ID: <20061205090608.GA25002@diana.vm.bytemark.co.uk>
-References: <20061111121625.8988.45195.stgit@localhost> <e5bfff550612020520w3ad48a09xfdde63b9050a75cf@mail.gmail.com> <b0943d9e0612040117y6554b891yaf6eb59d0d52ebf0@mail.gmail.com> <20061204153705.GA8644@diana.vm.bytemark.co.uk> <e5bfff550612041034g727a1bebg464f7c523c0fac7f@mail.gmail.com> <b0943d9e0612041413p4f303176x3d0fa95afd1c4a1@mail.gmail.com> <Pine.LNX.4.63.0612050841160.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Jim Meyering <jim@meyering.net>
+Subject: can I remove or move a tag in a remote repository?
+Date: Sun, 19 Nov 2006 19:42:53 +0100
+Message-ID: <87wt5rffbm.fsf@rho.meyering.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Tue, 5 Dec 2006 09:06:22 +0000 (UTC)
-Cc: Catalin Marinas <catalin.marinas@gmail.com>,
-	Marco Costalba <mcostalba@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Sun, 19 Nov 2006 18:45:17 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0612050841160.28348@wbgn013.biozentrum.uni-wuerzburg.de>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+Original-Lines: 46
+X-Virus-Scanned: ClamAV 0.88.6/2203/Sat Nov 18 04:54:38 2006 on zeus1.kernel.org
+X-Virus-Status: Clean
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33323>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GrWFl-0006ty-Dq for gcvg-git@gmane.org; Tue, 05 Dec
- 2006 10:06:17 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31851>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Glre8-0003qn-9y for gcvg-git@gmane.org; Sun, 19 Nov
+ 2006 19:44:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S967481AbWLEJGO convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Tue, 5 Dec 2006 04:06:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967575AbWLEJGO
- (ORCPT <rfc822;git-outgoing>); Tue, 5 Dec 2006 04:06:14 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2922 "EHLO
- diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S967481AbWLEJGM (ORCPT <rfc822;git@vger.kernel.org>); Tue, 5 Dec
- 2006 04:06:12 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1
- (Debian)) id 1GrWFc-0006Ww-00; Tue, 05 Dec 2006 09:06:08 +0000
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+ S932823AbWKSSn6 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 19 Nov 2006
+ 13:43:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932825AbWKSSn6
+ (ORCPT <rfc822;git-outgoing>); Sun, 19 Nov 2006 13:43:58 -0500
+Received: from zeus1.kernel.org ([204.152.191.4]:32469 "EHLO
+ zeus1.kernel.org") by vger.kernel.org with ESMTP id S932823AbWKSSn5 (ORCPT
+ <rfc822;git@vger.kernel.org>); Sun, 19 Nov 2006 13:43:57 -0500
+Received: from mx.meyering.net (mx.meyering.net [82.230.74.64]) by
+ zeus1.kernel.org (8.13.8/8.13.1) with ESMTP id kAJIhO5J024183 for
+ <git@vger.kernel.org>; Sun, 19 Nov 2006 18:43:37 GMT
+Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000) id
+ 49BE94EF5F; Sun, 19 Nov 2006 19:42:53 +0100 (CET)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On 2006-12-05 08:41:57 +0100, Johannes Schindelin wrote:
+Hello,
 
-> On Mon, 4 Dec 2006, Catalin Marinas wrote:
->
-> > I'll first move the message back to stdout.
->
-> In other parts of git, the progress message is only printed if
-> output goes to a tty. Why not do the same?
+Periodically, I sync the coreutils git repository to an otherwise
+read-only CVS repo, and use a cheap git tag named "cvs-head" to keep
+track of the point to which the latest sync operation has run.
+Then, after every sync-git-to-cvs operation, I run this:
 
-That sounds like a good idea for two reasons:
+  git-tag -f -m "most recent version that has been sync'd to cvs" cvs-head $sha1
 
-  1. It will address all concerns raised in this thread (I think).
+Also periodically, I push my git working dir/repo to a public place,
 
-  2. It will remove an unnecessary difference between git and stgit.
+  http://git.sv.gnu.org/gitweb/?p=coreutils.git;a=summary
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
+-----------------
+Just today, I have finally pushed tags to that public repo, including the
+"cvs-head" one (before there were no tags in the remote repo).  But now,
+I've just done a local sync-to-cvs operation, which has resulted in
+moving that tag to point to a different point in the git repo.
+
+Here's the problem:
+When I try to push the new tags, git-push fails:
+
+  $ git-push -f --tags ssh+git://git.sv.gnu.org/srv/git/coreutils master:refs/heads/master
+  updating 'refs/tags/cvs-head'
+    from 2fd3fd29a8b40be695bc2327c8cd3bd33e521100
+    to   db18f53ffb221e9957124d8af81c11a7e350ac3b
+  ...
+  Total 1, written 1 (delta 0), reused 0 (delta 0)
+  Unpacking 1 objects
+  error: denying non-fast forward; you should pull first
+
+I get the same error also when using --force.
+
+Perhaps I shouldn't push the cvs-head tag at all.
+A few questions:
+  - is there a way to say "push all tags matching /COREUTILS-*/"
+      or to say "push all tags, except the ones on this list"?
+  - is there a way to remove the cvs-head tag from the remote directory?
+      Note: I don't have shell access there.  I can request that someone
+      with shell access do it, but shouldn't have to resort to that.
+  - is there some way to make "git push" do what I want, and update the
+      offending tag in the remote repo?
+
+Thanks for listening,
+
