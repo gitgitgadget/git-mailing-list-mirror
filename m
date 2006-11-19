@@ -1,85 +1,67 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] merge: allow merging into a yet-to-be-born branch.
-Date: Tue, 21 Nov 2006 21:24:05 -0800
-Message-ID: <7vlkm4vytm.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [WISH] Store also tag dereferences in packed-refs
+Date: Sun, 19 Nov 2006 12:44:11 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0611191242000.3692@woody.osdl.org>
+References: <e5bfff550611180115j135746a1h916e8ae029d1374d@mail.gmail.com> 
+ <7vmz6oeh2k.fsf@assigned-by-dhcp.cox.net>  <20061118184345.GO7201@pasky.or.cz>
+  <e5bfff550611181047w6712774fkccc697d312b87c7e@mail.gmail.com> 
+ <7vac2oefuz.fsf@assigned-by-dhcp.cox.net>  <e5bfff550611181628o41e11652ycd17ddad5dd21225@mail.gmail.com>
+  <Pine.LNX.4.64.0611181706250.3692@woody.osdl.org> 
+ <e5bfff550611190140n3277ee26v95feba26dd3348fa@mail.gmail.com> 
+ <Pine.LNX.4.64.0611190945500.3692@woody.osdl.org> 
+ <e5bfff550611191107o63d89d8bp5ff4080803a0d784@mail.gmail.com>
+ <e5bfff550611191209s63982818vd3999b543e68e8df@mail.gmail.com>
+ <Pine.LNX.4.64.0611191219350.3692@woody.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 22 Nov 2006 05:24:16 +0000 (UTC)
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Sun, 19 Nov 2006 20:44:30 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+In-Reply-To: <Pine.LNX.4.64.0611191219350.3692@woody.osdl.org>
+X-MIMEDefang-Filter: osdl$Revision: 1.159 $
+X-Scanned-By: MIMEDefang 2.36
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32066>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31862>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gmkaj-0003n7-IO for gcvg-git@gmane.org; Wed, 22 Nov
- 2006 06:24:13 +0100
+ esmtp (Exim 4.43) id 1GltWY-0002SY-G1 for gcvg-git@gmane.org; Sun, 19 Nov
+ 2006 21:44:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1161764AbWKVFYJ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 22 Nov 2006
- 00:24:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756795AbWKVFYJ
- (ORCPT <rfc822;git-outgoing>); Wed, 22 Nov 2006 00:24:09 -0500
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:64190 "EHLO
- fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP id S1756775AbWKVFYI
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 22 Nov 2006 00:24:08 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao10.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061122052405.DRPC5575.fed1rmmtao10.cox.net@fed1rmimpo01.cox.net>; Wed, 22
- Nov 2006 00:24:05 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id phPc1V00B1kojtg0000000; Wed, 22 Nov 2006
- 00:23:36 -0500
-To: git@vger.kernel.org
+ S933230AbWKSUoT (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 19 Nov 2006
+ 15:44:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933247AbWKSUoS
+ (ORCPT <rfc822;git-outgoing>); Sun, 19 Nov 2006 15:44:18 -0500
+Received: from smtp.osdl.org ([65.172.181.25]:30936 "EHLO smtp.osdl.org") by
+ vger.kernel.org with ESMTP id S933230AbWKSUoR (ORCPT
+ <rfc822;git@vger.kernel.org>); Sun, 19 Nov 2006 15:44:17 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
+ smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kAJKiCix007606
+ (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Sun, 19
+ Nov 2006 12:44:13 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
+ shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kAJKiBIf017397; Sun, 19 Nov
+ 2006 12:44:12 -0800
+To: Marco Costalba <mcostalba@gmail.com>
 Sender: git-owner@vger.kernel.org
 
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
 
- * This is not useful in a freshly initialized repository, since
-   it would not have any commits that you can use with the
-   command.  But you can push into the repository and then later
-   use the updated branch to merge into your 'master' branch
-   that still does not exist yet.
+On Sun, 19 Nov 2006, Linus Torvalds wrote:
+> 
+> So the optimizations that _can_ be done are:
 
- git-merge.sh |   18 ++++++++++++++++++
- 1 files changed, 18 insertions(+), 0 deletions(-)
+Of course, doing a "git repack -a -d && git prune" is always the #1 
+optimization. It will still look up the objects, but it will be a lot 
+faster about it, and avoid a lot of the really bad IO patterns.
 
-diff --git a/git-merge.sh b/git-merge.sh
-index 25deb1e..dd4e83d 100755
---- a/git-merge.sh
-+++ b/git-merge.sh
-@@ -159,6 +159,24 @@ then
- 	shift
- 	head_arg="$1"
- 	shift
-+elif ! git-rev-parse --verify HEAD 2>/dev/null
-+then
-+	# If the merged head is a valid one there is no reason to
-+	# forbid "git merge" into a branch yet to be born.  We do
-+	# the same for "git pull".
-+	if test 1 -ne $#
-+	then
-+		echo >&2 "Can merge only exactly one commit into empty head"
-+		exit 1
-+	fi
-+
-+	rh=$(git rev-parse --verify "$1^0") ||
-+		die "$1 - not something we can merge"
-+
-+	git-update-ref -m "initial pull" HEAD "$rh" "" &&
-+	git-read-tree --reset -u HEAD
-+	exit
-+
- else
- 	# We are invoked directly as the first-class UI.
- 	head_arg=HEAD
--- 
-1.4.4.g26805
+If you don't want to repack, you could try just doing a "git clone" and 
+then doing the "git pack-refs --prune" in the clone too. And compare 
+cold-cache times between the two "identical" repositories.
 
