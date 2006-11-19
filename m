@@ -1,71 +1,76 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Lars Hjemli" <hjemli@gmail.com>
-Subject: Re: [PATCH] Fix regression tests on Cygwin
-Date: Wed, 25 Oct 2006 08:39:36 +0200
-Message-ID: <8c5c35580610242339r7c2501dh7165dea49965632b@mail.gmail.com>
-References: <11616320733093-git-send-email-hjemli@gmail.com>
-	 <Pine.LNX.4.63.0610241653020.2106@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <7vwt6pdn46.fsf@assigned-by-dhcp.cox.net>
-	 <7vods1dmnu.fsf@assigned-by-dhcp.cox.net>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Git manuals
+Date: Sun, 19 Nov 2006 18:59:52 +0100
+Message-ID: <20061119175952.GX7201@pasky.or.cz>
+References: <20061116221701.4499.qmail@science.horizon.com> <20061117153246.GA20065@thunk.org> <20061117182157.GC11882@fieldses.org> <20061119175040.GB15608@fieldses.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 25 Oct 2006 06:39:55 +0000 (UTC)
-Cc: git@vger.kernel.org,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Sun, 19 Nov 2006 18:00:04 +0000 (UTC)
+Cc: Theodore Tso <tytso@mit.edu>, linux@horizon.com,
+	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=mCkwVpqdgvrUj2ykdW6gTAEgv4q4q1AcUXpa2Ms7HxpkA6Tr2s0c0HbREeZu7Kfv2V2w+LfvB6N4cPVtbgLC2aRp/l22Bn5hdxsyOKea/iJ/8sIosRxxppXFsR6rAfZCZZjkrEVyw/tZSgiM6sKe0v1VdeufeySMpqJU4r3Mr7E=
-In-Reply-To: <7vods1dmnu.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
+In-Reply-To: <20061119175040.GB15608@fieldses.org>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30035>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31845>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GccQQ-0000Tg-RX for gcvg-git@gmane.org; Wed, 25 Oct
- 2006 08:39:44 +0200
+ esmtp (Exim 4.43) id 1GlqxT-0003F8-4u for gcvg-git@gmane.org; Sun, 19 Nov
+ 2006 18:59:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1423059AbWJYGjj (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 25 Oct 2006
- 02:39:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423062AbWJYGjj
- (ORCPT <rfc822;git-outgoing>); Wed, 25 Oct 2006 02:39:39 -0400
-Received: from nf-out-0910.google.com ([64.233.182.188]:40589 "EHLO
- nf-out-0910.google.com") by vger.kernel.org with ESMTP id S1423059AbWJYGji
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 25 Oct 2006 02:39:38 -0400
-Received: by nf-out-0910.google.com with SMTP id c2so490488nfe for
- <git@vger.kernel.org>; Tue, 24 Oct 2006 23:39:37 -0700 (PDT)
-Received: by 10.82.142.9 with SMTP id p9mr29458bud; Tue, 24 Oct 2006 23:39:36
- -0700 (PDT)
-Received: by 10.82.171.10 with HTTP; Tue, 24 Oct 2006 23:39:36 -0700 (PDT)
-To: "Junio C Hamano" <junkio@cox.net>
+ S932615AbWKSR7z (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 19 Nov 2006
+ 12:59:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932638AbWKSR7z
+ (ORCPT <rfc822;git-outgoing>); Sun, 19 Nov 2006 12:59:55 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:49585 "EHLO machine.or.cz") by
+ vger.kernel.org with ESMTP id S932615AbWKSR7y (ORCPT
+ <rfc822;git@vger.kernel.org>); Sun, 19 Nov 2006 12:59:54 -0500
+Received: (qmail 8809 invoked by uid 2001); 19 Nov 2006 18:59:52 +0100
+To: "J. Bruce Fields" <bfields@fieldses.org>
 Sender: git-owner@vger.kernel.org
 
-On 10/25/06, Junio C Hamano <junkio@cox.net> wrote:
-> Junio C Hamano <junkio@cox.net> writes:
->
-> > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> >
-> >> On Mon, 23 Oct 2006, Lars Hjemli wrote:
-> >>
-> >>> On Cygwin, "make test" failes due to missing ".exe" a couple of places.
-> >>
-> >> Last time I made "test" on cygwin, it did not complain.
-> >
-> > Same here (W2k, fairly up-to-date git, installed on local NTFS
-> > disk).
+On Sun, Nov 19, 2006 at 06:50:40PM CET, J. Bruce Fields wrote:
+> On Fri, Nov 17, 2006 at 01:21:57PM -0500, bfields wrote:
+> > On Fri, Nov 17, 2006 at 10:32:46AM -0500, Theodore Tso wrote:
+> > > It would be nice if there was an easy way to direct users through the
+> > > documentation in a way which makes good pedagogical sense.
+> ....
+> > How about this as a strawman "git user's manual" outline:
 
-Well, then it's probably my cygwin-environment that is broken (make
-test used to work for me too...)
+(I was briefly discussing Git Book with Junio at OLS, I think the result
+was "yeah, would be nice, perhaps we can start poking it soon". I
+started to think about it once again in the last few weeks.)
 
-Sorry for the noise
+> In fact, I'm tempted to submit a patch that just assigns a chapter
+> number to everything under Documentation/, slaps a single table of
+> contents on the front, and calls the result "the git user's manual."
+> 
+> Of course, the moment people started trying to read the thing they'd
+> complain that it was a mess--some stuff referenced without being
+> introduced, other stuff introduced too many times.  But then over time
+> maybe that'd force us to mold it into some sort of logical sequence.
 
---
+Sequencing isn't the only problem. A _manual_ is different from
+_reference documentation_ in that it does not usually describe command
+after command, but rather concept after concept. So instead of slamming
+git-*-pack commands together, you have a section "Handling Packs" where
+you try to coherently describe the commands together.
+
+Your approach is fine for something you would call "Git Reference
+Manual", but it is something really different from "The Git Book" or
+"Git User's Manual".
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+The meaning of Stonehenge in Traflamadorian, when viewed from above, is:
+"Replacement part being rushed with all possible speed."
