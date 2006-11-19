@@ -1,62 +1,60 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Steven Grimm <koreth@midwinter.com>
-Subject: Re: git-svn: follow parent after the fact?
-Date: Tue, 19 Dec 2006 13:36:59 -0800
-Message-ID: <45885B7B.6060308@midwinter.com>
-References: <45873D0A.1040804@midwinter.com> <20061219074745.GA31338@localdomain>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [WISH] Store also tag dereferences in packed-refs
+Date: Sat, 18 Nov 2006 17:59:08 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0611181758290.3692@woody.osdl.org>
+References: <e5bfff550611180115j135746a1h916e8ae029d1374d@mail.gmail.com>
+ <7vmz6oeh2k.fsf@assigned-by-dhcp.cox.net> <20061118184345.GO7201@pasky.or.cz>
+ <e5bfff550611181047w6712774fkccc697d312b87c7e@mail.gmail.com>
+ <7vac2oefuz.fsf@assigned-by-dhcp.cox.net> <e5bfff550611181628o41e11652ycd17ddad5dd21225@mail.gmail.com>
+ <Pine.LNX.4.64.0611181706250.3692@woody.osdl.org> <7vfycg9pu5.fsf@assigned-by-dhcp.cox.net>
+ <7vac2o9pln.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Tue, 19 Dec 2006 21:36:49 +0000 (UTC)
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Sun, 19 Nov 2006 01:59:38 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.8 (Macintosh/20061025)
-In-Reply-To: <20061219074745.GA31338@localdomain>
+In-Reply-To: <7vac2o9pln.fsf@assigned-by-dhcp.cox.net>
+X-MIMEDefang-Filter: osdl$Revision: 1.159 $
+X-Scanned-By: MIMEDefang 2.36
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34853>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gwmdi-0001Pj-NA for gcvg-git@gmane.org; Tue, 19 Dec
- 2006 22:36:47 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31822>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Glbxw-0005vx-LU for gcvg-git@gmane.org; Sun, 19 Nov
+ 2006 02:59:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S933029AbWLSVgo (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
- 16:36:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932959AbWLSVgo
- (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 16:36:44 -0500
-Received: from tater.midwinter.com ([216.32.86.90]:46047 "HELO midwinter.com"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S933029AbWLSVgn
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec 2006 16:36:43 -0500
-Received: (qmail 1171 invoked from network); 19 Dec 2006 21:36:42 -0000
-Received: from c-76-21-17-123.hsd1.ca.comcast.net (HELO ?192.168.0.128?)
- (koreth@76.21.17.123) by tater.midwinter.com with SMTP; 19 Dec 2006 21:36:42
- -0000
-To: Eric Wong <normalperson@yhbt.net>
+ S1755510AbWKSB7P (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 18 Nov 2006
+ 20:59:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755525AbWKSB7O
+ (ORCPT <rfc822;git-outgoing>); Sat, 18 Nov 2006 20:59:14 -0500
+Received: from smtp.osdl.org ([65.172.181.25]:48579 "EHLO smtp.osdl.org") by
+ vger.kernel.org with ESMTP id S1755510AbWKSB7N (ORCPT
+ <rfc822;git@vger.kernel.org>); Sat, 18 Nov 2006 20:59:13 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
+ smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kAJ1x9ix031471
+ (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Sat, 18
+ Nov 2006 17:59:09 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
+ shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kAJ1x863025309; Sat, 18 Nov
+ 2006 17:59:09 -0800
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Eric Wong wrote:
-> The final set of files at the latest (svn) revision was inconsistent?
-> That should never happen...  If so, I'd very much like to look into this.
->   
 
-Yes, that's right; there are about 50 files that were in the original 
-trunk before it was renamed but weren't in the branch that became the 
-new trunk. Those files are present in the git repo if I use plain 
-git-svn fetch, but they're not there in an svn client or in a git repo 
-where I've used --follow-parent.
 
-So far I haven't been able to come up with a from-scratch test case to 
-demonstrate this behavior. The svn repository in question, 
-unfortunately, isn't a public one. I've asked the person in charge of 
-the repo if he remembers what exactly he did at the time of the branch 
-reorganization; so far every permutation I've tried in my test repo has 
-worked fine and not had the problem, so something odd must have happened 
-in that repo's history.
+On Sat, 18 Nov 2006, Junio C Hamano wrote:
+> 
+> There is something seriously wrong about Marco's number with or
+> without my patch.  I am getting something like this from
+> linux-2.6 with fully packed and pruned refs;
 
-I'll follow up if/when I manage to get a good test case.
+Well, Marco is testing cold-cache numbers. But I agree, even with 
+cold-cache, it shouldn't be anywhere close to that bad. 
 
