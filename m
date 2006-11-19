@@ -1,59 +1,443 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_ADSP_NXDOMAIN,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD,
-	UNPARSEABLE_RELAY shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
-From: Pazu <pazu@pazu.com.br>
-Subject: Re: git-svn: why fetching files is so slow
-Date: Fri, 24 Nov 2006 19:28:48 +0000 (UTC)
-Message-ID: <loom.20061124T202153-512@post.gmane.org>
-References: <loom.20061124T143148-286@post.gmane.org> <20061124191609.GA32506@localdomain>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Fri, 24 Nov 2006 19:29:26 +0000 (UTC)
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH 2/2] gitweb: Refactor feed generation, make output prettier, add Atom feed
+Date: Sun, 19 Nov 2006 15:05:22 +0100
+Message-ID: <11639451253906-git-send-email-jnareb@gmail.com>
+References: <200611171236.19030.jnareb@gmail.com> <11639451221153-git-send-email-jnareb@gmail.com>
+NNTP-Posting-Date: Sun, 19 Nov 2006 14:04:59 +0000 (UTC)
+Cc: Jakub Narebski <jnareb@gmail.com>, Andreas Fuchs <asf@boinkor.net>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 10
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 201.37.99.93 (Mozilla/5.0 (Macintosh; U; Intel Mac OS X; en-GB; rv:1.8.1) Gecko/20061010 Firefox/2.0)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=J6qkzQwY4rnpJl+LWbI6iRDk05htTHq7Yz8tUvRsaOxJ6GsuBJ17jNINa9iZNGw4Otih+zn0ycm6FSuaFDv3Be9Q++IpRcgksbnTNtJI5kIWcBWKYREkTIQh2Sxs7NP7/d+mi0eWfZ0qSPFrcjkZwr65pqWCLcdYaCD1vbOWqyw=
+X-Mailer: git-send-email 1.4.3.4
+In-Reply-To: <11639451221153-git-send-email-jnareb@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32232>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31832>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gngje-0005zg-L5 for gcvg-git@gmane.org; Fri, 24 Nov
- 2006 20:29:19 +0100
+ esmtp (Exim 4.43) id 1GlnHm-0001mF-RV for gcvg-git@gmane.org; Sun, 19 Nov
+ 2006 15:04:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S935018AbWKXT3G (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 24 Nov 2006
- 14:29:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935024AbWKXT3F
- (ORCPT <rfc822;git-outgoing>); Fri, 24 Nov 2006 14:29:05 -0500
-Received: from main.gmane.org ([80.91.229.2]:12460 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S935018AbWKXT3D (ORCPT
- <rfc822;git@vger.kernel.org>); Fri, 24 Nov 2006 14:29:03 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1GngjJ-0005uS-Ev for git@vger.kernel.org; Fri, 24 Nov 2006 20:28:58 +0100
-Received: from C925635D.poa.virtua.com.br ([C925635D.poa.virtua.com.br]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Fri, 24 Nov 2006 20:28:57 +0100
-Received: from pazu by C925635D.poa.virtua.com.br with local (Gmexim 0.1
- (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Fri, 24 Nov 2006
- 20:28:57 +0100
+ S1756679AbWKSOEc (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 19 Nov 2006
+ 09:04:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756677AbWKSOEc
+ (ORCPT <rfc822;git-outgoing>); Sun, 19 Nov 2006 09:04:32 -0500
+Received: from ug-out-1314.google.com ([66.249.92.173]:27233 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1756679AbWKSOEa
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 19 Nov 2006 09:04:30 -0500
+Received: by ug-out-1314.google.com with SMTP id m3so1015784ugc for
+ <git@vger.kernel.org>; Sun, 19 Nov 2006 06:04:29 -0800 (PST)
+Received: by 10.66.221.6 with SMTP id t6mr5488362ugg.1163945069120; Sun, 19
+ Nov 2006 06:04:29 -0800 (PST)
+Received: from roke.D-201 ( [81.190.24.209]) by mx.google.com with ESMTP id
+ y7sm6906408ugc.2006.11.19.06.04.27; Sun, 19 Nov 2006 06:04:28 -0800 (PST)
+Received: from roke.D-201 (localhost.localdomain [127.0.0.1]) by roke.D-201
+ (8.13.4/8.13.4) with ESMTP id kAJE5gVF016921; Sun, 19 Nov 2006 15:05:42 +0100
+Received: (from jnareb@localhost) by roke.D-201 (8.13.4/8.13.4/Submit) id
+ kAJE5P1E016919; Sun, 19 Nov 2006 15:05:25 +0100
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Eric Wong <normalperson <at> yhbt.net> writes:
+Add support for more modern Atom web feed format. Both RSS and Atom
+feeds are generated by git_feed subroutine to avoid code duplication;
+git_rss and git_atom are thin wrappers around git_feed. Add links to
+Atom feed in HTML header and in page footer (but not in OPML; we
+should use APP, Atom Publishing Proptocol instead).
 
-> git-svn transfers full files, and not deltas.  I'll hopefully have a
-> chance to look into improving the situation for slow links this weekend.
+Allow for feed generation for branches other than current (HEAD)
+branch, and for generation of feeds for file or directory history.
 
-Yes, but why would that make fetching the first revision slower? In this
-situation, both svn and git-svn would have to fetch full files. Maybe git-svn
-isn't using gzip compression or http pipelining?
+Do not use "pre ${\sub_returning_scalar(...)} post" trick, but join
+strings instead: "pre " . sub_returning_scalar(...) . " post".
+Use href(-full=>1, ...) instead of hand-crafting gitweb urls.
 
--- Pazu
+Make output prettier:
+* Use title similar to the title of web page
+* Use project description (if exists) for description/subtitle
+* Do not add anything (committer name, commit date) to feed entry title
+* Wrap the commit message in <pre>
+* Make file names into an unordered list
+* Add links (diff, conditional blame, history) to the file list.
+
+In addition to the above points, the attached patch emits a
+Last-Changed: HTTP response header field, and doesn't compute the feed
+body if the HTTP request type was HEAD. This helps keep the web server
+load down for well-behaved feed readers that check if the feed needs
+updating.
+
+If browser (feed reader) sent Accept: header, and it prefers 'text/xml' type
+to 'application/rss+xml' (in the case of RSS feed) or 'application/atom+xml'
+(in the case of Atom feed), then use 'text/xml' as content type.
+
+Both RSS and Atom feeds validate at http://feedvalidator.org
+and at http://validator.w3.org/feed/
+
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+Signed-off-by: Andreas Fuchs <asf@boinkor.net>
+---
+Compared to implementation by Andreas Fuchs (antifuchs on #git) in
+  Message-ID: <ejim5q$31b$1@sea.gmane.org>
+  http://permalink.gmane.org/gmane.comp.version-control.git/31624
+this consolidates generation of RSS and Atom feeds, cleans up feed
+generation code, and uses 'text/xml' as content type if browser prefers
+this (for Mozilla).
+
+This requires:
+ "gitweb: Add an option to href() to return full URL"
+(sent just in case before this one), which is last patch in my previous
+gitweb patches series.
+
+This patch DOES NOT add feed links for branches (in "heads" view), nor
+feed links for files (as alternate representation of "history" view).
+Neither it adds Atom links to "OPML" view (we should use APP for that,
+I think).
+
+ gitweb/gitweb.perl |  255 ++++++++++++++++++++++++++++++++++++++++++---------
+ 1 files changed, 210 insertions(+), 45 deletions(-)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 8739501..a32a6b7 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -425,6 +425,7 @@ my %actions = (
+ 	"history" => \&git_history,
+ 	"log" => \&git_log,
+ 	"rss" => \&git_rss,
++	"atom" => \&git_atom,
+ 	"search" => \&git_search,
+ 	"search_help" => \&git_search_help,
+ 	"shortlog" => \&git_shortlog,
+@@ -1198,10 +1199,12 @@ sub parse_date {
+ 	$date{'mday'} = $mday;
+ 	$date{'day'} = $days[$wday];
+ 	$date{'month'} = $months[$mon];
+-	$date{'rfc2822'} = sprintf "%s, %d %s %4d %02d:%02d:%02d +0000",
+-	                   $days[$wday], $mday, $months[$mon], 1900+$year, $hour ,$min, $sec;
++	$date{'rfc2822'}   = sprintf "%s, %d %s %4d %02d:%02d:%02d +0000",
++	                     $days[$wday], $mday, $months[$mon], 1900+$year, $hour ,$min, $sec;
+ 	$date{'mday-time'} = sprintf "%d %s %02d:%02d",
+ 	                     $mday, $months[$mon], $hour ,$min;
++	$date{'iso-8601'}  = sprintf "%04d-%02d-%02dT%02d:%02d:%02dZ",
++	                     1900+$year, $mon, $mday, $hour ,$min, $sec;
+ 
+ 	$tz =~ m/^([+\-][0-9][0-9])([0-9][0-9])$/;
+ 	my $local = $epoch + ((int $1 + ($2/60)) * 3600);
+@@ -1209,9 +1212,9 @@ sub parse_date {
+ 	$date{'hour_local'} = $hour;
+ 	$date{'minute_local'} = $min;
+ 	$date{'tz_local'} = $tz;
+-	$date{'iso-tz'} = sprintf ("%04d-%02d-%02d %02d:%02d:%02d %s",
+-				   1900+$year, $mon+1, $mday,
+-				   $hour, $min, $sec, $tz);
++	$date{'iso-tz'} = sprintf("%04d-%02d-%02d %02d:%02d:%02d %s",
++	                          1900+$year, $mon+1, $mday,
++	                          $hour, $min, $sec, $tz);
+ 	return %date;
+ }
+ 
+@@ -1672,14 +1675,17 @@ EOF
+ 		}
+ 	}
+ 	if (defined $project) {
+-		printf('<link rel="alternate" title="%s log" '.
+-		       'href="%s" type="application/rss+xml"/>'."\n",
++		printf('<link rel="alternate" title="%s log RSS feed" '.
++		       'href="%s" type="application/rss+xml" />'."\n",
+ 		       esc_param($project), href(action=>"rss"));
++		printf('<link rel="alternate" title="%s log Atom feed" '.
++		       'href="%s" type="application/atom+xml" />'."\n",
++		       esc_param($project), href(action=>"atom"));
+ 	} else {
+ 		printf('<link rel="alternate" title="%s projects list" '.
+ 		       'href="%s" type="text/plain; charset=utf-8"/>'."\n",
+ 		       $site_name, href(project=>undef, action=>"project_index"));
+-		printf('<link rel="alternate" title="%s projects logs" '.
++		printf('<link rel="alternate" title="%s projects feeds" '.
+ 		       'href="%s" type="text/x-opml"/>'."\n",
+ 		       $site_name, href(project=>undef, action=>"opml"));
+ 	}
+@@ -1745,7 +1751,9 @@ sub git_footer_html {
+ 			print "<div class=\"page_footer_text\">" . esc_html($descr) . "</div>\n";
+ 		}
+ 		print $cgi->a({-href => href(action=>"rss"),
+-		              -class => "rss_logo"}, "RSS") . "\n";
++		              -class => "rss_logo"}, "RSS") . " ";
++		print $cgi->a({-href => href(action=>"atom"),
++		              -class => "rss_logo"}, "Atom") . "\n";
+ 	} else {
+ 		print $cgi->a({-href => href(project=>undef, action=>"opml"),
+ 		              -class => "rss_logo"}, "OPML") . " ";
+@@ -4150,26 +4158,125 @@ sub git_shortlog {
+ }
+ 
+ ## ......................................................................
+-## feeds (RSS, OPML)
++## feeds (RSS, Atom; OPML)
+ 
+-sub git_rss {
+-	# http://www.notestips.com/80256B3A007F2692/1/NAMO5P9UPQ
++sub git_feed {
++	my $format = shift || 'atom';
++	my ($have_blame) = gitweb_check_feature('blame');
++
++	# Atom: http://www.atomenabled.org/developers/syndication/
++	# RSS:  http://www.notestips.com/80256B3A007F2692/1/NAMO5P9UPQ
++	if ($format ne 'rss' && $format ne 'atom') {
++		die_error(undef, "Unknown web feed format");
++	}
++
++	# log/feed of current (HEAD) branch, log of given branch, history of file/directory
++	my $head = $hash || 'HEAD';
+ 	open my $fd, "-|", git_cmd(), "rev-list", "--max-count=150",
+-		git_get_head_hash($project), "--"
++		$head, "--", (defined $file_name ? $file_name : ())
+ 		or die_error(undef, "Open git-rev-list failed");
+ 	my @revlist = map { chomp; $_ } <$fd>;
+ 	close $fd or die_error(undef, "Reading git-rev-list failed");
+-	print $cgi->header(-type => 'text/xml', -charset => 'utf-8');
+-	print <<XML;
+-<?xml version="1.0" encoding="utf-8"?>
++
++	my %latest_commit;
++	my %latest_date;
++	my $content_type = "application/$format+xml";
++	if (defined $cgi->http('HTTP_ACCEPT') &&
++		 $cgi->Accept('text/xml') > $cgi->Accept($content_type)) {
++		# browser (feed reader) prefers text/xml
++		$content_type = 'text/xml';
++	}
++	if (defined($revlist[0])) {
++		%latest_commit = parse_commit($revlist[0]);
++		%latest_date   = parse_date($latest_commit{'committer_epoch'});
++		print $cgi->header(
++			-type => $content_type,
++			-charset => 'utf-8',
++			-last_modified => $latest_date{'rfc2822'});
++	} else {
++		print $cgi->header(
++			-type => $content_type,
++			-charset => 'utf-8');
++	}
++
++	# Optimization: skip generating the body if client asks only
++	# for Last-Modified date.
++	return if ($cgi->request_method() eq 'HEAD');
++
++	# header variables
++	my $title = "$site_name - $project/$action";
++	my $feed_type = 'log';
++	if (defined $hash) {
++		$title .= " - '$hash'";
++		$feed_type = 'branch log';
++		if (defined $file_name) {
++			$title .= " :: $file_name";
++			$feed_type = 'history';
++		}
++	} elsif (defined $file_name) {
++		$title .= " - $file_name";
++		$feed_type = 'history';
++	}
++	$title .= " $feed_type";
++	my $descr = git_get_project_description($project);
++	if (defined $descr) {
++		$descr = esc_html($descr);
++	} else {
++		$descr = "$project " .
++		         ($format eq 'rss' ? 'RSS' : 'Atom') .
++		         " feed";
++	}
++	my $owner = git_get_project_owner($project);
++	$owner = esc_html($owner);
++
++	#header
++	my $alt_url;
++	if (defined $file_name) {
++		$alt_url = href(-full=>1, action=>"history", hash=>$hash, file_name=>$file_name);
++	} elsif (defined $hash) {
++		$alt_url = href(-full=>1, action=>"log", hash=>$hash);
++	} else {
++		$alt_url = href(-full=>1, action=>"summary");
++	}
++	print qq!<?xml version="1.0" encoding="utf-8"?>\n!;
++	if ($format eq 'rss') {
++		print <<XML;
+ <rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+ <channel>
+-<title>$project $my_uri $my_url</title>
+-<link>${\esc_html("$my_url?p=$project;a=summary")}</link>
+-<description>$project log</description>
+-<language>en</language>
+ XML
++		print "<title>$title</title>\n" .
++		      "<link>$alt_url</link>\n" .
++		      "<description>$descr</description>\n" .
++		      "<language>en</language>\n";
++	} elsif ($format eq 'atom') {
++		print <<XML;
++<feed xmlns="http://www.w3.org/2005/Atom">
++XML
++		print "<title>$title</title>\n" .
++		      "<subtitle>$descr</subtitle>\n" .
++		      '<link rel="alternate" type="text/html" href="' .
++		      $alt_url . '" />' . "\n" .
++		      '<link rel="self" type="' . $content_type . '" href="' .
++		      $cgi->self_url() . '" />' . "\n" .
++		      "<id>" . href(-full=>1) . "</id>\n" .
++		      # use project owner for feed author
++		      "<author><name>$owner</name></author>\n";
++		if (defined $favicon) {
++			print "<icon>" . esc_url($favicon) . "</icon>\n";
++		}
++		if (defined $logo_url) {
++			# not twice as wide as tall: 72 x 27 pixels
++			print "<logo>" . esc_url($logo_url) . "</logo>\n";
++		}
++		if (! %latest_date) {
++			# dummy date to keep the feed valid until commits trickle in:
++			print "<updated>1970-01-01T00:00:00Z</updated>\n";
++		} else {
++			print "<updated>$latest_date{'iso-8601'}</updated>\n";
++		}
++	}
+ 
++	# contents
+ 	for (my $i = 0; $i <= $#revlist; $i++) {
+ 		my $commit = $revlist[$i];
+ 		my %co = parse_commit($commit);
+@@ -4178,42 +4285,100 @@ XML
+ 			last;
+ 		}
+ 		my %cd = parse_date($co{'committer_epoch'});
++
++		# get list of changed files
+ 		open $fd, "-|", git_cmd(), "diff-tree", '-r', @diff_opts,
+-			$co{'parent'}, $co{'id'}, "--"
++			$co{'parent'}, $co{'id'}, "--", (defined $file_name ? $file_name : ())
+ 			or next;
+ 		my @difftree = map { chomp; $_ } <$fd>;
+ 		close $fd
+ 			or next;
+-		print "<item>\n" .
+-		      "<title>" .
+-		      sprintf("%d %s %02d:%02d", $cd{'mday'}, $cd{'month'}, $cd{'hour'}, $cd{'minute'}) . " - " . esc_html($co{'title'}) .
+-		      "</title>\n" .
+-		      "<author>" . esc_html($co{'author'}) . "</author>\n" .
+-		      "<pubDate>$cd{'rfc2822'}</pubDate>\n" .
+-		      "<guid isPermaLink=\"true\">" . esc_html("$my_url?p=$project;a=commit;h=$commit") . "</guid>\n" .
+-		      "<link>" . esc_html("$my_url?p=$project;a=commit;h=$commit") . "</link>\n" .
+-		      "<description>" . esc_html($co{'title'}) . "</description>\n" .
+-		      "<content:encoded>" .
+-		      "<![CDATA[\n";
++
++		# print element (entry, item)
++		my $co_url = href(-full=>1, action=>"commit", hash=>$commit);
++		if ($format eq 'rss') {
++			print "<item>\n" .
++			      "<title>" . esc_html($co{'title'}) . "</title>\n" .
++			      "<author>" . esc_html($co{'author'}) . "</author>\n" .
++			      "<pubDate>$cd{'rfc2822'}</pubDate>\n" .
++			      "<guid isPermaLink=\"true\">$co_url</guid>\n" .
++			      "<link>$co_url</link>\n" .
++			      "<description>" . esc_html($co{'title'}) . "</description>\n" .
++			      "<content:encoded>" .
++			      "<![CDATA[\n";
++		} elsif ($format eq 'atom') {
++			print "<entry>\n" .
++			      "<title type=\"html\">" . esc_html($co{'title'}) . "</title>\n" .
++			      "<updated>$cd{'iso-8601'}</updated>\n" .
++			      "<author><name>" . esc_html($co{'author_name'}) . "</name></author>\n" .
++			      # use committer for contributor
++			      "<contributor><name>" . esc_html($co{'committer_name'}) . "</name></contributor>\n" .
++			      "<published>$cd{'iso-8601'}</published>\n" .
++			      "<link rel=\"alternate\" type=\"text/html\" href=\"$co_url\" />\n" .
++			      "<id>$co_url</id>\n" .
++			      "<content type=\"xhtml\" xml:base=\"" . esc_url($my_url) . "\">\n" .
++			      "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n";
++		}
+ 		my $comment = $co{'comment'};
++		print "<pre>\n";
+ 		foreach my $line (@$comment) {
+-			$line = to_utf8($line);
+-			print "$line<br/>\n";
++			$line = esc_html($line);
++			print "$line\n";
+ 		}
+-		print "<br/>\n";
+-		foreach my $line (@difftree) {
+-			if (!($line =~ m/^:([0-7]{6}) ([0-7]{6}) ([0-9a-fA-F]{40}) ([0-9a-fA-F]{40}) (.)([0-9]{0,3})\t(.*)$/)) {
+-				next;
++		print "</pre><ul>\n";
++		foreach my $difftree_line (@difftree) {
++			my %difftree = parse_difftree_raw_line($difftree_line);
++			next if !$difftree{'from_id'};
++
++			my $file = $difftree{'file'} || $difftree{'to_file'};
++
++			print "<li>" .
++			      "[" .
++			      $cgi->a({-href => href(-full=>1, action=>"blobdiff",
++			                             hash=>$difftree{'to_id'}, hash_parent=>$difftree{'from_id'},
++			                             hash_base=>$co{'id'}, hash_parent_base=>$co{'parent'},
++			                             file_name=>$file, file_parent=>$difftree{'from_file'}),
++			              -title => "diff"}, 'D');
++			if ($have_blame) {
++				print $cgi->a({-href => href(-full=>1, action=>"blame",
++				                             file_name=>$file, hash_base=>$commit),
++				              -title => "blame"}, 'B');
+ 			}
+-			my $file = esc_path(unquote($7));
+-			$file = to_utf8($file);
+-			print "$file<br/>\n";
++			# if this is not a feed of a file history
++			if (!defined $file_name || $file_name ne $file) {
++				print $cgi->a({-href => href(-full=>1, action=>"history",
++				                             file_name=>$file, hash=>$commit),
++				              -title => "history"}, 'H');
++			}
++			$file = esc_path($file);
++			print "] ".
++			      "$file</li>\n";
++		}
++		if ($format eq 'rss') {
++			print "</ul>]]>\n" .
++			      "</content:encoded>\n" .
++			      "</item>\n";
++		} elsif ($format eq 'atom') {
++			print "</ul>\n</div>\n" .
++			      "</content>\n" .
++			      "</entry>\n";
+ 		}
+-		print "]]>\n" .
+-		      "</content:encoded>\n" .
+-		      "</item>\n";
+ 	}
+-	print "</channel></rss>";
++
++	# end of feed
++	if ($format eq 'rss') {
++		print "</channel>\n</rss>\n";
++	}	elsif ($format eq 'atom') {
++		print "</feed>\n";
++	}
++}
++
++sub git_rss {
++	git_feed('rss');
++}
++
++sub git_atom {
++	git_feed('atom');
+ }
+ 
+ sub git_opml {
+-- 
+1.4.3.4
