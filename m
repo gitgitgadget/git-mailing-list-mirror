@@ -1,59 +1,57 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Nicolas Pitre <nico@cam.org>
-Subject: [PATCH] repacked packs should be read-only
-Date: Wed, 13 Dec 2006 16:25:26 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0612131620280.18171@xanadu.home>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] do_for_each_ref: perform the same sanity check for leftovers.
+Date: Sat, 18 Nov 2006 22:22:17 -0800
+Message-ID: <7vmz6o7y7a.fsf@assigned-by-dhcp.cox.net>
+References: <7vr6w07ylu.fsf@assigned-by-dhcp.cox.net>
+	<20061119061905.GB26670@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-NNTP-Posting-Date: Wed, 13 Dec 2006 22:25:37 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Sun, 19 Nov 2006 06:22:27 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Greylist: delayed 3600 seconds by postgrey-1.27 at vger.kernel.org; Wed, 13 Dec 2006 17:25:28 EST
-X-X-Sender: nico@xanadu.home
+In-Reply-To: <20061119061905.GB26670@spearce.org> (Shawn Pearce's message of
+	"Sun, 19 Nov 2006 01:19:05 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34241>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GucXc-0000Wa-HV for gcvg-git@gmane.org; Wed, 13 Dec
- 2006 23:25:32 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31827>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Glg4L-00005y-Cu for gcvg-git@gmane.org; Sun, 19 Nov
+ 2006 07:22:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751633AbWLMWZ3 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 13 Dec 2006
- 17:25:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751637AbWLMWZ3
- (ORCPT <rfc822;git-outgoing>); Wed, 13 Dec 2006 17:25:29 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:31972 "EHLO
- relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1751633AbWLMWZ2 (ORCPT <rfc822;git@vger.kernel.org>); Wed, 13 Dec 2006
- 17:25:28 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
- <0JA800FNGE6EJD30@VL-MO-MR001.ip.videotron.ca> for git@vger.kernel.org; Wed,
- 13 Dec 2006 16:25:26 -0500 (EST)
-To: Junio C Hamano <junkio@cox.net>
+ S1756475AbWKSGWT (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 19 Nov 2006
+ 01:22:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756477AbWKSGWS
+ (ORCPT <rfc822;git-outgoing>); Sun, 19 Nov 2006 01:22:18 -0500
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:22932 "EHLO
+ fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP id S1756475AbWKSGWS
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 19 Nov 2006 01:22:18 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao11.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061119062217.GVEC296.fed1rmmtao11.cox.net@fed1rmimpo01.cox.net>; Sun, 19
+ Nov 2006 01:22:17 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id oWMp1V00H1kojtg0000000; Sun, 19 Nov 2006
+ 01:21:49 -0500
+To: Shawn Pearce <spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 
-... just like the other pack creating tools do.
+Shawn Pearce <spearce@spearce.org> writes:
 
-Signed-off-by: Nicolas Pitre <nico@cam.org>
+> Junio C Hamano <junkio@cox.net> wrote:
+>>  * "pickaxe -L'/^static int do_for_each_ref/,+40' refs.c" turns
+>
+> What's this pickaxe you speak of?  Last I read you deleted it when
+> you renamed git-pickaxe to git-blame.
+>
+> Have you reinvented git-pickaxe so soon?  Maybe we could try using
+> git-longblade next time a new comamnd is being developed?  :-)
 
----
-
-diff --git a/git-repack.sh b/git-repack.sh
-index f150a55..067898f 100755
---- a/git-repack.sh
-+++ b/git-repack.sh
-@@ -67,6 +67,8 @@ name=$(git-pack-objects --non-empty --all $args </dev/null "$PACKTMP") ||
- if [ -z "$name" ]; then
- 	echo Nothing new to pack.
- else
-+	chmod a-w "$PACKTMP-$name.pack"
-+	chmod a-w "$PACKTMP-$name.idx"
- 	if test "$quiet" != '-q'; then
- 	    echo "Pack pack-$name created."
+Oh, no, I meant "blame".
