@@ -1,98 +1,74 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: how to revert changes in working tree?
-Date: Wed, 6 Dec 2006 09:43:27 +0100
-Message-ID: <81b0412b0612060043t488d356du8f5fcdd164a45eb5@mail.gmail.com>
-References: <4576680B.7030500@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: can I remove or move a tag in a remote repository?
+Date: Sun, 19 Nov 2006 19:54:27 +0100
+Organization: At home
+Message-ID: <ejq96b$frg$1@sea.gmane.org>
+References: <87wt5rffbm.fsf@rho.meyering.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 6 Dec 2006 08:43:44 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Sun, 19 Nov 2006 18:54:24 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=NyVDICyGZGiiFUgRt6E0eynkJFVGD01fnKkHysqVZv6wck1NRa/d1mv33V8OWyTxjih1ToudW/S8YYCxhjtBwz/jFKEA9+yHONVm3iZS/+BXDWtlRi7Th8YQIv6cDeIo6kVkoGuGkQ2JHVkHODChzYbNCgbZv696xQ5RM9PT5r8=
-In-Reply-To: <4576680B.7030500@gmail.com>
-Content-Disposition: inline
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 23
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33407>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GrsNK-0006tK-22 for gcvg-git@gmane.org; Wed, 06 Dec
- 2006 09:43:34 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31852>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Glrni-0005Jh-Ub for gcvg-git@gmane.org; Sun, 19 Nov
+ 2006 19:53:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1760311AbWLFInb (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
- 03:43:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760312AbWLFInb
- (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 03:43:31 -0500
-Received: from ug-out-1314.google.com ([66.249.92.173]:25765 "EHLO
- ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1760305AbWLFIna (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec
- 2006 03:43:30 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so73956uga for
- <git@vger.kernel.org>; Wed, 06 Dec 2006 00:43:29 -0800 (PST)
-Received: by 10.78.185.7 with SMTP id i7mr377542huf.1165394607654; Wed, 06
- Dec 2006 00:43:27 -0800 (PST)
-Received: by 10.78.135.3 with HTTP; Wed, 6 Dec 2006 00:43:27 -0800 (PST)
-To: "Liu Yubao" <yubao.liu@gmail.com>
+ S932832AbWKSSx4 convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Sun, 19 Nov 2006 13:53:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932843AbWKSSx4
+ (ORCPT <rfc822;git-outgoing>); Sun, 19 Nov 2006 13:53:56 -0500
+Received: from main.gmane.org ([80.91.229.2]:26849 "EHLO ciao.gmane.org") by
+ vger.kernel.org with ESMTP id S932832AbWKSSxz (ORCPT
+ <rfc822;git@vger.kernel.org>); Sun, 19 Nov 2006 13:53:55 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1GlrnZ-0005Gw-Ty for git@vger.kernel.org; Sun, 19 Nov 2006 19:53:50 +0100
+Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Sun, 19 Nov 2006 19:53:49 +0100
+Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Sun, 19 Nov 2006
+ 19:53:49 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On 12/6/06, Liu Yubao <yubao.liu@gmail.com> wrote:
-> I'm confused how to revert changes in working tree:
->
-> $ git fetch
-> $ git merge "sync with origin" HEAD origin
-> ....conflict....
+Jim Meyering wrote:
 
-You may want to consider git pull. It'd do exactly the same
+> When I try to push the new tags, git-push fails:
+>=20
+> =A0 $ git-push -f --tags ssh+git://git.sv.gnu.org/srv/git/coreutils m=
+aster:refs/heads/master
+> =A0 updating 'refs/tags/cvs-head'
+> =A0 =A0 from 2fd3fd29a8b40be695bc2327c8cd3bd33e521100
+> =A0 =A0 to =A0 db18f53ffb221e9957124d8af81c11a7e350ac3b
+> =A0 ...
+> =A0 Total 1, written 1 (delta 0), reused 0 (delta 0)
+> =A0 Unpacking 1 objects
+> =A0 error: denying non-fast forward; you should pull first
+>=20
+> I get the same error also when using --force.
 
-> $ git branch
-> * master
->   origin
->
-> $ git status
-> # .....: needs update
-> # .....: needs update
-> (In fact I never modified anything in this tree, and "git diff"
-> showed many difference indeed, very strange).
+Possibly remote side has receive.denyNonFastForwards set (it should not
+I think if it is public published bare repository). But even then there
+should be no fast-forward check on tags...
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
 
-That's windows and cygwin for you. They work together
-and may someday even figure how to commit the changes.
-
-They problem is the exec-bit which windows does not
-have and cygwin failed to correctly workaround the
-limitation.
-
-Do a "git repo-config core.filemode false" to almost
-disable the checks for exec bit.
-
-> I tried "git update-index --refresh", "git reset --hard",
-> "git reset --hard master", "git checkout master",
-> "git checkout -f master", but "git status" still said same
-> as above.
-
-After git update-index --refresh you shouldn't have had
-the diffs (unless you actually had textual changes).
-
-> At last, I deleted all files that were reported to be updated
-> with "rm -rf", ran "git checkout master" and "git status", then
-> git reported:
-> #       deleted:    ....
-> #       deleted:    ....
-
-Now do a git reset --hard and you should be set,
-unless you're unlucky enough to work on FAT,
-where probably nothing will save you.
-
-And avoid using any "special" characters (8bit, utf/unicode)
-in filenames, while you're on windows: you'll never be able
-to share the repository (unless others agree to use your
