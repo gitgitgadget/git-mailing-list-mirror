@@ -2,67 +2,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC/PATCH] Implement poor-man's submodule support in pre-commit hook
-Date: Wed, 20 Dec 2006 12:59:58 +0100
-Organization: At home
-Message-ID: <emb8ev$egb$1@sea.gmane.org>
-References: <200612200901.30584.andyparkins@gmail.com> <200612201008.49045.andyparkins@gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [WISH] Store also tag dereferences in packed-refs
+Date: Sun, 19 Nov 2006 13:14:34 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0611191310430.3692@woody.osdl.org>
+References: <e5bfff550611180115j135746a1h916e8ae029d1374d@mail.gmail.com>
+ <7vmz6oeh2k.fsf@assigned-by-dhcp.cox.net> <20061118184345.GO7201@pasky.or.cz>
+ <e5bfff550611181047w6712774fkccc697d312b87c7e@mail.gmail.com>
+ <7vac2oefuz.fsf@assigned-by-dhcp.cox.net> <e5bfff550611181628o41e11652ycd17ddad5dd21225@mail.gmail.com>
+ <Pine.LNX.4.64.0611181706250.3692@woody.osdl.org>
+ <e5bfff550611190140n3277ee26v95feba26dd3348fa@mail.gmail.com>
+ <Pine.LNX.4.64.0611190945500.3692@woody.osdl.org>
+ <e5bfff550611191107o63d89d8bp5ff4080803a0d784@mail.gmail.com>
+ <e5bfff550611191209s63982818vd3999b543e68e8df@mail.gmail.com>
+ <Pine.LNX.4.64.0611191219350.3692@woody.osdl.org> <7vbqn38831.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-NNTP-Posting-Date: Wed, 20 Dec 2006 11:57:56 +0000 (UTC)
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Sun, 19 Nov 2006 21:14:50 +0000 (UTC)
+Cc: git@vger.kernel.org, Marco Costalba <mcostalba@gmail.com>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 18
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-25-107.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+In-Reply-To: <7vbqn38831.fsf@assigned-by-dhcp.cox.net>
+X-MIMEDefang-Filter: osdl$Revision: 1.159 $
+X-Scanned-By: MIMEDefang 2.36
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34920>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gx04v-0008BL-Dz for gcvg-git@gmane.org; Wed, 20 Dec
- 2006 12:57:45 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31864>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gltzx-00005M-OM for gcvg-git@gmane.org; Sun, 19 Nov
+ 2006 22:14:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S964956AbWLTL5m (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 20 Dec 2006
- 06:57:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754627AbWLTL5m
- (ORCPT <rfc822;git-outgoing>); Wed, 20 Dec 2006 06:57:42 -0500
-Received: from main.gmane.org ([80.91.229.2]:45546 "EHLO ciao.gmane.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1754453AbWLTL5l
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 20 Dec 2006 06:57:41 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1Gx04h-0007OG-VM for git@vger.kernel.org; Wed, 20 Dec 2006 12:57:31 +0100
-Received: from host-81-190-25-107.torun.mm.pl ([81.190.25.107]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Wed, 20 Dec 2006 12:57:31 +0100
-Received: from jnareb by host-81-190-25-107.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Wed, 20 Dec 2006
- 12:57:31 +0100
-To: git@vger.kernel.org
+ S933301AbWKSVOm (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 19 Nov 2006
+ 16:14:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933316AbWKSVOm
+ (ORCPT <rfc822;git-outgoing>); Sun, 19 Nov 2006 16:14:42 -0500
+Received: from smtp.osdl.org ([65.172.181.25]:37087 "EHLO smtp.osdl.org") by
+ vger.kernel.org with ESMTP id S933301AbWKSVOl (ORCPT
+ <rfc822;git@vger.kernel.org>); Sun, 19 Nov 2006 16:14:41 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
+ smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kAJLEZix009100
+ (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Sun, 19
+ Nov 2006 13:14:35 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
+ shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kAJLEYpN018179; Sun, 19 Nov
+ 2006 13:14:34 -0800
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Andy Parkins wrote:
 
-> Help...
-> 
->> +if [ -f .gitmodules ]; then
-> 
-> This doesn't work because git-commit is not necessarily in the root of the 
-> working tree.  How do I safely get that root?  While ${GIT_DIR}/.. would work 
-> it is not guaranteed.
 
-Do you want "git rev-parse --show-prefix" or "git rev-parse --show-cdup",
-or "git rev-parse --git-dir" perhaps? (Although here rev in rev-parse is
-misnomer).
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+On Sun, 19 Nov 2006, Junio C Hamano wrote:
+> 
+> Did you do this "if (isspace(*line)) return NULL" to have
+> extensibility later, I wonder...
+
+No, but I try to have a policy of not accepting anything that is even 
+slightly questionable, so it was unintentional in the details but a result 
+of a higher-level principle..
+
+Of course, even when I wrote it I _also_ knew that I should check 
+everything else too (not just the first character), but I was lazy. That 
+would have been even better - then we could have made the thing be 
+something like
+
+	<sha1><space><name>[<space><sha1-of-deref>]*
+
+instead.
 
