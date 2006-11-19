@@ -1,76 +1,114 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: [RFC] Submodules in GIT
-Date: Fri, 1 Dec 2006 19:51:00 +0100
-Message-ID: <20061201185100.GH18810@admingilde.org>
-References: <20061201121234.GQ18810@admingilde.org> <4570289D.9050802@b-i-t.de> <20061201133558.GU18810@admingilde.org> <45703174.8000609@op5.se> <20061201134610.GW18810@admingilde.org> <457041AD.4010601@op5.se> <20061201150045.GZ18810@admingilde.org> <45705A94.2070509@op5.se> <20061201165708.GE18810@admingilde.org> <45706F8C.3070000@op5.se>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [WISH] Store also tag dereferences in packed-refs
+Date: Sun, 19 Nov 2006 15:36:36 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0611191527270.3692@woody.osdl.org>
+References: <e5bfff550611180115j135746a1h916e8ae029d1374d@mail.gmail.com>
+ <7vmz6oeh2k.fsf@assigned-by-dhcp.cox.net> <20061118184345.GO7201@pasky.or.cz>
+ <e5bfff550611181047w6712774fkccc697d312b87c7e@mail.gmail.com>
+ <7vac2oefuz.fsf@assigned-by-dhcp.cox.net> <e5bfff550611181628o41e11652ycd17ddad5dd21225@mail.gmail.com>
+ <Pine.LNX.4.64.0611181706250.3692@woody.osdl.org>
+ <e5bfff550611190140n3277ee26v95feba26dd3348fa@mail.gmail.com>
+ <Pine.LNX.4.64.0611190945500.3692@woody.osdl.org>
+ <e5bfff550611191107o63d89d8bp5ff4080803a0d784@mail.gmail.com>
+ <e5bfff550611191209s63982818vd3999b543e68e8df@mail.gmail.com>
+ <Pine.LNX.4.64.0611191219350.3692@woody.osdl.org> <7vbqn38831.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0611191310430.3692@woody.osdl.org> <ejqhvi$9kc$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="u/esRqyc5dLeU/8t"
-NNTP-Posting-Date: Fri, 1 Dec 2006 18:51:39 +0000 (UTC)
-Cc: sf <sf@b-i-t.de>, git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Sun, 19 Nov 2006 23:36:49 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <45706F8C.3070000@op5.se>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <ejqhvi$9kc$1@sea.gmane.org>
+X-MIMEDefang-Filter: osdl$Revision: 1.159 $
+X-Scanned-By: MIMEDefang 2.36
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32956>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31873>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GqDTn-0000HU-AJ for gcvg-git@gmane.org; Fri, 01 Dec
- 2006 19:51:24 +0100
+ esmtp (Exim 4.43) id 1GlwDL-0004V1-SL for gcvg-git@gmane.org; Mon, 20 Nov
+ 2006 00:36:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1759339AbWLASvE (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
- 13:51:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759338AbWLASvD
- (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 13:51:03 -0500
-Received: from agent.admingilde.org ([213.95.21.5]:22185 "EHLO
- mail.admingilde.org") by vger.kernel.org with ESMTP id S1759345AbWLASvB
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 13:51:01 -0500
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1) id
- 1GqDTQ-0000Qs-SZ; Fri, 01 Dec 2006 19:51:00 +0100
-To: Andreas Ericsson <ae@op5.se>
+ S933774AbWKSXgl (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 19 Nov 2006
+ 18:36:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933775AbWKSXgl
+ (ORCPT <rfc822;git-outgoing>); Sun, 19 Nov 2006 18:36:41 -0500
+Received: from smtp.osdl.org ([65.172.181.25]:61841 "EHLO smtp.osdl.org") by
+ vger.kernel.org with ESMTP id S933774AbWKSXgk (ORCPT
+ <rfc822;git@vger.kernel.org>); Sun, 19 Nov 2006 18:36:40 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
+ smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kAJNabix016653
+ (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Sun, 19
+ Nov 2006 15:36:37 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
+ shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kAJNaab0021359; Sun, 19 Nov
+ 2006 15:36:36 -0800
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
 
---u/esRqyc5dLeU/8t
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-hoi :)
+On Sun, 19 Nov 2006, Jakub Narebski wrote:
+> 
+> So the only reason against this format (IMHO more reasonable, more readable
+> and more readable, and even easy extendable to the whole chain of derefs)
+> is code in the wild? 
+> 
+> By the way, do we copy packed refs literaly when fetching or cloning?
 
-On Fri, Dec 01, 2006 at 07:08:12PM +0100, Andreas Ericsson wrote:
-> You're assuming the super- and sub-module will share HEAD, or at least=20
-> ODB, I think.
+The packed refs format is _purely_ a local format. So in that sense, we 
+can change it any way we want, and nobody really cares.
 
-not HEAD, only ODB.
+HOWEVER, even on a local machine, we generally want to be able to upgrade 
+and downgrade git versions without having to worry about things like this, 
+and having to convert one format to another. So using a format that "just 
+works" with any version of git that understands packed refs is _wildly_ 
+more preferable over changing the format.
 
-> I'm not convinced this is necessary. Convince me. I'll go=20
-> drink bear and get some dancing done while you're at it ;-)
+Btw, the simplest and best format is probably to make the new extension 
+look something like
 
-Get me a beer and I will convince you :-)
+	8ba130df4b67fa40878ccf80d54615132d24bc68 refs/tags/v2.6.17
+	^427abfa28afedffadfca9dd8b067eb6d36bac53f
+	d882e0c80e6e3c60640492b83395e6fbbae04276 refs/tags/v2.6.17-rc1
+	^6246b6128bbe34d0752f119cf7c5111c85fe481d
 
---=20
-Martin Waitz
+which is basically almost as dense as having a space on the same line, and 
+will also trigger the old "that's not a valid line, just ignore it" 
+reaction from older versions.
 
---u/esRqyc5dLeU/8t
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
+So the parsing rules for that would simply be:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
+ - if you see a line that starts with a "^<sha1>", then that is the 
+   "unpeeling" of the previous packed entry (which in turn might have been 
+   an unpeeling itself)
 
-iD8DBQFFcHmUj/Eaxd/oD7IRApcaAJ9i5DN9n9rytK7n+p+LbD/tVsgNyACfXy+Y
-9wrflgd/gDnFBiArdjxVPr8=
-=GtIy
------END PGP SIGNATURE-----
+So if you were to have tags pointing to tags, you migt have
+
+	<sha1> refs/tags/tagname
+	^<sha1-unpeeled>
+	^<sha1-unpeeled-of-unpeeled>
+	...
+	<sha1> refs/tags/othertag
+
+In addition, we'd need a line at the top of the file that says "this has 
+unpeeled information", because otherwise we have no way to distinguish 
+between the case of "no actual tag objects" and "old-fashioned ref-pack 
+file without any unpeeling info" - since they'd look identical.
+
+So I'd suggest adding - at the very top of the ref-pack file - a line line
+
+	# Ref-pack version 2
+
+which will be ignored by the current ref-pack reader (again, because it's 
+not a valid ref line), but we can use it in the future to specify further 
+extensions if we want to.
+
+Now somebody would just need to implement that ;)
 
