@@ -5,93 +5,72 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: git-fetch fails with error code 128
-Date: Sat, 16 Dec 2006 22:12:55 +0000
-Message-ID: <200612162212.57771.andyparkins@gmail.com>
-References: <200612142308.45376.andyparkins@gmail.com> <200612150946.14439.andyparkins@gmail.com> <7vy7p8omdh.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sat, 16 Dec 2006 22:15:58 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, Nicolas Pitre <nico@cam.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH 1/2] gitweb: Add an option to href() to return full URL
+Date: Sun, 19 Nov 2006 15:05:21 +0100
+Message-ID: <11639451221153-git-send-email-jnareb@gmail.com>
+References: <200611171236.19030.jnareb@gmail.com>
+NNTP-Posting-Date: Sun, 19 Nov 2006 14:04:16 +0000 (UTC)
+Cc: Jakub Narebski <jnareb@gmail.com>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=of1oQtwzHyjUYjr5JcGmmmGs57xOvGopR+fD8HSr/DgsQB25Orf9KBvu0rFiUjiB8ZV5AHqyoFElJ85R7Cz8j9X5ZSfwWa35Etzu812ZJ4uPreiytEGOEs9s1GW8SvOOldy/1eQxYsF1ls2AAlVfSEtHWWZjP1NlMpde0I/5uAw=
-User-Agent: KMail/1.9.5
-In-Reply-To: <7vy7p8omdh.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+        h=received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=WNTScWAy+D87EcgJ+BDp8Cus8C5IupLAAsA9P5Q6yQ8kK/2BoLhBYKy04W/BXpNyFRRDiqMomqjsOuZx201X2/l9E/sSJiiTkUTUL74zP6lKK9hheafycPcqMiS08SrxpfsUdQgxmLvvEb9995+axez/BkMT/6W9Xwq9Z8qqUBU=
+X-Mailer: git-send-email 1.4.3.4
+In-Reply-To: <200611171236.19030.jnareb@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34648>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gvhot-000377-PQ for gcvg-git@gmane.org; Sat, 16 Dec
- 2006 23:15:52 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31831>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GlnHH-0001hd-Fn for gcvg-git@gmane.org; Sun, 19 Nov
+ 2006 15:04:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1422660AbWLPWPt (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 16 Dec 2006
- 17:15:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422661AbWLPWPt
- (ORCPT <rfc822;git-outgoing>); Sat, 16 Dec 2006 17:15:49 -0500
-Received: from ug-out-1314.google.com ([66.249.92.174]:8280 "EHLO
- ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1422660AbWLPWPs (ORCPT <rfc822;git@vger.kernel.org>); Sat, 16 Dec
- 2006 17:15:48 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so1165870uga for
- <git@vger.kernel.org>; Sat, 16 Dec 2006 14:15:47 -0800 (PST)
-Received: by 10.67.27.3 with SMTP id e3mr3844680ugj.1166307346764; Sat, 16
- Dec 2006 14:15:46 -0800 (PST)
-Received: from grissom.internal.parkins.org.uk ( [84.201.153.164]) by
- mx.google.com with ESMTP id 30sm6655656ugf.2006.12.16.14.15.45; Sat, 16 Dec
- 2006 14:15:46 -0800 (PST)
+ S1756680AbWKSOEB (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 19 Nov 2006
+ 09:04:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756679AbWKSOEB
+ (ORCPT <rfc822;git-outgoing>); Sun, 19 Nov 2006 09:04:01 -0500
+Received: from ug-out-1314.google.com ([66.249.92.173]:27233 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1756677AbWKSOEB
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 19 Nov 2006 09:04:01 -0500
+Received: by ug-out-1314.google.com with SMTP id m3so1015784ugc for
+ <git@vger.kernel.org>; Sun, 19 Nov 2006 06:03:59 -0800 (PST)
+Received: by 10.67.22.14 with SMTP id z14mr5504814ugi.1163945039319; Sun, 19
+ Nov 2006 06:03:59 -0800 (PST)
+Received: from roke.D-201 ( [81.190.24.209]) by mx.google.com with ESMTP id
+ e1sm6914716ugf.2006.11.19.06.03.58; Sun, 19 Nov 2006 06:03:59 -0800 (PST)
+Received: from roke.D-201 (localhost.localdomain [127.0.0.1]) by roke.D-201
+ (8.13.4/8.13.4) with ESMTP id kAJE5OMo016916; Sun, 19 Nov 2006 15:05:24 +0100
+Received: (from jnareb@localhost) by roke.D-201 (8.13.4/8.13.4/Submit) id
+ kAJE5NYe016915; Sun, 19 Nov 2006 15:05:23 +0100
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On Friday 2006, December 15 21:55, Junio C Hamano wrote:
+href subroutine by default generates absolute URL (generated using
+CGI::url(-absolute=>1), and saved in $my_uri) using $my_uri as base;
+add an option to generate full URL using $my_url as base.
 
-> Thanks --- very much appreciated.  When it comes to
-> inter-repository object transfer, we take compatibility very
-> seriously.
+New feature usage: href(..., -full=>1)
 
-Okay.  Before I started bisecting I thought I'd do some other experiments.  
-Having tested fetch from remote and a fetch from local and finding the same 
-results, I've done all the tests locally.
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+ gitweb/gitweb.perl |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
 
-So; here goes.  I've got these directories:
-
- linux-partial/   (this is every patch from v1.0.0 to v2.1.63)
- linux-full/      (this is every patch from v1.0.0 to v2.5.75)
-
-linux-partial/ is the one I reported the original error on, later I confirmed 
-that the same error happened with a local fetch from linux-full.  I cloned 
-both of these.
-
- linux-partial-clone/  (made with git clone linux-partial linux-partial-clone)
- linux-full-clone/     (made with git clone linux-full linux-full-clone)
-
-Tests:
- - A fetch from linux-full to linux-partial, this one failed with error 128
- - A fetch from linux-full-clone to linux-partial, this one failed with
-   error 128
- - A fetch from linux-full to linux-partial-clone, this one succeeded
- - A fetch from linux-full-clone to linux-partial-clone, this one succeeded
-   (unsurprisingly)
-
-Next I ran git-prune in linux-partial.  The fetch then succeeded.  Bizarre.
-
-So, the strange result is that it is a difference in the destination directory 
-that is triggering the error, and whatever that fault is is fixed by 
-git-cloning that destination repository, or git-pruning the destination.
-
-Unfortunately I've now lost my test case, because the prune fixed it.  Bah.  
-Oh well, this fault can be marked "on hold until I get it to fail again".
-
-
-
-Andy
-
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 5875ba0..8739501 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -459,7 +459,8 @@ exit;
+ 
+ sub href(%) {
+ 	my %params = @_;
+-	my $href = $my_uri;
++	# default is to use -absolute url() i.e. $my_uri
++	my $href = $params{-full} ? $my_url : $my_uri;
+ 
+ 	# XXX: Warning: If you touch this, check the search form for updating,
+ 	# too.
 -- 
-Dr Andrew Parkins, M Eng (Hons), AMIEE
+1.4.3.4
