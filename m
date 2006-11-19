@@ -1,103 +1,74 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Peter Baumann <Peter.B.Baumann@stud.informatik.uni-erlangen.de>
-Subject: Re: [PATCH] config option core.showroot to enable showing the diff of the root commit
-Date: Fri, 24 Nov 2006 10:04:11 +0100
-Message-ID: <slrnemddcb.ggq.Peter.B.Baumann@xp.machine.xx>
-References: <200611211341.48862.andyparkins@gmail.com> <8aa486160611210609h1c2d229ekf0b5e8aeb4f21f11@mail.gmail.com> <slrnem694k.4lm.Peter.B.Baumann@xp.machine.xx> <Pine.LNX.4.64.0611210820100.3338@woody.osdl.org> <20061121180643.GC7201@pasky.or.cz> <ejvfng$cj6$1@sea.gmane.org> <20061121182135.GD7201@pasky.or.cz> <7v64d8y4tu.fsf@assigned-by-dhcp.cox.net> <slrnemaqt1.esn.Peter.B.Baumann@xp.machine.xx> <7virh5khrc.fsf@assigned-by-dhcp.cox.net> <slrnemcc0b.ncc.Peter.B.Baumann@xp.machine.xx> <7vejrthf2y.fsf@assigned-by-dhcp.cox.net> <7vzmahfx6q.fsf@assigned-by-dhcp.cox.net> <slrnemd98k.a3v.Peter.B.Baumann@xp.machine.xx> <7vlkm1cjht.fsf@assigned-by-dhcp.cox.net>
-NNTP-Posting-Date: Fri, 24 Nov 2006 09:05:08 +0000 (UTC)
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git-PS1 bash prompt setting
+Date: Sat, 18 Nov 2006 22:28:14 -0800
+Message-ID: <7vhcww7xxd.fsf@assigned-by-dhcp.cox.net>
+References: <20061116130111.921396df.seanlkml@sympatico.ca>
+	<20061117083801.GB11468@fry.bender.fht>
+	<BAYC1-PASMTP0635A081EAC964E03599B4AEE80@CEZ.ICE>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Sun, 19 Nov 2006 06:28:36 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 59
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: mason.hofmann.stw.uni-erlangen.de
-User-Agent: slrn/0.9.8.0 (Linux)
+In-Reply-To: <BAYC1-PASMTP0635A081EAC964E03599B4AEE80@CEZ.ICE>
+	(seanlkml@sympatico.ca's message of "Fri, 17 Nov 2006 04:20:51 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32201>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31828>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GnWzZ-0002Zh-SB for gcvg-git@gmane.org; Fri, 24 Nov
- 2006 10:05:06 +0100
+ esmtp (Exim 4.43) id 1GlgAG-00012z-UJ for gcvg-git@gmane.org; Sun, 19 Nov
+ 2006 07:28:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S934521AbWKXJE6 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 24 Nov 2006
- 04:04:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934522AbWKXJE6
- (ORCPT <rfc822;git-outgoing>); Fri, 24 Nov 2006 04:04:58 -0500
-Received: from main.gmane.org ([80.91.229.2]:4537 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S934521AbWKXJEy (ORCPT
- <rfc822;git@vger.kernel.org>); Fri, 24 Nov 2006 04:04:54 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1GnWzG-0002XY-ML for git@vger.kernel.org; Fri, 24 Nov 2006 10:04:46 +0100
-Received: from mason.hofmann.stw.uni-erlangen.de ([131.188.24.36]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Fri, 24 Nov 2006 10:04:46 +0100
-Received: from Peter.B.Baumann by mason.hofmann.stw.uni-erlangen.de with
- local (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>;
- Fri, 24 Nov 2006 10:04:46 +0100
-To: git@vger.kernel.org
+ S1756481AbWKSG2Q (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 19 Nov 2006
+ 01:28:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756480AbWKSG2Q
+ (ORCPT <rfc822;git-outgoing>); Sun, 19 Nov 2006 01:28:16 -0500
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:29914 "EHLO
+ fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP id S1755204AbWKSG2P
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 19 Nov 2006 01:28:15 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao07.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061119062815.GHAJ27894.fed1rmmtao07.cox.net@fed1rmimpo01.cox.net>; Sun, 19
+ Nov 2006 01:28:15 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id oWTm1V00J1kojtg0000000; Sun, 19 Nov 2006
+ 01:27:47 -0500
+To: Sean <seanlkml@sympatico.ca>
 Sender: git-owner@vger.kernel.org
 
-On 2006-11-24, Junio C Hamano <junkio@cox.net> wrote:
-> Peter Baumann <Peter.B.Baumann@stud.informatik.uni-erlangen.de>
-> writes:
->
->> One question, what's the difference between git-log -p and
->> git-whatchanged -p?
->> ...
->> As you can see, the root commit isn't shown. Is this intentional?
->
-> Some historical background.
->
-> The traditional command do do log-minded things was whatchanged
-> and it was implemented as
->
-> 	git rev-list $revision_args -- $path_limits |
->         git diff-tree --stdin --pretty -r $format_args
->
-> and whatchanged did not give --root to diff-tree by default.
-> And 'diff-tree' does not show --pretty logs when there is no
-> diff to be shown (which still is true today and is a useful
-> behaviour), hence no mention of the root commit.
->
-> On the other hand, "git-log" traditionally looked like this:
->
-> 	git rev-list --pretty $revision_args 
->
-> Back then, there was no path_limits nor even diff options to
-> it.
->
-> Later, Linus (with help from others) made the revision walk
-> machinery as callable inside programs other than "rev-list",
-> eliminating the need to pipe rev-list into diff-tree to perform
-> log-minded things.  That enriched what "git log" can do, and
-> mostly made "whatchanged" a redundant command.  As you may have
-> noticed, there isn't much difference between these two commands
-> in builtin-log.c; their differences are solely what default
-> options for diff and revision machinery are used and are meant
-> to match the traditional behaviour of these commands.
->
-> So there shouldn't be any differences, really, when you override
-> their defaults with the likes of -p.
->
-> Honestly speaking, I do not think there was _any_ consciously
-> designed intention to handle root commits, either to make these
-> commands behave identically or differently; regarding parentless
-> commits, they just behave the way they happen to behave, because
-> root commits were not something either Linus nor I were
-> interested in.
->
-> Given the recent discussion, however, the intention now should
-> be that Porcelain level commands should default to do --root
-> (i.e.  when asked to do "diff" to show how a commit without a
-> parent differs from its nonexistent parent, show diff with
-> emptiness).
->
+Sean <seanlkml@sympatico.ca> writes:
 
-Ah. I see. Thanks for the clarification.
+> On Fri, 17 Nov 2006 09:38:02 +0100
+> Nicolas Vilz <niv@iaglans.de> wrote:
+>
+>> Just a note:
+>> 
+>> this doesn't work with bash 3.2. I think they altered the way of
+>> trimming variables in this version.
+>> 
+>> on systems with bash 3.2 installed, i get
+>> [master!linus-2.6/vm/vm]$ 
+>> with the example above.
+>> 
+>> on systems with bash 3.1, it works properly.
+>
+> Sorry bout that, I knew it was a bit fragile.  Was rather
+> comical reading Junio's recent message about all the things not
+> to do if you want portable shell code and noticing my 6 line script
+> did 90% of them ;o)
 
-Peter
+Maybe I should have been more explicit when I said "${paremeter##word}
+and friends".  Might not have been obvious, but I only meant the
+following four: %, %%, # and ##.
+
+${parameter/pattern/string} and ${parameter//pattern/string} are
+not even in POSIX.
+
