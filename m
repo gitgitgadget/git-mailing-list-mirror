@@ -1,62 +1,75 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Documentation/git-commit: rewrite to make it more end-user friendly.
-Date: Sun, 10 Dec 2006 15:05:11 -0800
-Message-ID: <7vfybn2vyw.fsf@assigned-by-dhcp.cox.net>
-References: <7vy7pik51b.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0612082141260.2630@xanadu.home>
-	<7vd56tei20.fsf_-_@assigned-by-dhcp.cox.net>
-	<200612100130.48812.Josef.Weidendorfer@gmx.de>
-	<20061210210057.GB23387@fieldses.org>
-	<Pine.LNX.4.64.0612101704390.2630@xanadu.home>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: Git manuals
+Date: Sun, 19 Nov 2006 14:36:09 -0500
+Message-ID: <20061119193609.GA21866@fieldses.org>
+References: <20061116221701.4499.qmail@science.horizon.com> <20061117153246.GA20065@thunk.org> <20061117182157.GC11882@fieldses.org> <20061119175040.GB15608@fieldses.org> <20061119175952.GX7201@pasky.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sun, 10 Dec 2006 23:05:37 +0000 (UTC)
-Cc: git@vger.kernel.org, "J. Bruce Fields" <bfields@fieldses.org>
+NNTP-Posting-Date: Sun, 19 Nov 2006 19:36:27 +0000 (UTC)
+Cc: Theodore Tso <tytso@mit.edu>, linux@horizon.com,
+	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <Pine.LNX.4.64.0612101704390.2630@xanadu.home> (Nicolas Pitre's
-	message of "Sun, 10 Dec 2006 17:07:40 -0500 (EST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Content-Disposition: inline
+In-Reply-To: <20061119175952.GX7201@pasky.or.cz>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33954>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GtXjS-0005gy-Hu for gcvg-git@gmane.org; Mon, 11 Dec
- 2006 00:05:18 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31857>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GlsSh-0005iA-Bi for gcvg-git@gmane.org; Sun, 19 Nov
+ 2006 20:36:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1762456AbWLJXFO (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 10 Dec 2006
- 18:05:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762470AbWLJXFO
- (ORCPT <rfc822;git-outgoing>); Sun, 10 Dec 2006 18:05:14 -0500
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:50481 "EHLO
- fed1rmmtao06.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1762456AbWLJXFM (ORCPT <rfc822;git@vger.kernel.org>); Sun, 10 Dec 2006
- 18:05:12 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao06.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061210230511.HULI2628.fed1rmmtao06.cox.net@fed1rmimpo01.cox.net>; Sun, 10
- Dec 2006 18:05:11 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id xB4a1V0011kojtg0000000; Sun, 10 Dec 2006
- 18:04:34 -0500
-To: Nicolas Pitre <nico@cam.org>
+ S933071AbWKSTgP (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 19 Nov 2006
+ 14:36:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933076AbWKSTgP
+ (ORCPT <rfc822;git-outgoing>); Sun, 19 Nov 2006 14:36:15 -0500
+Received: from mail.fieldses.org ([66.93.2.214]:50665 "EHLO
+ pickle.fieldses.org") by vger.kernel.org with ESMTP id S933071AbWKSTgO (ORCPT
+ <rfc822;git@vger.kernel.org>); Sun, 19 Nov 2006 14:36:14 -0500
+Received: from bfields by pickle.fieldses.org with local (Exim 4.63)
+ (envelope-from <bfields@fieldses.org>) id 1GlsSX-0005kG-Av; Sun, 19 Nov 2006
+ 14:36:09 -0500
+To: Petr Baudis <pasky@suse.cz>
 Sender: git-owner@vger.kernel.org
 
-Nicolas Pitre <nico@cam.org> writes:
+On Sun, Nov 19, 2006 at 06:59:52PM +0100, Petr Baudis wrote:
+> On Sun, Nov 19, 2006 at 06:50:40PM CET, J. Bruce Fields wrote:
+> > In fact, I'm tempted to submit a patch that just assigns a chapter
+> > number to everything under Documentation/, slaps a single table of
+> > contents on the front, and calls the result "the git user's manual."
+> > 
+> > Of course, the moment people started trying to read the thing they'd
+> > complain that it was a mess--some stuff referenced without being
+> > introduced, other stuff introduced too many times.  But then over time
+> > maybe that'd force us to mold it into some sort of logical sequence.
+> 
+> Sequencing isn't the only problem. A _manual_ is different from
+> _reference documentation_ in that it does not usually describe command
+> after command, but rather concept after concept. So instead of slamming
+> git-*-pack commands together, you have a section "Handling Packs" where
+> you try to coherently describe the commands together.
+> 
+> Your approach is fine for something you would call "Git Reference
+> Manual", but it is something really different from "The Git Book" or
+> "Git User's Manual".
 
->> Man pages are reference documentation, so I figure it's OK to sacrifice
->> a little newbie-friendliness for accuracy and concision.
->
-> I disagree.  Clarity should be the first goal.  And the fact that even 
-> modified files have to be specified is something worth enphasizing, 
-> especially since this is not something other systems do.
+Yeah, of course, but I wasn't actually thinking of the man pages so much
+as:
+	everyday.txt
+	tutorial.txt
+	tutorial-2.txt
+	core-tutorial.txt
+	howto/
+	hooks.txt
+	README
+	glossary.txt
 
-Let's keep plumbing documentation technical reference material,
-but allow more newbie friendliness in Porcelain-ish
-documentation.
+etc.
+
