@@ -4,87 +4,64 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: [DRAFT 2] Branching and merging with git
-Date: Mon, 4 Dec 2006 02:23:50 -0500
-Message-ID: <20061204072350.GC28043@fieldses.org>
-References: <7vslghftix.fsf@assigned-by-dhcp.cox.net> <20061120235136.4841.qmail@science.horizon.com> <20061204011958.GB28043@fieldses.org>
+From: "Anand Kumria" <wildfire@progsoc.org>
+Subject: Re: how to authenticate with git-svn on a subversion repository
+Date: Sun, 19 Nov 2006 00:43:55 +0000 (UTC)
+Message-ID: <ejo9cb$2l8$1@sea.gmane.org>
+References: <4559D37E.1070703@archlinuxfr.org> <m24pszbede.fsf@ziti.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Mon, 4 Dec 2006 07:23:58 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Sun, 19 Nov 2006 00:44:24 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <20061204011958.GB28043@fieldses.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 19
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 88-110-175-230.dynamic.dsl.as9105.com
+User-Agent: pan 0.117 (We'll fly and we'll fall and we'll burn)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33169>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gr8B9-0007jV-D0 for gcvg-git@gmane.org; Mon, 04 Dec
- 2006 08:23:55 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31817>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GlanF-0006iT-Sy for gcvg-git@gmane.org; Sun, 19 Nov
+ 2006 01:44:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1758992AbWLDHXx (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
- 02:23:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758991AbWLDHXw
- (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 02:23:52 -0500
-Received: from mail.fieldses.org ([66.93.2.214]:25231 "EHLO
- pickle.fieldses.org") by vger.kernel.org with ESMTP id S1758938AbWLDHXv
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006 02:23:51 -0500
-Received: from bfields by pickle.fieldses.org with local (Exim 4.63)
- (envelope-from <bfields@fieldses.org>) id 1Gr8B4-00050q-Mn; Mon, 04 Dec 2006
- 02:23:50 -0500
-To: linux@horizon.com
+ S1755387AbWKSAoH convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Sat, 18 Nov 2006 19:44:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755458AbWKSAoH
+ (ORCPT <rfc822;git-outgoing>); Sat, 18 Nov 2006 19:44:07 -0500
+Received: from main.gmane.org ([80.91.229.2]:9178 "EHLO ciao.gmane.org") by
+ vger.kernel.org with ESMTP id S1755387AbWKSAoE (ORCPT
+ <rfc822;git@vger.kernel.org>); Sat, 18 Nov 2006 19:44:04 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1Glamv-0006fP-I3 for git@vger.kernel.org; Sun, 19 Nov 2006 01:44:01 +0100
+Received: from 88-110-175-230.dynamic.dsl.as9105.com ([88.110.175.230]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Sun, 19 Nov 2006 01:44:01 +0100
+Received: from wildfire by 88-110-175-230.dynamic.dsl.as9105.com with local
+ (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Sun, 19
+ Nov 2006 01:44:01 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On Sun, Dec 03, 2006 at 08:19:58PM -0500, J. Bruce Fields wrote:
-> That doesn't mean *you* need to do everything from scratch, but it would
-> be helpful to figure out where this would fit in with the other
-> documentation in a logical progression.  As a start, the first paragraph
-> could say "before reading this, we assume you've read X, Y, and Z", and
-> then the rest of the document could be audited to make sure that it
-> didn't assume anything that isn't in X, Y, and Z.
+On Thu, 16 Nov 2006 07:27:57 -0800, Seth Falcon wrote:
 
-By the way, I have some draft rough work on getting that introductory
-documentation organized at
+> Com=C3=A8te <comete@archlinuxfr.org> writes:
+>=20
+>> hello !
+>>
+>> i would like to use git-svn to commit some modifications to a
+>> Subversion repository but i don't know where i can enter my username
+>> and password to commit to the repository ? Is there any special file
+>> to put them.
+>> For now i get an error:
+>=20
+> There may be a better way, but if you just use the svn command line
+> client to create a small working copy from the repository, you will
 
-	git://linux-nfs.org/~bfields/git.git
+Or, even simpler, use: svn info <url> which will cache the credentials =
+and
+not require a working copy.
 
-See Documentation/user-manual.txt and Documentation/quick-start.txt.  I
-think I've stolen a small amount of text from you--hope that's OK!
-
-I have two ideas in mind:
-
-	- The tutorial is supposed to a very quick "look what git can
-	  do" document, but people also want it to really explain git,
-	  prepare people to read the man pages, etc., which will make it
-	  much longer over time.  So I'm trying to split out an
-	  extremely concise "quick-start" guide (modelled partly on
-	  Mercurial's) that doesn't even pretend to explain anything, and
-	  a "user manual" that's much more verbose and tries to cover
-	  the basics comprehensively.
-
-	- A lot of people don't actually need to do commits or merges at
-	  all--they just need to know how to clone a repository, check
-	  out a few versions, etc.  (Witness the number of web pages
-	  with "how to check out our latest code from CVS" out
-	  there....) I'm also assuming most people are joining an
-	  ongoing project instead of creating a new one.  So instead of
-	  starting right away with init-db/add/commit, I'm putting off
-	  actual "development" stuff till pretty late:
-
-	  	1. clone
-		2. checking out old versions, basic branch management
-		3. keeping up-to-date with fetch
-		4. bisect
-		5. archaeology (commits DAG, git-log, ...)
-		6. creating commits, index file
-		7. resolving merges, pull
-		8. publishing a public repository, push
-
-	  etc.  I'm hoping you'd be interested in working together on
-	  the last parts (7 and 8 especially).
-
-Comments welcomed...
-
+Anand
