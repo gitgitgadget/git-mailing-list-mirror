@@ -1,64 +1,61 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] cogito: Honor either post-commit script name; fail if both are executable
-Date: Fri, 27 Oct 2006 04:05:49 +0200
-Message-ID: <20061027020549.GY20017@pasky.or.cz>
-References: <874ptzhsjs.fsf@rho.meyering.net>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: Rename detection at git log
+Date: Mon, 20 Nov 2006 11:23:52 +0100
+Message-ID: <200611201023.54146.andyparkins@gmail.com>
+References: <200611201157.23680.litvinov2004@gmail.com> <81b0412b0611200206q4ded162drdc450715d7f801e0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 27 Oct 2006 02:09:36 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Mon, 20 Nov 2006 10:24:19 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=DH82NOYKpextd8A2ifR/b1iyO74IjEKuIAa4dzkd9AjG+M8XbbXbm9DUWA8PZCPbwGyWHCTOP0R4TsTbJqgUZ5DZHmNOKjdTqcp0Dnew2HY/nqCAQv84St1w37k92flI+8WOLEzvCPqH1W70qk98R4VNWU7kEOp1egVJH8ORZb8=
+User-Agent: KMail/1.9.5
+In-Reply-To: <81b0412b0611200206q4ded162drdc450715d7f801e0@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <874ptzhsjs.fsf@rho.meyering.net>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30278>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31898>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GdH6X-0006ie-SQ for gcvg-git@gmane.org; Fri, 27 Oct
- 2006 04:05:54 +0200
+ esmtp (Exim 4.43) id 1Gm6Jm-0007BP-GJ for gcvg-git@gmane.org; Mon, 20 Nov
+ 2006 11:24:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1423743AbWJ0CFv (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
- 22:05:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423746AbWJ0CFv
- (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 22:05:51 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:41959 "EHLO machine.or.cz") by
- vger.kernel.org with ESMTP id S1423743AbWJ0CFu (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 22:05:50 -0400
-Received: (qmail 9582 invoked by uid 2001); 27 Oct 2006 04:05:49 +0200
-To: Jim Meyering <jim@meyering.net>
+ S933964AbWKTKX7 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 20 Nov 2006
+ 05:23:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934013AbWKTKX7
+ (ORCPT <rfc822;git-outgoing>); Mon, 20 Nov 2006 05:23:59 -0500
+Received: from ug-out-1314.google.com ([66.249.92.168]:10277 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S933964AbWKTKX6
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 20 Nov 2006 05:23:58 -0500
+Received: by ug-out-1314.google.com with SMTP id m3so1133974ugc for
+ <git@vger.kernel.org>; Mon, 20 Nov 2006 02:23:57 -0800 (PST)
+Received: by 10.67.27.3 with SMTP id e3mr3047339ugj.1164018237195; Mon, 20
+ Nov 2006 02:23:57 -0800 (PST)
+Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
+ ESMTP id 20sm7526215uga.2006.11.20.02.23.56; Mon, 20 Nov 2006 02:23:56 -0800
+ (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-  Hi!
+On Monday 2006 November 20 10:06, Alex Riesen wrote:
 
-Dear diary, on Fri, Oct 20, 2006 at 06:15:51PM CEST, I got a letter
-where Jim Meyering <jim@meyering.net> said that...
-> I promised this patch some time ago, made the changes,
-> and then never sent them.  This is slightly different
-> from the current implementation in that it fails when both
-> scripts are executable.  Also, it factors out the script names and
-> adds tests.
-> 
-> Signed-off-by: Jim Meyering <jim@meyering.net>
+> remove --pretty=oneline, it is default behavior of git log.
 
-  I'm not sure I like this (of course, I always like additional tests,
-though). The problem is that this loses a smooth upgrade path, things
-suddenly break and you can't commit without having to think about fixing
-your environment. We should always give users enough time for that with
-deprecation warnings. So if we want to get rid of commit-post, we should
-rather start printing deprecation warnings if commit-post exists, and in
-few months cut commit-post off.
+No it's not; are you confusing it with --pretty=short?
+
+
+Andy
 
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
-$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
+Dr Andy Parkins, M Eng (hons), MIEE
