@@ -1,68 +1,79 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [BUG] StGit removed git branch of the same name as StGit branch
-Date: Tue, 21 Nov 2006 11:56:32 +0100
-Message-ID: <20061121105632.GA17021@diana.vm.bytemark.co.uk>
-References: <200611202201.45521.jnareb@gmail.com> <20061120222812.GE12285@fieldses.org> <ejtal6$p8s$1@sea.gmane.org> <20061120224800.GF12285@fieldses.org> <ejtbph$tod$1@sea.gmane.org> <87y7q5y8s6.wl%cworth@cworth.org> <tnx64d9xgex.fsf@arm.com>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: Rename detection at git log
+Date: Mon, 20 Nov 2006 10:50:55 +0100
+Message-ID: <200611200951.05529.andyparkins@gmail.com>
+References: <200611201157.23680.litvinov2004@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Tue, 21 Nov 2006 10:57:00 +0000 (UTC)
-Cc: Carl Worth <cworth@cworth.org>, Jakub Narebski <jnareb@gmail.com>,
-	git@vger.kernel.org
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Mon, 20 Nov 2006 09:51:29 +0000 (UTC)
+Cc: Alexander Litvinov <litvinov2004@gmail.com>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=WIPflXLKPBHT+bfeFwWv3dwRPs9yUZPNkigdApeY8BL4/Tn/6glizpPBe8/vk6K0O8drA7btoU32XIsqrRn8quvuPP84OIJA0Uhg9d6LfQPot9Rau5lE+vjiP0S3pWDguYvvfQw54tefUMbgMOlNmAaJmC67Z3ngj+P/qYFRfvk=
+User-Agent: KMail/1.9.5
+In-Reply-To: <200611201157.23680.litvinov2004@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <tnx64d9xgex.fsf@arm.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31985>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31891>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GmTJ3-0008AW-LD for gcvg-git@gmane.org; Tue, 21 Nov
- 2006 11:56:50 +0100
+ esmtp (Exim 4.43) id 1Gm5o3-0001ty-Vv for gcvg-git@gmane.org; Mon, 20 Nov
+ 2006 10:51:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1030845AbWKUK4p convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Tue, 21 Nov 2006 05:56:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030846AbWKUK4p
- (ORCPT <rfc822;git-outgoing>); Tue, 21 Nov 2006 05:56:45 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:25107 "EHLO
- diana.vm.bytemark.co.uk") by vger.kernel.org with ESMTP id S1030845AbWKUK4p
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2006 05:56:45 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1
- (Debian)) id 1GmTIm-0004aU-00; Tue, 21 Nov 2006 10:56:32 +0000
-To: Catalin Marinas <catalin.marinas@gmail.com>
+ S965253AbWKTJvN (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 20 Nov 2006
+ 04:51:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964901AbWKTJvN
+ (ORCPT <rfc822;git-outgoing>); Mon, 20 Nov 2006 04:51:13 -0500
+Received: from ug-out-1314.google.com ([66.249.92.169]:8347 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S965253AbWKTJvL
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 20 Nov 2006 04:51:11 -0500
+Received: by ug-out-1314.google.com with SMTP id m3so1128415ugc for
+ <git@vger.kernel.org>; Mon, 20 Nov 2006 01:51:10 -0800 (PST)
+Received: by 10.67.121.15 with SMTP id y15mr5926331ugm.1164016269958; Mon, 20
+ Nov 2006 01:51:09 -0800 (PST)
+Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
+ ESMTP id k30sm8122206ugc.2006.11.20.01.51.09; Mon, 20 Nov 2006 01:51:09 -0800
+ (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On 2006-11-21 10:06:30 +0000, Catalin Marinas wrote:
+On Monday 2006 November 20 05:57, Alexander Litvinov wrote:
 
-> I personally don't like mixing StGIT and GIT commands unnecessarily,
-> unless there is no other option (like "git log" since "stg log" has
-> a different meaning). There are people (including me) who use StGIT
-> almost exclusively, without relying on the GIT commands. That's why
-> I duplicated some of the GIT commands.
+> > PAGER=cat git log -M -C --pretty=oneline b/a
 
-I, on the other hand, tend to freely mix git and stgit commands. For
-example, I often commit things with the git emacs modes, but I do all
-my merging with stgit.
+I've come across this too.  Personally I'm not sure what use "-C" is.  From 
+the manpage, man git-diff-files (no, this isn't the place I'd look either).
 
-This is all very straightforward once you learn that stgit just adds a
-thin layer of extra metadata on top of git. All the really valuable
-information is stored in git; what stgit adds is e.g. convenient names
-for patches, and the distinction between commits that are patches and
-commits that aren't (so that you won't edit supposedly immutable
-history by mistake). To me, stgit is a convenient way to edit git
-history, which happens to make patchset maintenance very easy.
+--find-copies-harder
+For performance reasons, by default, -C option finds copies only if the 
+original file of the copy was modified in the same changeset. This flag makes 
+the command inspect unmodified files as candidates for the source of copy. 
+This is a very expensive operation for large projects, so use it with 
+caution.
 
-However, interoperability could be much better than it is. I think
-stgit maintains too much extra metadata on top of what git already
-has.
+That is to say that unless the file you are copying was modified AND copied in 
+the same commit, it won't be searched as a potential source for the copy 
+operation.  I think it would be rare to make a copy of a file I had modified, 
+surely I'd want to check in modifications before making a copy?
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
+Regardlss, to get the results you want, use the stronger 
+switch --find-copies-harder, heeding the warning that on big projects it will 
+be very slow.
+
+
+
+Andy
+-- 
+Dr Andy Parkins, M Eng (hons), MIEE
