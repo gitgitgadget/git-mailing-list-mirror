@@ -1,76 +1,73 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Martin Langhoff (CatalystIT)" <martin@catalyst.net.nz>
-Subject: Re: [PATCH] git-cvsimport: add suport for CVS pserver method HTTP/1.x
-  proxying
-Date: Fri, 24 Nov 2006 11:09:58 +1300
-Message-ID: <45661C36.9010101@catalyst.net.nz>
-References: <11642344172790-git-send-email-iarenuno@eteo.mondragon.edu> <7v64d5keke.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [RFC] Submodules in GIT
+Date: Mon, 20 Nov 2006 15:05:47 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0611201501230.3338@woody.osdl.org>
+References: <20061120215116.GA20736@admingilde.org> <ejt9dh$kfm$1@sea.gmane.org>
+ <7v7ixp20za.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Thu, 23 Nov 2006 22:10:23 +0000 (UTC)
-Cc: Inaki Arenaza <iarenuno@eteo.mondragon.edu>, git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Mon, 20 Nov 2006 23:06:03 +0000 (UTC)
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Mozilla/5.0 (Macintosh; U; PPC Mac OS X Mach-O; en-US; rv:1.7.12) Gecko/20050915
-X-Accept-Language: en-us, en
-In-Reply-To: <7v64d5keke.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <7v7ixp20za.fsf@assigned-by-dhcp.cox.net>
+X-MIMEDefang-Filter: osdl$Revision: 1.159 $
+X-Scanned-By: MIMEDefang 2.36
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32162>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31955>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GnMlq-000437-Ex for gcvg-git@gmane.org; Thu, 23 Nov
- 2006 23:10:14 +0100
+ esmtp (Exim 4.43) id 1GmID7-0005MT-99 for gcvg-git@gmane.org; Tue, 21 Nov
+ 2006 00:05:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S934178AbWKWWKK convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Thu, 23 Nov 2006 17:10:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934182AbWKWWKK
- (ORCPT <rfc822;git-outgoing>); Thu, 23 Nov 2006 17:10:10 -0500
-Received: from godel.catalyst.net.nz ([202.78.240.40]:1453 "EHLO
- mail1.catalyst.net.nz") by vger.kernel.org with ESMTP id S934178AbWKWWKJ
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 23 Nov 2006 17:10:09 -0500
-Received: from leibniz.catalyst.net.nz ([202.78.240.7] helo=[192.168.2.69])
- by mail1.catalyst.net.nz with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA:32)
- (Exim 4.50) id 1GnMlZ-0000jx-Q5; Fri, 24 Nov 2006 11:09:57 +1300
+ S966323AbWKTXFy (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 20 Nov 2006
+ 18:05:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966882AbWKTXFy
+ (ORCPT <rfc822;git-outgoing>); Mon, 20 Nov 2006 18:05:54 -0500
+Received: from smtp.osdl.org ([65.172.181.25]:15757 "EHLO smtp.osdl.org") by
+ vger.kernel.org with ESMTP id S966323AbWKTXFy (ORCPT
+ <rfc822;git@vger.kernel.org>); Mon, 20 Nov 2006 18:05:54 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
+ smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kAKN5mix016647
+ (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Mon, 20
+ Nov 2006 15:05:49 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
+ shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kAKN5l5X005243; Mon, 20 Nov
+ 2006 15:05:48 -0800
 To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano wrote:
-> Except that this statement made me go "huh?" wondering what it
-> would do to the $filehandle to evaluate <$filehandle> in a void
-> context:
->=20
-> +			# Skip the empty line of the proxy server output
-> +			<$s>;
-
-It's a perl idiom that will discard one line of the $filehandle. If we=20
-are 200% certain that it is empty, then it's fine. OTOH, it may well be=
-=20
-a bug in the particular proxy implementation I=C3=B1aki is using -- I d=
-on't=20
-know enough about CVS proxying to tell.
-
-> The "I/O Operators" section talks about evaluating <$s> in a
-> scalar context (i.e. "$rep =3D <$s>"), which we all know would
-> return a single line, and in list context, which swallows
-
-This is in scalar context, and that's safe to rely on. Whether it is=20
-clear enough in this non-Perl-native project... is a good flamewar=20
-waiting to happen :-)
-
-cheers,
 
 
-martin
---=20
------------------------------------------------------------------------
-Martin @ Catalyst .Net .NZ  Ltd, PO Box 11-053, Manners St,  Wellington
-WEB: http://catalyst.net.nz/           PHYS: Level 2, 150-154 Willis St
-OFFICE: +64(4)916-7224                              MOB: +64(21)364-017
-       Make things as simple as possible, but no simpler - Einstein
+On Mon, 20 Nov 2006, Junio C Hamano wrote:
+> 
+> That was shot down by Linus and I agree with him.  "bind" was a
+> bad idea because binding of a particular subproject commit into
+> a tree is a property of the tree, not one of the commits that
+> happen to have that tree.
+
+Yes. I think it would be a _fine_ idea to have a new tree-entry type that 
+points to a sub-commit, but it really does need to be on a "tree level", 
+not a commit level.
+
+If it's on a tree level, getting things like "git diff" etc to work is not 
+impossible, and it will also fit very well into the whole git 
+infrastructure.
+
+So right now a tree entry can be another tree or a blob - and the only 
+extension would be to add a "commit" type (which would largely _act_ as a 
+tree entry, at least for sorting, ie it would use the same "sorts as if it 
+had a '/' at the end" logic).
+
+Now, to get everything to work seamlessly within such a commit thing 
+might be a fair amount of work, but I'm not sure you even _need_ to. It 
+might be ok to just say "subproject 'xyzzy' differs" in the diff, for 
+example, and have some rudimentary support for "git status" etc talking 
+about subprojects that need to be committed.
+
