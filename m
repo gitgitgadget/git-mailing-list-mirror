@@ -1,69 +1,61 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH] diff-format.txt: Expand information about pathnames quoting in patch format
-Date: Thu, 26 Oct 2006 21:03:30 +0200
-Message-ID: <200610262103.31058.jnareb@gmail.com>
+From: Alexander Litvinov <litvinov2004@gmail.com>
+Subject: Re: Rename detection at git log
+Date: Mon, 20 Nov 2006 17:33:42 +0600
+Message-ID: <200611201733.42723.litvinov2004@gmail.com>
+References: <200611201157.23680.litvinov2004@gmail.com> <200611200951.05529.andyparkins@gmail.com> <7vejry5t4g.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain;
-  charset="iso-8859-2"
+  charset="utf-8"
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 26 Oct 2006 19:03:37 +0000 (UTC)
+NNTP-Posting-Date: Mon, 20 Nov 2006 11:34:06 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=GGDfTYDNjaZNDqHnnTen/9NYY8SPMgCThKnfpB4p5Vjkij3q9Qnkf68SLdFTOwmz61sJs9SaFnz0lTuVoSIe7h4cMbUUrEleZj3NM2hSXogWrA3Zkt2l+h5goUYt/dF/3p+iqG+5+r9g2p4UtAtUXhNuHtAUeG8sSPvpsU7CVP4=
-User-Agent: KMail/1.9.3
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=Ae17fbm0Yx4BqtgxbZPR6lA0NY6f/6UwtaWfPhtHIN8JwKEEMUvv1oyte8zhPiPzBzzyGN7vhKGT8+oIkiNqa93XcN33b2Sw2+idrqV82h0CX2rNvomTEpb2Y3ZPLX6OR0/deUimtcxPhAnU5oSoGZ4knYm5hsXhVGm72lBxlAI=
+User-Agent: KMail/1.8
+In-Reply-To: <7vejry5t4g.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30259>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31908>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GdAVV-00055v-U8 for gcvg-git@gmane.org; Thu, 26 Oct
- 2006 21:03:14 +0200
+ esmtp (Exim 4.43) id 1Gm7PO-00049R-Q6 for gcvg-git@gmane.org; Mon, 20 Nov
+ 2006 12:33:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1423724AbWJZTC6 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
- 15:02:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423679AbWJZTC6
- (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 15:02:58 -0400
-Received: from ug-out-1314.google.com ([66.249.92.175]:16427 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1423724AbWJZTC5
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 15:02:57 -0400
-Received: by ug-out-1314.google.com with SMTP id 32so462005ugm for
- <git@vger.kernel.org>; Thu, 26 Oct 2006 12:02:55 -0700 (PDT)
-Received: by 10.66.252.4 with SMTP id z4mr3383056ugh; Thu, 26 Oct 2006
- 12:02:55 -0700 (PDT)
-Received: from host-81-190-23-110.torun.mm.pl ( [81.190.23.110]) by
- mx.google.com with ESMTP id 32sm956556ugf.2006.10.26.12.02.55; Thu, 26 Oct
- 2006 12:02:55 -0700 (PDT)
-To: git@vger.kernel.org
+ S933759AbWKTLdw (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 20 Nov 2006
+ 06:33:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933762AbWKTLdw
+ (ORCPT <rfc822;git-outgoing>); Mon, 20 Nov 2006 06:33:52 -0500
+Received: from ug-out-1314.google.com ([66.249.92.169]:61529 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S933759AbWKTLdv
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 20 Nov 2006 06:33:51 -0500
+Received: by ug-out-1314.google.com with SMTP id m3so1146888ugc for
+ <git@vger.kernel.org>; Mon, 20 Nov 2006 03:33:50 -0800 (PST)
+Received: by 10.67.91.6 with SMTP id t6mr7677060ugl.1164022429397; Mon, 20
+ Nov 2006 03:33:49 -0800 (PST)
+Received: from lan.ac-sw.lcl ( [81.1.223.2]) by mx.google.com with ESMTP id
+ 30sm8230960ugf.2006.11.20.03.33.48; Mon, 20 Nov 2006 03:33:48 -0800 (PST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
- Documentation/diff-format.txt |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
+> What it means is that "git log" will look at path that matches
+> b/a (that means b/a/c and b/a/d are looked at, if b/a were a
+> directory).  Since path "a" which is what the file was
+> originally at is not something the pattern b/a matches, there is
+> no way b/a is noticed as a rename from a.
 
-diff --git a/Documentation/diff-format.txt b/Documentation/diff-format.txt
-index ed4ebcb..f980ecf 100644
---- a/Documentation/diff-format.txt
-+++ b/Documentation/diff-format.txt
-@@ -146,6 +146,9 @@ the file that rename/copy produces, resp
- 
- 3.  TAB, LF, and backslash characters in pathnames are
-     represented as `\t`, `\n`, and `\\`, respectively.
-+    If there is need to quote pathname then the whole
-+    pathname is put in double quotes, and quote characters
-+    in pathname are represented as `\"`.
- 
- 
- combined diff format
--- 
-1.4.3.3
+I have found that git blame show correct commits for this case. But I am still 
+in trouble then examining file's history. I have found I can use 
+git show -C -M commit-sha1 
+for commit there file was created to see if this was a rename :-)
+
