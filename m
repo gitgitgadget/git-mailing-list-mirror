@@ -1,79 +1,74 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: =?ISO-8859-1?Q?Re:_[PATCH_1/3]_make_index-p=E2?= =?ISO-8859-1?Q?ck_able_to_complete_thin_packs?=
-Date: Thu, 26 Oct 2006 12:57:50 +0100
-Message-ID: <b0943d9e0610260457m780dd7d4t95fe36130cbdf551@mail.gmail.com>
-References: <Pine.LNX.4.64.0610252323100.12418@xanadu.home>
-	 <7vr6wvr1ca.fsf@assigned-by-dhcp.cox.net> <ehppbg$phq$1@sea.gmane.org>
-	 <20061026091925.GD13780@diana.vm.bytemark.co.uk>
-	 <tnxac3j4c6c.fsf@arm.com>
-	 <20061026105841.GB16372@diana.vm.bytemark.co.uk>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: Rename detection at git log
+Date: Mon, 20 Nov 2006 12:59:12 +0100
+Message-ID: <200611201159.16596.andyparkins@gmail.com>
+References: <200611201157.23680.litvinov2004@gmail.com> <200611201101.04456.andyparkins@gmail.com> <ejs2lp$2r4$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Thu, 26 Oct 2006 11:58:16 +0000 (UTC)
-Cc: "Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Mon, 20 Nov 2006 11:59:40 +0000 (UTC)
+Cc: Jakub Narebski <jnareb@gmail.com>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Hk1u/Q/c4phr1WrVsyUXFw2zZcHrRmYJHOA3RiESHXw7rw4WPUCti8wfpetPfP1Qob9pdYPRzco2rGWDgKkwvvzTPGtzr19zNyjTv6KqlB1Zv+vrXwtkzsz+QDT9Q9YwCVtO++qCyk+FNt4iNomkxaUdNP+/6p3MKdRsmFrXq6s=
-In-Reply-To: <20061026105841.GB16372@diana.vm.bytemark.co.uk>
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=YAsIYIzjOa3eY5zdAZRiAXTQYXsayGa3H76TAlcXJnVUzZAheu+zdgd168vRx4c/24KoYPMAEz8+OtefsjtmcJ2S3eUo3ZI0xr+Imn3FEEv1MoB+Y9djWNXWhntYh41ZOo0ydxfVGZJxw3TTqLncX4S1CMztUJW2hwbA3BBSjFM=
+User-Agent: KMail/1.9.5
+In-Reply-To: <ejs2lp$2r4$1@sea.gmane.org>
 Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30197>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31909>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gd3rz-0000fi-In for gcvg-git@gmane.org; Thu, 26 Oct
- 2006 13:58:00 +0200
+ esmtp (Exim 4.43) id 1Gm7o4-0007nC-N8 for gcvg-git@gmane.org; Mon, 20 Nov
+ 2006 12:59:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1423276AbWJZL54 convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006 07:57:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423295AbWJZL54
- (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 07:57:56 -0400
-Received: from py-out-1112.google.com ([64.233.166.177]:40485 "EHLO
- py-out-1112.google.com") by vger.kernel.org with ESMTP id S1423276AbWJZL5z
- convert rfc822-to-8bit (ORCPT <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006
- 07:57:55 -0400
-Received: by py-out-1112.google.com with SMTP id z74so312931pyg for
- <git@vger.kernel.org>; Thu, 26 Oct 2006 04:57:55 -0700 (PDT)
-Received: by 10.35.99.17 with SMTP id b17mr3158629pym; Thu, 26 Oct 2006
- 04:57:50 -0700 (PDT)
-Received: by 10.35.103.18 with HTTP; Thu, 26 Oct 2006 04:57:50 -0700 (PDT)
-To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
+ S934078AbWKTL7V (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 20 Nov 2006
+ 06:59:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934081AbWKTL7V
+ (ORCPT <rfc822;git-outgoing>); Mon, 20 Nov 2006 06:59:21 -0500
+Received: from ug-out-1314.google.com ([66.249.92.175]:61134 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S934078AbWKTL7U
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 20 Nov 2006 06:59:20 -0500
+Received: by ug-out-1314.google.com with SMTP id m3so1152063ugc for
+ <git@vger.kernel.org>; Mon, 20 Nov 2006 03:59:19 -0800 (PST)
+Received: by 10.66.216.20 with SMTP id o20mr6093499ugg.1164023959522; Mon, 20
+ Nov 2006 03:59:19 -0800 (PST)
+Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
+ ESMTP id 55sm4507585ugq.2006.11.20.03.59.19; Mon, 20 Nov 2006 03:59:19 -0800
+ (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On 26/10/06, Karl Hasselstr=F6m <kha@treskal.com> wrote:
-> On 2006-10-26 11:13:47 +0100, Catalin Marinas wrote:
-> > Karl Hasselstr=F6m <kha@treskal.com> wrote:
-> > > On 2006-10-26 09:50:48 +0200, Jakub Narebski wrote:
-> > > > That said, git-am should understand QP with coding in mail
-> > > > headers.
-> > >
-> > > I really hope it does, since I just patched StGIT to generate suc=
-h
-> > > headers. (Out of pure vanity -- I don't want my name mangled!)
-> >
-> > It looks like it does, that's how I applied some of your patches
-> > ('stg import' doesn't understand them).
->
-> Hmm. So now I know why you haven't taken my "stg email" patches. I
-> guess I'll have to fix 'stg import' then. :-)
+On Monday 2006 November 20 11:15, Jakub Narebski wrote:
 
-That's one of the reasons (and I didn't have time to document myself
-before giving a proper reply). The other is that Gnus (and gmail)
-doesn't display the messages properly - it shows a lot of "=3D20". Is i=
-t
-possible not to affect the body (or make it optional)? People only
-using "patch" to apply the diffs would have problems with this
-encoding.
+> I'm not sure about this. You usually both do pure renames (to reorganize
+> files, to give file a better name) and renames with modification, but
+> I don't think that copy without modification is very common. Usually you
+> copy a file because you take one file as template for the other, or you
+> split file, or you join files into one file.
 
---=20
+Exactly - unfortunately it's the /source/ that has to be modified to be 
+included in the potential list.  Who copies a file then modifies the 
+original?  The copy is by definition already one of the modified files.
+
+"For performance reasons, by default, -C option finds copies only if the 
+original file of the copy was modified in the same changeset. This flag makes"
+
+Your points about copy-and-change accepted.  Hash comparison is not 
+sufficient.
+
+
+Andy
+
+-- 
+Dr Andy Parkins, M Eng (hons), MIEE
