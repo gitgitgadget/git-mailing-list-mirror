@@ -1,71 +1,106 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Sven Verdoolaege <skimo@kotnet.org>
-Subject: Re: [RFC] Submodules in GIT
-Date: Tue, 05 Dec 2006 17:00:19 +0100
-Message-ID: <20061205160019.GR940MdfPADPa@greensroom.kotnet.org>
-References: <20061121223130.GA24909@nan92-1-81-57-214-146.fbx.proxad.net>
- <200611281335.38728.andyparkins@gmail.com>
- <20061129160355.GF18810@admingilde.org>
- <200611292000.23778.andyparkins@gmail.com>
- <20061130170625.GH18810@admingilde.org> <456F29A2.1050205@op5.se>
- <20061205090125.GA2428@cepheus>
-Reply-To: skimo@liacs.nl
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: Rename detection at git log
+Date: Mon, 20 Nov 2006 13:16:20 +0100
+Message-ID: <200611201216.21752.andyparkins@gmail.com>
+References: <200611201157.23680.litvinov2004@gmail.com> <7virha4cnm.fsf@assigned-by-dhcp.cox.net> <7vfyce2w7d.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-NNTP-Posting-Date: Tue, 5 Dec 2006 16:00:41 +0000 (UTC)
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Mon, 20 Nov 2006 12:16:49 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-reply-to: <20061205090125.GA2428@cepheus>
-Content-disposition: inline
-User-Agent: Mutt/1.5.10i
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=Eb3Babljj7KYHP3mHlI3Axh1PItticR+XmgtenmoVRRZgVCetteP2b1i3r1dnNTDCSPVqVhCen11JlZQ3Co6B5M/aauSoj1p+To/U3FTrR96ihzeZteYmasAzUEfNCRvh7llOFcrHbzZG0x78YSOvKGi+gByUm3rhawd0dw5GT0=
+User-Agent: KMail/1.9.5
+In-Reply-To: <7vfyce2w7d.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33350>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Grcia-0004re-Up for gcvg-git@gmane.org; Tue, 05 Dec
- 2006 17:00:29 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31910>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gm84e-00035M-Mb for gcvg-git@gmane.org; Mon, 20 Nov
+ 2006 13:16:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S968390AbWLEQAX (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 5 Dec 2006
- 11:00:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S968391AbWLEQAW
- (ORCPT <rfc822;git-outgoing>); Tue, 5 Dec 2006 11:00:22 -0500
-Received: from smtp15.wxs.nl ([195.121.247.6]:50832 "EHLO smtp15.wxs.nl"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S968390AbWLEQAW
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 5 Dec 2006 11:00:22 -0500
-Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl
- [84.81.90.170]) by smtp15.wxs.nl (iPlanet Messaging Server 5.2 Patch 2 (built
- Jul 14 2004)) with SMTP id <0J9T00IL85SKXD@smtp15.wxs.nl> for
- git@vger.kernel.org; Tue, 05 Dec 2006 17:00:20 +0100 (CET)
-Received: (qmail 32371 invoked by uid 500); Tue, 05 Dec 2006 16:00:20 +0000
-To: Uwe Kleine-Koenig <zeisberg@informatik.uni-freiburg.de>, Andreas Ericsson
- <ae@op5.se>, Martin Waitz <tali@admingilde.org>, Andy Parkins
- <andyparkins@gmail.com>, git@vger.kernel.org
+ S934111AbWKTMQ3 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 20 Nov 2006
+ 07:16:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934112AbWKTMQ3
+ (ORCPT <rfc822;git-outgoing>); Mon, 20 Nov 2006 07:16:29 -0500
+Received: from ug-out-1314.google.com ([66.249.92.172]:24359 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S934111AbWKTMQ2
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 20 Nov 2006 07:16:28 -0500
+Received: by ug-out-1314.google.com with SMTP id m3so1155745ugc for
+ <git@vger.kernel.org>; Mon, 20 Nov 2006 04:16:27 -0800 (PST)
+Received: by 10.67.119.9 with SMTP id w9mr7739942ugm.1164024986822; Mon, 20
+ Nov 2006 04:16:26 -0800 (PST)
+Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
+ ESMTP id m4sm7596428ugc.2006.11.20.04.16.24; Mon, 20 Nov 2006 04:16:26 -0800
+ (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On Tue, Dec 05, 2006 at 10:01:25AM +0100, Uwe Kleine-Koenig wrote:
-> Hello,
-> 
-> Andreas Ericsson wrote:
-> > The only problem I'm seeing atm is that the supermodule somehow has to 
-> > mark whatever commits it's using from the submodule inside the submodule 
-> > repo so that they effectively become un-prunable, otherwise the 
-> > supermodule may some day find itself with a history that it can't restore.
-> One could circumvent that by creating a separate repo for the submodule
-> at checkout time and pull the needed objects in the supermodule's odb
-> when commiting the supermodule.  This way prune in the submodule cannot
-> do any harm, because in it's odb are no objects that are important for
-> the supermodule.
+On Monday 2006 November 20 11:28, Junio C Hamano wrote:
 
-I _think_ Linus argued against doing this (for scalability reasons),
-although he didn't actually answer my question when I asked him directly.
-In his proposal you wouldn't need to do this, because the particular
-checked-out copy of the submodule that is located in a subdirectory
-of a superproject would not be allowed to be pruned and it seems that
-Martin has also implemented it like this.
+> If people are well disciplined, code refactoring (which can
+> trigger rename/copy detection) tend to affect both source and
+> destination files at the same time, so many times -C finds what
+> you want without --find-copies-harder.
 
+That's true; however, I don't think that refactoring is the common operation.  
+Usually it's (as Jakub says) copy-and-modify-the-copy.  In that case the 
+original is untouched.
+
+> Having said all that, I think the rename/copy as a wholesale
+> operation on one file is an uninteresting special case.  The
+> generic case that happens far more often in practice is the
+> lines moving around across files, and the new "git blame" gives
+> you better picture to answer "where the heck did this come from"
+> question.
+
+To help the version control system underneath, I have always obeyed the 
+discipline of not to copy/move and modify in the same commit.  git has the 
+potential to remove this necessity, but I'd still like all my old commits to 
+have the copies detected correctly.
+
+As an example: I've got a colleague who works on a project where each new 
+version begins as a copy of the old one (it's not the way I'd work, but I 
+think git is flexible enough to cope with anything).  So, project1/ exists 
+and is copied to project2/ to begin work.  I suppose this is effectively 
+branching using the filesystem rather than the version control system.  I 
+noticed (and was surprised) that git didn't detect this as a copy.  No files 
+were changed in the copy, so I thought git would easily spot this.
+
+The problem is that the next project can be a copy of either project1/ or 
+project2/.  All this has already gone on for a few years.  I've recently 
+imported this into git and was examining the history.  I wanted to know for a 
+particular subdirectory (of many) which of the others it was based off.  I 
+was in qgit, and found that the commit didn't show as a copy, it showed as a 
+create, and hence I couldn't tell which was the parent project.  It's a shame 
+because all the mechanisms are there to show the operation, it just isn't 
+shown (without --find-copies-harder).
+
+git-blame is obviously of huge use for these detailed analyses of individual 
+line history.  However, in the simple case of a commit being a 100% copy of 
+another file, git lets me down.  In fact, in the case described above, it 
+wouldn't necessarily help me.  What if it went like this:
+
+project1/ copied to project2/
+project2/ copied to project3/
+
+git-blame on a file in project3/ will show that its contents came from a 
+project1 commit, whereas I want to know it's direct parent.
+
+
+Andy
+-- 
+Dr Andy Parkins, M Eng (hons), MIEE
