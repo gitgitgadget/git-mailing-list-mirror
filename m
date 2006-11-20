@@ -2,130 +2,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] git-cvsimport: add suport for CVS pserver method  HTTP/1.x  proxying
-Date: Fri, 24 Nov 2006 00:57:49 -0800
-Message-ID: <7vfyc9cjci.fsf@assigned-by-dhcp.cox.net>
-References: <11642344172790-git-send-email-iarenuno@eteo.mondragon.edu> <7v64
-	d5keke.fsf@assigned-by-dhcp.cox.net>
-	<67mz6h6xmb.fsf@poseidon.eteo.mondragon.edu>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Feature request: git-pull -e/--edit
+Date: Mon, 20 Nov 2006 09:02:16 +0100
+Organization: At home
+Message-ID: <ejrnbg$sg5$1@sea.gmane.org>
+References: <7vy7q67tf2.fsf@assigned-by-dhcp.cox.net> <20061120024308.18620.qmail@science.horizon.com> <7v8xi67qhq.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 24 Nov 2006 08:57:57 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Mon, 20 Nov 2006 08:01:27 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <67mz6h6xmb.fsf@poseidon.eteo.mondragon.edu> (Ignacio Arenaza's
-	message of "Fri, 24 Nov 2006 09:46:04 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 48
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32200>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31884>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GnWsc-0001Ra-AH for gcvg-git@gmane.org; Fri, 24 Nov
- 2006 09:57:54 +0100
+ esmtp (Exim 4.43) id 1Gm45j-00055q-2U for gcvg-git@gmane.org; Mon, 20 Nov
+ 2006 09:01:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S934520AbWKXI5v (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 24 Nov 2006
- 03:57:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934521AbWKXI5v
- (ORCPT <rfc822;git-outgoing>); Fri, 24 Nov 2006 03:57:51 -0500
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:12750 "EHLO
- fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP id S934520AbWKXI5v
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 24 Nov 2006 03:57:51 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao05.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061124085750.MBGU20330.fed1rmmtao05.cox.net@fed1rmimpo02.cox.net>; Fri, 24
- Nov 2006 03:57:50 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id qYxy1V00A1kojtg0000000; Fri, 24 Nov 2006
- 03:57:58 -0500
-To: Ignacio Arenaza <iarenuno@eteo.mondragon.edu>
+ S933753AbWKTIBJ convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Mon, 20 Nov 2006 03:01:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933684AbWKTIBI
+ (ORCPT <rfc822;git-outgoing>); Mon, 20 Nov 2006 03:01:08 -0500
+Received: from main.gmane.org ([80.91.229.2]:33733 "EHLO ciao.gmane.org") by
+ vger.kernel.org with ESMTP id S933753AbWKTIBH (ORCPT
+ <rfc822;git@vger.kernel.org>); Mon, 20 Nov 2006 03:01:07 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1Gm45H-0004za-K3 for git@vger.kernel.org; Mon, 20 Nov 2006 09:00:55 +0100
+Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Mon, 20 Nov 2006 09:00:55 +0100
+Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Mon, 20 Nov 2006
+ 09:00:55 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Ignacio Arenaza <iarenuno@eteo.mondragon.edu> writes:
+Junio C Hamano wrote:
 
-> ... Will send a new patch with all the
-> comments made so far in a few hours.
+> So if we rename the current "git merge" to "git-merge--record"
 
-Let's save a bit of trouble from you.  Here is what I've queued
-for 'master', with fixes from the discussion so far.
+or git-merge-driver
 
----
-diff --git a/git-cvsimport.perl b/git-cvsimport.perl
-index b54a948..4310dea 100755
---- a/git-cvsimport.perl
-+++ b/git-cvsimport.perl
-@@ -161,8 +161,22 @@ sub new {
- sub conn {
- 	my $self = shift;
- 	my $repo = $self->{'fullrep'};
--	if($repo =~ s/^:pserver:(?:(.*?)(?::(.*?))?@)?([^:\/]*)(?::(\d*))?//) {
--		my($user,$pass,$serv,$port) = ($1,$2,$3,$4);
-+	if($repo =~ s/^:pserver(?:([^:]*)):(?:(.*?)(?::(.*?))?@)?([^:\/]*)(?::(\d*))?//) {
-+		my($param,$user,$pass,$serv,$port) = ($1,$2,$3,$4,$5);
-+
-+		my($proxyhost,$proxyport);
-+		if($param && ($param =~ m/proxy=([^;]+)/)) {
-+			$proxyhost = $1;
-+			# Default proxyport, if not specified, is 8080.
-+			$proxyport = 8080;
-+			if($ENV{"CVS_PROXY_PORT"}) {
-+				$proxyport = $ENV{"CVS_PROXY_PORT"};
-+			}
-+			if($param =~ m/proxyport=([^;]+)/){
-+				$proxyport = $1;
-+			}
-+		}
-+
- 		$user="anonymous" unless defined $user;
- 		my $rr2 = "-";
- 		unless($port) {
-@@ -187,13 +201,43 @@ sub conn {
- 		}
- 		$pass="A" unless $pass;
- 
--		my $s = IO::Socket::INET->new(PeerHost => $serv, PeerPort => $port);
--		die "Socket to $serv: $!\n" unless defined $s;
-+		my ($s, $rep);
-+		if($proxyhost) {
-+
-+			# Use a HTTP Proxy. Only works for HTTP proxies that
-+			# don't require user authentication
-+			#
-+			# See: http://www.ietf.org/rfc/rfc2817.txt
-+
-+			$s = IO::Socket::INET->new(PeerHost => $proxyhost, PeerPort => $proxyport);
-+			die "Socket to $proxyhost: $!\n" unless defined $s;
-+			$s->write("CONNECT $serv:$port HTTP/1.1\r\nHost: $serv:$port\r\n\r\n")
-+	                        or die "Write to $proxyhost: $!\n";
-+	                $s->flush();
-+
-+			$rep = <$s>;
-+
-+			# The answer should look like 'HTTP/1.x 2yy ....'
-+			if(!($rep =~ m#^HTTP/1\.. 2[0-9][0-9]#)) {
-+				die "Proxy connect: $rep\n";
-+			}
-+			# Skip up to the empty line of the proxy server output
-+			# including the response headers.
-+			while ($rep = <$s>) {
-+				last if (!defined $rep ||
-+					 $rep eq "\n" ||
-+					 $rep eq "\r\n");
-+			}
-+		} else {
-+			$s = IO::Socket::INET->new(PeerHost => $serv, PeerPort => $port);
-+			die "Socket to $serv: $!\n" unless defined $s;
-+		}
-+
- 		$s->write("BEGIN AUTH REQUEST\n$repo\n$user\n$pass\nEND AUTH REQUEST\n")
- 			or die "Write to $serv: $!\n";
- 		$s->flush();
- 
--		my $rep = <$s>;
-+		$rep = <$s>;
- 
- 		if($rep ne "I LOVE YOU\n") {
- 			$rep="<unknown>" unless $rep;
+> (or any name "git pull" uses internally to record the merge
+> commit), and make "git merge" a synonym to "git pull .", and
+> give a command line option -m to "git pull" to _affect_ the
+> resulting merge message, I would think everybody would become
+> quite happy. =A0It means:
+>=20
+> =A0- People can say "git merge this-branch" (which is internally
+> =A0 =A0translated to "git pull . this-branch");
+>=20
+> =A0- People can say "git pull -m 'I am doing this merge for such
+> =A0 =A0and such reason' $URL $branch" to _include_ that message in
+> =A0 =A0the resulting merge commit;
+>=20
+> =A0- The same can be said about "git merge -m 'comment' $branch".
+>=20
+> I said _affect_ and _include_ in the above because I suspect
+> that most of the time you do not want to _replace_ the
+> autogenerated part ("Merge branch of repo", and if you are
+> pulling from your subordinate trees the merge summary message as
+> well).
+
+I'm all for adding -m <msg> option to git-pull (and perhaps also common
+other message generation options: -F <file>, --edit). I'm even for addi=
+ng
+-m option to git-merge.=20
+
+Making "git merge" to be a synonym to "git pull ."... I'm not so sure.
+I'd rather we don't lose the ability to give arbitrary refs ar "other"
+heads like in
+
+  git merge "Merge early part of branch 'topicA'" HEAD topicA~3
+
+example, and ability (if there is such ability) to not include HEAD (cu=
+rrent
+version of branch) as first parent like in
+
+  git checkout pu
+  git merge "Merge branch 'topicA', 'topicB'" topicA topicB
+
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
+
