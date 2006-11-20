@@ -1,86 +1,103 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [RFD] making separate-remote layout easier to use
-Date: Sat, 25 Nov 2006 19:37:05 -0800
-Message-ID: <7virh2zxni.fsf@assigned-by-dhcp.cox.net>
-References: <7v1wnr19do.fsf@assigned-by-dhcp.cox.net>
-	<ekafpm$fs7$1@sea.gmane.org> <7vvel3yuzz.fsf@assigned-by-dhcp.cox.net>
-	<200611260034.23974.jnareb@gmail.com>
+From: Eran Tromer <git2eran@tromer.org>
+Subject: Re: Feature request: git-pull -e/--edit
+Date: Mon, 20 Nov 2006 15:42:13 +0200
+Message-ID: <4561B0B5.1020305@tromer.org>
+References: <7vy7q67tf2.fsf@assigned-by-dhcp.cox.net>	<20061120024308.18620.qmail@science.horizon.com> <7v8xi67qhq.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sun, 26 Nov 2006 03:37:16 +0000 (UTC)
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Mon, 20 Nov 2006 13:43:42 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <200611260034.23974.jnareb@gmail.com> (Jakub Narebski's message
-	of "Sun, 26 Nov 2006 00:34:23 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.8) Gecko/20061107 Fedora/1.5.0.8-1.fc5 Thunderbird/1.5.0.8 Mnenhy/0.7.4.0
+In-Reply-To: <7v8xi67qhq.fsf@assigned-by-dhcp.cox.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32320>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31913>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GoApM-0000iP-5u for gcvg-git@gmane.org; Sun, 26 Nov
- 2006 04:37:12 +0100
+ esmtp (Exim 4.43) id 1Gm9Qg-0006KZ-2V for gcvg-git@gmane.org; Mon, 20 Nov
+ 2006 14:43:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S967255AbWKZDhI (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 25 Nov 2006
- 22:37:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967262AbWKZDhI
- (ORCPT <rfc822;git-outgoing>); Sat, 25 Nov 2006 22:37:08 -0500
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:10957 "EHLO
- fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP id S967255AbWKZDhG
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 25 Nov 2006 22:37:06 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao01.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061126033706.IBMR9173.fed1rmmtao01.cox.net@fed1rmimpo01.cox.net>; Sat, 25
- Nov 2006 22:37:06 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id rFca1V00X1kojtg0000000; Sat, 25 Nov 2006
- 22:36:35 -0500
-To: Jakub Narebski <jnareb@gmail.com>
+ S934165AbWKTNnR (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 20 Nov 2006
+ 08:43:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934166AbWKTNnR
+ (ORCPT <rfc822;git-outgoing>); Mon, 20 Nov 2006 08:43:17 -0500
+Received: from line108-16.adsl.actcom.co.il ([192.117.108.16]:46783 "EHLO
+ lucian.tromer.org") by vger.kernel.org with ESMTP id S934165AbWKTNnQ (ORCPT
+ <rfc822;git@vger.kernel.org>); Mon, 20 Nov 2006 08:43:16 -0500
+Received: from [192.168.4.6] ([192.168.4.6]) by lucian.tromer.org
+ (8.13.8/8.12.11) with ESMTP id kAKDh6MA019169; Mon, 20 Nov 2006 15:43:07
+ +0200
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Jakub Narebski <jnareb@gmail.com> writes:
+On 2006-11-20 05:21, Junio C Hamano wrote:
+> linux@horizon.com writes:
 
-> Well, the question is if git-clone would generate appropriate config 
-> entries in addition to or instead of $GIT_DIR/remotes/origin file...
+>> (Indeed, it might be nice to come up with a way of including a piece of
+>> the "please pull" e-mail, similar to the way that git-applypatch works.)
+> 
+> That is a lot more relevant example.  For example, I could
+> imagine that Linus coming up with a wrapper that is fed a series
+> of e-mails and:
+> 
+[snip]
+>    - otherwise annotate the commit message with the explanation
+>      of the series taken from the pull request message.
+[snip]
+>  - People can say "git pull -m 'I am doing this merge for such
+>    and such reason' $URL $branch" to _include_ that message in
+>    the resulting merge commit;
+> 
+>  - The same can be said about "git merge -m 'comment' $branch".
 
-What I meant by "irrelevant" is that it is purely syntax.  I
-would rather nail down the desired semantics first, and then
-worry about the syntax.  We have done remotes/origin file by
-default and allowed the same thing specified in configuration
-file for people who prefer configuration file, and I do not see
-an immediate need to change that.
 
-Only if/when the desired semantics turns out to be too complex
-to be expressed in the remotes/ file scheme and at the same time
-if configuration file is easier to express the same information,
-we should start talking about favoring configuration file over
-remotes/ file, and perhaps generating the config entries by
-default without generating remotes/.
+What about fast forwards? Do you get to record the explanation for the
+series only if the guy you pulled from didn't bother to do a rebase?
+That's broken.
 
-In either case, I do not think generating _both_ by default is a
-bad idea.  They will become out of sync and the user either need
-to delete one or the other to avoid confusion.
+Let's face it, the merge commits generated when pulling have two
+completely independent uses:
+1. They're technically necessary for joining DAG nodes that don't all
+   lie on one path.
+2. They're useful as a record of workflow and a place to put comments.
 
-> By the way, what do you think about extended refspec syntax, namely
-> in addition to <remote name>:<local name> it would allow to say
-> <remote name>:<local name>:<local branch to merge into>?
+The two uses are nearly independent.
+Consider the following silly DAG.
 
-I do not think it is reasonable to assume that one remote branch
-is to be always merged into one fixed local branch, so that is
-too limiting as an extension.  In the configuration file, I
-think we already allow the default remote to be fetched from and
-remote branches to be merged per branch statically.  A
-reasonable thing to do is to see how satisfied users are with
-that facility, what they find missing there. Worrying about the
-syntax should wait until we know what kind of things need to be
-expressed; that can be done both by extending the existing
-configuration and/or introducing a new entries in remotes/
-files but the point is that is mere implementation detail.
+  A------------F master
+   \          /
+    B--C--D--E
 
+Yes, E and F have identical trees. But it's actually *very useful*, if
+the commit message at F says "merged branch foo containing experimental
+bar from quux". And it shows up nicely when looking at gitk.
+
+Of course, you could just fast-forward instead:
+
+  A--B--C--D--E master
+
+but then you lose a meaningful and useful part of the historical record.
+
+There are the obvious bad consequences if you make this the default,
+but how about adding a --force-commit option to merge and pull?
+
+You'd need to educate users on how to use this responsibly to avoid
+noise, but that's not any different from existing stuff like rebase and
+revert. Most users won't even know it exists.
+
+And to answer Linus: yes, it's expected that only non-leaf developers
+will use --force-commit on regular basis, but that's not because
+maintainers are technically special in any way. It's just because
+maintainers have something useful to say ("someone's private topic
+branch, starting at A and ending at E, has just been accepted into my
+all-important public repo and here's why"). Anyone else can do the same
+if he feels likewise.
 
