@@ -1,67 +1,63 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: =?ISO-8859-1?Q?Com=E8te?= <comete@archlinuxfr.org>
-Subject: how to authenticate with git-svn on a subversion repository
-Date: Tue, 14 Nov 2006 15:32:30 +0100
-Message-ID: <4559D37E.1070703@archlinuxfr.org>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: Rename detection at git log
+Date: Mon, 20 Nov 2006 12:17:37 +0100
+Message-ID: <200611201117.39244.andyparkins@gmail.com>
+References: <200611201157.23680.litvinov2004@gmail.com> <200611201023.54146.andyparkins@gmail.com> <7vd57i4cij.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Wed, 15 Nov 2006 02:28:56 +0000 (UTC)
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Mon, 20 Nov 2006 11:18:22 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.8 (X11/20061108)
-X-Ovh-Remote: 88.137.49.140 (88-137-49-140.adslgp.cegetel.net)
-X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=FmLnA/VOlCEIQTI3MLFHAoPV/h/eCOWrgM+YiTTiSHi48ULOPlJm1JqK8r/KG//b4AktVMM7JZYtZRQJUsefeNrMQToWmWFUzIkgpfYRL9NMnf1mCM/tUg2zOfJZZGGfMhywUs1YUUK38c+SY5P1SHfGS0DCsiP+MHTt/4Y/3UA=
+User-Agent: KMail/1.9.5
+In-Reply-To: <7vd57i4cij.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31405>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31905>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GkAWE-0005Gy-BQ for gcvg-git@gmane.org; Wed, 15 Nov
- 2006 03:28:54 +0100
+ esmtp (Exim 4.43) id 1Gm7AJ-0001rk-QH for gcvg-git@gmane.org; Mon, 20 Nov
+ 2006 12:18:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1754376AbWKOC2v convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Tue, 14 Nov 2006 21:28:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754840AbWKOC2v
- (ORCPT <rfc822;git-outgoing>); Tue, 14 Nov 2006 21:28:51 -0500
-Received: from 42.mail-out.ovh.net ([213.251.189.42]:14536 "EHLO
- 42.mail-out.ovh.net") by vger.kernel.org with ESMTP id S1754376AbWKOC2u
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 14 Nov 2006 21:28:50 -0500
-Received: (qmail 2053 invoked by uid 503); 14 Nov 2006 14:32:15 -0000
-Received: from b6.ovh.net (HELO mail241.ha.ovh.net) (213.186.33.56) by
- 42.mail-out.ovh.net with SMTP; 14 Nov 2006 14:32:15 -0000
-Received: from b0.ovh.net (HELO queue-out) (213.186.33.50) by b0.ovh.net with
- SMTP; 14 Nov 2006 14:31:46 -0000
-Received: from 88-137-49-140.adslgp.cegetel.net (HELO ?192.168.5.10?)
- (morgan.lefieux%daknet.org@88.137.49.140) by ns0.ovh.net with SMTP; 14 Nov
- 2006 14:31:45 -0000
+ S1756724AbWKTLRq (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 20 Nov 2006
+ 06:17:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755909AbWKTLRp
+ (ORCPT <rfc822;git-outgoing>); Mon, 20 Nov 2006 06:17:45 -0500
+Received: from ug-out-1314.google.com ([66.249.92.171]:30485 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1756806AbWKTLRo
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 20 Nov 2006 06:17:44 -0500
+Received: by ug-out-1314.google.com with SMTP id m3so1143958ugc for
+ <git@vger.kernel.org>; Mon, 20 Nov 2006 03:17:43 -0800 (PST)
+Received: by 10.67.91.6 with SMTP id t6mr7654828ugl.1164021462568; Mon, 20
+ Nov 2006 03:17:42 -0800 (PST)
+Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
+ ESMTP id h1sm7519688ugf.2006.11.20.03.17.41; Mon, 20 Nov 2006 03:17:42 -0800
+ (PST)
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-hello !
+On Monday 2006 November 20 10:51, Junio C Hamano wrote:
 
-i would like to use git-svn to commit some modifications to a Subversio=
-n=20
-repository but i don't know where i can enter my username and password=20
-to commit to the repository ? Is there any special file to put them.
-=46or now i get an error:
+> I think Alex (Riesen) is saying "you (Alex Litvinov) were
+> wondering why you do not see the commit log message but only the
+> first line. That is because you are using --pretty=oneline.
+> Lose it, then you would get what you want because giving the log
+> message _is_ the default".
 
-# git-svn commit remotes/git-svn
-Autorisation refus=E9e: MKACTIVITY de=20
-'/svn/!svn/act/8115f5df-c0da-4a6d-91ef-135dcb76141c': =C9chec =E0=20
-l'autorisation (http://projet.archlinuxfr.org) at /usr/bin/git-svn line=
- 553
-512 at /usr/bin/git-svn line 574
-	main::commit_lib('f45ba41060287fedfcedfb5fc4c29ecfe30a7466') called at=
-=20
-/usr/bin/git-svn line 480
-	main::commit('remotes/git-svn') called at /usr/bin/git-svn line 172
+You're right.  Apologies to Alex for my misunderstanding.
 
-
-Thanks
-
+-- 
+Dr Andy Parkins, M Eng (hons), MIEE
