@@ -1,78 +1,74 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Salikh Zakirov <Salikh.Zakirov@Intel.com>
-Subject: Re: [PATCH] Make git-clone --use-separate-remote the default
-Date: Fri, 24 Nov 2006 14:56:52 +0300
-Message-ID: <ek6mm5$j2f$1@sea.gmane.org>
-References: <20061123225835.30071.99265.stgit@machine.or.cz>	<7vejrtiwqd.fsf@assigned-by-dhcp.cox.net>	<20061123234203.GN7201@pasky.or.cz>	<7vlkm1hf57.fsf@assigned-by-dhcp.cox.net>	<7vzmahe6qe.fsf@assigned-by-dhcp.cox.net>	<7vpsbde4fy.fsf@assigned-by-dhcp.cox.net> <ek6glc$pn$1@sea.gmane.org> <7vslg9axzv.fsf@assigned-by-dhcp.cox.net>
+From: Martin Waitz <tali@admingilde.org>
+Subject: Re: [RFC] Submodules in GIT
+Date: Tue, 21 Nov 2006 00:52:56 +0100
+Message-ID: <20061120235256.GE20736@admingilde.org>
+References: <20061120215116.GA20736@admingilde.org> <ejt9dh$kfm$1@sea.gmane.org> <7v7ixp20za.fsf@assigned-by-dhcp.cox.net> <ejtc3e$tod$2@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Fri, 24 Nov 2006 11:57:33 +0000 (UTC)
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="lteA1dqeVaWQ9QQl"
+NNTP-Posting-Date: Mon, 20 Nov 2006 23:53:43 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 30
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: msfwpr01.ims.intel.com
-User-Agent: Thunderbird 1.5.0.8 (Windows/20061025)
-In-Reply-To: <7vslg9axzv.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
+In-Reply-To: <ejtc3e$tod$2@sea.gmane.org>
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
+User-Agent: Mutt/1.5.9i
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32213>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31961>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GnZgE-0006BH-KA for gcvg-git@gmane.org; Fri, 24 Nov
- 2006 12:57:19 +0100
+ esmtp (Exim 4.43) id 1GmIwf-0007Z3-6P for gcvg-git@gmane.org; Tue, 21 Nov
+ 2006 00:53:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S934292AbWKXL5O (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 24 Nov 2006
- 06:57:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934285AbWKXL5O
- (ORCPT <rfc822;git-outgoing>); Fri, 24 Nov 2006 06:57:14 -0500
-Received: from main.gmane.org ([80.91.229.2]:61919 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S934292AbWKXL5N (ORCPT
- <rfc822;git@vger.kernel.org>); Fri, 24 Nov 2006 06:57:13 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1GnZg3-00068f-IX for git@vger.kernel.org; Fri, 24 Nov 2006 12:57:07 +0100
-Received: from msfwpr01.ims.intel.com ([62.118.80.132]) by main.gmane.org
- with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Fri, 24 Nov 2006 12:57:07 +0100
-Received: from Salikh.Zakirov by msfwpr01.ims.intel.com with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Fri, 24 Nov 2006
- 12:57:07 +0100
-To: git@vger.kernel.org
+ S966883AbWKTXw6 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 20 Nov 2006
+ 18:52:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966880AbWKTXw5
+ (ORCPT <rfc822;git-outgoing>); Mon, 20 Nov 2006 18:52:57 -0500
+Received: from agent.admingilde.org ([213.95.21.5]:47531 "EHLO
+ mail.admingilde.org") by vger.kernel.org with ESMTP id S966883AbWKTXw5 (ORCPT
+ <rfc822;git@vger.kernel.org>); Mon, 20 Nov 2006 18:52:57 -0500
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1) id
+ 1GmIwa-0004LP-Bq; Tue, 21 Nov 2006 00:52:56 +0100
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano wrote:
-> and if you write
-> 
-> 	git push $remote master
-> 
-> it is handled exactly as if you wrote:
-> 
-> 	git push $remote master:master
-> 
-> The manual correctly describes the above, but the issue the fix
-> addresses is about what happens to that 'master' string that
-> follows the colon, and the 'master' string becomes ambiguous if
-> the remote end uses separate-remote layout.
 
-Indeed, the manual describes it correctly.
-My point is that this semantics fairly complex
-and easy to understand incorrectly.
+--lteA1dqeVaWQ9QQl
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> Even under separate-remote layout, we would want to be able to
-> say:
-> 
-> 	git push master
-> 
-> to mean we want to push to remote's heads/master when the remote
-> has remotes/{origin,blech}/master.
+hoi :)
 
-I agree with your main point that 'git push master' should "just work"
-for all existing and new repositories, however,
-it is very confusing that 'git push master' can update something other than
-refs/heads/master, depending on the refs existing in the remote repo.
+On Tue, Nov 21, 2006 at 12:02:34AM +0100, Jakub Narebski wrote:
+> By the way, what permissions get the subproject tree?
+
+In my approach no permissions are saved in the object database,
+only the special bit to mark the submodule.
+When checking out, the directory is created 0777 modulo umask,
+just as other directories.  Then the submodule contents
+are checked out with their normal permissions.
+
+--=20
+Martin Waitz
+
+--lteA1dqeVaWQ9QQl
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFFYj/Yj/Eaxd/oD7IRAniXAJ4zZPGwTPLojG9cnGNGsXcqUjAsxQCff3hp
+uW75d8QDLAFvlidV1Yy6nwc=
+=FvQi
+-----END PGP SIGNATURE-----
+
