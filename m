@@ -1,80 +1,73 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
-Subject: Re: [PATCH] git-merge: make it usable as the first class UI
-Date: Mon, 20 Nov 2006 14:00:48 -0300
-Message-ID: <200611201700.kAKH0msM012002@laptop13.inf.utfsm.cl>
-References: <junkio@cox.net>
-NNTP-Posting-Date: Mon, 20 Nov 2006 17:07:46 +0000 (UTC)
-Cc: git@vger.kernel.org, linux@horizon.com
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: [WISH] Store also tag dereferences in packed-refs
+Date: Mon, 20 Nov 2006 13:56:10 +0100
+Message-ID: <e5bfff550611200456l4bc730fcvd91c01843aeb6c64@mail.gmail.com>
+References: <e5bfff550611180115j135746a1h916e8ae029d1374d@mail.gmail.com>
+	 <e5bfff550611191107o63d89d8bp5ff4080803a0d784@mail.gmail.com>
+	 <e5bfff550611191209s63982818vd3999b543e68e8df@mail.gmail.com>
+	 <Pine.LNX.4.64.0611191219350.3692@woody.osdl.org>
+	 <7vbqn38831.fsf@assigned-by-dhcp.cox.net>
+	 <Pine.LNX.4.64.0611191310430.3692@woody.osdl.org>
+	 <ejqhvi$9kc$1@sea.gmane.org>
+	 <Pine.LNX.4.64.0611191527270.3692@woody.osdl.org>
+	 <7vr6vy7smi.fsf@assigned-by-dhcp.cox.net> <ejrt37$fg9$1@sea.gmane.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Mon, 20 Nov 2006 12:57:03 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: Message from Junio C Hamano <junkio@cox.net> 
-   of "Mon, 20 Nov 2006 02:17:46 -0800." <7vu00u4e2d.fsf@assigned-by-dhcp.cox.net> 
-X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.5  (beta27)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-2.0.2 (inti.inf.utfsm.cl [200.1.19.1]); Mon, 20 Nov 2006 14:00:52 -0300 (CLST)
-X-Virus-Scanned: ClamAV version 0.88.5, clamav-milter version 0.88.5 on inti.inf.utfsm.cl
-X-Virus-Status: Clean
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=StO9HyrlUhfpP75I7ypNHIEHcW/qjmao300aM20ZTDGv+H/f0+atjeqi+dBFlg9OIhNrHPIf2HLVUclL/74JlY1bN5D6D76ZLsmgDh+IM8ijrLmAstAY3uRiVgqMl75VBHEqxpxXndaoFdi7Wu/XN3ff4F+ugbz5GZjk98s5G2c=
+In-Reply-To: <ejrt37$fg9$1@sea.gmane.org>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31922>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31911>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GmCbi-0007qq-Js for gcvg-git@gmane.org; Mon, 20 Nov
- 2006 18:06:59 +0100
+ esmtp (Exim 4.43) id 1Gm8hd-0004Ub-A0 for gcvg-git@gmane.org; Mon, 20 Nov
+ 2006 13:56:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S966216AbWKTRGW (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 20 Nov 2006
- 12:06:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966217AbWKTRGW
- (ORCPT <rfc822;git-outgoing>); Mon, 20 Nov 2006 12:06:22 -0500
-Received: from inti.inf.utfsm.cl ([200.1.21.155]:39610 "EHLO
- inti.inf.utfsm.cl") by vger.kernel.org with ESMTP id S966216AbWKTRGV (ORCPT
- <rfc822;git@vger.kernel.org>); Mon, 20 Nov 2006 12:06:21 -0500
-Received: from laptop13.inf.utfsm.cl (laptop13.inf.utfsm.cl [200.1.19.201])
- by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id kAKH0pQo024231
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO); Mon, 20
- Nov 2006 14:00:51 -0300
-Received: from laptop13.inf.utfsm.cl (laptop13.inf.utfsm.cl [127.0.0.1]) by
- laptop13.inf.utfsm.cl (8.13.8/8.13.8) with ESMTP id kAKH0msM012002; Mon, 20
- Nov 2006 14:00:48 -0300
-To: Junio C Hamano <junkio@cox.net>
+ S965753AbWKTM4p (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 20 Nov 2006
+ 07:56:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934155AbWKTM4p
+ (ORCPT <rfc822;git-outgoing>); Mon, 20 Nov 2006 07:56:45 -0500
+Received: from py-out-1112.google.com ([64.233.166.183]:25040 "EHLO
+ py-out-1112.google.com") by vger.kernel.org with ESMTP id S934154AbWKTM4o
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 20 Nov 2006 07:56:44 -0500
+Received: by py-out-1112.google.com with SMTP id a29so992696pyi for
+ <git@vger.kernel.org>; Mon, 20 Nov 2006 04:56:11 -0800 (PST)
+Received: by 10.35.93.19 with SMTP id v19mr590963pyl.1164027370175; Mon, 20
+ Nov 2006 04:56:10 -0800 (PST)
+Received: by 10.35.42.4 with HTTP; Mon, 20 Nov 2006 04:56:10 -0800 (PST)
+To: "Jakub Narebski" <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano <junkio@cox.net> wrote:
+> >
+> > For this particular one, there is no need for version 2.
+>
+> Actually, I think it is both true and untrue. True, because we need some
+> indicator that we trust packed-refs file to provide tag dereferences to
+> distinguish between the case when there are no tag objects at all, so there
+> are no tag dereferences in packed-refs, and the situation where we use
+> packed-refs generated by older git, and there are no tag dereferences in
+> packed-refs because git didn't saved it.
+>
 
-[...]
+We should be able to handle the ambiguous/malformed lines correctly
+and gracefully _always_, without 'trust' a version number to avoid to
+be prone to attacks with a malicious malformed file.
 
-> -- >8 --
-> [PATCH] git-merge: make it usable as the first class UI
-> 
-> This teaches the oft-requested syntax
-> 
-> 	git merge $commit
-> 
-> to implement merging the named commit to the current branch.
-> This hopefully would make "git merge" usable as the first class
-> UI instead of being a mere backend for "git pull".
-> 
-> Most notably, $commit above can be any committish, so you can
-> say for example:
-> 
-> 	git merge js/shortlog~2
-> 
-> to merge early part of a topic branch without merging the rest
-> of it.
+Anyway document versioning it's a common and savy practice.
 
-"Early part", i.e., branch js/shortlog up to js/shortlog~2 or just that one
-commit?
 
-> A custom merge message can be given with the new --message=<msg>
-> parameter.  The message is prepended in front of the usual
-> "Merge ..." message autogenerated with fmt-merge-message.
-
-Why not -m too (consistency!)?
--- 
-Dr. Horst H. von Brand                   User #22616 counter.li.org
-Departamento de Informatica                    Fono: +56 32 2654431
-Universidad Tecnica Federico Santa Maria             +56 32 2654239
