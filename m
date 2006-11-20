@@ -1,71 +1,64 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] index-pack usage of mmap() is unacceptably slower on
- many OSes other than Linux
-Date: Tue, 19 Dec 2006 16:40:58 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0612191640010.6766@woody.osdl.org>
-References: <86y7p57y05.fsf@blue.stonehenge.com> <Pine.LNX.4.64.0612181251020.3479@woody.osdl.org>
- <86r6uw9azn.fsf@blue.stonehenge.com> <Pine.LNX.4.64.0612181625140.18171@xanadu.home>
- <86hcvs984c.fsf@blue.stonehenge.com> <Pine.LNX.4.64.0612181414200.3479@woody.osdl.org>
- <8664c896xv.fsf@blue.stonehenge.com> <Pine.LNX.4.64.0612181511260.3479@woody.osdl.org>
- <Pine.LNX.4.64.0612181906450.18171@xanadu.home> <20061219051108.GA29405@thunk.org>
- <Pine.LNX.4.64.0612182234260.3479@woody.osdl.org>
- <Pine.LNX.4.63.0612190930460.19693@wbgn013.biozentrum.uni-wuerzburg.de>
- <7v1wmwtfmk.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0612191027270.18171@xanadu.home>
- <7vk60npv7x.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0612191409500.18171@xanadu.home>
- <Pine.LNX.4.64.0612191148270.3483@woody.osdl.org> <4588453A.3060904@garzik.org>
- <7vzm9jo1df.fsf@assigned-by-dhcp.cox.net>
+From: "Nikolai Weibull" <now@bitwi.se>
+Subject: Re: Shouldn't git-ls-files --others use $GIT_DIR?
+Date: Mon, 20 Nov 2006 20:51:32 +0100
+Message-ID: <dbfc82860611201151m52933720lfef939b7f6803411@mail.gmail.com>
+References: <dbfc82860611190537q77c8a358m184377a21d5a3e11@mail.gmail.com>
+	 <20061119183756.GZ7201@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Wed, 20 Dec 2006 00:41:24 +0000 (UTC)
-Cc: Jeff Garzik <jeff@garzik.org>, Nicolas Pitre <nico@cam.org>,
-	"Randal L. Schwartz" <merlyn@stonehenge.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Mon, 20 Nov 2006 19:52:01 +0000 (UTC)
+Cc: git <git@vger.kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <7vzm9jo1df.fsf@assigned-by-dhcp.cox.net>
-X-MIMEDefang-Filter: osdl$Revision: 1.163 $
-X-Scanned-By: MIMEDefang 2.36
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=T5VZGxu469nXIgKeZ7lx1eJEV24msEBhO27apmbQ8C8Nh1WJm6yFP0EJ5/zs3k/RL57XBzJ+epG1Xa4dDcfH2eh8iw/a8f3n18Vr3lyz5ik8os/LVSEaYfPKoEIumLDgAFkCik+DPcRKt4aHam8TMur7Obwaql3T6UauWbVfzcc=
+In-Reply-To: <20061119183756.GZ7201@pasky.or.cz>
+Content-Disposition: inline
+X-Google-Sender-Auth: 3cde759d0de99b0d
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34874>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GwpWM-0003uB-U3 for gcvg-git@gmane.org; Wed, 20 Dec
- 2006 01:41:23 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31932>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GmFBF-0000lF-14 for gcvg-git@gmane.org; Mon, 20 Nov
+ 2006 20:51:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932735AbWLTAlU (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
- 19:41:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932721AbWLTAlU
- (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 19:41:20 -0500
-Received: from smtp.osdl.org ([65.172.181.25]:49582 "EHLO smtp.osdl.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S932669AbWLTAlT
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec 2006 19:41:19 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
- smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kBK0ex2J011313
- (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Tue, 19
- Dec 2006 16:40:59 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
- shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kBK0ewB5015294; Tue, 19 Dec
- 2006 16:40:58 -0800
-To: Junio C Hamano <junkio@cox.net>
+ S966562AbWKTTvg (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 20 Nov 2006
+ 14:51:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966590AbWKTTvf
+ (ORCPT <rfc822;git-outgoing>); Mon, 20 Nov 2006 14:51:35 -0500
+Received: from wr-out-0506.google.com ([64.233.184.235]:64803 "EHLO
+ wr-out-0506.google.com") by vger.kernel.org with ESMTP id S966562AbWKTTvf
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 20 Nov 2006 14:51:35 -0500
+Received: by wr-out-0506.google.com with SMTP id i22so471855wra for
+ <git@vger.kernel.org>; Mon, 20 Nov 2006 11:51:33 -0800 (PST)
+Received: by 10.90.71.12 with SMTP id t12mr3816002aga.1164052293398; Mon, 20
+ Nov 2006 11:51:33 -0800 (PST)
+Received: by 10.90.65.18 with HTTP; Mon, 20 Nov 2006 11:51:32 -0800 (PST)
+To: "Petr Baudis" <pasky@suse.cz>
 Sender: git-owner@vger.kernel.org
 
+On 11/19/06, Petr Baudis <pasky@suse.cz> wrote:
+> On Sun, Nov 19, 2006 at 02:37:42PM CET, Nikolai Weibull wrote:
+> > If I do
+> >
+> > GIT_DIR=$HOME/projects/<project>/.git git ls-files --others
+> >
+> > from, e.g., $HOME, I get a list of all the files in $HOME and its
+> > subdirectories that aren't in said git repository.  Shouldn't --others
+> > use $GIT_DIR, instead of ".", or am I missing something here?
+>
+> git-ls-files --others lists untracked files in the current directory by
+> comparing it to the index stored in $GIT_DIR/index and listing files
+> present in the current directory but not in the index.
 
-
-On Tue, 19 Dec 2006, Junio C Hamano wrote:
-
-> Jeff Garzik <jeff@garzik.org> writes:
-> 
-> > If you are going to do this, you have to audit -every- file, to make
-> > sure git-compat-util.h is -always- the first header.
-> 
-> Will do.
-
-Well, since any cases where it isn't (and where we'd care) will  show up 
-as just a compiler warning, I doubt we really even need to. We can fix 
-things up as they get reported too..
+Ah, of course; how silly of me.  Thanks.
 
