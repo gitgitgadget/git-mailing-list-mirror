@@ -5,104 +5,100 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
 	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
-Subject: Re: git pull and merging.
-Date: Fri, 8 Dec 2006 02:56:29 +0100
-Message-ID: <8aa486160612071756s18f9530cr7ed26e4b7b47d1de@mail.gmail.com>
-References: <cc723f590612052051r62111c4cgfd7ee893cb00f84a@mail.gmail.com>
-	 <200612071227.46194.Josef.Weidendorfer@gmx.de>
-	 <7vhcw7ttj9.fsf@assigned-by-dhcp.cox.net>
-	 <200612072354.01830.Josef.Weidendorfer@gmx.de>
+From: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
+Subject: [PATCH] Doc: Make comment about merging in tutorial.txt more clear
+Date: Mon, 20 Nov 2006 21:29:41 +0100
+Message-ID: <4d8e3fd30611201229y293aad01r1de2e4337a33c797@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Fri, 8 Dec 2006 01:56:39 +0000 (UTC)
-Cc: "Junio C Hamano" <junkio@cox.net>,
-	"Aneesh Kumar K.V" <aneesh.kumar@gmail.com>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_35913_23741145.1164054581753"
+NNTP-Posting-Date: Mon, 20 Nov 2006 20:30:12 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=H+0rXLf2KVjlqe/jK8fmopOK6mjzxxXEByQKrhWfWIRTeK/LireVw2zPg0FlQiQ8uFUJX4wDVBQFZBXBMUHaP+ep++ndBWfJwl/wkiHFf/oTKtpGYrMRfJuEZys3tD7JfDa5sez5JpjH2tg7ADbtKtNZClh0PJ1x8bStGQJZmkU=
-In-Reply-To: <200612072354.01830.Josef.Weidendorfer@gmx.de>
-Content-Disposition: inline
+        h=received:message-id:date:from:to:subject:mime-version:content-type;
+        b=laC0P50SDncFe4nz01Z2rOuVRwXMzjy/ypF47wc+KJrHWL+PwMuI73fDMBUYzjVTLMOFai679VDCt3wF/B8MvgZKGxddE6EWJPaCqLM5o23qMjgbxGU1dIMqNaDsCTvEG0UFVTD0B3F2OSO/g4w3jtF3PsVFh8sDOrfGAfPe7DI=
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33651>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GsUyX-0007BK-J9 for gcvg-git@gmane.org; Fri, 08 Dec
- 2006 02:56:33 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31936>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GmFm1-0002Ce-WF for gcvg-git@gmane.org; Mon, 20 Nov
+ 2006 21:29:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1423710AbWLHB4a (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
- 20:56:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423715AbWLHB4a
- (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 20:56:30 -0500
-Received: from wx-out-0506.google.com ([66.249.82.230]:12658 "EHLO
- wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1423710AbWLHB4a (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec
- 2006 20:56:30 -0500
-Received: by wx-out-0506.google.com with SMTP id h27so686973wxd for
- <git@vger.kernel.org>; Thu, 07 Dec 2006 17:56:29 -0800 (PST)
-Received: by 10.70.39.2 with SMTP id m2mr4864797wxm.1165542989388; Thu, 07
- Dec 2006 17:56:29 -0800 (PST)
-Received: by 10.70.45.1 with HTTP; Thu, 7 Dec 2006 17:56:29 -0800 (PST)
-To: "Josef Weidendorfer" <Josef.Weidendorfer@gmx.de>
+ S966304AbWKTU3p (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 20 Nov 2006
+ 15:29:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966305AbWKTU3p
+ (ORCPT <rfc822;git-outgoing>); Mon, 20 Nov 2006 15:29:45 -0500
+Received: from ug-out-1314.google.com ([66.249.92.174]:62699 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S966304AbWKTU3o
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 20 Nov 2006 15:29:44 -0500
+Received: by ug-out-1314.google.com with SMTP id m3so1305969ugc for
+ <git@vger.kernel.org>; Mon, 20 Nov 2006 12:29:42 -0800 (PST)
+Received: by 10.78.118.19 with SMTP id q19mr5683771huc.1164054582033; Mon, 20
+ Nov 2006 12:29:42 -0800 (PST)
+Received: by 10.78.165.3 with HTTP; Mon, 20 Nov 2006 12:29:41 -0800 (PST)
+To: "Git Mailing List" <git@vger.kernel.org>
 Sender: git-owner@vger.kernel.org
 
-On 12/7/06, Josef Weidendorfer <Josef.Weidendorfer@gmx.de> wrote:
-> On Thursday 07 December 2006 20:06, you wrote:
-> > Once you place something like "branch.*.merge" in configuration
-> > file (either $GIT_DIR/config, or a $GIT_DIR/remotes/* file), you
-> > are talking about other repositories you regularly interact
-> > with, so it might be probably Ok to require the user to use a
-> > tracking branch if he wants the convenience of "branch.*.merge",
-> > and make its value name the local tracking branch instead of the
-> > remote branch.
-> >
-> > But that means I would never be able to benefit from the
-> > convenience of "branch.*.merge";
->
-> Hmm... that's true; actually, I did not thought about people
-> which do not want to have any tracking branches (again!). So
->
-> [remote "repo"]
->   url = ...
->   fetch = branch1
->   fetch = branch2
->
-> [branch "mybranch1"]
->   remote = repo
->   merge = branch1
->
-> actually looks fine, and is the only possible way.
-> But still, this does not work.
+------=_Part_35913_23741145.1164054581753
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-It works for me.
+Rephrased a sentence in order to make more clear the concept of
+pull . branch
 
-> You have to specify
->
->   merge = refs/heads/branch1
+Signed-off-by: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
+---
+ Documentation/tutorial.txt |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-It does not.
+diff --git a/Documentation/tutorial.txt b/Documentation/tutorial.txt
+index 554ee0a..646395d 100644
+--- a/Documentation/tutorial.txt
++++ b/Documentation/tutorial.txt
+@@ -141,7 +141,7 @@ $ git commit -a
+ ------------------------------------------------
 
-The merge line must match exactly the remote part of the refspec.
+ at this point the two branches have diverged, with different changes
+-made in each.  To merge the changes made in the two branches, run
++made in each.  To merge the changes did in experimental into master, run
 
->
-> That's confusing (perhaps I can come up with a patch
-> to allow "branch1" alone).
->
-> So probably the best way is to write some more detailed
-> explanation into the docu ...
+ ------------------------------------------------
+ $ git pull . experimental
+--=20
+1.4.4.ge3d4
 
-Perhaps that the branch.<name>.remote and branch.<name>.merge have the
-equivalent meaning as the parameters of git-pull?
 
->
-> Josef
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+--=20
+Paolo
+http://docs.google.com/View?docid=3Ddhbdhs7d_4hsxqc8
+http://www.linkedin.com/pub/0/132/9a3
+Non credo nelle otto del mattino. Per=F2 esistono. Le otto del mattino
+sono l'incontrovertibile prova della presenza del male nel mondo.
+Gli ultimi giorni, Andrew Masterson
+
+------=_Part_35913_23741145.1164054581753
+Content-Type: text/plain; name="0001-Doc-Make-comment-about-merging-in-tutorial.txt-more-clear.txt"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="0001-Doc-Make-comment-about-merging-in-tutorial.txt-more-clear.txt"
+X-Attachment-Id: f_eurbzfqd
+
+RnJvbSAxYTRlMDc4NTE1NTQ3YzM0NmI1ZDZlOGI3NGFiY2QyNGIyMGFjYjc4IE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBQYW9sbyBDaWFycm9jY2hpIDxwYW9sby5jaWFycm9jY2hpQGdt
+YWlsLmNvbT4KRGF0ZTogTW9uLCAyMCBOb3YgMjAwNiAyMToyNTo0NyArMDEwMAoKUmVwaHJhc2Vk
+IGEgc2VudGVuY2UgaW4gb3JkZXIgdG8gbWFrZSBtb3JlIGNsZWFyIHRoZSBjb25jZXB0IG9mCnB1
+bGwgLiBicmFuY2gKClNpZ25lZC1vZmYtYnk6IFBhb2xvIENpYXJyb2NjaGkgPHBhb2xvLmNpYXJy
+b2NjaGlAZ21haWwuY29tPgotLS0KIERvY3VtZW50YXRpb24vdHV0b3JpYWwudHh0IHwgICAgMiAr
+LQogMSBmaWxlcyBjaGFuZ2VkLCAxIGluc2VydGlvbnMoKyksIDEgZGVsZXRpb25zKC0pCgpkaWZm
+IC0tZ2l0IGEvRG9jdW1lbnRhdGlvbi90dXRvcmlhbC50eHQgYi9Eb2N1bWVudGF0aW9uL3R1dG9y
+aWFsLnR4dAppbmRleCA1NTRlZTBhLi42NDYzOTVkIDEwMDY0NAotLS0gYS9Eb2N1bWVudGF0aW9u
+L3R1dG9yaWFsLnR4dAorKysgYi9Eb2N1bWVudGF0aW9uL3R1dG9yaWFsLnR4dApAQCAtMTQxLDcg
+KzE0MSw3IEBAICQgZ2l0IGNvbW1pdCAtYQogLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tCiAKIGF0IHRoaXMgcG9pbnQgdGhlIHR3byBicmFuY2hlcyBoYXZl
+IGRpdmVyZ2VkLCB3aXRoIGRpZmZlcmVudCBjaGFuZ2VzCi1tYWRlIGluIGVhY2guICBUbyBtZXJn
+ZSB0aGUgY2hhbmdlcyBtYWRlIGluIHRoZSB0d28gYnJhbmNoZXMsIHJ1bgorbWFkZSBpbiBlYWNo
+LiAgVG8gbWVyZ2UgdGhlIGNoYW5nZXMgZGlkIGluIGV4cGVyaW1lbnRhbCBpbnRvIG1hc3Rlciwg
+cnVuCiAKIC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQog
+JCBnaXQgcHVsbCAuIGV4cGVyaW1lbnRhbAotLSAKMS40LjQuZ2UzZDQKCg==
