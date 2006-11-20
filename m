@@ -1,85 +1,105 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Adding glob support to remotes
-Date: Wed, 22 Nov 2006 04:56:34 -0800
-Message-ID: <7v7ixnskql.fsf@assigned-by-dhcp.cox.net>
-References: <200611220904.21850.andyparkins@gmail.com>
+From: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
+Subject: [PATCH] Documentation tutorial.txt: Teach the reader about git commit -a -s
+Date: Mon, 20 Nov 2006 23:30:56 +0100
+Message-ID: <4d8e3fd30611201430l6135814yc89f4abdb9044340@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 22 Nov 2006 12:56:48 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_37789_1457800.1164061856161"
+NNTP-Posting-Date: Mon, 20 Nov 2006 22:31:21 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <200611220904.21850.andyparkins@gmail.com> (Andy Parkins's
-	message of "Wed, 22 Nov 2006 09:04:20 +0000")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type;
+        b=nddWPgel5tnXnIE3jfMiIB/0+Ck4RcaLgtg7LsjfrHHZK+Qrx+l9ufASjPOM4hmAb92tR3BVh0ZOhPzxw+VifMl4ypb3k+0jpJw0IgXVom+ZdBfCqUPaYc/FlRLXd9LR2evMh1oGpp0C+LD4N3ZPApJWBYTS5ggvow3TWK2A850=
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32084>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31945>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GmreZ-0004VW-PT for gcvg-git@gmane.org; Wed, 22 Nov
- 2006 13:56:40 +0100
+ esmtp (Exim 4.43) id 1GmHfK-0005lw-Pe for gcvg-git@gmane.org; Mon, 20 Nov
+ 2006 23:31:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1755698AbWKVM4g (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 22 Nov 2006
- 07:56:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755701AbWKVM4g
- (ORCPT <rfc822;git-outgoing>); Wed, 22 Nov 2006 07:56:36 -0500
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:9403 "EHLO
- fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP id S1755693AbWKVM4g
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 22 Nov 2006 07:56:36 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao10.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061122125635.MPGW5575.fed1rmmtao10.cox.net@fed1rmimpo02.cox.net>; Wed, 22
- Nov 2006 07:56:35 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id powi1V00U1kojtg0000000; Wed, 22 Nov 2006
- 07:56:43 -0500
-To: Andy Parkins <andyparkins@gmail.com>
+ S934278AbWKTWa7 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 20 Nov 2006
+ 17:30:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934272AbWKTWa6
+ (ORCPT <rfc822;git-outgoing>); Mon, 20 Nov 2006 17:30:58 -0500
+Received: from nf-out-0910.google.com ([64.233.182.185]:64763 "EHLO
+ nf-out-0910.google.com") by vger.kernel.org with ESMTP id S934278AbWKTWa5
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 20 Nov 2006 17:30:57 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so2493856nfa for
+ <git@vger.kernel.org>; Mon, 20 Nov 2006 14:30:56 -0800 (PST)
+Received: by 10.78.26.9 with SMTP id 9mr5658910huz.1164061856232; Mon, 20 Nov
+ 2006 14:30:56 -0800 (PST)
+Received: by 10.78.165.3 with HTTP; Mon, 20 Nov 2006 14:30:56 -0800 (PST)
+To: "Git Mailing List" <git@vger.kernel.org>
 Sender: git-owner@vger.kernel.org
 
-Andy Parkins <andyparkins@gmail.com> writes:
+------=_Part_37789_1457800.1164061856161
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
-> I started to add code to git-parse-remote.sh:canon_refs_list_for_fetch() to 
-> preprocess the reflist to catch lines with a "*" in them then use the remote 
-> pattern to filter the output of from "git-ls-remote -h", blah, blah, you get 
-> the idea...
->
-> However, git-ls-remote needs the name of the remote repository (of course), 
-> but that isn't directly available in git-parse-remote.sh.  
+I think it's important to mention, in the collaboration section,
+that is possible to use the -s option to add the Signed-off-by
+line
 
-Is it really the case?  I do not remember the details offhand,
-but I do not think canon_refs_list_for_fetch is the function you
-should be messing with to implement the remote."origin".fetch
-stuff.  It should be get_remote_default_refs_for_fetch().  The
-function returns the list based on which remote, so it surely
-knows which remote the caller is talking about.
+Signed-off-by: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
+---
+ Documentation/tutorial.txt |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-However, I would recommend against actually running ls-remote to
-help "git-fetch" inside git-parse-remote.sh.  I think you should
-run ls-remote upfront early in git-fetch because there are at
-least two other parts in git-fetch that wants the same ls-remote
-output:
+diff --git a/Documentation/tutorial.txt b/Documentation/tutorial.txt
+index 554ee0a..402afdf 100644
+--- a/Documentation/tutorial.txt
++++ b/Documentation/tutorial.txt
+@@ -200,7 +200,7 @@ Bob then makes some changes and commits
 
- (1) dumb protocols currently cannot deal with a remote that has
-     run "packed-ref --prune" because git-fetch.sh first uses
-     curl executable to download the loose ref, read it and then
-     use the object name read from that to drive git-http-fetch.
-     We can and should get rid of the /max_depth=5/,/done/ loop
-     there and replace it with a grep of ls-remote output to
-     make them work against such a remote.  When tracking many
-     branches from the remote, this would reduce the number of
-     http requests (one per branch vs a ls-remote which is just
-     a single download of info/refs).
+ ------------------------------------------------
+ (edit files)
+-$ git commit -a
++$ git commit -a (add -s to add Signed-off-by line at the end of the
+commit message)
+ (repeat as necessary)
+ ------------------------------------------------
 
- (2) when doing a fetch with tracking branches (which is what
-     your change is about), we would need to run ls-remote to
-     find out the remote tags for tag following purposes anyway.
-     Running "ls-remote -h" once for your purpose and then
-     "ls-remote -t" for tag following later is obviously very
-     wasteful.
+-- 
+1.4.4.gef06
 
+
+-- 
+Paolo
+http://www.linkedin.com/pub/0/132/9a3
+
+------=_Part_37789_1457800.1164061856161
+Content-Type: text/plain; 
+	name=0001-Documentation-Teach-the-reader-about-git-commit-a-s.txt; 
+	charset=ANSI_X3.4-1968
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_eurgcq42
+Content-Disposition: attachment; filename="0001-Documentation-Teach-the-reader-about-git-commit-a-s.txt"
+
+RnJvbSAxZDFlZWQ3MDgxNjk5N2VlYjE4MWE1NDkzY2VjOWY1ODQ2N2JkMDFlIE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBQYW9sbyBDaWFycm9jY2hpIDxwYW9sby5jaWFycm9jY2hpQGdt
+YWlsLmNvbT4KRGF0ZTogTW9uLCAyMCBOb3YgMjAwNiAyMzoyODoxNiArMDEwMApTdWJqZWN0OiBb
+UEFUQ0hdIERvY3VtZW50YXRpb246IFRlYWNoIHRoZSByZWFkZXIgYWJvdXQgZ2l0IGNvbW1pdCAt
+YSAtcwoKSSB0aGluayBpdCdzIGltcG9ydGFudCB0byBtZW50aW9uLCBpbiB0aGUgY29sbGFib3Jh
+dGlvbiBzZWN0aW9uLAp0aGF0IGlzIHBvc3NpYmxlIHRvIHVzZSB0aGUgLXMgb3B0aW9uIHRvIGFk
+ZCB0aGUgU2lnbmVkLW9mZi1ieQpsaW5lCgpTaWduZWQtb2ZmLWJ5OiBQYW9sbyBDaWFycm9jY2hp
+IDxwYW9sby5jaWFycm9jY2hpQGdtYWlsLmNvbT4KLS0tCiBEb2N1bWVudGF0aW9uL3R1dG9yaWFs
+LnR4dCB8ICAgIDIgKy0KIDEgZmlsZXMgY2hhbmdlZCwgMSBpbnNlcnRpb25zKCspLCAxIGRlbGV0
+aW9ucygtKQoKZGlmZiAtLWdpdCBhL0RvY3VtZW50YXRpb24vdHV0b3JpYWwudHh0IGIvRG9jdW1l
+bnRhdGlvbi90dXRvcmlhbC50eHQKaW5kZXggNTU0ZWUwYS4uNDAyYWZkZiAxMDA2NDQKLS0tIGEv
+RG9jdW1lbnRhdGlvbi90dXRvcmlhbC50eHQKKysrIGIvRG9jdW1lbnRhdGlvbi90dXRvcmlhbC50
+eHQKQEAgLTIwMCw3ICsyMDAsNyBAQCBCb2IgdGhlbiBtYWtlcyBzb21lIGNoYW5nZXMgYW5kIGNv
+bW1pdHMKIAogLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+CiAoZWRpdCBmaWxlcykKLSQgZ2l0IGNvbW1pdCAtYQorJCBnaXQgY29tbWl0IC1hIChhZGQgLXMg
+dG8gYWRkIFNpZ25lZC1vZmYtYnkgbGluZSBhdCB0aGUgZW5kIG9mIHRoZSBjb21taXQgbWVzc2Fn
+ZSkKIChyZXBlYXQgYXMgbmVjZXNzYXJ5KQogLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tCiAKLS0gCjEuNC40LmdlZjA2Cgo=
