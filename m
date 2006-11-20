@@ -4,61 +4,68 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Alexandre Julliard <julliard@winehq.org>
-Subject: [PATCH 3/5] get_shallow_commits: Avoid memory leak if a commit has been reached already.
-Date: Fri, 24 Nov 2006 15:58:50 +0100
-Message-ID: <87slg8uc0l.fsf@wine.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 24 Nov 2006 14:59:47 +0000 (UTC)
+From: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
+Subject: Re: Cleaning up git user-interface warts
+Date: Mon, 20 Nov 2006 16:44:12 -0300
+Message-ID: <200611201944.kAKJiCAw014973@laptop13.inf.utfsm.cl>
+References: <junkio@cox.net>
+NNTP-Posting-Date: Mon, 20 Nov 2006 19:44:50 +0000 (UTC)
+Cc: hanwen@xs4all.nl, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.90 (gnu/linux)
+In-Reply-To: Message from Junio C Hamano <junkio@cox.net> 
+   of "Thu, 16 Nov 2006 03:47:31 -0800." <7vslgjaa0c.fsf@assigned-by-dhcp.cox.net> 
+X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.5  (beta27)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-2.0.2 (inti.inf.utfsm.cl [200.1.19.1]); Mon, 20 Nov 2006 16:44:13 -0300 (CLST)
+X-Virus-Scanned: ClamAV version 0.88.5, clamav-milter version 0.88.5 on inti.inf.utfsm.cl
+X-Virus-Status: Clean
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32222>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31929>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GncWf-0008QM-Ld for gcvg-git@gmane.org; Fri, 24 Nov
- 2006 15:59:38 +0100
+ esmtp (Exim 4.43) id 1GmF44-0007FS-U1 for gcvg-git@gmane.org; Mon, 20 Nov
+ 2006 20:44:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S934638AbWKXO7e (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 24 Nov 2006
- 09:59:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934639AbWKXO7e
- (ORCPT <rfc822;git-outgoing>); Fri, 24 Nov 2006 09:59:34 -0500
-Received: from mail.codeweavers.com ([216.251.189.131]:4581 "EHLO
- mail.codeweavers.com") by vger.kernel.org with ESMTP id S934638AbWKXO7d
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 24 Nov 2006 09:59:33 -0500
-Received: from adsl-84-226-49-216.adslplus.ch ([84.226.49.216]
- helo=wine.dyndns.org) by mail.codeweavers.com with esmtpsa
- (TLS-1.0:DHE_RSA_AES_256_CBC_SHA:32) (Exim 4.50) id 1GncVw-0005Jp-Fa for
- git@vger.kernel.org; Fri, 24 Nov 2006 08:58:52 -0600
-Received: by wine.dyndns.org (Postfix, from userid 1000) id 7A66610A155; Fri,
- 24 Nov 2006 15:58:50 +0100 (CET)
-To: git@vger.kernel.org
+ S966573AbWKTToU (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 20 Nov 2006
+ 14:44:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966579AbWKTToU
+ (ORCPT <rfc822;git-outgoing>); Mon, 20 Nov 2006 14:44:20 -0500
+Received: from inti.inf.utfsm.cl ([200.1.21.155]:27093 "EHLO
+ inti.inf.utfsm.cl") by vger.kernel.org with ESMTP id S966573AbWKTToT (ORCPT
+ <rfc822;git@vger.kernel.org>); Mon, 20 Nov 2006 14:44:19 -0500
+Received: from laptop13.inf.utfsm.cl (laptop13.inf.utfsm.cl [200.1.19.201])
+ by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id kAKJiDiO005674
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO); Mon, 20
+ Nov 2006 16:44:13 -0300
+Received: from laptop13.inf.utfsm.cl (laptop13.inf.utfsm.cl [127.0.0.1]) by
+ laptop13.inf.utfsm.cl (8.13.8/8.13.8) with ESMTP id kAKJiCAw014973; Mon, 20
+ Nov 2006 16:44:12 -0300
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Signed-off-by: Alexandre Julliard <julliard@winehq.org>
----
- shallow.c |    4 +++-
- 1 files changed, 3 insertions(+), 1 deletions(-)
+Junio C Hamano <junkio@cox.net> wrote:
+> Junio C Hamano <junkio@cox.net> writes:
+> > Han-Wen Nienhuys <hanwen@xs4all.nl> writes:
+> >
+> >> [hanwen@haring y]$ git pull ../x
+> >> fatal: Needed a single revision
+> >> Pulling into a black hole?
+> 
+> Having said all that, I happen to think that this particular
+> case of pulling into void could deserve to be special cased to
+> pretend it is a fast forward (after all, nothingness is an
+> ancestor of anything), if only to make new people's first
+> experience more pleasant.
 
-diff --git a/shallow.c b/shallow.c
-index 2db1dc4..3d53d17 100644
---- a/shallow.c
-+++ b/shallow.c
-@@ -60,7 +60,9 @@ struct commit_list *get_shallow_commits(
- 					commit = NULL;
- 					continue;
- 				}
--				commit->util = xcalloc(1, sizeof(int));
-+				if (!commit->util)
-+					commit->util = xmalloc(sizeof(int));
-+				*(int *)commit->util = 0;
- 				cur_depth = 0;
- 			} else {
- 				commit = (struct commit *)
--- 
-1.4.4.1.ga335e
+If you make pushing into an empty repository work also, you fix the case of
+"create an empty repo for somebody, let them fill it up remotely later".
 
+[...]
+
+> So please consider that this is classified as a bug.
+
+Thanks!
 -- 
-Alexandre Julliard
+Dr. Horst H. von Brand                   User #22616 counter.li.org
+Departamento de Informatica                    Fono: +56 32 2654431
+Universidad Tecnica Federico Santa Maria             +56 32 2654239
