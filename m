@@ -1,74 +1,79 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [RFC] Submodules in GIT
-Date: Sat, 25 Nov 2006 19:39:35 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0611251936590.3483@woody.osdl.org>
-References: <20061121223130.GA24909@nan92-1-81-57-214-146.fbx.proxad.net>
- <Pine.LNX.4.64.0611211437430.3338@woody.osdl.org>
- <20061121235429.GH5443@nan92-1-81-57-214-146.fbx.proxad.net>
- <20061122034056.GB23856@spearce.org> <20061123232313.GB24909@nan92-1-81-57-214-146.fbx.proxad.net>
- <20061125065338.GC4528@spearce.org> <20061125111235.GO5443@nan92-1-81-57-214-146.fbx.proxad.net>
- <Pine.LNX.4.64.0611251037000.6991@woody.osdl.org> <45689747.3020403@midwinter.com>
- <Pine.LNX.4.64.0611251128170.3483@woody.osdl.org>
- <20061125234908.GC24909@nan92-1-81-57-214-146.fbx.proxad.net>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Re: Some tips for doing a CVS importer
+Date: Mon, 20 Nov 2006 18:37:41 -0500
+Message-ID: <9e4733910611201537h30b6c9f4oee9d8df75284c284@mail.gmail.com>
+References: <9e4733910611201349s4d08b984g772c64982f148bfa@mail.gmail.com>
+	 <46a038f90611201503m6a63ec8ct347026c635190108@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Sun, 26 Nov 2006 03:40:16 +0000 (UTC)
-Cc: Steven Grimm <koreth@midwinter.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Mon, 20 Nov 2006 23:38:02 +0000 (UTC)
+Cc: "Git Mailing List" <git@vger.kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061125234908.GC24909@nan92-1-81-57-214-146.fbx.proxad.net>
-X-MIMEDefang-Filter: osdl$Revision: 1.160 $
-X-Scanned-By: MIMEDefang 2.36
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=eqDETl3iFNaSLXFJXca+DIa0tkhfgmpVgWKjaRvJDOOmfFKkrJI1mQZAqOPgp6nAfeKAe6ayr7q2DmE6U3OSByTW61dkoD9NsqEC8ZHx9s+42818+LhTWyLL+rv1H3GdigYgM4faQN/tMSEa6jZJQZWNExfcoFhDvvixKUm/0Go=
+In-Reply-To: <46a038f90611201503m6a63ec8ct347026c635190108@mail.gmail.com>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32321>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31959>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GoAsD-000146-81 for gcvg-git@gmane.org; Sun, 26 Nov
- 2006 04:40:09 +0100
+ esmtp (Exim 4.43) id 1GmIi6-0004FE-6c for gcvg-git@gmane.org; Tue, 21 Nov
+ 2006 00:37:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S967264AbWKZDkE (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 25 Nov 2006
- 22:40:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967263AbWKZDkE
- (ORCPT <rfc822;git-outgoing>); Sat, 25 Nov 2006 22:40:04 -0500
-Received: from smtp.osdl.org ([65.172.181.25]:19897 "EHLO smtp.osdl.org") by
- vger.kernel.org with ESMTP id S967264AbWKZDj7 (ORCPT
- <rfc822;git@vger.kernel.org>); Sat, 25 Nov 2006 22:39:59 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
- smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kAQ3dZix018655
- (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Sat, 25
- Nov 2006 19:39:36 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
- shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kAQ3dZsR020450; Sat, 25 Nov
- 2006 19:39:35 -0800
-To: Yann Dirson <ydirson@altern.org>
+ S965823AbWKTXhz (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 20 Nov 2006
+ 18:37:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966877AbWKTXhy
+ (ORCPT <rfc822;git-outgoing>); Mon, 20 Nov 2006 18:37:54 -0500
+Received: from py-out-1112.google.com ([64.233.166.183]:29305 "EHLO
+ py-out-1112.google.com") by vger.kernel.org with ESMTP id S965823AbWKTXhy
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 20 Nov 2006 18:37:54 -0500
+Received: by py-out-1112.google.com with SMTP id a29so1032916pyi for
+ <git@vger.kernel.org>; Mon, 20 Nov 2006 15:37:50 -0800 (PST)
+Received: by 10.35.121.9 with SMTP id y9mr300472pym.1164065862157; Mon, 20
+ Nov 2006 15:37:42 -0800 (PST)
+Received: by 10.35.72.13 with HTTP; Mon, 20 Nov 2006 15:37:41 -0800 (PST)
+To: "Martin Langhoff" <martin.langhoff@gmail.com>
 Sender: git-owner@vger.kernel.org
 
+On 11/20/06, Martin Langhoff <martin.langhoff@gmail.com> wrote:
+> On 11/21/06, Jon Smirl <jonsmirl@gmail.com> wrote:
+> > I have tried all of the available CVS importers. None of them are
+> > without problems. If anyone is interested in writing one for git here
+> > are some ideas on how to structure it.
+>
+> Hi Jon,
+>
+> I gather this means that the cvs2svn track hasn't been as productive
+> as expected. Any remaining/unsolvable issues with it? I have been
+> chronically busy on my e-learning projects, but don't discard coming
+> back to this when I have some time.
+
+Look in this thread
+[Fwd: Re: What's in git.git]
+
+There is a message in there that explains a problem that the cvs2svn
+people aren't going to fix and it kills git.
 
 
-On Sun, 26 Nov 2006, Yann Dirson wrote:
-> 
-> Also, I'd rather expect "git-commit -a" outside of any submodule to
-> commit everything in the supermodule, triggering submodule commits as an
-> intermediate step when needed - just like "git-commit -a" does not
-> require to manually specify subdirectories to inclue in the commit.  I'd
-> rather expect a special flag to exclude submodules from a commit.
+>
+> cheers,
+>
+>
+>
+> martin
+>
 
-So, how do you do commit messages? It generally doesn't make sense to 
-share the same commit message for submodules - the sub-commits generally 
-do different things.
 
-I'd actually suggest that "git commit -a" with non-clean submodules error 
-out for that reason, with something like
-
-	submodule 'src/xyzzy' is not up-to-date, please commit changes to 
-	that first.
-
-exactly because you really generally should consider the submodule commits 
-to be a separate phase.
-
+-- 
+Jon Smirl
