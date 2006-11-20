@@ -2,93 +2,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: git and bzr
-Date: Tue, 28 Nov 2006 14:41:31 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0611281432300.4244@woody.osdl.org>
-References: <45357CC3.4040507@utoronto.ca> <a7e835d40610250308v5d577482m139742e7fe1db185@mail.gmail.com>
- <87slhcz8zh.wl%cworth@cworth.org> <a7e835d40610260152k658aeaf0hb900cb63870c04e4@mail.gmail.com>
- <7vu01ro20b.fsf@assigned-by-dhcp.cox.net> <a7e835d40610260257r5f05ea4gc934f1c1cc267977@mail.gmail.com>
- <20061026101038.GA13310@coredump.intra.peff.net> <877iyne4dm.fsf@alplog.fr>
- <Pine.LNX.4.64.0610260753090.3962@g5.osdl.org> <456B7C6A.80104@webdrake.net>
- <845b6e870611280410j58bdcd99nc05d0f67489293e4@mail.gmail.com>
- <ekhaeg$etk$1@sea.gmane.org> <Pine.LNX.4.63.0611281433270.30004@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0611280754050.30076@woody.osdl.org> <456C7592.6020700@ableton.com>
- <ekhtnt$rkk$1@sea.gmane.org> <456C9DFF.1040407@onlinehome.de>
- <456CA981.4010808@onlinehome.de> <Pine.LNX.4.64.0611281346490.4244@woody.osdl.org>
- <456CB197.2030201@onlinehome.de> <Pine.LNX.4.64.0611281413310.4244@woody.osdl.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Patch to tutorial.txt
+Date: Mon, 20 Nov 2006 10:25:10 +0100
+Message-ID: <200611201025.11048.jnareb@gmail.com>
+References: <4d8e3fd30611191444r710f23e5uc488d35aa4abaf06@mail.gmail.com> <200611200949.32722.jnareb@gmail.com> <4d8e3fd30611200110y224b5b8dpf974d30d738455c9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Tue, 28 Nov 2006 22:42:05 +0000 (UTC)
-Cc: Jakub Narebski <jnareb@gmail.com>, bazaar-ng@lists.canonical.com,
-	git@vger.kernel.org
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Mon, 20 Nov 2006 09:23:57 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <Pine.LNX.4.64.0611281413310.4244@woody.osdl.org>
-X-MIMEDefang-Filter: osdl$Revision: 1.161 $
-X-Scanned-By: MIMEDefang 2.36
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=iGA+0aAt30XIAat0k2U16m4mtw7H6+kbphatMLINvAtg05CQOEmUG/VY0RjFSRGv4HihJ2zlsndwL2Sl81oQ7iqwGQ5DJPbGopa1mjcMRC6NHzQJ5utKOxsa4O3yoqxg+k4pMkbJJQBkOwai2Xqv5DSOVIOHj3setpH25YNMKME=
+User-Agent: KMail/1.9.3
+In-Reply-To: <4d8e3fd30611200110y224b5b8dpf974d30d738455c9@mail.gmail.com>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32601>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31888>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GpBeG-0003dU-6w for gcvg-git@gmane.org; Tue, 28 Nov
- 2006 23:41:57 +0100
+ esmtp (Exim 4.43) id 1Gm5NW-0005a4-80 for gcvg-git@gmane.org; Mon, 20 Nov
+ 2006 10:23:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1754505AbWK1Wlw (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 28 Nov 2006
- 17:41:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755276AbWK1Wlw
- (ORCPT <rfc822;git-outgoing>); Tue, 28 Nov 2006 17:41:52 -0500
-Received: from smtp.osdl.org ([65.172.181.25]:26035 "EHLO smtp.osdl.org") by
- vger.kernel.org with ESMTP id S1754505AbWK1Wlv (ORCPT
- <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2006 17:41:51 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
- smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kASMfWix009418
- (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Tue, 28
- Nov 2006 14:41:33 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
- shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kASMfV5S029004; Tue, 28 Nov
- 2006 14:41:32 -0800
-To: Nicholas Allen <nick.allen@onlinehome.de>
+ S934033AbWKTJXr (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 20 Nov 2006
+ 04:23:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934034AbWKTJXr
+ (ORCPT <rfc822;git-outgoing>); Mon, 20 Nov 2006 04:23:47 -0500
+Received: from ug-out-1314.google.com ([66.249.92.168]:50986 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S934033AbWKTJXq
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 20 Nov 2006 04:23:46 -0500
+Received: by ug-out-1314.google.com with SMTP id m3so1123979ugc for
+ <git@vger.kernel.org>; Mon, 20 Nov 2006 01:23:45 -0800 (PST)
+Received: by 10.66.242.5 with SMTP id p5mr6935842ugh.1164014624612; Mon, 20
+ Nov 2006 01:23:44 -0800 (PST)
+Received: from host-81-190-24-209.torun.mm.pl ( [81.190.24.209]) by
+ mx.google.com with ESMTP id 29sm7383152uga.2006.11.20.01.23.44; Mon, 20 Nov
+ 2006 01:23:44 -0800 (PST)
+To: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-
-
-On Tue, 28 Nov 2006, Linus Torvalds wrote:
-> On Tue, 28 Nov 2006, Nicholas Allen wrote:
-> > 
-> > All useful conflict status is lost isn't it?
+Paolo Ciarrocchi wrote:
+> On 11/20/06, Jakub Narebski <jnareb@gmail.com> wrote:
+>
+>> followed by empty line, then signoff line, for example
+>>
+>>   Signed-off-by: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
 > 
-> No, it's actually there, but "git status" doesn't really explain it to 
-> you.
+> Ok, but the Signed/off-by part should handled by the -s option in
+> git-format-patch.
 
-Side note, to clarify: in the _simple_ cases it's all actually there.
+Signed-off-by _can_ be added by -s option in git-format-patch, but 
+I think it is usually better to have it added in the commit, by the -s 
+option to git-commit.
 
-I can well imagine that in more complex cases, involving multiple 
-different files, you may well want to re-do the merge and let the merge 
-tell you why it refused to merge something.
-
-So the index, for example, contains just a "final end result" of what the 
-merge gave up on, and while for a simple rename conflict like your example 
-you could certainly see that directly from the index state (and thus we 
-could, for example, have a "git status" that talks about it being a 
-filename conflict), if you have a criss-cross rename, the index itself 
-doesn't really tell you _why_, and it could look superficially like a data 
-conflict. 
-
-In such a case, you'd really have to either go back to the merge itself to 
-see what happened, or you'd use the "git log" thing and just work it out 
-from there (ie you can ask "git log" to tell you about any renames as they 
-happened etc).
-
-I don't think I've actually hit a complex enough merge to need this yet, 
-but the graphical tools should help too, ie "gitk --merge" should give you 
-everything that "git log --merge" gives you (ie just the commits that 
-aren't common, and simplified to just the ones that matter for the 
-unmerged filenames in the end result). I can well imagine that being 
-useful too.
-
-So the tools are certainly there. "git status" just isn't necessarily the 
-best one (or the best that it could be, for that matter)..
-
+-- 
+Jakub Narebski
