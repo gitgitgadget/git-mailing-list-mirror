@@ -4,75 +4,56 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: merlyn@stonehenge.com (Randal L. Schwartz)
-Subject: latest update to git-svn blows up for me
-Date: 03 Dec 2006 20:00:47 -0800
-Message-ID: <863b7wnwcw.fsf@blue.stonehenge.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Rename detection at git log
+Date: Mon, 20 Nov 2006 02:51:16 -0800
+Message-ID: <7vd57i4cij.fsf@assigned-by-dhcp.cox.net>
+References: <200611201157.23680.litvinov2004@gmail.com>
+	<81b0412b0611200206q4ded162drdc450715d7f801e0@mail.gmail.com>
+	<200611201023.54146.andyparkins@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Mon, 4 Dec 2006 04:01:12 +0000 (UTC)
+NNTP-Posting-Date: Mon, 20 Nov 2006 10:51:26 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-x-mayan-date: Long count = 12.19.13.15.10; tzolkin = 4 Oc; haab = 3 Mac
-Original-Lines: 36
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+In-Reply-To: <200611201023.54146.andyparkins@gmail.com> (Andy Parkins's
+	message of "Mon, 20 Nov 2006 11:23:52 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33163>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gr50u-0003VH-JT for gcvg-git@gmane.org; Mon, 04 Dec
- 2006 05:01:08 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31901>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gm6kD-0003mh-Og for gcvg-git@gmane.org; Mon, 20 Nov
+ 2006 11:51:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1759229AbWLDEAw (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 3 Dec 2006
- 23:00:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759247AbWLDEAw
- (ORCPT <rfc822;git-outgoing>); Sun, 3 Dec 2006 23:00:52 -0500
-Received: from blue.stonehenge.com ([209.223.236.162]:1678 "EHLO
- blue.stonehenge.com") by vger.kernel.org with ESMTP id S1759229AbWLDEAv
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 3 Dec 2006 23:00:51 -0500
-Received: from localhost (localhost [127.0.0.1]) by blue.stonehenge.com
- (Postfix) with ESMTP id AE07B8F5CE for <git@vger.kernel.org>; Sun,  3 Dec
- 2006 20:00:50 -0800 (PST)
-Received: from blue.stonehenge.com ([127.0.0.1]) by localhost
- (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024) with LMTP id
- 17627-01-25 for <git@vger.kernel.org>; Sun,  3 Dec 2006 20:00:49 -0800 (PST)
-Received: by blue.stonehenge.com (Postfix, from userid 1001) id A7B658FB77;
- Sun,  3 Dec 2006 20:00:47 -0800 (PST)
-To: git@vger.kernel.org
+ S1755748AbWKTKvS (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 20 Nov 2006
+ 05:51:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755905AbWKTKvS
+ (ORCPT <rfc822;git-outgoing>); Mon, 20 Nov 2006 05:51:18 -0500
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:13534 "EHLO
+ fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP id S1755748AbWKTKvR
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 20 Nov 2006 05:51:17 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao04.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061120105117.PASS7494.fed1rmmtao04.cox.net@fed1rmimpo01.cox.net>; Mon, 20
+ Nov 2006 05:51:17 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id oyqo1V0061kojtg0000000; Mon, 20 Nov 2006
+ 05:50:48 -0500
+To: Andy Parkins <andyparkins@gmail.com>
 Sender: git-owner@vger.kernel.org
 
+Andy Parkins <andyparkins@gmail.com> writes:
 
-Does this ring a bell?
+> On Monday 2006 November 20 10:06, Alex Riesen wrote:
+>
+>> remove --pretty=oneline, it is default behavior of git log.
+>
+> No it's not; are you confusing it with --pretty=short?
 
-Fetching git-svn
-        M       trunk/lib/Perl/Critic/Policy/TestingAndDebugging/MisplacedShebang.pm
-        M       trunk/lib/Perl/Critic/Policy/TestingAndDebugging/ProhibitShebangWarningsArg.pm
-        M       trunk/lib/Perl/Critic/Policy/TestingAndDebugging/RequirePortableShebang.pm
-        M       trunk/compilers/past-pm/POST/Compiler.pir
-        M       trunk/compilers/past-pm/PAST/Compiler.pir
-        M       trunk/compilers/past-pm/PAST-pm.pir
-        M       trunk/languages/perl6/src/quote.pir
-        M       trunk/languages/perl6/src/classes/Str.pir
-        M       trunk/languages/perl6/src/classes/Code.pir
-        M       trunk/languages/perl6/src/classes/Num.pir
-        M       trunk/languages/plumhead/t/selection.txt
-        M       trunk/languages/plumhead/t/superglobals.t
-        M       trunk/languages/plumhead/t/strings.t
-        M       trunk/languages/tcl/runtime/builtin/clock.pir
-no blob information
-512 at /opt/git/bin/git-svn line 457
-        main::fetch_lib() called at /opt/git/bin/git-svn line 328
-        main::fetch() called at /opt/git/bin/git-svn line 973
-        main::fetch_child_id('git-svn') called at /opt/git/bin/git-svn line 991
-        main::rec_fetch('', '/Volumes/UFS/MIRROR/parrot-GITSVN/.git/svn') called at /opt/git/bin/git-svn line 747
-        main::multi_fetch() called at /opt/git/bin/git-svn line 187
-512 at /opt/git/bin/git-svn line 980
-        main::fetch_child_id('git-svn') called at /opt/git/bin/git-svn line 991
-        main::rec_fetch('', '/Volumes/UFS/MIRROR/parrot-GITSVN/.git/svn') called at /opt/git/bin/git-svn line 747
-        main::multi_fetch() called at /opt/git/bin/git-svn line 187
-
-
--- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
+I think Alex (Riesen) is saying "you (Alex Litvinov) were
+wondering why you do not see the commit log message but only the
+first line. That is because you are using --pretty=oneline.
+Lose it, then you would get what you want because giving the log
+message _is_ the default".
