@@ -2,56 +2,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] do_for_each_ref: perform the same sanity check for leftovers.
-Date: Sat, 18 Nov 2006 22:22:17 -0800
-Message-ID: <7vmz6o7y7a.fsf@assigned-by-dhcp.cox.net>
-References: <7vr6w07ylu.fsf@assigned-by-dhcp.cox.net>
-	<20061119061905.GB26670@spearce.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [BUG] StGit removed git branch of the same name as StGit branch
+Date: Mon, 20 Nov 2006 23:57:16 +0100
+Organization: At home
+Message-ID: <ejtbph$tod$1@sea.gmane.org>
+References: <200611202201.45521.jnareb@gmail.com> <20061120222812.GE12285@fieldses.org> <ejtal6$p8s$1@sea.gmane.org> <20061120224800.GF12285@fieldses.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sun, 19 Nov 2006 06:22:27 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Transfer-Encoding: 7Bit
+NNTP-Posting-Date: Mon, 20 Nov 2006 22:56:39 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061119061905.GB26670@spearce.org> (Shawn Pearce's message of
-	"Sun, 19 Nov 2006 01:19:05 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 27
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31827>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31951>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Glg4L-00005y-Cu for gcvg-git@gmane.org; Sun, 19 Nov
- 2006 07:22:21 +0100
+ esmtp (Exim 4.43) id 1GmI3k-0003GM-UB for gcvg-git@gmane.org; Mon, 20 Nov
+ 2006 23:56:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1756475AbWKSGWT (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 19 Nov 2006
- 01:22:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756477AbWKSGWS
- (ORCPT <rfc822;git-outgoing>); Sun, 19 Nov 2006 01:22:18 -0500
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:22932 "EHLO
- fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP id S1756475AbWKSGWS
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 19 Nov 2006 01:22:18 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao11.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061119062217.GVEC296.fed1rmmtao11.cox.net@fed1rmimpo01.cox.net>; Sun, 19
- Nov 2006 01:22:17 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id oWMp1V00H1kojtg0000000; Sun, 19 Nov 2006
- 01:21:49 -0500
-To: Shawn Pearce <spearce@spearce.org>
+ S966875AbWKTW4K (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 20 Nov 2006
+ 17:56:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966644AbWKTW4K
+ (ORCPT <rfc822;git-outgoing>); Mon, 20 Nov 2006 17:56:10 -0500
+Received: from main.gmane.org ([80.91.229.2]:36550 "EHLO ciao.gmane.org") by
+ vger.kernel.org with ESMTP id S966450AbWKTW4H (ORCPT
+ <rfc822;git@vger.kernel.org>); Mon, 20 Nov 2006 17:56:07 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1GmI3X-0003D6-Rg for git@vger.kernel.org; Mon, 20 Nov 2006 23:56:03 +0100
+Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Mon, 20 Nov 2006 23:56:03 +0100
+Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Mon, 20 Nov 2006
+ 23:56:03 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Shawn Pearce <spearce@spearce.org> writes:
+J. Bruce Fields wrote:
 
-> Junio C Hamano <junkio@cox.net> wrote:
->>  * "pickaxe -L'/^static int do_for_each_ref/,+40' refs.c" turns
->
-> What's this pickaxe you speak of?  Last I read you deleted it when
-> you renamed git-pickaxe to git-blame.
->
-> Have you reinvented git-pickaxe so soon?  Maybe we could try using
-> git-longblade next time a new comamnd is being developed?  :-)
+> On Mon, Nov 20, 2006 at 11:37:54PM +0100, Jakub Narebski wrote:
+>> J. Bruce Fields wrote:
 
-Oh, no, I meant "blame".
+>>> The idea I guess was to make it possible to use stgit (and only stgit)
+>>> for everything, and never type a git command.  It might have been better
+>>> to make stgit only manage patch series, and admit that people should use
+>>> git for the rest.  Then it might work more like you expect.
+>> 
+>> Yes, I expected to use StGit as a kind of preprocessing (branch preparation)
+>> for git.
+> 
+> The multiple-porcelains idea seems like a mistake to me--it'd be fine if
+> you're just adding new features on the side, but who wants to learn
+> entirely different sets of commands, with subtly different syntax,
+> semantics, and feature sets, for doing the same thing?
+
+I don't think so. StGit seems that way because it mainly adds new feature:
+patch management. But it can be used both as standalone SCM (like Quilt),
+or as a tool to manage patches in branch (rebase/cherry-pick on steroids).
+
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
+
