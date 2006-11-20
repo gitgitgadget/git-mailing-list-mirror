@@ -2,61 +2,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git and bzr
-Date: Tue, 28 Nov 2006 14:35:12 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0611281433270.30004@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <45357CC3.4040507@utoronto.ca> <a7e835d40610250308v5d577482m139742e7fe1db185@mail.gmail.com>
- <87slhcz8zh.wl%cworth@cworth.org> <a7e835d40610260152k658aeaf0hb900cb63870c04e4@mail.gmail.com>
- <7vu01ro20b.fsf@assigned-by-dhcp.cox.net> <a7e835d40610260257r5f05ea4gc934f1c1cc267977@mail.gmail.com>
- <20061026101038.GA13310@coredump.intra.peff.net> <877iyne4dm.fsf@alplog.fr>
- <Pine.LNX.4.64.0610260753090.3962@g5.osdl.org> <456B7C6A.80104@webdrake.net>
- <845b6e870611280410j58bdcd99nc05d0f67489293e4@mail.gmail.com>
- <ekhaeg$etk$1@sea.gmane.org>
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Martin Waitz <tali@admingilde.org>
+Subject: Re: [RFC] Submodules in GIT
+Date: Tue, 21 Nov 2006 00:29:07 +0100
+Message-ID: <20061120232904.GC20736@admingilde.org>
+References: <20061120215116.GA20736@admingilde.org> <ejt9dh$kfm$1@sea.gmane.org> <7v7ixp20za.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611201501230.3338@woody.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Tue, 28 Nov 2006 13:36:05 +0000 (UTC)
-Cc: git@vger.kernel.org, bazaar-ng@lists.canonical.com
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="WfZ7S8PLGjBY9Voh"
+NNTP-Posting-Date: Mon, 20 Nov 2006 23:29:42 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, Jakub Narebski <jnareb@gmail.com>,
+	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <ekhaeg$etk$1@sea.gmane.org>
-X-Y-GMX-Trusted: 0
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0611201501230.3338@woody.osdl.org>
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
+User-Agent: Mutt/1.5.9i
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32523>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31957>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gp37a-0003ze-Ce for gcvg-git@gmane.org; Tue, 28 Nov
- 2006 14:35:38 +0100
+ esmtp (Exim 4.43) id 1GmIZg-0002CO-0R for gcvg-git@gmane.org; Tue, 21 Nov
+ 2006 00:29:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1758650AbWK1NfP (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 28 Nov 2006
- 08:35:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758671AbWK1NfP
- (ORCPT <rfc822;git-outgoing>); Tue, 28 Nov 2006 08:35:15 -0500
-Received: from mail.gmx.net ([213.165.64.20]:65174 "HELO mail.gmx.net") by
- vger.kernel.org with SMTP id S1758650AbWK1NfO (ORCPT
- <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2006 08:35:14 -0500
-Received: (qmail invoked by alias); 28 Nov 2006 13:35:13 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp037) with SMTP; 28 Nov 2006 14:35:13 +0100
-To: Jakub Narebski <jnareb@gmail.com>
+ S1030375AbWKTX3M (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 20 Nov 2006
+ 18:29:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030465AbWKTX3M
+ (ORCPT <rfc822;git-outgoing>); Mon, 20 Nov 2006 18:29:12 -0500
+Received: from agent.admingilde.org ([213.95.21.5]:60298 "EHLO
+ mail.admingilde.org") by vger.kernel.org with ESMTP id S1030375AbWKTX3M
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 20 Nov 2006 18:29:12 -0500
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1) id
+ 1GmIZY-00049A-VJ; Tue, 21 Nov 2006 00:29:09 +0100
+To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 
-Hi,
 
-On Tue, 28 Nov 2006, Jakub Narebski wrote:
+--WfZ7S8PLGjBY9Voh
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> [... some reasons why git-annotate is not just your regular annotate ...]
+hoi :)
 
-You should also mention that git-annotate can follow code movements 
-through file renames.
+On Mon, Nov 20, 2006 at 03:05:47PM -0800, Linus Torvalds wrote:
+> Now, to get everything to work seamlessly within such a commit thing=20
+> might be a fair amount of work, but I'm not sure you even _need_ to. It=
+=20
+> might be ok to just say "subproject 'xyzzy' differs" in the diff, for=20
+> example, and have some rudimentary support for "git status" etc talking=
+=20
+> about subprojects that need to be committed.
 
-I know, because I was already rightfully blamed for code which was moved 
-by somebody else.
+this is exactly the status of my implementation at the moment ;-)
 
-Ciao,
-Dscho
+Well, it does not yet explicitly tell that a subproject diffs,
+but it just creates a diff of the two commit objects.
+
+I guess we need some command line option to say if we only want
+to know about that the submodule changes or if the diff should
+recurse into it.
+
+--=20
+Martin Waitz
+
+--WfZ7S8PLGjBY9Voh
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFFYjpAj/Eaxd/oD7IRApi7AJ0b+SQR5lTy9vMqE9xSBwIQ2D9YSACdHU/r
+Fkl8UixrighAoR6io1Vpt4k=
+=ySBz
+-----END PGP SIGNATURE-----
+
