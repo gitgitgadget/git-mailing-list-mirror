@@ -1,85 +1,57 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Question on rerere
-Date: Wed, 20 Dec 2006 02:40:46 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612200240360.19693@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0612200045490.19693@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vk60no0ua.fsf@assigned-by-dhcp.cox.net> <7vy7p3mk1i.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: Rename detection at git log
+Date: Mon, 20 Nov 2006 11:06:56 +0100
+Message-ID: <81b0412b0611200206q4ded162drdc450715d7f801e0@mail.gmail.com>
+References: <200611201157.23680.litvinov2004@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Wed, 20 Dec 2006 01:40:55 +0000 (UTC)
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Mon, 20 Nov 2006 10:07:13 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7vy7p3mk1i.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=ZKP36dFZpYkLS+EuXVsS7AFDY0m4s+r0hNBFGhTpb3HNVDxjWvZeZHuq1b2YGgtXC7rX/HrJFi0lhKUhqSugPZh8akSm2T2YeIc9wR1xYezcXm2LE5DDYHgRJ5H2dHNjdQSXXBwYaC3bds5aU2BiRNQqJ6Me3/Nqmv1eNREtcaU=
+In-Reply-To: <200611201157.23680.litvinov2004@gmail.com>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34889>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GwqRv-0003xl-Kq for gcvg-git@gmane.org; Wed, 20 Dec
- 2006 02:40:51 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31892>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gm63K-0004X5-EF for gcvg-git@gmane.org; Mon, 20 Nov
+ 2006 11:07:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932912AbWLTBkt (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
- 20:40:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932935AbWLTBkt
- (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 20:40:49 -0500
-Received: from mail.gmx.net ([213.165.64.20]:37405 "HELO mail.gmx.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S932912AbWLTBks
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec 2006 20:40:48 -0500
-Received: (qmail invoked by alias); 20 Dec 2006 01:40:46 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp046) with SMTP; 20 Dec 2006 02:40:46 +0100
-To: Junio C Hamano <junkio@cox.net>
+ S965552AbWKTKG7 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 20 Nov 2006
+ 05:06:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965555AbWKTKG7
+ (ORCPT <rfc822;git-outgoing>); Mon, 20 Nov 2006 05:06:59 -0500
+Received: from ug-out-1314.google.com ([66.249.92.172]:21979 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S965552AbWKTKG6
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 20 Nov 2006 05:06:58 -0500
+Received: by ug-out-1314.google.com with SMTP id m3so1131154ugc for
+ <git@vger.kernel.org>; Mon, 20 Nov 2006 02:06:57 -0800 (PST)
+Received: by 10.78.201.15 with SMTP id y15mr5023664huf.1164017216555; Mon, 20
+ Nov 2006 02:06:56 -0800 (PST)
+Received: by 10.78.135.19 with HTTP; Mon, 20 Nov 2006 02:06:56 -0800 (PST)
+To: "Alexander Litvinov" <litvinov2004@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Hi,
+On 11/20/06, Alexander Litvinov <litvinov2004@gmail.com> wrote:
+> How can I see all changes for one file ? Including renames/copies ?
 
-On Tue, 19 Dec 2006, Junio C Hamano wrote:
+git log -M -C -r --name-status
 
-> Junio C Hamano <junkio@cox.net> writes:
-> 
-> > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> >
-> >> IIUC then each conflict hunk is handled _separately_ like this: the 
-> >> lexicographically smaller between the two file sections is displayed 
-> >> first, regardless if a previous hunk had a different order. Not that it 
-> >> matters most of the time, but isn't this dangerous?
-> >
-> > You are probably right.  Probably the right thing would be to
-> > use the first hunk to determine the flipping order and stick to
-> > that for the rest.
-> >
-> > Not that I've seen problems with the current behaviour, though.
-> 
-> Well, come to think of it, I think the current behaviour makes
-> more sense.
-> 
-> Suppose you start from an original file "OO".  You have two
-> branches that change it to "AO" and "BO", and another pair of
-> branches that change it to "OC" and "OD".  Let's call these
-> branches A, B, C, and D.
-> 
-> By merging A and C, you will get "AC"; you can get "AD", "BC"
-> and "BD" the same way.
-> 
-> Now suppose you are on "AC" and merged "BD".  You would get
-> "<A=B><C=D>".
-> 
-> If you were on "BD" and merged "AC" you would get "<B=A><D=C>".
-> If you were on "AD" and merged "BC" you would get "<A=B><D=C>".
-> 
-> You got the idea?
+> PAGER=cat git log -M -C --pretty=oneline b/a
+>
+> At lastline I would like to see two commits : renaming a -> b/a and creation
+> of a. By the way, how can I see commit message with git log ?
 
-Yes. Thanks!
-
-Ciao,
-Dscho
