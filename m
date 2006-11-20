@@ -4,68 +4,63 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Catalin Marinas <catalin.marinas@arm.com>
+From: "J. Bruce Fields" <bfields@fieldses.org>
 Subject: Re: [BUG] StGit removed git branch of the same name as StGit branch
-Date: Tue, 21 Nov 2006 10:19:00 +0000
-Message-ID: <tnx1wnxxfu3.fsf@arm.com>
-References: <200611202201.45521.jnareb@gmail.com>
-	<b0943d9e0611210126x493848d9xae006af835fc62c7@mail.gmail.com>
-	<ejuj2a$2ot$1@sea.gmane.org>
-Reply-To: Catalin Marinas <catalin.marinas@gmail.com>
+Date: Mon, 20 Nov 2006 17:48:00 -0500
+Message-ID: <20061120224800.GF12285@fieldses.org>
+References: <200611202201.45521.jnareb@gmail.com> <20061120222812.GE12285@fieldses.org> <ejtal6$p8s$1@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 21 Nov 2006 10:19:24 +0000 (UTC)
+NNTP-Posting-Date: Mon, 20 Nov 2006 22:48:43 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <ejuj2a$2ot$1@sea.gmane.org> (Jakub Narebski's message of "Tue,
- 21 Nov 2006 11:07:31 +0100")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
-X-OriginalArrivalTime: 21 Nov 2006 10:19:20.0441 (UTC) FILETIME=[82198E90:01C70D56]
+Content-Disposition: inline
+In-Reply-To: <ejtal6$p8s$1@sea.gmane.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31983>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31948>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GmSid-0000AM-4B for gcvg-git@gmane.org; Tue, 21 Nov
- 2006 11:19:11 +0100
+ esmtp (Exim 4.43) id 1GmHvr-0001Nv-TP for gcvg-git@gmane.org; Mon, 20 Nov
+ 2006 23:48:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1030823AbWKUKTH (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 21 Nov 2006
- 05:19:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030824AbWKUKTH
- (ORCPT <rfc822;git-outgoing>); Tue, 21 Nov 2006 05:19:07 -0500
-Received: from cam-admin0.cambridge.arm.com ([193.131.176.58]:44792 "EHLO
- cam-admin0.cambridge.arm.com") by vger.kernel.org with ESMTP id
- S1030823AbWKUKTE (ORCPT <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2006
- 05:19:04 -0500
-Received: from cam-owa2.Emea.Arm.com (cam-owa2.emea.arm.com [10.1.105.18]) by
- cam-admin0.cambridge.arm.com (8.12.6/8.12.6) with ESMTP id kALAJ24b017299;
- Tue, 21 Nov 2006 10:19:02 GMT
-Received: from localhost.localdomain ([10.1.255.211]) by
- cam-owa2.Emea.Arm.com with Microsoft SMTPSVC(6.0.3790.0); Tue, 21 Nov 2006
- 10:19:20 +0000
+ S966400AbWKTWsE (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 20 Nov 2006
+ 17:48:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966408AbWKTWsE
+ (ORCPT <rfc822;git-outgoing>); Mon, 20 Nov 2006 17:48:04 -0500
+Received: from mail.fieldses.org ([66.93.2.214]:15550 "EHLO
+ pickle.fieldses.org") by vger.kernel.org with ESMTP id S966400AbWKTWsC (ORCPT
+ <rfc822;git@vger.kernel.org>); Mon, 20 Nov 2006 17:48:02 -0500
+Received: from bfields by pickle.fieldses.org with local (Exim 4.63)
+ (envelope-from <bfields@fieldses.org>) id 1GmHvk-0006KC-PH; Mon, 20 Nov 2006
+ 17:48:00 -0500
 To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Jakub Narebski <jnareb@gmail.com> wrote:
-> Catalin Marinas wrote:
->> I've never thought anyone would see a different meaing for the
->> "branch" command. What you wanted to do was the reverse of the "init"
->> command. Maybe something like "uninit" or a "--uninit" option to
->> "branch".
->
-> Yes, that is what I wanted. "stg branch --unmanage" or something
-> like that.
+On Mon, Nov 20, 2006 at 11:37:54PM +0100, Jakub Narebski wrote:
+> J. Bruce Fields wrote:
+> > You probably actually had to "stg branch --delete --force", didn't you?
+> 
+> Nope. "stg branch --delete gitweb/web"
+> 
+> > What you want is "stg commit".
+> 
+> No. Whole stack was committed, I wanted only get rid of
+> heads/base/gitweb/web (of StGit managed branch indicator).
 
-I'll put it on my to-do list.
+Oh, right, got it.
 
-> By the way, why "stg branch --delete" doesn't remove reflog? Not that I'm
-> complaining, because it sure saved some work when resurrecting branch, and
-> I didn't loose reflog info.
+> > The idea I guess was to make it possible to use stgit (and only stgit)
+> > for everything, and never type a git command.  It might have been better
+> > to make stgit only manage patch series, and admit that people should use
+> > git for the rest.  Then it might work more like you expect.
+> 
+> Yes, I expected to use StGit as a kind of preprocessing (branch preparation)
+> for git.
 
-Reflogs came into GIT after the StGIT branch command and never looked
-at them in detail. And maybe it should not touch the reflog info,
-especially for situations like this, unless GIT has a mechanism for a
-trash bin (StGIT has one for patches - .git/patches/<branch>/trash/ -
-but undocumented)
+The multiple-porcelains idea seems like a mistake to me--it'd be fine if
+you're just adding new features on the side, but who wants to learn
+entirely different sets of commands, with subtly different syntax,
+semantics, and feature sets, for doing the same thing?
 
--- 
