@@ -1,161 +1,115 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Graham Percival <gpermus@gmail.com>
-Subject: git newbie problems
-Date: Tue, 05 Dec 2006 16:41:29 -0800
-Message-ID: <457611B9.9020907@gmail.com>
-References: <4574AC9E.3040506@gmail.com> <4574BF70.8070100@lilypond.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Patch to tutorial.txt
+Date: Mon, 20 Nov 2006 09:49:31 +0100
+Message-ID: <200611200949.32722.jnareb@gmail.com>
+References: <4d8e3fd30611191444r710f23e5uc488d35aa4abaf06@mail.gmail.com> <ejqnh8$peb$1@sea.gmane.org> <4d8e3fd30611200030p1d117445qd3f7d619c18a0633@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 6 Dec 2006 00:41:41 +0000 (UTC)
+NNTP-Posting-Date: Mon, 20 Nov 2006 08:48:15 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:message-id:date:from:user-agent:mime-version:to:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=fNln4sCMT4kE7yEJ9/EfIqQQu7CAIpOjMH8Ycw3/bcSuUBNW9Bi9cgGIQunOs5F1wuO2Q7+fmiXP5ojLAg3cdOvwrPZulqeBCFnllVppSDCDjQ9oN8IbjMp9aRT/bNQO8gNGEROIIUpmdyaWpXoN70+CVVuO0mKeu59qjDNWJEw=
-User-Agent: Thunderbird 1.5.0.8 (Macintosh/20061025)
-In-Reply-To: <4574BF70.8070100@lilypond.org>
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:cc:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=PLCSfpMofuC5G9Kwj0PVgtwLuC9cWumVgFfjjBnzS2BcSgQ1FZXHrCvpiXvKt0AQ+xFRdgWSUx8M6deNJIeEOkdZ+9Vm1BLMnxHVQXEQe7rZpZg5sErVMRwcTE3gvBbxMfoB493mPaZWOsrgrY2OtyKjJ0Z5fSxFvHq5HStjPZ4=
+User-Agent: KMail/1.9.3
+In-Reply-To: <4d8e3fd30611200030p1d117445qd3f7d619c18a0633@mail.gmail.com>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33395>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Grkqy-0006xK-N5 for gcvg-git@gmane.org; Wed, 06 Dec
- 2006 01:41:41 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31886>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gm4p2-0006Qv-U7 for gcvg-git@gmane.org; Mon, 20 Nov
+ 2006 09:48:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1758839AbWLFAli (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 5 Dec 2006
- 19:41:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758862AbWLFAli
- (ORCPT <rfc822;git-outgoing>); Tue, 5 Dec 2006 19:41:38 -0500
-Received: from nz-out-0506.google.com ([64.233.162.232]:27953 "EHLO
- nz-out-0102.google.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with
- ESMTP id S1758839AbWLFAlh (ORCPT <rfc822;git@vger.kernel.org>); Tue, 5 Dec
- 2006 19:41:37 -0500
-Received: by nz-out-0102.google.com with SMTP id s1so25463nze for
- <git@vger.kernel.org>; Tue, 05 Dec 2006 16:41:36 -0800 (PST)
-Received: by 10.65.219.11 with SMTP id w11mr172335qbq.1165365696734; Tue, 05
- Dec 2006 16:41:36 -0800 (PST)
-Received: from ?192.168.1.139? ( [207.216.3.102]) by mx.google.com with ESMTP
- id e19sm37468942qbe.2006.12.05.16.41.32; Tue, 05 Dec 2006 16:41:33 -0800
- (PST)
-To: git@vger.kernel.org
+ S934010AbWKTIsJ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 20 Nov 2006
+ 03:48:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934013AbWKTIsJ
+ (ORCPT <rfc822;git-outgoing>); Mon, 20 Nov 2006 03:48:09 -0500
+Received: from ug-out-1314.google.com ([66.249.92.168]:37026 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S934010AbWKTIsI
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 20 Nov 2006 03:48:08 -0500
+Received: by ug-out-1314.google.com with SMTP id m3so1119034ugc for
+ <git@vger.kernel.org>; Mon, 20 Nov 2006 00:48:07 -0800 (PST)
+Received: by 10.67.100.17 with SMTP id c17mr7426026ugm.1164012486882; Mon, 20
+ Nov 2006 00:48:06 -0800 (PST)
+Received: from host-81-190-24-209.torun.mm.pl ( [81.190.24.209]) by
+ mx.google.com with ESMTP id 24sm8046874ugf.2006.11.20.00.48.06; Mon, 20 Nov
+ 2006 00:48:06 -0800 (PST)
+To: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Greetings,
+On Mon, 20 Nov 2006, Paolo Ciarrocchi wrote:
+> On 11/19/06, Jakub Narebski <jnareb@gmail.com> wrote:
+>> Paolo Ciarrocchi wrote:
 
-I'm posting these problems at Han-Wen and Dscho's insistence.  I'm the 
-documentation editor for GNU/LilyPond, so I'm reluctant to criticize 
-other project's documentation unless I spend an hour or more seriously 
-reading it.  I'm quite willing to admit that I never seriously tried to 
-read the docs on the overall theory of git (branches, repo, etc); I just 
-flailed around looking for magic commands to make things work.  By "make 
-things work", I mean imitating my work style with cvs:
+>>> From: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
+>>> Date: Sun, 19 Nov 2006 23:41:31 +0100
+>>> Subject: [PATCH] One of the comment was not really clear, rephrased to
+>>> make it easier to be understood by the reader
+>>
+>> Wordwrap. Perhaps it would be better to split description into short line,
+>> and two-line description.
 
-cvs co blah blah  (which I simply copy and paste from savannah)
-while (true) {
-   cvs update          // get changes that happened overnight
-   vi foo/bar/baz.txt  // or whatever editing commands you do
-   make; make web      // or whatever testing commands you do
-   cvs update          // get latest changes to prepare for
-                       // uploading my changes.
-   cvs ci foo/bar/baz.txt  // upload changes
-}
+See http://git.or.cz/gitwiki/CommitMessageConventions
 
-Once or twice a year I'll do "cvs diff" or "cvs add", but all I really 
-want are the above commands.  I figured that this should be really easy 
-to do, so I kept on skimming through the docs, trying to find the 
-equivalent of these really easy commands.  (note that I was reading the 
-"tutorial introduction to git")
+In short, it is better to split description into short one-line
+description, for example
+  "Documentation: Make comment about merging in tutorial.txt more clear"
+followed by empty line, then longer description of changes (if any), for
+example
 
-I should add that I've received help on the lilypond-devel list; I'm 
-posting this in case it helps future development for git docs, not 
-because I need more help to use git.
+  One of the comment was not really clear, rephrased to make it easier
+  to be understood by the reader
 
-This case was particularly difficult because the very first time I tried
-to commit... err... push... err... "make my doc changes available to
-everybody else" (whatever the right term is), there was this merge problem.
+followed by empty line, then signoff line, for example
 
+  Signed-off-by: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
 
+> This is not clear to me, when I do a "git commit -a" I can add a text using vi,
+> should I manually split the text in multiple lines?
+> Only the first line will be part of the Subject?
 
-MERGE PROBLEM
+Yes. The rest will be in the email body.
+ 
+>> [...]
+>>>  ------------------------------------------------
+>>>
+>>>  at this point the two branches have diverged, with different changes
+>>> -made in each.  To merge the changes made in the two branches, run
+>>> +made in each.  To merge the changes made in experimental into master run
+>>
+>> I would rather say:
+>>   To merge the changes made in the two branches into master, run
+> 
+> Why Jakub? There are only two branches, master and experimental.
+> While sitting in master and doing git pull . experimental I would
+> expect to merge I did in experimental into master. Changes did in
+> master are alreay merged in master. Am I wrong?
 
-Two people (me and another person) edited the same line on
-Documentation/user/advanced.itely at the same time.  (note that this 
-file has existed for over a year; it's not a new file)  When I tried to 
-get the most recent changes, I'm greeted with this:
-...
-Trying really trivial in-index merge...
-Documentation/user/advanced-notation.itely: needs merge
-fatal: you need to resolve your current index first
-Nope.
-Merging HEAD with c21d3f3e1c77722e50d994763442e6f994b03ac2
-Merging:
-038b7fc Misc small updates (trying to make git work).
-c21d3f3 Merge branch 'master' of
-ssh+git://hanwen@git.sv.gnu.org/srv/git/lilypond
-found 1 common ancestor(s):
-84219bb don't have input/templates/ any longer.
-fatal: Entry '.gitignore' would be overwritten by merge. Cannot merge.
-No merge strategy handled the merge.
+For me, "merge" in "to merge the changes" phrase is merge in common-sense
+meaning of the world, not the SCM jargon. Merge the changes == join the
+changes, so you have to give both sides, both changes you join.
 
+Merge the changes == take changes in branch 'experimental' since forking,
+take changes in branch 'master' since forking, join those changes
+together (merge), and put the result of this joining (this merge) into
+branch 'master'.
 
-As a git newbie, I'm quite confused.  OK, there's no merge strategy...
-so what do I do now?  With cvs, the changes would be dumped into the
-file.  I look at the file, found the conflict, and tried it again.  I
-got the same error message, and then it occurred to me that although I
-changed the files in my ~/usr/src/lilypond, git might be storing these
-files somewhere else.  So I tried
-
-$ git commit Documentation/user/advanced-notation.itely
-Cannot do a partial commit during a merge.
-You might have meant to say 'git commit -i paths...', perhaps?
-
-... eh?  I'm trying to fix this so that you _can_ merge!  Regardless,
-when I tried to update again, I get
-
-$ git pull gnu master
-...
-Trying really trivial in-index merge...
-fatal: Entry '.gitignore' would be overwritten by merge. Cannot merge.
-Nope.
-Merging HEAD with c21d3f3e1c77722e50d994763442e6f994b03ac2
-Merging:
-038b7fc Misc small updates (trying to make git work).
-c21d3f3 Merge branch 'master' of
-ssh+git://hanwen@git.sv.gnu.org/srv/git/lilypond
-found 1 common ancestor(s):
-84219bb don't have input/templates/ any longer.
-fatal: Entry '.gitignore' would be overwritten by merge. Cannot merge.
-No merge strategy handled the merge.
+On the contrary, in "merge branch 'experimenta' into 'master'" phrase
+"merge" is in the SCM meaning of this word.
 
 
-Now I'm totally confused, because I definitely haven't touched .gitignore.
-
-
-SUGGESTIONS
-
-The "tutorial introduction to git" looks like a nice document, but it
-assumes that you are in control of the project.  For users who aren't in
-control (ie me) this is a problem, because it starts me skimming.
-"Importing a project"... nah, that's not me.  "Merging branches"... I
-don't care; I'm going to shove everything into the main branch.  "Using
-git for collaboration"... hmm, maybe this is the stuff I need to read.
-But by this point, I've already skimmed through five screens of info, so
-I'm not reading very carefully.
-
-It would be nice to have an accompanying "tutorial introduction to
-contributing with git" for users (like me) who are not in control of a 
-project.
-
-Finally, it would be really nice if there was some mention of "resolving
-merge problems" in the tutorial (both in the current one and any new docs).
-
-Cheers,
-- Graham Percival
-
+Just my 2 eurocoents of not native English speaker...
+-- 
+Jakub Narebski
