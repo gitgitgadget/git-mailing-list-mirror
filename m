@@ -4,82 +4,68 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Idea for rebase strategy
-Date: Mon, 27 Nov 2006 00:33:54 -0800
-Message-ID: <7vfyc5l24t.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.63.0611270108160.30004@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: git-show --stat on first commit
+Date: Tue, 21 Nov 2006 13:42:38 -0500
+Message-ID: <20061121184238.GC22283@spearce.org>
+References: <200611211341.48862.andyparkins@gmail.com> <8aa486160611210609h1c2d229ekf0b5e8aeb4f21f11@mail.gmail.com> <slrnem694k.4lm.Peter.B.Baumann@xp.machine.xx> <Pine.LNX.4.64.0611210820100.3338@woody.osdl.org> <slrnem6cpn.6vh.Peter.B.Baumann@xp.machine.xx> <20061121183853.GA61605@dspnet.fr.eu.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Mon, 27 Nov 2006 08:34:09 +0000 (UTC)
-Cc: git@vger.kernel.org
+NNTP-Posting-Date: Tue, 21 Nov 2006 18:46:08 +0000 (UTC)
+Cc: Peter Baumann <Peter.B.Baumann@stud.informatik.uni-erlangen.de>,
+	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <Pine.LNX.4.63.0611270108160.30004@wbgn013.biozentrum.uni-wuerzburg.de>
-	(Johannes Schindelin's message of "Mon, 27 Nov 2006 01:15:14 +0100
-	(CET)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Content-Disposition: inline
+In-Reply-To: <20061121183853.GA61605@dspnet.fr.eu.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32390>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32019>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gobw7-0006CF-KW for gcvg-git@gmane.org; Mon, 27 Nov
- 2006 09:33:59 +0100
+ esmtp (Exim 4.43) id 1Gmad4-00041z-OY for gcvg-git@gmane.org; Tue, 21 Nov
+ 2006 19:45:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1757386AbWK0Id5 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 27 Nov 2006
- 03:33:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757393AbWK0Id5
- (ORCPT <rfc822;git-outgoing>); Mon, 27 Nov 2006 03:33:57 -0500
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:34467 "EHLO
- fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP id S1757386AbWK0Id4
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 27 Nov 2006 03:33:56 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao10.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061127083355.PWSD5575.fed1rmmtao10.cox.net@fed1rmimpo02.cox.net>; Mon, 27
- Nov 2006 03:33:55 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id rka41V0011kojtg0000000; Mon, 27 Nov 2006
- 03:34:04 -0500
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+ S1031300AbWKUSpz (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 21 Nov 2006
+ 13:45:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031301AbWKUSpz
+ (ORCPT <rfc822;git-outgoing>); Tue, 21 Nov 2006 13:45:55 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:30426 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S1031300AbWKUSpy
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2006 13:45:54 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1GmaZl-0004ON-9v; Tue, 21 Nov 2006 13:42:33 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ D931F20FB09; Tue, 21 Nov 2006 13:42:38 -0500 (EST)
+To: Olivier Galibert <galibert@pobox.com>
 Sender: git-owner@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Olivier Galibert <galibert@pobox.com> wrote:
+> On Tue, Nov 21, 2006 at 06:11:19PM +0100, Peter Baumann wrote:
+> > And I think handling this behaviour as a config option is the right thing,
+> > because most of the time if someone imports a project into git he
+> > will import the whole history, especially if he is using one of the
+> > cvs/svn importers. A "halfway import" as seen in the kernel repo is a
+> > special case and it is unlikely seen again.
+> 
+> Not all projects run on a public VCS.  Hell, not all projects run on a
+> VCS at all.  And in the CVS case, you don't always have enough access
+> to actually download the repository, which afaik is needed for
+> importing.
 
-> an idea hit me today: maybe we can make rebase work nicely with merges 
-> after all. We could record the original branch point and the new branch 
-> point for rebases.
+There is a tool floating around the 'net that will download
+a CVS repository and recreate the ,v files locally for you.
+cvssuck appears to be its name:
 
-One case that that would be simple enough, appear often enough
-in real life, and would be useful in practice is this:
+  http://freshmeat.net/projects/cvssuck/
 
-       A---B---C---D---E topic
-      /       /
-  ---X---o---Y---Z master
-
-After forking 'topic' at 'X' and built two commits A and B, the
-master has a related change in the area 'topic' works on, and a
-merge to adjust is made at C.  Then it builds two other commits
-D and E.  We should be able to rebase it on top of the master.
-
-If we have a reliable ref-log for 'topic' that should be trivial
-to do.  It will be just the matter of replaying the log on top
-of master.  The ref-log says we committed two after we forked,
-so we replay them:
-
-       A---B---C---D---E topic
-      /       /
-  ---X---o---Y---Z master
-                  \
-                   A'--B'
-
-Then the log says we merged 'Y'.  We faithfully replay that,
-which wuold result in "fast-forward -- nothing special is
-needed" situation.  The remaining log entries would say we have
-two further commits, so replaying them would result in:
-
-       A---B---C---D---E topic
-      /       /
-  ---X---o---Y---Z master
-                  \
-                   A'--B'--C'--D' topic'
-
+-- 
