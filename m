@@ -1,66 +1,64 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Collection of stgit issues and wishes
-Date: Sun, 10 Dec 2006 09:55:13 +0100
-Organization: At home
-Message-ID: <elght6$tjb$1@sea.gmane.org>
-References: <20061208221744.GA3288@nan92-1-81-57-214-146.fbx.proxad.net> <elconr$uku$2@sea.gmane.org>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: git-show --stat on first commit
+Date: Tue, 21 Nov 2006 19:48:17 +0100
+Message-ID: <20061121184817.GE7201@pasky.or.cz>
+References: <200611211341.48862.andyparkins@gmail.com> <ejvfng$cj6$1@sea.gmane.org> <20061121182135.GD7201@pasky.or.cz> <200611211839.58709.andyparkins@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-NNTP-Posting-Date: Sun, 10 Dec 2006 08:53:22 +0000 (UTC)
+NNTP-Posting-Date: Tue, 21 Nov 2006 18:48:40 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 16
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-25-107.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+Content-Disposition: inline
+In-Reply-To: <200611211839.58709.andyparkins@gmail.com>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33870>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GtKQy-00030N-4q for gcvg-git@gmane.org; Sun, 10 Dec
- 2006 09:53:20 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32020>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GmafP-0004Ss-Uh for gcvg-git@gmane.org; Tue, 21 Nov
+ 2006 19:48:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1760504AbWLJIxP (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 10 Dec 2006
- 03:53:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760513AbWLJIxP
- (ORCPT <rfc822;git-outgoing>); Sun, 10 Dec 2006 03:53:15 -0500
-Received: from main.gmane.org ([80.91.229.2]:38463 "EHLO ciao.gmane.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1760504AbWLJIxP
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 10 Dec 2006 03:53:15 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1GtKQk-00059w-H3 for git@vger.kernel.org; Sun, 10 Dec 2006 09:53:06 +0100
-Received: from host-81-190-25-107.torun.mm.pl ([81.190.25.107]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Sun, 10 Dec 2006 09:53:06 +0100
-Received: from jnareb by host-81-190-25-107.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Sun, 10 Dec 2006
- 09:53:06 +0100
-To: git@vger.kernel.org
+ S1031305AbWKUSsU (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 21 Nov 2006
+ 13:48:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031306AbWKUSsU
+ (ORCPT <rfc822;git-outgoing>); Tue, 21 Nov 2006 13:48:20 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:34280 "EHLO machine.or.cz") by
+ vger.kernel.org with ESMTP id S1031305AbWKUSsT (ORCPT
+ <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2006 13:48:19 -0500
+Received: (qmail 4488 invoked by uid 2001); 21 Nov 2006 19:48:17 +0100
+To: Andy Parkins <andyparkins@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Jakub Narebski wrote:
+On Tue, Nov 21, 2006 at 07:39:56PM CET, Andy Parkins wrote:
+> On Tuesday 2006, November 21 18:21, Petr Baudis wrote:
+> 
+> > (The answer is usually "create the branch in a separate repo and then
+> > fetch it to the original one". But it feels a bit kludgy given the
+> > otherwise seamless support for unrelated branches. (Not that I ever was
+> > a big fan of unrelated long-lived branches in general.))
+> 
+> Just as kludgy, but I did this today by writing the name of the new branch 
+> in .git/HEAD then doing
+> 
+> for file in $(git-ls-files); do git-update-index --force-remove $file; done
+> 
+> Before creating the new files and "git-commit"ing.
 
-> Here are some issues which are a bit annoying for me:
-> - make "stg help" (without command name) equivalent to "stg --help"
-> - stg new lacks --sign option (I have to remember to do this during
->   "stg refresh").
+Ok, this approach looks actually reasonable (contrary to the frequently
+suggested rm approach, which is rather dangerous).
 
-And another one: git uses VISUAL, then EDITOR, while stgit uses EDITOR
-only, so when I prepare VISUAL for git (I use emacsclient), stgit still
-uses EDITOR.
+Perhaps git checkout --empty could do this?
 
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
-
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+The meaning of Stonehenge in Traflamadorian, when viewed from above, is:
+"Replacement part being rushed with all possible speed."
