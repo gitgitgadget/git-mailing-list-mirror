@@ -1,79 +1,106 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Re: Some tips for doing a CVS importer
-Date: Mon, 20 Nov 2006 18:37:41 -0500
-Message-ID: <9e4733910611201537h30b6c9f4oee9d8df75284c284@mail.gmail.com>
-References: <9e4733910611201349s4d08b984g772c64982f148bfa@mail.gmail.com>
-	 <46a038f90611201503m6a63ec8ct347026c635190108@mail.gmail.com>
+From: Yann Dirson <ydirson@altern.org>
+Subject: Re: [RFC] Submodules in GIT
+Date: Wed, 22 Nov 2006 00:54:29 +0100
+Message-ID: <20061121235429.GH5443@nan92-1-81-57-214-146.fbx.proxad.net>
+References: <20061120215116.GA20736@admingilde.org> <ejt9dh$kfm$1@sea.gmane.org> <7v7ixp20za.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611201501230.3338@woody.osdl.org> <20061121223130.GA24909@nan92-1-81-57-214-146.fbx.proxad.net> <Pine.LNX.4.64.0611211437430.3338@woody.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Mon, 20 Nov 2006 23:38:02 +0000 (UTC)
-Cc: "Git Mailing List" <git@vger.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Tue, 21 Nov 2006 23:55:38 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, Jakub Narebski <jnareb@gmail.com>,
+	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=eqDETl3iFNaSLXFJXca+DIa0tkhfgmpVgWKjaRvJDOOmfFKkrJI1mQZAqOPgp6nAfeKAe6ayr7q2DmE6U3OSByTW61dkoD9NsqEC8ZHx9s+42818+LhTWyLL+rv1H3GdigYgM4faQN/tMSEa6jZJQZWNExfcoFhDvvixKUm/0Go=
-In-Reply-To: <46a038f90611201503m6a63ec8ct347026c635190108@mail.gmail.com>
 Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0611211437430.3338@woody.osdl.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31959>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32060>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GmIi6-0004FE-6c for gcvg-git@gmane.org; Tue, 21 Nov
- 2006 00:37:58 +0100
+ esmtp (Exim 4.43) id 1GmfSQ-0003H2-2p for gcvg-git@gmane.org; Wed, 22 Nov
+ 2006 00:55:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S965823AbWKTXhz (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 20 Nov 2006
- 18:37:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966877AbWKTXhy
- (ORCPT <rfc822;git-outgoing>); Mon, 20 Nov 2006 18:37:54 -0500
-Received: from py-out-1112.google.com ([64.233.166.183]:29305 "EHLO
- py-out-1112.google.com") by vger.kernel.org with ESMTP id S965823AbWKTXhy
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 20 Nov 2006 18:37:54 -0500
-Received: by py-out-1112.google.com with SMTP id a29so1032916pyi for
- <git@vger.kernel.org>; Mon, 20 Nov 2006 15:37:50 -0800 (PST)
-Received: by 10.35.121.9 with SMTP id y9mr300472pym.1164065862157; Mon, 20
- Nov 2006 15:37:42 -0800 (PST)
-Received: by 10.35.72.13 with HTTP; Mon, 20 Nov 2006 15:37:41 -0800 (PST)
-To: "Martin Langhoff" <martin.langhoff@gmail.com>
+ S1756882AbWKUXzN (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 21 Nov 2006
+ 18:55:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756883AbWKUXzM
+ (ORCPT <rfc822;git-outgoing>); Tue, 21 Nov 2006 18:55:12 -0500
+Received: from smtp3-g19.free.fr ([212.27.42.29]:62627 "EHLO
+ smtp3-g19.free.fr") by vger.kernel.org with ESMTP id S1756882AbWKUXzK (ORCPT
+ <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2006 18:55:10 -0500
+Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net
+ [81.57.214.146]) by smtp3-g19.free.fr (Postfix) with ESMTP id EDC7549F5D;
+ Wed, 22 Nov 2006 00:55:08 +0100 (CET)
+Received: by gandelf.nowhere.earth (Postfix, from userid 1000) id EFC471F06E;
+ Wed, 22 Nov 2006 00:54:29 +0100 (CET)
+To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 
-On 11/20/06, Martin Langhoff <martin.langhoff@gmail.com> wrote:
-> On 11/21/06, Jon Smirl <jonsmirl@gmail.com> wrote:
-> > I have tried all of the available CVS importers. None of them are
-> > without problems. If anyone is interested in writing one for git here
-> > are some ideas on how to structure it.
->
-> Hi Jon,
->
-> I gather this means that the cvs2svn track hasn't been as productive
-> as expected. Any remaining/unsolvable issues with it? I have been
-> chronically busy on my e-learning projects, but don't discard coming
-> back to this when I have some time.
+On Tue, Nov 21, 2006 at 02:51:56PM -0800, Linus Torvalds wrote:
+> 
+> 
+> On Tue, 21 Nov 2006, Yann Dirson wrote:
+> > 
+> > I'm not sure I get the reason why the submodule should not be recorded
+> > on "commit level".
+> 
+> Because that would be STUPID.
+> 
+> What does the submodules have to do with the commit level? Nothing. Nada. 
+> Zero.
 
-Look in this thread
-[Fwd: Re: What's in git.git]
+Oh, I see I may have expressed something in the wrong way :)
+Namely, I brought an idea coming from partial merges into a discussion
+on submodules, because when thinking about the former, I realized
+we could maybe use similar mechanisms for both.
 
-There is a message in there that explains a problem that the cvs2svn
-people aren't going to fix and it kills git.
+Note that the proposal I outlined did not break the tree, in that the
+sumodule tree is still in the same place.  In the case of a partial
+merge, the info that a subtree has been merged in this commit is indeeed
+part of the commit itself.
+
+I agree that the subtree case is somewhat different, and my idea may not
+apply to submodules after all :)
+
+A question would be, do "submodules" have to be permanent objects ?
+I suppose it depends on what people want to use them for.  Indeed, the
+"submodule" names strongly carries the idea of a permanent subset of the
+repository.  My proposal partial merges could be seen as using transient
+submodules: they do not matter much during most of the repo life.
+
+Put it another way, I see the proposal of allowing tree entries to be
+commits in addition to trees and blobs, akin to recording the submodule
+_history_ inside the _tree_, which I feel precisely violates the
+distinction you want to keep between those 2 concepts.
 
 
->
-> cheers,
->
->
->
-> martin
->
+> And a sub-project simply doesn't even _do_ that. Much of the time, a 
+> subproject stays constant, and is not something that comes and goes on an 
+> individual commit basis. 
 
+What about the case of a subproject that would evolve fast, and for
+which we may not want intermediate versions to be part of the
+supermodule ?  (just exploring an idea without real connection to the
+one discussed above)
 
+I mean, I have a tree in which the whole software for an embedded
+platform is stored, including kernel, apps, etc.  While working on the
+kernel, I may want to do several commits to that submodule, and may not want
+to commit to the supermodule for each kernel commit, only when I feel the
+kernel is stable enough.
+
+One may argue I just have to use a branch.  Anyway, there will be a need
+for submodule-specific branches - eg. kernel.org ones in my case.
+
+An alternative would be to allow committing to the submodule without
+creating matching supermodule commits, and let the user decide when he
+wants to commit at the higher level.  That way, 2 successive supermodule
+commits could have non-successive "subcommits".
+
+Best regards,
 -- 
-Jon Smirl
