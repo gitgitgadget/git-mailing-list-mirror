@@ -1,72 +1,69 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-1.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,LIST_MIRROR_BCC,MSGID_FROM_MTA_HEADER,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Planned new release of git
-Date: Tue, 07 Nov 2006 15:19:08 -0800
-Message-ID: <7vac3226c3.fsf@assigned-by-dhcp.cox.net>
-References: <454EAEDB.8020909@gmail.com>
-	<7vk629f6is.fsf@assigned-by-dhcp.cox.net> <454F31D7.1030202@gmail.com>
-	<Pine.LNX.4.64.0611060734490.25218@g5.osdl.org>
-	<45503553.3020605@gmail.com>
-	<Pine.LNX.4.64.0611070729370.3667@g5.osdl.org>
-	<7vhcxb2b15.fsf@assigned-by-dhcp.cox.net> <eiqvoh$ebd$1@sea.gmane.org>
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [BUG] StGit removed git branch of the same name as StGit branch
+Date: Tue, 21 Nov 2006 11:48:30 +0100
+Message-ID: <200611211148.30937.jnareb@gmail.com>
+References: <200611202201.45521.jnareb@gmail.com> <ejuj2a$2ot$1@sea.gmane.org> <tnx1wnxxfu3.fsf@arm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 7 Nov 2006 23:19:19 +0000 (UTC)
-Cc: jnareb@gmail.com
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Tue, 21 Nov 2006 10:47:25 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Original-cc: git@vger.kernel.org
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=ZKq6O8Z4adSLj/adUyHhOXXFDVaDNEOxsIpDu5VBHTXHfIC+hEhtYuqpULFCk965kOkqNgNKJJ2p34PuXNpXSzzXNfmucTw44DvWVy5HUtiApbCAsWecdtw9Rrgtzu8RUIC7hCnzXumYdVzgx13nplZa26HABNIm94f23+y5JKc=
+User-Agent: KMail/1.9.3
+In-Reply-To: <tnx1wnxxfu3.fsf@arm.com>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31100>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31984>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GhaDr-0004tQ-2Z for gcvg-git@gmane.org; Wed, 08 Nov
- 2006 00:19:15 +0100
+ esmtp (Exim 4.43) id 1GmT9k-0006CX-1E for gcvg-git@gmane.org; Tue, 21 Nov
+ 2006 11:47:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753334AbWKGXTL (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 7 Nov 2006
- 18:19:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753867AbWKGXTL
- (ORCPT <rfc822;git-outgoing>); Tue, 7 Nov 2006 18:19:11 -0500
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:40669 "EHLO
- fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP id S1753334AbWKGXTJ
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 7 Nov 2006 18:19:09 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao06.cox.net
- (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
- <20061107231908.GVQP6235.fed1rmmtao06.cox.net@fed1rmimpo01.cox.net>; Tue, 7
- Nov 2006 18:19:08 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id jzJl1V00X1kojtg0000000; Tue, 07 Nov 2006
- 18:18:46 -0500
-To: Jakub Narebski <jnareb@gmail.com>
+ S1030840AbWKUKrH (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 21 Nov 2006
+ 05:47:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030843AbWKUKrH
+ (ORCPT <rfc822;git-outgoing>); Tue, 21 Nov 2006 05:47:07 -0500
+Received: from ug-out-1314.google.com ([66.249.92.168]:44346 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1030840AbWKUKrE
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2006 05:47:04 -0500
+Received: by ug-out-1314.google.com with SMTP id m3so1464726ugc for
+ <git@vger.kernel.org>; Tue, 21 Nov 2006 02:47:03 -0800 (PST)
+Received: by 10.67.97.18 with SMTP id z18mr903789ugl.1164106022825; Tue, 21
+ Nov 2006 02:47:02 -0800 (PST)
+Received: from host-81-190-24-209.torun.mm.pl ( [81.190.24.209]) by
+ mx.google.com with ESMTP id x26sm9183746ugc.2006.11.21.02.47.02; Tue, 21 Nov
+ 2006 02:47:02 -0800 (PST)
+To: Catalin Marinas <catalin.marinas@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Catalin Marinas wrote:
+> Jakub Narebski <jnareb@gmail.com> wrote:
 
-> Junio C Hamano wrote:
->
->> We haven't seen a new release from 'master' for about a month.
->> I think the dust has settled already after two big topics
->> (packed-refs, delta-offset-base) were merged into 'master' since
->> v1.4.3, and it is now time to decide which topics that have been
->> cooking in 'next' are the ones I want in v1.4.4.  Perhaps by the
->> end of the week, I'll cut a v1.4.4-rc1 to start the pre-release
->> stabilization process.  No new features nor enhancements on
->> 'master' after that until v1.4.4 final.
->  
-> Do I understand correctly that the work on not exploding downloaded
-> pack on fetch, but making it non-thin, and related work on archival
-> packs (not to be considered for repacking) is not considered ready
-> (and tested)?
+>> By the way, why "stg branch --delete" doesn't remove reflog? Not that I'm
+>> complaining, because it sure saved some work when resurrecting branch, and
+>> I didn't loose reflog info.
+> 
+> Reflogs came into GIT after the StGIT branch command and never looked
+> at them in detail. And maybe it should not touch the reflog info,
+> especially for situations like this, unless GIT has a mechanism for a
+> trash bin (StGIT has one for patches - .git/patches/<branch>/trash/ -
+> but undocumented)
 
-Perhaps I phrased it badly, but I doubt it.
-
-In the above I am only saying that it probably is time for me to
-decide which ones to further merge into 'master', without saying
-which ones I think is ready right now.  That is because I
-haven't started thinking about it.
+Well, I'm asking because "git branch -D" deletes also reflog. So I'm
+worrying if StGit works with packed refs (although one usually do not
+pack branches/heads, only tags).
+-- 
+Jakub Narebski
