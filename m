@@ -2,58 +2,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Use new .git/config for storing "origin" shortcut repository
-Date: Sun, 26 Nov 2006 01:15:58 -0800
-Message-ID: <7vvel2va9d.fsf@assigned-by-dhcp.cox.net>
-References: <ekafpm@sea.gmane.org> <200611260003.31025.andyparkins@gmail.com>
-	<Pine.LNX.4.63.0611260141390.30004@wbgn013.biozentrum.uni-wuerzburg.de>
-	<200611260856.03057.andyparkins@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: git-show --stat on first commit
+Date: Tue, 21 Nov 2006 21:03:18 +0100
+Organization: At home
+Message-ID: <ejvlv9$781$1@sea.gmane.org>
+References: <200611211341.48862.andyparkins@gmail.com> <8aa486160611210609h1c2d229ekf0b5e8aeb4f21f11@mail.gmail.com> <slrnem694k.4lm.Peter.B.Baumann@xp.machine.xx> <Pine.LNX.4.64.0611210820100.3338@woody.osdl.org> <20061121180643.GC7201@pasky.or.cz> <ejvfng$cj6$1@sea.gmane.org> <20061121182135.GD7201@pasky.or.cz> <7v64d8y4tu.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sun, 26 Nov 2006 09:16:22 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Transfer-Encoding: 7Bit
+NNTP-Posting-Date: Tue, 21 Nov 2006 20:03:31 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <200611260856.03057.andyparkins@gmail.com> (Andy Parkins's
-	message of "Sun, 26 Nov 2006 08:56:01 +0000")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 26
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32336>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32031>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GoG7K-0004qs-Sc for gcvg-git@gmane.org; Sun, 26 Nov
- 2006 10:16:07 +0100
+ esmtp (Exim 4.43) id 1Gmbpu-0005jf-9R for gcvg-git@gmane.org; Tue, 21 Nov
+ 2006 21:03:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S935244AbWKZJQB (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 26 Nov 2006
- 04:16:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935247AbWKZJQA
- (ORCPT <rfc822;git-outgoing>); Sun, 26 Nov 2006 04:16:00 -0500
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:45235 "EHLO
- fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP id S935244AbWKZJQA
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 26 Nov 2006 04:16:00 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao01.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061126091559.UWBQ9173.fed1rmmtao01.cox.net@fed1rmimpo02.cox.net>; Sun, 26
- Nov 2006 04:15:59 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id rMG71V00G1kojtg0000000; Sun, 26 Nov 2006
- 04:16:08 -0500
-To: Andy Parkins <andyparkins@gmail.com>
+ S1031372AbWKUUDK (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 21 Nov 2006
+ 15:03:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031373AbWKUUDK
+ (ORCPT <rfc822;git-outgoing>); Tue, 21 Nov 2006 15:03:10 -0500
+Received: from main.gmane.org ([80.91.229.2]:4266 "EHLO ciao.gmane.org") by
+ vger.kernel.org with ESMTP id S1031351AbWKUUDJ (ORCPT
+ <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2006 15:03:09 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1Gmbou-0005P2-Ge for git@vger.kernel.org; Tue, 21 Nov 2006 21:02:16 +0100
+Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Tue, 21 Nov 2006 21:02:16 +0100
+Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Tue, 21 Nov 2006
+ 21:02:16 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Andy Parkins <andyparkins@gmail.com> writes:
+Junio C Hamano wrote:
 
-> On Sunday 2006, November 26 00:48, Johannes Schindelin wrote:
->
->> This hunk is wrong: "git-repo-config remote.bla.fetch b" will _overwrite_
->> remoter.bla.fetch. To avoid that, you have to use "git repo-config
->> remote.bla.fetch b ^$". (The last argument is a regular expression which
->> has to be matched by the value-to-be-oreplaced.)
->
-> This is in git-clone; the config is empty.  What is there to overwrite?
+> Petr Baudis <pasky@suse.cz> writes:
+> 
+>> On Tue, Nov 21, 2006 at 07:16:44PM CET, Jakub Narebski wrote:
+>>..
+>>> git repo-config show.difftree --root
+>>> git repo-config whatchanged.difftree --root
+>>
+>> That means extra pointless setup and is besides the point anyway, I was
+>> asking about empty commits, not default command settings.
+> 
+> I agree with you.  Personally, I think:
+> 
+>  - show is where the user is asking for _that_ particular
+>    commit, so it can safely default to --root, always.  No
+>    option is needed.
 
-The entry you wrote in the previous iteration in the same loop,
-perhaps?
+We don't show patch for merges by default in git-show, so I don't
+see why we would want to show root commit diff in git-show by default:
+those two are very similar.
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
+
