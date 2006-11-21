@@ -1,101 +1,110 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD,
-	SUBJ_ALL_CAPS shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: [ANNOUNCE] GIT 1.4.4.1
-Date: Wed, 22 Nov 2006 18:49:28 -0800
-Message-ID: <7v7ixmop1j.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
+Subject: Re: git-show --stat on first commit
+Date: Tue, 21 Nov 2006 15:14:04 -0300
+Message-ID: <200611211814.kALIE4EQ009257@laptop13.inf.utfsm.cl>
+References: <jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 23 Nov 2006 02:49:49 +0000 (UTC)
-Cc: linux-kernel@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Tue, 21 Nov 2006 18:14:30 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Warning: Original message contained 8-bit characters, however during
+	   the SMTP transport session the receiving system did not announce
+	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
+	   message does not have MIME headers (RFC 2045-2049) to enable
+	   encoding change, we had very little choice.
+X-Warning: We ASSUME it is less harmful to add the MIME headers, and
+	   convert the text to Quoted-Printable, than not to do so,
+	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
+X-Warning: We don't know what character set the user used, thus we had to
+	   write these MIME-headers with our local system default value.
+In-Reply-To: Message from Jakub Narebski <jnareb@gmail.com> 
+   of "Tue, 21 Nov 2006 17:18:15 BST." <ejv8pc$cig$1@sea.gmane.org> 
+X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.5  (beta27)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-2.0.2 (inti.inf.utfsm.cl [200.1.19.1]); Tue, 21 Nov 2006 15:14:04 -0300 (CLST)
+X-Virus-Scanned: ClamAV version 0.88.5, clamav-milter version 0.88.5 on inti.inf.utfsm.cl
+X-Virus-Status: Clean
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32115>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32011>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gn4em-00074m-IM for gcvg-git@gmane.org; Thu, 23 Nov
- 2006 03:49:44 +0100
+ esmtp (Exim 4.43) id 1Gma8L-0006BC-Ve for gcvg-git@gmane.org; Tue, 21 Nov
+ 2006 19:14:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1757278AbWKWCtl (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 22 Nov 2006
- 21:49:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757281AbWKWCtl
- (ORCPT <rfc822;git-outgoing>); Wed, 22 Nov 2006 21:49:41 -0500
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:20981 "EHLO
- fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP id S1757278AbWKWCtk
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 22 Nov 2006 21:49:40 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao07.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061123024939.REVE27894.fed1rmmtao07.cox.net@fed1rmimpo02.cox.net>; Wed, 22
- Nov 2006 21:49:39 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id q2pc1V0041kojtg0000000; Wed, 22 Nov 2006
- 21:49:36 -0500
-To: git@vger.kernel.org
+ S1031256AbWKUSOK (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 21 Nov 2006
+ 13:14:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031257AbWKUSOK
+ (ORCPT <rfc822;git-outgoing>); Tue, 21 Nov 2006 13:14:10 -0500
+Received: from inti.inf.utfsm.cl ([200.1.21.155]:10208 "EHLO
+ inti.inf.utfsm.cl") by vger.kernel.org with ESMTP id S1031256AbWKUSOJ (ORCPT
+ <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2006 13:14:09 -0500
+Received: from laptop13.inf.utfsm.cl (laptop13.inf.utfsm.cl [200.1.19.201])
+ by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id kALIE4ZJ032132
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO); Tue, 21
+ Nov 2006 15:14:04 -0300
+Received: from laptop13.inf.utfsm.cl (laptop13.inf.utfsm.cl [127.0.0.1]) by
+ laptop13.inf.utfsm.cl (8.13.8/8.13.8) with ESMTP id kALIE4EQ009257; Tue, 21
+ Nov 2006 15:14:04 -0300
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-The latest maintenance release GIT 1.4.4.1 is available at the
-usual places:
+Jakub Narebski <jnareb@gmail.com> wrote:
+> Peter Baumann wrote:
+> > On 2006-11-21, Santi B=C3=A9jar <sbejar@gmail.com> wrote:
+> >> On 11/21/06, Andy Parkins <andyparkins@gmail.com> wrote:
 
-  http://www.kernel.org/pub/software/scm/git/
+[...]
 
-  git-1.4.4.1.tar.{gz,bz2}			(tarball)
-  git-htmldocs-1.4.4.1.tar.{gz,bz2}		(preformatted docs)
-  git-manpages-1.4.4.1.tar.{gz,bz2}		(preformatted docs)
-  RPMS/$arch/git-*-1.4.4.1-1.$arch.rpm	(RPM)
+> >> In general the initial commit diff (or stat) is hidden, but perhap=
+s it
+> >> make sense to show it in "git show", you asked fo this specificall=
+y.
 
-This contains mostly small post-release fixups.
+> > Why not make --root the default? I also stumbled over this behaviou=
+r and
+> > even asked on this list.
 
-----------------------------------------------------------------
+> > In my opinion this will help new users which are supprised that the=
+y
+> > can't get the diff of the inital commit (which is totaly non-intuit=
+iv
+> > behavior).
 
-Changes since v1.4.4 are as follows:
+> > And one less "wart" to clean, which another thread is all about. :-=
+)
 
-Alexandre Julliard (1):
-      gitweb: Put back shortlog instead of graphiclog in the project list.
+Count me in! A freshly created repo should be just empty, not some stra=
+nge
+construction that isn't a real repo. The empty set /is/ real useful, yo=
+u
+know. Even if it is just for symmetry.
 
-Chris Riddoch (1):
-      Move --pretty options into Documentation/pretty-formats.txt
+> Because for projects imported into git first commit diff is huge,
+> and not very interesting.
 
-Jim Meyering (1):
-      Run "git repack -a -d" once more at end, if there's 1MB or more of not-packed data.
+That isn't your call to make. Sure, if I just untarred something large =
+and
+gitified it, I /know/ the diff to "before" is huge, and not really
+informative, and I'll abstain from asking for it. But if I just started=
+ a
+project with a half dozen files, I'd like to see what came before, or l=
+ook
+at the difference to "5 commits back" (which just happens to be every
+change, as there are 4 commits in all).
 
-Johannes Schindelin (1):
-      Seek back to current filepos when mmap()ing with NO_MMAP
-
-Junio C Hamano (7):
-      git-checkout: do not allow -f and -m at the same time.
-      git-checkout: allow pathspec to recover lost working tree directory
-      convert-objects: set _XOPEN_SOURCE to 600
-      git-fetch: follow lightweit tags as well.
-      do_for_each_ref: perform the same sanity check for leftovers.
-      trust-executable-bit: fix breakage for symlinks
-      GIT 1.4.4.1
-
-Linus Torvalds (2):
-      git-pull: allow pulling into an empty repository
-      "git fmt-merge-msg" SIGSEGV
-
-Michal Rokos (1):
-      archive: use setvbuf() instead of setlinebuf()
-
-Paolo Ciarrocchi (2):
-      Teach SubmittingPatches about git-commit -s
-      Doc: Make comment about merging in tutorial.txt more clear
-
-Petr Baudis (4):
-      Fix git-for-each-refs broken for tags
-      git-apply: Documentation typo fix
-      Documentation: Define symref and update HEAD description
-      Documentation: Correct alternates documentation, document http-alternates
-
-Rene Scharfe (4):
-      sparse fix: non-ANSI function declaration
-      sparse fix: Using plain integer as NULL pointer
-      git-apply: slightly clean up bitfield usage
-      Document git-runstatus
-
+The main focus here is on large(ish) projects with a lot of history, bu=
+t if
+you want to be able to get some mindshare you will have to look at the
+other end, projects just getting off the ground.
+--=20
+Dr. Horst H. von Brand                   User #22616 counter.li.org
+Departamento de Informatica                    Fono: +56 32 2654431
+Universidad Tecnica Federico Santa Maria             +56 32 2654239
