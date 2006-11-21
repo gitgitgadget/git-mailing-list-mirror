@@ -1,110 +1,89 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] clear error message for clone a gitweb URL
-Date: Wed, 08 Nov 2006 12:42:22 -0800
-Message-ID: <7v7iy5sma9.fsf@assigned-by-dhcp.cox.net>
-References: <4551864D.3010301@gmail.com>
+From: Martin Waitz <tali@admingilde.org>
+Subject: Re: [RFC] Submodules in GIT
+Date: Tue, 21 Nov 2006 08:55:38 +0100
+Message-ID: <20061121075538.GH20736@admingilde.org>
+References: <20061120215116.GA20736@admingilde.org> <ejt9dh$kfm$1@sea.gmane.org> <7v7ixp20za.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611201501230.3338@woody.osdl.org> <7v4pstzmk5.fsf@assigned-by-dhcp.cox.net> <20061121062753.GG20736@admingilde.org> <7vr6vxxnc8.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 8 Nov 2006 20:42:39 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="qM81t570OJUP5TU/"
+NNTP-Posting-Date: Tue, 21 Nov 2006 07:56:11 +0000 (UTC)
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Content-Disposition: inline
+In-Reply-To: <7vr6vxxnc8.fsf@assigned-by-dhcp.cox.net>
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
+User-Agent: Mutt/1.5.9i
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31157>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31977>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GhuFf-0004xZ-Nq for gcvg-git@gmane.org; Wed, 08 Nov
- 2006 21:42:28 +0100
+ esmtp (Exim 4.43) id 1GmQU6-0003OZ-0S for gcvg-git@gmane.org; Tue, 21 Nov
+ 2006 08:56:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1423685AbWKHUmZ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 8 Nov 2006
- 15:42:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423688AbWKHUmZ
- (ORCPT <rfc822;git-outgoing>); Wed, 8 Nov 2006 15:42:25 -0500
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:5053 "EHLO
- fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP id S1423685AbWKHUmY
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 8 Nov 2006 15:42:24 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao05.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061108204223.RTUB20330.fed1rmmtao05.cox.net@fed1rmimpo02.cox.net>; Wed, 8
- Nov 2006 15:42:23 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id kLiU1V00Y1kojtg0000000; Wed, 08 Nov 2006
- 15:42:29 -0500
-To: Liu Yubao <yubao.liu@gmail.com>
+ S966896AbWKUHzl (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 21 Nov 2006
+ 02:55:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966909AbWKUHzk
+ (ORCPT <rfc822;git-outgoing>); Tue, 21 Nov 2006 02:55:40 -0500
+Received: from agent.admingilde.org ([213.95.21.5]:18316 "EHLO
+ mail.admingilde.org") by vger.kernel.org with ESMTP id S966896AbWKUHzj (ORCPT
+ <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2006 02:55:39 -0500
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1) id
+ 1GmQTi-0008NM-9t; Tue, 21 Nov 2006 08:55:38 +0100
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Liu Yubao <yubao.liu@gmail.com> writes:
 
-> When clone a gitweb URL, git reports "Can't lock ref", it's not clear for users,
-> this patch adds clear error message for this case.
->
-> diff --git a/fetch.c b/fetch.c
-> index c426c04..40c5183 100644
-> --- a/fetch.c
-> +++ b/fetch.c
-> @@ -266,6 +266,14 @@ int pull(int targets, char **target, con
->  		if (!write_ref || !write_ref[i])
->  			continue;
->  
-> +		if (*write_ref[i] == '\0') {
-> +			if (strncmp(write_ref_log_details, "http", 4) == 0)
-> +				error("Can't feed empty ref, seems you are fetching from a gitweb URL, "
-> +				      "check it in web browser for git URL.");
-> +			else
-> +				error("Can't feed empty ref");
-> +			goto unlock_and_fail;
+--qM81t570OJUP5TU/
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-You might have got that error by feeding an URL for gitweb, but
-I do not think the code, even with your additions, knows enough
-to tell that the user's mistake isn't other kinds of errors.
+hoi :)
 
-I am afraid that it would cause the user to waste time going
-wild goose chase if you say "seems you are...".  The phrasing
-makes it sound as if the tool _knows_ with some certainty that
-it is more plausible cause of the error than other kinds, while
-it certainly doesn't.
+On Mon, Nov 20, 2006 at 11:36:55PM -0800, Junio C Hamano wrote:
+> I think that is fine as long as we somehow enforce the topology
+> of submodule to be similar to the toplevel topology.  Otherwise
+> I suspect it leads to unintuitive behaviour.
+>=20
+> Suppose that the ancestry chain for the toplevel are A, A~1, A~2
+> and you asked for "A~2..A".  A submodule is bound at tree "sub/"
+> and suppose A:sub/ =3D=3D B, A~1:sub/ =3D=3D C, and A~2:sub/ =3D=3D D.
+>=20
+> Now further suppose the ancestry chain for B, C and D are like
+> this:
+>=20
+>               o---C
+>              /     \
+>      ...o---o---D---B
+>=20
+> A naive implementation of "--objects A~2..A" would propagate
+> UNINTERESTING to D and mark B and C unmarked.  Would it however
+> be reasonable to include commits marked as 'o'?
 
-I think the reason it does not notice the breakage much earlier
-is that git-clone does not notice that gitweb URL gives nonsense
-to requests to "http://host/gitweb.cgi/$project/info/refs", so
-your patch to git-clone.sh is probably touching the right place,
-but I still feel the wording is a bit too strong and definitive
-than it should be.
+I think it is reasonable to just go on as in a normal repository.
+That is, pretend we want to list D..B and mark all commits which
+are reachable.
 
-Perhaps...
+--=20
+Martin Waitz
 
-diff --git a/git-clone.sh b/git-clone.sh
-index 3f006d1..7ae69d9 100755
---- a/git-clone.sh
-+++ b/git-clone.sh
-@@ -46,15 +46,18 @@ Perhaps git-update-server-info needs to
- 	do
- 		name=`expr "z$refname" : 'zrefs/\(.*\)'` &&
- 		case "$name" in
--		*^*)	continue;;
--		esac
-+		*^*)	continue ;;
-+		'')	false ;;
-+		esac &&
- 		if test -n "$use_separate_remote" &&
- 		   branch_name=`expr "z$name" : 'zheads/\(.*\)'`
- 		then
- 			tname="remotes/$origin/$branch_name"
- 		else
- 			tname=$name
--		fi
-+		fi || {
-+			die "info/refs has nonsense $sha1 $refname, are you pulling from the right repository URL?"
-+		}
- 		git-http-fetch -v -a -w "$tname" "$name" "$1/" || exit 1
- 	done <"$clone_tmp/refs"
- 	rm -fr "$clone_tmp"
+--qM81t570OJUP5TU/
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFFYrD6j/Eaxd/oD7IRAhzDAJ40EPMAEC2foddZrTrAHp5m0FORowCeLFme
+BakdgOKQTO8iAuAa0rnUWsU=
+=ErGz
+-----END PGP SIGNATURE-----
 
