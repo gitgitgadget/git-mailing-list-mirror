@@ -1,77 +1,90 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [PATCH] Oops, get the commit first, then the tree.
-Date: Sat, 2 Dec 2006 21:34:07 -0500
-Message-ID: <20061203023407.GC26668@spearce.org>
-References: <200612030145.45567.robin.rosenberg@dewire.com>
+From: Martin Waitz <tali@admingilde.org>
+Subject: Re: [RFC] Submodules in GIT
+Date: Tue, 21 Nov 2006 12:49:39 +0100
+Message-ID: <20061121114938.GI20736@admingilde.org>
+References: <20061120215116.GA20736@admingilde.org> <ejt9dh$kfm$1@sea.gmane.org> <7v7ixp20za.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611201501230.3338@woody.osdl.org> <7v4pstzmk5.fsf@assigned-by-dhcp.cox.net> <ejthuh$fn8$1@sea.gmane.org> <20061121062158.GF20736@admingilde.org> <ejuit4$mg$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sun, 3 Dec 2006 02:34:17 +0000 (UTC)
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="VkVuOCYP9O7H3CXI"
+NNTP-Posting-Date: Tue, 21 Nov 2006 11:49:55 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Content-Disposition: inline
-In-Reply-To: <200612030145.45567.robin.rosenberg@dewire.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+In-Reply-To: <ejuit4$mg$1@sea.gmane.org>
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
+User-Agent: Mutt/1.5.9i
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33087>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31986>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GqhBG-0002hF-TZ for gcvg-git@gmane.org; Sun, 03 Dec
- 2006 03:34:15 +0100
+ esmtp (Exim 4.43) id 1GmU8G-0000FI-8t for gcvg-git@gmane.org; Tue, 21 Nov
+ 2006 12:49:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S934519AbWLCCeM (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 2 Dec 2006
- 21:34:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936613AbWLCCeL
- (ORCPT <rfc822;git-outgoing>); Sat, 2 Dec 2006 21:34:11 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:64665 "EHLO
- corvette.plexpod.net") by vger.kernel.org with ESMTP id S934519AbWLCCeK
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 2 Dec 2006 21:34:10 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1GqhB0-0000Rm-6s; Sat, 02 Dec 2006 21:33:58 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- A263A20FB7F; Sat,  2 Dec 2006 21:34:07 -0500 (EST)
-To: Robin Rosenberg <robin.rosenberg@dewire.com>
+ S1030897AbWKULtl (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 21 Nov 2006
+ 06:49:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030898AbWKULtk
+ (ORCPT <rfc822;git-outgoing>); Tue, 21 Nov 2006 06:49:40 -0500
+Received: from agent.admingilde.org ([213.95.21.5]:52455 "EHLO
+ mail.admingilde.org") by vger.kernel.org with ESMTP id S1030897AbWKULtk
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2006 06:49:40 -0500
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1) id
+ 1GmU8B-0001r2-3m; Tue, 21 Nov 2006 12:49:39 +0100
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Robin Rosenberg <robin.rosenberg@dewire.com> wrote:
-> This made the eclipse plugin unable to connect to Git.
-...
-> --- a/org.spearce.jgit/src/org/spearce/jgit/lib/Repository.java
-> +++ b/org.spearce.jgit/src/org/spearce/jgit/lib/Repository.java
-> @@ -168,7 +168,8 @@ public class Repository {
->      }
->  
->      public Tree mapTree(final String revstr) throws IOException {
-> -	final ObjectId id = resolve(revstr);
-> +	Commit commit = mapCommit(revstr);
-> +	final ObjectId id = commit.getTreeId();
->  	return id != null ? mapTree(id) : null;
 
-I don't want to apply the fix above because mapTree(String) should
-be able to take an arbitrary SHA1 expression and return the Tree
-object corresponding to that.  Your change only permits commits to
-be resolved; but if the revstr resolved to a tag we'd need to peel
-back the tag to get to the tree.  Ideally that should be done in
-mapTree(ObjectId), based on the type of thing ObjectId points to.
+--VkVuOCYP9O7H3CXI
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I think the bug was caused by a recent breakage in Repository.mapTree
-(42691339).  I fixed it in 020e0ee but neglected to push it out.
-Actually I'm surprised mapTree(ObjectId) even works before 020e0ee;
-I just don't see how its right...
+hoi :)
 
--- 
+On Tue, Nov 21, 2006 at 11:04:46AM +0100, Jakub Narebski wrote:
+> "bind" header in commit objects is meant as a kind of shortcut, to ease
+> reachability checking (you don't need to recurse into directories).
+
+Well, but you already have to recurse to find all objects which are
+reachable by a commit, so you don't loose anything.
+
+> > The advantage in your proposal would be that submodules would
+> > be visible immediately when looking at the commit,
+> > without having to traverse the entire tree.
+> > This may be worthwhile when showing the combined history of parent
+> > and submodules.
+>=20
+> That was the idea.
+
+On the other hand that only has to be done once anyway.
+After you traversed the tree once you can create your own
+(in memory) cache of submodules connected to the tree.
+While walking the commits backwards, you only have to check those
+parts of the tree which have changed.
+So it may even be suitable for larger repositories.
+But clearly it is not as low as with the in-commit cache.
+So we have to weight complexity of the data storage with
+runtime complexity.  Opinions?
+
+--=20
+Martin Waitz
+
+--VkVuOCYP9O7H3CXI
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFFYufSj/Eaxd/oD7IRAjWrAJ4vy4uRBCJ6PjcSY9Iar99S63M12QCdFJkz
+0B3/mqxDlkdjUlMoeOOQYz8=
+=OVux
+-----END PGP SIGNATURE-----
+
