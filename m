@@ -1,77 +1,58 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: [PATCH 2/4] Rename remote_only to display_mode
-Date: Fri, 3 Nov 2006 09:40:55 +0100
-Message-ID: <200611030841.05888.andyparkins@gmail.com>
-References: <bec6ab7849e3fcacac23cca44a0ba93282af5fca.1162465753.git.andyparkins@gmail.com> <200611021111.09434.andyparkins@gmail.com> <7v64dxl0bf.fsf@assigned-by-dhcp.cox.net>
+From: Timur Tabi <timur@freescale.com>
+Subject: Re: Is there a way to trim old SHAs from a git tree (so it's not
+ so large)?
+Date: Tue, 21 Nov 2006 15:49:11 -0600
+Organization: Freescale
+Message-ID: <45637457.1010505@freescale.com>
+References: <455B90AD.3060707@freescale.com> <20061117103611.183640@gmx.net> <45632957.5070205@freescale.com> <20061121163206.GA22006@spearce.org> <45632EC6.5030902@freescale.com> <20061121165656.GC22006@spearce.org> <456330CD.9080503@freescale.com> <20061121183941.GB22283@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Fri, 3 Nov 2006 08:41:26 +0000 (UTC)
+NNTP-Posting-Date: Tue, 21 Nov 2006 21:49:41 +0000 (UTC)
+Cc: Thomas Kolejka <Thomas.Kolejka@gmx.at>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=JRkVNn5KAOPHCFcR/I66XdZDFCcFbcHOCdOz4gktt+xowBrIwUT2g/wyqcJx47qIAEsNTnEw+UTuL9BriPn+kljNvgdO7sdfyRLUDQiqytkl6up6yUL9+VT7zpSMvOmAgLXoP0q1HOQNLQJEejfghkRh8mbFvCUZANQWas+WjMQ=
-User-Agent: KMail/1.9.5
-In-Reply-To: <7v64dxl0bf.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.8.1) Gecko/20061101 SeaMonkey/1.1b
+In-Reply-To: <20061121183941.GB22283@spearce.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30797>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32042>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gfubz-000377-Q4 for gcvg-git@gmane.org; Fri, 03 Nov
- 2006 09:41:16 +0100
+ esmtp (Exim 4.43) id 1GmdUY-0007Og-5d for gcvg-git@gmane.org; Tue, 21 Nov
+ 2006 22:49:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751781AbWKCIlL (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 3 Nov 2006
- 03:41:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751641AbWKCIlL
- (ORCPT <rfc822;git-outgoing>); Fri, 3 Nov 2006 03:41:11 -0500
-Received: from ug-out-1314.google.com ([66.249.92.173]:17116 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1751352AbWKCIlK
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 3 Nov 2006 03:41:10 -0500
-Received: by ug-out-1314.google.com with SMTP id m3so350632ugc for
- <git@vger.kernel.org>; Fri, 03 Nov 2006 00:41:09 -0800 (PST)
-Received: by 10.66.242.5 with SMTP id p5mr2286157ugh.1162543268791; Fri, 03
- Nov 2006 00:41:08 -0800 (PST)
-Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
- ESMTP id 39sm547383ugb.2006.11.03.00.41.08; Fri, 03 Nov 2006 00:41:08 -0800
- (PST)
-To: git@vger.kernel.org
+ S1161393AbWKUVtS (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 21 Nov 2006
+ 16:49:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161401AbWKUVtS
+ (ORCPT <rfc822;git-outgoing>); Tue, 21 Nov 2006 16:49:18 -0500
+Received: from de01egw01.freescale.net ([192.88.165.102]:10462 "EHLO
+ de01egw01.freescale.net") by vger.kernel.org with ESMTP id S1161393AbWKUVtR
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2006 16:49:17 -0500
+Received: from de01smr01.freescale.net (de01smr01.freescale.net
+ [10.208.0.31]) by de01egw01.freescale.net (8.12.11/de01egw01) with ESMTP id
+ kALNAwIe023205; Tue, 21 Nov 2006 16:10:58 -0700 (MST)
+Received: from [10.82.19.119] (ld0169-tx32.am.freescale.net [10.82.19.119])
+ by de01smr01.freescale.net (8.13.1/8.13.0) with ESMTP id kALLnCD4029913; Tue,
+ 21 Nov 2006 15:49:12 -0600 (CST)
+To: Shawn Pearce <spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 
-On Friday 2006 November 03 02:40, Junio C Hamano wrote:
+Shawn Pearce wrote:
 
-> If you make this a "mode", it probably is better to make 1 and 0
-> into symbolic constants.  This patch taken alone is regression
-> in readability.
+> finally you can either run from that directory (see INSTALL file)
+> or you can install the binary somewhere else.  We don't really
+> recommend using `pu` for production level work, so make sure you
+> have a backup of any repository you run it on.  :)
 
-In my own code I would have done exactly that; however I've been trying to 
-keep my patches as minimal as possible.
+So how do I make a shallow clone?  I've set it all up, but there is no 
+git-shallow-clone command, and git help clone doesn't have anything either.
 
-Digressing a little: what is the polite form of patches for git?  My strategy 
-with this set was to make each patch as small as possible to reach my end 
-point.  If those patches were okayed on the list, I could then do a "make 
-more beautiful" patch, which is really nothing to do with the original 
-changes to functionality but would make the code prettier.  Really I'm asking 
-what level of intrusiveness of patch is not considered rude?  In making my 
-patches, should I ride rough-shod over current implementation and just do it 
-how I'd do it or should I try to fit in (as I did in this case)?
-
-> Something like this untested patch, that is...
-
-I'm very much in favour; I shall make changes of this form soon.
-
-
-Andy
 
 -- 
-Dr Andy Parkins, M Eng (hons), MIEE
+Timur Tabi
