@@ -4,87 +4,76 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH 2/2] Loosen "working file will be lost" check in Porcelain-ish
-Date: Mon, 04 Dec 2006 17:11:02 -0800
-Message-ID: <7vbqmjkuzd.fsf@assigned-by-dhcp.cox.net>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: Some tips for doing a CVS importer
+Date: Tue, 21 Nov 2006 15:15:05 -0500
+Message-ID: <20061121201505.GC22461@spearce.org>
+References: <9e4733910611201349s4d08b984g772c64982f148bfa@mail.gmail.com> <46a038f90611201503m6a63ec8ct347026c635190108@mail.gmail.com> <9e4733910611201537h30b6c9f4oee9d8df75284c284@mail.gmail.com> <46a038f90611201629o39f11f42ye07b86159360b66e@mail.gmail.com> <87vel9y5x6.wl%cworth@cworth.org> <9e4733910611201740i348302e6r84c3c27dc27e5954@mail.gmail.com> <20061121063934.GA3332@spearce.org> <20061121200341.GH7201@pasky.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 5 Dec 2006 01:11:19 +0000 (UTC)
+NNTP-Posting-Date: Tue, 21 Nov 2006 20:16:20 +0000 (UTC)
+Cc: Jon Smirl <jonsmirl@gmail.com>, Carl Worth <cworth@cworth.org>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Content-Disposition: inline
+In-Reply-To: <20061121200341.GH7201@pasky.or.cz>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33280>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GrOpz-0005Rc-2r for gcvg-git@gmane.org; Tue, 05 Dec
- 2006 02:11:11 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32034>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gmc1X-0000iv-3B for gcvg-git@gmane.org; Tue, 21 Nov
+ 2006 21:15:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S967956AbWLEBLG (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
- 20:11:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967955AbWLEBLG
- (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 20:11:06 -0500
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:36549 "EHLO
- fed1rmmtao06.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S967956AbWLEBLD (ORCPT <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006
- 20:11:03 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao06.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061205011102.WMUE5465.fed1rmmtao06.cox.net@fed1rmimpo02.cox.net>; Mon, 4
- Dec 2006 20:11:02 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id upBC1V00B1kojtg0000000; Mon, 04 Dec 2006
- 20:11:12 -0500
-To: git@vger.kernel.org
+ S1031376AbWKUUPO (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 21 Nov 2006
+ 15:15:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934402AbWKUUPO
+ (ORCPT <rfc822;git-outgoing>); Tue, 21 Nov 2006 15:15:14 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:16620 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S934171AbWKUUPM
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2006 15:15:12 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1Gmc1D-0008D6-5D; Tue, 21 Nov 2006 15:14:59 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 7D33020FB09; Tue, 21 Nov 2006 15:15:05 -0500 (EST)
+To: Petr Baudis <pasky@suse.cz>
 Sender: git-owner@vger.kernel.org
 
-This uses the previous update to read-tree in Porcelain-ish
-commands "git checkout" and "git merge" to loosen the check
-when switching branches.
+Petr Baudis <pasky@suse.cz> wrote:
+> On Tue, Nov 21, 2006 at 07:39:35AM CET, Shawn Pearce wrote:
+> > I think there's a number of issues that are keeping people from
+> > switching to Git and are instead causing them to choose SVN, hg
+> > or Monotone:
+> > 
+> >   - No GUI.
+> 
+> It has been my impression that Git's situation is far better than in
+> case of the other systems (except SVN: TortoiseSVN and RapidSVN). Is
+> that not so?
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
- git-checkout.sh |    5 +++--
- git-merge.sh    |    2 +-
- 2 files changed, 4 insertions(+), 3 deletions(-)
+Hmm.
 
-diff --git a/git-checkout.sh b/git-checkout.sh
-index 737abd0..a2be213 100755
---- a/git-checkout.sh
-+++ b/git-checkout.sh
-@@ -161,7 +161,7 @@ then
-     git-read-tree --reset -u $new
- else
-     git-update-index --refresh >/dev/null
--    merge_error=$(git-read-tree -m -u $old $new 2>&1) || (
-+    merge_error=$(git-read-tree -m -u --ignore=.gitignore $old $new 2>&1) || (
- 	case "$merge" in
- 	'')
- 		echo >&2 "$merge_error"
-@@ -172,7 +172,8 @@ else
-     	git diff-files --name-only | git update-index --remove --stdin &&
- 	work=`git write-tree` &&
- 	git read-tree --reset -u $new &&
--	git read-tree -m -u --aggressive $old $new $work || exit
-+	git read-tree -m -u --aggressive --ignore=.gitignore $old $new $work ||
-+	exit
- 
- 	if result=`git write-tree 2>/dev/null`
- 	then
-diff --git a/git-merge.sh b/git-merge.sh
-index 272f004..830f471 100755
---- a/git-merge.sh
-+++ b/git-merge.sh
-@@ -264,7 +264,7 @@ f,*)
- 	echo "Updating $(git-rev-parse --short $head)..$(git-rev-parse --short $1)"
- 	git-update-index --refresh 2>/dev/null
- 	new_head=$(git-rev-parse --verify "$1^0") &&
--	git-read-tree -u -v -m $head "$new_head" &&
-+	git-read-tree -v -m -u --ignore=.gitignore $head "$new_head" &&
- 	finish "$new_head" "Fast forward"
- 	dropsave
- 	exit 0
+hg has a browser (hgk).  Its a direct port of gitk.  I don't see
+a GUI otherwise, such as qgit or git-gui.  They do however have a
+Windows installer.
+
+Monotone has mtsh and guitone.  Neither appear to be as far along
+as say qgit or even git-gui, which isn't that far along at all.
+
+So I guess you are right.  Git's situation is better than that
+of hg or Monotone.  Now if only I can finish everything I want
+to put into git-gui, and get it included as part of the core Git
+distribution.  :)
+
 -- 
-1.4.4.1.ga37e
-
