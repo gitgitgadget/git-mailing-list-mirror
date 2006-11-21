@@ -4,128 +4,72 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: [PATCH] Documentation: clarify tutorial pull/merge discussion
-Date: Sat, 25 Nov 2006 22:45:02 -0500
-Message-ID: <20061126034502.GA3782@fieldses.org>
-References: <20061123203950.5d47421f@paolo-desktop> <20061124161144.GA19708@fieldses.org>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: Some tips for doing a CVS importer
+Date: Tue, 21 Nov 2006 15:05:08 -0500
+Message-ID: <20061121200508.GB22461@spearce.org>
+References: <9e4733910611201349s4d08b984g772c64982f148bfa@mail.gmail.com> <46a038f90611201503m6a63ec8ct347026c635190108@mail.gmail.com> <9e4733910611201537h30b6c9f4oee9d8df75284c284@mail.gmail.com> <46a038f90611201629o39f11f42ye07b86159360b66e@mail.gmail.com> <87vel9y5x6.wl%cworth@cworth.org> <9e4733910611201740i348302e6r84c3c27dc27e5954@mail.gmail.com> <20061121063934.GA3332@spearce.org> <456359E2.8010403@cc.jyu.fi>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sun, 26 Nov 2006 03:45:25 +0000 (UTC)
-Cc: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>, git@vger.kernel.org
+NNTP-Posting-Date: Tue, 21 Nov 2006 20:05:56 +0000 (UTC)
+Cc: Jon Smirl <jonsmirl@gmail.com>, Carl Worth <cworth@cworth.org>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Content-Disposition: inline
-In-Reply-To: <20061124161144.GA19708@fieldses.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <456359E2.8010403@cc.jyu.fi>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32322>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32033>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GoAxE-0001hf-Ic for gcvg-git@gmane.org; Sun, 26 Nov
- 2006 04:45:20 +0100
+ esmtp (Exim 4.43) id 1Gmbs3-0006Mn-QI for gcvg-git@gmane.org; Tue, 21 Nov
+ 2006 21:05:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S967283AbWKZDpI (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 25 Nov 2006
- 22:45:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967257AbWKZDpI
- (ORCPT <rfc822;git-outgoing>); Sat, 25 Nov 2006 22:45:08 -0500
-Received: from mail.fieldses.org ([66.93.2.214]:26553 "EHLO
- pickle.fieldses.org") by vger.kernel.org with ESMTP id S967283AbWKZDpF (ORCPT
- <rfc822;git@vger.kernel.org>); Sat, 25 Nov 2006 22:45:05 -0500
-Received: from bfields by pickle.fieldses.org with local (Exim 4.63)
- (envelope-from <bfields@fieldses.org>) id 1GoAww-0001Nr-Qn; Sat, 25 Nov 2006
- 22:45:02 -0500
-To: Junio C Hamano <junkio@cox.net>
+ S1031377AbWKUUFU (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 21 Nov 2006
+ 15:05:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031379AbWKUUFU
+ (ORCPT <rfc822;git-outgoing>); Tue, 21 Nov 2006 15:05:20 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:7146 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S1031377AbWKUUFS
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2006 15:05:18 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1Gmbra-00076e-2n; Tue, 21 Nov 2006 15:05:02 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 3AEBF20FB09; Tue, 21 Nov 2006 15:05:08 -0500 (EST)
+To: lamikr <lamikr@cc.jyu.fi>
 Sender: git-owner@vger.kernel.org
 
-Attempt to clarify somewhat the difference between pull and merge,
-and give a little more details on the pull syntax.
+lamikr <lamikr@cc.jyu.fi> wrote:
+> Shawn Pearce wrote:
+> >   - No GUI.
+> >   
+> QGIT allows using some commands. I plan to try out the GIT eclipse
+> plugin in near future myself.
+> This mail list have some discussion and download link to it's repo in
+> archives.
+> (title: Java GIT/Eclipse GIT version 0.1.1, )
 
-I'm still not happy with this section: the explanation of the origin
-branch isn't great, but maybe that should be left alone pending the
-use-separate-remotes change; and we need to explain how to set up a
-public repository and push to it.
+I'm the author of that plugin.  :-)
 
-Signed-off-by: J. Bruce Fields <bfields@citi.umich.edu>
----
- Documentation/tutorial.txt |   41 ++++++++++++++++++++++++++---------------
- 1 files changed, 26 insertions(+), 15 deletions(-)
+Its not even capable of making a commit yet.  The underling plumbing
+(aka jgit) can make commits but the Eclipse GUI has no function to
+actually invoke that plumbing and make a commit to the repository.
 
-diff --git a/Documentation/tutorial.txt b/Documentation/tutorial.txt
-index 1e4ddfb..35af81a 100644
---- a/Documentation/tutorial.txt
-+++ b/Documentation/tutorial.txt
-@@ -209,29 +209,28 @@ at /home/bob/myrepo.  She does this with
+The Eclipse plugin has apparently been a low priority for me.
+I haven't worked on it very recently.  Robin Rosenburg has supposedly
+gotten the revision compare interface to work, but its slow as a
+duck in November due to jgit's pack reading code not running as
+fast as it should.
  
- ------------------------------------------------
- $ cd /home/alice/project
--$ git pull /home/bob/myrepo
-+$ git pull /home/bob/myrepo master
- ------------------------------------------------
- 
--This actually pulls changes from the branch in Bob's repository named
--"master".  Alice could request a different branch by adding the name
--of the branch to the end of the git pull command line.
-+This merges the changes from Bob's "master" branch into Alice's
-+current branch.  If Alice has made her own changes in the meantime,
-+then she may need to manually fix any conflicts.  (Note that the
-+"master" argument in the above command is actually unnecessary, as it
-+is the default.)
- 
--This merges Bob's changes into her repository; "git log" will
--now show the new commits.  If Alice has made her own changes in the
--meantime, then Bob's changes will be merged in, and she will need to
--manually fix any conflicts.
-+The "pull" command thus performs two operations: it fetches changes
-+from a remote branch, then merges them into the current branch.
- 
--A more cautious Alice might wish to examine Bob's changes before
--pulling them.  She can do this by creating a temporary branch just
--for the purpose of studying Bob's changes:
-+You can perform the first operation alone using the "git fetch"
-+command.  For example, Alice could create a temporary branch just to
-+track Bob's changes, without merging them with her own, using:
- 
- -------------------------------------
- $ git fetch /home/bob/myrepo master:bob-incoming
- -------------------------------------
- 
- which fetches the changes from Bob's master branch into a new branch
--named bob-incoming.  (Unlike git pull, git fetch just fetches a copy
--of Bob's line of development without doing any merging).  Then
-+named bob-incoming.  Then
- 
- -------------------------------------
- $ git log -p master..bob-incoming
-@@ -240,8 +239,8 @@ $ git log -p master..bob-incoming
- shows a list of all the changes that Bob made since he branched from
- Alice's master branch.
- 
--After examining those changes, and possibly fixing things, Alice can
--pull the changes into her master branch:
-+After examining those changes, and possibly fixing things, Alice
-+could pull the changes into her master branch:
- 
- -------------------------------------
- $ git checkout master
-@@ -251,6 +250,18 @@ $ git pull . bob-incoming
- The last command is a pull from the "bob-incoming" branch in Alice's
- own repository.
- 
-+Alice could also perform both steps at once with:
-+
-+-------------------------------------
-+$ git pull /home/bob/myrepo master:bob-incoming
-+-------------------------------------
-+
-+This is just like the "git pull /home/bob/myrepo master" that we saw
-+before, except that it also stores the unmerged changes from bob's
-+master branch in bob-incoming before merging them into Alice's
-+current branch.  Note that git pull always merges into the current
-+branch, regardless of what else is given on the commandline.
-+
- Later, Bob can update his repo with Alice's latest changes using
- 
- -------------------------------------
 -- 
-1.4.4.rc1.g83ee9
