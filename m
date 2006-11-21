@@ -1,79 +1,67 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Patch to tutorial.txt
-Date: Sun, 19 Nov 2006 23:59:13 +0100
-Organization: At home
-Message-ID: <ejqnh8$peb$1@sea.gmane.org>
-References: <4d8e3fd30611191444r710f23e5uc488d35aa4abaf06@mail.gmail.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: Some tips for doing a CVS importer
+Date: Tue, 21 Nov 2006 21:03:41 +0100
+Message-ID: <20061121200341.GH7201@pasky.or.cz>
+References: <9e4733910611201349s4d08b984g772c64982f148bfa@mail.gmail.com> <46a038f90611201503m6a63ec8ct347026c635190108@mail.gmail.com> <9e4733910611201537h30b6c9f4oee9d8df75284c284@mail.gmail.com> <46a038f90611201629o39f11f42ye07b86159360b66e@mail.gmail.com> <87vel9y5x6.wl%cworth@cworth.org> <9e4733910611201740i348302e6r84c3c27dc27e5954@mail.gmail.com> <20061121063934.GA3332@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-NNTP-Posting-Date: Sun, 19 Nov 2006 22:58:18 +0000 (UTC)
+NNTP-Posting-Date: Tue, 21 Nov 2006 20:04:10 +0000 (UTC)
+Cc: Jon Smirl <jonsmirl@gmail.com>, Carl Worth <cworth@cworth.org>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 29
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+Content-Disposition: inline
+In-Reply-To: <20061121063934.GA3332@spearce.org>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31870>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32032>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Glvbz-0005SH-5n for gcvg-git@gmane.org; Sun, 19 Nov
- 2006 23:58:07 +0100
+ esmtp (Exim 4.43) id 1GmbqP-0005ss-7n for gcvg-git@gmane.org; Tue, 21 Nov
+ 2006 21:03:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S933675AbWKSW6D (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 19 Nov 2006
- 17:58:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933705AbWKSW6D
- (ORCPT <rfc822;git-outgoing>); Sun, 19 Nov 2006 17:58:03 -0500
-Received: from main.gmane.org ([80.91.229.2]:8686 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S933675AbWKSW6B (ORCPT
- <rfc822;git@vger.kernel.org>); Sun, 19 Nov 2006 17:58:01 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1Glvbm-0005Pb-Lc for git@vger.kernel.org; Sun, 19 Nov 2006 23:57:54 +0100
-Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Sun, 19 Nov 2006 23:57:54 +0100
-Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Sun, 19 Nov 2006
- 23:57:54 +0100
-To: git@vger.kernel.org
+ S1031351AbWKUUDo (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 21 Nov 2006
+ 15:03:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031373AbWKUUDo
+ (ORCPT <rfc822;git-outgoing>); Tue, 21 Nov 2006 15:03:44 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:58830 "EHLO machine.or.cz") by
+ vger.kernel.org with ESMTP id S1031351AbWKUUDn (ORCPT
+ <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2006 15:03:43 -0500
+Received: (qmail 10853 invoked by uid 2001); 21 Nov 2006 21:03:41 +0100
+To: Shawn Pearce <spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 
-Paolo Ciarrocchi wrote:
-
-> From 0b98769dfe16e3ba8cde698b75cb1067658c38e7 Mon Sep 17 00:00:00 2001
-
-I think you should remove this line.
-
-> From: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
-> Date: Sun, 19 Nov 2006 23:41:31 +0100
-> Subject: [PATCH] One of the comment was not really clear, rephrased to
-> make it easier to be understood by the reader
-
-Wordwrap. Perhaps it would be better to split description into short line,
-and two-line description.
-
-[...]
->  ------------------------------------------------
+On Tue, Nov 21, 2006 at 07:39:35AM CET, Shawn Pearce wrote:
+> Jon Smirl <jonsmirl@gmail.com> wrote:
+> > brendan said SVN is likely for the main Mozilla repo and monotone for
+> > the new Mozilla 2 work. No native win32 caused git to be immediately
+> > discarded.
 > 
->  at this point the two branches have diverged, with different changes
-> -made in each.  To merge the changes made in the two branches, run
-> +made in each.  To merge the changes made in experimental into master run
+> Yea, that lack of native win32 seems to be one of a number of
+> blockers for people switching their projects onto Git.
 
-I would rather say:
-  To merge the changes made in the two branches into master, run
+Yep. :-(
+
+> I think there's a number of issues that are keeping people from
+> switching to Git and are instead causing them to choose SVN, hg
+> or Monotone:
+> 
+>   - No GUI.
+
+It has been my impression that Git's situation is far better than in
+case of the other systems (except SVN: TortoiseSVN and RapidSVN). Is
+that not so?
 
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
-
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+The meaning of Stonehenge in Traflamadorian, when viewed from above, is:
+"Replacement part being rushed with all possible speed."
