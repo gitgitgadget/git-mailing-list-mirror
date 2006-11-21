@@ -1,98 +1,80 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-Subject: Re: [PATCH qgit] Change also tag marks when changing graph size
-Date: Wed, 25 Oct 2006 04:20:12 +0200
-Message-ID: <200610250420.12324.Josef.Weidendorfer@gmx.de>
-References: <e5bfff550610240947i30bc3fc0x49710e4cbb0f0556@mail.gmail.com> <200610242041.22230.Josef.Weidendorfer@gmx.de> <e5bfff550610241245r73b594ftf2cd39f4194b5411@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 25 Oct 2006 02:20:24 +0000 (UTC)
-Cc: "Git Mailing List" <git@vger.kernel.org>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Peter Baumann <Peter.B.Baumann@stud.informatik.uni-erlangen.de>
+Subject: Re: git-show --stat on first commit
+Date: Tue, 21 Nov 2006 18:11:19 +0100
+Message-ID: <slrnem6cpn.6vh.Peter.B.Baumann@xp.machine.xx>
+References: <200611211341.48862.andyparkins@gmail.com> <8aa486160611210609h1c2d229ekf0b5e8aeb4f21f11@mail.gmail.com> <slrnem694k.4lm.Peter.B.Baumann@xp.machine.xx> <Pine.LNX.4.64.0611210820100.3338@woody.osdl.org>
+NNTP-Posting-Date: Tue, 21 Nov 2006 17:12:05 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #352111
-User-Agent: KMail/1.9.3
-In-Reply-To: <e5bfff550610241245r73b594ftf2cd39f4194b5411@mail.gmail.com>
-Content-Disposition: inline
-X-Y-GMX-Trusted: 0
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 36
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: mason.hofmann.stw.uni-erlangen.de
+User-Agent: slrn/0.9.8.0 (Linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30027>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32006>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GcYNQ-0005uw-5I for gcvg-git@gmane.org; Wed, 25 Oct
- 2006 04:20:20 +0200
+ esmtp (Exim 4.43) id 1GmZ9q-0008Dk-3n for gcvg-git@gmane.org; Tue, 21 Nov
+ 2006 18:11:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1422882AbWJYCUR (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 24 Oct 2006
- 22:20:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422880AbWJYCUQ
- (ORCPT <rfc822;git-outgoing>); Tue, 24 Oct 2006 22:20:16 -0400
-Received: from mail.gmx.de ([213.165.64.20]:53194 "HELO mail.gmx.net") by
- vger.kernel.org with SMTP id S1422877AbWJYCUP (ORCPT
- <rfc822;git@vger.kernel.org>); Tue, 24 Oct 2006 22:20:15 -0400
-Received: (qmail invoked by alias); 25 Oct 2006 02:20:13 -0000
-Received: from p5496B314.dip0.t-ipconnect.de (EHLO noname) [84.150.179.20] by
- mail.gmx.net (mp006) with SMTP; 25 Oct 2006 04:20:13 +0200
-To: "Marco Costalba" <mcostalba@gmail.com>
+ S1031182AbWKURLg (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 21 Nov 2006
+ 12:11:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031225AbWKURLf
+ (ORCPT <rfc822;git-outgoing>); Tue, 21 Nov 2006 12:11:35 -0500
+Received: from main.gmane.org ([80.91.229.2]:24545 "EHLO ciao.gmane.org") by
+ vger.kernel.org with ESMTP id S1031182AbWKURLe (ORCPT
+ <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2006 12:11:34 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1GmZ9h-0008Bj-NN for git@vger.kernel.org; Tue, 21 Nov 2006 18:11:33 +0100
+Received: from mason.hofmann.stw.uni-erlangen.de ([131.188.24.36]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Tue, 21 Nov 2006 18:11:33 +0100
+Received: from Peter.B.Baumann by mason.hofmann.stw.uni-erlangen.de with
+ local (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>;
+ Tue, 21 Nov 2006 18:11:33 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On Tuesday 24 October 2006 21:45, Marco Costalba wrote:
-> Quoting from your last e-mail:
-> "The new painting code regroups the drawing commands in
-> multiple switch-statements to prepare for far simpler code
-> with booleans for different elements, and not one type only."
-> 
-> Indeed it's not clear to me what the above line means exactly, it just
-> smells like there is something more cooking.
+On 2006-11-21, Linus Torvalds <torvalds@osdl.org> wrote:
+>
+>
+> On Tue, 21 Nov 2006, Peter Baumann wrote:
+>> 
+>> Why not make --root the default? I also stumbled over this behaviour and
+>> even asked on this list.
+>
+> I suspect we should make the thing a config option, and default it to 
+> "on".
+>
+That would be great.
 
-Ah, yes ;-)
+> I personally do _not_ want to see the root commit, because for the kernel, 
+> it's a honking huge import that does not make sense as a "diff". It's not 
+> really a diff against anything, after all - it's an import.
+>
+> That's really the reason why git defaults to not showing the root diff at 
+> all: exactly because for the kernel, the initial commit was state that 
+> "just came to be", and I found it both illogical and annoying to see it as 
+> a diff, since that commit really was a "black hole" where previous history 
+> just disappeared.
+>
+> But if you have the _full_ history with a new project, "--root" by default 
+> probably makes tons of sense.
+>
 
-Currently, the drawing code knows how a full part of the graph
-should be drawn, with circle, rects, lines.
-Now, with direct drawing, this "knowledge" can be moved to graph
-layout time, which can generate info whether a circle or rect should
-be drawn. Making drawing a little bit faster, and simpler.
+I am aware of the import problem, especially from the kernel history.
 
-I am not sure if it is worth it, but this way, the drawing code could
-be the same e.g. for different graph drawing algorithms (like gitk).
+And I think handling this behaviour as a config option is the right thing,
+because most of the time if someone imports a project into git he
+will import the whole history, especially if he is using one of the
+cvs/svn importers. A "halfway import" as seen in the kernel repo is a
+special case and it is unlikely seen again.
 
-> > Now that everything is drawn directly, the question is what to do with
-> > the new flexibility. E.g. we _could_ implement different
-> > graph drawing algorithms next to the original qgit one,
-> > e.g. mimicking gitk.
-> 
-> One little secret of current algorithm is that it just needs to know
-> the "state" of previous revision graph to calculate the next one. (see
-> Git::updateLanes() and lanes.cpp), it's a kind of a "rasterized" graph
-> drawing, i.e. line by line.
-> 
-> I didn't studied gitk in deep but it seems a little bit less simpler.
-> Anyway if you are interested it's for sure worth trying ;-)
-
-I will have a look.
-
-Current qgit layout gets really extremely wide e.g. with the kernel.
-
-Some ideas:
-* Put lanes to the right if possible
-* If a branch has no commit for more than e.g. 50 entries, it's better to
-draw an arrow and get rid of the lane at all.
-By clicking on an arrow head, we could rearrange the commit ordering
-a little bit so that commits on the given branch move in a way that
-we always see the context on this branch.
-* Collapsing parts of the graph into mega-commits, e.g.
- - straight commit lines
- - short topic branches forking from and merging into a branch
-
-Josef
-
-> 
->   Marco
-> 
+Peter
