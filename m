@@ -1,81 +1,78 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] git-add --interactive (wip)
-Date: Wed, 13 Dec 2006 12:20:13 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612131216350.3635@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <360959.72234.qm@web31809.mail.mud.yahoo.com>
- <200612111147.44964.Josef.Weidendorfer@gmx.de> <7vwt4wpytm.fsf@assigned-by-dhcp.cox.net>
- <200612130415.59038.Josef.Weidendorfer@gmx.de> <7v1wn4mk9i.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0612131137100.3635@wbgn013.biozentrum.uni-wuerzburg.de>
- <20061213105754.GC9484@spearce.org>
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: Some tips for doing a CVS importer
+Date: Tue, 21 Nov 2006 13:29:20 +1300
+Message-ID: <46a038f90611201629o39f11f42ye07b86159360b66e@mail.gmail.com>
+References: <9e4733910611201349s4d08b984g772c64982f148bfa@mail.gmail.com>
+	 <46a038f90611201503m6a63ec8ct347026c635190108@mail.gmail.com>
+	 <9e4733910611201537h30b6c9f4oee9d8df75284c284@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Wed, 13 Dec 2006 11:22:09 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>,
-	Josef Weidendorfer <Josef.Weidendorfer@gmx.de>,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Tue, 21 Nov 2006 00:29:29 +0000 (UTC)
+Cc: "Git Mailing List" <git@vger.kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <20061213105754.GC9484@spearce.org>
-X-Y-GMX-Trusted: 0
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=eP8fj3CvZHxA5DsJeLv3xB5Az4MgEShi2Uwu82Gxyn7RL1kx1ArQjfG5i8kWZU6x8huhxBb3+CTuBQ2OO9JWtL+8VkzLLGeT06oBXKGJcplHMQ0wubcINKNY5fCzlEbdD4iSEagjyBxk1HK1beYjpidmCNMIvRSHJq/VL/eKipY=
+In-Reply-To: <9e4733910611201537h30b6c9f4oee9d8df75284c284@mail.gmail.com>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34210>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GuSBW-0003lP-NZ for gcvg-git@gmane.org; Wed, 13 Dec
- 2006 12:22:03 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31964>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GmJVu-0006ho-9I for gcvg-git@gmane.org; Tue, 21 Nov
+ 2006 01:29:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S964875AbWLMLUx (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 13 Dec 2006
- 06:20:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964861AbWLMLUU
- (ORCPT <rfc822;git-outgoing>); Wed, 13 Dec 2006 06:20:20 -0500
-Received: from mail.gmx.net ([213.165.64.20]:39482 "HELO mail.gmx.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S964876AbWLMLUQ
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 13 Dec 2006 06:20:16 -0500
-Received: (qmail invoked by alias); 13 Dec 2006 11:20:14 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp041) with SMTP; 13 Dec 2006 12:20:14 +0100
-To: Shawn Pearce <spearce@spearce.org>
+ S1030572AbWKUA3X (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 20 Nov 2006
+ 19:29:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030577AbWKUA3X
+ (ORCPT <rfc822;git-outgoing>); Mon, 20 Nov 2006 19:29:23 -0500
+Received: from nf-out-0910.google.com ([64.233.182.186]:52928 "EHLO
+ nf-out-0910.google.com") by vger.kernel.org with ESMTP id S1030572AbWKUA3W
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 20 Nov 2006 19:29:22 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so2521896nfa for
+ <git@vger.kernel.org>; Mon, 20 Nov 2006 16:29:21 -0800 (PST)
+Received: by 10.49.12.4 with SMTP id p4mr170188nfi.1164068960816; Mon, 20 Nov
+ 2006 16:29:20 -0800 (PST)
+Received: by 10.49.60.1 with HTTP; Mon, 20 Nov 2006 16:29:20 -0800 (PST)
+To: "Jon Smirl" <jonsmirl@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Hi,
+On 11/21/06, Jon Smirl <jonsmirl@gmail.com> wrote:
+> > I gather this means that the cvs2svn track hasn't been as productive
+> > as expected. Any remaining/unsolvable issues with it? I have been
+> > chronically busy on my e-learning projects, but don't discard coming
+> > back to this when I have some time.
+>
+> Look in this thread
+> [Fwd: Re: What's in git.git]
+>
+> There is a message in there that explains a problem that the cvs2svn
+> people aren't going to fix and it kills git.
 
-On Wed, 13 Dec 2006, Shawn Pearce wrote:
+I see - thanks for the pointer. Sorry to hear others in the Moz
+project weren't so keen on hearing about alternatives to SVN. Long
+term only something like GIT seems viable for such a large project (in
+terms of community, branches/subprojects and codebase).
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > On Tue, 12 Dec 2006, Junio C Hamano wrote:
-> > > Hmm, a way to easily stash away local changes and restoring
-> > > would lead to a system where you can easily stash and unstash
-> > > multiple snapshots and switch between them, and such a model
-> > > sounds vaguely familiar...
-> > 
-> > Hmm, what might that be? :-)
-> > 
-> > A more simple approach than to buy into Python 
-> 
-> Hmmm... last I heard Git doesn't depend on Python anymore, thanks
-> largely to you and Alex.
+Two remaining questions
+ - Where can I get your latest code? :-)
+ - I gather the moz cvs repo has some cases that require getting the
+symbol resolution right. Could this be performed as an extra pass /
+task?
 
-I referred to StGit, which is pure Python AFAIK.
+Eventually the Moz crowd will outgrow SVN - perhaps we should be
+parsing the SVN dump format instead ;-)
 
-> But it does stash and unstash snapshots of my working directory wicked 
-> fast using these things called branches...  :-)
+cheers,
 
-The PEBCAK. I cannot hardly type the commands as fast as Git need to stash 
-snapshots into branches.
 
-So, git-revolve-stage would help me. Or maybe I create bash aliases
-
-$ alias stash='stash_tree=$(git-write-tree)'
-$ alias unstash='git-read-tree $stash_tree'
-
-Ciao,
-Dscho
