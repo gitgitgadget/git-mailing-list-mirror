@@ -1,64 +1,59 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
-Subject: Re: [PATCH] Add branch.*.merge warning and documentation update
-Date: Sat, 9 Dec 2006 17:14:12 +0100
-Message-ID: <8aa486160612090814n4c4ee827o905674618c97eeea@mail.gmail.com>
-References: <cc723f590612052051r62111c4cgfd7ee893cb00f84a@mail.gmail.com>
-	 <200612090017.44105.Josef.Weidendorfer@gmx.de>
-	 <7vu006ez1i.fsf@assigned-by-dhcp.cox.net>
-	 <200612090228.26722.Josef.Weidendorfer@gmx.de>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: Re: [PATCH] gitweb: make HTML links out of http/https URLs in changelogs
+Date: 21 Nov 2006 15:55:04 -0800
+Message-ID: <86wt5oicdj.fsf@blue.stonehenge.com>
+References: <4563777C.4050108@openvz.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Sat, 9 Dec 2006 16:14:27 +0000 (UTC)
-Cc: "Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Tue, 21 Nov 2006 23:55:16 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=m46yqOswcSn/yB4Hhmw3DKHxwFVxKvSU7JjsZFv3FemhHdOWzBOXhnhTswuQY99UJdBs4RyDuDGCpSllr/YXtUUvEJ79mgz6XUf15n6dVco0+IOTibFJCxOgWl5g3B3f5JFDr7zKQDTqzfNUee7P/SVffHLgIkwp60K+aGkJWQY=
-In-Reply-To: <200612090228.26722.Josef.Weidendorfer@gmx.de>
-Content-Disposition: inline
+x-mayan-date: Long count = 12.19.13.14.18; tzolkin = 5 Etznab; haab = 11 Ceh
+In-Reply-To: <4563777C.4050108@openvz.org>
+Original-Lines: 15
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33818>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gt4qB-00075b-A8 for gcvg-git@gmane.org; Sat, 09 Dec
- 2006 17:14:19 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32059>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GmfSJ-0003FD-5E for gcvg-git@gmane.org; Wed, 22 Nov
+ 2006 00:55:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S937055AbWLIQOO convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Sat, 9 Dec 2006 11:14:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937056AbWLIQOO
- (ORCPT <rfc822;git-outgoing>); Sat, 9 Dec 2006 11:14:14 -0500
-Received: from wx-out-0506.google.com ([66.249.82.235]:22923 "EHLO
- wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S937055AbWLIQON convert rfc822-to-8bit (ORCPT
- <rfc822;git@vger.kernel.org>); Sat, 9 Dec 2006 11:14:13 -0500
-Received: by wx-out-0506.google.com with SMTP id h27so1095457wxd for
- <git@vger.kernel.org>; Sat, 09 Dec 2006 08:14:12 -0800 (PST)
-Received: by 10.70.61.1 with SMTP id j1mr8378370wxa.1165680852518; Sat, 09
- Dec 2006 08:14:12 -0800 (PST)
-Received: by 10.70.45.1 with HTTP; Sat, 9 Dec 2006 08:14:12 -0800 (PST)
-To: "Josef Weidendorfer" <Josef.Weidendorfer@gmx.de>
+ S1756880AbWKUXzH (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 21 Nov 2006
+ 18:55:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756882AbWKUXzH
+ (ORCPT <rfc822;git-outgoing>); Tue, 21 Nov 2006 18:55:07 -0500
+Received: from blue.stonehenge.com ([209.223.236.162]:691 "EHLO
+ blue.stonehenge.com") by vger.kernel.org with ESMTP id S1756880AbWKUXzF
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2006 18:55:05 -0500
+Received: from localhost (localhost [127.0.0.1]) by blue.stonehenge.com
+ (Postfix) with ESMTP id 1B7708FA20; Tue, 21 Nov 2006 15:55:05 -0800 (PST)
+Received: from blue.stonehenge.com ([127.0.0.1]) by localhost
+ (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024) with LMTP id
+ 06768-01-49; Tue, 21 Nov 2006 15:55:04 -0800 (PST)
+Received: by blue.stonehenge.com (Postfix, from userid 1001) id 7D3D18FA32;
+ Tue, 21 Nov 2006 15:55:04 -0800 (PST)
+To: Kir Kolyshkin <kir@openvz.org>
 Sender: git-owner@vger.kernel.org
 
-On 12/9/06, Josef Weidendorfer <Josef.Weidendorfer@gmx.de> wrote:
-> This patch clarifies the meaning of the branch.*.merge option.
-> Previously, if branch.*.merge was specified but did not match any
-> ref, the message "No changes." was not really helpful regarding
-> the misconfiguration. This patch adds a warning for this.
->
-> Signed-off-by: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+>>>>> "Kir" == Kir Kolyshkin <kir@openvz.org> writes:
 
-Acked-by: Santi B=E9jar <sbejar@gmail.com>
+Kir> +	# make HTML links out of http(s) URLs
+Kir> +	$line =~ s/(http[s]?:\/\/[^[:space:]\]\)]+)/<a href="\1">\1<\/a>/g;
 
-And thanks for the patch.
+Perl tip of the day:
 
+On the right side of s///, you want $1, not \1, because \1 accidentally
+works, but \10 (instead of the proper $10) will give you a control-h.  Ick.
+
+-- 
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
