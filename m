@@ -1,81 +1,86 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH 6/6] remove .keep pack lock files when done with refs update
-Date: Thu, 02 Nov 2006 10:09:49 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0611020959410.11384@xanadu.home>
-References: <11624187853116-git-send-email-nico@cam.org>
- <11624187853865-git-send-email-nico@cam.org>
- <1162418786895-git-send-email-nico@cam.org>
- <1162418786390-git-send-email-nico@cam.org>
- <11624187871572-git-send-email-nico@cam.org>
- <11624187883225-git-send-email-nico@cam.org>
- <7vzmbav2n9.fsf@assigned-by-dhcp.cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC] Submodules in GIT
+Date: Tue, 21 Nov 2006 11:04:46 +0100
+Organization: At home
+Message-ID: <ejuit4$mg$1@sea.gmane.org>
+References: <20061120215116.GA20736@admingilde.org> <ejt9dh$kfm$1@sea.gmane.org> <7v7ixp20za.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611201501230.3338@woody.osdl.org> <7v4pstzmk5.fsf@assigned-by-dhcp.cox.net> <ejthuh$fn8$1@sea.gmane.org> <20061121062158.GF20736@admingilde.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-NNTP-Posting-Date: Thu, 2 Nov 2006 15:11:11 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+NNTP-Posting-Date: Tue, 21 Nov 2006 10:04:35 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-reply-to: <7vzmbav2n9.fsf@assigned-by-dhcp.cox.net>
-X-X-Sender: nico@xanadu.home
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 36
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30757>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31980>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GfeD3-0005dL-7G for gcvg-git@gmane.org; Thu, 02 Nov
- 2006 16:10:25 +0100
+ esmtp (Exim 4.43) id 1GmSUD-0005QT-Rj for gcvg-git@gmane.org; Tue, 21 Nov
+ 2006 11:04:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751319AbWKBPKW (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 2 Nov 2006
- 10:10:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751333AbWKBPKW
- (ORCPT <rfc822;git-outgoing>); Thu, 2 Nov 2006 10:10:22 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:65022 "EHLO
- relais.videotron.ca") by vger.kernel.org with ESMTP id S1751319AbWKBPKV
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 2 Nov 2006 10:10:21 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
- <0J8300DJTZGD37H0@VL-MO-MR003.ip.videotron.ca> for git@vger.kernel.org; Thu,
- 02 Nov 2006 10:09:49 -0500 (EST)
-To: Junio C Hamano <junkio@cox.net>
+ S1030803AbWKUKEF (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 21 Nov 2006
+ 05:04:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030804AbWKUKEF
+ (ORCPT <rfc822;git-outgoing>); Tue, 21 Nov 2006 05:04:05 -0500
+Received: from main.gmane.org ([80.91.229.2]:29089 "EHLO ciao.gmane.org") by
+ vger.kernel.org with ESMTP id S1030803AbWKUKEC (ORCPT
+ <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2006 05:04:02 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1GmSTl-0005Jd-Md for git@vger.kernel.org; Tue, 21 Nov 2006 11:03:49 +0100
+Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Tue, 21 Nov 2006 11:03:49 +0100
+Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Tue, 21 Nov 2006
+ 11:03:49 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On Wed, 1 Nov 2006, Junio C Hamano wrote:
+Martin Waitz wrote:
 
-> Nicolas Pitre <nico@cam.org> writes:
+> On Tue, Nov 21, 2006 at 01:42:22AM +0100, Jakub Narebski wrote:
+>> Perhaps it would be best to join those two subproject support
+>> solutions together: "bind" tree/commit mount header in commit
+>> object, and "commit" entry in a tree.
 > 
-> > --- a/git-fetch.sh
-> > +++ b/git-fetch.sh
-> > @@ -51,7 +51,7 @@ do
-> >  		verbose=Yes
-> >  		;;
-> >  	-k|--k|--ke|--kee|--keep)
-> > -		keep=--keep
-> > +		keep=-k -k
-> >  		;;
-> >  	--reflog-action=*)
-> >  		rloga=`expr "z$1" : 'z-[^=]*=\(.*\)'`
-> 
-> Micronit.  This cannot be right without quoting.
+> But which is the autoritative source then?
+> Does it give any more information?
 
-OK.  Shell programming isn't really my turf.
+Both should contain the same information, otherwise repository is corrupt
+(is in inconsistent state).
 
-Another area of that patch I'm not really sure of is this:
+"bind" header in commit objects is meant as a kind of shortcut, to ease
+reachability checking (you don't need to recurse into directories).
 
-@@ -408,6 +415,7 @@ fetch_main () {
-          append_fetch_head "$sha1" "$remote" \
-                  "$remote_name" "$remote_nick" "$local_name" "$not_for_merge"
-       done
-+      if [ "$pack_lockfile" ]; then rm -f "$pack_lockfile"; fi
-     ) || exit ;;
-   esac
+> The advantage in your proposal would be that submodules would
+> be visible immediately when looking at the commit,
+> without having to traverse the entire tree.
+> This may be worthwhile when showing the combined history of parent
+> and submodules.
 
-How can I make sure to not clobber a non-zero return code with the rm 
-that would prevent the exit while still performing the rm in all cases?
+That was the idea.
 
+> But still this looks like "caching submodule information in the
+> commit object" and I do not know if we really want to do that.
+
+Well, we would be repeating information, sure. But we can put additional
+information in "bind" header except sha1 of commit and mount point...
+although I cannot think what... :)
+
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
 
