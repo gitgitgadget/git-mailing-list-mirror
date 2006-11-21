@@ -1,87 +1,86 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_ADSP_NXDOMAIN,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
-From: Zack Brown <zbrown@tumblerings.org>
-Subject: Re: cg-clone produces "___" file and no working tree
-Date: Thu, 20 Apr 2006 14:34:20 -0700
-Message-ID: <20060420213420.GD3653@tumblerings.org>
-References: <20060419053640.GA16334@tumblerings.org> <20060419094916.GD27689@pasky.or.cz> <20060419142131.GD4104@tumblerings.org> <20060419144827.GX27631@pasky.or.cz> <20060420164908.GA540@tumblerings.org> <7vejzsywrq.fsf@assigned-by-dhcp.cox.net> <20060420200849.GA3653@tumblerings.org> <7vslo8xaql.fsf@assigned-by-dhcp.cox.net> <7vodywxago.fsf@assigned-by-dhcp.cox.net>
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: remotes/* for "foreign" archives (was Re: tracking many cvs/svn/git remote archives)
+Date: 21 Nov 2006 06:57:45 -0800
+Message-ID: <86r6vwkfti.fsf@blue.stonehenge.com>
+References: <86y7q6m3zm.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 20 Apr 2006 21:34:50 +0000 (UTC)
-Cc: git@vger.kernel.org
+NNTP-Posting-Date: Tue, 21 Nov 2006 14:58:08 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <7vodywxago.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11+cvs20060403
+x-mayan-date: Long count = 12.19.13.14.18; tzolkin = 5 Etznab; haab = 11 Ceh
+In-Reply-To: <86y7q6m3zm.fsf@blue.stonehenge.com>
+Original-Lines: 42
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/19000>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31991>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1FWgnH-00066S-BD for gcvg-git@gmane.org; Thu, 20 Apr
- 2006 23:34:31 +0200
+ esmtp (Exim 4.43) id 1GmX4L-0006Tr-7r for gcvg-git@gmane.org; Tue, 21 Nov
+ 2006 15:57:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751330AbWDTVe2 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 20 Apr 2006
- 17:34:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751334AbWDTVe2
- (ORCPT <rfc822;git-outgoing>); Thu, 20 Apr 2006 17:34:28 -0400
-Received: from dsl092-000-086.sfo1.dsl.speakeasy.net ([66.92.0.86]:8337 "EHLO
- tumblerings.org") by vger.kernel.org with ESMTP id S1751330AbWDTVe1 (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 20 Apr 2006 17:34:27 -0400
-Received: from zbrown by tumblerings.org with local (Exim 4.61)
- (envelope-from <zbrown@tumblerings.org>) id 1FWgn6-00014Z-V8; Thu, 20 Apr
- 2006 14:34:20 -0700
-To: Junio C Hamano <junkio@cox.net>
+ S934371AbWKUO5r (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 21 Nov 2006
+ 09:57:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934375AbWKUO5r
+ (ORCPT <rfc822;git-outgoing>); Tue, 21 Nov 2006 09:57:47 -0500
+Received: from blue.stonehenge.com ([209.223.236.162]:44212 "EHLO
+ blue.stonehenge.com") by vger.kernel.org with ESMTP id S934371AbWKUO5q (ORCPT
+ <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2006 09:57:46 -0500
+Received: from localhost (localhost [127.0.0.1]) by blue.stonehenge.com
+ (Postfix) with ESMTP id CEF158FBA4 for <git@vger.kernel.org>; Tue, 21 Nov
+ 2006 06:57:45 -0800 (PST)
+Received: from blue.stonehenge.com ([127.0.0.1]) by localhost
+ (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024) with LMTP id
+ 31505-01-91 for <git@vger.kernel.org>; Tue, 21 Nov 2006 06:57:45 -0800 (PST)
+Received: by blue.stonehenge.com (Postfix, from userid 1001) id 3059C8FB72;
+ Tue, 21 Nov 2006 06:57:45 -0800 (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Hi,
+>>>>> "Randal" == Randal L Schwartz <merlyn@stonehenge.com> writes:
 
-> honestly I would not recommend "runnning
-> without installing" unless you know what you are doing ;-).
+Randal>             *-GIT*)
+Randal>                 ## first, update "origin":
+Randal>                 case $i in
+Randal>                     *-GIT)
+Randal>                         git-fetch
+Randal>                         ;;
+Randal>                     *-GITCVS)
+Randal>                         git-cvsimport -k -i $(git-repo-config getcvs.gitcvsargs)
+Randal>                         ;;
+Randal>                     *-GITSVN)
+Randal>                         ## be sure to have origin "ref: refs/remotes/git-svn"
+Randal>                         git-svn multi-fetch
+Randal>                         ;;
+Randal>                 esac
 
-OK, you're right, the problem was that I was not doing a proper install. I
-followed the directions and it worked. Thanks!
+It occurred to me after posting this, and while still thinking about the
+presentation I'm writing, that it'd be interesting if "get-fetch" could hide
+this from me.
 
-Be well,
-Zack
+If the file in remotes/origin looked something like:
 
-On Thu, Apr 20, 2006 at 01:23:35PM -0700, Junio C Hamano wrote:
-> Junio C Hamano <junkio@cox.net> writes:
-> 
-> > Zack Brown <zbrown@tumblerings.org> writes:
-> >
-> >> Not true. I went into the git source directory, and ran "make". Nothing more.
-> >
-> > Ah, I misunderstood.  You are trying to run it _without_
-> > installing it.
-> >
-> > Well, then probably you do not have templates installed
-> > anywhere, especially not where git-init-db expects them to be
-> > found.
-> 
-> (sorry for the short message sent unfinished by mistake).
-> 
-> Running things without installing is somewhat tricky, but test
-> framework needs to do that, so there are some things you would
-> need to do.
-> 
->  - "git init-db" takes --template argument; in the source area
->    before installing, they are built in templates/blt/.
-> 
->  - "git" and programs that need to invoke other git programs
->    (e.g. git-send-pack) expects things to be found in gitexecdir
->    you set when you build.  If you are not installing, you need
->    to override that with GIT_EXEC_PATH environment variable.
-> 
-> There might be other things, but you should be able to find them
-> from what t/Makefile and t/test-lib.sh do.
-> 
-> Having said that, honestly I would not recommend "runnning
-> without installing" unless you know what you are doing ;-).
-> 
+        Pull: !git-svn multi-fetch trunk
+        Push: !git-svn commit
+
+then git-fetch and git-push could treat "origin" as a "foreign" branch
+and indirect through these commands.
+
+Then I could just use "git-pull" naively, and it would git-fetch origin,
+invoking git-svn multi-fetch trunk to update it, and later I could
+git-push and it would use git-svn commit.
+
+This idea is half baked, but it could definitely hide the various foreign
+adaptors from the invocation line, allowing layered tools to use them
+transparently.
 
 -- 
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
