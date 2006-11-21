@@ -2,66 +2,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: [PATCH] Oops, get the commit first, then the tree.
-Date: Sun, 3 Dec 2006 01:45:45 +0100
-Message-ID: <200612030145.45567.robin.rosenberg@dewire.com>
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Is there a way to trim old SHAs from a git tree (so it's not so
+ large)?
+Date: Tue, 21 Nov 2006 23:06:57 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0611212306060.26827@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <455B90AD.3060707@freescale.com> <20061117103611.183640@gmx.net>
+ <45632957.5070205@freescale.com> <20061121163206.GA22006@spearce.org>
+ <45632EC6.5030902@freescale.com> <20061121165656.GC22006@spearce.org>
+ <456330CD.9080503@freescale.com> <20061121183941.GB22283@spearce.org>
+ <45637457.1010505@freescale.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sun, 3 Dec 2006 00:43:40 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Tue, 21 Nov 2006 22:07:47 +0000 (UTC)
+Cc: Shawn Pearce <spearce@spearce.org>,
+	Thomas Kolejka <Thomas.Kolejka@gmx.at>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new at dewire.com
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <45637457.1010505@freescale.com>
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33070>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32044>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GqfSA-00050i-G4 for gcvg-git@gmane.org; Sun, 03 Dec
- 2006 01:43:34 +0100
+ esmtp (Exim 4.43) id 1Gmdm0-0003mh-QD for gcvg-git@gmane.org; Tue, 21 Nov
+ 2006 23:07:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1424900AbWLCAn2 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 2 Dec 2006
- 19:43:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1424899AbWLCAn2
- (ORCPT <rfc822;git-outgoing>); Sat, 2 Dec 2006 19:43:28 -0500
-Received: from [83.140.172.130] ([83.140.172.130]:23405 "EHLO
- torino.dewire.com") by vger.kernel.org with ESMTP id S1424898AbWLCAn2 (ORCPT
- <rfc822;git@vger.kernel.org>); Sat, 2 Dec 2006 19:43:28 -0500
-Received: from localhost (localhost [127.0.0.1]) by torino.dewire.com
- (Postfix) with ESMTP id 6F77E80281C; Sun,  3 Dec 2006 01:39:40 +0100 (CET)
-Received: from torino.dewire.com ([127.0.0.1]) by localhost (torino
- [127.0.0.1]) (amavisd-new, port 10024) with ESMTP id 08364-05; Sun,  3 Dec
- 2006 01:39:40 +0100 (CET)
-Received: from [10.9.0.2] (unknown [10.9.0.2]) by torino.dewire.com (Postfix)
- with ESMTP id 2AFFC80019B; Sun,  3 Dec 2006 01:39:40 +0100 (CET)
-To: Shawn Pearce <spearce@spearce.org>
+ S1031243AbWKUWHI (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 21 Nov 2006
+ 17:07:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031294AbWKUWHI
+ (ORCPT <rfc822;git-outgoing>); Tue, 21 Nov 2006 17:07:08 -0500
+Received: from mail.gmx.net ([213.165.64.20]:37780 "HELO mail.gmx.net") by
+ vger.kernel.org with SMTP id S1031243AbWKUWHA (ORCPT
+ <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2006 17:07:00 -0500
+Received: (qmail invoked by alias); 21 Nov 2006 22:06:58 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp039) with SMTP; 21 Nov 2006 23:06:58 +0100
+To: Timur Tabi <timur@freescale.com>
 Sender: git-owner@vger.kernel.org
 
-This made the eclipse plugin unable to connect to Git.
+Hi,
 
-Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
----
- .../src/org/spearce/jgit/lib/Repository.java       |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
+On Tue, 21 Nov 2006, Timur Tabi wrote:
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/Repository.java 
-b/org.spearce.jgit/src/org/spearce/jgit/lib/Repository.java
-index bfdcd3e..2344817 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/lib/Repository.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/lib/Repository.java
-@@ -168,7 +168,8 @@ public class Repository {
-     }
- 
-     public Tree mapTree(final String revstr) throws IOException {
--	final ObjectId id = resolve(revstr);
-+	Commit commit = mapCommit(revstr);
-+	final ObjectId id = commit.getTreeId();
- 	return id != null ? mapTree(id) : null;
-     }
- 
--- 
-1.4.4.gf05d
+> Shawn Pearce wrote:
+> 
+> > finally you can either run from that directory (see INSTALL file)
+> > or you can install the binary somewhere else.  We don't really
+> > recommend using `pu` for production level work, so make sure you
+> > have a backup of any repository you run it on.  :)
+> 
+> So how do I make a shallow clone?  I've set it all up, but there is no
+> git-shallow-clone command, and git help clone doesn't have anything either.
 
+Try "git clone --depth 1 <url>". This will cut each ancestor chain after 
+one ancestor (IIRC).
+
+Ciao,
+Dscho
