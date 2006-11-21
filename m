@@ -2,107 +2,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] Make git-clone --use-separate-remote the default
-Date: Fri, 24 Nov 2006 10:22:31 +0100
-Organization: At home
-Message-ID: <ek6dhj$n1l$1@sea.gmane.org>
-References: <20061123225835.30071.99265.stgit@machine.or.cz> <7vejrtiwqd.fsf@assigned-by-dhcp.cox.net> <20061123234203.GN7201@pasky.or.cz> <7vlkm1hf57.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: git-show --stat on first commit
+Date: Tue, 21 Nov 2006 08:31:30 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0611210820100.3338@woody.osdl.org>
+References: <200611211341.48862.andyparkins@gmail.com>
+ <8aa486160611210609h1c2d229ekf0b5e8aeb4f21f11@mail.gmail.com>
+ <slrnem694k.4lm.Peter.B.Baumann@xp.machine.xx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-NNTP-Posting-Date: Fri, 24 Nov 2006 09:21:26 +0000 (UTC)
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Tue, 21 Nov 2006 16:36:46 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 58
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+In-Reply-To: <slrnem694k.4lm.Peter.B.Baumann@xp.machine.xx>
+X-MIMEDefang-Filter: osdl$Revision: 1.159 $
+X-Scanned-By: MIMEDefang 2.36
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32203>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31999>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GnXFE-0005bU-Ba for gcvg-git@gmane.org; Fri, 24 Nov
- 2006 10:21:16 +0100
+ esmtp (Exim 4.43) id 1GmYbm-0008MU-Cg for gcvg-git@gmane.org; Tue, 21 Nov
+ 2006 17:36:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1757508AbWKXJVM (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 24 Nov 2006
- 04:21:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757531AbWKXJVM
- (ORCPT <rfc822;git-outgoing>); Fri, 24 Nov 2006 04:21:12 -0500
-Received: from main.gmane.org ([80.91.229.2]:9952 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S1757508AbWKXJVL (ORCPT
- <rfc822;git@vger.kernel.org>); Fri, 24 Nov 2006 04:21:11 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1GnXF0-0005Yz-Sl for git@vger.kernel.org; Fri, 24 Nov 2006 10:21:02 +0100
-Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Fri, 24 Nov 2006 10:21:02 +0100
-Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Fri, 24 Nov 2006
- 10:21:02 +0100
-To: git@vger.kernel.org
+ S1031113AbWKUQet (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 21 Nov 2006
+ 11:34:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031092AbWKUQet
+ (ORCPT <rfc822;git-outgoing>); Tue, 21 Nov 2006 11:34:49 -0500
+Received: from smtp.osdl.org ([65.172.181.25]:58317 "EHLO smtp.osdl.org") by
+ vger.kernel.org with ESMTP id S1031073AbWKUQer (ORCPT
+ <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2006 11:34:47 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
+ smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kALGVVix012109
+ (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Tue, 21
+ Nov 2006 08:31:31 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
+ shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kALGVUa1030715; Tue, 21 Nov
+ 2006 08:31:31 -0800
+To: Peter Baumann <Peter.B.Baumann@stud.informatik.uni-erlangen.de>
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano wrote:
 
-> Petr Baudis <pasky@suse.cz> writes:
-> 
->>> Even though I fully agree that use-separate-remotes should be
->>> the default, to the point that I think we do not even
->>> need a backward compatibility option.  People who want to use
->>> traditional layout for simple one-remote-branch-only project
->>> would not suffer anyway because 'origin' still means origin in
->>> the new layout (refs/remotes/origin/HEAD).
->>
->> I don't know, we still at least need to keep the functionality for
->> --bare.
 
-By the way, I think the backward compatibility option should be
-simply named --dont-use-separate-remote, or --without-separate-remote,
-or --no-separate-remote (the last is probably the best choice).
+On Tue, 21 Nov 2006, Peter Baumann wrote:
+> 
+> Why not make --root the default? I also stumbled over this behaviour and
+> even asked on this list.
 
-> I agree --bare should continue to be a "snapshot mirror"; I am
-> not advocating for the removal of the internal implementation
-> detail such as $use_separate_remote variable.
-> 
-> However, I think having one sane behaviour is the right thing to
-> do for a clone that prepares a repository with a working tree
-> (including the one made with -n option, which only means "do not
-> do the check-out immediately after cloning" for such a
-> repository).
-> 
-> The traditional layout is slightly simpler for a project with
-> the simplest needs (that is, a single upstream repository that
-> has a single 'master' branch), but I do think even that is not
-> an advantage anymore.
-> 
-> With the separate-remote layout, git-fetch would still fetch and
-> update the "origin" (although that is now remotes/origin/master
-> which is pointed at by remotes/origin/HEAD) and the user can
-> still refer to it with "origin".  Commands "git-pull origin",
-> "git-pull . origin", and "git-merge origin" all will continue to
-> work the same way as before for such a project as in the
-> traditional layout, and that is why I think we do not need
-> backward compatibility flag in this case.
- 
-The exception being that with --use-separate-remote you cannot checkout
-tracking branches to see what it is there (at least for now, but IIRC we
-want to relax this constraint; i.e. to forbid commiting to non-heads,
-instead of forbidding checking out), you cannot use it as alternate
-source (as alternate repo to check from) while still allowing to work
-on it, and that gitweb doesn't show anything except heads and tags;
-it doesn't show remotes.
+I suspect we should make the thing a config option, and default it to 
+"on".
 
-By the way, does new "git peek-remote -a ." show anything except
-refs/heads/, refs/tags/ and refs/remotes (e.g. StGit refs/bases/
-and refs/patches/)?
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+I personally do _not_ want to see the root commit, because for the kernel, 
+it's a honking huge import that does not make sense as a "diff". It's not 
+really a diff against anything, after all - it's an import.
+
+That's really the reason why git defaults to not showing the root diff at 
+all: exactly because for the kernel, the initial commit was state that 
+"just came to be", and I found it both illogical and annoying to see it as 
+a diff, since that commit really was a "black hole" where previous history 
+just disappeared.
+
+But if you have the _full_ history with a new project, "--root" by default 
+probably makes tons of sense.
+
+> And one less "wart" to clean, which another thread is all about. :-)
+
+I really don't think it's a wart - see above - but it depends on the 
+project.
+
+There's also another reason for the root being special, which is purely 
+git-internal: the root really has no parents at all, and the normal "git 
+diff" is "diff against parents". So from a purely implementation 
+standpoint, the "root" case is actually a special case, and for a while I 
+was kind of wondering whether I should do what a lot of other SCM's seem 
+to do, namely start out with an "empty root" when doing "git init-db".
+
+git didn't end up doing that (and I'm personally pretty happy about it), 
+but it was one of the things I was kind of thinking about: a "git import" 
+kind of thing would have created an initial commit which was pre-populated 
+with the thing to import, and a "git init-db" would have created an 
+initial root commit that was empty.
+
+That would have made the current "don't show the root diff" behaviour very 
+natural (and you'd still have gotten the initial diff for a new project), 
+but on the other hand, it would have had that annoying unnecessary "init" 
+commit, and you'd _still_ have wanted to have something like "--root" in 
+order to show the import commit as a patch (which you _sometimes_ want to 
+do).
+
+So having a config option would solve the problem, but what annoys me 
+right now about the config options is that we really should have a 
+graphical front-end to setting those things or something, because while 
+_I_ don't have any issues with editing a ".git/config" file, I think we're 
+getting to the point where a lot of our problems are really about "you can 
+do it, but you have to know a lot about git to even know you can do it".
 
