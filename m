@@ -1,80 +1,64 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: merlyn@stonehenge.com (Randal L. Schwartz)
-Subject: [BUG] daemon.c blows up on OSX (was Re: What's in git.git (stable), and Announcing GIT 1.4.4.3)
-Date: 20 Dec 2006 14:20:42 -0800
-Message-ID: <86irg6yzt1.fsf_-_@blue.stonehenge.com>
-References: <7vmz5ib8eu.fsf@assigned-by-dhcp.cox.net>
-	<86vek6z0k2.fsf@blue.stonehenge.com>
-	<Pine.LNX.4.64.0612201412250.3576@woody.osdl.org>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: Is there a way to trim old SHAs from a git tree (so it's not so large)?
+Date: Tue, 21 Nov 2006 11:56:56 -0500
+Message-ID: <20061121165656.GC22006@spearce.org>
+References: <455B90AD.3060707@freescale.com> <20061117103611.183640@gmx.net> <45632957.5070205@freescale.com> <20061121163206.GA22006@spearce.org> <45632EC6.5030902@freescale.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 20 Dec 2006 22:20:55 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
-	linux-kernel@vger.kernel.org
+NNTP-Posting-Date: Tue, 21 Nov 2006 16:57:29 +0000 (UTC)
+Cc: Thomas Kolejka <Thomas.Kolejka@gmx.at>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Greylist: delayed 925 seconds by postgrey-1.27 at vger.kernel.org; Wed, 20 Dec 2006 17:20:44 EST
-x-mayan-date: Long count = 12.19.13.16.7; tzolkin = 8 Manik; haab = 0 Kankin
-In-Reply-To: <Pine.LNX.4.64.0612201412250.3576@woody.osdl.org>
-Original-Lines: 31
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+Content-Disposition: inline
+In-Reply-To: <45632EC6.5030902@freescale.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34971>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gx9nu-0002Wj-E3 for gcvg-git@gmane.org; Wed, 20 Dec
- 2006 23:20:50 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32003>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GmYvk-0005KT-KO for gcvg-git@gmane.org; Tue, 21 Nov
+ 2006 17:57:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1030382AbWLTWUp (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 20 Dec 2006
- 17:20:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030385AbWLTWUp
- (ORCPT <rfc822;git-outgoing>); Wed, 20 Dec 2006 17:20:45 -0500
-Received: from blue.stonehenge.com ([209.223.236.162]:31875 "EHLO
- blue.stonehenge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1030382AbWLTWUo (ORCPT <rfc822;git@vger.kernel.org>); Wed, 20 Dec 2006
- 17:20:44 -0500
-Received: from localhost (localhost [127.0.0.1]) by blue.stonehenge.com
- (Postfix) with ESMTP id E0B9C8FA6E; Wed, 20 Dec 2006 14:20:42 -0800 (PST)
-Received: from blue.stonehenge.com ([127.0.0.1]) by localhost
- (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024) with LMTP id
- 04744-03-20; Wed, 20 Dec 2006 14:20:42 -0800 (PST)
-Received: by blue.stonehenge.com (Postfix, from userid 1001) id 640898FA70;
- Wed, 20 Dec 2006 14:20:42 -0800 (PST)
-To: Linus Torvalds <torvalds@osdl.org>
+ S1031054AbWKUQ5F (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 21 Nov 2006
+ 11:57:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031057AbWKUQ5E
+ (ORCPT <rfc822;git-outgoing>); Tue, 21 Nov 2006 11:57:04 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:40644 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S1031054AbWKUQ5C
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2006 11:57:02 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1GmYvU-0001Yf-LA; Tue, 21 Nov 2006 11:56:52 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ B52D020FB09; Tue, 21 Nov 2006 11:56:56 -0500 (EST)
+To: Timur Tabi <timur@freescale.com>
 Sender: git-owner@vger.kernel.org
 
->>>>> "Linus" == Linus Torvalds <torvalds@osdl.org> writes:
+Timur Tabi <timur@freescale.com> wrote:
+> >Shallow clone is a development feature still being working on in
+> >Junio's 'pu' branch of git.git.  It has a few issues still to be
+> >worked out so it hasn't been made part of one of the more stable
+> >branches yet (like 'next', 'master', or 'maint').
+> 
+> Well, until it's available on an official git release, it doesn't help me.
 
->> Is this really in master?  I'm still seeing one-hour times on
->> my Mac, using 8336afa563fbeff35e531396273065161181f04c.
-
-Linus> Master right  now is at 54851157ac.
-
-Yeah, 54 objects just pulled down.  Here we go.  Time for a test...
-
-Nope... can't compile:
-
-    gcc -o daemon.o -c -g -O2 -Wall  -I/sw/include -I/opt/local/include -DSHA1_HEADER='<openssl/sha.h>' -DNO_STRLCPY daemon.c
-    daemon.c: In function 'parse_extra_args':
-    daemon.c:414: warning: implicit declaration of function 'strncasecmp'
-    daemon.c: In function 'socksetup':
-    daemon.c:766: error: 'NI_MAXSERV' undeclared (first use in this function)
-    daemon.c:766: error: (Each undeclared identifier is reported only once
-    daemon.c:766: error: for each function it appears in.)
-    daemon.c:766: warning: unused variable 'pbuf'
-    daemon.c: In function 'serve':
-    daemon.c:970: warning: implicit declaration of function 'initgroups'
-    make: *** [daemon.o] Error 1
-
-This smells like we've seen this before.  Regression introduced with
-some of the cleanup?
+One of the reasons its hanging out in 'pu' still is that there is
+a lack of people who are interested in the feature, and thus not
+enough people are testing it.  Perhaps you might be able to lend
+a hand in that regard?
 
 -- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
