@@ -1,85 +1,86 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: Subprojects tasks
-Date: Sun, 17 Dec 2006 20:54:17 +0100
-Message-ID: <20061217195417.GI12411@admingilde.org>
-References: <7vzm9nelob.fsf@assigned-by-dhcp.cox.net> <200612171401.10585.jnareb@gmail.com> <20061217134848.GH12411@admingilde.org> <200612171529.03165.jnareb@gmail.com>
+From: Timur Tabi <timur@freescale.com>
+Subject: Re: Is there a way to trim old SHAs from a git tree (so it's not
+ so large)?
+Date: Tue, 21 Nov 2006 16:47:46 -0600
+Organization: Freescale
+Message-ID: <45638212.8030501@freescale.com>
+References: <455B90AD.3060707@freescale.com> <20061117103611.183640@gmx.net> <45632957.5070205@freescale.com> <20061121163206.GA22006@spearce.org> <45632EC6.5030902@freescale.com> <20061121165656.GC22006@spearce.org> <456330CD.9080503@freescale.com> <20061121183941.GB22283@spearce.org> <45637457.1010505@freescale.com> <Pine.LNX.4.63.0611212306060.26827@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="82evfD9Ogz2JrdWZ"
-NNTP-Posting-Date: Sun, 17 Dec 2006 19:54:25 +0000 (UTC)
-Cc: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>,
-	git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Tue, 21 Nov 2006 22:48:13 +0000 (UTC)
+Cc: Shawn Pearce <spearce@spearce.org>,
+	Thomas Kolejka <Thomas.Kolejka@gmx.at>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <200612171529.03165.jnareb@gmail.com>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.8.1) Gecko/20061101 SeaMonkey/1.1b
+In-Reply-To: <Pine.LNX.4.63.0611212306060.26827@wbgn013.biozentrum.uni-wuerzburg.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34704>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gw25W-0001tM-B8 for gcvg-git@gmane.org; Sun, 17 Dec
- 2006 20:54:22 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32049>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GmePG-00052k-Bh for gcvg-git@gmane.org; Tue, 21 Nov
+ 2006 23:47:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751017AbWLQTyT (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 17 Dec 2006
- 14:54:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751018AbWLQTyT
- (ORCPT <rfc822;git-outgoing>); Sun, 17 Dec 2006 14:54:19 -0500
-Received: from mail.admingilde.org ([213.95.32.147]:42032 "EHLO
- mail.admingilde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1751012AbWLQTyS (ORCPT <rfc822;git@vger.kernel.org>); Sun, 17 Dec 2006
- 14:54:18 -0500
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1) id
- 1Gw25R-0007Z2-Ed; Sun, 17 Dec 2006 20:54:17 +0100
-To: Jakub Narebski <jnareb@gmail.com>
+ S1031245AbWKUWrz (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 21 Nov 2006
+ 17:47:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031255AbWKUWrz
+ (ORCPT <rfc822;git-outgoing>); Tue, 21 Nov 2006 17:47:55 -0500
+Received: from de01egw01.freescale.net ([192.88.165.102]:65271 "EHLO
+ de01egw01.freescale.net") by vger.kernel.org with ESMTP id S1031245AbWKUWry
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2006 17:47:54 -0500
+Received: from de01smr01.freescale.net (de01smr01.freescale.net
+ [10.208.0.31]) by de01egw01.freescale.net (8.12.11/de01egw01) with ESMTP id
+ kAM09Xi1008804; Tue, 21 Nov 2006 17:09:33 -0700 (MST)
+Received: from [10.82.19.119] (ld0169-tx32.am.freescale.net [10.82.19.119])
+ by de01smr01.freescale.net (8.13.1/8.13.0) with ESMTP id kALMlkPR015228; Tue,
+ 21 Nov 2006 16:47:46 -0600 (CST)
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 
+Johannes Schindelin wrote:
+> Hi,
+> 
+> On Tue, 21 Nov 2006, Timur Tabi wrote:
+> 
+>> Shawn Pearce wrote:
+>>
+>>> finally you can either run from that directory (see INSTALL file)
+>>> or you can install the binary somewhere else.  We don't really
+>>> recommend using `pu` for production level work, so make sure you
+>>> have a backup of any repository you run it on.  :)
+>> So how do I make a shallow clone?  I've set it all up, but there is no
+>> git-shallow-clone command, and git help clone doesn't have anything either.
+> 
+> Try "git clone --depth 1 <url>". This will cut each ancestor chain after 
+> one ancestor (IIRC).
 
---82evfD9Ogz2JrdWZ
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I think you mean git-clone.sh instead of git-clone.  If I do the above command, 
+I get:
 
-hoi :)
+$ ./git clone --depth 1 git://127.0.0.1/temp/u-boot-83xx/
+Usage: /home/b04825/bin/git-clone [--template=<template_directory>] 
+[--use-separate-remote] [--reference <reference-repo>] [--bare] [-l [-s]] [-q] 
+[-u <upload-pack>] [--origin <name>] [-n] <repo> [<dir>]
 
-On Sun, Dec 17, 2006 at 03:29:02PM +0100, Jakub Narebski wrote:
-> By the way, should this ref be in submodule, or in supermodule, e.g. in
-> refs/modules/<name>/HEAD? And there is a problam _what_ branch should
-> be that.
+However, git-clone.sh is not quite working either.  I had to run git-daemon on 
+my machine, because git-clone.sh doesn't like the http protocol, and my firewall 
+blocks everything but that.  So I cloned a repo, started git-daemon, and I tried 
+this:
 
-At the moment I simply use refs/heads/master of the submodule
-repository, just because it is the default branch anyway.
+$ ./git-clone.sh --depth 1 git://127.0.0.1/temp/u-boot-83xx
+usage: git-fetch-pack [--all] [-q] [-v] [-k] [--thin] [--exec=upload-pack] 
+[host:]directory <refs>...
+fetch-pack from 'git://127.0.0.1/temp/u-boot-83xx/' failed.
 
-In order to make the submodule refs which are not added to the
-supermodule available to the supermodule anyway (for fsck and prune),
-I added a symlink .git/refs/module/<submodule> -> <submodule>/.git/refs,
-so that the submodule branch is also available as
-refs/module/<submodule>/heads/master in the supermodule.
+A regular git-clone of git://127.0.0.1/temp/u-boot-83xx works, so I think 
+there's something wrong with git-clone.sh or my invocation thereof.
 
-But I expect that all this setup stuff can be greatly simplified with a
-little bit more knowledge of submodules in the core.  But this cleanup
-is for later, when the basis is settled.
-
---=20
-Martin Waitz
-
---82evfD9Ogz2JrdWZ
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFFhaBpj/Eaxd/oD7IRAj7SAJ9dfq5GTKpCsFYZ4X+NsP5MFW4yeQCcDETw
-PvW4j6qaWLHh/1eUgJtcRUE=
-=TAUt
------END PGP SIGNATURE-----
-
+-- 
+Timur Tabi
