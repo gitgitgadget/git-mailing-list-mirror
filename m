@@ -1,68 +1,80 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
-	DATE_IN_PAST_12_24,HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
-From: Sam Vilain <sam@vilain.net>
-Subject: [PATCH 1/4] git-svn: let libsvn_ls_fullurl return properties too
-Date: Mon, 4 Dec 2006 20:33:03 +1100
-Message-ID: <20061204235724.46FD7139B0C@magnus.utsl.gen.nz>
-NNTP-Posting-Date: Mon, 4 Dec 2006 23:57:32 +0000 (UTC)
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: Some tips for doing a CVS importer
+Date: Tue, 21 Nov 2006 01:39:35 -0500
+Message-ID: <20061121063934.GA3332@spearce.org>
+References: <9e4733910611201349s4d08b984g772c64982f148bfa@mail.gmail.com> <46a038f90611201503m6a63ec8ct347026c635190108@mail.gmail.com> <9e4733910611201537h30b6c9f4oee9d8df75284c284@mail.gmail.com> <46a038f90611201629o39f11f42ye07b86159360b66e@mail.gmail.com> <87vel9y5x6.wl%cworth@cworth.org> <9e4733910611201740i348302e6r84c3c27dc27e5954@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Tue, 21 Nov 2006 06:39:59 +0000 (UTC)
+Cc: Carl Worth <cworth@cworth.org>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+Content-Disposition: inline
+In-Reply-To: <9e4733910611201740i348302e6r84c3c27dc27e5954@mail.gmail.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33267>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GrNgg-0005UP-6b for gcvg-git@gmane.org; Tue, 05 Dec
- 2006 00:57:30 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31973>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GmPIR-0005HO-HB for gcvg-git@gmane.org; Tue, 21 Nov
+ 2006 07:39:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S935336AbWLDX5Z (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
- 18:57:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937190AbWLDX5Z
- (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 18:57:25 -0500
-Received: from watts.utsl.gen.nz ([202.78.240.73]:49721 "EHLO
- magnus.utsl.gen.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
- S935336AbWLDX5Z (ORCPT <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006
- 18:57:25 -0500
-Received: by magnus.utsl.gen.nz (Postfix, from userid 1003) id 46FD7139B0C;
- Tue,  5 Dec 2006 12:57:24 +1300 (NZDT)
-To: git@vger.kernel.org
+ S934356AbWKUGjm (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 21 Nov 2006
+ 01:39:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934353AbWKUGjm
+ (ORCPT <rfc822;git-outgoing>); Tue, 21 Nov 2006 01:39:42 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:2261 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S934356AbWKUGjl
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2006 01:39:41 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1GmPI9-0004r5-Gg; Tue, 21 Nov 2006 01:39:37 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 7228920FB09; Tue, 21 Nov 2006 01:39:35 -0500 (EST)
+To: Jon Smirl <jonsmirl@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Allow an extra parameter to be passed to the libsvn_ls_fullurl
-function to collect and return the properties of the URL being listed.
----
- git-svn.perl |    7 ++++---
- 1 files changed, 4 insertions(+), 3 deletions(-)
+Jon Smirl <jonsmirl@gmail.com> wrote:
+> brendan said SVN is likely for the main Mozilla repo and monotone for
+> the new Mozilla 2 work. No native win32 caused git to be immediately
+> discarded.
 
-diff --git a/git-svn.perl b/git-svn.perl
-index 3891122..93cfcc4 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -3321,18 +3321,19 @@ sub libsvn_commit_cb {
- 
- sub libsvn_ls_fullurl {
- 	my $fullurl = shift;
-+	my $want_props = shift;
- 	my $ra = libsvn_connect($fullurl);
--	my @ret;
-+	my (@ret, @props);
- 	my $pool = SVN::Pool->new;
- 	my $r = defined $_revision ? $_revision : $ra->get_latest_revnum;
--	my ($dirent, undef, undef) = $ra->get_dir('', $r, $pool);
-+	my ($dirent, undef, $props) = $ra->get_dir('', $r, $pool);
- 	foreach my $d (keys %$dirent) {
- 		if ($dirent->{$d}->kind == $SVN::Node::dir) {
- 			push @ret, "$d/"; # add '/' for compat with cli svn
- 		}
- 	}
- 	$pool->clear;
--	return @ret;
-+	return ($want_props ? (\@ret, $props) : @ret);
- }
- 
- 
+Yea, that lack of native win32 seems to be one of a number of
+blockers for people switching their projects onto Git.
+
+I think there's a number of issues that are keeping people from
+switching to Git and are instead causing them to choose SVN, hg
+or Monotone:
+
+  - No GUI.
+  - No native win32 installation.
+  - CVS import fails on some projects (e.g. Mozilla).
+  - Confusing documentation.
+  - pull/merge debate.
+  - Fear of hash conflicts corrupting a repository.
+
+I think Junio has solved the pull/merge debate issue.  We've talked
+the hash conflict issue to death, but some new people still haven't
+read those threads (or won't believe them).  I know people are trying
+to work on improving the documentation, but there is obviously still
+room for improvements.
+
+Right now I'm trying to work on the no GUI problem with git-gui...
+
 -- 
-1.4.4.1.ge918e-dirty
