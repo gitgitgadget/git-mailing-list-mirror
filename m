@@ -4,68 +4,90 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Han-Wen Nienhuys <hanwen@xs4all.nl>
-Subject: Re: [PATCH 0/2] Making "git commit" to mean "git commit -a".
-Date: Fri, 01 Dec 2006 10:31:16 +0100
-Message-ID: <456FF664.3060109@xs4all.nl>
-References: <7virgzuf38.fsf@assigned-by-dhcp.cox.net>	<Pine.LNX.4.64.0611282322320.9647@xanadu.home>	<7vr6vmsnly.fsf@assigned-by-dhcp.cox.net>	<87ejrlvn7r.wl%cworth@cworth.org>	<7vodqpn3t4.fsf@assigned-by-dhcp.cox.net>	<7vk61dn2yj.fsf@assigned-by-dhcp.cox.net>	<Pine.LNX.4.63.0611300310520.30004@wbgn013.biozentrum.uni-wuerzburg.de>	<Pine.LNX.4.64.0611291859070.3513@woody.osdl.org>	<456EBBE7.8030404@op5.se>	<Pine.LNX.4.64.0611300749560.3513@woody.osdl.org>	<20061130164046.GB17715@thunk.org>	<Pine.LNX.4.64.0611300903080.3513@woody.osdl.org>	<Pine.LNX.4.64.0611301229290.9647@xanadu.home>	<87irgwu6e6.wl%cworth@cworth.org>	<ekn8s3$lh6$1@sea.gmane.org> <87fyc0u56z.wl%cworth@cworth.org> <456FEB53.7080703@op5.se>
-Reply-To: hanwen@xs4all.nl
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: Is there a way to trim old SHAs from a git tree (so it's not so large)?
+Date: Tue, 21 Nov 2006 13:39:41 -0500
+Message-ID: <20061121183941.GB22283@spearce.org>
+References: <455B90AD.3060707@freescale.com> <20061117103611.183640@gmx.net> <45632957.5070205@freescale.com> <20061121163206.GA22006@spearce.org> <45632EC6.5030902@freescale.com> <20061121165656.GC22006@spearce.org> <456330CD.9080503@freescale.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Fri, 1 Dec 2006 09:31:34 +0000 (UTC)
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Tue, 21 Nov 2006 18:40:17 +0000 (UTC)
+Cc: Thomas Kolejka <Thomas.Kolejka@gmx.at>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.8 (X11/20061107)
-Original-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <456FEB53.7080703@op5.se>
-X-Virus-Scanned: by XS4ALL Virus Scanner
+Content-Disposition: inline
+In-Reply-To: <456330CD.9080503@freescale.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32878>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32016>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gq4jt-0005P9-3M for gcvg-git@gmane.org; Fri, 01 Dec
- 2006 10:31:27 +0100
+ esmtp (Exim 4.43) id 1GmaXD-0002qv-6u for gcvg-git@gmane.org; Tue, 21 Nov
+ 2006 19:39:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1759281AbWLAJbV (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
- 04:31:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759284AbWLAJbV
- (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 04:31:21 -0500
-Received: from smtp-vbr10.xs4all.nl ([194.109.24.30]:61957 "EHLO
- smtp-vbr10.xs4all.nl") by vger.kernel.org with ESMTP id S1759281AbWLAJbU
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 04:31:20 -0500
-Received: from [192.168.0.101] (82-171-213-190.dsl.ip.tiscali.nl
- [82.171.213.190]) (authenticated bits=0) by smtp-vbr10.xs4all.nl
- (8.13.8/8.13.8) with ESMTP id kB19V5Th079087 (version=TLSv1/SSLv3
- cipher=DHE-RSA-AES256-SHA bits=256 verify=NO); Fri, 1 Dec 2006 10:31:06 +0100
- (CET) (envelope-from hanwen@xs4all.nl)
-To: Andreas Ericsson <ae@op5.se>
+ S1031288AbWKUSjs (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 21 Nov 2006
+ 13:39:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031289AbWKUSjr
+ (ORCPT <rfc822;git-outgoing>); Tue, 21 Nov 2006 13:39:47 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:37337 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S1031288AbWKUSjq
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2006 13:39:46 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1GmaWu-0003nx-FC; Tue, 21 Nov 2006 13:39:36 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ DADDC20FB09; Tue, 21 Nov 2006 13:39:41 -0500 (EST)
+To: Timur Tabi <timur@freescale.com>
 Sender: git-owner@vger.kernel.org
 
-Andreas Ericsson escreveu:
-> Carl Worth wrote:
->>
->> See? Git _is_ harder to learn, and a user really cannot learn it
->> without being careful about the index right from the very beginning.
->>
+Timur Tabi <timur@freescale.com> wrote:
+> Shawn Pearce wrote:
+> >Timur Tabi <timur@freescale.com> wrote:
+> >>>Shallow clone is a development feature still being working on in
+> >>>Junio's 'pu' branch of git.git.  It has a few issues still to be
+> >>>worked out so it hasn't been made part of one of the more stable
+> >>>branches yet (like 'next', 'master', or 'maint').
+> >>Well, until it's available on an official git release, it doesn't help me.
+> >
+> >One of the reasons its hanging out in 'pu' still is that there is
+> >a lack of people who are interested in the feature, and thus not
+> >enough people are testing it.  Perhaps you might be able to lend
+> >a hand in that regard?
 > 
-> I'm not so sure about that. I came from CVS / SVN, although I've fiddled
-> quite a bit with other scm's as well. The two-step commit process of git
-> didn't terrify me at all, and I had used git at least a month before I
-> joined the mailing-list and found out that there's this thing called an
+> Sure, I can do that!  Can you give me some pointers?  I've never done 
+> development on git itself, so I don't know Junio or his pu (sorry, I 
+> couldn't resist :-)).
 
-I still don't know exactly how to operate adds and commits from the
-command line. I regularly get bitten by not supplying the -a and -i
-options.
+Junio C Hamano is the Git maintainer.  His published Git repository
+is here:
 
-I'm coming from darcs, where you can select which each diff hunk
-to put in a commit separately.
+	http://www.kernel.org/pub/scm/git/git.git/
 
-However, I almost never do that. I operate git like darcs, from the
-emacs support mode.  I almost never do -a commits anyway, because with
-emacs (M-x git-status) it's more natural to make functionally distinct
-commits, at the risk of introducing non-tested tree states in the
-repository.
+though it oddly has pack files from Jun 2006 in the wrong directory.
+Weird.  Anyway...
+
+If you clone from that URL, or better though the native Git protocol:
+
+	git://www.kernel.org/pub/scm/git/git.git
+
+you will get a branch called `pu`, which is the set of "Proposed
+Updates" to Git that Junio and others are currently working on.
+You can then checkout a branch off that, and build it:
+
+	git checkout -b pu-build pu
+	make
+
+finally you can either run from that directory (see INSTALL file)
+or you can install the binary somewhere else.  We don't really
+recommend using `pu` for production level work, so make sure you
+have a backup of any repository you run it on.  :)
 
 -- 
