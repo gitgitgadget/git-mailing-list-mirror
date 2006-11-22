@@ -1,119 +1,91 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH 2/2] Make left-right automatic.
-Date: Sat, 16 Dec 2006 16:12:55 -0800
-Message-ID: <7vlkl78jnc.fsf@assigned-by-dhcp.cox.net>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: Adding glob support to remotes
+Date: Wed, 22 Nov 2006 14:41:00 +0000
+Message-ID: <200611221441.02459.andyparkins@gmail.com>
+References: <200611220904.21850.andyparkins@gmail.com> <7v7ixnskql.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sun, 17 Dec 2006 00:13:05 +0000 (UTC)
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Wed, 22 Nov 2006 14:41:34 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=j39JGD2FdLJK9GN066EPJx4tehPEqt469na1Og+SWTSbtieEAy5Lg7i9WxIUnqa6WHsSjQgeB9N6+JdPssTc7OBtP5GKZQA1IQzAbIlyRZtA6PaPlegyEQebqG+UxclrrOSKSrXNetEe9mq5d2SGToAc8WWrubdy1r8+626xF+g=
+User-Agent: KMail/1.9.5
+In-Reply-To: <7v7ixnskql.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34663>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GvjeG-0005Fm-Pj for gcvg-git@gmane.org; Sun, 17 Dec
- 2006 01:13:01 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32088>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GmtHn-0005Gt-CN for gcvg-git@gmane.org; Wed, 22 Nov
+ 2006 15:41:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1422910AbWLQAM5 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 16 Dec 2006
- 19:12:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422914AbWLQAM5
- (ORCPT <rfc822;git-outgoing>); Sat, 16 Dec 2006 19:12:57 -0500
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:33098 "EHLO
- fed1rmmtao04.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1422910AbWLQAM5 (ORCPT <rfc822;git@vger.kernel.org>); Sat, 16 Dec 2006
- 19:12:57 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao04.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061217001256.JHSD7494.fed1rmmtao04.cox.net@fed1rmimpo02.cox.net>; Sat, 16
- Dec 2006 19:12:56 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id zcD81V0081kojtg0000000; Sat, 16 Dec 2006
- 19:13:08 -0500
+ S1752694AbWKVOlL (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 22 Nov 2006
+ 09:41:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753511AbWKVOlL
+ (ORCPT <rfc822;git-outgoing>); Wed, 22 Nov 2006 09:41:11 -0500
+Received: from ug-out-1314.google.com ([66.249.92.172]:13939 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1752694AbWKVOlJ
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 22 Nov 2006 09:41:09 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so182405uga for
+ <git@vger.kernel.org>; Wed, 22 Nov 2006 06:41:08 -0800 (PST)
+Received: by 10.66.219.11 with SMTP id r11mr3163417ugg.1164206468131; Wed, 22
+ Nov 2006 06:41:08 -0800 (PST)
+Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
+ ESMTP id k1sm11710835ugf.2006.11.22.06.41.07; Wed, 22 Nov 2006 06:41:07 -0800
+ (PST)
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-When using symmetric differences, I think the user almost always
-would want to know which side of the symmetry each commit came
-from.  So this removes --left-right option from the command
-line, and turns it on automatically when a symmetric difference
-is used ("git log --merge" counts as a symmetric difference
-between HEAD and MERGE_HEAD).
+On Wednesday 2006 November 22 12:56, Junio C Hamano wrote:
 
-Just in case, a new option --no-left-right is provided to defeat
-this, but I do not know if it would be useful.
+> > However, git-ls-remote needs the name of the remote repository (of
+> > course), but that isn't directly available in git-parse-remote.sh.
+>
+> Is it really the case?  I do not remember the details offhand,
+> but I do not think canon_refs_list_for_fetch is the function you
+> should be messing with to implement the remote."origin".fetch
+> stuff.  It should be get_remote_default_refs_for_fetch().  The
+> function returns the list based on which remote, so it surely
+> knows which remote the caller is talking about.
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
+The problem is that canon_refs_list_for_fetch bombs out too early because "*" 
+is not an acceptable name for a ref.
 
- * I think this would make life easier for merge-heavy people.
-   I'd push this out on 'next' soonish.
+> However, I would recommend against actually running ls-remote to
+> help "git-fetch" inside git-parse-remote.sh.  I think you should
+> run ls-remote upfront early in git-fetch because there are at
+> least two other parts in git-fetch that wants the same ls-remote
+> output:
 
- revision.c |   13 ++++++++++---
- revision.h |    1 +
- 2 files changed, 11 insertions(+), 3 deletions(-)
+Okay.  That's what I'll do.  It means altering git-check-ref-format to prevent 
+the early bomb out.  Perhaps I should move this check to somewhere after I've 
+done the reflist expansion?
 
-diff --git a/revision.c b/revision.c
-index d84f46e..56819f8 100644
---- a/revision.c
-+++ b/revision.c
-@@ -853,8 +853,8 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, const ch
- 				revs->boundary = 1;
- 				continue;
- 			}
--			if (!strcmp(arg, "--left-right")) {
--				revs->left_right = 1;
-+			if (!strcmp(arg, "--no-left-right")) {
-+				revs->no_left_right = 1;
- 				continue;
- 			}
- 			if (!strcmp(arg, "--objects")) {
-@@ -1055,13 +1055,18 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, const ch
- void prepare_revision_walk(struct rev_info *revs)
- {
- 	int nr = revs->pending.nr;
-+	int has_symmetric = 0;
- 	struct object_array_entry *list = revs->pending.objects;
- 
- 	revs->pending.nr = 0;
- 	revs->pending.alloc = 0;
- 	revs->pending.objects = NULL;
- 	while (--nr >= 0) {
--		struct commit *commit = handle_commit(revs, list->item, list->name);
-+		struct commit *commit;
-+
-+		if (list->item->flags & SYMMETRIC_LEFT)
-+			has_symmetric = 1;
-+		commit = handle_commit(revs, list->item, list->name);
- 		if (commit) {
- 			if (!(commit->object.flags & SEEN)) {
- 				commit->object.flags |= SEEN;
-@@ -1073,6 +1078,8 @@ void prepare_revision_walk(struct rev_info *revs)
- 
- 	if (revs->no_walk)
- 		return;
-+	if (!revs->no_left_right && has_symmetric)
-+		revs->left_right = 1;
- 	if (revs->limited)
- 		limit_list(revs);
- 	if (revs->topo_order)
-diff --git a/revision.h b/revision.h
-index 4585463..b2ab814 100644
---- a/revision.h
-+++ b/revision.h
-@@ -41,6 +41,7 @@ struct rev_info {
- 			limited:1,
- 			unpacked:1, /* see also ignore_packed below */
- 			boundary:1,
-+			no_left_right:1,
- 			left_right:1,
- 			parents:1;
- 
+>  (1) dumb protocols currently cannot deal with a remote that has
+
+I'm not sure I've understood this point.  I shall look at git-fetch.sh more 
+closely to try and address this though.
+
+>  (2) when doing a fetch with tracking branches (which is what
+
+Accepted.
+
+
+
+Andy
+
 -- 
-1.4.4.2.g83c5
-
+Dr Andy Parkins, M Eng (hons), MIEE
