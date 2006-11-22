@@ -4,83 +4,61 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Install git-sh-setup.sh into $(prefix)/share/git-core. Call with explicit path.
-Date: Sat, 09 Dec 2006 13:35:15 -0800
-Message-ID: <7v1wn8ah2k.fsf@assigned-by-dhcp.cox.net>
-References: <elc6g3$v1m$1@sea.gmane.org> <20061208193718.GA11906@soma>
-	<7v3b7qi0b4.fsf@assigned-by-dhcp.cox.net> <457AB54B.8070107@xs4all.nl>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH] gitweb: make HTML links out of http/https URLs in changelogs
+Date: Wed, 22 Nov 2006 21:56:52 +0100
+Message-ID: <20061122205652.GL7201@pasky.or.cz>
+References: <4563777C.4050108@openvz.org> <20061122000655.GJ7201@pasky.or.cz> <45641195.2000804@openvz.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sat, 9 Dec 2006 21:35:25 +0000 (UTC)
+NNTP-Posting-Date: Wed, 22 Nov 2006 20:57:14 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Content-Disposition: inline
+In-Reply-To: <45641195.2000804@openvz.org>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33836>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gt9qs-0005JF-Ut for gcvg-git@gmane.org; Sat, 09 Dec
- 2006 22:35:23 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32102>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gmz9O-00087X-9Z for gcvg-git@gmane.org; Wed, 22 Nov
+ 2006 21:56:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1757216AbWLIVfS (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 9 Dec 2006
- 16:35:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757289AbWLIVfS
- (ORCPT <rfc822;git-outgoing>); Sat, 9 Dec 2006 16:35:18 -0500
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:40752 "EHLO
- fed1rmmtao12.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1757216AbWLIVfR (ORCPT <rfc822;git@vger.kernel.org>); Sat, 9 Dec 2006
- 16:35:17 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao12.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061209213516.DZYA4226.fed1rmmtao12.cox.net@fed1rmimpo02.cox.net>; Sat, 9
- Dec 2006 16:35:16 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id wlbS1V00z1kojtg0000000; Sat, 09 Dec 2006
- 16:35:27 -0500
-To: hanwen@xs4all.nl
+ S1755910AbWKVU4z (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 22 Nov 2006
+ 15:56:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756061AbWKVU4z
+ (ORCPT <rfc822;git-outgoing>); Wed, 22 Nov 2006 15:56:55 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:48561 "EHLO machine.or.cz") by
+ vger.kernel.org with ESMTP id S1755910AbWKVU4y (ORCPT
+ <rfc822;git@vger.kernel.org>); Wed, 22 Nov 2006 15:56:54 -0500
+Received: (qmail 18968 invoked by uid 2001); 22 Nov 2006 21:56:52 +0100
+To: Kir Kolyshkin <kir@openvz.org>
 Sender: git-owner@vger.kernel.org
 
-Han-Wen Nienhuys <hanwen@xs4all.nl> writes:
+On Wed, Nov 22, 2006 at 10:00:05AM CET, Kir Kolyshkin wrote:
+> Petr Baudis wrote:
+> >On Tue, Nov 21, 2006 at 11:02:36PM CET, Kir Kolyshkin wrote:
+> >  
+> >>Slightly tested on http://git.openvz.org/. Applicable to git-1.4.4.
+> >>    
+> >
+> >...but in git's gitweb view it will make this <a
+> >href="http://git.openvz.org/.">http://git.openvz.org/.</a>. :-)
+> Not a problem actually since "." means "current directory", so it will 
+> work fine (and I have checked that) :)
+> Sure there is a room for improvement for this regex -- and I am 
+> collecting those.
 
-> And how about coding the path of git-sh-setup (in <prefix>/bin/git-sh-setup) 
-> in the shell scripts? This will ensure that the sh-setup is the one
-> from the right package, but still retain backward compatibility for 
-> scripts.
+But "http://git.openvz.org/index.html." might not work so fine, nor
+"http://git.openvz.org/,"...
 
-Hardcoding $(bin)/git-sh-setup is a non-starter; it breaks
-GIT_EXEC_PATH convention to allow users to override it.
+Bad URLs matchers which don't snip unlikely (!= invalid!) characters
+from the end of the URL are my pet peeve. ;-)
 
-You would need to make sure the following:
-
- - If you are moving git-sh-setup out of the way, I think you
-   would need to do the same for git-parse-remote while you are
-   at it.  There might be other scriptlets whose sole purpose is
-   to be sourced via "." (I haven't checked recently).
-
- - It should be arranged so that "make test" would test the
-   version from the source tree, even when you have an installed
-   version of git-sh-setup and friends elsewhere on your PATH.
-
- - People who build but do not install should be able to
-   continue using git from the build location with appropriate
-   environment settings (look for place that talks about PATH
-   and GIT_EXEC_PATH in INSTALL -- if you need something else,
-   you should document new requirements there).
-
-I haven't looked closely, but I suspect your patch might have
-broken the latter two.
-
-Having said that, I still do not see the point of doing this.
-
-Was there ever a case that you typed git-sh-setup on the command
-line by mistake (in which case it might be a valid desire to
-prevent the mistake from happening again)?  Command complettion
-might offer git-sh-setup when you say "git-<TAB>", which might
-irritate you --- but these days you can use Shawn's completion
-and say "git <TAB>" or "git somecommand<TAB>", which is way
-nicer, and makes it not really an issue either.
-
-In other words, I do not know what real problem you are trying
-to solve.
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+The meaning of Stonehenge in Traflamadorian, when viewed from above, is:
+"Replacement part being rushed with all possible speed."
