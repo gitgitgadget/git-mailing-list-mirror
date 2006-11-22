@@ -1,73 +1,48 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_ADSP_NXDOMAIN,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: David Lang <dlang@digitalinsight.com>
-Subject: Re: Average size of git bookkeeping data (related to Using git as
- a  general backup mechanism)
-Date: Tue, 19 Dec 2006 17:20:08 -0800 (PST)
-Message-ID: <Pine.LNX.4.63.0612191712440.18007@qynat.qvtvafvgr.pbz>
-References: <20061213193149.43284.qmail@web86909.mail.ukl.yahoo.com>
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+From: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [Patch to DRAFT 2 (2/2)] Branching and merging with git
+Date: Wed, 22 Nov 2006 14:36:03 +0100
+Message-ID: <45645243.4030400@lsrfire.ath.cx>
+References: <7vslghftix.fsf@assigned-by-dhcp.cox.net>	<20061120235136.4841.qmail@science.horizon.com> <7vlkm3u4kl.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-NNTP-Posting-Date: Wed, 20 Dec 2006 01:37:40 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Wed, 22 Nov 2006 13:36:25 +0000 (UTC)
+Cc: linux@horizon.com, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-X-Sender: dlang@dlang.diginsite.com
-In-Reply-To: <20061213193149.43284.qmail@web86909.mail.ukl.yahoo.com>
+User-Agent: Thunderbird 1.5.0.8 (Windows/20061025)
+In-Reply-To: <7vlkm3u4kl.fsf@assigned-by-dhcp.cox.net>
+X-Enigmail-Version: 0.94.0.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34888>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GwqOl-0003aa-D0 for gcvg-git@gmane.org; Wed, 20 Dec
- 2006 02:37:35 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32086>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GmsGs-0005rj-Qu for gcvg-git@gmane.org; Wed, 22 Nov
+ 2006 14:36:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932918AbWLTBhc (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
- 20:37:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932912AbWLTBhc
- (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 20:37:32 -0500
-Received: from warden-p.diginsite.com ([208.29.163.248]:33481 "HELO
- warden.diginsite.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
- id S932918AbWLTBhc (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec 2006
- 20:37:32 -0500
-Received: from wlvims02.diginsite.com by warden.diginsite.com via smtpd (for
- vger.kernel.org [209.132.176.167]) with SMTP; Tue, 19 Dec 2006 17:37:31 -0800
-Received: from dlang.diginsite.com ([10.201.10.67]) by
- wlvims02.corp.ad.diginsite.com with InterScan Message Security Suite; Tue, 19
- Dec 2006 17:37:29 -0800
-To: David Tweed <tweed314@yahoo.co.uk>
+ S1755865AbWKVNgJ convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Wed, 22 Nov 2006 08:36:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755870AbWKVNgJ
+ (ORCPT <rfc822;git-outgoing>); Wed, 22 Nov 2006 08:36:09 -0500
+Received: from static-ip-217-172-187-230.inaddr.intergenia.de
+ ([217.172.187.230]:48273 "EHLO neapel230.server4you.de") by vger.kernel.org
+ with ESMTP id S1755865AbWKVNgI (ORCPT <rfc822;git@vger.kernel.org>); Wed, 22
+ Nov 2006 08:36:08 -0500
+Received: from [10.0.1.3] (p508E413F.dip.t-dialin.net [80.142.65.63]) by
+ neapel230.server4you.de (Postfix) with ESMTP id 1441622005; Wed, 22 Nov 2006
+ 14:36:07 +0100 (CET)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-On Wed, 13 Dec 2006, David Tweed wrote:
+Junio C Hamano schrieb:
+> -tools will not let you commit to the branch.
+> +tools will not let you commit to the remote branchbranch.
 
-> How big is the "metadata" or "bookeeping data" in git related to a commit? (Eg, "around x bytes per changed file"
-> or "around x bytes per file being tracked (whether changed in the commit or not)" )
->
-> [I'm trying to get a feel for, if I switched to git, how much overhead would come from having a cron job automatically doing
-> a snapshot every hour (if anything has changed), plus manual snapshots at points where I want to feel "safeguarded".
-> I'm currently using my own simple, hacked together system for combined versioning/backups that does
-> this. Using naive tools that don't account for wastes space due to disk block size effects the data being
-> tracked is currently just under 9 months of acitvity on  2016 filenames with
-> 17457599 bytes of data (ie, compressed version of their contents at various times) and 7838546 bytes
-> is "metadata", ie, 30 percent of the stored data is metadata. This is in a format using 6 bytes to associate a single blob of
-> contents to a filename (whether changed since last snapshot or not).]
-
-if nothing has changed it will take the space of the commit tag, as the tree 
-will remain the same (and you should be able to script detection of this case 
-and make it zero overhead)
-
-if something has changed you will have the new tree and the changed object
-
-in a tree each object is ~28 bytes (IIRC from what Linus mentioned in the last 
-week or two)
-
-a loose object is compressed, and if you repack it will delta against prior 
-versions for even more space savings
-
-look at the size of the mozilla tree and the kernel tree and you will see that 
-when packed git is about as efficiant as any other option you have (and more 
-efficiant than most)
+s/branchbranch/branch/
 
