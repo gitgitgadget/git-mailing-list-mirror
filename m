@@ -1,67 +1,55 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.5 required=3.0 tests=BAYES_00,BODY_URI_ONLY,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [PATCH 1/3] Ask git for author and committer name
-Date: Tue, 5 Dec 2006 10:10:17 +0100
-Message-ID: <20061205091017.GB25002@diana.vm.bytemark.co.uk>
-References: <20061111232322.17760.26214.stgit@localhost> <20061111233046.17760.62871.stgit@localhost> <b0943d9e0612041424v42313a2r22d8fc8d1b18cb55@mail.gmail.com>
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+From: Kir Kolyshkin <kir@openvz.org>
+Subject: Re: [PATCH] gitweb: make HTML links out of http/https URLs in changelogs
+Date: Wed, 22 Nov 2006 12:00:05 +0300
+Message-ID: <45641195.2000804@openvz.org>
+References: <4563777C.4050108@openvz.org> <20061122000655.GJ7201@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Tue, 5 Dec 2006 09:10:28 +0000 (UTC)
+Content-Type: text/plain; charset=KOI8-R; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Wed, 22 Nov 2006 09:00:27 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <b0943d9e0612041424v42313a2r22d8fc8d1b18cb55@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+User-Agent: Thunderbird 1.5.0.8 (X11/20061109)
+In-Reply-To: <20061122000655.GJ7201@pasky.or.cz>
+X-Greylist: Sender succeeded SMTP AUTH authentication, not delayed by milter-greylist-3.0rc6 (sacred.ru [62.205.161.221]); Wed, 22 Nov 2006 11:57:37 +0300 (MSK)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33325>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GrWJk-0007Sf-70 for gcvg-git@gmane.org; Tue, 05 Dec
- 2006 10:10:24 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32071>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gmnxr-0002Jk-Bw for gcvg-git@gmane.org; Wed, 22 Nov
+ 2006 10:00:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S968132AbWLEJKU convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Tue, 5 Dec 2006 04:10:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S968136AbWLEJKU
- (ORCPT <rfc822;git-outgoing>); Tue, 5 Dec 2006 04:10:20 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2933 "EHLO
- diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S968132AbWLEJKS (ORCPT <rfc822;git@vger.kernel.org>); Tue, 5 Dec
- 2006 04:10:18 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1
- (Debian)) id 1GrWJd-0006YJ-00; Tue, 05 Dec 2006 09:10:17 +0000
-To: Catalin Marinas <catalin.marinas@gmail.com>
+ S1161982AbWKVJAP (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 22 Nov 2006
+ 04:00:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161998AbWKVJAO
+ (ORCPT <rfc822;git-outgoing>); Wed, 22 Nov 2006 04:00:14 -0500
+Received: from [62.205.161.221] ([62.205.161.221]:19400 "EHLO sacred.ru") by
+ vger.kernel.org with ESMTP id S1161995AbWKVJAN (ORCPT
+ <rfc822;git@vger.kernel.org>); Wed, 22 Nov 2006 04:00:13 -0500
+Received: from [10.1.11.22] (darnet.ru [213.152.157.70] (may be forged))
+ (authenticated bits=0) by sacred.ru (8.13.7/8.13.7) with ESMTP id
+ kAM8vZIx032663 (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256
+ verify=NO); Wed, 22 Nov 2006 11:57:36 +0300
+To: Petr Baudis <pasky@suse.cz>
 Sender: git-owner@vger.kernel.org
 
-On 2006-12-04 22:24:52 +0000, Catalin Marinas wrote:
-
-> On 11/11/06, Karl Hasselstr=F6m <kha@treskal.com> wrote:
+Petr Baudis wrote:
+> On Tue, Nov 21, 2006 at 11:02:36PM CET, Kir Kolyshkin wrote:
+>   
+>> Slightly tested on http://git.openvz.org/. Applicable to git-1.4.4.
+>>     
 >
-> > Consistently do the following to get hold of default user and
-> > committer:
-> >
-> >   1. Use the value specified on the command line, if any.
-> >
-> >   1. Otherwise, use the value from stgitrc, if available.
-> >
-> >   2. Otherwise, ask git for the value. git will produce the value
-> >      from on of its config files, from environment variables, or
-> >      make it up. It might be asking the spirits of the dead for
-> >      all we care.
->
-> I haven't forgot about this patch. I switched StGIT to the gitconfig
-> files and there won't be a need to invoke "git repo-config". I'll
-> try to modify your patch.
+> ...but in git's gitweb view it will make this <a
+> href="http://git.openvz.org/.">http://git.openvz.org/.</a>. :-)
+Not a problem actually since "." means "current directory", so it will 
+work fine (and I have checked that) :)
+Sure there is a room for improvement for this regex -- and I am 
+collecting those.
 
-Ah, nice. But will you still honor the git author and committer
-environment variables that way?
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
