@@ -1,90 +1,54 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: fetching packs and storing them as packs
-Date: Fri, 27 Oct 2006 10:08:17 +0200
-Message-ID: <81b0412b0610270108t7b93d04y2c99be20b7f41387@mail.gmail.com>
-References: <4540CA0C.6030300@tromer.org> <45413209.2000905@tromer.org>
-	 <Pine.LNX.4.64.0610262038320.11384@xanadu.home>
-	 <20061027014229.GA28407@spearce.org> <45417205.6020805@tromer.org>
-	 <20061027030054.GB28407@spearce.org> <4541850B.8060608@tromer.org>
-	 <20061027044233.GA29057@spearce.org>
-	 <81b0412b0610270042w29279b90t7c94d8590d701519@mail.gmail.com>
-	 <20061027075229.GD29057@spearce.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: filemode=false somewhat broken
+Date: Wed, 22 Nov 2006 14:39:18 -0800
+Message-ID: <7vodqzp0mh.fsf@assigned-by-dhcp.cox.net>
+References: <17764.44236.473000.729015@lapjr.intranet.kiel.bmiag.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Fri, 27 Oct 2006 08:08:37 +0000 (UTC)
-Cc: "Eran Tromer" <git2eran@tromer.org>,
-	"Nicolas Pitre" <nico@cam.org>, "Junio C Hamano" <junkio@cox.net>,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Wed, 22 Nov 2006 22:39:31 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=rX2kuXUlJbtfxkzccYIyI4UNKFtGj8b63MJwt8omj43dsDwRCvW/Q4pNK57YA7Iwl3Ce26g4u6xZxPntQtIgcCGdr1baBpot46Tjoi4IvXaSLKJkusx4aph+2Z9/mZkh9JhD4ImrbhsjVYwyAuCuNCBXyClXPmI4FRTLtNTIS88=
-In-Reply-To: <20061027075229.GD29057@spearce.org>
-Content-Disposition: inline
+In-Reply-To: <17764.44236.473000.729015@lapjr.intranet.kiel.bmiag.de> (Juergen
+	Ruehle's message of "Wed, 22 Nov 2006 21:02:20 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30303>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32107>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GdMlO-0007a2-7T for gcvg-git@gmane.org; Fri, 27 Oct
- 2006 10:08:26 +0200
+ esmtp (Exim 4.43) id 1Gn0kW-0002xG-8u for gcvg-git@gmane.org; Wed, 22 Nov
+ 2006 23:39:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1946237AbWJ0IIV (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 27 Oct 2006
- 04:08:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946241AbWJ0IIV
- (ORCPT <rfc822;git-outgoing>); Fri, 27 Oct 2006 04:08:21 -0400
-Received: from nf-out-0910.google.com ([64.233.182.186]:49181 "EHLO
- nf-out-0910.google.com") by vger.kernel.org with ESMTP id S1946237AbWJ0IIT
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 27 Oct 2006 04:08:19 -0400
-Received: by nf-out-0910.google.com with SMTP id c2so1212377nfe for
- <git@vger.kernel.org>; Fri, 27 Oct 2006 01:08:17 -0700 (PDT)
-Received: by 10.78.188.19 with SMTP id l19mr3388231huf; Fri, 27 Oct 2006
- 01:08:17 -0700 (PDT)
-Received: by 10.78.128.2 with HTTP; Fri, 27 Oct 2006 01:08:17 -0700 (PDT)
-To: "Shawn Pearce" <spearce@spearce.org>
+ S1757013AbWKVWjV (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 22 Nov 2006
+ 17:39:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757004AbWKVWjU
+ (ORCPT <rfc822;git-outgoing>); Wed, 22 Nov 2006 17:39:20 -0500
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:55263 "EHLO
+ fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP id S1756915AbWKVWjU
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 22 Nov 2006 17:39:20 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao03.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061122223919.YXLY4817.fed1rmmtao03.cox.net@fed1rmimpo01.cox.net>; Wed, 22
+ Nov 2006 17:39:19 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id pyeo1V01B1kojtg0000000; Wed, 22 Nov 2006
+ 17:38:49 -0500
+To: Juergen Ruehle <j.ruehle@bmiag.de>
 Sender: git-owner@vger.kernel.org
 
->> >So the receive-pack process becomes:
->> >
->> > a. Create temporary pack file in $GIT_DIR/objects/pack_XXXXX.
->> >b. Create temporary index file in $GIT_DIR/objects/index_XXXXX.
->>
->> Why not $GIT_DIR/objects/tmp/pack... and ignore it everywhere?
->
-> Because there is a race condition.
+Juergen Ruehle <j.ruehle@bmiag.de> writes:
 
-Oh, right. Incidentally, is there a lockfile for packs?
+> Commit fd28b34afd9bbd58297a25edced3f504c9a5487a tried to ignore the
+> executable bit if filemode=false, but instead forced all files to be
+> regular with 644 permission bits nuking symlink support.
 
-On 10/27/06, Shawn Pearce <spearce@spearce.org> wrote:
-> Alex Riesen <raa.lkml@gmail.com> wrote:
-> > >So the receive-pack process becomes:
-> > >
-> > > a. Create temporary pack file in $GIT_DIR/objects/pack_XXXXX.
-> > >b. Create temporary index file in $GIT_DIR/objects/index_XXXXX.
-> >
-> > Why not $GIT_DIR/objects/tmp/pack... and ignore it everywhere?
->
-> Because there is a race condition.
->
-> The contents of the new pack must be accessable as a normal pack
-> before we update and unlock the refs that are being changed.  This
-> means it must be a normal pack in $GIT_DIR/objects/pack.
->
-> Currently all packs under $GIT_DIR/objects/pack are deleted during
-> `repack -a -d`.  Those packs may have been added to that directory
-> after the repack started resulting in them getting deleted when
-> the repack completes, but with none of their contained objects in
-> the newly created pack.  Thus the repository is suddenly missing
-> everything that was just pushed (or fetched).
->
-> --
-> Shawn.
+Thanks for noticing.  Yes, that change is _seriously_ broken.  I
+should really raise the bar for patch acceptance.
+
+
