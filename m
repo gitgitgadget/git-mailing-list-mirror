@@ -1,60 +1,67 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Feature request: git-pull -e/--edit
-Date: Wed, 22 Nov 2006 15:02:45 -0800
-Message-ID: <7v3b8bozje.fsf@assigned-by-dhcp.cox.net>
-References: <20061119212611.13038.qmail@science.horizon.com>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Struggling with tangled
+Date: Wed, 22 Nov 2006 12:35:52 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0611221233370.30004@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <E1GmpTj-000235-2n@home.chandlerfamily.org.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 22 Nov 2006 23:03:15 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Wed, 22 Nov 2006 11:36:11 +0000 (UTC)
+Cc: Git Mailing List <git@vger.kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <E1GmpTj-000235-2n@home.chandlerfamily.org.uk>
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32109>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32080>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gn17E-0008I5-2F for gcvg-git@gmane.org; Thu, 23 Nov
- 2006 00:02:53 +0100
+ esmtp (Exim 4.43) id 1GmqOV-0002jS-Vk for gcvg-git@gmane.org; Wed, 22 Nov
+ 2006 12:36:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1757134AbWKVXCs (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 22 Nov 2006
- 18:02:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757140AbWKVXCs
- (ORCPT <rfc822;git-outgoing>); Wed, 22 Nov 2006 18:02:48 -0500
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:20910 "EHLO
- fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP id S1757134AbWKVXCs
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 22 Nov 2006 18:02:48 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao12.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061122230245.MGCC4226.fed1rmmtao12.cox.net@fed1rmimpo01.cox.net>; Wed, 22
- Nov 2006 18:02:45 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id pz2F1V00b1kojtg0000000; Wed, 22 Nov 2006
- 18:02:16 -0500
-To: linux@horizon.com
+ S1752292AbWKVLf4 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 22 Nov 2006
+ 06:35:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752593AbWKVLf4
+ (ORCPT <rfc822;git-outgoing>); Wed, 22 Nov 2006 06:35:56 -0500
+Received: from mail.gmx.de ([213.165.64.20]:36811 "HELO mail.gmx.net") by
+ vger.kernel.org with SMTP id S1752292AbWKVLf4 (ORCPT
+ <rfc822;git@vger.kernel.org>); Wed, 22 Nov 2006 06:35:56 -0500
+Received: (qmail invoked by alias); 22 Nov 2006 11:35:54 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp019) with SMTP; 22 Nov 2006 12:35:54 +0100
+To: Alan Chandler <alan@chandlerfamily.org.uk>
 Sender: git-owner@vger.kernel.org
 
-linux@horizon.com writes:
+Hi,
 
-> But I notice that --no-commit actually changes git's merging
-> technique.  If it's specified, the trivial in-index merge doesn't
-> appear to be attempted.  I don't think it makes a huge difference,
-> but is any difference desirable?
+On Wed, 22 Nov 2006, Alan Chandler wrote:
 
-This was done in response to a specific request from the list
-but I do not remember the details.  If I were to research the
-background I would
+> 2) Some files get completely munged with conflict resolution markers 
+> every few lines.  Is there a simple way to say "don't use this file, but 
+> use the [stage2/stage3] sources of the merge". (ie one of the original 
+> inputs to the merge - and if so, which one is which)
 
- (1) first, look at the authordate of the commit that introduced
-     the change.  For this, I would most likely use:
+I find myself using
 
-	git log -p -S--no-commit -- git-pull.sh
+	git diff --ours <file>
 
- (2) go back to the list archive and find the thread that
-     predates that commit by a few days.
+and
+
+	git diff --theirs <file>
+
+in such a case sometimes. If I _know_ my version is good, I do
+
+	git diff --ours <file> | git apply -R
+
+This also updates the index.
+
+Hth,
+Dscho
