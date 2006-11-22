@@ -2,133 +2,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: [PATCH] Documentation: add a "git user's manual"
-Date: Sat, 25 Nov 2006 23:01:42 -0500
-Message-ID: <20061126040142.GB3782@fieldses.org>
-References: <20061116221701.4499.qmail@science.horizon.com> <20061117153246.GA20065@thunk.org> <20061117182157.GC11882@fieldses.org> <20061119175040.GB15608@fieldses.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Struggling with tangled
+Date: Wed, 22 Nov 2006 12:01:15 +0100
+Organization: At home
+Message-ID: <ek1aj0$u09$1@sea.gmane.org>
+References: <E1GmpTj-000235-2n@home.chandlerfamily.org.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sun, 26 Nov 2006 04:02:03 +0000 (UTC)
-Cc: Theodore Tso <tytso@mit.edu>, linux@horizon.com,
-	git@vger.kernel.org
+Content-Transfer-Encoding: 7Bit
+NNTP-Posting-Date: Wed, 22 Nov 2006 11:00:12 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <20061119175040.GB15608@fieldses.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 54
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32326>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32077>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GoBDF-0004cY-I4 for gcvg-git@gmane.org; Sun, 26 Nov
- 2006 05:01:53 +0100
+ esmtp (Exim 4.43) id 1Gmppk-0003GG-SV for gcvg-git@gmane.org; Wed, 22 Nov
+ 2006 12:00:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S967290AbWKZEBt (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 25 Nov 2006
- 23:01:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967291AbWKZEBt
- (ORCPT <rfc822;git-outgoing>); Sat, 25 Nov 2006 23:01:49 -0500
-Received: from mail.fieldses.org ([66.93.2.214]:37056 "EHLO
- pickle.fieldses.org") by vger.kernel.org with ESMTP id S967290AbWKZEBs (ORCPT
- <rfc822;git@vger.kernel.org>); Sat, 25 Nov 2006 23:01:48 -0500
-Received: from bfields by pickle.fieldses.org with local (Exim 4.63)
- (envelope-from <bfields@fieldses.org>) id 1GoBD4-0001b3-TJ; Sat, 25 Nov 2006
- 23:01:42 -0500
-To: Junio C Hamano <junkio@cox.net>
+ S1162059AbWKVK77 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 22 Nov 2006
+ 05:59:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1162058AbWKVK74
+ (ORCPT <rfc822;git-outgoing>); Wed, 22 Nov 2006 05:59:56 -0500
+Received: from main.gmane.org ([80.91.229.2]:55168 "EHLO ciao.gmane.org") by
+ vger.kernel.org with ESMTP id S1162055AbWKVK7z (ORCPT
+ <rfc822;git@vger.kernel.org>); Wed, 22 Nov 2006 05:59:55 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1GmppX-0003Cg-6A for git@vger.kernel.org; Wed, 22 Nov 2006 11:59:51 +0100
+Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Wed, 22 Nov 2006 11:59:51 +0100
+Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Wed, 22 Nov 2006
+ 11:59:51 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On Sun, Nov 19, 2006 at 12:50:40PM -0500, J. Bruce Fields wrote:
-> In fact, I'm tempted to submit a patch that just assigns a chapter
-> number to everything under Documentation/, slaps a single table of
-> contents on the front, and calls the result "the git user's manual."
+Alan Chandler wrote:
 
-Something like this, as a start?:
+> I am trying to sort out a tangled (in the sense that I several branches that 
+> split a long time ago, but are reasonably close subsets of each other) 
+> repository of mine using git rebase.  I want to isolate the commits that 
+> cause the key differences so that I can then easily enhance the code but 
+> carry forward the variants (using git-rebase again probably). 
+> 
+> I have some questions which are causing me some grief after merge conflicts. 
+> Can someone help me. 
+> 
+> 1) I often edit a merge conflicted file to the state I expect it to be in at 
+> the end.  This sometimes means that I edit it to a state where no change is 
+> seen.  git-update-index notices this and doesn't do anything, but when I try 
+> git-rebase --continue it won't because it says git-update-index has not been 
+> run.  What am I supposed to do then? [Is the answer git-rebase --skip ?] 
 
+If you resolve conflict to the state where no change is seen, it means that
+the commit you currently are rebasing doesn't bring any changes; it was
+applied. So you have to do "git rebase --skip".
 
-Add a manual.txt file which generates a "git user's manual" by including
-a bunch of preexisting files under Documentation and declaring each to
-be a chapter.
+Sidenote: with git version 1.4.3.4 you cannot "git rebase --skip" while
+there are conflict in the index. It is most annoying - I'd like to skip
+the resolving. I bring the files in conflict to the "base" version and run
+"git update-index" before "git rebase --skip", but I'd like to skip that part.
 
-The result is a disorganized mess, because the documentation itself is a
-disorganized mess.  This is intended to call attention to that fact
-rather than fix it.  Hopefully we can massage it into a better order
-over time.  And hopefully we can encourage anyone that adds new
-documentation to think about where in the order it should be inserted.
+> 2) Some files get completely munged with conflict resolution markers every 
+> few lines.  Is there a simple way to say "don't use this file, but use the 
+> [stage2/stage3] sources of the merge". (ie one of the original inputs to the 
+> merge - and if so, which one is which) 
 
-Not built or installed by default for now.
+"git cat-file -p :<stage>: <filename> > <filename>", where stage = 1 means
+version from the ancestor, stage = 2 means version from the HEAD (from the
+base), and stage = 3 means version from the remote/other branch (from the
+branch being rebased).  
 
-Signed-off-by: J. Bruce Fields <bfields@citi.umich.edu>
----
- Documentation/Makefile    |    7 ++++++-
- Documentation/manual.conf |    2 ++
- Documentation/manual.txt  |   30 ++++++++++++++++++++++++++++++
- 3 files changed, 38 insertions(+), 1 deletions(-)
+> 3) I sometime hit a merge conflict in a file which I know will actually be 
+> deleted at the tip of the topic I am rebasing.  Is there a way at this point 
+> to just tell the conflict resolution to say make this file go away. 
 
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index c00f5f6..684dacf 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -85,9 +85,14 @@ clean:
- %.1 %.7 : %.xml
- 	xmlto -m callouts.xsl man $<
- 
--%.xml : %.txt
-+%.html : %.txt
- 	asciidoc -b docbook -d manpage -f asciidoc.conf $<
- 
-+manual.html: manual.txt
-+	a2x -f xhtml --no-icons --asciidoc-opts="-d book -f asciidoc.conf" $<
-+
-+# a2x -f xhtml --ascidoc-opts="-d book -f asciidoc.conf" $<
-+
- git.html: git.txt README
- 
- glossary.html : glossary.txt sort_glossary.pl
-diff --git a/Documentation/manual.conf b/Documentation/manual.conf
-new file mode 100644
-index 0000000..0d0cfad
---- /dev/null
-+++ b/Documentation/manual.conf
-@@ -0,0 +1,2 @@
-+[titles]
-+underlines="__","==","--","~~","^^"
-diff --git a/Documentation/manual.txt b/Documentation/manual.txt
-new file mode 100644
-index 0000000..5512212
---- /dev/null
-+++ b/Documentation/manual.txt
-@@ -0,0 +1,30 @@
-+Git User's manual
-+_________________
-+
-+include::tutorial.txt[]
-+
-+include::tutorial-2.txt[]
-+
-+Git design overview
-+===================
-+
-+include::README[]
-+
-+include::everyday.txt[]
-+
-+include::cvs-migration.txt[]
-+
-+include::howto-index.txt[]
-+
-+include::hooks.txt[]
-+
-+include::diffcore.txt[]
-+
-+include::repository-layout.txt[]
-+
-+include::core-tutorial.txt[]
-+
-+Glossary of git terms
-+=====================
-+
-+include::glossary.txt[]
+"git rm <filename>" plus "git update-index <filename>" doesn't work?
+
+> 4) I repeat the question I asked in a thread above.  What is the --merge 
+> switch on git-rebase actually do.  The man page starts talking about merge 
+> strategies, but there already is a -s switch for that. 
+
+"git rebase" uses "git format-patch" + "git-am --3way" machinery by default.
+The --merge option makes it use merge machinery instead (similar to the way 
+"git checkout -m" uses merge strategy IIRC).
 -- 
-1.4.4.rc1.g83ee9
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
+
