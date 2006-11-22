@@ -1,67 +1,60 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: [PATCH] make git a bit less cryptic on fetch errors
-Date: Mon, 18 Dec 2006 23:22:05 +0000
-Message-ID: <200612182322.15703.andyparkins@gmail.com>
-References: <Pine.LNX.4.64.0612181505320.18171@xanadu.home>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Feature request: git-pull -e/--edit
+Date: Wed, 22 Nov 2006 15:02:45 -0800
+Message-ID: <7v3b8bozje.fsf@assigned-by-dhcp.cox.net>
+References: <20061119212611.13038.qmail@science.horizon.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Mon, 18 Dec 2006 23:27:17 +0000 (UTC)
-Cc: Nicolas Pitre <nico@cam.org>, Junio C Hamano <junkio@cox.net>
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Wed, 22 Nov 2006 23:03:15 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=RbGjMccQKbxgUoL0ZO9y1stTtC46RvoJrcQIQGcr9JIBvOb7KszO0OGvfMfyVenyE10dZA6lHM/lraDVwmZhHcHXOyD5Eg8D2avGP8d7e/fPPrQbc10ed5xUE0IFpKgwdlE5KRL4x1aQj2eNSzgZejDWFlcRF37i/lx3+W+IRiE=
-User-Agent: KMail/1.9.5
-In-Reply-To: <Pine.LNX.4.64.0612181505320.18171@xanadu.home>
-Content-Disposition: inline
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34760>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32109>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GwRr2-0004Ss-04 for gcvg-git@gmane.org; Tue, 19 Dec
- 2006 00:25:08 +0100
+ esmtp (Exim 4.43) id 1Gn17E-0008I5-2F for gcvg-git@gmane.org; Thu, 23 Nov
+ 2006 00:02:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1754758AbWLRXZE (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 18 Dec 2006
- 18:25:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754757AbWLRXZE
- (ORCPT <rfc822;git-outgoing>); Mon, 18 Dec 2006 18:25:04 -0500
-Received: from ug-out-1314.google.com ([66.249.92.169]:10390 "EHLO
- ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1754758AbWLRXZD (ORCPT <rfc822;git@vger.kernel.org>); Mon, 18 Dec
- 2006 18:25:03 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so1638983uga for
- <git@vger.kernel.org>; Mon, 18 Dec 2006 15:25:01 -0800 (PST)
-Received: by 10.66.216.1 with SMTP id o1mr5994040ugg.1166484301303; Mon, 18
- Dec 2006 15:25:01 -0800 (PST)
-Received: from grissom.internal.parkins.org.uk ( [84.201.153.164]) by
- mx.google.com with ESMTP id m1sm9877116uge.2006.12.18.15.25.00; Mon, 18 Dec
- 2006 15:25:00 -0800 (PST)
-To: git@vger.kernel.org
+ S1757134AbWKVXCs (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 22 Nov 2006
+ 18:02:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757140AbWKVXCs
+ (ORCPT <rfc822;git-outgoing>); Wed, 22 Nov 2006 18:02:48 -0500
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:20910 "EHLO
+ fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP id S1757134AbWKVXCs
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 22 Nov 2006 18:02:48 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao12.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061122230245.MGCC4226.fed1rmmtao12.cox.net@fed1rmimpo01.cox.net>; Wed, 22
+ Nov 2006 18:02:45 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id pz2F1V00b1kojtg0000000; Wed, 22 Nov 2006
+ 18:02:16 -0500
+To: linux@horizon.com
 Sender: git-owner@vger.kernel.org
 
-On Monday 2006, December 18 20:16, Nicolas Pitre wrote:
-> -			die("unexpected EOF");
-> +			die("for some reason the remote end hung up unexpectedly");
+linux@horizon.com writes:
 
-If we don't know the reason; then saying this makes it sound like we just 
-couldn't be bothered to write the message.  How about just:
+> But I notice that --no-commit actually changes git's merging
+> technique.  If it's specified, the trivial in-index merge doesn't
+> appear to be attempted.  I don't think it makes a huge difference,
+> but is any difference desirable?
 
-"The remote end hung up unexpectedly"
+This was done in response to a specific request from the list
+but I do not remember the details.  If I were to research the
+background I would
 
-?
+ (1) first, look at the authordate of the commit that introduced
+     the change.  For this, I would most likely use:
 
-Andy
+	git log -p -S--no-commit -- git-pull.sh
 
--- 
-Dr Andrew Parkins, M Eng (Hons), AMIEE
+ (2) go back to the list archive and find the thread that
+     predates that commit by a few days.
