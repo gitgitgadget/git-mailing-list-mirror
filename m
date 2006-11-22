@@ -1,63 +1,93 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Francis Moreau" <francis.moro@gmail.com>
-Subject: Can't fetch 2.6.20-rc1 tag...
-Date: Mon, 18 Dec 2006 12:56:09 +0100
-Message-ID: <38b2ab8a0612180356t5c04f5bn29d7be3d0aa40764@mail.gmail.com>
+From: Alan Chandler <alan@chandlerfamily.org.uk>
+Subject: Re: Struggling with tangled
+Date: Wed, 22 Nov 2006 19:15:58 +0000
+Message-ID: <200611221915.59073.alan@chandlerfamily.org.uk>
+References: <E1GmpTj-000235-2n@home.chandlerfamily.org.uk> <ek1aj0$u09$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Mon, 18 Dec 2006 11:56:27 +0000 (UTC)
+NNTP-Posting-Date: Wed, 22 Nov 2006 19:16:59 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=NFgO9p4P7mGIxkxrwV5LVvm/nMQ5ppW2ly7e/WX9htYDYAB0ZgTa+vtBaxOMfYbegpMglBteLHm4insJ71nxabu0Tz/6IdRi/Rty0vHVCJahKmn+FJvh4GtWCeMZx49Wx4lkQUJTuhO+e0OU8qADOidxfGuJqWxj9by4XMQ+NH0=
+User-Agent: KMail/1.9.5
+In-Reply-To: <ek1aj0$u09$1@sea.gmane.org>
 Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34739>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GwH6S-0005za-CE for gcvg-git@gmane.org; Mon, 18 Dec
- 2006 12:56:20 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32094>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GmxZs-0003YY-9a for gcvg-git@gmane.org; Wed, 22 Nov
+ 2006 20:16:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753892AbWLRL4M (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 18 Dec 2006
- 06:56:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753893AbWLRL4M
- (ORCPT <rfc822;git-outgoing>); Mon, 18 Dec 2006 06:56:12 -0500
-Received: from wx-out-0506.google.com ([66.249.82.233]:45073 "EHLO
- wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1753892AbWLRL4K (ORCPT <rfc822;git@vger.kernel.org>); Mon, 18 Dec
- 2006 06:56:10 -0500
-Received: by wx-out-0506.google.com with SMTP id h27so1360576wxd for
- <git@vger.kernel.org>; Mon, 18 Dec 2006 03:56:10 -0800 (PST)
-Received: by 10.90.105.19 with SMTP id d19mr1949734agc.1166442969868; Mon, 18
- Dec 2006 03:56:09 -0800 (PST)
-Received: by 10.90.106.16 with HTTP; Mon, 18 Dec 2006 03:56:09 -0800 (PST)
+ S1756692AbWKVTQE (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 22 Nov 2006
+ 14:16:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756694AbWKVTQE
+ (ORCPT <rfc822;git-outgoing>); Wed, 22 Nov 2006 14:16:04 -0500
+Received: from 82-44-22-127.cable.ubr06.croy.blueyonder.co.uk
+ ([82.44.22.127]:32923 "EHLO home.chandlerfamily.org.uk") by vger.kernel.org
+ with ESMTP id S1756692AbWKVTQB (ORCPT <rfc822;git@vger.kernel.org>); Wed, 22
+ Nov 2006 14:16:01 -0500
+Received: from kanger.home ([192.168.0.21]) by home.chandlerfamily.org.uk
+ with esmtp (Exim 4.63) (envelope-from <alan@chandlerfamily.org.uk>) id
+ 1GmxZf-0003Fm-II for git@vger.kernel.org; Wed, 22 Nov 2006 19:15:59 +0000
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Hi
+On Wednesday 22 November 2006 11:01, Jakub Narebski wrote:
+> Alan Chandler wrote:
+...
+> > 2) Some files get completely munged with conflict resolution markers
+> > every few lines.  Is there a simple way to say "don't use this file, but
+> > use the [stage2/stage3] sources of the merge". (ie one of the original
+> > inputs to the merge - and if so, which one is which)
+>
+> "git cat-file -p :<stage>: <filename> > <filename>", where stage = 1 means
+> version from the ancestor, stage = 2 means version from the HEAD (from the
+> base), and stage = 3 means version from the remote/other branch (from the
+> branch being rebased).
 
-I've got this problem when issuing the following command in a kernel repo:
+Just a comment for the list.  There have been lots of documentation ideas 
+floating around recently.  One thing that could be done is to cross reference 
+the key sections in the man pages somewhat.  I read the man page for 
+git-cat-file, and that just says the non flag parameter is <object> and its 
+an SHA1.
 
-    $ git branch
-    * master
-    origin
-    $ git pull -tags
-    fatal: unexpected EOF
-    Fetch failure:
-git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
+Once I saw this, I was puzzled and eventually found a reference to in in 
+git-rev-parse.
 
-My git version is '1.4.4.2'
 
-Can anybody tell me what I'm doing wrong ?
+>
+> > 3) I sometime hit a merge conflict in a file which I know will actually
+> > be deleted at the tip of the topic I am rebasing.  Is there a way at this
+> > point to just tell the conflict resolution to say make this file go away.
+>
+> "git rm <filename>" plus "git update-index <filename>" doesn't work?
 
-thanks
+Well I _thought_ I tried git-update-index --remove and that hadn't worked.
+
+>
+> > 4) I repeat the question I asked in a thread above.  What is the --merge
+> > switch on git-rebase actually do.  The man page starts talking about
+> > merge strategies, but there already is a -s switch for that.
+>
+> "git rebase" uses "git format-patch" + "git-am --3way" machinery by
+> default. The --merge option makes it use merge machinery instead (similar
+> to the way "git checkout -m" uses merge strategy IIRC).
+
+Yes but ...
+
+... what does that mean in usage terms?
+
+Why would I want to use one rather than the other?
+
+
+
 -- 
+Alan Chandler
