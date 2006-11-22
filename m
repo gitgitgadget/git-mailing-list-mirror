@@ -4,80 +4,95 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: Minor documentation problems
-Date: Thu, 2 Nov 2006 12:41:49 +0100
-Message-ID: <20061102114149.GL20017@pasky.or.cz>
-References: <vpqmz7a1694.fsf@ecrins.imag.fr>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [RFC] Submodules in GIT
+Date: Tue, 21 Nov 2006 22:40:56 -0500
+Message-ID: <20061122034056.GB23856@spearce.org>
+References: <20061120215116.GA20736@admingilde.org> <ejt9dh$kfm$1@sea.gmane.org> <7v7ixp20za.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611201501230.3338@woody.osdl.org> <20061121223130.GA24909@nan92-1-81-57-214-146.fbx.proxad.net> <Pine.LNX.4.64.0611211437430.3338@woody.osdl.org> <20061121235429.GH5443@nan92-1-81-57-214-146.fbx.proxad.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 2 Nov 2006 11:42:01 +0000 (UTC)
-Cc: jnareb@gmail.com
+NNTP-Posting-Date: Wed, 22 Nov 2006 03:41:15 +0000 (UTC)
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Junio C Hamano <junkio@cox.net>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Content-Disposition: inline
-In-Reply-To: <vpqmz7a1694.fsf@ecrins.imag.fr>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <20061121235429.GH5443@nan92-1-81-57-214-146.fbx.proxad.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30738>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32064>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GfaxG-0001VE-D2 for gcvg-git@gmane.org; Thu, 02 Nov
- 2006 12:41:54 +0100
+ esmtp (Exim 4.43) id 1Gmiz1-0003W3-3o for gcvg-git@gmane.org; Wed, 22 Nov
+ 2006 04:41:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1750716AbWKBLlv (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 2 Nov 2006
- 06:41:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750835AbWKBLlv
- (ORCPT <rfc822;git-outgoing>); Thu, 2 Nov 2006 06:41:51 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:18883 "EHLO machine.or.cz") by
- vger.kernel.org with ESMTP id S1750716AbWKBLlu (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 2 Nov 2006 06:41:50 -0500
-Received: (qmail 13063 invoked by uid 2001); 2 Nov 2006 12:41:49 +0100
-To: git <git@vger.kernel.org>
+ S967040AbWKVDlI (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 21 Nov 2006
+ 22:41:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967051AbWKVDlI
+ (ORCPT <rfc822;git-outgoing>); Tue, 21 Nov 2006 22:41:08 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:43457 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S967040AbWKVDlE
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2006 22:41:04 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1Gmiyd-0007yh-1r; Tue, 21 Nov 2006 22:40:47 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 5145720FB09; Tue, 21 Nov 2006 22:40:57 -0500 (EST)
+To: Yann Dirson <ydirson@altern.org>
 Sender: git-owner@vger.kernel.org
 
-  Hi,
+Yann Dirson <ydirson@altern.org> wrote:
+> Put it another way, I see the proposal of allowing tree entries to be
+> commits in addition to trees and blobs, akin to recording the submodule
+> _history_ inside the _tree_, which I feel precisely violates the
+> distinction you want to keep between those 2 concepts.
 
-Dear diary, on Thu, Nov 02, 2006 at 11:40:23AM CET, I got a letter
-where Matthieu Moy <Matthieu.Moy@imag.fr> said that...
-> I found minor problems with the doc, which deserve to be fixed:
-> 
-> * http://www.kernel.org/pub/software/scm/cogito/docs/cg-commit.1.html
->   Mentions .git/config, but not ~/.gitconfig (which is indeed _the_
->   place where I think most people want to set their name and email).
+No.  Linus is right.  Submodule commits belong in the tree.
 
-  thanks for pointing this out, further releases will mention both.
+We want to record a specific subtree within a larger tree.  There are
+three ways we can refer to a tree: by its tree SHA1, by a commit
+which points at the tree SHA1, or by a tag which points at a
+commit which points at the tree SHA1, or by a tag which points
+at a tag which points at a commit which points at a tree SHA1.
+Which is basically a tree-ish.
 
->   Side note: it can be interesting to have a command to do this.
->   For example, bzr has "bzr whoami 'me <myself@myisp.com>'", which
->   avoids having to learn the config file syntax.
+The advantage of linking to the commit-ish (commit or tag) and
+not the tree-ish for a submodule is that it also provides you quick
+access to answer the "how did this tree arive at this state" question
+as the answer cannot come solely from the top level commit chain.
+The reason... keep reading...
+ 
+> What about the case of a subproject that would evolve fast, and for
+> which we may not want intermediate versions to be part of the
+> supermodule ?  (just exploring an idea without real connection to the
+> one discussed above)
 
-  Yes, you are certainly not the first to wish this, I'm seriously
-thinking about introducing cg-admin-config for setting the most common
-configuration variables.
+Right.  The submodule is free to be committed to an infinite number
+of times for any given commit in the supermodule.
 
-  Moreover, I'm more and more thinking about removing the fallback on
-guessing based on /etc/passwd and hostname. _Many_ people were and will
-be burnt by it, and I think it's more sane to require the user to
-confirm once what the valid credentials are (at _that_ point it's ok to
-guess, but the user has to confirm it) than let them unconsciously do
-200 commits with completely bogus author lines.
+It is expected that users will commit to a submodule say hundreds of
+times for every commit they make to the supermodule.  Or thousands.
+This is especially true if the submodule is some very large project,
+e.g. the Linux kernel, and the supermodule "upgrades" the kernel it
+is using after 3 months of staying on the same version.  Suddenly the
+supermodule has only 1 commit which covers maybe 10,000 commits in
+the submodule.
 
-  What do the Git people think? Perhaps we could introduce GIT_NO_GUESS
-environment variable which will prevent var.c from guessing?
-
-> * RSS link on the wiki:
->   The URL
->   http://git.or.cz/gitwiki/RecentChanges?action=rss_rc&ddiffs=1&unique=1
->   seems to be working as an RSS feed for changes, but it's not linked
->   to by http://git.or.cz/gitwiki/RecentChanges. Usually, there's an
->   RSS icon, and an HTML <link rel="alternate" ...> to help finding it.
-
-  Fixed, thanks.
+Yet we still want to be able to efficiently perform operations like
+"git bisect" within the scope of that submodule, to help narrow down
+a particular bug that is within that submodule.  To do that we need
+the commit chain (all 10,000 of those commits) in the submodule.
+To get those we really need a commit-ish and not a tree-ish, as
+going from a tree-ish to a commit-ish is not only not unique but
+is also pretty infeasible to do (you need to scan *every* commit).
 
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
-$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
