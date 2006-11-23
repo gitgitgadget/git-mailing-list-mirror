@@ -4,85 +4,119 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [RFC \ WISH] Add -o option to git-rev-list
-Date: Sun, 10 Dec 2006 10:16:40 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0612101009040.12500@woody.osdl.org>
-References: <e5bfff550612100338ye2ca2a0u1c8f29bbc59c5431@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: What's in git.git
+Date: Wed, 22 Nov 2006 18:49:58 -0800
+Message-ID: <7vwt5mnag9.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Sun, 10 Dec 2006 18:16:59 +0000 (UTC)
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <junkio@cox.net>,
-	Alex Riesen <raa.lkml@gmail.com>,
-	Shawn Pearce <spearce@spearce.org>
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Thu, 23 Nov 2006 02:50:18 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <e5bfff550612100338ye2ca2a0u1c8f29bbc59c5431@mail.gmail.com>
-X-MIMEDefang-Filter: osdl$Revision: 1.162 $
-X-Scanned-By: MIMEDefang 2.36
+X-maint-at: e945f95157c2c515e763ade874931fc1eb671a0b
+X-master-at: e945f95157c2c515e763ade874931fc1eb671a0b
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33912>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GtTEO-0001Ui-PT for gcvg-git@gmane.org; Sun, 10 Dec
- 2006 19:16:57 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32116>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gn4fF-0007AD-Qn for gcvg-git@gmane.org; Thu, 23 Nov
+ 2006 03:50:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1762298AbWLJSQv (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 10 Dec 2006
- 13:16:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762327AbWLJSQv
- (ORCPT <rfc822;git-outgoing>); Sun, 10 Dec 2006 13:16:51 -0500
-Received: from smtp.osdl.org ([65.172.181.25]:45820 "EHLO smtp.osdl.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1762298AbWLJSQu
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 10 Dec 2006 13:16:50 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
- smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kBAIGgID010902
- (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Sun, 10
- Dec 2006 10:16:43 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
- shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kBAIGeVL031246; Sun, 10 Dec
- 2006 10:16:41 -0800
-To: Marco Costalba <mcostalba@gmail.com>
+ S1757284AbWKWCuF (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 22 Nov 2006
+ 21:50:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757283AbWKWCuF
+ (ORCPT <rfc822;git-outgoing>); Wed, 22 Nov 2006 21:50:05 -0500
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:13471 "EHLO
+ fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP id S1757281AbWKWCuC
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 22 Nov 2006 21:50:02 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao09.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061123024959.HYXP18767.fed1rmmtao09.cox.net@fed1rmimpo02.cox.net>; Wed, 22
+ Nov 2006 21:49:59 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id q2q71V0011kojtg0000000; Wed, 22 Nov 2006
+ 21:50:07 -0500
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
+The 'maint' and 'master' are at the same commit; a maintenance
+release v1.4.4.1 has been cut.
+
+A handful enhancements that have been cooking in 'next' will
+start graduating to 'master' shortly; as usual, they won't be
+in the future v1.4.4.x maintenance series.
+
+ * gitweb updates.
+
+ * shortlog is now built-in.
+
+ * enhance packed-refs file to optimize "show-ref -d".
+
+ * retire merge-recursive-old.
+
+ * shallow clone.
+
+----------------------------------------------------------------
+
+* The 'next' branch, in addition to what are in 'master', has these.
+
+   Andy Parkins (2):
+      Improve git-prune -n output
+      Add support to git-branch to show local and remote branches
+
+   Jakub Narebski (7):
+      gitweb: Protect against possible warning in git_commitdiff
+      gitweb: Buffer diff header to deal with split patches + git_patchset_body refactoring
+      gitweb: Default to $hash_base or HEAD for $hash in "commit" and "commitdiff"
+      gitweb: New improved formatting of chunk header in diff
+      gitweb: Add an option to href() to return full URL
+      gitweb: Refactor feed generation, make output prettier, add Atom feed
+      gitweb: Finish restoring "blob" links in git_difftree_body
+
+   Johannes Schindelin (5):
+      Build in shortlog
+      shortlog: do not crash on parsing "[PATCH"
+      shortlog: read mailmap from ./.mailmap again
+      shortlog: handle email addresses case-insensitively
+      shortlog: fix "-n"
+
+   Junio C Hamano (9):
+      upload-pack: stop the other side when they have more roots than we do.
+      adjust_shared_perm: chmod() only when needed.
+      apply --numstat: mark binary diffstat with - -, not 0 0
+      pack-objects: tweak "do not even attempt delta" heuristics
+      Store peeled refs in packed-refs file.
+      remove merge-recursive-old
+      git-merge: make it usable as the first class UI
+      git-diff/git-apply: make diff output a bit friendlier to GNU patch (part 2)
+      Store peeled refs in packed-refs (take 2).
+
+   Nicolas Pitre (1):
+      builtin git-shortlog is broken
 
 
-On Sun, 10 Dec 2006, Marco Costalba wrote:
-> 
-> The averaged results on linux tree (about 30MB of data) and CPU set at
-> 1.2GHz are:
-> 
-> - QProcess 6734ms
-> 
-> - pipe and fread() with 64KB blocks 4832ms (38% faster then QProcess)
-> 
-> - temporary file and read() with 64KB blocks 4321ms (10% faster then pipe)
-> 
-> I have not enough knowledge to understand why temporary file is faster
-> then pipe. My guess is, after reading some docs around, fread() uses a
-> C standard I/O buffer, while read() is unbuffered.
+* The 'pu' branch, in addition, has these.
 
-Why don't you use the pipe and standard read()?
+   Alexandre Julliard (1):
+      Shallow clone: do not ignore shallowness when following tags
 
-Even if you use "popen()" and get a "FILE *" back, you can still do
+   Johannes Schindelin (5):
+      upload-pack: no longer call rev-list
+      support fetching into a shallow repository
+      allow cloning a repository "shallowly"
+      allow deepening of a shallow repository
+      add tests for shallow stuff
 
-	int fd = fileno(file);
-
-and use the raw IO capabilities.
-
-The thing is, temporary files can actually be faster under Linux just 
-because the Linux page-cache simply kicks ass. But it's not going to be 
-_that_ big of a difference, and you need all that crazy "wait for rev-list 
-to finish" and the "clean up temp-file on errors" etc crap, so there's no 
-way it's a better solution.
-
-If it really is stdio overhead (possibly locking), using "fileno()" and 
-the raw unistd.h interfaces is going to avoid it.
-
-(You still need to use "fclose()" to close the struct file afterwards, 
-otherwise you'll leak memory, so you shouldn't _forget_ the original 
-"struct FILE *", but you don't need to use it for anything else).
-
-Using popen() and pipes also means that if the parent dies, the child will 
-get a nice EPIPE on the writing side, which is what you want.
+   Junio C Hamano (10):
+      git-commit: show --summary after successful commit.
+      para-walk: walk n trees, index and working tree in parallel
+      rev-list --left-right
+      merge: allow merging into a yet-to-be-born branch.
+      blame: --show-stats for easier optimization work.
+      gitweb: steal loadavg throttle from kernel.org
+      We should make sure that the protocol is still extensible.
+      Why does it mean we do not have to register shallow if we have one?
+      Why didn't we mark want_obj as ~UNINTERESTING in the old code?
+      shallow clone: unparse and reparse an unshallowed commit
 
