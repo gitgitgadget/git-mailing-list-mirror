@@ -1,76 +1,117 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: Getting new branches from remote repo.
-Date: Mon, 13 Nov 2006 12:44:57 -0500
-Message-ID: <20061113174457.GA16979@spearce.org>
-References: <6e1787fe0611122033p49671e13xf5b7f95beeba8b06@mail.gmail.com> <7v8xigar36.fsf@assigned-by-dhcp.cox.net> <20061113091736.GA31693@diana.vm.bytemark.co.uk>
+X-Spam-Status: No, score=-2.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,MSGID_FROM_MTA_HEADER,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+From: Sean <seanlkml@sympatico.ca>
+Subject: Re: Pull and fetch
+Date: Thu, 23 Nov 2006 15:36:24 -0500
+Message-ID: <BAYC1-PASMTP11EB389CA59410315B2F8AAEE20@CEZ.ICE>
+References: <20061123203950.5d47421f@paolo-desktop>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Mon, 13 Nov 2006 17:45:57 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>,
-	Alexander Litvinov <litvinov2004@gmail.com>,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 23 Nov 2006 20:36:59 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <20061113091736.GA31693@diana.vm.bytemark.co.uk>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+X-Originating-IP: [65.93.43.81]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Original-Message-Id: <20061123153624.ed92d4f6.seanlkml@sympatico.ca>
+In-Reply-To: <20061123203950.5d47421f@paolo-desktop>
+X-Mailer: Sylpheed version 2.2.10 (GTK+ 2.10.4; i386-redhat-linux-gnu)
+X-OriginalArrivalTime: 23 Nov 2006 20:46:10.0234 (UTC) FILETIME=[681C09A0:01C70F40]
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31305>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gjfru-0006aN-3Y for gcvg-git@gmane.org; Mon, 13 Nov
- 2006 18:45:14 +0100
+ esmtp (Exim 4.43) id 1GnLJR-0007YV-8a for gcvg-git@gmane.org; Thu, 23 Nov
+ 2006 21:36:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932164AbWKMRpJ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 13 Nov 2006
- 12:45:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932144AbWKMRpI
- (ORCPT <rfc822;git-outgoing>); Mon, 13 Nov 2006 12:45:08 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:4243 "EHLO
- corvette.plexpod.net") by vger.kernel.org with ESMTP id S932164AbWKMRpH
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 13 Nov 2006 12:45:07 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1GjfrZ-0005Nf-NN; Mon, 13 Nov 2006 12:44:53 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- A13B220FB0B; Mon, 13 Nov 2006 12:44:57 -0500 (EST)
-To: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+ S1757461AbWKWUg3 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 23 Nov 2006
+ 15:36:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757463AbWKWUg2
+ (ORCPT <rfc822;git-outgoing>); Thu, 23 Nov 2006 15:36:28 -0500
+Received: from bayc1-pasmtp11.bayc1.hotmail.com ([65.54.191.171]:29056 "EHLO
+ BAYC1-PASMTP11.CEZ.ICE") by vger.kernel.org with ESMTP id S1757461AbWKWUg1
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 23 Nov 2006 15:36:27 -0500
+Received: from linux1.attic.local ([65.93.43.81]) by BAYC1-PASMTP11.CEZ.ICE
+ over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830); Thu, 23 Nov
+ 2006 12:46:09 -0800
+Received: from guru.attic.local ([10.10.10.28]) by linux1.attic.local with
+ esmtp (Exim 4.43) id 1GnKMx-0003Za-QU; Thu, 23 Nov 2006 14:36:23 -0500
+To: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Karl Hasselstr?m <kha@treskal.com> wrote:
-> On 2006-11-12 20:49:33 -0800, Junio C Hamano wrote:
-> > After finding out $that_new_branch's name, add either
-> >
-> >       Pull: refs/heads/$that_new_branch:refs/heads/$that_new_branch
-> >
-> > or if you are in "separate remote" school, then perhaps
-> >
-> >       Pull: refs/heads/$that_new_branch:refs/remotes/origin/$that_new_branch
-> >
-> > to .git/remotes/origin and running git fetch would give you what you
-> > want, I think.
+On Thu, 23 Nov 2006 20:39:50 +0100
+Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com> wrote:
+
+
+> OK, make sense. So let's try with an experiment:
+> paolo@paolo-desktop:~$ mkdir test
+> paolo@paolo-desktop:~$ cd test
+> paolo@paolo-desktop:~/test$ git-init-db 
+> defaulting to local storage area
+
+At this point your "master" branch will be empty.  You can see
+this by doing a "git log"
+
+> paolo@paolo-desktop:~/test$ git fetch ../git master:testbranch
+> warning: no common commits
+> remote: Generating pack...
+
+If you do "git log" at this point you'll see your master branch
+is still empty.  All you've done is fetched the remote branch
+into your new repo as "testbranch"
+
+> [skip]
+> paolo@paolo-desktop:~/test$ git pull ../git master:testbranchpull
+> * refs/heads/testbranchpull: storing branch 'master' of ../git
+>   commit: e945f95
+
+This command is different than fetch.  After fetching the remote
+branch into your repo as "testbranchpull", it then merges it with
+your currently checked out branch (master).  At this point if
+you do a "git log"  you'll see your master is now populated with
+the results of the merge (well in this case a fast forward).
+
+So this nicely shows the difference of fetch and pull, and explains
+how your "master" branch came to have something in it.
+
+ 
+> Now I have 3 branches:
+> paolo@paolo-desktop:~/test$ git branch
+> * master
+>   testbranch
+>   testbranchpull
 > 
-> There really should be a flag to make git fetch do this job. And if we
-> use separate remotes, the flag should probably default to "on".
+> All the branches have the same content, I expect to see differences between testbranch 
+> and testbranchpull. The first one is the end result of a fetch, the second one is
+> the end result of a pull.
 
-And also to automatically stop fetching any branch which is no longer
-listed on the remote system, rather than reporting a "Fetch failure".
+Yes, they will all have the same content.  As your local repo diverges
+from the remote (as you make local commits) the difference between
+fetch and pull will become more obvious and pronounced.
 
-I probably would keep the local ref (they are cheap) just in case
-the user was counting on that branch and then the remote system
-pulled the rug out from under them.  :-)
+> git status always says:
+>   nothing to commit
+> 
+> Why?
 
--- 
+This just means you have no uncommitted local changes in your repo.  Edit
+one of the file, and before committing the change, do "git status" again
+and it will list the file as modified.
+
+> What will happen if I repeat the same commands:
+>   git fetch ../git master:testbranch
+>   git pull ../git master:testbranchpull
+> after a change in the git master branch?
+
+Try it out :o)
+
+Afterward, both testbranch and testbranchpull will be direct copies
+of the other repo's master.  The fetch command will do nothing to
+"master".  However, after updating your testbranchpull, the pull
+command will merge (or fast forward) its contents into "master".
+
+Cheers,
