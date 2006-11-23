@@ -1,67 +1,69 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-Subject: Re: [PATCH] Explicitly add the default "git pull" behaviour to .git/config on clone
-Date: Wed, 6 Dec 2006 18:00:16 +0100
-Message-ID: <200612061800.17087.Josef.Weidendorfer@gmx.de>
-References: <200612061207.23437.andyparkins@gmail.com>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Calling all bash completion experts..
+Date: Thu, 23 Nov 2006 09:45:29 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0611230935520.27596@woody.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 6 Dec 2006 17:01:02 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Thu, 23 Nov 2006 17:46:22 +0000 (UTC)
+Cc: Git Mailing List <git@vger.kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: KMail/1.9.3
-In-Reply-To: <200612061207.23437.andyparkins@gmail.com>
-Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay1.informatik.tu-muenchen.de
+X-MIMEDefang-Filter: osdl$Revision: 1.160 $
+X-Scanned-By: MIMEDefang 2.36
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33492>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gs08h-0001mr-IG for gcvg-git@gmane.org; Wed, 06 Dec
- 2006 18:00:59 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32151>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GnIeL-0003QF-Qn for gcvg-git@gmane.org; Thu, 23 Nov
+ 2006 18:46:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S936877AbWLFRAZ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
- 12:00:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936866AbWLFRAY
- (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 12:00:24 -0500
-Received: from mailout1.informatik.tu-muenchen.de ([131.159.0.18]:52936 "EHLO
- mailout1.informatik.tu-muenchen.de" rhost-flags-OK-OK-OK-OK) by
- vger.kernel.org with ESMTP id S936595AbWLFRAV (ORCPT
- <rfc822;git@vger.kernel.org>); Wed, 6 Dec 2006 12:00:21 -0500
-Received: from dhcp-3s-49.lrr.in.tum.de (dhcp-3s-49.lrr.in.tum.de
- [131.159.35.49]) by mail.in.tum.de (Postfix) with ESMTP id B8F962852; Wed,  6
- Dec 2006 18:00:19 +0100 (MET)
-To: Andy Parkins <andyparkins@gmail.com>
+ S1756194AbWKWRqI (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 23 Nov 2006
+ 12:46:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756288AbWKWRqI
+ (ORCPT <rfc822;git-outgoing>); Thu, 23 Nov 2006 12:46:08 -0500
+Received: from smtp.osdl.org ([65.172.181.25]:33423 "EHLO smtp.osdl.org") by
+ vger.kernel.org with ESMTP id S1756194AbWKWRqF (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 23 Nov 2006 12:46:05 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
+ smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kANHjUix022077
+ (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Thu, 23
+ Nov 2006 09:45:40 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
+ shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kANHjTxm011903; Thu, 23 Nov
+ 2006 09:45:29 -0800
+To: "Shawn O. Pearce" <spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 
-On Wednesday 06 December 2006 13:07, Andy Parkins wrote:
-> The [branch "master"] section is such that there is no change to the
-> functionality of git-pull, but that functionality is now explicitly
-> documented.
 
-Nice.
-However, changing "git-clone" for this is an adhoc solution and
-looks wrong.
+So, I'm a happy but clueless user of the bash completion, and one thing 
+drives me wild: when it has found an exclusive completion, it doesn't add 
+the final space at the end, but just beeps at you when you <tab> again.
 
-Branching off a local development branch for a tracking branch is
-the job of git-branch. So first, git-branch should be called from
-git-clone to do this setup.
+So I do "git repa<tab>" and get "git repack", which is fine, but I really 
+_wanted_ to get "git repack " (with the space at the end), since I've now 
+got a unique command, and that's the normal completion behaviour (ie I 
+want it to act the same way that "git-repa<tab>" would have acted).
 
-And git-branch should be told to change the configuration of default
-behavior of git-pull, whenever it sees that you are branching off
-from a branch tracking a remote one. I even would go so far to setup
-a default "git-pull" action even for branching off from local branches,
-by setting "branch.<newbranch>.remote = ." to merge from local "upstream".
+The same is true of filename arguments, btw:
 
-Similar, "git-checkout -b <newbranch>" should call "git-branch"
-for branch creation, too.
+	git commit cont<tab>com<tab><tab>
+
+gives me
+
+	git commit contrib/completion/git-completion.bash
+
+but again, it doesn't seem to do the right thing about the fact that it 
+was the unique choice, so it didn't add the final space, and when you 
+press <tab> more to get what the other choices are, it doesn't show you 
+any other choices (because there are none).
+
+Now, without knowing the completion syntax, I assume it's the "-o nospace" 
+things in the completion file. So I'm wondering _why_ that "nospace" is 
+there, and whether this could be fixed?
 
