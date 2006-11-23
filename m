@@ -1,71 +1,74 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Uwe Kleine-Koenig <zeisberg@informatik.uni-freiburg.de>
-Subject: Re: [RFC] Submodules in GIT
-Date: Tue, 5 Dec 2006 10:01:25 +0100
-Organization: Universitaet Freiburg, Institut f. Informatik
-Message-ID: <20061205090125.GA2428@cepheus>
-References: <20061121223130.GA24909@nan92-1-81-57-214-146.fbx.proxad.net> <200611281335.38728.andyparkins@gmail.com> <20061129160355.GF18810@admingilde.org> <200611292000.23778.andyparkins@gmail.com> <20061130170625.GH18810@admingilde.org> <456F29A2.1050205@op5.se>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: Advice on converting to git from versioning-by-directory
+Date: Thu, 23 Nov 2006 11:02:16 +0000
+Message-ID: <200611231102.20015.andyparkins@gmail.com>
+References: <200611230916.46415.andyparkins@gmail.com> <20061123100757.GB32620@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 5 Dec 2006 09:01:40 +0000 (UTC)
-Cc: Martin Waitz <tali@admingilde.org>,
-	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 23 Nov 2006 11:02:35 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Mail-Followup-To: Uwe Kleine-Koenig <zeisberg@informatik.uni-freiburg.de>,
-	Andreas Ericsson <ae@op5.se>, Martin Waitz <tali@admingilde.org>,
-	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=tTEKGpr3HXhmgWUffxyfP3oPa4hc3NS2e6BvfAzmZbiihpVK6DkVhsSYxRYOTMK3TES0A6HIqcsG6RVvUKcJe9ViF9i3ujiZ87Y+rtKH3c3LbcCR3LS+ZuvFOGXrqQsSp9s5+y/5MAyC48OJfmNMNDXHcDwhbfTIRpanhusoYdA=
+User-Agent: KMail/1.9.5
+In-Reply-To: <20061123100757.GB32620@coredump.intra.peff.net>
 Content-Disposition: inline
-In-Reply-To: <456F29A2.1050205@op5.se>
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33321>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GrWBE-0006Om-1l for gcvg-git@gmane.org; Tue, 05 Dec
- 2006 10:01:36 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32136>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GnCLd-00071A-2N for gcvg-git@gmane.org; Thu, 23 Nov
+ 2006 12:02:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S968121AbWLEJBd (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 5 Dec 2006
- 04:01:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S968122AbWLEJBd
- (ORCPT <rfc822;git-outgoing>); Tue, 5 Dec 2006 04:01:33 -0500
-Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:51340 "EHLO
- atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
- with ESMTP id S968121AbWLEJBc (ORCPT <rfc822;git@vger.kernel.org>); Tue, 5
- Dec 2006 04:01:32 -0500
-Received: from login.informatik.uni-freiburg.de ([132.230.151.6]) by
- atlas.informatik.uni-freiburg.de with esmtp (Exim 4.60) (envelope-from
- <zeisberg@informatik.uni-freiburg.de>) id 1GrWB9-00064D-NW; Tue, 05 Dec 2006
- 10:01:31 +0100
-Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1]) by
- login.informatik.uni-freiburg.de (8.13.6/8.12.11) with ESMTP id
- kB591Tnq007575; Tue, 5 Dec 2006 10:01:29 +0100 (MET)
-Received: (from zeisberg@localhost) by login.informatik.uni-freiburg.de
- (8.13.6/8.12.11/Submit) id kB591T1c007560; Tue, 5 Dec 2006 10:01:29 +0100
- (MET)
-To: Andreas Ericsson <ae@op5.se>
+ S933590AbWKWLCZ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 23 Nov 2006
+ 06:02:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933595AbWKWLCZ
+ (ORCPT <rfc822;git-outgoing>); Thu, 23 Nov 2006 06:02:25 -0500
+Received: from ug-out-1314.google.com ([66.249.92.171]:26386 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S933590AbWKWLCY
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 23 Nov 2006 06:02:24 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so406979uga for
+ <git@vger.kernel.org>; Thu, 23 Nov 2006 03:02:23 -0800 (PST)
+Received: by 10.67.100.17 with SMTP id c17mr4889712ugm.1164279743610; Thu, 23
+ Nov 2006 03:02:23 -0800 (PST)
+Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
+ ESMTP id a1sm12910813ugf.2006.11.23.03.02.23; Thu, 23 Nov 2006 03:02:23 -0800
+ (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Hello,
+On Thursday 2006 November 23 10:07, Jeff King wrote:
 
-Andreas Ericsson wrote:
-> The only problem I'm seeing atm is that the supermodule somehow has to 
-> mark whatever commits it's using from the submodule inside the submodule 
-> repo so that they effectively become un-prunable, otherwise the 
-> supermodule may some day find itself with a history that it can't restore.
-One could circumvent that by creating a separate repo for the submodule
-at checkout time and pull the needed objects in the supermodule's odb
-when commiting the supermodule.  This way prune in the submodule cannot
-do any harm, because in it's odb are no objects that are important for
-the supermodule.
+> If I understand you correctly, you want to take four branches, each with
+> data in version1/, version2/, etc, and make it look like they all had
+> data in the project root throughout history. Is that right?
 
-Uwe
+Yes.  In essence I want to move the spatial dimension (directories) into git's 
+time dimension (branches).
 
+> If so, cogito's cg-admin-rewritehist can probably do what you want (I
+> also posted a script a while back to do this exact thing, and I can dig
+> it up if you want).
+
+I will have a look at cg-admin-rewritehist.  After Andy pointed out that they 
+were just like traditional svn branches, I'm having good luck using multiple 
+runs of git-svn to track each directory as if it were a separate branch.
+
+Thank you for the offer of a script, but don't go to any trouble to find it 
+just yet.  I think I have it licked now.
+
+
+Andy
 -- 
-Uwe Kleine-Koenig
-
+Dr Andy Parkins, M Eng (hons), MIEE
