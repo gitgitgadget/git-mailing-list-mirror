@@ -4,82 +4,82 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Did anyone have trouble learning the idea of local vs. remote
- branches?
-Date: Wed, 08 Nov 2006 13:17:59 +0100
-Message-ID: <4551CAF7.3050008@op5.se>
-References: <20061107172450.GA26591@spearce.org> <vpqbqnisegc.fsf@ecrins.imag.fr>
+From: Erik Mouw <erik@harddisk-recovery.com>
+Subject: Re: sizeof(struct ...)
+Date: Thu, 23 Nov 2006 16:54:31 +0100
+Organization: Harddisk-recovery.com
+Message-ID: <20061123155431.GD6581@harddisk-recovery.com>
+References: <20061123101609.1711.qmail@8b73034525b1a6.315fe32.mid.smarden.org> <45659781.5050005@lsrfire.ath.cx> <4565A46C.6090805@lsrfire.ath.cx> <4565A866.8020201@shadowen.org> <4565C205.8050300@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 8 Nov 2006 12:18:19 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Thu, 23 Nov 2006 15:55:02 +0000 (UTC)
+Cc: Andy Whitcroft <apw@shadowen.org>, Gerrit Pape <pape@smarden.org>,
+	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
-In-Reply-To: <vpqbqnisegc.fsf@ecrins.imag.fr>
+Content-Disposition: inline
+In-Reply-To: <4565C205.8050300@lsrfire.ath.cx>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31138>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32143>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GhmNd-00084A-Jr for gcvg-git@gmane.org; Wed, 08 Nov
- 2006 13:18:10 +0100
+ esmtp (Exim 4.43) id 1GnGuM-0004RP-DB for gcvg-git@gmane.org; Thu, 23 Nov
+ 2006 16:54:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1754558AbWKHMSG (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 8 Nov 2006
- 07:18:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754559AbWKHMSF
- (ORCPT <rfc822;git-outgoing>); Wed, 8 Nov 2006 07:18:05 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:55752 "EHLO
- smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1754558AbWKHMSD (ORCPT
- <rfc822;git@vger.kernel.org>); Wed, 8 Nov 2006 07:18:03 -0500
-Received: by smtp-gw1.op5.se (Postfix, from userid 588) id 45FC26BCFE; Wed, 
- 8 Nov 2006 13:18:02 +0100 (CET)
-Received: from [192.168.1.20] (unknown [213.88.215.14]) by smtp-gw1.op5.se
- (Postfix) with ESMTP id A12AF6BCDF for <git@vger.kernel.org>; Wed,  8 Nov
- 2006 13:17:59 +0100 (CET)
-To: git@vger.kernel.org
+ S1755123AbWKWPyd (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 23 Nov 2006
+ 10:54:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756350AbWKWPyd
+ (ORCPT <rfc822;git-outgoing>); Thu, 23 Nov 2006 10:54:33 -0500
+Received: from dtp.xs4all.nl ([80.126.206.180]:23689 "HELO
+ abra2.bitwizard.nl") by vger.kernel.org with SMTP id S1755123AbWKWPyc (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 23 Nov 2006 10:54:32 -0500
+Received: (qmail 30562 invoked from network); 23 Nov 2006 16:54:31 +0100
+Received: from unknown (HELO zurix.bitwizard.nl) (192.168.234.26) by
+ abra2.bitwizard.nl with SMTP; 23 Nov 2006 16:54:31 +0100
+Received: from erik by zurix.bitwizard.nl with local (Exim 3.36 #1 (Debian))
+ id 1GnGuF-0002Cg-00; Thu, 23 Nov 2006 16:54:31 +0100
+To: Ren? Scharfe <rene.scharfe@lsrfire.ath.cx>
 Sender: git-owner@vger.kernel.org
 
-Matthieu Moy wrote:
-> Shawn Pearce <spearce@spearce.org> writes:
+On Thu, Nov 23, 2006 at 04:45:09PM +0100, Ren? Scharfe wrote:
+> Andy Whitcroft schrieb:
+> > You see packing attributes applied to similar things in the kernel.
+> > Perhaps they are relevant here?
+> > Is there not some kind of attribute thing we can apply to this structure
+> > to prevent the padding?  You see that in the kernel from time to time.
+> > 
+> > struct foo {
+> > } __attribute__((packed));
 > 
->> Today I was talking with someone that I collaborate with through
->> Git and they still seemed to not get the idea that all branches
->> in their repository are local, and that at least a 'git fetch'
->> is needed to update the local tracking branches to the version
->> in the central repository that we collaborate through.  And this
->> isn't the first time we've had such discussions.
-> 
-> To me, the biggest difficulty was to understand the vocubulary.
+> Yes, that would be nice, but unfortunately __attribute__ is no standard
+> C.
 
-I had that same problem, although I started with git and came from CVS / 
-SVN. I am sufficiently experienced with those two system to hope that I 
-wouldn't come across any similarities at all, so I wasn't expecting any, 
-so I didn't get too badly bitten.
+There is no standard C way to pack structures. Some compilers use
+#pragma's, gcc uses __attribute__((packed)).
 
-The Documentation/glossary.txt file is a very good place to start 
-reading, although I wouldn't object to it being re-arranged to have the 
-terms described there pop up "in order of appearance", so to speak. I 
-sent in a couple of patches to the glossary file whenever I encountered 
-something in gittish that I didn't understand. Sometimes I had managed 
-to guess the correct meaning and the patch got applied. In other cases I 
-had it completely wrong and other, more gittish-fluent, people corrected 
-the patches and amended the documentation that led to the confusion.
+>  Is there really a compiler that inserts padding between arrays of
+> unsigned chars?
 
-I think this is the only way to keep the docs alive and 
-newcomer-friendly. Sadly, neither the maintainer nor the active 
-contributors have newbie-eyes so we're relying on everyone who *are* new 
-to git to help keep git easy for new people.
+Yes, that compiler is called "gcc".
+
+#include <stdio.h>
+
+struct foo {
+        unsigned char a[3];
+        unsigned char b[3];
+};
+
+int main(void)
+{
+        printf("%d\n", sizeof(struct foo));
+        return 0;
+}
+
+On i386 that prints 6, on ARM it prints 8.
 
 
-> And the git Vs cogito increased the confusion.
-> 
-
-I've found that too. It's a shame that some things can be done with git 
-that isn't possible (or at least easy) with cogito and the other way 
-around. The shared but divergent terminology doesn't exactly help 
-either. Now I fear it's too late to do anything about it.
+Erik
 
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
++-- Erik Mouw -- www.harddisk-recovery.com -- +31 70 370 12 90 --
