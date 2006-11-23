@@ -1,91 +1,58 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: What's in git.git (stable)
-Date: Thu, 14 Dec 2006 12:35:37 -0800
-Message-ID: <7v1wn243mu.fsf@assigned-by-dhcp.cox.net>
-References: <7v4przfpir.fsf@assigned-by-dhcp.cox.net>
-	<200612140959.19209.andyparkins@gmail.com>
-	<7v7iwu93rv.fsf@assigned-by-dhcp.cox.net>
-	<200612141136.59041.andyparkins@gmail.com>
-	<20061214114546.GI1747@spearce.org> <8764ce6654.wl%cworth@cworth.org>
-	<20061214120518.GL1747@spearce.org>
-	<Pine.LNX.4.64.0612141251520.18171@xanadu.home>
-	<7vy7pa45m8.fsf@assigned-by-dhcp.cox.net>
-	<20061214200245.GP1747@spearce.org>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [PATCH/RFC] Implemented glob support in pull refspecs
+Date: Thu, 23 Nov 2006 08:46:29 +0000
+Message-ID: <200611230846.30602.andyparkins@gmail.com>
+References: <200611230833.45904.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 14 Dec 2006 20:36:04 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain;
+  charset="iso-8859-15"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 23 Nov 2006 08:46:55 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061214200245.GP1747@spearce.org> (Shawn Pearce's message of
-	"Thu, 14 Dec 2006 15:02:45 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=MdMC2UvPnkiV1SvMYn/GDAV1oIkb4j9AKBSEOv2rbEToIJ7tMABxTyS4pd0yLgh4gQ+xRl1u09Mqj2Ot4vfrVXC9lXXpMozXDlnRt3CjV13yGdS9BrkaA1JUsGEYeN6gbnbh6W6EDtu67gLP0hDDSuenhdHz+CMPQKT7z3Z/8oU=
+User-Agent: KMail/1.9.5
+In-Reply-To: <200611230833.45904.andyparkins@gmail.com>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34393>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GuxIz-0003LR-SZ for gcvg-git@gmane.org; Thu, 14 Dec
- 2006 21:35:50 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32122>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GnAE9-0002hN-B5 for gcvg-git@gmane.org; Thu, 23 Nov
+ 2006 09:46:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932864AbWLNUfl (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
- 15:35:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932899AbWLNUfl
- (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 15:35:41 -0500
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:44322 "EHLO
- fed1rmmtao10.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S932898AbWLNUfj (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006
- 15:35:39 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao10.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061214203539.YTTZ20715.fed1rmmtao10.cox.net@fed1rmimpo02.cox.net>; Thu, 14
- Dec 2006 15:35:39 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id ykbq1V00H1kojtg0000000; Thu, 14 Dec 2006
- 15:35:50 -0500
-To: Shawn Pearce <spearce@spearce.org>
+ S933279AbWKWIqe (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 23 Nov 2006
+ 03:46:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933282AbWKWIqe
+ (ORCPT <rfc822;git-outgoing>); Thu, 23 Nov 2006 03:46:34 -0500
+Received: from ug-out-1314.google.com ([66.249.92.172]:41409 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S933279AbWKWIqe
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 23 Nov 2006 03:46:34 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so381717uga for
+ <git@vger.kernel.org>; Thu, 23 Nov 2006 00:46:32 -0800 (PST)
+Received: by 10.67.103.7 with SMTP id f7mr4657877ugm.1164271592816; Thu, 23
+ Nov 2006 00:46:32 -0800 (PST)
+Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
+ ESMTP id l40sm11881960ugc.2006.11.23.00.46.32; Thu, 23 Nov 2006 00:46:32
+ -0800 (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Shawn Pearce <spearce@spearce.org> writes:
+Sorry for the resend; I didn't get a copy of my send from last night from the 
+mailing list so thought I hadn't sent it.
 
-> Does anyone on the mailing list really have an objection to having
-> reflogs on by default?
+Please ignore this dupe.
 
-When you talk about potential breakage for existing users, you
-should not be asking people on THIS list.  You instead should
-talk with or at least think about people on linux-kernel, x.org
-and wine people, and possibly others.  git is maturing, and we
-cannot expect that most of the users are paying attention to
-what is happening on this list anymore.
-
-I 100% agree that it makes sense to have reflog enabled for a
-repository with an associated worktree.  I would say that we do
-not even need it to be conditional on the configuration variable
-for such a repository.
-
-My answer to your question is:
-
-	kernel.org:/pub/scm/
-
-I would REALLY be worried to have reflog enabled at a public
-distribution point where the only ways the owners interact with
-it daily are 'git push' and 'git pull'.  As you mentioned, there
-is one extra potential receive-pack failure, and in general it
-is one more thing that can go wrong, and hard to notice breakage
-because it is on the other side of the connection.
-
-Worse yet, there is no easy way to garbage collect.  Even in an
-end-user repository with a worktree, the only way to garbage
-collect older reflog entries is to edit the reflog files to
-remove the top part.
-
-Maybe a check to say if $GIT_DIR is ".git" or ends with "/.git"
-then enable it and otherwise honor the configuration variable,
-without changing the default in the code (with your patch) nor
-in the default configuration ("enable for new repositories" as I
-suggested) might be a workable compromise.
+Andy
+-- 
+Dr Andy Parkins, M Eng (hons), MIEE
