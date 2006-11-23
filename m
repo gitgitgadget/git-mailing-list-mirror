@@ -1,91 +1,65 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: [RFC \ WISH] Add -o option to git-rev-list
-Date: Mon, 11 Dec 2006 18:28:46 +0100
-Message-ID: <e5bfff550612110928h41e05acah4f835caa3fa6fea5@mail.gmail.com>
-References: <e5bfff550612100338ye2ca2a0u1c8f29bbc59c5431@mail.gmail.com>
-	 <200612111026.23656.Josef.Weidendorfer@gmx.de>
-	 <e5bfff550612110452t5bb18517yc0cf8278d4d9948c@mail.gmail.com>
-	 <200612111428.29390.Josef.Weidendorfer@gmx.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Mon, 11 Dec 2006 17:29:06 +0000 (UTC)
-Cc: "Linus Torvalds" <torvalds@osdl.org>,
-	"Git Mailing List" <git@vger.kernel.org>,
-	"Junio C Hamano" <junkio@cox.net>,
-	"Alex Riesen" <raa.lkml@gmail.com>,
-	"Shawn Pearce" <spearce@spearce.org>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [PATCH 1/3] git-svn: error out from dcommit on a parent-less commit
+Date: Thu, 23 Nov 2006 14:54:03 -0800
+Message-ID: <1164322445180-git-send-email-normalperson@yhbt.net>
+NNTP-Posting-Date: Thu, 23 Nov 2006 22:54:36 +0000 (UTC)
+Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=ENT6yrBJHBp4roUIqccyW7K1Bq+7/fPx3L1G8tIaj+4l3xpK+wDZvsX8MuPNARRhLUp+Xzgd9B5mDbFtQN4N61+wzQiM+ZLzEQbrNY/oomZtVZuUWfFZTLOljKxbYa5oz0h2WFgVwp4U2q1yw06ATiU5cNqA4lhdZXhSrDqRQBo=
-In-Reply-To: <200612111428.29390.Josef.Weidendorfer@gmx.de>
-Content-Disposition: inline
+X-Mailer: git-send-email 1.4.4.1.g22a08
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34019>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GtoxP-000680-7c for gcvg-git@gmane.org; Mon, 11 Dec
- 2006 18:28:51 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32165>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GnNSR-0005y8-Mj for gcvg-git@gmane.org; Thu, 23 Nov
+ 2006 23:54:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1762953AbWLKR2s (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 11 Dec 2006
- 12:28:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762983AbWLKR2s
- (ORCPT <rfc822;git-outgoing>); Mon, 11 Dec 2006 12:28:48 -0500
-Received: from nz-out-0506.google.com ([64.233.162.235]:34318 "EHLO
- nz-out-0102.google.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with
- ESMTP id S1762953AbWLKR2r (ORCPT <rfc822;git@vger.kernel.org>); Mon, 11 Dec
- 2006 12:28:47 -0500
-Received: by nz-out-0102.google.com with SMTP id s1so829865nze for
- <git@vger.kernel.org>; Mon, 11 Dec 2006 09:28:47 -0800 (PST)
-Received: by 10.35.65.17 with SMTP id s17mr10753800pyk.1165858126836; Mon, 11
- Dec 2006 09:28:46 -0800 (PST)
-Received: by 10.35.93.11 with HTTP; Mon, 11 Dec 2006 09:28:46 -0800 (PST)
-To: "Josef Weidendorfer" <Josef.Weidendorfer@gmx.de>
+ S1757482AbWKWWyJ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 23 Nov 2006
+ 17:54:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757490AbWKWWyJ
+ (ORCPT <rfc822;git-outgoing>); Thu, 23 Nov 2006 17:54:09 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:2004 "EHLO hand.yhbt.net") by
+ vger.kernel.org with ESMTP id S1757482AbWKWWyH (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 23 Nov 2006 17:54:07 -0500
+Received: from hand.yhbt.net (localhost [127.0.0.1]) by hand.yhbt.net
+ (Postfix) with SMTP id ACB802DC034; Thu, 23 Nov 2006 14:54:05 -0800 (PST)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Thu, 23 Nov 2006
+ 14:54:05 -0800
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-On 12/11/06, Josef Weidendorfer <Josef.Weidendorfer@gmx.de> wrote:
-> On Monday 11 December 2006 13:52, Marco Costalba wrote:
-> > On 12/11/06, Josef Weidendorfer <Josef.Weidendorfer@gmx.de> wrote:
-> > > On Monday 11 December 2006 01:15, Marco Costalba wrote:
-> > > >               guiUpdateTimer.start(100, true);
-> > >
-> > > What is the result with "guiUpdateTimer.start(0, true);" ?
-> > ...
-> > IOW you suggest to use a brute force polling of the pipe.
->
-> Ah, yes. That is probably not what you want.
->
-> Why did you introduce the timer at all? What was the problem
-> with QProcess and handling its signal "data available" ?
->
+dcommit would unconditionally append "~1" to a commit in order
+to generate a diff.  Now we generate a meaningful error message
+if we try to generate an impossible diff.
 
-I did. Actually the released 1.5.3 version and all the verions before
-that do use QProcess, but I experimented an increase in performance
-reading the data  on a timer instead of on "data available" signal.
-BTW that observation led to all this stuff ;-)
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
+---
+ git-svn.perl |    7 +++++++
+ 1 files changed, 7 insertions(+), 0 deletions(-)
 
-The problem is that the frequency of the signal is very very high
-because the producer can write a big amount of data with great speed.
-We are talking of a signal "data available" each few ms.
-
-By the way of experimenting with QProcess I have found it's better a
-timer when the stream is very very fast, _then_ I have update the
-reading code to take _more_ adavntage of the big chunks we were
-reading with a low frequency timer and avoid a double copy, but the
-increase was _already_ present also with the double copy needed by the
-original 'small chunks handling' code activated by "data available"
-signal.
-
-If you take a look at released qgit you will see, in dataloader.cpp
-the reading slot called on the signal.
-
+diff --git a/git-svn.perl b/git-svn.perl
+index 80b7b87..f0db4af 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -589,6 +589,13 @@ sub dcommit {
+ 	chomp(my @refs = safe_qx(qw/git-rev-list --no-merges/, "$gs..HEAD"));
+ 	my $last_rev;
+ 	foreach my $d (reverse @refs) {
++		if (quiet_run('git-rev-parse','--verify',"$d~1") != 0) {
++			die "Commit $d\n",
++			    "has no parent commit, and therefore ",
++			    "nothing to diff against.\n",
++			    "You should be working from a repository ",
++			    "originally created by git-svn\n";
++		}
+ 		unless (defined $last_rev) {
+ 			(undef, $last_rev, undef) = cmt_metadata("$d~1");
+ 			unless (defined $last_rev) {
+-- 
+1.4.4.1.g22a08
