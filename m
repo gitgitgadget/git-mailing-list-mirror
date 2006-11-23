@@ -1,70 +1,76 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] INSTALL: no need to have GNU diff installed
-Date: Thu, 14 Dec 2006 11:40:21 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612141139540.3635@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,MSGID_FROM_MTA_HEADER,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+From: Sean <seanlkml@sympatico.ca>
+Subject: Re: git crash when cg-fetch:ing dash
+Date: Thu, 23 Nov 2006 11:18:20 -0500
+Message-ID: <BAYC1-PASMTP0184DDB7F3619F6158FB18AEE20@CEZ.ICE>
+References: <45656B3C.4090601@lsrfire.ath.cx>
+	<200611231554.kANFsv9h005228@laptop13.inf.utfsm.cl>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Thu, 14 Dec 2006 10:40:29 +0000 (UTC)
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Thu, 23 Nov 2006 16:18:53 +0000 (UTC)
+Cc: =?ISO-8859-1?B?UmVu6Q==?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
+	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-X-Y-GMX-Trusted: 0
+X-Originating-IP: [65.93.43.81]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Original-Message-Id: <20061123111820.50a6488a.seanlkml@sympatico.ca>
+In-Reply-To: <200611231554.kANFsv9h005228@laptop13.inf.utfsm.cl>
+X-Mailer: Sylpheed version 2.2.10 (GTK+ 2.10.4; i386-redhat-linux-gnu)
+X-OriginalArrivalTime: 23 Nov 2006 16:18:22.0403 (UTC) FILETIME=[FEEF9930:01C70F1A]
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34305>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Guo0o-0007go-PT for gcvg-git@gmane.org; Thu, 14 Dec
- 2006 11:40:27 +0100
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GnHHO-0000oH-Fb for gcvg-git@gmane.org; Thu, 23 Nov
+ 2006 17:18:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751922AbWLNKkY (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
- 05:40:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751941AbWLNKkY
- (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 05:40:24 -0500
-Received: from mail.gmx.net ([213.165.64.20]:60700 "HELO mail.gmx.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S1751922AbWLNKkX
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006 05:40:23 -0500
-Received: (qmail invoked by alias); 14 Dec 2006 10:40:22 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp024) with SMTP; 14 Dec 2006 11:40:22 +0100
-To: git@vger.kernel.org, junkio@cox.net
+ S1755887AbWKWQSX convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Thu, 23 Nov 2006 11:18:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755970AbWKWQSX
+ (ORCPT <rfc822;git-outgoing>); Thu, 23 Nov 2006 11:18:23 -0500
+Received: from bayc1-pasmtp01.bayc1.hotmail.com ([65.54.191.161]:30725 "EHLO
+ bayc1-pasmtp01.bayc1.hotmail.com") by vger.kernel.org with ESMTP id
+ S1755887AbWKWQSW convert rfc822-to-8bit (ORCPT <rfc822;git@vger.kernel.org>);
+ Thu, 23 Nov 2006 11:18:22 -0500
+Received: from linux1.attic.local ([65.93.43.81]) by
+ bayc1-pasmtp01.bayc1.hotmail.com over TLS secured channel with Microsoft
+ SMTPSVC(6.0.3790.1830); Thu, 23 Nov 2006 08:18:22 -0800
+Received: from guru.attic.local ([10.10.10.28]) by linux1.attic.local with
+ esmtp (Exim 4.43) id 1GnGLD-0003DH-HK; Thu, 23 Nov 2006 10:18:19 -0500
+To: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
 Sender: git-owner@vger.kernel.org
 
+On Thu, 23 Nov 2006 12:54:57 -0300
+"Horst H. von Brand" <vonbrand@inf.utfsm.cl> wrote:
 
-Since a long time, we have inbuilt diff generation.
+> Ren=E9 Scharfe <rene.scharfe@lsrfire.ath.cx> wrote:
+> > Horst H. von Brand schrieb:
+> > > I did:
+> > >   git clone http://gondor.apana.org.au/~herbert/dash/dash.git
+> > > and got:
+> > >   error: Unable to start request
+> > >   error: Could not interpret heads/master as something to pull
+> >=20
+> > It works for me with both the version of git that came with Ubuntu =
+6.10
+> > (1.4.1) and a self-compiled git 1.4.4.g5942. :-?
+>=20
+> Here it's git-1.4.4 (self-built from Junio's SRPM, on Fedora rawhide =
+i686).
 
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
----
- INSTALL |   10 ----------
- 1 files changed, 0 insertions(+), 10 deletions(-)
+Works fine here with 1.4.3.3.g869c.
 
-diff --git a/INSTALL b/INSTALL
-index b5dd9f0..e7aea60 100644
---- a/INSTALL
-+++ b/INSTALL
-@@ -72,16 +72,6 @@ Issues of note:
- 	- expat library; git-http-push uses it for remote lock
- 	  management over DAV.  Similar to "curl" above, this is optional.
- 
--	- "GNU diff" to generate patches.  Of course, you don't _have_ to
--	  generate patches if you don't want to, but let's face it, you'll
--	  be wanting to. Or why did you get git in the first place?
--
--	  Non-GNU versions of the diff/patch programs don't generally support
--	  the unified patch format (which is the one git uses), so you
--	  really do want to get the GNU one.  Trust me, you will want to
--	  do that even if it wasn't for git.  There's no point in living
--	  in the dark ages any more. 
--
-         - "wish", the Tcl/Tk windowing shell is used in gitk to show the
-           history graphically
- 
--- 
-1.4.4.2.ga1b439-dirty
+Horst, this is the second recent example of something not working in yo=
+ur
+environment that works for others.  Is it possible you have an old stra=
+y
+version of git installed in your ~/bin or something?  By the way, did y=
+ou
+ever resolve that other issue?
+
