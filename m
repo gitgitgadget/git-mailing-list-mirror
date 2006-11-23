@@ -1,65 +1,89 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: merlyn@stonehenge.com (Randal L. Schwartz)
-Subject: Re: latest update to git-svn blows up for me
-Date: 04 Dec 2006 03:41:43 -0800
-Message-ID: <86hcwbnb0o.fsf@blue.stonehenge.com>
-References: <863b7wnwcw.fsf@blue.stonehenge.com>
-	<20061204070021.GG1369@localdomain>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Mon, 4 Dec 2006 11:41:50 +0000 (UTC)
-Cc: git@vger.kernel.org
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [PATCH 2/3] git-svn: correctly handle revision 0 in SVN repositories
+Date: Thu, 23 Nov 2006 14:54:04 -0800
+Message-ID: <1164322446983-git-send-email-normalperson@yhbt.net>
+References: <1164322445180-git-send-email-normalperson@yhbt.net>
+NNTP-Posting-Date: Thu, 23 Nov 2006 22:54:35 +0000 (UTC)
+Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-x-mayan-date: Long count = 12.19.13.15.11; tzolkin = 5 Chuen; haab = 4 Mac
-In-Reply-To: <20061204070021.GG1369@localdomain>
-Original-Lines: 20
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+X-Mailer: git-send-email 1.4.4.1.g22a08
+In-Reply-To: <1164322445180-git-send-email-normalperson@yhbt.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33193>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GrCCi-0007GK-3K for gcvg-git@gmane.org; Mon, 04 Dec
- 2006 12:41:48 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32164>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GnNSQ-0005y8-1u for gcvg-git@gmane.org; Thu, 23 Nov
+ 2006 23:54:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S936111AbWLDLlp (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
- 06:41:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936106AbWLDLlp
- (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 06:41:45 -0500
-Received: from blue.stonehenge.com ([209.223.236.162]:63809 "EHLO
- blue.stonehenge.com") by vger.kernel.org with ESMTP id S936111AbWLDLlo (ORCPT
- <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006 06:41:44 -0500
-Received: from localhost (localhost [127.0.0.1]) by blue.stonehenge.com
- (Postfix) with ESMTP id 3D1458FD97; Mon,  4 Dec 2006 03:41:44 -0800 (PST)
-Received: from blue.stonehenge.com ([127.0.0.1]) by localhost
- (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024) with LMTP id
- 10024-01-98; Mon,  4 Dec 2006 03:41:43 -0800 (PST)
-Received: by blue.stonehenge.com (Postfix, from userid 1001) id 7E9268FD8C;
- Mon,  4 Dec 2006 03:41:43 -0800 (PST)
-To: Eric Wong <normalperson@yhbt.net>
+ S1757484AbWKWWyK (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 23 Nov 2006
+ 17:54:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757490AbWKWWyJ
+ (ORCPT <rfc822;git-outgoing>); Thu, 23 Nov 2006 17:54:09 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:3028 "EHLO hand.yhbt.net") by
+ vger.kernel.org with ESMTP id S1757484AbWKWWyI (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 23 Nov 2006 17:54:08 -0500
+Received: from hand.yhbt.net (localhost [127.0.0.1]) by hand.yhbt.net
+ (Postfix) with SMTP id E9FD07DC0A8; Thu, 23 Nov 2006 14:54:06 -0800 (PST)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Thu, 23 Nov 2006
+ 14:54:06 -0800
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
->>>>> "Eric" == Eric Wong <normalperson@yhbt.net> writes:
+some SVN repositories have a revision 0 (committed by no author
+and no date) when created; so when we need to ensure that we
+check any revision variables are defined, and not just
+non-zero.
 
-Eric> "Randal L. Schwartz" <merlyn@stonehenge.com> wrote:
->> 
->> Does this ring a bell?
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
+---
+ git-svn.perl |   14 ++++++++++----
+ 1 files changed, 10 insertions(+), 4 deletions(-)
 
-Eric> Nope.
-
-Eric> This is on r15941 of  https://svn.perl.org/parrot/trunk ?  I can't seem
-Eric> to reproduce this with git svn fetch -r15940:15941
-
-No, and that worked for me as well.  Apparently, I might have corrupted my
-metadata because I updated git-svn while I was using it.  Is there any way to
-reset the metadata without having to re-fetch 15000 revisions?
-
+diff --git a/git-svn.perl b/git-svn.perl
+index f0db4af..6feae56 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -232,7 +232,7 @@ sub rebuild {
+ 		my @commit = grep(/^git-svn-id: /,`git-cat-file commit $c`);
+ 		next if (!@commit); # skip merges
+ 		my ($url, $rev, $uuid) = extract_metadata($commit[$#commit]);
+-		if (!$rev || !$uuid) {
++		if (!defined $rev || !$uuid) {
+ 			croak "Unable to extract revision or UUID from ",
+ 				"$c, $commit[$#commit]\n";
+ 		}
+@@ -832,8 +832,14 @@ sub commit_diff {
+ 		print STDERR "Needed URL or usable git-svn id command-line\n";
+ 		commit_diff_usage();
+ 	}
+-	my $r = shift || $_revision;
+-	die "-r|--revision is a required argument\n" unless (defined $r);
++	my $r = shift;
++	unless (defined $r) {
++		if (defined $_revision) {
++			$r = $_revision
++		} else {
++			die "-r|--revision is a required argument\n";
++		}
++	}
+ 	if (defined $_message && defined $_file) {
+ 		print STDERR "Both --message/-m and --file/-F specified ",
+ 				"for the commit message.\n",
+@@ -2493,7 +2499,7 @@ sub extract_metadata {
+ 	my $id = shift or return (undef, undef, undef);
+ 	my ($url, $rev, $uuid) = ($id =~ /^git-svn-id:\s(\S+?)\@(\d+)
+ 							\s([a-f\d\-]+)$/x);
+-	if (!$rev || !$uuid || !$url) {
++	if (!defined $rev || !$uuid || !$url) {
+ 		# some of the original repositories I made had
+ 		# identifiers like this:
+ 		($rev, $uuid) = ($id =~/^git-svn-id:\s(\d+)\@([a-f\d\-]+)/);
 -- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
+1.4.4.1.g22a08
