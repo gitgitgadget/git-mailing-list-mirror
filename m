@@ -1,105 +1,106 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Cleaning up git user-interface warts
-Date: Wed, 15 Nov 2006 15:33:43 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0611151523290.3349@woody.osdl.org>
-References: <Pine.LNX.4.64.0611150950170.3349@woody.osdl.org>
- <200611151858.51833.andyparkins@gmail.com> <Pine.LNX.4.64.0611151111250.3349@woody.osdl.org>
- <f2b55d220611151139v66fba16ax97ce6b9966b33ce7@mail.gmail.com>
- <Pine.LNX.4.64.0611151203450.3349@woody.osdl.org> <Pine.LNX.4.64.0611151516360.2591@xanadu.home>
- <Pine.LNX.4.64.0611151226590.3349@woody.osdl.org> <87velgs9hx.wl%cworth@cworth.org>
- <Pine.LNX.4.64.0611151339500.3349@woody.osdl.org> <87psbos4pb.wl%cworth@cworth.org>
- <20061115230252.GH24861@spearce.org>
+From: Yann Dirson <ydirson@altern.org>
+Subject: Re: "stgit clean" has problems with removed generated files
+Date: Thu, 23 Nov 2006 20:28:31 +0100
+Message-ID: <20061123192831.GL5443@nan92-1-81-57-214-146.fbx.proxad.net>
+References: <20061123161135.GK5443@nan92-1-81-57-214-146.fbx.proxad.net> <b0943d9e0611230833y5ffc14d3q922a821744ad05d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Wed, 15 Nov 2006 23:34:27 +0000 (UTC)
-Cc: Carl Worth <cworth@cworth.org>, Nicolas Pitre <nico@cam.org>,
-	"Michael K. Edwards" <medwards.linux@gmail.com>,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Thu, 23 Nov 2006 19:29:27 +0000 (UTC)
+Cc: GIT list <git@vger.kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061115230252.GH24861@spearce.org>
-X-MIMEDefang-Filter: osdl$Revision: 1.156 $
-X-Scanned-By: MIMEDefang 2.36
+Content-Disposition: inline
+In-Reply-To: <b0943d9e0611230833y5ffc14d3q922a821744ad05d@mail.gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31528>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32153>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GkUGo-0000e5-9t for gcvg-git@gmane.org; Thu, 16 Nov
- 2006 00:34:19 +0100
+ esmtp (Exim 4.43) id 1GnKG9-0001NR-UF for gcvg-git@gmane.org; Thu, 23 Nov
+ 2006 20:29:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1162066AbWKOXeP (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
- 18:34:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1162048AbWKOXeP
- (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 18:34:15 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:15293 "EHLO smtp.osdl.org") by
- vger.kernel.org with ESMTP id S1162066AbWKOXeO (ORCPT
- <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 18:34:14 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
- smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kAFNXioZ008994
- (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Wed, 15
- Nov 2006 15:33:45 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
- shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kAFNXgFv002558; Wed, 15 Nov
- 2006 15:33:43 -0800
-To: Shawn Pearce <spearce@spearce.org>
+ S1756194AbWKWT3S (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 23 Nov 2006
+ 14:29:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756361AbWKWT3S
+ (ORCPT <rfc822;git-outgoing>); Thu, 23 Nov 2006 14:29:18 -0500
+Received: from smtp3-g19.free.fr ([212.27.42.29]:33483 "EHLO
+ smtp3-g19.free.fr") by vger.kernel.org with ESMTP id S1756194AbWKWT3R (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 23 Nov 2006 14:29:17 -0500
+Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net
+ [81.57.214.146]) by smtp3-g19.free.fr (Postfix) with ESMTP id 1D41A4A25B;
+ Thu, 23 Nov 2006 20:29:16 +0100 (CET)
+Received: by gandelf.nowhere.earth (Postfix, from userid 1000) id 0782F1F066;
+ Thu, 23 Nov 2006 20:28:32 +0100 (CET)
+To: Catalin Marinas <catalin.marinas@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-
-
-On Wed, 15 Nov 2006, Shawn Pearce wrote:
+On Thu, Nov 23, 2006 at 04:33:42PM +0000, Catalin Marinas wrote:
+> >fatal: Untracked working tree file 'include/asm-arm/constants.h' would be  
+> >overwritten by merge.
 > 
-> I've taught the same fetch first, then merge strategy.  Nobody I
-> know in meat-space pulls from a remote URL and merges in one shot;
+> That's a git error and I think it is the correct behaviour. It is
+> safer to notify that a local file is overridden by a merge/switch
+> operation rather than just losing its content.
 
-Actually, with different people involved it's _much_ better to do it in 
-one shot.
+Right, I do not discuss the behaviour of git here.  But when I first
+encountered this issue, I was really wondering about what was
+happenning.  It would be really helpful in such a case, if stgit was
+able to pinpoint the precise patch which could not be popped.  It could
+also be helpful to tell when popping patches - currently it's done
+"behind my back", and I could only understand what was happenning by
+reading the code.
 
-Why? Because doing a separate "fetch to local space" + "merge from local 
-space" actually loses the information on what you are merging.
 
-It's a lot more useful to have a merge message like
+> >The root issue seems to be that stgit has problem with such generated
+> >files, ie., files that were removed from version-control, but can still
+> >legitimately exist in the tree.  Dealing with them could possibly be
+> >done (eg. allowing to back them up, and restore them when pushing the
+> >annoying patch), but is not a trivial issue (eg. we still need to guard
+> >the user against real conflicts).
+> 
+> That's a GIT issue more than an StGIT one, unless GIT already has a
+> way to deal with this and StGIT doesn't pass the right options.
 
-	Merge branch 'for-linus' of git://one.firstfloor.org/home/andi/git/linux-2.6
+I'm not sure if git itself should add support for this.  IMHO, such an issue
+is more related to the nature of patch management - git itself does not
+have a need to repetedly pop/push paches, with related merge
+hassles like this one.
 
-than one like
 
-	Merge branch 'for-linus'
+> >First, when cleaning patches, we could first look up which patches are
+> >to be removed, and only pop the necessary ones.
+> 
+> OK, I mentioned it above as well. This should really be done for
+> efficiency but it might not solve the problem if the empty patch is
+> deeper into the stack.
 
-which is what you get if you fetched it first.
+Right, it could be advertised as good practice to burry those near the
+bottom of the stack, and anyway to keep actively-changing ones near the
+top.
 
-Of course, in a situation like git itself, where most of the merges are 
-stuff that Junio has had pending in his own tree ('maint' branch etc), 
-things are different. But in a system where people actually use separate 
-trees, there really is an advantage to consider the fundamental operation 
-to be the "pull", not the "merge".
 
-Again, the kernel really is more distributed than most projects, but this 
-is another thing people should recognize: git has been designed for "true 
-distributed development". Not the "fake" kind. Not the "I merge mainly my 
-own branches" kind of thing. Truly distributed.
+> >BTW, maybe it would those make sense to allowthose special ranges in
+> >most places a range is valid.
+> 
+> Is there any other place where ranges could be used but aren't?
 
-And in a truly distributed situation, "pull" is strictly more powerful 
-than a separate "fetch" + separate "merge".
+Hm, let's see...  I'd say "export" (I have missed it already), "files"
+and maybe "commit" and "pick", although the latter would require a syntax
+for ranges in other branch.
 
-In other words, an SCM that does "pull" is _better_ than an SCM that does 
-"merge". You can implement "merge" as a special case of "pull" (which we 
-do), but you cannot conveniently do it the other way around without having 
-to tie them together some other way (ie you could have a "remember the 
-last place we fetched this branch from in order to tie the fetch and the 
-merge together" - but please realize that that is exactly what "pull" 
-_is_).
+While reviewing the various commands for this, I realized that "stg pop
+<patch>" semantics is significantly different from "stg push <patch>" -
+ie. it is an equivalent of "goto".  What about turning it into a
+float+pop, to better match the "push" behaviour ?
 
-So I will generally do a "git pull" (possibly followed by a "git reset 
---hard ORIG_HEAD" if I decided it wasn't good) over a "git fetch" + "git 
-merge". Exactly because the "pull" operation is actually more powerful.
+I also realized that "stg help <command>" output does not go through to
+the pager, while eg. the help for "mail" is quite long.
 
-Maybe people who aren't in my position don't always appreciate the _power_ 
-of git. The reason "merge" is a second-class citizen is simply because IT 
-SHOULD BE.
-
+Best regards,
+-- 
