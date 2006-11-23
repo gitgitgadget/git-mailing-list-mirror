@@ -2,80 +2,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [DRAFT] Branching and merging with git
-Date: Fri, 17 Nov 2006 10:37:50 +0100
-Organization: At home
-Message-ID: <ejjvqr$k0v$1@sea.gmane.org>
-References: <20061116221701.4499.qmail@science.horizon.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] git-cvsimport: add suport for CVS pserver method HTTP/1.x  proxying
+Date: Thu, 23 Nov 2006 14:01:37 -0800
+Message-ID: <7v64d5keke.fsf@assigned-by-dhcp.cox.net>
+References: <11642344172790-git-send-email-iarenuno@eteo.mondragon.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Fri, 17 Nov 2006 09:37:18 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Thu, 23 Nov 2006 22:01:49 +0000 (UTC)
+Cc: git@vger.kernel.org, Martin Langhoff <martin@catalyst.net.nz>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 26
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+In-Reply-To: <11642344172790-git-send-email-iarenuno@eteo.mondragon.edu>
+	(Inaki Arenaza's message of "Wed, 22 Nov 2006 23:26:57 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31681>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32160>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gl09m-0006Ul-C1 for gcvg-git@gmane.org; Fri, 17 Nov
- 2006 10:37:10 +0100
+ esmtp (Exim 4.43) id 1GnMda-0002AJ-JJ for gcvg-git@gmane.org; Thu, 23 Nov
+ 2006 23:01:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1755037AbWKQJgr convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Fri, 17 Nov 2006 04:36:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755616AbWKQJgr
- (ORCPT <rfc822;git-outgoing>); Fri, 17 Nov 2006 04:36:47 -0500
-Received: from main.gmane.org ([80.91.229.2]:59525 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S1755037AbWKQJgi (ORCPT
- <rfc822;git@vger.kernel.org>); Fri, 17 Nov 2006 04:36:38 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1Gl09E-0006Q7-7g for git@vger.kernel.org; Fri, 17 Nov 2006 10:36:36 +0100
-Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Fri, 17 Nov 2006 10:36:36 +0100
-Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Fri, 17 Nov 2006
- 10:36:36 +0100
-To: git@vger.kernel.org
+ S934138AbWKWWBj (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 23 Nov 2006
+ 17:01:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934147AbWKWWBj
+ (ORCPT <rfc822;git-outgoing>); Thu, 23 Nov 2006 17:01:39 -0500
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:57311 "EHLO
+ fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP id S934138AbWKWWBj
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 23 Nov 2006 17:01:39 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao10.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061123220138.HFMK5575.fed1rmmtao10.cox.net@fed1rmimpo02.cox.net>; Thu, 23
+ Nov 2006 17:01:38 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id qN1m1V0081kojtg0000000; Thu, 23 Nov 2006
+ 17:01:46 -0500
+To: Inaki Arenaza <iarenuno@eteo.mondragon.edu>
 Sender: git-owner@vger.kernel.org
 
-linux@horizon.com wrote:
+Thanks.  The patch looks very sane, isolated to be safe enough,
+and useful.
 
-> Either way, they're just a 41-byte file that contains a 40-byte hex
-> object ID, plus a newline. =A0Tags are stored in .git/refs/tags, and =
-heads
-> are stored in .git/refs/heads. =A0Creating a new branch is literally =
-just
-> picking a file name and writing the ID of an existing commit into it.
+Except that this statement made me go "huh?" wondering what it
+would do to the $filehandle to evaluate <$filehandle> in a void
+context:
 
-This is an implementation detail, and is not true in repository with
-packed refs. Although usually (by default) only tags are packed.
++			# Skip the empty line of the proxy server output
++			<$s>;
 
-But it remains true that ref (be it branch or tag) is just name and ID.
+and I ended up looking in perlop.pod and came up empty.
 
-> The git programs enforce the immutability of tags, but that's a safet=
-y
-> feature, not something fundamental. =A0You can rename a tag to the he=
-ads
-> directory and go wild.
+The "I/O Operators" section talks about evaluating <$s> in a
+scalar context (i.e. "$rep = <$s>"), which we all know would
+return a single line, and in list context, which swallows
+everything up to EOF, an obvious disaster for this particular
+use.  I couldn't find how it is defined to behave in a void
+context.  By experiments I know this returns only one line, but
+it leaves me feeling somewhat uneasy.
 
-You can have only refs to commit objects in heads directory (and I hope
-this is verified by fsck-objects), you can have refs to tag objects
-(heavyweight tags), to commits (lightweight tags), to blobs (for exampl=
-e
-public PGP key used for signing tags), to trees (I guess unused).
+Also it has a style inconsistency between "if(expression) {" and
+"if(expression){", and I do not like either of them, but fixing
+that should be left to a separate patch.
 
---=20
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
-
+I'll apply this unless Martin or other people on the list who
+have stake in cvsimport objects.
