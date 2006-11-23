@@ -1,68 +1,68 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: Do not use esc_html in esc_path
-Date: Sat, 25 Nov 2006 10:54:04 +0100
-Message-ID: <200611251054.04295.jnareb@gmail.com>
-References: <11644442392444-git-send-email-jnareb@gmail.com> <7v3b876esd.fsf@assigned-by-dhcp.cox.net>
+From: Yann Dirson <ydirson@altern.org>
+Subject: [PATCH 3/4] Optimize stg goto in the pop case.
+Date: Fri, 24 Nov 2006 00:17:03 +0100
+Message-ID: <20061123231658.9769.81157.stgit@gandelf.nowhere.earth>
+References: <20061123230721.9769.38403.stgit@gandelf.nowhere.earth>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sat, 25 Nov 2006 09:52:38 +0000 (UTC)
-Cc: git@vger.kernel.org
+NNTP-Posting-Date: Thu, 23 Nov 2006 23:18:12 +0000 (UTC)
+Cc: GIT list <git@vger.kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=EmwHp9hVvrPHy3XASnkGt5rEiAF7rzc4e4MABwxRGkaF4gBl1Dow4xQnIRTyaNue0lw+dJgBNT8COyc+qBnjFBrTd4KJ+i9nlTnPvRsqXp6oymK8zVik0r6mbd0XKLxhGf00rAdwJVddp9MIYj+guzOdRztzOSANHFSxMglx/2U=
-User-Agent: KMail/1.9.3
-In-Reply-To: <7v3b876esd.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+In-Reply-To: <20061123230721.9769.38403.stgit@gandelf.nowhere.earth>
+User-Agent: StGIT/0.11
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32273>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32173>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GnuD0-0007y7-1R for gcvg-git@gmane.org; Sat, 25 Nov
- 2006 10:52:30 +0100
+ esmtp (Exim 4.43) id 1GnNpa-0001iD-GG for gcvg-git@gmane.org; Fri, 24 Nov
+ 2006 00:18:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S966382AbWKYJw0 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 25 Nov 2006
- 04:52:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966377AbWKYJw0
- (ORCPT <rfc822;git-outgoing>); Sat, 25 Nov 2006 04:52:26 -0500
-Received: from ug-out-1314.google.com ([66.249.92.171]:60895 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S966382AbWKYJwZ
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 25 Nov 2006 04:52:25 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so824846uga for
- <git@vger.kernel.org>; Sat, 25 Nov 2006 01:52:23 -0800 (PST)
-Received: by 10.67.26.7 with SMTP id d7mr8582489ugj.1164448343753; Sat, 25
- Nov 2006 01:52:23 -0800 (PST)
-Received: from host-81-190-24-209.torun.mm.pl ( [81.190.24.209]) by
- mx.google.com with ESMTP id e33sm15058840ugd.2006.11.25.01.52.23; Sat, 25 Nov
- 2006 01:52:23 -0800 (PST)
-To: Junio C Hamano <junkio@cox.net>
+ S934253AbWKWXSG (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 23 Nov 2006
+ 18:18:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934255AbWKWXSG
+ (ORCPT <rfc822;git-outgoing>); Thu, 23 Nov 2006 18:18:06 -0500
+Received: from smtp2-g19.free.fr ([212.27.42.28]:63965 "EHLO
+ smtp2-g19.free.fr") by vger.kernel.org with ESMTP id S934253AbWKWXSF (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 23 Nov 2006 18:18:05 -0500
+Received: from bylbo.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net
+ [81.57.214.146]) by smtp2-g19.free.fr (Postfix) with ESMTP id 3AAC07D0A; Fri,
+ 24 Nov 2006 00:18:04 +0100 (CET)
+Received: from gandelf.nowhere.earth ([10.0.0.5] ident=dwitch) by
+ bylbo.nowhere.earth with esmtp (Exim 4.62) (envelope-from
+ <ydirson@altern.org>) id 1GnNpY-0002t2-6j; Fri, 24 Nov 2006 00:18:08 +0100
+To: Catalin Marinas <catalin.marinas@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
->
->> ---
->> This patch was send to git mailing list; I don't know if it
->> was missed, or rejected.
-> 
-> I do not remember looking at it deeply, so probably it was just
-> lost in the noise.
-> 
-> Unless there was a list discussion that was unfavorable, that
-> is; but I do not recall one and the patch looks sane.
 
-There was no discussion, so probably the patch was just lost in the 
-noise. It happens.
--- 
-Jakub Narebski
+
+
+Signed-off-by: Yann Dirson <ydirson@altern.org>
+---
+
+ stgit/commands/goto.py |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/stgit/commands/goto.py b/stgit/commands/goto.py
+index 1b62d1c..e129b8d 100644
+--- a/stgit/commands/goto.py
++++ b/stgit/commands/goto.py
+@@ -45,11 +45,11 @@ def func(parser, options, args):
+     check_head_top_equal()
+ 
+     applied = crt_series.get_applied()
+-    applied.reverse()
+     unapplied = crt_series.get_unapplied()
+     patch = args[0]
+ 
+     if patch in applied:
++        applied.reverse()
+         patches = applied[:applied.index(patch)]
+         pop_patches(patches)
