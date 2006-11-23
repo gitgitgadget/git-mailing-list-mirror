@@ -1,104 +1,103 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 1/2] Allow users to require source branch on git-checkout -b.
-Date: Thu, 07 Dec 2006 22:31:52 -0800
-Message-ID: <7vac1yoq3r.fsf@assigned-by-dhcp.cox.net>
-References: <20061207100152.GA12966@spearce.org>
-	<7vlkljsd1k.fsf@assigned-by-dhcp.cox.net>
-	<20061207195715.GG12143@spearce.org>
-	<7v64cns8nf.fsf@assigned-by-dhcp.cox.net>
-	<20061207214053.GC31035@fieldses.org>
-	<20061207215914.GC12502@spearce.org>
-	<20061208044516.GC5939@fieldses.org>
-	<20061208055938.GB13999@spearce.org>
+From: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
+Subject: Pull and fetch
+Date: Thu, 23 Nov 2006 20:39:50 +0100
+Message-ID: <20061123203950.5d47421f@paolo-desktop>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 8 Dec 2006 06:32:00 +0000 (UTC)
-Cc: git@vger.kernel.org, "J. Bruce Fields" <bfields@fieldses.org>
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 23 Nov 2006 19:40:16 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061208055938.GB13999@spearce.org> (Shawn Pearce's message of
-	"Fri, 8 Dec 2006 00:59:38 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:date:from:to:subject:message-id:x-mailer:mime-version:content-type:content-transfer-encoding;
+        b=gVvPhfb7LscQ8lAjvPuhchdJVCITH1WCYXNvJT7ZHUCfeR3LwyiP5h0iKQ+I3El/B/eGTUeOdXf4wi+lqZsdx5+/kG82g4rSMfpcv7HhGU76/TaxvV15sa8kUeapnu2Qk9jTrHbvtHgvxGdaOwERcEUxa5QlYnkDHwYCiJMsE0g=
+X-Mailer: Sylpheed-Claws 1.0.5 (GTK+ 1.2.10; i486-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33663>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GsZH4-0002ds-0M for gcvg-git@gmane.org; Fri, 08 Dec
- 2006 07:31:58 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32154>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GnKQb-0003jX-Rd for gcvg-git@gmane.org; Thu, 23 Nov
+ 2006 20:40:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1424803AbWLHGby (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
- 01:31:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1424804AbWLHGby
- (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 01:31:54 -0500
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:52663 "EHLO
- fed1rmmtao10.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1424803AbWLHGbx (ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Dec 2006
- 01:31:53 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao10.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061208063153.FGZS20715.fed1rmmtao10.cox.net@fed1rmimpo02.cox.net>; Fri, 8
- Dec 2006 01:31:53 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id w6Y31V00j1kojtg0000000; Fri, 08 Dec 2006
- 01:32:04 -0500
-To: Shawn Pearce <spearce@spearce.org>
+ S1757456AbWKWTj6 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 23 Nov 2006
+ 14:39:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757458AbWKWTj6
+ (ORCPT <rfc822;git-outgoing>); Thu, 23 Nov 2006 14:39:58 -0500
+Received: from nf-out-0910.google.com ([64.233.182.185]:27059 "EHLO
+ nf-out-0910.google.com") by vger.kernel.org with ESMTP id S1757456AbWKWTj5
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 23 Nov 2006 14:39:57 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so983588nfa for
+ <git@vger.kernel.org>; Thu, 23 Nov 2006 11:39:56 -0800 (PST)
+Received: by 10.49.10.3 with SMTP id n3mr4810855nfi.1164310795956; Thu, 23
+ Nov 2006 11:39:55 -0800 (PST)
+Received: from paolo-desktop ( [87.0.67.108]) by mx.google.com with ESMTP id
+ z73sm7006308nfb.2006.11.23.11.39.55; Thu, 23 Nov 2006 11:39:55 -0800 (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Shawn Pearce <spearce@spearce.org> writes:
+Hi all,
+I'm still reading git tutorial.txt and I'm again confused.
 
->> But my main complaint is just that I wouldn't want to see the behavior
->> of defaulting to HEAD--behavior which is simple, easy to explain, and
->> shared by most other git commands--by something significantly more
->> complicated.  That's more a complaint about Junio's suggestion than
->> yours, though.
->
-> True, defaulting to HEAD is something that is done almost everywhere.
-> Changing it for `git checkout -b` may surprise a lot of people,
-> almost as much as --index vs. --cached.
+  A more cautious Alice might wish to examine Bob's changes before
+  pulling them.  She can do this by creating a temporary branch just
+  for the purpose of studying Bob's changes:
 
-I did not mean to change the default to something other than
-HEAD depending on the configuration.
+  -------------------------------------
+  $ git fetch /home/bob/myrepo master:bob-incoming
+  -------------------------------------
 
-> (0) proceed if there is an explicit branch point specified on
->     the command like, just like now;
+  which fetches the changes from Bob's master branch into a new branch
+  named bob-incoming.  (Unlike git pull, git fetch just fetches a copy
+  of Bob's line of development without doing any merging).  Then
 
-... which is the same as before.
+  -------------------------------------
+  $ git log -p master..bob-incoming
+  -------------------------------------
 
-> (1) allow omission of branch-point if the current branch has
->     allowbranchbydefault configuration set as in above.  A new
->     branch is created forking off of the current HEAD;
+  shows a list of all the changes that Bob made since he branched from
+  Alice's master branch.
 
-... which allows people to do the same as before, but only on
-selected "primary" branches;
+OK, make sense. So let's try with an experiment:
+paolo@paolo-desktop:~$ mkdir test
+paolo@paolo-desktop:~$ cd test
+paolo@paolo-desktop:~/test$ git-init-db 
+defaulting to local storage area
+paolo@paolo-desktop:~/test$ git fetch ../git master:testbranch
+warning: no common commits
+remote: Generating pack...
+[skip]
+paolo@paolo-desktop:~/test$ git pull ../git master:testbranchpull
+* refs/heads/testbranchpull: storing branch 'master' of ../git
+  commit: e945f95
 
-> (2) allow omission of branch-point if no branch has such
->     configuration; in other words, existing repositories that
->     do not have the allowbranchbydefault configuration anywhere
->     are not affected.  A new branch is created forking off of
->     the current HEAD;
+Now I have 3 branches:
+paolo@paolo-desktop:~/test$ git branch
+* master
+  testbranch
+  testbranchpull
 
-... which allows people to keep using the current behaviour in
-existing repositories;
+All the branches have the same content, I expect to see differences between testbranch 
+and testbranchpull. The first one is the end result of a fetch, the second one is
+the end result of a pull.
 
-> (3) otherwise, it barfs if you do not give an explicit
->     branch-point.
+git status always says:
+  nothing to commit
 
-... but a newly created repositories would have an
-allowbranchbydefault entry on "master" (and only on "master"),
-which means new people would be prevented from making mistakes
-when on a non-master branch 'foo':
+Why?
+What will happen if I repeat the same commands:
+  git fetch ../git master:testbranch
+  git pull ../git master:testbranchpull
+after a change in the git master branch?
 
-	$ git branch bar
+Thanks in advance?
 
-and end up a foobar branch that is not based on 'master'.  They
-will instead get an error message that says "Hey, are you sure
-you want to fork off of this branch 'foo'?"
-
-But I do not deeply care about this.  An option to disable
-"default to HEAD" altogether is fine.
+Kind regards,
+Paolo Ciarrocchi
