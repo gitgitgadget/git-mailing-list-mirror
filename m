@@ -1,115 +1,73 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Han-Wen Nienhuys <hanwen@xs4all.nl>
-Subject: Re: For all you darcs lovers: git-hunk-commit
-Date: Wed, 06 Dec 2006 01:19:47 +0100
-Message-ID: <45760CA3.9060003@xs4all.nl>
-References: <Pine.LNX.4.63.0612051936480.28348@wbgn013.biozentrum.uni-wuerzburg.de>
-Reply-To: hanwen@xs4all.nl
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [PATCH 3/3] git-fetch: allow glob pattern in refspec
+Date: Thu, 23 Nov 2006 08:55:02 +0000
+Message-ID: <200611230855.04124.andyparkins@gmail.com>
+References: <7vzmaik4mi.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 6 Dec 2006 00:19:50 +0000 (UTC)
+NNTP-Posting-Date: Thu, 23 Nov 2006 08:55:28 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 66
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 82-171-213-190.dsl.ip.tiscali.nl
-User-Agent: Thunderbird 1.5.0.8 (X11/20061107)
-In-Reply-To: <Pine.LNX.4.63.0612051936480.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=VrSp1JlWunWg7kiBTVufd+YNO0j587jwLXhYF+eqd5KvClMde1xIVSkfxG5qgfZl3rmBFvNE8uIHGaILq9OvkaeS2JC5t1ji8PGl1QtOSiL+msr96B2au2fjXthTMkMkUQWMzKRVsp5j/YJh96AkMgKX0jPtTEQ2UEb97kXKLew=
+User-Agent: KMail/1.9.5
+In-Reply-To: <7vzmaik4mi.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33392>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GrkVp-0004an-N4 for gcvg-git@gmane.org; Wed, 06 Dec
- 2006 01:19:50 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32123>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GnAMW-0004pR-ET for gcvg-git@gmane.org; Thu, 23 Nov
+ 2006 09:55:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1758661AbWLFATr (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 5 Dec 2006
- 19:19:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758687AbWLFATr
- (ORCPT <rfc822;git-outgoing>); Tue, 5 Dec 2006 19:19:47 -0500
-Received: from main.gmane.org ([80.91.229.2]:49594 "EHLO ciao.gmane.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1758661AbWLFATq
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 5 Dec 2006 19:19:46 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1GrkVh-0001dl-LB for git@vger.kernel.org; Wed, 06 Dec 2006 01:19:41 +0100
-Received: from 82-171-213-190.dsl.ip.tiscali.nl ([82.171.213.190]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Wed, 06 Dec 2006 01:19:41 +0100
-Received: from hanwen by 82-171-213-190.dsl.ip.tiscali.nl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Wed, 06 Dec 2006
- 01:19:41 +0100
+ S1756739AbWKWIzL (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 23 Nov 2006
+ 03:55:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755381AbWKWIzL
+ (ORCPT <rfc822;git-outgoing>); Thu, 23 Nov 2006 03:55:11 -0500
+Received: from ug-out-1314.google.com ([66.249.92.168]:29918 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S933299AbWKWIzI
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 23 Nov 2006 03:55:08 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so383049uga for
+ <git@vger.kernel.org>; Thu, 23 Nov 2006 00:55:07 -0800 (PST)
+Received: by 10.66.232.9 with SMTP id e9mr4689772ugh.1164272107148; Thu, 23
+ Nov 2006 00:55:07 -0800 (PST)
+Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
+ ESMTP id x33sm11848319ugc.2006.11.23.00.55.06; Thu, 23 Nov 2006 00:55:07
+ -0800 (PST)
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Johannes Schindelin escreveu:
-> I was inspired by Han-Wen. This script allows you to commit selected hunks 
+On Thursday 2006 November 23 07:24, Junio C Hamano wrote:
 
-Wow!
+>  * Andy, I think this does the same thing as you wanted to do,
+>    but is cleaner implementation-wise and also at the concept
 
-> In darcs mode, all hunks are presented one by one, and you are asked if 
-> you want to commit this or not. If you make a mistake: ^C and back to 
-> start. I do not really know darcs, so this might not be how it works -- I 
-> did not find any good documentation how a "darcs record" looks like.
+It certainly is.  Looking at your implementation I see that I was worrying 
+unnecessarily about passing extra globals/parameters to git-parse-remote.  
+Your version is much better than mine; and I see that noone else calls 
+get_remote_refs_for_fetch anyway.
 
+>    level, to pretend as if the user listed the expanded form in
+>    the configuration.  I deliberately decided not to apply the
+>    wildcard expansion on refspecs that came from command line,
+>    but if we wanted to we can move the expand_refs_wildcard call
+>    a few lines down to make it also apply to them.
 
-This is the interactive interface for commits in Darcs. It uses the
-same interface for pushing and pulling, where I mostly use y/n/a/d but
-sometimes the other letters too.
-
-
-****
-Shall I record this change? (1/?)  [ynWsfqadjkc], or ? for help: ?
-How to use record...
-y: record this patch
-n: don't record it
-w: wait and decide later, defaulting to no
-
-s: don't record the rest of the changes to this file
-f: record the rest of the changes to this file
-
-d: record selected patches, skipping all the remaining patches
-a: record all the remaining patches
-q: cancel record
-
-j: skip to next patch
-k: back up to previous patch
-c: calculate number of patches
-h or ?: show this help
-
-<Space>: accept the current default (which is capitalized)
-****
+That's probably the most sensible method.  Using globs on the command line 
+could get people into trouble if they accidentally hit a shell expansion.
 
 
-
-If you want to get a feel for it, grab darcs and run
-
-  darcs init
-  echo hello > hello
-  darcs add
-  darcs record
-  
-
-For a really neat implementation of per-hunk commits, try running
-darcsum in Emacs
-
-
-> done < <(git ls-files --modified -z)
-
-> 	done < <(git diff "$filename")
-
-> 	done < <(echo ${hunks[$index]} | tr , '\n')
-
-am I running the wrong bash? it barf on this. Don't you mean $(echo ... )
-
-Frankly, I am amazed that people write things in bash at all--I vowed never
-to write bash again a couple of years ago.  If you start doing arrays and
-counting, wouldn't a more high-level language be suitable?
-
+Andy
 -- 
- Han-Wen Nienhuys - hanwen@xs4all.nl - http://www.xs4all.nl/~hanwen
+Dr Andy Parkins, M Eng (hons), MIEE
