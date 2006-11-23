@@ -1,83 +1,60 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_ADSP_NXDOMAIN,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Whitcroft <apw@shadowen.org>
-Subject: Re: git bug? + question
-Date: Mon, 06 Nov 2006 12:32:27 +0000
-Message-ID: <454F2B5B.8090405@shadowen.org>
-References: <buoejsme6ho.fsf@dhapc248.dev.necel.com> <200611041852.23867.Josef.Weidendorfer@gmx.de> <454F0636.1060406@shadowen.org> <200611061200.08972.Josef.Weidendorfer@gmx.de>
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: sizeof(struct ...)
+Date: Thu, 23 Nov 2006 18:57:00 +0100
+Message-ID: <4565E0EC.4030709@lsrfire.ath.cx>
+References: <20061123101609.1711.qmail@8b73034525b1a6.315fe32.mid.smarden.org> <45659781.5050005@lsrfire.ath.cx> <4565A46C.6090805@lsrfire.ath.cx> <4565A866.8020201@shadowen.org> <4565C205.8050300@lsrfire.ath.cx> <20061123155431.GD6581@harddisk-recovery.com> <4565C8F4.6000606@lsrfire.ath.cx> <4565CA02.20602@shadowen.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Mon, 6 Nov 2006 12:33:14 +0000 (UTC)
-Cc: Shawn Pearce <spearce@spearce.org>, Sean <seanlkml@sympatico.ca>,
-	Junio C Hamano <junkio@cox.net>, Miles Bader <miles@gnu.org>,
-	git@vger.kernel.org,
-	=?ISO-8859-1?Q?Karl_?= =?ISO-8859-1?Q?Hasselstr=F6m?= 
-	<kha@treskal.com>
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Thu, 23 Nov 2006 17:57:18 +0000 (UTC)
+Cc: Erik Mouw <erik@harddisk-recovery.com>,
+	Gerrit Pape <pape@smarden.org>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.7 (X11/20060927)
-In-Reply-To: <200611061200.08972.Josef.Weidendorfer@gmx.de>
-X-Enigmail-Version: 0.94.0.0
-OpenPGP: url=http://www.shadowen.org/~apw/public-key
+User-Agent: Thunderbird 1.5.0.8 (Windows/20061025)
+In-Reply-To: <4565CA02.20602@shadowen.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31009>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32152>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gh3el-0005aF-I1 for gcvg-git@gmane.org; Mon, 06 Nov
- 2006 13:32:52 +0100
+ esmtp (Exim 4.43) id 1GnIoy-0005vk-5X for gcvg-git@gmane.org; Thu, 23 Nov
+ 2006 18:57:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752908AbWKFMct (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 6 Nov 2006
- 07:32:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752910AbWKFMct
- (ORCPT <rfc822;git-outgoing>); Mon, 6 Nov 2006 07:32:49 -0500
-Received: from hellhawk.shadowen.org ([80.68.90.175]:41738 "EHLO
- hellhawk.shadowen.org") by vger.kernel.org with ESMTP id S1752902AbWKFMcs
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 6 Nov 2006 07:32:48 -0500
-Received: from localhost ([127.0.0.1]) by hellhawk.shadowen.org with esmtp
- (Exim 4.50) id 1Gh3do-0005qk-HM; Mon, 06 Nov 2006 12:31:52 +0000
-To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+ S1757301AbWKWR5I convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Thu, 23 Nov 2006 12:57:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757344AbWKWR5H
+ (ORCPT <rfc822;git-outgoing>); Thu, 23 Nov 2006 12:57:07 -0500
+Received: from static-ip-217-172-187-230.inaddr.intergenia.de
+ ([217.172.187.230]:57835 "EHLO neapel230.server4you.de") by vger.kernel.org
+ with ESMTP id S1757301AbWKWR5E (ORCPT <rfc822;git@vger.kernel.org>); Thu, 23
+ Nov 2006 12:57:04 -0500
+Received: from [10.0.1.4] (p508E51A7.dip.t-dialin.net [80.142.81.167]) by
+ neapel230.server4you.de (Postfix) with ESMTP id A1D0B2C016; Thu, 23 Nov 2006
+ 18:57:03 +0100 (CET)
+To: Andy Whitcroft <apw@shadowen.org>
 Sender: git-owner@vger.kernel.org
 
-Josef Weidendorfer wrote:
-> On Monday 06 November 2006 10:53, Andy Whitcroft wrote:
->> Josef Weidendorfer wrote:
->>> On Saturday 04 November 2006 06:03, Shawn Pearce wrote:
->>>> After reading your reply you are probably correct.  I can see there
->>>> may be workflows that want every remote branch also created as a
->>>> local branch.
->>>>
->>>> I could certainly live with a command line option to clone, e.g.:
->>>>
->>>> 	git clone --only vmdvt,vmtip user@host:/path...
->>> Still missing here: What branch should be checked out after
->>> cloning?
->> Does any need to be checked out?
-> 
-> We should not change existing behavior. IMHO, checking out a branch is
-> mostly the right thing to do. Of course, you often want to specify which one.
-> The current requirement for a master branch in the origin repository
-> is really bad, as it obviously requires ugly workarounds in some cases
-> (and totally confuse newbies in such use cases).
+Andy Whitcroft schrieb:
+> Perhaps we can look and see what a portable application like gzip or
+> bzip2 do in this situation.  They must have the same problem.
 
-We are not changing existing behaviour, if we do not check anything out
-only when specifying '--only'.
-> 
->> Or perhap I should put it another way, 
->> when we make a virgin repository we default to master checked out but
->> its not joined to the DAG.
-> 
-> I do not understand this. By creating a local branch, the commit DAG
-> is never changed.
+Info-ZIP's zip uses structs only for in-memory storage and has a write
+function for each of them that writes the members one by one.  I find
+the structs in archive-zip.c easier to read, but I might be biased. ;-)
 
-In a virgin repository there is no DAG to speak of and master doesn't
-really point anywhere until the first commit.  I was proposing that when
---only is specified, we just leave things as they are.  The master half
-pointing into the zero element DAG we have in an entirely empty repo.
-The new unconnected DAG or DAG's we have downloaded in the clone will be
-attached to their respective branch names.
+Anyway, archive-zip.c assumes that there is no padding between unsigned
+char arrays and that an unsigned char is exactly one byte wide.  The
+additional current assumption -- that sizeof(struct ...) sums up the
+sizes of all struct members -- is wrong on ARM, and the patches in this
+thread correct this error.
+
+So we're not as portable as Info-ZIP, but I think the assumptions above
+hold true for all interesting architectures.  And we have a readable
+description of the on-disk ZIP file headers.
 
