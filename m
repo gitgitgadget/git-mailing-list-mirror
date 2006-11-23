@@ -1,81 +1,73 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_ADSP_NXDOMAIN,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: git pull and merging.
-Date: Fri, 08 Dec 2006 12:48:08 +0100
-Organization: At home
-Message-ID: <elbj9g$og4$1@sea.gmane.org>
-References: <cc723f590612052051r62111c4cgfd7ee893cb00f84a@mail.gmail.com> <200612061744.31213.Josef.Weidendorfer@gmx.de> <4577B8C0.3060200@gmail.com> <200612071227.46194.Josef.Weidendorfer@gmx.de>
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: sizeof(struct ...)
+Date: Thu, 23 Nov 2006 17:14:44 +0100
+Message-ID: <4565C8F4.6000606@lsrfire.ath.cx>
+References: <20061123101609.1711.qmail@8b73034525b1a6.315fe32.mid.smarden.org> <45659781.5050005@lsrfire.ath.cx> <4565A46C.6090805@lsrfire.ath.cx> <4565A866.8020201@shadowen.org> <4565C205.8050300@lsrfire.ath.cx> <20061123155431.GD6581@harddisk-recovery.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-NNTP-Posting-Date: Fri, 8 Dec 2006 11:46:19 +0000 (UTC)
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Thu, 23 Nov 2006 16:15:29 +0000 (UTC)
+Cc: Andy Whitcroft <apw@shadowen.org>, Gerrit Pape <pape@smarden.org>,
+	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 31
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-25-107.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+User-Agent: Thunderbird 1.5.0.8 (Windows/20061025)
+In-Reply-To: <20061123155431.GD6581@harddisk-recovery.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33689>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GseBC-0001Cz-HN for gcvg-git@gmane.org; Fri, 08 Dec
- 2006 12:46:14 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32146>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GnHER-0008Ui-MX for gcvg-git@gmane.org; Thu, 23 Nov
+ 2006 17:15:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1425417AbWLHLqL (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
- 06:46:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1425416AbWLHLqL
- (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 06:46:11 -0500
-Received: from main.gmane.org ([80.91.229.2]:40370 "EHLO ciao.gmane.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S938051AbWLHLqJ
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Dec 2006 06:46:09 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1GseAw-0005Nq-68 for git@vger.kernel.org; Fri, 08 Dec 2006 12:45:58 +0100
-Received: from host-81-190-25-107.torun.mm.pl ([81.190.25.107]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Fri, 08 Dec 2006 12:45:58 +0100
-Received: from jnareb by host-81-190-25-107.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Fri, 08 Dec 2006
- 12:45:58 +0100
-To: git@vger.kernel.org
+ S1757400AbWKWQPV convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Thu, 23 Nov 2006 11:15:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757404AbWKWQPU
+ (ORCPT <rfc822;git-outgoing>); Thu, 23 Nov 2006 11:15:20 -0500
+Received: from static-ip-217-172-187-230.inaddr.intergenia.de
+ ([217.172.187.230]:11904 "EHLO neapel230.server4you.de") by vger.kernel.org
+ with ESMTP id S1757400AbWKWQPT (ORCPT <rfc822;git@vger.kernel.org>); Thu, 23
+ Nov 2006 11:15:19 -0500
+Received: from [10.0.1.4] (p508E51A7.dip.t-dialin.net [80.142.81.167]) by
+ neapel230.server4you.de (Postfix) with ESMTP id BF98C3C010; Thu, 23 Nov 2006
+ 17:15:17 +0100 (CET)
+To: Erik Mouw <erik@harddisk-recovery.com>
 Sender: git-owner@vger.kernel.org
 
-Josef Weidendorfer wrote:
+Erik Mouw schrieb:
+> On Thu, Nov 23, 2006 at 04:45:09PM +0100, Ren=E9 Scharfe wrote:
+>>  Is there really a compiler that inserts padding between arrays of
+>> unsigned chars?
+>=20
+> Yes, that compiler is called "gcc".
+>=20
+> #include <stdio.h>
+>=20
+> struct foo {
+>         unsigned char a[3];
+>         unsigned char b[3];
+> };
+>=20
+> int main(void)
+> {
+>         printf("%d\n", sizeof(struct foo));
+>         return 0;
+> }
+>=20
+> On i386 that prints 6, on ARM it prints 8.
 
-> Now looking at it, I think this semantic really is screwed and utterly confusing.
-> Why decides branch.*.merge about actions done in fetch (I think even if you did
-> "git fetch" alone)? OK, actually, that is an implementation detail and not
-> really important.
-> 
-> More important: Because "branch.*.merge" specifies a _remote_ branch,
-> the user has to understand that this info is already used in the fetch.
-> The intuitive mental model of a user about how it works IMHO is that
-> "branch.*.merge" is checked in the merge phase (as the name of the option suggests).
-> But this way, how could the merge phase know about any remote branch at all,
-> which does not need to be touched at all in the merge phase?
-> 
-> IMHO we should somehow change the semantic of branch.*.merge to specify the _local_
-> refspec part, as this is the branch which actually gets merged.
-> This is the only way that a user could grasp the meaning of it.
-> Perhaps introduce "branch.*.defaultmerge", and obsoleting "branch.*.merge"?
+Does it add 1 byte after a and and 1 after b or two after b?
+I suspect it's the latter case -- otherwise Gerrit's patch,
+which started this thread, wouldn't help solve his problem.
+Or the pad sizing follows complicated rules that I do not
+understand at the moment.
 
-The change of semantic would prohibit the "pull without tracking branch"
-semantic (probably not used anymore, since git supports multiple heads
-from long time).
+Time to look for an ARM emulator, it seems.
 
-I proposed in another thread to allow to either specify full refspec (in
-addition to current specifying remote branch), or ':' and local branch.
-Or perhaps add branch.*.localmerge configuration option?
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
-
+Thanks,
