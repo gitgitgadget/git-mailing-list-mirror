@@ -1,69 +1,76 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: What's in git.git (stable)
-Date: Thu, 14 Dec 2006 22:50:26 +0000
-Message-ID: <200612142250.27766.andyparkins@gmail.com>
-References: <7v4przfpir.fsf@assigned-by-dhcp.cox.net> <20061214114546.GI1747@spearce.org> <7v4pry16n5.fsf@assigned-by-dhcp.cox.net>
+From: "Martin Langhoff (CatalystIT)" <martin@catalyst.net.nz>
+Subject: Re: [PATCH] git-cvsimport: add suport for CVS pserver method HTTP/1.x
+  proxying
+Date: Fri, 24 Nov 2006 11:09:58 +1300
+Message-ID: <45661C36.9010101@catalyst.net.nz>
+References: <11642344172790-git-send-email-iarenuno@eteo.mondragon.edu> <7v64d5keke.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 14 Dec 2006 22:53:22 +0000 (UTC)
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Thu, 23 Nov 2006 22:10:23 +0000 (UTC)
+Cc: Inaki Arenaza <iarenuno@eteo.mondragon.edu>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=rbXZnAwIUMk577oLL8mLECtzklSM7xaB5FACnz02fudBFdqNGkVc9ew/lNWU2PI0xuYcluGEqhpZMXul9knsT+9aMPjTaZDv8iKeBRyZqVbGXtxrumhNI+ik93ld9FcjYbXZUicIzNVvMoxZx5dHl9inEQy7vnfqzkzVxXwfirA=
-User-Agent: KMail/1.9.5
-In-Reply-To: <7v4pry16n5.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+User-Agent: Mozilla/5.0 (Macintosh; U; PPC Mac OS X Mach-O; en-US; rv:1.7.12) Gecko/20050915
+X-Accept-Language: en-us, en
+In-Reply-To: <7v64d5keke.fsf@assigned-by-dhcp.cox.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34422>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GuzS0-0005fP-PP for gcvg-git@gmane.org; Thu, 14 Dec
- 2006 23:53:17 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32162>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GnMlq-000437-Ex for gcvg-git@gmane.org; Thu, 23 Nov
+ 2006 23:10:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1750992AbWLNWxN (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
- 17:53:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750728AbWLNWxN
- (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 17:53:13 -0500
-Received: from ug-out-1314.google.com ([66.249.92.171]:19547 "EHLO
- ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1750992AbWLNWxM (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec
- 2006 17:53:12 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so645625uga for
- <git@vger.kernel.org>; Thu, 14 Dec 2006 14:53:10 -0800 (PST)
-Received: by 10.66.248.5 with SMTP id v5mr73802ugh.1166136790395; Thu, 14 Dec
- 2006 14:53:10 -0800 (PST)
-Received: from grissom.internal.parkins.org.uk ( [84.201.153.164]) by
- mx.google.com with ESMTP id e1sm3289661ugf.2006.12.14.14.53.09; Thu, 14 Dec
- 2006 14:53:09 -0800 (PST)
-To: git@vger.kernel.org
+ S934178AbWKWWKK convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Thu, 23 Nov 2006 17:10:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934182AbWKWWKK
+ (ORCPT <rfc822;git-outgoing>); Thu, 23 Nov 2006 17:10:10 -0500
+Received: from godel.catalyst.net.nz ([202.78.240.40]:1453 "EHLO
+ mail1.catalyst.net.nz") by vger.kernel.org with ESMTP id S934178AbWKWWKJ
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 23 Nov 2006 17:10:09 -0500
+Received: from leibniz.catalyst.net.nz ([202.78.240.7] helo=[192.168.2.69])
+ by mail1.catalyst.net.nz with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA:32)
+ (Exim 4.50) id 1GnMlZ-0000jx-Q5; Fri, 24 Nov 2006 11:09:57 +1300
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-On Thursday 2006, December 14 21:58, Junio C Hamano wrote:
+Junio C Hamano wrote:
+> Except that this statement made me go "huh?" wondering what it
+> would do to the $filehandle to evaluate <$filehandle> in a void
+> context:
+>=20
+> +			# Skip the empty line of the proxy server output
+> +			<$s>;
 
-> Correct but a bad example that does not demonstrate the real
-> power of reflog.  Andy's AGGGHHHHHH can be recovered with a
-> simple:
->
-> 	$ git reset ORIG_HEAD
+It's a perl idiom that will discard one line of the $filehandle. If we=20
+are 200% certain that it is empty, then it's fine. OTOH, it may well be=
+=20
+a bug in the particular proxy implementation I=C3=B1aki is using -- I d=
+on't=20
+know enough about CVS proxying to tell.
 
-HAHA!  I knew reading this mailing list would pay off.
+> The "I/O Operators" section talks about evaluating <$s> in a
+> scalar context (i.e. "$rep =3D <$s>"), which we all know would
+> return a single line, and in list context, which swallows
 
-It amazes me that there is always an answer.  It's almost becoming a 
-pantomime - I say "well git can't do this", and you say "oh yes it can".
+This is in scalar context, and that's safe to rely on. Whether it is=20
+clear enough in this non-Perl-native project... is a good flamewar=20
+waiting to happen :-)
+
+cheers,
 
 
-Andy
-
--- 
-Dr Andrew Parkins, M Eng (Hons), AMIEE
+martin
+--=20
+-----------------------------------------------------------------------
+Martin @ Catalyst .Net .NZ  Ltd, PO Box 11-053, Manners St,  Wellington
+WEB: http://catalyst.net.nz/           PHYS: Level 2, 150-154 Willis St
+OFFICE: +64(4)916-7224                              MOB: +64(21)364-017
+       Make things as simple as possible, but no simpler - Einstein
