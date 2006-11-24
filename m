@@ -4,83 +4,64 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [PATCH 2/2] Teach receive-pack how to keep pack files based on object count.
-Date: Tue, 31 Oct 2006 16:29:42 -0500
-Message-ID: <20061031212942.GA24184@spearce.org>
-References: <20061031075704.GB7691@spearce.org> <Pine.LNX.4.64.0610311447250.11384@xanadu.home> <20061031201148.GD23671@spearce.org> <Pine.LNX.4.64.0610311559150.11384@xanadu.home>
+From: Alexandre Julliard <julliard@winehq.org>
+Subject: [PATCH 5/5] fetch-pack: Do not fetch tags for shallow clones.
+Date: Fri, 24 Nov 2006 16:00:13 +0100
+Message-ID: <87k61kubya.fsf@wine.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 31 Oct 2006 21:30:09 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+NNTP-Posting-Date: Fri, 24 Nov 2006 15:00:33 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0610311559150.11384@xanadu.home>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.90 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30598>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32224>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gf1BB-00079k-9T for gcvg-git@gmane.org; Tue, 31 Oct
- 2006 22:29:53 +0100
+ esmtp (Exim 4.43) id 1GncXO-0000AO-NY for gcvg-git@gmane.org; Fri, 24 Nov
+ 2006 16:00:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1946030AbWJaV3t (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 31 Oct 2006
- 16:29:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946043AbWJaV3t
- (ORCPT <rfc822;git-outgoing>); Tue, 31 Oct 2006 16:29:49 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:13549 "EHLO
- corvette.plexpod.net") by vger.kernel.org with ESMTP id S1946030AbWJaV3r
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 31 Oct 2006 16:29:47 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1Gf1At-0002Np-HZ; Tue, 31 Oct 2006 16:29:35 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- 466F220FB0C; Tue, 31 Oct 2006 16:29:42 -0500 (EST)
-To: Nicolas Pitre <nico@cam.org>
+ S934639AbWKXPAT (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 24 Nov 2006
+ 10:00:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934640AbWKXPAT
+ (ORCPT <rfc822;git-outgoing>); Fri, 24 Nov 2006 10:00:19 -0500
+Received: from mail.codeweavers.com ([216.251.189.131]:19173 "EHLO
+ mail.codeweavers.com") by vger.kernel.org with ESMTP id S934639AbWKXPAR
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 24 Nov 2006 10:00:17 -0500
+Received: from adsl-84-226-49-216.adslplus.ch ([84.226.49.216]
+ helo=wine.dyndns.org) by mail.codeweavers.com with esmtpsa
+ (TLS-1.0:DHE_RSA_AES_256_CBC_SHA:32) (Exim 4.50) id 1GncXG-0005NU-V8 for
+ git@vger.kernel.org; Fri, 24 Nov 2006 09:00:16 -0600
+Received: by wine.dyndns.org (Postfix, from userid 1000) id 11EF610A155; Fri,
+ 24 Nov 2006 16:00:13 +0100 (CET)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Nicolas Pitre <nico@cam.org> wrote:
-> On Tue, 31 Oct 2006, Shawn Pearce wrote:
-> > Nicolas Pitre <nico@cam.org> wrote:
-> > > I think this should be solved before rx packs are actually stored as 
-> > > packs though.  Otherwise people will end up with unwanted .keep files 
-> > > left around.  Maybe having a much bigger default for object number 
-> > > treshold for the time being?  (unless this patch is applied to "next" at 
-> > > the same time as another one that actually deals with those .keep 
-> > > files).
-> > 
-> > Its next on my list of things to do.  Hopefully I'll be able to
-> > implement it today.
-> > 
-> > I'm thinking of just brute forcing it: put enough identifying data
-> > into the .keep file to make it unique, then go through every local
-> > pack and look at their .keep file; if the content matches what
-> > receive-pack asked index-pack to put there then remove it.
-> 
-> Ouch.  What about the patch below?  It covers only the pull/fetch case, 
-> but covering the push case shouldn't be that hard either (simply use a 
-> pipe to read index-pack's stdout and capture the pack name).
-> 
-> I used "pack" <tab> <sha1> so it is easy to pick out of the list of refs 
-> that usually comes over the stream in the fetch case (if I understood 
-> that part right).
+A better fix may be to only fetch tags that point to commits that we
+are downloading, but git-clone doesn't have support for following
+tags. This will happen automatically on the next git-fetch though.
 
-I thought about using a pipe too, but in the case of receive-pack
-it looked like index-pack was sending something back to the push
-end of the connection.  I didn't dig into the code enough to see
-what that was and how to do the same in receive-pack itself.  The
-brute force approach is horrible but simple.  ;-)
+Signed-off-by: Alexandre Julliard <julliard@winehq.org>
+---
+ fetch-pack.c |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
 
-I'll look at your patch and what I need to do make a pipe work here,
-because its clearly the better solution.
+diff --git a/fetch-pack.c b/fetch-pack.c
+index bb310b6..80979b8 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -342,7 +342,8 @@ static void filter_refs(struct ref **ref
+ 		if (!memcmp(ref->name, "refs/", 5) &&
+ 		    check_ref_format(ref->name + 5))
+ 			; /* trash */
+-		else if (fetch_all) {
++		else if (fetch_all &&
++			 (!depth || strncmp(ref->name, "refs/tags/", 10) )) {
+ 			*newtail = ref;
+ 			ref->next = NULL;
+ 			newtail = &ref->next;
+-- 
+1.4.4.1.ga335e
 
 -- 
+Alexandre Julliard
