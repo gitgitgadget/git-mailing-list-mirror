@@ -1,90 +1,81 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Nicolas Vilz <niv@iaglans.de>
-Subject: Problems with git-svn authors file
-Date: Sun, 10 Dec 2006 18:26:05 +0100
-Message-ID: <20061210172604.GA18385@hermes.lan.home.vilz.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Make git-clone --use-separate-remote the default
+Date: Thu, 23 Nov 2006 16:17:24 -0800
+Message-ID: <7vlkm1hf57.fsf@assigned-by-dhcp.cox.net>
+References: <20061123225835.30071.99265.stgit@machine.or.cz>
+	<7vejrtiwqd.fsf@assigned-by-dhcp.cox.net>
+	<20061123234203.GN7201@pasky.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sun, 10 Dec 2006 17:26:40 +0000 (UTC)
+NNTP-Posting-Date: Fri, 24 Nov 2006 00:17:39 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Virus-Scanned: Debian amavisd-new at vsectoor.geht-ab-wie-schnitzel.de
-Content-Disposition: inline
-X-message-flag: Please send plain text messages only. Thank you.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <20061123234203.GN7201@pasky.or.cz> (Petr Baudis's message of
+	"Fri, 24 Nov 2006 00:42:03 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33903>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GtSRh-0004UB-Lr for gcvg-git@gmane.org; Sun, 10 Dec
- 2006 18:26:38 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32181>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GnOl2-0002Ld-N9 for gcvg-git@gmane.org; Fri, 24 Nov
+ 2006 01:17:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1762269AbWLJR0f (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 10 Dec 2006
- 12:26:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762273AbWLJR0f
- (ORCPT <rfc822;git-outgoing>); Sun, 10 Dec 2006 12:26:35 -0500
-Received: from geht-ab-wie-schnitzel.de ([217.69.165.145]:2921 "EHLO
- vsectoor.geht-ab-wie-schnitzel.de" rhost-flags-OK-OK-OK-OK) by
- vger.kernel.org with ESMTP id S1762269AbWLJR0e (ORCPT
- <rfc822;git@vger.kernel.org>); Sun, 10 Dec 2006 12:26:34 -0500
-Received: from localhost (localhost [127.0.0.1]) by
- vsectoor.geht-ab-wie-schnitzel.de (Postfix) with ESMTP id EAC853E77 for
- <git@vger.kernel.org>; Sun, 10 Dec 2006 18:26:31 +0100 (CET)
-Received: from vsectoor.geht-ab-wie-schnitzel.de ([127.0.0.1]) by localhost
- (vsectoor.geht-ab-wie-schnitzel.de [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 2u+G67VcWpIJ for <git@vger.kernel.org>; Sun, 10 Dec 2006
- 18:26:07 +0100 (CET)
-Received: from localhost (hermes.lan.home.vilz.de [192.168.100.26]) (using
- TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate
- requested) by vsectoor.geht-ab-wie-schnitzel.de (Postfix) with ESMTP id
- 4887C3E6A for <git@vger.kernel.org>; Sun, 10 Dec 2006 18:26:06 +0100 (CET)
-To: git@vger.kernel.org
+ S1757523AbWKXAR1 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 23 Nov 2006
+ 19:17:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757524AbWKXAR0
+ (ORCPT <rfc822;git-outgoing>); Thu, 23 Nov 2006 19:17:26 -0500
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:4798 "EHLO
+ fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP id S1757523AbWKXAR0
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 23 Nov 2006 19:17:26 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao11.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061124001725.FKMM296.fed1rmmtao11.cox.net@fed1rmimpo02.cox.net>; Thu, 23
+ Nov 2006 19:17:25 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id qQHZ1V0071kojtg0000000; Thu, 23 Nov 2006
+ 19:17:33 -0500
+To: Petr Baudis <pasky@suse.cz>
 Sender: git-owner@vger.kernel.org
 
-hello,
+Petr Baudis <pasky@suse.cz> writes:
 
-i tried to use git-svn with author-files and got stuck with following
-error message:
+>> Even though I fully agree that use-separate-remotes should be
+>> the default, to the point that I think we do not even
+>> need a backward compatibility option.  People who want to use
+>> traditional layout for simple one-remote-branch-only project
+>> would not suffer anyway because 'origin' still means origin in
+>> the new layout (refs/remotes/origin/HEAD).
+>
+> I don't know, we still at least need to keep the functionality for
+> --bare.
 
-Use of uninitialized value in hash element at /usr/bin/git-svn line
-2952.
-Use of uninitialized value in concatenation (.) or string at
-/usr/bin/git-svn line 2953.
-Author:  not defined in .git/info/svn-authors file
-512 at /usr/bin/git-svn line 457
-        main::fetch_lib() called at /usr/bin/git-svn line 328
-        main::fetch() called at /usr/bin/git-svn line 187
+I agree --bare should continue to be a "snapshot mirror"; I am
+not advocating for the removal of the internal implementation
+detail such as $use_separate_remote variable.
 
+However, I think having one sane behaviour is the right thing to
+do for a clone that prepares a repository with a working tree
+(including the one made with -n option, which only means "do not
+do the check-out immediately after cloning" for such a
+repository).
 
-my svn-authors file looks like this:
----->8-----------------
-username = Real Name <email@address>
----->8-----------------
-It is placed in .git/info/svn-authors and is configured via
-svn.authorsfile. I tried to dig in the code and it says at line 2952 if
-there is an $_author variable defined and no $users{$author}, then die
-with that message... 
+The traditional layout is slightly simpler for a project with
+the simplest needs (that is, a single upstream repository that
+has a single 'master' branch), but I do think even that is not
+an advantage anymore.
 
-above function load_authors i have found
-
-# '<svn username> = real-name <email address>' mapping based on git-svnimport:
-
-now i am a bit confused, because the manual says, the svn-authors file
-looks like my file above and here it sounds like 
-
-<svn username> = real-name <email address>
-
-is the real syntax for that file...
-
-If i ommit the -A or --authors-file= parameter (or unset the
-svn.authorsfile config-parameter)  while git-svn fetch, afterwards in 
-gitk --all, there is only the svn-username and the revision-uuid.
-
-Am i doing something wrong?
-
-Sincerly
+With the separate-remote layout, git-fetch would still fetch and
+update the "origin" (although that is now remotes/origin/master
+which is pointed at by remotes/origin/HEAD) and the user can
+still refer to it with "origin".  Commands "git-pull origin",
+"git-pull . origin", and "git-merge origin" all will continue to
+work the same way as before for such a project as in the
+traditional layout, and that is why I think we do not need
+backward compatibility flag in this case.
