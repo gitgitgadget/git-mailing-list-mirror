@@ -1,74 +1,101 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: What's in git.git (stable)
-Date: Thu, 14 Dec 2006 11:23:01 +0000
-Message-ID: <200612141123.02346.andyparkins@gmail.com>
-References: <7v4przfpir.fsf@assigned-by-dhcp.cox.net> <200612141021.12637.andyparkins@gmail.com> <Pine.LNX.4.63.0612141147200.3635@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: Use git-show-ref instead of git-peek-remote
+Date: Fri, 24 Nov 2006 23:35:15 +0100
+Message-ID: <200611242335.15964.jnareb@gmail.com>
+References: <11644056823095-git-send-email-jnareb@gmail.com> <7vhcwoa3mx.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain;
   charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 14 Dec 2006 11:23:14 +0000 (UTC)
+NNTP-Posting-Date: Fri, 24 Nov 2006 22:33:43 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=T01CWLWAJFciPTXEesZrwYsASM/XB+P123zceoUOAM4GjHikPbGalBpRY4c6Wx7+tDBnkbuIXWNWi4LX5Z/Gg24vKGsuvzQAzIi26CtVEEGlhQOW2Nr0YJ8LN2msjdkrtv5Jz52ni5cTVpKDN9Gmw2zB2EGwAgXccLyMQIanCuY=
-User-Agent: KMail/1.9.5
-In-Reply-To: <Pine.LNX.4.63.0612141147200.3635@wbgn013.biozentrum.uni-wuerzburg.de>
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=G3Yzsi1tgZ1U0WBxsBf7Vd8odVE0ALkN3e2pEs15DdCQ1XDRz6dINwifxhPUtTa2bvycpSSDpqQfs3cRxd5nRHUKOmd5DOmpxTe+wbWxyF2vrOzvdF35OraiOBerJY/j0KBpjlacKta+5ciKxtSl79L3UGrNkMb2cbWs4IqVyQA=
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vhcwoa3mx.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34317>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GuogC-0004kO-A7 for gcvg-git@gmane.org; Thu, 14 Dec
- 2006 12:23:12 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32244>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gnjc2-0006NW-Pn for gcvg-git@gmane.org; Fri, 24 Nov
+ 2006 23:33:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932566AbWLNLXJ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
- 06:23:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932401AbWLNLXJ
- (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 06:23:09 -0500
-Received: from ug-out-1314.google.com ([66.249.92.173]:16125 "EHLO
- ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S932621AbWLNLXI (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec
- 2006 06:23:08 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so465091uga for
- <git@vger.kernel.org>; Thu, 14 Dec 2006 03:23:07 -0800 (PST)
-Received: by 10.67.22.2 with SMTP id z2mr1214010ugi.1166095387291; Thu, 14
- Dec 2006 03:23:07 -0800 (PST)
-Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
- ESMTP id 53sm1834400ugd.2006.12.14.03.23.05; Thu, 14 Dec 2006 03:23:06 -0800
- (PST)
-To: git@vger.kernel.org
+ S934636AbWKXWdg (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 24 Nov 2006
+ 17:33:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934638AbWKXWdg
+ (ORCPT <rfc822;git-outgoing>); Fri, 24 Nov 2006 17:33:36 -0500
+Received: from ug-out-1314.google.com ([66.249.92.174]:65328 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S934636AbWKXWdf
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 24 Nov 2006 17:33:35 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so777969uga for
+ <git@vger.kernel.org>; Fri, 24 Nov 2006 14:33:34 -0800 (PST)
+Received: by 10.66.232.10 with SMTP id e10mr7897227ugh.1164407613913; Fri, 24
+ Nov 2006 14:33:33 -0800 (PST)
+Received: from host-81-190-24-209.torun.mm.pl ( [81.190.24.209]) by
+ mx.google.com with ESMTP id k2sm9113571ugf.2006.11.24.14.33.33; Fri, 24 Nov
+ 2006 14:33:33 -0800 (PST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-On Thursday 2006 December 14 10:51, Johannes Schindelin wrote:
+Junio C Hamano wrote:
 
-> If I have the choice between a "doing something" bar and a Windows
-> Explorer "14 seconds left" bar showing the same message for two minutes,
-> I'd rather have a Mars bar ;-)
+> Jakub Narebski <jnareb@gmail.com> writes:
+> 
+>> Use "git show-ref --dereference" instead of "git peek-remote ." in
 
-Gahhhhhhhhh!  Oh how I hate that window.
+It should be 
+   Use "git show-ref --dereference" instead of "git peek-remote <project>"
 
-On this we can wholeheartedly agree.  Unfortunately it's not just windows; 
-most applications that have a progress bar go like this:
+>> git_get_references. git-show-ref is faster than git-peek-remote; even
+>> faster is reading info/refs file (if it exists), but the information
+>> in info/refs can be stale.
+> 
+> More importantly, it is for dumb protocol transports, not for gitweb.
 
-0%, ..., 0%,..., 0%,.., 1 , 2, 3, 4, 5, 6, 33%, ..., 33%, ..., 33%, 35, 36, 
-85%, ..., 85%, ..., 85%, ..., 99%, 100%, ..., 100%, ... (yes, I'm completely 
-finished, but still working), ... 100%.
+Yes, but if it is there, why not make use of it? Especially that it
+is used only (I think) for refs markers, and not for anything important.
+On the other side a bit of performance here doesn't matter much.
 
-I reckon, unless the window with a progress bar in it has an ETA, then the 
-progress should be an ETA itself.  If it's not going to monotonically 
-increase, then the "percentage" is meaningless.
+> You forgot to mention that you fixed the last place that
+> directly used "$GIT" to invoke the command, bypassing sub
+> git_cmd.  That is a consistency clean-up worth mentioning.
 
+This is not fix, this is change of style. The style was to use
+  git peek-remote $projectroot/$project
+instead of equivalent
+  git --git-dir=$projectroot/$project peek-remote .
 
-Andy
+We don't have this choice with git-show-ref.
+
+On the other hand that makes all command invocation (except the one
+used for getting git core version) pass through git_cmd() subroutine.
+
+>> git-show-ref is available since v1.4.4; the output format is slightly
+>> different than git-peek-remote output format.
+> 
+>> -		if ($line =~ m/^([0-9a-fA-F]{40})\trefs\/($type\/?[^\^]+)/) {
+>> +		if ($line =~ m/^([0-9a-fA-F]{40}) refs\/($type\/?[^\^]+)/) {
+> 
+> I would rather do:
+> 
+> 	m|^([0-9a-f]{40})\srefs/($type/?[^^]+)|
+> 
+> which would catch both space and tab.
+
+Feel free to do that (one nitpick: is [^^] more readable than [^\^]?).
+
+Should I resend the patch?
 -- 
-Dr Andy Parkins, M Eng (hons), MIEE
+Jakub Narebski
