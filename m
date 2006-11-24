@@ -4,99 +4,63 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: GIT - releases workflow
-Date: Wed, 13 Dec 2006 06:14:50 -0500
-Message-ID: <20061213111450.GB31177@spearce.org>
-References: <89b129c60612121444t18ba94ecv57eea4c72be1663a@mail.gmail.com> <Pine.LNX.4.63.0612122353320.2807@wbgn013.biozentrum.uni-wuerzburg.de> <1166001019.19098.4.camel@localhost.localdomain> <Pine.LNX.4.63.0612131133160.3635@wbgn013.biozentrum.uni-wuerzburg.de> <20061213105614.GB9484@spearce.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] git-cvsimport: add suport for CVS pserver method HTTP/1.x proxying
+Date: Thu, 23 Nov 2006 20:42:05 -0500
+Message-ID: <20061124014205.GA19515@sigio.intra.peff.net>
+References: <11642344172790-git-send-email-iarenuno@eteo.mondragon.edu> <7v64d5keke.fsf@assigned-by-dhcp.cox.net> <45661C36.9010101@catalyst.net.nz> <7vlkm1ix7b.fsf@assigned-by-dhcp.cox.net> <46a038f90611231552x3e33eec4w7863ce6a1da5781b@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 13 Dec 2006 11:15:17 +0000 (UTC)
-Cc: Matthias Kestenholz <lists@spinlock.ch>,
-	Sean Kelley <sean.v.kelley@gmail.com>, git@vger.kernel.org
+NNTP-Posting-Date: Fri, 24 Nov 2006 01:46:36 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Content-Disposition: inline
-In-Reply-To: <20061213105614.GB9484@spearce.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+In-Reply-To: <46a038f90611231552x3e33eec4w7863ce6a1da5781b@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34209>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GuS4p-0002tZ-MU for gcvg-git@gmane.org; Wed, 13 Dec
- 2006 12:15:08 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32185>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GnQ4Y-0006hC-Rk for gcvg-git@gmane.org; Fri, 24 Nov
+ 2006 02:41:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S964834AbWLMLO5 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 13 Dec 2006
- 06:14:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964843AbWLMLO5
- (ORCPT <rfc822;git-outgoing>); Wed, 13 Dec 2006 06:14:57 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:60258 "EHLO
- corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S964834AbWLMLO4 (ORCPT <rfc822;git@vger.kernel.org>); Wed, 13 Dec 2006
- 06:14:56 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1GuS4X-0000VO-Ah; Wed, 13 Dec 2006 06:14:49 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- 922A720FB6E; Wed, 13 Dec 2006 06:14:50 -0500 (EST)
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+ S1757557AbWKXBln (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 23 Nov 2006
+ 20:41:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757558AbWKXBln
+ (ORCPT <rfc822;git-outgoing>); Thu, 23 Nov 2006 20:41:43 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:50886
+ "HELO peff.net") by vger.kernel.org with SMTP id S1757557AbWKXBlm (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 23 Nov 2006 20:41:42 -0500
+Received: (qmail 24273 invoked from network); 23 Nov 2006 20:41:47 -0500
+Received: from unknown (HELO sigio.intra.peff.net) (10.0.0.10) by
+ segfault.intra.peff.net with SMTP; 23 Nov 2006 20:41:47 -0500
+Received: by sigio.intra.peff.net (sSMTP sendmail emulation); Thu, 23 Nov
+ 2006 20:42:05 -0500
+To: Martin Langhoff <martin.langhoff@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Shawn Pearce <spearce@spearce.org> wrote:
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > > > On Tue, 12 Dec 2006, Sean Kelley wrote:
-> > > > 
-> > > > > I was wondering if anyone could share ideas on how best to use GIT to 
-> > > > > handle releases for those working with a remote GIT repository?  Do you 
-> > > > > create a branch and push it to the remote?  Thus you have a new branch 
-> > > > > referencing the particular release?
-> > 
-> > BTW, if the maintenance releases are sparse and long between, you can 
-> > actually create the branch from the tag, fix, and tag with the new version 
-> > number. No need to start the branches early.
+On Fri, Nov 24, 2006 at 12:52:13PM +1300, Martin Langhoff wrote:
+
+> You are right. It should be something along the lines of
 > 
-> Indeed.
-[snip]
-> The script is really meant for QA people to take in topic branches
-> from developers and apply them to a specific version, test that new
-> version, then ship that new version.  Some of the QA people I work
-> with aren't developers and have a somewhat difficult time making
-> a build from source; this script makes it a pretty simple process.
+>  # discard headers until first blank line
+>  while (<$s> ne '') {
+>      # nothing
+>  }
 > 
-> The version number incrementor is smart; its based off commit
-> lineage.  It can automatically create a "2.0.1" tag when "2.1"
-> has already been made but "2.0.1" is a bugfix of "2" or "2.0".
+> that is, assuming we can just ignore headers happily.
 
-What I really should have said was the general idea here is that
-we never even have a trunk.
+That code won't work; the value of a blank line will actually be "\n"
+(or "\r\n"). So you probably want:
 
-Developers work on topic branches and share/merge those individual
-branches as necessary to evolve a topic.  When its suitably cooked
-in developer land it gets sent off to testing by being pushed into
-a someewhat descriptive ref under refs/heads/ready.
+while (<$s>) {
+  chomp; chomp;
+  last unless $_;
+}
 
-Testing can then accept topics by merging them together and creating
-tags via the described script.
+or perhaps more readably:
 
-Developers update their still cooking topic branches when necessary
-by pulling in the tags. git merge is smart enough to dereference the
-tag and generate the merge.  Normally this is held off to the latest
-possible moment, and only to make sure there aren't any unexpected
-surprises from the merge waiting for the unsuspecting QA person.
+while (<$s>) {
+  last if $_ eq "\n" || $_ eq "\r\n";
+}
 
-Developers start new topic branches off the relevent tag they need
-to work on.  New features are often made off the latest tag from QA;
-bug fixes are often off the tag currently in production.
-
-So like I said, we're basically trunkless and happy.  Tag happy.
-Thank you Linus, et.al. for packed refs!
-
--- 
