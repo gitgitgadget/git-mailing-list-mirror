@@ -1,73 +1,81 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: Better symbolic link support in "tree" view
-Date: Tue, 5 Dec 2006 22:27:56 +0100
-Message-ID: <200612052227.56770.jnareb@gmail.com>
-References: <1165256780505-git-send-email-jnareb@gmail.com> <7vr6vfkv3i.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 5/5] fetch-pack: Do not fetch tags for shallow clones.
+Date: Fri, 24 Nov 2006 12:28:54 -0800
+Message-ID: <7v3b88bncp.fsf@assigned-by-dhcp.cox.net>
+References: <87k61kubya.fsf@wine.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-NNTP-Posting-Date: Tue, 5 Dec 2006 21:26:09 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Fri, 24 Nov 2006 20:29:04 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=JwB/EeWbpzWUoX74khc5CByJFdUxG0XrJpCXXf9WPNGVazvWvtEpS/+8H7G6C5qtr030atdN7juk3RIhx+C0uk/rl0qtVnCjK6uM74Wtz0O+Jp/0e3v+mZA+nBzuM3T2nZFUIjaRQjKXDc4VnEAC+ANcWC5kXGrO1/2g7osH9oM=
-User-Agent: KMail/1.9.3
-In-Reply-To: <7vr6vfkv3i.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+In-Reply-To: <87k61kubya.fsf@wine.dyndns.org> (Alexandre Julliard's message of
+	"Fri, 24 Nov 2006 16:00:13 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33374>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Grhni-0006Ey-TJ for gcvg-git@gmane.org; Tue, 05 Dec
- 2006 22:26:07 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32235>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GnhfP-0002NR-IT for gcvg-git@gmane.org; Fri, 24 Nov
+ 2006 21:28:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1031580AbWLEVZ4 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 5 Dec 2006
- 16:25:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031584AbWLEVZ4
- (ORCPT <rfc822;git-outgoing>); Tue, 5 Dec 2006 16:25:56 -0500
-Received: from ug-out-1314.google.com ([66.249.92.171]:59332 "EHLO
- ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1031580AbWLEVZz convert rfc822-to-8bit (ORCPT
- <rfc822;git@vger.kernel.org>); Tue, 5 Dec 2006 16:25:55 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so3460415uga for
- <git@vger.kernel.org>; Tue, 05 Dec 2006 13:25:51 -0800 (PST)
-Received: by 10.66.255.7 with SMTP id c7mr14394328ugi.1165353951349; Tue, 05
- Dec 2006 13:25:51 -0800 (PST)
-Received: from host-81-190-24-209.torun.mm.pl ( [81.190.24.209]) by
- mx.google.com with ESMTP id e34sm32537839ugd.2006.12.05.13.25.50; Tue, 05 Dec
- 2006 13:25:50 -0800 (PST)
-To: Junio C Hamano <junkio@cox.net>
+ S935043AbWKXU24 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 24 Nov 2006
+ 15:28:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935045AbWKXU24
+ (ORCPT <rfc822;git-outgoing>); Fri, 24 Nov 2006 15:28:56 -0500
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:49302 "EHLO
+ fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP id S935043AbWKXU2z
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 24 Nov 2006 15:28:55 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao12.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061124202855.BZVK4226.fed1rmmtao12.cox.net@fed1rmimpo02.cox.net>; Fri, 24
+ Nov 2006 15:28:55 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id qkV31V0051kojtg0000000; Fri, 24 Nov 2006
+ 15:29:03 -0500
+To: Alexandre Julliard <julliard@winehq.org>
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
-> 
->> In "tree" view (git_print_tree_entry subroutine), add for symbolic
->> links after file name " -> link_target", a la "ls -l".  Use
->> git_get_link_target_html to escape target name and make it into
->> hyperlink if possible.
-> 
-> I think " -> link_target" is fine, but I do not know if it is
-> useful (while I do not think it is wrong) to make the value that
-> would have been returned from readlink() into an href, even when
-> it points at something inside the same revision.
+Alexandre Julliard <julliard@winehq.org> writes:
 
-I have added this bit (making symbolic link target symlink) because 
-otherwise there is no way, besides hand-munging the URL, to go to the 
-link target.
+> A better fix may be to only fetch tags that point to commits that we
+> are downloading, but git-clone doesn't have support for following
+> tags. This will happen automatically on the next git-fetch though.
+>
+> Signed-off-by: Alexandre Julliard <julliard@winehq.org>
 
-From the command line, tools usually follow symlinks. In gitweb, "blob" 
-view (and "blob_plain" view) show symbolic link contents... not that 
-I'm for changing this, mind you.
--- 
-Jakub Narebski
+All five patches look sane.  Thanks.
+
+The last one made me go "Huh?" at first, but it indeed is an
+improvement.  It wouldn't make much sense to "shallow clone" by
+two commits near the tip of the 'master' branch from Linus's
+kernel, and then having to "shallow clone" all of his tags down
+to v2.6.12-rc2, each with two commit depths limit.
+
+I however think a better "fix" is not to use shallow "clone" but
+shallowly fetch branches you are interested in into an empty
+repository for such a use scenario.  Just like making two-depth
+shallow copy of all the old tags do not help when the user is
+interested in the recent history of the tip of the 'master'
+branch, it does not help much to get near the tip of all other
+branches with a uniform depth when one particular branch from a
+remote repository is of interest.  I can imagine that somebody
+who fully follows the 'master' branch from git.git repository
+from time to time wants to take a peek at near the tip of 'pu'
+(perhaps because the 'shallow clone' topic is interesting) or
+wants to fetch near the tip of Jakub's gitweb work to see what
+area is still being improved, and shallowly fetching them into a
+repository that has full history of my 'master' would be a
+useful way to do so, provided if 'pu' and/or Jakub's tree have
+deep enough histories since 'master' that the benefit of saved
+bandwidth and disk usage outweighs the complexity of "shallow".
+
+I haven't tried these usage scenarios myself.  I wonder if a
+shallow "clone" with non-uniform depths from possible more than
+one repository work sensibly?
