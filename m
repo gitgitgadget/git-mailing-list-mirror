@@ -1,87 +1,66 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Roman Zippel <zippel@linux-m68k.org>
-Subject: Re: problem in unpack-trees.c
-Date: Mon, 4 Dec 2006 12:36:04 +0100 (CET)
-Message-ID: <Pine.LNX.4.64.0612041214590.1867@scrub.home>
-References: <Pine.LNX.4.64.0612022125530.1867@scrub.home>
- <7vodqkq956.fsf@assigned-by-dhcp.cox.net>
+From: Alexandre Julliard <julliard@winehq.org>
+Subject: [PATCH 2/5] upload-pack: Check for NOT_SHALLOW flag before sending a shallow to the client.
+Date: Fri, 24 Nov 2006 15:58:25 +0100
+Message-ID: <87wt5kuc1a.fsf@wine.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Mon, 4 Dec 2006 11:36:29 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Fri, 24 Nov 2006 14:59:48 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-X-Sender: roman@scrub.home
-In-Reply-To: <7vodqkq956.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.90 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33191>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GrC7T-0006d8-Qd for gcvg-git@gmane.org; Mon, 04 Dec
- 2006 12:36:24 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32223>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GncWg-0008QM-9F for gcvg-git@gmane.org; Fri, 24 Nov
+ 2006 15:59:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S936091AbWLDLgR (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
- 06:36:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936094AbWLDLgR
- (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 06:36:17 -0500
-Received: from scrub.xs4all.nl ([194.109.195.176]:56226 "EHLO
- scrub.xs4all.nl") by vger.kernel.org with ESMTP id S936091AbWLDLgP (ORCPT
- <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006 06:36:15 -0500
-Received: from roman (helo=localhost) by scrub.xs4all.nl with local-esmtp
- (Exim 3.36 #1 (Debian)) id 1GrC7A-0007Zf-00; Mon, 04 Dec 2006 12:36:04 +0100
-To: Junio C Hamano <junkio@cox.net>
+ S934637AbWKXO7d (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 24 Nov 2006
+ 09:59:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934639AbWKXO7d
+ (ORCPT <rfc822;git-outgoing>); Fri, 24 Nov 2006 09:59:33 -0500
+Received: from mail.codeweavers.com ([216.251.189.131]:4069 "EHLO
+ mail.codeweavers.com") by vger.kernel.org with ESMTP id S934637AbWKXO7c
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 24 Nov 2006 09:59:32 -0500
+Received: from adsl-84-226-49-216.adslplus.ch ([84.226.49.216]
+ helo=wine.dyndns.org) by mail.codeweavers.com with esmtpsa
+ (TLS-1.0:DHE_RSA_AES_256_CBC_SHA:32) (Exim 4.50) id 1GncVX-0005Iv-Lb for
+ git@vger.kernel.org; Fri, 24 Nov 2006 08:58:28 -0600
+Received: by wine.dyndns.org (Postfix, from userid 1000) id 9390110A155; Fri,
+ 24 Nov 2006 15:58:25 +0100 (CET)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Hi,
+A commit may have been put on the shallow list, and then reached from
+another branch and marked NOT_SHALLOW without being removed from the
+list.
 
-On Mon, 4 Dec 2006, Junio C Hamano wrote:
+Signed-off-by: Alexandre Julliard <julliard@winehq.org>
+---
+ upload-pack.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-> Roman Zippel <zippel@linux-m68k.org> writes:
-> 
-> > I looked into it and the problem is during the "git-read-tree --reset" 
-> > step and it seems that the local df_conflict_entry variable of 
-> > unpack_trees() survives past that function. If you check in 
-> > add_cache_entry() it's called with this variable and only because 
-> > verify_path() fails it's not added to the tree on the other archs, but on 
-> > m68k the data on the stack is a bit different and thus verify_path() 
-> > succeeds and the stack variable is added to the tree and later saved.
-> 
-> I am very puzzled about this.
-> 
-> You are correct that the address of the df_conflict_entry is
-> assigned to "struct unpack_trees_options *o" in unpack_trees(),
-> and add_cache_entry() are called from many places in the call
-> chain that starts from that function.  And these call sites do
-> rely on the conflict_entry to have a NUL name to prevent
-> add_cache_entry from adding the entry to the index.  Which feels
-> like a hack, but it should get the job done while it is running.
+diff --git a/upload-pack.c b/upload-pack.c
+index d5b4750..d4a7b62 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -565,7 +565,7 @@ static void receive_needs(void)
+ 			SHALLOW, NOT_SHALLOW);
+ 		while (result) {
+ 			struct object *object = &result->item->object;
+-			if (!(object->flags & CLIENT_SHALLOW)) {
++			if (!(object->flags & (CLIENT_SHALLOW|NOT_SHALLOW))) {
+ 				packet_write(1, "shallow %s",
+ 						sha1_to_hex(object->sha1));
+ 				register_shallow(object->sha1);
+-- 
+1.4.4.1.ga335e
 
-Ok, I see, I wasn't sure that this part was really intentional.
-
-> On my x86-64 box with gcc 4 (i.e. "#define FLEX_ARRAY /* empty */"
-> is used,
-> 
->         #include "cache.h"
-> 
->         int
->         main(int ac, char **av)
->         {
->                 printf("sz %zu\n", sizeof(struct cache_entry));
->                 printf("of %zu\n", offsetof(struct cache_entry, name));
->                 memset(&dfc, 0, sizeof(dfc));
->         }
-> 
-> size of "struct cache_entry" is 64 while the offset of name
-> member is 62, so I am luckily getting two bytes of room for
-> memset to fill and cause name[] to be properly NUL terminated.
-> If the alignment requirement of the platform is smaller, we may
-> be overstepping the struct when we access its name[] member.
-
-Yes, on m68k both values are the same and thus name is not initialized.
-Your patch should do the trick, I'll give it a try.
-
+-- 
+Alexandre Julliard
