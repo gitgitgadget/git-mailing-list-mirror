@@ -1,136 +1,79 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Nix <nix@esperi.org.uk>
-Subject: Re: What's the meaning of `parenthood' in git commits?
-Date: Wed, 08 Nov 2006 01:36:15 +0000
-Message-ID: <87zmb2afe8.fsf@hades.wkstn.nix>
-References: <878ximbwm3.fsf@hades.wkstn.nix>
-	<7vy7qmyc46.fsf@assigned-by-dhcp.cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Cleaning up git user-interface warts
+Date: Fri, 24 Nov 2006 13:41:29 +0100
+Organization: At home
+Message-ID: <ek6p6j$r6p$1@sea.gmane.org>
+References: <87k61yt1x2.wl%cworth@cworth.org> <455A1137.8030301@shadowen.org>	<87hcx1u934.wl%cworth@cworth.org>	<Pine.LNX.4.64.0611141518590.2591@xanadu.home>	<87bqn9u43s.wl%cworth@cworth.org> <ejdcg5$4fl$1@sea.gmane.org>	<Pine.LNX.4.64.0611141633430.2591@xanadu.home>	<7vbqn9y6w6.fsf@assigned-by-dhcp.cox.net>	<Pine.LNX.4.64.0611142007010.2591@xanadu.home>	<7v3b8ltq7r.fsf@assigned-by-dhcp.cox.net>	<Pine.LNX.4.64.0611142306090.2591@xanadu.home>	<Pine.LNX.4.64.0611150950170.3349@woody.osdl.org>	<455BBCE9.4050503@xs4all.nl>	<Pine.LNX.4.64.0611151908130.3349@woody.osdl.org>	<455C412D.1030408@xs4all.nl> <7v7ixvbq80.fsf@assigned-by-dhcp.cox.net> <455C618A.7080309@xs4all.nl> <ejkd6g$vog$1@sea.gmane.org> <4566E512.4010405@xs4all.nl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 8 Nov 2006 01:37:21 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Transfer-Encoding: 7Bit
+NNTP-Posting-Date: Fri, 24 Nov 2006 12:40:16 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Emacs: impress your (remaining) friends and neighbors.
-In-Reply-To: <7vy7qmyc46.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's message of "Tue, 07 Nov 2006 17:13:13 -0800")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) XEmacs/21.5-b27 (linux)
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 29
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31110>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32215>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GhcMm-0004L7-0V for gcvg-git@gmane.org; Wed, 08 Nov
- 2006 02:36:42 +0100
+ esmtp (Exim 4.43) id 1GnaLh-0007jv-5d for gcvg-git@gmane.org; Fri, 24 Nov
+ 2006 13:40:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753827AbWKHBgY (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 7 Nov 2006
- 20:36:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753831AbWKHBgX
- (ORCPT <rfc822;git-outgoing>); Tue, 7 Nov 2006 20:36:23 -0500
-Received: from 41-052.adsl.zetnet.co.uk ([194.247.41.52]:64777 "EHLO
- mail.esperi.org.uk") by vger.kernel.org with ESMTP id S1753827AbWKHBgW (ORCPT
- <rfc822;git@vger.kernel.org>); Tue, 7 Nov 2006 20:36:22 -0500
-Received: from esperi.org.uk (nix@hades.wkstn.nix [192.168.14.18]) by
- mail.esperi.org.uk (8.12.11.20060614/8.12.11) with ESMTP id kA81aFB3014068;
- Wed, 8 Nov 2006 01:36:16 GMT
-Received: (from nix@localhost) by esperi.org.uk
- (8.12.11.20060614/8.12.11/Submit) id kA81aFih030120; Wed, 8 Nov 2006 01:36:15
- GMT
-To: Junio C Hamano <junkio@cox.net>
+ S934501AbWKXMkF (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 24 Nov 2006
+ 07:40:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934506AbWKXMkF
+ (ORCPT <rfc822;git-outgoing>); Fri, 24 Nov 2006 07:40:05 -0500
+Received: from main.gmane.org ([80.91.229.2]:2442 "EHLO ciao.gmane.org") by
+ vger.kernel.org with ESMTP id S934501AbWKXMkD (ORCPT
+ <rfc822;git@vger.kernel.org>); Fri, 24 Nov 2006 07:40:03 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1GnaLS-0007gs-QD for git@vger.kernel.org; Fri, 24 Nov 2006 13:39:54 +0100
+Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Fri, 24 Nov 2006 13:39:54 +0100
+Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Fri, 24 Nov 2006
+ 13:39:54 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On 8 Nov 2006, Junio C. Hamano spake thusly:
-> Nix <nix@esperi.org.uk> writes:
->
->> The idea being that if you have a tree like this:
->>
->>      B
->> ------------- ref trunks/latest
->>      \
->>       ------ ref heads/some-change-foo
->>
->>  ... -------- ref trunks/old-and-grotty
->>
->>
->> then this merge strategy, when asked to merge heads/some-change-foo into
->> trunks/old-and-grotty would spot that point B was the most recent
->> merge point into anything in trunks/, generate a diff between point B
->> and heads/some-change-foo, and patch it into trunks/old-and-grotty.
->
-> This is a standard "cherry-picking" practice.
+Han-Wen Nienhuys wrote:
 
-Yes, pretty much, except that we do *everything* by cherry-picking, and
-we want to track the cherry-picks in the same way that all other changes
-are tracked (i.e., a small branch for each (numbered) change, patching
-madly in all directions into a variety of trunks and release branches,
-with all those patches tracked.)
+> Jakub Narebski escreveu:
+> 
+>>>   - --pretty option with wholly uninformative options full, medium, 
+>>> short, raw.  It's not even documented what each option does.
+>> 
+>> And 'oneline' and undocumented 'email'. True, git lacks documentation (and
+>> this one of main complaints in git survey).
+> 
+> The recently posted patch documenting is an improvement, but why not
+> add an option so you can do
+> 
+>   --format 'committer %c\nauthor %a\n'
+>   
+> this catches all combinations, and is easier for scripting.
+> 
+> Right now, I have some scripts that have to munge log output with
+> regular expressions to strip out the "author:"  prefixes.
 
->    These commits I list as its parents of this new commit, and
->    everything that leads to them, are what I considered when
->    derived this commit.  This new child commit of them suits the
->    purpose of _my_ branch better than any of these parent
->    commits I took into consideration because of such and such
->    reasons that I stated in its commit log message.
->
-> If you mark the resulting commit on old-and-grotty to have
-> some-change-foo as one of its parents, because some-change-foo
-> has almost everything 'latest' has (up to point B), you are also
-> saying "I have considered everything that happened between
-> old-and-grotty and B when making this commit".
-
-Yeah. This is the merge-base tracking that Linus mentioned, and it's not
-quite what I'm looking for :/ it's a sort of step-parent, really...
-
-> What's implied by that statement is this, even though you do not
-> explicitly say:
->
->    I reject everything that happened on the development line
->    that led to 'latest' up to point B since old-and-grotty was
->    forked.
-
-(which is not necessarily true: we might want to backport an earlier
-change, also on another `small change branch', later on. Stuff on the
-trunks themselves will never want to get backported, but if the
-merge-base algorithm traverses patch-merge parent links, it might
-consider that a `small change branch' has been merged when it actually
-hasn't.)
-
-> This is not necessarily a bad thing, by the way.  For somebody
-> who is trying to maintain extremely-stable branch by cherry
-> picking only changes in a few narrow areas from the mainline
-> would _want_ to leave most of the "new good stuff" out from his
-> branch.  That's why I emphasized _my_ a few paragraphs above.
-
-That's exactly what we're doing, across-the-board.
-
-> But it is _so_ different from the mindset of usual "every branch
-> makes progress _forward_ perhaps with different pace".  In this
-> example, this branch is actively choosing to stay behind and
-> refusing to take changes from the 'latest'.  So your users need
-> to really understand what they are doing.
-
-*hahahaaaaa*... hang on, that *was* a joke, right? ;)
-
-> So I think as long as you and your users understand what is
-> going on, I do not see a problem at either the mechanical level
-> or the philosophical level.  But I am sure it would confuse a
-> lot of people, so please do not come back complaining that you
-> ended up getting your users heads explode ;-).
-
-OK, I think I need to find a way to notate in the patch-merged commit
-that one or more parents should be disregarded when searching for merge
-bases (and *only* when searching for merge bases). I think that will
-do what's wanted in all areas: i.e., it'll act like a cherry-pick
-that shows up in the logs/revlist and so on, but doesn't affect the
-semantics of later merges of stuff from anywhere except for the
-same limited branch.
-
-(obviously trying to patch-merge B to A twice is always going to
-fail, whether or not merge-base traversal jumps into B: I don't
-think there's any real need to protect against that.)
-
+If we ever implemented this, I'd rather to separate what is now of format
+parsing in git-for-each-ref (although I'd like to make it more like rpm's
+--query-format argument, with %-n{header}, %[array] etc.) into separate
+module, and reuse it for git-log and friends --pretty/--format handling.
 -- 
-Rich industrial heritage: lifeless wasteland. `The land
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
+
