@@ -6,64 +6,65 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 From: Seth Falcon <sethfalcon@gmail.com>
-Subject: Re: remotes/* for "foreign" archives
-Date: Tue, 21 Nov 2006 07:13:44 -0800
-Message-ID: <m2y7q4bzo7.fsf@ziti.local>
-References: <86y7q6m3zm.fsf@blue.stonehenge.com>
-	<86r6vwkfti.fsf@blue.stonehenge.com>
+Subject: Re: git-svn: why fetching files is so slow
+Date: Fri, 24 Nov 2006 09:10:39 -0800
+Message-ID: <m2odqwlqi8.fsf@ziti.fhcrc.org>
+References: <loom.20061124T143148-286@post.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 21 Nov 2006 15:14:53 +0000 (UTC)
+NNTP-Posting-Date: Fri, 24 Nov 2006 17:10:48 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:to:subject:references:from:in-reply-to:user-agent:date:message-id:mime-version:content-type;
-        b=dbCCJJ8ANk9ylNMc3999gfYC7aNoZiIJFYNb043trGMvE/as919rR2DFYoTpM00zGTjLv3gJ0gLlCEBo9boaU483619XJgpiPLwvRJW5FxzmOIRimNhNdxqRTOZrX+uvjLkRq0ZEYSusDIMDN7bLTFGgfPt6i70L0URM1nKaAR0=
-In-Reply-To: <86r6vwkfti.fsf@blue.stonehenge.com> (Randal L. Schwartz's message of "21 Nov 2006 06:57:45 -0800")
+        h=received:to:subject:references:from:date:in-reply-to:message-id:user-agent:mime-version:content-type;
+        b=h2+SEsJBYpM4gGD02nQrDHejJbrps2+yRLv89/Hi/LTsWjTrw9wJhC1N0PNEHGty4nLWYr2qHTFHjWAZxIoP0WCc373Dm2vFKstDn2kGbBkRr/KBjQHXVZcJQH9rtSP/yAMPUXK7QoMeMLk2pL+e8KzqIQd3zRKpktHdLy55Ang=
+In-Reply-To: <loom.20061124T143148-286@post.gmane.org> (pazu@pazu.com.br's message of "Fri, 24 Nov 2006 13:36:35 +0000 (UTC)")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (darwin)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31992>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32230>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GmXJv-0002Sn-HR for gcvg-git@gmane.org; Tue, 21 Nov
- 2006 16:13:59 +0100
+ esmtp (Exim 4.43) id 1GneZT-0007Wo-JA for gcvg-git@gmane.org; Fri, 24 Nov
+ 2006 18:10:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1031005AbWKUPNz (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 21 Nov 2006
- 10:13:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031014AbWKUPNz
- (ORCPT <rfc822;git-outgoing>); Tue, 21 Nov 2006 10:13:55 -0500
-Received: from nz-out-0102.google.com ([64.233.162.193]:62224 "EHLO
- nz-out-0102.google.com") by vger.kernel.org with ESMTP id S1031005AbWKUPNz
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2006 10:13:55 -0500
-Received: by nz-out-0102.google.com with SMTP id l1so1084142nzf for
- <git@vger.kernel.org>; Tue, 21 Nov 2006 07:13:54 -0800 (PST)
-Received: by 10.78.201.15 with SMTP id y15mr6542973huf.1164122033584; Tue, 21
- Nov 2006 07:13:53 -0800 (PST)
-Received: from ziti.local ( [67.171.24.140]) by mx.google.com with ESMTP id
- 18sm10977940hue.2006.11.21.07.13.52; Tue, 21 Nov 2006 07:13:53 -0800 (PST)
+ S1757799AbWKXRKg (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 24 Nov 2006
+ 12:10:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757807AbWKXRKg
+ (ORCPT <rfc822;git-outgoing>); Fri, 24 Nov 2006 12:10:36 -0500
+Received: from nz-out-0102.google.com ([64.233.162.206]:12781 "EHLO
+ nz-out-0102.google.com") by vger.kernel.org with ESMTP id S1757799AbWKXRKf
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 24 Nov 2006 12:10:35 -0500
+Received: by nz-out-0102.google.com with SMTP id s1so479469nze for
+ <git@vger.kernel.org>; Fri, 24 Nov 2006 09:10:35 -0800 (PST)
+Received: by 10.64.84.3 with SMTP id h3mr1287226qbb.1164388234960; Fri, 24
+ Nov 2006 09:10:34 -0800 (PST)
+Received: from ziti.fhcrc.org ( [67.171.24.140]) by mx.google.com with ESMTP
+ id f17sm18005649qba.2006.11.24.09.10.34; Fri, 24 Nov 2006 09:10:34 -0800
+ (PST)
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-merlyn@stonehenge.com (Randal L. Schwartz) writes:
-> It occurred to me after posting this, and while still thinking about the
-> presentation I'm writing, that it'd be interesting if "get-fetch" could hide
-> this from me.
->
-> If the file in remotes/origin looked something like:
->
->         Pull: !git-svn multi-fetch trunk
->         Push: !git-svn commit
->
-> then git-fetch and git-push could treat "origin" as a "foreign" branch
-> and indirect through these commands.
->
-> Then I could just use "git-pull" naively, and it would git-fetch origin,
-> invoking git-svn multi-fetch trunk to update it, and later I could
-> git-push and it would use git-svn commit.
+Pazu <pazu@pazu.com.br> writes:
+> ... compared to the standalone svn client. I'm working with repositories over
+> the internet, using not-so-fast links, but still, a svn checkout takes somewhere
+> around 5 to 10 minutes, while git-svn fetch takes at least 10 times that just to
+> fetch the initial revision. Later fetches also take *a lot* more time than a svn
+> update would.
 
-This sort of integration could be quite cool.  But I think the most
-common use of git-svn is with rebase and not pull.  My experience
-with git-svn and pull is that I very quickly ended up making broken
-commits to svn --- I've had much better luck rebasing.
+[warning: I _think_ this is how it works, but not 100% sure]
+When you use git-svn to fetch from an svn repository, you make a
+separate request for each commit that occurred on the remote svn
+repos.  When you use the svn client, it only needs to compute and
+download one delta .
+
+If you are not already using the Perl SVN bindings (you will need to
+build svn from source), you should give them a try.  They are much
+faster.
+
+My experience has often been the opposite, but I think that is because
+I work with an svn repository where I track a directory that has many
+many subdirs.  The svn working copy traversal is so slow that even
+with the extra network overhead, git + git-svn ends up being faster
+for fetch (and much faster for any local operation).
 
