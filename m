@@ -1,57 +1,83 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_ADSP_NXDOMAIN,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD,
-	UNPARSEABLE_RELAY shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
-From: Pazu <pazu@pazu.com.br>
-Subject: git-svn: why fetching files is so slow
-Date: Fri, 24 Nov 2006 13:36:35 +0000 (UTC)
-Message-ID: <loom.20061124T143148-286@post.gmane.org>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Increase length of function name buffer
+Date: Thu, 23 Nov 2006 22:47:44 -0800
+Message-ID: <7vk61le3xr.fsf@assigned-by-dhcp.cox.net>
+References: <200611231005.17859.andyparkins@gmail.com>
+	<7vbqmxkhpk.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Fri, 24 Nov 2006 13:37:07 +0000 (UTC)
+NNTP-Posting-Date: Fri, 24 Nov 2006 06:48:11 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 9
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 201.37.99.93 (Mozilla/5.0 (Macintosh; U; Intel Mac OS X; en-GB; rv:1.8.1) Gecko/20061010 Firefox/2.0)
+In-Reply-To: <7vbqmxkhpk.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Thu, 23 Nov 2006 12:53:43 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32216>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32190>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GnbEm-0004co-HM for gcvg-git@gmane.org; Fri, 24 Nov
- 2006 14:37:04 +0100
+ esmtp (Exim 4.43) id 1GnUr0-0001mv-Nh for gcvg-git@gmane.org; Fri, 24 Nov
+ 2006 07:48:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1757778AbWKXNg5 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 24 Nov 2006
- 08:36:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757777AbWKXNg5
- (ORCPT <rfc822;git-outgoing>); Fri, 24 Nov 2006 08:36:57 -0500
-Received: from main.gmane.org ([80.91.229.2]:65219 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S1757778AbWKXNg4 (ORCPT
- <rfc822;git@vger.kernel.org>); Fri, 24 Nov 2006 08:36:56 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1GnbEV-0004YZ-5k for git@vger.kernel.org; Fri, 24 Nov 2006 14:36:50 +0100
-Received: from C925635D.poa.virtua.com.br ([C925635D.poa.virtua.com.br]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Fri, 24 Nov 2006 14:36:47 +0100
-Received: from pazu by C925635D.poa.virtua.com.br with local (Gmexim 0.1
- (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Fri, 24 Nov 2006
- 14:36:47 +0100
-To: git@vger.kernel.org
+ S934447AbWKXGrx (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 24 Nov 2006
+ 01:47:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934450AbWKXGrx
+ (ORCPT <rfc822;git-outgoing>); Fri, 24 Nov 2006 01:47:53 -0500
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:43460 "EHLO
+ fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP id S934447AbWKXGrw
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 24 Nov 2006 01:47:52 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao06.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061124064745.FIZM5465.fed1rmmtao06.cox.net@fed1rmimpo02.cox.net>; Fri, 24
+ Nov 2006 01:47:45 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id qWnt1V0011kojtg0000000; Fri, 24 Nov 2006
+ 01:47:53 -0500
+To: Andy Parkins <andyparkins@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-... compared to the standalone svn client. I'm working with repositories over
-the internet, using not-so-fast links, but still, a svn checkout takes somewhere
-around 5 to 10 minutes, while git-svn fetch takes at least 10 times that just to
-fetch the initial revision. Later fetches also take *a lot* more time than a svn
-update would.
+Junio C Hamano <junkio@cox.net> writes:
 
-Cheers,
+> Andy Parkins <andyparkins@gmail.com> writes:
+>
+>> In xemit.c:xdl_emit_diff() a buffer for showing the function name as
+>> commentary is allocated; this buffer was 40 characters.  This is a bit
+>> small;...
+ >...
+> I wonder however which is easier to read, a loooong heading line
+> as you do in this patch, or "...TailOfVeryLongClassName::method"
+> that still fits on a single line without terminal line-wrapping.
 
--- Pazu
+Nah, I was stupid again.
+
+It would give something silly like the attached patch if we do
+what I suggested (notice the function header line which does not
+give us anything useful).
+
+Will apply your version as is.
+
+---
+
+diff --git a/xdiff/xemit.c b/xdiff/xemit.c
+index 07995ec..30d3df1 100644
+--- a/xdiff/xemit.c
++++ b/xdiff/xemit.c
+@@ -87,8 +87,10 @@ long i, char *buf, long sz, long *ll) {
+ 		    (isalpha((unsigned char)*rec) || /* identifier? */
+ 		     *rec == '_' ||	/* also identifier? */
+ 		     *rec == '$')) {	/* mysterious GNU diff's invention */
+-			if (len > sz)
++			if (len > sz) {
++				rec += len - sz;
+ 				len = sz;
++			}
+ 			while (0 < len && isspace((unsigned char)rec[len - 1]))
+ 				len--;
+ 			memcpy(buf, rec, len);
