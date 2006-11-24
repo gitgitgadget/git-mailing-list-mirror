@@ -1,70 +1,79 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC/PATCH] Implement poor-man's submodule support using commit  hooks
-Date: Wed, 20 Dec 2006 15:07:56 +0100
-Organization: At home
-Message-ID: <embfus$d50$1@sea.gmane.org>
-References: <200612201309.02119.andyparkins@gmail.com> <45893AC6.910D5748@eudaptics.com> <200612201347.13805.andyparkins@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] git-cvsimport: add suport for CVS pserver method HTTP/1.x proxying
+Date: Thu, 23 Nov 2006 16:24:48 -0800
+Message-ID: <7v7ixlhesv.fsf@assigned-by-dhcp.cox.net>
+References: <11642344172790-git-send-email-iarenuno@eteo.mondragon.edu>
+	<7v64d5keke.fsf@assigned-by-dhcp.cox.net>
+	<45661C36.9010101@catalyst.net.nz>
+	<7vlkm1ix7b.fsf@assigned-by-dhcp.cox.net>
+	<46a038f90611231552x3e33eec4w7863ce6a1da5781b@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-NNTP-Posting-Date: Wed, 20 Dec 2006 14:05:52 +0000 (UTC)
+NNTP-Posting-Date: Fri, 24 Nov 2006 00:25:02 +0000 (UTC)
+Cc: git@vger.kernel.org, <iarenuno@eteo.mondragon.edu>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 20
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-25-107.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+In-Reply-To: <46a038f90611231552x3e33eec4w7863ce6a1da5781b@mail.gmail.com>
+	(Martin Langhoff's message of "Fri, 24 Nov 2006 12:52:13 +1300")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34930>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gx24p-0006b8-HA for gcvg-git@gmane.org; Wed, 20 Dec
- 2006 15:05:47 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32183>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GnOsC-0003Xr-PE for gcvg-git@gmane.org; Fri, 24 Nov
+ 2006 01:24:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S965071AbWLTOFo (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 20 Dec 2006
- 09:05:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965074AbWLTOFo
- (ORCPT <rfc822;git-outgoing>); Wed, 20 Dec 2006 09:05:44 -0500
-Received: from main.gmane.org ([80.91.229.2]:56268 "EHLO ciao.gmane.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S965071AbWLTOFn
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 20 Dec 2006 09:05:43 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1Gx24P-0001X9-T8 for git@vger.kernel.org; Wed, 20 Dec 2006 15:05:21 +0100
-Received: from host-81-190-25-107.torun.mm.pl ([81.190.25.107]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Wed, 20 Dec 2006 15:05:21 +0100
-Received: from jnareb by host-81-190-25-107.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Wed, 20 Dec 2006
- 15:05:21 +0100
-To: git@vger.kernel.org
+ S1757510AbWKXAYx (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 23 Nov 2006
+ 19:24:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757520AbWKXAYx
+ (ORCPT <rfc822;git-outgoing>); Thu, 23 Nov 2006 19:24:53 -0500
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:18879 "EHLO
+ fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP id S1757510AbWKXAYw
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 23 Nov 2006 19:24:52 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao12.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061124002449.HFP4226.fed1rmmtao12.cox.net@fed1rmimpo02.cox.net>; Thu, 23
+ Nov 2006 19:24:49 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id qQQx1V00A1kojtg0000000; Thu, 23 Nov 2006
+ 19:24:57 -0500
+To: "Martin Langhoff" <martin.langhoff@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Andy Parkins wrote:
+"Martin Langhoff" <martin.langhoff@gmail.com> writes:
 
-> On Wednesday 2006 December 20 13:29, Johannes Sixt wrote:
+> On 11/24/06, Junio C Hamano <junkio@cox.net> wrote:
+>> It is more about HTTP proxying and it is my understanding that
+>> response to CONNECT method request has that empty line after the
+>> successful (2xx) response line and zero or more response
+>> headers.  The code is still wrong; it does not have a loop to
+>> discard the potential response headers that come before the
+>> empty line the code we are discussing discards.
+>
+> You are right. It should be something along the lines of
+>
+>  # discard headers until first blank line
+>  while (<$s> ne '') {
+>      # nothing
+>  }
+>
+> that is, assuming we can just ignore headers happily.
 
->>> +       while read subdir hash
->>
->> Wouldn't it be better to have the order of subdir and hash swapped? That
->> way subdir may contain blanks, and it gives nicer alignment in the file
->> because of the constant length of the hashes.
-> 
-> Unfortunately, it is the hash that is optional.  When you create the file, you 
-> don't list the hashes, you list the subdirectories.  I suppose I could make 
-> it so you have to give "000000" or something first?
+Yes, or "1 while (<$s> ne '')" which is listed as an example for
+a kosher way to use a constant to express no-op in void context ;-).
 
-That's the convention git uses in git-diff, reflog, etc.
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+        =head2 No-ops
+        X<no-op> X<nop>
+
+        Perl doesn't officially have a no-op operator, but the bare constants
+        C<0> and C<1> are special-cased to not produce a warning in a void
+        context, so you can for example safely do
+
+            1 while foo();
 
