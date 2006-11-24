@@ -1,67 +1,86 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Anand Kumria" <wildfire@progsoc.org>
-Subject: Re: how to authenticate with git-svn on a subversion repository
-Date: Sun, 19 Nov 2006 00:43:55 +0000 (UTC)
-Message-ID: <ejo9cb$2l8$1@sea.gmane.org>
-References: <4559D37E.1070703@archlinuxfr.org> <m24pszbede.fsf@ziti.local>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Sun, 19 Nov 2006 00:44:24 +0000 (UTC)
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH] gitweb: Use git-show-ref instead of git-peek-remote
+Date: Fri, 24 Nov 2006 23:01:22 +0100
+Message-ID: <11644056823095-git-send-email-jnareb@gmail.com>
+NNTP-Posting-Date: Fri, 24 Nov 2006 22:00:13 +0000 (UTC)
+Cc: Jakub Narebski <jnareb@gmail.com>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 19
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 88-110-175-230.dynamic.dsl.as9105.com
-User-Agent: pan 0.117 (We'll fly and we'll fall and we'll burn)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:cc:subject:date:message-id:x-mailer;
+        b=S0rwdtfZ1sGDfeIYIiActRlSHgrSh39Y1y30yi107VSH+WEVACC1++6qRvn6BT01RvdnJddbSppy8gmB/4Fwo7nRA26D1aaEmRx6FNh9l/vn15z2PdUKfhsi0RWhMsMN5l38gKJusuykEpDsrfmq61lMHox/IF3+Y6k0M5dHj2w=
+X-Mailer: git-send-email 1.4.4.1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31817>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32240>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GlanF-0006iT-Sy for gcvg-git@gmane.org; Sun, 19 Nov
- 2006 01:44:22 +0100
+ esmtp (Exim 4.43) id 1Gnj5S-0006UZ-KU for gcvg-git@gmane.org; Fri, 24 Nov
+ 2006 22:59:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1755387AbWKSAoH convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Sat, 18 Nov 2006 19:44:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755458AbWKSAoH
- (ORCPT <rfc822;git-outgoing>); Sat, 18 Nov 2006 19:44:07 -0500
-Received: from main.gmane.org ([80.91.229.2]:9178 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S1755387AbWKSAoE (ORCPT
- <rfc822;git@vger.kernel.org>); Sat, 18 Nov 2006 19:44:04 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1Glamv-0006fP-I3 for git@vger.kernel.org; Sun, 19 Nov 2006 01:44:01 +0100
-Received: from 88-110-175-230.dynamic.dsl.as9105.com ([88.110.175.230]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Sun, 19 Nov 2006 01:44:01 +0100
-Received: from wildfire by 88-110-175-230.dynamic.dsl.as9105.com with local
- (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Sun, 19
- Nov 2006 01:44:01 +0100
+ S966225AbWKXV7o (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 24 Nov 2006
+ 16:59:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966210AbWKXV7o
+ (ORCPT <rfc822;git-outgoing>); Fri, 24 Nov 2006 16:59:44 -0500
+Received: from ug-out-1314.google.com ([66.249.92.173]:26058 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S966226AbWKXV7n
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 24 Nov 2006 16:59:43 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so773859uga for
+ <git@vger.kernel.org>; Fri, 24 Nov 2006 13:59:41 -0800 (PST)
+Received: by 10.67.119.13 with SMTP id w13mr7847287ugm.1164405581799; Fri, 24
+ Nov 2006 13:59:41 -0800 (PST)
+Received: from roke.D-201 ( [81.190.24.209]) by mx.google.com with ESMTP id
+ y7sm15311247ugc.2006.11.24.13.59.41; Fri, 24 Nov 2006 13:59:41 -0800 (PST)
+Received: from roke.D-201 (localhost.localdomain [127.0.0.1]) by roke.D-201
+ (8.13.4/8.13.4) with ESMTP id kAOM1NV0031077; Fri, 24 Nov 2006 23:01:24 +0100
+Received: (from jnareb@localhost) by roke.D-201 (8.13.4/8.13.4/Submit) id
+ kAOM1MHU031076; Fri, 24 Nov 2006 23:01:22 +0100
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On Thu, 16 Nov 2006 07:27:57 -0800, Seth Falcon wrote:
+Use "git show-ref --dereference" instead of "git peek-remote ." in
+git_get_references. git-show-ref is faster than git-peek-remote; even
+faster is reading info/refs file (if it exists), but the information
+in info/refs can be stale.
 
-> Com=C3=A8te <comete@archlinuxfr.org> writes:
->=20
->> hello !
->>
->> i would like to use git-svn to commit some modifications to a
->> Subversion repository but i don't know where i can enter my username
->> and password to commit to the repository ? Is there any special file
->> to put them.
->> For now i get an error:
->=20
-> There may be a better way, but if you just use the svn command line
-> client to create a small working copy from the repository, you will
+git-show-ref is available since v1.4.4; the output format is slightly
+different than git-peek-remote output format.
 
-Or, even simpler, use: svn info <url> which will cache the credentials =
-and
-not require a working copy.
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+ gitweb/gitweb.perl |    9 +++++----
+ 1 files changed, 5 insertions(+), 4 deletions(-)
 
-Anand
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index f06cd3e..290751f 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -1154,14 +1154,15 @@ sub git_get_last_activity {
+ sub git_get_references {
+ 	my $type = shift || "";
+ 	my %refs;
+-	# 5dc01c595e6c6ec9ccda4f6f69c131c0dd945f8c	refs/tags/v2.6.11
+-	# c39ae07f393806ccf406ef966e9a15afc43cc36a	refs/tags/v2.6.11^{}
+-	open my $fd, "-|", $GIT, "peek-remote", "$projectroot/$project/"
++	# 5dc01c595e6c6ec9ccda4f6f69c131c0dd945f8c refs/tags/v2.6.11
++	# c39ae07f393806ccf406ef966e9a15afc43cc36a refs/tags/v2.6.11^{}
++	open my $fd, "-|", git_cmd(), "show-ref", "--dereference",
++		($type ? ("--", "refs/$type") : ()) # use -- <pattern> if $type
+ 		or return;
+ 
+ 	while (my $line = <$fd>) {
+ 		chomp $line;
+-		if ($line =~ m/^([0-9a-fA-F]{40})\trefs\/($type\/?[^\^]+)/) {
++		if ($line =~ m/^([0-9a-fA-F]{40}) refs\/($type\/?[^\^]+)/) {
+ 			if (defined $refs{$1}) {
+ 				push @{$refs{$1}}, $2;
+ 			} else {
+-- 
+1.4.4.1
