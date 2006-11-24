@@ -1,61 +1,70 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Morten Welinder" <mwelinder@gmail.com>
-Subject: Re: SEGV when lookup_* returns NULL
-Date: Mon, 27 Nov 2006 21:23:47 -0500
-Message-ID: <118833cc0611271823t3b1783cem38f031ac26ac0f94@mail.gmail.com>
-References: <20061127211315.GC18810@admingilde.org>
-	 <7vu00kftbq.fsf@assigned-by-dhcp.cox.net>
-	 <Pine.LNX.4.63.0611280032300.30004@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <7v3b84e8cg.fsf@assigned-by-dhcp.cox.net>
+From: Han-Wen Nienhuys <hanwen@xs4all.nl>
+Subject: Re: Cleaning up git user-interface warts
+Date: Fri, 24 Nov 2006 13:26:58 +0100
+Message-ID: <4566E512.4010405@xs4all.nl>
+References: <87k61yt1x2.wl%cworth@cworth.org> <455A1137.8030301@shadowen.org>	<87hcx1u934.wl%cworth@cworth.org>	<Pine.LNX.4.64.0611141518590.2591@xanadu.home>	<87bqn9u43s.wl%cworth@cworth.org> <ejdcg5$4fl$1@sea.gmane.org>	<Pine.LNX.4.64.0611141633430.2591@xanadu.home>	<7vbqn9y6w6.fsf@assigned-by-dhcp.cox.net>	<Pine.LNX.4.64.0611142007010.2591@xanadu.home>	<7v3b8ltq7r.fsf@assigned-by-dhcp.cox.net>	<Pine.LNX.4.64.0611142306090.2591@xanadu.home>	<Pine.LNX.4.64.0611150950170.3349@woody.osdl.org>	<455BBCE9.4050503@xs4all.nl>	<Pine.LNX.4.64.0611151908130.3349@woody.osdl.org>	<455C412D.1030408@xs4all.nl> <7v7ixvbq80.fsf@assigned-by-dhcp.cox.net> <455C618A.7080309@xs4all.nl> <ejkd6g$vog$1@sea.gmane.org>
+Reply-To: hanwen@xs4all.nl
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-2
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Tue, 28 Nov 2006 02:24:04 +0000 (UTC)
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Martin Waitz" <tali@admingilde.org>, git@vger.kernel.org
+NNTP-Posting-Date: Fri, 24 Nov 2006 12:27:34 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Ju+RgZISu+aSVt9QBV2bNC3tr8b8akYV0GPOcQwwYsGaeNJtMW/Jj/6PLxTbiYiCBAZszFYGTmhAwLt27IIIq2Ynk7YKrsGKLEQoZkQGFR2QS078O2m0jsOdSCDrSWEHGWPuXYD4PsEBreN1QXPo0FD9Cyx/VVZQ5OAS+4KOQDA=
-In-Reply-To: <7v3b84e8cg.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 21
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: muurbloem.xs4all.nl
+User-Agent: Thunderbird 1.5.0.8 (X11/20061107)
+In-Reply-To: <ejkd6g$vog$1@sea.gmane.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32481>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32214>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GosdT-0001Kt-MO for gcvg-git@gmane.org; Tue, 28 Nov
- 2006 03:23:52 +0100
+ esmtp (Exim 4.43) id 1Gna9M-0004ku-OF for gcvg-git@gmane.org; Fri, 24 Nov
+ 2006 13:27:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S934488AbWK1CXt (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 27 Nov 2006
- 21:23:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934494AbWK1CXs
- (ORCPT <rfc822;git-outgoing>); Mon, 27 Nov 2006 21:23:48 -0500
-Received: from wx-out-0506.google.com ([66.249.82.228]:3609 "EHLO
- wx-out-0506.google.com") by vger.kernel.org with ESMTP id S934488AbWK1CXs
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 27 Nov 2006 21:23:48 -0500
-Received: by wx-out-0506.google.com with SMTP id h27so1861484wxd for
- <git@vger.kernel.org>; Mon, 27 Nov 2006 18:23:47 -0800 (PST)
-Received: by 10.70.84.6 with SMTP id h6mr548447wxb.1164680627508; Mon, 27 Nov
- 2006 18:23:47 -0800 (PST)
-Received: by 10.70.99.4 with HTTP; Mon, 27 Nov 2006 18:23:47 -0800 (PST)
-To: "Junio C Hamano" <junkio@cox.net>
+ S934473AbWKXM1S (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 24 Nov 2006
+ 07:27:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934479AbWKXM1S
+ (ORCPT <rfc822;git-outgoing>); Fri, 24 Nov 2006 07:27:18 -0500
+Received: from main.gmane.org ([80.91.229.2]:18891 "EHLO ciao.gmane.org") by
+ vger.kernel.org with ESMTP id S934473AbWKXM1R (ORCPT
+ <rfc822;git@vger.kernel.org>); Fri, 24 Nov 2006 07:27:17 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1Gna91-0004ew-6M for git@vger.kernel.org; Fri, 24 Nov 2006 13:27:03 +0100
+Received: from muurbloem.xs4all.nl ([213.84.26.127]) by main.gmane.org with
+ esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>;
+ Fri, 24 Nov 2006 13:27:03 +0100
+Received: from hanwen by muurbloem.xs4all.nl with local (Gmexim 0.1 (Debian))
+ id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Fri, 24 Nov 2006 13:27:03
+ +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-> Why?  You would certainly install your own die() handler by that
-> time I presume?
+Jakub Narebski escreveu:
 
-Likely, but short of exiting or using longjmp/setjmp what can you do
-in such a "die"?  Not much.  And most GUI users will be unhappy
-with the exit approach.
+>>   - --pretty option with wholly uninformative options full, medium, 
+>> short, raw.  It's not even documented what each option does.
+> 
+> And 'oneline' and undocumented 'email'. True, git lacks documentation (and
+> this one of main complaints in git survey).
 
-If there is any chance that the error is not the programmer's fault, a
-nice library ought to pass the error back somehow.
+The recently posted patch documenting is an improvement, but why not
+add an option so you can do
 
+  --format 'committer %c\nauthor %a\n'
+  
+this catches all combinations, and is easier for scripting.
+
+Right now, I have some scripts that have to munge log output with
+regular expressions to strip out the "author:"  prefixes.
+
+
+-- 
+ Han-Wen Nienhuys - hanwen@xs4all.nl - http://www.xs4all.nl/~hanwen
