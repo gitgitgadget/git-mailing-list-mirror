@@ -1,92 +1,103 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: [RFC] Submodules in GIT
-Date: Fri, 1 Dec 2006 10:38:27 +0000
-Message-ID: <200612011038.29193.andyparkins@gmail.com>
-References: <20061121223130.GA24909@nan92-1-81-57-214-146.fbx.proxad.net> <200612010849.11176.andyparkins@gmail.com> <456FF6D1.4040500@op5.se>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-15"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Fri, 1 Dec 2006 10:38:57 +0000 (UTC)
+From: Peter Baumann <Peter.B.Baumann@stud.informatik.uni-erlangen.de>
+Subject: Re: [PATCH] config option core.showroot to enable showing the diff of the root commit
+Date: Fri, 24 Nov 2006 10:04:11 +0100
+Message-ID: <slrnemddcb.ggq.Peter.B.Baumann@xp.machine.xx>
+References: <200611211341.48862.andyparkins@gmail.com> <8aa486160611210609h1c2d229ekf0b5e8aeb4f21f11@mail.gmail.com> <slrnem694k.4lm.Peter.B.Baumann@xp.machine.xx> <Pine.LNX.4.64.0611210820100.3338@woody.osdl.org> <20061121180643.GC7201@pasky.or.cz> <ejvfng$cj6$1@sea.gmane.org> <20061121182135.GD7201@pasky.or.cz> <7v64d8y4tu.fsf@assigned-by-dhcp.cox.net> <slrnemaqt1.esn.Peter.B.Baumann@xp.machine.xx> <7virh5khrc.fsf@assigned-by-dhcp.cox.net> <slrnemcc0b.ncc.Peter.B.Baumann@xp.machine.xx> <7vejrthf2y.fsf@assigned-by-dhcp.cox.net> <7vzmahfx6q.fsf@assigned-by-dhcp.cox.net> <slrnemd98k.a3v.Peter.B.Baumann@xp.machine.xx> <7vlkm1cjht.fsf@assigned-by-dhcp.cox.net>
+NNTP-Posting-Date: Fri, 24 Nov 2006 09:05:08 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=H4W7LTvDbCREe6hyVDiEHqQXEcCqSVBEY/XXlGQfCFaAw9QehqBcg/djQH0uly/lQWtpp2YovYWFFsFSXlwz7//eUW19pBi/V0DrfFh3WfOkRO2H9JoGLENTbkH1R7YV5ke7uuc2ccTv851pXuExWSepGZRpesXm7rp2KMbmcvA=
-User-Agent: KMail/1.9.5
-In-Reply-To: <456FF6D1.4040500@op5.se>
-Content-Disposition: inline
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 59
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: mason.hofmann.stw.uni-erlangen.de
+User-Agent: slrn/0.9.8.0 (Linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32886>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32201>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gq5n2-0004wz-07 for gcvg-git@gmane.org; Fri, 01 Dec
- 2006 11:38:45 +0100
+ esmtp (Exim 4.43) id 1GnWzZ-0002Zh-SB for gcvg-git@gmane.org; Fri, 24 Nov
+ 2006 10:05:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S936135AbWLAKif (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
- 05:38:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936187AbWLAKif
- (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 05:38:35 -0500
-Received: from ug-out-1314.google.com ([66.249.92.169]:41793 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S936135AbWLAKie
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 05:38:34 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so2382889uga for
- <git@vger.kernel.org>; Fri, 01 Dec 2006 02:38:33 -0800 (PST)
-Received: by 10.67.119.13 with SMTP id w13mr7029771ugm.1164969513547; Fri, 01
- Dec 2006 02:38:33 -0800 (PST)
-Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
- ESMTP id k2sm18654448ugf.2006.12.01.02.38.32; Fri, 01 Dec 2006 02:38:32 -0800
- (PST)
+ S934521AbWKXJE6 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 24 Nov 2006
+ 04:04:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934522AbWKXJE6
+ (ORCPT <rfc822;git-outgoing>); Fri, 24 Nov 2006 04:04:58 -0500
+Received: from main.gmane.org ([80.91.229.2]:4537 "EHLO ciao.gmane.org") by
+ vger.kernel.org with ESMTP id S934521AbWKXJEy (ORCPT
+ <rfc822;git@vger.kernel.org>); Fri, 24 Nov 2006 04:04:54 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1GnWzG-0002XY-ML for git@vger.kernel.org; Fri, 24 Nov 2006 10:04:46 +0100
+Received: from mason.hofmann.stw.uni-erlangen.de ([131.188.24.36]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Fri, 24 Nov 2006 10:04:46 +0100
+Received: from Peter.B.Baumann by mason.hofmann.stw.uni-erlangen.de with
+ local (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>;
+ Fri, 24 Nov 2006 10:04:46 +0100
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On Friday 2006 December 01 09:33, Andreas Ericsson wrote:
-
-> True, but this makes one repo of the submodule special. Let's say you
-> have this layout
-
-In a way, but it's information that doesn't need to be transmitted.
-
-> mozilla/.git
-> mozilla/openssl/.git
-> mozilla/xlat/.git
+On 2006-11-24, Junio C Hamano <junkio@cox.net> wrote:
+> Peter Baumann <Peter.B.Baumann@stud.informatik.uni-erlangen.de>
+> writes:
 >
-> Now, we can be reasonably sure that the 'xlat' repo is something the
-> mozilla core team can push to, or at least we can consider the core repo
-> owners an official "vendor" of tags for the submodule repo. I'm fairly
-> certain openssl authors won't be too happy with allowing the thousands
-> of projects using its code to push tags to its official repo though.
+>> One question, what's the difference between git-log -p and
+>> git-whatchanged -p?
+>> ...
+>> As you can see, the root commit isn't shown. Is this intentional?
+>
+> Some historical background.
+>
+> The traditional command do do log-minded things was whatchanged
+> and it was implemented as
+>
+> 	git rev-list $revision_args -- $path_limits |
+>         git diff-tree --stdin --pretty -r $format_args
+>
+> and whatchanged did not give --root to diff-tree by default.
+> And 'diff-tree' does not show --pretty logs when there is no
+> diff to be shown (which still is true today and is a useful
+> behaviour), hence no mention of the root commit.
+>
+> On the other hand, "git-log" traditionally looked like this:
+>
+> 	git rev-list --pretty $revision_args 
+>
+> Back then, there was no path_limits nor even diff options to
+> it.
+>
+> Later, Linus (with help from others) made the revision walk
+> machinery as callable inside programs other than "rev-list",
+> eliminating the need to pipe rev-list into diff-tree to perform
+> log-minded things.  That enriched what "git log" can do, and
+> mostly made "whatchanged" a redundant command.  As you may have
+> noticed, there isn't much difference between these two commands
+> in builtin-log.c; their differences are solely what default
+> options for diff and revision machinery are used and are meant
+> to match the traditional behaviour of these commands.
+>
+> So there shouldn't be any differences, really, when you override
+> their defaults with the likes of -p.
+>
+> Honestly speaking, I do not think there was _any_ consciously
+> designed intention to handle root commits, either to make these
+> commands behave identically or differently; regarding parentless
+> commits, they just behave the way they happen to behave, because
+> root commits were not something either Linus nor I were
+> interested in.
+>
+> Given the recent discussion, however, the intention now should
+> be that Porcelain level commands should default to do --root
+> (i.e.  when asked to do "diff" to show how a commit without a
+> parent differs from its nonexistent parent, show diff with
+> emptiness).
+>
 
-No need, when cloning a supermodule, it will make those special tags 
-automatically in the submodule repo.  They are only there to prevent prune 
-from destroying those referenced commits after all.  If the submodule is 
-cloned directly, they aren't needed anyway, and those objects won't be part 
-of the dependency chain so wouldn't be downloaded.
+Ah. I see. Thanks for the clarification.
 
-> Now that I think about it more, I realize this is completely irrelevant
-> as the ui can create the tags in the submodule with info only from the
-> the supermodule, which means the submodule repo will only be special if
-> it's connected to the supermodule. We just need a command for creating
-> those tags in the submodule repo so people who use the same submodule
-> code for several projects can use the alternates mechanism effectively.
-
-Is that even necessary?  git-clone of a supermodule will make those tags 
-automatically.  If a submodule was alternative-cloned into a different 
-supermodule, well then THAT supermodule would make the right tags for itself.  
-Ah, I think I see what you mean now though, a method would be needed for 
-creating those tags if we managed to manually get a submodule repository in 
-to the supermodule - then supermodule-clone wouldn't have run.  Perhaps they 
-could be checked for at commit time and recreated then?
-
-
-Andy
--- 
-Dr Andy Parkins, M Eng (hons), MIEE
+Peter
