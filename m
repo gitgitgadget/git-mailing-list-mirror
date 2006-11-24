@@ -1,78 +1,57 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-2.5 required=3.0 tests=BAYES_00,BODY_URI_ONLY,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [RFC] Submodules in GIT
-Date: Tue, 28 Nov 2006 10:44:34 -0500
-Message-ID: <20061128154434.GD28337@spearce.org>
-References: <20061121223130.GA24909@nan92-1-81-57-214-146.fbx.proxad.net> <200611281029.11918.andyparkins@gmail.com> <ekh45n$rfc$1@sea.gmane.org> <200611281335.38728.andyparkins@gmail.com>
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+From: Gerrit Pape <pape@smarden.org>
+Subject: Re: [PATCH] archive-zip: don't use sizeof(struct ...)
+Date: Fri, 24 Nov 2006 08:53:57 +0000
+Message-ID: <20061124085357.21541.qmail@fd76b23131eb24.315fe32.mid.smarden.org>
+References: <20061123101609.1711.qmail@8b73034525b1a6.315fe32.mid.smarden.org> <45659781.5050005@lsrfire.ath.cx> <7vpsbdkhzc.fsf@assigned-by-dhcp.cox.net> <45661A7D.9070207@lsrfire.ath.cx>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 28 Nov 2006 15:45:33 +0000 (UTC)
-Cc: git@vger.kernel.org
+NNTP-Posting-Date: Fri, 24 Nov 2006 08:53:56 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+Mail-Followup-To: git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <200611281335.38728.andyparkins@gmail.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+In-Reply-To: <45661A7D.9070207@lsrfire.ath.cx>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32540>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32198>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gp58V-000318-BQ for gcvg-git@gmane.org; Tue, 28 Nov
- 2006 16:44:43 +0100
+ esmtp (Exim 4.43) id 1GnWoh-0000fc-Pr for gcvg-git@gmane.org; Fri, 24 Nov
+ 2006 09:53:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1758691AbWK1Poi (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 28 Nov 2006
- 10:44:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758693AbWK1Poi
- (ORCPT <rfc822;git-outgoing>); Tue, 28 Nov 2006 10:44:38 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:6020 "EHLO
- corvette.plexpod.net") by vger.kernel.org with ESMTP id S1758691AbWK1Poh
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2006 10:44:37 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1Gp58I-0002do-3x; Tue, 28 Nov 2006 10:44:30 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- 502BF20FB7F; Tue, 28 Nov 2006 10:44:34 -0500 (EST)
-To: Andy Parkins <andyparkins@gmail.com>
+ S934293AbWKXIxk (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 24 Nov 2006
+ 03:53:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934519AbWKXIxk
+ (ORCPT <rfc822;git-outgoing>); Fri, 24 Nov 2006 03:53:40 -0500
+Received: from a.ns.smarden.org ([212.42.242.37]:18312 "HELO
+ a.mx.smarden.org") by vger.kernel.org with SMTP id S934293AbWKXIxj (ORCPT
+ <rfc822;git@vger.kernel.org>); Fri, 24 Nov 2006 03:53:39 -0500
+Received: (qmail 21542 invoked by uid 1000); 24 Nov 2006 08:53:57 -0000
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Andy Parkins <andyparkins@gmail.com> wrote:
-> I think I've talked myself into the position where it definitely has to be 
-> HEAD being tracked in the submodules; anything else is a disaster waiting to 
-> happen because commit doesn't check in your current tree.
+On Thu, Nov 23, 2006 at 11:02:37PM +0100, Ren? Scharfe wrote:
+> We can't rely on sizeof(struct zip_*) returning the sum of
+> all struct members.  At least on ARM padding is added at the
+> end, as Gerrit Pape reported.  This fixes the problem but
+> still lets the compiler do the summing by introducing
+> explicit padding at the end of the structs and then taking
+> its offset as the combined size of the preceding members.
+> 
+> As Junio correctly notes, the _end[] marker array's size
+> must be greater than zero for compatibility with compilers
+> other than gcc.  The space wasted by the markers can safely
+> be neglected because we only have one instance of each
+> struct, i.e. in sum 3 wasted bytes on i386, and 0 on ARM. :)
+> 
+> We still rely on the compiler to not add padding between the
+> struct members, but that's reasonable given that all of them
+> are unsigned char arrays.
+> 
+> Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
 
-Yes, but not only that, HEAD is the only thing that fits with the
-rest of the git repository/index/working directory model.
-
-Lets review...
-
-What's HEAD?  Its the commit which matches the index state as
-closely as possible, with the only differences being the changes in
-progress that are being prepared for the next commit (whose parent
-will be HEAD).  If the index and working directory are both clean
-(no changes) then its also the current content of this directory,
-right?
-
-What's the index?  Its what you are about to commit.
-
-What's the working directory?  Its the current content, which may
-also be partially checked out or dirty.
-
-So HEAD in a submodule is the current content of that submodule.
-Therefore any update-index call on a submodule should load HEAD
-(totally ignoring whatever branch it refers to) into the supermodule
-index.
-
--- 
