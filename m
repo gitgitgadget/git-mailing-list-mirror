@@ -1,149 +1,180 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Chris Riddoch <chris@syntacticsugar.org>
-Subject: [PATCH] Move --pretty options into Documentation/pretty-formats.txt
-Date: Fri, 17 Nov 2006 17:58:51 -0700
-Message-ID: <11638115311562-git-send-email-chris@syntacticsugar.org>
-NNTP-Posting-Date: Sat, 18 Nov 2006 01:02:23 +0000 (UTC)
-Cc: Chris Riddoch <chris@syntacticsugar.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] config option core.showroot to enable showing the diff of the root commit
+Date: Thu, 23 Nov 2006 17:30:37 -0800
+Message-ID: <7vzmahfx6q.fsf@assigned-by-dhcp.cox.net>
+References: <200611211341.48862.andyparkins@gmail.com>
+	<8aa486160611210609h1c2d229ekf0b5e8aeb4f21f11@mail.gmail.com>
+	<slrnem694k.4lm.Peter.B.Baumann@xp.machine.xx>
+	<Pine.LNX.4.64.0611210820100.3338@woody.osdl.org>
+	<20061121180643.GC7201@pasky.or.cz> <ejvfng$cj6$1@sea.gmane.org>
+	<20061121182135.GD7201@pasky.or.cz>
+	<7v64d8y4tu.fsf@assigned-by-dhcp.cox.net>
+	<slrnemaqt1.esn.Peter.B.Baumann@xp.machine.xx>
+	<7virh5khrc.fsf@assigned-by-dhcp.cox.net>
+	<slrnemcc0b.ncc.Peter.B.Baumann@xp.machine.xx>
+	<7vejrthf2y.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Fri, 24 Nov 2006 01:41:00 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Mailer: git-send-email 1.4.4
+In-Reply-To: <7vejrthf2y.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Thu, 23 Nov 2006 16:18:45 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31744>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32184>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GlEb4-0008Mz-Iw for gcvg-git@gmane.org; Sat, 18 Nov
- 2006 02:02:18 +0100
+ esmtp (Exim 4.43) id 1GnPtx-0005aw-2Y for gcvg-git@gmane.org; Fri, 24 Nov
+ 2006 02:31:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1756108AbWKRBBm (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 17 Nov 2006
- 20:01:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756113AbWKRBBm
- (ORCPT <rfc822;git-outgoing>); Fri, 17 Nov 2006 20:01:42 -0500
-Received: from hinegardner.org ([216.17.180.14]:44382 "EHLO
- planchet.hinegardner.org") by vger.kernel.org with ESMTP id S1756108AbWKRBBl
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 17 Nov 2006 20:01:41 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1]) by
- planchet.hinegardner.org (Postfix) with ESMTP id 1750A1599CFE; Fri, 17 Nov
- 2006 18:02:19 -0700 (MST)
-To: git@vger.kernel.org
+ S1757548AbWKXBaj (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 23 Nov 2006
+ 20:30:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757549AbWKXBaj
+ (ORCPT <rfc822;git-outgoing>); Thu, 23 Nov 2006 20:30:39 -0500
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:12190 "EHLO
+ fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP id S1757548AbWKXBai
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 23 Nov 2006 20:30:38 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao05.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061124013037.BKYS20330.fed1rmmtao05.cox.net@fed1rmimpo02.cox.net>; Thu, 23
+ Nov 2006 20:30:37 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id qRWl1V00X1kojtg0000000; Thu, 23 Nov 2006
+ 20:30:45 -0500
+To: Peter Baumann <Peter.B.Baumann@stud.informatik.uni-erlangen.de>
 Sender: git-owner@vger.kernel.org
 
-Asciidoc-include it into the manuals for programs that use the
---pretty command-line option, for consistency among the docs.
+Junio C Hamano <junkio@cox.net> writes:
 
-Signed-off-by: Chris Riddoch <chris@syntacticsugar.org>
+> Peter Baumann <Peter.B.Baumann@stud.informatik.uni-erlangen.de>
+> writes:
+>
+>> Sorry, but I don't understand. The color handling doesn't look any different
+>> to me than the handling of the other config entrys. Did I miss something?
+>
+> "git-diff-tree --color HEAD" (with explicit command line
+> instruction to color it) still colours its output, but "[diff]
+> color = auto" in ~/.gitconfig would not affect the coloring.
+> Hence, "git-diff-tree HEAD" with the configuration entry gives
+> monochrome.
+>
+> "git diff HEAD" on the other hand looks at '[diff] color = auto"
+> and will color its output without being told on the command
+> line.
+
+Since this is about "log" family that deals with revision
+structure, how about....
+
+-- >8 --
+[PATCH] config option log.showroot to show the diff of root commits
+
+From: Peter Baumann <Peter.B.Baumann@stud.informatik.uni-erlangen.de>
+
+This allows one to see a root commit as a diff in commands like git-log,
+git-show and git-whatchanged.
+
+Signed-off-by: Peter Baumann <Peter.B.Baumannn@stud.informatik.uni-erlangen.de>
+Signed-off-by: Junio C Hamano <junkio@cox.net>
 ---
- Documentation/git-diff-tree.txt  |    7 +++----
- Documentation/git-log.txt        |    3 +--
- Documentation/git-rev-list.txt   |    6 +-----
- Documentation/git-show.txt       |    5 +----
- Documentation/pretty-formats.txt |   29 +++++++++++++++++++++++++++++
- 5 files changed, 35 insertions(+), 15 deletions(-)
+ Documentation/config.txt |    6 ++++++
+ builtin-log.c            |   20 ++++++++++++++++----
+ 2 files changed, 22 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/git-diff-tree.txt b/Documentation/git-diff-tree.txt
-index f7e8ff2..add0d2f 100644
---- a/Documentation/git-diff-tree.txt
-+++ b/Documentation/git-diff-tree.txt
-@@ -73,10 +73,9 @@ separated with a single space are given.
- 	This flag causes "git-diff-tree --stdin" to also show
- 	the commit message before the differences.
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 9d3c71c..9090762 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -219,6 +219,12 @@ i18n.commitEncoding::
+ 	browser (and possibly at other places in the future or in other
+ 	porcelains). See e.g. gitlink:git-mailinfo[1]. Defaults to 'utf-8'.
  
----pretty[=(raw|medium|short)]::
--	This is used to control "pretty printing" format of the
--	commit message.  Without "=<style>", it defaults to
--	medium.
++log.showroot::
++	If true, the initial commit will be shown as a big creation event.
++	This is equivalent to a diff against an empty tree.
++	Tools like gitlink:git-log[1] or gitlink:git-whatchanged[1], which
++	normally hide the root commit will now show it. True by default.
 +
-+include::pretty-formats.txt[]
-+
+ merge.summary::
+ 	Whether to include summaries of merged commits in newly created
+ 	merge commit messages. False by default.
+diff --git a/builtin-log.c b/builtin-log.c
+index fedb013..7acf5d3 100644
+--- a/builtin-log.c
++++ b/builtin-log.c
+@@ -13,6 +13,8 @@
+ #include <time.h>
+ #include <sys/time.h>
  
- --no-commit-id::
- 	git-diff-tree outputs a line with the commit ID when
-diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
-index c9ffff7..3f50b70 100644
---- a/Documentation/git-log.txt
-+++ b/Documentation/git-log.txt
-@@ -24,8 +24,7 @@ This manual page describes only the most
++static int default_show_root = 1;
++
+ /* this is in builtin-diff.c */
+ void add_head(struct rev_info *revs);
  
- OPTIONS
- -------
----pretty=<format>::
--	Controls the way the commit log is formatted.
-+include::pretty-formats.txt[]
+@@ -22,6 +24,7 @@ static void cmd_log_init(int argc, const
+ 	rev->abbrev = DEFAULT_ABBREV;
+ 	rev->commit_format = CMIT_FMT_DEFAULT;
+ 	rev->verbose_header = 1;
++	rev->show_root_diff = default_show_root;
+ 	argc = setup_revisions(argc, argv, rev, "HEAD");
+ 	if (rev->diffopt.pickaxe || rev->diffopt.filter)
+ 		rev->always_show_header = 0;
+@@ -44,11 +47,20 @@ static int cmd_log_walk(struct rev_info
+ 	return 0;
+ }
  
- --max-count=<n>::
- 	Limits the number of commits to show.
-diff --git a/Documentation/git-rev-list.txt b/Documentation/git-rev-list.txt
-index 00a95e2..ec43c0b 100644
---- a/Documentation/git-rev-list.txt
-+++ b/Documentation/git-rev-list.txt
-@@ -79,11 +79,7 @@ Using these options, gitlink:git-rev-lis
- more specialized family of commit log tools: gitlink:git-log[1],
- gitlink:git-show[1], and gitlink:git-whatchanged[1]
++static int git_log_config(const char *var, const char *value)
++{
++	if (!strcmp(var, "log.showroot")) {
++		default_show_root = git_config_bool(var, value);
++		return 0;
++	}
++	return git_diff_ui_config(var, value);
++}
++
+ int cmd_whatchanged(int argc, const char **argv, const char *prefix)
+ {
+ 	struct rev_info rev;
  
----pretty[='<format>']::
--
--	Pretty print the contents of the commit logs in a given format,
--	where '<format>' can be one of 'raw', 'medium', 'short', 'full',
--	and 'oneline'. When left out the format default to 'medium'.
-+include::pretty-formats.txt[]
+-	git_config(git_diff_ui_config);
++	git_config(git_log_config);
+ 	init_revisions(&rev, prefix);
+ 	rev.diff = 1;
+ 	rev.diffopt.recursive = 1;
+@@ -63,7 +75,7 @@ int cmd_show(int argc, const char **argv
+ {
+ 	struct rev_info rev;
  
- --relative-date::
+-	git_config(git_diff_ui_config);
++	git_config(git_log_config);
+ 	init_revisions(&rev, prefix);
+ 	rev.diff = 1;
+ 	rev.diffopt.recursive = 1;
+@@ -80,7 +92,7 @@ int cmd_log(int argc, const char **argv,
+ {
+ 	struct rev_info rev;
  
-diff --git a/Documentation/git-show.txt b/Documentation/git-show.txt
-index 2b4df3f..4c880a8 100644
---- a/Documentation/git-show.txt
-+++ b/Documentation/git-show.txt
-@@ -26,10 +26,7 @@ OPTIONS
- <commitid>::
- 	ID of the commit to show.
+-	git_config(git_diff_ui_config);
++	git_config(git_log_config);
+ 	init_revisions(&rev, prefix);
+ 	rev.always_show_header = 1;
+ 	cmd_log_init(argc, argv, prefix, &rev);
+@@ -109,7 +121,7 @@ static int git_format_config(const char
+ 	if (!strcmp(var, "diff.color")) {
+ 		return 0;
+ 	}
+-	return git_diff_ui_config(var, value);
++	return git_log_config(var, value);
+ }
  
----pretty=<format>::
--	Controls the output format for the commit logs.
--	<format> can be one of 'raw', 'medium', 'short', 'full',
--	and 'oneline'.
-+include::pretty-formats.txt[]
  
- Author
- ------
-diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
-new file mode 100644
-index 0000000..8995815
---- /dev/null
-+++ b/Documentation/pretty-formats.txt
-@@ -0,0 +1,29 @@
-+--pretty[='<format>']::
-+        Pretty-prints the details of a commit.  The default is 'medium'
-+        * 'oneline'
-+
-+            <sha1> <title line>
-+
-+        * 'short'
-+
-+            commit <sha1>
-+            Author: <author>
-+            <title line>
-+
-+        * 'medium'
-+
-+            commit <sha1>
-+            Author: <author>
-+            Date: <date>
-+            <full commit message>
-+
-+	* 'full'
-+
-+            commit <sha1>
-+            Author: <author>
-+            Commit: <committer>
-+            <full commit message>
-+
-+	* 'raw'
-+	
-+	    The entire commit exactly as stored in the commit object
 -- 
-1.4.4
+1.4.4.1.g77614
+
