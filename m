@@ -1,79 +1,60 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: =?ISO-8859-1?Q?Re:_[PATCH_1/3]_make_index-p=E2?= =?ISO-8859-1?Q?ck_able_to_complete_thin_packs?=
-Date: Thu, 26 Oct 2006 12:52:15 +0100
-Message-ID: <b0943d9e0610260452m675b4229g73bca8e65ca009f9@mail.gmail.com>
-References: <Pine.LNX.4.64.0610252323100.12418@xanadu.home>
-	 <7vr6wvr1ca.fsf@assigned-by-dhcp.cox.net> <ehppbg$phq$1@sea.gmane.org>
-	 <20061026091925.GD13780@diana.vm.bytemark.co.uk>
-	 <tnxac3j4c6c.fsf@arm.com>
-	 <20061026105841.GB16372@diana.vm.bytemark.co.uk>
+From: Salikh Zakirov <Salikh.Zakirov@Intel.com>
+Subject: Re: [PATCH] Make git-clone --use-separate-remote the default
+Date: Fri, 24 Nov 2006 12:58:47 +0300
+Message-ID: <ek6for$ti5$1@sea.gmane.org>
+References: <20061123225835.30071.99265.stgit@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Thu, 26 Oct 2006 11:52:37 +0000 (UTC)
-Cc: "Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Fri, 24 Nov 2006 09:59:28 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Iw5ufhbkkIPqkbF8w+ei/ovtsI56HWdYNj1MzvuhUH7mskzNsKW6Ph4kXbhnND4x9nti+7HwS4WG4cmesP78FSTIqGdACoK5N+/2Oqqj88o1BCtBdATuSBIyum3xQAw7adR2+Co4DjxIu1Dp1wTbV3keTXopteSREVDu7LmOiEg=
-In-Reply-To: <20061026105841.GB16372@diana.vm.bytemark.co.uk>
-Content-Disposition: inline
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 12
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: msfwpr01.ims.intel.com
+User-Agent: Thunderbird 1.5.0.8 (Windows/20061025)
+In-Reply-To: <20061123225835.30071.99265.stgit@machine.or.cz>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30195>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32206>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gd3md-000887-Ci for gcvg-git@gmane.org; Thu, 26 Oct
- 2006 13:52:27 +0200
+ esmtp (Exim 4.43) id 1GnXq3-0004nR-8i for gcvg-git@gmane.org; Fri, 24 Nov
+ 2006 10:59:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1423026AbWJZLwY convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006 07:52:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423105AbWJZLwY
- (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 07:52:24 -0400
-Received: from py-out-1112.google.com ([64.233.166.183]:27417 "EHLO
- py-out-1112.google.com") by vger.kernel.org with ESMTP id S1423026AbWJZLwX
- convert rfc822-to-8bit (ORCPT <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006
- 07:52:23 -0400
-Received: by py-out-1112.google.com with SMTP id z74so312102pyg for
- <git@vger.kernel.org>; Thu, 26 Oct 2006 04:52:22 -0700 (PDT)
-Received: by 10.35.79.3 with SMTP id g3mr3148469pyl; Thu, 26 Oct 2006
- 04:52:15 -0700 (PDT)
-Received: by 10.35.103.18 with HTTP; Thu, 26 Oct 2006 04:52:14 -0700 (PDT)
-To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
+ S934530AbWKXJ7Q (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 24 Nov 2006
+ 04:59:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934528AbWKXJ7Q
+ (ORCPT <rfc822;git-outgoing>); Fri, 24 Nov 2006 04:59:16 -0500
+Received: from main.gmane.org ([80.91.229.2]:43145 "EHLO ciao.gmane.org") by
+ vger.kernel.org with ESMTP id S934530AbWKXJ7O (ORCPT
+ <rfc822;git@vger.kernel.org>); Fri, 24 Nov 2006 04:59:14 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1GnXpr-0004kj-1P for git@vger.kernel.org; Fri, 24 Nov 2006 10:59:07 +0100
+Received: from msfwpr01.ims.intel.com ([62.118.80.132]) by main.gmane.org
+ with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Fri, 24 Nov 2006 10:59:07 +0100
+Received: from Salikh.Zakirov by msfwpr01.ims.intel.com with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Fri, 24 Nov 2006
+ 10:59:07 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On 26/10/06, Karl Hasselstr=F6m <kha@treskal.com> wrote:
-> On 2006-10-26 11:13:47 +0100, Catalin Marinas wrote:
-> > Karl Hasselstr=F6m <kha@treskal.com> wrote:
-> > > On 2006-10-26 09:50:48 +0200, Jakub Narebski wrote:
-> > > > That said, git-am should understand QP with coding in mail
-> > > > headers.
-> > >
-> > > I really hope it does, since I just patched StGIT to generate suc=
-h
-> > > headers. (Out of pure vanity -- I don't want my name mangled!)
-> >
-> > It looks like it does, that's how I applied some of your patches
-> > ('stg import' doesn't understand them).
->
-> Hmm. So now I know why you haven't taken my "stg email" patches. I
-> guess I'll have to fix 'stg import' then. :-)
+Petr Baudis wrote:
+> --- a/Documentation/git-clone.txt
+> +++ b/Documentation/git-clone.txt
+> ...
+>  --use-separate-remote::
+>  	Save remotes heads under `$GIT_DIR/remotes/origin/` instead
+> -	of `$GIT_DIR/refs/heads/`.  Only the master branch is saved
+> -	in the latter.
 
-That's one of the reasons (and I didn't have time to document myself
-before giving a proper reply). The other is that Gnus (and gmail)
-doesn't display the messages properly - it shows a lot of "=3D20". Is i=
-t
-possible not to affect the body (or make it optional)? People only
-using "patch" to apply the diffs would have problems with this
-encoding.
-
---=20
+This description does not apply to repositories which do not have 'master' branch.
+Maybe "only the HEAD branch of remote repository, where
+HEAD is the branch designated as main branch in repository".
