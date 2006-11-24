@@ -1,69 +1,68 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: Using git-bisect to find more than one breakage
-Date: Wed, 13 Dec 2006 09:34:04 -0500
-Message-ID: <20061213143404.GA24132@fieldses.org>
-References: <6280325c0612112034x373c8022q909ca192a866cfcf@mail.gmail.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: git-svn: why fetching files is so slow
+Date: Fri, 24 Nov 2006 14:14:35 -0800
+Message-ID: <20061124221435.GA21072@localdomain>
+References: <loom.20061124T143148-286@post.gmane.org> <20061124191609.GA32506@localdomain> <loom.20061124T202153-512@post.gmane.org> <20061124203320.GA21654@soma> <7vy7q0a85p.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 13 Dec 2006 15:14:16 +0000 (UTC)
-Cc: git@vger.kernel.org
+NNTP-Posting-Date: Fri, 24 Nov 2006 22:14:57 +0000 (UTC)
+Cc: git@vger.kernel.org, Pazu <pazu@pazu.com.br>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Greylist: delayed 2395 seconds by postgrey-1.27 at vger.kernel.org; Wed, 13 Dec 2006 10:14:01 EST
 Content-Disposition: inline
-In-Reply-To: <6280325c0612112034x373c8022q909ca192a866cfcf@mail.gmail.com>
+In-Reply-To: <7vy7q0a85p.fsf@assigned-by-dhcp.cox.net>
 User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34222>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GuVoA-00049O-2U for gcvg-git@gmane.org; Wed, 13 Dec
- 2006 16:14:10 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32241>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GnjJi-0001qx-5D for gcvg-git@gmane.org; Fri, 24 Nov
+ 2006 23:14:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S965000AbWLMPOE (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 13 Dec 2006
- 10:14:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964998AbWLMPOD
- (ORCPT <rfc822;git-outgoing>); Wed, 13 Dec 2006 10:14:03 -0500
-Received: from mail.fieldses.org ([66.93.2.214]:38059 "EHLO
- pickle.fieldses.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S964993AbWLMPOB (ORCPT <rfc822;git@vger.kernel.org>); Wed, 13 Dec 2006
- 10:14:01 -0500
-Received: from bfields by pickle.fieldses.org with local (Exim 4.63)
- (envelope-from <bfields@fieldses.org>) id 1GuVBM-0006Mv-Ug; Wed, 13 Dec 2006
- 09:34:04 -0500
-To: n0dalus <n0dalus+redhat@gmail.com>
+ S935097AbWKXWOj (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 24 Nov 2006
+ 17:14:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935098AbWKXWOj
+ (ORCPT <rfc822;git-outgoing>); Fri, 24 Nov 2006 17:14:39 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:17625 "EHLO hand.yhbt.net") by
+ vger.kernel.org with ESMTP id S935097AbWKXWOi (ORCPT
+ <rfc822;git@vger.kernel.org>); Fri, 24 Nov 2006 17:14:38 -0500
+Received: from hand.yhbt.net (localhost [127.0.0.1]) by hand.yhbt.net
+ (Postfix) with SMTP id B426D7DC098; Fri, 24 Nov 2006 14:14:35 -0800 (PST)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Fri, 24 Nov 2006
+ 14:14:35 -0800
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-On Tue, Dec 12, 2006 at 03:04:29PM +1030, n0dalus wrote:
-> This is what I tried to do:
-> - Make a branch ("working") at the bad commit
-> - Commit a patch to undo the bug-causing change from that commit
-> - Make a copy of the master branch
-> - git-rebase working
-> - (Then if that worked, use git-bisect to find the next breakage)
+Junio C Hamano <junkio@cox.net> wrote:
+> Eric Wong <normalperson@yhbt.net> writes:
 > 
-> I expected git-rebase to just apply all the commits from the master
-> onto my working branch, possibly stopping in the case of a conflict to
-> the file I patched. Instead, it produces large conflicts with
-> unrelated files, on the very first commit it tries to apply. I even
-> get the conflicts if the commit I make before using git-rebase changes
-> no files at all (just adding an empty file 'test').
+> > Pazu <pazu@pazu.com.br> wrote:
+> >> Eric Wong <normalperson <at> yhbt.net> writes:
+> >> 
+> >> > git-svn transfers full files, and not deltas.  I'll hopefully have a
+> >> > chance to look into improving the situation for slow links this weekend.
+> >> 
+> >> Yes, but why would that make fetching the first revision slower? In this
+> >> situation, both svn and git-svn would have to fetch full files. Maybe git-svn
+> >> isn't using gzip compression or http pipelining?
+> >
+> > Even for the initial transfer, the tree is bundled into one big delta
+> > (at least over https).
 > 
-> Is there something wrong with my method here? Is there another way to do 
-> this?
-> 
-> I am thinking for now I will just use git-bisect between the bad
-> commit and master, and apply my changes to every bisection.
+> Do you mean that "one big delta" saves duplicates across copies
+> inside the tree (e.g. svn tags and branches can be expressed as
+> a mostly identical copies of each other), or do you mean "one
+> full file at a time" requests are killing us, compared to a such
+> single transfer of "one big delta"?
 
-Yes, that's the way to do it.
+One full file at a time requests are definitely killing us (over slow
+links, at least).  I'm not sure how/if duplicates inside a requested
+tree are optimized on the server side.
 
-The git-rebase command is intended for rebasing small pieces of purely
-linear history; I don't believe it will work well (at all?) to rebase a
-large chunk of kernel history.
-
+-- 
