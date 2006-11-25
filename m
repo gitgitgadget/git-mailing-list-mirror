@@ -1,102 +1,102 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Adding a new file as if it had existed
-Date: Wed, 13 Dec 2006 16:52:46 +0100
-Message-ID: <458021CE.1000407@op5.se>
-References: <7ac1e90c0612120205k38b2fc14jbfd8ea682406efb2@mail.gmail.com> <7vhcw1whfx.fsf@assigned-by-dhcp.cox.net> <7ac1e90c0612120332o20d6778bsa16a788fdc04a3a1@mail.gmail.com> <7vzm9tuft7.fsf@assigned-by-dhcp.cox.net> <457FCA8C.6000300@op5.se> <Pine.LNX.4.63.0612131611050.3635@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: Computing delta sizes in pack files
+Date: Sat, 25 Nov 2006 02:33:38 -0500
+Message-ID: <20061125073338.GF4528@spearce.org>
+References: <20061121053942.GA3149@spearce.org> <2c6b72b30611220844t4b341284q4bff914b91eac48d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 13 Dec 2006 15:53:02 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>,
-	Bahadir Balban <bahadir.balban@gmail.com>, git@vger.kernel.org,
-	Andy Parkins <andyparkins@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Sat, 25 Nov 2006 07:34:01 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
-In-Reply-To: <Pine.LNX.4.63.0612131611050.3635@wbgn013.biozentrum.uni-wuerzburg.de>
+Content-Disposition: inline
+In-Reply-To: <2c6b72b30611220844t4b341284q4bff914b91eac48d@mail.gmail.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34224>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GuWPb-0002qS-Un for gcvg-git@gmane.org; Wed, 13 Dec
- 2006 16:52:52 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32263>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gns2u-0000C7-19 for gcvg-git@gmane.org; Sat, 25 Nov
+ 2006 08:33:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S965002AbWLMPwt (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 13 Dec 2006
- 10:52:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965005AbWLMPwt
- (ORCPT <rfc822;git-outgoing>); Wed, 13 Dec 2006 10:52:49 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:46443 "EHLO
- smtp-gw1.op5.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
- S965002AbWLMPws (ORCPT <rfc822;git@vger.kernel.org>); Wed, 13 Dec 2006
- 10:52:48 -0500
-Received: from [192.168.1.20] (unknown [213.88.215.14]) by smtp-gw1.op5.se
- (Postfix) with ESMTP id B7D6B6BCC7; Wed, 13 Dec 2006 16:52:46 +0100 (CET)
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+ S1757263AbWKYHdo (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 25 Nov 2006
+ 02:33:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757874AbWKYHdo
+ (ORCPT <rfc822;git-outgoing>); Sat, 25 Nov 2006 02:33:44 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:12720 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S1757263AbWKYHdn
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 25 Nov 2006 02:33:43 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1Gns2e-0004Wo-TB; Sat, 25 Nov 2006 02:33:41 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 027E920FB09; Sat, 25 Nov 2006 02:33:38 -0500 (EST)
+To: Jonas Fonseca <jonas.fonseca@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Johannes Schindelin wrote:
-> Hi,
-> 
-> On Wed, 13 Dec 2006, Andreas Ericsson wrote:
-> 
->> Junio C Hamano wrote:
->>> "Bahadir Balban" <bahadir.balban@gmail.com> writes:
->>>
->>> There is one thing we could further optimize, though.
->>>
->>> Switching branches with 100k blobs in a commit even when there
->>> are a handful paths different between the branches would still
->>> need to populate the index by reading two trees and collapsing
->>> them into a single stage.  In theory, we should be able to do a
->>> lot better if two-tree case of read-tree took advanrage of
->>> cache-tree information.  If ce_match_stat() says Ok for all
->>> paths in a subdirectory and the cached tree object name for that
->>> subdirectory in the index match what we are reading from the new
->>> tree, we should be able to skip reading that subdirectory (and
->>> its subdirectories) from the new tree object at all.
->>>
->>> Anybody interested to give it a try?
->>>
->> I'm not vell-versed enough in git internals to have my hopes high of 
->> making something useful of it, but if you give me a pointer of where to 
->> start I'd be happy to try, and perhaps learn something in the process.
-> 
-> Okay, I'll have a stab at explaining it.
-> 
-> For huge working directories, you usually have a huge number of trees. The 
-> idea of cache_tree is to remember not only the stat information of the 
-> blobs in the index, but to cache the hashes of the trees also (until they 
-> are invalidated, e.g. by an update-index). This avoids recalculation of 
-> the hashes when committing.
-> 
-> This cache is accessible by the global variable active_cache_tree. It is 
-> best accessed by the function cache_tree_find(), which you call like that:
-> 
-> 	struct cache_tree *ct = cache_tree_find(active_cache_tree, path);
-> 
-> where the variable "path" may contain slashes. The SHA1 of the 
-> corresponding tree is in ct->sha1, and you can check if the hash is still 
-> valid by asking
-> 
-> 	if (cache_tree_fully_valid(ct))
-> 		/* still valid */
-> 
-> AFAIU Junio would like to take the shortcut of doing nothing at all when 
-> (twoway) reading a tree whose hash is identical to the hash stored in the 
-> corresponding cache_tree _and_ when the cache is still fully valid.
-> 
+Jonas Fonseca <jonas.fonseca@gmail.com> wrote:
+> I will not post the numbers here. They are available in
+> http://jonas.nitro.dk/tmp/stats.pdf for those interested. The following
+> is my "analysis" of the numbers.
 
-Seems you wrote half the code for me already. :)
+Thanks, this was interesting stuff.
 
-Thanks for the excellent explanation. I'll see if I can grok it further 
-tonight.
+> As expected, the randomness of the content of both commit and tag objects
+> results in a very poor packing performance of only 2%.
+
+This is one reason why Jon Smirl was pushing the idea of dictionary based
+compression.  git.git has only 276 unique author lines, yet 37 of them
+are really the top committers.  Not surprisingly Junio C Hamano leads
+the pack with 3529+ commits...  :-)
+
+A dictionary based compression would allow us to easily compress
+Junio's authorship line away from those 3529+ commits into a single
+string, getting much better compression on the commits.
+
+In trees this may work very well too for very common file names, e.g.
+"Makefile".  Yes each tree delta compresses very well against its
+base (and likely copies the file name from the base even when the
+SHA1 changed) but if the bases were able to use a common dictionary
+that would help even more.
+ 
+> The data show that for minimal index files, the packs need to contain
+> more than 2500 objects. The 24 bytes per-object for the optimal case
+> includes 20-bytes for the object SHA1, and thus cannot be expected to
+> become lower.
+
+This is just a fundamental property of the pack index file format.
+The file *MUST* be 1064 bytes of fixed overhead, with 24 bytes of
+data per object indexed.  So the fixed overhead amortizes very
+quickly over the individual object entries, at which point its
+exactly 24 bytes per entry.  This all of course assumes a 32 bit
+index (which is the current format).
+
+The thing is the Mozilla index is 44 MiB.  That's roughly 1.9 million
+objects.  The index itself is larger than the entire git.git pack.
+On a large repository the index ain't trivial...  yet its essential
+to performance!
+
+On the other hand the 1064 bytes of fixed overhead in the index
+is nothing compared to the overhead in say an RCS file.  Or an
+SVN repository...  :-)
+
+What I failed to point out in my script (or in my email) is that
+the 24 bytes of index entry cannot be eliminated, and thus must
+be added to the "revision cost".  In some cases its about the same
+size as the deltafied revision in the pack file.  :-(
 
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
