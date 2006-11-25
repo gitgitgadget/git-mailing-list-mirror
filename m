@@ -1,57 +1,58 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: Re: [PATCH (amend)] gitweb: Slight visual improvements to commitdiff view
-Date: Thu, 26 Oct 2006 16:34:39 -0700 (PDT)
-Message-ID: <20061026233439.37073.qmail@web31811.mail.mud.yahoo.com>
-References: <200610261843.10529.jnareb@gmail.com>
-Reply-To: ltuikov@yahoo.com
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: Show remote branches on gitweb
+Date: Sat, 25 Nov 2006 01:50:29 +0100
+Message-ID: <20061125005029.GN4842@pasky.or.cz>
+References: <loom.20061124T210559-701@post.gmane.org> <ek7jsp$j83$1@sea.gmane.org> <ek7m6m$qqd$1@sea.gmane.org> <20061124235911.GO7201@pasky.or.cz> <7vy7q08iko.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-NNTP-Posting-Date: Thu, 26 Oct 2006 23:34:56 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Sat, 25 Nov 2006 00:50:46 +0000 (UTC)
+Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Message-ID:X-YMail-OSG:Received:Date:From:Reply-To:Subject:To:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=EHD1bEj/eLgMN2iLY/pp0JvXoUeIaGna5ppmzbxu/FdMP8Hb164MaWKtDGY0iPaxn3X0oaEQ5IhNZIfucJNf3e9504sdiY46+2Lijs5e2Gf2RvN/ehLtTVzk3jrqnealewSFB+H6eOIxUVgWGRa8M2rOAkWcXjUo/ZfaeUa3O9Y=  ;
-X-YMail-OSG: KMJkWsgVM1khLylo20CeiGSBwAONYiM05FF3LrKcTRXexS0nZTE0DsU39kuGdKktKvEp6cub_1jAbl4ohU9Zj0EqACWo8tKgl8ExscNDBva9uqzB20Jhyg9HtOadsE3LSZZ3VoxjMA--
-In-Reply-To: <200610261843.10529.jnareb@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <7vy7q08iko.fsf@assigned-by-dhcp.cox.net>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30266>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32251>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GdEkM-0008Cb-OB for gcvg-git@gmane.org; Fri, 27 Oct
- 2006 01:34:51 +0200
+ esmtp (Exim 4.43) id 1Gnlkc-0003JB-57 for gcvg-git@gmane.org; Sat, 25 Nov
+ 2006 01:50:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1945993AbWJZXel (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
- 19:34:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1945994AbWJZXel
- (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 19:34:41 -0400
-Received: from web31811.mail.mud.yahoo.com ([68.142.207.74]:28771 "HELO
- web31811.mail.mud.yahoo.com") by vger.kernel.org with SMTP id
- S1945993AbWJZXek (ORCPT <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006
- 19:34:40 -0400
-Received: (qmail 37075 invoked by uid 60001); 26 Oct 2006 23:34:39 -0000
-Received: from [64.215.88.90] by web31811.mail.mud.yahoo.com via HTTP; Thu,
- 26 Oct 2006 16:34:39 PDT
-To: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+ S934530AbWKYAub (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 24 Nov 2006
+ 19:50:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935102AbWKYAub
+ (ORCPT <rfc822;git-outgoing>); Fri, 24 Nov 2006 19:50:31 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:35250 "EHLO machine.or.cz") by
+ vger.kernel.org with ESMTP id S934530AbWKYAub (ORCPT
+ <rfc822;git@vger.kernel.org>); Fri, 24 Nov 2006 19:50:31 -0500
+Received: (qmail 30295 invoked by uid 2001); 25 Nov 2006 01:50:29 +0100
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Can you please explain what both patches actually do?
+On Sat, Nov 25, 2006 at 01:40:23AM CET, Junio C Hamano wrote:
+> Petr Baudis <pasky@suse.cz> writes:
+> 
+> >> The problem is that to implement it _well_ we have to get remotes, both
+> >> $GIT_DIR/remotes and config remote.xxx, info. And the latter (config
+> >> remotes info) needs config parsing, something we lack.
+> >
+> > Does that mean we _can_ parse $GIT_DIR/remotes? ;-)
+> 
+> Surely you should be able to.  You are working in Perl and the
+> remotes and config are trivially parsable text files.
 
-"slight visual improvements to commitdiff view" leaves
-much, _much_ to be desired and is hardly a commit message
-suitable to live in git.git.
+But so is the configuration file, unless I'm missing something...?
 
-Please describe what you found objectionable, why, how
-you decided to fix it and why you decided to fix it that way.
-
-Thanks,
-   Luben
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+The meaning of Stonehenge in Traflamadorian, when viewed from above, is:
+"Replacement part being rushed with all possible speed."
