@@ -1,103 +1,68 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Han-Wen Nienhuys <hanwen@xs4all.nl>
-Subject: Re: multi-project repos (was Re: Cleaning up git user-interface 
-  warts)
-Date: Fri, 17 Nov 2006 00:32:39 +0100
-Message-ID: <455CF517.9000101@xs4all.nl>
-References: <87k61yt1x2.wl%cworth@cworth.org> <455A1137.8030301@shadowen.org> <87hcx1u934.wl%cworth@cworth.org> <Pine.LNX.4.64.0611141518590.2591@xanadu.home> <87bqn9u43s.wl%cworth@cworth.org> <ejdcg5$4fl$1@sea.gmane.org> <Pine.LNX.4.64.0611141633430.2591@xanadu.home> <7vbqn9y6w6.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611142007010.2591@xanadu.home> <7v3b8ltq7r.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611142306090.2591@xanadu.home> <Pine.LNX.4.64.0611150950170.3349@woody.osdl.org> <455BBCE9.4050503@xs4all.nl> <Pine.LNX.4.64.0611151908130.3349@woody.osdl.org> <455C412D.1030408@xs4all.nl> <Pine.LNX.4.64.0611160814560.3349@woody.osdl.org> <455C94FA.3050903@xs4all.nl> <Pine.LNX.4.64.0611160904010.3349@woody.osdl.org> <455CA2A8.5010700@xs4all.nl> <Pine.LNX.4.64.0611160958170.3349@woody.osdl.org>
-Reply-To: hanwen@xs4all.nl
+From: "Lars Hjemli" <hjemli@gmail.com>
+Subject: Re: [RFC] Teach git-branch howto rename a branch
+Date: Sat, 25 Nov 2006 11:52:48 +0100
+Message-ID: <8c5c35580611250252r50539e4ere98bb38c7b8c9c9@mail.gmail.com>
+References: <1164409429445-git-send-email-hjemli@gmail.com>
+	 <20061125064901.GB4528@spearce.org> <ek9078$m2j$1@sea.gmane.org>
+	 <20061125085731.GG4528@spearce.org>
+	 <8c5c35580611250116h466e3649p2630ee6641b6e6f4@mail.gmail.com>
+	 <7vd57b3jc2.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 16 Nov 2006 23:33:05 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+NNTP-Posting-Date: Sat, 25 Nov 2006 10:53:16 +0000 (UTC)
+Cc: git@vger.kernel.org, "Shawn Pearce" <spearce@spearce.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.8 (X11/20061107)
-Original-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <Pine.LNX.4.64.0611160958170.3349@woody.osdl.org>
-X-Virus-Scanned: by XS4ALL Virus Scanner
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=rOMGe9+IwKO8Cj1FjDGY0QfXQwWDjOyXC0J+qyC56W3sCr5JToZxYwfxdjTd6d3Cq0Lk5t5wBLeVn7lQ+0Qet28NLS6aiUvmgIdt6rVRwD3GbuREVRw+D4FOPkq+f1+GLtzrtJdGaB6suSutWOE2nriC7qIeXFCe1r06U9vUAh4=
+In-Reply-To: <7vd57b3jc2.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31636>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32281>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gkqiv-0000bz-Gd for gcvg-git@gmane.org; Fri, 17 Nov
- 2006 00:32:50 +0100
+ esmtp (Exim 4.43) id 1Gnv9a-000176-Vf for gcvg-git@gmane.org; Sat, 25 Nov
+ 2006 11:53:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1424571AbWKPXcq (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 16 Nov 2006
- 18:32:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1424568AbWKPXcq
- (ORCPT <rfc822;git-outgoing>); Thu, 16 Nov 2006 18:32:46 -0500
-Received: from smtp-vbr3.xs4all.nl ([194.109.24.23]:27664 "EHLO
- smtp-vbr3.xs4all.nl") by vger.kernel.org with ESMTP id S1424578AbWKPXcp
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 16 Nov 2006 18:32:45 -0500
-Received: from [192.168.123.187] (muurbloem.xs4all.nl [213.84.26.127])
- (authenticated bits=0) by smtp-vbr3.xs4all.nl (8.13.8/8.13.8) with ESMTP id
- kAGNWad7062492; Fri, 17 Nov 2006 00:32:37 +0100 (CET) (envelope-from
- hanwen@xs4all.nl)
-To: Linus Torvalds <torvalds@osdl.org>
+ S1757862AbWKYKwz (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 25 Nov 2006
+ 05:52:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757904AbWKYKwz
+ (ORCPT <rfc822;git-outgoing>); Sat, 25 Nov 2006 05:52:55 -0500
+Received: from nf-out-0910.google.com ([64.233.182.186]:11233 "EHLO
+ nf-out-0910.google.com") by vger.kernel.org with ESMTP id S1757862AbWKYKwy
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 25 Nov 2006 05:52:54 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so1532393nfa for
+ <git@vger.kernel.org>; Sat, 25 Nov 2006 02:52:53 -0800 (PST)
+Received: by 10.82.164.9 with SMTP id m9mr1709394bue.1164451973073; Sat, 25
+ Nov 2006 02:52:53 -0800 (PST)
+Received: by 10.82.171.10 with HTTP; Sat, 25 Nov 2006 02:52:48 -0800 (PST)
+To: "Junio C Hamano" <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
+On 11/25/06, Junio C Hamano <junkio@cox.net> wrote:
+> "Lars Hjemli" <lh@elementstorage.no> writes:
+>
+> > Is it ok to put
+> >
+> > static int log_ref_write(struct ref_lock *lock,
+> >       const unsigned char *sha1, const char *msg)
+> >
+> > into refs.h?
+>
+> I think a cleaner implementation that does not have such a
+> layering violation would involve defining rename_refs()
+> interface in refs.c, next to the delete_ref() that exists there.
 
-Linus Torvalds escreveu:
->> You're misunderstanding me: the multi-repo is at git.sv.gnu.org is the
->> remote one. The example I gave was about locally creating a single
->> project repo from a remote multiproject repo. 
-> 
-> Ahh.
-> 
-> Ok, try the patch I just sent out, and see if it works for you. It 
-> _should_ allow you to do exactly that
-
-I'm leaving for a short holiday tomorrow, but will do when I come back.
-
->> From UI perspective it would be nice if this could also be done with clone,
->>
->>   git clone . ssh+git://....
-> 
-> The creation of a new archive tends to need special rights (with _real_ 
-> ssh access and a shell you could do it, but "ssh+git" really means "git 
-> protocol over a connection that was opened with ssh, but doesn't 
-> necessarily have a real shell at the other end").
-
-What happens on savannah is that the sysadmins set up an empty GIT
-repo with access, and leave it to you to push the stuff.  Of course,
-if the initial import gets packed automatically, that's also ok.
-
-> So I think the above syntax is actually not a good one, because it cannot 
-> work in the general case. It's much better to get used to setting up a 
-> repo first, and then pushing into it, and just accepting that it's a 
-> two-phase thing.
-
-Perhaps ; from a UI viewpoint, it would be nice though, even if it
-were aliased to a simple push. (Darcs has a get command analogous to
-git-clone, but also a put command to which git lacks the equivalent).
-
->> * why are objects downloaded twice?  If I do
->>
->>   git --bare fetch git://git.sv.gnu.org/lilypond.git web/master
->>
->> it downloads stuff, but I don't get a branch.
-> [..] 
->> If I then do 
->>
->>   git --bare fetch git://git.sv.gnu.org/lilypond.git web/master:master
->>
->> it downloads the same stuff again. 
-> 
-> Right. So you can either
-> [..]
-> See?
-
-No, I don't understand. In the fetch all the objects with their SHA1s
-were already downloaded. I'd expect that the fetch with a refspec
-would simply write a HEAD and a refs/heads/master, and notice that all
-the actual data was already downloaded, and doesn't download it again. 
-
+Yes, that looks a lot nicer. I'll give it a try.
 
 -- 
