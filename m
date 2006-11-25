@@ -4,67 +4,66 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: Possible but in gitweb
-Date: Sat, 18 Nov 2006 19:41:42 +0100
-Message-ID: <20061118184142.GN7201@pasky.or.cz>
-References: <4d8e3fd30611180858xf28e958g8511f2eb68d53848@mail.gmail.com> <ejng62$k2m$1@sea.gmane.org> <4d8e3fd30611180942p548a92d1ufc9e0dcfabedb59@mail.gmail.com> <200611181901.31708.jnareb@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Wierd tag errors from current 'next'
+Date: Sat, 25 Nov 2006 12:08:14 -0800
+Message-ID: <7vu00n1e8h.fsf@assigned-by-dhcp.cox.net>
+References: <456845E0.1050001@shadowen.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sat, 18 Nov 2006 18:42:01 +0000 (UTC)
-Cc: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>, git@vger.kernel.org
+NNTP-Posting-Date: Sat, 25 Nov 2006 20:08:30 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <200611181901.31708.jnareb@gmail.com>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <456845E0.1050001@shadowen.org> (Andy Whitcroft's message of
+	"Sat, 25 Nov 2006 13:32:16 +0000")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31787>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32304>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GlV8O-0006uy-HL for gcvg-git@gmane.org; Sat, 18 Nov
- 2006 19:41:49 +0100
+ esmtp (Exim 4.43) id 1Go3p1-0006tg-9M for gcvg-git@gmane.org; Sat, 25 Nov
+ 2006 21:08:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1755314AbWKRSlp (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 18 Nov 2006
- 13:41:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755317AbWKRSlp
- (ORCPT <rfc822;git-outgoing>); Sat, 18 Nov 2006 13:41:45 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:15073 "EHLO machine.or.cz") by
- vger.kernel.org with ESMTP id S1755314AbWKRSlo (ORCPT
- <rfc822;git@vger.kernel.org>); Sat, 18 Nov 2006 13:41:44 -0500
-Received: (qmail 18812 invoked by uid 2001); 18 Nov 2006 19:41:43 +0100
-To: Jakub Narebski <jnareb@gmail.com>
+ S967153AbWKYUIQ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 25 Nov 2006
+ 15:08:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967158AbWKYUIQ
+ (ORCPT <rfc822;git-outgoing>); Sat, 25 Nov 2006 15:08:16 -0500
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:23755 "EHLO
+ fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP id S967153AbWKYUIQ
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 25 Nov 2006 15:08:16 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao03.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061125200815.SCJQ4817.fed1rmmtao03.cox.net@fed1rmimpo01.cox.net>; Sat, 25
+ Nov 2006 15:08:15 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id r87k1V00C1kojtg0000000; Sat, 25 Nov 2006
+ 15:07:44 -0500
+To: Andy Whitcroft <apw@shadowen.org>
 Sender: git-owner@vger.kernel.org
 
-On Sat, Nov 18, 2006 at 07:01:30PM CET, Jakub Narebski wrote:
-> Paolo Ciarrocchi wrote:
-> > On 11/18/06, Jakub Narebski <jnareb@gmail.com> wrote:
-> >> Paolo Ciarrocchi wrote:
-> >>>
-> >>> Browsing the repo I reach the following URL
-> >>> http://repo.or.cz/w/LinuxKernelDevelopmentProcess.git?a=blob;f=LinuxKernelDevelopmentProcess.html;hb=HEAD
-> >>> that is not accessible.
-> >>
-> >> Because HEAD is master, not html, and there us no such file in master branch?
-> > 
-> > Fair enough but then there should be no link in the web interface.
-> > That sounds like a bug in the interface.
-> 
-> Where did you find this link? On what page?
-> 
-> "Browsing the repo" is not enough information to discover where
-> there is a bug.
+Andy Whitcroft <apw@shadowen.org> writes:
 
-It's not really hard to find. :-)
+> I just was fetching some updates from a repository which I sync from CVS
+> into my development repository.  I got the following wierd errors about
+> a tag during the fetch, it seemed to fix itself by the end ... hmmmm.
+>
+> apw@pinky$ git fetch
+> error: refs/tags/v0_72_3 does not point to a valid object!
+> error: refs/tags/v0_72_3 does not point to a valid object!
+> remote: Generating pack...
+> remote: Done counting 42 objects.
+> remote: Result has 28 objects.
+> remote: Deltifying 28 objects.
+> remote:  100% (28/28) done
+> remote: Total 28, written 28 (delta 20), reused 20 (delta 12)
+> Unpacking 28 objects
+>  100% (28/28) done
 
-http://repo.or.cz/w/LinuxKernelDevelopmentProcess.git?a=blob;f=LinuxKernelDevelopmentProcess.html;h=b5e39498997930cd14ecddfe120f62c577ce2e28;hb=html
+That sounds as if we are checking the refs/tags/v0_72_3 before
+we get the object itself.  "does not point to a valid object!"
+message comes from do_one_ref() in refs.c which means your
+repository had $GIT_DIR/refs/tags/v0_72_3 before that object was
+retrieved.
 
-I think the link shouldn't be 'HEAD' but 'latest' and point to the
-latest version in the currently browser branch.
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-The meaning of Stonehenge in Traflamadorian, when viewed from above, is:
-"Replacement part being rushed with all possible speed."
+Which is _bad_.  Could you reproduce and bisect it?
