@@ -4,85 +4,118 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Florent Thoumie <flz@xbsd.org>
-Subject: Re: Problem with git-push
-Date: Wed, 01 Nov 2006 19:57:15 +0000
-Message-ID: <1162411035.93716.14.camel@localhost>
-References: <1162306098.41547.4.camel@mayday.esat.net>
-	 <7v64e0qclo.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH 2/2] git-shortlog: make common repository prefix configurable with .mailmap
+Date: Sat, 25 Nov 2006 00:11:02 -0800
+Message-ID: <7vejrs54kp.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-tiEeu+9skTWmV7T4UAsJ"
-NNTP-Posting-Date: Wed, 1 Nov 2006 18:58:11 +0000 (UTC)
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Sat, 25 Nov 2006 08:11:19 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <7v64e0qclo.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Evolution 2.8.1 FreeBSD GNOME Team Port 
-X-Virus-Scanned: amavisd-new at xbsd.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30651>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32266>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GfLHl-0007tl-7M for gcvg-git@gmane.org; Wed, 01 Nov
- 2006 19:58:02 +0100
+ esmtp (Exim 4.43) id 1Gnscz-0007AB-Ln for gcvg-git@gmane.org; Sat, 25 Nov
+ 2006 09:11:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S2992551AbWKAS56 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 1 Nov 2006
- 13:57:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992554AbWKAS56
- (ORCPT <rfc822;git-outgoing>); Wed, 1 Nov 2006 13:57:58 -0500
-Received: from smtp3-g19.free.fr ([212.27.42.29]:33753 "EHLO
- smtp3-g19.free.fr") by vger.kernel.org with ESMTP id S2992551AbWKAS55 (ORCPT
- <rfc822;git@vger.kernel.org>); Wed, 1 Nov 2006 13:57:57 -0500
-Received: from smtp.xbsd.org (unknown [82.233.2.192]) by smtp3-g19.free.fr
- (Postfix) with ESMTP id C04354A385; Wed,  1 Nov 2006 19:57:47 +0100 (CET)
-Received: from localhost (localhost.xbsd.org [127.0.0.1]) by smtp.xbsd.org
- (Postfix) with ESMTP id 711D81141F; Wed,  1 Nov 2006 19:57:47 +0100 (CET)
-Received: from smtp.xbsd.org ([127.0.0.1]) by localhost (srv1.xbsd.org
- [127.0.0.1]) (amavisd-new, port 10024) with ESMTP id 73524-04; Wed,  1 Nov
- 2006 19:57:21 +0100 (CET)
-Received: from [193.120.13.130] (cream.xbsd.org [193.120.13.130]) by
- smtp.xbsd.org (Postfix) with ESMTP id A8655114F6; Wed,  1 Nov 2006 19:57:20
- +0100 (CET)
-To: Junio C Hamano <junkio@cox.net>
+ S1757888AbWKYILG (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 25 Nov 2006
+ 03:11:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757889AbWKYILG
+ (ORCPT <rfc822;git-outgoing>); Sat, 25 Nov 2006 03:11:06 -0500
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:65514 "EHLO
+ fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP id S1757888AbWKYILE
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 25 Nov 2006 03:11:04 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao02.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061125081103.JZRW97.fed1rmmtao02.cox.net@fed1rmimpo02.cox.net>; Sat, 25
+ Nov 2006 03:11:03 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id qwBB1V00N1kojtg0000000; Sat, 25 Nov 2006
+ 03:11:11 -0500
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
+The code had "/pub/scm/linux/kernel/git/" hardcoded which was
+too specific to the kernel project.
 
---=-tiEeu+9skTWmV7T4UAsJ
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
+With this, a line in the .mailmap file:
 
-On Tue, 2006-10-31 at 15:39 -0800, Junio C Hamano wrote:
+	# repo-abbrev: /pub/scm/linux/kernel/git/
 
-> A quick workaround until we sort this out would be:
->=20
->  - make sure all your developers have umask suitable for group
->    work (i.e. second octal-digit from the right should be zero
->    to give group members the same rights as you do).
->=20
->  - run "chmod g+w .git/objects/??" in the shared repository.
+can be used to cause the substring to be abbreviated to /.../
+on the title line of the commit message.
 
-I thought I checked on the remote (guess I only looked at my local
-repo), but that was it, wrong perms.
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
+ builtin-shortlog.c    |   24 ++++++++++++++++++++++--
+ contrib/mailmap.linux |    2 ++
+ 2 files changed, 24 insertions(+), 2 deletions(-)
 
-Sorry if this is a dumb question but assuming i did 3 successive
-git-push's, why is the object name changing from a try to another?
+diff --git a/builtin-shortlog.c b/builtin-shortlog.c
+index bdd952c..b5b13de 100644
+--- a/builtin-shortlog.c
++++ b/builtin-shortlog.c
+@@ -9,6 +9,8 @@
+ static const char shortlog_usage[] =
+ "git-shortlog [-n] [-s] [<commit-id>... ]";
+ 
++static char *common_repo_prefix;
++
+ static int compare_by_number(const void *a1, const void *a2)
+ {
+ 	const struct path_list_item *i1 = a1, *i2 = a2;
+@@ -35,8 +37,26 @@ static int read_mailmap(const char *filename)
+ 		char *end_of_name, *left_bracket, *right_bracket;
+ 		char *name, *email;
+ 		int i;
+-		if (buffer[0] == '#')
++		if (buffer[0] == '#') {
++			static const char abbrev[] = "# repo-abbrev:";
++			int abblen = sizeof(abbrev) - 1;
++			int len = strlen(buffer);
++
++			if (len && buffer[len - 1] == '\n')
++				buffer[--len] = 0;
++			if (!strncmp(buffer, abbrev, abblen)) {
++				char *cp;
++
++				if (common_repo_prefix)
++					free(common_repo_prefix);
++				common_repo_prefix = xmalloc(len);
++
++				for (cp = buffer + abblen; isspace(*cp); cp++)
++					; /* nothing */
++				strcpy(common_repo_prefix, cp);
++			}
+ 			continue;
++		}
+ 		if ((left_bracket = strchr(buffer, '<')) == NULL)
+ 			continue;
+ 		if ((right_bracket = strchr(left_bracket + 1, '>')) == NULL)
+@@ -87,7 +107,7 @@ static void insert_author_oneline(struct path_list *list,
+ 		const char *author, int authorlen,
+ 		const char *oneline, int onelinelen)
+ {
+-	const char *dot3 = "/pub/scm/linux/kernel/git/";
++	const char *dot3 = common_repo_prefix;
+ 	char *buffer, *p;
+ 	struct path_list_item *item;
+ 	struct path_list *onelines;
+diff --git a/contrib/mailmap.linux b/contrib/mailmap.linux
+index 83927c9..e4907f8 100644
+--- a/contrib/mailmap.linux
++++ b/contrib/mailmap.linux
+@@ -3,6 +3,8 @@
+ # So have an email->real name table to translate the
+ # (hopefully few) missing names
+ #
++# repo-abbrev: /pub/scm/linux/kernel/git/
++#
+ Adrian Bunk <bunk@stusta.de>
+ Andreas Herrmann <aherrman@de.ibm.com>
+ Andrew Morton <akpm@osdl.org>
+-- 
+1.4.4.1.g61fba
 
-Thanks for the answer.
-
-Florent
-
-
---=-tiEeu+9skTWmV7T4UAsJ
-Content-Type: application/pgp-signature; name=signature.asc
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.5 (FreeBSD)
-
-iD8DBQBFSPwbMxEkbVFH3PQRAozTAJ9fphmrJdr+rLll7YJaBLEdp/pxfQCfY2M0
-HFYXtCf7gzbHbO5DKFJjxCo=
-=Ye+w
------END PGP SIGNATURE-----
-
---=-tiEeu+9skTWmV7T4UAsJ--
