@@ -1,108 +1,141 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Subprojects tasks
-Date: Sun, 17 Dec 2006 14:01:09 +0100
-Message-ID: <200612171401.10585.jnareb@gmail.com>
-References: <7vzm9nelob.fsf@assigned-by-dhcp.cox.net> <200612170101.09615.Josef.Weidendorfer@gmx.de> <20061217114546.GG12411@admingilde.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [RFC] Teach git-branch howto rename a branch
+Date: Fri, 24 Nov 2006 21:40:30 -0800
+Message-ID: <7v1wns6q41.fsf@assigned-by-dhcp.cox.net>
+References: <1164409429445-git-send-email-hjemli@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sun, 17 Dec 2006 12:58:53 +0000 (UTC)
-Cc: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>,
-	git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Sat, 25 Nov 2006 05:40:55 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=XKy+UUVZUwUoypPg0Ie39Y4ThHaZh8gg+GdZQAKkEEhMObEALA2cRjqsS5t/srK2P4mtbtGNmj83/BbH7DriMHLMbcUa4i7HH98/+dTU5urTT+7/ITbQl/JF3VBf0A0asCwdHRy3CHvaBQZz3t49ukqJJYfPu53vbWkE1CWnBHw=
-User-Agent: KMail/1.9.3
-In-Reply-To: <20061217114546.GG12411@admingilde.org>
-Content-Disposition: inline
+In-Reply-To: <1164409429445-git-send-email-hjemli@gmail.com> (Lars Hjemli's
+	message of "Sat, 25 Nov 2006 00:03:49 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34687>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GvvbJ-00007H-QE for gcvg-git@gmane.org; Sun, 17 Dec
- 2006 13:58:46 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32254>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GnqHN-0007nX-St for gcvg-git@gmane.org; Sat, 25 Nov
+ 2006 06:40:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752563AbWLQM6l (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 17 Dec 2006
- 07:58:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752564AbWLQM6l
- (ORCPT <rfc822;git-outgoing>); Sun, 17 Dec 2006 07:58:41 -0500
-Received: from ug-out-1314.google.com ([66.249.92.173]:20600 "EHLO
- ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1752563AbWLQM6k (ORCPT <rfc822;git@vger.kernel.org>); Sun, 17 Dec
- 2006 07:58:40 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so1256257uga for
- <git@vger.kernel.org>; Sun, 17 Dec 2006 04:58:39 -0800 (PST)
-Received: by 10.67.91.6 with SMTP id t6mr3303080ugl.1166360319186; Sun, 17
- Dec 2006 04:58:39 -0800 (PST)
-Received: from host-81-190-25-107.torun.mm.pl ( [81.190.25.107]) by
- mx.google.com with ESMTP id e23sm7481028ugd.2006.12.17.04.58.38; Sun, 17 Dec
- 2006 04:58:39 -0800 (PST)
-To: Martin Waitz <tali@admingilde.org>
+ S1757830AbWKYFkd (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 25 Nov 2006
+ 00:40:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757832AbWKYFkd
+ (ORCPT <rfc822;git-outgoing>); Sat, 25 Nov 2006 00:40:33 -0500
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:11655 "EHLO
+ fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP id S1757830AbWKYFkc
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 25 Nov 2006 00:40:32 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao11.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061125054031.UMUT296.fed1rmmtao11.cox.net@fed1rmimpo02.cox.net>; Sat, 25
+ Nov 2006 00:40:31 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id qtgf1V00E1kojtg0000000; Sat, 25 Nov 2006
+ 00:40:39 -0500
+To: Lars Hjemli <hjemli@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Martin Waitz wrote:
-> On Sun, Dec 17, 2006 at 01:01:09AM +0100, Josef Weidendorfer wrote:
+Lars Hjemli <hjemli@gmail.com> writes:
 
->> IMHO it simply is added flexibility to allow a checkout to be separate from
->> the .git/ directory, same as explicitly setting $GIT_DIR would do.
->> So this .gitlink file is on the one hand one kind of convenience for users
->> which want to keep their repository separate, yet do not want to specify
->> $GIT_DIR all the time in front of git commands.
->> The .gitlink file simply makes the linkage to the separate repository
->> persistent.
-> 
-> I can see the reason for wanting to use another object database,
-> but HEAD and index should always be stored together with the
-> checked out directory.  So perhaps we just need some smart way to
-> search for the object database, but keep the .git directory.
+> +static void delete_branch(const char *branch, int force, struct commit *head_rev)
+>  {
+>...
+> +}
 
-Well, in the .gitlink proposal you could specify GIT_DIR for checkout,
-or separately: GIT_OBJECT_DIRECTORY, GIT_INDEX_FILE, GIT_REFS_DIRECTORY
-(does not exist yet), GIT_HEAD_FILE (does not exist yet, and I suppose
-it wouldn't be easy to implement it). By the way, that's why I'm for
-.gitlink name for the file, not .git -- this way .gitlink can "shadow"
-what's in .git, for example specifying in a smart way where to search
-(where to find) object database, but HEAD and index would be stored
-together with the checked out directory in .git
+Refactoring the single ref deletion into this function feels
+sane.  I think you do not need a separate force parameter to
+this function anymore; if the caller wants to force the deletion
+it can send in a NULL for head_rev to signal that there is no
+need for the "subset" check.
 
-By the way, I'm rather partial to supermodule following HEAD in submodule,
-not specified branch. First, I think it is easier from implementation
-point of view: you don't have to remember which branch supermodule should
-take submodule commits from; and this cannot be fixed branch name like
-'master'. For example 'maint' branch of supermodule could track 'maint'
-branch of submodule, 'master' branch of supermodule track 'master'
-branch of submodule, 'next' branch of supermodule tranck 'master' (!)
-branch of submodule, 'pu' branch of supermodule track 'next' (!) branch
-of submodule. 
+> +static void delete_branches(int argc, const char **argv, int force)
+> +{
+> +	struct commit *head_rev;
+> +	int i;
+> +	
+> +	head_rev = lookup_commit_reference(head_sha1);
+> +	if (!head_rev)
+> +		die("Couldn't look up commit object for current HEAD.");
+> +	for (i = 0; i < argc; i++) 
+> +		delete_branch(argv[i], force, head_rev);
+>  }
 
-Second, if you want to do some independent work on the module not related
-to work on submodule you should really clone (clone -l -s) submodule
-and work in separate checkout; the complaint that with tracking HEAD
-you can check-in wrong version of submodule to supermodule commit
-doesn't hold, because you still would have problem that _tree_
-of supermodule would have wrong version of submodule. And moving to
-using single defined branch of submodule brings multitude of other
-problems: for example you might usually track 'master' version of
-submodule, but for a short time need to track 'next' branch because
-it has functionality you need; and another time you need to move
-to 'maint' branch or even your own branch because 'master' version
-breaks something in supermodule.
+I do not think this die() is a good idea.  I think it is
+reasonable to allow the following sequence:
 
-Hmmm... I wonder how planned allowing to checking out tags, non-head
-branches (e.g. tracking/remote branches) and arbitrary commits but
-forbidding committing when HEAD is not a refs/heads/ branch would
-affect submodules / subprojects...
+	$ mkdir newdir && cd newdir
+	$ git init-db
+        $ git fetch $other_repo refs/heads/master:refs/heads/othre
+        $ git branch -D othre ;# oops, typo
+        $ git fetch $other_repo refs/heads/master:refs/heads/other
 
--- 
-Jakub Narebski
+When forcing a deletion, we do not care about ancestry relation
+between the HEAD and the branch being deleted, so we should not
+even bother checking if HEAD is already valid.  The original
+code before your patch shares the same problem.
+
+> -static void create_branch(const char *name, const char *start,
+> +static char *create_branch(const char *name, const char *start,
+>  			  int force, int reflog)
+
+This makes the returned names leak but probably we do not care
+about it too much.  However, the only caller that cares about
+the new refname is rename_branch, and we are talking only about
+branches, so I think handcrafting the refname just like you
+handcraft the refname for oldname in rename_branch() would be
+a better solution without introducing new leaks.
+
+> +static void rename_branch(const char *newname, const char *oldname, int force, int reflog)
+> +{
+> +	char ref[PATH_MAX];
+> +
+> +	snprintf(ref, sizeof ref, "refs/heads/%s", oldname);
+> +	if (check_ref_format(ref))
+> +		die("'%s' is not a valid branch name.", oldname);
+> +
+> +	newname = create_branch(newname, oldname, force, reflog);
+
+This does not feel right.  The 'start' parameter to
+create_branch is arbitrary SHA-1 expression so it can take
+'master', 'heads/master' and 'refs/heads/master' to mean the
+same thing, as long as they are unambiguous, but here you would
+want to accept only 'master' because the paramter is supposed to
+be the name of the branch you are renaming.  create_branch()
+does not want to do that check for its start parameter, so you
+should do the checking yourself here, and check_ref_format() is
+not good enough for that.  Probably calling resolve_ref() on ref
+(= "refs/heads/oldname") for reading (because you also want to
+make sure oldname talks about an existing branch) is needed.
+
+> +	if (!strcmp(oldname, head)) {
+> +		create_symref("HEAD", newname);
+> +		head = newname + 11;
+> +	}
+> +	delete_branch(oldname, force, NULL);
+>  }
+
+What is the right thing that should happen when newname talks
+about an existing branch (I am not asking "what does your code
+do?")?
+
+Without -f, it should barf.  With -f, we would want the rename
+to happen.  In the latter case, I think it should work the same
+way as deleting it and creating it anew, and that would make
+sure that reflog for the old one will be lost and a new log is
+started afresh; otherwise, the log would say old history for
+that branch and it won't be a "rename" anymore.
+
+Also what happens when oldname is "frotz" and newname is
+"frotz/nitfol"?  You would need to read the value of "frotz",
+make sure you can delete it (perhaps the usual fast-forward
+check as needed), and delete it to make room and then create
+"frotz/nitfol".  I suspect your patch does not handle that
+case.
+
