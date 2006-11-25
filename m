@@ -2,65 +2,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Change in git-svn dcommit semantics?
-Date: Wed, 20 Dec 2006 01:52:27 +0100
-Organization: At home
-Message-ID: <ema1ba$2u9$1@sea.gmane.org>
-References: <m2mz5jegka.fsf@ziti.local> <94FF72E0-F8BD-4773-803E-F179754BF0ED@silverinsanity.com> <Pine.LNX.4.63.0612200053550.19693@wbgn013.biozentrum.uni-wuerzburg.de> <C2881A17-27F7-467C-B353-189BB7DBFD1E@silverinsanity.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Show remote branches on gitweb
+Date: Fri, 24 Nov 2006 16:40:23 -0800
+Message-ID: <7vy7q08iko.fsf@assigned-by-dhcp.cox.net>
+References: <loom.20061124T210559-701@post.gmane.org>
+	<ek7jsp$j83$1@sea.gmane.org> <ek7m6m$qqd$1@sea.gmane.org>
+	<20061124235911.GO7201@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Wed, 20 Dec 2006 00:50:57 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Sat, 25 Nov 2006 00:40:33 +0000 (UTC)
+Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 15
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-25-107.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+In-Reply-To: <20061124235911.GO7201@pasky.or.cz> (Petr Baudis's message of
+	"Sat, 25 Nov 2006 00:59:11 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34876>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GwpfZ-0005Gh-DR for gcvg-git@gmane.org; Wed, 20 Dec
- 2006 01:50:53 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32250>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gnlao-0002C0-9h for gcvg-git@gmane.org; Sat, 25 Nov
+ 2006 01:40:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932721AbWLTAuS convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006 19:50:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932750AbWLTAuR
- (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 19:50:17 -0500
-Received: from main.gmane.org ([80.91.229.2]:58113 "EHLO ciao.gmane.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S932721AbWLTAuQ
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec 2006 19:50:16 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1Gwpem-0003l8-Af for git@vger.kernel.org; Wed, 20 Dec 2006 01:50:04 +0100
-Received: from host-81-190-25-107.torun.mm.pl ([81.190.25.107]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Wed, 20 Dec 2006 01:50:04 +0100
-Received: from jnareb by host-81-190-25-107.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Wed, 20 Dec 2006
- 01:50:04 +0100
-To: git@vger.kernel.org
+ S933972AbWKYAkZ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 24 Nov 2006
+ 19:40:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934485AbWKYAkZ
+ (ORCPT <rfc822;git-outgoing>); Fri, 24 Nov 2006 19:40:25 -0500
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:62448 "EHLO
+ fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP id S933972AbWKYAkY
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 24 Nov 2006 19:40:24 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao05.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061125004024.NELW20330.fed1rmmtao05.cox.net@fed1rmimpo02.cox.net>; Fri, 24
+ Nov 2006 19:40:24 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id qogX1V00q1kojtg0000000; Fri, 24 Nov 2006
+ 19:40:32 -0500
+To: Petr Baudis <pasky@suse.cz>
 Sender: git-owner@vger.kernel.org
 
-Brian Gernhardt wrote:
+Petr Baudis <pasky@suse.cz> writes:
 
-> And is there an easier way to find these things than "git rev-list =A0
-> HEAD | git diff-tree -r -s --stdin -SCOLLISION | xargs git show"? =A0=
-I =A0
-> cobbled that together from poking around inside gitk (which mostly =A0
-> works in OS X, but has some issues that make me prefer the command =A0
-> line).
+>> The problem is that to implement it _well_ we have to get remotes, both
+>> $GIT_DIR/remotes and config remote.xxx, info. And the latter (config
+>> remotes info) needs config parsing, something we lack.
+>
+> Does that mean we _can_ parse $GIT_DIR/remotes? ;-)
 
-git log -p -SCOLLISIONS ?=20
+Surely you should be able to.  You are working in Perl and the
+remotes and config are trivially parsable text files.
 
---=20
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+
 
