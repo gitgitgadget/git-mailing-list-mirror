@@ -1,82 +1,107 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: [BUG] git --git-dir dies with bus error
-Date: Wed, 20 Dec 2006 09:47:37 -0500
-Message-ID: <CF24F5E4-AE2F-48FD-A0C5-474D8BFA757F@silverinsanity.com>
-References: <200612200901.30584.andyparkins@gmail.com> <200612201008.49045.andyparkins@gmail.com> <A76C0FA3-1649-409B-B0D4-C22865622C1F@silverinsanity.com> <emb8h2$io4$1@sea.gmane.org> <45892E16.2040301@op5.se>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 20 Dec 2006 14:47:53 +0000 (UTC)
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH (take 3)] gitweb: Use git-show-ref instead of git-peek-remote
+Date: Sat, 25 Nov 2006 11:32:08 +0100
+Message-ID: <11644507284105-git-send-email-jnareb@gmail.com>
+References: <7vhcwoa3mx.fsf@assigned-by-dhcp.cox.net>
+NNTP-Posting-Date: Sat, 25 Nov 2006 10:30:54 +0000 (UTC)
+Cc: Jakub Narebski <jnareb@gmail.com>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <45892E16.2040301@op5.se>
-X-Mailer: Apple Mail (2.752.3)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=uQBY043zWUJx/DvlgGuGy0Tvn/7oqIEzAMDbxYec+VFCn0S66lJnxbN2MGn54Fxwptac7UPLhtNlDT/rgtM/pB58d9X8Bj1HF4RX03X+nB4FETe3F0C0jy++f8nSdl/LuLbiRLuZguKQRaHtvcfD1+RcYOEmfB9iWnTav/ZLCNs=
+X-Mailer: git-send-email 1.4.4.1
+In-Reply-To: <7vhcwoa3mx.fsf@assigned-by-dhcp.cox.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34936>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gx2jS-0006Wb-5Q for gcvg-git@gmane.org; Wed, 20 Dec
- 2006 15:47:46 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32277>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gnuo5-0005vY-6f for gcvg-git@gmane.org; Sat, 25 Nov
+ 2006 11:30:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S965113AbWLTOrl (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 20 Dec 2006
- 09:47:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965114AbWLTOrl
- (ORCPT <rfc822;git-outgoing>); Wed, 20 Dec 2006 09:47:41 -0500
-Received: from vs072.rosehosting.com ([216.114.78.72]:35334 "EHLO
- silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
- S965113AbWLTOrl (ORCPT <rfc822;git@vger.kernel.org>); Wed, 20 Dec 2006
- 09:47:41 -0500
-Received: from [192.168.1.6] (cpe-66-67-221-135.rochester.res.rr.com
- [66.67.221.135]) (using TLSv1 with cipher AES128-SHA (128/128 bits)) (No
- client certificate requested) by silverinsanity.com (Postfix) with ESMTP id
- 04CC11FFD321; Wed, 20 Dec 2006 14:47:39 +0000 (UTC)
-To: Andreas Ericsson <ae@op5.se>
+ S966408AbWKYKac (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 25 Nov 2006
+ 05:30:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966403AbWKYKac
+ (ORCPT <rfc822;git-outgoing>); Sat, 25 Nov 2006 05:30:32 -0500
+Received: from ug-out-1314.google.com ([66.249.92.170]:48187 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S966408AbWKYKab
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 25 Nov 2006 05:30:31 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so827559uga for
+ <git@vger.kernel.org>; Sat, 25 Nov 2006 02:30:30 -0800 (PST)
+Received: by 10.67.97.7 with SMTP id z7mr8653395ugl.1164450629853; Sat, 25
+ Nov 2006 02:30:29 -0800 (PST)
+Received: from roke.D-201 ( [81.190.24.209]) by mx.google.com with ESMTP id
+ a1sm15959343ugf.2006.11.25.02.30.29; Sat, 25 Nov 2006 02:30:29 -0800 (PST)
+Received: from roke.D-201 (localhost.localdomain [127.0.0.1]) by roke.D-201
+ (8.13.4/8.13.4) with ESMTP id kAPAW8Sm011877; Sat, 25 Nov 2006 11:32:09 +0100
+Received: (from jnareb@localhost) by roke.D-201 (8.13.4/8.13.4/Submit) id
+ kAPAW8la011876; Sat, 25 Nov 2006 11:32:08 +0100
+To: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
+Use "git show-ref --dereference" instead of "git peek-remote
+$projectroot/project" in git_get_references. git-show-ref is faster
+than git-peek-remote (40ms vs 56ms user+sys for git.git repository);
+even faster is reading info/refs file (if it exists), but the
+information in info/refs can be stale; that and the fact that
+info/refs is meant for dumb protocol transports, not for gitweb.
 
-On Dec 20, 2006, at 7:35 AM, Andreas Ericsson wrote:
+git-show-ref is available since v1.4.4; the output format is slightly
+different than git-peek-remote output format.
 
-> AFAIR, the discussions long ago went along the lines of "if no  
-> argument is passed to any of the --*-dir options, print out the  
-> current value". If "git --git-dir" doesn't print the directory name  
-> of the .git directory inside the repo you're currently in, I'd  
-> consider it a bug.
+While at it make git_get_references return hash in list context,
+and reference to hash (as it used to do) in scalar and void contexts.
 
-Consider this a bug then:
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+This is the final version.
 
-$ git --git-dir
-Bus error
-$ git --version
-git version 1.4.4.1.GIT
-$ git rev-parse origin/master
-8336afa563fbeff35e531396273065161181f04c
-$ gdb git
-(gdb) set args --git-dir
-(gdb) run
-Starting program: /usr/local/stow/git/src/git/git --git-dir
-Reading symbols for shared libraries ..+ done
+Once again, I'm extremly sorry for the confusion with the previous
+version...
 
-Program received signal EXC_BAD_ACCESS, Could not access memory.
-Reason: KERN_PROTECTION_FAILURE at address: 0x00000000
-0x900332e6 in setenv ()
-(gdb) bt
-#0  0x900332e6 in setenv ()
-#1  0x00001f9e in handle_options (argv=0xbffff4a4, argc=0xbffff4a0)  
-at git.c:76
-#2  0x000022da in main (argc=1, argv=0xbffff504, envp=0xbffff50c) at  
-git.c:346
+ gitweb/gitweb.perl |   11 ++++++-----
+ 1 files changed, 6 insertions(+), 5 deletions(-)
 
-My current HEAD (and installed version) just includes my "remove  
-COLLISION_CHECK" patch on top of git master.  This is on OS 10.4.8  
-with fink 0.26.  It appears to be trying to set GIT_DIR to some non- 
-set section of memory.  Bad git, bad.  I'd try to patch this myself  
-(to at least display an error instead of dying), but I'm deep in my  
-actual project code right now.
-
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index f06cd3e..1cded75 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -1154,14 +1154,15 @@ sub git_get_last_activity {
+ sub git_get_references {
+ 	my $type = shift || "";
+ 	my %refs;
+-	# 5dc01c595e6c6ec9ccda4f6f69c131c0dd945f8c	refs/tags/v2.6.11
+-	# c39ae07f393806ccf406ef966e9a15afc43cc36a	refs/tags/v2.6.11^{}
+-	open my $fd, "-|", $GIT, "peek-remote", "$projectroot/$project/"
++	# 5dc01c595e6c6ec9ccda4f6f69c131c0dd945f8c refs/tags/v2.6.11
++	# c39ae07f393806ccf406ef966e9a15afc43cc36a refs/tags/v2.6.11^{}
++	open my $fd, "-|", git_cmd(), "show-ref", "--dereference",
++		($type ? ("--", "refs/$type") : ()) # use -- <pattern> if $type
+ 		or return;
+ 
+ 	while (my $line = <$fd>) {
+ 		chomp $line;
+-		if ($line =~ m/^([0-9a-fA-F]{40})\trefs\/($type\/?[^\^]+)/) {
++		if ($line =~ m!^([0-9a-fA-F]{40})\srefs/($type/?[^^]+)!) {
+ 			if (defined $refs{$1}) {
+ 				push @{$refs{$1}}, $2;
+ 			} else {
+@@ -1170,7 +1171,7 @@ sub git_get_references {
+ 		}
+ 	}
+ 	close $fd or return;
+-	return \%refs;
++	return wantarray ? %refs : \%refs;
+ }
+ 
+ sub git_get_rev_name_tags {
+-- 
+1.4.4.1
