@@ -1,85 +1,63 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] Cleanup git-diff documentation
-Date: Fri, 15 Dec 2006 11:03:19 +0100
-Organization: At home
-Message-ID: <eltroi$b4q$3@sea.gmane.org>
-References: <7vr6v2aofs.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0612140957590.3635@wbgn013.biozentrum.uni-wuerzburg.de> <9A80051B-1F6B-4FFD-B33F-84121D3A422F@silverinsanity.com>
+From: "Fredrik Kuivinen" <frekui@gmail.com>
+Subject: Re: [RFC] Teach git-branch howto rename a branch
+Date: Sat, 25 Nov 2006 11:39:03 +0100
+Message-ID: <4c8ef70611250239h4e03b9c7k971b60187aa0f56d@mail.gmail.com>
+References: <1164409429445-git-send-email-hjemli@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Fri, 15 Dec 2006 10:05:16 +0000 (UTC)
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Sat, 25 Nov 2006 10:39:17 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 31
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-25-107.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=pfYeZDUJCLu8U7PEpHrnorqCsoBfnyGzIxyt8yqFkm52Yx2w7WJV1RNt6hm7pDktiFa6S9ynD3xcZuCve3O+2tl1qq1+xhMOA1svW82reuwhPsvc1nLkt23ZBwgDYiRJyysYGU2u7Jbn3LJ4jGqlsFVj2cUYMcPPlm9Sr0k5ChU=
+In-Reply-To: <1164409429445-git-send-email-hjemli@gmail.com>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34488>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gv9wH-0001Ul-TH for gcvg-git@gmane.org; Fri, 15 Dec
- 2006 11:05:14 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32279>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GnuwB-0007Kz-8T for gcvg-git@gmane.org; Sat, 25 Nov
+ 2006 11:39:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751696AbWLOKFK convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Fri, 15 Dec 2006 05:05:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751703AbWLOKFK
- (ORCPT <rfc822;git-outgoing>); Fri, 15 Dec 2006 05:05:10 -0500
-Received: from main.gmane.org ([80.91.229.2]:44370 "EHLO ciao.gmane.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1751696AbWLOKFI
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 15 Dec 2006 05:05:08 -0500
-Received: from root by ciao.gmane.org with local (Exim 4.43) id
- 1Gv9w5-00018y-Sb for git@vger.kernel.org; Fri, 15 Dec 2006 11:05:01 +0100
-Received: from host-81-190-25-107.torun.mm.pl ([81.190.25.107]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Fri, 15 Dec 2006 11:05:01 +0100
-Received: from jnareb by host-81-190-25-107.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Fri, 15 Dec 2006
- 11:05:01 +0100
-To: git@vger.kernel.org
+ S966417AbWKYKjH (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 25 Nov 2006
+ 05:39:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966420AbWKYKjH
+ (ORCPT <rfc822;git-outgoing>); Sat, 25 Nov 2006 05:39:07 -0500
+Received: from wx-out-0506.google.com ([66.249.82.234]:42077 "EHLO
+ wx-out-0506.google.com") by vger.kernel.org with ESMTP id S966417AbWKYKjF
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 25 Nov 2006 05:39:05 -0500
+Received: by wx-out-0506.google.com with SMTP id h27so1129959wxd for
+ <git@vger.kernel.org>; Sat, 25 Nov 2006 02:39:04 -0800 (PST)
+Received: by 10.70.56.4 with SMTP id e4mr2746353wxa.1164451144304; Sat, 25
+ Nov 2006 02:39:04 -0800 (PST)
+Received: by 10.70.49.14 with HTTP; Sat, 25 Nov 2006 02:39:03 -0800 (PST)
+To: "Lars Hjemli" <hjemli@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Brian Gernhardt wrote:
+On 11/25/06, Lars Hjemli <hjemli@gmail.com> wrote:
+> This adds a '--rename' option to git branch. If specified, branch
+> creation becomes branch renaming.
+>
+> With a single branchname, the current branch is renamed and .git/HEAD is
+> updated.
+>
+> With two branchnames, the second name is renamed to the first.
 
-> -This command shows changes between four combinations of states.
-> +Show changes between two trees, a tree and the working tree, a
-> +tree and the index file, or the index file and the working tree.
-> +The combination of what is compared with what is determined by
-> +the number of trees given to the command.
+Nice idea. But wouldn't it be more sensible to rename the first branch to the
+second instead of the other way around? That is, the syntax would be
 
-You talk here about "number of _trees_" while later you use <commit>,
-not <tree> or <tree-ish>. Only at the very end you say that <commit>
-(<commit-ish> because you can use tags as well) can be replaced by
-any <tree-ish>.
+    git branch --rename FROM TO
 
-That said, I like this clarification, especially the fact that
-I don't have to go to git-diff-tree(1) to find diff options.
-
-> 'git-diff' [--options] [--] [<path>...]::
-> @@ -25,11 +28,11 @@ This command shows changes between four =A0
-> combinations of states.
-> 'git-diff' [--options] --cached [<commit>] [--] [<path>...]::
-> =A0=A0=A0=A0=A0=A0=A0=A0This form is to view the changes you staged f=
-or the next
-> -=A0=A0=A0=A0=A0=A0=A0commit relative to the named <tree-ish>. =A0Typ=
-ically you
-> +=A0=A0=A0=A0=A0=A0=A0commit relative to the named <commit>. =A0Typic=
-ally you
-> =A0=A0=A0=A0=A0=A0=A0=A0would want comparison with the latest commit,=
- so if you
-> =A0=A0=A0=A0=A0=A0=A0=A0do not give <commit>, it defaults to HEAD.
-
---=20
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+which is more similar to how "mv" works.
 
