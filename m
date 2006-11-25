@@ -1,71 +1,78 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-2.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,MSGID_FROM_MTA_HEADER,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
-From: Sean <seanlkml@sympatico.ca>
-Subject: Re: git-PS1 bash prompt setting
-Date: Mon, 27 Nov 2006 07:56:50 -0500
-Message-ID: <BAYC1-PASMTP023A7249055A08208223F1AEE60@CEZ.ICE>
-References: <BAYC1-PASMTP037FDA6C6465F0541AC613AEE90@CEZ.ICE>
-	<Pine.LNX.4.63.0611261524130.30004@wbgn013.biozentrum.uni-wuerzburg.de>
-	<20061126094212.fde8cce7.seanlkml@sympatico.ca>
-	<20061127065400.GA19174@spearce.org>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Eric Blake <ebb9@byu.net>
+Subject: git on cygwin
+Date: Sat, 25 Nov 2006 07:38:23 -0700
+Message-ID: <4568555F.8050500@byu.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Mon, 27 Nov 2006 12:57:14 +0000 (UTC)
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, Theodore Tso <tytso@mit.edu>
+NNTP-Posting-Date: Sat, 25 Nov 2006 14:41:37 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Originating-IP: [65.93.43.74]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Original-Message-Id: <20061127075650.81a5a850.seanlkml@sympatico.ca>
-In-Reply-To: <20061127065400.GA19174@spearce.org>
-X-Mailer: Sylpheed version 2.2.10 (GTK+ 2.10.4; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 27 Nov 2006 12:56:52.0622 (UTC) FILETIME=[82846AE0:01C71223]
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.0.8) Gecko/20061025 Thunderbird/1.5.0.8 Mnenhy/0.7.4.666
+X-Enigmail-Version: 0.94.1.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32288>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gog2e-0000wS-CU for gcvg-git@gmane.org; Mon, 27 Nov
- 2006 13:57:00 +0100
+ esmtp (Exim 4.43) id 1GnyiY-0006r4-NR for gcvg-git@gmane.org; Sat, 25 Nov
+ 2006 15:41:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1758162AbWK0M4x (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 27 Nov 2006
- 07:56:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758159AbWK0M4x
- (ORCPT <rfc822;git-outgoing>); Mon, 27 Nov 2006 07:56:53 -0500
-Received: from bayc1-pasmtp02.bayc1.hotmail.com ([65.54.191.162]:33909 "EHLO
- BAYC1-PASMTP02.CEZ.ICE") by vger.kernel.org with ESMTP id S1758162AbWK0M4w
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 27 Nov 2006 07:56:52 -0500
-Received: from linux1.attic.local ([65.93.43.74]) by BAYC1-PASMTP02.CEZ.ICE
- over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830); Mon, 27 Nov
- 2006 04:56:52 -0800
-Received: from guru.attic.local ([10.10.10.28]) by linux1.attic.local with
- esmtp (Exim 4.43) id 1Gof6P-0006U6-12; Mon, 27 Nov 2006 06:56:49 -0500
-To: Shawn Pearce <spearce@spearce.org>
+ S966586AbWKYOkW (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 25 Nov 2006
+ 09:40:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966594AbWKYOkW
+ (ORCPT <rfc822;git-outgoing>); Sat, 25 Nov 2006 09:40:22 -0500
+Received: from alnrmhc11.comcast.net ([204.127.225.91]:28297 "EHLO
+ alnrmhc11.comcast.net") by vger.kernel.org with ESMTP id S966586AbWKYOkV
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 25 Nov 2006 09:40:21 -0500
+Received: from [192.168.0.103]
+ (c-24-10-241-225.hsd1.ut.comcast.net[24.10.241.225]) by comcast.net
+ (alnrmhc11) with ESMTP id <20061125144020b1100skqede>; Sat, 25 Nov 2006
+ 14:40:20 +0000
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On Mon, 27 Nov 2006 01:54:00 -0500
-Shawn Pearce <spearce@spearce.org> wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> I'm using something like this, and will be adding it to
-> git-completion.bash tonight:
-> 
-> 	__git_ps1 ()
-> 	{
-> 		local b="$(git symbolic-ref HEAD 2>/dev/null)"
-> 		if [ -n "$b" ]; then echo "(${b##refs/heads/})"; fi
-> 	}
-> 	PS1='[\u@\h \W$(__git_ps1)]\$ '
-> 
-> it works very well...
+I found the following patch useful for building git 1.4.4.1 on cygwin.  As
+of cygwin-1.5.22, C99 format strings are now supported (since I
+contributed the newlib patch that added them).  As of cygwin-1.5.21, d_ino
+is now reliable for all cygwin filesystem accesses (except for some remote
+NetApp drives, which have been fixed in cygwin CVS).  And while it is true
+that native Windows does not support symlinks, making NO_SYMLINK_HEAD a
+good idea for native builds; this is not the case for cygwin, and I did
+not seem to have any problems with removing it, either.
 
-Yeah, when I first coded it I even looked at making it a bash loadable
-to make it perform better but found the prototype to run acceptably,
-so never bothered.   If Git does get a --show-ps1 option, people will
-still be able to roll their own version to tweak the output format
-as you did above.  Hopefully the standard format will work for most
-though.
+- --- origsrc/git-1.4.4.1/Makefile        2006-11-22 19:38:07.000000000 -0700
++++ src/git-1.4.4.1/Makefile    2006-11-24 17:51:00.600344000 -0700
+@@ -369,11 +369,8 @@
+ endif
+ ifeq ($(uname_O),Cygwin)
+        NO_D_TYPE_IN_DIRENT = YesPlease
+- -       NO_D_INO_IN_DIRENT = YesPlease
+        NO_STRCASESTR = YesPlease
+- -       NO_SYMLINK_HEAD = YesPlease
+        NEEDS_LIBICONV = YesPlease
+- -       NO_C99_FORMAT = YesPlease
+        # There are conflicting reports about this.
+        # On some boxes NO_MMAP is needed, and not so elsewhere.
+        # Try uncommenting this if you see things break -- YMMV.
 
+- --
+Life is short - so eat dessert first!
+
+Eric Blake             ebb9@byu.net
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.5 (Cygwin)
+Comment: Public key at home.comcast.net/~ericblake/eblake.gpg
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+
+iD8DBQFFaFVe84KuGfSFAYARAjdrAJ9A+d9/aaEG0V2j8VTs/oycIpUS0wCeL/Ly
+70V5CWHOrAKD7kI09gQiTh0=
+=C8dP
