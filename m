@@ -1,80 +1,69 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [RFC] gitweb TODO
-Date: Fri, 17 Nov 2006 13:08:07 -0800
-Message-ID: <7vu00xixxk.fsf@assigned-by-dhcp.cox.net>
-References: <200611171901.40839.jnareb@gmail.com>
-	<7vwt5tlvy5.fsf@assigned-by-dhcp.cox.net>
-	<200611172130.11631.jnareb@gmail.com>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [RFC] Teach git-branch howto rename a branch
+Date: Sat, 25 Nov 2006 01:49:01 -0500
+Message-ID: <20061125064901.GB4528@spearce.org>
+References: <1164409429445-git-send-email-hjemli@gmail.com> <7v1wns6q41.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 17 Nov 2006 21:08:59 +0000 (UTC)
-Cc: git@vger.kernel.org
+NNTP-Posting-Date: Sat, 25 Nov 2006 06:49:27 +0000 (UTC)
+Cc: Lars Hjemli <hjemli@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <200611172130.11631.jnareb@gmail.com> (Jakub Narebski's message
-	of "Fri, 17 Nov 2006 21:30:11 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Content-Disposition: inline
+In-Reply-To: <7v1wns6q41.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31730>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32258>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GlAxD-0006Gr-KJ for gcvg-git@gmane.org; Fri, 17 Nov
- 2006 22:08:56 +0100
+ esmtp (Exim 4.43) id 1GnrLk-0000Oc-P0 for gcvg-git@gmane.org; Sat, 25 Nov
+ 2006 07:49:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1755901AbWKQVIL (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 17 Nov 2006
- 16:08:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755917AbWKQVIL
- (ORCPT <rfc822;git-outgoing>); Fri, 17 Nov 2006 16:08:11 -0500
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:43745 "EHLO
- fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP id S1755901AbWKQVII
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 17 Nov 2006 16:08:08 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao07.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061117210807.RIPB27894.fed1rmmtao07.cox.net@fed1rmimpo02.cox.net>; Fri, 17
- Nov 2006 16:08:07 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id nx8E1V00K1kojtg0000000; Fri, 17 Nov 2006
- 16:08:14 -0500
-To: Jakub Narebski <jnareb@gmail.com>
+ S1757850AbWKYGtJ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 25 Nov 2006
+ 01:49:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757853AbWKYGtJ
+ (ORCPT <rfc822;git-outgoing>); Sat, 25 Nov 2006 01:49:09 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:48043 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S1757850AbWKYGtI
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 25 Nov 2006 01:49:08 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1GnrLU-0002Y3-R8; Sat, 25 Nov 2006 01:49:05 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 171ED20FB09; Sat, 25 Nov 2006 01:49:02 -0500 (EST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Junio C Hamano <junkio@cox.net> wrote:
+> Without -f, it should barf.  With -f, we would want the rename
+> to happen.  In the latter case, I think it should work the same
+> way as deleting it and creating it anew, and that would make
+> sure that reflog for the old one will be lost and a new log is
+> started afresh; otherwise, the log would say old history for
+> that branch and it won't be a "rename" anymore.
 
-> What about the fact that git-diff -M is _not_ patch-compatibile;
+This patch doesn't rename the reflog when the branch renames.
+Myself and a few other users I support want the reflog preserved
+when a branch renames, we all see the reflog as part of the history
+of that branch and a rename is the same branch but stored under a
+different name...
 
-What about it?  I've never said patch compatibility is an issue.
-We have something patch cannot represent or understand and you
-should admit it.  The point is to make it easier to massage by
-hand, when the recipient does not have git handy.
+I had planned to do a rename branch command myself, but its been
+lower priority than everything else, so I have just never gotten
+around to it.  I'm glad to see someone is attempting it!
 
-With -M, the recipient can read and understand the patch text
-better than "remove this oldfile and create this newfile that
-the diff output does not tell you is related" diff.  And we say
-"rename" in plain language so the recipient _can_ do "mv A B"
-then "patch -p1".  Similarly, with -T that changes a symlink
-into a real file, if we do not do the current "remove the old
-and then create the new" and did instead "show the textual diff
-that can be applied", a non-git tool that does not understand
-the typechange can mistakenly muck with the target of the
-symlink, which is a disaster.  "Remove the target and then
-create this" at least would have lesser damage -- the object
-left as the result is incorrect nevertheless, but reading the
-contents and creating a symlink that has that contents by hand
-is easily done in a pinch.
-
-> We should have whatchanged part corresponding to the patchset
-> part at least in "commitdiff" view, which means '-c' (and for
-> the time being perhaps mean '-c' also in patchset part). '--cc'
-> which uses '-c' for the raw part would be nice...
-
-I am not sure what you mean by patchset part, but if you are
-talking about the multiway diff text, I think most of the time
-output from "-c -p" is much less interesting than "--cc".
-
-
+-- 
