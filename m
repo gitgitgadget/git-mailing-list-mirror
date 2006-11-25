@@ -1,52 +1,71 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Add git-count-packs, like git-count-objects.
-Date: Fri, 27 Oct 2006 21:11:17 -0700
-Message-ID: <7v8xj1axlm.fsf@assigned-by-dhcp.cox.net>
-References: <20061028040056.GA14191@spearce.org>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: [PATCH] Store peeled refs in packed-refs (take 2).
+Date: Sat, 25 Nov 2006 09:09:25 +0100
+Message-ID: <e5bfff550611250009x70a16c66h8077a2dccc1273e7@mail.gmail.com>
+References: <7vac2kvsos.fsf@assigned-by-dhcp.cox.net>
+	 <e5bfff550611220425x5cf9e33ds7b7b98229c6b408a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sat, 28 Oct 2006 04:11:42 +0000 (UTC)
-Cc: git@vger.kernel.org, Nicolas Pitre <nico@cam.org>
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Sat, 25 Nov 2006 08:09:46 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061028040056.GA14191@spearce.org> (Shawn Pearce's message of
-	"Sat, 28 Oct 2006 00:00:56 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=K9SAoO0ehjRrapSNsYtIJXXLlApVcExcOouTZ91UzQvE3YAS30MYIqreMSipd7k56KZxGNFXGR2hkQhHUGPDI4gnAzmUD5UIQU8IOatgzSI1woCVKjbUW3I5+jXeun3Z5OTO6+54tiOLBXA2ai1Fg9CS0+aHQEFMI+bwrpbDUR8=
+In-Reply-To: <e5bfff550611220425x5cf9e33ds7b7b98229c6b408a@mail.gmail.com>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30362>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32264>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GdfXW-0000Cv-Ej for gcvg-git@gmane.org; Sat, 28 Oct
- 2006 06:11:22 +0200
+ esmtp (Exim 4.43) id 1GnsbR-0006pH-FQ for gcvg-git@gmane.org; Sat, 25 Nov
+ 2006 09:09:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751726AbWJ1ELT (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 28 Oct 2006
- 00:11:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751738AbWJ1ELT
- (ORCPT <rfc822;git-outgoing>); Sat, 28 Oct 2006 00:11:19 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:20889 "EHLO
- fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP id S1751725AbWJ1ELS
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 28 Oct 2006 00:11:18 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao08.cox.net
- (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
- <20061028041118.TAYW22977.fed1rmmtao08.cox.net@fed1rmimpo01.cox.net>; Sat, 28
- Oct 2006 00:11:18 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id fgAz1V00c1kojtg0000000 Sat, 28 Oct 2006
- 00:11:00 -0400
-To: Shawn Pearce <spearce@spearce.org>
+ S1757883AbWKYIJ1 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 25 Nov 2006
+ 03:09:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757887AbWKYIJ0
+ (ORCPT <rfc822;git-outgoing>); Sat, 25 Nov 2006 03:09:26 -0500
+Received: from py-out-1112.google.com ([64.233.166.182]:62509 "EHLO
+ py-out-1112.google.com") by vger.kernel.org with ESMTP id S1757883AbWKYIJ0
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 25 Nov 2006 03:09:26 -0500
+Received: by py-out-1112.google.com with SMTP id a29so656298pyi for
+ <git@vger.kernel.org>; Sat, 25 Nov 2006 00:09:25 -0800 (PST)
+Received: by 10.35.115.18 with SMTP id s18mr7768437pym.1164442165498; Sat, 25
+ Nov 2006 00:09:25 -0800 (PST)
+Received: by 10.35.42.4 with HTTP; Sat, 25 Nov 2006 00:09:25 -0800 (PST)
+To: "Junio C Hamano" <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Shawn Pearce <spearce@spearce.org> writes:
+On 11/22/06, Marco Costalba <mcostalba@gmail.com> wrote:
+> On 11/22/06, Junio C Hamano <junkio@cox.net> wrote:
+> > there is only one such extension defined, "peeled".  This stores
+> > the "peeled tag" on a line that immediately follows a line for a
+> > tag object itself in the format "^<sha-1>".
+> >
+>
+> Thanks, I will try to do some performance tests this week end.
+>
 
-> Now that we are starting to save packs rather than unpacking into
-> loose objects its nice to have a way to list the number of current
-> packs and their total size.  This can help the user in deciding
-> when its time to run `git repack -a -d`.
+Cold cache tests with "git show-ref -d" on packed refs (after
+"git-pack-refs --prune")
 
-Why not just do "ls -lh $GIT_OBJECT_DIR/pack/pack-*.pack"???
+Before patch:
+
+- git tree 2374ms
+- linux tree 2225ms
+
+
+
+After patch:
+
+- git tree 1108ms
