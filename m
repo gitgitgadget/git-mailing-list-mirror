@@ -1,118 +1,80 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
-Subject: Re: [PATCH] Only warn about missing branch.<n>.merge in pull.
-Date: Mon, 18 Dec 2006 12:06:01 +0100
-Message-ID: <8aa486160612180306s38c83b17qc3fddf087ccd0460@mail.gmail.com>
-References: <20061218091206.GA11284@spearce.org>
+From: Ignacio Arenaza <iarenuno@eteo.mondragon.edu>
+Subject: Re: [PATCH] git-cvsimport: add suport for CVS pserver method 
+	HTTP/1.x proxying
+Date: Sat, 25 Nov 2006 13:43:19 +0100
+Message-ID: <67d57b7l3s.fsf@poseidon.eteo.mondragon.edu>
+References: <11642344172790-git-send-email-iarenuno@eteo.mondragon.edu> 
+	<7v64d5keke.fsf@assigned-by-dhcp.cox.net><45661C36.9010101@catalyst.net.nz>
+	<7vlkm1ix7b.fsf@assigned-by-dhcp.cox.net><46a038f90611231552x3e33eec4w7863c
+	e6a1d a5781b@mail.gmail.com><7v7ixlhesv.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Mon, 18 Dec 2006 11:06:10 +0000 (UTC)
-Cc: "Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Sat, 25 Nov 2006 12:43:48 +0000 (UTC)
+Cc: "Martin Langhoff" <martin.langhoff@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=lt4ffSr+hkwwzkdh6tPKotQGl90ePVOR7KgAwyjeciJrTHQq28VC84K97z4sQ2MbJtYdudD+aHAfNHB8I81+6Wrg47xoenwhVnC3zxI3PxXvwTam52usAhtH+2kdNmcvo2bhNt8PU7VZ+0m3/1NlQfmF4WULesrtR6zJYLp99UA=
-In-Reply-To: <20061218091206.GA11284@spearce.org>
-Content-Disposition: inline
+In-Reply-To: <7v7ixlhesv.fsf@assigned-by-dhcp.cox.net> (Junio C. 
+	Hamano'smessage of "Thu, 23 Nov 2006 16:24:48 -0800")
+User-Agent: Gnus/5.1002 (Gnus v5.10.2) Emacs/21.4 (gnu/linux)
+X-imss-version: 2.044
+X-imss-result: Passed
+X-imss-scores: Clean:99.90000 C:2 M:3 S:5 R:5
+X-imss-settings: Baseline:1 C:1 M:1 S:1 R:1 (0.0000 0.0000)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34737>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GwGJt-0005p6-EP for gcvg-git@gmane.org; Mon, 18 Dec
- 2006 12:06:09 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32285>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gnwse-0002TR-VT for gcvg-git@gmane.org; Sat, 25 Nov
+ 2006 13:43:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753824AbWLRLGG (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 18 Dec 2006
- 06:06:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753823AbWLRLGF
- (ORCPT <rfc822;git-outgoing>); Mon, 18 Dec 2006 06:06:05 -0500
-Received: from wx-out-0506.google.com ([66.249.82.236]:25873 "EHLO
- wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1753824AbWLRLGE (ORCPT <rfc822;git@vger.kernel.org>); Mon, 18 Dec
- 2006 06:06:04 -0500
-Received: by wx-out-0506.google.com with SMTP id h27so1350797wxd for
- <git@vger.kernel.org>; Mon, 18 Dec 2006 03:06:02 -0800 (PST)
-Received: by 10.70.66.18 with SMTP id o18mr7237541wxa.1166439961949; Mon, 18
- Dec 2006 03:06:01 -0800 (PST)
-Received: by 10.70.46.19 with HTTP; Mon, 18 Dec 2006 03:06:01 -0800 (PST)
-To: "Shawn O. Pearce" <spearce@spearce.org>
+ S966535AbWKYMn2 convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Sat, 25 Nov 2006 07:43:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966537AbWKYMn2
+ (ORCPT <rfc822;git-outgoing>); Sat, 25 Nov 2006 07:43:28 -0500
+Received: from mx.eteo.mondragon.edu ([193.146.78.131]:13518 "EHLO
+ mx.eteo.mondragon.edu") by vger.kernel.org with ESMTP id S966535AbWKYMn1
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 25 Nov 2006 07:43:27 -0500
+Received: by mx.eteo.mondragon.edu (Postfix, from userid 1001) id B8E36B6AF;
+ Sat, 25 Nov 2006 13:43:23 +0100 (CET)
+Received: from poseidon.eteo.mondragon.edu (poseidon.eteo.mondragon.edu
+ [172.31.3.4]) by mx.eteo.mondragon.edu (Postfix) with ESMTP id 0260CB6AE;
+ Sat, 25 Nov 2006 13:43:19 +0100 (CET)
+Received: from poseidon.eteo.mondragon.edu (localhost [127.0.0.1]) by
+ localhost.eteo.mondragon.edu (Postfix) with ESMTP id CC5082FDB2; Sat, 25 Nov
+ 2006 13:43:19 +0100 (CET)
+Received: by poseidon.eteo.mondragon.edu (Postfix, from userid 1072)id 
+ B2DA62FD06; Sat, 25 Nov 2006 13:43:19 +0100 (CET)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-On 12/18/06, Shawn O. Pearce <spearce@spearce.org> wrote:
-> Commit 62b339a5 added a warning for git-pull to notify the user when
-> they have not configured the setting 'branch.<n>.merge' (where <n>
-> is the current branch) and no arguments were given to git-pull to
-> specify the branches to merge.
->
-> Unfortunately this warning also appears in git-fetch when no
-> arguments were supplied, as the warning is being output at the
-> same time that the contents of FETCH_HEAD is being determined.
-> This causes users who fetch into local tracking branches prior
-> to merging to receive unexpected/unnecessary warnings:
->
->   $ git fetch
->   Warning: No merge candidate found because value of config option
->            "branch.sp/topic.merge" does not match any remote branch fetched.
->
-> This warning may also cause problems for other Porcelain that use
-> git-fetch as "plumbing", as the other Porcelain may not actually
-> use (or honor) the branch.<n>.merge configuration option.
->
-> Instead we should delay the warning about no matching branches until
-> we are actually in git-pull and are trying to setup the call to
-> git-merge to actually carry out the merge.  This way direct users
-> of git-fetch do not receive these warnings.
->
+Junio C Hamano <junkio@cox.net> writes:
 
-I think it is a sensible thing to do, but:
+>>> It is more about HTTP proxying and it is my understanding that
+>>> response to CONNECT method request has that empty line after the
+>>> successful (2xx) response line and zero or more response
+>>> headers.  The code is still wrong; it does not have a loop to
+>>> discard the potential response headers that come before the
+>>> empty line the code we are discussing discards.
 
-[...]
+I don't have the original message from Junio where he asks where the
+proxy behaviour is officially specified (as the draft has expired long
+ago), so I'll answer it here.
 
-> diff --git a/git-pull.sh b/git-pull.sh
-> index e23beb6..d43a565 100755
-> --- a/git-pull.sh
-> +++ b/git-pull.sh
-> @@ -76,7 +76,21 @@ merge_head=$(sed -e '/       not-for-merge   /d' \
->
->  case "$merge_head" in
->  '')
-> -       echo >&2 "No changes."
-> +       echo >&2 "warning: No branches were selected for merge."
-> +       if test $# = 0
-> +       then
-> +               branch=$(git-symbolic-ref HEAD | sed -e 's|^refs/heads/||')
-> +               remote=$(git-repo-config --get-all "branch.$branch.remote")
+There is a comment in the code that says the relevant RFC is 2817,
+sections 5.2 and 5.3.
 
-There is only support for one branch.<n>.remote.
+Saludos. I=F1aki.
 
-> +               if test -z "$remote"
-> +               then
-> +                       echo >&2 "warning: (Config option 'branch.$branch.remote' not set.)"
-
-It is OK not to have a branch.<n>.remote, it defaults to origin.
-
-> +               fi
-> +               merge=$(git-repo-config --get-all "branch.$branch.merge")
-> +               if test -z "$merge"
-> +               then
-> +                       echo >&2 "warning: (Config option 'branch.$branch.merge' not set.)"
-> +               fi
-> +       fi
-
-I don't like the (), and it's missing the other possibility:
-
-else
-   echo >&2 "Warning: config option 'branch.$branch.merge' does not
-match any remote branch fetched."
-
-Also we could check that the number of to be merge branches equals to
-the number of branch.<n>.merge (I'll do it).
+--=20
+School of Management
+Mondragon University
+20560 O=F1ati - Spain
++34 943 718009 (ext. 225)
 
