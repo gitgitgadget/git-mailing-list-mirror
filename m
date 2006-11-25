@@ -4,130 +4,65 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "=?ISO-8859-1?Q?Ilpo_J=E4rvinen?=" <ilpo.jarvinen@helsinki.fi>
-Subject: [PATCH] Fixes "stg goto `stg top`" to no-op & test
-Date: Sat, 28 Oct 2006 02:15:42 +0300 (EEST)
-Message-ID: <Pine.LNX.4.64.0610280156320.26765@kivilampi-30.cs.helsinki.fi>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: filemode=false somewhat broken
+Date: Sat, 25 Nov 2006 01:10:34 -0500
+Message-ID: <20061125061034.GA4528@spearce.org>
+References: <17764.44236.473000.729015@lapjr.intranet.kiel.bmiag.de> <7vodqzp0mh.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; boundary="-696243703-1865763695-1161990640=:26765"
-NNTP-Posting-Date: Fri, 27 Oct 2006 23:15:53 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Sat, 25 Nov 2006 06:10:54 +0000 (UTC)
+Cc: Juergen Ruehle <j.ruehle@bmiag.de>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-X-Sender: ijjarvin@kivilampi-30.cs.helsinki.fi
-Content-ID: <Pine.LNX.4.64.0610280210530.26765@kivilampi-30.cs.helsinki.fi>
+Content-Disposition: inline
+In-Reply-To: <7vodqzp0mh.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30352>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32255>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GdavU-00005b-0z for gcvg-git@gmane.org; Sat, 28 Oct
- 2006 01:15:48 +0200
+ esmtp (Exim 4.43) id 1GnqkQ-0003tb-RR for gcvg-git@gmane.org; Sat, 25 Nov
+ 2006 07:10:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751045AbWJ0XPp (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 27 Oct 2006
- 19:15:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751051AbWJ0XPo
- (ORCPT <rfc822;git-outgoing>); Fri, 27 Oct 2006 19:15:44 -0400
-Received: from courier.cs.helsinki.fi ([128.214.9.1]:45217 "EHLO
- mail.cs.helsinki.fi") by vger.kernel.org with ESMTP id S1751045AbWJ0XPo
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 27 Oct 2006 19:15:44 -0400
-Received: from kivilampi-30.cs.helsinki.fi (kivilampi-30.cs.helsinki.fi
- [128.214.9.42]) (AUTH: PLAIN cs-relay, TLS: TLSv1/SSLv3,256bits,AES256-SHA)
- by mail.cs.helsinki.fi with esmtp; Sat, 28 Oct 2006 02:15:43 +0300 id
- 000AFD7D.4542931F.00002D39
-Received: by kivilampi-30.cs.helsinki.fi (Postfix, from userid 50795) id
- E1552EAE9D; Sat, 28 Oct 2006 02:15:42 +0300 (EEST)
-Received: from localhost (localhost [127.0.0.1]) by
- kivilampi-30.cs.helsinki.fi (Postfix) with ESMTP id DA92BEAE9C; Sat, 28 Oct
- 2006 02:15:42 +0300 (EEST)
-To: catalin.marinas@gmail.com
+ S1757843AbWKYGKn (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 25 Nov 2006
+ 01:10:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757844AbWKYGKn
+ (ORCPT <rfc822;git-outgoing>); Sat, 25 Nov 2006 01:10:43 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:62631 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S1757843AbWKYGKm
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 25 Nov 2006 01:10:42 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1GnqkH-0000sw-4t; Sat, 25 Nov 2006 01:10:37 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ D72D320FB09; Sat, 25 Nov 2006 01:10:34 -0500 (EST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Junio C Hamano <junkio@cox.net> wrote:
+> Juergen Ruehle <j.ruehle@bmiag.de> writes:
+> 
+> > Commit fd28b34afd9bbd58297a25edced3f504c9a5487a tried to ignore the
+> > executable bit if filemode=false, but instead forced all files to be
+> > regular with 644 permission bits nuking symlink support.
+> 
+> Thanks for noticing.  Yes, that change is _seriously_ broken.  I
+> should really raise the bar for patch acceptance.
 
----696243703-1865763695-1161990640=:26765
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: 8BIT
-Content-ID: <Pine.LNX.4.64.0610280210531.26765@kivilampi-30.cs.helsinki.fi>
+Whoops.
 
-StGIT tried to access index that is not valid when goto'ing to
-the current patch. Adds also a test for it.
+I don't work with symlinks so I never noticed the breakage myself.
+Clearly the test cases that I created in fd28b3 should also have
+included symlinks, but they did not...  and we see this breakage
+occur.
 
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@helsinki.fi>
----
- stgit/commands/common.py |   17 ++++++++++-------
- t/t1600-goto-top.sh      |   32 ++++++++++++++++++++++++++++++++
- 2 files changed, 42 insertions(+), 7 deletions(-)
-
-diff --git a/stgit/commands/common.py b/stgit/commands/common.py
-index 1ea6025..88b1b94 100644
---- a/stgit/commands/common.py
-+++ b/stgit/commands/common.py
-@@ -200,16 +200,19 @@ def pop_patches(patches, keep = False):
-     """Pop the patches in the list from the stack. It is assumed that
-     the patches are listed in the stack reverse order.
-     """
--    p = patches[-1]
--    if len(patches) == 1:
--        print 'Popping patch "%s"...' % p,
-+    if len(patches) == 0:
-+        print 'nothing to push/pop'
-     else:
--        print 'Popping "%s" - "%s" patches...' % (patches[0], p),
--    sys.stdout.flush()
-+        p = patches[-1]
-+        if len(patches) == 1:
-+            print 'Popping patch "%s"...' % p,
-+        else:
-+            print 'Popping "%s" - "%s" patches...' % (patches[0], p),
-+        sys.stdout.flush()
- 
--    crt_series.pop_patch(p, keep)
-+        crt_series.pop_patch(p, keep)
- 
--    print 'done'
-+        print 'done'
- 
- def parse_patches(patch_args, patch_list):
-     """Parse patch_args list for patch names in patch_list and return
-diff --git a/t/t1600-goto-top.sh b/t/t1600-goto-top.sh
-new file mode 100755
-index 0000000..94a88cf
---- /dev/null
-+++ b/t/t1600-goto-top.sh
-@@ -0,0 +1,32 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2006 Catalin Marinas
-+#
-+
-+test_description='Test the uncommit command.
-+
-+'
-+
-+. ./test-lib.sh
-+
-+test_expect_success \
-+	'Initialize the StGIT repository' \
-+	'stg init
-+'
-+
-+test_expect_success \
-+	'Create the first patch' \
-+	'
-+	stg new foo -m "Foo Patch" &&
-+	echo foo > test &&
-+	stg add test &&
-+	stg refresh
-+	'
-+
-+test_expect_success \
-+	'Goto current patch' \
-+	'
-+	stg goto `stg top`
-+	'
-+
-+test_done
 -- 
-1.4.2
-
