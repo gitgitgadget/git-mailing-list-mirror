@@ -1,63 +1,59 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] Update git-diff documentation
-Date: Thu, 14 Dec 2006 12:02:25 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0612141157270.18171@xanadu.home>
-References: <7vr6v2aofs.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0612140957590.3635@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Jeff King <peff@peff.net>
+Subject: Re: git-format-patch little gripe
+Date: Sat, 25 Nov 2006 10:39:49 -0500
+Message-ID: <20061125153949.GA11136@coredump.intra.peff.net>
+References: <376237.14965.qm@web31805.mail.mud.yahoo.com> <20061103185026.GA28566@coredump.intra.peff.net> <20061125103033.2ea742d3.seanlkml@sympatico.ca>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-NNTP-Posting-Date: Thu, 14 Dec 2006 17:02:40 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Sat, 25 Nov 2006 15:40:07 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-reply-to: <Pine.LNX.4.63.0612140957590.3635@wbgn013.biozentrum.uni-wuerzburg.de>
-X-X-Sender: nico@xanadu.home
+Content-Disposition: inline
+In-Reply-To: <20061125103033.2ea742d3.seanlkml@sympatico.ca>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34373>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GutyY-0004Zf-Qo for gcvg-git@gmane.org; Thu, 14 Dec
- 2006 18:02:31 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32294>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GnzdE-0001G1-15 for gcvg-git@gmane.org; Sat, 25 Nov
+ 2006 16:39:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1750873AbWLNRC1 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
- 12:02:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750872AbWLNRC1
- (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 12:02:27 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:15877 "EHLO
- relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1750794AbWLNRC1 (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006
- 12:02:27 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
- <0JA900KP9WO1XUE0@VL-MH-MR001.ip.videotron.ca> for git@vger.kernel.org; Thu,
- 14 Dec 2006 12:02:26 -0500 (EST)
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+ S966640AbWKYPjx (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 25 Nov 2006
+ 10:39:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757923AbWKYPjw
+ (ORCPT <rfc822;git-outgoing>); Sat, 25 Nov 2006 10:39:52 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:9700 "HELO
+ peff.net") by vger.kernel.org with SMTP id S1757921AbWKYPjw (ORCPT
+ <rfc822;git@vger.kernel.org>); Sat, 25 Nov 2006 10:39:52 -0500
+Received: (qmail 340 invoked from network); 25 Nov 2006 10:39:57 -0500
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2) by
+ 66-23-211-5.clients.speedfactory.net with SMTP; 25 Nov 2006 10:39:57 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 25 Nov
+ 2006 10:39:49 -0500
+To: Sean <seanlkml@sympatico.ca>
 Sender: git-owner@vger.kernel.org
 
-On Thu, 14 Dec 2006, Johannes Schindelin wrote:
+On Sat, Nov 25, 2006 at 10:30:33AM -0500, Sean wrote:
 
-> Hi,
-> 
-> On Thu, 14 Dec 2006, Junio C Hamano wrote:
-> 
-> > -Show changes between two trees, a tree and the working tree, a
-> > -tree and the index file, or the index file and the working tree.
-> > -The combination of what is compared with what is determined by
-> > -the number of trees given to the command.
-> > +This command shows changes between four combinations of states.
-> 
-> I think the old explanation, while longer, is clearer.
+> If your mail setup support imap, the patches can be dumped directly into
+> it rather than having to go through an mbox.  For instance you can have
+> something like this in your ~/.gitconfig:
 
-It might not if you don't know what a "tree" is in git speak.  The 
-notion of what a tree refers to is slowly introduced afterwards which I 
-think is better than delivering everything in a dense four lines right 
-up front.
+Sure, I could. But if you have a client which supports mboxes, it's
+probably better to use the mbox. With your solution, I send the patch to
+the imap server, then fire up the mail client and re-download the
+patch, possibly mark it up, and then send it out by smtp. The latency
+increase can be noticeable, especially for big patches and slow imap
+servers.
 
+> To move all the patches into your imap drafts folder to be accessed
+> by whatever email client you use.
+
+Oh come on, Real Men just edit the mbox in vi. :)
 
