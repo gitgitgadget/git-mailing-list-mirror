@@ -1,68 +1,66 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: Re: git-merge-recursive segmentation error
-Date: Tue, 19 Dec 2006 18:18:59 -0800 (PST)
-Message-ID: <427701.7195.qm@web31811.mail.mud.yahoo.com>
-References: <Pine.LNX.4.63.0612200217300.19693@wbgn013.biozentrum.uni-wuerzburg.de>
-Reply-To: ltuikov@yahoo.com
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Show remote branches on gitweb
+Date: Fri, 24 Nov 2006 17:04:07 -0800
+Message-ID: <7vu00o8hh4.fsf@assigned-by-dhcp.cox.net>
+References: <loom.20061124T210559-701@post.gmane.org>
+	<ek7jsp$j83$1@sea.gmane.org> <ek7m6m$qqd$1@sea.gmane.org>
+	<20061124235911.GO7201@pasky.or.cz>
+	<7vy7q08iko.fsf@assigned-by-dhcp.cox.net>
+	<20061125005029.GN4842@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-NNTP-Posting-Date: Wed, 20 Dec 2006 02:19:07 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Sat, 25 Nov 2006 01:04:36 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=X-YMail-OSG:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
-  b=GZpD4svT1FZ+ekbO+3OcK+iGETBjDhKVUx/vnpkoq9RrwfHypJ18NJY8quhh8CzV258KmCCTIiy5qx9zCaFGzV+hR/l47SA3rnLMEfkstSy+FVLBCzna2ZCzgwlIrdjOkKtD+EIoFTwp9qON2sjvy1qioRTkBLwg8E+Rm7uc0Lo=;
-X-YMail-OSG: _OJLM4QVM1lw4AINn5KTynUMes.wYdgwP98Gd1VdFPCyI8OlgivwEMZpbzSFMC9kIdBEU5KRSiXt_PvzgPpuPmV70pTOPEuGW9pcm.7rfpFksxNZhSQmQX3Qzt_4cEh.YPVS8ZZfeBg-
-In-Reply-To: <Pine.LNX.4.63.0612200217300.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+In-Reply-To: <20061125005029.GN4842@pasky.or.cz> (Petr Baudis's message of
+	"Sat, 25 Nov 2006 01:50:29 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34893>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gwr2v-0008Lx-FU for gcvg-git@gmane.org; Wed, 20 Dec
- 2006 03:19:05 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32252>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gnlxo-0005jr-Ke for gcvg-git@gmane.org; Sat, 25 Nov
+ 2006 02:04:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S964780AbWLTCTB (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
- 21:19:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964781AbWLTCTA
- (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 21:19:00 -0500
-Received: from web31811.mail.mud.yahoo.com ([68.142.207.74]:33420 "HELO
- web31811.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- SMTP id S964780AbWLTCTA (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec
- 2006 21:19:00 -0500
-Received: (qmail 9732 invoked by uid 60001); 20 Dec 2006 02:18:59 -0000
-Received: from [64.215.88.90] by web31811.mail.mud.yahoo.com via HTTP; Tue,
- 19 Dec 2006 18:18:59 PST
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+ S935110AbWKYBEJ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 24 Nov 2006
+ 20:04:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935111AbWKYBEJ
+ (ORCPT <rfc822;git-outgoing>); Fri, 24 Nov 2006 20:04:09 -0500
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:43905 "EHLO
+ fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP id S935110AbWKYBEI
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 24 Nov 2006 20:04:08 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao02.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061125010408.OSPM97.fed1rmmtao02.cox.net@fed1rmimpo02.cox.net>; Fri, 24
+ Nov 2006 20:04:08 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id qp4F1V00l1kojtg0000000; Fri, 24 Nov 2006
+ 20:04:16 -0500
+To: Petr Baudis <pasky@suse.cz>
 Sender: git-owner@vger.kernel.org
 
---- Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> Hi,
-> 
-> On Tue, 19 Dec 2006, Luben Tuikov wrote:
-> 
-> > Auto-merging init/version.c
-> > /home/luben/bin/git-merge: line 394: 12030 
-> > Segmentation fault git-merge-$strategy $common -- "$head_arg" "$@"
-> 
-> Do you have any pointers how to get the two branches you try to merge? I'd 
-> be most grateful to have the sha1's of both heads, too...
+Petr Baudis <pasky@suse.cz> writes:
 
-The source tree is Linus' "master" tree.  The destination tree
-is my own "dev" tree, which I use as an intermediate tree, before 
-merging into my own kernel trees.
+>> > Does that mean we _can_ parse $GIT_DIR/remotes? ;-)
+>> 
+>> Surely you should be able to.  You are working in Perl and the
+>> remotes and config are trivially parsable text files.
+>
+> But so is the configuration file, unless I'm missing something...?
 
-Hopefully with the backtrace I posted and with the big-bisect
-results pointing to the culprit commit, someone can get a patch out
-to fix this.
+I do not think you are missing anything.  I said that remotes
+and config are simple trivially parsable text files and Perl
+should be a pleasant tool to read them with.
 
-    Luben
+So yes, we _can_ parse them, and we _can_ parse configuration
+file.
+
+Unless I'm missing something...?
+
