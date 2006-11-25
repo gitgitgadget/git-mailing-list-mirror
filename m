@@ -1,68 +1,79 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] shortlog: fix segfault on empty authorname
-Date: Sat, 09 Dec 2006 22:01:21 -0800
-Message-ID: <7vejr85lxq.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0612082205240.2630@xanadu.home>
-	<20061209040421.GA29113@coredump.intra.peff.net>
-	<Pine.LNX.4.63.0612100019270.28348@wbgn013.biozentrum.uni-wuerzburg.de>
-	<20061210034524.GA11819@coredump.intra.peff.net>
+From: Yann Dirson <ydirson@altern.org>
+Subject: Re: [RFC] Submodules in GIT
+Date: Sat, 25 Nov 2006 12:12:35 +0100
+Message-ID: <20061125111235.GO5443@nan92-1-81-57-214-146.fbx.proxad.net>
+References: <20061120215116.GA20736@admingilde.org> <ejt9dh$kfm$1@sea.gmane.org> <7v7ixp20za.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611201501230.3338@woody.osdl.org> <20061121223130.GA24909@nan92-1-81-57-214-146.fbx.proxad.net> <Pine.LNX.4.64.0611211437430.3338@woody.osdl.org> <20061121235429.GH5443@nan92-1-81-57-214-146.fbx.proxad.net> <20061122034056.GB23856@spearce.org> <20061123232313.GB24909@nan92-1-81-57-214-146.fbx.proxad.net> <20061125065338.GC4528@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sun, 10 Dec 2006 06:01:34 +0000 (UTC)
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
+NNTP-Posting-Date: Sat, 25 Nov 2006 11:13:48 +0000 (UTC)
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Junio C Hamano <junkio@cox.net>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061210034524.GA11819@coredump.intra.peff.net> (Jeff King's
-	message of "Sat, 9 Dec 2006 22:45:24 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Content-Disposition: inline
+In-Reply-To: <20061125065338.GC4528@spearce.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33868>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GtHkg-0001Ly-Sn for gcvg-git@gmane.org; Sun, 10 Dec
- 2006 07:01:31 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32284>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GnvTZ-0004d0-I9 for gcvg-git@gmane.org; Sat, 25 Nov
+ 2006 12:13:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1759243AbWLJGBX (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 10 Dec 2006
- 01:01:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759292AbWLJGBX
- (ORCPT <rfc822;git-outgoing>); Sun, 10 Dec 2006 01:01:23 -0500
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:44157 "EHLO
- fed1rmmtao07.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1759243AbWLJGBX (ORCPT <rfc822;git@vger.kernel.org>); Sun, 10 Dec 2006
- 01:01:23 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao07.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061210060122.OYGD22053.fed1rmmtao07.cox.net@fed1rmimpo02.cox.net>; Sun, 10
- Dec 2006 01:01:22 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id wu1Y1V00i1kojtg0000000; Sun, 10 Dec 2006
- 01:01:33 -0500
-To: Jeff King <peff@peff.net>
+ S966389AbWKYLNb (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 25 Nov 2006
+ 06:13:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966423AbWKYLNb
+ (ORCPT <rfc822;git-outgoing>); Sat, 25 Nov 2006 06:13:31 -0500
+Received: from smtp5-g19.free.fr ([212.27.42.35]:13706 "EHLO
+ smtp5-g19.free.fr") by vger.kernel.org with ESMTP id S966389AbWKYLNa (ORCPT
+ <rfc822;git@vger.kernel.org>); Sat, 25 Nov 2006 06:13:30 -0500
+Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net
+ [81.57.214.146]) by smtp5-g19.free.fr (Postfix) with ESMTP id 6E05827B3C;
+ Sat, 25 Nov 2006 12:13:24 +0100 (CET)
+Received: by gandelf.nowhere.earth (Postfix, from userid 1000) id 99C06201C;
+ Sat, 25 Nov 2006 12:12:35 +0100 (CET)
+To: Shawn Pearce <spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Sat, Nov 25, 2006 at 01:53:38AM -0500, Shawn Pearce wrote:
+> Yann Dirson <ydirson@altern.org> wrote:
+> > We don't need to have commits in the tree for this.  We'll just have
+> > submodule commits which are not attached to a supermodule commit, and we
+> > can access the whole submodule history through the submodule .git/HEAD,
+> > just like we do for a standard git project.
+> 
+> No.  You cannot do that.
+> 
+> How do we setup .git/HEAD when bisecting the supermodule?
+> Or merging it?  Or doing anything else with it?
 
-> It doesn't look like there are ever extra spaces to get soaked up in the
-> kernel or git repositories, but if there is a reason to expect
->   Full Name    <user@domain>
-> then we should probably replace my fix with yours.
+Would there be any problem assuming git-update-ref would take care of
+updating it ?
 
-As far as I know, commit-tree removes the extra space if exists,
-so your fix would be fine in practice.
+> Ideally the .git/HEAD of every submodule should seek to the commit
+> that points at the tree of the submodule which the supermodule
+> is referencing.
 
-People could write crappy replacements of plumbing, and we may
-end up with names with trailing whitespaces, but with your fix
-at least that would not make us crash, and it may even be
-considered a feature -- it would serve as a coalmine canary to
-detect such a broken alternative program that creates bogus
-commit objects.
+You mean, whenever we seek the HEAD of the supermodule, right ?
 
-We might want to tighten fsck-objects to warn about them,
-though.  But that is probably rather low priority.
+> This lets you then perform a bisect within the
+> submodule when you identify the supermodule commit which caused
+> the breakage.
+ 
+That is, first bisect the supermodule (which naturally bisects the
+submodule with rough granularity, assuming there are many submodule
+commits for at least some supermodule commits), then bisect the submodule
+between the two commits identified at supermodule level, right ?
+
+> We need the submodule commits to do this.  Doing it without is
+> too expensive.
+
+Maybe I missed something again, but I'm still not convinced :)
+-- 
