@@ -1,74 +1,76 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Liu Yubao <yubao.liu@gmail.com>
-Subject: how to revert changes in working tree?
-Date: Wed, 06 Dec 2006 14:49:47 +0800
-Message-ID: <4576680B.7030500@gmail.com>
+From: "Lars Hjemli" <lh@elementstorage.no>
+Subject: Re: [RFC] Teach git-branch howto rename a branch
+Date: Sat, 25 Nov 2006 10:16:19 +0100
+Message-ID: <8c5c35580611250116h466e3649p2630ee6641b6e6f4@mail.gmail.com>
+References: <1164409429445-git-send-email-hjemli@gmail.com>
+	 <7v1wns6q41.fsf@assigned-by-dhcp.cox.net>
+	 <20061125064901.GB4528@spearce.org> <ek9078$m2j$1@sea.gmane.org>
+	 <20061125085731.GG4528@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 6 Dec 2006 06:51:19 +0000 (UTC)
+NNTP-Posting-Date: Sat, 25 Nov 2006 09:16:33 +0000 (UTC)
+Cc: "Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:message-id:date:from:user-agent:mime-version:to:subject:content-type:content-transfer-encoding;
-        b=SqDPgN4V2U+x2owbIBSMWrPq9yv2QG8OkH7rVhrQ3WPy5atczlvIiztrhxlP5IP7MFvBsBNVVNSlYZesNz2qBrNgx0pOB87nF0oG6Kts3PhhKkoCJ2jq/zLALepgLvSwxLEIs+VP4Q98iN1tLPAqJn73tkIPwIzAYVebt6GUYGw=
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.0.7) Gecko/20060909 Thunderbird/1.5.0.7 Mnenhy/0.7.4.666
+        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=XaJrIRhJIxL6sGxjn372fkAnhSN+onWCFQ3ez5nQYuzER2IeYjwbv41wcUIYUPl6Rm6UgyKBzfD6JTD1WEiOKISd7YLkxXjrAMoZDzbHvS+WrjhpD6OPiQ7xbpieTE4tcjo8rhdn1z6lhiZVGoW/gpr7ppbSW74fx4S2hsclWiw=
+In-Reply-To: <20061125085731.GG4528@spearce.org>
+Content-Disposition: inline
+X-Google-Sender-Auth: 1eae0782222197ab
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33405>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Grqcd-00058z-Vr for gcvg-git@gmane.org; Wed, 06 Dec
- 2006 07:51:16 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32271>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gnte9-0001uA-KF for gcvg-git@gmane.org; Sat, 25 Nov
+ 2006 10:16:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1760270AbWLFGvN (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
- 01:51:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760271AbWLFGvM
- (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 01:51:12 -0500
-Received: from wx-out-0506.google.com ([66.249.82.229]:32033 "EHLO
- wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1760270AbWLFGvM (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec
- 2006 01:51:12 -0500
-Received: by wx-out-0506.google.com with SMTP id h27so120558wxd for
- <git@vger.kernel.org>; Tue, 05 Dec 2006 22:51:11 -0800 (PST)
-Received: by 10.70.111.2 with SMTP id j2mr760053wxc.1165387871522; Tue, 05
- Dec 2006 22:51:11 -0800 (PST)
-Received: from ?192.168.88.85? ( [221.122.47.70]) by mx.google.com with ESMTP
- id i20sm18999335wxd.2006.12.05.22.51.08; Tue, 05 Dec 2006 22:51:11 -0800
- (PST)
-To: git@vger.kernel.org
+ S966308AbWKYJQW (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 25 Nov 2006
+ 04:16:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966312AbWKYJQW
+ (ORCPT <rfc822;git-outgoing>); Sat, 25 Nov 2006 04:16:22 -0500
+Received: from nf-out-0910.google.com ([64.233.182.189]:47515 "EHLO
+ nf-out-0910.google.com") by vger.kernel.org with ESMTP id S966310AbWKYJQV
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 25 Nov 2006 04:16:21 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so1511313nfa for
+ <git@vger.kernel.org>; Sat, 25 Nov 2006 01:16:20 -0800 (PST)
+Received: by 10.82.109.19 with SMTP id h19mr1697990buc.1164446179992; Sat, 25
+ Nov 2006 01:16:19 -0800 (PST)
+Received: by 10.82.171.10 with HTTP; Sat, 25 Nov 2006 01:16:19 -0800 (PST)
+To: "Shawn Pearce" <spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 
-I'm confused how to revert changes in working tree:
+On 11/25/06, Shawn Pearce <spearce@spearce.org> wrote:
+> Jakub Narebski <jnareb@gmail.com> wrote:
+> >
+> > And of course reflog should store the fact of renaming branch.
+>
+> Yes, I think that's a worthwhile thing to log.  Problem is the
+> logging system tends to throw away pointless entries (sha1 ->
+> same sha1) so the rename log entry needs to be forced somehow...
 
-$ git fetch
-$ git merge "sync with origin" HEAD origin
-....conflict....
+Is it ok to put
 
-$ git branch
-* master
-  origin
+static int log_ref_write(struct ref_lock *lock,
+	const unsigned char *sha1, const char *msg)
 
-$ git status
-# .....: needs update
-# .....: needs update
-(In fact I never modified anything in this tree, and "git diff"
-showed many difference indeed, very strange).
+into refs.h?
 
-I tried "git update-index --refresh", "git reset --hard",
-"git reset --hard master", "git checkout master", 
-"git checkout -f master", but "git status" still said same
-as above.
+Then it should be possibly to do something like this:
 
-At last, I deleted all files that were reported to be updated
-with "rm -rf", ran "git checkout master" and "git status", then
-git reported:
-#       deleted:    ....
-#       deleted:    ....
+  lock = lock_ref_sha1(ref, sha1);
+  lock->force_write = 1;
+  log_ref_write(lock, sha1, "Renamed oldname to newname");
+  unlock_ref(lock);
 
+...after moving the reflog...
+
+-- 
