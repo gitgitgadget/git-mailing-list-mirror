@@ -1,69 +1,75 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [BUG] StGit removed git branch of the same name as StGit branch
-Date: Tue, 21 Nov 2006 11:48:30 +0100
-Message-ID: <200611211148.30937.jnareb@gmail.com>
-References: <200611202201.45521.jnareb@gmail.com> <ejuj2a$2ot$1@sea.gmane.org> <tnx1wnxxfu3.fsf@arm.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [RFD] making separate-remote layout easier to use
+Date: Sat, 25 Nov 2006 19:48:15 -0800
+Message-ID: <7v4psmzx4w.fsf@assigned-by-dhcp.cox.net>
+References: <7v1wnr19do.fsf@assigned-by-dhcp.cox.net>
+	<ekafpm$fs7$1@sea.gmane.org> <7vvel3yuzz.fsf@assigned-by-dhcp.cox.net>
+	<20061126031421.GC29394@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Tue, 21 Nov 2006 10:47:25 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Sun, 26 Nov 2006 03:48:40 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=ZKq6O8Z4adSLj/adUyHhOXXFDVaDNEOxsIpDu5VBHTXHfIC+hEhtYuqpULFCk965kOkqNgNKJJ2p34PuXNpXSzzXNfmucTw44DvWVy5HUtiApbCAsWecdtw9Rrgtzu8RUIC7hCnzXumYdVzgx13nplZa26HABNIm94f23+y5JKc=
-User-Agent: KMail/1.9.3
-In-Reply-To: <tnx1wnxxfu3.fsf@arm.com>
-Content-Disposition: inline
+In-Reply-To: <20061126031421.GC29394@spearce.org> (Shawn Pearce's message of
+	"Sat, 25 Nov 2006 22:14:21 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31984>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32323>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GmT9k-0006CX-1E for gcvg-git@gmane.org; Tue, 21 Nov
- 2006 11:47:12 +0100
+ esmtp (Exim 4.43) id 1GoB0L-0002Dd-8R for gcvg-git@gmane.org; Sun, 26 Nov
+ 2006 04:48:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1030840AbWKUKrH (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 21 Nov 2006
- 05:47:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030843AbWKUKrH
- (ORCPT <rfc822;git-outgoing>); Tue, 21 Nov 2006 05:47:07 -0500
-Received: from ug-out-1314.google.com ([66.249.92.168]:44346 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1030840AbWKUKrE
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2006 05:47:04 -0500
-Received: by ug-out-1314.google.com with SMTP id m3so1464726ugc for
- <git@vger.kernel.org>; Tue, 21 Nov 2006 02:47:03 -0800 (PST)
-Received: by 10.67.97.18 with SMTP id z18mr903789ugl.1164106022825; Tue, 21
- Nov 2006 02:47:02 -0800 (PST)
-Received: from host-81-190-24-209.torun.mm.pl ( [81.190.24.209]) by
- mx.google.com with ESMTP id x26sm9183746ugc.2006.11.21.02.47.02; Tue, 21 Nov
- 2006 02:47:02 -0800 (PST)
-To: Catalin Marinas <catalin.marinas@gmail.com>
+ S967285AbWKZDsR (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 25 Nov 2006
+ 22:48:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967286AbWKZDsR
+ (ORCPT <rfc822;git-outgoing>); Sat, 25 Nov 2006 22:48:17 -0500
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:5080 "EHLO
+ fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP id S967285AbWKZDsQ
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 25 Nov 2006 22:48:16 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao05.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061126034816.QWGP20330.fed1rmmtao05.cox.net@fed1rmimpo01.cox.net>; Sat, 25
+ Nov 2006 22:48:16 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id rFnk1V00a1kojtg0000000; Sat, 25 Nov 2006
+ 22:47:45 -0500
+To: Shawn Pearce <spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 
-Catalin Marinas wrote:
-> Jakub Narebski <jnareb@gmail.com> wrote:
+Shawn Pearce <spearce@spearce.org> writes:
 
->> By the way, why "stg branch --delete" doesn't remove reflog? Not that I'm
->> complaining, because it sure saved some work when resurrecting branch, and
->> I didn't loose reflog info.
-> 
-> Reflogs came into GIT after the StGIT branch command and never looked
-> at them in detail. And maybe it should not touch the reflog info,
-> especially for situations like this, unless GIT has a mechanism for a
-> trash bin (StGIT has one for patches - .git/patches/<branch>/trash/ -
-> but undocumented)
+> We moved away from the $GIT_DIR/branches directory to
+> $GIT_DIR/remotes, yet we still support $GIT_DIR/branches in
+> remote handling code.
 
-Well, I'm asking because "git branch -D" deletes also reflog. So I'm
-worrying if StGit works with packed refs (although one usually do not
-pack branches/heads, only tags).
--- 
-Jakub Narebski
+IIRC, git never used "branches", so there was no "moving away".
+It was merely to interpret what cg-init left in the repository.
+Since the very early days remotes/ has been _the_ format git
+used, and I do not see any strong reason to change it now.  The
+continued support for branches is an irrelevant topic and is not
+a justification to favor configuration over remotes/ nor the
+other way around.
+
+> For one thing the newer remote.<name>.fetch seems to make more sense
+> to new users than Pull: lines do.
+
+That is quite subjective.
+
+> ..., so there is probably low risk of
+> breakage ...
+
+Again, "low risk of breakage" does not justify switching.
+
+As I said in the other message, I think configuration vs remotes/
+is futile subject and premature topic to talk about before
+nailing down what semantics we would want.  Either format can
+have the expressive power, once we know what we want to express.
+
