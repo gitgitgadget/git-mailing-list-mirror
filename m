@@ -1,76 +1,114 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: svn versus git
-Date: Wed, 13 Dec 2006 15:45:02 -0800
-Message-ID: <7vfybjbbsx.fsf@assigned-by-dhcp.cox.net>
-References: <200612132200.41420.andyparkins@gmail.com>
+From: Han-Wen Nienhuys <hanwen@xs4all.nl>
+Subject: Re: git tag: don't complain of empty messages
+Date: Sun, 26 Nov 2006 17:42:49 +0100
+Message-ID: <4569C409.5080509@xs4all.nl>
+References: <ejfc1t$6am$1@sea.gmane.org> <7v64dgo9gj.fsf@assigned-by-dhcp.cox.net>
+Reply-To: hanwen@xs4all.nl
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 13 Dec 2006 23:45:22 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Sun, 26 Nov 2006 16:43:31 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <200612132200.41420.andyparkins@gmail.com> (Andy Parkins's
-	message of "Wed, 13 Dec 2006 22:00:37 +0000")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 65
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 82-171-213-190.dsl.ip.tiscali.nl
+User-Agent: Thunderbird 1.5.0.8 (X11/20061107)
+In-Reply-To: <7v64dgo9gj.fsf@assigned-by-dhcp.cox.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34261>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gudmf-0003A8-SP for gcvg-git@gmane.org; Thu, 14 Dec
- 2006 00:45:10 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32356>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GoN68-0006Mv-5o for gcvg-git@gmane.org; Sun, 26 Nov
+ 2006 17:43:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751662AbWLMXpG (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 13 Dec 2006
- 18:45:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751805AbWLMXpF
- (ORCPT <rfc822;git-outgoing>); Wed, 13 Dec 2006 18:45:05 -0500
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:38689 "EHLO
- fed1rmmtao04.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1751662AbWLMXpE (ORCPT <rfc822;git@vger.kernel.org>); Wed, 13 Dec 2006
- 18:45:04 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao04.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061213234503.LWQB7494.fed1rmmtao04.cox.net@fed1rmimpo02.cox.net>; Wed, 13
- Dec 2006 18:45:03 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id yPlE1V00t1kojtg0000000; Wed, 13 Dec 2006
- 18:45:15 -0500
-To: Andy Parkins <andyparkins@gmail.com>
+ S935429AbWKZQmz (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 26 Nov 2006
+ 11:42:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935432AbWKZQmz
+ (ORCPT <rfc822;git-outgoing>); Sun, 26 Nov 2006 11:42:55 -0500
+Received: from main.gmane.org ([80.91.229.2]:16262 "EHLO ciao.gmane.org") by
+ vger.kernel.org with ESMTP id S935429AbWKZQmz (ORCPT
+ <rfc822;git@vger.kernel.org>); Sun, 26 Nov 2006 11:42:55 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1GoN5d-0006GJ-PI for git@vger.kernel.org; Sun, 26 Nov 2006 17:42:49 +0100
+Received: from 82-171-213-190.dsl.ip.tiscali.nl ([82.171.213.190]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Sun, 26 Nov 2006 17:42:49 +0100
+Received: from hanwen by 82-171-213-190.dsl.ip.tiscali.nl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Sun, 26 Nov 2006
+ 17:42:49 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Andy Parkins <andyparkins@gmail.com> writes:
+Junio C Hamano escreveu:
+> Please follow Documentation/SubmittingPatches.
 
-> ...  The output of git-ls-tree is not user friendly; it
-> requires some understanding of git internals.
+See below, hope I didn't mess up.
 
-ls-tree is not Porcelain and has right to expose the internals
-by default.  "git ls-tree --name-only" could be aliased to give
-"git ls" if you wanted to, but I wonder how often you would want
-to run:
 
-	svn list -r538
 
-and for what purpose?
+From be40730d19592f9db8f07f619f5723060c2f4f0c Mon Sep 17 00:00:00 2001
+From: Han-Wen Nienhuys <hanwen@lilypond.org>
+Date: Sun, 26 Nov 2006 17:41:30 +0100
+Subject: [PATCH] allow empty tag message if -m is given explicitly.
 
-I often find myself doing
+---
+ git-tag.sh |   11 +++++++++--
+ 1 files changed, 9 insertions(+), 2 deletions(-)
 
-	git diff -r --name-status v1.3.0 HEAD
+diff --git a/git-tag.sh b/git-tag.sh
+index ac269e3..d53f94c 100755
+--- a/git-tag.sh
++++ b/git-tag.sh
+@@ -5,6 +5,7 @@ USAGE='-l [<pattern>] | [-a | -s | -u <k
+ SUBDIRECTORY_OK='Yes'
+ . git-sh-setup
+ 
++message_given=
+ annotate=
+ signed=
+ force=
+@@ -37,6 +38,12 @@ do
+     	annotate=1
+ 	shift
+ 	message="$1"
++	if test "$#" = "0"; then
++	    die "error: option -m needs an argument"
++	    exit 2
++	else
++	    message_given=1
++	fi
+ 	;;
+     -u)
+ 	annotate=1
+@@ -83,7 +90,7 @@ tagger=$(git-var GIT_COMMITTER_IDENT) ||
+ trap 'rm -f "$GIT_DIR"/TAG_TMP* "$GIT_DIR"/TAG_FINALMSG "$GIT_DIR"/TAG_EDITMSG' 0
+ 
+ if [ "$annotate" ]; then
+-    if [ -z "$message" ]; then
++    if [ -z "$message_given" ]; then
+         ( echo "#"
+           echo "# Write a tag message"
+           echo "#" ) > "$GIT_DIR"/TAG_EDITMSG
+@@ -95,7 +102,7 @@ if [ "$annotate" ]; then
+     grep -v '^#' <"$GIT_DIR"/TAG_EDITMSG |
+     git-stripspace >"$GIT_DIR"/TAG_FINALMSG
+ 
+-    [ -s "$GIT_DIR"/TAG_FINALMSG ] || {
++    [ -s "$GIT_DIR"/TAG_FINALMSG -o -n "$message_given" ] || {
+ 	echo >&2 "No tag message?"
+ 	exit 1
+     }
+-- 
+1.4.2.4
 
-to check if a file was already in v1.3.0 version, and I could do
-the same thing with
 
-	git list v1.3.0 >/var/tmp/1
-        git list HEAD >/var/tmp/2
-        diff -u /var/tmp/[12]
-
-but that certainly is awkward.
-
-What do people use "svn list -r538" for and how often?  In other
-words, when does it become necessary to get the full list of
-paths in an arbitrary revision?
-
+-- 
+ Han-Wen Nienhuys - hanwen@xs4all.nl - http://www.xs4all.nl/~hanwen
