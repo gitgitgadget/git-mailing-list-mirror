@@ -1,68 +1,130 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Alan Chandler" <alan@chandlerfamily.org.uk>
-Subject: Struggling with tangled
-Date: Wed, 22 Nov 2006 10:37:19 +0000
-Message-ID: <E1GmpTj-000235-2n@home.chandlerfamily.org.uk>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] grep: do not skip unmerged entries when grepping in the working tree.
+Date: Sun, 26 Nov 2006 12:49:46 -0800
+Message-ID: <7vvel2rl05.fsf@assigned-by-dhcp.cox.net>
+References: <ekc9q7$36e$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 22 Nov 2006 10:37:28 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Sun, 26 Nov 2006 20:49:59 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+In-Reply-To: <ekc9q7$36e$1@sea.gmane.org> (Johannes Sixt's message of "Sun, 26
+	Nov 2006 15:53:58 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32076>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32367>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GmpTo-0006Sf-Bp for gcvg-git@gmane.org; Wed, 22 Nov
- 2006 11:37:24 +0100
+ esmtp (Exim 4.43) id 1GoQwk-0006ck-BX for gcvg-git@gmane.org; Sun, 26 Nov
+ 2006 21:49:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1755626AbWKVKhV (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 22 Nov 2006
- 05:37:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755622AbWKVKhV
- (ORCPT <rfc822;git-outgoing>); Wed, 22 Nov 2006 05:37:21 -0500
-Received: from 82-44-22-127.cable.ubr06.croy.blueyonder.co.uk
- ([82.44.22.127]:51340 "EHLO home.chandlerfamily.org.uk") by vger.kernel.org
- with ESMTP id S1755626AbWKVKhU (ORCPT <rfc822;git@vger.kernel.org>); Wed, 22
- Nov 2006 05:37:20 -0500
-Received: from alan by home.chandlerfamily.org.uk with local (Exim 4.63)
- (envelope-from <alan@chandlerfamily.org.uk>) id 1GmpTj-000235-2n for
- git@vger.kernel.org; Wed, 22 Nov 2006 10:37:19 +0000
-To: "Git Mailing List" <git@vger.kernel.org>
+ S935540AbWKZUtt (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 26 Nov 2006
+ 15:49:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935559AbWKZUtt
+ (ORCPT <rfc822;git-outgoing>); Sun, 26 Nov 2006 15:49:49 -0500
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:53676 "EHLO
+ fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP id S935553AbWKZUtr
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 26 Nov 2006 15:49:47 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao01.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061126204947.VWNS9173.fed1rmmtao01.cox.net@fed1rmimpo02.cox.net>; Sun, 26
+ Nov 2006 15:49:47 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id rYpv1V00k1kojtg0000000; Sun, 26 Nov 2006
+ 15:49:56 -0500
+To: Johannes Sixt <johannes.sixt@telecom.at>
 Sender: git-owner@vger.kernel.org
 
-I am trying to sort out a tangled (in the sense that I several branches that 
-split a long time ago, but are reasonably close subsets of each other) 
-repository of mine using git rebase.  I want to isolate the commits that 
-cause the key differences so that I can then easily enhance the code but 
-carry forward the variants (using git-rebase again probably). 
+We used to skip unmerged entries, which made sense for grepping
+in the cached copies, but not for grepping in the files on the
+working tree.
 
-I have some questions which are causing me some grief after merge conflicts. 
-Can someone help me. 
+Noticed by Johannes Sixt.
 
-1) I often edit a merge conflicted file to the state I expect it to be in at 
-the end.  This sometimes means that I edit it to a state where no change is 
-seen.  git-update-index notices this and doesn't do anything, but when I try 
-git-rebase --continue it won't because it says git-update-index has not been 
-run.  What am I supposed to do then? [Is the answer git-rebase --skip ?] 
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
+  Johannes Sixt <johannes.sixt@telecom.at> writes:
 
-2) Some files get completely munged with conflict resolution markers every 
-few lines.  Is there a simple way to say "don't use this file, but use the 
-[stage2/stage3] sources of the merge". (ie one of the original inputs to the 
-merge - and if so, which one is which) 
+  > $ git-grep getSibling -- kdbg/exprwnd.h    # this file had a conflict
+  > $ grep getSibling -- kdbg/exprwnd.h       
+  >     { return static_cast<VarTree*>(getSibling()); }
+  > $ git-update-index kdbg/exprwnd.h
+  > $ git-grep getSibling -- kdbg/exprwnd.h       
+  > kdbg/exprwnd.h:    { return static_cast<VarTree*>(getSibling()); }
 
-3) I sometime hit a merge conflict in a file which I know will actually be 
-deleted at the tip of the topic I am rebasing.  Is there a way at this point 
-to just tell the conflict resolution to say make this file go away. 
+  This is because unmerged entries were ignored.
 
-4) I repeat the question I asked in a thread above.  What is the --merge 
-switch on git-rebase actually do.  The man page starts talking about merge 
-strategies, but there already is a -s switch for that. 
+ builtin-grep.c |   25 +++++++++++++++++++++----
+ 1 files changed, 21 insertions(+), 4 deletions(-)
 
- --
-Alan Chandler
-alan@chandlerfamily.org.uk
+diff --git a/builtin-grep.c b/builtin-grep.c
+index ad7dc00..9873e3d 100644
+--- a/builtin-grep.c
++++ b/builtin-grep.c
+@@ -268,7 +268,7 @@ static int external_grep(struct grep_opt *opt, const char **paths, int cached)
+ 	for (i = 0; i < active_nr; i++) {
+ 		struct cache_entry *ce = active_cache[i];
+ 		char *name;
+-		if (ce_stage(ce) || !S_ISREG(ntohl(ce->ce_mode)))
++		if (!S_ISREG(ntohl(ce->ce_mode)))
+ 			continue;
+ 		if (!pathspec_matches(paths, ce->name))
+ 			continue;
+@@ -280,12 +280,19 @@ static int external_grep(struct grep_opt *opt, const char **paths, int cached)
+ 			memcpy(name + 2, ce->name, len + 1);
+ 		}
+ 		argv[argc++] = name;
+-		if (argc < MAXARGS)
++		if (argc < MAXARGS && !ce_stage(ce))
+ 			continue;
+ 		status = exec_grep(argc, argv);
+ 		if (0 < status)
+ 			hit = 1;
+ 		argc = nr;
++		if (ce_stage(ce)) {
++			do {
++				i++;
++			} while (i < active_nr &&
++				 !strcmp(ce->name, active_cache[i]->name));
++			i--; /* compensate for loop control */
++		}
+ 	}
+ 	if (argc > nr) {
+ 		status = exec_grep(argc, argv);
+@@ -316,14 +323,24 @@ static int grep_cache(struct grep_opt *opt, const char **paths, int cached)
+ 
+ 	for (nr = 0; nr < active_nr; nr++) {
+ 		struct cache_entry *ce = active_cache[nr];
+-		if (ce_stage(ce) || !S_ISREG(ntohl(ce->ce_mode)))
++		if (!S_ISREG(ntohl(ce->ce_mode)))
+ 			continue;
+ 		if (!pathspec_matches(paths, ce->name))
+ 			continue;
+-		if (cached)
++		if (cached) {
++			if (ce_stage(ce))
++				continue;
+ 			hit |= grep_sha1(opt, ce->sha1, ce->name, 0);
++		}
+ 		else
+ 			hit |= grep_file(opt, ce->name);
++		if (ce_stage(ce)) {
++			do {
++				nr++;
++			} while (nr < active_nr &&
++				 !strcmp(ce->name, active_cache[nr]->name));
++			nr--; /* compensate for loop control */
++		}
+ 	}
+ 	free_grep_patterns(opt);
+ 	return hit;
+-- 
+1.4.4.1.ge3fb
+
