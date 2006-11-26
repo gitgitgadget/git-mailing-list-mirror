@@ -1,71 +1,93 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC] git-gui: A commit / fetch / push interface
-Date: Tue, 07 Nov 2006 09:58:18 +0100
-Organization: At home
-Message-ID: <eiphq0$pdf$1@sea.gmane.org>
-References: <20061107083603.GB9622@spearce.org>
+Subject: Re: [RFD] making separate-remote layout easier to use
+Date: Sun, 26 Nov 2006 10:32:14 +0100
+Message-ID: <200611261032.15207.jnareb@gmail.com>
+References: <7v1wnr19do.fsf@assigned-by-dhcp.cox.net> <ekafpm$fs7$1@sea.gmane.org> <20061126033433.GD29394@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-NNTP-Posting-Date: Tue, 7 Nov 2006 08:58:10 +0000 (UTC)
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Sun, 26 Nov 2006 09:30:51 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 21
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=mRK7OOQo46l3sRy+eDQ/Wzc3ywNe0UIrpfmVyFUCtbZ3RskgkVyjtrN+2yLPvVXz6BJ8TyXSdX3tr/6heYzwVd2AFcGK9QaXrBIL/VYDoHL3U4pT29DbxLnM1egRg9XEMDEmAc8wjogoqZ6HTNpe4rKCapjPEysv09vA34Lqr1U=
+User-Agent: KMail/1.9.3
+In-Reply-To: <20061126033433.GD29394@spearce.org>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31055>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32337>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GhMmR-0000BK-U4 for gcvg-git@gmane.org; Tue, 07 Nov
- 2006 09:58:04 +0100
+ esmtp (Exim 4.43) id 1GoGLU-0008CC-UV for gcvg-git@gmane.org; Sun, 26 Nov
+ 2006 10:30:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1754126AbWKGI6A (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 7 Nov 2006
- 03:58:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754128AbWKGI6A
- (ORCPT <rfc822;git-outgoing>); Tue, 7 Nov 2006 03:58:00 -0500
-Received: from main.gmane.org ([80.91.229.2]:33438 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S1754126AbWKGI57 (ORCPT
- <rfc822;git@vger.kernel.org>); Tue, 7 Nov 2006 03:57:59 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1GhMmJ-00009w-6e for git@vger.kernel.org; Tue, 07 Nov 2006 09:57:55 +0100
-Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Tue, 07 Nov 2006 09:57:55 +0100
-Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Tue, 07 Nov 2006
- 09:57:55 +0100
-To: git@vger.kernel.org
+ S935285AbWKZJag (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 26 Nov 2006
+ 04:30:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935286AbWKZJag
+ (ORCPT <rfc822;git-outgoing>); Sun, 26 Nov 2006 04:30:36 -0500
+Received: from ug-out-1314.google.com ([66.249.92.171]:368 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S935285AbWKZJaf
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 26 Nov 2006 04:30:35 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so923834uga for
+ <git@vger.kernel.org>; Sun, 26 Nov 2006 01:30:34 -0800 (PST)
+Received: by 10.67.30.6 with SMTP id h6mr10206811ugj.1164533434261; Sun, 26
+ Nov 2006 01:30:34 -0800 (PST)
+Received: from host-81-190-24-209.torun.mm.pl ( [81.190.24.209]) by
+ mx.google.com with ESMTP id k2sm11056524ugf.2006.11.26.01.30.33; Sun, 26 Nov
+ 2006 01:30:33 -0800 (PST)
+To: Shawn Pearce <spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 
 Shawn Pearce wrote:
-
-> Paul Mackerras originally started a thread about gitool, a graphical
-> interface for creating commits:
+> Jakub Narebski <jnareb@gmail.com> wrote:
+>> Junio C Hamano wrote:
+>>
+>>> I am not sure if 'merge in corresponding branch' is the only
+>>> valid workflow, however. I am reluctant to make the system
+>>> automatically do so if the solution makes other workflows more
+>>> painful to follow.  Automatically merging remotes/origin/$foo
+>>> when on $foo branch is not good enough, in other words (also,
+>>> there may be a hierarchy under remotes/ other than origin).  It
+>>> might make sense to introduce "Merge: " in remotes/ file and if
+>>> they are present use "Pull: " only to decide what are fetched
+>>> and use "Merge: " to decide what is merged (if we were doing the
+>>> system from scratch, the former would have been named "Fetch: "
+>>> but it is too late now).
+>> 
+>> If you add "Merge: " in remotes/, then please add it also in
+>> remote section in config file. Config file has now 
+>> branch.<branchname>.merge (and it would be nice if clone would
+>> set ou this for local branches corresponding to remote branches),
+>> but it is not the same.
 > 
->   http://thread.gmane.org/gmane.comp.version-control.git/26415
-[...]
-> I have posted a repository with the source on pasky's service:
+> I'm against adding anything to the remotes/ file format.
 > 
->       http://repo.or.cz/w/git-gui.git
-[...]
-> Suggestions for improvement (or patches!) are most welcome.
-> Better naming suggestions are also welcome.  :)
+> We already have branch.<name>.merge to indicate what the default
+> source for a git-pull on the branch named <name> should be.
+> git-branch probably should fill that entry in when a branch is
+> created from a remotes ref.
 
-I have added it to http://git.or.cz/gitwiki/InterfacesFrontendsAndTools
-By the way, do you know if (h)gct is actively developed against git?
+As I said, branch.<name>.merge is about something else: it just means
+that if we are on <name> branch "git pull" will merge 
+branch.<name>.merge branch into it.
+
+I think the "Merge: " or remote.<repo>.merge is about changing current 
+implicit rule: first branch is to be merged with current branch (if not 
+specified otherwise) when pull-ing, into explicit rule: branch marked 
+as "Merge: " is to be merged with current branch (unless specified 
+otherwise).
+
+Correct me if I'm wrong, Junio.
 -- 
 Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
-
