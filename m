@@ -1,60 +1,56 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Lars Hjemli" <hjemli@gmail.com>
-Subject: Re: [RFC] git-branch: add options and tests for branch renaming
-Date: Tue, 28 Nov 2006 17:10:30 +0100
-Message-ID: <8c5c35580611280810g2214ec8cs7406653c319be6fc@mail.gmail.com>
-References: <11647252603530-git-send-email-hjemli@gmail.com>
-	 <456C4FCE.6090306@shadowen.org>
+X-Spam-Status: No, score=-2.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,MSGID_FROM_MTA_HEADER,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+From: Sean <seanlkml@sympatico.ca>
+Subject: Re: git-PS1 bash prompt setting
+Date: Sun, 26 Nov 2006 09:42:12 -0500
+Message-ID: <BAYC1-PASMTP0478559E108A91E0F2A038AEE70@CEZ.ICE>
+References: <BAYC1-PASMTP037FDA6C6465F0541AC613AEE90@CEZ.ICE>
+	<Pine.LNX.4.63.0611261524130.30004@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Tue, 28 Nov 2006 16:11:08 +0000 (UTC)
+NNTP-Posting-Date: Sun, 26 Nov 2006 14:42:36 +0000 (UTC)
+Cc: git@vger.kernel.org, Theodore Tso <tytso@mit.edu>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=iZbXFgc3uj0v+RR6VGnP/6VS9oz03zR8Tt51VbwOwHmEnAxiq7CDeDsKi5GJyGuJZ+l+ehrUqifBoK1V89ST1CNf+p4Nw5zTWBRmzZliyM01S7HXb5+HXbA7JiDz1usRqmzhOTsxCCWISKptWuL4BQkbshpetx0Zrz4WceQPPqo=
-In-Reply-To: <456C4FCE.6090306@shadowen.org>
-Content-Disposition: inline
+X-Originating-IP: [65.93.43.74]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Original-Message-Id: <20061126094212.fde8cce7.seanlkml@sympatico.ca>
+In-Reply-To: <Pine.LNX.4.63.0611261524130.30004@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Mailer: Sylpheed version 2.2.10 (GTK+ 2.10.4; i386-redhat-linux-gnu)
+X-OriginalArrivalTime: 26 Nov 2006 14:42:14.0065 (UTC) FILETIME=[0FFA5210:01C71169]
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32544>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gp5XY-0002Vh-48 for gcvg-git@gmane.org; Tue, 28 Nov
- 2006 17:10:36 +0100
+ esmtp (Exim 4.43) id 1GoLD0-0005P5-Mr for gcvg-git@gmane.org; Sun, 26 Nov
+ 2006 15:42:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1758700AbWK1QKd (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 28 Nov 2006
- 11:10:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758701AbWK1QKd
- (ORCPT <rfc822;git-outgoing>); Tue, 28 Nov 2006 11:10:33 -0500
-Received: from nf-out-0910.google.com ([64.233.182.187]:64140 "EHLO
- nf-out-0910.google.com") by vger.kernel.org with ESMTP id S1758700AbWK1QKc
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2006 11:10:32 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so2615159nfa for
- <git@vger.kernel.org>; Tue, 28 Nov 2006 08:10:31 -0800 (PST)
-Received: by 10.82.129.8 with SMTP id b8mr193777bud.1164730230698; Tue, 28
- Nov 2006 08:10:30 -0800 (PST)
-Received: by 10.82.171.10 with HTTP; Tue, 28 Nov 2006 08:10:30 -0800 (PST)
-To: git@vger.kernel.org
+ S935390AbWKZOmP (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 26 Nov 2006
+ 09:42:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935424AbWKZOmP
+ (ORCPT <rfc822;git-outgoing>); Sun, 26 Nov 2006 09:42:15 -0500
+Received: from bayc1-pasmtp04.bayc1.hotmail.com ([65.54.191.164]:31766 "EHLO
+ BAYC1-PASMTP04.bayc1.hotmail.com") by vger.kernel.org with ESMTP id
+ S935390AbWKZOmO (ORCPT <rfc822;git@vger.kernel.org>); Sun, 26 Nov 2006
+ 09:42:14 -0500
+Received: from linux1.attic.local ([65.93.43.74]) by
+ BAYC1-PASMTP04.bayc1.hotmail.com over TLS secured channel with Microsoft
+ SMTPSVC(6.0.3790.1830); Sun, 26 Nov 2006 06:42:13 -0800
+Received: from guru.attic.local ([10.10.10.28]) by linux1.attic.local with
+ esmtp (Exim 4.43) id 1GoKGo-0004zJ-V4; Sun, 26 Nov 2006 08:42:11 -0500
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-On 11/28/06, Andy Whitcroft <apw@shadowen.org> wrote:
-> Perhaps I want a rename to just put a rename from in the top
-> of the new reflog and leave the old there.
+On Sun, 26 Nov 2006 15:27:07 +0100 (CET)
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
 
-That is what happens when you do
+> But there really is no good place to put it: most commands need a git 
+> repository, and those which do not, are inappropriate to put an option 
+> "--show-ps1" into. Except maybe repo-config. Thoughts?
 
-  git branch -l topic master
+What about just making it an option to the git wrapper?
 
-The first entry in reflog for 'topic' will say:
-
-  Branch: created from master
-
---
