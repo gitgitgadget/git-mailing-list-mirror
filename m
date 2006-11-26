@@ -4,78 +4,70 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: fetching packs and storing them as packs
-Date: Sat, 28 Oct 2006 23:52:54 -0400
-Message-ID: <20061029035254.GD3435@spearce.org>
-References: <4540CA0C.6030300@tromer.org> <Pine.LNX.4.64.0610271310450.3849@g5.osdl.org> <7v3b99e87c.fsf@assigned-by-dhcp.cox.net> <20061028034206.GA14044@spearce.org> <Pine.LNX.4.64.0610272109500.3849@g5.osdl.org> <7vwt6l9etn.fsf@assigned-by-dhcp.cox.net> <20061028072146.GB14607@spearce.org> <4543DA2E.9030300@tromer.org> <20061029033829.GA3435@spearce.org> <ei18ak$nv4$1@sea.gmane.org>
+From: "P. Christeas" <p_christ@hol.gr>
+Subject: Svnimport problem for openwrt repo
+Date: Sun, 26 Nov 2006 19:30:52 +0200
+Message-ID: <200611261930.53732.p_christ@hol.gr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sun, 29 Oct 2006 03:53:03 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: Multipart/Mixed;
+  boundary="Boundary-00=_N9caFJyKNs47qra"
+NNTP-Posting-Date: Sun, 26 Nov 2006 17:31:11 +0000 (UTC)
+Cc: git-list <git@vger.kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <ei18ak$nv4$1@sea.gmane.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+User-Agent: KMail/1.9.5
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30411>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32359>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Ge1jJ-0008IE-2E for gcvg-git@gmane.org; Sun, 29 Oct
- 2006 04:53:01 +0100
+ esmtp (Exim 4.43) id 1GoNq4-0000dv-5D for gcvg-git@gmane.org; Sun, 26 Nov
+ 2006 18:30:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S964975AbWJ2Dw6 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 28 Oct 2006
- 23:52:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964980AbWJ2Dw6
- (ORCPT <rfc822;git-outgoing>); Sat, 28 Oct 2006 23:52:58 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:3539 "EHLO
- corvette.plexpod.net") by vger.kernel.org with ESMTP id S964975AbWJ2Dw5
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 28 Oct 2006 23:52:57 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1Ge1j1-0006YS-MI; Sat, 28 Oct 2006 23:52:43 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- DA6C820E45B; Sat, 28 Oct 2006 23:52:54 -0400 (EDT)
-To: Jakub Narebski <jnareb@gmail.com>
+ S935457AbWKZRaf (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 26 Nov 2006
+ 12:30:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935458AbWKZRaf
+ (ORCPT <rfc822;git-outgoing>); Sun, 26 Nov 2006 12:30:35 -0500
+Received: from ppp249-097.dsl.hol.gr ([89.210.249.97]:33447 "EHLO
+ pfn3.pefnos") by vger.kernel.org with ESMTP id S935457AbWKZRae (ORCPT
+ <rfc822;git@vger.kernel.org>); Sun, 26 Nov 2006 12:30:34 -0500
+Received: from localhost.invalid (xorhgos2.pefnos [192.168.0.3]) by
+ pfn3.pefnos (Postfix) with ESMTP id 80EF2355CB; Sun, 26 Nov 2006 19:31:16
+ +0200 (EET)
+To: Matthias Urlichs <smurf@smurf.noris.de>
 Sender: git-owner@vger.kernel.org
 
-Jakub Narebski <jnareb@gmail.com> wrote:
-> Shawn Pearce wrote:
-> 
-> > Eran Tromer <git2eran@tromer.org> wrote:
-> >>
-> >> It would be nice to have whoever creates a pack-*.keep file put
-> >> something useful as the content of the file, so we'll know what to clean
-> >> up after abnormal termination:
-> >> 
-> >> $ grep -l ^git-receive-pack $GIT_DIR/objects/pack/pack-*.keep
-> > 
-> > Yes, that's a very good idea.  When I do the git-receive-pack
-> > implementation tonight I'll try to dump useful information to the
-> > .keep file such that you can easily grep for the stale .keeps
-> > and decide which ones should go.
-> 
-> Perhaps git-count-packs (or enhanced git-count-objects, or git-count-stuff;
-> whatever it would be named) could also list (with some option) the reasons
-> for packs to be kept...
+--Boundary-00=_N9caFJyKNs47qra
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
-That would be more like 'git ls-packs' to me, but as Junio pointed
-out why add a command just to count packs, and as others have said
-recently "Git has too many commands!".
+Just tried today to sync my openwrt copy, but it seems that their extensive 
+use of svn makes git-svnimport fail.
+In particular, around commit #5089, I get the attached error (having printed 
+the 'system' line). That commit should be the one when they merged 
+their 'buildroot-ng' branch into the trunk (major changes, that is).
+I have little to no time to debug the issue. Would you please give me a clue 
+how to solve the issue and keep on using git-svnimport? Of course, I could 
+even let you clone my repo or even work on it..
+Hint: is there something wrong in the git-update-index arguments  I have 
+there?
 
-<funny-and-not-to-be-taken-seriously>
-I like git-count-stuff.  So generic.  Maybe we can shove
-git-pickaxe in as the --count-lines-and-authors-andthings option of
-git-count-stuff, seeing as how some people didn't like its name.  :-)
-</funny-and-not-to-be-taken-seriously>
 
--- 
+
+
+--Boundary-00=_N9caFJyKNs47qra
+Content-Type: text/x-log;
+  charset="us-ascii";
+  name="svnimport.log"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+	filename="svnimport.log"
+
+~/bin/git-svnimport -v  https://svn.openwrt.org/openwrt/
+Fetching from 5059 to 5646 ...
+Switching from 52e84fb9bdd801d5ec730c871918b9a72103d93b to fd0a4bec684c716f58f674c7f6b609a78450de49 (/)
+5059:/:/: copying from buildroot-ng:openwrt @ 5058
+git-update-index --add  --cacheinfo 100644f6f0cadf4603265e36202cfb1bac1092e240d956//BSDmakefile --cacheinfo 10064474b3696242caf331aebf1df2d02f70cd53d2792e//Config.in --cacheinfo 100644d60c31a97a544b53039088d14fe9114583c0efc3//LICENSE --cacheinfo 10064439ffb17fb5e770c8c6983feee5ef3568388665a2//Makefile --cacheinfo 1006442bba6fa6f6c8190e659145770d3d5cfeb01b45b9//README --cacheinfo 10064459881580b475e05803a3a55dde4d356c27a9a589//docs/config.txt --cacheinfo 100644024161bdebf1cfcec79c4a1063c2ddabaf5237f0//docs/network-scripts.txt --cacheinfo 10064469dbaa60ba8f492c0875060b09b583173921fa48//docs/network.txt --cacheinfo 100644a1287da475bc8a63a5d13c021e6d27efc0fe39e9//include/host-build.mk --cacheinfo 1006443a5fd9683e3592f4750a80964a321075e388cde7//include/host.mkfatal: git-update-index: --cacheinfo cannot add //BSDmakefile
+Cannot add files: 32768
+
