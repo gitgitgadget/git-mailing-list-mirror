@@ -1,96 +1,119 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [RFC] Submodules in GIT
-Date: Tue, 05 Dec 2006 11:38:06 +0100
-Message-ID: <45754C0E.3070904@op5.se>
-References: <20061130170625.GH18810@admingilde.org>  <200612012306.41410.Josef.Weidendorfer@gmx.de>  <Pine.LNX.4.64.0612011423100.3695@woody.osdl.org>  <4570AF8F.1000801@stephan-feder.de>  <Pine.LNX.4.64.0612011505190.3695@woody.osdl.org>  <4570BFA4.8070903@stephan-feder.de>  <e7bda7770612021057mc9f3eb9q7fc047dd1b5c235f@mail.gmail.com>  <Pine.LNX.4.64.0612021114270.3476@woody.osdl.org>  <e7bda7770612030119v197cbc95h6b3fa9e22b78c058@mail.gmail.com>  <Pine.LNX.4.64.0612030946150.3476@woody.osdl.org> <e7bda7770612041226j4d4a5584m279afa9a2d7dfe74@mail.gmail.com> <Pine.LNX.4.64.0612041234390.3476@woody.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [RFD] making separate-remote layout easier to use
+Date: Sat, 25 Nov 2006 21:11:15 -0800
+Message-ID: <7vk61iyeq4.fsf@assigned-by-dhcp.cox.net>
+References: <7v1wnr19do.fsf@assigned-by-dhcp.cox.net>
+	<ekafpm$fs7$1@sea.gmane.org> <20061126033433.GD29394@spearce.org>
+	<7vvel2yi2u.fsf@assigned-by-dhcp.cox.net>
+	<20061126042311.GB30001@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Tue, 5 Dec 2006 10:38:15 +0000 (UTC)
-Cc: Torgil Svensson <torgil.svensson@gmail.com>,
-	sf-gmane@stephan-feder.de, sf <sf@b-i-t.de>, git@vger.kernel.org,
-	Martin Waitz <tali@admingilde.org>
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Sun, 26 Nov 2006 05:11:30 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
-In-Reply-To: <Pine.LNX.4.64.0612041234390.3476@woody.osdl.org>
+In-Reply-To: <20061126042311.GB30001@spearce.org> (Shawn Pearce's message of
+	"Sat, 25 Nov 2006 23:23:11 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33334>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GrXgi-0001L1-Ls for gcvg-git@gmane.org; Tue, 05 Dec
- 2006 11:38:13 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32329>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GoCIZ-0000ha-0g for gcvg-git@gmane.org; Sun, 26 Nov
+ 2006 06:11:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S968100AbWLEKiJ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 5 Dec 2006
- 05:38:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S968106AbWLEKiJ
- (ORCPT <rfc822;git-outgoing>); Tue, 5 Dec 2006 05:38:09 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:56989 "EHLO
- smtp-gw1.op5.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
- S968100AbWLEKiI (ORCPT <rfc822;git@vger.kernel.org>); Tue, 5 Dec 2006
- 05:38:08 -0500
-Received: from [192.168.1.20] (unknown [213.88.215.14]) by smtp-gw1.op5.se
- (Postfix) with ESMTP id CBCA56BCBE; Tue,  5 Dec 2006 11:38:06 +0100 (CET)
-To: Linus Torvalds <torvalds@osdl.org>
+ S967295AbWKZFLR (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 26 Nov 2006
+ 00:11:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935239AbWKZFLR
+ (ORCPT <rfc822;git-outgoing>); Sun, 26 Nov 2006 00:11:17 -0500
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:21409 "EHLO
+ fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP id S935238AbWKZFLQ
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 26 Nov 2006 00:11:16 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao06.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061126051116.LPSR5465.fed1rmmtao06.cox.net@fed1rmimpo01.cox.net>; Sun, 26
+ Nov 2006 00:11:16 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id rHAl1V0041kojtg0000000; Sun, 26 Nov 2006
+ 00:10:45 -0500
+To: Shawn Pearce <spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 
-Linus Torvalds wrote:
-> 
-> On Mon, 4 Dec 2006, Torgil Svensson wrote:
->> Okay, missed that part.  I wasn't familiar with contents of the CVS
->> modules files and misinterpreted your suggestion.
->>
->> MODULE [OPTIONS] [&OTHERMODULE...] [DIR] [FILES]
->>
->> So all this is UI only and the "normal" operations on the supermodule
->> will just ignore what's behind the commit-links?
-> 
-> Right. That's how CVS modules work (although in the case of CVS modules, 
-> the "dir" thing is obviously there in the "modules" file, so it's not 
-> _purely_ UI in CVS - this would likely be different in a git 
-> implementation, because the "tree" object ends up telling not just the 
-> exact version, but the location too).
-> 
-> So my suggestion basically boils down to:
-> 
->  - "fetch" and "clone" etc will just look at the "modules" file, and 
->    recursively fetch/clone whatever the module files talks about. This is 
->    the "thin veneer to make it _look_ like git actually understands 
->    submodules" part. It woudln't really - they're very much tacked on.
-> 
->  - the tree entries are what makes the "once you have all the submodule 
->    objects, this is how you can do 'diff' and 'checkout' on them, and this 
->    is what tells you the exact version that goes along with a particular 
->    supermodule version".
-> 
-> In other words, the simple and stupid way to do this is to just consider 
-> these two things two totally independent issues, and have different 
-> mechanisms for telling different operations what to do.
-> 
-> Is it "pretty"? No. The whole sub-module thing wouldn't be a tightly 
-> integrated low-level thing, it would very much be all about tracking 
-> multiple _separate_ git repositories, and just make them work well 
-> together. They'd very much still be separate, with just some simple 
-> infrastructure glue to make them look somewhat integrated.
-> 
-> So yeah, it's a bit hacky, but for the reasons I've tried to outline, I 
-> actually think that users _want_ hacky. Exactly because "deep integration" 
-> ends up having so many _bad_ features, so it's better to have a thin and 
-> simple layer that you can actually see past if you want to.
-> 
+Shawn Pearce <spearce@spearce.org> writes:
 
-Indeed. With the "tight" integration option we'd also have to have the 
-mechanism to rewrite the tree-entries with the location where the 
-submodule is located in the working tree. This might be needed anyways, 
-but it sure as hell seems a lot easier to just tack that part on when 
-doing a checkout and actually creating all the files.
+> So now we're at a point of:
+>
+>  * how do we get this branch information from the remote?
+>  * how does the remote store this branch information?
+>
+> I'm leaning towards the repo config for the latter, with say:
+>
+> 	[branch "pu"]
+> 		rewinds = true
+> 		description = This branch contains some proposed updates to git.\n\
+> 	It rewinds often, as different updates are proposed or merged into 'next'.
+>
+> but looking at that think its rather horrible looking.  :-)
+>
+> However for the former it may be useful if the client can download
+> the repo config from the remote repository, such as to fetch
+> the branch description data.
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
+For the former, I was hoping that we could do a new action
+against remote repository that is "get remote information". Just
+like we have "ls-remote" as a protocol neutral front-end to get
+what git native protocol would give "peek-remote", git native
+protocol would have get-repository-info action to transfer this
+information, and http and dumb transports do a file download
+from a known file, just like they download files prepared with
+update-server-info.  Most likely, that get-repository-info is
+just a glorified single file transfer and nothing more.
+
+As an implementation detail, I think it is one possibility to
+store this information in the config of the repository being
+cloned from.  We should be able to use repo-config to
+parse that file in config-like syntax to extract what we would
+want, so we do not have to come up with a new syntax nor a new
+parser, which is a big plus.
+
+	Side note: repo-config, especially the updating side of
+	it, is one of the programs I find the most brittle in
+	the whole system, and it always makes me hesitate when
+	somebody proposes to use config file in any important
+	way read-write for this reason.  But this "reading out
+	per-branch information from the file" is read-only so I
+	would not worry too much about it.
+
+Strictly speaking, however, the config file is a wrong place to
+store it.  For one thing it has core.sharedrepository and
+receive.denynonfastforwards that are true configuration to
+control the behaviour of git _at_ _the_ _repository_ the
+configuration is at.  The new "branch property" are primarily to
+help the other end, and the "filtering rewinding ones" we want
+at the clone/fetch side wants that information only and not
+interested in the true configuration information at that
+repository.
+
+So my preference is:
+
+ * store it in a fixed filename under $GIT_DIR/$something, in a
+   format that is similar to the true config file.
+
+ * Dumb transports would just do a file transfer, and we add a
+   new command (like "upload-pack", "upload-archive") for git
+   native transport to read that file.  We might want to have a
+   protocol neutral wrapper (just like "ls-remote").
+
+ * Cloners and fetchers would do the file transfer and use
+   repo-config to read from that transferred file to find out
+   which are rewinding branches.
+
+
+
+
