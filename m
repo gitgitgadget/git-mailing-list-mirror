@@ -5,74 +5,99 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
 	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Michael K. Edwards" <medwards.linux@gmail.com>
-Subject: Re: Cleaning up git user-interface warts
-Date: Wed, 15 Nov 2006 11:39:01 -0800
-Message-ID: <f2b55d220611151139v66fba16ax97ce6b9966b33ce7@mail.gmail.com>
-References: <87k61yt1x2.wl%cworth@cworth.org>
-	 <Pine.LNX.4.64.0611142306090.2591@xanadu.home>
-	 <Pine.LNX.4.64.0611150950170.3349@woody.osdl.org>
-	 <200611151858.51833.andyparkins@gmail.com>
-	 <Pine.LNX.4.64.0611151111250.3349@woody.osdl.org>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: [PATCH] Use new .git/config for storing "origin" shortcut repository
+Date: Sun, 26 Nov 2006 00:03:30 +0000
+Message-ID: <200611260003.31025.andyparkins@gmail.com>
+References: <ekafpm@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 15 Nov 2006 19:39:22 +0000 (UTC)
+NNTP-Posting-Date: Sun, 26 Nov 2006 00:06:34 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=sFIkL3KL6Xofl2WRK9taIJEXHaG2/CdqjN8BoN6taMFG3scBpj+R7vZds81aY1dhDatrCKrBfsOUfUOSJYyz+NpMG3RURg7rMX5xd9JjjmLRc8EChhX5hl4F1FmmnJAo10U3kTQd9RcuSKMEXcZd4P3EYuy6fM3/1tg0CVPfWyk=
-In-Reply-To: <Pine.LNX.4.64.0611151111250.3349@woody.osdl.org>
+        h=received:in-reply-to:references:from:date:subject:to:x-tuid:x-uid:x-length:mime-version:content-transfer-encoding:content-disposition:message-id;
+        b=jt/xw2S3uDi8z5e5PMPouJ5g4XEM0kx6VsQDYJdSSbh5Dg6sNeqRnH0OHqHWR8oJPOJEy3lnAAM4py4J7DI50ls1A8jrFIKYoxEbp4oIoiU7RGORwtV5QPEY7EDeGVaxJxTmziJXcv8iZdGK664+jqeqSERHGKFqkwXDmEz1AEY=
+In-Reply-To: <ekafpm@sea.gmane.org>
+X-TUID: d8c6f004584a2780
+X-UID: 170
+X-Length: 1871
 Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31477>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32311>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GkQbK-0005Ol-Bh for gcvg-git@gmane.org; Wed, 15 Nov
- 2006 20:39:14 +0100
+ esmtp (Exim 4.43) id 1Go7XR-0003ii-QJ for gcvg-git@gmane.org; Sun, 26 Nov
+ 2006 01:06:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1161098AbWKOTjK (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
- 14:39:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161166AbWKOTjJ
- (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 14:39:09 -0500
-Received: from wr-out-0506.google.com ([64.233.184.228]:62136 "EHLO
- wr-out-0506.google.com") by vger.kernel.org with ESMTP id S1161130AbWKOTjH
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 14:39:07 -0500
-Received: by wr-out-0506.google.com with SMTP id i22so150468wra for
- <git@vger.kernel.org>; Wed, 15 Nov 2006 11:39:06 -0800 (PST)
-Received: by 10.90.51.17 with SMTP id y17mr2760428agy.1163619546553; Wed, 15
- Nov 2006 11:39:06 -0800 (PST)
-Received: by 10.90.25.4 with HTTP; Wed, 15 Nov 2006 11:39:01 -0800 (PST)
+ S967020AbWKZAGQ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 25 Nov 2006
+ 19:06:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935216AbWKZAGQ
+ (ORCPT <rfc822;git-outgoing>); Sat, 25 Nov 2006 19:06:16 -0500
+Received: from ug-out-1314.google.com ([66.249.92.172]:27503 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S935213AbWKZAGP
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 25 Nov 2006 19:06:15 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so893416uga for
+ <git@vger.kernel.org>; Sat, 25 Nov 2006 16:06:14 -0800 (PST)
+Received: by 10.67.117.2 with SMTP id u2mr9584187ugm.1164499573831; Sat, 25
+ Nov 2006 16:06:13 -0800 (PST)
+Received: from grissom.internal.parkins.org.uk ( [84.201.153.164]) by
+ mx.google.com with ESMTP id q1sm12879136uge.2006.11.25.16.06.13; Sat, 25 Nov
+ 2006 16:06:13 -0800 (PST)
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On 11/15/06, Linus Torvalds <torvalds@osdl.org> wrote:
-> But once you understand branches, and understand "fetch" (and it really
-> isn't _that_ complicated: fetch really does exactly what the name says, so
-> if you understand local branches, you will understand "fetch"), then it's
-> a much smaller step to explain "pull = fetch + merge".
->
-> But I bet people don't teach it that way. They _start_ by teaching "pull".
-> Right?
+If .git/remotes/ is now deprecated, then git-clone shouldn't use it.
+This patch adds the analogous definitions to .git/config using
+git-repo-config calls.
 
-"git fetch" is certainly the right thing for the platform integration
-role, in which one is trying to maintain a series of integration
-branches which track the bleeding edge of some subsystems while
-keeping the core stable on each branch.  This is not as impossible as
-people make it out to be, but there certainly isn't much place for
-automatic merges to _persistent_ branches.
+For example what was previously .git/remotes/origin
+  URL: proto://host/path
+  Pull: refs/heads/master:refs/heads/origin
+Is now added to .git/config as
+  [remote "origin"]
+  url = proto://host/path
+  fetch = refs/heads/master:refs/heads/origin
 
-It's fundamentally a backporting and cherry-picking effort, and the
-git workflow puts it where it belongs: in the local repository, where
-_transient_ branches can and should be created and destroyed casually
-to track exploratory efforts.  These may include automatic merges and
-even cruder techniques (git diff, hack on patch, apply patch).  Once
-you figure out which bits you actually want to backport, you go back
-to a fresh branch and cherry-pick the same bits with the tool instead
-of manually, so that there is less noise in future merges.  When
-you've tested a little, you merge this branch to the persistent branch
-that other repositories track.
+Signed-off-by: Andy Parkins <andyparkins@gmail.com>
+---
+I'm not sure if I'm correct in thinking that .git/remotes is deprecated.  If it is,
+this patch makes git-clone use .git/config instead.
 
-Cheers,
+Personally I like it, I think there should be as small a number of places for 
+configuring the repository as possible.
+
+
+ git-clone.sh |    9 ++++-----
+ 1 files changed, 4 insertions(+), 5 deletions(-)
+
+diff --git a/git-clone.sh b/git-clone.sh
+index 9ed4135..1057a26 100755
+--- a/git-clone.sh
++++ b/git-clone.sh
+@@ -373,9 +373,8 @@ then
+ 		*)	origin_track="$remote_top/$origin"
+ 			git-update-ref "refs/heads/$origin" "$head_sha1" ;;
+ 		esac &&
+-		echo >"$GIT_DIR/remotes/$origin" \
+-		"URL: $repo
+-Pull: refs/heads/$head_points_at:$origin_track" &&
++		git-repo-config remote."$origin".url "$repo" &&
++		git-repo-config remote."$origin".fetch "refs/heads/$head_points_at:$origin_track" &&
+ 		(cd "$GIT_DIR/$remote_top" && find . -type f -print) |
+ 		while read dotslref
+ 		do
+@@ -389,8 +388,8 @@ Pull: refs/heads/$head_points_at:$origin_track" &&
+ 			then
+ 				continue
+ 			fi
+-			echo "Pull: refs/heads/${name}:$remote_top/${name}"
+-		done >>"$GIT_DIR/remotes/$origin" &&
++			git-repo-config remote."$origin".fetch "refs/heads/${name}:$remote_top/${name}"
++		done &&
+ 		case "$use_separate_remote" in
+ 		t)
+ 			rm -f "refs/remotes/$origin/HEAD"
+-- 
+1.4.4.1.gb38c-dirty
