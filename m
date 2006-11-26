@@ -6,53 +6,78 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git-pull from git.git - no remote ref for pu or next?
-Date: Tue, 12 Dec 2006 19:09:39 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612121908100.2807@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <863b7l83o9.fsf@blue.stonehenge.com> <86y7pd6oz7.fsf@blue.stonehenge.com>
- <Pine.LNX.4.64.0612120949230.3535@woody.osdl.org>
+Subject: Re: [PATCH] Use new .git/config for storing "origin" shortcut
+ repository
+Date: Sun, 26 Nov 2006 14:45:15 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0611261437270.30004@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <ekafpm@sea.gmane.org> <200611260003.31025.andyparkins@gmail.com>
+ <Pine.LNX.4.63.0611260141390.30004@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vzmaeyie6.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Tue, 12 Dec 2006 18:10:30 +0000 (UTC)
-Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>, git@vger.kernel.org
+NNTP-Posting-Date: Sun, 26 Nov 2006 13:45:34 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 X-Authenticated: #1490710
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <Pine.LNX.4.64.0612120949230.3535@woody.osdl.org>
+In-Reply-To: <7vzmaeyie6.fsf@assigned-by-dhcp.cox.net>
 X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34117>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GuC55-0006La-JM for gcvg-git@gmane.org; Tue, 12 Dec
- 2006 19:10:19 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32345>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GoKK0-0001aa-59 for gcvg-git@gmane.org; Sun, 26 Nov
+ 2006 14:45:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932320AbWLLSKP (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 12 Dec 2006
- 13:10:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932326AbWLLSKP
- (ORCPT <rfc822;git-outgoing>); Tue, 12 Dec 2006 13:10:15 -0500
-Received: from mail.gmx.net ([213.165.64.20]:47020 "HELO mail.gmx.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S932320AbWLLSKN
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 12 Dec 2006 13:10:13 -0500
-Received: (qmail invoked by alias); 12 Dec 2006 18:09:43 -0000
+ S935386AbWKZNpT (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 26 Nov 2006
+ 08:45:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935388AbWKZNpT
+ (ORCPT <rfc822;git-outgoing>); Sun, 26 Nov 2006 08:45:19 -0500
+Received: from mail.gmx.de ([213.165.64.20]:11428 "HELO mail.gmx.net") by
+ vger.kernel.org with SMTP id S935386AbWKZNpR (ORCPT
+ <rfc822;git@vger.kernel.org>); Sun, 26 Nov 2006 08:45:17 -0500
+Received: (qmail invoked by alias); 26 Nov 2006 13:45:15 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp035) with SMTP; 12 Dec 2006 19:09:43 +0100
-To: Linus Torvalds <torvalds@osdl.org>
+ [132.187.25.13] by mail.gmx.net (mp019) with SMTP; 26 Nov 2006 14:45:15 +0100
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
 Hi,
 
-On Tue, 12 Dec 2006, Linus Torvalds wrote:
+On Sat, 25 Nov 2006, Junio C Hamano wrote:
 
-> But since the thing needs mirroring for non-git uses too, and since 
-> rsync generally _works_ apart from the slight race-condition issue, 
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > This hunk is wrong: "git-repo-config remote.bla.fetch b" will _overwrite_ 
+> > remoter.bla.fetch. To avoid that, you have to use "git repo-config 
+> > remote.bla.fetch b ^$". (The last argument is a regular expression which 
+> > has to be matched by the value-to-be-oreplaced.)
+> 
+> Yup, one of the joys of working the config file everybody seems to like 
+> ;-).
 
-... and git would probably change the pack structure (i.e. which objects 
-are in which packs, or even loose) which would be too bad for all those 
-HTTP leechers ...
+The problem is: config files are ubiquitous, so you need not teach 
+users about it. On the other hand, they are just key / value stores, i.e. 
+reflecting a mapping. What we want here, is a multimapping, so we use the 
+wrong tool.
 
-> that's what it just uses.
+But sometimes it is so much more pragmatic to just take off one shoe and 
+put the darned nail back into the wall than to go to the shop, buy the 
+hammer, go back, put the nail in, and try to sell the hammer via eBay.
+
+BTW regarding your criticism of the config file: I agree that the write 
+support of git-repo-config was quite brittle at the start. Which is my 
+fault.
+
+However, we had quite some flashing out bugs in the mean time, so I am 
+quite confident in the tool. Of course, what with the recent addition of a 
+user specific config file (which makes the name "repo-config" seem utterly 
+wrong), there might be some dragons in the code.
+
+So, it seems that the whole config writing code is a perfect opportunity 
+for people wanting to audit source code!
 
 Ciao,
 Dscho
+
