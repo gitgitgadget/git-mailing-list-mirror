@@ -4,51 +4,52 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] Allow hand-editing of patches before sending
-Date: Fri, 3 Nov 2006 14:39:33 +0100
-Message-ID: <20061103133933.GP20017@pasky.or.cz>
-References: <20061101090046.1107.81105.stgit@localhost> <b0943d9e0611020232x1e343bbco9451c8183c84d68@mail.gmail.com> <20061102113631.GA30507@diana.vm.bytemark.co.uk> <b0943d9e0611030139i7be9569bh4a29596a768e82a3@mail.gmail.com> <20061103095859.GC16721@diana.vm.bytemark.co.uk> <b0943d9e0611030444w13e04586u185413c2562d45bc@mail.gmail.com> <20061103130259.GA20611@diana.vm.bytemark.co.uk> <b0943d9e0611030525t5da2cce7nf7b41323411e8d2d@mail.gmail.com>
+From: Johannes Sixt <johannes.sixt@telecom.at>
+Subject: Re: [PATCH] grep: do not skip unmerged entries when grepping in the working tree.
+Date: Sun, 26 Nov 2006 22:30:01 +0100
+Message-ID: <200611262230.01948.johannes.sixt@telecom.at>
+References: <ekc9q7$36e$1@sea.gmane.org> <7vvel2rl05.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 3 Nov 2006 13:40:11 +0000 (UTC)
-Cc: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>,
-	git@vger.kernel.org
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Sun, 26 Nov 2006 21:30:25 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vvel2rl05.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
-In-Reply-To: <b0943d9e0611030525t5da2cce7nf7b41323411e8d2d@mail.gmail.com>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30852>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32368>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GfzGn-0005bf-5F for gcvg-git@gmane.org; Fri, 03 Nov
- 2006 14:39:45 +0100
+ esmtp (Exim 4.43) id 1GoRZs-0006qv-Qc for gcvg-git@gmane.org; Sun, 26 Nov
+ 2006 22:30:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752972AbWKCNjg (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 3 Nov 2006
- 08:39:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752975AbWKCNjg
- (ORCPT <rfc822;git-outgoing>); Fri, 3 Nov 2006 08:39:36 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:7064 "EHLO machine.or.cz") by
- vger.kernel.org with ESMTP id S1752970AbWKCNjf (ORCPT
- <rfc822;git@vger.kernel.org>); Fri, 3 Nov 2006 08:39:35 -0500
-Received: (qmail 18420 invoked by uid 2001); 3 Nov 2006 14:39:33 +0100
-To: Catalin Marinas <catalin.marinas@gmail.com>
+ S935577AbWKZVaL (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 26 Nov 2006
+ 16:30:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757999AbWKZVaL
+ (ORCPT <rfc822;git-outgoing>); Sun, 26 Nov 2006 16:30:11 -0500
+Received: from mail.nextra.at ([195.170.70.67]:42495 "EHLO mail.nextra.at")
+ by vger.kernel.org with ESMTP id S1757998AbWKZVaK (ORCPT
+ <rfc822;git@vger.kernel.org>); Sun, 26 Nov 2006 16:30:10 -0500
+Received: from dx.sixt.local (at00d01-adsl-194-118-045-019.nextranet.at
+ [194.118.45.19]) by mail.nextra.at (8.13.7/8.13.6) with ESMTP id
+ kAQLUNf6028189; Sun, 26 Nov 2006 22:30:24 +0100 (MET)
+Received: from localhost (localhost [127.0.0.1]) by dx.sixt.local (Postfix)
+ with ESMTP id 9561639341; Sun, 26 Nov 2006 22:30:02 +0100 (CET)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Dear diary, on Fri, Nov 03, 2006 at 02:25:36PM CET, I got a letter
-where Catalin Marinas <catalin.marinas@gmail.com> said that...
-> I just run git-am and "stg uncommit" or "assimilate".
+On Sunday 26 November 2006 21:49, Junio C Hamano wrote:
+> We used to skip unmerged entries, which made sense for grepping
+> in the cached copies, but not for grepping in the files on the
+> working tree.
+>
+> Noticed by Johannes Sixt.
+>
+> Signed-off-by: Junio C Hamano <junkio@cox.net>
 
-git-am calls git-mailsplit and git-mailinfo, and those two tools will do
-most of the work (basically everything except the actual committing) for
-you, I use them in cg-patch -m and it should be fairly trivial to make a
-stg command reusing those too.
+This fixes my problem. Thanks!
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
-$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
