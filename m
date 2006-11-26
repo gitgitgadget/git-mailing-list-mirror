@@ -1,94 +1,122 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Subprojects tasks
-Date: Sun, 17 Dec 2006 11:01:10 +0100
-Organization: At home
-Message-ID: <em34cd$ni8$1@sea.gmane.org>
-References: <7vzm9nelob.fsf@assigned-by-dhcp.cox.net> <200612170848.10092.alan@chandlerfamily.org.uk>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-NNTP-Posting-Date: Sun, 17 Dec 2006 09:59:27 +0000 (UTC)
+Subject: [PATCH] gitweb: Make project description in projects list link to summary view
+Date: Sun, 26 Nov 2006 02:18:26 +0100
+Message-ID: <1164503906220-git-send-email-jnareb@gmail.com>
+NNTP-Posting-Date: Sun, 26 Nov 2006 01:17:02 +0000 (UTC)
+Cc: Jakub Narebski <jnareb@gmail.com>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 44
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-25-107.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:cc:subject:date:message-id:x-mailer;
+        b=nm+/g6d6uoGRXgcu18flu8qu0ulaM3lP/CQByp+mnulOkiTYUCbbHS1H/SJINvgLq097DnpHNSV2SYHdbpC4PqWZNAHDGQS9itY2aXQfUGG8P3x1WtfbQSU6yCJ6bgWW4JZUhnSGm1I86Zi5jFOf0Et5kcJXOa076VKInWoQ6Og=
+X-Mailer: git-send-email 1.4.4.1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34682>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GvsnY-0002CZ-91 for gcvg-git@gmane.org; Sun, 17 Dec
- 2006 10:59:12 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32314>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Go8dd-0000ib-TR for gcvg-git@gmane.org; Sun, 26 Nov
+ 2006 02:16:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752334AbWLQJ7E (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 17 Dec 2006
- 04:59:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752337AbWLQJ7E
- (ORCPT <rfc822;git-outgoing>); Sun, 17 Dec 2006 04:59:04 -0500
-Received: from main.gmane.org ([80.91.229.2]:59725 "EHLO ciao.gmane.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1752335AbWLQJ7D
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 17 Dec 2006 04:59:03 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1Gvsn9-0006fq-JB for git@vger.kernel.org; Sun, 17 Dec 2006 10:58:47 +0100
-Received: from host-81-190-25-107.torun.mm.pl ([81.190.25.107]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Sun, 17 Dec 2006 10:58:47 +0100
-Received: from jnareb by host-81-190-25-107.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Sun, 17 Dec 2006
- 10:58:47 +0100
+ S935222AbWKZBQq (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 25 Nov 2006
+ 20:16:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935220AbWKZBQq
+ (ORCPT <rfc822;git-outgoing>); Sat, 25 Nov 2006 20:16:46 -0500
+Received: from ug-out-1314.google.com ([66.249.92.174]:65260 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S935222AbWKZBQp
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 25 Nov 2006 20:16:45 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so897501uga for
+ <git@vger.kernel.org>; Sat, 25 Nov 2006 17:16:44 -0800 (PST)
+Received: by 10.66.242.20 with SMTP id p20mr9867923ugh.1164503804548; Sat, 25
+ Nov 2006 17:16:44 -0800 (PST)
+Received: from roke.D-201 ( [81.190.24.209]) by mx.google.com with ESMTP id
+ j1sm16785020ugf.2006.11.25.17.16.43; Sat, 25 Nov 2006 17:16:44 -0800 (PST)
+Received: from roke.D-201 (localhost.localdomain [127.0.0.1]) by roke.D-201
+ (8.13.4/8.13.4) with ESMTP id kAQ1IRqf028070; Sun, 26 Nov 2006 02:18:27 +0100
+Received: (from jnareb@localhost) by roke.D-201 (8.13.4/8.13.4/Submit) id
+ kAQ1IQ75028069; Sun, 26 Nov 2006 02:18:26 +0100
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Alan Chandler wrote:
+Make (shortened) project description in the "projects list" view
+hyperlink to the "summary" view of the project. Project names are
+sometimes short; having project description be hyperling gives larger
+are to click. While at it, display full description on mouseover via
+'title' attribute to introduced link.
 
-> The use case was when the supermodule wanted to make use of the header 
-> files of the submodule because it was using the submodule as a library.
-> 
-> This did make me wonder if the submodule should not export some form 
-> of "approved" set of content (or files - and I do think care is needed 
-> here as to which it is when we think about renames) which is both
-> 
-> a) a subset of the full tree that is stored at commit time, and
-> b) does itself have a commit history 
-> 
-> (I am clearly thinking that would be the standard "include" files, but 
-> not the actual source of the library - (but it might include the 
-> library it self as a prebuilt binary library?)
-> 
-> This does suggest it is a tree object stored in the repository - and 
-> that it is linked in time via a set of commit objects - I'll call them 
-> the "export commits".  I am not sure whether a new commit should be 
-> made everytime there is any change (via a normal commit) to this 
-> content, or (and I slightly favour this) there is a new commit made 
-> which is somewhat akin to a tag when the project wants to release a new 
-> version of its interface. 
+Additionally, fix whitespace usage in modified git_project_list_body
+subroutine: tabs are for indent, spaces are for align.
 
-In the absence of sparse/partial checkout, and it's use in submodule
-support, this can be solvd purely on porcelain level.
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+ gitweb/gitweb.perl |   13 ++++++++-----
+ 1 files changed, 8 insertions(+), 5 deletions(-)
 
-You would have to simply maintain separate 'includes' branch, similarly
-to how 'html' and 'man' (and 'todo') branches are maintained in git.git
-repository -- it would be your 'set of commit objects'. Then the only
-think that would be needed is some commit / post-commit hook which would
-examine if commit touches "include" files and if it does, make a commit
-in the 'includes' ('inc' for short) branch.
-
-Suportmodule would then use either 'master' branch for full sources,
-or 'includes' branch for headers only.
-
-P.S. Cc: Alan Chandler <alan@chandlerfamily.org.uk>, 
-Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index fac7923..0477507 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -2441,6 +2441,7 @@ sub git_project_list_body {
+ 		($pr->{'age'}, $pr->{'age_string'}) = @aa;
+ 		if (!defined $pr->{'descr'}) {
+ 			my $descr = git_get_project_description($pr->{'path'}) || "";
++			$pr->{'descr_long'} = to_utf8($descr);
+ 			$pr->{'descr'} = chop_str($descr, 25, 5);
+ 		}
+ 		if (!defined $pr->{'owner'}) {
+@@ -2476,7 +2477,7 @@ sub git_project_list_body {
+ 		} else {
+ 			print "<th>" .
+ 			      $cgi->a({-href => href(project=>undef, order=>'project'),
+-				       -class => "header"}, "Project") .
++			               -class => "header"}, "Project") .
+ 			      "</th>\n";
+ 		}
+ 		if ($order eq "descr") {
+@@ -2485,7 +2486,7 @@ sub git_project_list_body {
+ 		} else {
+ 			print "<th>" .
+ 			      $cgi->a({-href => href(project=>undef, order=>'descr'),
+-				       -class => "header"}, "Description") .
++			               -class => "header"}, "Description") .
+ 			      "</th>\n";
+ 		}
+ 		if ($order eq "owner") {
+@@ -2494,7 +2495,7 @@ sub git_project_list_body {
+ 		} else {
+ 			print "<th>" .
+ 			      $cgi->a({-href => href(project=>undef, order=>'owner'),
+-				       -class => "header"}, "Owner") .
++			               -class => "header"}, "Owner") .
+ 			      "</th>\n";
+ 		}
+ 		if ($order eq "age") {
+@@ -2503,7 +2504,7 @@ sub git_project_list_body {
+ 		} else {
+ 			print "<th>" .
+ 			      $cgi->a({-href => href(project=>undef, order=>'age'),
+-				       -class => "header"}, "Last Change") .
++			               -class => "header"}, "Last Change") .
+ 			      "</th>\n";
+ 		}
+ 		print "<th></th>\n" .
+@@ -2528,7 +2529,9 @@ sub git_project_list_body {
+ 		}
+ 		print "<td>" . $cgi->a({-href => href(project=>$pr->{'path'}, action=>"summary"),
+ 		                        -class => "list"}, esc_html($pr->{'path'})) . "</td>\n" .
+-		      "<td>" . esc_html($pr->{'descr'}) . "</td>\n" .
++		      "<td>" . $cgi->a({-href => href(project=>$pr->{'path'}, action=>"summary"),
++		                        -class => "list", -title => $pr->{'descr_long'}},
++		                        esc_html($pr->{'descr'})) . "</td>\n" .
+ 		      "<td><i>" . chop_str($pr->{'owner'}, 15) . "</i></td>\n";
+ 		print "<td class=\"". age_class($pr->{'age'}) . "\">" .
+ 		      $pr->{'age_string'} . "</td>\n" .
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
-
+1.4.4.1
