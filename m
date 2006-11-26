@@ -1,70 +1,54 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Rename detection at git log
-Date: Mon, 20 Nov 2006 02:07:11 -0800
-Message-ID: <7vejry5t4g.fsf@assigned-by-dhcp.cox.net>
-References: <200611201157.23680.litvinov2004@gmail.com>
-	<200611200951.05529.andyparkins@gmail.com>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Marko Macek <marko.macek@gmx.net>
+Subject: Re: Some tips for doing a CVS importer
+Date: Sun, 26 Nov 2006 17:11:36 +0100
+Message-ID: <4569BCB8.9030809@gmx.net>
+References: <9e4733910611201349s4d08b984g772c64982f148bfa@mail.gmail.com>	 <46a038f90611201503m6a63ec8ct347026c635190108@mail.gmail.com>	 <9e4733910611201537h30b6c9f4oee9d8df75284c284@mail.gmail.com>	 <46a038f90611201629o39f11f42ye07b86159360b66e@mail.gmail.com>	 <9e4733910611201753m392b5defpb3eb295a075be789@mail.gmail.com>	 <456969DA.6090702@gmx.net> <9e4733910611260735g2b18e9d1p51a0dca153282cc7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Mon, 20 Nov 2006 10:07:33 +0000 (UTC)
-Cc: git@vger.kernel.org, Alexander Litvinov <litvinov2004@gmail.com>
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Sun, 26 Nov 2006 16:15:54 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <200611200951.05529.andyparkins@gmail.com> (Andy Parkins's
-	message of "Mon, 20 Nov 2006 10:50:55 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Authenticated: #420190
+User-Agent: Thunderbird 1.5.0.7 (X11/20060909)
+Original-Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <9e4733910611260735g2b18e9d1p51a0dca153282cc7@mail.gmail.com>
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31893>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32354>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gm63a-0004a4-7d for gcvg-git@gmane.org; Mon, 20 Nov
- 2006 11:07:19 +0100
+ esmtp (Exim 4.43) id 1GoMfT-0000ZL-Ix for gcvg-git@gmane.org; Sun, 26 Nov
+ 2006 17:15:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S965555AbWKTKHO (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 20 Nov 2006
- 05:07:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965556AbWKTKHN
- (ORCPT <rfc822;git-outgoing>); Mon, 20 Nov 2006 05:07:13 -0500
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:63481 "EHLO
- fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP id S965555AbWKTKHM
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 20 Nov 2006 05:07:12 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao01.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061120100711.MFKG9173.fed1rmmtao01.cox.net@fed1rmimpo01.cox.net>; Mon, 20
- Nov 2006 05:07:11 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id oy6i1V00m1kojtg0000000; Mon, 20 Nov 2006
- 05:06:43 -0500
-To: Andy Parkins <andyparkins@gmail.com>
+ S934383AbWKZQPh (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 26 Nov 2006
+ 11:15:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934391AbWKZQPh
+ (ORCPT <rfc822;git-outgoing>); Sun, 26 Nov 2006 11:15:37 -0500
+Received: from mail.gmx.net ([213.165.64.20]:41190 "HELO mail.gmx.net") by
+ vger.kernel.org with SMTP id S934383AbWKZQPh (ORCPT
+ <rfc822;git@vger.kernel.org>); Sun, 26 Nov 2006 11:15:37 -0500
+Received: (qmail invoked by alias); 26 Nov 2006 16:15:34 -0000
+Received: from BSN-77-45-79.dial-up.dsl.siol.net (EHLO [192.168.2.7])
+ [193.77.45.79] by mail.gmx.net (mp009) with SMTP; 26 Nov 2006 17:15:34 +0100
+To: Jon Smirl <jonsmirl@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Andy Parkins <andyparkins@gmail.com> writes:
+Jon Smirl wrote:
 
-> On Monday 2006 November 20 05:57, Alexander Litvinov wrote:
->
->> > PAGER=cat git log -M -C --pretty=oneline b/a
->
-> I've come across this too.  Personally I'm not sure what use "-C" is.  From 
-> the manpage, man git-diff-files (no, this isn't the place I'd look either).
+> Another note for doing a converter. When combining things into change
+> sets, for git import the comments in the branches should not be mixed
+> between branches and the trunk when detecting change set. Git doesn't
+> allow simultaneous commits to the trunk and branches.
 
-The real issue here is because the b/a on the command line
-applies on the input-side, and does not act as the output
-filter.  This comes from _very_ early design decision and if you
-dig the list archive you will see Linus and I arguing about
-diffcore-pathspec (which later died off).
-
-What it means is that "git log" will look at path that matches
-b/a (that means b/a/c and b/a/d are looked at, if b/a were a
-directory).  Since path "a" which is what the file was
-originally at is not something the pattern b/a matches, there is
-no way b/a is noticed as a rename from a.
-
-I've been meaning to resurrect Fredrik's --single-follow=path
-patch but haven't had time to recently, with all the other
-interesting discussion happening on the list.
+Yup, this is the current problem I'm facing now. Even for CVS->SVN conversion,
+I don't want to see multi-branch commits.
 
