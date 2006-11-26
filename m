@@ -1,79 +1,56 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 2/n] gitweb: Use '&iquot;' instead of '?' in esc_path
-Date: Mon, 30 Oct 2006 16:34:35 -0800
-Message-ID: <7vzmbds4pw.fsf@assigned-by-dhcp.cox.net>
-References: <200610301953.01875.jnareb@gmail.com>
-	<200610301959.05313.jnareb@gmail.com>
+From: Christian Thaeter <ct@pipapo.org>
+Subject: Re: handling symlinks proposal
+Date: Sun, 26 Nov 2006 20:50:01 +0100
+Message-ID: <4569EFE9.6010101@pipapo.org>
+References: <4569C7F8.4030303@pipapo.org> <Pine.LNX.4.64.0611261034100.3483@woody.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 31 Oct 2006 00:34:55 +0000 (UTC)
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Sun, 26 Nov 2006 19:50:30 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <200610301959.05313.jnareb@gmail.com> (Jakub Narebski's message
-	of "Mon, 30 Oct 2006 19:59:05 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+User-Agent: Icedove 1.5.0.7 (X11/20061013)
+In-Reply-To: <Pine.LNX.4.64.0611261034100.3483@woody.osdl.org>
+X-Enigmail-Version: 0.94.0.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30556>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32364>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GehaT-00083S-26 for gcvg-git@gmane.org; Tue, 31 Oct
- 2006 01:34:41 +0100
+ esmtp (Exim 4.43) id 1GoQ14-0001Ua-7K for gcvg-git@gmane.org; Sun, 26 Nov
+ 2006 20:50:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1161487AbWJaAei (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 30 Oct 2006
- 19:34:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161490AbWJaAei
- (ORCPT <rfc822;git-outgoing>); Mon, 30 Oct 2006 19:34:38 -0500
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:3525 "EHLO
- fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP id S1161487AbWJaAeh
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 30 Oct 2006 19:34:37 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao12.cox.net
- (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
- <20061031003436.WTNN18180.fed1rmmtao12.cox.net@fed1rmimpo01.cox.net>; Mon, 30
- Oct 2006 19:34:36 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id goaG1V00r1kojtg0000000 Mon, 30 Oct 2006
- 19:34:17 -0500
-To: Jakub Narebski <jnareb@gmail.com>
+ S1756935AbWKZTuG (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 26 Nov 2006
+ 14:50:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756965AbWKZTuG
+ (ORCPT <rfc822;git-outgoing>); Sun, 26 Nov 2006 14:50:06 -0500
+Received: from pipapo.org ([217.140.77.75]:47120 "EHLO mail.pipapo.org") by
+ vger.kernel.org with ESMTP id S1756961AbWKZTuE (ORCPT
+ <rfc822;git@vger.kernel.org>); Sun, 26 Nov 2006 14:50:04 -0500
+Received: from [10.20.40.100] (unknown [10.20.40.100]) by mail.pipapo.org
+ (Postfix) with ESMTP id B48AD127AAD; Sun, 26 Nov 2006 20:50:02 +0100 (CET)
+To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Linus Torvalds wrote:
+> 
+> On Sun, 26 Nov 2006, Christian Thaeter wrote:
+>> Git currently keep symlinks always as symlink, I would like to see some
+>> optional functionality when handling symlinks.
+> 
+> I can pretty much guarantee that you really don't want to do this, and 
+> that you'd be _much_ happier using some explicit wrappers around git to 
+> handle your special needs, than try to teach the SCM to handle symlinks 
+> specially.
 
-> Use "&iquot;" Latin 1 entity ("&#191;" -- inverted question mark =
-> turned question mark, U+00BF ISOnum) instead '?' as replacements for
-> control characters and other undisplayable characters.
->
-> Signed-off-by: Jakub Narebski <jnareb@gmail.com>
-
-Do you have something against our Spanish and Latin American
-friends?  ;-)
-
-I wonder if there is a more suitable replacement character that
-is accepted across scripts?
-
-Japanese printing industry has a long tradition of using U+3013
-("geta") as a filler character.  Originally they placed a type
-of otherwise unused character upside down while packing types
-into a row, and the reverse side of a type, when inked and
-printed, left imprint that looked like footprint somebody who
-wore a "geta" (a traditional footware) would leave.
-
-	http://ja.wikipedia.org/wiki/%E4%B8%8B%E9%A7%84
-
-shows how a "geta" looks like, and
-
-	http://unicode.org/charts/PDF/U3000.pdf
-
-shows how the filler character looks like.
-
-Note that I am not suggesting to use &#3013; as a replacement at
-all.  I however think inverted question is inappropriate, and we
-should pick something else if we are fixing the question mark
-which is obviously inappropriate.
+ok agreed, i'll write some script which one can use on a tree to
+sanitize symlinks on given rules and/or be used as a pre-commit check.
+That has the pretty same effect for my needs and is more sane like you
+outlined.
 
