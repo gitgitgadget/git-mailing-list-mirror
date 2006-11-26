@@ -2,81 +2,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-Subject: Re: [PATCH/RFC] Convenient support of remote branches in git-checkout
-Date: Tue, 7 Nov 2006 11:53:32 +0100
-Message-ID: <200611071153.32840.Josef.Weidendorfer@gmx.de>
-References: <200611070026.16425.Josef.Weidendorfer@gmx.de> <200611070225.24956.Josef.Weidendorfer@gmx.de> <20061107065400.GA25737@diana.vm.bytemark.co.uk>
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Han-Wen Nienhuys <hanwen@xs4all.nl>
+Subject: Re: git tag: don't complain of empty messages
+Date: Sun, 26 Nov 2006 17:46:11 +0100
+Message-ID: <4569C4D3.5060102@xs4all.nl>
+References: <ejfc1t$6am$1@sea.gmane.org> <7v64dgo9gj.fsf@assigned-by-dhcp.cox.net> <4569C409.5080509@xs4all.nl>
+Reply-To: hanwen@xs4all.nl
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Tue, 7 Nov 2006 13:15:34 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+NNTP-Posting-Date: Sun, 26 Nov 2006 16:50:31 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: KMail/1.9.3
-In-Reply-To: <20061107065400.GA25737@diana.vm.bytemark.co.uk>
-Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay2.informatik.tu-muenchen.de
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 13
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 82-171-213-190.dsl.ip.tiscali.nl
+User-Agent: Thunderbird 1.5.0.8 (X11/20061107)
+In-Reply-To: <4569C409.5080509@xs4all.nl>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31069>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32357>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GhQnX-0004a1-2D for gcvg-git@gmane.org; Tue, 07 Nov
- 2006 14:15:27 +0100
+ esmtp (Exim 4.43) id 1GoNCv-0007yq-7Q for gcvg-git@gmane.org; Sun, 26 Nov
+ 2006 17:50:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932502AbWKGNOn (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 7 Nov 2006
- 08:14:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932088AbWKGNOn
- (ORCPT <rfc822;git-outgoing>); Tue, 7 Nov 2006 08:14:43 -0500
-Received: from tuminfo2.informatik.tu-muenchen.de ([131.159.0.81]:18055 "EHLO
- tuminfo2.informatik.tu-muenchen.de") by vger.kernel.org with ESMTP id
- S932502AbWKGNOm (ORCPT <rfc822;git@vger.kernel.org>); Tue, 7 Nov 2006
- 08:14:42 -0500
-Received: from dhcp-3s-44.lrr.in.tum.de (dhcp-3s-44.lrr.in.tum.de
- [131.159.35.44]) by mail.in.tum.de (Postfix) with ESMTP id 765C12800; Tue,  7
- Nov 2006 12:06:23 +0100 (MET)
-To: Karl =?iso-8859-1?q?Hasselstr=F6m?= <kha@treskal.com>
+ S935436AbWKZQuL (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 26 Nov 2006
+ 11:50:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935440AbWKZQuL
+ (ORCPT <rfc822;git-outgoing>); Sun, 26 Nov 2006 11:50:11 -0500
+Received: from main.gmane.org ([80.91.229.2]:49098 "EHLO ciao.gmane.org") by
+ vger.kernel.org with ESMTP id S935436AbWKZQuK (ORCPT
+ <rfc822;git@vger.kernel.org>); Sun, 26 Nov 2006 11:50:10 -0500
+Received: from root by ciao.gmane.org with local (Exim 4.43) id
+ 1GoNCd-0007ux-2E for git@vger.kernel.org; Sun, 26 Nov 2006 17:50:03 +0100
+Received: from 82-171-213-190.dsl.ip.tiscali.nl ([82.171.213.190]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Sun, 26 Nov 2006 17:50:03 +0100
+Received: from hanwen by 82-171-213-190.dsl.ip.tiscali.nl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Sun, 26 Nov 2006
+ 17:50:03 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On Tuesday 07 November 2006 07:54, you wrote:
-> > IMHO this kind of aliasing is awkward. When you want to start
-> > another topic branch on the remote branch, or want to reference the
-> > remote branch for diffs, you have to explicitly specify
-> > "remotes/origin/next", making for more typing.
+Han-Wen Nienhuys escreveu:
+> Junio C Hamano escreveu:
+>> Please follow Documentation/SubmittingPatches.
 > 
-> Having more than one local branch for a remote branch is advanced
-> enough that the user should know how to create branches with any name
-> they choose.
+> See below, hope I didn't mess up.
 
-But such an advanced szenario is exactly the reason to introduce
-these long branch names like "origin/next", isn't it?
-When a newbie probably never is confronted with this szenario, then
-why give him longer branch names per default?
-Do you see the contradiction in this argument?
+please add
 
-IMHO it should be the other way around: when an advanced user
-gets this conflict, he knows how to rename the branches by using
-this more elaborated scheme.
+Signed-off-by: Han-Wen Nienhuys <hanwen@xs4all.nl>
 
-I understand that these long branch names implicity give you information
-about the upstream (by including the remote shortcut in front),
-but this information (like all branch attributes) should also be
-easy available with "git branch --info" or similar. Especially,
-when we introduce shortcuts like "@up" (i.e. git-show-ref @up).
- 
-> But I do agree that calling it "origin/next" the first time you
-> branch, and "remotes/origin/next" subsequent times, is nonintuitive.
-> However, this could be solved by the following message being printed
-> the first time:
-> 
->   $ git checkout origin/next
->   No local branch "origin/next" exists. Creating new local branch
->   "origin/next" off of remote branch "remotes/origin/next".
 
-My patch already does something like this.
-
+-- 
+ Han-Wen Nienhuys - hanwen@xs4all.nl - http://www.xs4all.nl/~hanwen
