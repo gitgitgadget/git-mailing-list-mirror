@@ -1,144 +1,133 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD,
-	T_TVD_MIME_NO_HEADERS shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
-From: merlyn@stonehenge.com (Randal L. Schwartz)
-Subject: Re: [BUG] daemon.c blows up on OSX
-Date: 20 Dec 2006 14:46:57 -0800
-Message-ID: <86ac1iyyla.fsf@blue.stonehenge.com>
-References: <7vmz5ib8eu.fsf@assigned-by-dhcp.cox.net>
-	<86vek6z0k2.fsf@blue.stonehenge.com>
-	<Pine.LNX.4.64.0612201412250.3576@woody.osdl.org>
-	<86irg6yzt1.fsf_-_@blue.stonehenge.com>
-	<7vr6uu6w8e.fsf@assigned-by-dhcp.cox.net>
-	<86ejquyz4v.fsf@blue.stonehenge.com>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [RFD] making separate-remote layout easier to use
+Date: Sat, 25 Nov 2006 22:34:33 -0500
+Message-ID: <20061126033433.GD29394@spearce.org>
+References: <7v1wnr19do.fsf@assigned-by-dhcp.cox.net> <ekafpm$fs7$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="=-=-="
-NNTP-Posting-Date: Wed, 20 Dec 2006 22:47:06 +0000 (UTC)
-Cc: git@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Sun, 26 Nov 2006 03:34:51 +0000 (UTC)
+Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-x-mayan-date: Long count = 12.19.13.16.7; tzolkin = 8 Manik; haab = 0 Kankin
-In-Reply-To: <86ejquyz4v.fsf@blue.stonehenge.com>
-Original-Lines: 45
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+Content-Disposition: inline
+In-Reply-To: <ekafpm$fs7$1@sea.gmane.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34977>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GxADH-000084-27 for gcvg-git@gmane.org; Wed, 20 Dec
- 2006 23:47:03 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32319>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GoAmx-0000Pf-Cg for gcvg-git@gmane.org; Sun, 26 Nov
+ 2006 04:34:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1030415AbWLTWq7 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 20 Dec 2006
- 17:46:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030411AbWLTWq7
- (ORCPT <rfc822;git-outgoing>); Wed, 20 Dec 2006 17:46:59 -0500
-Received: from blue.stonehenge.com ([209.223.236.162]:30589 "EHLO
- blue.stonehenge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1030409AbWLTWq6 (ORCPT <rfc822;git@vger.kernel.org>); Wed, 20 Dec 2006
- 17:46:58 -0500
-Received: from localhost (localhost [127.0.0.1]) by blue.stonehenge.com
- (Postfix) with ESMTP id 046E88FA88; Wed, 20 Dec 2006 14:46:58 -0800 (PST)
-Received: from blue.stonehenge.com ([127.0.0.1]) by localhost
- (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024) with LMTP id
- 20521-01-87; Wed, 20 Dec 2006 14:46:57 -0800 (PST)
-Received: by blue.stonehenge.com (Postfix, from userid 1001) id 6CD858FA8A;
- Wed, 20 Dec 2006 14:46:57 -0800 (PST)
+ S967247AbWKZDej (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 25 Nov 2006
+ 22:34:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967255AbWKZDej
+ (ORCPT <rfc822;git-outgoing>); Sat, 25 Nov 2006 22:34:39 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:38631 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S967247AbWKZDei
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 25 Nov 2006 22:34:38 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1GoAme-0006Tr-KV; Sat, 25 Nov 2006 22:34:24 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 4CB9220FB09; Sat, 25 Nov 2006 22:34:34 -0500 (EST)
 To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
---=-=-=
+Jakub Narebski <jnareb@gmail.com> wrote:
+> Junio C Hamano wrote:
+> >       Pull: +refs/heads/*:refs/remotes/<origin>/*
+> 
+> I hope that it also works with the remote.origin config file
+> section instead of $GIT_DIR/remotes/origin
 
->>>>> "Randal" == Randal L Schwartz <merlyn@stonehenge.com> writes:
-
-Randal> running "git version 1.4.4.3.g5485" on my openbsd box, but I can't get
-Randal> there on my OSX box.
-
-According to my headers, "strncasecmp" is defined in <string.h>,
-"NI_MAXSERV" is defined in <netdb.h>, and "initgrps" is defined
-in "unistd.h".  So this patch works (just verified on OSX), but I
-don't know what damage it does elsehwere:
-
-diff --git a/daemon.c b/daemon.c
-index b129b83..5ce73ed 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -1,3 +1,7 @@
-+#include <string.h>
-+#include <netdb.h>
-+#include <unistd.h>
-+
- #include "cache.h"
- #include "pkt-line.h"
- #include "exec_cmd.h"
-
-However, now imap-send.o blows up:
-
-imap-send.c: In function 'imap_open_store':
-imap-send.c:908: error: 'AF_LOCAL' undeclared (first use in this function)
-imap-send.c:908: error: (Each undeclared identifier is reported only once
-imap-send.c:908: error: for each function it appears in.)
-imap-send.c:990: warning: implicit declaration of function 'getpass'
-imap-send.c:990: warning: assignment makes pointer from integer without a cast
-make: *** [imap-send.o] Error 1
-
-and finding "getpass" wants me to add "unistd.h" there too.
-
-Hmm.  Let's see if I can use git-format-patch as Linus intended.
-
-
---=-=-=
-Content-Disposition: attachment; filename=0001-patch-for-osx.txt
-Content-Description: patch for osx
-
-From 1549561dc68a1ea71f137c40109c90d33c0f9887 Mon Sep 17 00:00:00 2001
-From: Randal L. Schwartz <merlyn@4.sub-70-192-166.myvzw.com>
-Date: Wed, 20 Dec 2006 14:45:49 -0800
-Subject: [PATCH] patch for osx
-
----
- daemon.c    |    4 ++++
- imap-send.c |    2 ++
- 2 files changed, 6 insertions(+), 0 deletions(-)
-
-diff --git a/daemon.c b/daemon.c
-index b129b83..5ce73ed 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -1,3 +1,7 @@
-+#include <string.h>
-+#include <netdb.h>
-+#include <unistd.h>
-+
- #include "cache.h"
- #include "pkt-line.h"
- #include "exec_cmd.h"
-diff --git a/imap-send.c b/imap-send.c
-index 894cbbd..afd7447 100644
---- a/imap-send.c
-+++ b/imap-send.c
-@@ -22,6 +22,8 @@
-  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-  */
+Yes, it does.  Fortunately Git is relatively consistent.  :-)
  
-+#include <unistd.h>
-+
- #include "cache.h"
+> > Forcing with '+' is debatable, but with separate-remote layout,
+> > remotes/*/ hierarchy is to track what the remote has, and you
+> > cannot do much else other than noticing and warning when the
+> > remote end does funny things to its refs anyway, so I think
+> > having '+' might be a better default.
+> 
+> Perhaps, perhaps not. It would be nice to have configuration option
+> that would tell that history of given branch is being changed, and
+> the ability to ask about it remotely, so git-clone would be able
+> to add this + _when needed_ automatically.
+> 
+> But it's a fact that with separate remote the need to use fast-forward
+> check is lessened, and it might be more important to not confuse first
+> time user with having to modify $GIT_DIR/remotes/origin or remote.origin
+> config section to fetch from the repository he/she cloned from.
+
+Yes.  From an out-of-the-box-make-Git-appear-to-be-easier-to-use
+point of view tossing + into the Pull:/remote.<name>.fetch setup
+might seem like the right thing to do.  It lets the end-user blindly
+follow the upstream repository they cloned from.  Almost.
+
+The problem becomes when the user makes a topic branch off say
+Junio's `pu` branch and later after doing a fetch and looking at
+the log of `remotes/origin/pu` decide to pull the updated `pu`
+into their topic branch, so they can continue testing.  But now
+they are in merge hell as Junio has completely rebased `pu` and
+what was there isn't, and what's there now ain't compatible...
+and the new user curses at Git.
+
+Needing to put + in front of a refspec (or needing to fetch it with
+--force) is the user agreeing that something _evil_ is going on with
+the upstream and that they acknowledge this may cause problems for
+them locally.
+
+I would prefer to see the upstream be able to publish a short
+description of each branch, where the repository owner can describe
+the policy of that branch, as well as have a machine readable
+setting on each branch indicating if that branch will be rewound
+from time to time, or never rewound.
+
+git-clone should skip rewinding branches by default, unless the user
+adds an option (e.g. --include-rewinding-branches).  This way new
+users to git.git don't get the `pu` branch unless they really mean
+to get it, at which point they have hopefully also read the upstream's
+description of the `pu` branch and its rewinding policy, and can
+at least start to grasp what is going to happen if they start to
+work with the branch.
  
- typedef struct store_conf {
--- 
-1.4.4.3.g5485-dirty
+> > I am not sure if 'merge in corresponding branch' is the only
+> > valid workflow, however. I am reluctant to make the system
+> > automatically do so if the solution makes other workflows more
+> > painful to follow.  Automatically merging remotes/origin/$foo
+> > when on $foo branch is not good enough, in other words (also,
+> > there may be a hierarchy under remotes/ other than origin).  It
+> > might make sense to introduce "Merge: " in remotes/ file and if
+> > they are present use "Pull: " only to decide what are fetched
+> > and use "Merge: " to decide what is merged (if we were doing the
+> > system from scratch, the former would have been named "Fetch: "
+> > but it is too late now).
+> 
+> If you add "Merge: " in remotes/, then please add it also in
+> remote section in config file. Config file has now 
+> branch.<branchname>.merge (and it would be nice if clone would
+> set ou this for local branches corresponding to remote branches),
+> but it is not the same.
 
+I'm against adding anything to the remotes/ file format.
 
---=-=-=
-
+We already have branch.<name>.merge to indicate what the default
+source for a git-pull on the branch named <name> should be.
+git-branch probably should fill that entry in when a branch is
+created from a remotes ref.
 
 -- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
-See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
-
