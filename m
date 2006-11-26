@@ -1,85 +1,108 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [RFC] gitweb: Add committags support (take 2)
-Date: Wed, 06 Dec 2006 11:47:10 -0800
-Message-ID: <7vpsaw3iyp.fsf@assigned-by-dhcp.cox.net>
-References: <200612040001.13640.jnareb@gmail.com>
-	<200612061351.02712.jnareb@gmail.com>
-	<7vveko3km4.fsf@assigned-by-dhcp.cox.net>
-	<200612062032.58706.jnareb@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 6 Dec 2006 19:48:05 +0000 (UTC)
-Cc: git@vger.kernel.org
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH] git-clone: Rename --use-immingled-remote option to --no-separate-remote
+Date: Mon, 27 Nov 2006 00:22:29 +0100
+Message-ID: <11645833492897-git-send-email-jnareb@gmail.com>
+NNTP-Posting-Date: Sun, 26 Nov 2006 23:20:56 +0000 (UTC)
+Cc: Jakub Narebski <jnareb@gmail.com>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <200612062032.58706.jnareb@gmail.com> (Jakub Narebski's message
-	of "Wed, 6 Dec 2006 20:32:58 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:cc:subject:date:message-id:x-mailer;
+        b=DQA7DQKBzEBOaCXek+BXxWZAIoaaBr5RmFRbc0UXqEoVcIEhXJpHsKOZhO1Q2lkWHGmTNdBvubyj+Gn7vc5L6tgqRtdCUl6QvHsNXW+j7RHHoCFk3CZRYQ98fTL4acBBPMe1sfvy7KZaVf05XMVfixnzJ8g6oMZfFtveoX8Qu9k=
+X-Mailer: git-send-email 1.4.4.1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33514>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gs2kG-0004KW-2k for gcvg-git@gmane.org; Wed, 06 Dec
- 2006 20:47:56 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32370>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GoTIp-0006OX-TK for gcvg-git@gmane.org; Mon, 27 Nov
+ 2006 00:20:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S937572AbWLFTrN (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
- 14:47:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937574AbWLFTrN
- (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 14:47:13 -0500
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:40188 "EHLO
- fed1rmmtao06.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S937572AbWLFTrL (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec 2006
- 14:47:11 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao06.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061206194710.RAXY2628.fed1rmmtao06.cox.net@fed1rmimpo02.cox.net>; Wed, 6
- Dec 2006 14:47:10 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id vXnL1V00a1kojtg0000000; Wed, 06 Dec 2006
- 14:47:21 -0500
-To: Jakub Narebski <jnareb@gmail.com>
+ S1754709AbWKZXUt (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 26 Nov 2006
+ 18:20:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755102AbWKZXUt
+ (ORCPT <rfc822;git-outgoing>); Sun, 26 Nov 2006 18:20:49 -0500
+Received: from ug-out-1314.google.com ([66.249.92.174]:2606 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1755122AbWKZXUs
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 26 Nov 2006 18:20:48 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so1004198uga for
+ <git@vger.kernel.org>; Sun, 26 Nov 2006 15:20:46 -0800 (PST)
+Received: by 10.67.22.14 with SMTP id z14mr11221923ugi.1164583246470; Sun, 26
+ Nov 2006 15:20:46 -0800 (PST)
+Received: from roke.D-201 ( [81.190.24.209]) by mx.google.com with ESMTP id
+ 54sm17987288ugp.2006.11.26.15.20.45; Sun, 26 Nov 2006 15:20:45 -0800 (PST)
+Received: from roke.D-201 (localhost.localdomain [127.0.0.1]) by roke.D-201
+ (8.13.4/8.13.4) with ESMTP id kAQNMVWi018169; Mon, 27 Nov 2006 00:22:31 +0100
+Received: (from jnareb@localhost) by roke.D-201 (8.13.4/8.13.4/Submit) id
+ kAQNMTxU018168; Mon, 27 Nov 2006 00:22:29 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+ Documentation/git-clone.txt |    4 ++--
+ git-clone.sh                |    6 +++---
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-> By the way, what is the formal structure of the config file? Perhaps
-> something like the notation used in RFC?
-
-Is there an RFC for .INI format?
-
-> Is it possible (and doesn't crash current git config parser) having
->
->   [gitweb]
->   	blame = yes
->   	pickaxe = no
->   	snapshot = bzip2
->
->   [gitweb "committags"]
->   	message-id = "http://news.gmane.org/find-root.php?message_id="
->   	mantis = "http://bugs.or.cz/view.php?id="
->   	url
->   	sha1
->
-> in the config file?
-
-If you are asking about [gitweb] stanza and (seemingly
-overlapping) [gitweb "foo"] stanza, we already have prior
-examples:
-
-	[diff]
-        	color = auto
-        [diff "color"]
-        	whitespace = blue reverse
-
-so your example in the above would be legal (the dash in
-'message-id' part might be questionable, though).
-
-
-
-
+diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+index 4cb4223..d5efa00 100644
+--- a/Documentation/git-clone.txt
++++ b/Documentation/git-clone.txt
+@@ -11,7 +11,7 @@ SYNOPSIS
+ [verse]
+ 'git-clone' [--template=<template_directory>] [-l [-s]] [-q] [-n] [--bare]
+ 	  [-o <name>] [-u <upload-pack>] [--reference <repository>]
+-	  [--use-separate-remote | --use-immingled-remote] <repository>
++	  [--use-separate-remote | --no-separate-remote] <repository>
+ 	  [<directory>]
+ 
+ DESCRIPTION
+@@ -105,7 +105,7 @@ OPTIONS
+ 	of `$GIT_DIR/refs/heads/`.  Only the local master branch is
+ 	saved in the latter. This is the default.
+ 
+---use-immingled-remote::
++--no-separate-remote::
+ 	Save remotes heads in the same namespace as the local
+ 	heads, `$GIT_DIR/refs/heads/'.  In regular repositories,
+ 	this is a legacy setup git-clone created by default in
+diff --git a/git-clone.sh b/git-clone.sh
+index d4ee93f..8964039 100755
+--- a/git-clone.sh
++++ b/git-clone.sh
+@@ -14,7 +14,7 @@ die() {
+ }
+ 
+ usage() {
+-	die "Usage: $0 [--template=<template_directory>] [--use-immingled-remote] [--reference <reference-repo>] [--bare] [-l [-s]] [-q] [-u <upload-pack>] [--origin <name>] [-n] <repo> [<dir>]"
++	die "Usage: $0 [--template=<template_directory>] [--no-separate-remote] [--reference <reference-repo>] [--bare] [-l [-s]] [-q] [-u <upload-pack>] [--origin <name>] [-n] <repo> [<dir>]"
+ }
+ 
+ get_repo_base() {
+@@ -140,7 +140,7 @@ while
+ 	*,--use-separate-remote)
+ 		# default
+ 		use_separate_remote=t ;;
+-	*,--use-immingled-remote)
++	*,--no-separate-remote)
+ 		use_separate_remote= ;;
+ 	1,--reference) usage ;;
+ 	*,--reference)
+@@ -176,7 +176,7 @@ repo="$1"
+ test -n "$repo" ||
+     die 'you must specify a repository to clone.'
+ 
+-# --bare implies --no-checkout and --use-immingled-remote
++# --bare implies --no-checkout and --no-separate-remote
+ if test yes = "$bare"
+ then
+ 	if test yes = "$origin_override"
+-- 
+1.4.4.1
