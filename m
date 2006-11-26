@@ -1,77 +1,88 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: What's in git.git
-Date: Thu, 26 Oct 2006 02:24:25 -0700
-Message-ID: <7v7iynpgza.fsf@assigned-by-dhcp.cox.net>
-References: <7vk62npipb.fsf@assigned-by-dhcp.cox.net>
-	<ehpu4t$ch2$1@sea.gmane.org>
+From: Eric Blake <ebb9@byu.net>
+Subject: [patch] cg help broken when $PAGER contains space
+Date: Sun, 26 Nov 2006 07:51:24 -0700
+Message-ID: <4569A9EC.6080805@byu.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 26 Oct 2006 09:24:49 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Sun, 26 Nov 2006 14:53:41 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <ehpu4t$ch2$1@sea.gmane.org> (Jakub Narebski's message of "Thu,
-	26 Oct 2006 11:12:36 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.0.8) Gecko/20061025 Thunderbird/1.5.0.8 Mnenhy/0.7.4.666
+X-Enigmail-Version: 0.94.1.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30163>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32348>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gd1TU-00014R-Rn for gcvg-git@gmane.org; Thu, 26 Oct
- 2006 11:24:33 +0200
+ esmtp (Exim 4.43) id 1GoLNq-0007qJ-6J for gcvg-git@gmane.org; Sun, 26 Nov
+ 2006 15:53:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1422879AbWJZJY3 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
- 05:24:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422891AbWJZJY3
- (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 05:24:29 -0400
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:61569 "EHLO
- fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP id S1422879AbWJZJY3
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 05:24:29 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao09.cox.net
- (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
- <20061026092427.ONOJ16798.fed1rmmtao09.cox.net@fed1rmimpo01.cox.net>; Thu, 26
- Oct 2006 05:24:27 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id exQ81V00w1kojtg0000000 Thu, 26 Oct 2006
- 05:24:09 -0400
-To: Jakub Narebski <jnareb@gmail.com>
+ S934372AbWKZOxT (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 26 Nov 2006
+ 09:53:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935404AbWKZOxT
+ (ORCPT <rfc822;git-outgoing>); Sun, 26 Nov 2006 09:53:19 -0500
+Received: from rwcrmhc15.comcast.net ([204.127.192.85]:61874 "EHLO
+ rwcrmhc15.comcast.net") by vger.kernel.org with ESMTP id S934372AbWKZOxT
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 26 Nov 2006 09:53:19 -0500
+Received: from [192.168.0.103]
+ (c-24-10-241-225.hsd1.ut.comcast.net[24.10.241.225]) by comcast.net
+ (rwcrmhc15) with ESMTP id <20061126145317m1500aouc8e>; Sun, 26 Nov 2006
+ 14:53:17 +0000
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Jakub Narebski <jnareb@gmail.com> writes:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> Junio C Hamano wrote:
->
->>   I've flushed all the 'gitweb/' changes from "next" and core
->>   support that some of them needed; notably "for-each-ref" and
->>   "blame --porcelain" is now in "master".  Oh, and "annotate"
->>   is now a mere synonym for "blame -c".
->>       gitweb: prepare for repositories with packed refs.
->>       gitweb: use for-each-ref to show the latest activity across branches
->
-> This unfortunately means that I cannot test gitweb based on 'master'
-> branch using _released_ git core, git version 1.4.3.3, as it doesn't have
-> git-for-each-ref nor git-show-ref.
+With cogito 0.18.1, cg-help line 152 invokes "IFS=$'\n' colorize", which
+in turn invokes the "pager" shell function from cg-Xlib with IFS set to
+just a newline.  This means that if PAGER contains any spaces, the
+expansion of ${PAGER:-less} within pager() will not be split, leading to
+the following less-than-useful help message:
 
-As long as "master" version of gitweb goes with "master" version
-of the core, I do not see it as a problem.  Otherwise how would
-you make any progress?
+$ echo $PAGER
+less -s
+$ cg help
+/usr/lib/cogito/cg-Xlib: line 193: less -s: command not found
+$ echo $?
+127
 
-> ... Should
-> we try to wait for core feature to mature to released version before using
-> it in gitweb?
+This patch fixes the problem:
 
-That's both insulting and inconsistent.
+2006-11-26  Eric Blake  <ebb9@byu.net>
 
-Insulting in that somehow you seem to feel "master" is lessor
-quality than "maint", and inconsistent in that you seem to find
-"gitweb" is somehow more special than other scripts we ship as
-part of the git.git project sources.
+	* cg-help: Don't change IFS when invoking pager.
 
-Anyhow, I have done my fair share of git hacking for the week,
-so I'll stop venting and go to bed.
+diff --git a/cg-help b/cg-help
+index c2d558f..f428767 100755
+- --- a/cg-help
++++ b/cg-help
+@@ -149,7 +149,7 @@ BRANCH_COMMANDS="$(ls "$bin_path"/cg-bra
+ TAG_COMMANDS="$(ls "$bin_path"/cg-tag* | sed 's#.*/##' | tr '\n' ' ')"
+ ADVANCED_COMMANDS="$(ls "$bin_path"/cg-admin-* | sed 's#.*/##' | tr '\n'
+' ')"
+
+- -IFS=$'\n' colorize <<__END__
++colorize <<__END__
+ The Cogito version control system  $(cg-version)
+
+ Available regular commands:
+
+- --
+Life is short - so eat dessert first!
+
+Eric Blake             ebb9@byu.net
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.5 (Cygwin)
+Comment: Public key at home.comcast.net/~ericblake/eblake.gpg
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+
+iD8DBQFFaanr84KuGfSFAYARAmfSAKCZ15/oq3rwsPyB/XLNXpUWYzQRiACfeYcC
+DFw8ldbHVYs0vZtjynI3/hU=
+=rR/p
