@@ -1,92 +1,273 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	DATE_IN_PAST_12_24,HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
-From: Sam Vilain <sam@vilain.net>
-Subject: [PATCH 2/4] git-svn: collect SVK source URL on mirror paths
-Date: Mon, 4 Dec 2006 20:35:21 +1100
-Message-ID: <20061204235724.5393E1380C2@magnus.utsl.gen.nz>
-NNTP-Posting-Date: Mon, 4 Dec 2006 23:57:33 +0000 (UTC)
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [PATCH 12/10] Teach bash about git-repo-config.
+Date: Mon, 27 Nov 2006 04:44:47 -0500
+Message-ID: <20061127094447.GA19273@spearce.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Mon, 27 Nov 2006 09:45:09 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33268>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GrNgf-0005UP-Ly for gcvg-git@gmane.org; Tue, 05 Dec
- 2006 00:57:30 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32407>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1God2o-000425-EN for gcvg-git@gmane.org; Mon, 27 Nov
+ 2006 10:44:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S935968AbWLDX50 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
- 18:57:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937175AbWLDX50
- (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 18:57:26 -0500
-Received: from watts.utsl.gen.nz ([202.78.240.73]:58164 "EHLO
- magnus.utsl.gen.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
- S935968AbWLDX5Z (ORCPT <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006
- 18:57:25 -0500
-Received: by magnus.utsl.gen.nz (Postfix, from userid 1003) id 5393E1380C2;
- Tue,  5 Dec 2006 12:57:24 +1300 (NZDT)
-To: git@vger.kernel.org
+ S1757655AbWK0Joz (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 27 Nov 2006
+ 04:44:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757658AbWK0Joz
+ (ORCPT <rfc822;git-outgoing>); Mon, 27 Nov 2006 04:44:55 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:29075 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S1757655AbWK0Joy
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 27 Nov 2006 04:44:54 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1God2g-0007v5-7P; Mon, 27 Nov 2006 04:44:50 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 9BC2D20FB7F; Mon, 27 Nov 2006 04:44:48 -0500 (EST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-If you use git-svn to import a mirror path within an SVK depot
-directly (eg, file:///home/you/.svk/local/mirror/foo), then the URLs
-and revisions in the generated commits will be of the wrong URL.
+This is a really ugly completion script for git-repo-config, but it has
+some nice properties.  I've added all of the documented configuration
+parameters from Documentation/config.txt to the script, allowing the
+user to complete any standard configuration parameter name.
 
-When we set up with git-svn multi-init, check whether the base URL is
-(the root of) a mirror path, and store it for later.  Set up a couple
-of globals and helper functions for later use.
+We also have some intelligence for the remote.*.* and branch.*.* keys
+by completing not only the key name (e.g. remote.origin) but also the
+values (e.g. remote.*.fetch completes to the branches available on the
+corresponding remote).
+
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
- git-svn.perl |   21 +++++++++++++++++++++
- 1 files changed, 21 insertions(+), 0 deletions(-)
+ Yes, that's it.  I'm finally done tinkering with bash
+ completion support for this week.  Total of 12 patches.
+ Sorry about the numbering Junio; when I sent the first 10
+ I thought I was going to bed, but then decided to stay
+ up and hack a bit more...
 
-diff --git a/git-svn.perl b/git-svn.perl
-index 93cfcc4..c5f82be 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -5,6 +5,7 @@ use warnings;
- use strict;
- use vars qw/	$AUTHOR $VERSION
- 		$SVN_URL $SVN_INFO $SVN_WC $SVN_UUID
-+		$SVM_URL $SVM_UUID
- 		$GIT_SVN_INDEX $GIT_SVN
- 		$GIT_DIR $GIT_SVN_DIR $REVDB/;
- $AUTHOR = 'Eric Wong <normalperson@yhbt.net>';
-@@ -733,6 +734,21 @@ sub multi_init {
- 		init($_trunk);
- 		sys('git-repo-config', 'svn.trunk', $_trunk);
- 	}
-+	if ( $url ) {
-+	    # check for the case of SVK mirror path
-+	    my ($ents, $props) = libsvn_ls_fullurl($url, "1");
-+	    if ( my $src = $props->{'svm:source'} ) {
-+		$src =~ s{!$}{};  # don't know wtf a ! is there for
-+		$src =~ s{(^[a-z\+]*://)[^/@]*@}{$1}; # username of no interest
-+
-+		# store the source as a repo-config item
-+		sys('git-repo-config', 'svn.svkmirrorpath', $src);
-+		my $uuid = $props->{'svm:uuid'};
-+		$uuid =~ m{^[0-9a-f\-]{41,}}
-+		    or croak "doesn't look right - svm:uuid is '$uuid'";
-+		sys('git-repo-config', 'svn.svkuuid', $uuid);
-+	    }
-+	}
- 	complete_url_ls_init($url, $_branches, '--branches/-b', '');
- 	complete_url_ls_init($url, $_tags, '--tags/-t', 'tags/');
- }
-@@ -2084,6 +2100,11 @@ sub check_repack {
- 	}
+ I know Linus would like to see the space thing corrected.
+ I'll try to look at it next week if nobody beats me to it.
+
+ contrib/completion/git-completion.bash |  154 ++++++++++++++++++++++++++++++++
+ 1 files changed, 154 insertions(+), 0 deletions(-)
+
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 47b393d..a957165 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -43,6 +43,27 @@ __git_ps1 ()
+ 	fi
  }
  
-+sub get_svm_url {
-+    chomp($SVM_URL = `git-repo-config --get svn.svkmirrorpath`);
-+    chomp($SVM_UUID = `git-repo-config --get svn.svkuuid`);
++__git_heads ()
++{
++	local cmd i is_hash=y dir="${1:-$(__gitdir)}"
++	if [ -d "$dir" ]; then
++		for i in $(git --git-dir="$dir" \
++			for-each-ref --format='%(refname)' \
++			refs/heads ); do
++			echo "${i#refs/heads/}"
++		done
++		return
++	fi
++	for i in $(git-ls-remote "$dir" 2>/dev/null); do
++		case "$is_hash,$i" in
++		y,*) is_hash=n ;;
++		n,*^{}) is_hash=y ;;
++		n,refs/heads/*) is_hash=y; echo "${i#refs/heads/}" ;;
++		n,*) is_hash=y; echo "$i" ;;
++		esac
++	done
 +}
 +
- sub set_commit_env {
- 	my ($log_msg) = @_;
- 	my $author = $log_msg->{author};
+ __git_refs ()
+ {
+ 	local cmd i is_hash=y dir="${1:-$(__gitdir)}"
+@@ -91,6 +112,23 @@ __git_refs2 ()
+ 	done
+ }
+ 
++__git_refs_remotes ()
++{
++	local cmd i is_hash=y
++	for i in $(git-ls-remote "$1" 2>/dev/null); do
++		case "$is_hash,$i" in
++		n,refs/heads/*)
++			is_hash=y
++			echo "$i:refs/remotes/$1/${i#refs/heads/}"
++			;;
++		y,*) is_hash=n ;;
++		n,*^{}) is_hash=y ;;
++		n,refs/tags/*) is_hash=y;;
++		n,*) is_hash=y; ;;
++		esac
++	done
++}
++
+ __git_remotes ()
+ {
+ 	local i ngoff IFS=$'\n' d="$(__gitdir)"
+@@ -520,6 +558,119 @@ _git_rebase ()
+ 	COMPREPLY=($(compgen -W "$(__git_refs)" -- "$cur"))
+ }
+ 
++_git_repo_config ()
++{
++	local cur="${COMP_WORDS[COMP_CWORD]}"
++	local prv="${COMP_WORDS[COMP_CWORD-1]}"
++	case "$prv" in
++	branch.*.remote)
++		COMPREPLY=($(compgen -W "$(__git_remotes)" -- "$cur"))
++		return
++		;;
++	branch.*.merge)
++		COMPREPLY=($(compgen -W "$(__git_refs)" -- "$cur"))
++		return
++		;;
++	remote.*.fetch)
++		local remote="${prv#remote.}"
++		remote="${remote%.fetch}"
++		COMPREPLY=($(compgen -W "$(__git_refs_remotes "$remote")" \
++			-- "$cur"))
++		return
++		;;
++	remote.*.push)
++		local remote="${prv#remote.}"
++		remote="${remote%.push}"
++		COMPREPLY=($(compgen -W "$(git --git-dir="$(__gitdir)" \
++			for-each-ref --format='%(refname):%(refname)' \
++			refs/heads)" -- "$cur"))
++		return
++		;;
++	*.*)
++		COMPREPLY=()
++		return
++		;;
++	esac
++	case "$cur" in
++	--*)
++		COMPREPLY=($(compgen -W "
++			--global --list --replace-all
++			--get --get-all --get-regexp
++			--unset --unset-all
++			" -- "$cur"))
++		return
++		;;
++	branch.*.*)
++		local pfx="${cur%.*}."
++		cur="${cur##*.}"
++		COMPREPLY=($(compgen -P "$pfx" -W "remote merge" -- "$cur"))
++		return
++		;;
++	branch.*)
++		local pfx="${cur%.*}."
++		cur="${cur#*.}"
++		COMPREPLY=($(compgen -P "$pfx" -S . \
++			-W "$(__git_heads)" -- "$cur"))
++		return
++		;;
++	remote.*.*)
++		local pfx="${cur%.*}."
++		cur="${cur##*.}"
++		COMPREPLY=($(compgen -P "$pfx" -W "url fetch push" -- "$cur"))
++		return
++		;;
++	remote.*)
++		local pfx="${cur%.*}."
++		cur="${cur#*.}"
++		COMPREPLY=($(compgen -P "$pfx" -S . \
++			-W "$(__git_remotes)" -- "$cur"))
++		return
++		;;
++	esac
++	COMPREPLY=($(compgen -W "
++		apply.whitespace
++		core.fileMode
++		core.gitProxy
++		core.ignoreStat
++		core.preferSymlinkRefs
++		core.logAllRefUpdates
++		core.repositoryFormatVersion
++		core.sharedRepository
++		core.warnAmbiguousRefs
++		core.compression
++		core.legacyHeaders
++		i18n.commitEncoding
++		diff.color
++		diff.renameLimit
++		diff.renames
++		pager.color
++		status.color
++		log.showroot
++		show.difftree
++		showbranch.default
++		whatchanged.difftree
++		http.sslVerify
++		http.sslCert
++		http.sslKey
++		http.sslCAInfo
++		http.sslCAPath
++		http.maxRequests
++		http.lowSpeedLimit http.lowSpeedTime
++		http.noEPSV
++		pack.window
++		repack.useDeltaBaseOffset
++		pull.octopus pull.twohead
++		merge.summary
++		receive.unpackLimit
++		receive.denyNonFastForwards
++		user.name user.email
++		tar.umask
++		gitcvs.enabled
++		gitcvs.logfile
++		branch. remote.
++	" -- "$cur"))
++}
++
+ _git_reset ()
+ {
+ 	local cur="${COMP_WORDS[COMP_CWORD]}"
+@@ -572,6 +723,7 @@ _git ()
+ 	pull)        _git_pull ;;
+ 	push)        _git_push ;;
+ 	rebase)      _git_rebase ;;
++	repo-config) _git_repo_config ;;
+ 	reset)       _git_reset ;;
+ 	show)        _git_log ;;
+ 	show-branch) _git_log ;;
+@@ -605,6 +757,7 @@ complete -o default            -F _git_name_rev git-name-rev
+ complete -o default -o nospace -F _git_pull git-pull
+ complete -o default -o nospace -F _git_push git-push
+ complete -o default            -F _git_rebase git-rebase
++complete -o default            -F _git_repo_config git-repo-config
+ complete -o default            -F _git_reset git-reset
+ complete -o default            -F _git_log git-show
+ complete -o default -o nospace -F _git_log git-show-branch
+@@ -626,6 +779,7 @@ complete -o default -o nospace -F _git_ls_tree git-ls-tree.exe
+ complete -o default            -F _git_merge_base git-merge-base.exe
+ complete -o default            -F _git_name_rev git-name-rev.exe
+ complete -o default -o nospace -F _git_push git-push.exe
++complete -o default            -F _git_repo_config git-repo-config
+ complete -o default -o nospace -F _git_log git-show.exe
+ complete -o default -o nospace -F _git_log git-show-branch.exe
+ complete -o default -o nospace -F _git_log git-whatchanged.exe
 -- 
-1.4.4.1.ge918e-dirty
