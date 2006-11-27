@@ -1,64 +1,174 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Seth Falcon <sethfalcon@gmail.com>
-Subject: Re: [RFC] requiring Perl SVN libraries for git-svn
-Date: Fri, 15 Dec 2006 13:06:57 -0800
-Message-ID: <m28xh8amxa.fsf@ziti.local>
-References: <20061213202142.GE8179@localdomain>
-	<20061215184424.GA1442@localdomain>
+X-Spam-Status: No, score=-2.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,MSGID_FROM_MTA_HEADER,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+From: Sean <seanlkml@sympatico.ca>
+Subject: [PATCH] Update documentation to remove incorrect GIT_DIFF_OPTS
+ example.
+Date: Mon, 27 Nov 2006 14:37:43 -0500
+Message-ID: <BAYC1-PASMTP10903FA2C4B5C1F99E1322AEE60@CEZ.ICE>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 15 Dec 2006 21:07:25 +0000 (UTC)
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Mon, 27 Nov 2006 19:39:01 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:to:subject:references:from:date:in-reply-to:message-id:user-agent:mime-version:content-type;
-        b=Wovju2R3K4+4Veyu1HPnr2m1HKle/K07GB/7WWjLRDBwum3wX7Lx1qgyhCTdKsBhYoVGX8kG3R1/9WR/YOgaHp7iICvnDpNZOZhXJfkZIFRrw6T5/Ms4m6PUQcUvEhan0pfSeqnI/b5T3D6rda7TjMo6iv0evjcKXJl/jj50frY=
-In-Reply-To: <20061215184424.GA1442@localdomain> (Eric Wong's message of "Fri, 15 Dec 2006 10:44:24 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (darwin)
+X-Originating-IP: [65.93.43.74]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Original-Message-Id: <20061127143743.67c6a4e9.seanlkml@sympatico.ca>
+X-Mailer: Sylpheed version 2.2.10 (GTK+ 2.10.4; i386-redhat-linux-gnu)
+X-OriginalArrivalTime: 27 Nov 2006 19:41:51.0390 (UTC) FILETIME=[15B62BE0:01C7125C]
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34551>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GvKH0-0008P3-3r for gcvg-git@gmane.org; Fri, 15 Dec
- 2006 22:07:18 +0100
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GomIY-0001WE-FS for gcvg-git@gmane.org; Mon, 27 Nov
+ 2006 20:37:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S964997AbWLOVHG (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 15 Dec 2006
- 16:07:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965008AbWLOVHG
- (ORCPT <rfc822;git-outgoing>); Fri, 15 Dec 2006 16:07:06 -0500
-Received: from ug-out-1314.google.com ([66.249.92.170]:22874 "EHLO
- ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S964997AbWLOVHE (ORCPT <rfc822;git@vger.kernel.org>); Fri, 15 Dec
- 2006 16:07:04 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so917852uga for
- <git@vger.kernel.org>; Fri, 15 Dec 2006 13:07:02 -0800 (PST)
-Received: by 10.66.232.9 with SMTP id e9mr502366ugh.1166216822340; Fri, 15
- Dec 2006 13:07:02 -0800 (PST)
-Received: from ziti.local ( [140.107.181.122]) by mx.google.com with ESMTP id
- m1sm4045484ugc.2006.12.15.13.07.01; Fri, 15 Dec 2006 13:07:02 -0800 (PST)
+ S1758524AbWK0Thq (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 27 Nov 2006
+ 14:37:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758537AbWK0Thq
+ (ORCPT <rfc822;git-outgoing>); Mon, 27 Nov 2006 14:37:46 -0500
+Received: from bayc1-pasmtp10.bayc1.hotmail.com ([65.54.191.170]:42149 "EHLO
+ BAYC1-PASMTP10.bayc1.hotmail.com") by vger.kernel.org with ESMTP id
+ S1758524AbWK0Thp (ORCPT <rfc822;git@vger.kernel.org>); Mon, 27 Nov 2006
+ 14:37:45 -0500
+Received: from linux1.attic.local ([65.93.43.74]) by
+ BAYC1-PASMTP10.bayc1.hotmail.com over TLS secured channel with Microsoft
+ SMTPSVC(6.0.3790.1830); Mon, 27 Nov 2006 11:41:51 -0800
+Received: from guru.attic.local ([10.10.10.28]) by linux1.attic.local with
+ esmtp (Exim 4.43) id 1GolMM-000778-5y for git@vger.kernel.org; Mon, 27 Nov
+ 2006 13:37:42 -0500
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Eric Wong <normalperson@yhbt.net> writes:
+Git no longer calls an external diff program to generate patches.
+Remove the documentation which suggests that you can pass
+arbitrary diff options via the GIT_DIFF_OPTS environment variable.
 
-> Eric Wong <normalperson@yhbt.net> wrote:
->> Are there any git-svn users out there who would be seriously hurt if I
->> dropped support for using the svn command-line client in git-svn?
->
-> One additional comment is that the dcommit command (much favored over
-> 'git svn commit') does not currently work with the command-line
-> client.
+Signed-off-by: Sean Estabrooks <seanlkml@sympatico.ca>
+---
+ Documentation/diff-format.txt |   57 ++++------------------------------------
+ Documentation/git.txt         |   32 ++++++++++++++++++++---
+ 2 files changed, 34 insertions(+), 55 deletions(-)
 
-Which IMO, suggests that you should drop command-line support asap.
-Those wanting command-line support are most likely to be beginning
-users who almost certainly want to be using dcommit.
-
-(that makes $0.04)
-
+diff --git a/Documentation/diff-format.txt b/Documentation/diff-format.txt
+index e4520e2..883c1bb 100644
+--- a/Documentation/diff-format.txt
++++ b/Documentation/diff-format.txt
+@@ -65,62 +65,17 @@ Generating patches with -p
+ 
+ When "git-diff-index", "git-diff-tree", or "git-diff-files" are run
+ with a '-p' option, they do not produce the output described above;
+-instead they produce a patch file.
++instead they produce a patch file.  You can customize the creation
++of such patches via the GIT_EXTERNAL_DIFF and the GIT_DIFF_OPTS
++environment variables.
+ 
+-The patch generation can be customized at two levels.
+-
+-1. When the environment variable 'GIT_EXTERNAL_DIFF' is not set,
+-   these commands internally invoke "diff" like this:
+-
+-      diff -L a/<path> -L b/<path> -pu <old> <new>
+-+
+-For added files, `/dev/null` is used for <old>.  For removed
+-files, `/dev/null` is used for <new>
+-+
+-The "diff" formatting options can be customized via the
+-environment variable 'GIT_DIFF_OPTS'.  For example, if you
+-prefer context diff:
+-
+-      GIT_DIFF_OPTS=-c git-diff-index -p HEAD
+-
+-
+-2. When the environment variable 'GIT_EXTERNAL_DIFF' is set, the
+-   program named by it is called, instead of the diff invocation
+-   described above.
+-+
+-For a path that is added, removed, or modified,
+-'GIT_EXTERNAL_DIFF' is called with 7 parameters:
+-
+-     path old-file old-hex old-mode new-file new-hex new-mode
+-+
+-where:
+-
+-     <old|new>-file:: are files GIT_EXTERNAL_DIFF can use to read the
+-		      contents of <old|new>,
+-     <old|new>-hex:: are the 40-hexdigit SHA1 hashes,
+-     <old|new>-mode:: are the octal representation of the file modes.
+-
+-+ 
+-The file parameters can point at the user's working file
+-(e.g. `new-file` in "git-diff-files"), `/dev/null` (e.g. `old-file`
+-when a new file is added), or a temporary file (e.g. `old-file` in the
+-index).  'GIT_EXTERNAL_DIFF' should not worry about unlinking the
+-temporary file --- it is removed when 'GIT_EXTERNAL_DIFF' exits.
+-
+-For a path that is unmerged, 'GIT_EXTERNAL_DIFF' is called with 1
+-parameter, <path>.
+-
+-
+-git specific extension to diff format
+--------------------------------------
+-
+-What -p option produces is slightly different from the
+-traditional diff format.
++What the -p option produces is slightly different from the traditional
++diff format.
+ 
+ 1.   It is preceded with a "git diff" header, that looks like
+      this:
+ 
+-     diff --git a/file1 b/file2
++       diff --git a/file1 b/file2
+ +
+ The `a/` and `b/` filenames are the same unless rename/copy is
+ involved.  Especially, even for a creation or a deletion,
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index 619d656..6382ef0 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -639,11 +639,35 @@ git Commits
+ git Diffs
+ ~~~~~~~~~
+ 'GIT_DIFF_OPTS'::
++	Only valid setting is "--unified=??" or "-u??" to set the
++	number of context lines shown when a unified diff is created.
++	This takes precedence over any "-U" or "--unified" option
++	value passed on the git diff command line.
++
+ 'GIT_EXTERNAL_DIFF'::
+-	see the "generating patches" section in :
+-	gitlink:git-diff-index[1];
+-	gitlink:git-diff-files[1];
+-	gitlink:git-diff-tree[1]
++	When the environment variable 'GIT_EXTERNAL_DIFF' is set, the
++	program named by it is called, instead of the diff invocation
++	described above.  For a path that is added, removed, or modified,
++        'GIT_EXTERNAL_DIFF' is called with 7 parameters:
++
++	path old-file old-hex old-mode new-file new-hex new-mode
+++
++where:
++
++	<old|new>-file:: are files GIT_EXTERNAL_DIFF can use to read the
++                         contents of <old|new>,
++	<old|new>-hex:: are the 40-hexdigit SHA1 hashes,
++	<old|new>-mode:: are the octal representation of the file modes.
++
+++
++The file parameters can point at the user's working file
++(e.g. `new-file` in "git-diff-files"), `/dev/null` (e.g. `old-file`
++when a new file is added), or a temporary file (e.g. `old-file` in the
++index).  'GIT_EXTERNAL_DIFF' should not worry about unlinking the
++temporary file --- it is removed when 'GIT_EXTERNAL_DIFF' exits.
+++
++For a path that is unmerged, 'GIT_EXTERNAL_DIFF' is called with 1
++parameter, <path>.
+ 
+ other
+ ~~~~~
+-- 
+1.4.4.1
