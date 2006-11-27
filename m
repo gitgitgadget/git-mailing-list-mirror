@@ -1,68 +1,141 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Liu Yubao <yubao.liu@gmail.com>
-Subject: how to show log for only one branch
-Date: Mon, 06 Nov 2006 11:41:15 +0800
-Message-ID: <454EAEDB.8020909@gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [PATCH 4/4] Teach bash about git-am/git-apply and their whitespace options.
+Date: Mon, 27 Nov 2006 15:12:03 -0500
+Message-ID: <20061127201203.GD7308@spearce.org>
+References: <139669072795537547ec26b69115509100dcd7ec.1164658223.git.spearce@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Mon, 6 Nov 2006 03:42:36 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Mon, 27 Nov 2006 20:13:09 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:user-agent:mime-version:to:subject:content-type:content-transfer-encoding;
-        b=mfEvGhvxUaLgxe8ARVvKDa5k2QQNI74hqScydVzhXe2M0HJAAs4rm+xK+fkb3QZg3ZXK9apNtotxm0teyon7pbJZlPf4yv5ccaAMkdADI/Afc91Nvy0edaZGy5Hop7HPgtSHAMM/2ucpTd8cq4ngBY+8dK4JgEdGXtET8RU60L0=
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.0.7) Gecko/20060909 Thunderbird/1.5.0.7 Mnenhy/0.7.4.666
+Content-Disposition: inline
+In-Reply-To: <139669072795537547ec26b69115509100dcd7ec.1164658223.git.spearce@spearce.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30990>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32446>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GgvNW-0006tg-F9 for gcvg-git@gmane.org; Mon, 06 Nov
- 2006 04:42:30 +0100
+ esmtp (Exim 4.43) id 1Gompn-0000zl-LY for gcvg-git@gmane.org; Mon, 27 Nov
+ 2006 21:12:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1423408AbWKFDmQ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 5 Nov 2006
- 22:42:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423415AbWKFDmQ
- (ORCPT <rfc822;git-outgoing>); Sun, 5 Nov 2006 22:42:16 -0500
-Received: from py-out-1112.google.com ([64.233.166.183]:28910 "EHLO
- py-out-1112.google.com") by vger.kernel.org with ESMTP id S1423408AbWKFDmQ
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 5 Nov 2006 22:42:16 -0500
-Received: by py-out-1112.google.com with SMTP id a73so922523pye for
- <git@vger.kernel.org>; Sun, 05 Nov 2006 19:42:15 -0800 (PST)
-Received: by 10.35.40.10 with SMTP id s10mr9569323pyj.1162784535068; Sun, 05
- Nov 2006 19:42:15 -0800 (PST)
-Received: from ?192.168.88.85? ( [221.122.47.70]) by mx.google.com with ESMTP
- id n27sm4395127pyh.2006.11.05.19.42.13; Sun, 05 Nov 2006 19:42:14 -0800 (PST)
-To: git@vger.kernel.org
+ S1758557AbWK0UMI (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 27 Nov 2006
+ 15:12:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758556AbWK0UMI
+ (ORCPT <rfc822;git-outgoing>); Mon, 27 Nov 2006 15:12:08 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:59807 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S1758557AbWK0UMG
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 27 Nov 2006 15:12:06 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1GompY-0006Qu-P6; Mon, 27 Nov 2006 15:11:57 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 8793520FB7F; Mon, 27 Nov 2006 15:12:03 -0500 (EST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-I'm some confused by `git log', here is a revision graph:
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ contrib/completion/git-completion.bash |   53 ++++++++++++++++++++++++++++++++
+ 1 files changed, 53 insertions(+), 0 deletions(-)
 
-a-----> b ---> c ----------------> f ---> g --- master
-         \                        /
-          `------> d ----------> e ---- test
-
-I hope `git log ...` shows g, f, c, b, a.
-
-`git log master` shows g, f, e, d, c, b, a;
-`git log master ^test` shows g, f, c.
-`git log --no-merges master` shows g, e, d, c, b, a.
-
-That's to say, I want to view master, master~1, master~2, master~3, ...
-until the beginning, no commits in other branches involved.
-
-I have heard git treats all parents equally in a merge operation, so I
-am curious how git decides which parent is HEAD^1.
-
-I feel the HEAD^1 branch is more special than HEAD^2 branch, because HEAD^1
-is usually the working branch and the target branch of merging operation.
-it's a little more convenient to see only commits that really happen in
-current branch, especially for people who come from CVS and Subversion (yes,
-I think git is more interesting than CVS and Subversion:-).
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index ba3adb6..5b7d9d3 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -307,6 +307,54 @@ __git_aliased_command ()
+ 	done
+ }
+ 
++__git_whitespacelist="nowarn warn error error-all strip"
++
++_git_am ()
++{
++	local cur="${COMP_WORDS[COMP_CWORD]}"
++	if [ -d .dotest ]; then
++		COMPREPLY=($(compgen -W "
++			--skip --resolved
++			" -- "$cur"))
++		return
++	fi
++	case "$cur" in
++	--whitespace=*)
++		COMPREPLY=($(compgen -W "$__git_whitespacelist" \
++			-- "${cur##--whitespace=}"))
++		return
++		;;
++	--*)
++		COMPREPLY=($(compgen -W "
++			--signoff --utf8 --binary --3way --interactive
++			--whitespace=
++			" -- "$cur"))
++		return
++	esac
++	COMPREPLY=()
++}
++
++_git_apply ()
++{
++	local cur="${COMP_WORDS[COMP_CWORD]}"
++	case "$cur" in
++	--whitespace=*)
++		COMPREPLY=($(compgen -W "$__git_whitespacelist" \
++			-- "${cur##--whitespace=}"))
++		return
++		;;
++	--*)
++		COMPREPLY=($(compgen -W "
++			--stat --numstat --summary --check --index
++			--cached --index-info --reverse --reject --unidiff-zero
++			--apply --no-add --exclude=
++			--whitespace= --inaccurate-eof --verbose
++			" -- "$cur"))
++		return
++	esac
++	COMPREPLY=()
++}
++
+ _git_branch ()
+ {
+ 	local cur="${COMP_WORDS[COMP_CWORD]}"
+@@ -760,6 +808,8 @@ _git ()
+ 	[ "$expansion" ] && command="$expansion"
+ 
+ 	case "$command" in
++	am)          _git_am ;;
++	apply)       _git_apply ;;
+ 	branch)      _git_branch ;;
+ 	cat-file)    _git_cat_file ;;
+ 	checkout)    _git_checkout ;;
+@@ -795,6 +845,8 @@ _gitk ()
+ 
+ complete -o default -o nospace -F _git git
+ complete -o default            -F _gitk gitk
++complete -o default            -F _git_am git-am
++complete -o default            -F _git_apply git-apply
+ complete -o default            -F _git_branch git-branch
+ complete -o default -o nospace -F _git_cat_file git-cat-file
+ complete -o default            -F _git_checkout git-checkout
+@@ -824,6 +876,7 @@ complete -o default -o nospace -F _git_log git-whatchanged
+ # included the '.exe' suffix.
+ #
+ if [ Cygwin = "$(uname -o 2>/dev/null)" ]; then
++complete -o default            -F _git_apply git-apply.exe
+ complete -o default -o nospace -F _git git.exe
+ complete -o default            -F _git_branch git-branch.exe
+ complete -o default -o nospace -F _git_cat_file git-cat-file.exe
+-- 
