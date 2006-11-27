@@ -4,79 +4,60 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
-Subject: [PATCH 0/3] Re: Author name and e-mail address in .stgitrc
-Date: Sun, 12 Nov 2006 00:23:22 +0100
-Message-ID: <20061111232322.17760.26214.stgit@localhost>
-References: <b0943d9e0611111502q2f68be67l1a2441d84923a732@mail.gmail.com>
+From: Nicolas Vilz <niv@iaglans.de>
+Subject: Re: [PATCH 9/10] Allow completion of --committer and --author arguments to git log.
+Date: Mon, 27 Nov 2006 11:28:32 +0100
+Message-ID: <20061127102831.GA5428@fry.bender.fht>
+References: <de7beb117fb963e68e1085b773593be326ffd495.1164616814.git.spearce@spearce.org> <20061127084228.GI19745@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Sat, 11 Nov 2006 23:31:06 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Mon, 27 Nov 2006 10:28:56 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <b0943d9e0611111502q2f68be67l1a2441d84923a732@mail.gmail.com>
-User-Agent: StGIT/0.11
+Content-Disposition: inline
+In-Reply-To: <20061127084228.GI19745@spearce.org>
+X-message-flag: Please send plain text messages only. Thank you.
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at hs-esslingen.de
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31248>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32408>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gj2JR-0006nP-SF for gcvg-git@gmane.org; Sun, 12 Nov
- 2006 00:31:02 +0100
+ esmtp (Exim 4.43) id 1GodjB-0005UX-3K for gcvg-git@gmane.org; Mon, 27 Nov
+ 2006 11:28:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1946018AbWKKXao convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Sat, 11 Nov 2006 18:30:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1947325AbWKKXao
- (ORCPT <rfc822;git-outgoing>); Sat, 11 Nov 2006 18:30:44 -0500
-Received: from mxfep03.bredband.com ([195.54.107.76]:19950 "EHLO
- mxfep03.bredband.com") by vger.kernel.org with ESMTP id S1946018AbWKKXan
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 11 Nov 2006 18:30:43 -0500
-Received: from ironport.bredband.com ([195.54.107.82] [195.54.107.82]) by
- mxfep03.bredband.com with ESMTP id
- <20061111233041.CNKZ25623.mxfep03.bredband.com@ironport.bredband.com> for
- <git@vger.kernel.org>; Sun, 12 Nov 2006 00:30:41 +0100
-Received: from ua-83-227-180-148.cust.bredbandsbolaget.se (HELO
- yoghurt.hemma.treskal.com) ([83.227.180.148]) by ironport.bredband.com with
- ESMTP; 12 Nov 2006 00:30:41 +0100
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by
- yoghurt.hemma.treskal.com (Postfix) with ESMTP id 3AE754C04D; Sun, 12 Nov
- 2006 00:30:41 +0100 (CET)
-To: Catalin Marinas <catalin.marinas@gmail.com>
+ S1757806AbWK0K2m (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 27 Nov 2006
+ 05:28:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757824AbWK0K2m
+ (ORCPT <rfc822;git-outgoing>); Mon, 27 Nov 2006 05:28:42 -0500
+Received: from mail.hs-esslingen.de ([134.108.32.78]:59274 "EHLO
+ mail.hs-esslingen.de") by vger.kernel.org with ESMTP id S1757801AbWK0K2l
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 27 Nov 2006 05:28:41 -0500
+Received: from localhost (mail.hs-esslingen.de [134.108.32.78]) by
+ mail.hs-esslingen.de (Postfix) with ESMTP id 7F4CF13E74; Mon, 27 Nov 2006
+ 11:28:39 +0100 (CET)
+Received: from mail.hs-esslingen.de ([134.108.32.78]) by localhost (rslx211
+ [127.0.0.1]) (amavisd-new, port 10024) with ESMTP id 14807-05; Mon, 27 Nov
+ 2006 11:28:33 +0100 (CET)
+Received: from localhost (ovpngp2198.hs-esslingen.de [134.108.122.198])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by mail.hs-esslingen.de (Postfix) with ESMTP id
+ 4492913E2B; Mon, 27 Nov 2006 11:28:33 +0100 (CET)
+To: "Shawn O. Pearce" <spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 
-On 2006-11-11 23:02:04 +0000, Catalin Marinas wrote:
+On Mon, Nov 27, 2006 at 03:42:28AM -0500, Shawn O. Pearce wrote:
+> This is just a cute hack, but we can (easily) complete the parameter
+> to --author or --committer in bash by asking for all possible authors
+> or committers in this project from git log and offering them up as
+> valid choices.
+> 
+> We replace spaces with dots as this prevents names with spaces from
+> appearing as two parameters rather than one, yet it still matches the
+> space in the field.
+is it hard to train bash-completion to use "" and spaces instead of 
+replacing spaces by dots? Besides, great feature, thank you for that... 
+that's very handy.
 
-> On 11/11/06, Karl Hasselstr=C3=B6m <kha@treskal.com> wrote:
->
-> > Is there any particular reason to have the author and committer
-> > names in ~/.stgitrc? Simply taking them from the same place git
-> > does would probably be a usability enhancement (unless they're
-> > specified on the command line, of course).
->=20
-> At the time I added these to .stgitrc, the only place git was taking
-> them from was the environment variables and I wanted to put them in a
-> single place. I also didn't like the idea of having the committer
-> e-mail address be some username@local-machine as I don't think the
-> name of the machine where I create patches is relevant. I also define
-> the committer/author per repository in the .git/stgitrc file (i.e. I
-> use @arm.com for Linux patches and @gmail.com for StGIT).
-
-Well, this should all be sorted out now; git has both per-repository
-and per-user config files.
-
-> I use StGIT almost exclusively, even in "maintainer" mode and I
-> would like not to spread the configuration options over many files.
-> It is on my todo list to use the same configuration file as git
-> (with a [stgit] section) since it has a format that should be
-> understood by the Python config module.
-
-The last patch in this series deprecates name and email config in
-stgitrc by not mentioning them in the example stgitrc, because
-teaching newbies to use yet another layer of identity configuration on
-top of what git already provides is madness. Old-timers may continue
-using stgitrc for that purpose for now (but as you say, integrating
-the configuration with git is on the TODO list).
-
---=20
-Karl Hasselstr=C3=B6m, kha@treskal.com
+Sincerly
