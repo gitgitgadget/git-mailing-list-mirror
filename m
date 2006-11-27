@@ -1,52 +1,72 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Nicholas Allen <nick.allen@onlinehome.de>
-Subject: Re: git and bzr
-Date: Tue, 28 Nov 2006 23:34:19 +0100
-Message-ID: <456CB96B.1030504@onlinehome.de>
-References: <Pine.LNX.4.64.0610260753090.3962@g5.osdl.org>	<456B7C6A.80104@webdrake.net>	<845b6e870611280410j58bdcd99nc05d0f67489293e4@mail.gmail.com>	<ekhaeg$etk$1@sea.gmane.org>	<Pine.LNX.4.63.0611281433270.30004@wbgn013.biozentrum.uni-wuerzburg.de>	<Pine.LNX.4.64.0611280754050.30076@woody.osdl.org>	<456C7592.6020700@ableton.com> <ekhtnt$rkk$1@sea.gmane.org>	<456C9DFF.1040407@onlinehome.de> <456CA981.4010808@onlinehome.de> <20061128214531.GA24299@jameswestby.net>
+From: Michael Loeffler <miloeffler@googlemail.com>
+Subject: Re: [PATCH 3/3] git-fetch: allow glob pattern in refspec
+Date: Mon, 27 Nov 2006 19:14:21 +0100
+Message-ID: <1164651262.13153.31.camel@ibook.zvpunry.de>
+References: <7vzmaik4mi.fsf@assigned-by-dhcp.cox.net>
+Reply-To: miloeffler@googlemail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Tue, 28 Nov 2006 22:34:34 +0000 (UTC)
+NNTP-Posting-Date: Mon, 27 Nov 2006 18:14:59 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.8 (X11/20061115)
-In-Reply-To: <20061128214531.GA24299@jameswestby.net>
-X-Enigmail-Version: 0.94.0.0
-X-Provags-ID: kundenserver.de abuse@kundenserver.de login:8f68dfdb39f9894a8a7411e7c5df1048
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=googlemail.com;
+        h=received:subject:from:reply-to:to:in-reply-to:references:content-type:date:message-id:mime-version:x-mailer:content-transfer-encoding;
+        b=h5k/+YYxdLC0vdrGPZG+FE6ZiqaBZYnmtIi+uOjR2dPzV0YUS0VCKKTWY3zqBJy9dfIzHafg4K6GaS+UgtPRVSEvjewtOsVtez2kp2J80vLSNwjDf1fQ5P30Ofs2LCOMFhmABCa7wIfnVCW84/7GycXM4hAJm9THvBSqfnMP6f8=
+In-Reply-To: <7vzmaik4mi.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Evolution 2.6.3 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32599>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32435>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GpBWz-0001os-SK for gcvg-git@gmane.org; Tue, 28 Nov
- 2006 23:34:26 +0100
+ esmtp (Exim 4.43) id 1Gokzu-0005YI-Qq for gcvg-git@gmane.org; Mon, 27 Nov
+ 2006 19:14:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1755795AbWK1WeW (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 28 Nov 2006
- 17:34:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756360AbWK1WeW
- (ORCPT <rfc822;git-outgoing>); Tue, 28 Nov 2006 17:34:22 -0500
-Received: from moutng.kundenserver.de ([212.227.126.186]:38899 "EHLO
- moutng.kundenserver.de") by vger.kernel.org with ESMTP id S1755795AbWK1WeV
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2006 17:34:21 -0500
-Received: from [84.190.155.117] (helo=[192.168.1.100]) by
- mrelayeu.kundenserver.de (node=mrelayeu1) with ESMTP (Nemesis), id
- 0MKwpI-1GpBWt2SiQ-0000rm; Tue, 28 Nov 2006 23:34:20 +0100
-To: bazaar-ng@lists.canonical.com, Git Mailing List <git@vger.kernel.org>
+ S1758502AbWK0SO2 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 27 Nov 2006
+ 13:14:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758504AbWK0SO1
+ (ORCPT <rfc822;git-outgoing>); Mon, 27 Nov 2006 13:14:27 -0500
+Received: from ug-out-1314.google.com ([66.249.92.173]:5312 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1758502AbWK0SO1
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 27 Nov 2006 13:14:27 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so1221343uga for
+ <git@vger.kernel.org>; Mon, 27 Nov 2006 10:14:25 -0800 (PST)
+Received: by 10.67.19.20 with SMTP id w20mr12927285ugi.1164651265457; Mon, 27
+ Nov 2006 10:14:25 -0800 (PST)
+Received: from ?192.168.17.101? ( [217.224.101.164]) by mx.google.com with
+ ESMTP id m1sm18158230ugc.2006.11.27.10.14.24; Mon, 27 Nov 2006 10:14:25 -0800
+ (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Thanks for the informative response. It helped but I'm still slightly
-confused by git - I think I need to play around with it a bit more to
-understand and get more familiar with the concepts...
+hi,
 
-Purely from an initial usage point of view though, for me at least, the
-bzr output needed no explanation which I think is indicative of a good
-user interface whereas the git was not so clear or obvious - there must
-be room for improvement in git's user friendliness here surely. But that
-might just be because I am clueless when it comes to the way git works
-and the concepts it uses ;-)
+Am Mittwoch, den 22.11.2006, 23:24 -0800 schrieb Junio C Hamano: 
+> This adds Andy's refspec glob.  You can have a single line:
+> 
+> 	Pull: refs/heads/*:refs/remotes/origin/*
+How about using extended regex for this, something like this:
+Pull: refs/heads/master:refs/remotes/origin/master
+Pull: refs/tags/v(.*):refs/tags/origin/v\1
 
+... 
+> +expand_refs_wildcard () {
+> +	for ref
+> +	do
+...
+How about using something like:
+echo "$ls_remote_result" | sed -n -r -e "s:$ref: p"
+
+Using $ref as a part of the sed expression is not a good idea (.* should
+not match past the ':'), but something like this maybe. What do you
+think?
+
+bye
