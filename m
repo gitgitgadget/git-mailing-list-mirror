@@ -1,70 +1,125 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Add --bool and --int to the OPTIONS section
-Date: Wed, 29 Nov 2006 11:09:42 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0611291107130.30004@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <7vd5772unw.fsf@assigned-by-dhcp.cox.net> <200611290825.40953.andyparkins@gmail.com>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [PATCH 1/10] Teach git-completion.bash how to complete git-merge.
+Date: Mon, 27 Nov 2006 03:40:47 -0500
+Message-ID: <20061127084047.GA19745@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Wed, 29 Nov 2006 10:09:55 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Mon, 27 Nov 2006 08:41:06 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <200611290825.40953.andyparkins@gmail.com>
-X-Y-GMX-Trusted: 0
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32628>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32391>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GpMNw-00033K-8k for gcvg-git@gmane.org; Wed, 29 Nov
- 2006 11:09:48 +0100
+ esmtp (Exim 4.43) id 1Goc2r-0007R1-1m for gcvg-git@gmane.org; Mon, 27 Nov
+ 2006 09:40:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S966654AbWK2KJp (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 29 Nov 2006
- 05:09:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966656AbWK2KJp
- (ORCPT <rfc822;git-outgoing>); Wed, 29 Nov 2006 05:09:45 -0500
-Received: from mail.gmx.net ([213.165.64.20]:62954 "HELO mail.gmx.net") by
- vger.kernel.org with SMTP id S966654AbWK2KJo (ORCPT
- <rfc822;git@vger.kernel.org>); Wed, 29 Nov 2006 05:09:44 -0500
-Received: (qmail invoked by alias); 29 Nov 2006 10:09:42 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp032) with SMTP; 29 Nov 2006 11:09:42 +0100
-To: Andy Parkins <andyparkins@gmail.com>
+ S1757409AbWK0Ikw (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 27 Nov 2006
+ 03:40:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757410AbWK0Ikw
+ (ORCPT <rfc822;git-outgoing>); Mon, 27 Nov 2006 03:40:52 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:60043 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S1757409AbWK0Ikw
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 27 Nov 2006 03:40:52 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1Goc2i-0004Nu-1x; Mon, 27 Nov 2006 03:40:48 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 10BF420FB7F; Mon, 27 Nov 2006 03:40:48 -0500 (EST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Hi,
+Now that git-merge is high-level Porcelain users are going to expect
+to be able to use it from the command line, in which case we really
+should also be able to complete ref names as parameters.
 
-On Wed, 29 Nov 2006, Andy Parkins wrote:
+I'm also including completion support for the merge strategies
+that are supported by git-merge.sh, should the user wish to use a
+different strategy than their default.
 
-> Signed-off-by: Andy Parkins <andyparkins@gmail.com>
-> ---
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ contrib/completion/git-completion.bash |   30 ++++++++++++++++++++++++++++++
+ 1 files changed, 30 insertions(+), 0 deletions(-)
 
-You might want to use a more-to-the-point subject, and move this into the 
-commit message:
-
-> I did look for just such an option, but didn't find it because it wasn't 
-> in the OPTIONS list of the git-repo-config man page.  If there is an 
-> OPTIONS section it should include all options, otherwise it's no use as 
-> a quick reference.
-
-And this belongs into another mail:
-
-> Your template commit message is an excellent idea, but I don't like the idea 
-> of simply hard coding sign off line into it; it means that there are then two 
-> locations in the .git tree that I'd have to edit to change my name. 
-> [...]
-
-But to answer your concern: you would do this as a hook, which is a script 
-in which you do not put your name directly. Rather, this script gets the 
-current author name by calling either git-var or git-repo-config.
-
-Ciao,
-Dscho
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index a43a177..28bd0e3 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -81,6 +81,16 @@ __git_remotes ()
+ 	done
+ }
+ 
++__git_merge_strategies ()
++{
++	sed -n "/^all_strategies='/{
++		s/^all_strategies='//
++		s/'//
++		p
++		q
++		}" "$(git --exec-path)/git-merge"
++}
++
+ __git_complete_file ()
+ {
+ 	local pfx ls ref cur="${COMP_WORDS[COMP_CWORD]}"
+@@ -240,6 +250,24 @@ _git_log ()
+ 	esac
+ }
+ 
++_git_merge ()
++{
++	local cur="${COMP_WORDS[COMP_CWORD]}"
++	case "$cur" in
++	--*)
++		COMPREPLY=($(compgen -W "
++			--no-commit --no-summary --squash
++			" -- "$cur"))
++		return
++	esac
++	if [ $COMP_CWORD -gt 1 -a X-s = "X${COMP_WORDS[COMP_CWORD-1]}" ]
++	then
++		COMPREPLY=($(compgen -W "$(__git_merge_strategies)" -- "$cur"))
++	else
++		COMPREPLY=($(compgen -W "$(__git_refs)" -- "$cur"))
++	fi
++}
++
+ _git_merge_base ()
+ {
+ 	local cur="${COMP_WORDS[COMP_CWORD]}"
+@@ -348,6 +376,7 @@ _git ()
+ 	log)         _git_log ;;
+ 	ls-remote)   _git_ls_remote ;;
+ 	ls-tree)     _git_ls_tree ;;
++	merge)       _git_merge;;
+ 	merge-base)  _git_merge_base ;;
+ 	pull)        _git_pull ;;
+ 	push)        _git_push ;;
+@@ -376,6 +405,7 @@ complete -o default -o nospace -F _git_fetch git-fetch
+ complete -o default -o nospace -F _git_log git-log
+ complete -o default            -F _git_ls_remote git-ls-remote
+ complete -o default -o nospace -F _git_ls_tree git-ls-tree
++complete -o default            -F _git_merge git-merge
+ complete -o default            -F _git_merge_base git-merge-base
+ complete -o default -o nospace -F _git_pull git-pull
+ complete -o default -o nospace -F _git_push git-push
+-- 
+1.4.4.1.ge3fb
