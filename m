@@ -1,66 +1,56 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: Getting new branches from remote repo.
-Date: Mon, 13 Nov 2006 18:53:54 +0100
-Message-ID: <20061113175354.GA16094@diana.vm.bytemark.co.uk>
-References: <6e1787fe0611122033p49671e13xf5b7f95beeba8b06@mail.gmail.com> <7v8xigar36.fsf@assigned-by-dhcp.cox.net> <20061113091736.GA31693@diana.vm.bytemark.co.uk> <20061113174457.GA16979@spearce.org>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Mozilla, git and Windows
+Date: Mon, 27 Nov 2006 10:28:59 -0500
+Message-ID: <9e4733910611270728p36e58e08w6cc7a2989b7843ce@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Mon, 13 Nov 2006 17:55:09 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>,
-	Alexander Litvinov <litvinov2004@gmail.com>,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Mon, 27 Nov 2006 15:30:06 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=uaIdv0XfVjtz5AXKw6YMqeywhYbQi8dbcTYVRrJbrjjYHH1fkVx3xM5HZ2dgblDoevWJ1gSsiVLzF3zVFAVKAH/1SmOfycxbsr9guykRvaC4pxmxioYnOuGHjhEGrL8BSb+hl0yw6VlyUS/uYHI2HerrztwVGLItIJeKRUId3aw=
 Content-Disposition: inline
-In-Reply-To: <20061113174457.GA16979@spearce.org>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31306>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32419>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gjg0v-0000Nc-JK for gcvg-git@gmane.org; Mon, 13 Nov
- 2006 18:54:33 +0100
+ esmtp (Exim 4.43) id 1GoiQG-0006lb-SW for gcvg-git@gmane.org; Mon, 27 Nov
+ 2006 16:29:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1755289AbWKMRya convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Mon, 13 Nov 2006 12:54:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755290AbWKMRy3
- (ORCPT <rfc822;git-outgoing>); Mon, 13 Nov 2006 12:54:29 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:49936 "EHLO
- diana.vm.bytemark.co.uk") by vger.kernel.org with ESMTP id S1755289AbWKMRy3
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 13 Nov 2006 12:54:29 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1
- (Debian)) id 1Gjg0I-00058r-00; Mon, 13 Nov 2006 17:53:54 +0000
-To: Shawn Pearce <spearce@spearce.org>
+ S1758281AbWK0P3B (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 27 Nov 2006
+ 10:29:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758279AbWK0P3B
+ (ORCPT <rfc822;git-outgoing>); Mon, 27 Nov 2006 10:29:01 -0500
+Received: from py-out-1112.google.com ([64.233.166.178]:5788 "EHLO
+ py-out-1112.google.com") by vger.kernel.org with ESMTP id S1758274AbWK0P3A
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 27 Nov 2006 10:29:00 -0500
+Received: by py-out-1112.google.com with SMTP id a29so1125556pyi for
+ <git@vger.kernel.org>; Mon, 27 Nov 2006 07:28:59 -0800 (PST)
+Received: by 10.35.21.9 with SMTP id y9mr13403321pyi.1164641339605; Mon, 27
+ Nov 2006 07:28:59 -0800 (PST)
+Received: by 10.35.72.13 with HTTP; Mon, 27 Nov 2006 07:28:59 -0800 (PST)
+To: "Git Mailing List" <git@vger.kernel.org>
 Sender: git-owner@vger.kernel.org
 
-On 2006-11-13 12:44:57 -0500, Shawn Pearce wrote:
+In the other thread we are discussing the conversion of Mozilla CVS to
+git format. This is something that has to be done but it is not the
+only issue. Without a native Windows port they won't even consider
+using git. There is also the risk that the features needed by Mozilla
+will be completed after they choose to use a different SCM.
 
-> Karl Hasselstr=F6m <kha@treskal.com> wrote:
->
-> > There really should be a flag to make git fetch do this job. And
-> > if we use separate remotes, the flag should probably default to
-> > "on".
->
-> And also to automatically stop fetching any branch which is no
-> longer listed on the remote system, rather than reporting a "Fetch
-> failure".
+Even if we implement all of the needed features git still needs to win
+the competition against the other possible choices. The last I heard
+the leading candiate is SVN/SVK.
 
-Yes.
-
-> I probably would keep the local ref (they are cheap) just in case
-> the user was counting on that branch and then the remote system
-> pulled the rug out from under them. :-)
-
-Sounds like good default behavior. But I smell the potential for
-another command flag here. :-)
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
+-- 
+Jon Smirl
