@@ -1,148 +1,78 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: VCS comparison table
-Date: Thu, 26 Oct 2006 09:21:34 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0610260912250.3962@g5.osdl.org>
-References: <45357CC3.4040507@utoronto.ca> <20061021130111.GL75501@over-yonder.net>
- <453F2FF8.2080903@op5.se> <200610251146.06116.jnareb@gmail.com>
- <a7e835d40610250308v5d577482m139742e7fe1db185@mail.gmail.com>
- <87slhcz8zh.wl%cworth@cworth.org> <a7e835d40610260152k658aeaf0hb900cb63870c04e4@mail.gmail.com>
- <7vu01ro20b.fsf@assigned-by-dhcp.cox.net> <a7e835d40610260257r5f05ea4gc934f1c1cc267977@mail.gmail.com>
- <20061026101038.GA13310@coredump.intra.peff.net> <877iyne4dm.fsf@alplog.fr>
- <Pine.LNX.4.64.0610260753090.3962@g5.osdl.org> <87k62n5ahp.fsf@alplog.fr>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [PATCH 4/10] Add current branch in PS1 support to git-completion.bash.
+Date: Mon, 27 Nov 2006 11:51:23 -0500
+Message-ID: <20061127165122.GB6616@spearce.org>
+References: <de7beb117fb963e68e1085b773593be326ffd495.1164616814.git.spearce@spearce.org> <20061127084128.GD19745@spearce.org> <20061127103111.4835bffc.seanlkml@sympatico.ca>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Thu, 26 Oct 2006 16:22:51 +0000 (UTC)
-Cc: bazaar-ng@lists.canonical.com, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Mon, 27 Nov 2006 16:51:52 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <87k62n5ahp.fsf@alplog.fr>
-X-MIMEDefang-Filter: osdl$Revision: 1.155 $
-X-Scanned-By: MIMEDefang 2.36
+Content-Disposition: inline
+In-Reply-To: <20061127103111.4835bffc.seanlkml@sympatico.ca>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30233>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32428>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gd7zX-0008Kj-Ri for gcvg-git@gmane.org; Thu, 26 Oct
- 2006 18:22:04 +0200
+ esmtp (Exim 4.43) id 1Gojha-0004oS-Nd for gcvg-git@gmane.org; Mon, 27 Nov
+ 2006 17:51:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1423600AbWJZQWA (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
- 12:22:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423601AbWJZQWA
- (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 12:22:00 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:42386 "EHLO smtp.osdl.org") by
- vger.kernel.org with ESMTP id S1423600AbWJZQV7 (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 12:21:59 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
- smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k9QGLZPo029065
- (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Thu, 26
- Oct 2006 09:21:35 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
- shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k9QGLYZh019975; Thu, 26 Oct
- 2006 09:21:34 -0700
-To: Vincent Ladeuil <v.ladeuil+lp@free.fr>
+ S1758248AbWK0Qv2 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 27 Nov 2006
+ 11:51:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758365AbWK0Qv2
+ (ORCPT <rfc822;git-outgoing>); Mon, 27 Nov 2006 11:51:28 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:57572 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S1758248AbWK0Qv1
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 27 Nov 2006 11:51:27 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1GojhO-0003ei-8G; Mon, 27 Nov 2006 11:51:18 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 1A7EF20FB7F; Mon, 27 Nov 2006 11:51:23 -0500 (EST)
+To: Sean <seanlkml@sympatico.ca>
 Sender: git-owner@vger.kernel.org
 
-
-
-On Thu, 26 Oct 2006, Vincent Ladeuil wrote:
-
-> >>>>> "Linus" == Linus Torvalds <torvalds@osdl.org> writes:
+Sean <seanlkml@sympatico.ca> wrote:
+> On Mon, 27 Nov 2006 03:41:28 -0500
+> "Shawn O. Pearce" <spearce@spearce.org> wrote:
 > 
->     Linus> Commits are defined by a _combination_ of:
+> > Many users want to display the current branch name of the current git
+> > repository as part of their PS1 prompt, much as their PS1 prompt might
+> > also display the current working directory name.
+> > 
+> > We don't force our own PS1 onto the user.  Instead we let them craft
+> > their own PS1 string and offer them the function __git_ps1 which they
+> > can invoke to obtain either "" (when not in a git repository) or
+> > "(%s)" where %s is the name of the current branch, as read from HEAD,
+> > with the leading refs/heads/ removed.
 > 
->     Linus>  - the tree they commit (which is recursive, so the
->     Linus>  commit name indirectly includes information EVERY
->     Linus>  SINGLE BIT in the whole tree, in every single file)
-> 
-> And here you keep that separate from any SCM related info,
-> right ?
+> Suppose it doesn't hurt to include support for this in git completion
+> scripts.  It doesn't look like __git_ps1 is a proper name though,
+> perhaps __git_branch or __git_current_branch would be better?
 
-I don't understand that question.
+I actually started with the name __git_current_branch but changed
+my mind on that and went with __git_ps1.
 
-The commits contain the tree information. A raw commit in git (this is the 
-true contents of the current top commit in my kernel tree, just added 
-indentation and an empty line between the command I used to generate it 
-and the output, to make it stand out better in the email) looks something 
-like this:
+My rationale at the time was probably not correct (it was early this
+morning) but I figured that the current branch name is "master"
+while __git_ps1 prints " (master)".  Therefore __git_ps1 is not
+really printing the current branch, its printing the current branch
+and other stuff.  So I went with a name which implied its purpose.
 
-   [torvalds@g5 linux]$ git-cat-file commit HEAD
-
-   tree ba1ed8c744654ca91ee2b71b7cdee149c8edbef1
-   parent 2a4f739dfc59edd52eaa37d63af1bd830ea42318
-   parent 012d64ff68f304df1c35ce5902f5023dc14b643f
-   author Linus Torvalds <torvalds@g5.osdl.org> 1161873881 -0700
-   committer Linus Torvalds <torvalds@g5.osdl.org> 1161873881 -0700
-   
-   Merge master.kernel.org:/pub/scm/linux/kernel/git/davem/sparc-2.6
-   
-   * master.kernel.org:/pub/scm/linux/kernel/git/davem/sparc-2.6:
-     [SPARC64]: Fix memory corruption in pci_4u_free_consistent().
-     [SPARC64]: Fix central/FHC bus handling on Ex000 systems.
-
-where the _name_ of the commit is 
-
-   [torvalds@g5 linux]$ git-rev-parse HEAD
-
-   e80391500078b524083ba51c3df01bbaaecc94bb
-
-ie the commit itself contains the exact tree name (and the name of the 
-parents), and the name of the commit is literally the SHA1 of the contents 
-of the commit (plus a git-specific header).
-
->     >> Trees are defined by their content only ?
-> 
->     Linus> Where "contents" does include names and
->     Linus> permissions/types (eg execute bit and symlink etc).
-> 
-> Which can also be expressed as: "Everything the user can
-> manipulate outside the SCM context", right ?
-
-Again, I'm not sure what you mean by that. The SCM does not track 
-_everything_. It does not track user names and inode numbers, so in a 
-sense a developer can change things that the SCM simply doesn't _care_ 
-about and never tracks. But yes, the tree contents uniquely identify the 
-exact contents that the user cares about.
-
->     Linus> If you compare the commit name, and they are equal,
->     Linus> you automatically know
-> 
->     Linus>  - the trees are 100% identical
->     Linus>  - the histories are 100% identical
-> 
-> And that's the only info you can get, no ordering here.
-
-No, there is ordering there too. But yes, the ordering is not in the name 
-itself, you have to go look at the actual commit history to see it.
-
-The name is just an identifier.
-
->     Linus> If you only care about the actual tree, you compare
->     Linus> the tree name for equality, ie you can do
-> 
->     Linus> 	git-rev-parse commit1^{tree} commit2^{tree}
-> 
->     Linus> and compare the two: if and only if they are equal are
->     Linus> the actual contents 100% equal.
-> 
-> Actually, that's backwards:
-> 
-> "their actual contents are equal" implies "their signatures are
-> equal".
-
-No. 
-
-If the signatures are equal, the contents are equal, and vice versa. It 
-really is a two-way thing.
-
-> But, two totally different trees can have the same signature.
-
-No. Don't even think that way. That just confuses you. The hash is 
-cryptographic, and large enough, that you really can equate the contents 
-with the hash. Anything else is just not even interesting.
-
+-- 
