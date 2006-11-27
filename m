@@ -1,22 +1,20 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [RFC] git-gui: A commit / fetch / push interface
-Date: Wed, 8 Nov 2006 01:03:50 -0500
-Message-ID: <20061108060350.GE28498@spearce.org>
-References: <20061107083603.GB9622@spearce.org> <17745.3287.358673.265578@cargo.ozlabs.ibm.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [PATCH 1/4] Support --strategy=x completion in addition to --strategy x.
+Date: Mon, 27 Nov 2006 15:10:42 -0500
+Message-ID: <20061127201041.GA7308@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 8 Nov 2006 06:04:30 +0000 (UTC)
+NNTP-Posting-Date: Mon, 27 Nov 2006 20:12:24 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Content-Disposition: inline
-In-Reply-To: <17745.3287.358673.265578@cargo.ozlabs.ibm.com>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -28,58 +26,100 @@ X-Source-Args:
 X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31122>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32443>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GhgXx-000670-JX for gcvg-git@gmane.org; Wed, 08 Nov
- 2006 07:04:26 +0100
+ esmtp (Exim 4.43) id 1GomoS-0000jL-Ve for gcvg-git@gmane.org; Mon, 27 Nov
+ 2006 21:10:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1754337AbWKHGD4 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 8 Nov 2006
- 01:03:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754338AbWKHGD4
- (ORCPT <rfc822;git-outgoing>); Wed, 8 Nov 2006 01:03:56 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:57541 "EHLO
- corvette.plexpod.net") by vger.kernel.org with ESMTP id S1754335AbWKHGDz
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 8 Nov 2006 01:03:55 -0500
+ S1758549AbWK0UKq (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 27 Nov 2006
+ 15:10:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758552AbWK0UKq
+ (ORCPT <rfc822;git-outgoing>); Mon, 27 Nov 2006 15:10:46 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:41887 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S1758549AbWK0UKp
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 27 Nov 2006 15:10:45 -0500
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
  helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1GhgXR-0002DG-H7; Wed, 08 Nov 2006 01:03:53 -0500
+ id 1GomoF-0006KC-PT; Mon, 27 Nov 2006 15:10:35 -0500
 Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- 5DC5620E487; Wed,  8 Nov 2006 01:03:51 -0500 (EST)
-To: Paul Mackerras <paulus@samba.org>
+ 27DA120FB7F; Mon, 27 Nov 2006 15:10:42 -0500 (EST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Paul Mackerras <paulus@samba.org> wrote:
-> One thing I have been meaning to do is to integrate gitool into gitk,
-> now that gitk can display a fake commit showing the local changes.  I
-> intend to add a menu item to gitk saying "Commit local changes" or
-> something, which would invoke gitool, or maybe now git-gui instead. :)
-> The nice thing is that then gitk could update the graph to show the
-> new commit once it was created.
+Because git-merge and git-rebase both accept -s, --strategy or --strategy=
+we should recognize all three formats in the bash completion functions and
+issue back all merge strategies on demand.
 
-Right.  :-)
+I also moved the prior word testing to be before the current word testing,
+as the current word cannot be completed with -- if the prior word was an
+option which requires a parameter, such as -s or --strategy.
 
-I have absolutely no plans (or desire) to attempt to do graph
-rendering in git-gui.  The most I may do for showing history in it
-is perhaps a "git log --max-count=5 --pretty=oneline" type of display
-so the user can see more than just an empty window after a commit.
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ contrib/completion/git-completion.bash |   30 ++++++++++++++++++++----------
+ 1 files changed, 20 insertions(+), 10 deletions(-)
 
-IMHO gitk does a very nice job of rendering the graph on a wide
-range of platforms (although it still has two annoying bugs: one
-on Windows and one on Mac OS X that really make it hard to use).
-git-gui is just an attempt to bring the other major features of Git
-to that same set of platforms, with the same set of dependencies
-(wish 8) and ease of use...
-
-It would be nice if we can eventually connect gitk and git-gui so
-they can coordinate as you are talking about above...
-
-> My current version of gitool also has menus that let you revert
-> modified files, and delete or ignore untracked files.  Have you
-> considered adding that to git-gui?
-
-Yes, they are in my TODO list (or if missing from there are certainly
-in my head as things to add).  I'd like to get git-gui finished this
-week, which means getting those features in today or tomorrow.  :-)
-I'll probably do branches first though.
-
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index a957165..e53f040 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -455,18 +455,23 @@ _git_log ()
+ _git_merge ()
+ {
+ 	local cur="${COMP_WORDS[COMP_CWORD]}"
++	case "${COMP_WORDS[COMP_CWORD-1]}" in
++	-s|--strategy)
++		COMPREPLY=($(compgen -W "$(__git_merge_strategies)" -- "$cur"))
++		return
++	esac
+ 	case "$cur" in
++	--strategy=*)
++		COMPREPLY=($(compgen -W "$(__git_merge_strategies)" \
++			-- "${cur##--strategy=}"))
++		return
++		;;
+ 	--*)
+ 		COMPREPLY=($(compgen -W "
+ 			--no-commit --no-summary --squash --strategy
+ 			" -- "$cur"))
+ 		return
+ 	esac
+-	case "${COMP_WORDS[COMP_CWORD-1]}" in
+-	-s|--strategy)
+-		COMPREPLY=($(compgen -W "$(__git_merge_strategies)" -- "$cur"))
+-		return
+-	esac
+ 	COMPREPLY=($(compgen -W "$(__git_refs)" -- "$cur"))
+ }
+ 
+@@ -543,18 +548,23 @@ _git_rebase ()
+ 			" -- "$cur"))
+ 		return
+ 	fi
++	case "${COMP_WORDS[COMP_CWORD-1]}" in
++	-s|--strategy)
++		COMPREPLY=($(compgen -W "$(__git_merge_strategies)" -- "$cur"))
++		return
++	esac
+ 	case "$cur" in
++	--strategy=*)
++		COMPREPLY=($(compgen -W "$(__git_merge_strategies)" \
++			-- "${cur##--strategy=}"))
++		return
++		;;
+ 	--*)
+ 		COMPREPLY=($(compgen -W "
+ 			--onto --merge --strategy
+ 			" -- "$cur"))
+ 		return
+ 	esac
+-	case "${COMP_WORDS[COMP_CWORD-1]}" in
+-	-s|--strategy)
+-		COMPREPLY=($(compgen -W "$(__git_merge_strategies)" -- "$cur"))
+-		return
+-	esac
+ 	COMPREPLY=($(compgen -W "$(__git_refs)" -- "$cur"))
+ }
+ 
 -- 
+1.4.4.1.ge3fb
