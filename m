@@ -1,65 +1,122 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD,
-	TRACKER_ID shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
-From: Johannes Sixt <J.Sixt@eudaptics.com>
-Subject: Re: [RFC/PATCH] Implement poor-man's submodule support using commit 
- hooks
-Date: Wed, 20 Dec 2006 14:29:42 +0100
-Organization: eudaptics software gmbh
-Message-ID: <45893AC6.910D5748@eudaptics.com>
-References: <200612201309.02119.andyparkins@gmail.com>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] sha1_object_info(): be consistent with read_sha1_file()
+Date: Tue, 28 Nov 2006 00:18:55 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0611280016150.30004@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 20 Dec 2006 13:30:20 +0000 (UTC)
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Mon, 27 Nov 2006 23:19:04 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 15
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: cm56-163-160.liwest.at
-X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
-X-Accept-Language: en
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34926>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gx1WT-0008TT-MB for gcvg-git@gmane.org; Wed, 20 Dec
- 2006 14:30:18 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32458>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gopkb-0004mp-Fk for gcvg-git@gmane.org; Tue, 28 Nov
+ 2006 00:19:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S965020AbWLTNaN (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 20 Dec 2006
- 08:30:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965028AbWLTNaN
- (ORCPT <rfc822;git-outgoing>); Wed, 20 Dec 2006 08:30:13 -0500
-Received: from main.gmane.org ([80.91.229.2]:51792 "EHLO ciao.gmane.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S965020AbWLTNaM
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 20 Dec 2006 08:30:12 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1Gx1WI-0002RT-Cg for git@vger.kernel.org; Wed, 20 Dec 2006 14:30:06 +0100
-Received: from cm56-163-160.liwest.at ([86.56.163.160]) by main.gmane.org
- with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Wed, 20 Dec 2006 14:30:06 +0100
-Received: from J.Sixt by cm56-163-160.liwest.at with local (Gmexim 0.1
- (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Wed, 20 Dec 2006
- 14:30:06 +0100
-To: git@vger.kernel.org
+ S1758599AbWK0XS6 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 27 Nov 2006
+ 18:18:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758602AbWK0XS5
+ (ORCPT <rfc822;git-outgoing>); Mon, 27 Nov 2006 18:18:57 -0500
+Received: from mail.gmx.de ([213.165.64.20]:48826 "HELO mail.gmx.net") by
+ vger.kernel.org with SMTP id S1758599AbWK0XS5 (ORCPT
+ <rfc822;git@vger.kernel.org>); Mon, 27 Nov 2006 18:18:57 -0500
+Received: (qmail invoked by alias); 27 Nov 2006 23:18:55 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp012) with SMTP; 28 Nov 2006 00:18:55 +0100
+To: git@vger.kernel.org, junkio@cox.net
 Sender: git-owner@vger.kernel.org
 
-Andy Parkins wrote:
-> +WORKINGTOP=$(git-rev-parse --show-cdup)
-> +GITMODULES="${WORKINGTOP}.gitmodules"
-> +if [ -f "$GITMODULES" ]; then
-> +       cat "$GITMODULES" |
 
-useless-use-of-cat-syndrome
+We used to try loose objects first with sha1_object_info(), but packed
+objects first with read_sha1_file(). Now, prefer packed objects over loose
+ones with sha1_object_info(), too.
 
-> +       while read subdir hash
+Usually the old behaviour would pose no problem, but when you tried to fix 
+a fscked up repository by inserting a known-good pack,
 
-Wouldn't it be better to have the order of subdir and hash swapped? That
-way subdir may contain blanks, and it gives nicer alignment in the file
-because of the constant length of the hashes.
+	git cat-file $(git cat-file -t <sha1>) <sha1>
 
--- Hannes
+could fail, even when
+
+	git cat-file blob <sha1>
+
+would _not_ fail. Worse, a repack would fail, too.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ sha1_file.c |   35 ++++++++++++++++++++---------------
+ 1 files changed, 20 insertions(+), 15 deletions(-)
+
+diff --git a/sha1_file.c b/sha1_file.c
+index 09456d2..63f416b 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -1261,7 +1261,7 @@ struct packed_git *find_sha1_pack(const unsigned char *sha1,
+ 	
+ }
+ 
+-int sha1_object_info(const unsigned char *sha1, char *type, unsigned long *sizep)
++static int sha1_loose_object_info(const unsigned char *sha1, char *type, unsigned long *sizep)
+ {
+ 	int status;
+ 	unsigned long mapsize, size;
+@@ -1270,20 +1270,8 @@ int sha1_object_info(const unsigned char *sha1, char *type, unsigned long *sizep
+ 	char hdr[128];
+ 
+ 	map = map_sha1_file(sha1, &mapsize);
+-	if (!map) {
+-		struct pack_entry e;
+-
+-		if (!find_pack_entry(sha1, &e, NULL)) {
+-			reprepare_packed_git();
+-			if (!find_pack_entry(sha1, &e, NULL))
+-				return error("unable to find %s", sha1_to_hex(sha1));
+-		}
+-		if (use_packed_git(e.p))
+-			die("cannot map packed file");
+-		status = packed_object_info(e.p, e.offset, type, sizep);
+-		unuse_packed_git(e.p);
+-		return status;
+-	}
++	if (!map)
++		return error("unable to find %s", sha1_to_hex(sha1));
+ 	if (unpack_sha1_header(&stream, map, mapsize, hdr, sizeof(hdr)) < 0)
+ 		status = error("unable to unpack %s header",
+ 			       sha1_to_hex(sha1));
+@@ -1299,6 +1287,23 @@ int sha1_object_info(const unsigned char *sha1, char *type, unsigned long *sizep
+ 	return status;
+ }
+ 
++int sha1_object_info(const unsigned char *sha1, char *type, unsigned long *sizep)
++{
++	int status;
++	struct pack_entry e;
++
++	if (!find_pack_entry(sha1, &e, NULL)) {
++		reprepare_packed_git();
++		if (!find_pack_entry(sha1, &e, NULL))
++			return sha1_loose_object_info(sha1, type, sizep);
++	}
++	if (use_packed_git(e.p))
++		die("cannot map packed file");
++	status = packed_object_info(e.p, e.offset, type, sizep);
++	unuse_packed_git(e.p);
++	return status;
++}
++
+ static void *read_packed_sha1(const unsigned char *sha1, char *type, unsigned long *size)
+ {
+ 	struct pack_entry e;
+-- 
+1.4.4.1.gfac7-dirty
