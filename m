@@ -1,71 +1,62 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: What's in git.git
-Date: Thu, 2 Nov 2006 11:02:58 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0611021055550.1670@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <7vk62ewtxd.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 9/10] Allow completion of --committer and --author arguments to git log.
+Date: Mon, 27 Nov 2006 12:20:51 -0800
+Message-ID: <7vy7pwfxp8.fsf@assigned-by-dhcp.cox.net>
+References: <de7beb117fb963e68e1085b773593be326ffd495.1164616814.git.spearce@spearce.org>
+	<20061127084228.GI19745@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Thu, 2 Nov 2006 10:03:16 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Mon, 27 Nov 2006 20:21:10 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7vk62ewtxd.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+In-Reply-To: <20061127084228.GI19745@spearce.org> (Shawn O. Pearce's message
+	of "Mon, 27 Nov 2006 03:42:28 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30702>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32448>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GfZPd-0006W5-Bl for gcvg-git@gmane.org; Thu, 02 Nov
- 2006 11:03:06 +0100
+ esmtp (Exim 4.43) id 1GomyN-0002fV-KO for gcvg-git@gmane.org; Mon, 27 Nov
+ 2006 21:21:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752787AbWKBKDB (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 2 Nov 2006
- 05:03:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752791AbWKBKDA
- (ORCPT <rfc822;git-outgoing>); Thu, 2 Nov 2006 05:03:00 -0500
-Received: from mail.gmx.net ([213.165.64.20]:10726 "HELO mail.gmx.net") by
- vger.kernel.org with SMTP id S1752787AbWKBKDA (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 2 Nov 2006 05:03:00 -0500
-Received: (qmail invoked by alias); 02 Nov 2006 10:02:58 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp028) with SMTP; 02 Nov 2006 11:02:58 +0100
-To: Junio C Hamano <junkio@cox.net>, Jon Smirl <jonsmirl@gmail.com>
+ S1758561AbWK0UUw (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 27 Nov 2006
+ 15:20:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758562AbWK0UUw
+ (ORCPT <rfc822;git-outgoing>); Mon, 27 Nov 2006 15:20:52 -0500
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:30113 "EHLO
+ fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP id S1758561AbWK0UUw
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 27 Nov 2006 15:20:52 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao06.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061127202051.LEMM5465.fed1rmmtao06.cox.net@fed1rmimpo01.cox.net>; Mon, 27
+ Nov 2006 15:20:51 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id rwLK1V00e1kojtg0000000; Mon, 27 Nov 2006
+ 15:20:20 -0500
+To: "Shawn O. Pearce" <spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 
-Hi,
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-On Wed, 1 Nov 2006, Junio C Hamano wrote:
+> This is just a cute hack, but we can (easily) complete the parameter
+> to --author or --committer in bash by asking for all possible authors
+> or committers in this project from git log and offering them up as
+> valid choices.
 
-> * The 'pu' branch, in addition, has these.
-> 
->   Johannes's "shallow" was marked as "pu" material so I've based
->   the series on the tip of "next" (which means we cannot
->   directly merge that into "next" or "master" without rebasing
->   it to "master" first) and parked it in "pu".  I have given
->   only a cursory look to it but it looks promising.
+Easily but slowly ;-).  Try this in the kernel repository
 
-Note that I have no use for shallow clones myself, since I really like to 
-have the complete history around. It also makes for a nice distributed 
-backup solution.
+	git log --author=Andre<TAB>
 
-The reasons I did it:
+and watch the paint dry.  You might want to have an extra shell
+to run top before you hit the TAB key.
 
-- 'cause I could
-- I think it is important for other people (this means you, Jon)
-- I suggested lazy clones as an easy way out, but I am now convinced that 
-they introduce more problems than they solve. Therefore I wanted to make 
-good for the confusion I helped develop.
+It indeed is cute, but I think most people would wonder if the
+terminal went dead, especially without any progress indicators.
 
-Since I do not have any use for shallow clones myself, I am waiting for 
-people to jump on it, test it, and shout "Hooray" or "Nacknacknack".
-
-Ciao,
-Dscho
