@@ -1,67 +1,121 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.0 required=3.0 tests=APOSTROPHE_FROM,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
-From: The Answering Machine <merlyn.'s-answering.machine@stonehenge.com>
-Subject: Re: [BUG] making docs blows up in b1bfcae438ad:git-merge-file.txt
-Date: Sat, 16 Dec 2006 15:47:17 -0800 (PST)
-Message-ID: <20061216234717.15ECE8F5A8@blue.stonehenge.com>
-References: <86y7p7cssx.fsf@blue.stonehenge.com>  <4584857D.703@gmail.com>
-NNTP-Posting-Date: Sun, 17 Dec 2006 00:14:06 +0000 (UTC)
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [PATCH 2/4] Teach bash about git-commit's options.
+Date: Mon, 27 Nov 2006 15:11:10 -0500
+Message-ID: <20061127201110.GB7308@spearce.org>
+References: <139669072795537547ec26b69115509100dcd7ec.1164658223.git.spearce@spearce.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Mon, 27 Nov 2006 20:13:08 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Greylist: delayed 1602 seconds by postgrey-1.27 at vger.kernel.org; Sat, 16 Dec 2006 19:13:59 EST
-In-Reply-To: <4584857D.703@gmail.com>  from A Large Angry SCM on Sat,
- 16 Dec 2006 15:47:09 -0800
-X-Mailer: Perl5 Mail::Internet v1.74
+Content-Disposition: inline
+In-Reply-To: <139669072795537547ec26b69115509100dcd7ec.1164658223.git.spearce@spearce.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34665>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GvjfG-0005JA-8e for gcvg-git@gmane.org; Sun, 17 Dec
- 2006 01:14:02 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32445>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gomov-0000pQ-1X for gcvg-git@gmane.org; Mon, 27 Nov
+ 2006 21:11:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1422917AbWLQAN7 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 16 Dec 2006
- 19:13:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422919AbWLQAN7
- (ORCPT <rfc822;git-outgoing>); Sat, 16 Dec 2006 19:13:59 -0500
-Received: from blue.stonehenge.com ([209.223.236.162]:44982 "EHLO
- blue.stonehenge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1422917AbWLQAN7 (ORCPT <rfc822;git@vger.kernel.org>); Sat, 16 Dec 2006
- 19:13:59 -0500
-Received: from localhost (localhost [127.0.0.1]) by blue.stonehenge.com
- (Postfix) with ESMTP id 7FBA38F5BB for <git@vger.kernel.org>; Sat, 16 Dec
- 2006 15:47:17 -0800 (PST)
-Received: from blue.stonehenge.com ([127.0.0.1]) by localhost
- (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024) with LMTP id
- 14824-01-3 for <git@vger.kernel.org>; Sat, 16 Dec 2006 15:47:17 -0800 (PST)
-Received: from localhost.localdomain (localhost [127.0.0.1]) by
- blue.stonehenge.com (Postfix) with ESMTP id 15ECE8F5A8 for
- <git@vger.kernel.org>; Sat, 16 Dec 2006 15:47:17 -0800 (PST)
-To: git@vger.kernel.org
+ S1758553AbWK0ULO (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 27 Nov 2006
+ 15:11:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758554AbWK0ULO
+ (ORCPT <rfc822;git-outgoing>); Mon, 27 Nov 2006 15:11:14 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:47263 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S1758553AbWK0ULN
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 27 Nov 2006 15:11:13 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1Gomoi-0006Me-2M; Mon, 27 Nov 2006 15:11:04 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ CBE3C20FB7F; Mon, 27 Nov 2006 15:11:10 -0500 (EST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-I've received your mail.
-Your message has been queued, and will probably be read within 48 hours.
+Not only can we complete the long options for git-commit, but now we
+can also complete author strings by looking up all prior author names
+in all branches and offering them up as possible completions.  This
+is similiar to the support used by the --author= option to git-log.
 
-In the meanwhile, if you're curious about where I am, or what I'm
-doing, or have a question that you think I might get asked frequently,
-or answer frequently even when not asked, you can check out my FAQ by
-sending email to the FAQserver at:
+Unfortunately this changes names which use ' within their string.
+It seems to be bash's fault here, the ' is being passed out by sed
+but is getting removed during the completion generation.  Fortunately
+' appears in only one name in git.git so the damage is likely to be
+rather low.
 
-	<merlyn-faq@stonehenge.com>
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ contrib/completion/git-completion.bash |   28 ++++++++++++++++++++++++++++
+ 1 files changed, 28 insertions(+), 0 deletions(-)
 
-(The subject line and body of the message are ignored.)
-
-Thank you!
-
-(Please save this message.  You'll get it only once a month, although
-the FAQ above is updated frequently and you can request it as you wish.)
-
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index e53f040..d4eb138 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -332,6 +332,32 @@ _git_cherry_pick ()
+ 	esac
+ }
+ 
++_git_commit ()
++{
++	local cur="${COMP_WORDS[COMP_CWORD]}"
++	case "$cur" in
++	--author=*)
++		local IFS=$'\n'
++		cur="${cur##--author=}"
++		COMPREPLY=($(compgen -P \' -S \' \
++			-W "$(git log --pretty=raw --all \
++			| sed -n -e "/^author /{
++				s/^author //
++				s/>.*/>/
++				p
++			}")" -- "${cur##\'}"))
++		return
++		;;
++	--*)
++		COMPREPLY=($(compgen -W "
++			--all --author=\' --signoff --verify --no-verify
++			--edit --amend --include --only
++			" -- "$cur"))
++		return
++	esac
++	COMPREPLY=()
++}
++
+ _git_diff ()
+ {
+ 	__git_complete_file
+@@ -720,6 +746,7 @@ _git ()
+ 	cat-file)    _git_cat_file ;;
+ 	checkout)    _git_checkout ;;
+ 	cherry-pick) _git_cherry_pick ;;
++	commit)      _git_commit ;;
+ 	diff)        _git_diff ;;
+ 	diff-tree)   _git_diff_tree ;;
+ 	fetch)       _git_fetch ;;
+@@ -754,6 +781,7 @@ complete -o default            -F _git_branch git-branch
+ complete -o default -o nospace -F _git_cat_file git-cat-file
+ complete -o default            -F _git_checkout git-checkout
+ complete -o default            -F _git_cherry_pick git-cherry-pick
++complete -o default            -F _git_commit git-commit
+ complete -o default -o nospace -F _git_diff git-diff
+ complete -o default            -F _git_diff_tree git-diff-tree
+ complete -o default -o nospace -F _git_fetch git-fetch
 -- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
-See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
+1.4.4.1.ge3fb
