@@ -1,62 +1,64 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: git-pull from git.git - no remote ref for pu or next?
-Date: Tue, 12 Dec 2006 11:03:59 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0612121102390.3535@woody.osdl.org>
-References: <863b7l83o9.fsf@blue.stonehenge.com> <86y7pd6oz7.fsf@blue.stonehenge.com>
- <Pine.LNX.4.64.0612120949230.3535@woody.osdl.org> <Pine.LNX.4.64.0612121345180.18171@xanadu.home>
+From: Andy Whitcroft <apw@shadowen.org>
+Subject: Re: Mozilla, git and Windows
+Date: Mon, 27 Nov 2006 15:34:22 +0000
+Message-ID: <456B057E.4000904@shadowen.org>
+References: <9e4733910611270728p36e58e08w6cc7a2989b7843ce@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Tue, 12 Dec 2006 19:04:18 +0000 (UTC)
-Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Mon, 27 Nov 2006 15:35:05 +0000 (UTC)
+Cc: Git Mailing List <git@vger.kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <Pine.LNX.4.64.0612121345180.18171@xanadu.home>
-X-MIMEDefang-Filter: osdl$Revision: 1.162 $
-X-Scanned-By: MIMEDefang 2.36
+User-Agent: Thunderbird 1.5.0.7 (X11/20060927)
+In-Reply-To: <9e4733910611270728p36e58e08w6cc7a2989b7843ce@mail.gmail.com>
+X-Enigmail-Version: 0.94.0.0
+OpenPGP: url=http://www.shadowen.org/~apw/public-key
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34127>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GuCvI-0006cm-Es for gcvg-git@gmane.org; Tue, 12 Dec
- 2006 20:04:16 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32421>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GoiV2-0008R2-Qz for gcvg-git@gmane.org; Mon, 27 Nov
+ 2006 16:34:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751550AbWLLTEM (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 12 Dec 2006
- 14:04:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751580AbWLLTEL
- (ORCPT <rfc822;git-outgoing>); Tue, 12 Dec 2006 14:04:11 -0500
-Received: from smtp.osdl.org ([65.172.181.25]:59049 "EHLO smtp.osdl.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1751550AbWLLTEK
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 12 Dec 2006 14:04:10 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
- smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kBCJ40ID011901
- (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Tue, 12
- Dec 2006 11:04:00 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
- shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kBCJ3xtL012447; Tue, 12 Dec
- 2006 11:03:59 -0800
-To: Nicolas Pitre <nico@cam.org>
+ S1758292AbWK0Pe0 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 27 Nov 2006
+ 10:34:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758294AbWK0PeZ
+ (ORCPT <rfc822;git-outgoing>); Mon, 27 Nov 2006 10:34:25 -0500
+Received: from hellhawk.shadowen.org ([80.68.90.175]:19209 "EHLO
+ hellhawk.shadowen.org") by vger.kernel.org with ESMTP id S1758292AbWK0PeZ
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 27 Nov 2006 10:34:25 -0500
+Received: from localhost ([127.0.0.1]) by hellhawk.shadowen.org with esmtp
+ (Exim 4.50) id 1GoiUF-0001Wb-L3; Mon, 27 Nov 2006 15:33:39 +0000
+To: Jon Smirl <jonsmirl@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-
-
-On Tue, 12 Dec 2006, Nicolas Pitre wrote:
+Jon Smirl wrote:
+> In the other thread we are discussing the conversion of Mozilla CVS to
+> git format. This is something that has to be done but it is not the
+> only issue. Without a native Windows port they won't even consider
+> using git. There is also the risk that the features needed by Mozilla
+> will be completed after they choose to use a different SCM.
 > 
-> Wouldn't it be a worthy goal to exclude git repos from the rsync 
-> mirroring and use git instead?
+> Even if we implement all of the needed features git still needs to win
+> the competition against the other possible choices. The last I heard
+> the leading candiate is SVN/SVK.
 
-Well, one of the problems is simply maintenance of kernel.org.
+Do we need to worry too much about taking over the world in one day?
+Yes of course git is _the_ superior solution etc, but too many new users
+at once is always painful.
 
-It's just _simpler_ to use rsync for everything.
+I think you are more likely to win letting them convert over to SVN.
+From there people naturally start using git mirrors from the SVN trunk.
+ Cirtainly I have two projects which do not use git, one in CVS and one
+in SVN.  I just svnimport that and work in git.  I am confident with
+time the project will migrate, but I am happy other git users are happy
+all without it being the tool of choice.
 
-Look at the current gitweb caching discussion. Did anybody actually step 
-up to be a gitweb maintainer on kernel.org?
-
-Same deal. Simplicity and lack of maintenance is sometimes not just a good 
-idea, it's a requirement.
-
+-apw
