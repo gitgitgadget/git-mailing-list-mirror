@@ -2,85 +2,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [RFC] Submodules in GIT
-Date: Mon, 20 Nov 2006 23:36:55 -0800
-Message-ID: <7vr6vxxnc8.fsf@assigned-by-dhcp.cox.net>
-References: <20061120215116.GA20736@admingilde.org>
-	<ejt9dh$kfm$1@sea.gmane.org> <7v7ixp20za.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0611201501230.3338@woody.osdl.org>
-	<7v4pstzmk5.fsf@assigned-by-dhcp.cox.net>
-	<20061121062753.GG20736@admingilde.org>
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH/RFC] "init-db" can really be just "init"
+Date: Tue, 28 Nov 2006 00:36:15 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0611280034010.30004@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.64.0611271622260.9647@xanadu.home>
+ <7vmz6cfsuw.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 21 Nov 2006 07:37:31 +0000 (UTC)
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Mon, 27 Nov 2006 23:36:34 +0000 (UTC)
+Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <7vmz6cfsuw.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31976>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32461>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GmQBz-000878-9h for gcvg-git@gmane.org; Tue, 21 Nov
- 2006 08:37:19 +0100
+ esmtp (Exim 4.43) id 1Goq1N-0000WR-FO for gcvg-git@gmane.org; Tue, 28 Nov
+ 2006 00:36:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S934216AbWKUHg5 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 21 Nov 2006
- 02:36:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934262AbWKUHg5
- (ORCPT <rfc822;git-outgoing>); Tue, 21 Nov 2006 02:36:57 -0500
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:53731 "EHLO
- fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP id S934216AbWKUHg4
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2006 02:36:56 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao06.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061121073656.URGK5465.fed1rmmtao06.cox.net@fed1rmimpo02.cox.net>; Tue, 21
- Nov 2006 02:36:56 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id pKd31V0011kojtg0000000; Tue, 21 Nov 2006
- 02:37:03 -0500
-To: Martin Waitz <tali@admingilde.org>
+ S1758614AbWK0XgS (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 27 Nov 2006
+ 18:36:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758616AbWK0XgS
+ (ORCPT <rfc822;git-outgoing>); Mon, 27 Nov 2006 18:36:18 -0500
+Received: from mail.gmx.net ([213.165.64.20]:34270 "HELO mail.gmx.net") by
+ vger.kernel.org with SMTP id S1758614AbWK0XgR (ORCPT
+ <rfc822;git@vger.kernel.org>); Mon, 27 Nov 2006 18:36:17 -0500
+Received: (qmail invoked by alias); 27 Nov 2006 23:36:15 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp030) with SMTP; 28 Nov 2006 00:36:15 +0100
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Martin Waitz <tali@admingilde.org> writes:
+Hi,
 
-> On Mon, Nov 20, 2006 at 04:10:50PM -0800, Junio C Hamano wrote:
->
->> However, if I recall correctly, it was rather nightmarish to
->> make this also work for reachability traversal necessary for
->> pack generation.  It was painful enough even when the bind was
->> at the commit level (which was way simpler to handle), but to do
->> this the right way, the bind needs to be done at the tree level,
->> and "rev-list --objects foo..bar" would need some way to limit
->> the commit ancestry chain of subproject at the same time, by
->> computing the commit ancestry of the embedded commits in the
->> trees.
->
-> This at least seems to work already.
-> The UNINTERESTING flag is recursively set for the submodule
-> commits while walking the object chain.
+On Mon, 27 Nov 2006, Junio C Hamano wrote:
 
-I think that is fine as long as we somehow enforce the topology
-of submodule to be similar to the toplevel topology.  Otherwise
-I suspect it leads to unintuitive behaviour.
+> Nicolas Pitre <nico@cam.org> writes:
+> 
+> > Maybe that could be a good rule of thumb to have all porcelainish 
+> > commands not have any hyphen in their name, like "diff", "commit", 
+> > "add", etc. ?
+> 
+> I was also hoping that would become the case except verify-tag,
+> cherry-pick, and format-patch.
 
-Suppose that the ancestry chain for the toplevel are A, A~1, A~2
-and you asked for "A~2..A".  A submodule is bound at tree "sub/"
-and suppose A:sub/ == B, A~1:sub/ == C, and A~2:sub/ == D.
+I agree it might make a good rule-of-thumb, but let's not be overzealous. 
+I have yet to see any better names for those three either, let alone 
+better names without a hyphen.
 
-Now further suppose the ancestry chain for B, C and D are like
-this:
+> Also I was wondering if it would make sense to give two dashes to the 
+> back-end ones that never get invoked by the end users directly (e.g. 
+> merge--recursive, upload--pack) but thought it was too ugly.
 
-              o---C
-             /     \
-     ...o---o---D---B
+I think it would appeal mostly to our friends, the monotone users...
 
-A naive implementation of "--objects A~2..A" would propagate
-UNINTERESTING to D and mark B and C unmarked.  Would it however
-be reasonable to include commits marked as 'o'?
-
-I am not trying to be negative here, but just raising things
-that I did not think through when I tried to tackle it the last
-time...
+Ciao,
+Dscho
