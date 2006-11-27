@@ -1,118 +1,79 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH] git-clone: Rename --use-immingled-remote option to --no-separate-remote
-Date: Mon, 4 Dec 2006 14:29:09 +0100
-Message-ID: <200612041429.09835.jnareb@gmail.com>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [PATCH 4/10] Add current branch in PS1 support to git-completion.bash.
+Date: Mon, 27 Nov 2006 12:31:36 -0500
+Message-ID: <20061127173136.GD6616@spearce.org>
+References: <de7beb117fb963e68e1085b773593be326ffd495.1164616814.git.spearce@spearce.org> <20061127084128.GD19745@spearce.org> <20061127103111.4835bffc.seanlkml@sympatico.ca> <20061127165122.GB6616@spearce.org> <20061127122653.3e801d7a.seanlkml@sympatico.ca>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Mon, 4 Dec 2006 13:27:24 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Mon, 27 Nov 2006 17:32:18 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=mbI0JQSkAI3c63cPZXeZqvXSAa6Oz/gykSe2vchcI2o+N+lbjwSUt5Bkj1UyPMiy7hiGZCglkT2uMb+2hTqPH59pBwxG9Eqbark/v6MsEL8Hep4SflfNDAvKxtVwl7HBx2h2v7MubFOWxEHMIWHa7+DZFq7PXhZXA0KAiL0WZx8=
-User-Agent: KMail/1.9.3
 Content-Disposition: inline
+In-Reply-To: <20061127122653.3e801d7a.seanlkml@sympatico.ca>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33195>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GrDqk-00065z-AZ for gcvg-git@gmane.org; Mon, 04 Dec
- 2006 14:27:14 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32432>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GokKb-0004tq-3y for gcvg-git@gmane.org; Mon, 27 Nov
+ 2006 18:31:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S936832AbWLDN1L (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
- 08:27:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936831AbWLDN1L
- (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 08:27:11 -0500
-Received: from ug-out-1314.google.com ([66.249.92.171]:58259 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S936830AbWLDN1K
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006 08:27:10 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so2993505uga for
- <git@vger.kernel.org>; Mon, 04 Dec 2006 05:27:08 -0800 (PST)
-Received: by 10.66.232.10 with SMTP id e10mr12020650ugh.1165238828013; Mon,
- 04 Dec 2006 05:27:08 -0800 (PST)
-Received: from host-81-190-24-209.torun.mm.pl ( [81.190.24.209]) by
- mx.google.com with ESMTP id u1sm2086640uge.2006.12.04.05.27.06; Mon, 04 Dec
- 2006 05:27:06 -0800 (PST)
-To: git@vger.kernel.org
+ S1754447AbWK0Rbp (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 27 Nov 2006
+ 12:31:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758337AbWK0Rbp
+ (ORCPT <rfc822;git-outgoing>); Mon, 27 Nov 2006 12:31:45 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:7149 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S1754447AbWK0Rbo
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 27 Nov 2006 12:31:44 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1GokKM-0001eR-80; Mon, 27 Nov 2006 12:31:34 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 462F820FB7F; Mon, 27 Nov 2006 12:31:36 -0500 (EST)
+To: Sean <seanlkml@sympatico.ca>
 Sender: git-owner@vger.kernel.org
 
-With making --use-separate-remote default when creating non-bare
-clone, there was need for the flag which would turn off this behavior.
-It was called --use-immingled-remote.
+Sean <seanlkml@sympatico.ca> wrote:
+> On Mon, 27 Nov 2006 11:51:23 -0500
+> Shawn Pearce <spearce@spearce.org> wrote:
+> 
+> > I actually started with the name __git_current_branch but changed
+> > my mind on that and went with __git_ps1.
+> > 
+> > My rationale at the time was probably not correct (it was early this
+> > morning) but I figured that the current branch name is "master"
+> > while __git_ps1 prints " (master)".  Therefore __git_ps1 is not
+> > really printing the current branch, its printing the current branch
+> > and other stuff.  So I went with a name which implied its purpose.
+> 
+> Ahh, I had missed that, it makes some sense.  Although it goes a bit
+> against the commit message that the user is free to construct whatever
+> PS1 format they like (ie. they're stuck with parenthesis around the
+> branch name).
+> 
+> Just thinking out loud, what about allowing __git_ps1 to take a
+> format string of its own?  It could parse options like  "(\b)"
+> to mean git branch surrounded by parenthesis.  But you could
+> also do "[\b]" or "!\b" if you preferred.
 
-Immingle means to blend, to combine into one, to intermingle, but it
-is a bit obscure word. I think it would be better to use simply
---no-separate-remote as the opposite to --use-separate-remote
-option to git clone.
+I did that.  :-)
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
- Documentation/git-clone.txt |    4 ++--
- git-clone.sh                |    6 +++---
- 2 files changed, 5 insertions(+), 5 deletions(-)
-
-diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-index 4cb4223..d5efa00 100644
---- a/Documentation/git-clone.txt
-+++ b/Documentation/git-clone.txt
-@@ -11,7 +11,7 @@ SYNOPSIS
- [verse]
- 'git-clone' [--template=<template_directory>] [-l [-s]] [-q] [-n] [--bare]
- 	  [-o <name>] [-u <upload-pack>] [--reference <repository>]
--	  [--use-separate-remote | --use-immingled-remote] <repository>
-+	  [--use-separate-remote | --no-separate-remote] <repository>
- 	  [<directory>]
+If you read the implementation of __git_ps1 the default format is
+" (%s)" but you can pass anything you want as the first parameter.
  
- DESCRIPTION
-@@ -105,7 +105,7 @@ OPTIONS
- 	of `$GIT_DIR/refs/heads/`.  Only the local master branch is
- 	saved in the latter. This is the default.
- 
----use-immingled-remote::
-+--no-separate-remote::
- 	Save remotes heads in the same namespace as the local
- 	heads, `$GIT_DIR/refs/heads/'.  In regular repositories,
- 	this is a legacy setup git-clone created by default in
-diff --git a/git-clone.sh b/git-clone.sh
-index d4ee93f..8964039 100755
---- a/git-clone.sh
-+++ b/git-clone.sh
-@@ -14,7 +14,7 @@ die() {
- }
- 
- usage() {
--	die "Usage: $0 [--template=<template_directory>] [--use-immingled-remote] [--reference <reference-repo>] [--bare] [-l [-s]] [-q] [-u <upload-pack>] [--origin <name>] [-n] <repo> [<dir>]"
-+	die "Usage: $0 [--template=<template_directory>] [--no-separate-remote] [--reference <reference-repo>] [--bare] [-l [-s]] [-q] [-u <upload-pack>] [--origin <name>] [-n] <repo> [<dir>]"
- }
- 
- get_repo_base() {
-@@ -140,7 +140,7 @@ while
- 	*,--use-separate-remote)
- 		# default
- 		use_separate_remote=t ;;
--	*,--use-immingled-remote)
-+	*,--no-separate-remote)
- 		use_separate_remote= ;;
- 	1,--reference) usage ;;
- 	*,--reference)
-@@ -176,7 +176,7 @@ repo="$1"
- test -n "$repo" ||
-     die 'you must specify a repository to clone.'
- 
--# --bare implies --no-checkout and --use-immingled-remote
-+# --bare implies --no-checkout and --no-separate-remote
- if test yes = "$bare"
- then
- 	if test yes = "$origin_override"
 -- 
-1.4.4.1
