@@ -1,66 +1,96 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: git-pull from git.git - no remote ref for pu or next?
-Date: Tue, 12 Dec 2006 10:23:36 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0612121021270.3535@woody.osdl.org>
-References: <863b7l83o9.fsf@blue.stonehenge.com> <86y7pd6oz7.fsf@blue.stonehenge.com>
- <Pine.LNX.4.64.0612120949230.3535@woody.osdl.org>
- <Pine.LNX.4.63.0612121908100.2807@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] revision traversal: Add --refs=<pattern> option
+Date: Mon, 27 Nov 2006 15:59:33 -0800
+Message-ID: <7vhcwke90a.fsf@assigned-by-dhcp.cox.net>
+References: <7vzmadl5b0.fsf@assigned-by-dhcp.cox.net>
+	<11646401513369-git-send-email-vsu@altlinux.ru>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Tue, 12 Dec 2006 18:23:57 +0000 (UTC)
-Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Tue, 28 Nov 2006 00:00:25 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <Pine.LNX.4.63.0612121908100.2807@wbgn013.biozentrum.uni-wuerzburg.de>
-X-MIMEDefang-Filter: osdl$Revision: 1.162 $
-X-Scanned-By: MIMEDefang 2.36
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34119>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GuCIF-0008L4-5X for gcvg-git@gmane.org; Tue, 12 Dec
- 2006 19:23:55 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32465>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GoqOP-0006IC-42 for gcvg-git@gmane.org; Tue, 28 Nov
+ 2006 01:00:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932290AbWLLSXs (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 12 Dec 2006
- 13:23:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932325AbWLLSXs
- (ORCPT <rfc822;git-outgoing>); Tue, 12 Dec 2006 13:23:48 -0500
-Received: from smtp.osdl.org ([65.172.181.25]:53560 "EHLO smtp.osdl.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S932290AbWLLSXr
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 12 Dec 2006 13:23:47 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
- smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kBCINeID008856
- (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Tue, 12
- Dec 2006 10:23:41 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
- shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kBCINa3a010914; Tue, 12 Dec
- 2006 10:23:38 -0800
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+ S1758629AbWK0X7f (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 27 Nov 2006
+ 18:59:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758630AbWK0X7f
+ (ORCPT <rfc822;git-outgoing>); Mon, 27 Nov 2006 18:59:35 -0500
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:53163 "EHLO
+ fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP id S1758629AbWK0X7e
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 27 Nov 2006 18:59:34 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao08.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061127235934.KREA18207.fed1rmmtao08.cox.net@fed1rmimpo01.cox.net>; Mon, 27
+ Nov 2006 18:59:34 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id rzz11V00q1kojtg0000000; Mon, 27 Nov 2006
+ 18:59:02 -0500
+To: Sergey Vlasov <vsu@altlinux.ru>
 Sender: git-owner@vger.kernel.org
 
+Sergey Vlasov <vsu@altlinux.ru> writes:
 
+> Add the --refs=<pattern> option, which can be used to select a
+> subset of refs matching the specified glob pattern.
+>
+> Signed-off-by: Sergey Vlasov <vsu@altlinux.ru>
+> ---
+>
+>  If --all-branches is too specific for the mentioned use case,
+>  what about adding a more general glob pattern match?
 
-On Tue, 12 Dec 2006, Johannes Schindelin wrote:
-> > rsync generally _works_ apart from the slight race-condition issue, 
-> 
-> ... and git would probably change the pack structure (i.e. which objects 
-> are in which packs, or even loose) which would be too bad for all those 
-> HTTP leechers ...
+Traditionally any new option to rev-list must be accompanied
+with a matching change to rev-parse.  I do not know offhand how
+strictly we should adhere to this rule these days; it depends on
+how people's script use rev-list.
 
-Well, as it is, I end up repacking my git archives on kernel.org every two 
-weeks or so anyway, so anybody who uses stupid protocols (rsync or http) 
-will end up downloading everything anew anyway.
+Before revision.c "revision walking library" was done, many
+Porcelain-ish commands were implemented as a pipeline that plugs
+rev-list output to diff-tree.  These shell scripts took
+parameters from the command line, and rev-parse was used to
+separate parameters (both "flags" that begin with a dash and
+"non-flags" that don't) that should be given to rev-list and the
+other parameters (meant to be used by the shell script itself
+but often are given straight to the downstream diff-tree).  The
+rev-parse command has even the --sq option to facilitate this
+usage:
 
-And kernel.org will probably start doing automatic repacking, since the 
-current situation just means that some people don't repack on their own, 
-and have tens of thousands of loose objects.
+	rev_opts=`git rev-parse --sq --default=HEAD --revs "$@"`
+	diff_opts=`git rev-parse --sq --no-revs "$@"`
+        eval "git-rev-list $rev_opts" |
+        eval "git-diff-tree --stdin $diff_opts"
 
-You really don't want to use the non-native protocols unless you have to, 
-or for projects that don't change.
+so that it can even pass -S'I want to find this string' to diff-tree
+without worrying about spaces.
+
+I personally feel that part of rev-parse outlived its usefulness
+(--flags, --no-flags, --revs-only, and --no-revs).  It was a
+useful hack, and served us well, but it was a hack.
+
+In that sense it probably is Ok to leave it unmaintained, but it
+might be a good idea to plan deprecating it, given that we have
+been talking about UI warts.  If there are pipelines that can be
+easily formed (with the help of rev-parse "parameter sifter"),
+but whose functionality cannot be easily emulated with the
+current crop of Porcelain-ish, we should work on polishing the
+Porcelain-ish to make the pipelines unnecessary.
+
+The remaining parts of rev-parse (the most important of which is
+the --verify option) should probably stay.  The original
+question of "list all the branches" can be done with:
+
+	git rev-parse --symbolic --branches
 
