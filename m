@@ -1,66 +1,139 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,MSGID_FROM_MTA_HEADER,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
-From: Sean <seanlkml@sympatico.ca>
-Subject: Re: fetching packs and storing them as packs
-Date: Thu, 26 Oct 2006 23:13:54 -0400
-Message-ID: <BAYC1-PASMTP03992F75428088AF83AE39AE040@CEZ.ICE>
-References: <Pine.LNX.4.64.0610252333540.12418@xanadu.home>
-	<4540CA0C.6030300@tromer.org>
-	<Pine.LNX.4.64.0610261105200.12418@xanadu.home>
-	<45413209.2000905@tromer.org>
-	<Pine.LNX.4.64.0610262038320.11384@xanadu.home>
-	<20061027014229.GA28407@spearce.org>
-	<45417205.6020805@tromer.org>
-	<20061027030054.GB28407@spearce.org>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Working copy as a pseudo-head
+Date: Mon, 27 Nov 2006 01:20:39 -0800
+Message-ID: <7vlklxi6u0.fsf@assigned-by-dhcp.cox.net>
+References: <456A9F93.1060801@midwinter.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Fri, 27 Oct 2006 03:14:16 +0000 (UTC)
-Cc: Eran Tromer <git2eran@tromer.org>, Nicolas Pitre <nico@cam.org>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Mon, 27 Nov 2006 09:20:52 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Originating-IP: [65.93.43.81]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Original-Message-Id: <20061026231354.807b1ed0.seanlkml@sympatico.ca>
-In-Reply-To: <20061027030054.GB28407@spearce.org>
-X-Mailer: Sylpheed version 2.2.9 (GTK+ 2.10.4; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 27 Oct 2006 03:13:56.0602 (UTC) FILETIME=[F0610DA0:01C6F975]
+In-Reply-To: <456A9F93.1060801@midwinter.com> (Steven Grimm's message of "Mon,
+	27 Nov 2006 00:19:31 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32405>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GdIAc-0004FP-2s for gcvg-git@gmane.org; Fri, 27 Oct
- 2006 05:14:10 +0200
+ esmtp (Exim 4.43) id 1GocfM-0006oq-Io for gcvg-git@gmane.org; Mon, 27 Nov
+ 2006 10:20:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1161477AbWJ0DN6 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
- 23:13:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161478AbWJ0DN6
- (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 23:13:58 -0400
-Received: from bayc1-pasmtp03.bayc1.hotmail.com ([65.54.191.163]:19848 "EHLO
- BAYC1-PASMTP03.bayc1.hotmail.com") by vger.kernel.org with ESMTP id
- S1161477AbWJ0DN5 (ORCPT <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006
- 23:13:57 -0400
-Received: from linux1.attic.local ([65.93.43.81]) by
- BAYC1-PASMTP03.bayc1.hotmail.com over TLS secured channel with Microsoft
- SMTPSVC(6.0.3790.1830); Thu, 26 Oct 2006 20:13:56 -0700
-Received: from guru.attic.local ([10.10.10.28]) by linux1.attic.local with
- esmtp (Exim 4.43) id 1GdHEI-0004pH-VX; Thu, 26 Oct 2006 22:13:54 -0400
-To: Shawn Pearce <spearce@spearce.org>
+ S1757551AbWK0JUl (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 27 Nov 2006
+ 04:20:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757554AbWK0JUl
+ (ORCPT <rfc822;git-outgoing>); Mon, 27 Nov 2006 04:20:41 -0500
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:10434 "EHLO
+ fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP id S1757551AbWK0JUk
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 27 Nov 2006 04:20:40 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao07.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061127092040.SEXW27894.fed1rmmtao07.cox.net@fed1rmimpo02.cox.net>; Mon, 27
+ Nov 2006 04:20:40 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id rlLo1V00E1kojtg0000000; Mon, 27 Nov 2006
+ 04:20:48 -0500
+To: Steven Grimm <koreth@midwinter.com>
 Sender: git-owner@vger.kernel.org
 
-On Thu, 26 Oct 2006 23:00:54 -0400
-Shawn Pearce <spearce@spearce.org> wrote:
+Steven Grimm <koreth@midwinter.com> writes:
 
-> What happens when the incoming pack (steps #2 and #3) takes 15
-> minutes to upload (slow ADSL modem, lots of objects) and the
-> background repack process sees those temporary refs and starts
-> trying to include those objects?  It can't walk the DAG that those
-> refs point at because the objects aren't in the current repository.
+> Comments? Is this just nuts?
 
-As long as there was standard naming for such temporary refs,
-they could be completely ignored by the repack process, no?
+It is not "nuts", but we do not do it currently because it is a
+bit too combersome to make it recoverable when things go wrong
+while keeping the cost of making the necessary back-up for
+recovery low.  When switching branches with local changes,
+"git-checkout -m" needs to deal with a similar issue, but that
+case only deal with two trees and a working tree.  To do this
+for three-way merge, the conflicts you need to deal with become
+more complex.
 
+What needs to be done is very simple and straightforward.  You
+first stash away the working tree state in a "virtual" tree,
+then perform the usual 3-way merge using the common ancestor,
+your HEAD and the other head, and come up with the merge result
+without any of your changes.  Then you run another three-way
+merge between the merge result and your previous working tree
+state using the HEAD before the merge as the common ancestor.
+
+       o---o---X (other head)
+      /
+  ---o---o---H (your head)
+              \  
+               W (your working tree)
+
+==>
+
+       o---o---X (other head)
+      /         \
+  ---o---o---H---M (merge between the base trees)
+              \  
+               W (your working tree)
+
+==>
+
+       o---o---X (other head)
+      /         \
+  ---o---o---H---M (merge between the base trees)
+              \   \   
+               W---W'(your working tree, updated for the merge result)
+
+The design goal here is that you do not want to get any of your
+local changes (i.e. "diff H W") to be included when you record
+the result of the base merge 'M', and you would want the diff
+between H and W to be forward-ported to the diff between M and
+W'.
+
+The first goal is already quite cumbersome when the merge
+between X and H involve conflicing merges.  We use the working
+tree to perform the file level merge (i.e. you edit them with
+your favorite editor, and tell git when you are done), so while
+that is happening we temporarily need to remove what was between
+H and W.  If the merge is too complex and the user decides to
+revert the whole thing, we would need to rewind the index and
+working tree to the state at W (that means we would at least
+need to stash the diff between H and index, and index and
+working tree before starting the merge).
+
+After the base merge is done, we would need to update the HEAD
+to point at M.  Then we would perform the second three-way merge
+between M and W using the original HEAD as their common
+ancestor to come up with W'.  When this conflicts, there is no
+easy way for the user to recover, other than going back to the
+original state (that is, HEAD points at H and working tree is
+W), even after having spent effort to merge between X and H to
+produce M.
+
+In common usage (call that "best current practice" if you may),
+you do not have local changes in the working tree that would
+conflict with the merge, so the current behaviour feels
+cumbersome only when the safety valve kicks in.  After seeing it
+fail due to the safety valve, you can do the same as what the
+above pictures depict using existing tools.
+
+ * preserve the local changes (i.e. come up with the virtual
+   "W"):
+
+	git commit -a -m WIP
+	git tag -f WIP
+        git reset --hard HEAD^
+
+ * perform the merge in the now-clean tree:
+
+	git pull ;# again from the same place
+	edit edit
+        test test
+        git commit -a ;# resolve conflicts, test and commit
+
+ * recover what you have preserved, and discard the virtual W:
+
+	git pull --no-commit . WIP ;# merge in
+	git reset ;# revert index to HEAD aka base merge result.
+	git tag -d WIP
