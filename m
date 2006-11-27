@@ -1,78 +1,66 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Nicolas Vilz <niv@iaglans.de>
-Subject: git-svn throwing assertion on old svn tracking branch
-Date: Thu, 21 Dec 2006 00:55:51 +0100
-Message-ID: <20061220235551.GA2974@hermes.lan.home.vilz.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Possible BUG with git-rev-list --all in a StGit repository
+Date: Sun, 26 Nov 2006 23:25:23 -0800
+Message-ID: <7vzmadl5b0.fsf@assigned-by-dhcp.cox.net>
+References: <e5bfff550611260827t686a5071w7f050f17f784e5d9@mail.gmail.com>
+	<7v7ixit13h.fsf@assigned-by-dhcp.cox.net>
+	<e5bfff550611262231s3eac2d11ke9fcdb0d699093f0@mail.gmail.com>
+	<e5bfff550611262238q60d466a3r230c9c4af283b76b@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 21 Dec 2006 00:16:50 +0000 (UTC)
+NNTP-Posting-Date: Mon, 27 Nov 2006 07:25:46 +0000 (UTC)
+Cc: "Junio C Hamano" <junkio@cox.net>, catalin.marinas@gmail.com,
+	"Git Mailing List" <git@vger.kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Greylist: delayed 1160 seconds by postgrey-1.27 at vger.kernel.org; Wed, 20 Dec 2006 19:16:28 EST
-X-Virus-Scanned: Debian amavisd-new at vsectoor.geht-ab-wie-schnitzel.de
-Content-Disposition: inline
-X-message-flag: Please send plain text messages only. Thank you.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <e5bfff550611262238q60d466a3r230c9c4af283b76b@mail.gmail.com>
+	(Marco Costalba's message of "Mon, 27 Nov 2006 07:38:30 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34987>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GxBc2-0006q8-1S for gcvg-git@gmane.org; Thu, 21 Dec
- 2006 01:16:42 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32387>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Goas0-0003CL-75 for gcvg-git@gmane.org; Mon, 27 Nov
+ 2006 08:25:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1161080AbWLUAQ3 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 20 Dec 2006
- 19:16:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161082AbWLUAQ3
- (ORCPT <rfc822;git-outgoing>); Wed, 20 Dec 2006 19:16:29 -0500
-Received: from geht-ab-wie-schnitzel.de ([217.69.165.145]:1269 "EHLO
- vsectoor.geht-ab-wie-schnitzel.de" rhost-flags-OK-OK-OK-OK) by
- vger.kernel.org with ESMTP id S1161080AbWLUAQ2 (ORCPT
- <rfc822;git@vger.kernel.org>); Wed, 20 Dec 2006 19:16:28 -0500
-Received: from localhost (localhost [127.0.0.1]) by
- vsectoor.geht-ab-wie-schnitzel.de (Postfix) with ESMTP id B64D73EDC for
- <git@vger.kernel.org>; Thu, 21 Dec 2006 00:57:03 +0100 (CET)
-Received: from vsectoor.geht-ab-wie-schnitzel.de ([127.0.0.1]) by localhost
- (vsectoor.geht-ab-wie-schnitzel.de [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id uY7h7lEp9mVU for <git@vger.kernel.org>; Thu, 21 Dec 2006
- 00:56:42 +0100 (CET)
-Received: from localhost (hermes.lan.home.vilz.de [192.168.100.26]) (using
- TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate
- requested) by vsectoor.geht-ab-wie-schnitzel.de (Postfix) with ESMTP id
- 5C5C73EE9 for <git@vger.kernel.org>; Thu, 21 Dec 2006 00:55:51 +0100 (CET)
-To: git@vger.kernel.org
+ S1757173AbWK0HZZ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 27 Nov 2006
+ 02:25:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757174AbWK0HZZ
+ (ORCPT <rfc822;git-outgoing>); Mon, 27 Nov 2006 02:25:25 -0500
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:1988 "EHLO
+ fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP id S1757173AbWK0HZY
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 27 Nov 2006 02:25:24 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao05.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061127072524.LRVR20330.fed1rmmtao05.cox.net@fed1rmimpo02.cox.net>; Mon, 27
+ Nov 2006 02:25:24 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id rjRY1V00B1kojtg0000000; Mon, 27 Nov 2006
+ 02:25:32 -0500
+To: "Marco Costalba" <mcostalba@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-hello guys,
+"Marco Costalba" <mcostalba@gmail.com> writes:
 
-it has been a while, i tried git in conjunction with svn... i got a nice
-history, when working with it. This Work is now a year old.
+> Could a possible '--all-branches' new option come to rescue?
 
-Now I wanted to get on working and got following error message while
-fetching from one specific svn tracking branch:
+I doubt it.  Next thing people would start talking about is what
+to do with the remote tracking branches, and what we are talking
+about is rev-list, one of the lower level of plumbing that would
+be better left without knowing much about the Porcelain's use of
+refs/ namespaces.
 
-$ git-svn fetch -i svn_master
-perl: subversion/libsvn_subr/path.c:343: svn_path_remove_component: 
-Assertion `is_canonical(path->data, path->len)' failed.
-Aborted
+If you (as a Porcelain) want to get all refs under refs/heads/,
+there are (unfortunately) two ways to get that list.  I would
+suggest obtain the refs you want that way, pass them as command
+line arguments to rev-list.
 
-I checked the svn working copy, it is uptodate now (although i had to
-search for it, i havent been using this repository for one year...)
+$ git for-each-ref --format='%(refname)' refs/heads
+$ git show-ref --heads | sed -e 's/^[^ ]* //'
 
-the output of gitk --all looks good, too. So i wonder if that error
-message above is only an alternative to say "more work? i ask because i
-am finished and have nothing else todo.."
-
-It is only happening to this old repository...
-
-Any help is appreciated. If possible, i would like to keep my development
-history for this repository.
-
-I almost forgot, i use git version 1.4.4.3.g545b 
-
-Sincerly
-Nicolas
