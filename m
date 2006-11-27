@@ -1,89 +1,59 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Cleaning up git user-interface warts
-Date: Wed, 15 Nov 2006 11:18:36 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0611151111250.3349@woody.osdl.org>
-References: <87k61yt1x2.wl%cworth@cworth.org> <Pine.LNX.4.64.0611142306090.2591@xanadu.home>
- <Pine.LNX.4.64.0611150950170.3349@woody.osdl.org> <200611151858.51833.andyparkins@gmail.com>
+X-Spam-Status: No, score=-2.3 required=3.0 tests=BAYES_00,
+	MSGID_FROM_MTA_HEADER,SPF_SOFTFAIL shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: Some tips for doing a CVS importer
+Date: Mon, 27 Nov 2006 12:29:06 +0100
+Message-ID: <456ACC02.6090508@alum.mit.edu>
+References: <9e4733910611201349s4d08b984g772c64982f148bfa@mail.gmail.com>	 <46a038f90611201503m6a63ec8ct347026c635190108@mail.gmail.com>	 <9e4733910611201537h30b6c9f4oee9d8df75284c284@mail.gmail.com>	 <46a038f90611201629o39f11f42ye07b86159360b66e@mail.gmail.com>	 <9e4733910611201753m392b5defpb3eb295a075be789@mail.gmail.com>	 <456969DA.6090702@gmx.net> <9e4733910611260735g2b18e9d1p51a0dca153282cc7@mail.gmail.com> <4569BCB8.9030809@gmx.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Wed, 15 Nov 2006 19:19:10 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Mon, 27 Nov 2006 11:29:41 +0000 (UTC)
+Cc: Jon Smirl <jonsmirl@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <200611151858.51833.andyparkins@gmail.com>
-X-MIMEDefang-Filter: osdl$Revision: 1.156 $
-X-Scanned-By: MIMEDefang 2.36
+X-Envelope-From: mhagger@alum.mit.edu
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.8) Gecko/20061117 Thunderbird/1.5.0.8 Mnenhy/0.7.4.666
+In-Reply-To: <4569BCB8.9030809@gmx.net>
+X-Enigmail-Version: 0.94.0.0
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31475>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32411>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GkQHf-0000Rs-2a for gcvg-git@gmane.org; Wed, 15 Nov
- 2006 20:18:55 +0100
+ esmtp (Exim 4.43) id 1Goeg6-0003Ev-5R for gcvg-git@gmane.org; Mon, 27 Nov
+ 2006 12:29:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1030915AbWKOTSv (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
- 14:18:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030922AbWKOTSu
- (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 14:18:50 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:58813 "EHLO smtp.osdl.org") by
- vger.kernel.org with ESMTP id S1030915AbWKOTSt (ORCPT
- <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 14:18:49 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
- smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kAFJIeoZ020717
- (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Wed, 15
- Nov 2006 11:18:40 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
- shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kAFJIaKU025962; Wed, 15 Nov
- 2006 11:18:38 -0800
-To: Andy Parkins <andyparkins@gmail.com>
+ S1758059AbWK0L3L (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 27 Nov 2006
+ 06:29:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758064AbWK0L3L
+ (ORCPT <rfc822;git-outgoing>); Mon, 27 Nov 2006 06:29:11 -0500
+Received: from einhorn.in-berlin.de ([192.109.42.8]:39827 "EHLO
+ einhorn.in-berlin.de") by vger.kernel.org with ESMTP id S1758059AbWK0L3K
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 27 Nov 2006 06:29:10 -0500
+Received: from [192.168.100.152] ([212.222.128.142]) (authenticated bits=0)
+ by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id kARBT7vP017845
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT); Mon, 27
+ Nov 2006 12:29:07 +0100
+To: Marko Macek <marko.macek@gmx.net>
 Sender: git-owner@vger.kernel.org
 
+Marko Macek wrote:
+>> Another note for doing a converter. When combining things into change
+>> sets, for git import the comments in the branches should not be mixed
+>> between branches and the trunk when detecting change set. Git doesn't
+>> allow simultaneous commits to the trunk and branches.
+> 
+> Yup, this is the current problem I'm facing now. Even for CVS->SVN
+> conversion,
+> I don't want to see multi-branch commits.
 
+To avoid multi-branch commits, you have to start cvs2svn with an
+--options file, and in the options file set
 
-On Wed, 15 Nov 2006, Andy Parkins wrote:
->
-> On the one hand you're arguing that git syntax is easy to learn, and on the 
-> other that no one will be able to learn a new syntax just as easily.
-
-I'm saying that people who are new to git will _have_ to learn new 
-concepts ANYWAY.
-
-I don't think the naming is the hard part. 
-
-The fact is, git is one of the very few (essentially _only_) SCM's that 
-make it very clear that all real operations are local and that if you want 
-to work with other repositories, you have to "fetch" those into local 
-branches first. The fact that "pull" exists at all is really just 
-shorthand.
-
-If people have trouble explaining this to others, and have trouble 
-grasping "pull", then I will bet that the _real_ issue has nothing at all 
-to do with naming at all, and the real issue is that people are being 
-_taught_ the concepts in the wrong order.
-
-Before you learn "pull", you should learn "fetch". Don't even _mention_ 
-"pull" until the person got what "fetch" means. Because the fact is, 
-"fetch" is really the much more fundamental operation, and once you 
-really understand what "fetch" does, "pull" is obvious.
-
-So I'll argue that the problem isn't naming, the "problem" is really that 
-git has a few fundamnetal concepts that people aren't used to. The most 
-fundamnetal of those is the notion of the local branch-space. EVERY other 
-(broken) SCM has branches as being some kind of totally idiotic separate 
-subdirectories, or doesn't really support branches at all (ie neither BK 
-nor CVS really support "branches" - even if a concept of that name exists 
-in CVS, it has nothing at all in common with the git model of branches).
-
-But once you understand branches, and understand "fetch" (and it really 
-isn't _that_ complicated: fetch really does exactly what the name says, so 
-if you understand local branches, you will understand "fetch"), then it's 
-a much smaller step to explain "pull = fetch + merge".
-
-But I bet people don't teach it that way. They _start_ by teaching "pull". 
-Right?
+ctx.cross_project_commits = False
 
