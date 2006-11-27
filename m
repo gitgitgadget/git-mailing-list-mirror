@@ -1,70 +1,82 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: What's in git.git (stable)
-Date: Fri, 15 Dec 2006 15:28:09 +0100
-Organization: At home
-Message-ID: <elub92$v7q$4@sea.gmane.org>
-References: <7v4przfpir.fsf@assigned-by-dhcp.cox.net> <200612132237.10051.andyparkins@gmail.com> <elpvro$rvj$1@sea.gmane.org> <200612140927.27259.andyparkins@gmail.com> <20061214093637.GC1747@spearce.org> <Pine.LNX.4.64.0612141205490.18171@xanadu.home>
+X-Spam-Status: No, score=-2.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,MSGID_FROM_MTA_HEADER,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+From: Sean <seanlkml@sympatico.ca>
+Subject: Re: [PATCH 4/10] Add current branch in PS1 support to
+ git-completion.bash.
+Date: Mon, 27 Nov 2006 12:26:53 -0500
+Message-ID: <BAYC1-PASMTP109DA8BB360DD64E76B7B0AEE60@CEZ.ICE>
+References: <de7beb117fb963e68e1085b773593be326ffd495.1164616814.git.spearce@spearce.org>
+	<20061127084128.GD19745@spearce.org>
+	<20061127103111.4835bffc.seanlkml@sympatico.ca>
+	<20061127165122.GB6616@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-NNTP-Posting-Date: Fri, 15 Dec 2006 14:26:02 +0000 (UTC)
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Mon, 27 Nov 2006 17:27:31 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 20
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-25-107.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+X-Originating-IP: [65.93.43.74]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Original-Message-Id: <20061127122653.3e801d7a.seanlkml@sympatico.ca>
+In-Reply-To: <20061127165122.GB6616@spearce.org>
+X-Mailer: Sylpheed version 2.2.10 (GTK+ 2.10.4; i386-redhat-linux-gnu)
+X-OriginalArrivalTime: 27 Nov 2006 17:31:01.0265 (UTC) FILETIME=[CEAC2810:01C71249]
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34506>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GvE0d-0000fx-TC for gcvg-git@gmane.org; Fri, 15 Dec
- 2006 15:26:00 +0100
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GokFv-0003ds-SI for gcvg-git@gmane.org; Mon, 27 Nov
+ 2006 18:27:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752634AbWLOOZ5 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 15 Dec 2006
- 09:25:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752636AbWLOOZ5
- (ORCPT <rfc822;git-outgoing>); Fri, 15 Dec 2006 09:25:57 -0500
-Received: from main.gmane.org ([80.91.229.2]:49453 "EHLO ciao.gmane.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1752634AbWLOOZ4
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 15 Dec 2006 09:25:56 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1GvE0R-0005Dr-2h for git@vger.kernel.org; Fri, 15 Dec 2006 15:25:47 +0100
-Received: from host-81-190-25-107.torun.mm.pl ([81.190.25.107]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Fri, 15 Dec 2006 15:25:47 +0100
-Received: from jnareb by host-81-190-25-107.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Fri, 15 Dec 2006
- 15:25:47 +0100
-To: git@vger.kernel.org
+ S1758458AbWK0R04 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 27 Nov 2006
+ 12:26:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758459AbWK0R04
+ (ORCPT <rfc822;git-outgoing>); Mon, 27 Nov 2006 12:26:56 -0500
+Received: from bayc1-pasmtp10.bayc1.hotmail.com ([65.54.191.170]:42475 "EHLO
+ BAYC1-PASMTP10.bayc1.hotmail.com") by vger.kernel.org with ESMTP id
+ S1758456AbWK0R0z (ORCPT <rfc822;git@vger.kernel.org>); Mon, 27 Nov 2006
+ 12:26:55 -0500
+Received: from linux1.attic.local ([65.93.43.74]) by
+ BAYC1-PASMTP10.bayc1.hotmail.com over TLS secured channel with Microsoft
+ SMTPSVC(6.0.3790.1830); Mon, 27 Nov 2006 09:31:01 -0800
+Received: from guru.attic.local ([10.10.10.28]) by linux1.attic.local with
+ esmtp (Exim 4.43) id 1GojJk-0006rd-BD; Mon, 27 Nov 2006 11:26:52 -0500
+To: Shawn Pearce <spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 
-Nicolas Pitre wrote:
+On Mon, 27 Nov 2006 11:51:23 -0500
+Shawn Pearce <spearce@spearce.org> wrote:
 
-> On Thu, 14 Dec 2006, Shawn Pearce wrote:
+> I actually started with the name __git_current_branch but changed
+> my mind on that and went with __git_ps1.
 > 
->> But I'm not sure that git-add should output anything.  Last I checked
->> the 'mv' command in Linux doesn't say "Move 5 files" when I move 5
->> files into a directory.  Likewise I don't think that knowing that
->> 6781 files were added is useful, what if it should have really been
->> 6782 files?  I'm unlikely to know, care, or realize it.
-> 
-> git-add -v does output added files already.
+> My rationale at the time was probably not correct (it was early this
+> morning) but I figured that the current branch name is "master"
+> while __git_ps1 prints " (master)".  Therefore __git_ps1 is not
+> really printing the current branch, its printing the current branch
+> and other stuff.  So I went with a name which implied its purpose.
 
-Ha! Now only get it to accept --verbose as long alternative to -v option,
-and add -v/--verbose option to other similar commands (git-mv for example).
+Ahh, I had missed that, it makes some sense.  Although it goes a bit
+against the commit message that the user is free to construct whatever
+PS1 format they like (ie. they're stuck with parenthesis around the
+branch name).
 
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Just thinking out loud, what about allowing __git_ps1 to take a
+format string of its own?  It could parse options like  "(\b)"
+to mean git branch surrounded by parenthesis.  But you could
+also do "[\b]" or "!\b" if you preferred.
+
+Then adding additional options would be easy, like "\r" for
+repo relative path etc... and the user really could create just
+about any git prompt they wanted.  Of course, if __git_ps1
+sees it's not in a git directory, it would always return an
+empty string.
+
+But that's maybe all too complicated to be worthwhile.  It's
+something that could be considered for the git --show-ps1 option
+though.
 
