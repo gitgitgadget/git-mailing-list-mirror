@@ -1,56 +1,63 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,BODY_URI_ONLY,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Alan Chandler <alan@chandlerfamily.org.uk>
-Subject: Re: Bash completion Issue?
-Date: Sun, 5 Nov 2006 09:30:23 +0000
-Message-ID: <200611050930.23455.alan@chandlerfamily.org.uk>
-References: <200611041236.59989.alan@chandlerfamily.org.uk> <200611050033.07716.alan@chandlerfamily.org.uk> <20061105042849.GA3840@spearce.org>
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: Possible BUG with git-rev-list --all in a StGit repository
+Date: Mon, 27 Nov 2006 07:38:30 +0100
+Message-ID: <e5bfff550611262238q60d466a3r230c9c4af283b76b@mail.gmail.com>
+References: <e5bfff550611260827t686a5071w7f050f17f784e5d9@mail.gmail.com>
+	 <7v7ixit13h.fsf@assigned-by-dhcp.cox.net>
+	 <e5bfff550611262231s3eac2d11ke9fcdb0d699093f0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sun, 5 Nov 2006 09:31:17 +0000 (UTC)
+NNTP-Posting-Date: Mon, 27 Nov 2006 06:38:38 +0000 (UTC)
+Cc: catalin.marinas@gmail.com, "Git Mailing List" <git@vger.kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: KMail/1.9.5
-In-Reply-To: <20061105042849.GA3840@spearce.org>
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=KDJdYx6bVFfB3HRXWqBIM5FcBNgvODnQ/bRyqZhXBHY/DauxcrO01v28sOgIZBXpvyle17RLTlC2yHYt7HZvLFVLdVPdR84xu8cvEweQ7R5Cl6TeVc8+4PtCHMgCKqeUvwN4Tr1vKSEeGE01CqoAubu/K4wOXEpSHJtLJTJzJm8=
+In-Reply-To: <e5bfff550611262231s3eac2d11ke9fcdb0d699093f0@mail.gmail.com>
 Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30961>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32384>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GgeLO-0001wt-1H for gcvg-git@gmane.org; Sun, 05 Nov
- 2006 10:31:10 +0100
+ esmtp (Exim 4.43) id 1Goa8Q-00046t-3n for gcvg-git@gmane.org; Mon, 27 Nov
+ 2006 07:38:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932596AbWKEJav (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 5 Nov 2006
- 04:30:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932595AbWKEJav
- (ORCPT <rfc822;git-outgoing>); Sun, 5 Nov 2006 04:30:51 -0500
-Received: from 82-44-22-127.cable.ubr06.croy.blueyonder.co.uk
- ([82.44.22.127]:22949 "EHLO home.chandlerfamily.org.uk") by vger.kernel.org
- with ESMTP id S932596AbWKEJav (ORCPT <rfc822;git@vger.kernel.org>); Sun, 5
- Nov 2006 04:30:51 -0500
-Received: from kanger.home ([192.168.0.21]) by home.chandlerfamily.org.uk
- with esmtp (Exim 4.63) (envelope-from <alan@chandlerfamily.org.uk>) id
- 1GgeL3-0000Zr-QE for git@vger.kernel.org; Sun, 05 Nov 2006 09:30:49 +0000
-To: git@vger.kernel.org
+ S1757092AbWK0Gib (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 27 Nov 2006
+ 01:38:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757093AbWK0Gib
+ (ORCPT <rfc822;git-outgoing>); Mon, 27 Nov 2006 01:38:31 -0500
+Received: from py-out-1112.google.com ([64.233.166.176]:24348 "EHLO
+ py-out-1112.google.com") by vger.kernel.org with ESMTP id S1757090AbWK0Gia
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 27 Nov 2006 01:38:30 -0500
+Received: by py-out-1112.google.com with SMTP id a29so1035276pyi for
+ <git@vger.kernel.org>; Sun, 26 Nov 2006 22:38:30 -0800 (PST)
+Received: by 10.35.99.17 with SMTP id b17mr12452810pym.1164609510195; Sun, 26
+ Nov 2006 22:38:30 -0800 (PST)
+Received: by 10.35.42.4 with HTTP; Sun, 26 Nov 2006 22:38:30 -0800 (PST)
+To: "Junio C Hamano" <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-On Sunday 05 November 2006 04:28, Shawn Pearce wrote:
+On 11/27/06, Marco Costalba <mcostalba@gmail.com> wrote:
+> >
+> > You are looking at .git/refs/bases/ refs that StGIT uses for its
+> > internal bookkeeping.
+> >
+> Ok.
+>
+> Anyway, getting garbage when asking for a git-rev-list --all if in a
+> StGit repo at least could be considered a little integration issue.
+>
+> Internal bookkeeing should be, well,  _internal_  :-)
+>
 
-> Maybe you can nicely ask the Debian maintainer to switch to using
-> use the completion script that is actually shipped with git 1.4.3.3?
 
-It seems to be a little bit more subtle than I first thought.
-
-There is a separate 'git-completion' package which is not maintained by the 
-git maintainer (Gerrit Pape) and which has not been updated since August. Its 
-this package that contains the scripts.
-
-I'll file a bug report against it.
--- 
-Alan Chandler
