@@ -1,73 +1,102 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: how to show log for only one branch
-Date: Tue, 7 Nov 2006 09:08:52 +0100
-Message-ID: <200611070908.53121.jnareb@gmail.com>
-References: <454EAEDB.8020909@gmail.com> <eink3u$pmh$1@sea.gmane.org> <455001EA.5040306@gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [PATCH 10/10] Support bash completion of refs/remote.
+Date: Mon, 27 Nov 2006 03:42:32 -0500
+Message-ID: <20061127084232.GJ19745@spearce.org>
+References: <de7beb117fb963e68e1085b773593be326ffd495.1164616814.git.spearce@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Tue, 7 Nov 2006 08:08:30 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Mon, 27 Nov 2006 08:42:45 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=WJDVPV5OV2VYpS1kbwn3p62diZ8c6kxSXrAGx/zCitjkmfmk+QtZtiNUHLDZOOGOUDn74MYuKfZH9TKlCqKDoNXAg68YavPq05nZdSDUU+i7gBOljYY1vnRGstRR8+iH8+bHjcyL8C+I91lmUwdbFi9ioosullV7ctHI2dLTUBg=
-User-Agent: KMail/1.9.3
-In-Reply-To: <455001EA.5040306@gmail.com>
 Content-Disposition: inline
+In-Reply-To: <de7beb117fb963e68e1085b773593be326ffd495.1164616814.git.spearce@spearce.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31052>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32399>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GhM0J-0008Cc-9U for gcvg-git@gmane.org; Tue, 07 Nov
- 2006 09:08:19 +0100
+ esmtp (Exim 4.43) id 1Goc4W-0007lZ-3I for gcvg-git@gmane.org; Mon, 27 Nov
+ 2006 09:42:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1754100AbWKGIIQ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 7 Nov 2006
- 03:08:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754105AbWKGIIQ
- (ORCPT <rfc822;git-outgoing>); Tue, 7 Nov 2006 03:08:16 -0500
-Received: from ug-out-1314.google.com ([66.249.92.173]:585 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1754100AbWKGIIP
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 7 Nov 2006 03:08:15 -0500
-Received: by ug-out-1314.google.com with SMTP id m3so1134455ugc for
- <git@vger.kernel.org>; Tue, 07 Nov 2006 00:08:14 -0800 (PST)
-Received: by 10.67.103.7 with SMTP id f7mr8701700ugm.1162886894281; Tue, 07
- Nov 2006 00:08:14 -0800 (PST)
-Received: from host-81-190-24-209.torun.mm.pl ( [81.190.24.209]) by
- mx.google.com with ESMTP id k1sm6130110ugf.2006.11.07.00.08.13; Tue, 07 Nov
- 2006 00:08:13 -0800 (PST)
-To: Liu Yubao <yubao.liu@gmail.com>, Junio C Hamano <junkio@cox.net>
+ S1757441AbWK0Img (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 27 Nov 2006
+ 03:42:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757443AbWK0Img
+ (ORCPT <rfc822;git-outgoing>); Mon, 27 Nov 2006 03:42:36 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:13964 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S1757441AbWK0Imf
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 27 Nov 2006 03:42:35 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1Goc4O-0004WG-34; Mon, 27 Nov 2006 03:42:32 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 8E80120FB7F; Mon, 27 Nov 2006 03:42:32 -0500 (EST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Liu Yubao wrote:
-> Jakub Narebski wrote:
->>
->> Perhaps what you want is git log --committer=<owner of repo>?
->> 
-> Thanks, it can't meet my requirement, if I create two branches
-> and merge them, I can't easily tell the track of those two branches.
+Now that people are really likely to start using separate remotes
+(due to the default in git-clone changing) we should support ref
+completion for these refs in as many commands as possible.
 
-Use graphical history viewer then. git-show-branch, gitk (Tcl/Tk),
-qgit (Qt), less used GitView (GTK+), tig (ncurses), least used 
-git-browser (JavaScript). 
+While we are working on this routine we should use for-each-ref
+to obtain a list of local refs, as this should run faster than
+peek-remote as it does not need to dereference tag objects in
+order to produce the list of refs back to us.  It should also
+be more friendly to users of StGIT as we won't generate a list
+of the StGIT metadata refs.
 
-BTW. that is what subject line (first line of commit message) is for. 
-Note the "gitweb:", "Documentation:", "autoconf:", "Improve build:" in 
-the git log.
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ contrib/completion/git-completion.bash |   18 ++++++++++++++----
+ 1 files changed, 14 insertions(+), 4 deletions(-)
 
-
-By the way, what is the status of the proposed "note" header extension 
-to the commit object? One could store name of branch we were/are on, 
-even though this is absolutely discouraged...
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index b456a3b..df67f8e 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -47,16 +47,26 @@ __git_refs ()
+ {
+ 	local cmd i is_hash=y dir="${1:-$(__gitdir)}"
+ 	if [ -d "$dir" ]; then
+-		cmd=git-peek-remote
+-	else
+-		cmd=git-ls-remote
++		if [ -e "$dir/HEAD" ]; then echo HEAD; fi
++		for i in $(git --git-dir="$dir" \
++			for-each-ref --format='%(refname)' \
++			refs/tags refs/heads refs/remotes); do
++			case "$i" in
++				refs/tags/*)    echo "${i#refs/tags/}" ;;
++				refs/heads/*)   echo "${i#refs/heads/}" ;;
++				refs/remotes/*) echo "${i#refs/remotes/}" ;;
++				*)              echo "$i" ;;
++			esac
++		done
++		return
+ 	fi
+-	for i in $($cmd "$dir" 2>/dev/null); do
++	for i in $(git-ls-remote "$dir" 2>/dev/null); do
+ 		case "$is_hash,$i" in
+ 		y,*) is_hash=n ;;
+ 		n,*^{}) is_hash=y ;;
+ 		n,refs/tags/*) is_hash=y; echo "${i#refs/tags/}" ;;
+ 		n,refs/heads/*) is_hash=y; echo "${i#refs/heads/}" ;;
++		n,refs/remotes/*) is_hash=y; echo "${i#refs/remotes/}" ;;
+ 		n,*) is_hash=y; echo "$i" ;;
+ 		esac
+ 	done
 -- 
-Jakub Narebski
