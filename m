@@ -1,129 +1,96 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
-Subject: Re: Possible but in gitweb
-Date: Sat, 18 Nov 2006 18:42:33 +0100
-Message-ID: <4d8e3fd30611180942p548a92d1ufc9e0dcfabedb59@mail.gmail.com>
-References: <4d8e3fd30611180858xf28e958g8511f2eb68d53848@mail.gmail.com>
-	 <ejng62$k2m$1@sea.gmane.org>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: git-PS1 bash prompt setting
+Date: Mon, 27 Nov 2006 12:02:49 -0500
+Message-ID: <20061127170249.GC6616@spearce.org>
+References: <BAYC1-PASMTP037FDA6C6465F0541AC613AEE90@CEZ.ICE> <Pine.LNX.4.63.0611261524130.30004@wbgn013.biozentrum.uni-wuerzburg.de> <20061126094212.fde8cce7.seanlkml@sympatico.ca> <20061127065400.GA19174@spearce.org> <20061127075650.81a5a850.seanlkml@sympatico.ca>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Sat, 18 Nov 2006 17:42:53 +0000 (UTC)
-Cc: "Git Mailing List" <git@vger.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Mon, 27 Nov 2006 17:03:21 +0000 (UTC)
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, Theodore Tso <tytso@mit.edu>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=bUPHOaMHsXKOUkdglPdBCE3xVSkoyI76EwZD31TFWV6xFayJvbN7cyc+qzHrUGV1WAt5j2ulhRd0EmJHKL7wHHAD2m4NR5q5BZs5uaqBvK/nF3BXYZDNhfOYp3ndIZw25TnbX7P8FG3SSj6BQEyZI9jb4FLmpGkkS1zS+0PHAlg=
-In-Reply-To: <ejng62$k2m$1@sea.gmane.org>
 Content-Disposition: inline
+In-Reply-To: <20061127075650.81a5a850.seanlkml@sympatico.ca>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31781>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32429>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GlUDK-0004Gg-Az for gcvg-git@gmane.org; Sat, 18 Nov
- 2006 18:42:50 +0100
+ esmtp (Exim 4.43) id 1Gojsk-0007TL-HM for gcvg-git@gmane.org; Mon, 27 Nov
+ 2006 18:03:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1755263AbWKRRml convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Sat, 18 Nov 2006 12:42:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755270AbWKRRml
- (ORCPT <rfc822;git-outgoing>); Sat, 18 Nov 2006 12:42:41 -0500
-Received: from nf-out-0910.google.com ([64.233.182.184]:45766 "EHLO
- nf-out-0910.google.com") by vger.kernel.org with ESMTP id S1755263AbWKRRmk
- convert rfc822-to-8bit (ORCPT <rfc822;git@vger.kernel.org>); Sat, 18 Nov 2006
- 12:42:40 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so1747258nfa for
- <git@vger.kernel.org>; Sat, 18 Nov 2006 09:42:34 -0800 (PST)
-Received: by 10.78.128.15 with SMTP id a15mr3393780hud.1163871753637; Sat, 18
- Nov 2006 09:42:33 -0800 (PST)
-Received: by 10.78.165.3 with HTTP; Sat, 18 Nov 2006 09:42:33 -0800 (PST)
-To: "Jakub Narebski" <jnareb@gmail.com>
+ S1758412AbWK0RC6 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 27 Nov 2006
+ 12:02:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758415AbWK0RC6
+ (ORCPT <rfc822;git-outgoing>); Mon, 27 Nov 2006 12:02:58 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:27879 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S1758382AbWK0RC6
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 27 Nov 2006 12:02:58 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1GojsS-0005QI-MM; Mon, 27 Nov 2006 12:02:44 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 7364A20FB7F; Mon, 27 Nov 2006 12:02:49 -0500 (EST)
+To: Sean <seanlkml@sympatico.ca>
 Sender: git-owner@vger.kernel.org
 
-On 11/18/06, Jakub Narebski <jnareb@gmail.com> wrote:
-> Paolo Ciarrocchi wrote:
->
-> > Hi all,
-> > I'm playing with a repo hosted by repos.os.cz and I think I faced a
-> > bug (Pasky confirmed that this should be reported here as a bug).
-> >
-> > My repo has two branches,
-> > * master
-> >   html
-> >
-> > Master contains a text file while html contains his conversion in h=
-tml
-> > done via asciidoc.
-> >
-> > I need to URLs that point to the top of the branches in order to ha=
-ve
-> > an easy way for linking the documentation to external portals.
-> >
-> > This link points to HEAD, so top of master:
-> > http://repo.or.cz/w/LinuxKernelDevelopmentProcess.git?a=3Dblob_plai=
-n;f=3DLinuxKernelDevelopmentProcess;hb=3DHEAD
-> >
-> > Browsing the repo I reach the following URL
-> > http://repo.or.cz/w/LinuxKernelDevelopmentProcess.git?a=3Dblob;f=3D=
-LinuxKernelDevelopmentProcess.html;hb=3DHEAD
-> > that is not accessible.
-> Because HEAD is master, not html, and there us no such file in master=
- branch?
+Sean <seanlkml@sympatico.ca> wrote:
+> On Mon, 27 Nov 2006 01:54:00 -0500
+> Shawn Pearce <spearce@spearce.org> wrote:
+> 
+> > I'm using something like this, and will be adding it to
+> > git-completion.bash tonight:
+> > 
+> > 	__git_ps1 ()
+> > 	{
+> > 		local b="$(git symbolic-ref HEAD 2>/dev/null)"
+> > 		if [ -n "$b" ]; then echo "(${b##refs/heads/})"; fi
+> > 	}
+> > 	PS1='[\u@\h \W$(__git_ps1)]\$ '
+> > 
+> > it works very well...
+> 
+> Yeah, when I first coded it I even looked at making it a bash loadable
+> to make it perform better but found the prototype to run acceptably,
+> so never bothered.
 
-=46air enoough but then there should be no link in the web interface.
-That sounds like a bug in the interface.
+When I originally coded the first version of __git_ps1 I was using
+it on a Cygwin system, where the fork+exec of the external script
+can take a little while.  The time to fork+exec two programs (script
+and then git) is huge compared to just fork+exec of git by itself,
+so I coded it as a function.  On the other hand my Mac OS X system
+doesn't even blink at either implementation.
 
-> But all the following links
->  http://repo.or.cz/w/LinuxKernelDevelopmentProcess.git?a=3Dblob;f=3DL=
-inuxKernelDevelopmentProcess.html;hb=3Dhtml
->
+> If Git does get a --show-ps1 option, people will
+> still be able to roll their own version to tweak the output format
+> as you did above.  Hopefully the standard format will work for most
+> though.
 
-Yeah, but I would like to see the interpreted page.
+I'm not sure that's worth implementing in the core code.
+Most shells that will let you invoke a command as part of their
+prompt generation will also let you use builtin functions and do
+some basic string manipulation (e.g. like I do above with bash).
+At which point it is say 5 lines of shell (nicely formatted) to
+craft a prompt string vs. 15-20 lines of C to parse the option,
+read HEAD, and craft a prompt string.
 
-http://repo.or.cz/w/LinuxKernelDevelopmentProcess.git?a=3Dblob;f=3DLinu=
-xKernelDevelopmentProcess;hb=3Dmaster
+If someone else contributes a --show-ps1 option that is useable as
+a replacement for my __git_ps1 I'll gladly jump on board and change
+to using it, but I just don't see a reason to write it myself.
 
-That is master not html
-  http://repo.or.cz/w/LinuxKernelDevelopmentProcess.git?a=3Dblob;f=3DLi=
-nuxKernelDevelopmentProcess;hb=3DHEAD
-> works
-
-Same as above.
-
-> You can use
->  http://repo.or.cz/w/LinuxKernelDevelopmentProcess.git/html:/LinuxKer=
-nelDevelopmentProcess.html
-
-Yes, thanks! Is it reachable via the web interface?
-Is it always pointing to the top of the repo?
-
-> or
->  http://repo.or.cz/w/LinuxKernelDevelopmentProcess.git/html:LinuxKern=
-elDevelopmentProcess.html
-> (and there is remote possibility that links would work, too)
->
-> > Looks like is not possible to obtain a link to the top of a branch
-> > different from master.
->
-> It is possible, but you must specify the branch.
-
-Well, I don't see how it is possible just browsing with gitweb.
-Am I wrong?
-
-> P.S. Please reply also to git mailing list...
-
-Ciao,
---=20
-Paolo
-http://docs.google.com/View?docid=3Ddhbdhs7d_4hsxqc8
-http://www.linkedin.com/pub/0/132/9a3
-Non credo nelle otto del mattino. Per=F2 esistono. Le otto del mattino
-sono l'incontrovertibile prova della presenza del male nel mondo.
+-- 
