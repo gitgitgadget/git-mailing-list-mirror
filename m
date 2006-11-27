@@ -1,102 +1,70 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: [ANNOUNCE] qgit-1.5.3
-Date: Sat, 11 Nov 2006 09:06:20 +0100
-Message-ID: <e5bfff550611110006p44494ed4h2979232bfc8e957c@mail.gmail.com>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: Re: [RFD] making separate-remote layout easier to use
+Date: Mon, 27 Nov 2006 01:41:14 +0100
+Message-ID: <200611270141.14307.Josef.Weidendorfer@gmx.de>
+References: <7v1wnr19do.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sat, 11 Nov 2006 08:07:06 +0000 (UTC)
+NNTP-Posting-Date: Mon, 27 Nov 2006 00:41:43 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=c8zkq7L9Ve860kWWa5BR6YWMM1H4sdgbajYst608ooYwS1iw7KFU8aLir2H+zWGbmdliXzKWCIcBOeMJ8GfDtvlfl7E7xaBth/X5eH8lHeQo0MNAdM/Tc/Bq0Obn2D/DevY72MNr3BvoosoP5XMuwf5ZW1rsuKBav57lc13ALpo=
+X-Authenticated: #352111
+User-Agent: KMail/1.9.3
+In-Reply-To: <7v1wnr19do.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31210>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32373>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GintE-0004Vs-TJ for gcvg-git@gmane.org; Sat, 11 Nov
- 2006 09:07:01 +0100
+ esmtp (Exim 4.43) id 1GoUYs-000763-21 for gcvg-git@gmane.org; Mon, 27 Nov
+ 2006 01:41:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1947147AbWKKIG4 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 11 Nov 2006
- 03:06:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1947150AbWKKIG4
- (ORCPT <rfc822;git-outgoing>); Sat, 11 Nov 2006 03:06:56 -0500
-Received: from py-out-1112.google.com ([64.233.166.182]:23909 "EHLO
- py-out-1112.google.com") by vger.kernel.org with ESMTP id S1947148AbWKKIGy
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 11 Nov 2006 03:06:54 -0500
-Received: by py-out-1112.google.com with SMTP id a29so392071pyi for
- <git@vger.kernel.org>; Sat, 11 Nov 2006 00:06:21 -0800 (PST)
-Received: by 10.35.70.2 with SMTP id x2mr5323321pyk.1163232380927; Sat, 11
- Nov 2006 00:06:20 -0800 (PST)
-Received: by 10.35.42.4 with HTTP; Sat, 11 Nov 2006 00:06:20 -0800 (PST)
-To: "Git Mailing List" <git@vger.kernel.org>, linux-kernel@vger.kernel.org
+ S1753513AbWK0AlS (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 26 Nov 2006
+ 19:41:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755604AbWK0AlS
+ (ORCPT <rfc822;git-outgoing>); Sun, 26 Nov 2006 19:41:18 -0500
+Received: from mail.gmx.net ([213.165.64.20]:3502 "HELO mail.gmx.net") by
+ vger.kernel.org with SMTP id S1753513AbWK0AlR (ORCPT
+ <rfc822;git@vger.kernel.org>); Sun, 26 Nov 2006 19:41:17 -0500
+Received: (qmail invoked by alias); 27 Nov 2006 00:41:15 -0000
+Received: from p5496967F.dip0.t-ipconnect.de (EHLO noname) [84.150.150.127]
+ by mail.gmx.net (mp036) with SMTP; 27 Nov 2006 01:41:15 +0100
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-qgit it's a graphical git repositories viewer built on Qt libraries.
+On Saturday 25 November 2006 22:53, Junio C Hamano wrote:
+>  - merging the "primary" branch is good only when the user is on
+>    the corresponding "primary" branch.  It is usually a wrong
+>    thing to do when on another branch.
 
-This is mostly a bug fix release.
+I vote for a config option
 
-Several issues has been fixed, also some crash bugs, so an update is
-strongly suggested.
+ core.pull.stopWithoutDefaultMerge
 
-To note is the new possibility to set the font used by patch and file
-content viewers.
+which would error out on a
 
-Thanks to Pavel Roskin and Josef Weidendorfer for their help and patches.
+ git pull
 
+when no branch.<current branch>.merge is set with a message like
 
-Download tarball from http://www.sourceforge.net/projects/qgit
-or directly from git public repository
-git://git.kernel.org/pub/scm/qgit/qgit.git
+ "No default remote branch set to merge into current branch <branch>.
+  Set branch.<branch>.remote/merge to make this work"
 
-Please refer to http://digilander.libero.it/mcostalba/ for additional
-information.
+It is arguable if this option should change the behavior of
+"git pull <repo>". Probably not: I would assume that the
+user explicitly wants to merge the primary branch of <repo>.
 
-	Marco
-
-
-ChangeLog from 1.5.2
-
-- use a smaller tab close button and a smaller icon (Pavel Roskin)
-
-- fix a crash in case of repo change while in filtered view
-
-- fix a crash due to evil static pointers
-
-- clear all the panes if search from the toolbar doesn't find anything
-
-- silence a Qt warning when closing a tab
-
-- let the user to set the typewriter (fixed width) font used
-  with patch and file content viewers
-
-- fix broken StGit 'pop' command interface
-
-- do not use "--keep" option of git-am as default
-
-- fix issues with tag marks when changing graph size
-
-- fix filenames cache data saving in case of bare repositories
-
-- rewrite and simplify graph drawing code (Josef Weidendorfer)
-
-- fix issues with file names with spaces
-
-- adjust columns width when changing window size
-
-- fetch file history from all trees instead of only current
-
-- early exit update cycle when a new request arrives
-
-- correctly order tags in start-up input range dialog
+Additionally, set branch.<primary>.remote/merge on git-clone,
+together with core.pull.stopWithoutDefaultMerge=1.
 
