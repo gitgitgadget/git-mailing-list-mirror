@@ -1,98 +1,76 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Using GIT to store /etc (Or: How to make GIT store all file permission
- bits)
-Date: Mon, 11 Dec 2006 11:39:47 +0100
-Message-ID: <457D3573.2010001@op5.se>
-References: <787BE48C-1808-4A33-A368-5E8A3F00C787@mac.com> <elh91b$v6r$1@sea.gmane.org> <A52817B6-0265-4164-8E5D-334AF92DC267@mac.com> <200612101926.33307.jnareb@gmail.com> <19476830-E30A-42B7-AD9B-4C417D830C8E@mac.com>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Re: Mozilla, git and Windows
+Date: Mon, 27 Nov 2006 11:13:10 -0500
+Message-ID: <9e4733910611270813g4ff982b0tbe6b57d1d49ca9f7@mail.gmail.com>
+References: <9e4733910611270728p36e58e08w6cc7a2989b7843ce@mail.gmail.com>
+	 <456B057E.4000904@shadowen.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Mon, 11 Dec 2006 10:39:58 +0000 (UTC)
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+NNTP-Posting-Date: Mon, 27 Nov 2006 16:13:56 +0000 (UTC)
+Cc: "Git Mailing List" <git@vger.kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
-In-Reply-To: <19476830-E30A-42B7-AD9B-4C417D830C8E@mac.com>
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=L+JQcbSgb4r8fhTrj8SQciJAFRby1WxVe5W4pkQf5+QN3Piq+9lZmZShlnC9vXPStZARn8Q3dTJW/RNNUQ1GmaAmv8ESVru8IluyFJpcQIwcI0Ogaz6Tjon6tPgj3U75Ww9IMc7gLbpoUT46z2V8pj+qyzOjCNMhPizioJdVGjI=
+In-Reply-To: <456B057E.4000904@shadowen.org>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33989>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GtiZd-0007Gw-IT for gcvg-git@gmane.org; Mon, 11 Dec
- 2006 11:39:53 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32424>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Goj6l-0002Su-6z for gcvg-git@gmane.org; Mon, 27 Nov
+ 2006 17:13:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1762712AbWLKKju (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 11 Dec 2006
- 05:39:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762760AbWLKKjt
- (ORCPT <rfc822;git-outgoing>); Mon, 11 Dec 2006 05:39:49 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:37774 "EHLO
- smtp-gw1.op5.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
- S1762712AbWLKKjt (ORCPT <rfc822;git@vger.kernel.org>); Mon, 11 Dec 2006
- 05:39:49 -0500
-Received: from [192.168.1.20] (unknown [213.88.215.14]) by smtp-gw1.op5.se
- (Postfix) with ESMTP id E72116BCBF; Mon, 11 Dec 2006 11:39:47 +0100 (CET)
-To: Kyle Moffett <mrmacman_g4@mac.com>
+ S1757090AbWK0QNN (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 27 Nov 2006
+ 11:13:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758352AbWK0QNN
+ (ORCPT <rfc822;git-outgoing>); Mon, 27 Nov 2006 11:13:13 -0500
+Received: from nz-out-0102.google.com ([64.233.162.206]:52000 "EHLO
+ nz-out-0102.google.com") by vger.kernel.org with ESMTP id S1757090AbWK0QNL
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 27 Nov 2006 11:13:11 -0500
+Received: by nz-out-0102.google.com with SMTP id s1so692637nze for
+ <git@vger.kernel.org>; Mon, 27 Nov 2006 08:13:10 -0800 (PST)
+Received: by 10.35.66.13 with SMTP id t13mr13498691pyk.1164643990580; Mon, 27
+ Nov 2006 08:13:10 -0800 (PST)
+Received: by 10.35.72.13 with HTTP; Mon, 27 Nov 2006 08:13:10 -0800 (PST)
+To: "Andy Whitcroft" <apw@shadowen.org>
 Sender: git-owner@vger.kernel.org
 
-Kyle Moffett wrote:
-> On Dec 10, 2006, at 13:26:32, Jakub Narebski wrote:
->> The idea is to not store /etc in git directly, but use import/export 
->> scripts, which for example saves permissions and ownership in some 
->> file also tracked by git on import, and restores correct permissions 
->> on export. That is what I remember from this discussion. This of 
->> course means that you would have to write your own porcelain...
->>
->> What about mentioned in other email IsiSetup?
-> 
-> The real problem I have with that is you literally have to duplicate all 
-> sorts of functionality.  I want to run "foo-status" in /etc and get 
-> something useful, but if /etc is not a git directory in and of itself 
-> then you have to duplicate most of "git-status" anyways.
+On 11/27/06, Andy Whitcroft <apw@shadowen.org> wrote:
+> Jon Smirl wrote:
+> > In the other thread we are discussing the conversion of Mozilla CVS to
+> > git format. This is something that has to be done but it is not the
+> > only issue. Without a native Windows port they won't even consider
+> > using git. There is also the risk that the features needed by Mozilla
+> > will be completed after they choose to use a different SCM.
+> >
+> > Even if we implement all of the needed features git still needs to win
+> > the competition against the other possible choices. The last I heard
+> > the leading candiate is SVN/SVK.
+>
+> Do we need to worry too much about taking over the world in one day?
+> Yes of course git is _the_ superior solution etc, but too many new users
+> at once is always painful.
+>
+> I think you are more likely to win letting them convert over to SVN.
+> From there people naturally start using git mirrors from the SVN trunk.
+>  Cirtainly I have two projects which do not use git, one in CVS and one
+> in SVN.  I just svnimport that and work in git.  I am confident with
+> time the project will migrate, but I am happy other git users are happy
+> all without it being the tool of choice.
 
-Make /etc/.git a symlink to where you store your repo and go to the 
-other directory when you want to *restore* configuration. The only "own 
-porcelain" you need to write is a simple program that understands "save" 
-and "restore" (or some such) and tucks away the meta-data in a file 
-somewhere inside the git tree. If you make it in the format
-
-octal-mode path/to/file
-
-you can even get decently human-readable permission diffs, which will 
-most likely be prettier and easier to read than anything git currently has.
-
-> 
-> GIT already has _some_ idea about file permissions, it just discards 
-> most of the data before writing to disk.   Of course, adding POSIX ACLs
-> and user-extended-attributes requires a new data format, but those are 
-> very similar to filesystem permissions; they differ only in amount of 
-> data stored, not in purpose.
-> 
-
-The amount of data stored is the issue here. The current implementation 
-(which works just fine and does The Right Thing(tm) for code-repos) only 
-stores what it has to and uses the spare bits to do other things.
-
-> Import/export scripts literally require wrapping every single GIT 
-> command with a script that changes directory a few times, reads from a 
-> different checked-out tree, and permutes some extended-attribute data 
-> slightly before storing it in the underlying GIT tree.  Even without 
-> adding any new functionality whatsoever that doubles the amount of code 
-> just for finding your repository and checking command-line arguments, 
-> and that's a crazy trade-off to make in any situation.
-> 
-
-GIT_DIR=/some/where/else/.git git log -p
-
-Why would you want to read from a different checked-out tree? 
-Non-committed data is "changes", committed data is "HEAD" (or 
-commit-ish) and marked data is "index". I see no reason what so ever for 
-a second checked-out tree.
+The SVN version of the Mozilla repository is about 3GB. It takes
+around a week of CPU time for svnimport to process it.
 
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
+Jon Smirl
