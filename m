@@ -4,71 +4,83 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: git and bzr
-Date: Tue, 28 Nov 2006 13:49:43 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0611281346490.4244@woody.osdl.org>
-References: <45357CC3.4040507@utoronto.ca> <a7e835d40610250308v5d577482m139742e7fe1db185@mail.gmail.com>
- <87slhcz8zh.wl%cworth@cworth.org> <a7e835d40610260152k658aeaf0hb900cb63870c04e4@mail.gmail.com>
- <7vu01ro20b.fsf@assigned-by-dhcp.cox.net> <a7e835d40610260257r5f05ea4gc934f1c1cc267977@mail.gmail.com>
- <20061026101038.GA13310@coredump.intra.peff.net> <877iyne4dm.fsf@alplog.fr>
- <Pine.LNX.4.64.0610260753090.3962@g5.osdl.org> <456B7C6A.80104@webdrake.net>
- <845b6e870611280410j58bdcd99nc05d0f67489293e4@mail.gmail.com>
- <ekhaeg$etk$1@sea.gmane.org> <Pine.LNX.4.63.0611281433270.30004@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0611280754050.30076@woody.osdl.org> <456C7592.6020700@ableton.com>
- <ekhtnt$rkk$1@sea.gmane.org> <456C9DFF.1040407@onlinehome.de>
- <456CA981.4010808@onlinehome.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] (experimental) per-topic shortlog.
+Date: Sun, 26 Nov 2006 17:38:31 -0800
+Message-ID: <7vejrpr7mw.fsf@assigned-by-dhcp.cox.net>
+References: <7v8xhxsopp.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0611261652520.30076@woody.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Tue, 28 Nov 2006 21:50:11 +0000 (UTC)
-Cc: Jakub Narebski <jnareb@gmail.com>, bazaar-ng@lists.canonical.com,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Mon, 27 Nov 2006 01:38:58 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <456CA981.4010808@onlinehome.de>
-X-MIMEDefang-Filter: osdl$Revision: 1.161 $
-X-Scanned-By: MIMEDefang 2.36
+In-Reply-To: <Pine.LNX.4.64.0611261652520.30076@woody.osdl.org> (Linus
+	Torvalds's message of "Sun, 26 Nov 2006 17:06:08 -0800 (PST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32586>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32378>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GpApv-0007A3-9p for gcvg-git@gmane.org; Tue, 28 Nov
- 2006 22:49:55 +0100
+ esmtp (Exim 4.43) id 1GoVSO-0002TH-5f for gcvg-git@gmane.org; Mon, 27 Nov
+ 2006 02:38:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1757080AbWK1Vtw (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 28 Nov 2006
- 16:49:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757076AbWK1Vtw
- (ORCPT <rfc822;git-outgoing>); Tue, 28 Nov 2006 16:49:52 -0500
-Received: from smtp.osdl.org ([65.172.181.25]:43170 "EHLO smtp.osdl.org") by
- vger.kernel.org with ESMTP id S1757078AbWK1Vtv (ORCPT
- <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2006 16:49:51 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
- smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kASLniix005417
- (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Tue, 28
- Nov 2006 13:49:44 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
- shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kASLnhe3027122; Tue, 28 Nov
- 2006 13:49:43 -0800
-To: Nicholas Allen <nick.allen@onlinehome.de>
+ S1755786AbWK0Bid (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 26 Nov 2006
+ 20:38:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755823AbWK0Bid
+ (ORCPT <rfc822;git-outgoing>); Sun, 26 Nov 2006 20:38:33 -0500
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:42136 "EHLO
+ fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP id S1755786AbWK0Bid
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 26 Nov 2006 20:38:33 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao11.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061127013832.INXW296.fed1rmmtao11.cox.net@fed1rmimpo02.cox.net>; Sun, 26
+ Nov 2006 20:38:32 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id rdeg1V0161kojtg0000000; Sun, 26 Nov 2006
+ 20:38:41 -0500
+To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 
+Linus Torvalds <torvalds@osdl.org> writes:
 
+> On Sun, 26 Nov 2006, Junio C Hamano wrote:
+>>
+>> This implements an experimental "git log-fpc" command that shows
+>> short-log style output sorted by topics.
+>> 
+>> A "topic" is identified by going through the first-parent
+>> chains; this ignores the fast-forward case, but for a top-level
+>> integrator it often is good enough.
+>
+> Umm. May I suggest that you try this with the kernel repo too..
 
-On Tue, 28 Nov 2006, Nicholas Allen wrote:
-> 
-> and here's how it looked in git:
-> git status
+Have you?
 
-Ehh. It told you exactly what happened when you actually did the merge, 
-didn't it?
+I've compared 
 
-Yeah, "git status" won't tell you _why_ it results in unmerged paths, but 
-the merge will have told you.  You must have seen that, but decided to 
-just ignore it and not post it, because it didn't support the conclusion 
-you wanted to get, did it?
+	gitk HEAD~40..HEAD
 
-There are lots of reasons why "git status" may tell you that something 
-isn't merged. The most common one by far being an actual data conflict, 
-not a name conflict. The reason for why something conflicts is always told 
-at merge-time.
+and 
 
+	git-log-fpc --no-merges HEAD~40..HEAD
+
+Admittedly, the first group ("from the tip of the master") tends
+to be seriously mixed up without a fixed theme (well the theme
+appears to be "fix trivial warnings and compilation breakages
+not limited to any particular subsystem"), but I find the other
+groups quite a sane representation of what actually happened.
+
+My copy of your tree is a bit old (HEAD is at 1abbfb412), but I
+see:
+
+ - a two-commit series on MIPS via Ralf Baechle,
+ - a four-commit series on ARM via Russel King,
+ - a three-commit series on POWERPC via Paul Mackerras,
+ - a seventeen-commit series in net/ area via Dave Miller,
+ - a three-commit series on x86_64 via Andi Kleen.
+ ...
+
+As you said, committer would be a good addition to break a
+fast-forward case to make it even better.
