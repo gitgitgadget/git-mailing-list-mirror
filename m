@@ -1,68 +1,100 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
-Subject: Re: git bug? + question
-Date: Fri, 3 Nov 2006 11:27:36 +0100
-Message-ID: <8aa486160611030227w4c79ace9ta00a3eecfc46b11a@mail.gmail.com>
-References: <buoejsme6ho.fsf@dhapc248.dev.necel.com>
-	 <7v4pthmew1.fsf@assigned-by-dhcp.cox.net>
-	 <20061103074857.GA15972@diana.vm.bytemark.co.uk>
-	 <7v3b90gbfv.fsf@assigned-by-dhcp.cox.net>
-	 <20061103095905.GD7545@admingilde.org>
+From: Bruno Haible <bruno@clisp.org>
+Subject: git: how to produce context diffs?
+Date: Mon, 27 Nov 2006 15:16:30 +0100
+Message-ID: <200611271516.30425.bruno@clisp.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain;
+  charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Fri, 3 Nov 2006 10:27:46 +0000 (UTC)
-Cc: "Junio C Hamano" <junkio@cox.net>,
-	"=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>,
-	"Miles Bader" <miles@gnu.org>, git@vger.kernel.org
+NNTP-Posting-Date: Mon, 27 Nov 2006 14:20:40 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=MHuqyhVUBxQNVJkYA2O9/nLo+1osbvGj1BU25u/TVnOEjPMH4Y198cKXZFdTRcj/ni75Pci63X2NQh5vGl8bW787M8GiqVwy+NSJJDO3iQXIzSzJfDROkmQpaXh6RU9iPZZNX0mfJw8TuLyQ+G3U7xhua91dxOTT7/MEjBTTaUQ=
-In-Reply-To: <20061103095905.GD7545@admingilde.org>
+User-Agent: KMail/1.9.1
 Content-Disposition: inline
+X-OriginalArrivalTime: 27 Nov 2006 14:20:08.0282 (UTC) FILETIME=[2429A3A0:01C7122F]
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30816>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32414>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GfwGy-0000tj-DF for gcvg-git@gmane.org; Fri, 03 Nov
- 2006 11:27:41 +0100
+ esmtp (Exim 4.43) id 1GohKw-0005SV-Gt for gcvg-git@gmane.org; Mon, 27 Nov
+ 2006 15:19:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752907AbWKCK1h (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 3 Nov 2006
- 05:27:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752908AbWKCK1h
- (ORCPT <rfc822;git-outgoing>); Fri, 3 Nov 2006 05:27:37 -0500
-Received: from wx-out-0506.google.com ([66.249.82.236]:15752 "EHLO
- wx-out-0506.google.com") by vger.kernel.org with ESMTP id S1752902AbWKCK1h
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 3 Nov 2006 05:27:37 -0500
-Received: by wx-out-0506.google.com with SMTP id s14so374044wxc for
- <git@vger.kernel.org>; Fri, 03 Nov 2006 02:27:36 -0800 (PST)
-Received: by 10.70.131.20 with SMTP id e20mr2813570wxd.1162549656438; Fri, 03
- Nov 2006 02:27:36 -0800 (PST)
-Received: by 10.70.46.19 with HTTP; Fri, 3 Nov 2006 02:27:36 -0800 (PST)
-To: "Martin Waitz" <tali@admingilde.org>
+ S1758238AbWK0OTz (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 27 Nov 2006
+ 09:19:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758243AbWK0OTz
+ (ORCPT <rfc822;git-outgoing>); Mon, 27 Nov 2006 09:19:55 -0500
+Received: from ftp.ilog.fr ([81.80.162.195]:38841 "EHLO ftp.ilog.fr") by
+ vger.kernel.org with ESMTP id S1758238AbWK0OTy (ORCPT
+ <rfc822;git@vger.kernel.org>); Mon, 27 Nov 2006 09:19:54 -0500
+Received: from laposte.ilog.fr (cerbere-qfe0 [81.80.162.193]) by ftp.ilog.fr
+ (8.13.1/8.13.1) with ESMTP id kAREJndr029498; Mon, 27 Nov 2006 15:19:49 +0100
+Received: from marbore.ilog.biz (marbore.ilog.biz [172.17.2.61]) by
+ laposte.ilog.fr (8.13.1/8.13.1) with ESMTP id kAREJiUg024868; Mon, 27 Nov
+ 2006 15:19:44 +0100
+Received: from honolulu.ilog.fr ([172.16.15.37]) by marbore.ilog.biz with
+ Microsoft SMTPSVC(6.0.3790.1830); Mon, 27 Nov 2006 15:20:08 +0100
+Received: by honolulu.ilog.fr (Postfix, from userid 1001) id 916F33F420; Mon,
+ 27 Nov 2006 15:16:30 +0100 (CET)
+To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On 11/3/06, Martin Waitz <tali@admingilde.org> wrote:
-> I think the most intuitive thing for pull would be to fetch into
-> remotes/<remotename>/* and then to merge
-> remotes/<remotename>/<currentbranch>.
+Hi,
 
-Yes as the default branch to merge instead the first line, the problem
-is that it changes the current behaviour. But I think the most
-intuitive thing would be to record the branch it is based off at the
-branch creation time. Something similar to my patch:
+Is this a bug in git-diff? The git-diff-files.html says:
 
-Oct 17 [PATCHv2] git-branch: Set branch properties
-Message-ID: <87y7rf80es.fsf@gmail.com>
+  " When the environment variable GIT_EXTERNAL_DIFF is not set ...
+    For example, if you prefer context diff:
+    GIT_DIFF_OPTS=-c git-diff-index -p HEAD  "
 
-Note that it is for the "old" git-branch.sh.
+This doesn't work for me with git-1.4.4:
+
+$ unset GIT_EXTERNAL_DIFF
+$ export GIT_DIFF_OPTS=-c
+$ git-diff-index -p HEAD
+diff --git a/configure.ac b/configure.ac
+index 74901dc..d222ded 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -1,5 +1,5 @@
+ dnl Process this file with autoconf to produce a configure script.
+-AC_INIT(hello, 2.1.1, bug-gnu-hello@gnu.org)
++AC_INIT(hello, 2.1.2, bug-gnu-hello@gnu.org)
+ AC_CONFIG_SRCDIR([src/hello.c])
+ 
+ AC_PREREQ(2.52)
+
+Expected output:
+
+$ git-diff-index -p HEAD
+index 74901dc..d222ded 100644
+diff --git a/configure.ac b/configure.ac
+*** a/configure.ac
+--- b/configure.ac
+***************
+*** 1,5 ****
+  dnl Process this file with autoconf to produce a configure script.
+! AC_INIT(hello, 2.1.1, bug-gnu-hello@gnu.org)
+  AC_CONFIG_SRCDIR([src/hello.c])
+  
+  AC_PREREQ(2.52)
+--- 1,5 ----
+  dnl Process this file with autoconf to produce a configure script.
+! AC_INIT(hello, 2.1.2, bug-gnu-hello@gnu.org)
+  AC_CONFIG_SRCDIR([src/hello.c])
+  
+  AC_PREREQ(2.52)
+
+
+(Really, while I find -u diffs fine for tiny changes, I find them unreadable
+for rewrites of larger blocks, and cannot live without -c for these.)
+
+When I look at diff.c around
+       const char *diffopts = getenv("GIT_DIFF_OPTS");
+it appears that only unified diffs are supported??
 
