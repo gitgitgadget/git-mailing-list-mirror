@@ -5,124 +5,65 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 From: Junio C Hamano <junkio@cox.net>
-Subject: What's cooking in git.git (topics)
-Date: Sun, 17 Dec 2006 23:28:39 -0800
-Message-ID: <7vwt4p1x3s.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: [PATCH] (experimental) per-topic shortlog.
+Date: Sun, 26 Nov 2006 17:55:41 -0800
+Message-ID: <7vac2dr6ua.fsf@assigned-by-dhcp.cox.net>
+References: <7v8xhxsopp.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0611261652520.30076@woody.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Mon, 18 Dec 2006 07:28:47 +0000 (UTC)
+NNTP-Posting-Date: Mon, 27 Nov 2006 01:55:52 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+In-Reply-To: <Pine.LNX.4.64.0611261652520.30076@woody.osdl.org> (Linus
+	Torvalds's message of "Sun, 26 Nov 2006 17:06:08 -0800 (PST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34720>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GwCvT-00069L-Fv for gcvg-git@gmane.org; Mon, 18 Dec
- 2006 08:28:43 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32380>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GoVin-00062f-Et for gcvg-git@gmane.org; Mon, 27 Nov
+ 2006 02:55:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753444AbWLRH2l (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 18 Dec 2006
- 02:28:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753446AbWLRH2k
- (ORCPT <rfc822;git-outgoing>); Mon, 18 Dec 2006 02:28:40 -0500
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:62259 "EHLO
- fed1rmmtao09.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1753444AbWLRH2k (ORCPT <rfc822;git@vger.kernel.org>); Mon, 18 Dec 2006
- 02:28:40 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao09.cox.net
+ S1756047AbWK0Bzn (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 26 Nov 2006
+ 20:55:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756049AbWK0Bzn
+ (ORCPT <rfc822;git-outgoing>); Sun, 26 Nov 2006 20:55:43 -0500
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:39329 "EHLO
+ fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP id S1756047AbWK0Bzm
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 26 Nov 2006 20:55:42 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao06.cox.net
  (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061218072839.CUEX18767.fed1rmmtao09.cox.net@fed1rmimpo02.cox.net>; Mon, 18
- Dec 2006 02:28:39 -0500
+ <20061127015542.XQGX5465.fed1rmmtao06.cox.net@fed1rmimpo02.cox.net>; Sun, 26
+ Nov 2006 20:55:42 -0500
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id 07Ur1W00W1kojtg0000000; Mon, 18 Dec 2006
- 02:28:52 -0500
-To: git@vger.kernel.org
+ fed1rmimpo02.cox.net with bizsmtp id rdvp1V00m1kojtg0000000; Sun, 26 Nov 2006
+ 20:55:50 -0500
+To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 
-Here are the topics cooking in git.git and their status.
+Linus Torvalds <torvalds@osdl.org> writes:
 
-*  jc/leftright (Sat Dec 16 16:07:20 2006 -0800) 3 commits
- + Make left-right automatic.
- + Teach all of log family --left-right output.
- + rev-list --left-right
-*  jc/clone (Sat Dec 16 01:53:10 2006 -0800) 4 commits
- + git-clone: lose the traditional 'no-separate-remote' layout
- + git-clone: lose the artificial "first" fetch refspec
- + git-pull: refuse default merge without branch.*.merge
- + git-clone: use wildcard specification for tracking branches
+> On Sun, 26 Nov 2006, Junio C Hamano wrote:
+>>
+>> This implements an experimental "git log-fpc" command that shows
+>> short-log style output sorted by topics.
+>> 
+>> A "topic" is identified by going through the first-parent
+>> chains; this ignores the fast-forward case, but for a top-level
+>> integrator it often is good enough.
 
-Will likely to be in 'master' soonish.
+After sending out a response, I re-read your message because I
+did not quite get where bayesian would come into the picture.
 
-*  ew/svn-pm (Fri Dec 15 23:58:08 2006 -0800) 3 commits
- + git-svn: rename 'commit' command to 'set-tree'
- + git-svn: remove support for the svn command-line client
- + git-svn: convert to using Git.pm
+I think I should have used the word "topic branch" instead of
+"topic".  In other words, I was not interested in sifting the
+various totally unrelated linear commits into groups that deal
+with distinct problems.
 
-On hold -- the users will decide.
-
-*^ jc/git-add--interactive (Mon Dec 11 17:09:26 2006 -0800) 2 commits
- - git-add --interactive: hunk splitting
- - git-add --interactive
-*^ jc/explain (Mon Dec 4 19:35:04 2006 -0800) 1 commit
- - git-explain
-*  jc/3way (Wed Nov 29 18:53:13 2006 -0800) 1 commit
- + git-merge: preserve and merge local changes when doing fast
-   forward
-*^ jc/web (Wed Nov 8 14:54:09 2006 -0800) 1 commit
- - gitweb: steal loadavg throttle from kernel.org
-
-Undecided.
-
-*^ jc/reflog (Sat Dec 16 18:35:00 2006 -0800) 1 commit
- - revision: introduce ref@{N..M} syntax.
-
-I do not think this is of general use enough, so I'd shelve this
-for now.
-
-*^ jn/web (Sat Dec 16 17:12:55 2006 +0100) 1 commit
- - gitweb: Add some mod_perl specific support
-
-Jakub says this needs review, so it is on hold for now.
-
-*  js/shallow (Fri Nov 24 16:00:13 2006 +0100) 15 commits
- + fetch-pack: Do not fetch tags for shallow clones.
- + get_shallow_commits: Avoid memory leak if a commit has been
-   reached already.
- + git-fetch: Reset shallow_depth before auto-following tags.
- + upload-pack: Check for NOT_SHALLOW flag before sending a shallow
-   to the client.
- + fetch-pack: Properly remove the shallow file when it becomes
-   empty.
- + shallow clone: unparse and reparse an unshallowed commit
- + Why didn't we mark want_obj as ~UNINTERESTING in the old code?
- + Why does it mean we do not have to register shallow if we have
-   one?
- + We should make sure that the protocol is still extensible.
- + add tests for shallow stuff
- + Shallow clone: do not ignore shallowness when following tags
- + allow deepening of a shallow repository
- + allow cloning a repository "shallowly"
- + support fetching into a shallow repository
- + upload-pack: no longer call rev-list
-
-Post v1.5.0
-
-*  jc/diff-apply-patch (Fri Sep 22 16:17:58 2006 -0700) 1 commit
- + git-diff/git-apply: make diff output a bit friendlier to GNU patch
-   (part 2)
-*^ jc/pickaxe (Sun Nov 5 11:52:43 2006 -0800) 1 commit
- - blame: --show-stats for easier optimization work.
-*^ jc/diff (Mon Sep 25 23:03:34 2006 -0700) 1 commit
- - para-walk: walk n trees, index and working tree in parallel
-
-On hold.
-
-*^ sv/git-svn (Tue Dec 5 16:17:38 2006 +1100) 5 commits
- . git-svn: re-map repository URLs and UUIDs on SVK mirror paths
- . git-svn: collect revision properties when fetching
- . git-svn: collect SVK source URL on mirror paths
- . git-svn: let libsvn_ls_fullurl return properties too
- . git-svn: make test for SVK mirror path import
-
-On hold -- waiting for updates or responses to Eric's comment; I
-am holding onto this series but it is temporarily dropped from
-'pu'.
+But again you are showing your superiour intelligence by setting
+the problem in a much grander scheme ;-), where there is no such
+developer discipline that would help the shortlogger (like use
+of topic branches).  In such a case, you would need a set of
+heuristics that you described.
