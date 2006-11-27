@@ -1,102 +1,63 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH 0/2] Making "git commit" to mean "git commit -a".
-Date: Thu, 30 Nov 2006 13:03:19 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0611301253380.3513@woody.osdl.org>
-References: <7virgzuf38.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0611282322320.9647@xanadu.home> <7vr6vmsnly.fsf@assigned-by-dhcp.cox.net>
- <87ejrlvn7r.wl%cworth@cworth.org> <7vodqpn3t4.fsf@assigned-by-dhcp.cox.net>
- <7vk61dn2yj.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0611300310520.30004@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0611291859070.3513@woody.osdl.org> <456EBBE7.8030404@op5.se>
- <Pine.LNX.4.64.0611300749560.3513@woody.osdl.org> <20061130164046.GB17715@thunk.org>
- <Pine.LNX.4.64.0611300903080.3513@woody.osdl.org> <Pine.LNX.4.64.0611301229290.9647@xanadu.home>
- <87irgwu6e6.wl%cworth@cworth.org> <87hcwgu5t1.wl%cworth@cworth.org>
- <Pine.LNX.4.64.0611301132350.3513@woody.osdl.org> <Pine.LNX.4.64.0611301521320.9647@xanadu.home>
+X-Spam-Status: No, score=-2.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,MSGID_FROM_MTA_HEADER,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+From: Sean <seanlkml@sympatico.ca>
+Subject: Re: [PATCH 4/10] Add current branch in PS1 support to
+ git-completion.bash.
+Date: Mon, 27 Nov 2006 12:45:41 -0500
+Message-ID: <BAYC1-PASMTP11F1E3F750BA675B27EC9EAEE60@CEZ.ICE>
+References: <de7beb117fb963e68e1085b773593be326ffd495.1164616814.git.spearce@spearce.org>
+	<20061127084128.GD19745@spearce.org>
+	<20061127103111.4835bffc.seanlkml@sympatico.ca>
+	<20061127165122.GB6616@spearce.org>
+	<20061127122653.3e801d7a.seanlkml@sympatico.ca>
+	<20061127173136.GD6616@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Thu, 30 Nov 2006 21:04:25 +0000 (UTC)
-Cc: Carl Worth <cworth@cworth.org>, Theodore Tso <tytso@mit.edu>,
-	Andreas Ericsson <ae@op5.se>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Mon, 27 Nov 2006 17:46:05 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <Pine.LNX.4.64.0611301521320.9647@xanadu.home>
-X-MIMEDefang-Filter: osdl$Revision: 1.161 $
-X-Scanned-By: MIMEDefang 2.36
+X-Originating-IP: [65.93.43.74]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Original-Message-Id: <20061127124541.5fdabb4c.seanlkml@sympatico.ca>
+In-Reply-To: <20061127173136.GD6616@spearce.org>
+X-Mailer: Sylpheed version 2.2.10 (GTK+ 2.10.4; i386-redhat-linux-gnu)
+X-OriginalArrivalTime: 27 Nov 2006 17:55:32.0468 (UTC) FILETIME=[3B93EB40:01C7124D]
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32798>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gpt4k-0002me-1F for gcvg-git@gmane.org; Thu, 30 Nov
- 2006 22:04:10 +0100
+ esmtp (Exim 4.43) id 1GokYG-0008Jp-HI for gcvg-git@gmane.org; Mon, 27 Nov
+ 2006 18:45:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S936451AbWK3VEG (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
- 16:04:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936450AbWK3VEG
- (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 16:04:06 -0500
-Received: from smtp.osdl.org ([65.172.181.25]:52702 "EHLO smtp.osdl.org") by
- vger.kernel.org with ESMTP id S936447AbWK3VED (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 16:04:03 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
- smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kAUL3KjQ010757
- (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Thu, 30
- Nov 2006 13:03:21 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
- shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kAUL3JCN019276; Thu, 30 Nov
- 2006 13:03:19 -0800
-To: Nicolas Pitre <nico@cam.org>
+ S1758442AbWK0Rpp (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 27 Nov 2006
+ 12:45:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758447AbWK0Rpp
+ (ORCPT <rfc822;git-outgoing>); Mon, 27 Nov 2006 12:45:45 -0500
+Received: from bayc1-pasmtp11.bayc1.hotmail.com ([65.54.191.171]:13402 "EHLO
+ BAYC1-PASMTP11.CEZ.ICE") by vger.kernel.org with ESMTP id S1758442AbWK0Rpn
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 27 Nov 2006 12:45:43 -0500
+Received: from linux1.attic.local ([65.93.43.74]) by BAYC1-PASMTP11.CEZ.ICE
+ over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830); Mon, 27 Nov
+ 2006 09:55:32 -0800
+Received: from guru.attic.local ([10.10.10.28]) by linux1.attic.local with
+ esmtp (Exim 4.43) id 1Gojbw-0006uU-7d; Mon, 27 Nov 2006 11:45:40 -0500
+To: Shawn Pearce <spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 
+On Mon, 27 Nov 2006 12:31:36 -0500
+Shawn Pearce <spearce@spearce.org> wrote:
 
-
-On Thu, 30 Nov 2006, Nicolas Pitre wrote:
+> I did that.  :-)
 > 
-> Would it make sense for "git add" to do the same as "git update-index" 
-> on already tracked files?  Given the explanation above this would make 
-> 100% sense to me.
+> If you read the implementation of __git_ps1 the default format is
+> " (%s)" but you can pass anything you want as the first parameter.
 
-Yeah, I think it would probably make sense. I also think it would make 
-sense to rename "update-index" entirely, or at least offer other names for 
-it (ie the "git resolved" suggestion).
-
-In short - I agree that it's all just facets of the same thing: telling 
-git that some part of the working tree is now in a state ready to be 
-committed. Whether it's because we want to "add" content, or just mark it 
-as no longer having conflicts, or any other reason.
-
-> But right now, doing "git add" on an already tracked file simply does 
-> nothing.  This is even worse than erroring out.
-
-Yeah, that's arguably a stupid thing to do ("you already added it, what do 
-you want me to do?") but the choice we use is probably the worst of the 
-three straightforward possibilities (ignore, update or error).
-
-The _original_ "git add" was literally just this one-liner:
-
-	#!/bin/sh
-	git-update-index --add -- "$@"
-
-which actually was better in this respect (it updated the content), but 
-that didn't do sub-directories, so this is arguable a bug introduced by 
-commit 37539fbd: 
-
-    [PATCH] Improved "git add"
-
-    This fixes everybodys favourite complaint about "git add", namely that it
-    doesn't take directories.
-
-which started using 
-
-	git-ls-files --others -z -- "$@"
-
-together with the exclude files to generate the list of files to add. At 
-that point, we lost files that already existed (since "--others" specifies 
-just files we don't know about).
+lol, you're good.  I'm back to thinking it's slightly misnamed though,
+as that %s can only ever mean branch.  But it's really a minor nit,
+sorry for the noise.  Good work.
 
