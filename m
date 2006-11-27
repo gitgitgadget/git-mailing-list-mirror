@@ -1,80 +1,135 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: Fast access git-rev-list output: some OS knowledge required
-Date: Fri, 8 Dec 2006 19:34:44 +0100
-Message-ID: <e5bfff550612081034q5e4c0c93s3512fce2f11b1fab@mail.gmail.com>
-References: <e5bfff550612061124jcd0d94em47793710866776e7@mail.gmail.com>
-	 <20061206192800.GC20320@spearce.org>
-	 <e5bfff550612061134r3725dcbu2ff2dd6284fcd651@mail.gmail.com>
-	 <20061206194258.GD20320@spearce.org>
-	 <20061206195142.GE20320@spearce.org> <45781639.1050208@op5.se>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Fri, 8 Dec 2006 18:34:53 +0000 (UTC)
-Cc: "Shawn Pearce" <spearce@spearce.org>,
-	"Git Mailing List" <git@vger.kernel.org>
+From: Sergey Vlasov <vsu@altlinux.ru>
+Subject: [PATCH] revision traversal: Add --refs=<pattern> option
+Date: Mon, 27 Nov 2006 18:09:11 +0300
+Message-ID: <11646401513369-git-send-email-vsu@altlinux.ru>
+References: <7vzmadl5b0.fsf@assigned-by-dhcp.cox.net>
+NNTP-Posting-Date: Mon, 27 Nov 2006 15:09:33 +0000 (UTC)
+Cc: Marco Costalba <mcostalba@gmail.com>, catalin.marinas@gmail.com,
+	git@vger.kernel.org, Sergey Vlasov <vsu@altlinux.ru>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=IRFxaawC68lbc6qqGBvVTJ9VlvxwkH61cMfxq1DGYHWsa5R+p19GuFSrDMyU5zrNE80LjjwPsevxw5f13ybjfLIih7g7kVbzZLURHgC6gyPzmst7zhcAQrEVFRc7utALCLAIshBs3JVz9FWW/F2LAdgziZ2rWXefzGe94QunxQ8=
-In-Reply-To: <45781639.1050208@op5.se>
-Content-Disposition: inline
+X-Mailer: git-send-email 1.4.4.1.gb0b0
+In-Reply-To: <7vzmadl5b0.fsf@assigned-by-dhcp.cox.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33719>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GskYb-0001oA-LG for gcvg-git@gmane.org; Fri, 08 Dec
- 2006 19:34:50 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32416>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Goi6j-0001bi-Pf for gcvg-git@gmane.org; Mon, 27 Nov
+ 2006 16:09:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1760828AbWLHSeq (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
- 13:34:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760827AbWLHSeq
- (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 13:34:46 -0500
-Received: from py-out-1112.google.com ([64.233.166.176]:22223 "EHLO
- py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1760828AbWLHSep (ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Dec
- 2006 13:34:45 -0500
-Received: by py-out-1112.google.com with SMTP id a29so472122pyi for
- <git@vger.kernel.org>; Fri, 08 Dec 2006 10:34:45 -0800 (PST)
-Received: by 10.35.79.3 with SMTP id g3mr6384193pyl.1165602885044; Fri, 08
- Dec 2006 10:34:45 -0800 (PST)
-Received: by 10.35.93.11 with HTTP; Fri, 8 Dec 2006 10:34:44 -0800 (PST)
-To: "Andreas Ericsson" <ae@op5.se>
+ S1758276AbWK0PJR (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 27 Nov 2006
+ 10:09:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758278AbWK0PJR
+ (ORCPT <rfc822;git-outgoing>); Mon, 27 Nov 2006 10:09:17 -0500
+Received: from master.altlinux.org ([62.118.250.235]:50450 "EHLO
+ master.altlinux.org") by vger.kernel.org with ESMTP id S1758277AbWK0PJQ
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 27 Nov 2006 10:09:16 -0500
+Received: by master.altlinux.org (Postfix, from userid 584) id 79ACDE51DF;
+ Mon, 27 Nov 2006 18:09:12 +0300 (MSK)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-On 12/7/06, Andreas Ericsson <ae@op5.se> wrote:
-> Shawn Pearce wrote:
-> >
-> > Perhaps there is some fast IPC API supported by Qt that you could
-> > use to run the revision listing outside of the main UI process,
-> > to eliminate the bottlenecks you are seeing and remove the problems
-> > noted above?  One that doesn't involve reading from a pipe I mean...
-> >
->
-> Why not just fork() + exec() and read from the filedescriptor? You can
-> up the output buffer of the forked program to something suitable, which
-> means the OS will cache it for you until you copy it to a buffer in qgit
-> (i.e., read from the descriptor).
->
+Add the --refs=<pattern> option, which can be used to select a
+subset of refs matching the specified glob pattern.
 
-Please, what do you mean with "something suitable"? How can I redirect
-the output to a memory buffer or to a file that the OS will cache
-*until* I've copied it?
+Signed-off-by: Sergey Vlasov <vsu@altlinux.ru>
+---
 
-If I redirect to a 'normal' file, this will be flushed by OS after
-some time, normally few seconds.
+ If --all-branches is too specific for the mentioned use case,
+ what about adding a more general glob pattern match?
 
-Could you please post links with examples/docs about this kind of
-implementation?
+ Documentation/git-rev-list.txt |    9 +++++++++
+ revision.c                     |   21 ++++++++++++++++++---
+ 2 files changed, 27 insertions(+), 3 deletions(-)
 
-
-Thanks
+diff --git a/Documentation/git-rev-list.txt b/Documentation/git-rev-list.txt
+index ec43c0b..d5f99ef 100644
+--- a/Documentation/git-rev-list.txt
++++ b/Documentation/git-rev-list.txt
+@@ -17,6 +17,7 @@ SYNOPSIS
+ 	     [ \--remove-empty ]
+ 	     [ \--not ]
+ 	     [ \--all ]
++	     [ \--refs=<pattern> ]
+ 	     [ \--stdin ]
+ 	     [ \--topo-order ]
+ 	     [ \--parents ]
+@@ -179,6 +180,14 @@ limiting may be applied.
+ 	Pretend as if all the refs in `$GIT_DIR/refs/` are listed on the
+ 	command line as '<commit>'.
+ 
++--refs='pattern'::
++
++	Pretend as if all the refs in `$GIT_DIR/refs/` matching the
++	specified glob pattern are listed on the command line as
++	'<commit>'.  The initial `refs/` part is skipped when matching,
++	but the subsequent `heads/`, `tags/` or `remotes/` part is
++	included in the text to match.
++
+ --stdin::
+ 
+ 	In addition to the '<commit>' listed on the command
+diff --git a/revision.c b/revision.c
+index 993bb66..240ff59 100644
+--- a/revision.c
++++ b/revision.c
+@@ -7,6 +7,7 @@
+ #include "refs.h"
+ #include "revision.h"
+ #include <regex.h>
++#include <fnmatch.h>
+ #include "grep.h"
+ 
+ static char *path_name(struct name_path *path, const char *name)
+@@ -464,18 +465,28 @@ static void limit_list(struct rev_info *
+ 
+ static int all_flags;
+ static struct rev_info *all_revs;
++static const char *all_pattern;
+ 
+ static int handle_one_ref(const char *path, const unsigned char *sha1, int flag, void *cb_data)
+ {
+-	struct object *object = get_reference(all_revs, path, sha1, all_flags);
++	struct object *object;
++
++	if (all_pattern) {
++		if (strncmp(path, "refs/", 5))
++			return 0;
++		if (fnmatch(all_pattern, path + 5, 0))
++			return 0;
++	}
++	object = get_reference(all_revs, path, sha1, all_flags);
+ 	add_pending_object(all_revs, object, "");
+ 	return 0;
+ }
+ 
+-static void handle_all(struct rev_info *revs, unsigned flags)
++static void handle_all(struct rev_info *revs, unsigned flags, const char *pattern)
+ {
+ 	all_revs = revs;
+ 	all_flags = flags;
++	all_pattern = pattern;
+ 	for_each_ref(handle_one_ref, NULL);
+ }
+ 
+@@ -800,7 +811,11 @@ int setup_revisions(int argc, const char
+ 				continue;
+ 			}
+ 			if (!strcmp(arg, "--all")) {
+-				handle_all(revs, flags);
++				handle_all(revs, flags, NULL);
++				continue;
++			}
++			if (!strncmp(arg, "--refs=", 7)) {
++				handle_all(revs, flags, arg + 7);
+ 				continue;
+ 			}
+ 			if (!strcmp(arg, "--not")) {
+-- 
+1.4.4.1.gb0b0
