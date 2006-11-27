@@ -1,76 +1,82 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Hyphens and hiding core commands
-Date: Mon, 27 Nov 2006 18:18:54 -0800
-Message-ID: <7vk61gcnzl.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0611271622260.9647@xanadu.home>
-	<7vmz6cfsuw.fsf@assigned-by-dhcp.cox.net>
-	<87bqmswm1e.wl%cworth@cworth.org>
-	<7vodqse90q.fsf@assigned-by-dhcp.cox.net>
-	<87ac2cwha4.wl%cworth@cworth.org>
-	<7vy7pwcsgp.fsf@assigned-by-dhcp.cox.net>
-	<878xhwwdyj.wl%cworth@cworth.org>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: "Thomas Kolejka" <Thomas.Kolejka@gmx.at>
+Subject: Re: git: how to produce context diffs?
+Date: Mon, 27 Nov 2006 19:33:46 +0100
+Message-ID: <20061127183346.30010@gmx.net>
+References: <200611271516.30425.bruno@clisp.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 28 Nov 2006 02:19:09 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Mon, 27 Nov 2006 18:35:07 +0000 (UTC)
+Cc: git@vger.kernel.org, junkio@cox.net
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <878xhwwdyj.wl%cworth@cworth.org> (Carl Worth's message of "Mon,
-	27 Nov 2006 17:35:16 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+In-Reply-To: <200611271516.30425.bruno@clisp.org>
+X-Authenticated: #20307258
+X-Flags: 0001
+X-Mailer: WWW-Mail 6100 (Global Message Exchange)
+X-Priority: 3
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32480>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32436>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GosYl-0000LC-PV for gcvg-git@gmane.org; Tue, 28 Nov
- 2006 03:19:00 +0100
+ esmtp (Exim 4.43) id 1GolIf-0001Ef-Qy for gcvg-git@gmane.org; Mon, 27 Nov
+ 2006 19:33:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S934190AbWK1CS4 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 27 Nov 2006
- 21:18:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934476AbWK1CS4
- (ORCPT <rfc822;git-outgoing>); Mon, 27 Nov 2006 21:18:56 -0500
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:39395 "EHLO
- fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP id S934190AbWK1CSz
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 27 Nov 2006 21:18:55 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao02.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061128021855.CEPO97.fed1rmmtao02.cox.net@fed1rmimpo01.cox.net>; Mon, 27
- Nov 2006 21:18:55 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id s2JP1V0021kojtg0000000; Mon, 27 Nov 2006
- 21:18:23 -0500
-To: Carl Worth <cworth@cworth.org>
+ S932934AbWK0Sdt convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Mon, 27 Nov 2006 13:33:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933049AbWK0Sdt
+ (ORCPT <rfc822;git-outgoing>); Mon, 27 Nov 2006 13:33:49 -0500
+Received: from mail.gmx.de ([213.165.64.20]:47050 "HELO mail.gmx.net") by
+ vger.kernel.org with SMTP id S932934AbWK0Sds (ORCPT
+ <rfc822;git@vger.kernel.org>); Mon, 27 Nov 2006 13:33:48 -0500
+Received: (qmail 27307 invoked by uid 0); 27 Nov 2006 18:33:46 -0000
+Received: from 141.130.250.71 by www069.gmx.net with HTTP; Mon, 27 Nov 2006
+ 19:33:46 +0100 (CET)
+To: Bruno Haible <bruno@clisp.org>
 Sender: git-owner@vger.kernel.org
 
-Carl Worth <cworth@cworth.org> writes:
+Hello,
 
-> On Mon, 27 Nov 2006 16:42:14 -0800, Junio C Hamano wrote:
->> I think you are teaching backwards.  Couldn't you start like this?
->>
->> 	"git commit" takes the list of paths you want to commit.
-> ...
+I'm using the following script 'external-diff.sh':
 
-> If the "commit the index" operation were moved to a non-default
-> command-line option of git-commit, then the commit command could be
-> explained without having to introduce the notion of the index at
-> all.
+--
+# path old-file old-hex old-mode new-file new-hex new-mode
+# $1   $2       $3      $4       $5       $6      $7
 
-Read what I wrote again.  You can explain it without talking
-about index at all.  I really do not think you need to break
-"git commit" nor rename "update-index" to "resolve" to explain
-things to new people.
+old_hex=3D$3
+new_hex=3D`git-hash-object $5`
 
-The tutorial might be better reworked not to start talking about
--a but start building small project from a newly created
-hello.c, git add it, and "git commit" (the first commit), then
-edit hello.c and "git commit hello.c" (the second commit).
+if [ "$old_hex" =3D "$new_hex" ]
+then
+	exit 0
+fi
 
-Perhaps.
+echo "diff --git a/$1 b/$1"
+echo "index ${old_hex:0:7}..${new_hex:0:7} $4"
 
-Enough about "git commit -a" for tonight.
+diff -L a/$1 -L b/$1 -pc $2 $5
+
+exit 0
+--
+
+which can be called by:
+
+export GIT_EXTERNAL_DIFF=3Dexternal-diff.sh
+git-diff-index master -p > my.patch
+
+
+
+Bye,
+Thomas Kolejka
+
+--=20
+"Ein Herz f=FCr Kinder" - Ihre Spende hilft! Aktion: www.deutschlandseg=
+elt.de
+Unser Dankesch=F6n: Ihr Name auf dem Segel der 1. deutschen America's C=
