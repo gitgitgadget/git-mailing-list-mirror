@@ -1,69 +1,64 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: [PATCH] "master" should be treated no differently from any other branch
-Date: Thu, 14 Dec 2006 16:34:51 +0000
-Message-ID: <200612141634.54616.andyparkins@gmail.com>
-References: <200612141519.44294.andyparkins@gmail.com> <Pine.LNX.4.63.0612141627090.3635@wbgn013.biozentrum.uni-wuerzburg.de> <200612141625.08485.andyparkins@gmail.com>
+X-Spam-Status: No, score=-2.5 required=3.0 tests=BAYES_00,DKIM_ADSP_NXDOMAIN,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+From: Pazu <pazu@pazu.com.br>
+Subject: Re: [PATCH 1.2/2 (fixed)] git-svn: fix output reporting from the delta fetcher
+Date: Tue, 28 Nov 2006 18:47:50 -0200
+Message-ID: <9e7ab7380611281247h723a16fapc5a9898e8a4c7e1f@mail.gmail.com>
+References: <loom.20061124T143148-286@post.gmane.org>
+	 <20061128054448.GA396@soma> <20061128102958.GA5207@soma>
+	 <20061128105017.GA20366@soma>
+	 <9e7ab7380611280445r4ebe344cw69cbc18a74c6122f@mail.gmail.com>
+	 <9e7ab7380611280732k4e940380tbf2a96146807d671@mail.gmail.com>
+	 <m2bqmr1rnw.fsf@ziti.fhcrc.org> <20061128201605.GA1369@localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 14 Dec 2006 16:35:13 +0000 (UTC)
+NNTP-Posting-Date: Tue, 28 Nov 2006 20:48:17 +0000 (UTC)
+Cc: "Seth Falcon" <sethfalcon@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=WlADewIoDKkdvB111DdmXdbGtkakGJOMxQaoqycKN3Z90YVawcB3GzIkyPl0WacHQyQ4xUgJG6Fc75DHYerkLfxyaWRKZPppILzDoLgpxA1cb2tWiwBm9uMDjyYfETdp4lmh5vzbpj2Xis3epvGW9kYFKjK1otRBZpMe5FyBv14=
-User-Agent: KMail/1.9.5
-In-Reply-To: <200612141625.08485.andyparkins@gmail.com>
+        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=nOlBFTpKIaEwII2Kn4KTVzRcbAVl3AgoUsfm/sSxxo40S+d97FEuEAt+SnPDG6qqYICAbiHhzz+IS69EZlymg0d9SPDKOg0XPAYVtR/PvOfeIkWwUOsCSVQ8v/Z4YL79wSDtoRFl6Saq7+yDHSkTzLCaWpNfkue7yzJtXRxvQW4=
+In-Reply-To: <20061128201605.GA1369@localdomain>
 Content-Disposition: inline
+X-Google-Sender-Auth: d7888054b8faefa9
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34366>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GutY3-0008GJ-0J for gcvg-git@gmane.org; Thu, 14 Dec
- 2006 17:35:07 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32576>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gp9rw-0001Lw-Dl for gcvg-git@gmane.org; Tue, 28 Nov
+ 2006 21:47:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932862AbWLNQfE (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
- 11:35:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932860AbWLNQfD
- (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 11:35:03 -0500
-Received: from ug-out-1314.google.com ([66.249.92.174]:44026 "EHLO
- ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S932862AbWLNQfB (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec
- 2006 11:35:01 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so547699uga for
- <git@vger.kernel.org>; Thu, 14 Dec 2006 08:34:59 -0800 (PST)
-Received: by 10.67.100.17 with SMTP id c17mr1675936ugm.1166114099762; Thu, 14
- Dec 2006 08:34:59 -0800 (PST)
-Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
- ESMTP id p32sm2252263ugc.2006.12.14.08.34.58; Thu, 14 Dec 2006 08:34:58 -0800
- (PST)
-To: git@vger.kernel.org
+ S1755296AbWK1Urw (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 28 Nov 2006
+ 15:47:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755467AbWK1Urw
+ (ORCPT <rfc822;git-outgoing>); Tue, 28 Nov 2006 15:47:52 -0500
+Received: from nf-out-0910.google.com ([64.233.182.187]:723 "EHLO
+ nf-out-0910.google.com") by vger.kernel.org with ESMTP id S1755296AbWK1Urw
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2006 15:47:52 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so2686644nfa for
+ <git@vger.kernel.org>; Tue, 28 Nov 2006 12:47:50 -0800 (PST)
+Received: by 10.49.107.3 with SMTP id j3mr13040623nfm.1164746870185; Tue, 28
+ Nov 2006 12:47:50 -0800 (PST)
+Received: by 10.48.216.6 with HTTP; Tue, 28 Nov 2006 12:47:50 -0800 (PST)
+To: "Eric Wong" <normalperson@yhbt.net>
 Sender: git-owner@vger.kernel.org
 
+On 11/28/06, Eric Wong <normalperson@yhbt.net> wrote:
 
-> > have a convention here than configurability. You would not want "git" to
-> > be called "guitar" for some users, just because they happen to like that
-> > name more, either, right?
->
-> You're correct; but we're talking about branch names not program names.
+> Git itself cannot easily track empty directories (at least as far as
+> update-index and checkout) goes.
+> [...]
+> Is that something the git community wants?
 
-And the analogy is flawed.  I don't want git to be called guitar, however I'd 
-be very upset if I got
-  
- $ mv git guitar
- Error: git is conventionally called guitar
+No, I guess not. I detailed the real problem in my previous message,
+and it had nothing to do with empty directories, but with git-svn
+recording broken revisions from svn. Did you get it, or Trogdor ate my
+email?
 
-
-Andy
-
--- 
-Dr Andy Parkins, M Eng (hons), MIEE
