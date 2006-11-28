@@ -1,92 +1,104 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH 2/3 (amend)] gitweb: Use --no-commit-id in git_commit and git_commitdiff
-Date: Wed, 25 Oct 2006 14:23:21 +0200
-Message-ID: <200610251423.21739.jnareb@gmail.com>
-References: <200610241349.54685.jnareb@gmail.com> <200610241354.49396.jnareb@gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: git and bzr
+Date: Tue, 28 Nov 2006 08:08:36 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0611280754050.30076@woody.osdl.org>
+References: <45357CC3.4040507@utoronto.ca> <a7e835d40610250308v5d577482m139742e7fe1db185@mail.gmail.com>
+ <87slhcz8zh.wl%cworth@cworth.org> <a7e835d40610260152k658aeaf0hb900cb63870c04e4@mail.gmail.com>
+ <7vu01ro20b.fsf@assigned-by-dhcp.cox.net> <a7e835d40610260257r5f05ea4gc934f1c1cc267977@mail.gmail.com>
+ <20061026101038.GA13310@coredump.intra.peff.net> <877iyne4dm.fsf@alplog.fr>
+ <Pine.LNX.4.64.0610260753090.3962@g5.osdl.org> <456B7C6A.80104@webdrake.net>
+ <845b6e870611280410j58bdcd99nc05d0f67489293e4@mail.gmail.com>
+ <ekhaeg$etk$1@sea.gmane.org> <Pine.LNX.4.63.0611281433270.30004@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 25 Oct 2006 12:23:32 +0000 (UTC)
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Tue, 28 Nov 2006 16:10:02 +0000 (UTC)
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
+	bazaar-ng@lists.canonical.com
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=joOzWly/fkQ+/HjJ5l76DM+EG7tYlN78QDHg8f2YtSOBfBKvsMydM3saQ8YulTAsGzBzEKFaS3iNBfhDx3pP1FUwgcjxkLf3zcXnp5/Rp/ea7D2Z7k9DUPpZViWJylfghEsEz/TI9E2Qq4Q4zpiOg5ndeppJZkbYhfu5xBEJ9VY=
-User-Agent: KMail/1.9.3
-In-Reply-To: <200610241354.49396.jnareb@gmail.com>
-Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0611281433270.30004@wbgn013.biozentrum.uni-wuerzburg.de>
+X-MIMEDefang-Filter: osdl$Revision: 1.160 $
+X-Scanned-By: MIMEDefang 2.36
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30054>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32543>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gchmq-0001oi-ME for gcvg-git@gmane.org; Wed, 25 Oct
- 2006 14:23:14 +0200
+ esmtp (Exim 4.43) id 1Gp5W8-00023B-Ug for gcvg-git@gmane.org; Tue, 28 Nov
+ 2006 17:09:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1423376AbWJYMXG (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 25 Oct 2006
- 08:23:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423377AbWJYMXF
- (ORCPT <rfc822;git-outgoing>); Wed, 25 Oct 2006 08:23:05 -0400
-Received: from ug-out-1314.google.com ([66.249.92.173]:35726 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1423376AbWJYMXC
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 25 Oct 2006 08:23:02 -0400
-Received: by ug-out-1314.google.com with SMTP id 32so72837ugm for
- <git@vger.kernel.org>; Wed, 25 Oct 2006 05:23:00 -0700 (PDT)
-Received: by 10.67.97.18 with SMTP id z18mr714740ugl; Wed, 25 Oct 2006
- 05:23:00 -0700 (PDT)
-Received: from host-81-190-23-110.torun.mm.pl ( [81.190.23.110]) by
- mx.google.com with ESMTP id e33sm2164402ugd.2006.10.25.05.23.00; Wed, 25 Oct
- 2006 05:23:00 -0700 (PDT)
-To: git@vger.kernel.org
+ S1758698AbWK1QJG (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 28 Nov 2006
+ 11:09:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758699AbWK1QJF
+ (ORCPT <rfc822;git-outgoing>); Tue, 28 Nov 2006 11:09:05 -0500
+Received: from smtp.osdl.org ([65.172.181.25]:27037 "EHLO smtp.osdl.org") by
+ vger.kernel.org with ESMTP id S1758698AbWK1QJE (ORCPT
+ <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2006 11:09:04 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
+ smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kASG8bix012324
+ (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Tue, 28
+ Nov 2006 08:08:58 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
+ shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kASG8aK4015256; Tue, 28 Nov
+ 2006 08:08:36 -0800
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-Use --no-commit-id option to git diff-tree command in git_commit and
-git_commitdiff to filter out commit ID output that git-diff-tree adds
-when called with only one <tree-ish> (not only for --stdin).
 
-This option is in git since at least v1.0.0, so make use of it.
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-This is "amend" patch. It adds --no-commit-id option to git-diff-tree
-invocation instead of removing commit IDs (tree-ish IDs to be more exact)
-from git-diff-tree output.
+On Tue, 28 Nov 2006, Johannes Schindelin wrote:
+> 
+> On Tue, 28 Nov 2006, Jakub Narebski wrote:
+> 
+> > [... some reasons why git-annotate is not just your regular annotate ...]
+> 
+> You should also mention that git-annotate can follow code movements 
+> through file renames.
 
-Still, I'm not sure why git-diff-tree outputs tree-ish before diff
-when called with only one tree-ish. Bugwards compatibility?
+.. and within the same file, and _copied_ from other files.
 
- gitweb/gitweb.perl |   4 +++-
- 1 files changed, 3 insertions(+), 1 deletions(-)
+A good example of this is still just doing a
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 8ac60be..345e336 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -3004,7 +3004,8 @@ sub git_commit {
- 	if (!defined $parent) {
- 		$parent = "--root";
- 	}
--	open my $fd, "-|", git_cmd(), "diff-tree", '-r', @diff_opts, $parent, $hash
-+	open my $fd, "-|", git_cmd(), "diff-tree", '-r', "--no-commit-id",
-+		@diff_opts, $parent, $hash
- 		or die_error(undef, "Open git-diff-tree failed");
- 	my @difftree = map { chomp; $_ } <$fd>;
- 	close $fd or die_error(undef, "Reading git-diff-tree failed");
-@@ -3321,6 +3322,7 @@ sub git_commitdiff {
- 	my @difftree;
- 	if ($format eq 'html') {
- 		open $fd, "-|", git_cmd(), "diff-tree", '-r', @diff_opts,
-+			"--no-commit-id",
- 			"--patch-with-raw", "--full-index", $hash_parent, $hash
- 			or die_error(undef, "Open git-diff-tree failed");
- 
--- 
-1.4.2.1
+	git blame -C revision.c
+
+because that "revision.c" file was created by splitting the old 
+"rev-list.c" into two files (revision.c and rev-list.c). And the fact that 
+"git blame" catches it and shows it in a very natural format is really 
+quite nice.
+
+(rev-list.c has since been renamed to "builtin-rev-list.c", so if you want 
+to see the "other" side of the split, just do
+
+	git blame -C builtin-rev-list.c
+
+in order to realize how well git blame follows both renames _and_ pure 
+data movement).
+
+The reason this is a good example is simply the fact that it should 
+totally silence anybody who still thinks that tracking file identities is 
+a good thing. It explains well why tracking file identities is just 
+_stupid_.
+
+You simply couldn't have done that kind of split sanely with file identity 
+tracking (well, that one only had a single copy, so you could argue that a 
+file identity tracker with copies could have done it, but the fact is that 
+(a) they never do and (b) "git blame" can equally well track stuff that 
+comes from _multiple_ different "file iddentities").
+
+Such a "multiple sources" case can actually be found by doing
+
+	git blame -C tree-walk.c
+
+which (correctly) figures out that the code comes from both merge-tree.c 
+(the "entry compare/extract" functions)_and_ from sha1_name.c (the 
+"find_tree_entry()" function). 
+
+So yes, "git blame" is a _hell_ of a lot more powerful than anybody elses 
+"annotate", as far as I know. I literally suspect that nobody else comes 
+even close.
+
