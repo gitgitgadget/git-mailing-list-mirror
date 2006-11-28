@@ -1,84 +1,126 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 2/3] git-fetch: do not use "*" for fetching multiple refs
-Date: Wed, 06 Dec 2006 17:58:27 +0100
-Organization: At home
-Message-ID: <el6sni$re3$1@sea.gmane.org>
-References: <1165261102.20055.9.camel@ibook.zvpunry.de> <el1tud$n07$2@sea.gmane.org> <1165422865.29714.13.camel@ibook.zvpunry.de>
+From: "Lars Hjemli" <hjemli@gmail.com>
+Subject: Re: [PATCH] Teach git-branch howto rename a branch
+Date: Tue, 28 Nov 2006 10:55:47 +0100
+Message-ID: <8c5c35580611280155v3b21cbe1m4b580ca9838eac15@mail.gmail.com>
+References: <1164679287192-git-send-email-hjemli@gmail.com>
+	 <7vzmac3qig.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-NNTP-Posting-Date: Wed, 6 Dec 2006 16:57:13 +0000 (UTC)
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Tue, 28 Nov 2006 09:56:12 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 34
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=nivKf2Ig6eiBPT4ZX6+RSKFyOL8AEGSO+HTUEyhEtQBEML4GD7tGJfvD39iinRHv3rfDIkvT9BNSRziQGjx+JKKhlL0KFguNwPhpwkXjSxVt3Og2DRJLI53zdfbuxnzTiTB6kJi3umbgwdz91/f13jDrT3i11rZeun0vXqlbKk4=
+In-Reply-To: <7vzmac3qig.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33491>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gs04v-00019x-0A for gcvg-git@gmane.org; Wed, 06 Dec
- 2006 17:57:05 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32501>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gozgu-0001gE-Sb for gcvg-git@gmane.org; Tue, 28 Nov
+ 2006 10:55:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S936458AbWLFQ4n (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
- 11:56:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936498AbWLFQ4n
- (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 11:56:43 -0500
-Received: from main.gmane.org ([80.91.229.2]:33639 "EHLO ciao.gmane.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S936458AbWLFQ4m
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec 2006 11:56:42 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1Gs04Q-0003vh-T0 for git@vger.kernel.org; Wed, 06 Dec 2006 17:56:34 +0100
-Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Wed, 06 Dec 2006 17:56:34 +0100
-Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Wed, 06 Dec 2006
- 17:56:34 +0100
-To: git@vger.kernel.org
+ S935774AbWK1Jzt (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 28 Nov 2006
+ 04:55:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935782AbWK1Jzt
+ (ORCPT <rfc822;git-outgoing>); Tue, 28 Nov 2006 04:55:49 -0500
+Received: from nf-out-0910.google.com ([64.233.182.185]:9722 "EHLO
+ nf-out-0910.google.com") by vger.kernel.org with ESMTP id S935774AbWK1Jzt
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2006 04:55:49 -0500
+Received: by nf-out-0910.google.com with SMTP id c2so2368305nfe for
+ <git@vger.kernel.org>; Tue, 28 Nov 2006 01:55:47 -0800 (PST)
+Received: by 10.82.120.15 with SMTP id s15mr125377buc.1164707747628; Tue, 28
+ Nov 2006 01:55:47 -0800 (PST)
+Received: by 10.82.171.10 with HTTP; Tue, 28 Nov 2006 01:55:47 -0800 (PST)
+To: "Junio C Hamano" <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Michael Loeffler wrote:
-
-> Am Montag, den 04.12.2006, 20:48 +0100 schrieb Jakub Narebski:
-> ...
->> I'm not sure if regexp support is truly better than the usual path globbing,
->> as in fnmatch / glob.
+On 11/28/06, Junio C Hamano <junkio@cox.net> wrote:
+> Lars Hjemli <hjemli@gmail.com> writes:
+> >
+> > With two branchnames, the second name is renamed to the first.
 >
-> The current code does not do a real glob, this was the reason for me to
-> think about regex support, I thought it is easy to use sed for this. Now
-> I know it better.
+> Thanks.
+>
+> "--rename newname oldname" feels funny, as already mentioned a
+> few times on the list.  rename(2) is "rename(old, new)" and
+> mv(1) is "mv old new".
 
-We could use perl for that, but embedded perl is a bit horrible.
+Ok, how about
 
-> I want it a bit portable, but sed on other systems (like macos or
-> solaris) does not support extended REs, and the basic REs do not support
-> the | operator (but this works on systems with glibc with \|).
-> 
-> Maybe we should support something like this:
-> Pull: refs/heads/v*:refs/remotes/origin/
-> 
-> I still don't like the * on the destination ref, it looks a bit strange
-> (like cp Downloads/*.mp3 Music/*).
+  git branch [-m|-M] [oldbranch] newbranch
 
-'*' in destination part would mean $n / \n (n-th match for *).
-And you need some way to mark if it is prefix match, or whole path match.
-Ending prefix match with '/' is one way of doing this... Unless it would
-be prefix match always, but I think this leads way to confusion.
+where -m is 'move' and -M is 'force move'?
 
-Just a thought.
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
 
+>
+> +       if (!rename_ref(oldref, newref) && !strcmp(oldname, head))
+> +               create_symref("HEAD", newref);
+> +}
+>
+> Can create_symref() fail?
+
+Yes... But what can been done if/when it fails? create_symref()
+already seems to be pretty verbose about errors, so the only thing I
+can think of is to return the errorcode to the caller (which I should
+have done in the first place, git-branch ought to have a usable
+exitcode)
+
+>
+> +int rename_ref(const char *oldref, const char *newref)
+> +{
+> +       unsigned char sha1[20], orig_sha1[20];
+> +       int flag = 0, logmoved = 0;
+> +       struct ref_lock *lock;
+> +       char msg[PATH_MAX*2 + 100];
+> +       struct stat stat;
+> +       int log = !lstat(git_path("logs/%s", oldref), &stat);
+>
+> This is not wrong per-se, but it made me stop and wonder if we
+> want to error out when we find out "logs/oldref" is a symlink; I
+> do not think we care about it that much, but in that case we may
+> want to say stat() here instead...  Just a minor detail.
+
+Well, it's a good point. If it's a symlink that's a pretty strong
+indication that someone has been messing with the log for some reason,
+so to error out is probably the right thing to do.
+
+
+>
+> +       lock = lock_ref_sha1_basic("tmp-renamed-ref", NULL, NULL);
+> +       if (!lock)
+> +               return error("unable to lock tmp-renamed-ref");
+> +       lock->force_write = 1;
+> +       if (write_ref_sha1(lock, orig_sha1, msg))
+> +               return error("unable to save current sha1 in tmp-renamed-ref");
+> +       if (log && rename(git_path("logs/%s", oldref), git_path("tmp-renamed-log")))
+> +               return error("unable to move logfile logs/%s to tmp-renamed-log: %s",
+> +                       oldref, strerror(errno));
+>
+> I am confused with this code.  tmp-renamed-ref is not even a
+> ref, you lock $GIT_DIR/tmp-renamed-ref and call write-ref_sha1()
+> with an uninitialized msg[] buffer to write into a logfile. What
+> is the name of that logfile?  $GIT_DIR/log/tmp-renamed-ref???
+
+My goal was to save the ref in a tmp-file before deleting the old ref,
+not to log the event. I think of it as a way to get out of trouble if
+rename_ref should fail badly.
+
+Btw: I't _might_ be interesting to have $GIT_DIR/logs/tmp-renamed-ref
+(or something similar) as a branch-independent log of branch renames
+
+
+Anyway, I'l fix up the mentioned issues in a new patch
+
+--
