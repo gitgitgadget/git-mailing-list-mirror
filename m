@@ -4,85 +4,109 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: [RFC] Submodules in GIT
-Date: Sat, 2 Dec 2006 21:58:53 +0100
-Message-ID: <20061202205853.GW18810@admingilde.org>
-References: <20061130170625.GH18810@admingilde.org> <200612020036.08826.Josef.Weidendorfer@gmx.de> <Pine.LNX.4.64.0612011540010.3695@woody.osdl.org> <200612021232.08699.Josef.Weidendorfer@gmx.de> <Pine.LNX.4.64.0612021144520.3476@woody.osdl.org> <20061202202103.GS18810@admingilde.org> <Pine.LNX.4.64.0612021245081.3476@woody.osdl.org>
+From: Nicholas Allen <nick.allen@onlinehome.de>
+Subject: Re: git and bzr
+Date: Tue, 28 Nov 2006 22:26:25 +0100
+Message-ID: <456CA981.4010808@onlinehome.de>
+References: <45357CC3.4040507@utoronto.ca>	<a7e835d40610250308v5d577482m139742e7fe1db185@mail.gmail.com>	<87slhcz8zh.wl%cworth@cworth.org>	<a7e835d40610260152k658aeaf0hb900cb63870c04e4@mail.gmail.com>	<7vu01ro20b.fsf@assigned-by-dhcp.cox.net>	<a7e835d40610260257r5f05ea4gc934f1c1cc267977@mail.gmail.com>	<20061026101038.GA13310@coredump.intra.peff.net>	<877iyne4dm.fsf@alplog.fr>	<Pine.LNX.4.64.0610260753090.3962@g5.osdl.org>	<456B7C6A.80104@webdrake.net>	<845b6e870611280410j58bdcd99nc05d0f67489293e4@mail.gmail.com>	<ekhaeg$etk$1@sea.gmane.org>	<Pine.LNX.4.63.0611281433270.30004@wbgn013.biozentrum.uni-wuerzburg.de>	<Pine.LNX.4.64.0611280754050.30076@woody.osdl.org>	<456C7592.6020700@ableton.com>	<ekhtnt$rkk$1@sea.gmane.org> <456C9DFF.1040407@onlinehome.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="w7rOJgaucv5jay56"
-NNTP-Posting-Date: Sat, 2 Dec 2006 20:59:05 +0000 (UTC)
-Cc: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>,
-	sf <sf-gmane@stephan-feder.de>,
-	Git Mailing List <git@vger.kernel.org>,
-	Andy Parkins <andyparkins@gmail.com>
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Tue, 28 Nov 2006 21:26:57 +0000 (UTC)
+Cc: Jakub Narebski <jnareb@gmail.com>, bazaar-ng@lists.canonical.com,
+	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0612021245081.3476@woody.osdl.org>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+User-Agent: Thunderbird 1.5.0.8 (X11/20061115)
+In-Reply-To: <456C9DFF.1040407@onlinehome.de>
+X-Enigmail-Version: 0.94.0.0
+X-Provags-ID: kundenserver.de abuse@kundenserver.de login:8f68dfdb39f9894a8a7411e7c5df1048
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33048>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32580>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gqbwp-00040Q-Bk for gcvg-git@gmane.org; Sat, 02 Dec
- 2006 21:58:59 +0100
+ esmtp (Exim 4.43) id 1GpATL-0001NM-Nr for gcvg-git@gmane.org; Tue, 28 Nov
+ 2006 22:26:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1031792AbWLBU6z (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 2 Dec 2006
- 15:58:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031793AbWLBU6z
- (ORCPT <rfc822;git-outgoing>); Sat, 2 Dec 2006 15:58:55 -0500
-Received: from agent.admingilde.org ([213.95.21.5]:4042 "EHLO
- mail.admingilde.org") by vger.kernel.org with ESMTP id S1031792AbWLBU6y
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 2 Dec 2006 15:58:54 -0500
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1) id
- 1Gqbwj-0004qH-9K; Sat, 02 Dec 2006 21:58:53 +0100
-To: Linus Torvalds <torvalds@osdl.org>
+ S1755706AbWK1V0c (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 28 Nov 2006
+ 16:26:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756297AbWK1V0c
+ (ORCPT <rfc822;git-outgoing>); Tue, 28 Nov 2006 16:26:32 -0500
+Received: from moutng.kundenserver.de ([212.227.126.188]:36068 "EHLO
+ moutng.kundenserver.de") by vger.kernel.org with ESMTP id S1755706AbWK1V0b
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2006 16:26:31 -0500
+Received: from [84.190.155.117] (helo=[192.168.1.100]) by
+ mrelayeu.kundenserver.de (node=mrelayeu2) with ESMTP (Nemesis), id
+ 0MKwtQ-1GpATC2pKk-0007ZP; Tue, 28 Nov 2006 22:26:27 +0100
+To: Nicholas Allen <nick.allen@onlinehome.de>
 Sender: git-owner@vger.kernel.org
 
+> 
+> Just out of curiosity: How does git handle the case where one file is
+> renamed differently in 2 branches and then the branches are repeatably
+> merged? I know that bzr handles this very well and in various tests I
+> did there were absolutely no repeated conflicts. Would git behave as
+> well in this scenario?
+> 
 
---w7rOJgaucv5jay56
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Ok - I got curious and decided to install git and try this myself.
 
-hoi :)
+In this test I had a file hello.txt that got renamed to hello1.txt in
+one branch and hello2.txt in another. Then I merged the changes between
+the 2 branches.
 
-On Sat, Dec 02, 2006 at 12:46:01PM -0800, Linus Torvalds wrote:
-> On Sat, 2 Dec 2006, Martin Waitz wrote:
-> >=20
-> > What makes a submodule so special that now we suddenly have to store
-> > those stuff in the object database?
->=20
-> I'm not sure it is. I suspect a pure commit link with just a CVS-style=20
-> "modules" file is sufficient. I'm just saying that I don't think it is=20
-> _wrong_ to possibly want to expand it.
+Here is how it looked after the merge in bzr:
 
-If we later see that we really want to have it we can always introduce
-it later.  I don't think we should do it now if we don't see clear
-benefits _now_.
+ bzr status
+renamed:
+  hello2.txt => hello1.txt
+conflicts:
+  Path conflict: hello2.txt / hello1.txt
+pending merges:
+  Nicholas Allen 2006-11-28 Renamed hello to hello1
 
-So I was not against the link object itself (initially I wanted to do it
-this way, too), only agains the information which was proposed to be
-stored there.  Up to now I haven't found anything which makes sense to
-store next to the submodule commit to define the identity of the
-submodule.
 
---=20
-Martin Waitz
+and here's how it looked in git:
+git status
+#
+# Changed but not updated:
+#   (use git-update-index to mark for commit)
+#
+#       unmerged: hello.txt
+#       unmerged: hello1.txt
+#       unmerged: hello2.txt
+#       modified: hello2.txt
+#
+nothing to commit
 
---w7rOJgaucv5jay56
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
+So git is not telling me that I have a conflict due to the same file
+being renamed differently in 2 branches - well at least not in a way I
+can comprehend anyway! Whereas bzr made this very clear. Also, in git I
+ended up with 2 files:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
+ ls
+hello1.txt  hello2.txt
 
-iD8DBQFFcekNj/Eaxd/oD7IRAm6GAJ9fSDOCaqo6Vzfy0hfno+8gnKwjkwCeLowl
-jIlA052DVIa2TTBhAsI/sKk=
-=aPhR
------END PGP SIGNATURE-----
+whereas in bzr there was only one file and I just had to decide which
+name it was to be given to resolve the conflict.
 
+I'm not sure how I should resolve the conflict in git but that's
+probably just because I am not familiar with it yet and the message it
+gave was not comprehensible or helpful to me in the slightest. In bzr it
+was very easy and repeatably merging caused no trouble at all - the name
+conflict had to be resolved only once.
+
+While it was good that git detected my file rename (although this was
+not hard as the contents did not change at all) the process in bzr was
+*much* smoother and more user friendly than it was it git. When you have
+conflicts I think it's especially important that the RCS inform you of
+what is really happening so you do not make mistakes. Bzr was much more
+informative than git was and told me exactly why there was a conflict
+and made it easy to resolve it.
+
+This situation is a pretty common one and it seems to me that git's
+content based approach is not as useful in this case as the file
+identity approach that bzr uses.
+
+
+Nick
