@@ -1,65 +1,94 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Han-Wen Nienhuys <hanwen@xs4all.nl>
-Subject: Re: Suggestion: drop 'g' in git-describe suffix
-Date: Thu, 02 Nov 2006 10:55:15 +0100
-Message-ID: <4549C083.9060805@xs4all.nl>
-References: <eibh94$t7n$1@sea.gmane.org> <45494E20.1000503@shadowen.org>
-Reply-To: hanwen@xs4all.nl
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: git and bzr
+Date: Tue, 28 Nov 2006 14:41:31 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0611281432300.4244@woody.osdl.org>
+References: <45357CC3.4040507@utoronto.ca> <a7e835d40610250308v5d577482m139742e7fe1db185@mail.gmail.com>
+ <87slhcz8zh.wl%cworth@cworth.org> <a7e835d40610260152k658aeaf0hb900cb63870c04e4@mail.gmail.com>
+ <7vu01ro20b.fsf@assigned-by-dhcp.cox.net> <a7e835d40610260257r5f05ea4gc934f1c1cc267977@mail.gmail.com>
+ <20061026101038.GA13310@coredump.intra.peff.net> <877iyne4dm.fsf@alplog.fr>
+ <Pine.LNX.4.64.0610260753090.3962@g5.osdl.org> <456B7C6A.80104@webdrake.net>
+ <845b6e870611280410j58bdcd99nc05d0f67489293e4@mail.gmail.com>
+ <ekhaeg$etk$1@sea.gmane.org> <Pine.LNX.4.63.0611281433270.30004@wbgn013.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.64.0611280754050.30076@woody.osdl.org> <456C7592.6020700@ableton.com>
+ <ekhtnt$rkk$1@sea.gmane.org> <456C9DFF.1040407@onlinehome.de>
+ <456CA981.4010808@onlinehome.de> <Pine.LNX.4.64.0611281346490.4244@woody.osdl.org>
+ <456CB197.2030201@onlinehome.de> <Pine.LNX.4.64.0611281413310.4244@woody.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 2 Nov 2006 09:55:59 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Tue, 28 Nov 2006 22:42:05 +0000 (UTC)
+Cc: Jakub Narebski <jnareb@gmail.com>, bazaar-ng@lists.canonical.com,
+	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 15
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: muurbloem.xs4all.nl
-User-Agent: Thunderbird 1.5.0.7 (X11/20061027)
-In-Reply-To: <45494E20.1000503@shadowen.org>
+In-Reply-To: <Pine.LNX.4.64.0611281413310.4244@woody.osdl.org>
+X-MIMEDefang-Filter: osdl$Revision: 1.161 $
+X-Scanned-By: MIMEDefang 2.36
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30700>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32601>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GfZIC-00051K-Hm for gcvg-git@gmane.org; Thu, 02 Nov
- 2006 10:55:24 +0100
+ esmtp (Exim 4.43) id 1GpBeG-0003dU-6w for gcvg-git@gmane.org; Tue, 28 Nov
+ 2006 23:41:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752785AbWKBJzV (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 2 Nov 2006
- 04:55:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752780AbWKBJzV
- (ORCPT <rfc822;git-outgoing>); Thu, 2 Nov 2006 04:55:21 -0500
-Received: from main.gmane.org ([80.91.229.2]:3553 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S1752786AbWKBJzS (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 2 Nov 2006 04:55:18 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1GfZHy-0004yF-I0 for git@vger.kernel.org; Thu, 02 Nov 2006 10:55:10 +0100
-Received: from muurbloem.xs4all.nl ([213.84.26.127]) by main.gmane.org with
- esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>;
- Thu, 02 Nov 2006 10:55:10 +0100
-Received: from hanwen by muurbloem.xs4all.nl with local (Gmexim 0.1 (Debian))
- id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Thu, 02 Nov 2006 10:55:10
- +0100
-To: git@vger.kernel.org
+ S1754505AbWK1Wlw (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 28 Nov 2006
+ 17:41:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755276AbWK1Wlw
+ (ORCPT <rfc822;git-outgoing>); Tue, 28 Nov 2006 17:41:52 -0500
+Received: from smtp.osdl.org ([65.172.181.25]:26035 "EHLO smtp.osdl.org") by
+ vger.kernel.org with ESMTP id S1754505AbWK1Wlv (ORCPT
+ <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2006 17:41:51 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
+ smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kASMfWix009418
+ (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Tue, 28
+ Nov 2006 14:41:33 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
+ shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kASMfV5S029004; Tue, 28 Nov
+ 2006 14:41:32 -0800
+To: Nicholas Allen <nick.allen@onlinehome.de>
 Sender: git-owner@vger.kernel.org
 
-Andy Whitcroft escreveu:
->> or some other non-hex character.
+
+
+On Tue, 28 Nov 2006, Linus Torvalds wrote:
+> On Tue, 28 Nov 2006, Nicholas Allen wrote:
+> > 
+> > All useful conflict status is lost isn't it?
 > 
-> g is not a hex digit, hex is 0-f ??
-> 
+> No, it's actually there, but "git status" doesn't really explain it to 
+> you.
 
-Yes of course; silly me. Still I think it would be clearer if it used a 
-non-alphabet char, eg.
+Side note, to clarify: in the _simple_ cases it's all actually there.
 
-   tag+sha1
+I can well imagine that in more complex cases, involving multiple 
+different files, you may well want to re-do the merge and let the merge 
+tell you why it refused to merge something.
 
-to separate the tag and the committish.
+So the index, for example, contains just a "final end result" of what the 
+merge gave up on, and while for a simple rename conflict like your example 
+you could certainly see that directly from the index state (and thus we 
+could, for example, have a "git status" that talks about it being a 
+filename conflict), if you have a criss-cross rename, the index itself 
+doesn't really tell you _why_, and it could look superficially like a data 
+conflict. 
 
--- 
-  Han-Wen Nienhuys - hanwen@xs4all.nl - http://www.xs4all.nl/~hanwen
+In such a case, you'd really have to either go back to the merge itself to 
+see what happened, or you'd use the "git log" thing and just work it out 
+from there (ie you can ask "git log" to tell you about any renames as they 
+happened etc).
+
+I don't think I've actually hit a complex enough merge to need this yet, 
+but the graphical tools should help too, ie "gitk --merge" should give you 
+everything that "git log --merge" gives you (ie just the commits that 
+aren't common, and simplified to just the ones that matter for the 
+unmerged filenames in the end result). I can well imagine that being 
+useful too.
+
+So the tools are certainly there. "git status" just isn't necessarily the 
+best one (or the best that it could be, for that matter)..
+
