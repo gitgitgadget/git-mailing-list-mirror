@@ -4,67 +4,133 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Nicholas Allen <nick.allen@onlinehome.de>
-Subject: Re: git and bzr
-Date: Tue, 28 Nov 2006 23:00:55 +0100
-Message-ID: <456CB197.2030201@onlinehome.de>
-References: <45357CC3.4040507@utoronto.ca> <a7e835d40610250308v5d577482m139742e7fe1db185@mail.gmail.com> <87slhcz8zh.wl%cworth@cworth.org> <a7e835d40610260152k658aeaf0hb900cb63870c04e4@mail.gmail.com> <7vu01ro20b.fsf@assigned-by-dhcp.cox.net> <a7e835d40610260257r5f05ea4gc934f1c1cc267977@mail.gmail.com> <20061026101038.GA13310@coredump.intra.peff.net> <877iyne4dm.fsf@alplog.fr> <Pine.LNX.4.64.0610260753090.3962@g5.osdl.org> <456B7C6A.80104@webdrake.net> <845b6e870611280410j58bdcd99nc05d0f67489293e4@mail.gmail.com> <ekhaeg$etk$1@sea.gmane.org> <Pine.LNX.4.63.0611281433270.30004@wbgn013.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.64.0611280754050.30076@woody.osdl.org> <456C7592.6020700@ableton.com> <ekhtnt$rkk$1@sea.gmane.org> <456C9DFF.1040407@onlinehome.de> <456CA981.4010808@onlinehome.de> <Pine.LNX.4.64.0611281346490.4244@woody.osdl.org>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [RFC] Submodules in GIT
+Date: Tue, 28 Nov 2006 16:02:11 -0500
+Message-ID: <20061128210211.GI28337@spearce.org>
+References: <20061121223130.GA24909@nan92-1-81-57-214-146.fbx.proxad.net> <200611281029.11918.andyparkins@gmail.com> <ekh45n$rfc$1@sea.gmane.org> <200611281335.38728.andyparkins@gmail.com> <456C94E2.6010708@midwinter.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Tue, 28 Nov 2006 22:02:04 +0000 (UTC)
-Cc: Jakub Narebski <jnareb@gmail.com>, bazaar-ng@lists.canonical.com,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Tue, 28 Nov 2006 21:02:41 +0000 (UTC)
+Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.8 (X11/20061115)
-In-Reply-To: <Pine.LNX.4.64.0611281346490.4244@woody.osdl.org>
-X-Enigmail-Version: 0.94.0.0
-X-Provags-ID: kundenserver.de abuse@kundenserver.de login:8f68dfdb39f9894a8a7411e7c5df1048
+Content-Disposition: inline
+In-Reply-To: <456C94E2.6010708@midwinter.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32590>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32577>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GpB0y-0001iT-KU for gcvg-git@gmane.org; Tue, 28 Nov
- 2006 23:01:21 +0100
+ esmtp (Exim 4.43) id 1GpA5s-0004Hp-6q for gcvg-git@gmane.org; Tue, 28 Nov
+ 2006 22:02:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1757418AbWK1WBA (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 28 Nov 2006
- 17:01:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757412AbWK1WBA
- (ORCPT <rfc822;git-outgoing>); Tue, 28 Nov 2006 17:01:00 -0500
-Received: from moutng.kundenserver.de ([212.227.126.188]:13822 "EHLO
- moutng.kundenserver.de") by vger.kernel.org with ESMTP id S1757418AbWK1WA7
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2006 17:00:59 -0500
-Received: from [84.190.155.117] (helo=[192.168.1.100]) by
- mrelayeu.kundenserver.de (node=mrelayeu6) with ESMTP (Nemesis), id
- 0ML29c-1GpB0a2B59-0008Tn; Tue, 28 Nov 2006 23:00:57 +0100
-To: Linus Torvalds <torvalds@osdl.org>
+ S1755518AbWK1VCQ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 28 Nov 2006
+ 16:02:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755510AbWK1VCQ
+ (ORCPT <rfc822;git-outgoing>); Tue, 28 Nov 2006 16:02:16 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:24769 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S1755518AbWK1VCP
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2006 16:02:15 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1GpA5c-0001Mg-HL; Tue, 28 Nov 2006 16:02:04 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 8BB3B20FB7F; Tue, 28 Nov 2006 16:02:11 -0500 (EST)
+To: Steven Grimm <koreth@midwinter.com>
 Sender: git-owner@vger.kernel.org
 
-Linus Torvalds wrote:
-> 
-> On Tue, 28 Nov 2006, Nicholas Allen wrote:
->> and here's how it looked in git:
->> git status
-> 
-> Ehh. It told you exactly what happened when you actually did the merge, 
-> didn't it?
-> 
-> Yeah, "git status" won't tell you _why_ it results in unmerged paths, but 
-> the merge will have told you.  You must have seen that, but decided to 
-> just ignore it and not post it, because it didn't support the conclusion 
-> you wanted to get, did it?
+Steven Grimm <koreth@midwinter.com> wrote:
+> Andy Parkins wrote:
+> >Unfortunately, during development, you've switched libsubmodule1 to 
+> >branch "development", but supermodule isn't tracking libsubmodule1/HEAD 
+> >it's tracking libsubmodule1/master.  Your supermodule commit doesn't 
+> >capture a snapshot of the tree you're using.
+> >  
+>
+> Or maybe not a merge, but worse, you'd *replace* the 
+> previously committed master with what's in your dev branch.
 
-I didn't do this deliberately - it's just because merge spewed out a
-whole load of stuff at me that I didn't understand and therefore
-overlooked the conflict message in it. I wasn't expecting to see it here
-anyway and was hoping for a short and informative summary that I would
-understand when I did a status.
+Right, you would be replacing the prior branch of that submodule with
+the new submodule branch.
 
-Also what happens if I loose the messages because they scrolled off
-screen or the power goes down, I need to reboot for some reason, or I
-don't have time and want to shutdown my computer restart another day and
-resolve the conflicts then? All useful conflict status is lost isn't it?
-That's why I expected git status to tell me this in some understandable
-manner and was not even expecting it to only be in the merge output....
+I think the safety valve you are looking for here is two things:
 
+  * don't automatically update the submodule's HEAD into the
+    supermodule's index.
+
+  * make sure the submodule's HEAD is a fast-forward of the
+    supermodule's index, with a --force option to force it
+	anyway.
+
+Otherwise the developer just has to know what he/she is doing.
+Today you can put stuff that isn't ready for prime-time into a
+repository on the wrong branch just by applying the wrong patch,
+or cherry-picking the wrong commit, etc...  the user can (and
+will) make mistakes.  But they can also easily recover from them
+by rewinding history and redoing it.
+
+> On a related note, it would be great from a usability point of view if 
+> there were a way to say "I always want to be on the same branch in all 
+> submodules and the supermodule."
+
+That's not really an issue.
+
+A branch doesn't exist just because you checked-out the branch, or
+because you created it.  A branch exists because there were two or
+more commits (B and C) which use the same parent (A) and two or more
+of those commits survive, e.g. they have refs which point to them
+(directly or indirectly) or they were merged into another commit
+which itself survives.
+
+Therefore if the supermodule is on the "development branch" the
+submodules are also immediately on the same branch, because their
+HEADs are derived from whatever is stored in the supermodule's tree.
+And that tree is derived from whatever "development branch" means.
+
+Really what you want/need is a special head in the submodule
+which acts as the "branch that corresponds to the supermodule".
+This probably should just be a naked SHA1 stored in HEAD, which
+is committable only because a supermodule exists in a higher level
+directory.
+
+The fact that the submodule project has branches *at all* is
+totally irrelevant once you start to speak about that submodule
+within the supermodule, as its the supermodule which determines
+the branch of the submodule.
+
+> But I think the Perforce-style 
+> "compose a single workspace out of different bits of a larger project" 
+> model is hugely useful
+
+That's a mess.
+
+You start to get into weird cases where the directory structure
+expected by the build process is no longer intact, because the user
+has sliced it apart in weird ways.  And there's no single version
+which corresponds to that workspace as (if I recall correctly)
+you can pick different tags or branches at will.  I believe that
+ClearCase has the same bug.
+
+You also can't version that now spliced workspace, aside from taking
+the configuration file and putting that under version control too.
+
+However I think the proposal on the table will support that to some
+degree, in that you can take any version of any repository and embed
+it at any directory of any other repository.  This means you can
+for example embed the Linux kernel, glibc and gcc projects into
+a larger "embedded device" repository, but you cannot alter the
+structure of any of those three projects without making your own
+locally developed branch of them.  Which is actually the correct
+thing to do as any subslicing of a repository is exactly that:
+a locally developed branch of that repository.
+
+-- 
