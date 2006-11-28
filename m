@@ -1,56 +1,62 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-1.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,LIST_MIRROR_BCC,MSGID_FROM_MTA_HEADER,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [RFC] Submodules in GIT
-Date: Mon, 20 Nov 2006 14:43:21 -0800
-Message-ID: <7v7ixp20za.fsf@assigned-by-dhcp.cox.net>
-References: <20061120215116.GA20736@admingilde.org>
-	<ejt9dh$kfm$1@sea.gmane.org>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git and bzr
+Date: Tue, 28 Nov 2006 14:35:12 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0611281433270.30004@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <45357CC3.4040507@utoronto.ca> <a7e835d40610250308v5d577482m139742e7fe1db185@mail.gmail.com>
+ <87slhcz8zh.wl%cworth@cworth.org> <a7e835d40610260152k658aeaf0hb900cb63870c04e4@mail.gmail.com>
+ <7vu01ro20b.fsf@assigned-by-dhcp.cox.net> <a7e835d40610260257r5f05ea4gc934f1c1cc267977@mail.gmail.com>
+ <20061026101038.GA13310@coredump.intra.peff.net> <877iyne4dm.fsf@alplog.fr>
+ <Pine.LNX.4.64.0610260753090.3962@g5.osdl.org> <456B7C6A.80104@webdrake.net>
+ <845b6e870611280410j58bdcd99nc05d0f67489293e4@mail.gmail.com>
+ <ekhaeg$etk$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Mon, 20 Nov 2006 22:43:36 +0000 (UTC)
-Cc: jnareb@gmail.com
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Tue, 28 Nov 2006 13:36:05 +0000 (UTC)
+Cc: git@vger.kernel.org, bazaar-ng@lists.canonical.com
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Original-cc: git@vger.kernel.org
-In-Reply-To: <ejt9dh$kfm$1@sea.gmane.org> (Jakub Narebski's message of "Mon,
-	20 Nov 2006 23:16:45 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <ekhaeg$etk$1@sea.gmane.org>
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31947>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32523>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GmHrQ-0000EE-J5 for gcvg-git@gmane.org; Mon, 20 Nov
- 2006 23:43:33 +0100
+ esmtp (Exim 4.43) id 1Gp37a-0003ze-Ce for gcvg-git@gmane.org; Tue, 28 Nov
+ 2006 14:35:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S966591AbWKTWnX (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 20 Nov 2006
- 17:43:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966644AbWKTWnX
- (ORCPT <rfc822;git-outgoing>); Mon, 20 Nov 2006 17:43:23 -0500
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:19082 "EHLO
- fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP id S966591AbWKTWnW
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 20 Nov 2006 17:43:22 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao06.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061120224321.ZWHT5465.fed1rmmtao06.cox.net@fed1rmimpo01.cox.net>; Mon, 20
- Nov 2006 17:43:21 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id pAis1V00Q1kojtg0000000; Mon, 20 Nov 2006
- 17:42:53 -0500
+ S1758650AbWK1NfP (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 28 Nov 2006
+ 08:35:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758671AbWK1NfP
+ (ORCPT <rfc822;git-outgoing>); Tue, 28 Nov 2006 08:35:15 -0500
+Received: from mail.gmx.net ([213.165.64.20]:65174 "HELO mail.gmx.net") by
+ vger.kernel.org with SMTP id S1758650AbWK1NfO (ORCPT
+ <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2006 08:35:14 -0500
+Received: (qmail invoked by alias); 28 Nov 2006 13:35:13 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp037) with SMTP; 28 Nov 2006 14:35:13 +0100
 To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Hi,
 
-> By the way, in todo branch, in Subpro.txt, there is talk about adding
-> link to submodule trees in _commit object_... well link to submodule tree
-> or commit, with the "mount point".
+On Tue, 28 Nov 2006, Jakub Narebski wrote:
 
-That was shot down by Linus and I agree with him.  "bind" was a
-bad idea because binding of a particular subproject commit into
-a tree is a property of the tree, not one of the commits that
-happen to have that tree.
+> [... some reasons why git-annotate is not just your regular annotate ...]
+
+You should also mention that git-annotate can follow code movements 
+through file renames.
+
+I know, because I was already rightfully blamed for code which was moved 
+by somebody else.
+
+Ciao,
+Dscho
