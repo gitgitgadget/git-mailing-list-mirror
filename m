@@ -1,140 +1,104 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: What's in git.git
-Date: Sat, 11 Nov 2006 22:07:02 -0800
-Message-ID: <7vu015gpvd.fsf@assigned-by-dhcp.cox.net>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [RFC] git-branch: add options and tests for branch renaming
+Date: Tue, 28 Nov 2006 10:39:04 -0500
+Message-ID: <20061128153904.GC28337@spearce.org>
+References: <11647252603530-git-send-email-hjemli@gmail.com> <456C4FCE.6090306@shadowen.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sun, 12 Nov 2006 06:07:21 +0000 (UTC)
+NNTP-Posting-Date: Tue, 28 Nov 2006 15:39:31 +0000 (UTC)
+Cc: Lars Hjemli <hjemli@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <junkio@cox.net>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-maint-at: e02cd6388f0193706279268a7d9fa57be4cbc997
-X-master-at: a74e60a0f59899c612053b6fe0f0f62652118151
+Content-Disposition: inline
+In-Reply-To: <456C4FCE.6090306@shadowen.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31256>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32539>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gj8Uu-0007Tp-PX for gcvg-git@gmane.org; Sun, 12 Nov
- 2006 07:07:17 +0100
+ esmtp (Exim 4.43) id 1Gp53O-0001aq-PK for gcvg-git@gmane.org; Tue, 28 Nov
+ 2006 16:39:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1754037AbWKLGHF (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 12 Nov 2006
- 01:07:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753958AbWKLGHE
- (ORCPT <rfc822;git-outgoing>); Sun, 12 Nov 2006 01:07:04 -0500
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:56281 "EHLO
- fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP id S1754037AbWKLGHD
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 12 Nov 2006 01:07:03 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao08.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061112060702.IWOX18207.fed1rmmtao08.cox.net@fed1rmimpo01.cox.net>; Sun, 12
- Nov 2006 01:07:02 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id li6d1V00D1kojtg0000000; Sun, 12 Nov 2006
- 01:06:38 -0500
-To: git@vger.kernel.org
+ S1758689AbWK1PjM (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 28 Nov 2006
+ 10:39:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758690AbWK1PjM
+ (ORCPT <rfc822;git-outgoing>); Tue, 28 Nov 2006 10:39:12 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:1411 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S1758689AbWK1PjL
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2006 10:39:11 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1Gp52y-0008Rj-2r; Tue, 28 Nov 2006 10:39:00 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 3C4F820FB7F; Tue, 28 Nov 2006 10:39:04 -0500 (EST)
+To: Andy Whitcroft <apw@shadowen.org>
 Sender: git-owner@vger.kernel.org
 
-Execuive summary.
+Andy Whitcroft <apw@shadowen.org> wrote:
+> Ok, I have been feeling uneasy about rename and reflogs for a while now.
+>  About removing reflogs too for that matter.
+> 
+> In my mind the ref log is about tracking what a ref points to.  So I
+> want to be able to say "what was next, yesterday".  Do I care if its not
+> there now?  Perhaps I want a rename to just put a rename from in the top
+> of the new reflog and leave the old there.
+> 
+> Yep, no idea how we would clean them up with this model.  But ...
 
-I've tagged the tip of 'master' as v1.4.4-rc2 tonight.  In the
-meantime, GIT 1.4.3.5 was cut from the 'maint' branch.
+You use a global reflog instead of a ref specific log.  There are
+of course huge problems with that idea, but it is probably the
+simplest way to solve what you want.
 
-We hopefully can declare the real 1.4.4 soon enough, before the
-turkey time.
-
-----------------------------------------------------------------
-
-* The 'maint' branch has these fixes since the last announcement.
-
-   Eric Wong (3):
-      git-svn: avoid printing filenames of files we're not tracking
-      git-svn: don't die on rebuild when --upgrade is specified
-      git-svn: fix dcommit losing changes when out-of-date from svn
-
-   Junio C Hamano (2):
-      path-list: fix path-list-insert return value
-      git-cvsserver: read from git with -z to get non-ASCII pathnames.
-
-   Petr Baudis (1):
-      Nicer error messages in case saving an object to db goes wrong
-
-   Robert Shearman (1):
-      git-rebase: Use --ignore-if-in-upstream option when executing git-format-patch.
+Though I'm not sure why you care that much.  To me a ref is just
+as transient as the name of the working directory the repository is
+housed in.  I could care less what I called that directory last week,
+just that it exists and has the content I expect.  On the other
+hand, once I'm in that directory I *do* want the history of it.
+That's where git comes in.  Likewise for a ref once I am speaking
+about a given ref, I want the history of it, and that's where git's
+reflog comes in.
 
 
-* The 'master' branch has these since the last announcement.
+Although I just realized this paticular case:
 
-   Eric Wong (3):
-      git-svn: avoid printing filenames of files we're not tracking
-      git-svn: don't die on rebuild when --upgrade is specified
-      git-svn: fix dcommit losing changes when out-of-date from svn
+	git branch -D next
+	git fetch origin next:next
+	...
+	git fetch origin next:next
+	git branch -M next bob
+	...
+	... 2 days go by  ...
+	...
+	git fetch origin next:next
+	... arrgh next is no good! ...
+	git log next@{2.days.ago}
 
-   Jakub Narebski (3):
-      gitweb: Better git-unquoting and gitweb-quoting of pathnames
-      gitweb: Use character or octal escape codes (and add span.cntrl) in esc_path
-      gitweb: New improved patchset view
+and there's nothing there, as the log for next just started in
+the last fetch.  Yet you had a next that you renamed to bob, and
+that next has the log.
 
-   Junio C Hamano (14):
-      gitweb: fix disabling of "forks"
-      gitweb: minimally fix "fork" support.
-      gitweb: do not give blame link unconditionally in diff-tree view
-      git-status: quote LF in its output
-      git-pickaxe: retire pickaxe
-      gitweb: protect blob and diff output lines from controls.
-      gitweb: protect commit messages from controls.
-      gitweb: fix unmatched div in commitdiff
-      Documentation: move blame examples
-      git-annotate: no need to exec blame; it is built-in now.
-      git-annotate: fix -S on graft file with comments.
-      path-list: fix path-list-insert return value
-      git-cvsserver: read from git with -z to get non-ASCII pathnames.
-      GIT 1.4.4-rc2
+Though this can be easily dealt with by reading the RENAME_LOG.
+If you scan both this ref's log and the RENAME_LOG and switch to
+scanning another ref's log when you find that this ref was renamed
+to another ref, then you get what you expect above.  Except if you
+deleted the rename destination branch.
 
-   OGAWA Hirofumi (1):
-      gitk: Fix nextfile() and add prevfile()
+I can't say I would use that feature though, despite how handy I
+find reflogs to be.
 
-   Petr Baudis (1):
-      Nicer error messages in case saving an object to db goes wrong
-
-   Robert Shearman (1):
-      git-rebase: Use --ignore-if-in-upstream option when executing git-format-patch.
-
-
-* The 'next' branch, in addition, has these.
-
-   Junio C Hamano (4):
-      upload-pack: stop the other side when they have more roots than we do.
-      pack-objects: use of version 3 delta is now optional.
-      Revert "pack-objects: use of version 3 delta is now optional."
-      adjust_shared_perm: chmod() only when needed.
-
-
-* The 'pu' branch, in addition, has these.
-
-   Alexandre Julliard (1):
-      Shallow clone: do not ignore shallowness when following tags
-
-   Jakub Narebski (1):
-      gitweb: New improved formatting of chunk header in diff
-
-   Johannes Schindelin (6):
-      upload-pack: no longer call rev-list
-      support fetching into a shallow repository
-      allow cloning a repository "shallowly"
-      Build in shortlog
-      allow deepening of a shallow repository
-      add tests for shallow stuff
-
-   Junio C Hamano (6):
-      git-branch -a: show both local and remote tracking branches.
-      git-commit: show --summary after successful commit.
-      git-diff/git-apply: make diff output a bit friendlier to GNU patch (part 2)
-      rev-list --left-right
-      blame: --show-stats for easier optimization work.
-      gitweb: steal loadavg throttle from kernel.org
-
+-- 
