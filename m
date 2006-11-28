@@ -4,97 +4,55 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Otavio Salvador <otavio@debian.org>
-Subject: Re: StGit metadata grabbing with git clone
-Date: Thu, 23 Nov 2006 12:31:23 -0200
-Organization: O.S. Systems Ltda.
-Message-ID: <87ejru1bgk.fsf@neumann.lab.ossystems.com.br>
-References: <87ac2jwutu.fsf@neumann.lab.ossystems.com.br>
-	<tnxslgawic2.fsf@arm.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] (experimental) per-topic shortlog.
+Date: Tue, 28 Nov 2006 08:56:14 -0500
+Message-ID: <20061128135614.GA29505@coredump.intra.peff.net>
+References: <7v8xhxsopp.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611261652520.30076@woody.osdl.org> <Pine.LNX.4.63.0611280040480.30004@wbgn013.biozentrum.uni-wuerzburg.de> <7v7ixge8j2.fsf@assigned-by-dhcp.cox.net> <20061128131139.GA10874@coredump.intra.peff.net> <Pine.LNX.4.63.0611281439500.30004@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 23 Nov 2006 14:31:51 +0000 (UTC)
-Cc: git@vger.kernel.org
+NNTP-Posting-Date: Tue, 28 Nov 2006 13:56:48 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
+	Linus Torvalds <torvalds@osdl.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-URL: http://www.debian.org/~otavio/
-X-Attribution: O.S.
-In-Reply-To: <tnxslgawic2.fsf@arm.com> (Catalin Marinas's message of "Thu, 23
-	Nov 2006 10:47:09 +0000")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/22.0.90 (gnu/linux)
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at freedom.ind.br
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0611281439500.30004@wbgn013.biozentrum.uni-wuerzburg.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32141>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32526>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GnFc1-0003Yr-Qn for gcvg-git@gmane.org; Thu, 23 Nov
- 2006 15:31:38 +0100
+ esmtp (Exim 4.43) id 1Gp3Rk-0000jx-Di for gcvg-git@gmane.org; Tue, 28 Nov
+ 2006 14:56:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1757373AbWKWObd (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 23 Nov 2006
- 09:31:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757374AbWKWObd
- (ORCPT <rfc822;git-outgoing>); Thu, 23 Nov 2006 09:31:33 -0500
-Received: from mail.freedom.ind.br ([201.35.65.90]:48106 "EHLO
- freedom.ind.br") by vger.kernel.org with ESMTP id S1757373AbWKWObc (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 23 Nov 2006 09:31:32 -0500
-Received: from localhost (localhost [127.0.0.1]) by freedom.ind.br (Postfix)
- with ESMTP id F1A7B21F39; Thu, 23 Nov 2006 12:31:26 -0200 (BRST)
-Received: from freedom.ind.br ([127.0.0.1]) by localhost
- (internet.freedom.ind.br [127.0.0.1]) (amavisd-new, port 10024) with ESMTP id
- 06724-04; Thu, 23 Nov 2006 12:31:26 -0200 (BRST)
-Received: from lab.ossystems.com.br (lab.ossystems.com.br [201.10.58.28]) by
- freedom.ind.br (Postfix) with SMTP id 0D06021EC3; Thu, 23 Nov 2006 12:31:26
- -0200 (BRST)
-Received: (nullmailer pid 13991 invoked by uid 1000); Thu, 23 Nov 2006
- 14:31:23 -0000
-To: Catalin Marinas <catalin.marinas@gmail.com>
+ S934366AbWK1N4R (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 28 Nov 2006
+ 08:56:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934459AbWK1N4R
+ (ORCPT <rfc822;git-outgoing>); Tue, 28 Nov 2006 08:56:17 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:8599 "HELO
+ peff.net") by vger.kernel.org with SMTP id S934366AbWK1N4R (ORCPT
+ <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2006 08:56:17 -0500
+Received: (qmail 9479 invoked from network); 28 Nov 2006 08:56:24 -0500
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2) by
+ 66-23-211-5.clients.speedfactory.net with SMTP; 28 Nov 2006 08:56:24 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 28 Nov
+ 2006 08:56:14 -0500
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-Catalin Marinas <catalin.marinas@arm.com> writes:
+On Tue, Nov 28, 2006 at 02:43:49PM +0100, Johannes Schindelin wrote:
 
-> Otavio Salvador <otavio@debian.org> wrote:
->> I'm a happy user of stgit together with git to maintain a patch queue
->> while I or the company team is working on patches that will be send
->> for merging. Both works great but we're having troubles when we try to
->> clone a stgit repository.
->>
->> When I clone the repository it grab the source but it loses the
->> metadata. I would like to grab those too. Does anybody has a solution
->> or a trick how I can do that?
->
-> Most of the StGIT metadata can be generated by "uncommit" (the reason
-> I still keep a lot of this metadata like author etc. is for
-> speed). However, I'm not sure how well this would work since you can
-> nor synchronise the patches afterwards. StGIT works well for sharing
-> patches via e-mail but you might want to consider topic branches
-> instead of patches (though StGIT seems more convenient).
->
-> Another idea is to export the patches (stg export) to a common place
-> and import them in the other tree (stg import --series --replace). I
-> could also add a --sync option to "import", instead of --replace,
-> which would perform a three-way merge with the coresponding local
-> patches so that it grabs any additional changes in both repositories
-> or branches (similar to "pick --fold", option which I added for the
-> same reason).
->
-> Yet another idea is a "stg import" command for remote repositories or
-> branches which would bring in the StGIT metadata.
->
-> At the bottom of the TODO list is something that would solve this,
-> only that I've never found the time to think about it properly. I work
-> on several branches (and even separate trees) and share patches
-> between them. It would be nice to be able to synchronise the changes
-> to these patches.
+> BTW merge-recursive is a perfect example why this approach will break 
+> down: most of the rewrite in C took place in a private repository with 
+> quite some commits. This does not show in the git repository.
+> 
+> I fully expect the linux repository to behave similarly, since most of the 
+> features are cooked elsewhere, and not all of them are pulled, but some 
+> are applied (i.e. they appear out of nowhere from the repository's 
+> viewpoint).
 
-That would be a really nice feature. Besides, would be nice to have a
-way to plug something on clone and push git methods so you might send
-all those metadata without much hassle.
+Yes, I think this would be more useful in concert with some sort of
+grouping. If we can make a group of commits related to merge-recursive,
+and score them as a single item, then they can be compared to other
+groups (which may consist of a single commit or several).
 
--- 
-        O T A V I O    S A L V A D O R
----------------------------------------------
- E-mail: otavio@debian.org      UIN: 5906116
- GNU/Linux User: 239058     GPG ID: 49A5F855
- Home Page: http://otavio.ossystems.com.br
----------------------------------------------
-"Microsoft gives you Windows ... Linux gives
