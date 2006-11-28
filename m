@@ -4,70 +4,84 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: Topic descriptions
-Date: Thu, 7 Dec 2006 12:55:52 +0100
-Message-ID: <20061207115552.GC10468@admingilde.org>
-References: <200612062153.30639.andyparkins@gmail.com> <7v4ps8y7un.fsf@assigned-by-dhcp.cox.net>
+From: Nicholas Allen <nick.allen@onlinehome.de>
+Subject: Re: git and bzr
+Date: Tue, 28 Nov 2006 23:36:03 +0100
+Message-ID: <456CB9D3.4060900@onlinehome.de>
+References: <45357CC3.4040507@utoronto.ca>	 <845b6e870611280410j58bdcd99nc05d0f67489293e4@mail.gmail.com>	 <ekhaeg$etk$1@sea.gmane.org>	 <Pine.LNX.4.63.0611281433270.30004@wbgn013.biozentrum.uni-wuerzburg.de>	 <Pine.LNX.4.64.0611280754050.30076@woody.osdl.org>	 <456C7592.6020700@ableton.com> <ekhtnt$rkk$1@sea.gmane.org>	 <456C9DFF.1040407@onlinehome.de>	 <46a038f90611281340u521fb5fct745ebe1ded9a630e@mail.gmail.com>	 <456CADE9.7060503@onlinehome.de> <46a038f90611281414y165ed376r80e3dbc3c7888985@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="nmemrqcdn5VTmUEE"
-NNTP-Posting-Date: Thu, 7 Dec 2006 11:56:01 +0000 (UTC)
-Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Tue, 28 Nov 2006 22:36:24 +0000 (UTC)
+Cc: Git Mailing List <git@vger.kernel.org>,
+	"bazaar-ng@lists.canonical.com" <bazaar-ng@lists.canonical.com>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <7v4ps8y7un.fsf@assigned-by-dhcp.cox.net>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+User-Agent: Thunderbird 1.5.0.8 (X11/20061115)
+In-Reply-To: <46a038f90611281414y165ed376r80e3dbc3c7888985@mail.gmail.com>
+X-Enigmail-Version: 0.94.0.0
+X-Provags-ID: kundenserver.de abuse@kundenserver.de login:8f68dfdb39f9894a8a7411e7c5df1048
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33573>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GsHr4-0002Oi-Ge for gcvg-git@gmane.org; Thu, 07 Dec
- 2006 12:55:58 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32600>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GpBYi-0002Gx-1j for gcvg-git@gmane.org; Tue, 28 Nov
+ 2006 23:36:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1032085AbWLGLzz (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
- 06:55:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1032088AbWLGLzz
- (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 06:55:55 -0500
-Received: from mail.admingilde.org ([213.95.32.147]:44723 "EHLO
- mail.admingilde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1032085AbWLGLzy (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec 2006
- 06:55:54 -0500
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1) id
- 1GsHqy-0004FW-Up; Thu, 07 Dec 2006 12:55:52 +0100
-To: Junio C Hamano <junkio@cox.net>
+ S1756821AbWK1WgJ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 28 Nov 2006
+ 17:36:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757285AbWK1WgI
+ (ORCPT <rfc822;git-outgoing>); Tue, 28 Nov 2006 17:36:08 -0500
+Received: from moutng.kundenserver.de ([212.227.126.187]:10464 "EHLO
+ moutng.kundenserver.de") by vger.kernel.org with ESMTP id S1756821AbWK1WgG
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2006 17:36:06 -0500
+Received: from [84.190.155.117] (helo=[192.168.1.100]) by
+ mrelayeu.kundenserver.de (node=mrelayeu5) with ESMTP (Nemesis), id
+ 0ML25U-1GpBYa12NE-0003HP; Tue, 28 Nov 2006 23:36:04 +0100
+To: Martin Langhoff <martin.langhoff@gmail.com>
 Sender: git-owner@vger.kernel.org
 
+Martin Langhoff wrote:
+> On 11/29/06, Nicholas Allen <nick.allen@onlinehome.de> wrote:
+>> yes I can see if you just use plain patches. In bzr though there are
+>> bundles that store extra data along with the patch and if you use this
+>> instead of a simple patch this will never be a problem as bzr can then
+>> notice the same bundle being merged into 2 branches.
+> 
+> Well, there you start depending on everyone using bzr and providing
+> metadata-added patches. Git is really good at dealing with scenarios
+> where not everyone is using Git.. so the
+> content-is-kind-and-metadata-be-damned pays off handsomely.
+> 
+> And the "scenarios where not everyone is using Git" are everytime that
+> we are tracking a project that uses a different SCM. For me, the
+> "killer-app" of git is that, as it does not rely on magic metadata, it
+> is perfectly useful on projects that I track that use CVS or SVN.
+> 
+> I submit or commit patches upstream and git spots the commits being
+> echoed back in just right because it does not rely on the metadata.
+> Only on the content.
+> 
+> cheers,
+> 
+> 
+> martin
+> ps: hope you don't mind I re-added the CC to git@vger in my reply
 
---nmemrqcdn5VTmUEE
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Of course not - I also added bzr mailing list back on this discussion too...
 
-hoi :)
+I have to agree that's pretty cool!
 
-On Wed, Dec 06, 2006 at 02:31:28PM -0800, Junio C Hamano wrote:
-> But that description thing would be useful in gitweb, for
-> example.
+For the kind of development we do this is not really a big deal though
+as all developers can agree on using one RCS. But if you mix git and svn
+in this way then the changes can only go one way (from svn to git) can't
+they as svn is not so intelligent so this somewhat limits its usefulness
+doesn't it?
 
-And it could be useful to automatically generate the summary for
-please-pull mails or for the [0/N] patch introduction mail.
-
---=20
-Martin Waitz
-
---nmemrqcdn5VTmUEE
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFFeAFIj/Eaxd/oD7IRAv64AJ4yEN/IN+QyEtpK4sXcdoc6Y1dHiwCfcOWx
-/I8MA39KqFkIRHnOMmCaDYg=
-=1PJd
------END PGP SIGNATURE-----
+I know bzr it has some beta level plugin support for SVN foreign
+branches (git, mercurial and svk ones too I think) and I believe this
+works in both directions. So you can commit to bzr, push that to an svn
+repository and also pull changes from svn. Merge branches in bzr and
+commit back to svn with log messages and history intact. So bzr still
+allows the use of multiple RCS systems...
 
