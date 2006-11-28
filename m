@@ -5,77 +5,69 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [RFC] gitweb: Add committags support (take 2)
-Date: Wed, 06 Dec 2006 11:11:31 -0800
-Message-ID: <7vveko3km4.fsf@assigned-by-dhcp.cox.net>
-References: <200612040001.13640.jnareb@gmail.com>
-	<200612041133.44816.jnareb@gmail.com>
-	<7vmz64ortu.fsf@assigned-by-dhcp.cox.net>
-	<200612061351.02712.jnareb@gmail.com>
+Subject: Re: [PATCH] Trim hint printed when gecos is empty.
+Date: Tue, 28 Nov 2006 10:29:50 -0800
+Message-ID: <7v3b834e75.fsf@assigned-by-dhcp.cox.net>
+References: <ekh2uh$nk2$1@sea.gmane.org>
+	<200611281403.36370.andyparkins@gmail.com>
+	<Pine.LNX.4.63.0611281536230.30004@wbgn013.biozentrum.uni-wuerzburg.de>
+	<200611281506.53518.andyparkins@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 6 Dec 2006 19:11:46 +0000 (UTC)
-Cc: git@vger.kernel.org, Pasky Baudis <pasky@suse.cz>
+NNTP-Posting-Date: Tue, 28 Nov 2006 18:30:13 +0000 (UTC)
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <200612061351.02712.jnareb@gmail.com> (Jakub Narebski's message
-	of "Wed, 6 Dec 2006 13:51:01 +0100")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33507>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gs2B7-0007Cp-1o for gcvg-git@gmane.org; Wed, 06 Dec
- 2006 20:11:37 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32560>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gp7iN-0006wI-EO for gcvg-git@gmane.org; Tue, 28 Nov
+ 2006 19:29:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S937095AbWLFTLe (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
- 14:11:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937196AbWLFTLe
- (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 14:11:34 -0500
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:48419 "EHLO
- fed1rmmtao12.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S937095AbWLFTLd (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec 2006
- 14:11:33 -0500
+ S1758724AbWK1S3w (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 28 Nov 2006
+ 13:29:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758726AbWK1S3w
+ (ORCPT <rfc822;git-outgoing>); Tue, 28 Nov 2006 13:29:52 -0500
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:49309 "EHLO
+ fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP id S1758724AbWK1S3v
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2006 13:29:51 -0500
 Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao12.cox.net
  (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061206191132.YMAZ4226.fed1rmmtao12.cox.net@fed1rmimpo02.cox.net>; Wed, 6
- Dec 2006 14:11:32 -0500
+ <20061128182951.DFQ4226.fed1rmmtao12.cox.net@fed1rmimpo02.cox.net>; Tue, 28
+ Nov 2006 13:29:51 -0500
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id vXBi1V00a1kojtg0000000; Wed, 06 Dec 2006
- 14:11:42 -0500
-To: Jakub Narebski <jnareb@gmail.com>
+ fed1rmimpo02.cox.net with bizsmtp id sJVz1V0131kojtg0000000; Tue, 28 Nov 2006
+ 13:30:00 -0500
+To: Andy Parkins <andyparkins@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Andy Parkins <andyparkins@gmail.com> writes:
 
-> 1. Make it easier to have per repository gitweb configuration, for
->    example by having gitweb configuration file in GIT_DIR for a project,
->    "gitweb_conf.perl" by default:
+> On Tuesday 2006 November 28 14:40, Johannes Schindelin wrote:
 >
->   our $GITWEB_REPO_CONFIG = $ENV{'GITWEB_REPO_CONFIG'} ||
->   	"++GITWEB_CONFIG++";
->   do "$projectroot/$project/$GITWEB_REPO_CONFIG"
->   	if -e "$projectroot/$project/$GITWEB_CONFIG";
+>> You are probably different than me. What with my track record, I _trust_
+>> my patches to be not perfect at all...
+>
+> ...  I had understood it was a 
+> legal tool to trace the provenance of a patch - not to sign off on it being 
+> bug free (which surely is impossible).
 
-I suspect site administrators would hesitate to have perl
-scripts in repositories that could run arbitrary things as their
-"side effects".
+Johannes, Andy's interpretation is in line with the policy in
+SubmittingPatches.  S-o-b is about warranty of provenance, and
+not about correctness or cheering (Acked-by).
 
-> 2. Put the configuration in config file, using/like %features support.
->    For example gitweb.committags.<committag name> would hold parameters
->    for <committag>. Committags sequence would be given by sequence of
->    entries in config file. Comittags without options would have sole
->    variable entry (which I think is equivalent to being bool variable
->    and having 1 or 'yes' as value).
+And I think it makes sense to add "-s" automatically to commits
+made in a private working repository in which the developer who
+configured "-s" to be added automatically is the only person who
+makes commits.  As already mentioned in the thread, one of the
+hooks should be usable for that.  And it certainly is a
+possibility to add a config to turn "-s" on.
 
-I think gitweb.* in $GIT_DIR/config and a config reader in Perl
-are very sensible things to do, and you would need the config
-reader eventually anyway.  The longer we postpone it, the more
-we risk the temptation to pollute $GIT_DIR/ with the likes of
-"description", "owner", and "homepage", and I do not think we
-want to make this worse.
+But I suspect that it would be cleaner and more useful to teach
+"git commit" to use a commit message template per repository and
+put the S-o-b in there -- that mechanism would be usable for
+things other than just S-o-b lines as projects see fit.
 
-> What do you think about it? Junio? Pasky?
-
-If you are asking Pasky, you should CC him, I think.  I added
-him to the CC list.
