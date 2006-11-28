@@ -1,115 +1,77 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] git-branch -D: make it work even when on a yet-to-be-born branch
-Date: Fri, 24 Nov 2006 23:12:41 -0800
-Message-ID: <7vr6vs579y.fsf_-_@assigned-by-dhcp.cox.net>
-References: <1164409429445-git-send-email-hjemli@gmail.com>
-	<7v1wns6q41.fsf@assigned-by-dhcp.cox.net>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [PATCH] Trim hint printed when gecos is empty.
+Date: Tue, 28 Nov 2006 14:03:35 +0000
+Message-ID: <200611281403.36370.andyparkins@gmail.com>
+References: <ekh2uh$nk2$1@sea.gmane.org> <200611281146.56201.andyparkins@gmail.com> <Pine.LNX.4.63.0611281426311.30004@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sat, 25 Nov 2006 07:12:56 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Tue, 28 Nov 2006 14:04:05 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <7v1wns6q41.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Fri, 24 Nov 2006 21:40:30 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=A3bydXiy8t8ShiWQL2eiITS4GcK+kZs9IokQT63Ljs/TtEbCI8yBKL256AwI6NTWJzBaKj1SRZ7z1AJAageRlOQiSqAJguYN7W2QBxgbLSfx2Xsh0XEdHFjb7ZdWa/oe6q7nXOBoB3Pvf9yb7/9x08ecUN4o6KfNHo56+J8I1oI=
+User-Agent: KMail/1.9.5
+In-Reply-To: <Pine.LNX.4.63.0611281426311.30004@wbgn013.biozentrum.uni-wuerzburg.de>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32261>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32527>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GnriU-0004Ys-Rj for gcvg-git@gmane.org; Sat, 25 Nov
- 2006 08:12:51 +0100
+ esmtp (Exim 4.43) id 1Gp3Yq-0002Ua-8t for gcvg-git@gmane.org; Tue, 28 Nov
+ 2006 15:03:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S933429AbWKYHMn (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 25 Nov 2006
- 02:12:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934284AbWKYHMn
- (ORCPT <rfc822;git-outgoing>); Sat, 25 Nov 2006 02:12:43 -0500
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:29608 "EHLO
- fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP id S933429AbWKYHMm
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 25 Nov 2006 02:12:42 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao11.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061125071242.YHUD296.fed1rmmtao11.cox.net@fed1rmimpo02.cox.net>; Sat, 25
- Nov 2006 02:12:42 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id qvCp1V0111kojtg0000000; Sat, 25 Nov 2006
- 02:12:50 -0500
-To: Lars Hjemli <hjemli@gmail.com>
+ S934637AbWK1ODp (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 28 Nov 2006
+ 09:03:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934963AbWK1ODp
+ (ORCPT <rfc822;git-outgoing>); Tue, 28 Nov 2006 09:03:45 -0500
+Received: from ug-out-1314.google.com ([66.249.92.172]:62665 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S934637AbWK1ODp
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2006 09:03:45 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so1483048uga for
+ <git@vger.kernel.org>; Tue, 28 Nov 2006 06:03:43 -0800 (PST)
+Received: by 10.66.248.5 with SMTP id v5mr1614496ugh.1164722623540; Tue, 28
+ Nov 2006 06:03:43 -0800 (PST)
+Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
+ ESMTP id e33sm19612161ugd.2006.11.28.06.03.39; Tue, 28 Nov 2006 06:03:39
+ -0800 (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-This makes "git branch -D other_branch" work even when HEAD
-points at a yet-to-be-born branch.
+On Tuesday 2006 November 28 13:28, Johannes Schindelin wrote:
 
-Earlier, we checked the HEAD ref for the purpose of "subset"
-check even when the deletion was forced (i.e. not -d but -D).
-Because of this, you cannot delete a branch even with -D while
-on a yet-to-be-born branch.
+> No. As has been often said, a signoff _has_ to be a conscious act, or else
+> it will lose its meaning.
 
-With this change, the following sequence that now works:
+I'm not suggesting that a project integrator would have that switch on, but 
+for me, in my own repository, where I am the only person writing patches, 
+what possible case is there that I won't sign off?
 
-	mkdir newdir && cd newdir
-	git init-db
-	git fetch -k $other_repo refs/heads/master:refs/heads/othre
-	# oops, typo
-	git branch other othre
-	git branch -D othre
+> Once you are reasonably convinced you want to sign off on that commit,
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
+I am always convinced.  Perhaps I am doing wrong - please explain to me under 
+what circumstance I would /not/ want to sign off on a commit.  (assuming I am 
+acting merely as a developer on a project, I am not accepting patches from 
+anyone but me).
 
-  Junio C Hamano <junkio@cox.net> writes:
+> just add "-s" to git-commit. And if you forgot, fix it by "git commit -s
+> --amend". (Note that this is another nice example why "-a" by default
+> would be wrong, wrong, wrong.)
 
-  > When forcing a deletion, we do not care about ancestry relation
-  > between the HEAD and the branch being deleted, so we should not
-  > even bother checking if HEAD is already valid.  The original
-  > code before your patch shares the same problem.
+I don't see what one has to do with the other.  There are good arguments for 
+not having "-a" default, but signing off isn't one of them.
 
-  And here is a fix for that.  This is on top of your -v change
-  which I've applied.
 
- builtin-branch.c |   12 ++++++++----
- 1 files changed, 8 insertions(+), 4 deletions(-)
-
-diff --git a/builtin-branch.c b/builtin-branch.c
-index 69b7b55..3d5cb0e 100644
---- a/builtin-branch.c
-+++ b/builtin-branch.c
-@@ -38,12 +38,16 @@ static int in_merge_bases(const unsigned char *sha1,
- 
- static void delete_branches(int argc, const char **argv, int force)
- {
--	struct commit *rev, *head_rev;
-+	struct commit *rev, *head_rev = head_rev;
- 	unsigned char sha1[20];
- 	char *name;
- 	int i;
- 
--	head_rev = lookup_commit_reference(head_sha1);
-+	if (!force) {
-+		head_rev = lookup_commit_reference(head_sha1);
-+		if (!head_rev)
-+			die("Couldn't look up commit object for HEAD");
-+	}
- 	for (i = 0; i < argc; i++) {
- 		if (!strcmp(head, argv[i]))
- 			die("Cannot delete the branch you are currently on.");
-@@ -53,8 +57,8 @@ static void delete_branches(int argc, const char **argv, int force)
- 			die("Branch '%s' not found.", argv[i]);
- 
- 		rev = lookup_commit_reference(sha1);
--		if (!rev || !head_rev)
--			die("Couldn't look up commit objects.");
-+		if (!rev)
-+			die("Couldn't look up commit object for '%s'", name);
- 
- 		/* This checks whether the merge bases of branch and
- 		 * HEAD contains branch -- which means that the HEAD
+Andy
 -- 
-1.4.4.1.g61fba
-
+Dr Andy Parkins, M Eng (hons), MIEE
