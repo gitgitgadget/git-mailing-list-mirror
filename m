@@ -1,67 +1,114 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Patch to tutorial.txt
-Date: Mon, 20 Nov 2006 10:25:10 +0100
-Message-ID: <200611201025.11048.jnareb@gmail.com>
-References: <4d8e3fd30611191444r710f23e5uc488d35aa4abaf06@mail.gmail.com> <200611200949.32722.jnareb@gmail.com> <4d8e3fd30611200110y224b5b8dpf974d30d738455c9@mail.gmail.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [PATCH 2/2] git-svn: update tests for recent changes
+Date: Mon, 27 Nov 2006 21:46:50 -0800
+Message-ID: <20061128054650.GB396@soma>
+References: <loom.20061124T143148-286@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Mon, 20 Nov 2006 09:23:57 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Tue, 28 Nov 2006 05:47:22 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=iGA+0aAt30XIAat0k2U16m4mtw7H6+kbphatMLINvAtg05CQOEmUG/VY0RjFSRGv4HihJ2zlsndwL2Sl81oQ7iqwGQ5DJPbGopa1mjcMRC6NHzQJ5utKOxsa4O3yoqxg+k4pMkbJJQBkOwai2Xqv5DSOVIOHj3setpH25YNMKME=
-User-Agent: KMail/1.9.3
-In-Reply-To: <4d8e3fd30611200110y224b5b8dpf974d30d738455c9@mail.gmail.com>
 Content-Disposition: inline
+In-Reply-To: <loom.20061124T143148-286@post.gmane.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31888>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32486>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gm5NW-0005a4-80 for gcvg-git@gmane.org; Mon, 20 Nov
- 2006 10:23:50 +0100
+ esmtp (Exim 4.43) id 1Govnz-0002cp-GH for gcvg-git@gmane.org; Tue, 28 Nov
+ 2006 06:46:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S934033AbWKTJXr (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 20 Nov 2006
- 04:23:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934034AbWKTJXr
- (ORCPT <rfc822;git-outgoing>); Mon, 20 Nov 2006 04:23:47 -0500
-Received: from ug-out-1314.google.com ([66.249.92.168]:50986 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S934033AbWKTJXq
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 20 Nov 2006 04:23:46 -0500
-Received: by ug-out-1314.google.com with SMTP id m3so1123979ugc for
- <git@vger.kernel.org>; Mon, 20 Nov 2006 01:23:45 -0800 (PST)
-Received: by 10.66.242.5 with SMTP id p5mr6935842ugh.1164014624612; Mon, 20
- Nov 2006 01:23:44 -0800 (PST)
-Received: from host-81-190-24-209.torun.mm.pl ( [81.190.24.209]) by
- mx.google.com with ESMTP id 29sm7383152uga.2006.11.20.01.23.44; Mon, 20 Nov
- 2006 01:23:44 -0800 (PST)
-To: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
+ S935633AbWK1Fqw (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 28 Nov 2006
+ 00:46:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935634AbWK1Fqw
+ (ORCPT <rfc822;git-outgoing>); Tue, 28 Nov 2006 00:46:52 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:13034 "EHLO hand.yhbt.net") by
+ vger.kernel.org with ESMTP id S935633AbWK1Fqw (ORCPT
+ <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2006 00:46:52 -0500
+Received: from hand.yhbt.net (localhost [127.0.0.1]) by hand.yhbt.net
+ (Postfix) with SMTP id 7CF1A2DC034; Mon, 27 Nov 2006 21:46:50 -0800 (PST)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Mon, 27 Nov 2006
+ 21:46:50 -0800
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Paolo Ciarrocchi wrote:
-> On 11/20/06, Jakub Narebski <jnareb@gmail.com> wrote:
->
->> followed by empty line, then signoff line, for example
->>
->>   Signed-off-by: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
-> 
-> Ok, but the Signed/off-by part should handled by the -s option in
-> git-format-patch.
+* Enable test for delta transfers in full-svn-test.
 
-Signed-off-by _can_ be added by -s option in git-format-patch, but 
-I think it is usually better to have it added in the commit, by the -s 
-option to git-commit.
+* Run tests against the root of the repository so we won't have
+  to revisit 308906fa6e98132cab839a4f42701386fba368ef and
+  efe4631def181d32f932672a7ea31e52ee0ab308 again.
+  The graft-branches test still runs as before.
 
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
+---
+ t/Makefile                        |    3 ++-
+ t/lib-git-svn.sh                  |    2 +-
+ t/t9100-git-svn-basic.sh          |    5 +++++
+ t/t9103-git-svn-graft-branches.sh |    2 ++
+ 4 files changed, 10 insertions(+), 2 deletions(-)
+
+diff --git a/t/Makefile b/t/Makefile
+index 8983509..0abe66d 100644
+--- a/t/Makefile
++++ b/t/Makefile
+@@ -27,8 +27,9 @@ clean:
+ 
+ # we can test NO_OPTIMIZE_COMMITS independently of LC_ALL
+ full-svn-test:
++	$(MAKE) $(TSVN) GIT_SVN_NO_LIB=0 GIT_SVN_DELTA_FETCH=1 \
++					GIT_SVN_NO_OPTIMIZE_COMMITS=1 LC_ALL=C
+ 	$(MAKE) $(TSVN) GIT_SVN_NO_LIB=1 GIT_SVN_NO_OPTIMIZE_COMMITS=1 LC_ALL=C
+-	$(MAKE) $(TSVN) GIT_SVN_NO_LIB=0 GIT_SVN_NO_OPTIMIZE_COMMITS=1 LC_ALL=C
+ 	$(MAKE) $(TSVN) GIT_SVN_NO_LIB=1 GIT_SVN_NO_OPTIMIZE_COMMITS=0 \
+ 							LC_ALL=en_US.UTF-8
+ 	$(MAKE) $(TSVN) GIT_SVN_NO_LIB=0 GIT_SVN_NO_OPTIMIZE_COMMITS=0 \
+diff --git a/t/lib-git-svn.sh b/t/lib-git-svn.sh
+index 29a1e72..63c6703 100644
+--- a/t/lib-git-svn.sh
++++ b/t/lib-git-svn.sh
+@@ -45,6 +45,6 @@ else
+ 	svnadmin create "$svnrepo"
+ fi
+ 
+-svnrepo="file://$svnrepo/test-git-svn"
++svnrepo="file://$svnrepo"
+ 
+ 
+diff --git a/t/t9100-git-svn-basic.sh b/t/t9100-git-svn-basic.sh
+index 34a3ccd..f9de232 100755
+--- a/t/t9100-git-svn-basic.sh
++++ b/t/t9100-git-svn-basic.sh
+@@ -228,6 +228,11 @@ tree 56a30b966619b863674f5978696f4a3594f
+ tree d667270a1f7b109f5eb3aaea21ede14b56bfdd6e
+ tree 8f51f74cf0163afc9ad68a4b1537288c4558b5a4
+ EOF
++
++if test -z "$GIT_SVN_NO_LIB" || test "$GIT_SVN_NO_LIB" -eq 0; then
++	echo tree 4b825dc642cb6eb9a060e54bf8d69288fbee4904 >> expected
++fi
++
+ test_expect_success "$name" "diff -u a expected"
+ 
+ test_done
+diff --git a/t/t9103-git-svn-graft-branches.sh b/t/t9103-git-svn-graft-branches.sh
+index cc62d4e..293b98f 100755
+--- a/t/t9103-git-svn-graft-branches.sh
++++ b/t/t9103-git-svn-graft-branches.sh
+@@ -1,6 +1,8 @@
+ test_description='git-svn graft-branches'
+ . ./lib-git-svn.sh
+ 
++svnrepo="$svnrepo/test-git-svn"
++
+ test_expect_success 'initialize repo' "
+ 	mkdir import &&
+ 	cd import &&
 -- 
-Jakub Narebski
+1.4.4.1.g22a08
