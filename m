@@ -1,97 +1,131 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: [PATCH] Remove unused variable in receive-pack.
-Date: Mon, 30 Oct 2006 17:34:50 -0500
-Message-ID: <20061030223450.GE5775@spearce.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: git and bzr
+Date: Tue, 28 Nov 2006 22:43:24 +0100
+Organization: At home
+Message-ID: <ekiaed$9v1$1@sea.gmane.org>
+References: <45357CC3.4040507@utoronto.ca>	<a7e835d40610250308v5d577482m139742e7fe1db185@mail.gmail.com>	<87slhcz8zh.wl%cworth@cworth.org>	<a7e835d40610260152k658aeaf0hb900cb63870c04e4@mail.gmail.com>	<7vu01ro20b.fsf@assigned-by-dhcp.cox.net>	<a7e835d40610260257r5f05ea4gc934f1c1cc267977@mail.gmail.com>	<20061026101038.GA13310@coredump.intra.peff.net>	<877iyne4dm.fsf@alplog.fr>	<Pine.LNX.4.64.0610260753090.3962@g5.osdl.org>	<456B7C6A.80104@webdrake.net>	<845b6e870611280410j58bdcd99nc05d0f67489293e4@mail.gmail.com>	<ekhaeg$etk$1@sea.gmane.org>	<Pine.LNX.4.63.0611281433270.30004@wbgn013.biozentrum.uni-wuerzburg.de>	<Pine.LNX.4.64.0611280754050.30076@woody.osdl.org>	<456C7592.6020700@ableton.com>	<ekhtnt$rkk$1@sea.gmane.org> <456C9DFF.1040407@onlinehome.de> <456CA981.4010808@onlinehome.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Mon, 30 Oct 2006 22:37:03 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Transfer-Encoding: 7Bit
+NNTP-Posting-Date: Tue, 28 Nov 2006 21:42:25 +0000 (UTC)
+Cc: bazaar-ng@lists.canonical.com
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Followup-To: gmane.comp.version-control.git
+Original-Lines: 79
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30537>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32583>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GefjD-0003ku-VH for gcvg-git@gmane.org; Mon, 30 Oct
- 2006 23:35:37 +0100
+ esmtp (Exim 4.43) id 1GpAiU-0005Dv-Iy for gcvg-git@gmane.org; Tue, 28 Nov
+ 2006 22:42:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1422701AbWJ3Wez (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 30 Oct 2006
- 17:34:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422707AbWJ3Wez
- (ORCPT <rfc822;git-outgoing>); Mon, 30 Oct 2006 17:34:55 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:52874 "EHLO
- corvette.plexpod.net") by vger.kernel.org with ESMTP id S1422701AbWJ3Wey
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 30 Oct 2006 17:34:54 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1GefiN-000879-RF; Mon, 30 Oct 2006 17:34:43 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- EB91320FB0C; Mon, 30 Oct 2006 17:34:50 -0500 (EST)
-To: Junio C Hamano <junkio@cox.net>
+ S1756867AbWK1VmM (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 28 Nov 2006
+ 16:42:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756871AbWK1VmL
+ (ORCPT <rfc822;git-outgoing>); Tue, 28 Nov 2006 16:42:11 -0500
+Received: from main.gmane.org ([80.91.229.2]:33220 "EHLO ciao.gmane.org") by
+ vger.kernel.org with ESMTP id S1756867AbWK1VmK (ORCPT
+ <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2006 16:42:10 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1GpAiA-00057n-2e for git@vger.kernel.org; Tue, 28 Nov 2006 22:41:54 +0100
+Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Tue, 28 Nov 2006 22:41:54 +0100
+Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Tue, 28 Nov 2006
+ 22:41:54 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-We aren't using this return code variable for anything so lets
-just get rid of it to keep this section of code clean.
+Nicholas Allen wrote:
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- receive-pack.c |    7 ++-----
- 1 files changed, 2 insertions(+), 5 deletions(-)
+>> Just out of curiosity: How does git handle the case where one file is
+>> renamed differently in 2 branches and then the branches are repeatably
+>> merged? I know that bzr handles this very well and in various tests I
+>> did there were absolutely no repeated conflicts. Would git behave as
+>> well in this scenario?
+>> 
+> 
+> Ok - I got curious and decided to install git and try this myself.
+> 
+> In this test I had a file hello.txt that got renamed to hello1.txt in
+> one branch and hello2.txt in another. Then I merged the changes between
+> the 2 branches.
+> 
+> Here is how it looked after the merge in bzr:
+> 
+>  bzr status
+> renamed:
+>   hello2.txt => hello1.txt
+> conflicts:
+>   Path conflict: hello2.txt / hello1.txt
+> pending merges:
+>   Nicholas Allen 2006-11-28 Renamed hello to hello1
+> 
+> 
+> and here's how it looked in git:
+> git status
+> #
+> # Changed but not updated:
+> #   (use git-update-index to mark for commit)
+> #
+> #       unmerged: hello.txt
+> #       unmerged: hello1.txt
+> #       unmerged: hello2.txt
+> #       modified: hello2.txt
+> #
+> nothing to commit
 
-diff --git a/receive-pack.c b/receive-pack.c
-index 7e4e510..f6f1729 100644
---- a/receive-pack.c
-+++ b/receive-pack.c
-@@ -219,7 +219,7 @@ static void read_head_info(void)
- 	}
- }
- 
--static const char *unpack(int *error_code)
-+static const char *unpack()
- {
- 	int code;
- 
-@@ -230,7 +230,6 @@ static const char *unpack(int *error_cod
- 		code = run_command_v_opt(ARRAY_SIZE(unpacker) - 1,
- 					 unpacker, RUN_GIT_CMD);
- 
--	*error_code = 0;
- 	switch (code) {
- 	case 0:
- 		return NULL;
-@@ -247,7 +246,6 @@ static const char *unpack(int *error_cod
- 	case -ERR_RUN_COMMAND_WAITPID_NOEXIT:
- 		return "unpacker died strangely";
- 	default:
--		*error_code = -code;
- 		return "unpacker exited with error code";
- 	}
- }
-@@ -301,8 +299,7 @@ int main(int argc, char **argv)
- 
- 	read_head_info();
- 	if (commands) {
--		int code;
--		const char *unpack_status = unpack(&code);
-+		const char *unpack_status = unpack();
- 		if (!unpack_status)
- 			execute_commands();
- 		if (report_status)
+Er? What about merge printed?
+
+  $ git pull . branch
+  Trying really trivial in-index merge...
+  fatal: Merge requires file-level merging
+  Nope.
+  Merging HEAD with c59706ee42aa7b6b2b203d4219210a684f5581f2
+  Merging:
+  8f43c37 Moved hello.txt to hello_master.txt
+  c59706e Moved hello.txt to hello_branch.txt
+  found 1 common ancestor(s):
+  b7d5f1a Initial commit
+  CONFLICT (rename/rename): Rename hello.txt->hello_master.txt in branch 
+    HEAD rename hello.txt->hello_branch.txt in c59706e
+  Automatic merge failed; fix conflicts and then commit the result.
+
+I agree that git-status output could be more helpful in the case of
+merges. Well, you can always check "git ls-files --stage"
+
+  $ git ls-files --stage --abbrev
+  100644 18249f3 1        hello.txt
+  100644 18249f3 3        hello_branch.txt
+  100644 18249f3 2        hello_master.txt
+
+> So git is not telling me that I have a conflict due to the same file
+> being renamed differently in 2 branches - well at least not in a way I
+> can comprehend anyway! Whereas bzr made this very clear. Also, in git I
+> ended up with 2 files:
+> 
+>  ls
+> hello1.txt  hello2.txt
+> 
+> whereas in bzr there was only one file and I just had to decide which
+> name it was to be given to resolve the conflict.
+
 -- 
-1.4.3.3.g7d63
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
+
