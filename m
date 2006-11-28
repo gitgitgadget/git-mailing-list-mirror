@@ -1,100 +1,125 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: Calling all bash completion experts..
-Date: Sat, 25 Nov 2006 02:13:51 -0500
-Message-ID: <20061125071351.GE4528@spearce.org>
-References: <Pine.LNX.4.64.0611230935520.27596@woody.osdl.org>
+X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_NXDOMAIN,DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
+From: Pazu <pazu@pazu.com.br>
+Subject: Re: [PATCH 1.2/2 (fixed)] git-svn: fix output reporting from the delta fetcher
+Date: Tue, 28 Nov 2006 13:32:56 -0200
+Message-ID: <9e7ab7380611280732k4e940380tbf2a96146807d671@mail.gmail.com>
+References: <loom.20061124T143148-286@post.gmane.org>
+	 <20061128054448.GA396@soma> <20061128102958.GA5207@soma>
+	 <20061128105017.GA20366@soma>
+	 <9e7ab7380611280445r4ebe344cw69cbc18a74c6122f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sat, 25 Nov 2006 07:14:01 +0000 (UTC)
-Cc: Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Tue, 28 Nov 2006 15:33:16 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=K66HdIxBsPOMRJ9RE0FfOJuatLHD8JNkQSU2m0XbkwF5iMDBCToqTjl2P9txF8oK2uSEJ/jp+WiRE5TQq5hgDkRq73KEvh7Dp9uDydDi5ShndmhTDBEw2ejYcrBTxf58FzWODpYgTHsArYdAdbIQ33WNxmM+q8m39jA3V1unh9g=
+In-Reply-To: <9e7ab7380611280445r4ebe344cw69cbc18a74c6122f@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0611230935520.27596@woody.osdl.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+X-Google-Sender-Auth: dc584e5750264ee1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32262>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32538>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gnrjb-0004m7-RR for gcvg-git@gmane.org; Sat, 25 Nov
- 2006 08:14:00 +0100
+ esmtp (Exim 4.43) id 1Gp4xB-0008KJ-Qv for gcvg-git@gmane.org; Tue, 28 Nov
+ 2006 16:33:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1757866AbWKYHN5 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 25 Nov 2006
- 02:13:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757867AbWKYHN5
- (ORCPT <rfc822;git-outgoing>); Sat, 25 Nov 2006 02:13:57 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:3758 "EHLO
- corvette.plexpod.net") by vger.kernel.org with ESMTP id S1757866AbWKYHN4
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 25 Nov 2006 02:13:56 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1GnrjV-0003dk-SH; Sat, 25 Nov 2006 02:13:53 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- F270A20FB09; Sat, 25 Nov 2006 02:13:51 -0500 (EST)
-To: Linus Torvalds <torvalds@osdl.org>
+ S1758687AbWK1Pc7 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 28 Nov 2006
+ 10:32:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758688AbWK1Pc7
+ (ORCPT <rfc822;git-outgoing>); Tue, 28 Nov 2006 10:32:59 -0500
+Received: from nf-out-0910.google.com ([64.233.182.186]:12006 "EHLO
+ nf-out-0910.google.com") by vger.kernel.org with ESMTP id S1758687AbWK1Pc6
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2006 10:32:58 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so2604677nfa for
+ <git@vger.kernel.org>; Tue, 28 Nov 2006 07:32:57 -0800 (PST)
+Received: by 10.49.91.6 with SMTP id t6mr4765968nfl.1164727976959; Tue, 28
+ Nov 2006 07:32:56 -0800 (PST)
+Received: by 10.48.216.6 with HTTP; Tue, 28 Nov 2006 07:32:56 -0800 (PST)
+To: "Eric Wong" <normalperson@yhbt.net>
 Sender: git-owner@vger.kernel.org
 
-Linus Torvalds <torvalds@osdl.org> wrote:
-> So I do "git repa<tab>" and get "git repack", which is fine, but I really 
-> _wanted_ to get "git repack " (with the space at the end), since I've now 
-> got a unique command, and that's the normal completion behaviour (ie I 
-> want it to act the same way that "git-repa<tab>" would have acted).
-[snip]
-> Now, without knowing the completion syntax, I assume it's the "-o nospace" 
-> things in the completion file. So I'm wondering _why_ that "nospace" is 
-> there, and whether this could be fixed?
+On 11/28/06, Pazu <pazu@pazu.com.br> wrote:
 
-Yes, its the "-o nospace".
+> Error from SVN, (200003): Incomplete data: Delta source ended unexpectedly
+>  at /opt/local/lib/perl5/vendor_perl/5.8.8/darwin-2level/SVN/Ra.pm line 157
+> 512 at /Users/pazu/bin/git-svn line 448
+>         main::fetch_lib() called at /Users/pazu/bin/git-svn line 319
+>         main::fetch() called at /Users/pazu/bin/git-svn line 178
 
-I added the nospace option because of the completion for fetch/push,
-cat-file, diff-tree and ls-tree.
+I've added some debug statements to git-svn and found more
+information. Apparently, this error is happening because
+SVN::Git::Fetcher is trying to open a file that hasn't been fetched by
+git-svn yet. Now, *why* this is happening, I don't know. Maybe
+something happened while fetching the initial revision.
 
-The problem is the file completion for e.g. cat-file.  We don't
-want a space added after we complete a directory name, so you can
-complete further, e.g.:
+Here's the output from my "debug" run:
 
-  git cat-file -p ma<tab>con<tab>comp<tab>git-com<tab>
+Creating fetcher for revision 9785a6fc2d61a6f9b702bb8e2dd81b11415e6e92
+Starting update on revision 11159
+Opening CamelEar/config/glconfig.xml@11143
+Error from SVN, (200003): Incomplete data: Delta source ended unexpectedly
 
-gives us:
+Here, SVN::Git::Fetcher received a request to open
+CamelEar/config/glconfig.xml, but:
 
-  git cat-file -p master:contrib/completion/git-completion.sh
+mini:~/devel/camel-git pazu$ git-ls-tree
+9785a6fc2d61a6f9b702bb8e2dd81b11415e6e92
+040000 tree 9a02a43ec34e88d4cee64d322354a49c8f6063e2    BungeIntegrationService
+040000 tree 6e0bc09356f480f8b6ec782420c4af322ed3bc0a
+BungeIntegrationServiceClient
+040000 tree 5da3e715525c9b436fdf9a9dfb4de2bffd8e5ff3    CamelService
+040000 tree a2d36b9cc469a52aea4f2422ffab30b9a1ee67de    CamelServiceClient
+040000 tree 3d550fad4dcf09a8d45c5e5808dac4883854872c    CamelServiceTests
+040000 tree 1fcd2416b4c8494c066abc38051db5244ee801cd    CamelWeb
+040000 tree d2e30726674b22e06b4ec07aa68b49f925609c85    Reports
+040000 tree 007c4ded31cf16418a7fb0b2ffbe2b796e7ce11e    Servers
+100644 blob da2d34be7d44fff5cf70702edc61fd8b6057a14a    _root.iml
+100644 blob 6219148365613fd6195b8558376455c3379bbd6e    bg-cam.ipr
+100644 blob 25d3fbab0971940cf2cdbe399fd2b79cb21de1b5    build.xml
+100644 blob abc91fc1b268a3610a927125b88c1ad05c095d95    checkout-svn-build.sh
+100644 blob 475a5dc68c8e0eaaac3a182c078c04b947825469    cvs-checkout.xml
 
-but if I omitted the "-o nospace" then we would instead need:
+Notice that there's no "CamelEar" directory. For some reason, it
+wasn't fetched in the initial revision. Now, just to make sure this
+isn't svn fault:
 
-  git cat-file ma<tab><bs>con<tab><bs>comp<tab><bs>git-com<tab>
+mini:~/devel/camel-git pazu$ svn ls -r11143
+https://tech.bga.bunge.com/BungeHomeExt/GLS/trunk/java/bg-cam
+.cvsignore
+BungeIntegrationEar/
+BungeIntegrationService/
+BungeIntegrationServiceClient/
+CamelEar/
+CamelService/
+CamelServiceClient/
+CamelServiceTests/
+CamelWeb/
+Reports/
+Servers/
+Servers_W6/
+_root.iml
+bg-cam.ipr
+build.ws.properties.example
+build.xml
+checkout-build.sh
+checkout-svn-build.sh
+cvs-checkout.xml
+svn-checkout.xml
 
-as each successive <tab> would add a trailing space that you would need
-to remove before you can complete again.
+So yeah, CamelEar was supposed to exist in this revision, but for some
+reason, git-svn missed it. I'll keep trying to find why that happened
+-- my bets are on a broken network connection during the initial
+fetch, with git-svn accepting what it got so far as the initial
+revision, instead of reporting the broken connection.
 
-So as a user I decided that adding the space myself was less
-annoying then needing to delete the space during completion down
-through a tree.  But perhaps that was wrong.
-
-I did try to inject the space myself in the completion code when
-I knew something was unique, but bash didn't like that (it tossed
-the space).
-
-To be honest, I'm not really sure how to fix it.
-
-One option would be to perform a `ls-tree -r` through whatever part
-of the path we have now and offer up EVERYTHING in the tree as a
-possible completion, but that is insane as it will take a little
-while to generate and on a large tree (e.g. the Linux kernel) you
-will get a large number of proposed completions back which aren't
-really relevant.
-
--- 
