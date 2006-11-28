@@ -4,88 +4,82 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [DRAFT] Branching and merging with git
-Date: Fri, 17 Nov 2006 16:40:27 -0800
-Message-ID: <7virhdh9j8.fsf@assigned-by-dhcp.cox.net>
-References: <20061117182157.GC11882@fieldses.org>
-	<20061118001355.23488.qmail@science.horizon.com>
+From: Aaron Bentley <aaron.bentley@utoronto.ca>
+Subject: Re: git and bzr
+Date: Tue, 28 Nov 2006 13:31:56 -0500
+Message-ID: <456C809C.3050503@utoronto.ca>
+References: <45357CC3.4040507@utoronto.ca>	<a7e835d40610250308v5d577482m139742e7fe1db185@mail.gmail.com>	<87slhcz8zh.wl%cworth@cworth.org>	<a7e835d40610260152k658aeaf0hb900cb63870c04e4@mail.gmail.com>	<7vu01ro20b.fsf@assigned-by-dhcp.cox.net>	<a7e835d40610260257r5f05ea4gc934f1c1cc267977@mail.gmail.com>	<20061026101038.GA13310@coredump.intra.peff.net>	<877iyne4dm.fsf@alplog.fr>	<Pine.LNX.4.64.0610260753090.3962@g5.osdl.org>	<456B7C6A.80104@webdrake.net>	<845b6e870611280410j58bdcd99nc05d0f67489293e4@mail.gmail.com>	<ekhaeg$etk$1@sea.gmane.org>	<Pine.LNX.4.63.0611281433270.30004@wbgn013.biozentrum.uni-wuerzburg.de>	<Pine.LNX.4.64.0611280754050.30076@woody.osdl.org>	<456C6CBB.70702@utoronto.ca> <ekhrhi$g6t$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sat, 18 Nov 2006 00:40:38 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Tue, 28 Nov 2006 18:32:51 +0000 (UTC)
+Cc: bazaar-ng@lists.canonical.com, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061118001355.23488.qmail@science.horizon.com>
-	(linux@horizon.com's message of "17 Nov 2006 19:13:55 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+User-Agent: Debian Thunderbird 1.0.2 (X11/20060926)
+X-Accept-Language: en-us, en
+In-Reply-To: <ekhrhi$g6t$1@sea.gmane.org>
+X-Enigmail-Version: 0.91.0.0
+X-Panometrics-MailScanner: Found to be clean
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31742>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32561>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GlEG3-00052l-5g for gcvg-git@gmane.org; Sat, 18 Nov
- 2006 01:40:35 +0100
+ esmtp (Exim 4.43) id 1Gp7kd-0007bA-30 for gcvg-git@gmane.org; Tue, 28 Nov
+ 2006 19:32:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753660AbWKRAk3 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 17 Nov 2006
- 19:40:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756105AbWKRAk3
- (ORCPT <rfc822;git-outgoing>); Fri, 17 Nov 2006 19:40:29 -0500
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:41369 "EHLO
- fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP id S1753660AbWKRAk2
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 17 Nov 2006 19:40:28 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao11.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061118004027.ZFXO296.fed1rmmtao11.cox.net@fed1rmimpo02.cox.net>; Fri, 17
- Nov 2006 19:40:27 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id o0ga1V00K1kojtg0000000; Fri, 17 Nov 2006
- 19:40:34 -0500
-To: linux@horizon.com
+ S1758733AbWK1ScL (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 28 Nov 2006
+ 13:32:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758734AbWK1ScL
+ (ORCPT <rfc822;git-outgoing>); Tue, 28 Nov 2006 13:32:11 -0500
+Received: from server4.panoramicfeedback.com ([66.216.124.41]:5052 "EHLO
+ server4.panoramicfeedback.com") by vger.kernel.org with ESMTP id
+ S1758733AbWK1ScJ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2006
+ 13:32:09 -0500
+Received: from server4.panoramicfeedback.com ([66.216.124.41]
+ helo=[192.168.2.19]) by server4.panoramicfeedback.com with esmtp (Exim 3.36
+ #1 (Debian)) id 1Gp7kT-00041i-00; Tue, 28 Nov 2006 13:32:06 -0500
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-linux@horizon.com writes:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> We seem to have developed a consensus on the desirability of allowing
-> HEAD to point outside refs/heads, postponing the check until
-> commit/merge time.  (At least, junkio and Linus seemed to like it.)
+Jakub Narebski wrote:
+>>I notice that blame has an option to limit the annotation to recent
+>>history.  I can only assume that is for performance reasons.  bzr
+>>annotate doesn't need a feature like that, because annotations are
+>>explicit in bzr's storage format. 
+> 
+> 
+> But you don't have content movement tracking.
+> 
+> 
+>>                                  I expect that even if we were to 
+>>extend annotate to track content across files, it would still be so fast
+>>that we wouldn't need it.
+> 
+> 
+> I think not.
 
-Yes, and I am actually interested in at least doing the initial
-damage assessment myself but people are welcome to beat me to
-it.  The easies part would be to just try writing a bare SHA-1
-to .git/HEAD with:
+There's no question that determining content movement could involve
+opening a lot of revisions, but you wouldn't need to examine:
 
-	H=$(git-rev-parse --verify HEAD)
-        echo $H >.git/HEAD
+1. revisions that didn't alter any lines being examined
+2. revisions that altered only the file in question
+3. revisions with multiple parents, because any lines attributed to that
+merge will be the outcome of conflict resolution.  (Other lines will be
+attributed to one of the parents)
 
-and see what breaks and start picking up the pieces from there.
+I'll admit though, that when I was thinking of this, I was thinking of
+annotation-based merging, a scenario in which the number of lines being
+examined is typically extremely low.
 
-> I'd like to learn more about the zillion options to git-log.
-> If people feel like sharing useful incantations, it would be
-> be very helpful to give a concrete example of its usefulness,
-> preferably within the git history itself.
->
-> (Are there any octopus merges in git's history?  If not, could I ask
-> for one for pedagogical value?)
+Aaron
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+Comment: Using GnuPG with Thunderbird - http://enigmail.mozdev.org
 
-git.git itself is full of them, but the very first octopus (it
-actually is a pentapus) is rather nice to watch in gitk:
-
-	211232bae64bcc60bbf5d1b5e5b2344c22ed767e
-
-You can look for them with:
-
-	git rev-list --parents HEAD | grep '..* ..* ..* ..* ..* ..*'
-
-Repeat as many " ..*" as the number of parents you would want to require.
-I knew the very first one was pentapus (I did it) so I wrote six ..*
-there (one for the commit, one each for parents).
-
-Len's dodecapus in linux-2.6.git is this one:
-
-	9fdb62af92c741addbea15545f214a6e89460865
-
-It is very interesting to watch it with "git show".  Len has
-another one in August:
-
-	da547d775fa9ba8d9dcaee7bc4e960540e2be576
-
+iD8DBQFFbICL0F+nu1YWqI0RAhaXAJ9tqw/J17oKDV0nnuPlputs1PHBIgCghs6K
+q++u4Z9OFGwziUBsnW08y0U=
+=tmqe
