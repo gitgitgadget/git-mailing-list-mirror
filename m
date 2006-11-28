@@ -1,159 +1,60 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Nix <nix@esperi.org.uk>
-Subject: Re: What's the meaning of `parenthood' in git commits?
-Date: Wed, 08 Nov 2006 03:04:51 +0000
-Message-ID: <87velqabak.fsf@hades.wkstn.nix>
-References: <878ximbwm3.fsf@hades.wkstn.nix>
-	<Pine.LNX.4.64.0611071644430.3667@g5.osdl.org>
-	<874ptabubr.fsf@hades.wkstn.nix>
+From: "Lars Hjemli" <hjemli@gmail.com>
+Subject: Re: [RFC] git-branch: add options and tests for branch renaming
+Date: Tue, 28 Nov 2006 17:10:30 +0100
+Message-ID: <8c5c35580611280810g2214ec8cs7406653c319be6fc@mail.gmail.com>
+References: <11647252603530-git-send-email-hjemli@gmail.com>
+	 <456C4FCE.6090306@shadowen.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 8 Nov 2006 03:06:07 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Tue, 28 Nov 2006 16:11:08 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Emacs: Lovecraft was an optimist.
-In-Reply-To: <874ptabubr.fsf@hades.wkstn.nix> (nix@esperi.org.uk's message of "Wed, 08 Nov 2006 01:28:24 +0000")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) XEmacs/21.5-b27 (linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=iZbXFgc3uj0v+RR6VGnP/6VS9oz03zR8Tt51VbwOwHmEnAxiq7CDeDsKi5GJyGuJZ+l+ehrUqifBoK1V89ST1CNf+p4Nw5zTWBRmzZliyM01S7HXb5+HXbA7JiDz1usRqmzhOTsxCCWISKptWuL4BQkbshpetx0Zrz4WceQPPqo=
+In-Reply-To: <456C4FCE.6090306@shadowen.org>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31111>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32544>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GhdlE-0005fI-OH for gcvg-git@gmane.org; Wed, 08 Nov
- 2006 04:05:57 +0100
+ esmtp (Exim 4.43) id 1Gp5XY-0002Vh-48 for gcvg-git@gmane.org; Tue, 28 Nov
+ 2006 17:10:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753969AbWKHDFE (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 7 Nov 2006
- 22:05:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753954AbWKHDFD
- (ORCPT <rfc822;git-outgoing>); Tue, 7 Nov 2006 22:05:03 -0500
-Received: from 41-052.adsl.zetnet.co.uk ([194.247.41.52]:1807 "EHLO
- mail.esperi.org.uk") by vger.kernel.org with ESMTP id S1753946AbWKHDFA (ORCPT
- <rfc822;git@vger.kernel.org>); Tue, 7 Nov 2006 22:05:00 -0500
-Received: from esperi.org.uk (nix@hades.wkstn.nix [192.168.14.18]) by
- mail.esperi.org.uk (8.12.11.20060614/8.12.11) with ESMTP id kA834rw4021329;
- Wed, 8 Nov 2006 03:04:53 GMT
-Received: (from nix@localhost) by esperi.org.uk
- (8.12.11.20060614/8.12.11/Submit) id kA834qRR012450; Wed, 8 Nov 2006 03:04:52
- GMT
-To: Linus Torvalds <torvalds@osdl.org>
+ S1758700AbWK1QKd (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 28 Nov 2006
+ 11:10:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758701AbWK1QKd
+ (ORCPT <rfc822;git-outgoing>); Tue, 28 Nov 2006 11:10:33 -0500
+Received: from nf-out-0910.google.com ([64.233.182.187]:64140 "EHLO
+ nf-out-0910.google.com") by vger.kernel.org with ESMTP id S1758700AbWK1QKc
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2006 11:10:32 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so2615159nfa for
+ <git@vger.kernel.org>; Tue, 28 Nov 2006 08:10:31 -0800 (PST)
+Received: by 10.82.129.8 with SMTP id b8mr193777bud.1164730230698; Tue, 28
+ Nov 2006 08:10:30 -0800 (PST)
+Received: by 10.82.171.10 with HTTP; Tue, 28 Nov 2006 08:10:30 -0800 (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On 8 Nov 2006, nix@esperi.org.uk spake thusly:
-> On 8 Nov 2006, Linus Torvalds uttered the following:
->>  - the "merge-base" algorithms obviously use it to find the most recent 
->>    common ancestor, and that in turn impacts the normal merge strategies, 
->>    of course.
->
-> Hm, yeah, if merging iterates down patch-merged branches it might have
-> interesting consequences, because the trees on one side of patch- merges
-> are likely to be very different to trees on the other side (years of
-> development separate them). I'd like a way to specify that those parents
-> are *not* to be traversed by the merge-base algorithms, really.
->
-> A series of
->
-> not-merge-base: <sha1 id>
->
-> headers, perhaps? (I think that's likely to involve much less code churn
-> than introducing a new `not-merge-base-parent' tag).
+On 11/28/06, Andy Whitcroft <apw@shadowen.org> wrote:
+> Perhaps I want a rename to just put a rename from in the top
+> of the new reflog and leave the old there.
 
-Wrong. Sort of.
+That is what happens when you do
 
-When doing normal merges you don't want to consider patch-merged parents
-as real merges: but there is one situation when you *do* want merge-base
-checking to traverse such links.
+  git branch -l topic master
 
-Say you have the tree just described:
+The first entry in reflog for 'topic' will say:
 
-     B
-------------- ref trunks/latest
-     \
-      ------ ref heads/some-change-foo
+  Branch: created from master
 
- ... -------- ref trunks/old-and-grotty
-
-and you want to patch-merge heads/some-change-foo with
-trunks/old-and-grotty.
-
-It doesn't quite apply, so you end up with a conflict-resolution. This
-will normally be in the merge commit, but there's no guarantee of that:
-perhaps you knew the source tree would conflict in advance and fixed it
-up so that it wouldn't, leaving the old heads/some-change-foo pointing
-before that fixup:
-
-     B
-------------- ref trunks/latest
-     \
-      ------- ref heads/some-change-foo
-          D \
-            c
-            |
- ... -------------- ref trunks/old-and-grotty
-
-Later on, you find a bug in that change. It's still the same conceptual
-change, so you fix it, and you want to patch-merge the fix across:
-
-     B
-------------- ref trunks/latest
-     \
-      -----------\ ref heads/some-change-foo
-          C \    .
-            c    . (link under construction)
-            |    .
- ... -------------- ref trunks/old-and-grotty
-            E    F
-
-What patch-merge must do in order to produce a diff-merge at point F is
-therefore rather more involved than I'd hoped:
-
- - determine B as above (most recent merge-base of heads/some-change-foo
-   with anything in trunks/).
-
- - determine the merge-base of trunks/old-and-grotty with
-   heads/some-change-foo, *traversing patch-merge parents*. Call this
-   base C. (This is the only circumstance in which merge-base
-   determination should traverse patch-merged parents.)
-
- - Iff that base C is topologically a child of B, then we have already
-   merged part of this change in the past. In that case, instead of the
-   merge consisting of the diff between B and F, it consists of the diff
-   between C and the head, minus the set of changes c. So it remains to
-   determine c.
-
- - scan backwards along F with git-rev-list, searching specifically for
-   the most recent patch-merge naming any commit which has C as a
-   transitive parent: that is point E. (Such a point must exist as long
-   as only patch-merges have been used to merge heads/some-change-foo
-   with trunks/old-and-grotty: if other sorts of merge have been used,
-   all bets are off and I think we can legitimately fail the merge.)
-   (This requires the ability to distinguish patch-merges from normal
-   merges, but that's easy if we have any tag at all to distinguish
-   them, which we must for merge- base traversal to avoid such parents
-   normally.)
-
- - Reverse out the diff between C and E (if the two are not the same
-   commit) and remember it temporarily as c.
-
- - Apply the forwards diff between point C and heads/some-change-foo,
-   and then apply c in the forwards direction (if c is already present,
-   this is not an error: it just means that whatever conflict-
-   resolution was necessary as a one-off was later needed on the change
-   trunk).
-
-I think that should cope with just about everything. I've tried to mock
-up all sorts of contrived trees and I can't find anything that doesn't
-reduce to that case or a simplification of it. (And no, this case is not
-contrived: we test on trunks, so we deal with it whenever anything fails
-testing and has to be fixed...)
-
-(Now all I have to do is write it... enough words, time for action.
-Actually time for sleep, it's three in the morning here. Action
-tomorrow.)
-
--- 
-Rich industrial heritage: lifeless wasteland. `The land
+--
