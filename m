@@ -2,112 +2,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Adjust t5510 to put remotes in config
-Date: Tue, 19 Dec 2006 09:18:09 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612190908060.19693@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0612171545390.3635@wbgn013.biozentrum.uni-wuerzburg.de>
- <7v7iwox59i.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0612182325550.19693@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vvek8vnb8.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0612182346500.19693@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.63.0612182349070.19693@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vr6uwvmk8.fsf@assigned-by-dhcp.cox.net> <7virg8vl74.fsf@assigned-by-dhcp.cox.net>
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Nicholas Allen <allen@ableton.com>
+Subject: Re: git and bzr
+Date: Tue, 28 Nov 2006 19:58:43 +0100
+Message-ID: <456C86E3.50902@ableton.com>
+References: <45357CC3.4040507@utoronto.ca>	<a7e835d40610250308v5d577482m139742e7fe1db185@mail.gmail.com>	<87slhcz8zh.wl%cworth@cworth.org>	<a7e835d40610260152k658aeaf0hb900cb63870c04e4@mail.gmail.com>	<7vu01ro20b.fsf@assigned-by-dhcp.cox.net>	<a7e835d40610260257r5f05ea4gc934f1c1cc267977@mail.gmail.com>	<20061026101038.GA13310@coredump.intra.peff.net>	<877iyne4dm.fsf@alplog.fr>	<Pine.LNX.4.64.0610260753090.3962@g5.osdl.org>	<456B7C6A.80104@webdrake.net>	<845b6e870611280410j58bdcd99nc05d0f67489293e4@mail.gmail.com>	<ekhaeg$etk$1@sea.gmane.org>	<Pine.LNX.4.63.0611281433270.30004@wbgn013.biozentrum.uni-wuerzburg.de>	<Pine.LNX.4.64.0611280754050.30076@woody.osdl.org>	<456C7592.6020700@ableton.com> <ekhtnt$rkk$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Tue, 19 Dec 2006 08:18:30 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Tue, 28 Nov 2006 18:59:48 +0000 (UTC)
+Cc: bazaar-ng@lists.canonical.com, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7virg8vl74.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+User-Agent: Thunderbird 1.5.0.8 (Windows/20061025)
+In-Reply-To: <ekhtnt$rkk$1@sea.gmane.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34795>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32564>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GwaB9-00021P-Qy for gcvg-git@gmane.org; Tue, 19 Dec
- 2006 09:18:28 +0100
+ esmtp (Exim 4.43) id 1Gp8AN-0006R4-LU for gcvg-git@gmane.org; Tue, 28 Nov
+ 2006 19:58:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932655AbWLSISN (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
- 03:18:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932653AbWLSISN
- (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 03:18:13 -0500
-Received: from mail.gmx.net ([213.165.64.20]:36953 "HELO mail.gmx.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S932655AbWLSISM
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec 2006 03:18:12 -0500
-Received: (qmail invoked by alias); 19 Dec 2006 08:18:10 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp027) with SMTP; 19 Dec 2006 09:18:10 +0100
-To: Junio C Hamano <junkio@cox.net>
+ S936025AbWK1S6r (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 28 Nov 2006
+ 13:58:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936026AbWK1S6r
+ (ORCPT <rfc822;git-outgoing>); Tue, 28 Nov 2006 13:58:47 -0500
+Received: from mail.ableton.net ([62.96.12.115]:7908 "EHLO mail.ableton.net")
+ by vger.kernel.org with ESMTP id S936025AbWK1S6r (ORCPT
+ <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2006 13:58:47 -0500
+Received: from client0055.office.ableton.com ([10.1.15.66]) by
+ mail.ableton.net with esmtpsa (TLSv1:AES256-SHA:256) (Exim 4.62)
+ (envelope-from <allen@ableton.com>) id 1Gp8Ac-0005qj-5s; Tue, 28 Nov 2006
+ 19:59:06 +0100
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Hi,
 
-On Mon, 18 Dec 2006, Junio C Hamano wrote:
+> There are trouble with file-ids. Most common example is trouble with file
+> which was created in two branches (two repositories) independently, then
+> branches got merged. Most (all?) file-id based rename detection has trouble
+> with repeated merging of those branches, even if there are no true
+> conflicts.
 
-> fix testsuite: make sure they use templates freshly built from the source
+Do you mean if the 2 files should be merged into 1 file? If they should 
+be 2 files with different names there is no problem using file 
+identifiers but if they should be merged into one file then I can see 
+that this would cause problems. You would have to delete one of the 
+files and copy its changes into the other which would create conflicts 
+when that file is modified in the other branch. This is a problem if you 
+*only* have file identifiers.
 
-Okay.
+But if you tracked both file identifiers *and* content identifiers (as I 
+was trying to say in my first post) this wouldn't be a problem would it? 
+When content is changed you use the content identifiers but when files 
+are changed by renaming or deleting you use file identifiers. To me at 
+least it doesn't seem like it's a choice of one or the other or that one 
+is stupid and the other isn't but that you need them both. bzr uses file 
+ids and git uses content ids. It would be nice if there were an RCS 
+that  used both - then you get the best of both worlds don't you?
 
-But why not introduce the environment variable GIT_TEMPLATE_DIR, to 
-imitate similar solutions. This would result in a smaller diff, and people 
-would not have to remember typing "git_init_db" in tests (I admit, I did 
-not spot the subtle difference right away, and thought they were 
-white-space fixes...).
+So I don't think you want to use file identifiers to track changes to 
+content (as bzr would do in this case) and you don't want to use content 
+identifiers to track changes to files (as git does, to my understanding, 
+when a file is renamed).
 
-I.e. something like this instead:
-
---
-[PATCH] Introduce GIT_TEMPLATE_DIR
-
-Instead of passing --template explicitely to init-db and clone, you can
-just set the environment variable GIT_TEMPLATE_DIR.
-
-Also make use of it in the tests, to make sure that the templates are
-copied.
-
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-
----
-
- builtin-init-db.c |    7 +++++--
- t/test-lib.sh     |    3 ++-
- 2 files changed, 7 insertions(+), 3 deletions(-)
-
-diff --git a/builtin-init-db.c b/builtin-init-db.c
-index fa70baa..85cd4d9 100644
---- a/builtin-init-db.c
-+++ b/builtin-init-db.c
-@@ -124,8 +124,11 @@ static void copy_templates(const char *git_dir, int len, const char *template_di
- 	int template_len;
- 	DIR *dir;
- 
--	if (!template_dir)
--		template_dir = DEFAULT_GIT_TEMPLATE_DIR;
-+	if (!template_dir) {
-+		template_dir = getenv("GIT_TEMPLATE_DIR");
-+		if (!template_dir)
-+			template_dir = DEFAULT_GIT_TEMPLATE_DIR;
-+	}
- 	strcpy(template_path, template_dir);
- 	template_len = strlen(template_path);
- 	if (template_path[template_len-1] != '/') {
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index ac7be76..f0f9cd6 100755
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -208,8 +208,9 @@ test_done () {
- # t/ subdirectory and are run in trash subdirectory.
- PATH=$(pwd)/..:$PATH
- GIT_EXEC_PATH=$(pwd)/..
-+GIT_TEMPLATE_DIR=$(pwd)/../templates/blt
- HOME=$(pwd)/trash
--export PATH GIT_EXEC_PATH HOME
-+export PATH GIT_EXEC_PATH GIT_TEMPLATE_DIR HOME
- 
- GITPERLLIB=$(pwd)/../perl/blib/lib:$(pwd)/../perl/blib/arch/auto/Git
+Nick
