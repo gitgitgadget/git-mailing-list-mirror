@@ -1,86 +1,135 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
+From: Andy Parkins <andyparkins@gmail.com>
 Subject: Re: [RFC] Submodules in GIT
-Date: Tue, 21 Nov 2006 11:04:46 +0100
-Organization: At home
-Message-ID: <ejuit4$mg$1@sea.gmane.org>
-References: <20061120215116.GA20736@admingilde.org> <ejt9dh$kfm$1@sea.gmane.org> <7v7ixp20za.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611201501230.3338@woody.osdl.org> <7v4pstzmk5.fsf@assigned-by-dhcp.cox.net> <ejthuh$fn8$1@sea.gmane.org> <20061121062158.GF20736@admingilde.org>
+Date: Tue, 28 Nov 2006 16:29:05 +0000
+Message-ID: <200611281629.08636.andyparkins@gmail.com>
+References: <20061121223130.GA24909@nan92-1-81-57-214-146.fbx.proxad.net> <200611281335.38728.andyparkins@gmail.com> <20061128154434.GD28337@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-NNTP-Posting-Date: Tue, 21 Nov 2006 10:04:35 +0000 (UTC)
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Tue, 28 Nov 2006 16:29:47 +0000 (UTC)
+Cc: Shawn Pearce <spearce@spearce.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 36
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=QGELFpngOLupolFjycQNofPSEg7Jtc7ThwB6j+8aKcHkFi1ndXNlWZawFYDVBevwHlCOr3nTOm7l1WD0M/y4X38Bd1TFZ6Nwyd+GuiR2UbfgKhgRr8XwSqWmcKDKuluaB+BO5hpCt1eJ/CMcLF+BPa4fvPvYWiMcson3bsEZYQg=
+User-Agent: KMail/1.9.5
+In-Reply-To: <20061128154434.GD28337@spearce.org>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31980>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32546>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GmSUD-0005QT-Rj for gcvg-git@gmane.org; Tue, 21 Nov
- 2006 11:04:18 +0100
+ esmtp (Exim 4.43) id 1Gp5pi-0007oI-Tq for gcvg-git@gmane.org; Tue, 28 Nov
+ 2006 17:29:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1030803AbWKUKEF (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 21 Nov 2006
- 05:04:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030804AbWKUKEF
- (ORCPT <rfc822;git-outgoing>); Tue, 21 Nov 2006 05:04:05 -0500
-Received: from main.gmane.org ([80.91.229.2]:29089 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S1030803AbWKUKEC (ORCPT
- <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2006 05:04:02 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1GmSTl-0005Jd-Md for git@vger.kernel.org; Tue, 21 Nov 2006 11:03:49 +0100
-Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Tue, 21 Nov 2006 11:03:49 +0100
-Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Tue, 21 Nov 2006
- 11:03:49 +0100
+ S935846AbWK1Q3R (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 28 Nov 2006
+ 11:29:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935865AbWK1Q3R
+ (ORCPT <rfc822;git-outgoing>); Tue, 28 Nov 2006 11:29:17 -0500
+Received: from ug-out-1314.google.com ([66.249.92.170]:4943 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S935846AbWK1Q3Q
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2006 11:29:16 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so1523273uga for
+ <git@vger.kernel.org>; Tue, 28 Nov 2006 08:29:15 -0800 (PST)
+Received: by 10.66.244.10 with SMTP id r10mr1855090ugh.1164731355119; Tue, 28
+ Nov 2006 08:29:15 -0800 (PST)
+Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
+ ESMTP id o24sm1237035ugd.2006.11.28.08.29.14; Tue, 28 Nov 2006 08:29:14 -0800
+ (PST)
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Martin Waitz wrote:
+On Tuesday 2006 November 28 15:44, Shawn Pearce wrote:
 
-> On Tue, Nov 21, 2006 at 01:42:22AM +0100, Jakub Narebski wrote:
->> Perhaps it would be best to join those two subproject support
->> solutions together: "bind" tree/commit mount header in commit
->> object, and "commit" entry in a tree.
-> 
-> But which is the autoritative source then?
-> Does it give any more information?
+> So HEAD in a submodule is the current content of that submodule.
+> Therefore any update-index call on a submodule should load HEAD
+> (totally ignoring whatever branch it refers to) into the supermodule
+> index.
 
-Both should contain the same information, otherwise repository is corrupt
-(is in inconsistent state).
+I was with you right up until here.
 
-"bind" header in commit objects is meant as a kind of shortcut, to ease
-reachability checking (you don't need to recurse into directories).
+Why should a submodule do anything to the supermodule?  This is like saying, 
+when I edit a working tree file, it should automatically call update-index.  
+The supermodule index should only be updated in response to a manual 
+update-index (or commit -a I suppose).
 
-> The advantage in your proposal would be that submodules would
-> be visible immediately when looking at the commit,
-> without having to traverse the entire tree.
-> This may be worthwhile when showing the combined history of parent
-> and submodules.
+Worse, if you allow that to happen, the supermodule can commit a state that 
+cannot be retrieved from the submodule's repository.  The ONLY thing a 
+supermodule can record about a submodule is a commit.  Changing the index 
+doesn't create a commit, so it can't change anything in the supermodule.
 
-That was the idea.
+If you change the submodule index then that submodule is "dirty", this state 
+has no parallel with normal git operation.  The nearest thing is that you've 
+changed a file but not saved it.  Apart from showing the "dirty" state in the 
+supermodule's git-status, I don't see that there is anything that the 
+supermodule can do - it can't go around committing in a repository that it 
+not itself.
 
-> But still this looks like "caching submodule information in the
-> commit object" and I do not know if we really want to do that.
+IMO, it should always be possible to take a submodule and work on it in 
+isolation - in an extreme case, by moving it out of the supermodule tree 
+entirely.
 
-Well, we would be repeating information, sure. But we can put additional
-information in "bind" header except sha1 of commit and mount point...
-although I cannot think what... :)
+In summary, from the supermodule's point of view:
+ * A submodule with changed working directory is "dirty-wd"
+ * A submodule with changed index is "dirty-idx" from the supermodule's
+ * A submodule with changed HEAD (since the last supermodule commit) 
+   is "changed but not updated" and can hence be "update-index"ed into the
+   supermodule
+ * A submodule with changed HEAD that has been added to the supermodule index
+   is "updated but not checked in"
+ * A submodule with changed HEAD (since the last supermodule update-index) is
+   both "changed but not updated" _and_ "updated but not checked in", just 
+   like any normal file.
+
+What's needed then:
+ * A way of telling git to treat a particular directory as a submodule instead
+   of a directory
+ * git-status gets knowledge of how to check for "dirty" submodules
+ * git-commit-tree learns about how to store "submodule" object types in
+   trees.  The submodule object type will be nothing more than the hash of the
+   current HEAD commit.  (This might be my ignorance, perhaps it's just 
+   update-index that needs to know this)
+
+I don't know enough about the plumbing to know if my description above is 
+using the right nomenclature - I'm sure someone will correct me.
+
+In my head, it would look something like this:
+
+$ mkdir supermodule; cd supermodule
+$ git init-db
+$ git clone proto://host/submodule.git
+$ git add --submodule submodule
+$ git update-index submodule
+$ git commit -m "Added submodule to supermodule"
+[ edit submodule ]
+$ git status
+submodule is dirty, the working directory has changed
+[ update-index in submodule ]
+$ git status
+submodule is dirty, the index has changed
+[ commit in submodule ]
+$ git status
+submodule is changed but not updated
+$ git update-index submodule
+$ git status
+submodule is updated but not checked in
+$ git commit -m "Record submodule change in supermodule"
+
+Am I crazy?
+
+
+
+Andy
 
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
-
+Dr Andy Parkins, M Eng (hons), MIEE
