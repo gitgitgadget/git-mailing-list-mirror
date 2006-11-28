@@ -1,71 +1,68 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: [PATCH] Allow hand-editing of patches before sending
-Date: Fri, 3 Nov 2006 14:01:43 +0000
-Message-ID: <b0943d9e0611030601v7db6d862ve568c95b17dd0da1@mail.gmail.com>
-References: <20061101090046.1107.81105.stgit@localhost>
-	 <b0943d9e0611020232x1e343bbco9451c8183c84d68@mail.gmail.com>
-	 <20061102113631.GA30507@diana.vm.bytemark.co.uk>
-	 <b0943d9e0611030139i7be9569bh4a29596a768e82a3@mail.gmail.com>
-	 <20061103095859.GC16721@diana.vm.bytemark.co.uk>
-	 <b0943d9e0611030444w13e04586u185413c2562d45bc@mail.gmail.com>
-	 <20061103130259.GA20611@diana.vm.bytemark.co.uk>
-	 <b0943d9e0611030525t5da2cce7nf7b41323411e8d2d@mail.gmail.com>
-	 <20061103133933.GP20017@pasky.or.cz>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: git and bzr
+Date: Tue, 28 Nov 2006 16:53:32 -0500
+Message-ID: <20061128215332.GK28337@spearce.org>
+References: <456B7C6A.80104@webdrake.net> <845b6e870611280410j58bdcd99nc05d0f67489293e4@mail.gmail.com> <ekhaeg$etk$1@sea.gmane.org> <Pine.LNX.4.63.0611281433270.30004@wbgn013.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.64.0611280754050.30076@woody.osdl.org> <456C7592.6020700@ableton.com> <ekhtnt$rkk$1@sea.gmane.org> <456C9DFF.1040407@onlinehome.de> <456CA981.4010808@onlinehome.de> <Pine.LNX.4.64.0611281346490.4244@woody.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Fri, 3 Nov 2006 14:13:48 +0000 (UTC)
-Cc: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Tue, 28 Nov 2006 21:54:13 +0000 (UTC)
+Cc: Nicholas Allen <nick.allen@onlinehome.de>,
+	Jakub Narebski <jnareb@gmail.com>,
+	bazaar-ng@lists.canonical.com, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=qD3h3lMjV9mubXh0iXDD42pgNSIWnOYDHu9flyZYSrTv2Lfc5kyMNTteJhrAQlED2EeWtLZvYAdL43+mXxm0OoOvDqqJwt4yUHm6XXLgOBTc18mPpwqXUim1jueWjxPwKk0yq7Xtfj3U+fdY72qAws7mDEIugFUmFXY37x70REQ=
-In-Reply-To: <20061103133933.GP20017@pasky.or.cz>
 Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0611281346490.4244@woody.osdl.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30856>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32587>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gfzlv-0006Bt-Jr for gcvg-git@gmane.org; Fri, 03 Nov
- 2006 15:11:51 +0100
+ esmtp (Exim 4.43) id 1GpAtd-0008DZ-0u for gcvg-git@gmane.org; Tue, 28 Nov
+ 2006 22:53:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752976AbWKCOLs (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 3 Nov 2006
- 09:11:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753213AbWKCOLs
- (ORCPT <rfc822;git-outgoing>); Fri, 3 Nov 2006 09:11:48 -0500
-Received: from py-out-1112.google.com ([64.233.166.177]:24105 "EHLO
- py-out-1112.google.com") by vger.kernel.org with ESMTP id S1752976AbWKCOLr
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 3 Nov 2006 09:11:47 -0500
-Received: by py-out-1112.google.com with SMTP id a73so323716pye for
- <git@vger.kernel.org>; Fri, 03 Nov 2006 06:11:46 -0800 (PST)
-Received: by 10.35.77.1 with SMTP id e1mr3347199pyl.1162562503867; Fri, 03
- Nov 2006 06:01:43 -0800 (PST)
-Received: by 10.35.77.5 with HTTP; Fri, 3 Nov 2006 06:01:43 -0800 (PST)
-To: "Petr Baudis" <pasky@suse.cz>
+ S1757090AbWK1Vxl (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 28 Nov 2006
+ 16:53:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757098AbWK1Vxl
+ (ORCPT <rfc822;git-outgoing>); Tue, 28 Nov 2006 16:53:41 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:31435 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S1757090AbWK1Vxl
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2006 16:53:41 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1GpAtJ-0002X9-G1; Tue, 28 Nov 2006 16:53:25 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ BD66A20FB7F; Tue, 28 Nov 2006 16:53:32 -0500 (EST)
+To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 
-On 03/11/06, Petr Baudis <pasky@suse.cz> wrote:
-> Dear diary, on Fri, Nov 03, 2006 at 02:25:36PM CET, I got a letter
-> where Catalin Marinas <catalin.marinas@gmail.com> said that...
-> > I just run git-am and "stg uncommit" or "assimilate".
->
-> git-am calls git-mailsplit and git-mailinfo, and those two tools will do
-> most of the work (basically everything except the actual committing) for
-> you, I use them in cg-patch -m and it should be fairly trivial to make a
-> stg command reusing those too.
+Linus Torvalds <torvalds@osdl.org> wrote:
+> There are lots of reasons why "git status" may tell you that something 
+> isn't merged. The most common one by far being an actual data conflict, 
+> not a name conflict. The reason for why something conflicts is always told 
+> at merge-time.
 
-Yes, indeed, these are the commands I would use. I wouldn't go further
-in calling git-am or git-applymbox directly as I try not to use too
-many of the porcelain'ish git scripts.
+Except when you are doing a large merge, your terminal scrollback
+is really short, and there's a lot of conflicts.  Then you can't
+see what merge said about any given file.  :-(
+
+Fortunately its easy to back out of the merge and redo it with
+large enough scrollback, or redirecting it to a file for later
+review, but its annoying that we don't save that information off
+for later review.
 
 -- 
