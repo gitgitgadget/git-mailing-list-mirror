@@ -1,16 +1,18 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
-X-Spam-Level: *
+X-Spam-Level: **
 X-Spam-ASN: AS24867 82.211.80.0/20
-X-Spam-Status: No, score=1.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,LIST_MIRROR_RECEIVED,MSGID_FROM_MTA_HEADER
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=2.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,LIST_MIRROR_RECEIVED,
+	MSGID_FROM_MTA_HEADER shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Path: news.gmane.org!not-for-mail
-From: Vincent Ladeuil <v.ladeuil@alplog.fr>
+From: Sean <seanlkml@sympatico.ca>
 Newsgroups: gmane.comp.version-control.bazaar-ng.general,gmane.comp.version-control.git
-Subject: Re: VCS comparison table
-Date: Thu, 26 Oct 2006 14:33:32 +0200
-Message-ID: <87u01r9rz7.fsf@alplog.fr>
-References: <20061021130111.GL75501@over-yonder.net> <453F2FF8.2080903@op5.se>
+Subject: Re: git and bzr
+Date: Mon, 27 Nov 2006 19:40:49 -0500
+Message-ID: <BAYC1-PASMTP03D791B2FF9E3AE0397A3CAEE50@CEZ.ICE>
+References: <45357CC3.4040507@utoronto.ca>
+	<20061021130111.GL75501@over-yonder.net> <453F2FF8.2080903@op5.se>
 	<200610251146.06116.jnareb@gmail.com>
 	<a7e835d40610250308v5d577482m139742e7fe1db185@mail.gmail.com>
 	<87slhcz8zh.wl%cworth@cworth.org>
@@ -19,39 +21,45 @@ References: <20061021130111.GL75501@over-yonder.net> <453F2FF8.2080903@op5.se>
 	<a7e835d40610260257r5f05ea4gc934f1c1cc267977@mail.gmail.com>
 	<20061026101038.GA13310@coredump.intra.peff.net>
 	<877iyne4dm.fsf@alplog.fr>
-	<20061026111338.GA15179@coredump.intra.peff.net>
+	<Pine.LNX.4.64.0610260753090.3962@g5.osdl.org>
+	<456B7C6A.80104@webdrake.net>
 NNTP-Posting-Host: main.gmane.org
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-Trace: sea.gmane.org 1161866066 27810 80.91.229.2 (26 Oct 2006 12:34:26 GMT)
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Trace: sea.gmane.org 1164674479 12019 80.91.229.2 (28 Nov 2006 00:41:19 GMT)
 X-Complaints-To: usenet@sea.gmane.org
-NNTP-Posting-Date: Thu, 26 Oct 2006 12:34:26 +0000 (UTC)
-Cc: , bazaar-ng@lists.canonical.com, git@vger.kernel.org
-Original-X-From: bazaar-ng-bounces@lists.canonical.com Thu Oct 26 14:34:20 2006
+NNTP-Posting-Date: Tue, 28 Nov 2006 00:41:19 +0000 (UTC)
+Cc: bazaar-ng@lists.canonical.com, git@vger.kernel.org
+Original-X-From: bazaar-ng-bounces@lists.canonical.com Tue Nov 28 01:41:17 2006
 Return-path: <bazaar-ng-bounces@lists.canonical.com>
 Envelope-to: gcvbg-bazaar-ng@m.gmane.org
 Received: from esperanza.ubuntu.com ([82.211.81.173])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Gd4Qm-0006xC-VX
-	for gcvbg-bazaar-ng@m.gmane.org; Thu, 26 Oct 2006 14:33:57 +0200
+	id 1Gor24-0006zW-0w
+	for gcvbg-bazaar-ng@m.gmane.org; Tue, 28 Nov 2006 01:41:08 +0100
 Received: from localhost ([127.0.0.1] helo=esperanza.ubuntu.com)
 	by esperanza.ubuntu.com with esmtp (Exim 4.60)
 	(envelope-from <bazaar-ng-bounces@lists.canonical.com>)
-	id 1Gd4Qe-0002Ch-0q; Thu, 26 Oct 2006 13:33:50 +0100
-Received: from [217.167.26.75] (helo=srv-mail.altest.fr)
-	by esperanza.ubuntu.com with smtp (Exim 4.60)
-	(envelope-from <v.ladeuil@alplog.fr>) id 1Gd4QS-0002Ah-4a
-	for bazaar-ng@lists.canonical.com; Thu, 26 Oct 2006 13:33:36 +0100
-Received: from dune.altest.fr ([10.0.0.145]) by srv-mail.altest.fr with
-	Microsoft SMTPSVC(6.0.3790.1830); Thu, 26 Oct 2006 14:33:32 +0200
-Received: by dune.altest.fr (Postfix, from userid 1000)
-	id 831A3E9F2; Thu, 26 Oct 2006 14:33:32 +0200 (CEST)
-To: Jeff King <peff@peff.net>
-In-Reply-To: <20061026111338.GA15179@coredump.intra.peff.net> (Jeff King's
-	message of "Thu, 26 Oct 2006 07:13:39 -0400")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
-X-OriginalArrivalTime: 26 Oct 2006 12:33:32.0483 (UTC)
-	FILETIME=[F2C02930:01C6F8FA]
+	id 1Gor20-00076n-Sl; Tue, 28 Nov 2006 00:41:04 +0000
+Received: from bayc1-pasmtp03.bayc1.hotmail.com ([65.54.191.163])
+	by esperanza.ubuntu.com with esmtp (Exim 4.60)
+	(envelope-from <seanlkml@sympatico.ca>) id 1Gor1p-00074z-G2
+	for bazaar-ng@lists.canonical.com; Tue, 28 Nov 2006 00:40:54 +0000
+X-Originating-IP: [65.93.43.74]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Received: from linux1.attic.local ([65.93.43.74]) by
+	BAYC1-PASMTP03.bayc1.hotmail.com over TLS secured channel with
+	Microsoft SMTPSVC(6.0.3790.1830); Mon, 27 Nov 2006 16:40:51 -0800
+Received: from guru.attic.local ([10.10.10.28])
+	by linux1.attic.local with esmtp (Exim 4.43)
+	id 1Goq5g-0007Zg-DK; Mon, 27 Nov 2006 18:40:48 -0500
+To: Joseph Wakeling <joseph.wakeling@webdrake.net>
+Original-Message-Id: <20061127194049.8ac68b1c.seanlkml@sympatico.ca>
+In-Reply-To: <456B7C6A.80104@webdrake.net>
+X-Mailer: Sylpheed version 2.2.10 (GTK+ 2.10.4; i386-redhat-linux-gnu)
+X-OriginalArrivalTime: 28 Nov 2006 00:40:52.0317 (UTC)
+	FILETIME=[DB5660D0:01C71285]
 X-BeenThere: bazaar-ng@lists.canonical.com
 X-Mailman-Version: 2.1.8
 Precedence: list
@@ -65,48 +73,79 @@ List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
 	<mailto:bazaar-ng-request@lists.canonical.com?subject=subscribe>
 Original-Sender: bazaar-ng-bounces@lists.canonical.com
 Errors-To: bazaar-ng-bounces@lists.canonical.com
-Xref: news.gmane.org gmane.comp.version-control.bazaar-ng.general:18835 gmane.comp.version-control.git:30204
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30204>
+Xref: news.gmane.org gmane.comp.version-control.bazaar-ng.general:19736 gmane.comp.version-control.git:32472
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "Jeff" == Jeff King <peff@peff.net> writes:
+On Tue, 28 Nov 2006 01:01:46 +0100
+Joseph Wakeling <joseph.wakeling@webdrake.net> wrote:
 
-    Jeff> On Thu, Oct 26, 2006 at 12:52:05PM +0200, Vincent Ladeuil wrote:
-    >> Ok, so git make a distinction between the commit (code created by
-    >> someone) and the tree (code only).
+> First off a really dumb one: how do I identify myself to git, i.e. give
+> it a name and email address?  Currently it uses my system identity,
+> My Name <username@computer.(none)>.  I haven't found any equivalent of
+> the bzr whoami command.
 
-    Jeff> Yes (a commit is a tree, zero or more parents, commit message, and
-    Jeff> author/committer info).
+Assuming you have a recent version of git, then:
 
-The parents of a tree are also trees or can/must they be commits ?
+$ git repo-config --global user.email "you@email.com"
+$ git repo-config --global user.name "Your Name"
 
-    >> Commits are defined by their parents.
+Will setup a ~/.gitconfig in your home directory; these settings
+will apply in any repo you use.  Drop the "--global" to set them
+per repo.
 
-    Jeff> Partially, yes.
+> With this in mind, is there any significance to the "master" branch (is
+> it intended e.g. to indicate a git repository's "stable" version
+> according to the owner?), or is this just a convenient default name?
+> Could I delete or rename it?  Using bzr I would normally give the
+> central branch(*) the name of the project.
 
-I buy that this "partially" means "the other parts are irrelevant
-to this discussion".
+It's just a common convention and carries no special significance;
+rename away!
 
-    >> Trees are defined by their content only ?
+> Any other useful comments that can be made to a bzr user about working
+> with this difference, positive or negative aspects of it?
 
-    Jeff> Yes.
+Don't be afraid to git-clone your local repo, especially with the -l
+and -s options.  That will get you a separate repo/working directory
+while not taking up much extra disk space (objects from your first
+repo will be shared with the second).
 
-So it is possible that : starting from a tree T,
+Once you get comfortable with multiple branches in a single repo/
+working directory, it often is much better than the alternatives.
+But the above gives you the option to work either way.
 
-- I make a patch A,
-- you make the patch B,
-- A and B are equal (stop watching above my shoulder please, or what is me ?),
-- we both commit,
-- we pull changes from each other repository.
+> Next question ... one of the reasons I started seriously thinking about
+> git was that in the VCS comparison discussion, it was noted that git is
+> a lot more flexible than bzr in terms of how it can track data (e.g. the
+> git pickaxe command, although I understand that's not in the released
+> version [1.4.4.1] yet?).  A frustration with bzr is that pulling or
+> merging patches from another branch or repo requires them to share the
+> same HEAD.  Is this a requirement in git or can I say, "Hey, I like that
+> particular function in project XXX, I'm going to pull that individual
+> bit of code and its development history into project YYY"?
 
-We will end up with a tree T2 with a hash corresponding to both
-T+A and T+B, but each of us will have a different commit id CA
-and CB both pointing to T2, did I get it ?
+The Git cherry-pick command lets you grab specific commits from
+other branches in your repo.  But cherry-pick works at the commit
+level, there is no easy way to grab a single function for instance
+and merge just its history into another branch.
 
-    Vincent
+However, you can merge an entire separate project into yours even
+though they don't share a base commit.  This has been done several
+times in the history of Git itself. For instance you can see two
+separate "initial" commits in the Git repo with a command like
+"gitk README gitk" which gives a graphical history of the "gitk"
+and "README" files and shows each started life in a separate
+initial commit.  Use "git show 5569b" to see Linus bragging on
+this first separate-project-merge and give some more details.
+ 
+> Last off (for now, I'm sure I'll think of more): is there any easy (or
+> difficult) way to effectively import version history from a bzr
+> repository, and vice versa?
 
+Don't think a direct bridge between the two has been written yet.
 
-
+Cheers,
+Sean
 
 
 
