@@ -1,87 +1,72 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Re: Moving a directory into another fails
-Date: Mon, 04 Dec 2006 20:37:12 +0100
-Organization: At home
-Message-ID: <el1t9a$lmo$1@sea.gmane.org>
-References: <9e4733910607260800v618edf0em7b0f5c3332bf8fc5@mail.gmail.com> <20060726223459.GA30601@vsectoor.geht-ab-wie-schnitzel.de> <9e4733910607261603m6772602cr333d8c58f555edaa@mail.gmail.com> <20060728014350.GI13776@pasky.or.cz> <f3d7535d0612041019q4bda01a1k9938b056d51f8a78@mail.gmail.com> <el1qtr$bca$1@sea.gmane.org> <Pine.LNX.4.63.0612042001320.28348@wbgn013.biozentrum.uni-wuerzburg.de> <el1rmm$bca$2@sea.gmane.org> <Pine.LNX.4.63.0612042009590.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+From: "=?ISO-8859-1?Q?Erik_B=E5gfors?=" <zindar@gmail.com>
+Subject: Re: git and bzr
+Date: Tue, 28 Nov 2006 13:10:21 +0100
+Message-ID: <845b6e870611280410j58bdcd99nc05d0f67489293e4@mail.gmail.com>
+References: <45357CC3.4040507@utoronto.ca>
+	 <a7e835d40610250308v5d577482m139742e7fe1db185@mail.gmail.com>
+	 <87slhcz8zh.wl%cworth@cworth.org>
+	 <a7e835d40610260152k658aeaf0hb900cb63870c04e4@mail.gmail.com>
+	 <7vu01ro20b.fsf@assigned-by-dhcp.cox.net>
+	 <a7e835d40610260257r5f05ea4gc934f1c1cc267977@mail.gmail.com>
+	 <20061026101038.GA13310@coredump.intra.peff.net>
+	 <877iyne4dm.fsf@alplog.fr>
+	 <Pine.LNX.4.64.0610260753090.3962@g5.osdl.org>
+	 <456B7C6A.80104@webdrake.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-NNTP-Posting-Date: Mon, 4 Dec 2006 19:35:40 +0000 (UTC)
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Tue, 28 Nov 2006 12:10:55 +0000 (UTC)
+Cc: git@vger.kernel.org, bazaar-ng@lists.canonical.com
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 37
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=HLbihiYyvSTnkpz0Fh7RP43hAM0HksLI0Y6jAQE/0azMxabku8NhwO31r//1MriO1c4KFYgGJnHTBXDNc6VPovZhLERA037KoJz3zmCgGypHavzUmkxJg2rSU7UHXb8Cr9qQ14h3HVsnC2jbYE8OTq5the/9Lv6bL4FwzlvDRX0=
+In-Reply-To: <456B7C6A.80104@webdrake.net>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33225>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GrJb8-0007xq-Sn for gcvg-git@gmane.org; Mon, 04 Dec
- 2006 20:35:31 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32514>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gp1nJ-0000UR-AQ for gcvg-git@gmane.org; Tue, 28 Nov
+ 2006 13:10:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S937204AbWLDTf2 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
- 14:35:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759360AbWLDTf2
- (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 14:35:28 -0500
-Received: from main.gmane.org ([80.91.229.2]:37661 "EHLO ciao.gmane.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1759442AbWLDTf1
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006 14:35:27 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1GrJb2-0006ay-4M for git@vger.kernel.org; Mon, 04 Dec 2006 20:35:24 +0100
-Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Mon, 04 Dec 2006 20:35:24 +0100
-Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Mon, 04 Dec 2006
- 20:35:24 +0100
-To: git@vger.kernel.org
+ S1757795AbWK1MKX (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 28 Nov 2006
+ 07:10:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757928AbWK1MKX
+ (ORCPT <rfc822;git-outgoing>); Tue, 28 Nov 2006 07:10:23 -0500
+Received: from py-out-1112.google.com ([64.233.166.181]:54515 "EHLO
+ py-out-1112.google.com") by vger.kernel.org with ESMTP id S1757795AbWK1MKW
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2006 07:10:22 -0500
+Received: by py-out-1112.google.com with SMTP id a29so1282121pyi for
+ <git@vger.kernel.org>; Tue, 28 Nov 2006 04:10:21 -0800 (PST)
+Received: by 10.35.18.18 with SMTP id v18mr1441645pyi.1164715821611; Tue, 28
+ Nov 2006 04:10:21 -0800 (PST)
+Received: by 10.35.116.4 with HTTP; Tue, 28 Nov 2006 04:10:21 -0800 (PST)
+To: "Joseph Wakeling" <joseph.wakeling@webdrake.net>
 Sender: git-owner@vger.kernel.org
 
-Johannes Schindelin wrote:
+> Next question ... one of the reasons I started seriously thinking about
+> git was that in the VCS comparison discussion, it was noted that git is
+> a lot more flexible than bzr in terms of how it can track data (e.g. the
+> git pickaxe command, although I understand that's not in the released
+> version [1.4.4.1] yet?).
 
-> On Mon, 4 Dec 2006, Jakub Narebski wrote:
-> 
->> Johannes Schindelin wrote:
->> 
->>> On Mon, 4 Dec 2006, Jakub Narebski wrote:
->>> 
->>>> [...] git should acquire core.filesystemEncoding configuration variable 
->>>> which would encode from filesystem encoding used in working directory 
->>>> and perhaps index to UTF-8 encoding used in repository (in tree objects) 
->>>> and perhaps index.
->>> 
->>> So, you want to pull in all thinkable encodings? Of course, you could rely 
->>> on libiconv, adding yet another dependency to git. (Yes, I know, mailinfo 
->>> uses it already. But I never use mailinfo, so I do not need libiconv.)
->> 
->> A conditional dependency. If you don't have libiconv, this feature wouldn't
->> be available.
-> 
-> You are speaking as somebody compiling git from source. We are a minority.
 
-Usually iconv is in libc.
+If this is blame/annotate,  this exists in bzr as well...
 
-# Define NEEDS_LIBICONV if linking with libc is not enough (Darwin).
+: [bagfors@zyrgelkwyt]$ ; bzr help blame
+usage: bzr annotate FILENAME
+aliases: ann, blame, praise
 
-Hmm... perhaps not that usually. The uname based configuration in Makefile
-(not the test based configuration provided by autoconf generated
-./configure script) sets NEEDS_LIBICONV for: Darwin, SunOS 5.8, Cygwin,
-FreeBSD and OpenBSD, some versions of NetBSD, AIX.
+Show the origin of each line in a file.
 
-And HFS+ is on MacOS X / Darwin, without iconv in libc...
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
 
