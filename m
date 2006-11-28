@@ -1,82 +1,66 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: latest update to git-svn blows up for me
-Date: Mon, 4 Dec 2006 11:54:52 -0800
-Message-ID: <20061204195452.GB27342@soma>
-References: <863b7wnwcw.fsf@blue.stonehenge.com> <20061204070021.GG1369@localdomain> <86hcwbnb0o.fsf@blue.stonehenge.com> <20061204181241.GA27342@soma> <86zma3lahj.fsf@blue.stonehenge.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [RFC] Submodules in GIT
+Date: Tue, 28 Nov 2006 16:32:21 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0611281614450.20138@iabervon.org>
+References: <Pine.LNX.4.64.0611251128170.3483@woody.osdl.org>
+ <20061125234908.GC24909@nan92-1-81-57-214-146.fbx.proxad.net>
+ <Pine.LNX.4.64.0611251936590.3483@woody.osdl.org> <Pine.LNX.4.64.0611260241320.20138@iabervon.org>
+ <456C0313.3020308@op5.se> <Pine.LNX.4.64.0611281218290.20138@iabervon.org>
+ <20061128180817.GA12463MdfPADPa@greensroom.kotnet.org>
+ <Pine.LNX.4.64.0611281315020.20138@iabervon.org>
+ <20061128190618.GB12463MdfPADPa@greensroom.kotnet.org>
+ <Pine.LNX.4.64.0611281407370.20138@iabervon.org> <20061128211012.GJ28337@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Mon, 4 Dec 2006 19:55:03 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Tue, 28 Nov 2006 21:32:40 +0000 (UTC)
+Cc: skimo@liacs.nl, Andreas Ericsson <ae@op5.se>,
+	Linus Torvalds <torvalds@osdl.org>,
+	Yann Dirson <ydirson@altern.org>,
+	Steven Grimm <koreth@midwinter.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <86zma3lahj.fsf@blue.stonehenge.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <20061128211012.GJ28337@spearce.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33235>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GrJtz-0002eo-Ki for gcvg-git@gmane.org; Mon, 04 Dec
- 2006 20:54:59 +0100
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GpAZ1-0002pC-K2 for gcvg-git@gmane.org; Tue, 28 Nov
+ 2006 22:32:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S966209AbWLDTy4 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
- 14:54:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965885AbWLDTy4
- (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 14:54:56 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:41982 "EHLO hand.yhbt.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S937357AbWLDTyy
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006 14:54:54 -0500
-Received: from hand.yhbt.net (localhost [127.0.0.1]) by hand.yhbt.net
- (Postfix) with SMTP id 3020B2DC034; Mon,  4 Dec 2006 11:54:52 -0800 (PST)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Mon,  4 Dec 2006
- 11:54:52 -0800
-To: "Randal L. Schwartz" <merlyn@stonehenge.com>
+ S1756405AbWK1VcX (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 28 Nov 2006
+ 16:32:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756548AbWK1VcX
+ (ORCPT <rfc822;git-outgoing>); Tue, 28 Nov 2006 16:32:23 -0500
+Received: from iabervon.org ([66.92.72.58]:37134 "EHLO iabervon.org") by
+ vger.kernel.org with ESMTP id S1756405AbWK1VcW (ORCPT
+ <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2006 16:32:22 -0500
+Received: (qmail 20603 invoked by uid 1000); 28 Nov 2006 16:32:21 -0500
+Received: from localhost (sendmail-bs@127.0.0.1) by localhost with SMTP; 28
+ Nov 2006 16:32:21 -0500
+To: Shawn Pearce <spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 
-"Randal L. Schwartz" <merlyn@stonehenge.com> wrote:
-> >>>>> "Eric" == Eric Wong <normalperson@yhbt.net> writes:
-> 
-> Eric> "Randal L. Schwartz" <merlyn@stonehenge.com> wrote:
-> >> >>>>> "Eric" == Eric Wong <normalperson@yhbt.net> writes:
-> >> 
-> Eric> "Randal L. Schwartz" <merlyn@stonehenge.com> wrote:
-> >> >> 
-> >> >> Does this ring a bell?
-> >> 
-> Eric> Nope.
-> >> 
-> Eric> This is on r15941 of  https://svn.perl.org/parrot/trunk ?  I can't seem
-> Eric> to reproduce this with git svn fetch -r15940:15941
-> >> 
-> >> No, and that worked for me as well.  Apparently, I might have corrupted my
-> >> metadata because I updated git-svn while I was using it.  Is there any way to
-> >> reset the metadata without having to re-fetch 15000 revisions?
-> 
-> Eric> rm .git/refs/remotes/$GIT_SVN_ID .git/svn/$GIT_SVN_ID/.rev_db
-> Eric> git svn -i $GIT_SVN_ID rebuild
-> 
-> That's not working:
-> 
-> localhost.local:..RROR/parrot-GITSVN % git-svn -i git-svn rebuild
-> fatal: 'origin': unable to chdir or not a git archive
-> fatal: unexpected EOF
-> Failed to find remote refs
-> 256 at /opt/git/bin/git-svn line 2151
->         main::safe_qx('git-ls-remote', 'origin', 'refs/remotes/git-svn') called at /opt/git/bin/git-svn line 3404
->         main::copy_remote_ref() called at /opt/git/bin/git-svn line 226
->         main::rebuild() called at /opt/git/bin/git-svn line 187
+On Tue, 28 Nov 2006, Shawn Pearce wrote:
 
-Can you try:
+> Daniel Barkalow <barkalow@iabervon.org> wrote:
+> > and then it makes sense to let you do multiple commits with a single 
+> > command when the paths end in different modules, since that's obviously 
+> > what you're requesting, and then -a must do all of them.
+> 
+> Except what if the submodules have different commit message
+> standards?  E.g. one requires signoff and another doesn't?  Or one
+> allows privately held information (e.g. its your coporate project)
+> and one doesn't (e.g. its an open source project you use/contribute
+> to)?
 
-git update-ref refs/remotes/git-svn \
-  <last commit successfully imported from git-svn>
+I don't think you'd ever want the same commit message for commits in two 
+projects. In any case where you'd commit a submodule in the process of 
+committing a supermodule, git would do this by recursively calling 
+git-commit, which would prompt for separate commit messages.
 
-and running rebuild again?
-
--- 
+	-Daniel
