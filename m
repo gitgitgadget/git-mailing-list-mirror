@@ -1,150 +1,144 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: sf <sf@b-i-t.de>
-Subject: Re: [RFC] Submodules in GIT
-Date: Thu, 30 Nov 2006 17:05:39 +0100
-Message-ID: <456F0153.5000107@b-i-t.de>
-References: <20061121223130.GA24909@nan92-1-81-57-214-146.fbx.proxad.net> <200611301255.41733.andyparkins@gmail.com> <456EE3F1.5070101@b-i-t.de> <200611301449.55171.andyparkins@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: git and bzr
+Date: Tue, 28 Nov 2006 01:39:14 +0100
+Organization: At home
+Message-ID: <ekg0c5$b43$1@sea.gmane.org>
+References: <45357CC3.4040507@utoronto.ca>	<20061021130111.GL75501@over-yonder.net>	<453F2FF8.2080903@op5.se> <200610251146.06116.jnareb@gmail.com>	<a7e835d40610250308v5d577482m139742e7fe1db185@mail.gmail.com>	<87slhcz8zh.wl%cworth@cworth.org>	<a7e835d40610260152k658aeaf0hb900cb63870c04e4@mail.gmail.com>	<7vu01ro20b.fsf@assigned-by-dhcp.cox.net>	<a7e835d40610260257r5f05ea4gc934f1c1cc267977@mail.gmail.com>	<20061026101038.GA13310@coredump.intra.peff.net>	<877iyne4dm.fsf@alplog.fr> <Pine.LNX.4.64.0610260753090.3962@g5.osdl.org> <456B7C6A.80104@webdrake.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 30 Nov 2006 16:06:37 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+NNTP-Posting-Date: Tue, 28 Nov 2006 00:38:16 +0000 (UTC)
+Cc: bazaar-ng@lists.canonical.com
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.8 (X11/20061110)
-In-Reply-To: <200611301449.55171.andyparkins@gmail.com>
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Followup-To: gmane.comp.version-control.git
+Original-Lines: 92
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32764>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32471>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GpoQ3-0004Aw-0i for gcvg-git@gmane.org; Thu, 30 Nov
- 2006 17:05:51 +0100
+ esmtp (Exim 4.43) id 1Goqz8-0006Im-8o for gcvg-git@gmane.org; Tue, 28 Nov
+ 2006 01:38:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1030645AbWK3QFr (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
- 11:05:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967836AbWK3QFr
- (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 11:05:47 -0500
-Received: from mail.medianet-world.de ([213.157.0.167]:25747 "HELO
- mail.medianet-world.de") by vger.kernel.org with SMTP id S967828AbWK3QFq
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 11:05:46 -0500
-Received: (qmail 6385 invoked by uid 1011); 30 Nov 2006 16:05:45 -0000
-Received: from sf@b-i-t.de by mail1 by uid 1003 with qmail-scanner-1.22 
- (ExcuBAtor: 1.0.2.  Clear:RC:1(213.157.15.184):SA:0(0.0/5.0):.  Processed in
- 0.404396 secs); 30 Nov 2006 16:05:45 -0000
-Received: from unknown (HELO IP-213157000067.dialin.heagmedianet.de)
- (213.157.15.184) by mail.medianet-world.de with SMTP; 30 Nov 2006 16:05:45
- -0000
-Received: from [192.168.168.40] (groa.b-i-t.de [192.168.168.40]) by
- mail.b-i-t.de (Postfix) with ESMTP id D4235259B7; Thu, 30 Nov 2006 17:05:39
- +0100 (CET)
-To: Andy Parkins <andyparkins@gmail.com>
+ S933879AbWK1AiB (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 27 Nov 2006
+ 19:38:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933880AbWK1AiB
+ (ORCPT <rfc822;git-outgoing>); Mon, 27 Nov 2006 19:38:01 -0500
+Received: from main.gmane.org ([80.91.229.2]:8358 "EHLO ciao.gmane.org") by
+ vger.kernel.org with ESMTP id S933879AbWK1AiA (ORCPT
+ <rfc822;git@vger.kernel.org>); Mon, 27 Nov 2006 19:38:00 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1Goqym-0006Cr-18 for git@vger.kernel.org; Tue, 28 Nov 2006 01:37:44 +0100
+Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Tue, 28 Nov 2006 01:37:44 +0100
+Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Tue, 28 Nov 2006
+ 01:37:44 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Andy Parkins wrote:
-> On Thursday 2006 November 30 14:00, Stephan Feder wrote:
+Joseph Wakeling wrote:
+
+> Hello all,
 > 
->> Again I do not see the problem. Probably I have a much simpler picture
->> of submodules: They are just commits in the supermodule's tree.
->> Everything else follows naturally from how git currently behaves.
+> Following the very interesting debate about the differences between bzr
+> and git, I thought it was about time I tried to learn properly about git
+> and how to use it.  I've been using bzr for a good while now, although
+> since I'm not a serious developer I only use it for simple purposes,
+> keeping track of code I write on my own for academic projects.
 > 
-> How are these commits any different from just having one big repository?  If 
-> some of the development of the submodule is contained in the supermodule then 
-> it's not a submodule anymore.
-
-Right now you only have commits of the top directory aka the super 
-project. Every subdirectory is just that: a directory (which git stores 
-as trees).
-
-Now, if you have a subdirectory that git stores as a commit, not a tree, 
-you have a subproject. It is a directory with history, and because the 
-commit is part of your superprject, you have access to this history.
-
-> Why bother with all the effort to make a separation between submodule and 
-> supermodule and then store the submodule commits in the supermodule.  That's 
-> not supermodule/submodule git - that's just normal git.
-
-No, it is not. Currently, there is no way to store a commit within the 
-contents of another commit. You can only store trees and blobs.
-
-> Surely the whole point of having submodule's is so that you can take the 
-> submodule away.  Let me give you an example.  Let's say I have a project that 
-> uses the libxcb library (some random project out in the world that uses git).  
-> I've arranged it something like this:
+> So, a few questions about differences I don't understand...
 > 
-> myproject (git root)
->  |----- src
->  |----- doc
->  `----- libxcb (git root)
-> 
-> This works fine; with one problem.  When I make a commit in myproject, there 
-> is no link into the particular snapshot of the libxcb that I used at that 
-> moment.  If libxcb moves on, and makes incompatible changes, then when I 
-> checkout an old version of myproject, it won't compile any more because I'll 
-> need to find out which commit of libxcb I used at the time.
+> First off a really dumb one: how do I identify myself to git, i.e. give
+> it a name and email address?  Currently it uses my system identity,
+> My Name <username@computer.(none)>.  I haven't found any equivalent of
+> the bzr whoami command.
 
-OK.
+git repo-config user.name "Joseph Wakeling"
+git repo-config user.email joseph.wakeling@webdrake.net
 
-> Submodules will solve this problem.  In the future I'll be able to check out 
-> any commit of myproject and it will automatically checkout the right commit 
-> from the libxcb repository.
+You might add --global option if you want your identity to be saved
+in ~/.gitconfig file, and not per repository (one might want to use
+different identities for different repositories).
 
-OK, I am still with you so far.
+"git repo-config --list" or "git var -l" to list all config. There is no
+direct equivalent of "bzr whoami" (the equivalent would be:
 
-> Now let's say I'm working away and find a bug in 
-> libxcb; I fix it, commit it.  That change had better be stored in the libxcb 
-> repository, and had better make no reference to the myproject repository.  If 
-> it doesn't, I'm going to have to pollute the libxcb upstream repository with 
-> myproject if I want to share those fixes.
+  echo "$(git repo-config --get user.name) <$(git repo-config --get user.email)>"
+ 
+> Now to more serious business.  One of the main operational differences I
+> see as a new user is that bzr defaults to setting up branches in
+> different locations, whereas git by default creates a repository where
+> branches are different versions of the directory contents and switching
+> branches *changes* the directory contents.  bzr branch seems to be
+> closer to git-clone than git-branch (N.B. I have never used bzr repos so
+> might not be making a fair comparison).
 
-Here comes the part where we did not meet before.
+The rough equivalent of bzr repos would be a set of git repos which share
+object database, either via symlink, or via GIT_OBJECT_DIRECTORY, or via
+alternates mechanism.
 
-Of course you do not make any reference from your subproject to your 
-superproject. You do exactly what you do in git today when you work with 
-different branches:
+But it is a fact that in bzr working area is associated with branch, while
+in git it is associated with repository.
 
-Step 1: You fix a bug in myproject's subdirectory libxcb.
+> With this in mind, is there any significance to the "master" branch (is
+> it intended e.g. to indicate a git repository's "stable" version
+> according to the owner?), or is this just a convenient default name?
+> Could I delete or rename it?  Using bzr I would normally give the
+> central branch(*) the name of the project.
 
-Step 2: You commit to myproject. myproject now contains a new commit 
-object in path libxcb. (How to do that is up to the UI but at the 
-repository level the outcome should be obvious). This commit is local to 
-your repository.
+Of course you can rename 'master' branch. But please remember that names
+of branches in git are local matter. Well, except the fact that you usually
+preserve them in a fashion.
 
-Step 3: You propose your changes to the libxcb upstream (it might not be 
-a repository you have write access to). I use the following made up 
-syntax (see man git-rev-parse):
+But equivalent of giving central branch the name of the project would
+be naming the directory with working area and .git directory the name
+of project, or in the case of bare repository giving $GIT_DIR for a project
+name project.git.
 
-A suffix : followed by a path, _followed by a suffix //::_ names the 
-_revision_ at the given path in the tree-ish object named by the part 
-before the colon.
+> Any other useful comments that can be made to a bzr user about working
+> with this difference, positive or negative aspects of it?
 
-Step 3a: Generate a patch
+By the way, 'master' is by no means special. It is default in a few cases
+(init-db, clone), but that's all.
+ 
+> Next question ... one of the reasons I started seriously thinking about
+> git was that in the VCS comparison discussion, it was noted that git is
+> a lot more flexible than bzr in terms of how it can track data (e.g. the
+> git pickaxe command, although I understand that's not in the released
+> version [1.4.4.1] yet?).  A frustration with bzr is that pulling or
+> merging patches from another branch or repo requires them to share the
+> same HEAD.  Is this a requirement in git or can I say, "Hey, I like that
+> particular function in project XXX, I'm going to pull that individual
+> bit of code and its development history into project YYY"?
 
-git diff libxcb//^..libxcb//
+In git repository can have unrelated branches. So you can fetch unrelated
+repository into your repository, and merge/cherry-pick from there
+if needed.
 
-Step 3b: Push your changes
+In defence of Bazaar-NG, you can probably get the same or very similar with
+bzr repos. 
 
-git push <libxcb-repository> HEAD:libxcb//:<branch in libxcb-repository>
+> Last off (for now, I'm sure I'll think of more): is there any easy (or
+> difficult) way to effectively import version history from a bzr
+> repository, and vice versa?
 
-Step 3c: Let your changes be pulled
-
-"Hello, please pull <myproject-repository> HEAD:libxcb//:<branch in 
-libxcb-repository>"
-
-Step 4: Pull upstream version (hopefully with your changes, otherwise 
-you have to merge)
-
-git pull <libxcb-repository> <branch in libxcb-repository>::HEAD:libxcb//
-
-See, it works.
-
- From what I understand you want to do the commit and push steps in one 
-go. How do you want to record local (to your superproject) changes to 
-the subproject?
-
-Regards
+Try git-archimport, or Tailor tool.
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
 
