@@ -6,128 +6,94 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: git pull and merging.
-Date: Wed, 06 Dec 2006 10:31:29 +0100
+Subject: Re: git and bzr
+Date: Tue, 28 Nov 2006 13:37:17 +0100
 Organization: At home
-Message-ID: <el62hi$esu$1@sea.gmane.org>
-References: <cc723f590612052051r62111c4cgfd7ee893cb00f84a@mail.gmail.com> <7vodqhaa7o.fsf@assigned-by-dhcp.cox.net> <cc723f590612052121u1f6e3c9lc7329f40ee1c9e5a@mail.gmail.com>
+Message-ID: <ekhaeg$etk$1@sea.gmane.org>
+References: <45357CC3.4040507@utoronto.ca> <a7e835d40610250308v5d577482m139742e7fe1db185@mail.gmail.com> <87slhcz8zh.wl%cworth@cworth.org> <a7e835d40610260152k658aeaf0hb900cb63870c04e4@mail.gmail.com> <7vu01ro20b.fsf@assigned-by-dhcp.cox.net> <a7e835d40610260257r5f05ea4gc934f1c1cc267977@mail.gmail.com> <20061026101038.GA13310@coredump.intra.peff.net> <877iyne4dm.fsf@alplog.fr> <Pine.LNX.4.64.0610260753090.3962@g5.osdl.org> <456B7C6A.80104@webdrake.net> <845b6e870611280410j58bdcd99nc05d0f67489293e4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-NNTP-Posting-Date: Wed, 6 Dec 2006 09:30:02 +0000 (UTC)
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+NNTP-Posting-Date: Tue, 28 Nov 2006 12:36:13 +0000 (UTC)
+Cc: bazaar-ng@lists.canonical.com
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 85
+Original-Followup-To: gmane.comp.version-control.git
+Original-Lines: 49
 Original-X-Complaints-To: usenet@sea.gmane.org
 X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
 Mail-Copies-To: jnareb@gmail.com
 User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33409>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Grt6F-00041i-8Y for gcvg-git@gmane.org; Wed, 06 Dec
- 2006 10:29:59 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32517>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gp2Bt-0006eV-AZ for gcvg-git@gmane.org; Tue, 28 Nov
+ 2006 13:36:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1760366AbWLFJ34 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
- 04:29:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760372AbWLFJ34
- (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 04:29:56 -0500
-Received: from main.gmane.org ([80.91.229.2]:49927 "EHLO ciao.gmane.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1760366AbWLFJ3z
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec 2006 04:29:55 -0500
+ S1758418AbWK1Mf5 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 28 Nov 2006
+ 07:35:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758433AbWK1Mf5
+ (ORCPT <rfc822;git-outgoing>); Tue, 28 Nov 2006 07:35:57 -0500
+Received: from main.gmane.org ([80.91.229.2]:28556 "EHLO ciao.gmane.org") by
+ vger.kernel.org with ESMTP id S1758417AbWK1Mf4 (ORCPT
+ <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2006 07:35:56 -0500
 Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1Grt5z-0001Z1-0A for git@vger.kernel.org; Wed, 06 Dec 2006 10:29:44 +0100
+ 1Gp2Bc-0006aK-CY for git@vger.kernel.org; Tue, 28 Nov 2006 13:35:44 +0100
 Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
  main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Wed, 06 Dec 2006 10:29:42 +0100
+ <git@vger.kernel.org>; Tue, 28 Nov 2006 13:35:44 +0100
 Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Wed, 06 Dec 2006
- 10:29:42 +0100
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Tue, 28 Nov 2006
+ 13:35:44 +0100
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Aneesh Kumar wrote:
+Erik B?gfors wrote:
 
-> On 12/6/06, Junio C Hamano <junkio@cox.net> wrote:
->> "Aneesh Kumar" <aneesh.kumar@gmail.com> writes:
->>
->>> I have a git.git clone using --use-separate-remote. That means i have
->>> the master branch created by default. Now i need to build git from the
->>> pu branch too. So i created git branch pu remotes/origin/pu.
->>>
->>>
->>> How how do i track the pu branch using git pull. What i mean is the
->>> master local branch is tracked by default using git pull. Is there a
->>> way to track the local pu branch too.
->>
->>         $ cat>.git/remotes/origin <<\EOF
->>         URL: ...kernel.org/pub/scm/git/git.git
->>         Pull: refs/heads/master:refs/remotes/origin/master
->>         Pull: refs/heads/next:refs/remotes/origin/next
->>         Pull: +refs/heads/pu:refs/remotes/origin/pu
->>         EOF
-
-Or you can do .git/config equivalent:
-
-$ git repo-config remote.origin.url ...kernel.org/pub/scm/git/git.git
-$ git repo-config remote.origin.fetch  refs/heads/master:refs/remotes/origin/master
-$ git repo-config remote.origin.fetch  refs/heads/next:refs/remotes/origin/next
-$ git repo-config remote.origin.fetch +refs/heads/pu:refs/remotes/origin/pu
-
->> Then you would checkout 'pu' by having a matching local branch:
->>
->>         $ git branch pu remotes/origin/pu
->>         $ git checkout pu ;# this is your refs/heads/pu
->>         $ make
->>
->> Hacking on it can be done in this branch as usual.  When you are
->> interested in the latest 'pu' from me:
->>
->>         $ git checkout pu ;# this is your refs/heads/pu
->>         $ git fetch ;# most of the time git pull would also be fine...
->>
->> and then:
->>
->>         $ git rebase remotes/origin/pu
->>
->> The 'rebase' in the last step is because my 'pu' rewinds freely;
->> otherwise you would do "git merge remotes/origin/pu" instead.
->>
+>> Next question ... one of the reasons I started seriously thinking about
+>> git was that in the VCS comparison discussion, it was noted that git is
+>> a lot more flexible than bzr in terms of how it can track data (e.g. the
+>> git pickaxe command, although I understand that's not in the released
+>> version [1.4.4.1] yet?).
 > 
-> Okey what i was looking for was a .git/config that will imply as a
-> part of git pull origin that local
+> If this is blame/annotate,  this exists in bzr as well...
 > 
-> master is to track remotes/origin/master
-> pu  should track remotes/origin/pu.
+> : [bagfors@zyrgelkwyt]$ ; bzr help blame
+> usage: bzr annotate FILENAME
+> aliases: ann, blame, praise
 > 
-> I almost felt the branch.<name>.merge was for that.
-> 
-> What is this git-repo-config used for. I am trying to understand
-> 
-> branch.<name>.remote and branch.<name>.merge usage.
+> Show the origin of each line in a file.
 
-Yes it is what branch.<name>.merge is for... and it would work for
-any branch _except_ pu, which rewinds frequently, and you should
-rebase your changes on top of current version instead of merging.
+That doesn't change the fact that "git pickaxe" abilities in "git blame"
+is more than just equivalent of "cvs annotate".
 
-Still it is useful to add branch.<branch>.remote for pu:
+----
+bzr annotate FILENAME
+    Show the origin of each line in a file.
 
-  $ git repo-config branch.refs/heads/pu.remote origin
+----
+git-blame [-c] [-l] [-t] [-f] [-n] [-p] [-L n,m] [-S <revs-file>]
+          [-M] [-C] [-C] [--since=<date>] [<rev>] [--] <file>
 
-so you can do just "git fetch" on pu to fetch from origin (well,
-"git fetch" would fetch from origin as it is the default even in
-absence of branch.<branch>.remote).
+Annotates each line in the given file with information from the revision
+which last modified the line. Optionally, start annotating from the given
+revision.
 
-If it were any other branch, for example next, you could add
+Also it can limit the range of lines annotated.
+[...]
+Also you can use regular expression to specify the line range.
+  git blame -L '/^sub hello {/,/^}$/' foo
+would limit the annotation to the body of hello subroutine.
 
-  $ git repo-config branch.refs/heads/next.remote origin
-  $ git repo-config branch.refs/heads/next.merge refs/remotes/origin/next
+When you are not interested in changes older than the version v2.6.18, or
+changes older than 3 weeks, you can use revision range specifiers similar
+to git-rev-list:
+  git blame v2.6.18.. -- foo
+  git blame --since=3.weeks -- foo
 
-for "git pull" on next branch fo fetch from origin and merge
-next branch from origin. 
-
+http://kernel.org/pub/software/scm/git/docs/git-blame.html
 -- 
 Jakub Narebski
 Warsaw, Poland
