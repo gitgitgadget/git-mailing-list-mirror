@@ -1,73 +1,94 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [ANNOUNCE] gitfs pre-release 0.04
-Date: Mon, 4 Dec 2006 20:54:33 +0100
-Message-ID: <200612042054.34157.jnareb@gmail.com>
-References: <20061204194011.GW47959@gaz.sfgoth.com> <el1tg0$n07$1@sea.gmane.org> <20061204200349.GX47959@gaz.sfgoth.com>
+Subject: Re: git and bzr
+Date: Tue, 28 Nov 2006 20:59:12 +0100
+Organization: At home
+Message-ID: <eki4b1$ivt$1@sea.gmane.org>
+References: <45357CC3.4040507@utoronto.ca> <ekhtnt$rkk$1@sea.gmane.org> <456C89E7.8080404@ableton.com> <200611281940.40139.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Mon, 4 Dec 2006 19:52:57 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+NNTP-Posting-Date: Tue, 28 Nov 2006 19:58:42 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=M3yasEZuNUm+bj/T/kRo685npaBK2egXtuvkB7fPVcRmkVqA3V+91Ozi1XtHuj1CfA7/W88jRxEckGo2nkXoLppIsG2v/ZZ0PqeFVkfH6VQse3xuX/dkjeAxuR66hR9WjV6wp+d5O38ZAqsdMG5QcGcCGPZDbYuIBMzw28B1SgA=
-User-Agent: KMail/1.9.3
-In-Reply-To: <20061204200349.GX47959@gaz.sfgoth.com>
-Content-Disposition: inline
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 44
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33233>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GrJrz-0002Gi-Fp for gcvg-git@gmane.org; Mon, 04 Dec
- 2006 20:52:55 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32569>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gp95o-0005g3-Dn for gcvg-git@gmane.org; Tue, 28 Nov
+ 2006 20:58:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S937349AbWLDTwt (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
- 14:52:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937354AbWLDTws
- (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 14:52:48 -0500
-Received: from ug-out-1314.google.com ([66.249.92.169]:42493 "EHLO
- ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S937349AbWLDTwr (ORCPT <rfc822;git@vger.kernel.org>); Mon, 4 Dec
- 2006 14:52:47 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so3104211uga for
- <git@vger.kernel.org>; Mon, 04 Dec 2006 11:52:45 -0800 (PST)
-Received: by 10.67.26.7 with SMTP id d7mr12586635ugj.1165261964683; Mon, 04
- Dec 2006 11:52:44 -0800 (PST)
-Received: from host-81-190-24-209.torun.mm.pl ( [81.190.24.209]) by
- mx.google.com with ESMTP id g30sm30617448ugd.2006.12.04.11.52.43; Mon, 04 Dec
- 2006 11:52:44 -0800 (PST)
-To: Mitchell Blank Jr <mitch@sfgoth.com>
+ S936076AbWK1T6I (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 28 Nov 2006
+ 14:58:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936077AbWK1T6I
+ (ORCPT <rfc822;git-outgoing>); Tue, 28 Nov 2006 14:58:08 -0500
+Received: from main.gmane.org ([80.91.229.2]:43679 "EHLO ciao.gmane.org") by
+ vger.kernel.org with ESMTP id S936076AbWK1T6F (ORCPT
+ <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2006 14:58:05 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1Gp95N-0005Y2-1e for git@vger.kernel.org; Tue, 28 Nov 2006 20:57:45 +0100
+Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Tue, 28 Nov 2006 20:57:45 +0100
+Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Tue, 28 Nov 2006
+ 20:57:45 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Mitchell Blank Jr wrote:
-> Jakub Narebski wrote:
->
->> Not true. Symlink HEAD still works, and we have even core.preferSymlinkRefs
->> configuration variable.
-> 
-> Yes, but it has to be a symlink pointing into "refs/", not just a regular
-> file holding a hash value.  Which is fine for most purposes but sort of a
-> pain for me.
-> 
-> I'll probably have it be a symlink to "refs/gitfs-dynamic" or something and
-> then have "refs" be populated with that synthetic file and symlinks to
-> any of the normal contents of the refs directory.  Not too bad, but will
-> take a little bit of code.
+Andy Parkins wrote:
 
-You would have to wait a bit. There was talk on git mailing list about
-allowing HEAD to point to non-head ref, or even bare sha1, only forbidding
-committing to such HEAD (but allowing checkout of arbitrary revision,
-not only branch, but also remote branch, tag, or branch~n).
+> On Tuesday 2006, November 28 19:11, Nicholas Allen wrote:
+> 
+>> This can't be fail safe though. I would prefer to also have the option
+>> to be able to *explicitly* tell the RCS that a file was renamed and not
+>> have it try to detect from the content  which is bound to have corner
+>> cases that fail. When I know I renamed a file why can't I explicitly
+> 
+> You want to tell git about a rename that will never fail to be detected?  No 
+> problem.
+> 
+> $ git mv oldname newname
+> $ git commit
+> 
+> The corner cases you speak about are when you rename and edit.
+> 
+> For me, I prefer that to be detected as at least the detection algorithm can 
+> be tuned - there is no fixing it if the VCS was forced to consider it a 
+> rename.
+> 
+> When I started using git I was worried about the lack of a rename, but now I 
+> realise that it's not needed - it's pointless.  The VCS is snapshotting 
+> moments in time, that's it.  Then by making cleverer and cleverer 
+> interpreters of those snapshots you have the potential to do stuff that is 
+> far more useful than "just" rename recording.
+
+Well, there are two cases where this might be not enough.
+
+On is following file renames for history tracking. git-blame does that,
+but git-log and friends does not; the <path> is just revision limiter.
+There is an idea of --follow option to git-log (and friends), to be
+implemented.
+
+Second is rename detection for 3way merges: only ancestor and final
+states are considered, so the above would not help. And rename detection
+might fail if ancestor is not similar enough to end states; well, the
+merge has low chance of being without conflict then.
+
 -- 
 Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
+
