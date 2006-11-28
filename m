@@ -1,72 +1,79 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] "master" should be treated no differently from any other
-     branch
-Date: Thu, 14 Dec 2006 17:14:39 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612141710400.3635@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <200612141519.44294.andyparkins@gmail.com>
- <Pine.LNX.4.63.0612141627090.3635@wbgn013.biozentrum.uni-wuerzburg.de>
- <4581721B.4050102@xs4all.nl> <458174C9.2050401@xs4all.nl>
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: git and bzr
+Date: Wed, 29 Nov 2006 11:14:22 +1300
+Message-ID: <46a038f90611281414y165ed376r80e3dbc3c7888985@mail.gmail.com>
+References: <45357CC3.4040507@utoronto.ca>
+	 <845b6e870611280410j58bdcd99nc05d0f67489293e4@mail.gmail.com>
+	 <ekhaeg$etk$1@sea.gmane.org>
+	 <Pine.LNX.4.63.0611281433270.30004@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <Pine.LNX.4.64.0611280754050.30076@woody.osdl.org>
+	 <456C7592.6020700@ableton.com> <ekhtnt$rkk$1@sea.gmane.org>
+	 <456C9DFF.1040407@onlinehome.de>
+	 <46a038f90611281340u521fb5fct745ebe1ded9a630e@mail.gmail.com>
+	 <456CADE9.7060503@onlinehome.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Thu, 14 Dec 2006 16:14:54 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Tue, 28 Nov 2006 22:14:43 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <458174C9.2050401@xs4all.nl>
-X-Y-GMX-Trusted: 0
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Qbzel8Urofw9gp3FehfPBcY75794Tdrn5sjY35hoPk01X6+YW1gd0bWvRX4lh/HAGUBrYCBR/4OvAbtLtp7wuIhqF3wmRpUBEpAuVqX4oOt5MyXN3W6mALKd4jVXS2I6YmD8JjgWLahTdVjKtgDJNhrtKI2lMKtVSwOji6TzbC0=
+In-Reply-To: <456CADE9.7060503@onlinehome.de>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34360>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GutEN-0004om-VC for gcvg-git@gmane.org; Thu, 14 Dec
- 2006 17:14:48 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32593>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GpBDf-000580-Gh for gcvg-git@gmane.org; Tue, 28 Nov
+ 2006 23:14:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932851AbWLNQOp (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
- 11:14:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932852AbWLNQOp
- (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 11:14:45 -0500
-Received: from mail.gmx.net ([213.165.64.20]:51104 "HELO mail.gmx.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S932851AbWLNQOo
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006 11:14:44 -0500
-Received: (qmail invoked by alias); 14 Dec 2006 16:14:39 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp019) with SMTP; 14 Dec 2006 17:14:39 +0100
-To: Han-Wen Nienhuys <hanwen@xs4all.nl>
+ S1757481AbWK1WOY (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 28 Nov 2006
+ 17:14:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757545AbWK1WOY
+ (ORCPT <rfc822;git-outgoing>); Tue, 28 Nov 2006 17:14:24 -0500
+Received: from nf-out-0910.google.com ([64.233.182.190]:39174 "EHLO
+ nf-out-0910.google.com") by vger.kernel.org with ESMTP id S1757481AbWK1WOY
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2006 17:14:24 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so2706530nfa for
+ <git@vger.kernel.org>; Tue, 28 Nov 2006 14:14:22 -0800 (PST)
+Received: by 10.49.93.13 with SMTP id v13mr12796953nfl.1164752062439; Tue, 28
+ Nov 2006 14:14:22 -0800 (PST)
+Received: by 10.49.60.1 with HTTP; Tue, 28 Nov 2006 14:14:22 -0800 (PST)
+To: "Nicholas Allen" <nick.allen@onlinehome.de>, "Git Mailing List"
+ <git@vger.kernel.org>
 Sender: git-owner@vger.kernel.org
 
-Hi,
+On 11/29/06, Nicholas Allen <nick.allen@onlinehome.de> wrote:
+> yes I can see if you just use plain patches. In bzr though there are
+> bundles that store extra data along with the patch and if you use this
+> instead of a simple patch this will never be a problem as bzr can then
+> notice the same bundle being merged into 2 branches.
 
-On Thu, 14 Dec 2006, Han-Wen Nienhuys wrote:
+Well, there you start depending on everyone using bzr and providing
+metadata-added patches. Git is really good at dealing with scenarios
+where not everyone is using Git.. so the
+content-is-kind-and-metadata-be-damned pays off handsomely.
 
-> Wouldn't it be better to mention the id of the local repository too? 
-> 
->   Merge branch 'master' of ssh+git://git.sv.gnu.org/srv/git/lilypond into 
->   'master' of 'hanwen@xs4all.nl'
-> 
-> this would give more information when these commit messages get pushed 
-> to someone else.
+And the "scenarios where not everyone is using Git" are everytime that
+we are tracking a project that uses a different SCM. For me, the
+"killer-app" of git is that, as it does not rely on magic metadata, it
+is perfectly useful on projects that I track that use CVS or SVN.
 
-And why not put your address and birthday in there, too?
+I submit or commit patches upstream and git spots the commits being
+echoed back in just right because it does not rely on the metadata.
+Only on the content.
 
-Frankly, it does not matter. In my private git repository I see that I 
-often merged from this machine to that machine, criss-crossing often. It 
-does not buy me anything to even know _where_ I got it from.
+cheers,
 
-Besides, the information you are most likely looking for is the committer, 
-which is recorded anyway.
 
-The single most useful information in the Merge message is the name of the 
-branch I merged, since it is more often than not a topic branch, which is 
-aptly named.
-
-Ciao,
-Dscho
+martin
