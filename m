@@ -1,80 +1,89 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Ignacio Arenaza <iarenuno@eteo.mondragon.edu>
-Subject: Re: [PATCH] git-cvsimport: add suport for CVS pserver method   
-	HTTP/1.x  proxying
-Date: Mon, 27 Nov 2006 17:27:01 +0100
-Message-ID: <67bqmsn9d6.fsf@poseidon.eteo.mondragon.edu>
-References: <11642344172790-git-send-email-iarenuno@eteo.mondragon.edu><7v64
-	d5keke.fsf@assigned-by-dhcp.cox.net><67mz6h6xmb.fsf@poseidon.eteo.mond 
-	ragon.edu><7vfyc9cjci.fsf@assigned-by-dhcp.cox.net> 
-	<67hcwp6wpp.fsf@poseidon.eteo.mondragon.edu> 
-	<7vhcwpawvg.fsf@assigned-by-dhcp.cox.net>
+From: Theodore Tso <tytso@mit.edu>
+Subject: Re: Hyphens and hiding core commands
+Date: Tue, 28 Nov 2006 00:40:32 -0500
+Message-ID: <20061128054032.GC11122@thunk.org>
+References: <Pine.LNX.4.64.0611271622260.9647@xanadu.home> <7vmz6cfsuw.fsf@assigned-by-dhcp.cox.net> <87bqmswm1e.wl%cworth@cworth.org> <7vodqse90q.fsf@assigned-by-dhcp.cox.net> <87ac2cwha4.wl%cworth@cworth.org> <7vy7pwcsgp.fsf@assigned-by-dhcp.cox.net> <878xhwwdyj.wl%cworth@cworth.org> <7vk61gcnzl.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Mon, 27 Nov 2006 16:27:23 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Tue, 28 Nov 2006 05:40:43 +0000 (UTC)
+Cc: Carl Worth <cworth@cworth.org>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <7vhcwpawvg.fsf@assigned-by-dhcp.cox.net> (Junio C. 
-	Hamano'smessage of "Fri, 24 Nov 2006 03:48:35 -0800")
-User-Agent: Gnus/5.1002 (Gnus v5.10.2) Emacs/21.4 (gnu/linux)
-X-imss-version: 2.044
-X-imss-result: Passed
-X-imss-scores: Clean:99.90000 C:2 M:3 S:5 R:5
-X-imss-settings: Baseline:1 C:1 M:1 S:1 R:1 (0.0000 0.0000)
+Content-Disposition: inline
+In-Reply-To: <7vk61gcnzl.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.12-2006-07-14
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32426>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32484>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GojK6-0006NM-3i for gcvg-git@gmane.org; Mon, 27 Nov
- 2006 17:27:14 +0100
+ esmtp (Exim 4.43) id 1Govhx-0001Cy-Pq for gcvg-git@gmane.org; Tue, 28 Nov
+ 2006 06:40:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1757150AbWK0Q1K convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Mon, 27 Nov 2006 11:27:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758364AbWK0Q1K
- (ORCPT <rfc822;git-outgoing>); Mon, 27 Nov 2006 11:27:10 -0500
-Received: from mx.eteo.mondragon.edu ([193.146.78.131]:29158 "EHLO
- mx.eteo.mondragon.edu") by vger.kernel.org with ESMTP id S1757150AbWK0Q1J
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 27 Nov 2006 11:27:09 -0500
-Received: by mx.eteo.mondragon.edu (Postfix, from userid 1001) id 0A609B6B7;
- Mon, 27 Nov 2006 17:27:05 +0100 (CET)
-Received: from poseidon.eteo.mondragon.edu (poseidon.eteo.mondragon.edu
- [172.31.3.4]) by mx.eteo.mondragon.edu (Postfix) with ESMTP id B585BB6B6;
- Mon, 27 Nov 2006 17:27:01 +0100 (CET)
-Received: from poseidon.eteo.mondragon.edu (localhost [127.0.0.1]) by
- localhost.eteo.mondragon.edu (Postfix) with ESMTP id 904CC2FD6D; Mon, 27 Nov
- 2006 17:27:01 +0100 (CET)
-Received: by poseidon.eteo.mondragon.edu (Postfix, from userid 1072)id 
- 6BE832FD06; Mon, 27 Nov 2006 17:27:01 +0100 (CET)
+ S935623AbWK1Fki (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 28 Nov 2006
+ 00:40:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935622AbWK1Fki
+ (ORCPT <rfc822;git-outgoing>); Tue, 28 Nov 2006 00:40:38 -0500
+Received: from thunk.org ([69.25.196.29]:65188 "EHLO thunker.thunk.org") by
+ vger.kernel.org with ESMTP id S935621AbWK1Fki (ORCPT
+ <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2006 00:40:38 -0500
+Received: from root (helo=candygram.thunk.org) by thunker.thunk.org with
+ local-esmtps  (tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1
+ (Debian)) id 1GovlV-0003Tk-Kg; Tue, 28 Nov 2006 00:44:21 -0500
+Received: from tytso by candygram.thunk.org with local (Exim 4.62)
+ (envelope-from <tytso@thunk.org>) id 1Govho-0006UG-Lv; Tue, 28 Nov 2006
+ 00:40:32 -0500
 To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano <junkio@cox.net> writes:
+On Mon, Nov 27, 2006 at 06:18:54PM -0800, Junio C Hamano wrote:
+> Read what I wrote again.  You can explain it without talking
+> about index at all.  I really do not think you need to break
+> "git commit" nor rename "update-index" to "resolve" to explain
+> things to new people.
 
-> I deliberately left out the style changes to avoid cluttering
-> the patch; as I said in my first response, that should come as a
-> separate patch that does not change anything else.
+I think you're both right, and talking past each other to a certain
+extent.  Yes, pedagogically it would be better to talk about "git
+commit Makefile hello.c ..."; and "git commit -a" as a short-cut to
+not have to list all of the files explicitly.
 
-Ok, I've had a look at git-cvsimport.perl and I can't come up with a
-consistent style for the 'if () {' sentence. According to grep there
-are 50 instances of 'if(...)' and 39 instances of 'if (...)', so I
-don't know which is the preferred one. And I can't find a CodingStyle
-document either.
+> The tutorial might be better reworked not to start talking about
+> -a but start building small project from a newly created
+> hello.c, git add it, and "git commit" (the first commit), then
+> edit hello.c and "git commit hello.c" (the second commit).
+> 
+> Perhaps.
 
-Which way should I fix them? And should I fix the whole file, or just
-the ones in my original patch?
+Carl was saying that the totorial should be changed to do this.  I
+would change "perhaps" to "DEFINITELY".  
 
-Saludos. I=F1aki.
+I would go further and argue that the man page for git-commit should
+be changed to list the:
 
---=20
-School of Management
-Mondragon University
-20560 O=F1ati - Spain
-+34 943 718009 (ext. 225)
+	git commit file ...
+and
+	git -a
+
+alternatives first, and then talk about the index in a subsequent
+paragraph (perhaps with a note that the first two usages are best for
+novice users) might also be a good idea.  Yes, the man page is
+supposed to be a reference, but some novice users do bother to try to
+learn by reading the man page (shock!  horror!), and it might be good
+if they don't run screaming into the night.
+
+But hey, there's room for many distributed SCM's, and we can always
+let those users use Mercurial and be happy....  (Just know that
+project leaders who are worried about keeping their developer base
+broad might choose Mercurial because it has a gentler learning curve
+--- and that perhaps a few simple documentation changes plus some
+syntatic sugar might make git much more attractive to them and to
+novice git users.)
 
