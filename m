@@ -1,86 +1,62 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] (experimental) per-topic shortlog.
-Date: Sun, 26 Nov 2006 17:38:31 -0800
-Message-ID: <7vejrpr7mw.fsf@assigned-by-dhcp.cox.net>
-References: <7v8xhxsopp.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0611261652520.30076@woody.osdl.org>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Odd merge message in ad0c31?
+Date: Tue, 28 Nov 2006 10:46:01 -0500
+Message-ID: <20061128154601.GE28337@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Mon, 27 Nov 2006 01:38:58 +0000 (UTC)
+NNTP-Posting-Date: Tue, 28 Nov 2006 15:46:52 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <Pine.LNX.4.64.0611261652520.30076@woody.osdl.org> (Linus
-	Torvalds's message of "Sun, 26 Nov 2006 17:06:08 -0800 (PST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32378>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32541>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GoVSO-0002TH-5f for gcvg-git@gmane.org; Mon, 27 Nov
- 2006 02:38:52 +0100
+ esmtp (Exim 4.43) id 1Gp59w-0003Tf-DI for gcvg-git@gmane.org; Tue, 28 Nov
+ 2006 16:46:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1755786AbWK0Bid (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 26 Nov 2006
- 20:38:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755823AbWK0Bid
- (ORCPT <rfc822;git-outgoing>); Sun, 26 Nov 2006 20:38:33 -0500
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:42136 "EHLO
- fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP id S1755786AbWK0Bid
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 26 Nov 2006 20:38:33 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao11.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061127013832.INXW296.fed1rmmtao11.cox.net@fed1rmimpo02.cox.net>; Sun, 26
- Nov 2006 20:38:32 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id rdeg1V0161kojtg0000000; Sun, 26 Nov 2006
- 20:38:41 -0500
-To: Linus Torvalds <torvalds@osdl.org>
+ S935391AbWK1PqI (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 28 Nov 2006
+ 10:46:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935389AbWK1PqI
+ (ORCPT <rfc822;git-outgoing>); Tue, 28 Nov 2006 10:46:08 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:22916 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S935391AbWK1PqF
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2006 10:46:05 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1Gp59h-0005CE-6n; Tue, 28 Nov 2006 10:45:57 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 7E75E20FB7F; Tue, 28 Nov 2006 10:46:01 -0500 (EST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Linus Torvalds <torvalds@osdl.org> writes:
+Is this because of my bash completion breakage?
 
-> On Sun, 26 Nov 2006, Junio C Hamano wrote:
->>
->> This implements an experimental "git log-fpc" command that shows
->> short-log style output sorted by topics.
->> 
->> A "topic" is identified by going through the first-parent
->> chains; this ignores the fast-forward case, but for a top-level
->> integrator it often is good enough.
->
-> Umm. May I suggest that you try this with the kernel repo too..
+commit ad0c31801b19d7614fac4c82fba67121b75bdea8
+Merge: b3fccc6... 255cae8...
+Author: Junio C Hamano <junkio@cox.net>
+Date:   Mon Nov 27 17:14:31 2006 -0800
 
-Have you?
+    Merge branch 'ap/clone-origin' of .git/ into next
+                                   ^^^^^^^^
+                                   ^^^^^^^^
 
-I've compared 
+or were you just doing something weird at that time?
 
-	gitk HEAD~40..HEAD
-
-and 
-
-	git-log-fpc --no-merges HEAD~40..HEAD
-
-Admittedly, the first group ("from the tip of the master") tends
-to be seriously mixed up without a fixed theme (well the theme
-appears to be "fix trivial warnings and compilation breakages
-not limited to any particular subsystem"), but I find the other
-groups quite a sane representation of what actually happened.
-
-My copy of your tree is a bit old (HEAD is at 1abbfb412), but I
-see:
-
- - a two-commit series on MIPS via Ralf Baechle,
- - a four-commit series on ARM via Russel King,
- - a three-commit series on POWERPC via Paul Mackerras,
- - a seventeen-commit series in net/ area via Dave Miller,
- - a three-commit series on x86_64 via Andi Kleen.
- ...
-
-As you said, committer would be a good addition to break a
-fast-forward case to make it even better.
+-- 
