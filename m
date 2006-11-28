@@ -1,90 +1,86 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Documentation/git-commit.txt
-Date: Sat, 09 Dec 2006 21:49:13 +0100
-Organization: At home
-Message-ID: <elf7bt$hiq$1@sea.gmane.org>
-References: <7vy7pik51b.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0612082141260.2630@xanadu.home> <7vpsatelvv.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0612091442470.2630@xanadu.home>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [PATCH] Trim hint printed when gecos is empty.
+Date: Tue, 28 Nov 2006 10:31:44 -0500
+Message-ID: <20061128153144.GB28337@spearce.org>
+References: <ekh2uh$nk2$1@sea.gmane.org> <200611281403.36370.andyparkins@gmail.com> <Pine.LNX.4.63.0611281536230.30004@wbgn013.biozentrum.uni-wuerzburg.de> <200611281506.53518.andyparkins@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-NNTP-Posting-Date: Sat, 9 Dec 2006 20:47:20 +0000 (UTC)
+NNTP-Posting-Date: Tue, 28 Nov 2006 15:32:11 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 40
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-25-107.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+Content-Disposition: inline
+In-Reply-To: <200611281506.53518.andyparkins@gmail.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33832>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gt96L-0000M3-DT for gcvg-git@gmane.org; Sat, 09 Dec
- 2006 21:47:17 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32537>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gp4w4-00082l-5N for gcvg-git@gmane.org; Tue, 28 Nov
+ 2006 16:31:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S937672AbWLIUrP (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 9 Dec 2006
- 15:47:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937673AbWLIUrO
- (ORCPT <rfc822;git-outgoing>); Sat, 9 Dec 2006 15:47:14 -0500
-Received: from main.gmane.org ([80.91.229.2]:36415 "EHLO ciao.gmane.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S937672AbWLIUrO
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 9 Dec 2006 15:47:14 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1Gt969-0007ZD-CS for git@vger.kernel.org; Sat, 09 Dec 2006 21:47:05 +0100
-Received: from host-81-190-25-107.torun.mm.pl ([81.190.25.107]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Sat, 09 Dec 2006 21:47:05 +0100
-Received: from jnareb by host-81-190-25-107.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Sat, 09 Dec 2006
- 21:47:05 +0100
-To: git@vger.kernel.org
+ S1758683AbWK1Pbs (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 28 Nov 2006
+ 10:31:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758690AbWK1Pbs
+ (ORCPT <rfc822;git-outgoing>); Tue, 28 Nov 2006 10:31:48 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:8321 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S1758683AbWK1Pbs
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2006 10:31:48 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1Gp4vs-0005K9-Po; Tue, 28 Nov 2006 10:31:40 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ DC91020FB7F; Tue, 28 Nov 2006 10:31:44 -0500 (EST)
+To: Andy Parkins <andyparkins@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Nicolas Pitre wrote:
-
-> On Fri, 8 Dec 2006, Junio C Hamano wrote:
-[...]
->> Another reason I described the merge workflow is it would become
->> much less clear why --only is useless in merge situation if the
->> reader does not know that a conflicted merge stages the
->> auto-resolved changes.
+Andy Parkins <andyparkins@gmail.com> wrote:
+> > So I will never need something like you suggest. Having said that, if you
+> > think it is best for you to mark every commit as signed-off-by you, just
+> > add an alias:
+> >
+> > 	git repo-config --global alias.c "commit -s"
 > 
-> Sure, but the whole merge concept might still not make any sense at the 
-> moment the user is learning about commit.  In other words, the "commit" 
-> documentation must not depend on the "merge" concept.  It should rather 
-> be the other way around, i.e. the "merge" documentation can easily 
-> depend on the "commit" documentation.
+> That requires that I introduce a new command; I want the existing command to 
+> do The Right Thing.  Also; I certainly wouldn't want it global, as I said in 
+> my original message - this is a per-project choice.  Some projects don't have 
+> Signed-Off lines, so there is no point there.
 > 
-> Just like I carefully avoided talking about "commit -a" in the git-add 
-> man page to avoid circular conceptual dependencies.  But obviously the 
-> git-commit man page must talk about the "add" concept.
-> 
-> This way you get a progressive knowledge base with git-add which pretty 
-> much stands on its own, then you move to git-commit that depends on 
-> git-add, then you move to merging and resolving conflicts that depend on 
-> git-commit.  And so without being distracted by concepts you don't need 
-> to know just yet along the way.
+> Ideally, I'd be able to do
+>         git repo-config alias.commit "commit -s"
+> Just as I can with shell commands.
 
-IMVHO for reference documentation (and manpages for commands are such
-documentation) it is more important to be complete, than to be
-self-contained and without circular conceptual dependencies. The latter
-(and defining things before using it) is more important for things like
-tutorial or quickstart.
+Long ago we decided that aliasing over shipped commands was a baaaad
+idea, as it might get a shell script into trouble when all of a
+sudden the "-s" option is being given to every commit invocation.
 
-If one is not doing merge then one can skip the talk about merges. If one
-git-commit complains about using --only (because of merge), one would
-rather search for information in git-commit(1), not git-merge(1) or
-git-pull(1); well, the merge might be result of git-checkout -m.
+But you can install a commit-msg hook (.git/hooks/commit-msg)
+in any project you want to ensure a Signed-off-by line is in the
+commit message for.  Its handed the COMMIT_EDITMSG file, which is
+what the message will be generated from.  Looking at the code for
+git-commit.sh its perfectly OK if the hook edits the file too.
+
+Further the hook could be interactive, prompting the user "are
+you sure you don't want to sign this commit?" or can be skipped by
+handing --no-verify to commit.
+
+
+I just learned about commit-msg hook the other day when I was reading
+through git-commit.sh and noticed I didn't implement invoking that
+particular hook in git-gui...
+
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
-
