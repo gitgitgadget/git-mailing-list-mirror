@@ -1,59 +1,74 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_ADSP_NXDOMAIN,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD,
-	UNPARSEABLE_RELAY shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
-From: Pazu <pazu@pazu.com.br>
-Subject: Re: Commit f84871 breaks build on OS X
-Date: Thu, 7 Dec 2006 15:20:53 +0000 (UTC)
-Message-ID: <loom.20061207T161845-377@post.gmane.org>
-References: <2D096A57-D7B3-49C7-81E4-EB47A0D933B2@silverinsanity.com> <81b0412b0612070633i7aec43dse7a8beda64437103@mail.gmail.com>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Aaron Bentley <aaron.bentley@utoronto.ca>
+Subject: Re: git and bzr
+Date: Tue, 28 Nov 2006 16:59:25 -0500
+Message-ID: <456CB13D.6090407@utoronto.ca>
+References: <45357CC3.4040507@utoronto.ca> <ekhrhi$g6t$1@sea.gmane.org> <456C809C.3050503@utoronto.ca> <200611281943.40354.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-2
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 7 Dec 2006 15:22:46 +0000 (UTC)
+NNTP-Posting-Date: Tue, 28 Nov 2006 21:59:39 +0000 (UTC)
+Cc: bazaar-ng@lists.canonical.com, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 10
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 201.37.99.93 (Mozilla/5.0 (Macintosh; U; Intel Mac OS X; en-GB; rv:1.8.1) Gecko/20061010 Firefox/2.0)
+User-Agent: Debian Thunderbird 1.0.2 (X11/20060926)
+X-Accept-Language: en-us, en
+In-Reply-To: <200611281943.40354.jnareb@gmail.com>
+X-Enigmail-Version: 0.91.0.0
+X-Panometrics-MailScanner: Found to be clean
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33589>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GsL52-0006UR-Fk for gcvg-git@gmane.org; Thu, 07 Dec
- 2006 16:22:36 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32589>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GpAzH-0001DY-0F for gcvg-git@gmane.org; Tue, 28 Nov
+ 2006 22:59:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S937979AbWLGPVu (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
- 10:21:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937980AbWLGPVu
- (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 10:21:50 -0500
-Received: from main.gmane.org ([80.91.229.2]:33355 "EHLO ciao.gmane.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S937979AbWLGPVt
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec 2006 10:21:49 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1GsL3w-0007GE-Kx for git@vger.kernel.org; Thu, 07 Dec 2006 16:21:29 +0100
-Received: from C925635D.poa.virtua.com.br ([C925635D.poa.virtua.com.br]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Thu, 07 Dec 2006 16:21:28 +0100
-Received: from pazu by C925635D.poa.virtua.com.br with local (Gmexim 0.1
- (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Thu, 07 Dec 2006
- 16:21:28 +0100
-To: git@vger.kernel.org
+ S1757160AbWK1V7c (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 28 Nov 2006
+ 16:59:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757377AbWK1V7c
+ (ORCPT <rfc822;git-outgoing>); Tue, 28 Nov 2006 16:59:32 -0500
+Received: from server4.panoramicfeedback.com ([66.216.124.41]:24512 "EHLO
+ server4.panoramicfeedback.com") by vger.kernel.org with ESMTP id
+ S1757160AbWK1V7b (ORCPT <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2006
+ 16:59:31 -0500
+Received: from server4.panoramicfeedback.com ([66.216.124.41]
+ helo=[192.168.2.19]) by server4.panoramicfeedback.com with esmtp (Exim 3.36
+ #1 (Debian)) id 1GpAz9-0006hH-00; Tue, 28 Nov 2006 16:59:27 -0500
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Alex Riesen <raa.lkml <at> gmail.com> writes:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> Strange. You seem to have the old, generated Makefile you perl/
-> directory. Haven't your pull failed? If so, I suspect that
+Jakub Narebski wrote:
+> Well, I gues that with "annotate friendly" (weave or knit) storage
+> annotate/blame would be faster. But fast annotate was not one of the
+> design goals of git.
+> 
+> How fast is "bzr annotate"?
 
-I've found the same problem as the OP. First my pull failed like you said, but
-then I completely wiped my working copy and tried checkout again -- this time it
-worked fine. However, the build still fails with the error mentioned by the OP.
+$ time bzr annotate builtins.py > /dev/null
 
--- Pazu
+real    0m1.479s
+user    0m1.430s
+sys     0m0.030s
+
+builtins.py has 953 ancestor revisions (i.e. revisions that modified it)
+and 3016 lines.
+
+That's on a machine with 4141.87 Bogomips.  I did optimize annotate
+slightly, but I'm submitting the optimization for our 0.14.0 release.
+
+Aaron
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+Comment: Using GnuPG with Thunderbird - http://enigmail.mozdev.org
+
+iD8DBQFFbLE90F+nu1YWqI0RAlkdAJ99Ca4ITlwx+TuGvBmux0HPDpx28QCfTY0h
+lJYpnpcpWs8SpAP31x48NF4=
+=EDXr
