@@ -6,66 +6,88 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: What's in git.git (stable)
-Date: Thu, 14 Dec 2006 01:16:35 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612140113340.3635@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <7v4przfpir.fsf@assigned-by-dhcp.cox.net> <200612132237.10051.andyparkins@gmail.com>
- <7vk60vbcfz.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: can I remove or move a tag in a remote repository?
+Date: Wed, 29 Nov 2006 10:54:10 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0611291040590.30004@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <87wt5rffbm.fsf@rho.meyering.net> <7virgz1bz7.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Thu, 14 Dec 2006 00:17:04 +0000 (UTC)
-Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
+NNTP-Posting-Date: Wed, 29 Nov 2006 09:54:30 +0000 (UTC)
+Cc: Jim Meyering <jim@meyering.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 X-Authenticated: #1490710
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7vk60vbcfz.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <7virgz1bz7.fsf@assigned-by-dhcp.cox.net>
 X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34269>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GueHN-0006zP-IB for gcvg-git@gmane.org; Thu, 14 Dec
- 2006 01:16:53 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32627>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GpM91-0008Du-1z for gcvg-git@gmane.org; Wed, 29 Nov
+ 2006 10:54:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751826AbWLNAQj (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 13 Dec 2006
- 19:16:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751823AbWLNAQj
- (ORCPT <rfc822;git-outgoing>); Wed, 13 Dec 2006 19:16:39 -0500
-Received: from mail.gmx.net ([213.165.64.20]:55741 "HELO mail.gmx.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S1751822AbWLNAQh
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 13 Dec 2006 19:16:37 -0500
-Received: (qmail invoked by alias); 14 Dec 2006 00:16:36 -0000
+ S966410AbWK2JyN (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 29 Nov 2006
+ 04:54:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758816AbWK2JyN
+ (ORCPT <rfc822;git-outgoing>); Wed, 29 Nov 2006 04:54:13 -0500
+Received: from mail.gmx.net ([213.165.64.20]:64664 "HELO mail.gmx.net") by
+ vger.kernel.org with SMTP id S1758813AbWK2JyN (ORCPT
+ <rfc822;git@vger.kernel.org>); Wed, 29 Nov 2006 04:54:13 -0500
+Received: (qmail invoked by alias); 29 Nov 2006 09:54:11 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp011) with SMTP; 14 Dec 2006 01:16:36 +0100
+ [132.187.25.13] by mail.gmx.net (mp005) with SMTP; 29 Nov 2006 10:54:11 +0100
 To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
 Hi,
 
-On Wed, 13 Dec 2006, Junio C Hamano wrote:
+On Tue, 28 Nov 2006, Junio C Hamano wrote:
 
-> Andy Parkins <andyparkins@gmail.com> writes:
+> Jim Meyering <jim@meyering.net> writes:
 > 
-> >  * git-cat-file is badly named.  git-cat-object would be slightly
-> >    better.
+> > Here's the problem:
+> > When I try to push the new tags, git-push fails:
+> >
+> >   $ git-push -f --tags ssh+git://git.sv.gnu.org/srv/git/coreutils master:refs/heads/master
+> >   updating 'refs/tags/cvs-head'
+> >     from 2fd3fd29a8b40be695bc2327c8cd3bd33e521100
+> >     to   db18f53ffb221e9957124d8af81c11a7e350ac3b
+> >   ...
+> >   Total 1, written 1 (delta 0), reused 0 (delta 0)
+> >   Unpacking 1 objects
+> >   error: denying non-fast forward; you should pull first
+> >
+> > I get the same error also when using --force.
 > 
-> Not a Porcelain.
+> I think this is due to overeager receive.denyNonFastForwards
+> configuration setting at the repository you are pushing into.
 > 
-> We might want to add a pair of built-in internal aliases though:
+> I _think_ what receive-pack does in this case is totally wrong.
+> It should either:
 > 
-> 	[alias]
->         	cat = cat-file -p
->                 less = -p cat-file -p
+>  (1) deny overwriting existing tags -- tags are meant to be
+>      immutable so it should not allow them to be "updated"
+>      regardless of fast-forwardness, or
 > 
-> or have these as samples in template .git/config file.
+>  (2) allow overwriting things under refs/tags/ without any
+>      fast-forward checking.  After all, a tag could point at a
+>      tree or a blob, and there is no fast-forwardness among
+>      trees.
+> 
+> The client side check in "git fetch" takes the latter viewpoint,
+> and I think we should be consistent with it.
+> 
+> Johannes, what do you think?  Does the following patch look sane
+> to you?
 
-I sent a patch which makes "git show" have that functionality, and 
-frankly, I disagree "less" would be a good name for it. It uses the 
-_pager_, which is not always "less", and besides, what it does is to show 
-that particular blob. So obviously, I think my patch is the best approach.
+It does if you agree that (2) is correct.
 
-BTW if you now say "git show master:README" it will show _nothing_, not 
-even an error message.
+But I don't agree. cvs-head really should be a head IMHO, not a tag, 
+because cvs-head really tracks a branch.
+
+I also think that git-fetch silently updating tags is wrong. Rather, it 
+should warn that the tags are different. But I've been wrong before.
 
 Ciao,
+Dscho
