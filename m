@@ -1,89 +1,130 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: protect blob and diff output lines from controls.
-Date: Thu, 9 Nov 2006 11:41:41 +0100
-Message-ID: <200611091141.42205.jnareb@gmail.com>
-References: <7vpsbxqzre.fsf@assigned-by-dhcp.cox.net> <200611091102.56565.jnareb@gmail.com> <7v8xiklxh1.fsf@assigned-by-dhcp.cox.net>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH 0/2] Making "git commit" to mean "git commit -a".
+Date: Wed, 29 Nov 2006 13:08:52 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0611291234350.9647@xanadu.home>
+References: <Pine.LNX.4.64.0611271622260.9647@xanadu.home>
+ <7vmz6cfsuw.fsf@assigned-by-dhcp.cox.net> <87bqmswm1e.wl%cworth@cworth.org>
+ <7vodqse90q.fsf@assigned-by-dhcp.cox.net> <87ac2cwha4.wl%cworth@cworth.org>
+ <7vy7pwcsgp.fsf@assigned-by-dhcp.cox.net> <878xhwwdyj.wl%cworth@cworth.org>
+ <7vk61gcnzl.fsf@assigned-by-dhcp.cox.net>
+ <7vd5786opj.fsf@assigned-by-dhcp.cox.net> <871wnnwi3k.wl%cworth@cworth.org>
+ <7virgzuf38.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0611282322320.9647@xanadu.home>
+ <7vr6vmsnly.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Thu, 9 Nov 2006 10:41:11 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+NNTP-Posting-Date: Wed, 29 Nov 2006 18:09:23 +0000 (UTC)
+Cc: Carl Worth <cworth@cworth.org>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=MSEidwNfB4+WfLftHx5mToJ/m6WQCSN4evKMlS9OrZdFzCp2Ylx/Lm/gi5MxtDdlx5b6k+e44RFYMP9oDIuYNX6a9/MBb1Qt0dMoT3ta6fAVZlIa3uErJpv0UbBJJt3zeCwi1i+tlPIHtw8NSsyy5IXdvx90dgQWg8rFr8nK4Ug=
-User-Agent: KMail/1.9.3
-In-Reply-To: <7v8xiklxh1.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+In-reply-to: <7vr6vmsnly.fsf@assigned-by-dhcp.cox.net>
+X-X-Sender: nico@xanadu.home
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31194>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32653>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gi7L5-0006Bp-QY for gcvg-git@gmane.org; Thu, 09 Nov
- 2006 11:40:56 +0100
+ esmtp (Exim 4.43) id 1GpTrl-0001Sg-NS for gcvg-git@gmane.org; Wed, 29 Nov
+ 2006 19:09:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932430AbWKIKkw convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Thu, 9 Nov 2006 05:40:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932509AbWKIKkw
- (ORCPT <rfc822;git-outgoing>); Thu, 9 Nov 2006 05:40:52 -0500
-Received: from ug-out-1314.google.com ([66.249.92.169]:59812 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S932430AbWKIKkv
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 9 Nov 2006 05:40:51 -0500
-Received: by ug-out-1314.google.com with SMTP id m3so177037ugc for
- <git@vger.kernel.org>; Thu, 09 Nov 2006 02:40:50 -0800 (PST)
-Received: by 10.67.22.7 with SMTP id z7mr1128149ugi.1163068849762; Thu, 09
- Nov 2006 02:40:49 -0800 (PST)
-Received: from host-81-190-24-209.torun.mm.pl ( [81.190.24.209]) by
- mx.google.com with ESMTP id o30sm662188ugd.2006.11.09.02.40.49; Thu, 09 Nov
- 2006 02:40:49 -0800 (PST)
+ S967492AbWK2SIy (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 29 Nov 2006
+ 13:08:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967496AbWK2SIy
+ (ORCPT <rfc822;git-outgoing>); Wed, 29 Nov 2006 13:08:54 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:30367 "EHLO
+ relais.videotron.ca") by vger.kernel.org with ESMTP id S967492AbWK2SIx (ORCPT
+ <rfc822;git@vger.kernel.org>); Wed, 29 Nov 2006 13:08:53 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
+ <0J9I00C307QSORG0@VL-MO-MR002.ip.videotron.ca> for git@vger.kernel.org; Wed,
+ 29 Nov 2006 13:08:53 -0500 (EST)
 To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
->> Junio C Hamano wrote:
->>> [...] =A0There is another
->>> thing I noticed while testing it with an artifitial test that I
->>> haven't fixed, but I think you already know about it (when the
->>> commitdiff is completely empty except mode changes, we end up
->>> with unbalanced div). =A0My test's tip can be found at
->>> 'gitweb-test-funny-char' branch temporarily in the git.git
->>> repository.
->>
->> Damn. I thought I corrected this on resend...
->=20
-> I think you need this, otherwise when the last filepair changes
-> only metainfo you fail to close the extended header div.
+On Tue, 28 Nov 2006, Junio C Hamano wrote:
 
-True, I forgot about the situation where empty patch is _last_
-in the patchset (which includes the situation when it is _only_
-patch).
+> Nicolas Pitre <nico@cam.org> writes:
+> 
+> > This argument has its converse.  What you should _not_ have to worry 
+> > about all the time is whether your index really includes all the changes 
+> > you want included in your next commit.
+> 
+> That's what we have "git diff" with various output options for;
+> I often do "git diff --stat" or "git diff --name-status" when I
+> know I am about to commit in a dirty working tree.  I suspect
+> that I am not getting your point.
 
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index 1a757cc..e54a29e 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -2338,6 +2338,8 @@ sub git_patchset_body {
-> =20
->  		print format_diff_line($patch_line);
->  	}
-> +	print "</div>\n" if $in_header; # extended header
-I would write '# class=3D"diff extended_header"' here instead.
-> +
->  	print "</div>\n" if $patch_found; # class=3D"patch"
-> =20
->  	print "</div>\n"; # class=3D"patchset"
+I'm afraid this conversation is getting nowhere then.
 
-Looks good. Ack.
+> > And whether wanting to leave local changes in the working directory 
+> > without commiting them actually happen more often than wanting to commit 
+> > every changes is arguable.
+> 
+> I do not think anybody is talking about which happens more
+> often.
 
---=20
-Jakub Narebski
+But I do.
+
+> "screw the index" people do not have to worry about the
+> index during the course of their changes in the working tree
+> toward the next commit, and the only time they need to tell git
+> (which _IS_ a system based on the index, dammit) about what they
+> want to do with the index is at the commit time, and they tell
+> git to "screw the index" by passing "-a" to "git commit".
+
+No one talked about "screw the index" people.  Those are happily using 
+Cogito.
+
+We're talking about flattening the GIT learning curve.  And as futile it 
+may seem to you that newbies should just use "commit -a" without 
+thinking, they still get bothered by that -a there.  And probably 
+they'll forget about it once in a while and then GIT will _appear_ as 
+malfunctioning to them.
+
+Of course amongst those newbies that didn't went away at this point 
+there will be those who decide to study further and come to the index 
+concept.  And I hope that we all agree that the index is a powerful but 
+still advanced concept that should not be presented up front.
+
+But my point is: why not making a very little change to the default 
+commit behavior. Really little change involving -a being the default.  
+The impact on newbies will be significant as they won't have to grok 
+everything at once to make sense of this -a we are telling them to use 
+blindly. And it will sort of match known expectations to commit 
+everything dirty.
+
+And actually my point above is that in many cases, maybe the majoryty of 
+those case but this is arguable, what one is doing is not keeping dirty 
+and uncommited state around but rather committing every changes all the 
+time.  In _that_ case, which might not be all the time but often enough, 
+then using -a is annoying[1].
+
+So having -a the default makes GIT much more friendly to new users.  You 
+"add" files, you "commit", you edit some files, you "commit" again, and 
+everything works fine, and you are happy and starts feeling good about 
+GIT.
+
+Now for those who've seen the light and want to use the index it is not 
+much of a bother to add a -i to their commit invokation.  At this point 
+if you understand the index you know what you're doing, and using -i 
+won't bother you as much it bothered you to use -a without knowing 
+why when you was a newbie.
+
+But still, if you are a GIT old fart and have difficulties switching 
+habits, or if you simply are the kind with dirty not-to-commit state in 
+your tree and adding -i all the time bothers you just like [1] above, 
+then there is a way out!  You are a GIT expert at this point of course 
+and certainly know how to add an alias for the -i to be implicit with 
+your "commit".
+
+Therefore I think this is much more logical to ask the experts to add an 
+alias for "commit -i" than asking such tricks from less experienced 
+users. This is all my point is about.
+
+
