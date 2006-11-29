@@ -1,68 +1,55 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: *
 X-Spam-ASN: AS24867 82.211.80.0/20
-X-Spam-Status: No, score=1.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=1.8 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,LIST_MIRROR_RECEIVED,MSGID_FROM_MTA_HEADER
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Path: news.gmane.org!not-for-mail
-From: Nicholas Allen <nick.allen@onlinehome.de>
+From: Jakub Narebski <jnareb@gmail.com>
 Newsgroups: gmane.comp.version-control.bazaar-ng.general,gmane.comp.version-control.git
 Subject: Re: git and bzr
-Date: Tue, 28 Nov 2006 23:48:53 +0100
-Message-ID: <456CBCD5.3050505@onlinehome.de>
-References: <45357CC3.4040507@utoronto.ca>
-	<a7e835d40610250308v5d577482m139742e7fe1db185@mail.gmail.com>
-	<87slhcz8zh.wl%cworth@cworth.org>
-	<a7e835d40610260152k658aeaf0hb900cb63870c04e4@mail.gmail.com>
-	<7vu01ro20b.fsf@assigned-by-dhcp.cox.net>
-	<a7e835d40610260257r5f05ea4gc934f1c1cc267977@mail.gmail.com>
-	<20061026101038.GA13310@coredump.intra.peff.net>
-	<877iyne4dm.fsf@alplog.fr>
-	<Pine.LNX.4.64.0610260753090.3962@g5.osdl.org>
-	<456B7C6A.80104@webdrake.net>
-	<845b6e870611280410j58bdcd99nc05d0f67489293e4@mail.gmail.com>
-	<ekhaeg$etk$1@sea.gmane.org>
-	<Pine.LNX.4.63.0611281433270.30004@wbgn013.biozentrum.uni-wuerzburg.de>
-	<Pine.LNX.4.64.0611280754050.30076@woody.osdl.org>
-	<456C7592.6020700@ableton.com> <ekhtnt$rkk$1@sea.gmane.org>
-	<456C9DFF.1040407@onlinehome.de> <456CA981.4010808@onlinehome.de>
-	<Pine.LNX.4.64.0611281346490.4244@woody.osdl.org>
-	<456CB197.2030201@onlinehome.de>
-	<Pine.LNX.4.64.0611281413310.4244@woody.osdl.org>
-	<Pine.LNX.4.64.0611281432300.4244@woody.osdl.org>
+Date: Wed, 29 Nov 2006 12:01:41 +0100
+Message-ID: <200611291201.42561.jnareb@gmail.com>
+References: <45357CC3.4040507@utoronto.ca> <456CBCD5.3050505@onlinehome.de>
+	<Pine.LNX.4.63.0611291145510.30004@wbgn013.biozentrum.uni-wuerzburg.de>
 NNTP-Posting-Host: main.gmane.org
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-X-Trace: sea.gmane.org 1164754153 26650 80.91.229.2 (28 Nov 2006 22:49:13 GMT)
+X-Trace: sea.gmane.org 1164798023 7854 80.91.229.2 (29 Nov 2006 11:00:23 GMT)
 X-Complaints-To: usenet@sea.gmane.org
-NNTP-Posting-Date: Tue, 28 Nov 2006 22:49:13 +0000 (UTC)
-Cc: bazaar-ng@lists.canonical.com, git@vger.kernel.org,
-	Jakub Narebski <jnareb@gmail.com>
-Original-X-From: bazaar-ng-bounces@lists.canonical.com Tue Nov 28 23:49:10 2006
+NNTP-Posting-Date: Wed, 29 Nov 2006 11:00:23 +0000 (UTC)
+Cc: Linus Torvalds <torvalds@osdl.org>, bazaar-ng@lists.canonical.com,
+	git@vger.kernel.org
+Original-X-From: bazaar-ng-bounces@lists.canonical.com Wed Nov 29 12:00:17 2006
 Return-path: <bazaar-ng-bounces@lists.canonical.com>
 Envelope-to: gcvbg-bazaar-ng@m.gmane.org
 Received: from esperanza.ubuntu.com ([82.211.81.173])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1GpBl9-0005Fp-7g
-	for gcvbg-bazaar-ng@m.gmane.org; Tue, 28 Nov 2006 23:49:03 +0100
+	id 1GpNAm-0003p0-NC
+	for gcvbg-bazaar-ng@m.gmane.org; Wed, 29 Nov 2006 12:00:16 +0100
 Received: from localhost ([127.0.0.1] helo=esperanza.ubuntu.com)
 	by esperanza.ubuntu.com with esmtp (Exim 4.60)
 	(envelope-from <bazaar-ng-bounces@lists.canonical.com>)
-	id 1GpBl7-0001a8-Kg; Tue, 28 Nov 2006 22:49:01 +0000
-Received: from moutng.kundenserver.de ([212.227.126.177])
+	id 1GpNAX-0000wW-7z; Wed, 29 Nov 2006 11:00:01 +0000
+Received: from ug-out-1314.google.com ([66.249.92.173])
 	by esperanza.ubuntu.com with esmtp (Exim 4.60)
-	(envelope-from <nick.allen@onlinehome.de>) id 1GpBl1-0001Zd-T1
-	for bazaar-ng@lists.canonical.com; Tue, 28 Nov 2006 22:48:55 +0000
-Received: from [84.190.155.117] (helo=[192.168.1.100])
-	by mrelayeu.kundenserver.de (node=mrelayeu2) with ESMTP (Nemesis),
-	id 0MKwtQ-1GpBkz3pMI-0007Xc; Tue, 28 Nov 2006 23:48:55 +0100
-User-Agent: Thunderbird 1.5.0.8 (X11/20061115)
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0611281432300.4244@woody.osdl.org>
-X-Enigmail-Version: 0.94.0.0
-X-Provags-ID: kundenserver.de abuse@kundenserver.de
-	login:8f68dfdb39f9894a8a7411e7c5df1048
+	(envelope-from <jnareb@gmail.com>) id 1GpNAS-0000w3-T1
+	for bazaar-ng@lists.canonical.com; Wed, 29 Nov 2006 10:59:57 +0000
+Received: by ug-out-1314.google.com with SMTP id e2so1525430ugf
+	for <bazaar-ng@lists.canonical.com>;
+	Wed, 29 Nov 2006 02:59:56 -0800 (PST)
+Received: by 10.67.97.18 with SMTP id z18mr3026629ugl.1164797996201;
+	Wed, 29 Nov 2006 02:59:56 -0800 (PST)
+Received: from host-81-190-24-209.torun.mm.pl ( [81.190.24.209])
+	by mx.google.com with ESMTP id 27sm4195547ugp.2006.11.29.02.59.54;
+	Wed, 29 Nov 2006 02:59:54 -0800 (PST)
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+User-Agent: KMail/1.9.3
+In-Reply-To: <Pine.LNX.4.63.0611291145510.30004@wbgn013.biozentrum.uni-wuerzburg.de>
+Content-Disposition: inline
 X-BeenThere: bazaar-ng@lists.canonical.com
 X-Mailman-Version: 2.1.8
 Precedence: list
@@ -76,19 +63,41 @@ List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar-ng>,
 	<mailto:bazaar-ng-request@lists.canonical.com?subject=subscribe>
 Original-Sender: bazaar-ng-bounces@lists.canonical.com
 Errors-To: bazaar-ng-bounces@lists.canonical.com
-Xref: news.gmane.org gmane.comp.version-control.bazaar-ng.general:19817 gmane.comp.version-control.git:32604
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32604>
+Xref: news.gmane.org gmane.comp.version-control.bazaar-ng.general:19831 gmane.comp.version-control.git:32633
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32633>
 X-Mailing-List: git@vger.kernel.org
 
+Johannes Schindelin wrote:
 
+> On Tue, 28 Nov 2006, Nicholas Allen wrote:
 > 
-> So the tools are certainly there. "git status" just isn't necessarily the 
-> best one (or the best that it could be, for that matter)..
+>> [Linus wrote...]
+>>> 
+>>> So the tools are certainly there. "git status" just isn't necessarily the 
+>>> best one (or the best that it could be, for that matter)..
+>> 
+>> I guess I hit a limitation in the output of status as opposed to a
+>> limitation in what git can do ;-)
+> 
+> I think it is something different altogether: you learnt how to use CVS, 
+> and you learnt how to use bzr, and you are now biased towards using the 
+> same names for the same operations in git.
+> 
+> I actually use git-status quite often, just before committing, to know 
+> what I changed. But I will probable retrain my mind to use "git diff" or 
+> even "git diff --stat", because it is more informative.
+> 
+> As for your scenario: There really should be a "what to do when my merge 
+> screwed up?" document.
 
-I guess I hit a limitation in the output of status as opposed to a
-limitation in what git can do ;-)
+It would be nice to have git-resolved (or git-resolve) wrapper around
+git-update-index similar to git-add, git-mv, git-rm which would mark
+file as resolved, without need for git-update-index, git-add and git-rm
+even in the case of CONFLICT(rename/rename). Although I'm not sure
+if it could work in all cases in the simple form of "git resolved <file>",
+e.g. in the case of CONFLICT(add/add).
 
-Nick
-
-
+By the way, I wonder if git can detect the case when the same (or nearly
+the same) file was added in two different branches under different
+filename...
 
