@@ -2,87 +2,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Cleaning up git user-interface warts
-Date: Wed, 15 Nov 2006 10:16:02 -0800
-Message-ID: <7vbqn8o9st.fsf@assigned-by-dhcp.cox.net>
-References: <87k61yt1x2.wl%cworth@cworth.org> <455A1137.8030301@shadowen.org>
-	<87hcx1u934.wl%cworth@cworth.org>
-	<Pine.LNX.4.64.0611141518590.2591@xanadu.home>
-	<87bqn9u43s.wl%cworth@cworth.org>
-	<7vr6w5y7to.fsf@assigned-by-dhcp.cox.net>
-	<7virhhy76h.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0611142048350.2591@xanadu.home>
-	<7vu011qnl6.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0611151454250.13772@wbgn013.biozentrum.uni-wuerzburg.de>
-	<Pine.LNX.4.64.0611151000460.2591@xanadu.home>
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: What's in git.git
+Date: Wed, 29 Nov 2006 11:21:21 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0611291118160.30004@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <7vzmaf3kdl.fsf@assigned-by-dhcp.cox.net> <87zmabv0i7.wl%cworth@cworth.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 15 Nov 2006 18:16:31 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Wed, 29 Nov 2006 10:22:07 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <Pine.LNX.4.64.0611151000460.2591@xanadu.home> (Nicolas Pitre's
-	message of "Wed, 15 Nov 2006 10:10:50 -0500 (EST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <87zmabv0i7.wl%cworth@cworth.org>
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31458>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32629>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GkPIw-00031L-HR for gcvg-git@gmane.org; Wed, 15 Nov
- 2006 19:16:11 +0100
+ esmtp (Exim 4.43) id 1GpMZD-0005Ii-Mc for gcvg-git@gmane.org; Wed, 29 Nov
+ 2006 11:21:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1030802AbWKOSQG (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
- 13:16:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030804AbWKOSQG
- (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 13:16:06 -0500
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:53210 "EHLO
- fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP id S1030802AbWKOSQD
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 13:16:03 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao01.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061115181602.PGKS9173.fed1rmmtao01.cox.net@fed1rmimpo02.cox.net>; Wed, 15
- Nov 2006 13:16:02 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id n6G81V00v1kojtg0000000; Wed, 15 Nov 2006
- 13:16:09 -0500
-To: Nicolas Pitre <nico@cam.org>
+ S966872AbWK2KVZ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 29 Nov 2006
+ 05:21:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966874AbWK2KVY
+ (ORCPT <rfc822;git-outgoing>); Wed, 29 Nov 2006 05:21:24 -0500
+Received: from mail.gmx.net ([213.165.64.20]:63454 "HELO mail.gmx.net") by
+ vger.kernel.org with SMTP id S966872AbWK2KVY (ORCPT
+ <rfc822;git@vger.kernel.org>); Wed, 29 Nov 2006 05:21:24 -0500
+Received: (qmail invoked by alias); 29 Nov 2006 10:21:22 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp045) with SMTP; 29 Nov 2006 11:21:22 +0100
+To: Carl Worth <cworth@cworth.org>
 Sender: git-owner@vger.kernel.org
 
-Nicolas Pitre <nico@cam.org> writes:
+Hi,
 
->> Why not do something like "get/put" instead? It is
->> 
->> - easier to remember
->> - not bogus (AFAICT the meaning is not used in diametrical senses)
->> - shorter to type than download/upload
->
-> Well, of all compromizes this is probably the best one so far.  I would 
-> have prefered to bite the bullet and fix "pull" instead of adding yet 
-> more commands.  But if the consensus is that there is no way on earth 
-> that "pull" can be salvaged then get/put is probably more enjoyable than 
-> download/upload.  This way pull/fetch/push could still be available 
-> (albeit burried somewhere out of sight).
+On Tue, 28 Nov 2006, Carl Worth wrote:
 
-I still think in the long run you would be better off giving
-separate names to Porcelains because I am sure you are going to
-find the next command to "fix", you cannot suddenly change the
-semantics of the command, and you soon run out of alternative
-ways to name the action and you in addition have to explain the
-differences between fetch and get to new users.  At least, with
-"ig pull", you can dismiss all the broken git-x Porcelain-ish by
-saying "Oh, git-x user-level commands had inconsistent semantics
-and broken UI so do not use them anymore -- they are still there
-only to help old timers transition.  The user level commands are
-now called ig-x and ig stands for improved git".
+> On Sat, 25 Nov 2006 02:12:38 -0800, Junio C Hamano wrote:
+> >  * The new "--depth $n" parameter to git clone/fetch tries to
+> >    limit the commit ancestry depth to $n.
+> [...]
+> Has though been given to make the depth selection consistent with
+> other limiting options for rev-parse and rev-list? For example, I'd
+> like to be able to use --since to get a shallow clone, (so should
+> --depth instead be --max-count?, and can we re-use some existing
+> machinery here?).
 
-But that's a very minor detail and can be fixed when we hit the
-wall, so let's wait and see what happens.  Please consider my
-gh/gu/cg/whatever dropped.
+I briefly considered that, but decided against it, for two reasons: 1) it 
+puts the burden of calculation on the server, and 2) I was not at all sure 
+if the whole shallow stuff would be useful to begin with (and therefore 
+avoided complicated stuff as much as possible).
 
-I think get/put is much better than suddenly changing what pull
-means and is shorter to type than x-load; I am Ok with them.
-Although I think these words are tainted by SCCS, I do not think
-anybody cares.
+> >    Petr Baudis (1):
+> >       Make git-clone --use-separate-remote the default
+> ...
+> >    Junio C Hamano (19):
+> >       git-merge: make it usable as the first class UI
+> 
+> Also very exciting. Please do keep up the user-interface improvements, 
+> everybody.
+
+I concur.
+
+Ciao,
+Dscho
