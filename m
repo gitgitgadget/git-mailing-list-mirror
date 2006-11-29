@@ -1,75 +1,71 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: fork0@t-online.de (Alex Riesen)
-Subject: Re: [RFC \ WISH] Add -o option to git-rev-list
-Date: Sun, 10 Dec 2006 15:54:44 +0100
-Message-ID: <20061210145444.GB4836@steel.home>
-References: <e5bfff550612100338ye2ca2a0u1c8f29bbc59c5431@mail.gmail.com>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: [PATCH] pack-objects: remove redundent status information
+Date: Wed, 29 Nov 2006 17:15:48 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0611291704440.9647@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sun, 10 Dec 2006 14:55:21 +0000 (UTC)
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <junkio@cox.net>,
-	Shawn Pearce <spearce@spearce.org>,
-	Linus Torvalds <torvalds@osdl.org>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+NNTP-Posting-Date: Wed, 29 Nov 2006 22:16:13 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <e5bfff550612100338ye2ca2a0u1c8f29bbc59c5431@mail.gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-ID: XVycB+ZJoeR4MJuhlNO9LO3ailiuHnG1xqvdJ-x66ehoR5GvcHodci
-X-TOI-MSGID: 13b9689c-ef95-4331-8b9a-6ec46d93c9e6
+X-X-Sender: nico@xanadu.home
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33893>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GtQ5A-00074b-Px for gcvg-git@gmane.org; Sun, 10 Dec
- 2006 15:55:13 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32673>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GpXie-0005MO-1H for gcvg-git@gmane.org; Wed, 29 Nov
+ 2006 23:15:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1760836AbWLJOzH (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 10 Dec 2006
- 09:55:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760783AbWLJOzH
- (ORCPT <rfc822;git-outgoing>); Sun, 10 Dec 2006 09:55:07 -0500
-Received: from mailout11.sul.t-online.com ([194.25.134.85]:34238 "EHLO
- mailout11.sul.t-online.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1760836AbWLJOzG (ORCPT <rfc822;git@vger.kernel.org>); Sun, 10 Dec
- 2006 09:55:06 -0500
-Received: from fwd34.aul.t-online.de  by mailout11.sul.t-online.com with smtp
-  id 1GtQ4v-0006Yp-05; Sun, 10 Dec 2006 15:54:57 +0100
-Received: from tigra.home
- (XVycB+ZJoeR4MJuhlNO9LO3ailiuHnG1xqvdJ-x66ehoR5GvcHodci@[84.163.110.190]) by
- fwd34.sul.t-online.de with esmtp id 1GtQ4j-1UBmaW0; Sun, 10 Dec 2006 15:54:45
- +0100
-Received: from steel.home (steel.home [192.168.1.2]) by tigra.home (Postfix)
- with ESMTP id D39DC277AF; Sun, 10 Dec 2006 15:54:44 +0100 (CET)
-Received: from raa by steel.home with local (Exim 4.42 #1 (Debian)) id
- 1GtQ4i-0001m6-2E; Sun, 10 Dec 2006 15:54:44 +0100
-To: Marco Costalba <mcostalba@gmail.com>
+ S1758844AbWK2WPu (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 29 Nov 2006
+ 17:15:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758851AbWK2WPu
+ (ORCPT <rfc822;git-outgoing>); Wed, 29 Nov 2006 17:15:50 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:8310 "EHLO
+ relais.videotron.ca") by vger.kernel.org with ESMTP id S1758844AbWK2WPt
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 29 Nov 2006 17:15:49 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
+ <0J9I00KB2J6CYC70@VL-MH-MR001.ip.videotron.ca> for git@vger.kernel.org; Wed,
+ 29 Nov 2006 17:15:49 -0500 (EST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Marco Costalba, Sun, Dec 10, 2006 12:38:42 +0100:
-> So my request is if it is possible to make git-rev-list write
-> _directly_ to a file, without shell redirection, I would ask if it is
-> possible:
+The final 'nr_result' and 'written' values must always be the same 
+otherwise we're in deep trouble.  So let's remove a redundent report.
 
-Well, it is usually possible to redirect stdout directly into a file
-(see dup2). "Usually", unless you want windows which as always has
-it's own stupid way of doing simple things. Nevertheless, it's
-possible to do it without ever touching rev-list.
+And for paranoia sake let's make sure those two variables are actually 
+equal after all objects are written (one never knows).
 
-> I understand this could be not exactly a top priority feature for git
-> people, but I would really like to get the best possible interface
-> with the plumbing git and the -o options is also a very common one.
+Signed-off-by: Nicolas Pitre <nico@cam.org>
 
-Sadly, you're right. Almost every command-line program got the option.
-What education could have caused this, I wonder...
+---
 
-> P.S: On another thread I explained why I see problematic linking
-> directly against libgit.a
-
-It still is the fastest you can get.
+diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
+index 753bcd5..a2dc7d1 100644
+--- a/builtin-pack-objects.c
++++ b/builtin-pack-objects.c
+@@ -514,6 +514,8 @@ static void write_pack_file(void)
+ 	if (do_progress)
+ 		fputc('\n', stderr);
+  done:
++	if (written != nr_result)
++		die("wrote %d objects while expecting %d", written, nr_result);
+ 	sha1close(f, pack_file_sha1, 1);
+ }
+ 
+@@ -1662,7 +1664,7 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+ 		}
+ 	}
+ 	if (progress)
+-		fprintf(stderr, "Total %d, written %d (delta %d), reused %d (delta %d)\n",
+-			nr_result, written, written_delta, reused, reused_delta);
++		fprintf(stderr, "Total %d (delta %d), reused %d (delta %d)\n",
++			written, written_delta, reused, reused_delta);
+ 	return 0;
