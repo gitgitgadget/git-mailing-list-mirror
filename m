@@ -5,75 +5,74 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
 	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: [WISH] Store also tag dereferences in packed-refs
-Date: Sun, 19 Nov 2006 23:25:49 +0100
-Message-ID: <e5bfff550611191425g30d02b98l71cfdc6439d2e09f@mail.gmail.com>
-References: <e5bfff550611180115j135746a1h916e8ae029d1374d@mail.gmail.com>
-	 <e5bfff550611181047w6712774fkccc697d312b87c7e@mail.gmail.com>
-	 <7vac2oefuz.fsf@assigned-by-dhcp.cox.net>
-	 <e5bfff550611181628o41e11652ycd17ddad5dd21225@mail.gmail.com>
-	 <Pine.LNX.4.64.0611181706250.3692@woody.osdl.org>
-	 <e5bfff550611190140n3277ee26v95feba26dd3348fa@mail.gmail.com>
-	 <Pine.LNX.4.64.0611190945500.3692@woody.osdl.org>
-	 <e5bfff550611191107o63d89d8bp5ff4080803a0d784@mail.gmail.com>
-	 <e5bfff550611191209s63982818vd3999b543e68e8df@mail.gmail.com>
-	 <Pine.LNX.4.64.0611191219350.3692@woody.osdl.org>
+From: Seth Falcon <sethfalcon@gmail.com>
+Subject: Re: [PATCH 2/3] git-svn: documentation updates
+Date: Wed, 29 Nov 2006 07:58:40 -0800
+Message-ID: <m2wt5es0r3.fsf@ziti.fhcrc.org>
+References: <1164768702941-git-send-email-normalperson@yhbt.net>
+	<11647687042130-git-send-email-normalperson@yhbt.net>
+	<456D36CE.1060300@midwinter.com> <20061129085419.GB4486@hand.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sun, 19 Nov 2006 22:26:36 +0000 (UTC)
-Cc: "Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Wed, 29 Nov 2006 15:58:57 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=YdCvUwVx4ZHuYcwnhhJsWOaARkRvbLWNSWRg1y/Ob91rxuzh658+5lOK5c2SsOJOzVJhe0+HYeXqHusFadhGg05uzMR8mXhyDrtkBMBenBvJeppkFOuzOkPE75fCQghCKgnVo+c+1/YRYZDCyRVgCHdBQ2QmMPQiN7PdNHPjLLE=
-In-Reply-To: <Pine.LNX.4.64.0611191219350.3692@woody.osdl.org>
-Content-Disposition: inline
+        h=received:to:cc:subject:references:from:date:in-reply-to:message-id:user-agent:mime-version:content-type;
+        b=Nw3Yf+6sYChsKuYFZjSAeGKKBjX8Isd4nRZbNDpKJTFaxCaVwhiXxfv3vPE9zC+sY6+HzFEHQKMk5proowsL9Nr4jwwE1/qJjQGcfC80idpem1Gb3Ex1nXkG7Lax+NQlmIlMMs/2RhxQJZuA3aAwTmVbNV456BlMQ5VtlWtXbsI=
+In-Reply-To: <20061129085419.GB4486@hand.yhbt.net> (Eric Wong's message of "Wed, 29 Nov 2006 00:54:19 -0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (darwin)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31868>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32646>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Glv7O-0007MD-Vv for gcvg-git@gmane.org; Sun, 19 Nov
- 2006 23:26:31 +0100
+ esmtp (Exim 4.43) id 1GpRpU-0007rL-To for gcvg-git@gmane.org; Wed, 29 Nov
+ 2006 16:58:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S933472AbWKSW02 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 19 Nov 2006
- 17:26:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933473AbWKSW02
- (ORCPT <rfc822;git-outgoing>); Sun, 19 Nov 2006 17:26:28 -0500
-Received: from py-out-1112.google.com ([64.233.166.176]:46919 "EHLO
- py-out-1112.google.com") by vger.kernel.org with ESMTP id S933472AbWKSW01
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 19 Nov 2006 17:26:27 -0500
-Received: by py-out-1112.google.com with SMTP id a29so874985pyi for
- <git@vger.kernel.org>; Sun, 19 Nov 2006 14:25:53 -0800 (PST)
-Received: by 10.35.101.1 with SMTP id d1mr2182660pym.1163975149913; Sun, 19
- Nov 2006 14:25:49 -0800 (PST)
-Received: by 10.35.42.4 with HTTP; Sun, 19 Nov 2006 14:25:49 -0800 (PST)
-To: "Linus Torvalds" <torvalds@osdl.org>
+ S935684AbWK2P6a (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 29 Nov 2006
+ 10:58:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935774AbWK2P6a
+ (ORCPT <rfc822;git-outgoing>); Wed, 29 Nov 2006 10:58:30 -0500
+Received: from ug-out-1314.google.com ([66.249.92.172]:57970 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S935684AbWK2P6a
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 29 Nov 2006 10:58:30 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so1826485uga for
+ <git@vger.kernel.org>; Wed, 29 Nov 2006 07:58:28 -0800 (PST)
+Received: by 10.78.183.15 with SMTP id g15mr2324974huf.1164815908429; Wed, 29
+ Nov 2006 07:58:28 -0800 (PST)
+Received: from ziti.fhcrc.org ( [67.171.24.140]) by mx.google.com with ESMTP
+ id 39sm7985968hug.2006.11.29.07.58.26; Wed, 29 Nov 2006 07:58:27 -0800 (PST)
+To: Eric Wong <normalperson@yhbt.net>
 Sender: git-owner@vger.kernel.org
 
-On 11/19/06, Linus Torvalds <torvalds@osdl.org> wrote:
->
->
->
-> For example, it's often (but not always) faster to do all the readdir's
-> separately, and then sort the thing by inode number, and try to avoid
-> back-and-forth movement. But quite frankly, that kind of stuff probably
-> isn't sane to do in "git show-refs".
+Eric Wong <normalperson@yhbt.net> writes:
+> I've been considering something along those lines.  I'm interested in
+> renaming the current 'commit' command to something else (it still has
+> its uses), but I haven't figured out what to call it...
 
-Excuse me for my ignorance, but isn' it the job of OS disk schedulers?
+I think this would be a sensible change and will help new users get
+started with git-svn.  
 
->
-> Anyway, I think that if we really want to make "git show-refs" go fast
-> when things are cold in the cache, and with lots ot tags and "-d" (which
-> is a reasonable case to optimize for: it's probably exactly what we end up
-> doing both for gitweb _and_ for "git-send-pack"), we'd need to expand the
-> packed-refs file with the deref cache.
->
+> Also, something that can wrap (git commit && git svn dcommit) into one
+> step would be nice.
 
-Probably also gitk, currently it uses (the slower) "git ls-remote"
-instead of "git peek-remote" or "git show-refs" but the concept seems
-the same.
+For my workflow, that wouldn't be all that useful.  I find that I
+accumulate a few commits locally and then send them all to svn.  For
+this workflow, what would be useful is if dcommit could understand a
+command like:
+
+    git svn dcommit remotes/git-svn..HEAD~2
+
+Sometimes I realize I should have sent a stack of commits to svn, but
+now have some newer commits that aren't quite ready on the head of my
+branch.  
+
+While the workaround is easy (create a new branch and dcommit from
+it), I think there is a usability argument in that when one
+sees an example like dcommit foo..bar, one expects all
+the other magic to work.  I feel for this and accidentally committed a
+few commits I didn't want to send.  If nothing else, perhaps git-svn
+could error out and say, "hey, I don't do that".
 
