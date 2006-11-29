@@ -1,64 +1,84 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: [PATCH] Allow hand-editing of patches before sending
-Date: Thu, 2 Nov 2006 10:32:46 +0000
-Message-ID: <b0943d9e0611020232x1e343bbco9451c8183c84d68@mail.gmail.com>
-References: <20061101090046.1107.81105.stgit@localhost>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: can I remove or move a tag in a remote repository?
+Date: Wed, 29 Nov 2006 12:45:36 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0611291220130.30004@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <87wt5rffbm.fsf@rho.meyering.net> <7virgz1bz7.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0611291040590.30004@wbgn013.biozentrum.uni-wuerzburg.de>
+ <87u00imsin.fsf@rho.meyering.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Thu, 2 Nov 2006 10:33:02 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Wed, 29 Nov 2006 11:46:03 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Xt2Edr4BQS1igr/VSceY//jRDB2f5qlN1iBIInyR4hvQsWrViE2ipbSg4km4GgO+wXbG5eqM3+qYdQd40CX+G+sqaU3eLk9t/bcUFW09CYq4DAdumAUtPCUgWpm1n+FcYdsBpX8VaS49i4PpA2GZaJzvGB9nhD2MX5g5OeN2leU=
-In-Reply-To: <20061101090046.1107.81105.stgit@localhost>
-Content-Disposition: inline
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <87u00imsin.fsf@rho.meyering.net>
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30704>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32635>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GfZsR-0003dW-Ur for gcvg-git@gmane.org; Thu, 02 Nov
- 2006 11:32:52 +0100
+ esmtp (Exim 4.43) id 1GpNsm-00031p-Au for gcvg-git@gmane.org; Wed, 29 Nov
+ 2006 12:45:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752082AbWKBKcs convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Thu, 2 Nov 2006 05:32:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752809AbWKBKcs
- (ORCPT <rfc822;git-outgoing>); Thu, 2 Nov 2006 05:32:48 -0500
-Received: from py-out-1112.google.com ([64.233.166.176]:2265 "EHLO
- py-out-1112.google.com") by vger.kernel.org with ESMTP id S1752082AbWKBKcr
- convert rfc822-to-8bit (ORCPT <rfc822;git@vger.kernel.org>); Thu, 2 Nov 2006
- 05:32:47 -0500
-Received: by py-out-1112.google.com with SMTP id a73so76220pye for
- <git@vger.kernel.org>; Thu, 02 Nov 2006 02:32:46 -0800 (PST)
-Received: by 10.35.112.4 with SMTP id p4mr559528pym.1162463566577; Thu, 02
- Nov 2006 02:32:46 -0800 (PST)
-Received: by 10.35.77.5 with HTTP; Thu, 2 Nov 2006 02:32:46 -0800 (PST)
-To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
+ S935467AbWK2Lpj (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 29 Nov 2006
+ 06:45:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935514AbWK2Lpj
+ (ORCPT <rfc822;git-outgoing>); Wed, 29 Nov 2006 06:45:39 -0500
+Received: from mail.gmx.net ([213.165.64.20]:35003 "HELO mail.gmx.net") by
+ vger.kernel.org with SMTP id S935467AbWK2Lpi (ORCPT
+ <rfc822;git@vger.kernel.org>); Wed, 29 Nov 2006 06:45:38 -0500
+Received: (qmail invoked by alias); 29 Nov 2006 11:45:36 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp036) with SMTP; 29 Nov 2006 12:45:36 +0100
+To: Jim Meyering <jim@meyering.net>
 Sender: git-owner@vger.kernel.org
 
-On 01/11/06, Karl Hasselstr=F6m <kha@treskal.com> wrote:
-> This adds a new flag to 'stg mail', allowing the user to hand-edit
-> each patch e-mail before it is sent, just like it is currently
-> possible to edit the cover message.
+Hi,
 
-Applied it but with some conflicts since you have some other patches
-which I haven't merged yet (like QP encoding). I'll try to have a look
-at this QP encoding this week. The main problem is that Gnus shows
-plenty of "=3D20" instead of new lines and 'stg import' cannot cope wit=
-h
-them.
+On Wed, 29 Nov 2006, Jim Meyering wrote:
 
-Thanks.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+>
+> > I also think that git-fetch silently updating tags is wrong. Rather, it
+> > should warn that the tags are different. But I've been wrong before.
+> 
+> AFAIK, no one wants git-fetch to update tags _silently_. I expected it 
+> give a diagnostic and fail by default -- and it already does that.
 
---=20
+Umm. I just tested it, and it said "updating tag" without failing.
+
+> Pushing moved tags is serious business.  I was hoping to be able to use 
+> --force to override that fail-safe.
+
+Hmmm. Probably Junio's patch is correct after all, since tags are special 
+creatures: you do not expect them to change, but if, they can change 
+arbitrarily (as opposed to branches, which should evolve linearly).
+
+> My goal is to maintain a symbolic reference "cvs-head" that points
+> to the newest git trunk node that's been mirrored to a CVS repository.
+
+But is that not just tracking another branch?
+
+> Without even considering any other option, I chose to use a lightweight
+> tag for that purpose, since I have a conceptual view that it's a label I
+> can move from one referent to another.  It strikes me as counter-intuitive
+> to use a temporary git "branch" that way.  Would that even work, removing
+> it and recreating it all the time?
+
+Yes, it would. Remember: a branch in git is just a named ref. It 
+literally used to be a 41-byte file pointing to the tip of the branch in 
+the ancestor graph. And you can update it with git-update-ref.
+
+So, a branch in git is very much the movable label you are looking for.
+
+Ciao,
+Dscho
