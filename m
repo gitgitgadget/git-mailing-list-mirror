@@ -1,75 +1,87 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: Show '...' links in "summary" view only if there are more items
-Date: Tue, 19 Dec 2006 13:42:44 +0100
-Message-ID: <200612191342.46220.jnareb@gmail.com>
-References: <20061218224327.GG16029@localhost> <20061219120854.GA16429@localhost> <200612191328.08928.jnareb@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 0/2] Making "git commit" to mean "git commit -a".
+Date: Wed, 29 Nov 2006 12:39:56 -0800
+Message-ID: <7vlkluoulf.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0611271622260.9647@xanadu.home>
+	<7vmz6cfsuw.fsf@assigned-by-dhcp.cox.net>
+	<87bqmswm1e.wl%cworth@cworth.org>
+	<7vodqse90q.fsf@assigned-by-dhcp.cox.net>
+	<87ac2cwha4.wl%cworth@cworth.org>
+	<7vy7pwcsgp.fsf@assigned-by-dhcp.cox.net>
+	<878xhwwdyj.wl%cworth@cworth.org>
+	<7vk61gcnzl.fsf@assigned-by-dhcp.cox.net>
+	<7vd5786opj.fsf@assigned-by-dhcp.cox.net>
+	<871wnnwi3k.wl%cworth@cworth.org>
+	<7virgzuf38.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0611282322320.9647@xanadu.home>
+	<7vr6vmsnly.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0611291234350.9647@xanadu.home>
+	<7vzmaaozi8.fsf@assigned-by-dhcp.cox.net>
+	<456DDADC.7030509@midwinter.com>
+	<Pine.LNX.4.63.0611292059480.30004@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Tue, 19 Dec 2006 12:41:09 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Wed, 29 Nov 2006 20:40:28 +0000 (UTC)
+Cc: git@vger.kernel.org, Nicolas Pitre <nico@cam.org>,
+	Steven Grimm <koreth@midwinter.com>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=VQINKvZGy3pmXpLb7fFeBUU451CRsbECSIuATshkMF4oaxcJNnFDqWPx3Iq9GPQh0+xN5tibk+egZD5UtsZvmIjRdUtRuXjIKu1J0K8ESzJ0ffDO2xpwu4ZofslI4MuL1opaTTOgV4CMLwo/QozkY0V/U9K8uLk6J8dNmamHpYU=
-User-Agent: KMail/1.9.3
-In-Reply-To: <200612191328.08928.jnareb@gmail.com>
-Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0611292059480.30004@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Wed, 29 Nov 2006 21:01:11 +0100
+	(CET)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34828>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32664>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GweH1-0004PW-TN for gcvg-git@gmane.org; Tue, 19 Dec
- 2006 13:40:48 +0100
+ esmtp (Exim 4.43) id 1GpWDq-0007q1-88 for gcvg-git@gmane.org; Wed, 29 Nov
+ 2006 21:40:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932815AbWLSMko convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006 07:40:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932817AbWLSMkn
- (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 07:40:43 -0500
-Received: from ug-out-1314.google.com ([66.249.92.170]:33967 "EHLO
- ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S932815AbWLSMkn (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec
- 2006 07:40:43 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so1806762uga for
- <git@vger.kernel.org>; Tue, 19 Dec 2006 04:40:41 -0800 (PST)
-Received: by 10.66.219.11 with SMTP id r11mr8455384ugg.1166532041419; Tue, 19
- Dec 2006 04:40:41 -0800 (PST)
-Received: from host-81-190-25-107.torun.mm.pl ( [81.190.25.107]) by
- mx.google.com with ESMTP id x33sm9083654ugc.2006.12.19.04.40.29; Tue, 19 Dec
- 2006 04:40:40 -0800 (PST)
-To: Robert Fitzsimons <robfitz@273k.net>
+ S967662AbWK2Uj6 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 29 Nov 2006
+ 15:39:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967661AbWK2Uj6
+ (ORCPT <rfc822;git-outgoing>); Wed, 29 Nov 2006 15:39:58 -0500
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:23277 "EHLO
+ fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP id S967660AbWK2Uj6
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 29 Nov 2006 15:39:58 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao05.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061129203957.LSFJ20330.fed1rmmtao05.cox.net@fed1rmimpo02.cox.net>; Wed, 29
+ Nov 2006 15:39:57 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id skg51V00u1kojtg0000000; Wed, 29 Nov 2006
+ 15:40:06 -0500
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
->> @@ -2876,8 +2879,8 @@ sub git_summary {
->> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0}
->> =A0=A0=A0=A0=A0=A0=A0=A0}
->> =A0
->> -=A0=A0=A0=A0=A0=A0=A0open my $fd, "-|", git_cmd(), "rev-list", "--m=
-ax-count=3D17",
->> -=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0git_get_head_hash($pro=
-ject), "--"
->> +=A0=A0=A0=A0=A0=A0=A0open my $fd, "-|", git_cmd(), "rev-list", "--m=
-ax-count=3D16",
->> +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0$head, "--"
->> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0or die_error(undef, =
-"Open git-rev-list failed");
->> =A0=A0=A0=A0=A0=A0=A0=A0my @revlist =3D map { chomp; $_ } <$fd>;
->> =A0=A0=A0=A0=A0=A0=A0=A0close $fd;
->=20
-> and if we remove that chunk, then your earlier patch would not
-> touch git_summary at all, so mine would cleanly apply (I think).
+> On Wed, 29 Nov 2006, Steven Grimm wrote:
+>
+>> More likely they will start wondering the instant you tell them to use 
+>> it the first time. Or at least they'll ask, "If '-a' means commit all 
+>> files, what's the default?" And then you either have to blow off the 
+>> question or start telling them about the index.
+>
+> So what? Tell them that there is a staging area, which makes many 
+> operations of git very powerful and fast. And this staging area is called 
+> "the index" in git. And to put some files into it, specify those 
+> files. If you want _all_ modified files there, use "-a". That's it.
 
-Sorry, I haven't noticed git_get_head_hash($project) -> $head
-Sorry for the noise.
---=20
-Jakub Narebski
+Well said.
+
+I think I have stated my preference and reasoning clearly enough
+on this topic, so I won't waste my time repeating them.  My time
+is better spent on _listening_ to people who might want to make
+convincing arguments to influence what I will end up deciding
+(the final decision will be mine anyway).
+
+By the way, I've been having fun with the xdl_merge() stuff;
+thanks for a job well done.  I will push some of it out in 'pu'
+shortly.
