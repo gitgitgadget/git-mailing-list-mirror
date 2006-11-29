@@ -1,98 +1,83 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
-From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-Subject: Re: [PATCH/RFC] Convenient support of remote branches in git-checkout
-Date: Tue, 7 Nov 2006 18:04:43 +0100
-Message-ID: <200611071804.43724.Josef.Weidendorfer@gmx.de>
-References: <200611070026.16425.Josef.Weidendorfer@gmx.de> <200611071153.32840.Josef.Weidendorfer@gmx.de> <20061107135609.GA32376@diana.vm.bytemark.co.uk>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: [PATCH] Add --bool and --int to the OPTIONS section
+Date: Wed, 29 Nov 2006 08:25:40 +0000
+Message-ID: <200611290825.40953.andyparkins@gmail.com>
+References: <7vd5772unw.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Tue, 7 Nov 2006 17:06:36 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+NNTP-Posting-Date: Wed, 29 Nov 2006 08:26:10 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: KMail/1.9.3
-In-Reply-To: <20061107135609.GA32376@diana.vm.bytemark.co.uk>
+In-Reply-To: <7vd5772unw.fsf@assigned-by-dhcp.cox.net>
+X-TUID: eac74226b448e87f
+X-UID: 175
+X-Length: 979
 Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay1.informatik.tu-muenchen.de
+X-OriginalArrivalTime: 29 Nov 2006 08:27:22.0241 (UTC) FILETIME=[310B9710:01C71390]
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31077>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32623>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GhUOm-0006Ik-7O for gcvg-git@gmane.org; Tue, 07 Nov
- 2006 18:06:08 +0100
+ esmtp (Exim 4.43) id 1GpKlJ-0004LY-Oi for gcvg-git@gmane.org; Wed, 29 Nov
+ 2006 09:25:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S965563AbWKGRFj (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 7 Nov 2006
- 12:05:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965569AbWKGRFj
- (ORCPT <rfc822;git-outgoing>); Tue, 7 Nov 2006 12:05:39 -0500
-Received: from mailout1.informatik.tu-muenchen.de ([131.159.0.18]:8321 "EHLO
- mailout1.informatik.tu-muenchen.de") by vger.kernel.org with ESMTP id
- S965563AbWKGRFi (ORCPT <rfc822;git@vger.kernel.org>); Tue, 7 Nov 2006
- 12:05:38 -0500
-Received: from dhcp-3s-44.lrr.in.tum.de (dhcp-3s-44.lrr.in.tum.de
- [131.159.35.44]) by mail.in.tum.de (Postfix) with ESMTP id 288522702; Tue,  7
- Nov 2006 18:04:46 +0100 (MET)
-To: Karl =?iso-8859-1?q?Hasselstr=F6m?= <kha@treskal.com>
+ S966284AbWK2IZq (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 29 Nov 2006
+ 03:25:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966330AbWK2IZq
+ (ORCPT <rfc822;git-outgoing>); Wed, 29 Nov 2006 03:25:46 -0500
+Received: from mail.360visiontechnology.com ([194.70.53.226]:35434 "EHLO
+ 369run02s.360vision.com") by vger.kernel.org with ESMTP id S966284AbWK2IZp
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 29 Nov 2006 03:25:45 -0500
+Received: from dvr.360vision.com ([192.189.1.24]) by 369run02s.360vision.com
+ with Microsoft SMTPSVC(5.0.2195.6713); Wed, 29 Nov 2006 08:27:22 +0000
+Received: from localhost ([127.0.0.1]) by dvr.360vision.com with esmtp (Exim
+ 3.36 #1 (Debian)) id 1GpKlC-0001Tb-00 for <git@vger.kernel.org>; Wed, 29 Nov
+ 2006 08:25:42 +0000
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On Tuesday 07 November 2006 14:56, you wrote:
-> But what happens when an unexperienced user gets this conflict for the
-> first time (having for the first time used two different remotes)?
-> Your scheme forces her to learn two new things instead of one,
-> creating the artificial barrier I mentioned above.
+Signed-off-by: Andy Parkins <andyparkins@gmail.com>
+---
+I did look for just such an option, but didn't find it because it wasn't in 
+the OPTIONS list of the git-repo-config man page.  If there is an OPTIONS 
+section it should include all options, otherwise it's no use as a quick 
+reference.
 
-I give the user a warning that she has to specify a branch
-name herself. This does not force her to rename all her branches
-and go with the new naming <remote>/<remote branch>, but probably
-makes her do
+Your template commit message is an excellent idea, but I don't like the idea 
+of simply hard coding sign off line into it; it means that there are then two 
+locations in the .git tree that I'd have to edit to change my name.  
+Therefore any template would have to support token expansion so that "S-o-B: 
+$REPOSITORY_EMAIL" would be possible.  Even better would be support 
+for "$GIT_STATUS_OUTPUT" and "$GIT_DIFF_OUTPUT" so that the commit message is 
+completely templated.
 
- repo developer1, branch next => next (magic behavior)
- repo developer2, branch next => next2 (manual specification)
+ Documentation/git-repo-config.txt |    6 ++++++
+ 1 files changed, 6 insertions(+), 0 deletions(-)
 
-and perhaps rename next to next1 afterwards.
-
-At least I do not want to type long branch names; most of the
-cloned repos I have do have only one remote. So I would rename
-the branches names created with the complex magic scheme.
-
-Of course, another way is to be more smart with branch name parsing.
-Currently, a given name is searched in
-	.git/
-	.git/refs/
-	.git/refs/tags/
-	.git/refs/heads/
-	.git/refs/remotes/
-	.git/refs/remotes/*/HEAD
-
-What about adding before remotes
-	.git/refs/heads/<first-part-of-current-branchname>/
-and at the end
-	.git/refs/remotes/<first-part-of-current-branchname>/
-Ie. when on branch "origin/next", a given name "master" is
-parsed as "refs/heads/origin/master" when existing?
-So the parsing rule is: "With current branch X and given name Y,
-search for a branch as near as possible to X which has Y as
-last name component".
-
-This would match current UI, where you have simple branch names
-like "master" or "next".
-With above rule, you can use "master" to refer
-to "refs/heads/origin/master" in the complex model,
-and for a read-only remote head "refs/heads/remotes/origin/next",
-it is enough to say
-	git-checkout next
-to get a new local branch "refs/heads/origin/next" created
-to work on.
-
-You keep the simple UI and still get the perfect overview with
-eg. with "gitk --all" even in the case where you work on
-10s of remote branches from multiple repository.
-
+diff --git a/Documentation/git-repo-config.txt 
+b/Documentation/git-repo-config.txt
+index 8199615..5bede9a 100644
+--- a/Documentation/git-repo-config.txt
++++ b/Documentation/git-repo-config.txt
+@@ -77,6 +77,12 @@ OPTIONS
+ -l, --list::
+ 	List all variables set in config file.
+ 
++--bool::
++	git-repo-config will ensure that the output is "true" or "false"
++
++--int::
++	git-repo-config will ensure that the output is a simple decimal number
++
+ 
+ ENVIRONMENT
+ -----------
+-- 
+1.4.3.GIT-dirty
