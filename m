@@ -1,52 +1,50 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [RFC] requiring Perl SVN libraries for git-svn
-Date: Wed, 13 Dec 2006 12:21:42 -0800
-Message-ID: <20061213202142.GE8179@localdomain>
+From: Steven Grimm <koreth@midwinter.com>
+Subject: Re: [PATCH 0/2] Making "git commit" to mean "git commit -a".
+Date: Wed, 29 Nov 2006 11:12:17 -0800
+Message-ID: <456DDB91.8080608@midwinter.com>
+References: <Pine.LNX.4.64.0611271622260.9647@xanadu.home> <7vmz6cfsuw.fsf@assigned-by-dhcp.cox.net> <87bqmswm1e.wl%cworth@cworth.org> <7vodqse90q.fsf@assigned-by-dhcp.cox.net> <87ac2cwha4.wl%cworth@cworth.org> <7vy7pwcsgp.fsf@assigned-by-dhcp.cox.net> <878xhwwdyj.wl%cworth@cworth.org> <7vk61gcnzl.fsf@assigned-by-dhcp.cox.net> <7vd5786opj.fsf@assigned-by-dhcp.cox.net> <871wnnwi3k.wl%cworth@cworth.org> <7virgzuf38.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611282322320.9647@xanadu.home> <7vr6vmsnly.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611291234350.9647@xanadu.home> <ekkir2$6fq$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 13 Dec 2006 20:22:00 +0000 (UTC)
+Content-Type: text/plain; charset=ISO-8859-2; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Wed, 29 Nov 2006 19:12:39 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
+User-Agent: Thunderbird 1.5.0.8 (Macintosh/20061025)
+In-Reply-To: <ekkir2$6fq$1@sea.gmane.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34230>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Guabu-0006et-27 for gcvg-git@gmane.org; Wed, 13 Dec
- 2006 21:21:50 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32659>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GpUqt-0007Co-IL for gcvg-git@gmane.org; Wed, 29 Nov
+ 2006 20:12:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1750704AbWLMUVr (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 13 Dec 2006
- 15:21:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750701AbWLMUVr
- (ORCPT <rfc822;git-outgoing>); Wed, 13 Dec 2006 15:21:47 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:55483 "EHLO hand.yhbt.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1750704AbWLMUVq
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 13 Dec 2006 15:21:46 -0500
-Received: from hand.yhbt.net (localhost [127.0.0.1]) by hand.yhbt.net
- (Postfix) with SMTP id CE0DD2DC034; Wed, 13 Dec 2006 12:21:42 -0800 (PST)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Wed, 13 Dec 2006
- 12:21:42 -0800
-To: git@vger.kernel.org
+ S967572AbWK2TMN (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 29 Nov 2006
+ 14:12:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967578AbWK2TMM
+ (ORCPT <rfc822;git-outgoing>); Wed, 29 Nov 2006 14:12:12 -0500
+Received: from tater.midwinter.com ([216.32.86.90]:12234 "HELO
+ midwinter.com") by vger.kernel.org with SMTP id S967572AbWK2TMM (ORCPT
+ <rfc822;git@vger.kernel.org>); Wed, 29 Nov 2006 14:12:12 -0500
+Received: (qmail 14841 invoked from network); 29 Nov 2006 19:12:10 -0000
+Received: from c-76-21-17-123.hsd1.ca.comcast.net (HELO ?192.168.0.128?)
+ (koreth@76.21.17.123) by tater.midwinter.com with SMTP; 29 Nov 2006 19:12:10
+ -0000
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Are there any git-svn users out there who would be seriously hurt if I
-dropped support for using the svn command-line client in git-svn?
+Jakub Narebski wrote:
+> If "git commit -a" by default heresy ;-) was accepted, I'd rather it be via
+> configuration option.
+>   
 
-The API of the SVN:: libraries seem to be relatively stable these days
-and are *much* faster than the command-line client.  I plan on
-maintaining compatibility with version 1.1 of the SVN libraries for at
-least another year; or more if it's not a big problem.
+So the newbie-friendly behavior should require learning how to edit a 
+configuration file, and the expert-friendly behavior should be the one 
+you get on your first out-of-the-box exposure to git?
 
-Lately, I've introduced support for authentication and connecting to
-repositories with limited read permissions, as well as reading from the
-config files in ~/.subversion; so everything that could be done with
-the command-line client backend can be done with the libraries, too.
-
--- 
