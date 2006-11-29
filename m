@@ -4,98 +4,111 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: Fast access git-rev-list output: some OS knowledge required
-Date: Wed, 6 Dec 2006 15:18:16 -0500
-Message-ID: <20061206201816.GF20320@spearce.org>
-References: <e5bfff550612061124jcd0d94em47793710866776e7@mail.gmail.com> <20061206192800.GC20320@spearce.org> <e5bfff550612061134r3725dcbu2ff2dd6284fcd651@mail.gmail.com> <20061206194258.GD20320@spearce.org> <20061206195142.GE20320@spearce.org> <e5bfff550612061208g6e4003e7ifa7dbd5ed69180c9@mail.gmail.com>
+From: Joseph Wakeling <joseph.wakeling@webdrake.net>
+Subject: Re: git and bzr
+Date: Wed, 29 Nov 2006 03:23:45 +0100
+Message-ID: <456CEF31.8080600@webdrake.net>
+References: <45357CC3.4040507@utoronto.ca> <20061021130111.GL75501@over-yonder.net> <453F2FF8.2080903@op5.se> <200610251146.06116.jnareb@gmail.com> <a7e835d40610250308v5d577482m139742e7fe1db185@mail.gmail.com> <87slhcz8zh.wl%cworth@cworth.org> <a7e835d40610260152k658aeaf0hb900cb63870c04e4@mail.gmail.com> <7vu01ro20b.fsf@assigned-by-dhcp.cox.net> <a7e835d40610260257r5f05ea4gc934f1c1cc267977@mail.gmail.com> <20061026101038.GA13310@coredump.intra.peff.net> <877iyne4dm.fsf@alplog.fr> <Pine.LNX.4.64.0610260753090.3962@g5.osdl.org> <456B7C6A.80104@webdrake.net> <Pine.LNX.4.64.0611271834090.30076@woody.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 6 Dec 2006 20:18:29 +0000 (UTC)
-Cc: Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Wed, 29 Nov 2006 02:24:21 +0000 (UTC)
+Cc: git@vger.kernel.org, bazaar-ng@lists.canonical.com
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <e5bfff550612061208g6e4003e7ifa7dbd5ed69180c9@mail.gmail.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+User-Agent: Thunderbird 1.5.0.8 (X11/20061115)
+In-Reply-To: <Pine.LNX.4.64.0611271834090.30076@woody.osdl.org>
+X-Enigmail-Version: 0.94.0.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33517>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gs3Dn-0000SX-IC for gcvg-git@gmane.org; Wed, 06 Dec
- 2006 21:18:27 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32606>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GpF7H-00013V-OH for gcvg-git@gmane.org; Wed, 29 Nov
+ 2006 03:24:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S937610AbWLFUSW (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
- 15:18:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937612AbWLFUSV
- (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 15:18:21 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:56373 "EHLO
- corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S937611AbWLFUST (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec 2006
- 15:18:19 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1Gs3DG-0002Ac-Tu; Wed, 06 Dec 2006 15:17:55 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- 4290A20FB7F; Wed,  6 Dec 2006 15:18:16 -0500 (EST)
-To: Marco Costalba <mcostalba@gmail.com>
+ S1758438AbWK2CXz (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 28 Nov 2006
+ 21:23:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758443AbWK2CXz
+ (ORCPT <rfc822;git-outgoing>); Tue, 28 Nov 2006 21:23:55 -0500
+Received: from alf.nbi.dk ([130.225.212.55]:44813 "EHLO alf.nbi.dk") by
+ vger.kernel.org with ESMTP id S1758438AbWK2CXy (ORCPT
+ <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2006 21:23:54 -0500
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by alf.nbi.dk
+ (8.9.3/8.9.3) with ESMTP id DAA07776; Wed, 29 Nov 2006 03:23:46 +0100 (MET)
+To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 
-Marco Costalba <mcostalba@gmail.com> wrote:
-> On 12/6/06, Shawn Pearce <spearce@spearce.org> wrote:
-> >Shawn Pearce <spearce@spearce.org> wrote:
-> >
-> >Perhaps there is some fast IPC API supported by Qt that you could
-> >use to run the revision listing outside of the main UI process,
-> >to eliminate the bottlenecks you are seeing and remove the problems
-> >noted above?  One that doesn't involve reading from a pipe I mean...
-> >
+Thanks to everyone for your very detailed responses. :-)
+
+On the subject of blame and pulling patches from unrelated branches,
+
+Jakub Narebski wrote:
+> In git repository can have unrelated branches. So you can fetch unrelated
+> repository into your repository, and merge/cherry-pick from there
+> if needed.
+
+Sean wrote:
+> The Git cherry-pick command lets you grab specific commits from
+> other branches in your repo.  But cherry-pick works at the commit
+> level, there is no easy way to grab a single function for instance
+> and merge just its history into another branch.
+
+Linus Torvalds wrote:
+> pickaxe wasn't in the released version back when the discussions were 
+> raging, but it's there now. Except it's really called "git blame" these 
+> days (and "git annotate") since it's taken over both of those duties.
 > 
-> Qt it's very fast in reading from files, also git-rev-list is fast in
-> write to a file...the problem is I would not want the file to be saved
-> on disk, but stay cached in the OS memory for the few seconds needed
-> to be written and read back, and then deleted. It's a kind of shared
-> memory at the end. But I don't know how to realize it.
+> However...
+> 
+>> A frustration with bzr is that pulling or
+>> merging patches from another branch or repo requires them to share the
+>> same HEAD.  Is this a requirement in git or can I say, "Hey, I like that
+>> particular function in project XXX, I'm going to pull that individual
+>> bit of code and its development history into project YYY"?
+> 
+> ... it's not _quite_ that smart. It will only look for sources to new 
+> functions from existing sources in the tree that preceded the commit that 
+> added the function, so it will _not_ see it coming from another branch or 
+> another project entirely.
+> 
+> So when you ask for code annotations (use the "-C" flag to see code moved 
+> across from other files), it will still limit itself to just a particular 
+> input set, and not go gallivating over all possible branches and projects 
+> you might have in your repository.
 
-On a modern Linux (probably your largest target audience) a small
-file which has a very short lifespan (few seconds) is unlikey to
-hit the platter.  Most filesystems will put the data into buffer
-cache and delay writing to disk because temporary files are so
-common on UNIX.
+So ... if I understand correctly, I can get patches from somewhere else,
+but in the branch history, I will not be able to tell the difference
+from having simply newly created them?
 
-Though our resident Linux experts may chime in with more details...
- 
-> Also let git-rev-list to write directly in qgit process address space
-> would be nice, indeed very nice.
+With regards to git blame/pickaxe/annotate, the idea of tracking *code*
+rather than files was one thing that really excited me when I read about
+it in the earlier discussion, and is probably the main reason I'm trying
+out git.  I'd like to understand this properly so is there a simple
+exercise I can do to demonstrate its capabilities?  I tried an
+experiment where I created one file with two lines, then cut one of the
+lines, pasted it into a new file, and committed both changes at the same
+time.  But git blame -C on the second file just gives me the
+time/date/sha1 of its creation, and no indication that the line was
+taken from elsewhere.
 
-And ugly.  :-)
+Back to the more basic queries ... one more difference I've observed
+from bzr, after playing around for a while, involves the commands to
+undo changes and commits.  It looks like git reset combines the
+capabilities of both bzr uncommit and bzr revert: I can undo changes
+since the last commit by resetting to HEAD, and I can undo commits by
+resetting to HEAD^ or earlier.
 
-SysV IPC (shared memory, semaphores) are messy and difficult to
-get right.  mmap against a random file in the filesystem tends
-to work better on those systems which support it well, provided
-that the file isn't on a network mount.  But again you still need
-semaphores or something like them to control access to the data in
-the mmap'd region.
+Some things here I'm not quite sure about:
+(1) the difference between git reset --soft and git reset --mixed,
+probably because I don't understand the way the index works, the
+difference between changed, updated and committed.
+(2) How to remove changes made to an individual file since the last commit.
 
-I was thinking that maybe if Qt had a bounded buffer available for
-use between a process and its child, that you could use that to run
-your own "qgit-rev-list" child and get the data back more quickly,
-without the need for a temporary file.  But it doesn't look like
-they have one.  Oh well.
+Last, could someone explain the git merge command?  git pull seems to do
+many things which I would need to use bzr merge for---I can "pull"
+between branches which have diverged, for example.  I don't understand
+quite what git merge does that's different, and when to use one or the
+other.
 
+Many thanks again to everyone,
 
-Your current temporary file approach is probably the best you can
-get, and has the simplest possible implementation.  Doing better
-would require linking against libgit.a, and getting the core Git
-hackers to make at least the revision machinery more useful in a
-library setting.
-
--- 
