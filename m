@@ -1,98 +1,176 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Matthias Hopf <mhopf@suse.de>
-Subject: Re: Getting new branches from remote repo.
-Date: Mon, 13 Nov 2006 17:57:09 +0100
-Message-ID: <20061113165709.GA21588@suse.de>
-References: <6e1787fe0611122033p49671e13xf5b7f95beeba8b06@mail.gmail.com> <7v8xigar36.fsf@assigned-by-dhcp.cox.net> <20061113091736.GA31693@diana.vm.bytemark.co.uk>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: git and bzr
+Date: Tue, 28 Nov 2006 19:51:19 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0611281906520.3395@woody.osdl.org>
+References: <45357CC3.4040507@utoronto.ca> <20061021130111.GL75501@over-yonder.net>
+ <453F2FF8.2080903@op5.se> <200610251146.06116.jnareb@gmail.com>
+ <a7e835d40610250308v5d577482m139742e7fe1db185@mail.gmail.com>
+ <87slhcz8zh.wl%cworth@cworth.org> <a7e835d40610260152k658aeaf0hb900cb63870c04e4@mail.gmail.com>
+ <7vu01ro20b.fsf@assigned-by-dhcp.cox.net> <a7e835d40610260257r5f05ea4gc934f1c1cc267977@mail.gmail.com>
+ <20061026101038.GA13310@coredump.intra.peff.net> <877iyne4dm.fsf@alplog.fr>
+ <Pine.LNX.4.64.0610260753090.3962@g5.osdl.org> <456B7C6A.80104@webdrake.net>
+ <Pine.LNX.4.64.0611271834090.30076@woody.osdl.org> <456CEF31.8080600@webdrake.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Mon, 13 Nov 2006 17:02:48 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>,
-	Alexander Litvinov <litvinov2004@gmail.com>,
-	git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Wed, 29 Nov 2006 03:51:49 +0000 (UTC)
+Cc: git@vger.kernel.org, bazaar-ng@lists.canonical.com
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Mail-Followup-To: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>,
-	Junio C Hamano <junkio@cox.net>,
-	Alexander Litvinov <litvinov2004@gmail.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20061113091736.GA31693@diana.vm.bytemark.co.uk>
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <456CEF31.8080600@webdrake.net>
+X-MIMEDefang-Filter: osdl$Revision: 1.161 $
+X-Scanned-By: MIMEDefang 2.36
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31302>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32611>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GjfAy-00054w-Pq for gcvg-git@gmane.org; Mon, 13 Nov
- 2006 18:00:53 +0100
+ esmtp (Exim 4.43) id 1GpGTy-0000bK-Am for gcvg-git@gmane.org; Wed, 29 Nov
+ 2006 04:51:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1755219AbWKMQ5c convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Mon, 13 Nov 2006 11:57:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755155AbWKMQ5S
- (ORCPT <rfc822;git-outgoing>); Mon, 13 Nov 2006 11:57:18 -0500
-Received: from cantor.suse.de ([195.135.220.2]:663 "EHLO mx1.suse.de") by
- vger.kernel.org with ESMTP id S1755228AbWKMQ5Q (ORCPT
- <rfc822;git@vger.kernel.org>); Mon, 13 Nov 2006 11:57:16 -0500
-Received: from Relay1.suse.de (mail2.suse.de [195.135.221.8]) (using TLSv1
- with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate
- requested) by mx1.suse.de (Postfix) with ESMTP id C7F451201F; Mon, 13 Nov
- 2006 17:57:14 +0100 (CET)
-To: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+ S1757957AbWK2Dv1 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 28 Nov 2006
+ 22:51:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758042AbWK2Dv1
+ (ORCPT <rfc822;git-outgoing>); Tue, 28 Nov 2006 22:51:27 -0500
+Received: from smtp.osdl.org ([65.172.181.25]:206 "EHLO smtp.osdl.org") by
+ vger.kernel.org with ESMTP id S1757957AbWK2Dv1 (ORCPT
+ <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2006 22:51:27 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
+ smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kAT3pLix009895
+ (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Tue, 28
+ Nov 2006 19:51:22 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
+ shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kAT3pJe7006540; Tue, 28 Nov
+ 2006 19:51:19 -0800
+To: Joseph Wakeling <joseph.wakeling@webdrake.net>
 Sender: git-owner@vger.kernel.org
 
-On Nov 13, 06 10:17:36 +0100, Karl Hasselstr=F6m wrote:
-> > > I have a trouble I don't know how to solve. When I am cloning
-> > > remote repo I automatically get all it's branches stored at my
-> > > repo (they are listed at .git/remotes/origin). When someone adds
-> > > new branch(es) to remote repo git pull (git fetch) does not
-> > > automatically add them to my repo. I have a tool to list all
-> > > remote branches (git ls-remote --heads origin) but I can't find
-> > > how to add interesting (or all) branches to by repo.
-> >
-> > After finding out $that_new_branch's name, add either
-> >       Pull: refs/heads/$that_new_branch:refs/heads/$that_new_branch
-> > or if you are in "separate remote" school, then perhaps
-> >       Pull: refs/heads/$that_new_branch:refs/remotes/origin/$that_n=
-ew_branch
-> > to .git/remotes/origin and running git fetch would give you what yo=
-u
-> > want, I think.
->=20
-> There really should be a flag to make git fetch do this job. And if w=
-e
-> use separate remotes, the flag should probably default to "on".
 
-This was an issue I stumbled upon recently, which was discussed on
-X.org's mailing list. I wanted to sumarize that here, but didn't have
-time for that so far.
 
-Right now I use the following UGLY script to do exactly that:
+On Wed, 29 Nov 2006, Joseph Wakeling wrote:
+> 
+> So ... if I understand correctly, I can get patches from somewhere else,
+> but in the branch history, I will not be able to tell the difference
+> from having simply newly created them?
 
-git-ls-remote -h origin | cut -f 2 | perl -e 'while (<>) { chomp;
-$h{$_}=3D$_; } open F, ".git/remotes/origin" or die; while (<F>) { prin=
-t;
-if (/^Pull:\s+([^: ]*):/) { delete $h{$1}; } } foreach $f (keys %h) {
-print "Pull:   ${f}:$f\n"; }' > newfile
-mv newfile .git/remotes/origin
+Think of it this way: if the _patch_ looks like it's a code movement, then 
+"git blame" will show it as a code movement. Ie, if the patch (to a human) 
+looks like it's moving a function from one file into another (which in a 
+patch will obviously be a question of removing it from one file, and 
+adding it to another), then git will also see it that way, and then "git 
+blame" will also follow its history as it moved.
 
-(modulo some safety tests), but that doesn't work right for origin file=
-s
-with multiple URL: statements (I very much assume they are possible).
+But if somebody sends you a patch that just adds a new function that 
+didn't exist in that context at all, then "git blame" won't ever realize 
+that that new function was taken from another branch entirely.
 
-I second that there should be a flag to make git fetch do that
-automatically, and at least all "git for CVS users" tutorials should
-include this flag, as this is exactly how CVS works (otherwise you
-cannot check out another branch that happens to be added upstream).
+> With regards to git blame/pickaxe/annotate, the idea of tracking *code*
+> rather than files was one thing that really excited me when I read about
+> it in the earlier discussion, and is probably the main reason I'm trying
+> out git.  I'd like to understand this properly so is there a simple
+> exercise I can do to demonstrate its capabilities?  I tried an
+> experiment where I created one file with two lines, then cut one of the
+> lines, pasted it into a new file, and committed both changes at the same
+> time.  But git blame -C on the second file just gives me the
+> time/date/sha1 of its creation, and no indication that the line was
+> taken from elsewhere.
 
-Matthias
+Actually, I think you found a bug.
 
---=20
-Matthias Hopf <mhopf@suse.de>       __        __   __
-Maxfeldstr. 5 / 90409 Nuernberg    (_   | |  (_   |__         mat@mshop=
-f.de
-Phone +49-911-74053-715            __)  |_|  __)  |__  labs   www.mshop=
+Now, with small changes, "git blame -C" will just ignore copies entirely, 
+so your particular test might not have even been supposed to work, but 
+trying with a new git repo with two bigger files checked in at the initial 
+commit, I'm actually not seeing "git blame -C" do the right thing even for 
+real code movement.
+
+And the problem seems to go to the "root commit": if the file existed in 
+the root, the logic in "git blame" to diff against the (nonexistent) 
+parent of the root commit won't do the right thing, and that just confuses 
+git blame entirely.
+
+I think Junio screwed up at some point. I'll send him a bug-report once 
+I've triaged this a bit more, but I can recreate your breakage if I start 
+a new git database and create two files in the root, and move data between 
+them in the second commit (but if I instead create the second file in the 
+second commit, and do the movement in the third commit, git blame -C works 
+again ;).
+
+> Back to the more basic queries ... one more difference I've observed
+> from bzr, after playing around for a while, involves the commands to
+> undo changes and commits.  It looks like git reset combines the
+> capabilities of both bzr uncommit and bzr revert: I can undo changes
+> since the last commit by resetting to HEAD, and I can undo commits by
+> resetting to HEAD^ or earlier.
+
+I'm not quite sure what "bzr revert" does. Git does have a "revert" too, 
+but it will append a _new_ commit that actually undoes the commit you're 
+asking to revert. If you want to just "undo history" (whether it's one 
+commit or many - I don't see why it would be different) then yes, "git 
+reset" is the thing to use.
+
+I _suspect_ that bzr people use "uncommit" to undo a commit in order to 
+fix it up. In git, you could do that with "git reset" and a new commit, 
+but the normal thing to do is just to fix it up, and then do 
+
+	git commit --amend
+
+instead (which amends the last commit to include whatever fixups you did).
+
+> Some things here I'm not quite sure about:
+> (1) the difference between git reset --soft and git reset --mixed,
+> probably because I don't understand the way the index works, the
+> difference between changed, updated and committed.
+
+You'd generally not want to use "--soft" unless you know what the index 
+really is. Once you do know about all the index issues, you'll know why 
+it's different from "--mixed", but in general, no normal person would ever 
+use _either_ --soft (because not changing the index is too confusing if 
+you don't know about it) or --mixed (because it's the default).
+
+So in reality, you should use
+
+	git reset
+
+to reset everything but the actual working tree (and it will talk about 
+the files that no longer match the state you are resetting _to_, if any 
+such files exist), or
+
+	git reset --hard
+
+to reset everything.
+
+Any other usage is strictly for hardcore people only, and if you don't 
+know you want to use it, you shouldn't even consider it.
+
+In fact, I'm pretty hardcore, and I don't think I've ever really used 
+"--soft". It's largely been replaced by "git commit --amend", because 
+amending a commit used to be the only reason to use "--soft", really.
+
+So it might even be worthwhile just dropping "--soft" and "--mixed" 
+altogether, but in the meantime, you might as well just ignore them.
+
+> (2) How to remove changes made to an individual file since the last commit.
+
+"git checkout file"
+
+
+> Last, could someone explain the git merge command?
+
+I argued that we should never teach people to use it at all (because "git 
+pull" really does everything it can do), but people on the git list said 
+people are used to merging, so it exists, and these days the syntax is 
+more usable than it used to be.
+
+> git pull seems to do many things which I would need to use bzr merge 
+> for---I can "pull" between branches which have diverged, for example.  
+> I don't understand quite what git merge does that's different, and when 
+> to use one or the other.
+
+Heh. I'm with you. I'm in the "don't use 'git merge' at all" camp, but it 
+was argued that people coming from non-git backgrounds would find it 
+too confusing to just use "git pull" for merging ;)
+
