@@ -1,102 +1,58 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 4/3] git-svn: correctly handle packed-refs in refs/remotes/
-Date: Tue, 12 Dec 2006 17:27:51 -0800
-Message-ID: <7vlklcmvoo.fsf@assigned-by-dhcp.cox.net>
-References: <11659636223725-git-send-email-normalperson@yhbt.net>
-	<11659636263755-git-send-email-normalperson@yhbt.net>
-	<20061213004500.GA17811@localdomain>
+From: Joseph Wakeling <joseph.wakeling@webdrake.net>
+Subject: git blame [was: git and bzr]
+Date: Wed, 29 Nov 2006 13:17:58 +0100
+Message-ID: <456D7A76.3080605@webdrake.net>
+References: <45357CC3.4040507@utoronto.ca> <20061021130111.GL75501@over-yonder.net> <453F2FF8.2080903@op5.se> <200610251146.06116.jnareb@gmail.com> <a7e835d40610250308v5d577482m139742e7fe1db185@mail.gmail.com> <87slhcz8zh.wl%cworth@cworth.org> <a7e835d40610260152k658aeaf0hb900cb63870c04e4@mail.gmail.com> <7vu01ro20b.fsf@assigned-by-dhcp.cox.net> <a7e835d40610260257r5f05ea4gc934f1c1cc267977@mail.gmail.com> <20061026101038.GA13310@coredump.intra.peff.net> <877iyne4dm.fsf@alplog.fr> <Pine.LNX.4.64.0610260753090.3962@g5.osdl.org> <456B7C6A.80104@webdrake.net> <Pine.LNX.4.64.0611271834090.30076@woody.osdl.org> <456CEF31.8080600@webdrake.net> <Pine.LNX.4.64.0611281906520.3395@woody.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 13 Dec 2006 01:28:01 +0000 (UTC)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Wed, 29 Nov 2006 12:18:22 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+User-Agent: Thunderbird 1.5.0.8 (X11/20061115)
+In-Reply-To: <Pine.LNX.4.64.0611281906520.3395@woody.osdl.org>
+X-Enigmail-Version: 0.94.0.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34176>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GuIuZ-0002T7-Ra for gcvg-git@gmane.org; Wed, 13 Dec
- 2006 02:27:56 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32637>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GpOOF-0000LH-Tc for gcvg-git@gmane.org; Wed, 29 Nov
+ 2006 13:18:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1750752AbWLMB1x (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 12 Dec 2006
- 20:27:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751582AbWLMB1x
- (ORCPT <rfc822;git-outgoing>); Tue, 12 Dec 2006 20:27:53 -0500
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:35649 "EHLO
- fed1rmmtao08.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1751573AbWLMB1w (ORCPT <rfc822;git@vger.kernel.org>); Tue, 12 Dec 2006
- 20:27:52 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao08.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061213012752.BVGE16632.fed1rmmtao08.cox.net@fed1rmimpo02.cox.net>; Tue, 12
- Dec 2006 20:27:52 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id y1U21V00s1kojtg0000000; Tue, 12 Dec 2006
- 20:28:03 -0500
-To: Eric Wong <normalperson@yhbt.net>
+ S966972AbWK2MSJ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 29 Nov 2006
+ 07:18:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967140AbWK2MSJ
+ (ORCPT <rfc822;git-outgoing>); Wed, 29 Nov 2006 07:18:09 -0500
+Received: from alf.nbi.dk ([130.225.212.55]:14342 "EHLO alf.nbi.dk") by
+ vger.kernel.org with ESMTP id S966972AbWK2MSI (ORCPT
+ <rfc822;git@vger.kernel.org>); Wed, 29 Nov 2006 07:18:08 -0500
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by alf.nbi.dk
+ (8.9.3/8.9.3) with ESMTP id NAA16843; Wed, 29 Nov 2006 13:17:59 +0100 (MET)
+To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 
-Eric Wong <normalperson@yhbt.net> writes:
+Linus Torvalds wrote:
+> Now, with small changes, "git blame -C" will just ignore copies entirely, 
 
-> We now use git-rev-parse universally to read refs, instead
-> of our own file_to_s function (which I plan on removing).
->
-> Signed-off-by: Eric Wong <normalperson@yhbt.net>
-> ---
->  git-svn.perl |   10 +++++++++-
->  1 files changed, 9 insertions(+), 1 deletions(-)
->
-> diff --git a/git-svn.perl b/git-svn.perl
-> index 1f8a3b0..aac8f73 100755
-> --- a/git-svn.perl
-> +++ b/git-svn.perl
-> @@ -2016,9 +2016,17 @@ sub git_commit {
->  
->  	# just in case we clobber the existing ref, we still want that ref
->  	# as our parent:
-> -	if (my $cur = eval { file_to_s("$GIT_DIR/refs/remotes/$GIT_SVN") }) {
-> +	open my $null, '>', '/dev/null' or croak $!;
-> +	open my $stderr, '>&', \*STDERR or croak $!;
-> +	open STDERR, '>&', $null or croak $!;
-> +	if (my $cur = eval { safe_qx('git-rev-parse',
-> +	                             "refs/remotes/$GIT_SVN^0") }) {
-> +		chomp $cur;
->  		push @tmp_parents, $cur;
->  	}
-> +	open STDERR, '>&', $stderr or croak $!;
-> +	close $stderr or croak $!;
-> +	close $null or croak $!;
->  
->  	if (exists $tree_map{$tree}) {
->  		foreach my $p (@{$tree_map{$tree}}) {
+Obvious when I think about it, otherwise every 'int i;' in the kernel
+would have a huge blame list ... :-O
 
-It's a neat trick you do to stash away STDERR and redirect to
-/dev/null ;-).  It might be worth doing something like this:
+> I think Junio screwed up at some point. I'll send him a bug-report once 
+> I've triaged this a bit more, but I can recreate your breakage if I start 
+> a new git database and create two files in the root, and move data between 
+> them in the second commit (but if I instead create the second file in the 
+> second commit, and do the movement in the third commit, git blame -C works 
+> again ;).
 
-	sub without_stderr {
-        	my ($cmd, @param) = @_;
-                # stash away magic
-                my @return = eval {
-                	safe_qx($cmd, @param);
-                };
-                # restore magic
-                return @return;
-	}
+Actually my setup was like the latter situation you describe, so blame
+was probably working fine and just ignoring the small change.  But
+serendipity is a wonderful thing. :-)
 
-in Git.pm?
-
-Then the caller would do something like this instead:
-
-	sub git_commit {
-        	...
-		if (my ($cur) = without_stderr(qw(git rev-parse --verify),
-			"refs/remotes/$GIT_SVN^0")) {
-                	...
-
+    -- Joe
