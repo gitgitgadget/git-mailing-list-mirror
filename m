@@ -1,110 +1,109 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: What's in git.git (stable)
-Date: Thu, 14 Dec 2006 11:36:57 +0000
-Message-ID: <200612141136.59041.andyparkins@gmail.com>
-References: <7v4przfpir.fsf@assigned-by-dhcp.cox.net> <200612140959.19209.andyparkins@gmail.com> <7v7iwu93rv.fsf@assigned-by-dhcp.cox.net>
+From: Martin Waitz <tali@admingilde.org>
+Subject: Re: [RFC] Submodules in GIT
+Date: Wed, 29 Nov 2006 17:15:43 +0100
+Message-ID: <20061129161543.GG18810@admingilde.org>
+References: <20061121223130.GA24909@nan92-1-81-57-214-146.fbx.proxad.net> <200611281335.38728.andyparkins@gmail.com> <20061128154434.GD28337@spearce.org> <200611281629.08636.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 14 Dec 2006 11:37:18 +0000 (UTC)
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="NQTVMVnDVuULnIzU"
+NNTP-Posting-Date: Wed, 29 Nov 2006 16:16:47 +0000 (UTC)
+Cc: git@vger.kernel.org, Shawn Pearce <spearce@spearce.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=AjXdqRJZBHcwoNFVJrhjOPRWuPmjeSttPbRWX4GqUKhivEfrqdiH2nfwub2QPQFSNN97MHo3Z3tkZ0Zcf5Uht4R6gGbjyOvf6BW61lkZ2tikZPY6VP1P1bc5vS991Y/ZDpHPdCPcNRwYDfAjxVskPkook80zV//MJux2d777i54=
-User-Agent: KMail/1.9.5
-In-Reply-To: <7v7iwu93rv.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
+In-Reply-To: <200611281629.08636.andyparkins@gmail.com>
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
+User-Agent: Mutt/1.5.9i
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34320>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Guoth-0006fT-17 for gcvg-git@gmane.org; Thu, 14 Dec
- 2006 12:37:09 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32649>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GpS6K-0003qk-5K for gcvg-git@gmane.org; Wed, 29 Nov
+ 2006 17:16:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932640AbWLNLhF (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
- 06:37:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932638AbWLNLhF
- (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 06:37:05 -0500
-Received: from ug-out-1314.google.com ([66.249.92.168]:34339 "EHLO
- ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S932640AbWLNLhE (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec
- 2006 06:37:04 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so468588uga for
- <git@vger.kernel.org>; Thu, 14 Dec 2006 03:37:03 -0800 (PST)
-Received: by 10.66.221.6 with SMTP id t6mr1243200ugg.1166096222790; Thu, 14
- Dec 2006 03:37:02 -0800 (PST)
-Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
- ESMTP id k2sm1918713ugf.2006.12.14.03.37.02; Thu, 14 Dec 2006 03:37:02 -0800
- (PST)
-To: git@vger.kernel.org
+ S967460AbWK2QP4 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 29 Nov 2006
+ 11:15:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967462AbWK2QP4
+ (ORCPT <rfc822;git-outgoing>); Wed, 29 Nov 2006 11:15:56 -0500
+Received: from agent.admingilde.org ([213.95.21.5]:57773 "EHLO
+ mail.admingilde.org") by vger.kernel.org with ESMTP id S967460AbWK2QPz (ORCPT
+ <rfc822;git@vger.kernel.org>); Wed, 29 Nov 2006 11:15:55 -0500
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1) id
+ 1GpS63-0005f5-Qd; Wed, 29 Nov 2006 17:15:43 +0100
+To: Andy Parkins <andyparkins@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-On Thursday 2006 December 14 10:21, Junio C Hamano wrote:
 
-> You keep repeating that you want to know the object name of the
+--NQTVMVnDVuULnIzU
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Oh dear, you're right; I am terribly repetative.  Sorry.
-Oh dear, you're right; I am terribly repetative.  Sorry.
+hoi :)
 
-;-)
+On Tue, Nov 28, 2006 at 04:29:05PM +0000, Andy Parkins wrote:
+> In summary, from the supermodule's point of view:
+>  * A submodule with changed working directory is "dirty-wd"
+>  * A submodule with changed index is "dirty-idx" from the supermodule's
+>  * A submodule with changed HEAD (since the last supermodule commit)=20
+>    is "changed but not updated" and can hence be "update-index"ed into the
+>    supermodule
+>  * A submodule with changed HEAD that has been added to the supermodule i=
+ndex
+>    is "updated but not checked in"
+>  * A submodule with changed HEAD (since the last supermodule update-index=
+) is
+>    both "changed but not updated" _and_ "updated but not checked in", jus=
+t=20
+>    like any normal file.
 
-> But you never communicate with your own git repository using the
-> SHA-1 object names when talking about commits you made recently
-
-How's this then:
-
-$ git commit
-$ git commit
-$ git commit
-$ git reset HEAD^^^
-
-"AGGGHHHHHH!  I meant HEAD^^"
-
-At this point I start running "git-prune -n | grep commit" and some liberal 
-use of git-show to try and find the hash of the object so I can do
-
-$ git reset --hard HASH_OF_OBJECT_I_STUPIDLY_ORPHANED
-
-> So I do not think "git commit" is a valid example.  I also agree
-> with Shawn that "git add" that says 6781 files were added is
-> pointless.
-
-Okay.
-
-> > I've always thought that programs that needed an expert/beginner split
-> > were badly designed.
->
-> There probably is a truth in that.  Let's not add verbosity
-> unnecessarily.
-
-My habit is always to be overly verbose in program output; however, I realise 
-that not everybody likes that.  None of these things cause me any difficulty 
-in my use of git.  However, my Dad also is an engineer, but he's not so 
-comfortable with VCS; for him almost every part of git is a mystery.  
-Commands that run and don't say anything are confusing because he didn't 
-really know what they were /meant/ to do; he's just got a set of recipes that 
-he knows to type.  He's probably an extreme case, and not a good model for 
-typical user - on the other hand, I would say that if he can use it, then it 
-is officially newbie-friendly. :-)
-
-> I agree with you that making some commands with progress
-> indication less chatty would be a good clean-up.
-
-These are actually the ones I feel more strongly about.  Too much output just 
-drowns out the information that people really need.
+when tracking refs/heads/master instead of HEAD, you also get:
+   * A submodule where HEAD is not pointing to refs/heads/master is
+     "dirty-branch" or something.
 
 
-Andy
+> What's needed then:
+>  * A way of telling git to treat a particular directory as a submodule in=
+stead
+>    of a directory
+This is handled by creating a GIT repository in this directory.
+My current implementation needs some more magic by the user to add it to
+the index, but I plan to change this to the way that GIT repositories
+will be recognized as possible submodules.
 
--- 
-Dr Andy Parkins, M Eng (hons), MIEE
+>  * git-status gets knowledge of how to check for "dirty" submodules
+This is on top of my TODO.
+
+>  * git-commit-tree learns about how to store "submodule" object types in
+>    trees.  The submodule object type will be nothing more than the hash o=
+f the
+>    current HEAD commit.  (This might be my ignorance, perhaps it's just=
+=20
+>    update-index that needs to know this)
+it's only update-index that has to know this.
+Otherwise it would be implicitly updated and you would never get your
+"changed but not updated" status as above.
+
+
+--=20
+Martin Waitz
+
+--NQTVMVnDVuULnIzU
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFFbbIvj/Eaxd/oD7IRAv6ZAJ9W909185K/byVc91ctIBsqlkM9hACfZhzD
+FDHKPq/XhUbPIOcZkZNnVtk=
+=sT3j
+-----END PGP SIGNATURE-----
+
