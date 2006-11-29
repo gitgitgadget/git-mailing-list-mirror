@@ -2,67 +2,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 2/n] gitweb: Use '&iquot;' instead of '?' in esc_path
-Date: Tue, 07 Nov 2006 00:16:22 +0100
-Organization: At home
-Message-ID: <eiofmt$8nc$1@sea.gmane.org>
-References: <200610301953.01875.jnareb@gmail.com> <7virhw5hoi.fsf@assigned-by-dhcp.cox.net> <200611032333.49794.jnareb@gmail.com> <200611062258.08320.jnareb@gmail.com> <7v8xiochw0.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] (experimental) per-topic shortlog.
+Date: Tue, 28 Nov 2006 16:57:00 -0800
+Message-ID: <7v1wnnysrn.fsf@assigned-by-dhcp.cox.net>
+References: <7v8xhxsopp.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0611261652520.30076@woody.osdl.org>
+	<Pine.LNX.4.63.0611280040480.30004@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7v7ixge8j2.fsf@assigned-by-dhcp.cox.net>
+	<20061128131139.GA10874@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-NNTP-Posting-Date: Mon, 6 Nov 2006 23:16:40 +0000 (UTC)
+NNTP-Posting-Date: Wed, 29 Nov 2006 00:57:13 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 18
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+In-Reply-To: <20061128131139.GA10874@coredump.intra.peff.net> (Jeff King's
+	message of "Tue, 28 Nov 2006 08:11:39 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31031>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32605>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GhDhh-0000su-AZ for gcvg-git@gmane.org; Tue, 07 Nov
- 2006 00:16:33 +0100
+ esmtp (Exim 4.43) id 1GpDl5-0001Ww-Kr for gcvg-git@gmane.org; Wed, 29 Nov
+ 2006 01:57:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753688AbWKFXP7 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 6 Nov 2006
- 18:15:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753919AbWKFXP7
- (ORCPT <rfc822;git-outgoing>); Mon, 6 Nov 2006 18:15:59 -0500
-Received: from main.gmane.org ([80.91.229.2]:31107 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S1753688AbWKFXP6 (ORCPT
- <rfc822;git@vger.kernel.org>); Mon, 6 Nov 2006 18:15:58 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1GhDgy-0000jA-U2 for git@vger.kernel.org; Tue, 07 Nov 2006 00:15:48 +0100
-Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Tue, 07 Nov 2006 00:15:48 +0100
-Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Tue, 07 Nov 2006
- 00:15:48 +0100
-To: git@vger.kernel.org
+ S1758261AbWK2A5E (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 28 Nov 2006
+ 19:57:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758285AbWK2A5D
+ (ORCPT <rfc822;git-outgoing>); Tue, 28 Nov 2006 19:57:03 -0500
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:16586 "EHLO
+ fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP id S1758261AbWK2A5B
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2006 19:57:01 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao08.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061129005701.IYUP18207.fed1rmmtao08.cox.net@fed1rmimpo01.cox.net>; Tue, 28
+ Nov 2006 19:57:01 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id sQwU1V00F1kojtg0000000; Tue, 28 Nov 2006
+ 19:56:29 -0500
+To: Jeff King <peff@peff.net>
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano wrote:
+Jeff King <peff@peff.net> writes:
 
-> Jakub Narebski <jnareb@gmail.com> writes:
-> 
->> Here is example code for this:
-> 
-> Ok.  The issues I raised in the previous round seem to have been
-> addressed.  Maybe you would want not to use nested 'sub' and it
-> is good to go, I think.
- 
-Nested sub makes it easy to change gitweb quoting from Character Escape
-Codes (CEC) to e.g. Unicode Printable Representation (PR).
+> Just for fun, I took a look at what we might see by ordering commits by
+> their "amount of blamedness". That is, the count of lines introduced by
+> a commit which were not later superseded. The script I used is below:
+>
+> #!/bin/sh
+>
+> start=$1; shift
+> end=$1; shift
+>
+> start_sha1=`git-rev-parse $start^{}`
+> git-rev-list --parents $start..$end >revs
+> echo $start_sha1 >>revs
+> for i in `git-diff --raw -r $start $end | cut -f2`; do
+>   echo blaming $i... >&2
+>   git-blame -l -S revs $i | cut -d' ' -f1
+> done |
+>   grep -v $start_sha1 |
+>   sort | uniq -c | sort -rn |
+>   while read count hash; do
+>     echo "$count `git-rev-list --max-count=1 --pretty=oneline $hash`"
+>   done
+>
+> The top 15 for v1.4.3 to v1.4.4 are:
+>
+> 1604 6973dcaee76ef7b7bfcabd2f26e76205aae07858 Libify diff-files.
 
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Something is SERIOUSLY wrong.
+
+That commit is not even between v1.4.3 and v1.4.4.
+
+
 
