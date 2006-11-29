@@ -2,331 +2,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 4/5] allow deepening of a shallow repository
-Date: Mon, 30 Oct 2006 20:09:53 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0610302009390.26682@wbgn013.biozentrum.uni-wuerzburg.de>
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 0/2] Making "git commit" to mean "git commit -a".
+Date: Tue, 28 Nov 2006 23:44:57 -0800
+Message-ID: <7vr6vmsnly.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0611271622260.9647@xanadu.home>
+	<7vmz6cfsuw.fsf@assigned-by-dhcp.cox.net>
+	<87bqmswm1e.wl%cworth@cworth.org>
+	<7vodqse90q.fsf@assigned-by-dhcp.cox.net>
+	<87ac2cwha4.wl%cworth@cworth.org>
+	<7vy7pwcsgp.fsf@assigned-by-dhcp.cox.net>
+	<878xhwwdyj.wl%cworth@cworth.org>
+	<7vk61gcnzl.fsf@assigned-by-dhcp.cox.net>
+	<7vd5786opj.fsf@assigned-by-dhcp.cox.net>
+	<871wnnwi3k.wl%cworth@cworth.org>
+	<7virgzuf38.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0611282322320.9647@xanadu.home>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Mon, 30 Oct 2006 19:19:45 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Wed, 29 Nov 2006 07:45:15 +0000 (UTC)
+Cc: Carl Worth <cworth@cworth.org>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-X-Y-GMX-Trusted: 0
+In-Reply-To: <Pine.LNX.4.64.0611282322320.9647@xanadu.home> (Nicolas Pitre's
+	message of "Tue, 28 Nov 2006 23:33:59 -0500 (EST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30509>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32621>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GecWi-0006Cp-Ew for gcvg-git@gmane.org; Mon, 30 Oct
- 2006 20:10:28 +0100
+ esmtp (Exim 4.43) id 1GpK7v-0003He-H4 for gcvg-git@gmane.org; Wed, 29 Nov
+ 2006 08:45:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1161433AbWJ3TKK (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 30 Oct 2006
- 14:10:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161469AbWJ3TKK
- (ORCPT <rfc822;git-outgoing>); Mon, 30 Oct 2006 14:10:10 -0500
-Received: from mail.gmx.net ([213.165.64.20]:902 "HELO mail.gmx.net") by
- vger.kernel.org with SMTP id S1161467AbWJ3TKH (ORCPT
- <rfc822;git@vger.kernel.org>); Mon, 30 Oct 2006 14:10:07 -0500
-Received: (qmail invoked by alias); 30 Oct 2006 19:10:00 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp036) with SMTP; 30 Oct 2006 20:10:00 +0100
-To: git@vger.kernel.org, junkio@cox.net
+ S965919AbWK2Ho7 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 29 Nov 2006
+ 02:44:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966031AbWK2Ho7
+ (ORCPT <rfc822;git-outgoing>); Wed, 29 Nov 2006 02:44:59 -0500
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:25239 "EHLO
+ fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP id S965919AbWK2Ho6
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 29 Nov 2006 02:44:58 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao04.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061129074458.BOUK7494.fed1rmmtao04.cox.net@fed1rmimpo01.cox.net>; Wed, 29
+ Nov 2006 02:44:58 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id sXkR1V01J1kojtg0000000; Wed, 29 Nov 2006
+ 02:44:26 -0500
+To: Nicolas Pitre <nico@cam.org>
 Sender: git-owner@vger.kernel.org
 
+Nicolas Pitre <nico@cam.org> writes:
 
-Now, by saying "git fetch -depth <n> <repo>" you can deepen
-a shallow repository.
+> This argument has its converse.  What you should _not_ have to worry 
+> about all the time is whether your index really includes all the changes 
+> you want included in your next commit.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- commit.c      |   13 +++++++++++++
- commit.h      |    3 ++-
- fetch-pack.c  |   22 ++++++++++++++++------
- git-fetch.sh  |   12 +++++++++++-
- shallow.c     |    8 ++++++--
- upload-pack.c |   57 ++++++++++++++++++++++++++++++++++++++++++++++-----------
- 6 files changed, 94 insertions(+), 21 deletions(-)
+That's what we have "git diff" with various output options for;
+I often do "git diff --stat" or "git diff --name-status" when I
+know I am about to commit in a dirty working tree.  I suspect
+that I am not getting your point.
 
-diff --git a/commit.c b/commit.c
-index bffa278..d5103cd 100644
---- a/commit.c
-+++ b/commit.c
-@@ -255,6 +255,19 @@ int write_shallow_commits(int fd, int us
- 	return count;
- }
- 
-+int unregister_shallow(const unsigned char *sha1)
-+{
-+	int pos = commit_graft_pos(sha1);
-+	if (pos < 0)
-+		return -1;
-+	if (pos + 1 < commit_graft_nr)
-+		memcpy(commit_graft + pos, commit_graft + pos + 1,
-+				sizeof(struct commit_graft *)
-+				* (commit_graft_nr - pos - 1));
-+	commit_graft_nr--;
-+	return 0;
-+}
-+
- int parse_commit_buffer(struct commit *item, void *buffer, unsigned long size)
- {
- 	char *tail = buffer;
-diff --git a/commit.h b/commit.h
-index c559510..e9e158f 100644
---- a/commit.h
-+++ b/commit.h
-@@ -108,9 +108,10 @@ int read_graft_file(const char *graft_fi
- extern struct commit_list *get_merge_bases(struct commit *rev1, struct commit *rev2, int cleanup);
- 
- extern int register_shallow(const unsigned char *sha1);
-+extern int unregister_shallow(const unsigned char *sha1);
- extern int write_shallow_commits(int fd, int use_pack_protocol);
- extern int is_repository_shallow();
- extern struct commit_list *get_shallow_commits(struct object_array *heads,
--		int depth);
-+		int depth, int shallow_flag, int not_shallow_flag);
- 
- #endif /* COMMIT_H */
-diff --git a/fetch-pack.c b/fetch-pack.c
-index 9619d6e..a82a5ba 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -199,7 +199,17 @@ static int find_common(int fd[2], unsign
- 				if (lookup_object(sha1))
- 					continue;
- 				register_shallow(sha1);
--			}
-+			}  else if (!strncmp("unshallow ", line, 10)) {
-+				if (get_sha1_hex(line + 10, sha1))
-+					die("invalid unshallow line: %s", line);
-+				if (!lookup_object(sha1))
-+					die("object not found: %s", line);
-+				/* make sure that it is parsed as shallow */
-+				parse_object(sha1);
-+				if (unregister_shallow(sha1))
-+					die("no shallow found: %s", line);
-+			} else
-+				die("expected shallow/unshallow, got %s", line);
- 		}
- 	}
- 
-@@ -388,9 +398,11 @@ static int everything_local(struct ref *
- 		}
- 	}
- 
--	for_each_ref(mark_complete, NULL);
--	if (cutoff)
--		mark_recent_complete_commits(cutoff);
-+	if (!depth) {
-+		for_each_ref(mark_complete, NULL);
-+		if (cutoff)
-+			mark_recent_complete_commits(cutoff);
-+	}
- 
- 	/*
- 	 * Mark all complete remote refs as common refs.
-@@ -550,8 +562,6 @@ int main(int argc, char **argv)
- 	}
- 	if (!dest)
- 		usage(fetch_pack_usage);
--	if (is_repository_shallow() && depth > 0)
--		die("Deepening of a shallow repository not yet supported!");
- 	pid = git_connect(fd, dest, exec);
- 	if (pid < 0)
- 		return 1;
-diff --git a/git-fetch.sh b/git-fetch.sh
-index 539dff6..2a4b7a0 100755
---- a/git-fetch.sh
-+++ b/git-fetch.sh
-@@ -21,6 +21,7 @@ update_head_ok=
- exec=
- upload_pack=
- keep=--thin
-+depth=
- while case "$#" in 0) break ;; esac
- do
- 	case "$1" in
-@@ -56,6 +57,13 @@ do
- 	--reflog-action=*)
- 		rloga=`expr "z$1" : 'z-[^=]*=\(.*\)'`
- 		;;
-+	--depth=*)
-+		depth="--depth=`expr "z$1" : 'z-[^=]*=\(.*\)'`"
-+		;;
-+	--depth)
-+		shift
-+		depth="--depth=$1"
-+		;;
- 	-*)
- 		usage
- 		;;
-@@ -296,6 +304,7 @@ fetch_main () {
-       # There are transports that can fetch only one head at a time...
-       case "$remote" in
-       http://* | https://* | ftp://*)
-+	  test -n "$depth" && die "shallow clone with http not supported"
- 	  proto=`expr "$remote" : '\([^:]*\):'`
- 	  if [ -n "$GIT_SSL_NO_VERIFY" ]; then
- 	      curl_extra_args="-k"
-@@ -324,6 +333,7 @@ fetch_main () {
- 	  git-http-fetch -v -a "$head" "$remote/" || exit
- 	  ;;
-       rsync://*)
-+	  test -n "$depth" && die "shallow clone with rsync not supported"
- 	  TMP_HEAD="$GIT_DIR/TMP_HEAD"
- 	  rsync -L -q "$remote/$remote_name" "$TMP_HEAD" || exit 1
- 	  head=$(git-rev-parse --verify TMP_HEAD)
-@@ -370,7 +380,7 @@ fetch_main () {
-     ( : subshell because we muck with IFS
-       IFS=" 	$LF"
-       (
--	  git-fetch-pack $exec $keep "$remote" $rref || echo failed "$remote"
-+	  git-fetch-pack $exec $keep $depth "$remote" $rref || echo failed "$remote"
-       ) |
-       while read sha1 remote_name
-       do
-diff --git a/shallow.c b/shallow.c
-index 3cf2127..58a7b20 100644
---- a/shallow.c
-+++ b/shallow.c
-@@ -41,7 +41,8 @@ int is_repository_shallow()
- 	return is_shallow;
- }
- 
--struct commit_list *get_shallow_commits(struct object_array *heads, int depth)
-+struct commit_list *get_shallow_commits(struct object_array *heads, int depth,
-+		int shallow_flag, int not_shallow_flag)
- {
- 	int i = 0, cur_depth = 0;
- 	struct commit_list *result = NULL;
-@@ -67,6 +68,7 @@ struct commit_list *get_shallow_commits(
- 			}
- 		}
- 		parse_commit(commit);
-+		commit->object.flags |= not_shallow_flag;
- 		cur_depth++;
- 		for (p = commit->parents, commit = NULL; p; p = p->next) {
- 			if (!p->item->util) {
-@@ -87,8 +89,10 @@ struct commit_list *get_shallow_commits(
- 					commit = p->item;
- 					cur_depth = *(int *)commit->util;
- 				}
--			} else
-+			} else {
- 				commit_list_insert(p->item, &result);
-+				p->item->object.flags |= shallow_flag;
-+			}
- 		}
- 	}
- 
-diff --git a/upload-pack.c b/upload-pack.c
-index ebe1e5a..162dd34 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -134,6 +134,7 @@ static void create_pack_file(void)
- 		} else {
- 			for (i = 0; i < want_obj.nr; i++) {
- 				struct object *o = want_obj.objects[i].item;
-+				o->flags &= ~UNINTERESTING;
- 				add_pending_object(&revs, o, NULL);
- 			}
- 			for (i = 0; i < have_obj.nr; i++) {
-@@ -490,6 +491,9 @@ static void receive_needs(void)
- 	static char line[1000];
- 	int len, depth = 0;
- 
-+#define SHALLOW (1u<<8)
-+#define NOT_SHALLOW (1u<<9)
-+#define CLIENT_SHALLOW (1u<<10)
- 	for (;;) {
- 		struct object *o;
- 		unsigned char sha1_buf[20];
-@@ -501,16 +505,19 @@ static void receive_needs(void)
- 		if (!strncmp("shallow ", line, 8)) {
- 			unsigned char sha1[20];
- 			struct object *object;
-+			use_thin_pack = 0;
- 			if (get_sha1(line + 8, sha1))
- 				die("invalid shallow line: %s", line);
- 			object = parse_object(sha1);
- 			if (!object)
- 				die("did not find object for %s", line);
-+			object->flags |= CLIENT_SHALLOW;
- 			add_object_array(object, NULL, &shallows);
- 			continue;
- 		}
- 		if (!strncmp("deepen ", line, 7)) {
- 			char *end;
-+			use_thin_pack = 0;
- 			depth = strtol(line + 7, &end, 0);
- 			if (end == line + 7 || depth <= 0)
- 				die("Invalid deepen: %s", line);
-@@ -547,23 +554,51 @@ static void receive_needs(void)
- 			add_object_array(o, NULL, &want_obj);
- 		}
- 	}
-+	if (depth == 0 && shallows.nr == 0)
-+		return;
- 	if (depth > 0) {
- 		struct commit_list *result, *backup;
--		if (shallows.nr > 0)
--			die("Deepening a shallow repository not yet supported");
--		backup = result = get_shallow_commits(&want_obj, depth);
-+		int i;
-+		backup = result = get_shallow_commits(&want_obj, depth,
-+			SHALLOW, NOT_SHALLOW);
- 		while (result) {
--			packet_write(1, "shallow %s",
--					sha1_to_hex(result->item->object.sha1));
-+			struct object *object = &result->item->object;
-+			if (!(object->flags & CLIENT_SHALLOW)) {
-+				packet_write(1, "shallow %s",
-+						sha1_to_hex(object->sha1));
-+				register_shallow(object->sha1);
-+			}
- 			result = result->next;
- 		}
- 		free_commit_list(backup);
--	}
--	if (shallows.nr > 0) {
--		int i;
--		for (i = 0; i < shallows.nr; i++)
--			register_shallow(shallows.objects[i].item->sha1);
--	}
-+		for (i = 0; i < shallows.nr; i++) {
-+			struct object *object = shallows.objects[i].item;
-+			if (object->flags & NOT_SHALLOW) {
-+				struct commit_list *parents;
-+				packet_write(1, "unshallow %s",
-+					sha1_to_hex(object->sha1));
-+				object->flags &= ~CLIENT_SHALLOW;
-+				/* make sure the real parents are parsed */
-+				unregister_shallow(object->sha1);
-+				parse_commit((struct commit *)object);
-+				parents = ((struct commit *)object)->parents;
-+				while (parents) {
-+					add_object_array(&parents->item->object,
-+							NULL, &want_obj);
-+					parents = parents->next;
-+				}
-+			}
-+			/* make sure commit traversal conforms to client */
-+			register_shallow(object->sha1);
-+		}
-+		packet_flush(1);
-+	} else
-+		if (shallows.nr > 0) {
-+			int i;
-+			for (i = 0; i < shallows.nr; i++)
-+				register_shallow(shallows.objects[i].item->sha1);
-+		}
-+	free(shallows.objects);
- }
- 
- static int send_ref(const char *refname, const unsigned char *sha1, int flag, void *cb_data)
--- 
-1.4.3.3.gca42
+> And whether wanting to leave local changes in the working directory 
+> without commiting them actually happen more often than wanting to commit 
+> every changes is arguable.
+
+I do not think anybody is talking about which happens more
+often.  "screw the index" people do not have to worry about the
+index during the course of their changes in the working tree
+toward the next commit, and the only time they need to tell git
+(which _IS_ a system based on the index, dammit) about what they
+want to do with the index is at the commit time, and they tell
+git to "screw the index" by passing "-a" to "git commit".  In
+other words, "-a" at commit time is a magic incantation to allow
+them to be casual about index manipulation before reaching the
+point to commit.  They do not have to worry about differences
+between "git rm --force" vs "/bin/rm" nor "git apply" vs "git
+apply --index").
+
+It might make sense to have a configuration in .git/config that
+says "user.workingtreeistheking = true".  This should obviously
+affect what "git commit" does by default, but it also should
+change the behaviour of other commands to suit the "screw the
+index" workflow better.
+
+For example, the configuration should probably make "git diff"
+(without an explicit --cached nor HEAD) pretend it was asked to
+show diff between HEAD and the working tree, because the user
+chose not to care about the index.  Not caring about the index
+is different from consciously keeping the index clean; for
+example, running "git apply --index" by mistake when he meant to
+say "git apply" should be tolerated, and Porcelain-ish that is
+working under workingtreeistheking mode should behave as if the
+index does not exist.  In other words, the index is _not_ a
+staging area towards the next commit for him; the working tree
+is.
+
+I thought Cogito largely follows that model, so it certainly is
+possible to do things that way.  And I would not mind if the
+changes are cleanly done and maintainable.  I am NOT going to
+say that I will refuse to maintain the code that implements the
+workingtreeistheking half of the system, although it is very
+unlikely that I would ever enable that configuration in my
+repositories.
+
+Would that make people happy?  I do not think so.  I think it
+will lead to more confusion to have two majorly different
+semantics in the same set of tools.
+
