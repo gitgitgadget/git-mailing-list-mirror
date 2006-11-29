@@ -1,75 +1,73 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
-	DATE_IN_PAST_03_06,HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: [PATCH 5/5] git-svn: re-map repository URLs and UUIDs on SVK
- mirror paths
-Date: Thu, 07 Dec 2006 11:20:34 +1100
-Message-ID: <45775E52.90102@vilain.net>
-References: <20061205051738.16552.8987.stgit@localhost> <20061205051738.16552.22494.stgit@localhost> <20061205085804.GB27236@soma>
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: [PATCH 2/2] Don't require config file for "stg mail"
+Date: Wed, 29 Nov 2006 16:29:32 +0000
+Message-ID: <b0943d9e0611290829h291942d7x13247511d16afeee@mail.gmail.com>
+References: <20061129035925.6118.78329.stgit@dv.roinet.com>
+	 <20061129035930.6118.88435.stgit@dv.roinet.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 7 Dec 2006 04:27:11 +0000 (UTC)
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Wed, 29 Nov 2006 16:30:56 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.4 (X11/20060615)
-In-Reply-To: <20061205085804.GB27236@soma>
-X-Enigmail-Version: 0.94.0.0
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Ho/eL3h86RZREsgAIzTOzK+fmc64d4NyfSJBay66kb6Kux8fU1nr8DqCBQEdwHOgKdZGRhEL2C7f43fBPMPiHMcdtTbXByG6FUWCTQrAN+VF5bHoAPRHJZnWOp89Xt+o5N8MmJ4svUYd5/jcijd5hBkPTrRC7eVDvK/Od5rfSA4=
+In-Reply-To: <20061129035930.6118.88435.stgit@dv.roinet.com>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33550>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GsAqk-0006qt-1P for gcvg-git@gmane.org; Thu, 07 Dec
- 2006 05:27:10 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32650>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GpSJV-0007i8-1x for gcvg-git@gmane.org; Wed, 29 Nov
+ 2006 17:29:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S968736AbWLGE1H (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
- 23:27:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S968737AbWLGE1H
- (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 23:27:07 -0500
-Received: from watts.utsl.gen.nz ([202.78.240.73]:42253 "EHLO
- magnus.utsl.gen.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
- S968736AbWLGE1D (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec 2006
- 23:27:03 -0500
-Received: by magnus.utsl.gen.nz (Postfix, from userid 65534) id 394E7139B0D;
- Thu,  7 Dec 2006 17:27:02 +1300 (NZDT)
-Received: from [127.0.0.1] (longdrop.magnus.utsl.gen.nz [192.168.253.12])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
- certificate requested) by magnus.utsl.gen.nz (Postfix) with ESMTP id
- 8CF13139AEC; Thu,  7 Dec 2006 17:26:57 +1300 (NZDT)
-To: Eric Wong <normalperson@yhbt.net>
+ S967467AbWK2Q3e convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Wed, 29 Nov 2006 11:29:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967468AbWK2Q3d
+ (ORCPT <rfc822;git-outgoing>); Wed, 29 Nov 2006 11:29:33 -0500
+Received: from wx-out-0506.google.com ([66.249.82.227]:47394 "EHLO
+ wx-out-0506.google.com") by vger.kernel.org with ESMTP id S967467AbWK2Q3d
+ convert rfc822-to-8bit (ORCPT <rfc822;git@vger.kernel.org>); Wed, 29 Nov 2006
+ 11:29:33 -0500
+Received: by wx-out-0506.google.com with SMTP id h27so2368423wxd for
+ <git@vger.kernel.org>; Wed, 29 Nov 2006 08:29:32 -0800 (PST)
+Received: by 10.90.52.2 with SMTP id z2mr2444227agz.1164817772501; Wed, 29
+ Nov 2006 08:29:32 -0800 (PST)
+Received: by 10.65.133.7 with HTTP; Wed, 29 Nov 2006 08:29:32 -0800 (PST)
+To: "Pavel Roskin" <proski@gnu.org>
 Sender: git-owner@vger.kernel.org
 
-Eric Wong wrote:
-> Upon further review, this would make 'git svn rebuild' behave
-> unexpectedly (it would make the git-svn metadata, including .rev_db
-> entries point to the original repo and not the SVK one).  This may not
-> necessarily be a big deal, however.
+On 29/11/06, Pavel Roskin <proski@gnu.org> wrote:
+> When calculating the string to be used in the From: field, don't requ=
+ire
+> it to come from the configuration file.  Instead, reuse already known
+> authname and authemail values as the default.  They can be taken from
+> the GIT_AUTHOR_NAME and GIT_AUTHOR_EMAIL environment variables.
 
-Yes, that's the idea; a 'rebuild' should set it up to pull from the
-original SVN repository directly.  That probably needs some documentation...
+Your patch uses the author of the patch which can be different from
+the person sending the e-mail. It could indeed use the author from GIT
+variables or configuration (not the patch author) and I already have a
+patch from Karl Hasselstr=F6m for this (which I haven't found the time
+to check properly).
 
-> Also, incremental fetches (or fetching more than 1k sequential
-> revisions) would probably fail.  To fix this, read the offset of last
-> entry in .rev_db instead of git-svn-id: from the last commit to get the
-> last revision.  But since rebuild won't work as expected; losing the
-> .rev_db file means you wouldn't be able to fetch from the SVK repo
-> anymore (but the original upstream one will be fine).
-> 
-> One last thing: feature should be made optional.  I actually work
-> day-to-day on a repository that was created with svm/SVN::Mirror,
-> the original repository no longer exists; but the mirrored one
-> still has these properties (I suppose I could remove the props
-> server-side, but some people may not have the permissions).
+The reason I added a sender option is because the sender (that gets
+added to the e-mail headers) may differ from the author of the patch.
+I use one e-mail address as the author but I might be behind an SMTP
+server which only allows a different e-mail address and therefore I
+set the sender accordingly.
 
-ok, I'll work on that and the other issues you highlighted... possibly
-the overhead of fetching the revprops during mirroring might hurt a
-little for people not doing this, too.  Thanks for reviewing the patch!
+Once I merge Karl's patch, I'll modify StGIT to use the GIT defaults
+if there is no sender configured.
 
-Sam.
-
-
+--=20
