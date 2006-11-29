@@ -1,141 +1,97 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH 4/4] Teach bash about git-am/git-apply and their whitespace options.
-Date: Mon, 27 Nov 2006 15:12:03 -0500
-Message-ID: <20061127201203.GD7308@spearce.org>
-References: <139669072795537547ec26b69115509100dcd7ec.1164658223.git.spearce@spearce.org>
+From: Jim Meyering <jim@meyering.net>
+Subject: Re: can I remove or move a tag in a remote repository?
+Date: Wed, 29 Nov 2006 11:55:28 +0100
+Message-ID: <87u00imsin.fsf@rho.meyering.net>
+References: <87wt5rffbm.fsf@rho.meyering.net>
+	<7virgz1bz7.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0611291040590.30004@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Mon, 27 Nov 2006 20:13:09 +0000 (UTC)
-Cc: git@vger.kernel.org
+NNTP-Posting-Date: Wed, 29 Nov 2006 10:55:53 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <139669072795537547ec26b69115509100dcd7ec.1164658223.git.spearce@spearce.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+In-Reply-To: <Pine.LNX.4.63.0611291040590.30004@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Wed, 29 Nov 2006 10:54:10 +0100
+	(CET)")
+Original-Lines: 56
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32446>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32632>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gompn-0000zl-LY for gcvg-git@gmane.org; Mon, 27 Nov
- 2006 21:12:12 +0100
+ esmtp (Exim 4.43) id 1GpN6D-0002wg-9I for gcvg-git@gmane.org; Wed, 29 Nov
+ 2006 11:55:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1758557AbWK0UMI (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 27 Nov 2006
- 15:12:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758556AbWK0UMI
- (ORCPT <rfc822;git-outgoing>); Mon, 27 Nov 2006 15:12:08 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:59807 "EHLO
- corvette.plexpod.net") by vger.kernel.org with ESMTP id S1758557AbWK0UMG
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 27 Nov 2006 15:12:06 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1GompY-0006Qu-P6; Mon, 27 Nov 2006 15:11:57 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- 8793520FB7F; Mon, 27 Nov 2006 15:12:03 -0500 (EST)
-To: Junio C Hamano <junkio@cox.net>
+ S967027AbWK2Kza (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 29 Nov 2006
+ 05:55:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967036AbWK2Kza
+ (ORCPT <rfc822;git-outgoing>); Wed, 29 Nov 2006 05:55:30 -0500
+Received: from mx.meyering.net ([82.230.74.64]:14237 "EHLO mx.meyering.net")
+ by vger.kernel.org with ESMTP id S967027AbWK2Kz3 (ORCPT
+ <rfc822;git@vger.kernel.org>); Wed, 29 Nov 2006 05:55:29 -0500
+Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000) id
+ A50BC287E9; Wed, 29 Nov 2006 11:55:28 +0100 (CET)
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- contrib/completion/git-completion.bash |   53 ++++++++++++++++++++++++++++++++
- 1 files changed, 53 insertions(+), 0 deletions(-)
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> On Tue, 28 Nov 2006, Junio C Hamano wrote:
+...
+>> I think this is due to overeager receive.denyNonFastForwards
+>> configuration setting at the repository you are pushing into.
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index ba3adb6..5b7d9d3 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -307,6 +307,54 @@ __git_aliased_command ()
- 	done
- }
- 
-+__git_whitespacelist="nowarn warn error error-all strip"
-+
-+_git_am ()
-+{
-+	local cur="${COMP_WORDS[COMP_CWORD]}"
-+	if [ -d .dotest ]; then
-+		COMPREPLY=($(compgen -W "
-+			--skip --resolved
-+			" -- "$cur"))
-+		return
-+	fi
-+	case "$cur" in
-+	--whitespace=*)
-+		COMPREPLY=($(compgen -W "$__git_whitespacelist" \
-+			-- "${cur##--whitespace=}"))
-+		return
-+		;;
-+	--*)
-+		COMPREPLY=($(compgen -W "
-+			--signoff --utf8 --binary --3way --interactive
-+			--whitespace=
-+			" -- "$cur"))
-+		return
-+	esac
-+	COMPREPLY=()
-+}
-+
-+_git_apply ()
-+{
-+	local cur="${COMP_WORDS[COMP_CWORD]}"
-+	case "$cur" in
-+	--whitespace=*)
-+		COMPREPLY=($(compgen -W "$__git_whitespacelist" \
-+			-- "${cur##--whitespace=}"))
-+		return
-+		;;
-+	--*)
-+		COMPREPLY=($(compgen -W "
-+			--stat --numstat --summary --check --index
-+			--cached --index-info --reverse --reject --unidiff-zero
-+			--apply --no-add --exclude=
-+			--whitespace= --inaccurate-eof --verbose
-+			" -- "$cur"))
-+		return
-+	esac
-+	COMPREPLY=()
-+}
-+
- _git_branch ()
- {
- 	local cur="${COMP_WORDS[COMP_CWORD]}"
-@@ -760,6 +808,8 @@ _git ()
- 	[ "$expansion" ] && command="$expansion"
- 
- 	case "$command" in
-+	am)          _git_am ;;
-+	apply)       _git_apply ;;
- 	branch)      _git_branch ;;
- 	cat-file)    _git_cat_file ;;
- 	checkout)    _git_checkout ;;
-@@ -795,6 +845,8 @@ _gitk ()
- 
- complete -o default -o nospace -F _git git
- complete -o default            -F _gitk gitk
-+complete -o default            -F _git_am git-am
-+complete -o default            -F _git_apply git-apply
- complete -o default            -F _git_branch git-branch
- complete -o default -o nospace -F _git_cat_file git-cat-file
- complete -o default            -F _git_checkout git-checkout
-@@ -824,6 +876,7 @@ complete -o default -o nospace -F _git_log git-whatchanged
- # included the '.exe' suffix.
- #
- if [ Cygwin = "$(uname -o 2>/dev/null)" ]; then
-+complete -o default            -F _git_apply git-apply.exe
- complete -o default -o nospace -F _git git.exe
- complete -o default            -F _git_branch git-branch.exe
- complete -o default -o nospace -F _git_cat_file git-cat-file.exe
--- 
+Junio, thank you for following up on this!
+
+>> I _think_ what receive-pack does in this case is totally wrong.
+>> It should either:
+>>
+>>  (1) deny overwriting existing tags -- tags are meant to be
+>>      immutable so it should not allow them to be "updated"
+>>      regardless of fast-forwardness, or
+>>
+>>  (2) allow overwriting things under refs/tags/ without any
+>>      fast-forward checking.  After all, a tag could point at a
+>>      tree or a blob, and there is no fast-forwardness among
+>>      trees.
+>>
+>> The client side check in "git fetch" takes the latter viewpoint,
+>> and I think we should be consistent with it.
+
+>> Johannes, what do you think?  Does the following patch look sane
+>> to you?
+>
+> It does if you agree that (2) is correct.
+>
+> But I don't agree. cvs-head really should be a head IMHO, not a tag,
+> because cvs-head really tracks a branch.
+>
+> I also think that git-fetch silently updating tags is wrong. Rather, it
+> should warn that the tags are different. But I've been wrong before.
+
+AFAIK, no one wants git-fetch to update tags _silently_.
+I expected it give a diagnostic and fail by default -- and it already
+does that.  Pushing moved tags is serious business.  I was hoping to be
+able to use --force to override that fail-safe.
+
+My goal is to maintain a symbolic reference "cvs-head" that points
+to the newest git trunk node that's been mirrored to a CVS repository.
+Without even considering any other option, I chose to use a lightweight
+tag for that purpose, since I have a conceptual view that it's a label I
+can move from one referent to another.  It strikes me as counter-intuitive
+to use a temporary git "branch" that way.  Would that even work, removing
+it and recreating it all the time?  Hmm.. or maybe you mean to create the
+branch once and then to merge from the trunk repeatedly.  That seems
+like unnecessary work, when all I want is a movable label.
+
+I admit that I like the idea of release tags being immutable, but even
+there, it's happened that I've made-but-not-published a release, then
+realized that it wasn't quite complete.  I was glad to be able to go
+back and re-tag after making corrections.
+
+I wouldn't mind having a way to specify that a pushed tag is *not*
