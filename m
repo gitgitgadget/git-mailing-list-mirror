@@ -4,81 +4,77 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] mailinfo: hack to accept in-line annotations in patches.
-Date: Mon, 11 Dec 2006 17:15:48 -0800
-Message-ID: <7vu001zzgb.fsf@assigned-by-dhcp.cox.net>
+From: Pavel Roskin <proski@gnu.org>
+Subject: Re: [PATCH 2/2] Don't require config file for "stg mail"
+Date: Wed, 29 Nov 2006 18:27:21 -0500
+Message-ID: <1164842841.23643.28.camel@dv>
+References: <20061129035925.6118.78329.stgit@dv.roinet.com>
+	 <20061129035930.6118.88435.stgit@dv.roinet.com>
+	 <b0943d9e0611290829h291942d7x13247511d16afeee@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 12 Dec 2006 01:16:17 +0000 (UTC)
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Wed, 29 Nov 2006 23:27:51 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+In-Reply-To: <b0943d9e0611290829h291942d7x13247511d16afeee@mail.gmail.com>
+X-Mailer: Evolution 2.8.0 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34053>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GtwFi-0005mZ-5I for gcvg-git@gmane.org; Tue, 12 Dec
- 2006 02:16:14 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32678>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GpYpu-0005Mu-4d for gcvg-git@gmane.org; Thu, 30 Nov
+ 2006 00:27:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1750809AbWLLBPv (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 11 Dec 2006
- 20:15:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750810AbWLLBPu
- (ORCPT <rfc822;git-outgoing>); Mon, 11 Dec 2006 20:15:50 -0500
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:51517 "EHLO
- fed1rmmtao11.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1750809AbWLLBPt (ORCPT <rfc822;git@vger.kernel.org>); Mon, 11 Dec 2006
- 20:15:49 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao11.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061212011548.ZFGD25875.fed1rmmtao11.cox.net@fed1rmimpo02.cox.net>; Mon, 11
- Dec 2006 20:15:48 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id xdFz1V00w1kojtg0000000; Mon, 11 Dec 2006
- 20:16:00 -0500
-To: git@vger.kernel.org
+ S934293AbWK2X1Z convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Wed, 29 Nov 2006 18:27:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934356AbWK2X1Z
+ (ORCPT <rfc822;git-outgoing>); Wed, 29 Nov 2006 18:27:25 -0500
+Received: from fencepost.gnu.org ([199.232.76.164]:30955 "EHLO
+ fencepost.gnu.org") by vger.kernel.org with ESMTP id S1758993AbWK2X1Y convert
+ rfc822-to-8bit (ORCPT <rfc822;git@vger.kernel.org>); Wed, 29 Nov 2006
+ 18:27:24 -0500
+Received: from proski by fencepost.gnu.org with local (Exim 4.52) id
+ 1GpYpn-0004UL-BW for git@vger.kernel.org; Wed, 29 Nov 2006 18:27:23 -0500
+Received: from proski by gnu.org with local (Exim 4.63) (envelope-from
+ <proski@gnu.org>) id 1GpYpl-0007JM-9r; Wed, 29 Nov 2006 18:27:21 -0500
+To: Catalin Marinas <catalin.marinas@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Long before git-apply, when I wanted to talk about rationale of
-individual changes, I used to add annotation between hunks
-(delimited @@ -n,m, +l,k @@) as unindented plain text and rely
-on GNU patch to discard them as garbage.  Because git-apply is
-much less forgiving than GNU patch, this is not possible.
+Hello, Catalin!
 
-This patch teaches mailinfo that lines that begin with a '|' would
-never appear in the patch text and can be discarded safely.
-Which means that we can generate a patch as usual using format-patch,
-and add annotations inline, prefixed with '|'.
+On Wed, 2006-11-29 at 16:29 +0000, Catalin Marinas wrote:
+> On 29/11/06, Pavel Roskin <proski@gnu.org> wrote:
+> > When calculating the string to be used in the From: field, don't re=
+quire
+> > it to come from the configuration file.  Instead, reuse already kno=
+wn
+> > authname and authemail values as the default.  They can be taken fr=
+om
+> > the GIT_AUTHOR_NAME and GIT_AUTHOR_EMAIL environment variables.
+>=20
+> Your patch uses the author of the patch which can be different from
+> the person sending the e-mail. It could indeed use the author from GI=
+T
+> variables or configuration (not the patch author) and I already have =
+a
+> patch from Karl Hasselstr=F6m for this (which I haven't found the tim=
+e
+> to check properly).
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
+The funny thing it, GIT_AUTHOR_NAME and GIT_AUTHOR_EMAIL are only used
+in the code to determine the author of the patch.
 
- * I am not seriously suggesting this for inclusion but people
-   might find this handy -- see the first edition of my
-   git-commit documentation patch for an example (although I
-   seem to have botched the hand-munge of that message).
+Apparently, things are more twisted than I expected, so they need some
+untangling first.
 
- builtin-mailinfo.c |    7 +++++--
- 1 files changed, 5 insertions(+), 2 deletions(-)
+> Once I merge Karl's patch, I'll modify StGIT to use the GIT defaults
+> if there is no sender configured.
 
-diff --git a/builtin-mailinfo.c b/builtin-mailinfo.c
-index b8d7dbc..7819be1 100644
---- a/builtin-mailinfo.c
-+++ b/builtin-mailinfo.c
-@@ -710,8 +710,11 @@ static void handle_patch(void)
- 		 * here; we are dealing with the user payload.
- 		 */
- 		decode_transfer_encoding(line);
--		fputs(line, patchfile);
--		patch_lines++;
-+
-+		if (line[0] != '|') {
-+			fputs(line, patchfile);
-+			patch_lines++;
-+		}
- 	} while (fgets(line, sizeof(line), fin) != NULL);
- }
- 
--- 
-1.4.4.2.g7d2d-dirty
+Sounds good.
+
+--=20
+Regards,
+Pavel Roskin
 
