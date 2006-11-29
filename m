@@ -2,56 +2,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Petr Baudis <pasky@suse.cz>
-Subject: [PATCH] git-apply: Documentation typo fix
-Date: Sat, 18 Nov 2006 06:05:11 +0100
-Message-ID: <20061118050511.13383.11467.stgit@machine.or.cz>
-Content-Type: text/plain; charset=utf-8; format=fixed
-Content-Transfer-Encoding: 8bit
-NNTP-Posting-Date: Sat, 18 Nov 2006 05:05:27 +0000 (UTC)
-Cc: <git@vger.kernel.org>
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: gitk with arguments fails on OSX
+Date: Wed, 29 Nov 2006 16:10:00 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0611291609370.30004@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <864psixpj6.fsf@blue.stonehenge.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Wed, 29 Nov 2006 15:10:20 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: StGIT/0.11
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <864psixpj6.fsf@blue.stonehenge.com>
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31756>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32644>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GlIOJ-0005HE-K7 for gcvg-git@gmane.org; Sat, 18 Nov
- 2006 06:05:24 +0100
+ esmtp (Exim 4.43) id 1GpR4f-00067b-3z for gcvg-git@gmane.org; Wed, 29 Nov
+ 2006 16:10:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753810AbWKRFFO (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 18 Nov 2006
- 00:05:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753018AbWKRFFO
- (ORCPT <rfc822;git-outgoing>); Sat, 18 Nov 2006 00:05:14 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:464 "EHLO machine.or.cz") by
- vger.kernel.org with ESMTP id S1753810AbWKRFFM (ORCPT
- <rfc822;git@vger.kernel.org>); Sat, 18 Nov 2006 00:05:12 -0500
-Received: (qmail 13393 invoked from network); 18 Nov 2006 06:05:11 +0100
-Received: from localhost (HELO machine.or.cz) (xpasky@127.0.0.1) by localhost
- with SMTP; 18 Nov 2006 06:05:11 +0100
-To: Junio C Hamano <junkio@cox.net>
+ S967401AbWK2PKI (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 29 Nov 2006
+ 10:10:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967400AbWK2PKI
+ (ORCPT <rfc822;git-outgoing>); Wed, 29 Nov 2006 10:10:08 -0500
+Received: from mail.gmx.net ([213.165.64.20]:49358 "HELO mail.gmx.net") by
+ vger.kernel.org with SMTP id S967402AbWK2PKG (ORCPT
+ <rfc822;git@vger.kernel.org>); Wed, 29 Nov 2006 10:10:06 -0500
+Received: (qmail invoked by alias); 29 Nov 2006 15:10:05 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp035) with SMTP; 29 Nov 2006 16:10:05 +0100
+To: "Randal L. Schwartz" <merlyn@stonehenge.com>
 Sender: git-owner@vger.kernel.org
 
-inacurate -> inaccurate, sorry if it was a pun. ;-)
+Hi,
 
-Signed-off-by: Petr Baudis <pasky@suse.cz>
----
+On Wed, 29 Nov 2006, Randal L. Schwartz wrote:
 
- Documentation/git-apply.txt |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+> 
+> Using the native "wish", gitk fails on OSX 10.4 if given any arguments.
+> For example, the failure for "gitk --all" is:
+> 
+>     localhost.local:~/MIRROR/git-GIT % gitk --all
+>     Error in startup script: unknown option "-state"
+>         while executing
 
-diff --git a/Documentation/git-apply.txt b/Documentation/git-apply.txt
-index d9137c7..2cc32d1 100644
---- a/Documentation/git-apply.txt
-+++ b/Documentation/git-apply.txt
-@@ -150,7 +150,7 @@ discouraged.
- * `strip` outputs warnings for a few such errors, strips out the
-   trailing whitespaces and applies the patch.
- 
----inacurate-eof::
-+--inaccurate-eof::
- 	Under certain circumstances, some versions of diff do not correctly
- 	detect a missing new-line at the end of the file. As a result, patches
+Known problem:
+
+http://thread.gmane.org/gmane.comp.version-control.git/31266/focus=31266
+
+Hth,
+Dscho
