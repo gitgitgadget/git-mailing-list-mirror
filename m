@@ -2,67 +2,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Yann Dirson <ydirson@altern.org>
-Subject: [PATCH 3/4] Optimize stg goto in the pop case.
-Date: Fri, 24 Nov 2006 00:17:03 +0100
-Message-ID: <20061123231658.9769.81157.stgit@gandelf.nowhere.earth>
-References: <20061123230721.9769.38403.stgit@gandelf.nowhere.earth>
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git-merge-recursive-old?
+Date: Wed, 29 Nov 2006 16:07:45 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0611291606410.30004@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <868xhuxpun.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 23 Nov 2006 23:18:12 +0000 (UTC)
-Cc: GIT list <git@vger.kernel.org>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Wed, 29 Nov 2006 15:08:13 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061123230721.9769.38403.stgit@gandelf.nowhere.earth>
-User-Agent: StGIT/0.11
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <868xhuxpun.fsf@blue.stonehenge.com>
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32173>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32642>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GnNpa-0001iD-GG for gcvg-git@gmane.org; Fri, 24 Nov
- 2006 00:18:10 +0100
+ esmtp (Exim 4.43) id 1GpR2O-0005dj-9T for gcvg-git@gmane.org; Wed, 29 Nov
+ 2006 16:07:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S934253AbWKWXSG (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 23 Nov 2006
- 18:18:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934255AbWKWXSG
- (ORCPT <rfc822;git-outgoing>); Thu, 23 Nov 2006 18:18:06 -0500
-Received: from smtp2-g19.free.fr ([212.27.42.28]:63965 "EHLO
- smtp2-g19.free.fr") by vger.kernel.org with ESMTP id S934253AbWKWXSF (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 23 Nov 2006 18:18:05 -0500
-Received: from bylbo.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net
- [81.57.214.146]) by smtp2-g19.free.fr (Postfix) with ESMTP id 3AAC07D0A; Fri,
- 24 Nov 2006 00:18:04 +0100 (CET)
-Received: from gandelf.nowhere.earth ([10.0.0.5] ident=dwitch) by
- bylbo.nowhere.earth with esmtp (Exim 4.62) (envelope-from
- <ydirson@altern.org>) id 1GnNpY-0002t2-6j; Fri, 24 Nov 2006 00:18:08 +0100
-To: Catalin Marinas <catalin.marinas@gmail.com>
+ S967396AbWK2PHs (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 29 Nov 2006
+ 10:07:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967397AbWK2PHs
+ (ORCPT <rfc822;git-outgoing>); Wed, 29 Nov 2006 10:07:48 -0500
+Received: from mail.gmx.net ([213.165.64.20]:56513 "HELO mail.gmx.net") by
+ vger.kernel.org with SMTP id S967396AbWK2PHr (ORCPT
+ <rfc822;git@vger.kernel.org>); Wed, 29 Nov 2006 10:07:47 -0500
+Received: (qmail invoked by alias); 29 Nov 2006 15:07:45 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp039) with SMTP; 29 Nov 2006 16:07:45 +0100
+To: "Randal L. Schwartz" <merlyn@stonehenge.com>
 Sender: git-owner@vger.kernel.org
 
+Hi,
 
+On Wed, 29 Nov 2006, Randal L. Schwartz wrote:
 
+> I build daily, and apaprently I built git-merge-recursive-old,
+> but it's not in .gitignore.  Needs to be added, no?
 
-Signed-off-by: Yann Dirson <ydirson@altern.org>
----
+To the contrary. You need to remove it: v1.4.4-g7cdbff1 removed it, but 
+you still have the generated file...
 
- stgit/commands/goto.py |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/stgit/commands/goto.py b/stgit/commands/goto.py
-index 1b62d1c..e129b8d 100644
---- a/stgit/commands/goto.py
-+++ b/stgit/commands/goto.py
-@@ -45,11 +45,11 @@ def func(parser, options, args):
-     check_head_top_equal()
- 
-     applied = crt_series.get_applied()
--    applied.reverse()
-     unapplied = crt_series.get_unapplied()
-     patch = args[0]
- 
-     if patch in applied:
-+        applied.reverse()
-         patches = applied[:applied.index(patch)]
-         pop_patches(patches)
+Hth,
+Dscho
