@@ -2,78 +2,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: merlyn@stonehenge.com (Randal L. Schwartz)
-Subject: Re: [BUG] daemon.c blows up on OSX
-Date: 20 Dec 2006 17:20:40 -0800
-Message-ID: <86vek6vyc7.fsf@blue.stonehenge.com>
-References: <7vmz5ib8eu.fsf@assigned-by-dhcp.cox.net>
-	<86irg6yzt1.fsf_-_@blue.stonehenge.com>
-	<7vr6uu6w8e.fsf@assigned-by-dhcp.cox.net>
-	<86ejquyz4v.fsf@blue.stonehenge.com>
-	<86ac1iyyla.fsf@blue.stonehenge.com>
-	<Pine.LNX.4.64.0612201502090.3576@woody.osdl.org>
-	<86wt4mximh.fsf@blue.stonehenge.com>
-	<Pine.LNX.4.64.0612201524230.3576@woody.osdl.org>
-	<caf068570612201636g75180138r223aef7c42f69a50@mail.gmail.com>
-	<7vtzzq3wo6.fsf@assigned-by-dhcp.cox.net>
-	<caf068570612201654s3949202cl55bd21307ca59453@mail.gmail.com>
-	<7vodpy3vxi.fsf@assigned-by-dhcp.cox.net>
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [BUG] git shortlog: need a range!
+Date: Wed, 29 Nov 2006 10:38:31 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0611291034340.30004@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <7v8xhv2uj1.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 21 Dec 2006 01:25:21 +0000 (UTC)
-Cc: "Terje Sten Bjerkseth" <terje@bjerkseth.org>,
-	"Linus Torvalds" <torvalds@osdl.org>, git@vger.kernel.org
+Content-Type: MULTIPART/MIXED; BOUNDARY="-1148973799-14060943-1164793111=:30004"
+NNTP-Posting-Date: Wed, 29 Nov 2006 09:38:51 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-x-mayan-date: Long count = 12.19.13.16.7; tzolkin = 8 Manik; haab = 0 Kankin
-In-Reply-To: <7vodpy3vxi.fsf@assigned-by-dhcp.cox.net>
-Original-Lines: 22
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <7v8xhv2uj1.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35000>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GxCgM-00009Q-Ul for gcvg-git@gmane.org; Thu, 21 Dec
- 2006 02:25:15 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32626>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GpLtk-00059a-Gm for gcvg-git@gmane.org; Wed, 29 Nov
+ 2006 10:38:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1161116AbWLUBZL (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 20 Dec 2006
- 20:25:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161124AbWLUBZL
- (ORCPT <rfc822;git-outgoing>); Wed, 20 Dec 2006 20:25:11 -0500
-Received: from blue.stonehenge.com ([209.223.236.162]:12269 "EHLO
- blue.stonehenge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1161116AbWLUBZJ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 20 Dec 2006
- 20:25:09 -0500
-Received: from localhost (localhost [127.0.0.1]) by blue.stonehenge.com
- (Postfix) with ESMTP id A463C8F375; Wed, 20 Dec 2006 17:25:08 -0800 (PST)
-Received: from blue.stonehenge.com ([127.0.0.1]) by localhost
- (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024) with LMTP id
- 00841-01-31; Wed, 20 Dec 2006 17:25:08 -0800 (PST)
-Received: by blue.stonehenge.com (Postfix, from userid 1001) id DFBD88F5D3;
- Wed, 20 Dec 2006 17:20:40 -0800 (PST)
+ S1758806AbWK2Jie (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 29 Nov 2006
+ 04:38:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758809AbWK2Jid
+ (ORCPT <rfc822;git-outgoing>); Wed, 29 Nov 2006 04:38:33 -0500
+Received: from mail.gmx.net ([213.165.64.20]:54501 "HELO mail.gmx.net") by
+ vger.kernel.org with SMTP id S1758806AbWK2Jid (ORCPT
+ <rfc822;git@vger.kernel.org>); Wed, 29 Nov 2006 04:38:33 -0500
+Received: (qmail invoked by alias); 29 Nov 2006 09:38:31 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp029) with SMTP; 29 Nov 2006 10:38:31 +0100
 To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
->>>>> "Junio" == Junio C Hamano <junkio@cox.net> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Junio> "Terje Sten Bjerkseth" <terje@bjerkseth.org> writes:
->> On 12/21/06, Junio C Hamano <junkio@cox.net> wrote:
->>> Thanks.  While this is in a better direction than randomly
->>> including the headers in the source, it is still sad.
->>> 
->>> Does everybody use Apple CC on OSX?  Is the symbol defined even
->>> with GCC?  Or Gcc fixes headers well enough and makes this a
->>> non-issue?
->> 
->> I'm not sure about everybody, but at least the Apple CC *is* GCC:
+---1148973799-14060943-1164793111=:30004
+Content-Type: TEXT/PLAIN; charset=iso-8859-1
+Content-Transfer-Encoding: 8BIT
 
-Junio> Thanks for clarifying this; will apply.
+Hi,
 
-But don't because it doesn't help. :(
+On Tue, 28 Nov 2006, Junio C Hamano wrote:
 
--- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
+> I just got this:
+> 
+>         $ git shortlog --since=Oct.20 --until=Nov.20 master
+>         fatal: Need a range!
+> 
+> Why isn't this a range?
+
+It really is not. Think about this scenario:
+
+A - B - C
+  \   /
+    D
+
+where both B and D were done after Oct.20, but not A. Then you do not have 
+a range, i.e. you cannot represent the same in the form X..Y.
+
+However, this only shows that my reasoning in shortlog was wrong. It was 
+meant to prevent accidentally traversing the _whole_ history (which does 
+take some time), but maybe even this is something people want to do?
+
+Therefore: Ack on René's patch.
+
+Ciao,
+Dscho
+
