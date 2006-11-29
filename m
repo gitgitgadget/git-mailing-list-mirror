@@ -1,63 +1,72 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jon Loeliger <jdl@freescale.com>
-Subject: Re: information for a 60-minute "intro to git" needed
-Date: Mon, 13 Nov 2006 12:58:39 -0600
-Message-ID: <1163444316.4665.212.camel@cashmere.sps.mot.com>
-References: <8664dmxdrf.fsf@blue.stonehenge.com>
-	 <20061111143304.GA7201@pasky.or.cz>
+X-Spam-Status: No, score=-2.1 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD,UNWANTED_LANGUAGE_BODY shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH 4/4] xdl_merge(): fix thinko
+Date: Thu, 30 Nov 2006 00:25:11 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0611300024350.30004@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Mon, 13 Nov 2006 19:09:18 +0000 (UTC)
-Cc: Git List <git@vger.kernel.org>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Wed, 29 Nov 2006 23:25:42 +0000 (UTC)
+Cc: junkio@cox.net
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061111143304.GA7201@pasky.or.cz>
-X-Mailer: Ximian Evolution 1.4.6 (1.4.6-2.ydl.1) 
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31312>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32677>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gjh9X-000863-Go for gcvg-git@gmane.org; Mon, 13 Nov
- 2006 20:07:32 +0100
+ esmtp (Exim 4.43) id 1GpYnm-0004iM-AM for gcvg-git@gmane.org; Thu, 30 Nov
+ 2006 00:25:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932792AbWKMTHZ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 13 Nov 2006
- 14:07:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755336AbWKMTHZ
- (ORCPT <rfc822;git-outgoing>); Mon, 13 Nov 2006 14:07:25 -0500
-Received: from az33egw01.freescale.net ([192.88.158.102]:35070 "EHLO
- az33egw01.freescale.net") by vger.kernel.org with ESMTP id S1755337AbWKMTHY
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 13 Nov 2006 14:07:24 -0500
-Received: from az33smr01 (az33smr01.freescale.net [10.64.34.199]) by
- az33egw01.freescale.net (8.12.11/az33egw01) with ESMTP id kADJ7GlT019932;
- Mon, 13 Nov 2006 12:07:16 -0700 (MST)
-Received: from [10.82.19.2] (cashmere.am.freescale.net [10.82.19.2]) by
- az33smr01 (8.13.1/8.13.0) with ESMTP id kADJ7FRU004138; Mon, 13 Nov 2006
- 13:07:15 -0600 (CST)
-To: Petr Baudis <pasky@suse.cz>
+ S1758981AbWK2XZO (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 29 Nov 2006
+ 18:25:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758982AbWK2XZO
+ (ORCPT <rfc822;git-outgoing>); Wed, 29 Nov 2006 18:25:14 -0500
+Received: from mail.gmx.net ([213.165.64.20]:61830 "HELO mail.gmx.net") by
+ vger.kernel.org with SMTP id S1758981AbWK2XZN (ORCPT
+ <rfc822;git@vger.kernel.org>); Wed, 29 Nov 2006 18:25:13 -0500
+Received: (qmail invoked by alias); 29 Nov 2006 23:25:11 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp028) with SMTP; 30 Nov 2006 00:25:11 +0100
+To: Davide Libenzi <davidel@xmailserver.org>, git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On Sat, 2006-11-11 at 08:33, Petr Baudis wrote:
 
-> 
->   see
-> 
-> 	http://news.gmane.org/find-root.php?message_id=<7vvepqi6x6.fsf@assigned-by-dhcp.cox.net>
-> 
-> and replies for some slides from OLS (dunno if jdl's made his
-> available?), and http://git.or.cz/gitwiki/GitLinks for links to plenty
-> of "using git" pages for various projects and other introductory
-> articles.
+If one side's block (of changed lines) ends later than the other
+side's block, the former should be tested against the next block
+of the other side, not vice versa.
 
-All of my git papers published in Linux Magazine as well
-as my OLS presentation are available off of www.jdl.com.
-(Yes, I still need to make them available off of
-opensource.freescale.com as well still.  *sigh*)
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ xdiff/xmerge.c |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-jdl
-
+diff --git a/xdiff/xmerge.c b/xdiff/xmerge.c
+index 9fe2059..6d4f9b6 100644
+--- a/xdiff/xmerge.c
++++ b/xdiff/xmerge.c
+@@ -318,13 +318,13 @@ static int xdl_do_merge(xdfenv_t *xe1, x
+ 			xscr1->i1 = i2;
+ 			xscr1->i2 += xscr1->chg2;
+ 			xscr1->chg2 = 0;
+-			xscr1 = xscr1->next;
++			xscr2 = xscr2->next;
+ 		} else if (i2 > i1) {
+ 			xscr2->chg1 -= i2 - i1;
+ 			xscr2->i1 = i1;
+ 			xscr2->i2 += xscr2->chg2;
+ 			xscr2->chg2 = 0;
+-			xscr2 = xscr2->next;
++			xscr1 = xscr1->next;
+ 		} else {
+ 			xscr1 = xscr1->next;
+ 			xscr2 = xscr2->next;
+-- 
+1.4.4.g5aac-dirty
