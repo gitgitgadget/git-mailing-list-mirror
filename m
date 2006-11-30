@@ -1,61 +1,69 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: cloning the kernel - why long time in "Resolving 313037 deltas"
-Date: Tue, 19 Dec 2006 02:58:05 -0500
-Message-ID: <20061219075805.GE2511@spearce.org>
-References: <86hcvs984c.fsf@blue.stonehenge.com> <Pine.LNX.4.64.0612181414200.3479@woody.osdl.org> <8664c896xv.fsf@blue.stonehenge.com> <Pine.LNX.4.64.0612181511260.3479@woody.osdl.org> <Pine.LNX.4.64.0612181906450.18171@xanadu.home> <20061219051108.GA29405@thunk.org> <20061219063930.GA2511@spearce.org> <Pine.LNX.4.64.0612182248420.3479@woody.osdl.org> <20061219072607.GD2511@spearce.org> <20061219075256.GA30448@fiberbit.xs4all.nl>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git and bzr
+Date: Thu, 30 Nov 2006 13:47:15 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0611301345170.30004@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <45357CC3.4040507@utoronto.ca> <20061021130111.GL75501@over-yonder.net>
+ <453F2FF8.2080903@op5.se> <200610251146.06116.jnareb@gmail.com>
+ <a7e835d40610250308v5d577482m139742e7fe1db185@mail.gmail.com>
+ <87slhcz8zh.wl%cworth@cworth.org> <a7e835d40610260152k658aeaf0hb900cb63870c04e4@mail.gmail.com>
+ <7vu01ro20b.fsf@assigned-by-dhcp.cox.net> <a7e835d40610260257r5f05ea4gc934f1c1cc267977@mail.gmail.com>
+ <20061026101038.GA13310@coredump.intra.peff.net> <877iyne4dm.fsf@alplog.fr>
+ <Pine.LNX.4.64.0610260753090.3962@g5.osdl.org> <456B7C6A.80104@webdrake.net>
+ <456ED047.3030102@ableton.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 19 Dec 2006 07:58:31 +0000 (UTC)
-Cc: Linus Torvalds <torvalds@osdl.org>, Theodore Tso <tytso@mit.edu>,
-	Nicolas Pitre <nico@cam.org>,
-	"Randal L. Schwartz" <merlyn@stonehenge.com>, git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Thu, 30 Nov 2006 12:47:33 +0000 (UTC)
+Cc: Joseph Wakeling <joseph.wakeling@webdrake.net>,
+	git@vger.kernel.org, bazaar-ng@lists.canonical.com
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <20061219075256.GA30448@fiberbit.xs4all.nl>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <456ED047.3030102@ableton.com>
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34794>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32736>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GwZrm-0007Qm-Du for gcvg-git@gmane.org; Tue, 19 Dec
- 2006 08:58:27 +0100
+ esmtp (Exim 4.43) id 1GplK2-0000VQ-R7 for gcvg-git@gmane.org; Thu, 30 Nov
+ 2006 13:47:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932626AbWLSH6P (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
- 02:58:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932648AbWLSH6P
- (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 02:58:15 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:57057 "EHLO
- corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S932626AbWLSH6O (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec 2006
- 02:58:14 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1GwZrR-0005BQ-SR; Tue, 19 Dec 2006 02:58:05 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- 720DD20FB65; Tue, 19 Dec 2006 02:58:05 -0500 (EST)
-To: Marco Roeland <marco.roeland@xs4all.nl>
+ S965753AbWK3MrW (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
+ 07:47:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936305AbWK3MrV
+ (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 07:47:21 -0500
+Received: from mail.gmx.net ([213.165.64.20]:6123 "HELO mail.gmx.net") by
+ vger.kernel.org with SMTP id S936336AbWK3MrT (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 07:47:19 -0500
+Received: (qmail invoked by alias); 30 Nov 2006 12:47:17 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp039) with SMTP; 30 Nov 2006 13:47:17 +0100
+To: Nicholas Allen <allen@ableton.com>
 Sender: git-owner@vger.kernel.org
 
-Marco Roeland <marco.roeland@xs4all.nl> wrote:
-> The kernel git repository isn't very handy on the Mac HFS+ filesystem,
-> due to it being case-insensitive, but I suppose it won't influence
-> git-index-pack.
+Hi,
 
-Yea, I just play with it in packed format on this system.  :-)
+On Thu, 30 Nov 2006, Nicholas Allen wrote:
 
--- 
+> Does this mean if I have, for example, a large C++ file with a bunch of 
+> methods in it and I move one of the methods from the bottom of the file 
+> to the top and in another branch someone makes a change to that method 
+> that when I merge their changes git will merge their changes into the 
+> method at the top of the file where I have moved it?
+
+As for now, no, it does not. This is a shortcoming of RCS merge which does 
+the heavy-lifting.
+
+Having said that, stay tuned for new developments: the functionality of 
+merge is being integrated in git. This opens the door to make use of the 
+code tracking support in git, to do exactly what you just proposed.
+
+Ciao,
+Dscho
