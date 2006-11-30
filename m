@@ -2,62 +2,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: SEGV when lookup_* returns NULL
-Date: Tue, 28 Nov 2006 00:33:24 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0611280032300.30004@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20061127211315.GC18810@admingilde.org> <7vu00kftbq.fsf@assigned-by-dhcp.cox.net>
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: git and bzr
+Date: Thu, 30 Nov 2006 10:35:59 +0100
+Organization: At home
+Message-ID: <ekm8ig$usu$1@sea.gmane.org>
+References: <45357CC3.4040507@utoronto.ca> <456E8147.9070304@gmx.net> <fcaeb9bf0611300101s51a53b75lc7e771b067ba6e33@mail.gmail.com> <200611300930.33537.alan@chandlerfamily.org.uk>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Mon, 27 Nov 2006 23:33:44 +0000 (UTC)
-Cc: Martin Waitz <tali@admingilde.org>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+NNTP-Posting-Date: Thu, 30 Nov 2006 09:35:08 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7vu00kftbq.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 12
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32460>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32713>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gopyc-0008G3-CB for gcvg-git@gmane.org; Tue, 28 Nov
- 2006 00:33:30 +0100
+ esmtp (Exim 4.43) id 1GpiJb-0008H3-Oq for gcvg-git@gmane.org; Thu, 30 Nov
+ 2006 10:34:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1758608AbWK0Xd3 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 27 Nov 2006
- 18:33:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758610AbWK0Xd2
- (ORCPT <rfc822;git-outgoing>); Mon, 27 Nov 2006 18:33:28 -0500
-Received: from mail.gmx.net ([213.165.64.20]:34969 "HELO mail.gmx.net") by
- vger.kernel.org with SMTP id S1758608AbWK0Xd1 (ORCPT
- <rfc822;git@vger.kernel.org>); Mon, 27 Nov 2006 18:33:27 -0500
-Received: (qmail invoked by alias); 27 Nov 2006 23:33:26 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp039) with SMTP; 28 Nov 2006 00:33:26 +0100
-To: Junio C Hamano <junkio@cox.net>
+ S932875AbWK3Jeo (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
+ 04:34:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932934AbWK3Jeo
+ (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 04:34:44 -0500
+Received: from main.gmane.org ([80.91.229.2]:2778 "EHLO ciao.gmane.org") by
+ vger.kernel.org with ESMTP id S932875AbWK3Jen (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 04:34:43 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1GpiJE-0008A7-FQ for git@vger.kernel.org; Thu, 30 Nov 2006 10:34:24 +0100
+Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Thu, 30 Nov 2006 10:34:24 +0100
+Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Thu, 30 Nov 2006
+ 10:34:24 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Hi,
+Alan Chandler wrote:
 
-On Mon, 27 Nov 2006, Junio C Hamano wrote:
+> And if you are not sure which you have done then presumably you do what you do 
+> now, or git commit -a or git commit -i as you need.
 
-> Martin Waitz <tali@admingilde.org> writes:
-> 
-> > All the lookup_{blob,tree,commit} functions check that the object
-> > really is of the requested type and return NULL otherwise.
-> > However this NULL pointer is not checked in the calling functions.
-> >
-> > Should we make lookup_* to just die when invoked on another object-type?
-> 
-> Making lookup_{specific type} die when they see unexpected type
-> would not hurt that much, I think, aside from the possibility
-> that some callers may check NULL to see if object already
-> exists, but they should be using has_sha1_file() instead.
+By the way, short option -i is not --index but --include (i.e. commit
+both changes in index and files mentioned on command line). Perhaps -I?
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
 
-And it would totally clobber the long term goal of libifying git.
-
-Ciao,
-Dscho
