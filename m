@@ -4,78 +4,52 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: cloning the kernel - why long time in "Resolving 313037 deltas"
-Date: Tue, 19 Dec 2006 02:26:07 -0500
-Message-ID: <20061219072607.GD2511@spearce.org>
-References: <86r6uw9azn.fsf@blue.stonehenge.com> <Pine.LNX.4.64.0612181625140.18171@xanadu.home> <86hcvs984c.fsf@blue.stonehenge.com> <Pine.LNX.4.64.0612181414200.3479@woody.osdl.org> <8664c896xv.fsf@blue.stonehenge.com> <Pine.LNX.4.64.0612181511260.3479@woody.osdl.org> <Pine.LNX.4.64.0612181906450.18171@xanadu.home> <20061219051108.GA29405@thunk.org> <20061219063930.GA2511@spearce.org> <Pine.LNX.4.64.0612182248420.3479@woody.osdl.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [RFC] git-add update with all-0 object
+Date: Thu, 30 Nov 2006 17:34:58 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0611301733460.9647@xanadu.home>
+References: <Pine.LNX.4.64.0611301634080.20138@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 19 Dec 2006 07:26:32 +0000 (UTC)
-Cc: Theodore Tso <tytso@mit.edu>, Nicolas Pitre <nico@cam.org>,
-	"Randal L. Schwartz" <merlyn@stonehenge.com>, git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+NNTP-Posting-Date: Thu, 30 Nov 2006 22:35:15 +0000 (UTC)
+Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0612182248420.3479@woody.osdl.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+In-reply-to: <Pine.LNX.4.64.0611301634080.20138@iabervon.org>
+X-X-Sender: nico@xanadu.home
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34792>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32819>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GwZMo-00013O-Bg for gcvg-git@gmane.org; Tue, 19 Dec
- 2006 08:26:26 +0100
+ esmtp (Exim 4.43) id 1GpuUi-00072q-Jj for gcvg-git@gmane.org; Thu, 30 Nov
+ 2006 23:35:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932093AbWLSH0R (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
- 02:26:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932071AbWLSH0R
- (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 02:26:17 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:56062 "EHLO
- corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S932093AbWLSH0Q (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec 2006
- 02:26:16 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1GwZMY-0003PC-PD; Tue, 19 Dec 2006 02:26:10 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- 34D1120FB65; Tue, 19 Dec 2006 02:26:08 -0500 (EST)
-To: Linus Torvalds <torvalds@osdl.org>
+ S1031586AbWK3WfA (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
+ 17:35:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031587AbWK3WfA
+ (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 17:35:00 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:55532 "EHLO
+ relais.videotron.ca") by vger.kernel.org with ESMTP id S1031586AbWK3We7
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 17:34:59 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
+ <0J9K006W2EQA4K90@VL-MO-MR002.ip.videotron.ca> for git@vger.kernel.org; Thu,
+ 30 Nov 2006 17:34:58 -0500 (EST)
+To: Daniel Barkalow <barkalow@iabervon.org>
 Sender: git-owner@vger.kernel.org
 
-Linus Torvalds <torvalds@osdl.org> wrote:
-> 
-> 
-> On Tue, 19 Dec 2006, Shawn Pearce wrote:
-> > 
-> > Why isn't git-index-pack doing the same?  Is there some hidden glitch
-> > in some OS somewhere that has a problem with overmapping a file and
-> > appending into it via write()?  I've done that on Mac OS X, Linux,
-> > BSDi, Solaris...  never had a problem.
-> 
-> It works on modern systems, but at least old HPUX versions had 
-> non-coherent mmap() and write(), and POSIX does not guarantee it. And if 
-> you ever want to port to Windows, I don't think you should do it.
-> 
-> Anyway, try the pread() version first, see if that fixes the OS X problem.
+On Thu, 30 Nov 2006, Daniel Barkalow wrote:
 
-I'll give your pread() version a shot.
+> One thing that I think is non-intuitive to a lot of users (either novice 
+> or who just don't do it much) is that it matters where in the process you 
+> do "git add <path>" if you're also changing the file. Even if you 
+> understand the index, you may not realize (or may not have internalized 
+> the fact) that what git-add does is update the index with what's there 
+> now.
 
-But right now I'm in the middle of cloning your linux-2.6 git
-repository.
+And actually I think this is a good thing.  This is what makes the index 
+worth it.  Better find a way to make it obvious to people what's 
+happening.
 
-It is done downloading the pack and my system is pegged at 100%
-CPU while resolving deltas.
 
-ActivityMonitor is showing that I'm spending 94% CPU in the kernel,
-which is just insane.  Clearly Mac OS X's kernel cannot gracefully
-handle what git-index-pack is currently doing.
-
--- 
