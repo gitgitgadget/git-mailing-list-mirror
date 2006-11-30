@@ -1,81 +1,62 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Sean Kelley" <sean.v.kelley@gmail.com>
-Subject: Re: Stupid Git question
-Date: Wed, 22 Nov 2006 15:28:42 -0600
-Message-ID: <89b129c60611221328l333d22c6o3668aef2706f92c7@mail.gmail.com>
-References: <89b129c60611211331r3bb286b6re3c2c8f65ec3896f@mail.gmail.com>
-	 <89b129c60611211341j71079633g53b0ec1d2e3193a5@mail.gmail.com>
-	 <ejvs65$vo8$1@sea.gmane.org>
-	 <89b129c60611220628l59e305b8h4d2196f7cf6498d4@mail.gmail.com>
-	 <871wnvxwg4.wl%cworth@cworth.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [BUG] git-fetch -k is broken
+Date: Thu, 30 Nov 2006 13:21:59 -0800
+Message-ID: <7vd574iqa0.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0611301441440.9647@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 22 Nov 2006 21:28:51 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Thu, 30 Nov 2006 21:22:12 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=VwSl74YxrfDyDxT8dnhtQdO917ZRb4+3Vn1sCWsHRItHcMzFJqztgz78FsNDvfm984uiUvmGJpL7st+4efbgWE4kyONHjgVgPIkf9nAN1m+c4Eshg367gBvsYPnYDl+7u9ITnq1JRqfv2QArmjSyYRhKsst0Xl6A3rtmmGkTLXU=
-In-Reply-To: <871wnvxwg4.wl%cworth@cworth.org>
-Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0611301441440.9647@xanadu.home> (Nicolas Pitre's
+	message of "Thu, 30 Nov 2006 15:11:54 -0500 (EST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32103>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32801>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GmzeC-0005q6-6Y for gcvg-git@gmane.org; Wed, 22 Nov
- 2006 22:28:48 +0100
+ esmtp (Exim 4.43) id 1GptM7-0006ld-Gq for gcvg-git@gmane.org; Thu, 30 Nov
+ 2006 22:22:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1757030AbWKVV2p (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 22 Nov 2006
- 16:28:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757033AbWKVV2o
- (ORCPT <rfc822;git-outgoing>); Wed, 22 Nov 2006 16:28:44 -0500
-Received: from ug-out-1314.google.com ([66.249.92.169]:20842 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1757030AbWKVV2o
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 22 Nov 2006 16:28:44 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so300400uga for
- <git@vger.kernel.org>; Wed, 22 Nov 2006 13:28:42 -0800 (PST)
-Received: by 10.78.193.19 with SMTP id q19mr8316709huf.1164230922297; Wed, 22
- Nov 2006 13:28:42 -0800 (PST)
-Received: by 10.78.179.10 with HTTP; Wed, 22 Nov 2006 13:28:42 -0800 (PST)
-To: "Carl Worth" <cworth@cworth.org>
+ S1031493AbWK3VWE (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
+ 16:22:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031519AbWK3VWD
+ (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 16:22:03 -0500
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:52178 "EHLO
+ fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP id S1031506AbWK3VWB
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 16:22:01 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao04.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061130212200.CHEA7494.fed1rmmtao04.cox.net@fed1rmimpo02.cox.net>; Thu, 30
+ Nov 2006 16:22:00 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id t9N81V00s1kojtg0000000; Thu, 30 Nov 2006
+ 16:22:09 -0500
+To: Nicolas Pitre <nico@cam.org>
 Sender: git-owner@vger.kernel.org
 
-Hi,
+Nicolas Pitre <nico@cam.org> writes:
 
-On 11/22/06, Carl Worth <cworth@cworth.org> wrote:
-> On Wed, 22 Nov 2006 08:28:58 -0600, "Sean Kelley" wrote:
-> > How do I add a branch to the remote repository that is visible to all
-> > team members.  It seems like the git checkout -b commands just create
-> > local topic branches.
+> Actually, the .keep file is simply not removed as it should.
 >
-> Just push the branch out to the remote repository. You even gave the
-> command sequence to do that:
->
-> > git checkout Project
-> > git pull . fm-modulator
-> > git push origin Project
->
+> But first it appears that commit f64d7fd2 added an && on line 431 of 
+> git-fetch.sh and that cannot be right.  There is simply no condition for 
+> not removing the lock file.  It must be removed regardless if the 
+> previous command succeeded or not.  Junio?
 
-One other question - how do you rename a branch on the remote
-repository once you have created it?
+True, but your "echo" patch breaks things even more -- when fast
+forward check fails, it should cause the entire command should
+report that with the exit status.
 
-Thanks,
-
-Sean
-
-> -Carl
->
->
->
-
-
--- 
+That suggests that we need to come up with a way to clean up
+these .keep files some other way than just being one of the
+command near the end.  As to the mysterious "echo e <empty>"
+I will not have chance to look at it myself until later today
+(I'm at work now and it is not my git day today).
