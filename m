@@ -4,113 +4,147 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Whitcroft <apw@shadowen.org>
-Subject: Re: Suggestion: drop 'g' in git-describe suffix
-Date: Thu, 02 Nov 2006 13:52:33 +0000
-Message-ID: <4549F821.9090600@shadowen.org>
-References: <eibh94$t7n$1@sea.gmane.org> <45494E20.1000503@shadowen.org>	 <4549C083.9060805@xs4all.nl> <4549CA6B.4090909@shadowen.org>	 <4549CE2A.3010808@xs4all.nl>	 <8aa486160611020312v42047716t6a13e6fa16eeae8@mail.gmail.com>	 <4549D4B4.4030601@shadowen.org> <8aa486160611020439r255bcdb1q6e7ece46c77de11c@mail.gmail.com>
+From: sf <sf@b-i-t.de>
+Subject: Re: [RFC] Submodules in GIT
+Date: Thu, 30 Nov 2006 17:05:39 +0100
+Message-ID: <456F0153.5000107@b-i-t.de>
+References: <20061121223130.GA24909@nan92-1-81-57-214-146.fbx.proxad.net> <200611301255.41733.andyparkins@gmail.com> <456EE3F1.5070101@b-i-t.de> <200611301449.55171.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Thu, 2 Nov 2006 13:53:34 +0000 (UTC)
-Cc: hanwen@xs4all.nl, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 30 Nov 2006 16:06:37 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.5 (X11/20060812)
-In-Reply-To: <8aa486160611020439r255bcdb1q6e7ece46c77de11c@mail.gmail.com>
-X-Enigmail-Version: 0.94.0.0
+User-Agent: Thunderbird 1.5.0.8 (X11/20061110)
+In-Reply-To: <200611301449.55171.andyparkins@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30750>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32764>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gfd0Q-0007MW-LC for gcvg-git@gmane.org; Thu, 02 Nov
- 2006 14:53:19 +0100
+ esmtp (Exim 4.43) id 1GpoQ3-0004Aw-0i for gcvg-git@gmane.org; Thu, 30 Nov
+ 2006 17:05:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752334AbWKBNxN convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Thu, 2 Nov 2006 08:53:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752339AbWKBNxN
- (ORCPT <rfc822;git-outgoing>); Thu, 2 Nov 2006 08:53:13 -0500
-Received: from hellhawk.shadowen.org ([80.68.90.175]:4108 "EHLO
- hellhawk.shadowen.org") by vger.kernel.org with ESMTP id S1752334AbWKBNxM
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 2 Nov 2006 08:53:12 -0500
-Received: from localhost ([127.0.0.1]) by hellhawk.shadowen.org with esmtp
- (Exim 4.50) id 1Gfczf-0004Pw-PB; Thu, 02 Nov 2006 13:52:31 +0000
-To: =?ISO-8859-1?Q?Santi_B=E9jar?= <sbejar@gmail.com>
+ S1030645AbWK3QFr (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
+ 11:05:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967836AbWK3QFr
+ (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 11:05:47 -0500
+Received: from mail.medianet-world.de ([213.157.0.167]:25747 "HELO
+ mail.medianet-world.de") by vger.kernel.org with SMTP id S967828AbWK3QFq
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 11:05:46 -0500
+Received: (qmail 6385 invoked by uid 1011); 30 Nov 2006 16:05:45 -0000
+Received: from sf@b-i-t.de by mail1 by uid 1003 with qmail-scanner-1.22 
+ (ExcuBAtor: 1.0.2.  Clear:RC:1(213.157.15.184):SA:0(0.0/5.0):.  Processed in
+ 0.404396 secs); 30 Nov 2006 16:05:45 -0000
+Received: from unknown (HELO IP-213157000067.dialin.heagmedianet.de)
+ (213.157.15.184) by mail.medianet-world.de with SMTP; 30 Nov 2006 16:05:45
+ -0000
+Received: from [192.168.168.40] (groa.b-i-t.de [192.168.168.40]) by
+ mail.b-i-t.de (Postfix) with ESMTP id D4235259B7; Thu, 30 Nov 2006 17:05:39
+ +0100 (CET)
+To: Andy Parkins <andyparkins@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Santi B=E9jar wrote:
-> On 11/2/06, Andy Whitcroft <apw@shadowen.org> wrote:
->> Santi B=E9jar wrote:
->> > One problem I see with this scheme (either 'g', 'git' of '+') is t=
-hat
->> > it does not provide an increasing version number, even for
->> > fast-forwarding commits. Then it is not useful as a package versio=
-n
->> > number (deb or rpm). I've already seen deb packages with
->> > version+git20061010. One possibility could be to add the number of
->> > commits between the tag and the commit as:
->> >
->> > v1.4.3.3-git12g1e1f76e
->> >
->> > to provide a weak ordering for fast-forwarding commits. What do yo=
-u
->> thing?
->>
->> I think you'll restart the 1.2.3.4 versioning is better 'debate' aga=
-in!
->=20
-> Sorry, I don't undestand this.
+Andy Parkins wrote:
+> On Thursday 2006 November 30 14:00, Stephan Feder wrote:
+> 
+>> Again I do not see the problem. Probably I have a much simpler picture
+>> of submodules: They are just commits in the supermodule's tree.
+>> Everything else follows naturally from how git currently behaves.
+> 
+> How are these commits any different from just having one big repository?  If 
+> some of the development of the submodule is contained in the supermodule then 
+> it's not a submodule anymore.
 
-There was a long running debate between sha1's and version 'numbers'
-1.2.3.4 for each revision.
->=20
->> Surly if things are being pushed into a .deb or .rpm we should be us=
-ing
->> a real release version.  We should be tagging that.  If the project =
-is
->> not providing release number, there is nothing stopping you from tag=
-ging
->> them yourself in your copy of the repository and using your tag.  yo=
-u
->> could use like 'unofficial-N' where N increments in the way you want=
-=2E
->=20
-> And where do you store this tag? It is an upstream commit and you jus=
-t
-> refer to this. With the unofficial-N there is no way to know which
-> upstream commit you are refering without having access to the git
-> repository of the packager  .
+Right now you only have commits of the top directory aka the super 
+project. Every subdirectory is just that: a directory (which git stores 
+as trees).
 
-Yes that is completly true, but its normally the packer who is doing th=
-e
-bug fixing of the .deb when its broken.  The key problem is you need
-your numbering to be stable.  The only guarenteed stable thing is the
-sha1, tags can change.  IMHO you should be including the full sha1 in
-the --version output and the package descript, whatever versioning you
-are using on the .deb itself.
+Now, if you have a subdirectory that git stores as a commit, not a tree, 
+you have a subproject. It is a directory with history, and because the 
+commit is part of your superprject, you have access to this history.
 
-That said I guess it would be pretty easy to come up with something to
-count the number of commits since the last valid tag, something like
-that below.  Might not be pretty, nor so easy to turn back into a commi=
-t
-of course.
+> Why bother with all the effort to make a separation between submodule and 
+> supermodule and then store the submodule commits in the supermodule.  That's 
+> not supermodule/submodule git - that's just normal git.
 
--apw
+No, it is not. Currently, there is no way to store a commit within the 
+contents of another commit. You can only store trees and blobs.
 
-#!/bin/sh
+> Surely the whole point of having submodule's is so that you can take the 
+> submodule away.  Let me give you an example.  Let's say I have a project that 
+> uses the libxcb library (some random project out in the world that uses git).  
+> I've arranged it something like this:
+> 
+> myproject (git root)
+>  |----- src
+>  |----- doc
+>  `----- libxcb (git root)
+> 
+> This works fine; with one problem.  When I make a commit in myproject, there 
+> is no link into the particular snapshot of the libxcb that I used at that 
+> moment.  If libxcb moves on, and makes incompatible changes, then when I 
+> checkout an old version of myproject, it won't compile any more because I'll 
+> need to find out which commit of libxcb I used at the time.
 
-let n=3D0
-git log --pretty=3Done "$@" | \
-        awk '{print $1}' | \
-        git name-rev --tags --stdin | \
-{
-        while read sha1 name
-        do
-                if [ "$name" !=3D "" ]; then
-                        echo "$sha1 $name $n"
-                        exit 0
-                fi
-                let "n=3Dn+1"
-        done
-        echo "- unknown 0"
-        exit 1
+OK.
+
+> Submodules will solve this problem.  In the future I'll be able to check out 
+> any commit of myproject and it will automatically checkout the right commit 
+> from the libxcb repository.
+
+OK, I am still with you so far.
+
+> Now let's say I'm working away and find a bug in 
+> libxcb; I fix it, commit it.  That change had better be stored in the libxcb 
+> repository, and had better make no reference to the myproject repository.  If 
+> it doesn't, I'm going to have to pollute the libxcb upstream repository with 
+> myproject if I want to share those fixes.
+
+Here comes the part where we did not meet before.
+
+Of course you do not make any reference from your subproject to your 
+superproject. You do exactly what you do in git today when you work with 
+different branches:
+
+Step 1: You fix a bug in myproject's subdirectory libxcb.
+
+Step 2: You commit to myproject. myproject now contains a new commit 
+object in path libxcb. (How to do that is up to the UI but at the 
+repository level the outcome should be obvious). This commit is local to 
+your repository.
+
+Step 3: You propose your changes to the libxcb upstream (it might not be 
+a repository you have write access to). I use the following made up 
+syntax (see man git-rev-parse):
+
+A suffix : followed by a path, _followed by a suffix //::_ names the 
+_revision_ at the given path in the tree-ish object named by the part 
+before the colon.
+
+Step 3a: Generate a patch
+
+git diff libxcb//^..libxcb//
+
+Step 3b: Push your changes
+
+git push <libxcb-repository> HEAD:libxcb//:<branch in libxcb-repository>
+
+Step 3c: Let your changes be pulled
+
+"Hello, please pull <myproject-repository> HEAD:libxcb//:<branch in 
+libxcb-repository>"
+
+Step 4: Pull upstream version (hopefully with your changes, otherwise 
+you have to merge)
+
+git pull <libxcb-repository> <branch in libxcb-repository>::HEAD:libxcb//
+
+See, it works.
+
+ From what I understand you want to do the commit and push steps in one 
+go. How do you want to record local (to your superproject) changes to 
+the subproject?
+
+Regards
+
