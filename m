@@ -1,71 +1,86 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Did anyone have trouble learning the idea of local vs. remote branches?
-Date: Tue, 7 Nov 2006 12:24:50 -0500
-Message-ID: <20061107172450.GA26591@spearce.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: v2.6.11 tag in kernel tree
+Date: Wed, 29 Nov 2006 20:22:37 -0800
+Message-ID: <7v7ixdlg1e.fsf@assigned-by-dhcp.cox.net>
+References: <9e4733910611292002o289dc4d1u7bde2d457fa97d73@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 7 Nov 2006 17:25:11 +0000 (UTC)
+NNTP-Posting-Date: Thu, 30 Nov 2006 04:22:52 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+In-Reply-To: <9e4733910611292002o289dc4d1u7bde2d457fa97d73@mail.gmail.com>
+	(Jon Smirl's message of "Wed, 29 Nov 2006 23:02:23 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31079>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32702>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GhUh0-0002cR-1e for gcvg-git@gmane.org; Tue, 07 Nov
- 2006 18:24:58 +0100
+ esmtp (Exim 4.43) id 1GpdRc-0000jX-Vs for gcvg-git@gmane.org; Thu, 30 Nov
+ 2006 05:22:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S965574AbWKGRYz (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 7 Nov 2006
- 12:24:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965587AbWKGRYz
- (ORCPT <rfc822;git-outgoing>); Tue, 7 Nov 2006 12:24:55 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:38576 "EHLO
- corvette.plexpod.net") by vger.kernel.org with ESMTP id S965574AbWKGRYy
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 7 Nov 2006 12:24:54 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1GhUgp-0005d2-0B for git@vger.kernel.org; Tue, 07 Nov 2006 12:24:47 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- BC5A120E487; Tue,  7 Nov 2006 12:24:50 -0500 (EST)
-To: git@vger.kernel.org
+ S933385AbWK3EWj (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 29 Nov 2006
+ 23:22:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759008AbWK3EWj
+ (ORCPT <rfc822;git-outgoing>); Wed, 29 Nov 2006 23:22:39 -0500
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:42691 "EHLO
+ fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP id S1759005AbWK3EWi
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 29 Nov 2006 23:22:38 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao05.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061130042238.IQPJ20330.fed1rmmtao05.cox.net@fed1rmimpo01.cox.net>; Wed, 29
+ Nov 2006 23:22:38 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id ssN41V00J1kojtg0000000; Wed, 29 Nov 2006
+ 23:22:05 -0500
+To: "Jon Smirl" <jonsmirl@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Today I was talking with someone that I collaborate with through
-Git and they still seemed to not get the idea that all branches
-in their repository are local, and that at least a 'git fetch'
-is needed to update the local tracking branches to the version
-in the central repository that we collaborate through.  And this
-isn't the first time we've had such discussions.
+"Jon Smirl" <jonsmirl@gmail.com> writes:
 
-It dawned on me that this person still hasn't grasped the idea
-behind fetch.  A few other users that I know also have commented on
-how difficult fetch is to learn.
+> I'm trying to check out v2.6.11 so that I can figure out the changes a
+> vendor made to it.
+>
+> jonsmirl@jonsmirl:/extra/linux$ git checkout -b microcross v2.6.11
+> Cannot switch branch to a non-commit.
 
-Most seemed to think that fetch would update their working directory,
-or their current branch, as there is no other way to "download
-changes from origin".  They also seem to expect their local tracking
-branch to automatically update, especially when invoking
-`git checkout -b foo tracking-branch`.
+Sorry, you cannot check it out directly, and there is no easy
+way to start a new branch from a bare tree.
 
+I would create a temporary branch from any commit and reset the
+working tree with it.
 
-Clearly there is a gap in communicating these ideas in a way that
-they can be understood by users.  Of course in at least one case
-the users just isn't reading any Git documentation and plows ahead
-as though it were CVS ('cause everything's "just like CVS") *sigh*.
+	git checkout -b temp master
+        git read-tree -m -u v2.6.11-tree
 
--- 
+One BIG caveat is that this in state, only your index and the
+working tree can be trusted.  The history of temp branch does
+not have anything to do with v2.6.11 -- a bare tree object does
+not have any history behind it (or on top of it, for that
+matter).
+
+A slightly more elaborate way would be
+
+        $ git checkout -b v2.6.11-phoney $(echo 'phoney v2.6.11' |
+	        git commit-tree v2.6.11-tree^{tree})
+
+to create a parentless commit that has v2.6.11-tree, and make
+that your current branch.  But again this commit does not have
+any relationship in history with the development line that leads
+to v2.6.19 just released.
+
+You could graft it as the parent of v2.6.12-rc2 (the first
+commit in git era) after doing the above:
+
+	$ parent=$(git-rev-parse v2.6.11-phoney^0)
+        $ commit=$(git-rev-parse v2.6.12-rc2^0)
+	$ echo $commit $parent >>.git/info/grafts
+
+and pretend as if v2.6.12-rc2 is a child of v2.6.11-phoney.
+
