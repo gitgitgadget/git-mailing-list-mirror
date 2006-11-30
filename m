@@ -1,68 +1,68 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Han-Wen Nienhuys <hanwen@xs4all.nl>
-Subject: Re: Suggestion: drop 'g' in git-describe suffix
-Date: Thu, 02 Nov 2006 12:23:05 +0100
-Message-ID: <4549D519.4080104@xs4all.nl>
-References: <eibh94$t7n$1@sea.gmane.org> <45494E20.1000503@shadowen.org>	 <4549C083.9060805@xs4all.nl> <4549CA6B.4090909@shadowen.org>	 <4549CE2A.3010808@xs4all.nl> <8aa486160611020312v42047716t6a13e6fa16eeae8@mail.gmail.com>
-Reply-To: hanwen@xs4all.nl
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: git and bzr
+Date: Thu, 30 Nov 2006 21:09:33 +0100
+Organization: At home
+Message-ID: <ekndmb$7e9$1@sea.gmane.org>
+References: <ekhtnt$rkk$1@sea.gmane.org> <456C9DFF.1040407@onlinehome.de> <456CA981.4010808@onlinehome.de> <Pine.LNX.4.64.0611281346490.4244@woody.osdl.org> <456CB197.2030201@onlinehome.de> <Pine.LNX.4.64.0611281413310.4244@woody.osdl.org> <Pine.LNX.4.63.0611291149440.30004@wbgn013.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.64.0611290922410.3513@woody.osdl.org> <456DD76C.4010902@gmx.net> <456ECDAF.4050102@op5.se> <20061130200122.GD10999@thunk.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
+Content-Type: text/plain; charset=iso-8859-2
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Thu, 2 Nov 2006 11:22:58 +0000 (UTC)
-Cc: git@vger.kernel.org
+NNTP-Posting-Date: Thu, 30 Nov 2006 20:09:52 +0000 (UTC)
+Cc: bazaar-ng@lists.canonical.com
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.7 (X11/20061027)
-Original-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <8aa486160611020312v42047716t6a13e6fa16eeae8@mail.gmail.com>
-X-Virus-Scanned: by XS4ALL Virus Scanner
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Followup-To: gmane.comp.version-control.git
+Original-Lines: 14
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30734>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32795>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gfaer-0006II-Lv for gcvg-git@gmane.org; Thu, 02 Nov
- 2006 12:22:54 +0100
+ esmtp (Exim 4.43) id 1GpsDc-0006S1-4K for gcvg-git@gmane.org; Thu, 30 Nov
+ 2006 21:09:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751482AbWKBLWu convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Thu, 2 Nov 2006 06:22:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752570AbWKBLWu
- (ORCPT <rfc822;git-outgoing>); Thu, 2 Nov 2006 06:22:50 -0500
-Received: from smtp-vbr15.xs4all.nl ([194.109.24.35]:50700 "EHLO
- smtp-vbr15.xs4all.nl") by vger.kernel.org with ESMTP id S1751482AbWKBLWt
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 2 Nov 2006 06:22:49 -0500
-Received: from [192.168.123.187] (muurbloem.xs4all.nl [213.84.26.127])
- (authenticated bits=0) by smtp-vbr15.xs4all.nl (8.13.8/8.13.8) with ESMTP id
- kA2BMlpM037197; Thu, 2 Nov 2006 12:22:47 +0100 (CET) (envelope-from
- hanwen@xs4all.nl)
-To: =?ISO-8859-1?Q?Santi_B=E9jar?= <sbejar@gmail.com>
+ S1031310AbWK3UJN convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006 15:09:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031313AbWK3UJN
+ (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 15:09:13 -0500
+Received: from main.gmane.org ([80.91.229.2]:33414 "EHLO ciao.gmane.org") by
+ vger.kernel.org with ESMTP id S1031310AbWK3UJL (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 15:09:11 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1GpsCW-00069F-6T for git@vger.kernel.org; Thu, 30 Nov 2006 21:08:08 +0100
+Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Thu, 30 Nov 2006 21:08:08 +0100
+Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Thu, 30 Nov 2006
+ 21:08:08 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Santi B=E9jar escreveu:
-> One problem I see with this scheme (either 'g', 'git' of '+') is that
-> it does not provide an increasing version number, even for
-> fast-forwarding commits. Then it is not useful as a package version
-> number (deb or rpm). I've already seen deb packages with
-> version+git20061010. One possibility could be to add the number of
-> commits between the tag and the commit as:
->=20
-> v1.4.3.3-git12g1e1f76e
->=20
-> to provide a weak ordering for fast-forwarding commits. What do you t=
-hing?
+Theodore Tso wrote:
 
-Is that number well defined if you merge branches in between?
+> =A0 =A0 =A0 =A0* When no <ent> is given, the working tree and the ind=
+ex file
+> =A0 =A0 =A0 =A0 =A0 is compared, using git-diff-files.
 
-I'd prefer
+ *  When no <tree-ish> is given, the working tree and  the  index  file=
+  are
+    compared, using git-diff-files.
 
-   v1.4.3.3+git-12-1e1f76e
-
-or similar. Pasting together words without separator is bad for readabi=
-lity.
-
+Use more modern git.
 --=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
+
