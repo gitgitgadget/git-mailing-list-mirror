@@ -1,91 +1,67 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: What's in git.git (stable)
-Date: Thu, 14 Dec 2006 15:17:19 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0612141507200.18171@xanadu.home>
-References: <7v4przfpir.fsf@assigned-by-dhcp.cox.net>
- <200612140959.19209.andyparkins@gmail.com>
- <7v7iwu93rv.fsf@assigned-by-dhcp.cox.net>
- <200612141136.59041.andyparkins@gmail.com> <20061214114546.GI1747@spearce.org>
- <8764ce6654.wl%cworth@cworth.org> <20061214120518.GL1747@spearce.org>
- <Pine.LNX.4.64.0612141251520.18171@xanadu.home>
- <7vy7pa45m8.fsf@assigned-by-dhcp.cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 0/2] Making "git commit" to mean "git commit -a".
+Date: Thu, 30 Nov 2006 22:41:41 +0100
+Organization: At home
+Message-ID: <eknj33$q2r$1@sea.gmane.org>
+References: <7virgzuf38.fsf@assigned-by-dhcp.cox.net>	<Pine.LNX.4.64.0611282322320.9647@xanadu.home>	<7vr6vmsnly.fsf@assigned-by-dhcp.cox.net>	<87ejrlvn7r.wl%cworth@cworth.org>	<7vodqpn3t4.fsf@assigned-by-dhcp.cox.net>	<7vk61dn2yj.fsf@assigned-by-dhcp.cox.net>	<Pine.LNX.4.63.0611300310520.30004@wbgn013.biozentrum.uni-wuerzburg.de>	<Pine.LNX.4.64.0611291859070.3513@woody.osdl.org>	<456EBBE7.8030404@op5.se>	<Pine.LNX.4.64.0611300749560.3513@woody.osdl.org>	<20061130164046.GB17715@thunk.org>	<Pine.LNX.4.64.0611300903080.3513@woody.osdl.org>	<Pine.LNX.4.64.0611301229290.9647@xanadu.home>	<87irgwu6e6.wl%cworth@cworth.org> <87hcwgu5t1.wl%cworth@cworth.org> <456F4E38.50001@codeweavers.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-NNTP-Posting-Date: Thu, 14 Dec 2006 20:17:47 +0000 (UTC)
-Cc: git@vger.kernel.org, Shawn Pearce <spearce@spearce.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+NNTP-Posting-Date: Thu, 30 Nov 2006 21:40:33 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-reply-to: <7vy7pa45m8.fsf@assigned-by-dhcp.cox.net>
-X-X-Sender: nico@xanadu.home
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 17
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34391>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gux1Q-0000ms-Py for gcvg-git@gmane.org; Thu, 14 Dec
- 2006 21:17:41 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32805>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gptdh-0002YK-PW for gcvg-git@gmane.org; Thu, 30 Nov
+ 2006 22:40:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932777AbWLNURW (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
- 15:17:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932784AbWLNURW
- (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 15:17:22 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:45628 "EHLO
- relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S932781AbWLNURV (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006
- 15:17:21 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
- <0JAA008ZE5OVUHR0@VL-MH-MR002.ip.videotron.ca> for git@vger.kernel.org; Thu,
- 14 Dec 2006 15:17:20 -0500 (EST)
-To: Junio C Hamano <junkio@cox.net>
+ S967929AbWK3VkO (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
+ 16:40:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967930AbWK3VkO
+ (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 16:40:14 -0500
+Received: from main.gmane.org ([80.91.229.2]:62158 "EHLO ciao.gmane.org") by
+ vger.kernel.org with ESMTP id S967929AbWK3VkL (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 16:40:11 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1GptdO-0002TQ-9G for git@vger.kernel.org; Thu, 30 Nov 2006 22:39:58 +0100
+Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Thu, 30 Nov 2006 22:39:58 +0100
+Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Thu, 30 Nov 2006
+ 22:39:58 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On Thu, 14 Dec 2006, Junio C Hamano wrote:
+Robert Shearman wrote:
 
-> Nicolas Pitre <nico@cam.org> writes:
-> 
-> > I'd say screw that.  The solution should really be this patch:
-> >
-> > diff --git a/environment.c b/environment.c
-> > index 84d870c..98275b2 100644
-> > --- a/environment.c
-> > +++ b/environment.c
-> > @@ -15,7 +15,7 @@ int use_legacy_headers = 1;
-> >  int trust_executable_bit = 1;
-> >  int assume_unchanged;
-> >  int prefer_symlink_refs;
-> > -int log_all_ref_updates;
-> > +int log_all_ref_updates = 1;
-> >  int warn_ambiguous_refs = 1;
-> >  int repository_format_version;
-> >  char git_commit_encoding[MAX_ENCODING_LENGTH] = "utf-8";
-> >
-> 
-> That changes what the command does to existing repositories,
-> which is somewhat impolite.
+> Having the index exposed for even simple operations means that the user 
+> has to initially learn three states instead of two. The worst thing 
+> about the index is that it is a limbo state. The committed content is in 
+> the history and can be viewed by gitk (and other tools that the user 
+> will be introduced to later) and the working tree is exactly what the 
+> user sees in their editor. Having a hidden state isn't very good from an 
+> HCI point of view.
 
-You must be kidding, aren't you?
-
-Just in case you really are serious, let's pretend that being impolite 
-for something that has the potential of saving people's arses is 
-certainly worth it, much more that the little inconvenience of having 
-log files mysteriously appear and make no harm otherwise.
-
-> I am not opposed too much to an updated version of the tool that
-> sets the configuration on by default for newly created
-> repositories, though.
-
-Hmmm....
-
-Well it is just that I strongly believe users with existing repos have 
-no really valid reason to not have this feature enabled.  But making it 
-on in a default config file at repo creation time is better than 
-nothing.
-
+Index is accessible, just like committed contents. The fact that gitk, qgit,
+git-gui doesn't display state of index is their limitation.
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
 
