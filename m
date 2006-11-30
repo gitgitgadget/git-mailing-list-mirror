@@ -1,64 +1,91 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Seth Falcon <sethfalcon@gmail.com>
-Subject: Re: [PATCH 0/2] Making "git commit" to mean "git commit -a".
-Date: Thu, 30 Nov 2006 08:03:52 -0800
-Message-ID: <m23b80ncpj.fsf@ziti.fhcrc.org>
-References: <Pine.LNX.4.64.0611271622260.9647@xanadu.home>
-	<7vodqse90q.fsf@assigned-by-dhcp.cox.net>
-	<87ac2cwha4.wl%cworth@cworth.org>
-	<7vy7pwcsgp.fsf@assigned-by-dhcp.cox.net>
-	<878xhwwdyj.wl%cworth@cworth.org>
-	<7vk61gcnzl.fsf@assigned-by-dhcp.cox.net>
-	<7vd5786opj.fsf@assigned-by-dhcp.cox.net> <ekmkoe$a52$1@sea.gmane.org>
-	<ekmlf4$ask$3@sea.gmane.org> <m2odqpm0d6.fsf@ziti.fhcrc.org>
-	<fcaeb9bf0611300750t4adb4c97ibd65bc5b254e7efa@mail.gmail.com>
+From: Martin Waitz <tali@admingilde.org>
+Subject: Re: [RFC] Submodules in GIT
+Date: Thu, 30 Nov 2006 18:19:49 +0100
+Message-ID: <20061130171949.GI18810@admingilde.org>
+References: <20061121223130.GA24909@nan92-1-81-57-214-146.fbx.proxad.net> <200611301449.55171.andyparkins@gmail.com> <20061130152011.GM12463MdfPADPa@greensroom.kotnet.org> <200611301530.51171.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 30 Nov 2006 16:04:11 +0000 (UTC)
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="PW0Eas8rCkcu1VkF"
+NNTP-Posting-Date: Thu, 30 Nov 2006 17:20:23 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:to:subject:references:from:date:in-reply-to:message-id:user-agent:mime-version:content-type;
-        b=PwilPDcvDJr65Ok2Ppajlgd69gSDigbk1oh+5HEI1Ha9boAvqHPCWxZqB0unWGbIRrkFmIsSM7GNK2LGfNAd1CwrSmqQgL/LflOrmVR6+ofKzk562mWCNTfy+9+hvB+JqX9n6/tLyh9F4hYNVBF4Hhz0NUItttn4OGNk6wBLG3c=
-In-Reply-To: <fcaeb9bf0611300750t4adb4c97ibd65bc5b254e7efa@mail.gmail.com> (Nguyen Thai Ngoc Duy's message of "Thu, 30 Nov 2006 22:50:23 +0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (darwin)
+Content-Disposition: inline
+In-Reply-To: <200611301530.51171.andyparkins@gmail.com>
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
+User-Agent: Mutt/1.5.9i
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32761>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32780>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GpoO0-0003hr-2Q for gcvg-git@gmane.org; Thu, 30 Nov
- 2006 17:03:44 +0100
+ esmtp (Exim 4.43) id 1GppZh-0007DL-Ks for gcvg-git@gmane.org; Thu, 30 Nov
+ 2006 18:19:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1030639AbWK3QDl (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
- 11:03:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030641AbWK3QDl
- (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 11:03:41 -0500
-Received: from ug-out-1314.google.com ([66.249.92.168]:41853 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1030639AbWK3QDk
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 11:03:40 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so2155620uga for
- <git@vger.kernel.org>; Thu, 30 Nov 2006 08:03:38 -0800 (PST)
-Received: by 10.78.201.10 with SMTP id y10mr3695175huf.1164902618491; Thu, 30
- Nov 2006 08:03:38 -0800 (PST)
-Received: from ziti.fhcrc.org ( [67.171.24.140]) by mx.google.com with ESMTP
- id 11sm26923848hug.2006.11.30.08.03.37; Thu, 30 Nov 2006 08:03:38 -0800 (PST)
-To: git@vger.kernel.org
+ S1030833AbWK3RTv (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
+ 12:19:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030835AbWK3RTv
+ (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 12:19:51 -0500
+Received: from agent.admingilde.org ([213.95.21.5]:15068 "EHLO
+ mail.admingilde.org") by vger.kernel.org with ESMTP id S1030829AbWK3RTu
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 12:19:50 -0500
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1) id
+ 1GppZd-0004tl-Ko; Thu, 30 Nov 2006 18:19:49 +0100
+To: Andy Parkins <andyparkins@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-"Nguyen Thai Ngoc Duy" <pclouds@gmail.com> writes:
 
-> On 11/30/06, Seth Falcon <sethfalcon@gmail.com> wrote:
->>
->> For those using emacsclient, I don't think ^C will work.  Is there
->> another way to undu an ammend commit?  If not, is there any sense in
->> detecting a magic comment to abort the ammend commit?
->
-> Uncomment to abort commit would be more intuitive.
+--PW0Eas8rCkcu1VkF
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+hoi :)
+
+On Thu, Nov 30, 2006 at 03:30:49PM +0000, Andy Parkins wrote:
+> Well, I know what the commit is /that/ was all that was stored.  So I=20
+> (actually supermodule-git does):
+>=20
+> cd $DIRECTORY_ASSOCIATED_WITH_SUBMODULE
+> git checkout -f $COMMIT_FROM_SUPERMODULE
+>=20
+> Obviously, this is grossly simplified.  It also requires that HEAD be all=
+owed=20
+> to be an arbitrary commit rather than a branch, but that's already been=
+=20
+> generally agreed upon as a good thing.
+
+It's not that easy.
+
+You also have to make sure that all your submodule commits that _ever_
+have been part of your submodule have be stay in your repository
+forever.
+Consider that your submodule switches to an other branch and some
+old commits are not referenced by the current version any more.
+These old commits still have to survive a git-prune, if they have been
+part of some old supermodule version.
+So you really have to connect both object databases and it's not enough
+to just store the commit sha1 without actually parsing it by the GIT
+core.
+
+--=20
+Martin Waitz
+
+--PW0Eas8rCkcu1VkF
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFFbxK1j/Eaxd/oD7IRAtozAJ477SfCnVw7xWOCLEkDn/mxqKxv/gCdFPmE
+o+6Iu3n039WLuCAHyXokL2g=
+=sx55
+-----END PGP SIGNATURE-----
 
