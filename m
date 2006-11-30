@@ -1,76 +1,128 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Michael K. Edwards" <medwards.linux@gmail.com>
-Subject: Re: Cleaning up git user-interface warts
-Date: Thu, 16 Nov 2006 22:42:55 -0800
-Message-ID: <f2b55d220611162242s48dc42d6g4cbfd9173e712ff8@mail.gmail.com>
-References: <87k61yt1x2.wl%cworth@cworth.org>
-	 <7v3b8ltq7r.fsf@assigned-by-dhcp.cox.net>
-	 <Pine.LNX.4.64.0611142306090.2591@xanadu.home>
-	 <Pine.LNX.4.64.0611150950170.3349@woody.osdl.org>
-	 <455BBCE9.4050503@xs4all.nl>
-	 <Pine.LNX.4.64.0611151908130.3349@woody.osdl.org>
-	 <Pine.LNX.4.63.0611162353250.13772@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <Pine.LNX.4.64.0611161508530.3349@woody.osdl.org>
-	 <455CFCBD.8040901@xs4all.nl>
-	 <f2b55d220611161734m49136e6fneda5b002eb67618b@mail.gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [RFC] git-add update with all-0 object
+Date: Thu, 30 Nov 2006 14:46:23 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0611301431420.3513@woody.osdl.org>
+References: <Pine.LNX.4.64.0611301634080.20138@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Fri, 17 Nov 2006 06:43:11 +0000 (UTC)
-Cc: "Junio C Hamano" <junkio@cox.net>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Thu, 30 Nov 2006 22:47:19 +0000 (UTC)
+Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=J225X2YkhHy3cvPNp0qMoE0kDpmgzGB4wPTDD3gIQmGozFexaNND90CpHEkesYAM1eLBiXhuu0YVy2fo1pcSHLMSEqvU9xdSNFW4faAGvACAzSUfb5/snrDfcWXk3Px/pYsgR0zPWrTHWDmBTUF5efMqHf24b7dghAh/7BXNSGc=
-In-Reply-To: <f2b55d220611161734m49136e6fneda5b002eb67618b@mail.gmail.com>
-Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0611301634080.20138@iabervon.org>
+X-MIMEDefang-Filter: osdl$Revision: 1.161 $
+X-Scanned-By: MIMEDefang 2.36
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31670>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32825>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GkxRD-00075q-K1 for gcvg-git@gmane.org; Fri, 17 Nov
- 2006 07:42:59 +0100
+ esmtp (Exim 4.43) id 1Gpufq-0000Vb-2C for gcvg-git@gmane.org; Thu, 30 Nov
+ 2006 23:46:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1754988AbWKQGm4 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 17 Nov 2006
- 01:42:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755468AbWKQGm4
- (ORCPT <rfc822;git-outgoing>); Fri, 17 Nov 2006 01:42:56 -0500
-Received: from wx-out-0506.google.com ([66.249.82.224]:54319 "EHLO
- wx-out-0506.google.com") by vger.kernel.org with ESMTP id S1754988AbWKQGm4
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 17 Nov 2006 01:42:56 -0500
-Received: by wx-out-0506.google.com with SMTP id s7so849838wxc for
- <git@vger.kernel.org>; Thu, 16 Nov 2006 22:42:55 -0800 (PST)
-Received: by 10.90.25.7 with SMTP id 7mr1190856agy.1163745775332; Thu, 16 Nov
- 2006 22:42:55 -0800 (PST)
-Received: by 10.90.25.4 with HTTP; Thu, 16 Nov 2006 22:42:55 -0800 (PST)
-To: git@vger.kernel.org
+ S1031605AbWK3Wqb (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
+ 17:46:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031606AbWK3Wqa
+ (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 17:46:30 -0500
+Received: from smtp.osdl.org ([65.172.181.25]:5778 "EHLO smtp.osdl.org") by
+ vger.kernel.org with ESMTP id S1031605AbWK3Wqa (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 17:46:30 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
+ smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kAUMkOjQ017098
+ (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Thu, 30
+ Nov 2006 14:46:24 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
+ shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kAUMkND6022630; Thu, 30 Nov
+ 2006 14:46:24 -0800
+To: Daniel Barkalow <barkalow@iabervon.org>
 Sender: git-owner@vger.kernel.org
 
-On 11/16/06, Michael K. Edwards <medwards.linux@gmail.com> wrote
->   The only entry placed in .git/remotes is the
-> "origin" of the new clone, which is the "master" of the remote
-> repository.  That's for the user's convenience, and is about the only
-> thing in the new clone that _isn't_ a copy of something in the remote
-> tree.
 
-Actually, this "origin" entry does contain "Pull:" lines for all of
-the branches that were cloned, so that "git pull" fetches and merges
-updates to all of these branches.  (If upstream is in the habit of
-reverting things, you may need "git pull -f"; I just did that on the
-git repo to handle a failure to fast-forward on the "pu" branch.)
 
-Presumably "git branch -D" should inspect everything under
-.git/remotes to see whether one or more Pull: lines need to be deleted
-along with the branch.  Currently, it looks like "remotes" entries are
-created only by "git clone" or by hand.  Junio, are there any plans to
-manage the contents of "remotes" through the tool instead of by hand?
+On Thu, 30 Nov 2006, Daniel Barkalow wrote:
+> 
+> I think the more obvious behavior is to have it record the fact that you 
+> want to have the path tracked, but require one of the usual updating 
+> mechanisms to get a particular content into the index.
 
-Cheers,
+While this certainly matches the git model better than just automatically 
+taking whatever state exist at commit time (you instead introduce it as a 
+special "empty state" case), I don't think you really want it.
+
+Why? 
+
+Two reasons:
+
+ - you're still left with all the same issues (ie you do need to use "git 
+   commit -a" because that is simply fundamental, and if you don't, "git 
+   commit" now causes an ERROR, which is just illogical - you just added 
+   the data!)
+
+   So it's simply better to just tell people "git add" adds the whole 
+   state. Explain to them that git doesn't track "filenames", it tracks 
+   state, and when you do a "git add", it really adds the _data_ and the 
+   permissions too.
+
+   Really, if you didn't come from years of broken SCM's, you'd think that 
+   it's _natural_ that when you add a file for tracking, you add its 
+   contents too. It's not that git is surprising or unnatural, it's that 
+   CVS is.
+
+ - you generally really don't want to see "git diff" show you the big diff 
+   for a new creation. You only think you do, but trust me, you generally 
+   don't. It's the same thing as with doing merges - keeping the 
+   automerged state in the index is actually nice, because it means that 
+   the default "git diff" can just shut the heck up about the things that 
+   may be the _bulk_ of the change, but it's not the interesting part.
+
+So I would suggest that if people are irritated with "git diff" for 
+example not showing newly added files AT ALL, then the solution to that 
+isn't that they should be added as "empty" or "all zeroes". We do have 
+other state bits in the index already (we need them for marking things as 
+being unmerged etc), and if the problem is that you want to see that you 
+have a pending add, it's easy enough to have "git add" always set a bit 
+saying "this file is new".
+
+A normal "read tree object" would populate index entries with that bit 
+cleared, and so it would be possible to have
+
+	git add file.c
+	git diff
+
+show something like
+
+	diff --git a/file.c b/file.c
+	added file <mode> <sha1>
+
+rather than show the whole big diff (which I _really_ don't think you want 
+to see, and which is actually against the whole point, which is that you 
+add _content_ to the index, and "git diff" will always show you the stuff 
+that is _not_ added to the index yet).
+
+(Of course, if you _also_ had changed it between the "git add" and the 
+"git diff", you'd get both the "added file <mode> <sha1>" _and_ the diff 
+that is the diff between the thing you added, and the status it has now).
+
+So showing a real diff after "git add" would really be wrong. The index 
+really is important. But if it's _only_ an issue of worrying about seeing 
+added files at all, we can add a "people comfort" bit to do that.
+
+(Quite frankly, I don't think it's worthwhile. I really think this is a 
+documentation issue. Make people understand that "git add" adds the 
+contents too, and that git never tracks filenames on their own at all).
+
+So it is always going to be true that
+
+	git add file
+	echo New line >> file
+	git commit
+
+must commit the old contents of the file. That really _does_ follow from 
+the whole "track contents" model. Anything that doesn't do this is 
+fundamnetally broken, and has broken the notion of what "git add" means.
+
