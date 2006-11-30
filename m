@@ -1,116 +1,83 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Ben Greear <greearb@candelatech.com>
-Subject: Re: Question on multi-level git repository heiarchy.
-Date: Fri, 27 Oct 2006 07:05:02 -0700
-Organization: Candela Technologies
-Message-ID: <4542120E.1050903@candelatech.com>
-References: <45419529.3010207@candelatech.com> <20061027052517.GB29057@spearce.org>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 0/2] Making "git commit" to mean "git commit -a".
+Date: Thu, 30 Nov 2006 03:11:20 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0611300310520.30004@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.64.0611271622260.9647@xanadu.home>
+ <7vmz6cfsuw.fsf@assigned-by-dhcp.cox.net> <87bqmswm1e.wl%cworth@cworth.org>
+ <7vodqse90q.fsf@assigned-by-dhcp.cox.net> <87ac2cwha4.wl%cworth@cworth.org>
+ <7vy7pwcsgp.fsf@assigned-by-dhcp.cox.net> <878xhwwdyj.wl%cworth@cworth.org>
+ <7vk61gcnzl.fsf@assigned-by-dhcp.cox.net> <7vd5786opj.fsf@assigned-by-dhcp.cox.net>
+ <871wnnwi3k.wl%cworth@cworth.org> <7virgzuf38.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0611282322320.9647@xanadu.home> <7vr6vmsnly.fsf@assigned-by-dhcp.cox.net>
+ <87ejrlvn7r.wl%cworth@cworth.org> <7vodqpn3t4.fsf@assigned-by-dhcp.cox.net>
+ <7vk61dn2yj.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Fri, 27 Oct 2006 14:05:14 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Thu, 30 Nov 2006 02:11:39 +0000 (UTC)
+Cc: Carl Worth <cworth@cworth.org>, Nicolas Pitre <nico@cam.org>,
+	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.5 (X11/20060808)
-In-Reply-To: <20061027052517.GB29057@spearce.org>
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <7vk61dn2yj.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30327>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32696>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GdSJP-0008Ll-Oz for gcvg-git@gmane.org; Fri, 27 Oct
- 2006 16:03:56 +0200
+ esmtp (Exim 4.43) id 1GpbOX-0002vg-Ry for gcvg-git@gmane.org; Thu, 30 Nov
+ 2006 03:11:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1946471AbWJ0ODl (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 27 Oct 2006
- 10:03:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946473AbWJ0ODl
- (ORCPT <rfc822;git-outgoing>); Fri, 27 Oct 2006 10:03:41 -0400
-Received: from ns2.lanforge.com ([66.165.47.211]:54972 "EHLO
- ns2.lanforge.com") by vger.kernel.org with ESMTP id S1946471AbWJ0ODk (ORCPT
- <rfc822;git@vger.kernel.org>); Fri, 27 Oct 2006 10:03:40 -0400
-Received: from [71.112.210.101] (pool-71-112-210-101.sttlwa.dsl-w.verizon.net
- [71.112.210.101]) (authenticated bits=0) by ns2.lanforge.com (8.13.4/8.13.4)
- with ESMTP id k9RE3cqf029464; Fri, 27 Oct 2006 07:03:38 -0700
-To: Shawn Pearce <spearce@spearce.org>
+ S936039AbWK3CLX (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 29 Nov 2006
+ 21:11:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936075AbWK3CLW
+ (ORCPT <rfc822;git-outgoing>); Wed, 29 Nov 2006 21:11:22 -0500
+Received: from mail.gmx.net ([213.165.64.20]:42453 "HELO mail.gmx.net") by
+ vger.kernel.org with SMTP id S936039AbWK3CLW (ORCPT
+ <rfc822;git@vger.kernel.org>); Wed, 29 Nov 2006 21:11:22 -0500
+Received: (qmail invoked by alias); 30 Nov 2006 02:11:20 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp038) with SMTP; 30 Nov 2006 03:11:20 +0100
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Shawn Pearce wrote:
-> Ben Greear <greearb@candelatech.com> wrote:
->   
->> I want to create an intermediate level..something like:
->>
->> kernel.org git tree
->>       |
->> my git master tree
->> /                          \
->> work-station-1   work-station-2  ....
->>     
->  
->   
->> I then did a git  checkout -f master on the
->> pub server and did a pull from the upstream kernel.
->> This seemed to work fine.
->>     
->
-> Ah, what you really want here is to make your "my git master tree"
-> a bare repostiory and use fetch instead of pull.  This way you
-> don't need to maintain a working directory of files associated
-> with that repository.  So assuming you have "mygitmastertree"
-> as the directory do:
->
-> 	mv mygitmastertree/.git mygitmastertree.git
-> 	rm -rf mygitmastertree
->
-> and update your workstation .git/remotes/origin files such
-> that the URL line reads ".../mygitmastertree.git" rather than
-> ".../mygitmastertree/.git".
->
-> Then to update "mygitmastertree" with recent changes you can use
-> git fetch rather than git pull:
->
-> 	git --git-dir mygitmastertree.git fetch
->   
+Hi,
 
-Ok, I made those changes...
->  
->   
->> Then, on the work-station, I did a git checkout -f master, and also did 
->> a pull.
->> In this case, it seems that it is trying to merge with changes in the 
->> lf_v2.6.18 branch
->> instead of the the main 'master' tree (see below).
->>     
->
-> When you use "git pull" with no additional arguments the first
-> branch listed in a Pull: line of .git/remotes/origin will be the
-> branch merged into the current branch.  I don't know what that
-> branch is listed as in your workstation tree but from what you
-> described it sounds like it may be that lf_v2.6.18 branch, which
-> is why its trying to merge it.
->   
-That is certainly not intuitive.
+On Wed, 29 Nov 2006, Junio C Hamano wrote:
 
-I want to synchronize the entire git repo, including all branches.  How 
-would I go
-about doing that?
+> Junio C Hamano <junkio@cox.net> writes:
+> 
+> > ...  Rather,
+> > "building your next commit incrementally in the index is the
+> > workflow git is designed to support, but you are not required to
+> > do that _incrementally_.  Until you encounter a complex
+> > situation such as resolving a large conflicting merge, doing
+> > that incrementally does not buy you anything as long as you work
+> > in a clean working tree.
+> 
+> Side note.  I think the above "Until..." is an overstatement,
+> and maybe the readers of the tutorial can be taught a lot
+> earlier how the index can help them.  Maybe the following
+> sequence can be added to an early part of the tutorial sequence?
+> 
+>  $ edit hello.c
+>  $ make test
+>  $ git diff
+>  $ git update-index hello.c; # ok, that is good so far.
+>  $ edit hello.c; # hack more
+>  $ make test; # oops, does not work
+>  $ git diff; # ah, that overeager edit broken what was good
+>  $ git checkout hello.c; # get the last good one back
 
-Is there any way to recover my currently mangled tree on the 
-workstation, or do I need
-to start fresh there?  If I start fresh, do I re-clone, or is there some 
-better way to get
-the synchronization that I want?
+I like it. Sort of a "temporary commit" to check against.
 
-Thanks,
-Ben
-
-
-
--- 
-Ben Greear <greearb@candelatech.com> 
-Candela Technologies Inc  http://www.candelatech.com
-
+Ciao,
+Dscho
