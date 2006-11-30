@@ -1,58 +1,68 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Alan Chandler <alan@chandlerfamily.org.uk>
-Subject: Re: [RFC] Submodules in GIT
-Date: Fri, 1 Dec 2006 23:23:54 +0000
-Message-ID: <200612012323.54403.alan@chandlerfamily.org.uk>
-References: <4570289D.9050802@b-i-t.de> <Pine.LNX.4.64.0612011134080.3695@woody.osdl.org> <20061201203002.GJ18810@admingilde.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [RFC] git-add update with all-0 object
+Date: Thu, 30 Nov 2006 17:49:27 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0611301747330.9647@xanadu.home>
+References: <Pine.LNX.4.64.0611301634080.20138@iabervon.org>
+ <Pine.LNX.4.64.0611301733460.9647@xanadu.home> <eknmju$9ok$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-15"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Fri, 1 Dec 2006 23:28:01 +0000 (UTC)
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+NNTP-Posting-Date: Thu, 30 Nov 2006 22:50:11 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: KMail/1.9.5
-In-Reply-To: <20061201203002.GJ18810@admingilde.org>
-Content-Disposition: inline
+In-reply-to: <eknmju$9ok$1@sea.gmane.org>
+X-X-Sender: nico@xanadu.home
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32985>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32827>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GqHn7-0003yH-Bt for gcvg-git@gmane.org; Sat, 02 Dec
- 2006 00:27:37 +0100
+ esmtp (Exim 4.43) id 1Gpuii-00018J-MH for gcvg-git@gmane.org; Thu, 30 Nov
+ 2006 23:49:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1162322AbWLAXZC (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
- 18:25:02 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1162301AbWLAXYM
- (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 18:24:12 -0500
-Received: from 82-44-22-127.cable.ubr06.croy.blueyonder.co.uk
- ([82.44.22.127]:52624 "EHLO home.chandlerfamily.org.uk") by vger.kernel.org
- with ESMTP id S1162239AbWLAXX4 (ORCPT <rfc822;git@vger.kernel.org>); Fri, 1
- Dec 2006 18:23:56 -0500
-Received: from kanger.home ([192.168.0.21]) by home.chandlerfamily.org.uk
- with esmtp (Exim 4.63) (envelope-from <alan@chandlerfamily.org.uk>) id
- 1GqHjX-0001ow-OV for git@vger.kernel.org; Fri, 01 Dec 2006 23:23:55 +0000
-To: git@vger.kernel.org
+ S1031571AbWK3Wt3 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
+ 17:49:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031608AbWK3Wt3
+ (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 17:49:29 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:11581 "EHLO
+ relais.videotron.ca") by vger.kernel.org with ESMTP id S1031571AbWK3Wt2
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 17:49:28 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR001.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
+ <0J9K0094CFEF2W40@VL-MO-MR001.ip.videotron.ca> for git@vger.kernel.org; Thu,
+ 30 Nov 2006 17:49:28 -0500 (EST)
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-On Friday 01 December 2006 20:30, Martin Waitz wrote:
-> hoi :)
->
-> Linus, you are a lot better in describing all my thoughts than I myself.
-> ;-)
+On Thu, 30 Nov 2006, Jakub Narebski wrote:
 
-Yes
+> Nicolas Pitre wrote:
+> 
+> > On Thu, 30 Nov 2006, Daniel Barkalow wrote:
+> > 
+> >> One thing that I think is non-intuitive to a lot of users (either novice 
+> >> or who just don't do it much) is that it matters where in the process you 
+> >> do "git add <path>" if you're also changing the file. Even if you 
+> >> understand the index, you may not realize (or may not have internalized 
+> >> the fact) that what git-add does is update the index with what's there 
+> >> now.
+> > 
+> > And actually I think this is a good thing.  This is what makes the index 
+> > worth it.  Better find a way to make it obvious to people what's 
+> > happening.
+> 
+> Still, perhaps (perhaps!) it would be useful to have "intent to add"
+> git-add.
 
-Some of the clearest explanations described from a strategic point of view 
-come from posts such as these. 
+Well, sure.  It could be an argument to git-add.  But surely not the 
+default?
 
-And he keeps saying he can't write documentation.
+git-add --latest maybe?
 
- 
--- 
-Alan Chandler
+
