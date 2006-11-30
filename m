@@ -5,79 +5,70 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
 	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: Adding a new file as if it had existed
-Date: Tue, 12 Dec 2006 12:26:29 +0000
-Message-ID: <200612121226.32772.andyparkins@gmail.com>
-References: <7ac1e90c0612120205k38b2fc14jbfd8ea682406efb2@mail.gmail.com> <7vhcw1whfx.fsf@assigned-by-dhcp.cox.net> <7ac1e90c0612120332o20d6778bsa16a788fdc04a3a1@mail.gmail.com>
+From: "Francis Moreau" <francis.moro@gmail.com>
+Subject: Re: How to prepend data when formatting patches ?
+Date: Thu, 30 Nov 2006 17:16:55 +0100
+Message-ID: <38b2ab8a0611300816r19d883a8qab93c86ff11b7ed7@mail.gmail.com>
+References: <38b2ab8a0611300616j54a9f8ase9b4f1c305b7c22b@mail.gmail.com>
+	 <Pine.LNX.4.63.0611301638430.30004@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Tue, 12 Dec 2006 12:26:48 +0000 (UTC)
+NNTP-Posting-Date: Thu, 30 Nov 2006 16:17:55 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=uCe6qO2PnAp33V3qJNee4DIlxFfUKLzLKyYgo2DAHodKgQpQIPeXje9snGHEOMLeLiFvVoyplMN5MT35J72OX2u9or4r0R1tuKGQn9U0F5RstosefXCP1dAqodoiea2Xszy/q9nodT/tXjj7q5d3cBA8f+2RzPhKwbhaNy0WOBY=
-User-Agent: KMail/1.9.5
-In-Reply-To: <7ac1e90c0612120332o20d6778bsa16a788fdc04a3a1@mail.gmail.com>
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=derfHNycT55fS4NYFx0M9XE5fTrR+HFTMhDA2T6Vm1xj+m7cpXSMwwNnhIOC0RYkdkW+U6/ob/mOWRRfUz5vM9qzTh+JgDu0kO1BRJzl8Fy9TcpMFIPtV0l2N7jj+TF8di0cxTm7pyLIrBY0AMQKfGk8wj7REtF0soDlOqFqgaM=
+In-Reply-To: <Pine.LNX.4.63.0611301638430.30004@wbgn013.biozentrum.uni-wuerzburg.de>
 Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34088>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gu6iZ-0008GL-9C for gcvg-git@gmane.org; Tue, 12 Dec
- 2006 13:26:43 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32767>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gpob8-0007W4-Ib for gcvg-git@gmane.org; Thu, 30 Nov
+ 2006 17:17:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751260AbWLLM0k (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 12 Dec 2006
- 07:26:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751261AbWLLM0k
- (ORCPT <rfc822;git-outgoing>); Tue, 12 Dec 2006 07:26:40 -0500
-Received: from ug-out-1314.google.com ([66.249.92.173]:59089 "EHLO
- ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1751260AbWLLM0j (ORCPT <rfc822;git@vger.kernel.org>); Tue, 12 Dec
- 2006 07:26:39 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so1646983uga for
- <git@vger.kernel.org>; Tue, 12 Dec 2006 04:26:37 -0800 (PST)
-Received: by 10.67.101.10 with SMTP id d10mr5333374ugm.1165926397631; Tue, 12
- Dec 2006 04:26:37 -0800 (PST)
-Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
- ESMTP id 29sm6731511uga.2006.12.12.04.26.37; Tue, 12 Dec 2006 04:26:37 -0800
- (PST)
-To: git@vger.kernel.org
+ S1030671AbWK3QQ5 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
+ 11:16:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967837AbWK3QQ5
+ (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 11:16:57 -0500
+Received: from wx-out-0506.google.com ([66.249.82.235]:14928 "EHLO
+ wx-out-0506.google.com") by vger.kernel.org with ESMTP id S967836AbWK3QQ4
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 11:16:56 -0500
+Received: by wx-out-0506.google.com with SMTP id h27so2708791wxd for
+ <git@vger.kernel.org>; Thu, 30 Nov 2006 08:16:56 -0800 (PST)
+Received: by 10.90.78.9 with SMTP id a9mr3859678agb.1164903415704; Thu, 30
+ Nov 2006 08:16:55 -0800 (PST)
+Received: by 10.90.55.9 with HTTP; Thu, 30 Nov 2006 08:16:55 -0800 (PST)
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-On Tuesday 2006 December 12 11:32, Bahadir Balban wrote:
+On 11/30/06, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> Hi,
+>
+> On Thu, 30 Nov 2006, Francis Moreau wrote:
+>
+> > I'd like to add to all patchs created by "git-format-patch" command
+> > the following line:
+> >
+> >        From: xxx.yyy <foo@crazy.com>
+>
+> From Documentation/git-format-patch.txt:
+>
+> -- snip --
+>
+> CONFIGURATION
+> -------------
+> You can specify extra mail header lines to be added to each
+> message in the repository configuration as follows:
+>
 
-> If I don't know which files I may be touching in the future for
-> implementing some feature, then I am obliged to add all the files even
-> if they are irrelevant. I said "performance reasons" assuming all the
-> file hashes need checked for every commit -a to see if they're
-> changed, but I just tried on a PIII and it seems not so slow.
+I stupily thought that it couldn't be used to prepend message for the
+message body. But since it appends the line at the end of mail header,
+it does the right thing for me.
 
-Here's a handy rule of thumb I've learned in my use of git:
-
- "git is fast.  Really fast."
-
-That'll hold you in good stead.  In my experience there is no operation in git 
-that is slow.  I've got some trees that are for embedded work and hold the 
-whole linux kernel, often more than once.  Subversion, which I used 
-previously, took literally hours to import the whole tree.  Git takes 
-minutes.
-
-As to your direct concern: git doesn't hash every file at every commit.  There 
-is no need.  git has an "index" that is used to prepare a commit; at the time 
-you do the actual commit, git already knows which files are being checked in.  
-Obviously, Linus uses git for managing the linux kernel, he's said before 
-that he wanted a version control system that can do multiple commits /per 
-second/.  git can do that.
-
-In short - don't worry about making life easy for git - it's a workhorse and 
-does a grand job.
-
-
-Andy
+Thanks for your quick answer
 -- 
-Dr Andy Parkins, M Eng (hons), MIEE
