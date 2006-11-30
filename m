@@ -1,123 +1,93 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Aneesh Kumar K.V" <aneesh.kumar@gmail.com>
-Subject: Re: shallow clone failed git pull
-Date: Fri, 10 Nov 2006 11:28:27 +0530
-Message-ID: <45541503.4020604@gmail.com>
-References: <4552A865.5000201@gmail.com>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [RFC] Submodules in GIT
+Date: Thu, 30 Nov 2006 14:49:53 +0000
+Message-ID: <200611301449.55171.andyparkins@gmail.com>
+References: <20061121223130.GA24909@nan92-1-81-57-214-146.fbx.proxad.net> <200611301255.41733.andyparkins@gmail.com> <456EE3F1.5070101@b-i-t.de>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------030101040605040004020101"
-NNTP-Posting-Date: Fri, 10 Nov 2006 05:59:00 +0000 (UTC)
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 30 Nov 2006 14:50:16 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:message-id:date:from:user-agent:mime-version:to:subject:references:in-reply-to:content-type;
-        b=Gufh1nZ5LO4uGBAwspHz5daNc3Z7Hr+HvTQn8T+77JRKUJ0jvlwOF/UmE6tAgJylo1gPDLlGwYn9+92N/iGyFPcF4GiRXoKtY7tPH5fo60jkh91xkXzNTK99GzVsverbS/PicPnBagCjq3kQ+IpI11ztEPogCt5IPJ+AgB5y+gM=
-User-Agent: Thunderbird 1.5.0.7 (X11/20060918)
-In-Reply-To: <4552A865.5000201@gmail.com>
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=Nt6hvIYFyDIPoM8HlNokg8WKfjLIWsHlTGgFVUzMy2SanNaXNgn0caA+WclcSZM7vl3AYSOpIMLqOEc4ewY5lIfWAl2TJFbjky49w4+G4f67NwcBWPuwEMOkCzRoVJ6VWENiVGbHmPOFRonnshiW3exvQEtG2seijKjwhmKb7Ao=
+User-Agent: KMail/1.9.5
+In-Reply-To: <456EE3F1.5070101@b-i-t.de>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31204>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32749>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GiPPd-0007DT-Cr for gcvg-git@gmane.org; Fri, 10 Nov
- 2006 06:58:49 +0100
+ esmtp (Exim 4.43) id 1GpnEo-00014c-Em for gcvg-git@gmane.org; Thu, 30 Nov
+ 2006 15:50:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1161051AbWKJF6o (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 10 Nov 2006
- 00:58:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966086AbWKJF6o
- (ORCPT <rfc822;git-outgoing>); Fri, 10 Nov 2006 00:58:44 -0500
-Received: from ug-out-1314.google.com ([66.249.92.170]:26899 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S966046AbWKJF6n
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 10 Nov 2006 00:58:43 -0500
-Received: by ug-out-1314.google.com with SMTP id m3so442483ugc for
- <git@vger.kernel.org>; Thu, 09 Nov 2006 21:58:42 -0800 (PST)
-Received: by 10.78.48.16 with SMTP id v16mr2179587huv.1163138322176; Thu, 09
- Nov 2006 21:58:42 -0800 (PST)
-Received: from ?217.172.219.183? ( [156.153.255.234]) by mx.google.com with
- ESMTP id 39sm2549906hug.2006.11.09.21.58.39; Thu, 09 Nov 2006 21:58:42 -0800
- (PST)
-To: "Aneesh Kumar K.V" <aneesh.kumar@gmail.com>, git@vger.kernel.org
+ S936432AbWK3OuF (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
+ 09:50:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936434AbWK3OuF
+ (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 09:50:05 -0500
+Received: from ug-out-1314.google.com ([66.249.92.170]:59026 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S936432AbWK3OuB
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 09:50:01 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so2132878uga for
+ <git@vger.kernel.org>; Thu, 30 Nov 2006 06:50:00 -0800 (PST)
+Received: by 10.67.19.20 with SMTP id w20mr5487130ugi.1164898199111; Thu, 30
+ Nov 2006 06:49:59 -0800 (PST)
+Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
+ ESMTP id j34sm22591828ugc.2006.11.30.06.49.58; Thu, 30 Nov 2006 06:49:58
+ -0800 (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-This is a multi-part message in MIME format.
---------------030101040605040004020101
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+On Thursday 2006 November 30 14:00, Stephan Feder wrote:
 
-Aneesh Kumar K.V wrote:
-> I was using the pu branch i tried to update the git repository and i got 
-> this error.
-> 
-> alk 9e950efa20dc8037c27509666cba6999da9368e8
-> walk 3b6a792f6ace33584897d1af08630c9acc0ce221
-> * refs/heads/origin: fast forward to branch 'master' of 
-> http://repo.or.cz/r/linux-2.6
->  old..new: 3d42488..088406b
-> Auto-following refs/tags/v2.6.19-rc5
-> shallow clone with http not supported
-> 
-> 
-> This repository was not cloned with -depth. I only updated the git tools 
-> using the pu branch
-> 
+> Again I do not see the problem. Probably I have a much simpler picture
+> of submodules: They are just commits in the supermodule's tree.
+> Everything else follows naturally from how git currently behaves.
 
-The attached patch gets it working. I am not sure whether the fix is the right one. I 
-am a little bit confused regarding the $depth being incremented. 
+How are these commits any different from just having one big repository?  If 
+some of the development of the submodule is contained in the supermodule then 
+it's not a submodule anymore.
 
--aneesh
+Why bother with all the effort to make a separation between submodule and 
+supermodule and then store the submodule commits in the supermodule.  That's 
+not supermodule/submodule git - that's just normal git.
 
---------------030101040605040004020101
-Content-Type: text/x-patch;
- name="git-fetch.sh.diff"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline;
- filename="git-fetch.sh.diff"
+Surely the whole point of having submodule's is so that you can take the 
+submodule away.  Let me give you an example.  Let's say I have a project that 
+uses the libxcb library (some random project out in the world that uses git).  
+I've arranged it something like this:
 
-diff --git a/git-fetch.sh b/git-fetch.sh
-index 8b46e73..6459994 100755
---- a/git-fetch.sh
-+++ b/git-fetch.sh
-@@ -21,7 +21,7 @@ update_head_ok=
- exec=
- upload_pack=
- keep=
--depth=
-+depth=0
- while case "$#" in 0) break ;; esac
- do
- 	case "$1" in
-@@ -304,7 +304,7 @@ fetch_main () {
-       # There are transports that can fetch only one head at a time...
-       case "$remote" in
-       http://* | https://* | ftp://*)
--	  test -n "$depth" && die "shallow clone with http not supported"
-+	  [ x"$depth" != x0 ] && die "shallow clone with http not supported"
- 	  proto=`expr "$remote" : '\([^:]*\):'`
- 	  if [ -n "$GIT_SSL_NO_VERIFY" ]; then
- 	      curl_extra_args="-k"
-@@ -325,7 +325,7 @@ fetch_main () {
- 	      print "$u";
- 	  ' "$head")
- 	    head=$(curl -nsfL $curl_extra_args $noepsv_opt "$remote/$remote_name_quoted")
--	    depth=$( expr \( $depth + 1 \) )
-+	   # depth=$( expr \( $depth + 1 \) )
- 	  done
- 	  expr "z$head" : "z$_x40\$" >/dev/null ||
- 	      die "Failed to fetch $remote_name from $remote"
-@@ -333,7 +333,7 @@ fetch_main () {
- 	  git-http-fetch -v -a "$head" "$remote/" || exit
- 	  ;;
-       rsync://*)
--	  test -n "$depth" && die "shallow clone with rsync not supported"
-+	  [ x"$depth" != x0 ] && die "shallow clone with http not supported"
- 	  TMP_HEAD="$GIT_DIR/TMP_HEAD"
- 	  rsync -L -q "$remote/$remote_name" "$TMP_HEAD" || exit 1
- 	  head=$(git-rev-parse --verify TMP_HEAD)
+myproject (git root)
+ |----- src
+ |----- doc
+ `----- libxcb (git root)
 
+This works fine; with one problem.  When I make a commit in myproject, there 
+is no link into the particular snapshot of the libxcb that I used at that 
+moment.  If libxcb moves on, and makes incompatible changes, then when I 
+checkout an old version of myproject, it won't compile any more because I'll 
+need to find out which commit of libxcb I used at the time.
+
+Submodules will solve this problem.  In the future I'll be able to check out 
+any commit of myproject and it will automatically checkout the right commit 
+from the libxcb repository.  Now let's say I'm working away and find a bug in 
+libxcb; I fix it, commit it.  That change had better be stored in the libxcb 
+repository, and had better make no reference to the myproject repository.  If 
+it doesn't, I'm going to have to pollute the libxcb upstream repository with 
+myproject if I want to share those fixes.
+
+
+
+Andy
+-- 
+Dr Andy Parkins, M Eng (hons), MIEE
