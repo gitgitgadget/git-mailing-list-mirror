@@ -1,63 +1,56 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Michael S. Tsirkin" <mst@mellanox.co.il>
-Subject: Re: Hyphens and hiding core commands
-Date: Wed, 29 Nov 2006 09:14:49 +0200
-Message-ID: <20061129071449.GH5061@mellanox.co.il>
-References: <7vu00k3pao.fsf@assigned-by-dhcp.cox.net>
-Reply-To: "Michael S. Tsirkin" <mst@mellanox.co.il>
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: [PATCH 0/2] Making "git commit" to mean "git commit -a".
+Date: Thu, 30 Nov 2006 15:04:42 +1300
+Message-ID: <456E3C3A.6050807@vilain.net>
+References: <Pine.LNX.4.64.0611271622260.9647@xanadu.home>	<7vmz6cfsuw.fsf@assigned-by-dhcp.cox.net>	<87bqmswm1e.wl%cworth@cworth.org>	<7vodqse90q.fsf@assigned-by-dhcp.cox.net>	<87ac2cwha4.wl%cworth@cworth.org>	<7vy7pwcsgp.fsf@assigned-by-dhcp.cox.net>	<878xhwwdyj.wl%cworth@cworth.org>	<7vk61gcnzl.fsf@assigned-by-dhcp.cox.net>	<7vd5786opj.fsf@assigned-by-dhcp.cox.net>	<871wnnwi3k.wl%cworth@cworth.org>	<7virgzuf38.fsf@assigned-by-dhcp.cox.net>	<Pine.LNX.4.64.0611282322320.9647@xanadu.home>	<7vr6vmsnly.fsf@assigned-by-dhcp.cox.net>	<87ejrlvn7r.wl%cworth@cworth.org>	<7vodqpn3t4.fsf@assigned-by-dhcp.cox.net> <7vk61dn2yj.fsf@assigned-by-dhcp.cox.net> <456E3AB7.1030306@midwinter.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 29 Nov 2006 07:15:13 +0000 (UTC)
-Cc: Theodore Tso <tytso@mit.edu>, Carl Worth <cworth@cworth.org>,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 30 Nov 2006 02:05:12 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <7vu00k3pao.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
+User-Agent: Thunderbird 1.5.0.2 (X11/20060521)
+In-Reply-To: <456E3AB7.1030306@midwinter.com>
+X-Enigmail-Version: 0.94.0.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32619>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32695>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GpJep-0004m7-I5 for gcvg-git@gmane.org; Wed, 29 Nov
- 2006 08:15:03 +0100
+ esmtp (Exim 4.43) id 1GpbIF-00023H-A1 for gcvg-git@gmane.org; Thu, 30 Nov
+ 2006 03:04:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S934180AbWK2HPA (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 29 Nov 2006
- 02:15:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934190AbWK2HPA
- (ORCPT <rfc822;git-outgoing>); Wed, 29 Nov 2006 02:15:00 -0500
-Received: from dev.mellanox.co.il ([194.90.237.44]:1923 "EHLO
- dev.mellanox.co.il") by vger.kernel.org with ESMTP id S934180AbWK2HO7 (ORCPT
- <rfc822;git@vger.kernel.org>); Wed, 29 Nov 2006 02:14:59 -0500
-Received: from mellanox.co.il ([194.90.237.34]) by dev.mellanox.co.il
- (8.13.1/8.13.1) with SMTP id kAT7EhkC007832; Wed, 29 Nov 2006 09:14:44 +0200
-Received: by mellanox.co.il (sSMTP sendmail emulation); Wed, 29 Nov 2006
- 09:14:49 +0200
-To: Junio C Hamano <junkio@cox.net>
+ S933283AbWK3CEw (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 29 Nov 2006
+ 21:04:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934632AbWK3CEw
+ (ORCPT <rfc822;git-outgoing>); Wed, 29 Nov 2006 21:04:52 -0500
+Received: from watts.utsl.gen.nz ([202.78.240.73]:29339 "EHLO
+ magnus.utsl.gen.nz") by vger.kernel.org with ESMTP id S933283AbWK3CEv (ORCPT
+ <rfc822;git@vger.kernel.org>); Wed, 29 Nov 2006 21:04:51 -0500
+Received: by magnus.utsl.gen.nz (Postfix, from userid 65534) id 6F06F139AED;
+ Thu, 30 Nov 2006 15:04:49 +1300 (NZDT)
+Received: from [192.168.2.22] (leibniz.catalyst.net.nz [202.78.240.7]) (using
+ TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate
+ requested) by magnus.utsl.gen.nz (Postfix) with ESMTP id 68EF0139AEB; Thu, 30
+ Nov 2006 15:04:45 +1300 (NZDT)
+To: Steven Grimm <koreth@midwinter.com>
 Sender: git-owner@vger.kernel.org
 
-> +------------------------------------------------
-> +$ cat >~/.gitconfig
-> +[user]
-> +	name = Your Name Comes Here
-> +	email = you@yourdomain.example.com
-> +^D
-> +------------------------------------------------
+Steven Grimm wrote:
+> Am I missing some magic index command that would support multi-level 
+> backing out? Obviously StGIT is an option as well, but that seems like 
+> overkill when all I want is to checkpoint my work. The above is why, 
+> even though (I think) I know enough about the index to use it as you 
+> describe, I often don't bother and just run "commit -a" during 
+> development instead. When I merge, I usually fold all my checkpoint 
+> commits together and merge the change as a logical unit.
+>   
 
-I used to use the ^D convention when explaining git
-to beginners and I noticed some people try to cut-and-paste it.
+Try `git commit --amend'.
 
-So the following might be a better way to put it:
-
-+$ cat <<EOF >~/.gitconfig
-+[user]
-+	name = Your Name Comes Here
-+	email = you@yourdomain.example.com
-+EOF
-
--- 
