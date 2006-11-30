@@ -1,139 +1,76 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Working copy as a pseudo-head
-Date: Mon, 27 Nov 2006 01:20:39 -0800
-Message-ID: <7vlklxi6u0.fsf@assigned-by-dhcp.cox.net>
-References: <456A9F93.1060801@midwinter.com>
+From: Sven Verdoolaege <skimo@kotnet.org>
+Subject: Re: [RFC] Submodules in GIT
+Date: Thu, 30 Nov 2006 16:20:11 +0100
+Message-ID: <20061130152011.GM12463MdfPADPa@greensroom.kotnet.org>
+References: <20061121223130.GA24909@nan92-1-81-57-214-146.fbx.proxad.net>
+ <200611301255.41733.andyparkins@gmail.com> <456EE3F1.5070101@b-i-t.de>
+ <200611301449.55171.andyparkins@gmail.com>
+Reply-To: skimo@liacs.nl
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Mon, 27 Nov 2006 09:20:52 +0000 (UTC)
+Content-Transfer-Encoding: 7BIT
+NNTP-Posting-Date: Thu, 30 Nov 2006 15:20:51 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <456A9F93.1060801@midwinter.com> (Steven Grimm's message of "Mon,
-	27 Nov 2006 00:19:31 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+In-reply-to: <200611301449.55171.andyparkins@gmail.com>
+Content-disposition: inline
+User-Agent: Mutt/1.5.10i
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32405>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32752>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GocfM-0006oq-Io for gcvg-git@gmane.org; Mon, 27 Nov
- 2006 10:20:44 +0100
+ esmtp (Exim 4.43) id 1Gpnhz-0000a6-Rj for gcvg-git@gmane.org; Thu, 30 Nov
+ 2006 16:20:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1757551AbWK0JUl (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 27 Nov 2006
- 04:20:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757554AbWK0JUl
- (ORCPT <rfc822;git-outgoing>); Mon, 27 Nov 2006 04:20:41 -0500
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:10434 "EHLO
- fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP id S1757551AbWK0JUk
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 27 Nov 2006 04:20:40 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao07.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061127092040.SEXW27894.fed1rmmtao07.cox.net@fed1rmimpo02.cox.net>; Mon, 27
- Nov 2006 04:20:40 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id rlLo1V00E1kojtg0000000; Mon, 27 Nov 2006
- 04:20:48 -0500
-To: Steven Grimm <koreth@midwinter.com>
+ S1030375AbWK3PUP (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
+ 10:20:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030411AbWK3PUP
+ (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 10:20:15 -0500
+Received: from psmtp09.wxs.nl ([195.121.247.23]:9120 "EHLO psmtp09.wxs.nl")
+ by vger.kernel.org with ESMTP id S1030375AbWK3PUN (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 10:20:13 -0500
+Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl
+ [84.81.90.170]) by psmtp09.wxs.nl (iPlanet Messaging Server 5.2 HotFix 2.07
+ (built Jun 24 2005)) with SMTP id <0J9J000KVULNQ4@psmtp09.wxs.nl> for
+ git@vger.kernel.org; Thu, 30 Nov 2006 16:20:12 +0100 (MET)
+Received: (qmail 17980 invoked by uid 500); Thu, 30 Nov 2006 15:20:11 +0000
+To: Andy Parkins <andyparkins@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Steven Grimm <koreth@midwinter.com> writes:
+On Thu, Nov 30, 2006 at 02:49:53PM +0000, Andy Parkins wrote:
+> How are these commits any different from just having one big repository?  If 
 
-> Comments? Is this just nuts?
+You can work on the submodule independently.
 
-It is not "nuts", but we do not do it currently because it is a
-bit too combersome to make it recoverable when things go wrong
-while keeping the cost of making the necessary back-up for
-recovery low.  When switching branches with local changes,
-"git-checkout -m" needs to deal with a similar issue, but that
-case only deal with two trees and a working tree.  To do this
-for three-way merge, the conflicts you need to deal with become
-more complex.
+> some of the development of the submodule is contained in the supermodule then 
+> it's not a submodule anymore.
 
-What needs to be done is very simple and straightforward.  You
-first stash away the working tree state in a "virtual" tree,
-then perform the usual 3-way merge using the common ancestor,
-your HEAD and the other head, and come up with the merge result
-without any of your changes.  Then you run another three-way
-merge between the merge result and your previous working tree
-state using the HEAD before the merge as the common ancestor.
+On the contrary, that's exactly what a submodule is supposed to be.
 
-       o---o---X (other head)
-      /
-  ---o---o---H (your head)
-              \  
-               W (your working tree)
+> Why bother with all the effort to make a separation between submodule and 
+> supermodule and then store the submodule commits in the supermodule.  That's 
+> not supermodule/submodule git - that's just normal git.
 
-==>
+[..]
 
-       o---o---X (other head)
-      /         \
-  ---o---o---H---M (merge between the base trees)
-              \  
-               W (your working tree)
+> myproject (git root)
+>  |----- src
+>  |----- doc
+>  `----- libxcb (git root)
+> 
+[..]
+> 
+> Submodules will solve this problem.  In the future I'll be able to check out 
+> any commit of myproject and it will automatically checkout the right commit 
+> from the libxcb repository.
 
-==>
+How are you going to checkout the right commit of the lixcb repo if
+you didn't store it in the supermodule ?
 
-       o---o---X (other head)
-      /         \
-  ---o---o---H---M (merge between the base trees)
-              \   \   
-               W---W'(your working tree, updated for the merge result)
-
-The design goal here is that you do not want to get any of your
-local changes (i.e. "diff H W") to be included when you record
-the result of the base merge 'M', and you would want the diff
-between H and W to be forward-ported to the diff between M and
-W'.
-
-The first goal is already quite cumbersome when the merge
-between X and H involve conflicing merges.  We use the working
-tree to perform the file level merge (i.e. you edit them with
-your favorite editor, and tell git when you are done), so while
-that is happening we temporarily need to remove what was between
-H and W.  If the merge is too complex and the user decides to
-revert the whole thing, we would need to rewind the index and
-working tree to the state at W (that means we would at least
-need to stash the diff between H and index, and index and
-working tree before starting the merge).
-
-After the base merge is done, we would need to update the HEAD
-to point at M.  Then we would perform the second three-way merge
-between M and W using the original HEAD as their common
-ancestor to come up with W'.  When this conflicts, there is no
-easy way for the user to recover, other than going back to the
-original state (that is, HEAD points at H and working tree is
-W), even after having spent effort to merge between X and H to
-produce M.
-
-In common usage (call that "best current practice" if you may),
-you do not have local changes in the working tree that would
-conflict with the merge, so the current behaviour feels
-cumbersome only when the safety valve kicks in.  After seeing it
-fail due to the safety valve, you can do the same as what the
-above pictures depict using existing tools.
-
- * preserve the local changes (i.e. come up with the virtual
-   "W"):
-
-	git commit -a -m WIP
-	git tag -f WIP
-        git reset --hard HEAD^
-
- * perform the merge in the now-clean tree:
-
-	git pull ;# again from the same place
-	edit edit
-        test test
-        git commit -a ;# resolve conflicts, test and commit
-
- * recover what you have preserved, and discard the virtual W:
-
-	git pull --no-commit . WIP ;# merge in
-	git reset ;# revert index to HEAD aka base merge result.
-	git tag -d WIP
