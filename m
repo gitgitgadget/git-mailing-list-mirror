@@ -1,65 +1,88 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: [PATCH] cvs-migration document: make the need for "push" more obvious
-Date: Wed, 6 Dec 2006 09:58:02 -0500
-Message-ID: <20061206145802.GC1714@fieldses.org>
-References: <4574AC9E.3040506@gmail.com> <4574BF70.8070100@lilypond.org> <45760545.2010801@gmail.com> <20061206.105251.144349770.wl@gnu.org> <Pine.LNX.4.63.0612061325320.28348@wbgn013.biozentrum.uni-wuerzburg.de> <4576D92A.80307@xs4all.nl>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: [PATCH] Make git-commit cleverer - have it figure out whether it needs -a automatically
+Date: Thu, 30 Nov 2006 15:01:43 +0000
+Message-ID: <200611301501.43436.andyparkins@gmail.com>
+References: <fcaeb9bf0611300532x77c7fc8aq2ba77ff57b81cc05@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 6 Dec 2006 14:58:27 +0000 (UTC)
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	gpermus@gmail.com, hanwen@lilypond.org, git@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 30 Nov 2006 15:02:51 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+In-Reply-To: <fcaeb9bf0611300532x77c7fc8aq2ba77ff57b81cc05@mail.gmail.com>
+X-TUID: ddb33c4b3239800a
+X-UID: 179
+X-Length: 1960
 Content-Disposition: inline
-In-Reply-To: <4576D92A.80307@xs4all.nl>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+X-OriginalArrivalTime: 30 Nov 2006 15:03:26.0706 (UTC) FILETIME=[B02EED20:01C71490]
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33465>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GryDw-0006UU-MP for gcvg-git@gmane.org; Wed, 06 Dec
- 2006 15:58:17 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32750>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GpnQ8-0004DX-M8 for gcvg-git@gmane.org; Thu, 30 Nov
+ 2006 16:01:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1760675AbWLFO6N (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
- 09:58:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760676AbWLFO6N
- (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 09:58:13 -0500
-Received: from mail.fieldses.org ([66.93.2.214]:51095 "EHLO
- pickle.fieldses.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1760675AbWLFO6N (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec 2006
- 09:58:13 -0500
-Received: from bfields by pickle.fieldses.org with local (Exim 4.63)
- (envelope-from <bfields@fieldses.org>) id 1GryDi-0000lC-T2; Wed, 06 Dec 2006
- 09:58:02 -0500
-To: Han-Wen Nienhuys <hanwen@xs4all.nl>
+ S967824AbWK3PBs (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
+ 10:01:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967828AbWK3PBs
+ (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 10:01:48 -0500
+Received: from mail.360visiontechnology.com ([194.70.53.226]:53986 "EHLO
+ 369run02s.360vision.com") by vger.kernel.org with ESMTP id S967824AbWK3PBr
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 10:01:47 -0500
+Received: from dvr.360vision.com ([192.189.1.24]) by 369run02s.360vision.com
+ with Microsoft SMTPSVC(5.0.2195.6713); Thu, 30 Nov 2006 15:03:26 +0000
+Received: from localhost ([127.0.0.1]) by dvr.360vision.com with esmtp (Exim
+ 3.36 #1 (Debian)) id 1GpnQ1-0006TU-00 for <git@vger.kernel.org>; Thu, 30 Nov
+ 2006 15:01:45 +0000
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On Wed, Dec 06, 2006 at 03:52:26PM +0100, Han-Wen Nienhuys wrote:
-> Johannes Schindelin escreveu:
-> > It really is an important concept to grasp for people coming
-> > from CVS. Even if it is briefly mentioned, it is not obvious
-> > enough to sink in.
-> 
-> I think the goal is laudable, but IMO it would be better to shorten
-> the document rather adding more text.
+Raimund Bauer offered this suggestion (paraphrased):
 
-OK, but...
+"Maybe we could do git-commit -a  _only_ if the index matches HEAD, and
+otherwise keep current behavior?  So people who don't care about the
+index won't get tripped up, and when you do have a dirty index, you get
+told about it?"
 
->  Documentation/cvs-migration.txt |   34 +++++++++++++++++++++++-----------
->  1 files changed, 23 insertions(+), 11 deletions(-)
+Johannes Schindelin pointed out that this isn't the right thing to do for
+an --amend, so that is checked for. Additionally, it's probably not the
+right thing to do if any files are specified with "--only" or
+"--include", so they turn this behaviour off as well.
 
-... that lengthens it even more than the proposed addition.
+Nguyen Thai Ngoc Duy asked that git-commit let you know it's done this
+by adding an extra comment to the commit message.
 
-> +    Hence, there is a difference between creating a revision
-> +    (the "commit" command) and submitting it (the "push" command).
+Signed-off-by: Andy Parkins <andyparkins@gmail.com>
+---
+ git-commit.sh |   10 ++++++++++
+ 1 files changed, 10 insertions(+), 0 deletions(-)
 
-I'd rather leave that introduction as it is--just as a section that
-advertises the git features without trying to explain much.  And I'd
-rather not mention push until we have a chance to explain how to use it.
-
+diff --git a/git-commit.sh b/git-commit.sh
+index 81c3a0c..b391257 100755
+--- a/git-commit.sh
++++ b/git-commit.sh
+@@ -265,6 +265,16 @@ $1"
+ done
+ case "$edit_flag" in t) no_edit= ;; esac
+ 
++# Clever commit - if this commit would do nothing, then make it an "all"
++# commit
++if [ -z "$(git-diff-index --cached --name-only HEAD)" \
++	-a -z "$amend" -a -z "$only" -a -z "$also" ]; then
++	echo "# There was nothing to commit but changes were detected in the" > $GIT_DIR/SQUASH_MSG
++	echo "# working tree. 'git commit -a' mode activated." >> $GIT_DIR/SQUASH_MSG
++	echo "#" >> $GIT_DIR/SQUASH_MSG
++	all=t
++fi
++
+ ################################################################
+ # Sanity check options
+ 
+-- 
+1.4.4.1.g3ece-dirty
