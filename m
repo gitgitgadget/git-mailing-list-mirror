@@ -1,203 +1,129 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] git-fetch: Avoid reading packed refs over and over again
-Date: Sun, 17 Dec 2006 17:54:58 -0800
-Message-ID: <7vslfe3r4d.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.63.0612172048331.3635@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Yann Dirson <ydirson@altern.org>
+Subject: Handling of branches in stgit
+Date: Thu, 30 Nov 2006 01:00:38 +0100
+Message-ID: <20061130000038.GA13324@nan92-1-81-57-214-146.fbx.proxad.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Mon, 18 Dec 2006 01:55:15 +0000 (UTC)
-Cc: git@vger.kernel.org
+NNTP-Posting-Date: Thu, 30 Nov 2006 00:01:24 +0000 (UTC)
+Cc: GIT list <git@vger.kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34716>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gw7ik-0004Zu-Rn for gcvg-git@gmane.org; Mon, 18 Dec
- 2006 02:55:15 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32681>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GpZMY-0005o1-OT for gcvg-git@gmane.org; Thu, 30 Nov
+ 2006 01:01:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751487AbWLRBzA (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 17 Dec 2006
- 20:55:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751497AbWLRBzA
- (ORCPT <rfc822;git-outgoing>); Sun, 17 Dec 2006 20:55:00 -0500
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:38653 "EHLO
- fed1rmmtao07.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1751487AbWLRBzA (ORCPT <rfc822;git@vger.kernel.org>); Sun, 17 Dec 2006
- 20:55:00 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao07.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061218015459.MXYW22053.fed1rmmtao07.cox.net@fed1rmimpo02.cox.net>; Sun, 17
- Dec 2006 20:54:59 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id 01vB1W00E1kojtg0000000; Sun, 17 Dec 2006
- 20:55:11 -0500
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+ S967678AbWK3ABM (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 29 Nov 2006
+ 19:01:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936117AbWK3ABM
+ (ORCPT <rfc822;git-outgoing>); Wed, 29 Nov 2006 19:01:12 -0500
+Received: from smtp5-g19.free.fr ([212.27.42.35]:54712 "EHLO
+ smtp5-g19.free.fr") by vger.kernel.org with ESMTP id S936113AbWK3ABK (ORCPT
+ <rfc822;git@vger.kernel.org>); Wed, 29 Nov 2006 19:01:10 -0500
+Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net
+ [81.57.214.146]) by smtp5-g19.free.fr (Postfix) with ESMTP id D725627728;
+ Thu, 30 Nov 2006 01:01:06 +0100 (CET)
+Received: by gandelf.nowhere.earth (Postfix, from userid 1000) id A47792010;
+ Thu, 30 Nov 2006 01:00:38 +0100 (CET)
+To: Catalin Marinas <catalin.marinas@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+I have started to work on recording parent information for stgit
+branches, so we don't need to give the same info on every "git pull".
 
-> 	Since this option is purely for use in git-fetch, I did not even
-> 	bother documenting it.
+I'm facing a problem, in that we have several kind of stgit branches:
 
-I think the name --filter-blah makes it unclear if it is a
-filter that picks up items that match the criteria "blah" out of
-its input, or if it filters out the ones that do not match the
-criteria.
+* those created against a cogito branch (eg. by "cg clone" and "stg
+  init").  They work pretty much intuitively (and it happens I mostly
+  used this flavour before those tests).  All we need is the name of
+  the local branch, and "stg pull <branch>" relies on "git fetch" to
+  find the repository information in .git/branches/<branch>.
 
-In either case, you are not filtering "invalid vs valid" but
-"existing vs missing".
+  In this case, it is easy to request pulling from any branch, but
+  usually only one of them is what you want, and the results of using
+  another one (or forgetting to specify the one you want) can be
+  annoying [ISSUE 1].  Hence this work of mine: being able to store
+  this info in .git/patches/<stack>/parent (my initial implementation)
+  was sufficient in theory.
 
-If you are making a git-fetch specific extension, it would make
-sense to include what the upstream sed does as well.  That is,
-the user would become:
+  But "stg pull" allows for a refspec argument.  Since the branch
+  mapping is already defined in a file, and I canno think of any
+  useful way to override it, maybe we could make sure noone uses it in
+  such a case ?
 
-	echo "$ls_remote_result" |
--       sed -n	-e 's|^\('"$_x40"'\)	\(refs/tags/.*\)^{}$|\1 \2|p' \
--               -e 's|^\('"$_x40"'\)	\(refs/tags/.*\)$|\1 \2|p' |
-+	git show-ref --exclude-existing=refs/tags/ |
-        while read sha1 name
-        do
--		git-show-ref --verify --quiet -- "$name" && continue
--		git-check-ref-format "$name" || {
--			echo >&2 "warning: tag ${name} ignored"
--			continue
+  
+* but those created against a local branch are typically different,
+  and updated by "stg pull . <branch>".  In that case, we have to
+  specify the repository (".") explicitely, in addition to the branch,
+  and the way to use the use them is different.
 
-The 'exclude-existing' flag would filter out the ones that do not
-head-match the specified hierarchy, the ones that we have, and
-the ones that do not conform to a valid refname pattern (which
-would filter out ^{} entries).
 
-How about this as a replacement?
+* and it gets better with those branches created against a git remote
+  branch (eg. by "stg clone" or "stg branch -c" against an existing
+  remote branch), typically updated via "stg pull <remote>", where the
+  repo information is extracted by "git fetch" from
+  .git/remotes/<remote>.  That is, we do not specify a branch or a
+  repository URL, but an alias that may cover several branches from
+  another repo.
 
----
+  Here the branch information from the remotes file appears not to be
+  used at all (in fact all branches are fetched - not sure that it's
+  always what we want, but I'll wait to find myself limited by this
+  behaviour before complaining ;)
 
- builtin-show-ref.c |   60 +++++++++++++++++++++++++++++++++++++++++++++++++++-
- git-fetch.sh       |   12 ++-------
- 2 files changed, 62 insertions(+), 10 deletions(-)
+  Also, "stgit pull <remote>" using "git pull" by default, it is the
+  1st branch listed in the remotes file that gets taken as parent
+  [ISSUE 2].  We should probably instead run "git fetch <remote>" and
+  then then "git pull . <branch>", but that surely requires some
+  changes to the "stg pull" internals.
 
-diff --git a/builtin-show-ref.c b/builtin-show-ref.c
-index 0739798..b36f15e 100644
---- a/builtin-show-ref.c
-+++ b/builtin-show-ref.c
-@@ -2,8 +2,9 @@
- #include "refs.h"
- #include "object.h"
- #include "tag.h"
-+#include "path-list.h"
- 
--static const char show_ref_usage[] = "git show-ref [-q|--quiet] [--verify] [-h|--head] [-d|--dereference] [-s|--hash[=<length>]] [--abbrev[=<length>]] [--tags] [--heads] [--] [pattern*]";
-+static const char show_ref_usage[] = "git show-ref [-q|--quiet] [--verify] [-h|--head] [-d|--dereference] [-s|--hash[=<length>]] [--abbrev[=<length>]] [--tags] [--heads] [--] [pattern*] | --filter-invalid < ref-list";
- 
- static int deref_tags = 0, show_head = 0, tags_only = 0, heads_only = 0,
- 	found_match = 0, verify = 0, quiet = 0, hash_only = 0, abbrev = 0;
-@@ -86,6 +87,59 @@ match:
- 	return 0;
- }
- 
-+static int add_existing(const char *refname, const unsigned char *sha1, int flag, void *cbdata)
-+{
-+	struct path_list *list = (struct path_list *)cbdata;
-+	path_list_insert(refname, list);
-+	return 0;
-+}
-+
-+/*
-+ * read "^(?:<anything>\s)?<refname>(?:\^\{\})?$" from the standard input,
-+ * and
-+ * (1) strip "^{}" at the end of line if any;
-+ * (2) ignore if match is provided and does not head-match refname;
-+ * (3) warn if refname is not a well-formed refname and skip;
-+ * (4) ignore if refname is a ref that exists in the local repository;
-+ * (5) otherwise output the line.
-+ */
-+static int exclude_existing(const char *match)
-+{
-+	static struct path_list existing_refs = { NULL, 0, 0, 0 };
-+	char buf[1024];
-+	int matchlen = match ? strlen(match) : 0;
-+
-+	for_each_ref(add_existing, &existing_refs);
-+	while (fgets(buf, sizeof(buf), stdin)) {
-+		int len = strlen(buf);
-+		char *ref;
-+		if (len > 0 && buf[len - 1] == '\n')
-+			buf[--len] = '\0';
-+		if (!strcmp(buf + len - 3, "^{}")) {
-+			len -= 3;
-+			buf[len] = '\0';
-+		}
-+		for (ref = buf + len; buf < ref; ref--)
-+			if (isspace(ref[-1]))
-+				break;
-+		if (match) {
-+			int reflen = buf + len - ref;
-+			if (reflen < matchlen)
-+				continue;
-+			if (strncmp(ref, match, matchlen))
-+				continue;
-+		}
-+		if (check_ref_format(ref)) {
-+			fprintf(stderr, "warning: ref '%s' ignored\n", ref);
-+			continue;
-+		}
-+		if (!path_list_has_path(&existing_refs, ref)) {
-+			printf("%s\n", buf);
-+		}
-+	}
-+	return 0;
-+}
-+
- int cmd_show_ref(int argc, const char **argv, const char *prefix)
- {
- 	int i;
-@@ -153,6 +207,10 @@ int cmd_show_ref(int argc, const char **argv, const char *prefix)
- 			heads_only = 1;
- 			continue;
- 		}
-+		if (!strcmp(arg, "--exclude-existing"))
-+			return exclude_existing(NULL);
-+		if (!strncmp(arg, "--exclude-existing=", 19))
-+			return exclude_existing(arg + 19);
- 		usage(show_ref_usage);
- 	}
- 	if (show_head)
-diff --git a/git-fetch.sh b/git-fetch.sh
-index fb35815..38101a6 100755
---- a/git-fetch.sh
-+++ b/git-fetch.sh
-@@ -242,7 +242,7 @@ esac
- reflist=$(get_remote_refs_for_fetch "$@")
- if test "$tags"
- then
--	taglist=`IFS="	" &&
-+	taglist=`IFS='	' &&
- 		  echo "$ls_remote_result" |
- 	          while read sha1 name
- 		  do
-@@ -438,17 +438,11 @@ case "$no_tags$tags" in
- 	*:refs/*)
- 		# effective only when we are following remote branch
- 		# using local tracking branch.
--		taglist=$(IFS=" " &&
-+		taglist=$(IFS='	' &&
- 		echo "$ls_remote_result" |
--		sed -n	-e 's|^\('"$_x40"'\)	\(refs/tags/.*\)^{}$|\1 \2|p' \
--			-e 's|^\('"$_x40"'\)	\(refs/tags/.*\)$|\1 \2|p' |
-+		git-show-ref --exclude-existing=refs/tags/ |
- 		while read sha1 name
- 		do
--			git-show-ref --verify --quiet -- "$name" && continue
--			git-check-ref-format "$name" || {
--				echo >&2 "warning: tag ${name} ignored"
--				continue
--			}
- 			git-cat-file -t "$sha1" >/dev/null 2>&1 || continue
- 			echo >&2 "Auto-following $name"
- 			echo ".${name}:${name}"
+  Thus (modulo that issue), we need 2 infos: "remote" and branch.
+  Storing the latter should help to solve issue 2.
+
+  Note: whereas "stg pull origin", while pulling a "foo" branch, cannot
+  know current "foo2" branch should be rebased to "foo", (after renaming
+  remotes/origin to foo) "stg pull foo", not only fetches "origin" as
+  expected, but also (seemingly correctly but hell how does it know
+  [ISSUE 3]) rebases current "master" to "origin" - is "master"
+  special in any way here ?  I did not find anything about this in the
+  source, although I found a handful of occurences of "master" in
+  commands/branch.py, which seem to imply "master" is so special it
+  cannot be deleted, which would look like abuse to me [ISSUE 4].
+
+
+Now what do we do next ?
+
+We could implement an ad-hoc solution acknowledging there are 3
+different ways to work with a branch, keeping the current "stg pull"
+syntaxes (they are already a pain for users IMHO) and storing
+paremeters as ad-hoc values, or we could try to rework the "stg pull"
+command line.
+
+Some of my ideas for the latter include:
+
+- store a "parent branch" with the name of the parent branch in the
+local repository
+
+- store a "parent repository" (ie. "." for local branches, "AUTO" for
+cogito branches, and <remote> for git branches)
+
+- rejecting non-default arguments and adding new options to allow to
+specify/store alternative values
+
+- we'll need to make sure there are no remote branches of one type
+shadowed by one of the other type with same name, and do some sanity
+checks that specified branch in a given remote really exists.
+
+
+How does that sound ?
+-- 
