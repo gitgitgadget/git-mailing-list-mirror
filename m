@@ -5,97 +5,67 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: Atom feeds
-Date: Fri, 17 Nov 2006 12:36:18 +0100
-Message-ID: <200611171236.19030.jnareb@gmail.com>
-References: <11635494363452-git-send-email-asf@boinkor.net> <ejim5q$31b$1@sea.gmane.org> <7v4psysazy.fsf@assigned-by-dhcp.cox.net>
+From: Seth Falcon <sethfalcon@gmail.com>
+Subject: Re: [PATCH 0/2] Making "git commit" to mean "git commit -a".
+Date: Thu, 30 Nov 2006 07:15:49 -0800
+Message-ID: <m2odqpm0d6.fsf@ziti.fhcrc.org>
+References: <Pine.LNX.4.64.0611271622260.9647@xanadu.home>
+	<7vmz6cfsuw.fsf@assigned-by-dhcp.cox.net>
+	<87bqmswm1e.wl%cworth@cworth.org>
+	<7vodqse90q.fsf@assigned-by-dhcp.cox.net>
+	<87ac2cwha4.wl%cworth@cworth.org>
+	<7vy7pwcsgp.fsf@assigned-by-dhcp.cox.net>
+	<878xhwwdyj.wl%cworth@cworth.org>
+	<7vk61gcnzl.fsf@assigned-by-dhcp.cox.net>
+	<7vd5786opj.fsf@assigned-by-dhcp.cox.net> <ekmkoe$a52$1@sea.gmane.org>
+	<ekmlf4$ask$3@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Fri, 17 Nov 2006 11:35:21 +0000 (UTC)
-Cc: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Thu, 30 Nov 2006 15:16:25 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=PXx3gGovx38+ReegJ6p2NkECjALHMuU6fqQNolftk2asi2U3HHijb53Gsu5qA8FvzLHyt2mN25s2Lu3Y5OaKi3M/E3kOTWmM+uuKWrPIdlfMgA5QdFHdSEkqLjC9LizlOtKKcXPdsxgkh585U+vRnegNxmaI4Ks6RfWCbQpyglY=
-User-Agent: KMail/1.9.3
-In-Reply-To: <7v4psysazy.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+        h=received:to:subject:references:from:date:in-reply-to:message-id:user-agent:mime-version:content-type;
+        b=GZMwklLyCoic5EJh4WACFynnN4hXZx7NPi1ACfm0crlG1+7zYwgFTiMP4pb7QOiClfzxgsKBoeoV55LOogMGtbZkKdPuDq5HTQoQyQhbLU7F069ui0BCaXRqIYAQqfeE08FSdAyLFSk+3tRJbJQJEC64SIC6zinmWYNU+vEhnUs=
+In-Reply-To: <ekmlf4$ask$3@sea.gmane.org> (Jakub Narebski's message of "Thu, 30 Nov 2006 14:16:04 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (darwin)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31690>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32751>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gl1zz-0003MD-Mx for gcvg-git@gmane.org; Fri, 17 Nov
- 2006 12:35:12 +0100
+ esmtp (Exim 4.43) id 1GpndX-0007ky-PS for gcvg-git@gmane.org; Thu, 30 Nov
+ 2006 16:15:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1755694AbWKQLfA (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 17 Nov 2006
- 06:35:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933531AbWKQLfA
- (ORCPT <rfc822;git-outgoing>); Fri, 17 Nov 2006 06:35:00 -0500
-Received: from ug-out-1314.google.com ([66.249.92.174]:23335 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1755694AbWKQLfA
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 17 Nov 2006 06:35:00 -0500
-Received: by ug-out-1314.google.com with SMTP id m3so672511ugc for
- <git@vger.kernel.org>; Fri, 17 Nov 2006 03:34:58 -0800 (PST)
-Received: by 10.66.221.6 with SMTP id t6mr1895260ugg.1163763298241; Fri, 17
- Nov 2006 03:34:58 -0800 (PST)
-Received: from host-81-190-24-209.torun.mm.pl ( [81.190.24.209]) by
- mx.google.com with ESMTP id e33sm2987615ugd.2006.11.17.03.34.57; Fri, 17 Nov
- 2006 03:34:58 -0800 (PST)
-To: Junio C Hamano <junkio@cox.net>, Andreas Fuchs <asf@boinkor.net>
+ S1030391AbWK3PPk (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
+ 10:15:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030376AbWK3PPk
+ (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 10:15:40 -0500
+Received: from ug-out-1314.google.com ([66.249.92.169]:27192 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1030375AbWK3PPj
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 10:15:39 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so2140327uga for
+ <git@vger.kernel.org>; Thu, 30 Nov 2006 07:15:38 -0800 (PST)
+Received: by 10.78.39.16 with SMTP id m16mr3618353hum.1164899737435; Thu, 30
+ Nov 2006 07:15:37 -0800 (PST)
+Received: from ziti.fhcrc.org ( [67.171.24.140]) by mx.google.com with ESMTP
+ id 11sm26865681hug.2006.11.30.07.15.36; Thu, 30 Nov 2006 07:15:37 -0800 (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano wrote:
+Jakub Narebski <jnareb@gmail.com> writes:
 
-> Andreas Fuchs <asf@boinkor.net> writes:
-> 
->> Jakub Narebski wrote:
->>> Andreas Fuchs <asf@boinkor.net> wrote:
->>> 
->>>> * Wrap the commit message in <pre>
->>> We use <div class="pre"> in "commit" view if I remember correctly.
->>
->> That's ok for rendered HTML output, but in my experience, the way feed
->> readers interpret that ranges from "badly" to "not at all"; it's better
->> to stick to explicit structure hints only in feeds. /-:
+> Salikh Zakirov wrote:
+>
+>> Someone said, that default '-a' does not go well with 'git-commit --amend',
+>> and I second that. It was somewhat suprising to see that 'git commit --amend'
+>> is going to include all of the dirty state into the commit,
+>> and since there is no easy way to abort a --amend commit (because the comment
+>> buffer wasn't empty, and :q! does not work as it would on the regular commit),
+>> I had to untwine the changes manually.
+>
+> By the way, I think that git-commit should also watch the return code
+> from the editor, so you can ^C it to abort git-commit --amend.
 
-True. "<pre>" in RSS feed is better (I don't know if you can give CSS
-for RSS, be it RSS 2.01 or Atom; rather not).
-
->> So, this is the only thing I haven't fixed in the attached patch (:
-
-Good.
-
->> In addition to the above points, the attached patch emits a
->> Last-Changed: HTTP response header field, and doesn't compute the feed
->> body if the HTTP request type was HEAD. This helps keep the web server
->> load down for well-behaved feed readers that check if the feed needs
->> updating.
-
-Very nice.
-
->> Hope you like it,
-> 
-> Seems sane to me.  Jakub, how do you like this one?  
-
-I like it. Ack.
-
-> If it looks  Ok to you, please arrange to include your one-liner
-> that this depends on and forward a readily applicable patch with
-> appropriate commit log message.
-
-Which one liner? As far as I can see the patch does NOT use
-href(-full=>1,...) but esc_url(...).
-
-Perhaps this is for next patch.
-
-
-BTW I have encountered something calles Atom Publishing Protocol (APP):
-perhaps we should also add this in addition to currently used OPML.
--- 
-Jakub Narebski
-Torun, Poland
+For those using emacsclient, I don't think ^C will work.  Is there
+another way to undu an ammend commit?  If not, is there any sense in
