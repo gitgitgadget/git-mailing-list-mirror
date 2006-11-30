@@ -1,93 +1,118 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] diff-format.txt: Combined diff format documentation supplement
-Date: Thu, 26 Oct 2006 00:10:06 -0700
-Message-ID: <7vvem7r1rl.fsf@assigned-by-dhcp.cox.net>
-References: <ehoo2k$1g6$1@sea.gmane.org>
-	<7vejswkoi4.fsf@assigned-by-dhcp.cox.net>
-	<200610260544.50614.jnareb@gmail.com>
-	<7vac3jk3g7.fsf@assigned-by-dhcp.cox.net>
-	<7v1wovsgkf.fsf@assigned-by-dhcp.cox.net>
+From: Nicolas Pitre <nico@cam.org>
+Subject: [BUG] git-fetch -k is broken
+Date: Thu, 30 Nov 2006 15:11:54 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0611301441440.9647@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 26 Oct 2006 07:10:27 +0000 (UTC)
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+NNTP-Posting-Date: Thu, 30 Nov 2006 20:15:16 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <7v1wovsgkf.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Thu, 26 Oct 2006 00:05:04 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-X-Sender: nico@xanadu.home
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30142>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32796>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GczNV-0005I8-SO for gcvg-git@gmane.org; Thu, 26 Oct
- 2006 09:10:14 +0200
+ esmtp (Exim 4.43) id 1GpsIv-0007mb-Fe for gcvg-git@gmane.org; Thu, 30 Nov
+ 2006 21:14:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751749AbWJZHKJ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
- 03:10:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751757AbWJZHKJ
- (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 03:10:09 -0400
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:48347 "EHLO
- fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP id S1751749AbWJZHKH
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 03:10:07 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao04.cox.net
- (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
- <20061026071007.YQTC22409.fed1rmmtao04.cox.net@fed1rmimpo01.cox.net>; Thu, 26
- Oct 2006 03:10:07 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id ev9p1V00C1kojtg0000000 Thu, 26 Oct 2006
- 03:09:50 -0400
-To: Jakub Narebski <jnareb@gmail.com>
+ S1031347AbWK3UM4 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
+ 15:12:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031361AbWK3UMV
+ (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 15:12:21 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:55521 "EHLO
+ relais.videotron.ca") by vger.kernel.org with ESMTP id S1031359AbWK3ULz
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 15:11:55 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
+ <0J9K00LMB83UX740@VL-MH-MR002.ip.videotron.ca> for git@vger.kernel.org; Thu,
+ 30 Nov 2006 15:11:55 -0500 (EST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-This script minimally demonstrates a few interesting things an
-evil merge can do.  Run it in a throw-away directory and view
-the resulting merge with "git-show" with or without the patch I
-sent out earlier.
+Actually, the .keep file is simply not removed as it should.
 
-One thing that you would notice is that the combined-diff code
-chooses not to show the original contents of a deleted
-file. while showing the whole result of a new file.  Strictly
-speaking, this is inconsistent, but an evil merge is rare and
-what ended up getting removed is not as interesting as what
-remains as the result.
+But first it appears that commit f64d7fd2 added an && on line 431 of 
+git-fetch.sh and that cannot be right.  There is simply no condition for 
+not removing the lock file.  It must be removed regardless if the 
+previous command succeeded or not.  Junio?
 
--- >8 --
-#!/bin/sh
+Now for the actual problem.  I instrumented git-fetch.sh to understand 
+what's going on as follows:
 
-test -d .git && {
-	echo Run me in an empty directory please
-	exit 1
-}
+diff --git a/git-fetch.sh b/git-fetch.sh
+index 8365785..042040e 100755
+--- a/git-fetch.sh
++++ b/git-fetch.sh
+@@ -397,10 +397,12 @@ fetch_main () {
+ 		  continue ;;
+ 	  keep)
+ 		  pack_lockfile="$GIT_OBJECT_DIRECTORY/pack/pack-$remote_name.keep"
++echo "a $pack_lockfile"
+ 		  continue ;;
+ 	  esac
+ 	  found=
+ 	  single_force=
++echo "b $pack_lockfile"
+ 	  for ref in $refs
+ 	  do
+ 	      case "$ref" in
+@@ -425,10 +427,13 @@ fetch_main () {
+ 	      esac
+ 	  done
+ 	  local_name=$(expr "z$found" : 'z[^:]*:\(.*\)')
++echo "c $pack_lockfile"
+ 	  append_fetch_head "$sha1" "$remote" \
+ 		  "$remote_name" "$remote_nick" "$local_name" \
+ 		  "$not_for_merge" || exit
+-      done &&
++echo "d $pack_lockfile"
++      done
++echo "e $pack_lockfile"
+       if [ "$pack_lockfile" ]; then rm -f "$pack_lockfile"; fi
+     ) || exit ;;
+   esac
 
-git init-db
+And performing a fetch -k produced the following output:
 
-echo one >file1.txt
-git add file1.txt
-git commit -m initial
+a .git/objects/pack/pack-da39a3ee5e6b4b0d3255bfef95601890afd80709.keep
+b .git/objects/pack/pack-da39a3ee5e6b4b0d3255bfef95601890afd80709.keep
+c .git/objects/pack/pack-da39a3ee5e6b4b0d3255bfef95601890afd80709.keep
+* refs/heads/next: fast forward to branch 'next' of 
+git://git.kernel.org/pub/scm/git/git
+  old..new: ede546b..c41921b
+d .git/objects/pack/pack-da39a3ee5e6b4b0d3255bfef95601890afd80709.keep
+b .git/objects/pack/pack-da39a3ee5e6b4b0d3255bfef95601890afd80709.keep
+c .git/objects/pack/pack-da39a3ee5e6b4b0d3255bfef95601890afd80709.keep
+d .git/objects/pack/pack-da39a3ee5e6b4b0d3255bfef95601890afd80709.keep
+b .git/objects/pack/pack-da39a3ee5e6b4b0d3255bfef95601890afd80709.keep
+c .git/objects/pack/pack-da39a3ee5e6b4b0d3255bfef95601890afd80709.keep
+d .git/objects/pack/pack-da39a3ee5e6b4b0d3255bfef95601890afd80709.keep
+b .git/objects/pack/pack-da39a3ee5e6b4b0d3255bfef95601890afd80709.keep
+c .git/objects/pack/pack-da39a3ee5e6b4b0d3255bfef95601890afd80709.keep
+d .git/objects/pack/pack-da39a3ee5e6b4b0d3255bfef95601890afd80709.keep
+b .git/objects/pack/pack-da39a3ee5e6b4b0d3255bfef95601890afd80709.keep
+c .git/objects/pack/pack-da39a3ee5e6b4b0d3255bfef95601890afd80709.keep
+d .git/objects/pack/pack-da39a3ee5e6b4b0d3255bfef95601890afd80709.keep
+b .git/objects/pack/pack-da39a3ee5e6b4b0d3255bfef95601890afd80709.keep
+c .git/objects/pack/pack-da39a3ee5e6b4b0d3255bfef95601890afd80709.keep
+d .git/objects/pack/pack-da39a3ee5e6b4b0d3255bfef95601890afd80709.keep
+b .git/objects/pack/pack-da39a3ee5e6b4b0d3255bfef95601890afd80709.keep
+c .git/objects/pack/pack-da39a3ee5e6b4b0d3255bfef95601890afd80709.keep
+d .git/objects/pack/pack-da39a3ee5e6b4b0d3255bfef95601890afd80709.keep
+e
 
-git branch side
+So....... How the heck could pack_lockfile become empty on the line with 
+the "e" mark?
 
-echo two >file2.txt
-git add file2.txt
-git commit -m second
-
-git checkout side
-echo uno >file1.txt
-git commit -a -m side
-
-git merge "Evil merge" HEAD master
-rm -f file1.txt
-echo added by the evil merge >file3.txt
-echo modified by the evil merge >file2.txt
-git update-index --add --remove file1.txt file2.txt file3.txt
-EDITOR=: VISUAL=: git commit --amend
-
+$ /bin/sh --version
+GNU bash, version 3.1.17(1)-release (i686-redhat-linux-gnu)
 
 
