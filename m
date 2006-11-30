@@ -1,59 +1,68 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-2.3 required=3.0 tests=BAYES_00,
-	MSGID_FROM_MTA_HEADER,SPF_SOFTFAIL shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: Some tips for doing a CVS importer
-Date: Mon, 27 Nov 2006 12:29:06 +0100
-Message-ID: <456ACC02.6090508@alum.mit.edu>
-References: <9e4733910611201349s4d08b984g772c64982f148bfa@mail.gmail.com>	 <46a038f90611201503m6a63ec8ct347026c635190108@mail.gmail.com>	 <9e4733910611201537h30b6c9f4oee9d8df75284c284@mail.gmail.com>	 <46a038f90611201629o39f11f42ye07b86159360b66e@mail.gmail.com>	 <9e4733910611201753m392b5defpb3eb295a075be789@mail.gmail.com>	 <456969DA.6090702@gmx.net> <9e4733910611260735g2b18e9d1p51a0dca153282cc7@mail.gmail.com> <4569BCB8.9030809@gmx.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git and bzr
+Date: Thu, 30 Nov 2006 13:23:27 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0611301322180.30004@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <45357CC3.4040507@utoronto.ca> <456CB197.2030201@onlinehome.de>
+  <Pine.LNX.4.64.0611281413310.4244@woody.osdl.org> 
+ <Pine.LNX.4.63.0611291149440.30004@wbgn013.biozentrum.uni-wuerzburg.de> 
+ <Pine.LNX.4.64.0611290922410.3513@woody.osdl.org>  <456DD76C.4010902@gmx.net>
+  <Pine.LNX.4.64.0611291235590.3513@woody.osdl.org>  <87bqmpvlxf.wl%cworth@cworth.org>
+ <456E8147.9070304@gmx.net>  <Pine.LNX.4.63.0611301111310.30004@wbgn013.biozentrum.uni-wuerzburg.de>
+ <fcaeb9bf0611300325r3a3fa8av141359c69d2377b5@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Mon, 27 Nov 2006 11:29:41 +0000 (UTC)
-Cc: Jon Smirl <jonsmirl@gmail.com>, git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Thu, 30 Nov 2006 12:30:49 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Envelope-From: mhagger@alum.mit.edu
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.8) Gecko/20061117 Thunderbird/1.5.0.8 Mnenhy/0.7.4.666
-In-Reply-To: <4569BCB8.9030809@gmx.net>
-X-Enigmail-Version: 0.94.0.0
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <fcaeb9bf0611300325r3a3fa8av141359c69d2377b5@mail.gmail.com>
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32411>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32730>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Goeg6-0003Ev-5R for gcvg-git@gmane.org; Mon, 27 Nov
- 2006 12:29:38 +0100
+ esmtp (Exim 4.43) id 1Gpl2a-0004HU-R9 for gcvg-git@gmane.org; Thu, 30 Nov
+ 2006 13:29:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1758059AbWK0L3L (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 27 Nov 2006
- 06:29:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758064AbWK0L3L
- (ORCPT <rfc822;git-outgoing>); Mon, 27 Nov 2006 06:29:11 -0500
-Received: from einhorn.in-berlin.de ([192.109.42.8]:39827 "EHLO
- einhorn.in-berlin.de") by vger.kernel.org with ESMTP id S1758059AbWK0L3K
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 27 Nov 2006 06:29:10 -0500
-Received: from [192.168.100.152] ([212.222.128.142]) (authenticated bits=0)
- by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id kARBT7vP017845
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT); Mon, 27
- Nov 2006 12:29:07 +0100
-To: Marko Macek <marko.macek@gmx.net>
+ S936403AbWK3M11 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
+ 07:27:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936394AbWK3MXe
+ (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 07:23:34 -0500
+Received: from mail.gmx.net ([213.165.64.20]:9644 "HELO mail.gmx.net") by
+ vger.kernel.org with SMTP id S936392AbWK3MX3 (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 07:23:29 -0500
+Received: (qmail invoked by alias); 30 Nov 2006 12:23:27 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp041) with SMTP; 30 Nov 2006 13:23:27 +0100
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Marko Macek wrote:
->> Another note for doing a converter. When combining things into change
->> sets, for git import the comments in the branches should not be mixed
->> between branches and the trunk when detecting change set. Git doesn't
->> allow simultaneous commits to the trunk and branches.
+Hi,
+
+On Thu, 30 Nov 2006, Nguyen Thai Ngoc Duy wrote:
+
+> On 11/30/06, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > But here's an idea: tell the user that she has to tell git-commit which
+> > files she wants committed. Yes! That's it. Just tell it the friggin'
+> > files. And if you are a lazy bum, and want to commit _all_ modified
+> > files, git has a nice shortcut for ya: "-a".
 > 
-> Yup, this is the current problem I'm facing now. Even for CVS->SVN
-> conversion,
-> I don't want to see multi-branch commits.
+> It reminds me Microsoft Office Assistant :-) Let's make "git assistant
+> mode" that tries hard to guess user's desires and give them guidance.
+> Once they get used to git, they can disable that mode and back to
+> "plain git".
 
-To avoid multi-branch commits, you have to start cvs2svn with an
---options file, and in the options file set
+See git-gui from Shawn. It should really help new users with a graphical 
+user interface.
 
-ctx.cross_project_commits = False
-
+Ciao,
+Dscho
