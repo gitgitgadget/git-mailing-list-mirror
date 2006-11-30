@@ -5,64 +5,58 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
 	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: git-show --stat on first commit
-Date: Tue, 21 Nov 2006 18:39:56 +0000
-Message-ID: <200611211839.58709.andyparkins@gmail.com>
-References: <200611211341.48862.andyparkins@gmail.com> <ejvfng$cj6$1@sea.gmane.org> <20061121182135.GD7201@pasky.or.cz>
+From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+Subject: Re: [PATCH 0/2] Making "git commit" to mean "git commit -a".
+Date: Thu, 30 Nov 2006 22:50:23 +0700
+Message-ID: <fcaeb9bf0611300750t4adb4c97ibd65bc5b254e7efa@mail.gmail.com>
+References: <Pine.LNX.4.64.0611271622260.9647@xanadu.home>
+	 <7vodqse90q.fsf@assigned-by-dhcp.cox.net>
+	 <87ac2cwha4.wl%cworth@cworth.org>
+	 <7vy7pwcsgp.fsf@assigned-by-dhcp.cox.net>
+	 <878xhwwdyj.wl%cworth@cworth.org>
+	 <7vk61gcnzl.fsf@assigned-by-dhcp.cox.net>
+	 <7vd5786opj.fsf@assigned-by-dhcp.cox.net> <ekmkoe$a52$1@sea.gmane.org>
+	 <ekmlf4$ask$3@sea.gmane.org> <m2odqpm0d6.fsf@ziti.fhcrc.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="ansi_x3.4-1968"
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Tue, 21 Nov 2006 18:43:20 +0000 (UTC)
+NNTP-Posting-Date: Thu, 30 Nov 2006 15:50:42 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=UqYRkaLBLAzUvJSo31J9oQm6DZy1WdVboNykEcQvsXkcOS0uW5idHEZFS0SeKoljBdZ4VhOpJkaxF/DG5g3DIvlA8aqEQVm1EwH1pe9hCqeMonFl7VcNmD4NbglceoyDc09xpZfibj9ecTI7NSYMzmr10urddOywBJhcCpkL+Tc=
-User-Agent: KMail/1.9.5
-In-Reply-To: <20061121182135.GD7201@pasky.or.cz>
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=EiZl/rpooqVeTvxAfQftiHgojmjvIqEjRrJkSC2mTZrXUX317sfuOK52uE/LEuHThRW4UYVKEfv9c0KaSPW/PiEvgaE7IOSAQ7ecJwF3/N9O/xsG3EEgtc66uaFQtTQ2F+VK6anoWIFDVS3lTAZkxNc+OH4emq+6hSmUsctVG8w=
+In-Reply-To: <m2odqpm0d6.fsf@ziti.fhcrc.org>
 Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32018>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32757>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GmaZy-0003PU-8U for gcvg-git@gmane.org; Tue, 21 Nov
- 2006 19:42:49 +0100
+ esmtp (Exim 4.43) id 1GpoBB-0008Sr-Fj for gcvg-git@gmane.org; Thu, 30 Nov
+ 2006 16:50:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1031296AbWKUSmm (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 21 Nov 2006
- 13:42:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031298AbWKUSmm
- (ORCPT <rfc822;git-outgoing>); Tue, 21 Nov 2006 13:42:42 -0500
-Received: from ug-out-1314.google.com ([66.249.92.174]:41384 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1031296AbWKUSml
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2006 13:42:41 -0500
-Received: by ug-out-1314.google.com with SMTP id m3so1611485ugc for
- <git@vger.kernel.org>; Tue, 21 Nov 2006 10:42:39 -0800 (PST)
-Received: by 10.67.97.7 with SMTP id z7mr1637453ugl.1164134558872; Tue, 21
- Nov 2006 10:42:38 -0800 (PST)
-Received: from grissom.internal.parkins.org.uk ( [84.201.153.164]) by
- mx.google.com with ESMTP id 53sm8199643ugn.2006.11.21.10.42.38; Tue, 21 Nov
- 2006 10:42:38 -0800 (PST)
+ S1030609AbWK3Pu0 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
+ 10:50:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030608AbWK3Pu0
+ (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 10:50:26 -0500
+Received: from wr-out-0506.google.com ([64.233.184.238]:20241 "EHLO
+ wr-out-0506.google.com") by vger.kernel.org with ESMTP id S1030609AbWK3PuZ
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 10:50:25 -0500
+Received: by wr-out-0506.google.com with SMTP id i7so1017404wra for
+ <git@vger.kernel.org>; Thu, 30 Nov 2006 07:50:24 -0800 (PST)
+Received: by 10.78.185.7 with SMTP id i7mr3651947huf.1164901823885; Thu, 30
+ Nov 2006 07:50:23 -0800 (PST)
+Received: by 10.78.118.16 with HTTP; Thu, 30 Nov 2006 07:50:23 -0800 (PST)
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On Tuesday 2006, November 21 18:21, Petr Baudis wrote:
+On 11/30/06, Seth Falcon <sethfalcon@gmail.com> wrote:
+>
+> For those using emacsclient, I don't think ^C will work.  Is there
+> another way to undu an ammend commit?  If not, is there any sense in
+> detecting a magic comment to abort the ammend commit?
 
-> (The answer is usually "create the branch in a separate repo and then
-> fetch it to the original one". But it feels a bit kludgy given the
-> otherwise seamless support for unrelated branches. (Not that I ever was
-> a big fan of unrelated long-lived branches in general.))
+Uncomment to abort commit would be more intuitive.
 
-Just as kludgy, but I did this today by writing the name of the new branch 
-in .git/HEAD then doing
-
-for file in $(git-ls-files); do git-update-index --force-remove $file; done
-
-Before creating the new files and "git-commit"ing.
-
-
-Andy
 -- 
-Dr Andrew Parkins, M Eng (Hons), AMIEE
