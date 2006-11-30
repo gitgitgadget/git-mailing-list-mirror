@@ -4,111 +4,111 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: EGIT unpackedreadr problem
-Date: Sun, 3 Dec 2006 02:00:13 +0100
-Message-ID: <200612030200.13857.robin.rosenberg@dewire.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git and bzr
+Date: Thu, 30 Nov 2006 15:36:38 -0800
+Message-ID: <7vslg0ecc9.fsf@assigned-by-dhcp.cox.net>
+References: <45357CC3.4040507@utoronto.ca> <456E8147.9070304@gmx.net>
+	<fcaeb9bf0611300101s51a53b75lc7e771b067ba6e33@mail.gmail.com>
+	<200611300930.33537.alan@chandlerfamily.org.uk>
+	<ekm8ig$usu$1@sea.gmane.org> <7vbqmpjlsz.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0611302338190.30004@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sun, 3 Dec 2006 00:58:06 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Thu, 30 Nov 2006 23:36:56 +0000 (UTC)
+Cc: jnareb@gmail.com, Alan Chandler <alan@chandlerfamily.org.uk>,
+	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new at dewire.com
+In-Reply-To: <Pine.LNX.4.63.0611302338190.30004@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Thu, 30 Nov 2006 23:45:20 +0100
+	(CET)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33072>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32832>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GqfgB-0006lR-RF for gcvg-git@gmane.org; Sun, 03 Dec
- 2006 01:58:04 +0100
+ esmtp (Exim 4.43) id 1GpvSX-0003Zy-8F for gcvg-git@gmane.org; Fri, 01 Dec
+ 2006 00:36:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S936604AbWLCA56 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 2 Dec 2006
- 19:57:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936605AbWLCA56
- (ORCPT <rfc822;git-outgoing>); Sat, 2 Dec 2006 19:57:58 -0500
-Received: from [83.140.172.130] ([83.140.172.130]:46445 "EHLO
- torino.dewire.com") by vger.kernel.org with ESMTP id S936604AbWLCA55 (ORCPT
- <rfc822;git@vger.kernel.org>); Sat, 2 Dec 2006 19:57:57 -0500
-Received: from localhost (localhost [127.0.0.1]) by torino.dewire.com
- (Postfix) with ESMTP id D026F80281C; Sun,  3 Dec 2006 01:54:09 +0100 (CET)
-Received: from torino.dewire.com ([127.0.0.1]) by localhost (torino
- [127.0.0.1]) (amavisd-new, port 10024) with ESMTP id 08533-06; Sun,  3 Dec
- 2006 01:54:09 +0100 (CET)
-Received: from [10.9.0.2] (unknown [10.9.0.2]) by torino.dewire.com (Postfix)
- with ESMTP id 29A838003E1; Sun,  3 Dec 2006 01:54:09 +0100 (CET)
-To: Shawn Pearce <spearce@spearce.org>
+ S967974AbWK3Xgl (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
+ 18:36:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967980AbWK3Xgk
+ (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 18:36:40 -0500
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:56505 "EHLO
+ fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP id S967974AbWK3Xgk
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 18:36:40 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao02.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061130233639.KMET97.fed1rmmtao02.cox.net@fed1rmimpo02.cox.net>; Thu, 30
+ Nov 2006 18:36:39 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id tBco1V0081kojtg0000000; Thu, 30 Nov 2006
+ 18:36:48 -0500
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-Subject: [PATCH] Utility to show a log.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-This program shows commit information for a commit.
+> On Thu, 30 Nov 2006, Junio C Hamano wrote:
+>
+>> Somehow we ended up introducing that twisted semantics and that was 
+>> where --only came from, which unfortunately later became the default 
+>> (and I already said that I realize this was a big mistake).
+>
+> If you are talking about "git commit file1 file2" ignoring the current 
+> index, and building a new index just updating file1 and file2 from the 
+> working directory, I disagree that it was a big mistake.
 
-Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
----
+When I wrote that paragraph, I said:
 
-The main reason for this patch is not the program itself. The new code to
-read really fast but doesn't always work.
+        Much later, people from CVS background wanted to say "edit foo
+        bar; git update-index bar; git commit foo" to mean "I might have
+        done something to the index, but I do not want to care about it
+        now -- please make a commit that includes only the changes to
+        bar and I do not want the changes to foo included in the
+        commit".  Somehow we ended up introducing that twisted semantics
+        and that was where --only came from, which unfortunately later
+        became the default (and I already said that I realize this was a
+        big mistake).
 
-Try the supplied program. I get no parents and the treeid 
-is wrong. An interesting thing is that if you look in the debugger the author 
-and commit messag is actually correct. Only the tree id and parent are wrong. 
-Not sure what's going on. The  UnpackedReader "looks" like it does
-the equivalent of what it did before,but apparently it isn't. 
+But ignoring the index was not because of that command sequence,
+as you reminded me in your message I am replying to.  It was to
+allow this sequence, which is natural with CVS:
 
-Reading commits from packs works fine. It's the unpacked reader that's bad.
+	$ git-checkout  ;# existing project that did not have Makefile
+	$ edit hello.c  ;# to fix wording of the message
+        $ edit Makefile ;# anybody who is self respecting should have one
+	$ git-add Makefile ;# do not forget to add it
+        $ git-commit hello.c ;# the fix is important independent of Makefile
+	... then maybe the next commit is to add Makefile ...
 
--- robin
- 
-# java -Xmx100m -cp /home/me/SW/EGIT/org.spearce.jgit/bin org.spearce.jgit.pgm.Log c1ad80df56ff5f9d945eac8ac905b8009de30081
-commit c1ad80df56ff5f9d945eac8ac905b8009de30081
-tree 7ba4b782c23bb35b0cb7dbc46cfc09a6e887e19d
-author PersonIdent[Shawn O. Pearce, spearce@spearce.org, Wed Nov 29 21:02:45 CET 2006]
+If you view this sequence with CVS mindset, there is nothing
+surprising about the commit _not_ committing Makefile in this
+example.
 
-Misc. code formatting cleanups.
+But if you come from the school that "git-add" is about adding
+"the contents (and the path, but only because content cannot be
+added without the path)", and if you already understood that
+"git-commit" without parameters nor options is a way to make a
+commit out of the index, it certainly is counterintuitive.  
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+Granted, parameters and options are ways to affect what the
+command does, but usually it does so by modifying and enhancing
+what the command does without breaking the basic premise.  What
+the --only does is quite different -- it bypasses the index
+completely.
 
-# git cat-file -p c1ad80df56ff5f9d945eac8ac905b8009de30081
-tree a7ba4b7f1824763f182b6d45288e52fceece3c65b
-parent 82c23bb35b0cb7dbc46cfc09a6e887e19dfb20f9
-author Shawn O. Pearce <spearce@spearce.org> 1164830576 -0500
-committer Shawn O. Pearce <spearce@spearce.org> 1164830576 -0500
+In fact, what it does is _so_ counterintuitive that I did not
+even remember what the real motivation behind it was, and sent
+my message with a much more implausible sequence which had an
+explicit update-index (no sane person would do that).  That
+should tell you something.
 
-Misc. code formatting cleanups.
-[...]
-
- org.spearce.jgit/src/org/spearce/jgit/pgm/Log.java |   23 ++++++++++++++++++++
- 1 files changed, 23 insertions(+), 0 deletions(-)
-
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/pgm/Log.java b/org.spearce.jgit/src/org/spearce/jgit/pgm/Log.java
-new file mode 100644
-index 0000000..9598792
---- /dev/null
-+++ b/org.spearce.jgit/src/org/spearce/jgit/pgm/Log.java
-@@ -0,0 +1,23 @@
-+    package org.spearce.jgit.pgm;
-+    
-+    import java.io.File;
-+    import java.io.IOException;
-+import java.util.Iterator;
-+
-+import org.spearce.jgit.lib.Commit;
-+import org.spearce.jgit.lib.Repository;
-+    
-+    public class Log {
-+        public static void main(String[] args) throws IOException {
-+            Repository db = new Repository(new File(".git"));	
-+            Commit commit = db.mapCommit(args[0]);
-+            System.out.println("commit "+commit.getCommitId());
-+            System.out.println("tree "+commit.getTreeId());
-+            for (Iterator ci=commit.getParentIds().iterator(); ci.hasNext(); ) {
-+                System.out.println("parent "+ci.next());
-+            }
-+            System.out.println("author "+commit.getAuthor());
-+            System.out.println();
-+            System.out.println(commit.getMessage());
-+        }
-+    }
--- 
-1.4.4.gf05d
+Remember, new peole will not stay "newbies" forever.  The
+original "inclusive" semantics is a lot easier to explain once
+you get what index does.  The way to introduce "index" to people
+Nico proposed would not have to talk about "Ah, but there are
+these two twists" if we did not make the --only the default
+semantics.  What I find a big mistake is not the --only option;
+the mistake is that it is the default.
