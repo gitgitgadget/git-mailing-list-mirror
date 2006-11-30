@@ -1,67 +1,57 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git-merge-recursive segmentation error
-Date: Wed, 20 Dec 2006 03:33:33 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612200332420.19693@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.64.0612191709320.6766@woody.osdl.org>
- <929899.78332.qm@web31809.mail.mud.yahoo.com> <7vtzzrmhhd.fsf@assigned-by-dhcp.cox.net>
- <7vpsafmh89.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Re: v2.6.11 tag in kernel tree
+Date: Thu, 30 Nov 2006 14:11:02 -0500
+Message-ID: <9e4733910611301111j3bc3b641ge46c5e80b19c469c@mail.gmail.com>
+References: <9e4733910611292002o289dc4d1u7bde2d457fa97d73@mail.gmail.com>
+	 <Pine.LNX.4.64.0611300758290.3513@woody.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Wed, 20 Dec 2006 02:33:43 +0000 (UTC)
-Cc: ltuikov@yahoo.com, git@vger.kernel.org,
-	Linus Torvalds <torvalds@osdl.org>
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 30 Nov 2006 19:11:39 +0000 (UTC)
+Cc: "Git Mailing List" <git@vger.kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7vpsafmh89.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=qyACl/LhBJip07WWGGIVZR7IrRWC8bMhnXdyez5nukMv59DdkCbgFX8yvzsgsHXHLXd9DeaxztZn1i+bE5Hm9WSBixGpARFo7O6WlRb7eNbO9FQXUQ+I4L5x1YEu5g8FvZcjCoig3Rnt3uDoNFGbNhsqJTp9mpzrCq2JuHhglgg=
+In-Reply-To: <Pine.LNX.4.64.0611300758290.3513@woody.osdl.org>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34898>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GwrH0-0001Ia-0b for gcvg-git@gmane.org; Wed, 20 Dec
- 2006 03:33:38 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32791>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GprJM-0000Cg-Ut for gcvg-git@gmane.org; Thu, 30 Nov
+ 2006 20:11:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S964788AbWLTCdf (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
- 21:33:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964789AbWLTCdf
- (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 21:33:35 -0500
-Received: from mail.gmx.net ([213.165.64.20]:35478 "HELO mail.gmx.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S964788AbWLTCdf
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec 2006 21:33:35 -0500
-Received: (qmail invoked by alias); 20 Dec 2006 02:33:33 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp034) with SMTP; 20 Dec 2006 03:33:33 +0100
-To: Junio C Hamano <junkio@cox.net>
+ S1031182AbWK3TLG (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
+ 14:11:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967892AbWK3TLF
+ (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 14:11:05 -0500
+Received: from nz-out-0506.google.com ([64.233.162.227]:62430 "EHLO
+ nz-out-0102.google.com") by vger.kernel.org with ESMTP id S967891AbWK3TLD
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 14:11:03 -0500
+Received: by nz-out-0102.google.com with SMTP id s1so1399938nze for
+ <git@vger.kernel.org>; Thu, 30 Nov 2006 11:11:02 -0800 (PST)
+Received: by 10.35.79.3 with SMTP id g3mr6971198pyl.1164913862359; Thu, 30
+ Nov 2006 11:11:02 -0800 (PST)
+Received: by 10.35.72.13 with HTTP; Thu, 30 Nov 2006 11:11:02 -0800 (PST)
+To: "Linus Torvalds" <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 
-Hi,
+Thanks for the replies, I got it working. I'm trying to decipher the
+changes a vendor made to 2.6.11 when they ported it to an ARM device
+and peripherals.
 
-On Tue, 19 Dec 2006, Junio C Hamano wrote:
+It is the usual situation of releasing a GPL tarball without any
+documentation as to what they changed.
 
-> Junio C Hamano <junkio@cox.net> writes:
-> 
-> > Luben Tuikov <ltuikov@yahoo.com> writes:
-> >
-> >> I also ran git-bisect twice over two well known but overlapping
-> >> good-bad regions and I get the same commit as being the culprit.
-> >> It seems to be commit 1510fea781cb0517eeba8c378964f7bc4f9577ab.
-> >>
-> >>     Luben
-> >
-> > Ooooooops.
-> 
-> 1510fe is buggy and it is my fault.
-
-You hand munging should not have led to any segmentation fault. It would 
-be sooo nice to have the test case.
-
-Ciao,
+-- 
+Jon Smirl
