@@ -1,77 +1,93 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: merlyn@stonehenge.com (Randal L. Schwartz)
-Subject: Re: cloning the kernel - why long time in "Resolving 313037 deltas"
-Date: 18 Dec 2006 14:26:36 -0800
-Message-ID: <8664c896xv.fsf@blue.stonehenge.com>
-References: <86y7p57y05.fsf@blue.stonehenge.com>
-	<Pine.LNX.4.64.0612181251020.3479@woody.osdl.org>
-	<86r6uw9azn.fsf@blue.stonehenge.com>
-	<Pine.LNX.4.64.0612181625140.18171@xanadu.home>
-	<86hcvs984c.fsf@blue.stonehenge.com>
-	<Pine.LNX.4.64.0612181414200.3479@woody.osdl.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH 0/2] Making "git commit" to mean "git commit -a".
+Date: Wed, 29 Nov 2006 19:52:06 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0611291900550.20138@iabervon.org>
+References: <Pine.LNX.4.64.0611271622260.9647@xanadu.home>
+ <7vmz6cfsuw.fsf@assigned-by-dhcp.cox.net> <87bqmswm1e.wl%cworth@cworth.org>
+ <7vodqse90q.fsf@assigned-by-dhcp.cox.net> <87ac2cwha4.wl%cworth@cworth.org>
+ <7vy7pwcsgp.fsf@assigned-by-dhcp.cox.net> <878xhwwdyj.wl%cworth@cworth.org>
+ <7vk61gcnzl.fsf@assigned-by-dhcp.cox.net> <7vd5786opj.fsf@assigned-by-dhcp.cox.net>
+ <871wnnwi3k.wl%cworth@cworth.org> <7virgzuf38.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Mon, 18 Dec 2006 22:26:54 +0000 (UTC)
-Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Thu, 30 Nov 2006 00:52:22 +0000 (UTC)
+Cc: Carl Worth <cworth@cworth.org>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-x-mayan-date: Long count = 12.19.13.16.5; tzolkin = 6 Chicchan; haab = 18 Mac
-In-Reply-To: <Pine.LNX.4.64.0612181414200.3479@woody.osdl.org>
-Original-Lines: 27
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+In-Reply-To: <7virgzuf38.fsf@assigned-by-dhcp.cox.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34747>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32691>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GwQwS-0006Eg-HY for gcvg-git@gmane.org; Mon, 18 Dec
- 2006 23:26:40 +0100
+ esmtp (Exim 4.43) id 1Gpa9s-0006W1-O4 for gcvg-git@gmane.org; Thu, 30 Nov
+ 2006 01:52:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1754693AbWLRW0h (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 18 Dec 2006
- 17:26:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754694AbWLRW0h
- (ORCPT <rfc822;git-outgoing>); Mon, 18 Dec 2006 17:26:37 -0500
-Received: from blue.stonehenge.com ([209.223.236.162]:37162 "EHLO
- blue.stonehenge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1754693AbWLRW0h (ORCPT <rfc822;git@vger.kernel.org>); Mon, 18 Dec 2006
- 17:26:37 -0500
-Received: from localhost (localhost [127.0.0.1]) by blue.stonehenge.com
- (Postfix) with ESMTP id 97CEA8F563; Mon, 18 Dec 2006 14:26:36 -0800 (PST)
-Received: from blue.stonehenge.com ([127.0.0.1]) by localhost
- (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024) with LMTP id
- 17075-01-20; Mon, 18 Dec 2006 14:26:36 -0800 (PST)
-Received: by blue.stonehenge.com (Postfix, from userid 1001) id 1BEF78F5BC;
- Mon, 18 Dec 2006 14:26:36 -0800 (PST)
-To: Linus Torvalds <torvalds@osdl.org>
+ S967751AbWK3AwJ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 29 Nov 2006
+ 19:52:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967753AbWK3AwJ
+ (ORCPT <rfc822;git-outgoing>); Wed, 29 Nov 2006 19:52:09 -0500
+Received: from iabervon.org ([66.92.72.58]:40453 "EHLO iabervon.org") by
+ vger.kernel.org with ESMTP id S967751AbWK3AwI (ORCPT
+ <rfc822;git@vger.kernel.org>); Wed, 29 Nov 2006 19:52:08 -0500
+Received: (qmail 20319 invoked by uid 1000); 29 Nov 2006 19:52:07 -0500
+Received: from localhost (sendmail-bs@127.0.0.1) by localhost with SMTP; 29
+ Nov 2006 19:52:07 -0500
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
->>>>> "Linus" == Linus Torvalds <torvalds@osdl.org> writes:
+On Tue, 28 Nov 2006, Junio C Hamano wrote:
 
->> So that *was* a local delay.
+> The above paragraph is not the important part of my message.
+> What was much more important is what immediately followed it,
+> which you did not quote:
+> 
+>     And at that point, I trust "git commit" to do the right thing --
+>     the damn thing I just checked with "git diff --cached" _is_ what
+>     will be committed.
 
-Linus> Ok, interesting. Two questions:
+Perhaps you'd be happier if the command to commit what "git diff --cached" 
+shows were "git commit --cached" rather than "git commit -i"? (Or if they 
+were both --index; how did we miss that last September?)
 
-Linus>  - what does "top" say (is it CPU-bound? Is it perhaps blowing out your 
-Linus>    disk cache? Is it swapping?)
+It seems logical to me that "git commit" would commit the changes shown by 
+"git diff" (in addition to changes in the index, of course, which are so 
+obvious as to need no mention). I personally check with "git diff" and 
+commit if everything there looks good; otherwise I tweak stuff until it 
+does. And if there are a lot of changes, and all of those in some files 
+look good, but those in other files need work, I can "git update-index" 
+the ones I know I like so I don't have to go through them each time I'm 
+checking on other stuff next time.
 
-Not swapping, but CPU bound.
+> This is where "git commit" that does "-a" by default goes quite
+> against the underlying mental model of git.  You staged what
+> should appear in the next commit in the index because you did
+> not want to worry about the local changes you still want to keep
+> in your working tree. 
 
-Linus>  - do you have "oprofile" (or even just pgprof) to see where the *hell* 
-Linus>    that time is spent, if it's actually CPU?
+That is not so clear to me. Maybe you're putting changes into the index to 
+reduce the noise in "git diff", by updating everything that's 
+unquestionable while you examine the other stuff. I think that everything 
+in the index is clearly in the next commit, but it's obviously not true 
+that everything in the next commit is in the index (because you might not 
+be done updating things yet).
 
-I'm a "bear of very little brane" regarding code development on OSX.  I
-can ask around to see if there's someway to profile this.
+> Doing the "screw the index" commit by default to these people is slap in 
+> the face.  You do not want to get your index suddenly screwed at the 
+> final moment of making the commit, which happened to me when I did 
+> "commit --amend" with the version with those two patches applied.
 
-Linus> You're running this under OS X, aren't you? It's a pig of an OS, but 
-Linus> "almost one hour" vs "25 seconds" is still unreasonable.
+I personally think that --amend should default to retaining the same tree, 
+with options available for using the index or -a or paths. Using the index 
+by default is just as wrong as -a; you're just more careful about it by 
+experience. The index holds stuff to go in the *next* commit, but --amend 
+generates a new version of the *previous* commit, so the logical basis for 
+the new previous commit is the old previous commit's tree, leaving the 
+index alone.
 
-I agree!
-
--- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
+	-Daniel
