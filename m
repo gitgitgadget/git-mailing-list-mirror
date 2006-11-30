@@ -1,75 +1,103 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: Topic descriptions
-Date: Thu, 7 Dec 2006 08:37:13 +0000
-Message-ID: <200612070837.16412.andyparkins@gmail.com>
-References: <200612062153.30639.andyparkins@gmail.com> <7v4ps8y7un.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 0/2] Making "git commit" to mean "git commit -a".
+Date: Thu, 30 Nov 2006 15:02:52 -0800
+Message-ID: <7vlklsfsgz.fsf@assigned-by-dhcp.cox.net>
+References: <7virgzuf38.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0611282322320.9647@xanadu.home>
+	<7vr6vmsnly.fsf@assigned-by-dhcp.cox.net>
+	<87ejrlvn7r.wl%cworth@cworth.org>
+	<7vodqpn3t4.fsf@assigned-by-dhcp.cox.net>
+	<7vk61dn2yj.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0611300310520.30004@wbgn013.biozentrum.uni-wuerzburg.de>
+	<Pine.LNX.4.64.0611291859070.3513@woody.osdl.org>
+	<456EBBE7.8030404@op5.se>
+	<Pine.LNX.4.64.0611300749560.3513@woody.osdl.org>
+	<20061130164046.GB17715@thunk.org>
+	<Pine.LNX.4.64.0611300903080.3513@woody.osdl.org>
+	<Pine.LNX.4.64.0611301229290.9647@xanadu.home>
+	<87irgwu6e6.wl%cworth@cworth.org> <87hcwgu5t1.wl%cworth@cworth.org>
+	<Pine.LNX.4.64.0611301132350.3513@woody.osdl.org>
+	<Pine.LNX.4.64.0611301521320.9647@xanadu.home>
+	<7vhcwgiqer.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0611301624430.9647@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 7 Dec 2006 08:40:24 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Thu, 30 Nov 2006 23:04:04 +0000 (UTC)
+Cc: Linus Torvalds <torvalds@osdl.org>, Carl Worth <cworth@cworth.org>,
+	Theodore Tso <tytso@mit.edu>, Andreas Ericsson <ae@op5.se>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=bfNVmR5dEhlxR80XGvW80TZ1wEw/Kp8MsN4jMsJ+hjeX/kC1DsIjPZoF3FS1pi7q9+IJyDQfcVlzOMGOAHYPFtkB5kgh88pFV058JPbRC4lPJQposSI0VL5sPQMmoIkV0IRP3nK69JkIdGl94dI2U8BDKs+XGiS04rObA+LZwUg=
-User-Agent: KMail/1.9.5
-In-Reply-To: <7v4ps8y7un.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0611301624430.9647@xanadu.home> (Nicolas Pitre's
+	message of "Thu, 30 Nov 2006 17:21:00 -0500 (EST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33560>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GsEng-0002gy-VK for gcvg-git@gmane.org; Thu, 07 Dec
- 2006 09:40:17 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32830>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gpuwa-0003zk-6F for gcvg-git@gmane.org; Fri, 01 Dec
+ 2006 00:03:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1031856AbWLGIkL (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
- 03:40:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031857AbWLGIkL
- (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 03:40:11 -0500
-Received: from nz-out-0506.google.com ([64.233.162.236]:63696 "EHLO
- nz-out-0102.google.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with
- ESMTP id S1031856AbWLGIkI (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec
- 2006 03:40:08 -0500
-Received: by nz-out-0102.google.com with SMTP id s1so293373nze for
- <git@vger.kernel.org>; Thu, 07 Dec 2006 00:40:08 -0800 (PST)
-Received: by 10.65.193.16 with SMTP id v16mr3141026qbp.1165480807656; Thu, 07
- Dec 2006 00:40:07 -0800 (PST)
-Received: from grissom.internal.parkins.org.uk ( [84.201.153.164]) by
- mx.google.com with ESMTP id c6sm454491qbc.2006.12.07.00.40.05; Thu, 07 Dec
- 2006 00:40:06 -0800 (PST)
-To: git@vger.kernel.org
+ S967949AbWK3XC7 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
+ 18:02:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967961AbWK3XC6
+ (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 18:02:58 -0500
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:5615 "EHLO
+ fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP id S967960AbWK3XCx
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 18:02:53 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao04.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061130230253.HAHL7494.fed1rmmtao04.cox.net@fed1rmimpo02.cox.net>; Thu, 30
+ Nov 2006 18:02:53 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id tB311V00e1kojtg0000000; Thu, 30 Nov 2006
+ 18:03:02 -0500
+To: Nicolas Pitre <nico@cam.org>
 Sender: git-owner@vger.kernel.org
 
-On Wednesday 2006, December 06 22:31, Junio C Hamano wrote:
+Nicolas Pitre <nico@cam.org> writes:
 
-> I am unlikely to use such a thing for the "What's in" message,
-> though.  The part that talks about "what the current status is"
-> is much easier to write when I need to talk about "the current";
-> otherwise I'd be forced to remember to think if I need to update
-> the information, every time I touch topic branches.
+> Wonderful! We might be converging to something then.
 
-It wasn't so much the what's current - as you say that would be fairly 
-ridiculous as it's so fluid.  It was more a description of the topic.  I've 
-got tonnes of branches where I have quickly thought of an idea and started 
-work on it, only to get bored and move on.  Describing a topic in such a 
-short space as "ap/short-name" is hard.
+Yup.  And it appears that we even agree that "intent to add" is
+a bad idea ;-).
 
-The actual place it's stored isn't really relevant, more that I could see a 
-use for it.  If it's going in the config I suppose all it needs is a 
-magic "and so it shall be" hand wave.  It doesn't require any new code does 
-it?
+>   Here's a twist.  If you do "git commit <file1> <file2> ..." then 
+>   only the  changes belonging to those explicitly specified files will 
+>   be committed, entirely bypassing the current "added" changes.  Those
+>   "added" changes will still remain available for a subsequent commit.
+>
+>   There is a twist about that twist: if you do "git commit -i <file>..." 
+>   then the commit will consider changes to those specified files 
+>   _including_ all "added" changes so far.
 
+I sense that you are inviting me to argue for reverting the
+other "git commit" braindead which is spelled "--only" (and
+worse yet, it is the default).  I am very tempted.
 
-Andy
--- 
-Dr Andrew Parkins, M Eng (Hons), AMIEE
+>   But for instance it is best to only remember "git add" + "git 
+>   commit" and/or "git commit -a".
+>
+> Doesn't it sounds nice?  The index is being introduced up front without 
+> even mentioning it, and I think the above should be fairly palatable to 
+> newbies as well.  Would only lack some enhancements to the commit 
+> template and the "nothing to commit" message so the user is cued about 
+> the fact that "current changeset is empty -- don't forget to 'git add' 
+> modified files, or use 'git commit -a'".
+>
+> What do you think?
+
+Other than these "twists", I think it makes sense, and that is
+what I think.
+
+But making sense to me does not necessarily validate that a
+tutorial document is great for its intended audience, since I
+lost git virginity long time ago.  I can only endorse that the
+description is technically accurate.
