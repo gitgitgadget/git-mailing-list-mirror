@@ -1,84 +1,89 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: kernel.org mirroring (Re: [GIT PULL] MMC update)
-Date: Fri, 08 Dec 2006 08:42:32 -0800
-Message-ID: <457995F8.1080405@zytor.com>
-References: <Pine.LNX.4.64.0612020835110.3476@woody.osdl.org> <45744FA3.7020908@zytor.com> <Pine.LNX.4.64.0612061847190.3615@woody.osdl.org> <45778AA3.7080709@zytor.com> <Pine.LNX.4.64.0612061940170.3615@woody.osdl.org> <4577A84C.3010601@zytor.com> <Pine.LNX.4.64.0612070953290.3615@woody.osdl.org> <45785697.1060001@zytor.com> <Pine.LNX.4.64.0612071052560.3615@woody.osdl.org> <457868AA.2030605@zytor.com> <20061207193012.GA84678@dspnet.fr.eu.org> <4578722E.9030402@zytor.com> <4579611F.5010303@dawes.za.net> <45798FE2.9040502@zytor.com> <Pine.LNX.4.64.0612080830380.3516@woody.osdl.org>
+From: Seth Falcon <sethfalcon@gmail.com>
+Subject: Re: [PATCH 0/2] Making "git commit" to mean "git commit -a".
+Date: Wed, 29 Nov 2006 21:24:16 -0800
+Message-ID: <m21wnlo6bj.fsf@ziti.fhcrc.org>
+References: <Pine.LNX.4.64.0611271622260.9647@xanadu.home>
+	<7vmz6cfsuw.fsf@assigned-by-dhcp.cox.net>
+	<87bqmswm1e.wl%cworth@cworth.org>
+	<7vodqse90q.fsf@assigned-by-dhcp.cox.net>
+	<87ac2cwha4.wl%cworth@cworth.org>
+	<7vy7pwcsgp.fsf@assigned-by-dhcp.cox.net>
+	<878xhwwdyj.wl%cworth@cworth.org>
+	<7vk61gcnzl.fsf@assigned-by-dhcp.cox.net>
+	<7vd5786opj.fsf@assigned-by-dhcp.cox.net>
+	<871wnnwi3k.wl%cworth@cworth.org>
+	<7virgzuf38.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0611282322320.9647@xanadu.home>
+	<7vr6vmsnly.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0611291234350.9647@xanadu.home>
+	<7vzmaaozi8.fsf@assigned-by-dhcp.cox.net>
+	<456DDADC.7030509@midwinter.com>
+	<Pine.LNX.4.63.0611292059480.30004@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7vlkluoulf.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Fri, 8 Dec 2006 16:43:12 +0000 (UTC)
-Cc: Rogan Dawes <discard@dawes.za.net>,
-	Kernel Org Admin <ftpadmin@kernel.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jakub Narebski <jnareb@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Thu, 30 Nov 2006 05:24:17 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.8 (X11/20061107)
-In-Reply-To: <Pine.LNX.4.64.0612080830380.3516@woody.osdl.org>
-X-Virus-Scanned: ClamAV 0.88.6/2307/Fri Dec  8 05:50:05 2006 on terminus.zytor.com
-X-Virus-Status: Clean
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:to:subject:references:from:date:in-reply-to:message-id:user-agent:mime-version:content-type;
+        b=k/IyKgpEagzjNgZkRQUvU8B9ZHJ86znnaXqL+tp2R2R7ud4BSTG0FJaAz0KhcJeC7lhgZ5ZYfBMrF+re53gJ9kHDTUniVe+Tm8lN8+yWy3mYJkRT9pkY+Rr3Kjqr8ggFc154JmH3ytwsIFhd6Lr3rRdbi9Mi1XQjh7qq2OjrlgY=
+In-Reply-To: <7vlkluoulf.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's message of "Wed, 29 Nov 2006 12:39:56 -0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (darwin)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33704>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GsioV-0000Gt-LR for gcvg-git@gmane.org; Fri, 08 Dec
- 2006 17:43:08 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32703>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GpeP6-0003kT-1g for gcvg-git@gmane.org; Thu, 30 Nov
+ 2006 06:24:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1425614AbWLHQmu (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
- 11:42:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1425619AbWLHQmu
- (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 11:42:50 -0500
-Received: from terminus.zytor.com ([192.83.249.54]:56886 "EHLO
- terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
- S1425614AbWLHQmt (ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Dec 2006
- 11:42:49 -0500
-Received: from [172.27.0.16] (c-67-180-238-27.hsd1.ca.comcast.net
- [67.180.238.27]) (authenticated bits=0) by terminus.zytor.com (8.13.8/8.13.7)
- with ESMTP id kB8GgWmn011488 (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA
- bits=256 verify=NO); Fri, 8 Dec 2006 08:42:33 -0800
-To: Linus Torvalds <torvalds@osdl.org>
+ S936187AbWK3FYH (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
+ 00:24:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936188AbWK3FYH
+ (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 00:24:07 -0500
+Received: from nf-out-0910.google.com ([64.233.182.186]:17481 "EHLO
+ nf-out-0910.google.com") by vger.kernel.org with ESMTP id S936187AbWK3FYE
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 00:24:04 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so3132408nfa for
+ <git@vger.kernel.org>; Wed, 29 Nov 2006 21:24:03 -0800 (PST)
+Received: by 10.48.4.17 with SMTP id 17mr7295013nfd.1164864243189; Wed, 29
+ Nov 2006 21:24:03 -0800 (PST)
+Received: from ziti.fhcrc.org ( [67.171.24.140]) by mx.google.com with ESMTP
+ id r33sm10701474nfc.2006.11.29.21.24.02; Wed, 29 Nov 2006 21:24:03 -0800
+ (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Linus Torvalds wrote:
-> 
-> On Fri, 8 Dec 2006, H. Peter Anvin wrote:
->> This goes back to the "gitweb needs native caching" again.
-> 
-> It should be fairly easy to add a caching layer, but I wouldn't do it 
-> inside gitweb itself - it gets too mixed up. It would be better to have 
-> it as a separate front-end, that just calls gitweb for anything it doesn't 
-> find in the cache.
-> 
+Junio C Hamano <junkio@cox.net> writes:
+> My time is better spent on _listening_ to people who might want to
+> make convincing arguments to influence what I will end up deciding
+> (the final decision will be mine anyway).
 
-If you want to do side effect generation of cache contents, it might not 
-be possible to do it that way.  At the very least gitweb needs to be 
-aware of how to explicitly enter things into the cache.
+So I will add my $0.02:
 
-All of this isn't really all that hard; I have implemented all that 
-stuff for diffview, for example (when generating a single diff hunk, you 
-  naturally end up producing all of them, so you want to have them 
-preemptively cached.)
+  Summary: leave git-commit as-is
 
-> I could write a simple C caching thing that just hashes the CGI arguments 
-> and uses a hash to create a cache (and proper lock-files etc to serialize 
-> access to a particular cache object while it's being created) fairly 
-> easily, but I'm pretty sure people would much prefer a mod_perl thing just 
-> to avoid the fork/exec overhead with Apache (I think mod_perl allows 
-> Apache to run perl scripts without it), and that means I'm not the right 
-> person any more.
+  I think the intimidation factor of the index is overstated.  A
+  scratch working area is a natural concept -- that's what people do
+  who don't even _know_ what an scm is.  I agree with Junio's
+  description of commit -a as default breaking the mental model.
 
-True about mod_perl.  Haven't messed with that myself, either. 
-fork/exec really is very cheap on Linux, so it's not a huge deal.
+  I've played with three distributed scm: tla, hg, and git.  I've
+  stuck with git because, in part, it helped me to learn its more
+  advanced features -- not because it was easiest to use intially out
+  of the box.  And if I'm not going to get something more than cvs or
+  svn gives me, what's the point of switching in the first place?
 
-> Not that I'm the right person anyway, since I don't have a web server set 
-> up on my machine to even test with ;)
 
-Heh :)
+  + seth
+  
+  
 
-	-hpa
