@@ -1,55 +1,69 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: kernel.org mirroring (Re: [GIT PULL] MMC update)
-Date: Fri, 08 Dec 2006 08:16:34 -0800
-Message-ID: <45798FE2.9040502@zytor.com>
-References: <Pine.LNX.4.64.0612020835110.3476@woody.osdl.org> <45744FA3.7020908@zytor.com> <Pine.LNX.4.64.0612061847190.3615@woody.osdl.org> <45778AA3.7080709@zytor.com> <Pine.LNX.4.64.0612061940170.3615@woody.osdl.org> <4577A84C.3010601@zytor.com> <Pine.LNX.4.64.0612070953290.3615@woody.osdl.org> <45785697.1060001@zytor.com> <Pine.LNX.4.64.0612071052560.3615@woody.osdl.org> <457868AA.2030605@zytor.com> <20061207193012.GA84678@dspnet.fr.eu.org> <4578722E.9030402@zytor.com> <4579611F.5010303@dawes.za.net>
+From: Salikh Zakirov <Salikh.Zakirov@Intel.com>
+Subject: Re: [PATCH 0/2] Making "git commit" to mean "git commit -a".
+Date: Thu, 30 Nov 2006 15:23:13 +0300
+Message-ID: <ekmkoe$a52$1@sea.gmane.org>
+References: <Pine.LNX.4.64.0611271622260.9647@xanadu.home>	<7vmz6cfsuw.fsf@assigned-by-dhcp.cox.net>	<87bqmswm1e.wl%cworth@cworth.org>	<7vodqse90q.fsf@assigned-by-dhcp.cox.net>	<87ac2cwha4.wl%cworth@cworth.org>	<7vy7pwcsgp.fsf@assigned-by-dhcp.cox.net>	<878xhwwdyj.wl%cworth@cworth.org>	<7vk61gcnzl.fsf@assigned-by-dhcp.cox.net> <7vd5786opj.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Fri, 8 Dec 2006 16:17:17 +0000 (UTC)
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Kernel Org Admin <ftpadmin@kernel.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jakub Narebski <jnareb@gmail.com>
+NNTP-Posting-Date: Thu, 30 Nov 2006 13:05:38 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.8 (X11/20061107)
-In-Reply-To: <4579611F.5010303@dawes.za.net>
-X-Virus-Scanned: ClamAV 0.88.6/2307/Fri Dec  8 05:50:05 2006 on terminus.zytor.com
-X-Virus-Status: Clean
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 21
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: msfwpr01.ims.intel.com
+User-Agent: Thunderbird 1.5.0.8 (Windows/20061025)
+In-Reply-To: <7vd5786opj.fsf@assigned-by-dhcp.cox.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33702>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GsiPM-0004jK-4w for gcvg-git@gmane.org; Fri, 08 Dec
- 2006 17:17:08 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32738>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GplbR-0005H2-Nf for gcvg-git@gmane.org; Thu, 30 Nov
+ 2006 14:05:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1425597AbWLHQRF (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
- 11:17:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760755AbWLHQRF
- (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 11:17:05 -0500
-Received: from terminus.zytor.com ([192.83.249.54]:51884 "EHLO
- terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
- S1760753AbWLHQRB (ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Dec 2006
- 11:17:01 -0500
-Received: from [172.27.0.16] (c-67-180-238-27.hsd1.ca.comcast.net
- [67.180.238.27]) (authenticated bits=0) by terminus.zytor.com (8.13.8/8.13.7)
- with ESMTP id kB8GGYfX010122 (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA
- bits=256 verify=NO); Fri, 8 Dec 2006 08:16:40 -0800
-To: Rogan Dawes <discard@dawes.za.net>
+ S966288AbWK3NFU (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
+ 08:05:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936379AbWK3NFU
+ (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 08:05:20 -0500
+Received: from main.gmane.org ([80.91.229.2]:8138 "EHLO ciao.gmane.org") by
+ vger.kernel.org with ESMTP id S936287AbWK3NFS (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 08:05:18 -0500
+Received: from root by ciao.gmane.org with local (Exim 4.43) id
+ 1Gplb4-0005Ai-L1 for git@vger.kernel.org; Thu, 30 Nov 2006 14:05:03 +0100
+Received: from msfwpr01.ims.intel.com ([62.118.80.132]) by main.gmane.org
+ with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Thu, 30 Nov 2006 14:05:02 +0100
+Received: from Salikh.Zakirov by msfwpr01.ims.intel.com with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Thu, 30 Nov 2006
+ 14:05:02 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Rogan Dawes wrote:
-> 
-> How about extending gitweb to check to see if there already exists a 
-> cached version of these pages, before recreating them?
-> 
+Junio C Hamano wrote:
+> I've been playing with a "private edition" git to see how it
+> feels like to use "git commit" that defaults to the "-a"
+> behaviour, using myself as a guinea pig, for the rest of the
+> evening.
 
-This goes back to the "gitweb needs native caching" again.
+Thanks a lot for the patches, Junio!
+
+I am using them for two days, and my experience is great!
+Many times it saved me annoyances of forgetting to put '-a' to 'git commit'.
+
+It should be noted, that I mostly used 'git-commit files...'
+or 'git-commit -a' forms before.
+
+Someone said, that default '-a' does not go well with 'git-commit --amend',
+and I second that. It was somewhat suprising to see that 'git commit --amend'
+is going to include all of the dirty state into the commit,
+and since there is no easy way to abort a --amend commit (because the comment
+buffer wasn't empty, and :q! does not work as it would on the regular commit),
+I had to untwine the changes manually.
 
