@@ -4,57 +4,64 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: WARNING: THIS PATCH CAN BREAK YOUR REPO, was Re: [PATCH 2/3] Only repack active packs by skipping over kept packs.
-Date: Mon, 30 Oct 2006 14:07:01 -0800
-Message-ID: <7vy7qxv4oq.fsf@assigned-by-dhcp.cox.net>
-References: <20061029093754.GD3847@spearce.org>
-	<Pine.LNX.4.64.0610301332440.11384@xanadu.home>
-	<20061030202611.GA5775@spearce.org>
-	<7v7iyhwk47.fsf@assigned-by-dhcp.cox.net>
-	<20061030215529.GC5775@spearce.org>
+From: Alex Bennee <kernel-hacker@bennee.com>
+Subject: Re: Getting CVS and Git to play nicely in the same box
+Date: Thu, 30 Nov 2006 13:54:07 +0000
+Organization: Insert Joke Here
+Message-ID: <1164894847.21950.98.camel@okra.transitives.com>
+References: <1164890354.21950.92.camel@okra.transitives.com>
+	 <ekml1n$ask$1@sea.gmane.org>
+Reply-To: kernel-hacker@bennee.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Mon, 30 Oct 2006 22:14:24 +0000 (UTC)
-Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 30 Nov 2006 13:54:53 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061030215529.GC5775@spearce.org> (Shawn Pearce's message of
-	"Mon, 30 Oct 2006 16:55:29 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+In-Reply-To: <ekml1n$ask$1@sea.gmane.org>
+X-Mailer: Evolution 2.6.0 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30534>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32745>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GefHt-0004s7-Jn for gcvg-git@gmane.org; Mon, 30 Oct
- 2006 23:07:21 +0100
+ esmtp (Exim 4.43) id 1GpmMi-0001zt-1b for gcvg-git@gmane.org; Thu, 30 Nov
+ 2006 14:54:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1422678AbWJ3WHF (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 30 Oct 2006
- 17:07:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422679AbWJ3WHF
- (ORCPT <rfc822;git-outgoing>); Mon, 30 Oct 2006 17:07:05 -0500
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:26358 "EHLO
- fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP id S1422680AbWJ3WHC
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 30 Oct 2006 17:07:02 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao07.cox.net
- (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
- <20061030220701.EUOK28934.fed1rmmtao07.cox.net@fed1rmimpo01.cox.net>; Mon, 30
- Oct 2006 17:07:01 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id gm6h1V00f1kojtg0000000 Mon, 30 Oct 2006
- 17:06:42 -0500
-To: Shawn Pearce <spearce@spearce.org>
+ S936412AbWK3NyK (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
+ 08:54:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936413AbWK3NyK
+ (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 08:54:10 -0500
+Received: from mx.transitive.com ([217.207.128.220]:6530 "EHLO
+ pennyblack.transitives.com") by vger.kernel.org with ESMTP id S936412AbWK3NyJ
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 08:54:09 -0500
+Received: from [192.168.1.82] (helo=okra.transitives.com) by
+ pennyblack.transitives.com with esmtp (Exim 4.50) id 1GpmDR-0004w4-9y; Thu,
+ 30 Nov 2006 13:44:41 +0000
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Shawn Pearce <spearce@spearce.org> writes:
+On Thu, 2006-11-30 at 14:08 +0100, Jakub Narebski wrote:
+> Alex Bennee wrote:
+> 
+> > Has anyone successfully set up such a working environment? Can anyone
+> > offer any tips on how to make it all work nicely?
+> 
+> Why not use git-cvsserver? Or port git-svn to CVS (or use Tailor)?
 
-> Did you see Jan Harkes' patch that changes the behavior to be what
-> it should have been?
->  
->> So --unpacked=pretend-this-is-loose was wrong to begin with; it
->> probably should have been --incremental=pretend-this-is-loose.
->
-> I don't care about what the option name is.
+I can't use git-cvsserver because the main repository is going to have
+to stay on CVS for the time being. I don't think it could be used as a
+drop in replacement for our existing server anyway as it doesn't support
+tagging or branching.
 
-It is not about name, but what --unpacked means.  See my other
-mail.
+Using git is my own personal indulgence (At least until I can
+demonstrate it's worth while the other migrating ;-).
+
+It looks like git-svn  is the sort of tool I'd want for CVS although I'm
+not sure how it would live with our CVS branched development model. I'll
+have a poke around Tailor and see if that offers any help.
+
+-- 
+Alex, homepage: http://www.bennee.com/~alex/
+Nobody wants constructive criticism. It's all we can do to put up with
+constructive praise.
