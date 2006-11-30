@@ -1,437 +1,73 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH 1/2] gitweb: New improved patchset view
-Date: Wed, 8 Nov 2006 17:59:41 +0100
-Message-ID: <200611081759.41498.jnareb@gmail.com>
-References: <200611081147.52952.jnareb@gmail.com> <200611081150.07469.jnareb@gmail.com> <200611081758.57597.jnareb@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [RFD] making separate-remote layout easier to use
+Date: Thu, 30 Nov 2006 13:22:15 -0800
+Message-ID: <7v64cwiq9k.fsf@assigned-by-dhcp.cox.net>
+References: <7v1wnr19do.fsf@assigned-by-dhcp.cox.net>
+	<ekafpm$fs7$1@sea.gmane.org> <20061126033433.GD29394@spearce.org>
+	<7vvel2yi2u.fsf@assigned-by-dhcp.cox.net>
+	<1164910560.4724.117.camel@cashmere.sps.mot.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 8 Nov 2006 17:00:27 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Thu, 30 Nov 2006 21:22:25 +0000 (UTC)
+Cc: Shawn Pearce <spearce@spearce.org>, Git List <git@vger.kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=EnqkGn4Fr6ATefrOh+nuPBf3VVk14zNLO3Nq8120KAJqJN9cZvtOUajV5u5TVeQmVFlQJ9ZMBV+uA/9oa9bRiV0ZTbtUR791muT16hg4o7pCvj8KL9d4cbMfI2TN5RjlOjO4sQEie6nZ3l1vYaXgKrGADii7U0X13fDpnffChCU=
-User-Agent: KMail/1.9.3
-In-Reply-To: <200611081758.57597.jnareb@gmail.com>
-Content-Disposition: inline
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31144>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32802>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GhqmJ-00087z-9z for gcvg-git@gmane.org; Wed, 08 Nov
- 2006 17:59:56 +0100
+ esmtp (Exim 4.43) id 1GptMK-0006o9-UN for gcvg-git@gmane.org; Thu, 30 Nov
+ 2006 22:22:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1161346AbWKHQ7w (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 8 Nov 2006
- 11:59:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161351AbWKHQ7w
- (ORCPT <rfc822;git-outgoing>); Wed, 8 Nov 2006 11:59:52 -0500
-Received: from ug-out-1314.google.com ([66.249.92.173]:53149 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1161346AbWKHQ7v
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 8 Nov 2006 11:59:51 -0500
-Received: by ug-out-1314.google.com with SMTP id m3so1576709ugc for
- <git@vger.kernel.org>; Wed, 08 Nov 2006 08:59:50 -0800 (PST)
-Received: by 10.66.244.10 with SMTP id r10mr11234607ugh.1163005189649; Wed,
- 08 Nov 2006 08:59:49 -0800 (PST)
-Received: from host-81-190-24-209.torun.mm.pl ( [81.190.24.209]) by
- mx.google.com with ESMTP id e1sm8082261ugf.2006.11.08.08.59.48; Wed, 08 Nov
- 2006 08:59:49 -0800 (PST)
-To: git@vger.kernel.org
+ S1031506AbWK3VWS (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
+ 16:22:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031519AbWK3VWS
+ (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 16:22:18 -0500
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:33690 "EHLO
+ fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP id S1031506AbWK3VWR
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 16:22:17 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao03.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061130212216.CYHK4817.fed1rmmtao03.cox.net@fed1rmimpo02.cox.net>; Thu, 30
+ Nov 2006 16:22:16 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id t9NR1V0031kojtg0000000; Thu, 30 Nov 2006
+ 16:22:25 -0500
+To: Jon Loeliger <jdl@freescale.com>
 Sender: git-owner@vger.kernel.org
 
-Replace "gitweb diff header" with its full sha1 of blobs and replace
-it by "git diff" header and extended diff header. Change also somewhat
-highlighting of diffs.
+Jon Loeliger <jdl@freescale.com> writes:
 
-Added `file_type_long' subroutine to convert file mode in octal to
-file type description (only for file modes which used by git).
+> On Sat, 2006-11-25 at 21:58, Junio C Hamano wrote:
+>> > ...
+>> > I would prefer to see the upstream be able to publish a short
+>> > description of each branch, where the repository owner can describe
+>> > the policy of that branch,...
+>> ...
+>> I like this approach very much.
+>
+> I see how it is! :-)  When Shawn says it, it is to be liked.
+> But when I allude to it a _year_ ago, I'm ignored.
 
-Changes:
-* "gitweb diff header" which looked for example like below:
-    file:_<sha1 before>_ -> file:_<sha1 after>_
-  where 'file' is file type and '<sha1>' is full sha1 of blob is
-  changed to
-    diff --git _a/<file before>_ _b/<file after>_
-  In both cases links are visible and use default link style. If file
-  is added, a/<file> is not hyperlinked. If file is deleted, b/<file>
-  is not hyperlinked.
-* there is added "extended diff header", with <path> and <hash>
-  hyperlinked (and <hash> shortened to 7 characters), and <mode>
-  explained: '<mode>' is extended to '<mode> (<file type description>)',
-  where added text is slightly lighter to easy distinguish that it
-  was added (and it is difference from git-diff output).
-* from-file/to-file two-line header lines have slightly darker color
-  than removed/added lines.
-* chunk header has now delicate line above for easier finding chunk
-  boundary, and top margin of 2px, both barely visible.
+Think of it not as a difference between you and Shawn, but as a
+difference in me back then and me now, who finally saw the light
+in your revelation after gaining a year's worth of experience ;-).
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
- gitweb/gitweb.css  |   66 +++++++++++++++----
- gitweb/gitweb.perl |  183 
-++++++++++++++++++++++++++++++++++------------------
- 2 files changed, 173 insertions(+), 76 deletions(-)
-
-diff --git a/gitweb/gitweb.css b/gitweb/gitweb.css
-index e19e6bc..974b47f 100644
---- a/gitweb/gitweb.css
-+++ b/gitweb/gitweb.css
-@@ -298,40 +298,82 @@ td.mode {
- 	font-family: monospace;
- }
- 
--div.diff a.list {
-+/* styling of diffs (patchsets): commitdiff and blobdiff views */
-+div.diff.header,
-+div.diff.extended_header {
-+	white-space: normal;
-+}
-+
-+div.diff.header {
-+	font-weight: bold;
-+
-+	background-color: #edece6;
-+
-+	margin-top: 4px;
-+	padding: 4px 0px 2px 0px;
-+	border: solid #d9d8d1;
-+	border-width: 1px 0px 1px 0px;
-+}
-+
-+div.diff.header a.path {
-+	text-decoration: underline;
-+}
-+
-+div.diff.extended_header,
-+div.diff.extended_header a.path,
-+div.diff.extended_header a.hash {
-+	color: #777777;
-+}
-+
-+div.diff.extended_header .info {
-+	color: #b0b0b0;
-+}
-+
-+div.diff.extended_header {
-+	background-color: #f6f5ee;
-+	padding: 2px 0px 2px 0px;
-+}
-+
-+div.diff a.path,
-+div.diff a.hash {
- 	text-decoration: none;
- }
- 
--div.diff a.list:hover {
-+div.diff a.path:hover,
-+div.diff a.hash:hover {
- 	text-decoration: underline;
- }
- 
--div.diff.to_file a.list,
--div.diff.to_file,
-+div.diff.to_file a.path,
-+div.diff.to_file {
-+	color: #007000;
-+}
-+
- div.diff.add {
- 	color: #008800;
- }
- 
--div.diff.from_file a.list,
--div.diff.from_file,
-+div.diff.from_file a.path,
-+div.diff.from_file {
-+	color: #aa0000;
-+}
-+
- div.diff.rem {
- 	color: #cc0000;
- }
- 
- div.diff.chunk_header {
- 	color: #990099;
-+
-+	border: dotted #ffe0ff;
-+	border-width: 1px 0px 0px 0px;
-+	margin-top: 2px;
- }
- 
- div.diff.incomplete {
- 	color: #cccccc;
- }
- 
--div.diff_info {
--	font-family: monospace;
--	color: #000099;
--	background-color: #edece6;
--	font-style: italic;
--}
- 
- div.index_include {
- 	border: solid #d9d8d1;
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index c9b16b5..2cf8e60 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -780,6 +780,32 @@ sub file_type {
- 	}
- }
- 
-+# convert file mode in octal to file type description string
-+sub file_type_long {
-+	my $mode = shift;
-+
-+	if ($mode !~ m/^[0-7]+$/) {
-+		return $mode;
-+	} else {
-+		$mode = oct $mode;
-+	}
-+
-+	if (S_ISDIR($mode & S_IFMT)) {
-+		return "directory";
-+	} elsif (S_ISLNK($mode)) {
-+		return "symlink";
-+	} elsif (S_ISREG($mode)) {
-+		if ($mode & S_IXUSR) {
-+			return "executable";
-+		} else {
-+			return "file";
-+		};
-+	} else {
-+		return "unknown";
-+	}
-+}
-+
-+
- ## 
-----------------------------------------------------------------------
- ## functions returning short HTML fragments, or transforming HTML 
-fragments
- ## which don't beling to other sections
-@@ -2166,6 +2192,7 @@ sub git_patchset_body {
- 	my $in_header = 0;
- 	my $patch_found = 0;
- 	my $diffinfo;
-+	my (%from, %to);
- 
- 	print "<div class=\"patchset\">\n";
- 
-@@ -2176,6 +2203,10 @@ sub git_patchset_body {
- 		if ($patch_line =~ m/^diff /) { # "git diff" header
- 			# beginning of patch (in patchset)
- 			if ($patch_found) {
-+				# close extended header for previous empty patch
-+				if ($in_header) {
-+					print "</div>\n" # class="diff extended_header"
-+				}
- 				# close previous patch
- 				print "</div>\n"; # class="patch"
- 			} else {
-@@ -2184,89 +2215,113 @@ sub git_patchset_body {
- 			}
- 			print "<div class=\"patch\" id=\"patch". ($patch_idx+1) ."\">\n";
- 
-+			# read and prepare patch information
- 			if (ref($difftree->[$patch_idx]) eq "HASH") {
-+				# pre-parsed (or generated by hand)
- 				$diffinfo = $difftree->[$patch_idx];
- 			} else {
- 				$diffinfo = parse_difftree_raw_line($difftree->[$patch_idx]);
- 			}
-+			$from{'file'} = $diffinfo->{'from_file'} || $diffinfo->{'file'};
-+			$to{'file'}   = $diffinfo->{'to_file'}   || $diffinfo->{'file'};
-+			if ($diffinfo->{'status'} ne "A") { # not new (added) file
-+				$from{'href'} = href(action=>"blob", hash_base=>$hash_parent,
-+				                     hash=>$diffinfo->{'from_id'},
-+				                     file_name=>$from{'file'});
-+			}
-+			if ($diffinfo->{'status'} ne "D") { # not deleted file
-+				$to{'href'} = href(action=>"blob", hash_base=>$hash,
-+				                   hash=>$diffinfo->{'to_id'},
-+				                   file_name=>$to{'file'});
-+			}
- 			$patch_idx++;
- 
--			if ($diffinfo->{'status'} eq "A") { # added
--				print "<div class=\"diff_info\">" . 
-file_type($diffinfo->{'to_mode'}) . ":" .
--				      $cgi->a({-href => href(action=>"blob", hash_base=>$hash,
--				                             hash=>$diffinfo->{'to_id'}, 
-file_name=>$diffinfo->{'file'})},
--				              $diffinfo->{'to_id'}) . " (new)" .
--				      "</div>\n"; # class="diff_info"
--
--			} elsif ($diffinfo->{'status'} eq "D") { # deleted
--				print "<div class=\"diff_info\">" . 
-file_type($diffinfo->{'from_mode'}) . ":" .
--				      $cgi->a({-href => href(action=>"blob", 
-hash_base=>$hash_parent,
--				                             hash=>$diffinfo->{'from_id'}, 
-file_name=>$diffinfo->{'file'})},
--				              $diffinfo->{'from_id'}) . " (deleted)" .
--				      "</div>\n"; # class="diff_info"
--
--			} elsif ($diffinfo->{'status'} eq "R" || # renamed
--			         $diffinfo->{'status'} eq "C" || # copied
--			         $diffinfo->{'status'} eq "2") { # with two filenames (from 
-git_blobdiff)
--				print "<div class=\"diff_info\">" .
--				      file_type($diffinfo->{'from_mode'}) . ":" .
--				      $cgi->a({-href => href(action=>"blob", 
-hash_base=>$hash_parent,
--				                             hash=>$diffinfo->{'from_id'}, 
-file_name=>$diffinfo->{'from_file'})},
--				              $diffinfo->{'from_id'}) .
--				      " -> " .
--				      file_type($diffinfo->{'to_mode'}) . ":" .
--				      $cgi->a({-href => href(action=>"blob", hash_base=>$hash,
--				                             hash=>$diffinfo->{'to_id'}, 
-file_name=>$diffinfo->{'to_file'})},
--				              $diffinfo->{'to_id'});
--				print "</div>\n"; # class="diff_info"
--
--			} else { # modified, mode changed, ...
--				print "<div class=\"diff_info\">" .
--				      file_type($diffinfo->{'from_mode'}) . ":" .
--				      $cgi->a({-href => href(action=>"blob", 
-hash_base=>$hash_parent,
--				                             hash=>$diffinfo->{'from_id'}, 
-file_name=>$diffinfo->{'file'})},
--				              $diffinfo->{'from_id'}) .
--				      " -> " .
--				      file_type($diffinfo->{'to_mode'}) . ":" .
--				      $cgi->a({-href => href(action=>"blob", hash_base=>$hash,
--				                             hash=>$diffinfo->{'to_id'}, 
-file_name=>$diffinfo->{'file'})},
--				              $diffinfo->{'to_id'});
--				print "</div>\n"; # class="diff_info"
-+			# print "git diff" header
-+			$patch_line =~ s!^(diff (.*?) )"?a/.*$!$1!;
-+			if ($from{'href'}) {
-+				$patch_line .= $cgi->a({-href => $from{'href'}, -class => "path"},
-+				                       'a/' . esc_path($from{'file'}));
-+			} else { # file was added
-+				$patch_line .= 'a/' . esc_path($from{'file'});
-+			}
-+			$patch_line .= ' ';
-+			if ($to{'href'}) {
-+				$patch_line .= $cgi->a({-href => $to{'href'}, -class => "path"},
-+				                       'b/' . esc_path($to{'file'}));
-+			} else { # file was deleted
-+				$patch_line .= 'b/' . esc_path($to{'file'});
- 			}
- 
--			#print "<div class=\"diff extended_header\">\n";
-+			print "<div class=\"diff header\">$patch_line</div>\n";
-+			print "<div class=\"diff extended_header\">\n";
- 			$in_header = 1;
- 			next LINE;
--		} # start of patch in patchset
-+		}
- 
-+		if ($in_header) {
-+			if ($patch_line !~ m/^---/) {
-+				# match <path>
-+				if ($patch_line =~ s!^((copy|rename) from ).*$!$1! && 
-$from{'href'}) {
-+					$patch_line .= $cgi->a({-href=>$from{'href'}, -class=>"path"},
-+					                        esc_path($from{'file'}));
-+				}
-+				if ($patch_line =~ s!^((copy|rename) to ).*$!$1! && $to{'href'}) {
-+					$patch_line = $cgi->a({-href=>$to{'href'}, -class=>"path"},
-+					                      esc_path($to{'file'}));
-+				}
-+				# match <mode>
-+				if ($patch_line =~ m/\s(\d{6})$/) {
-+					$patch_line .= '<span class="info"> (' .
-+					               file_type_long($1) .
-+					               ')</span>';
-+				}
-+				# match <hash>
-+				if ($patch_line =~ m/^index/) {
-+					my ($from_link, $to_link);
-+					if ($from{'href'}) {
-+						$from_link = $cgi->a({-href=>$from{'href'}, -class=>"hash"},
-+						                     substr($diffinfo->{'from_id'},0,7));
-+					} else {
-+						$from_link = '0' x 7;
-+					}
-+					if ($to{'href'}) {
-+						$to_link = $cgi->a({-href=>$to{'href'}, -class=>"hash"},
-+						                   substr($diffinfo->{'to_id'},0,7));
-+					} else {
-+						$to_link = '0' x 7;
-+					}
-+					my ($from_id, $to_id) = ($diffinfo->{'from_id'}, 
-$diffinfo->{'to_id'});
-+					$patch_line =~ s!$from_id\.\.$to_id!$from_link..$to_link!;
-+				}
-+				print $patch_line . "<br/>\n";
- 
--		if ($in_header && $patch_line =~ m/^---/) {
--			#print "</div>\n"; # class="diff extended_header"
--			$in_header = 0;
-+			} else {
-+				#$in_header && $patch_line =~ m/^---/;
-+				print "</div>\n"; # class="diff extended_header"
-+				$in_header = 0;
-+
-+				if ($from{'href'}) {
-+					$patch_line = '--- a/' .
-+					              $cgi->a({-href=>$from{'href'}, -class=>"path"},
-+					                      esc_path($from{'file'}));
-+				}
-+				print "<div class=\"diff from_file\">$patch_line</div>\n";
- 
--			my $file = $diffinfo->{'from_file'};
--			$file  ||= $diffinfo->{'file'};
--			$file = $cgi->a({-href => href(action=>"blob", 
-hash_base=>$hash_parent,
--			                               hash=>$diffinfo->{'from_id'}, 
-file_name=>$file),
--			                -class => "list"}, esc_path($file));
--			$patch_line =~ s|a/.*$|a/$file|g;
--			print "<div class=\"diff from_file\">$patch_line</div>\n";
-+				$patch_line = <$fd>;
-+				chomp $patch_line;
- 
--			$patch_line = <$fd>;
--			chomp $patch_line;
-+				#$patch_line =~ m/^+++/;
-+				if ($to{'href'}) {
-+					$patch_line = '+++ b/' .
-+					              $cgi->a({-href=>$to{'href'}, -class=>"path"},
-+					                      esc_path($to{'file'}));
-+				}
-+				print "<div class=\"diff to_file\">$patch_line</div>\n";
- 
--			#$patch_line =~ m/^+++/;
--			$file    = $diffinfo->{'to_file'};
--			$file  ||= $diffinfo->{'file'};
--			$file = $cgi->a({-href => href(action=>"blob", hash_base=>$hash,
--			                               hash=>$diffinfo->{'to_id'}, 
-file_name=>$file),
--			                -class => "list"}, esc_path($file));
--			$patch_line =~ s|b/.*|b/$file|g;
--			print "<div class=\"diff to_file\">$patch_line</div>\n";
-+			}
- 
- 			next LINE;
- 		}
--		next LINE if $in_header;
- 
- 		print format_diff_line($patch_line);
- 	}
--- 
-1.4.3.4
+Seriously, I did not ignore it, and I think some of your other
+comments in the message contributed to improved documentation.
+When your message was posted, the issue Shawn raised in his
+message was not so prominent, because people did not even get
+that "Pull: refs/heads/pu:refs/heads/pu" line in their remotes/
+file by default back then.  It was back in 0.99.9 era and a few
+days after your message, a patch was posted to put more than
+just the 'master' mapping in the remotes/ file clone creates.
+It became an issue after that change but we lacked the resources
+nor sense of urgency to do the out-of-band stuff, as we were
+busy working on other things.
