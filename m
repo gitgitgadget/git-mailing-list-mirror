@@ -1,71 +1,79 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: git-pull from git.git - no remote ref for pu or next?
-Date: Tue, 12 Dec 2006 14:50:20 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0612121445320.18171@xanadu.home>
-References: <863b7l83o9.fsf@blue.stonehenge.com>
- <86y7pd6oz7.fsf@blue.stonehenge.com>
- <Pine.LNX.4.64.0612120949230.3535@woody.osdl.org>
- <Pine.LNX.4.63.0612121908100.2807@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0612121352520.18171@xanadu.home>
- <Pine.LNX.4.63.0612121956470.2807@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0612121420580.18171@xanadu.home>
- <Pine.LNX.4.63.0612122031450.2807@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [RFC] Submodules in GIT
+Date: Thu, 30 Nov 2006 15:30:49 +0000
+Message-ID: <200611301530.51171.andyparkins@gmail.com>
+References: <20061121223130.GA24909@nan92-1-81-57-214-146.fbx.proxad.net> <200611301449.55171.andyparkins@gmail.com> <20061130152011.GM12463MdfPADPa@greensroom.kotnet.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-NNTP-Posting-Date: Tue, 12 Dec 2006 19:50:50 +0000 (UTC)
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	"Randal L. Schwartz" <merlyn@stonehenge.com>, git@vger.kernel.org
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 30 Nov 2006 15:31:17 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-reply-to: <Pine.LNX.4.63.0612122031450.2807@wbgn013.biozentrum.uni-wuerzburg.de>
-X-X-Sender: nico@xanadu.home
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=jU5eVTbZlQJXr1Z/sR6ET9hYYYfjVGlef2pnxJoJcXR3aO+Y+AUEhC5oJSCnwHdlatBZJhF7ZiXAIKqcggh40ht1s2Facj0jIwIa9fQSTYsiuE/X0ngExAgmMH01184T42TdDV4sZK439YUOMwRvNw1PFM7+2nnh6hmrFiRJJuA=
+User-Agent: KMail/1.9.5
+In-Reply-To: <20061130152011.GM12463MdfPADPa@greensroom.kotnet.org>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34139>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GuDeE-0005VU-0u for gcvg-git@gmane.org; Tue, 12 Dec
- 2006 20:50:42 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32753>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GpnsL-0003Je-Qp for gcvg-git@gmane.org; Thu, 30 Nov
+ 2006 16:31:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932263AbWLLTu1 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 12 Dec 2006
- 14:50:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932418AbWLLTu1
- (ORCPT <rfc822;git-outgoing>); Tue, 12 Dec 2006 14:50:27 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:16991 "EHLO
- relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S932415AbWLLTu0 (ORCPT <rfc822;git@vger.kernel.org>); Tue, 12 Dec 2006
- 14:50:26 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
- <0JA600JYCF3W91F0@VL-MH-MR002.ip.videotron.ca> for git@vger.kernel.org; Tue,
- 12 Dec 2006 14:50:20 -0500 (EST)
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+ S1030511AbWK3Pa5 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
+ 10:30:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030513AbWK3Pa5
+ (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 10:30:57 -0500
+Received: from ug-out-1314.google.com ([66.249.92.173]:56733 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1030511AbWK3Pa4
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 10:30:56 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so2145058uga for
+ <git@vger.kernel.org>; Thu, 30 Nov 2006 07:30:55 -0800 (PST)
+Received: by 10.67.121.15 with SMTP id y15mr5541053ugm.1164900655352; Thu, 30
+ Nov 2006 07:30:55 -0800 (PST)
+Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
+ ESMTP id i39sm19891915ugd.2006.11.30.07.30.54; Thu, 30 Nov 2006 07:30:54
+ -0800 (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On Tue, 12 Dec 2006, Johannes Schindelin wrote:
+On Thursday 2006 November 30 15:20, Sven Verdoolaege wrote:
 
-> Hi,
-> 
-> On Tue, 12 Dec 2006, Nicolas Pitre wrote:
-> 
-> > On Tue, 12 Dec 2006, Johannes Schindelin wrote:
-> > 
-> > > But it would become a non-problem when the HTTP transport would learn 
-> > > to read and interpret the .idx files, basically constructing thin 
-> > > packs from parts of the .pack files ("Content-Range:" comes to 
-> > > mind)...
-> > 
-> > Woooh.
-> 
-> Does that mean "Yes, I'll do it"? ;-)
+> You can work on the submodule independently.
 
-Absolutely not.  ;-)  I know next to nothing about HTTP to start with.
-It just looks like a crazy idea that might actually work.
+It's not independent if any part of it is in the supermodule.
 
+> > some of the development of the submodule is contained in the supermodule
+> > then it's not a submodule anymore.
+>
+> On the contrary, that's exactly what a submodule is supposed to be.
 
+I don't think so.  I think it's just made some complicated normal repository.
+
+> How are you going to checkout the right commit of the lixcb repo if
+> you didn't store it in the supermodule ?
+
+Well, I know what the commit is /that/ was all that was stored.  So I 
+(actually supermodule-git does):
+
+cd $DIRECTORY_ASSOCIATED_WITH_SUBMODULE
+git checkout -f $COMMIT_FROM_SUPERMODULE
+
+Obviously, this is grossly simplified.  It also requires that HEAD be allowed 
+to be an arbitrary commit rather than a branch, but that's already been 
+generally agreed upon as a good thing.
+
+Andy
+-- 
+Dr Andy Parkins, M Eng (hons), MIEE
