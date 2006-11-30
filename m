@@ -4,72 +4,74 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] (experimental) per-topic shortlog.
-Date: Fri, 01 Dec 2006 03:00:41 -0800
-Message-ID: <7vhcwfanja.fsf@assigned-by-dhcp.cox.net>
-References: <7v8xhxsopp.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0611261652520.30076@woody.osdl.org>
-	<Pine.LNX.4.63.0611280040480.30004@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7v7ixge8j2.fsf@assigned-by-dhcp.cox.net>
-	<20061128131139.GA10874@coredump.intra.peff.net>
-	<7v1wnnysrn.fsf@assigned-by-dhcp.cox.net>
-	<20061201081117.GA20025@coredump.intra.peff.net>
-	<7vlklranrt.fsf@assigned-by-dhcp.cox.net>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [RFC] Submodules in GIT
+Date: Thu, 30 Nov 2006 13:16:37 +0100
+Message-ID: <456ECBA5.7010409@op5.se>
+References: <20061121223130.GA24909@nan92-1-81-57-214-146.fbx.proxad.net> <200611281335.38728.andyparkins@gmail.com> <20061129160355.GF18810@admingilde.org> <200611292000.23778.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 1 Dec 2006 11:01:53 +0000 (UTC)
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 30 Nov 2006 12:19:27 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <7vlklranrt.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Fri, 01 Dec 2006 02:55:34 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
+In-Reply-To: <200611292000.23778.andyparkins@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32892>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32728>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gq68N-0001Vs-9k for gcvg-git@gmane.org; Fri, 01 Dec
- 2006 12:00:48 +0100
+ esmtp (Exim 4.43) id 1GpksW-0001qu-N0 for gcvg-git@gmane.org; Thu, 30 Nov
+ 2006 13:19:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S936388AbWLALAo (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
- 06:00:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936403AbWLALAo
- (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 06:00:44 -0500
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:16888 "EHLO
- fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP id S936388AbWLALAm
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 06:00:42 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao06.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061201110042.IOHK5465.fed1rmmtao06.cox.net@fed1rmimpo02.cox.net>; Fri, 1
- Dec 2006 06:00:42 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id tP0r1V00D1kojtg0000000; Fri, 01 Dec 2006
- 06:00:51 -0500
-To: Jeff King <peff@peff.net>
+ S936309AbWK3MQy (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
+ 07:16:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936314AbWK3MQx
+ (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 07:16:53 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:19144 "EHLO
+ smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S936310AbWK3MQj (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 07:16:39 -0500
+Received: from [192.168.1.20] (unknown [213.88.215.14]) by smtp-gw1.op5.se
+ (Postfix) with ESMTP id 393CB6BCC1; Thu, 30 Nov 2006 13:16:38 +0100 (CET)
+To: Andy Parkins <andyparkins@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano <junkio@cox.net> writes:
+Andy Parkins wrote:
+> On Wednesday 2006, November 29 16:03, Martin Waitz wrote:
+> 
+  >>  - when updating the supermodule, you have to take care that your
+>>    submodules are on the right branch.
+>>    You might for example have some testing-throwawy branch in one
+>>    submodule and don't want to merge it with other changes yet.
+> 
+> What is the "right" branch though?  As I said above, if you're tracking one 
+> branch in the submodule then you've effectively locked that submodule to that 
+> branch for all supermodule uses.  Or you've made yourself a big rod to beat 
+> yourself with everytime you want to do some development on an "off" branch on 
+> the submodule.
+> 
 
-> What's wrong is that the ancestry graph around that commit
-> roughly looks like this:
->
->          z---o---o---o
->         /             \
->   808239a--v1.4.3--o---*---o---v1.4.4
-> ...
-> While what blame outputs is technically correct, it is not very
-> useful for this kind of application.  As you said, it probably
-> makes sense to gray-out the lines that are blamed on boundary
-> commits.
->
-> Side note: one might be tempted to say "then blame v1.4.3 for
-> lines that 808239a is blamed for", but that is a good
+Perhaps I'm just daft, but I fail to see how you can safely track a 
+topic-branch that might get rewinded or rebased in the submodule without 
+crippling the supermodule. Wasn't the intention that the supermodule has 
+a new tree object (called "submodule") that points to a commit in the 
+submodule from where it gets its tree and stuff? Is the intention that 
+the supermodule pulls all of the submodules history into its own ODB? If 
+so, what's the difference between just having one large repository. If 
+not, how can you make it not break in case the commit it references in 
+the submodule is pruned away?
 
-Gaah.  "that is NOT a good workaround".  Sorry about the wasted
-bandwidth.
+One possible way would ofcourse be to add something like this to the 
+supermodule commit:
+submodule directory/commit-sha1
+tree submodule-tree-sha1
 
-> workaround.  The original command line could have more than one
-> bottom commits, and the final blame might go to a common
-> ancestor of them, and we need to randomly choose between them,
-> which is worse than telling the truth as we currently do.
+but then you're in trouble because the supermodule will have the same 
+files as all the submodules stored in its own tree. I'm confused. Could 
+someone shed some light on how this sub-/super-module connection is 
+supposed to work in the supermodule's commit objects?
+
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
