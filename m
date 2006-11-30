@@ -1,94 +1,48 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC] Submodules in GIT
-Date: Sun, 03 Dec 2006 23:49:03 +0100
-Organization: At home
-Message-ID: <ekvk8s$c3d$1@sea.gmane.org>
-References: <20061130170625.GH18810@admingilde.org> <200612012306.41410.Josef.Weidendorfer@gmx.de> <Pine.LNX.4.64.0612011423100.3695@woody.osdl.org> <200612012355.03493.Josef.Weidendorfer@gmx.de> <Pine.LNX.4.64.0612011510290.3695@woody.osdl.org> <4570AF8F.1000801@stephan-feder.de> <Pine.LNX.4.64.0612011505190.3695@woody.osdl.org> <200612020036.08826.Josef.Weidendorfer@gmx.de> <Pine.LNX.4.64.0612011540010.3695@woody.osdl.org> <20061203221630.GA940MdfPADPa@greensroom.kotnet.org> <Pine.LNX.4.64.0612031421030.3476@woody.osdl.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-NNTP-Posting-Date: Sun, 3 Dec 2006 22:49:34 +0000 (UTC)
+From: Yann Dirson <ydirson@altern.org>
+Subject: [PATCH 0/3] Misc stgit patches
+Date: Thu, 30 Nov 2006 01:23:04 +0100
+Message-ID: <20061130002304.21981.67797.stgit@gandelf.nowhere.earth>
+Content-Type: text/plain; charset=utf-8; format=fixed
+Content-Transfer-Encoding: 8bit
+NNTP-Posting-Date: Thu, 30 Nov 2006 00:28:52 +0000 (UTC)
+Cc: GIT list <git@vger.kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 44
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+User-Agent: StGIT/0.11
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33148>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gr09H-0007bQ-9G for gcvg-git@gmane.org; Sun, 03 Dec
- 2006 23:49:27 +0100
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GpZmH-0002OP-Le for gcvg-git@gmane.org; Thu, 30 Nov
+ 2006 01:27:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1759841AbWLCWtY (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 3 Dec 2006
- 17:49:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760136AbWLCWtY
- (ORCPT <rfc822;git-outgoing>); Sun, 3 Dec 2006 17:49:24 -0500
-Received: from main.gmane.org ([80.91.229.2]:53122 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S1759841AbWLCWtX (ORCPT
- <rfc822;git@vger.kernel.org>); Sun, 3 Dec 2006 17:49:23 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1Gr091-0005cC-LS for git@vger.kernel.org; Sun, 03 Dec 2006 23:49:11 +0100
-Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Sun, 03 Dec 2006 23:49:11 +0100
-Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Sun, 03 Dec 2006
- 23:49:11 +0100
-To: git@vger.kernel.org
+ S967726AbWK3A1n (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 29 Nov 2006
+ 19:27:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967723AbWK3A1n
+ (ORCPT <rfc822;git-outgoing>); Wed, 29 Nov 2006 19:27:43 -0500
+Received: from smtp2-g19.free.fr ([212.27.42.28]:9930 "EHLO
+ smtp2-g19.free.fr") by vger.kernel.org with ESMTP id S967726AbWK3A1n (ORCPT
+ <rfc822;git@vger.kernel.org>); Wed, 29 Nov 2006 19:27:43 -0500
+Received: from bylbo.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net
+ [81.57.214.146]) by smtp2-g19.free.fr (Postfix) with ESMTP id 0120577C1; Thu,
+ 30 Nov 2006 01:27:42 +0100 (CET)
+Received: from gandelf.nowhere.earth ([10.0.0.5] ident=dwitch) by
+ bylbo.nowhere.earth with esmtp (Exim 4.62) (envelope-from
+ <ydirson@altern.org>) id 1GpZms-0006Au-FW; Thu, 30 Nov 2006 01:28:26 +0100
+To: Catalin Marinas <catalin.marinas@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Linus Torvalds wrote:
+One of the following patches contains a pretty substantial change to stack.py to help
+adding new stored properties to a Series just like it is done for a Patch.  It was
+expected to be the first in a series for storing branch parent information, but as you
+may have read already, it's not for today :)
 
-> On Sun, 3 Dec 2006, Sven Verdoolaege wrote:
->> 
->> On Fri, Dec 01, 2006 at 03:30:32PM -0800, Linus Torvalds wrote:
->>> The only thing that a submodule must NOT be allowed to do on its own is 
->>> pruning (and it's distant cousin "git repack -d").
->> 
->> How are you going to enforce this if the submodule isn't supposed
->> to know that it is being used as a submodule ?
-> 
-> Note that there's actually two "submodules":
-> 
->  - there's the submodule "project" itself.
-> 
->    This one must be totally unaware of the supermodule, because this one 
->    might be cloned and copied _independently_ of the supermodule.
-> 
->  - there's the PARTICULAR CHECKED-OUT COPY of the submodule that is 
->    actually checked out in a supermodule.
-> 
->    This is just a specific _instance_ of the particular submodule.
-> 
-> So a particular instance of a submodule might be "aware" of the fact that 
-> it's a submodule of a supermodule. For example, the "awareness" migth be 
-> as simple as just a magic flag file inside it's .git/ directory. And that 
-> awareness would be what simply disabled pruning or "repack -d" within that 
-> particular instance.
-
-If we use objects/info/alternates (or equivalent, e.g. objects/info/modules,
-or modules file) in superproject to refer to submodule repository object
-database (so superproject has access to all the objects including
-submodule), I'd prefer to have in submodule objects/info/borrowers file,
-which would point to superproject (and to other repositories which have
-submodule as one of alternate object databases) for git-prune and friends
-to check which parts are truly unreachable.
-
-This would be generic solution to the problem with alternates, not only
-specific to submodule support.
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
-
+Yann Dirson    <ydirson@altern.org> |
+Debian-related: <dirson@debian.org> |   Support Debian GNU/Linux:
+                                    |  Freedom, Power, Stability, Gratis
