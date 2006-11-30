@@ -5,112 +5,86 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-diff opens too many files?
-Date: Mon, 20 Nov 2006 13:02:24 -0800
-Message-ID: <7vfycd25nj.fsf@assigned-by-dhcp.cox.net>
-References: <fcaeb9bf0611200212s6ddb0518k24f85223acfed08b@mail.gmail.com>
-	<Pine.LNX.4.64.0611200832450.3692@woody.osdl.org>
+Subject: Re: [PATCH 0/2] Making "git commit" to mean "git commit -a".
+Date: Thu, 30 Nov 2006 14:47:51 -0800
+Message-ID: <7vy7psft60.fsf@assigned-by-dhcp.cox.net>
+References: <7virgzuf38.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0611282322320.9647@xanadu.home>
+	<7vr6vmsnly.fsf@assigned-by-dhcp.cox.net>
+	<87ejrlvn7r.wl%cworth@cworth.org>
+	<7vodqpn3t4.fsf@assigned-by-dhcp.cox.net>
+	<7vk61dn2yj.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0611300310520.30004@wbgn013.biozentrum.uni-wuerzburg.de>
+	<Pine.LNX.4.64.0611291859070.3513@woody.osdl.org>
+	<456EBBE7.8030404@op5.se>
+	<Pine.LNX.4.64.0611300749560.3513@woody.osdl.org>
+	<20061130164046.GB17715@thunk.org>
+	<Pine.LNX.4.64.0611300903080.3513@woody.osdl.org>
+	<Pine.LNX.4.64.0611301229290.9647@xanadu.home>
+	<87irgwu6e6.wl%cworth@cworth.org> <87hcwgu5t1.wl%cworth@cworth.org>
+	<Pine.LNX.4.64.0611301132350.3513@woody.osdl.org>
+	<Pine.LNX.4.64.0611301521320.9647@xanadu.home>
+	<Pine.LNX.4.64.0611301253380.3513@woody.osdl.org>
+	<eknhjr$nce$1@sea.gmane.org> <878xhsty3t.wl%cworth@cworth.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Mon, 20 Nov 2006 21:02:38 +0000 (UTC)
-Cc: git@vger.kernel.org, Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+NNTP-Posting-Date: Thu, 30 Nov 2006 22:49:02 +0000 (UTC)
+Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>,
+	Theodore Tso <tytso@mit.edu>, Andreas Ericsson <ae@op5.se>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <Pine.LNX.4.64.0611200832450.3692@woody.osdl.org> (Linus
-	Torvalds's message of "Mon, 20 Nov 2006 09:00:55 -0800 (PST)")
+In-Reply-To: <878xhsty3t.wl%cworth@cworth.org> (Carl Worth's message of "Thu,
+	30 Nov 2006 13:37:26 -0800")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31938>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32826>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GmGHd-00021n-83 for gcvg-git@gmane.org; Mon, 20 Nov
- 2006 22:02:29 +0100
+ esmtp (Exim 4.43) id 1GpuhA-0000mv-9x for gcvg-git@gmane.org; Thu, 30 Nov
+ 2006 23:47:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S966692AbWKTVC0 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 20 Nov 2006
- 16:02:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966731AbWKTVC0
- (ORCPT <rfc822;git-outgoing>); Mon, 20 Nov 2006 16:02:26 -0500
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:11915 "EHLO
- fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP id S966692AbWKTVCZ
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 20 Nov 2006 16:02:25 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao03.cox.net
+ S1031606AbWK3Wrx (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
+ 17:47:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031608AbWK3Wrx
+ (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 17:47:53 -0500
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:37597 "EHLO
+ fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP id S1031606AbWK3Wrx
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 17:47:53 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao04.cox.net
  (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061120210225.HJLT4817.fed1rmmtao03.cox.net@fed1rmimpo01.cox.net>; Mon, 20
- Nov 2006 16:02:25 -0500
+ <20061130224752.GLGZ7494.fed1rmmtao04.cox.net@fed1rmimpo02.cox.net>; Thu, 30
+ Nov 2006 17:47:52 -0500
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id p91v1V00d1kojtg0000000; Mon, 20 Nov 2006
- 16:01:56 -0500
-To: Linus Torvalds <torvalds@osdl.org>
+ fed1rmimpo02.cox.net with bizsmtp id tAo01V00m1kojtg0000000; Thu, 30 Nov 2006
+ 17:48:01 -0500
+To: Carl Worth <cworth@cworth.org>
 Sender: git-owner@vger.kernel.org
 
-Linus Torvalds <torvalds@osdl.org> writes:
+Carl Worth <cworth@cworth.org> writes:
 
-> Junio? This is your speciality, I'm not sure how painful it would be to 
-> unmap and remap on demand.. (or switch it to some kind of "keep the last 
-> <n> mmaps active" kind of thing to avoid having thousands and thousands of 
-> mmaps active).
+> I'm happy with the direction of having several commands that take the
+> place of update-index, each with its own name oriented toward what the
+> user wants to do.
 >
-> One simple thing that might be worth it is to simply _not_ use mmap() at 
-> all for small files. If a file is less than 1kB, it might be better to do 
-> a malloc() and a read() - partly because it avoids having tons of file 
-> descriptors, but partly because it's also more efficient from a virtual 
-> memory usage perspective (not that you're probably very likely to ever 
-> really hit that problem in practice).
+> Obviously, "add", "mv", and "rm" have obvious places where the user
+> wants to use them.
 >
-> Nguyen - that "use malloc+read" thing might be a quick workaround, but 
-> only if you have tons of _small_ files (and if you can't easily just 
-> increase file-max). 
+> There's the merge case where "resolve" and "resolved" have both been
+> floated as possible names.
+>
+> It might even make sense to invent one more name for the case where
+> the user wants to inform git that a file has been edited and that git
+> should accept the new contents. It's the sort of "note that file is
+> edited" operation that could be recommended to the user with "add; fix
+> typo; commit" confusion.
+>
+> Sure, "add" could be used again, and "update-index" clearly _works_
+> but it's a rather ugly name, (and already has "plumbing" functionality
+> like --add and --remove that we don't want here).
 
-So here is a lunch-time hack to get Nguyen unstuck.
+checkin.
 
--- >8 --
-[PATCH] diff.c: avoid mmap() of small files in populate_filespec()
+You check things into index with "git checkin" and later commit
+the index with "git commit".
 
-This would hopefully behave better in VM usage.  It is not a
-real fix if you are dealing with truly huge diff, in which case
-we would have to LRU out the data in memory for filespecs that
-are not used in immediate future.
-
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
-diff --git a/diff.c b/diff.c
-index 3315378..af50b6f 100644
---- a/diff.c
-+++ b/diff.c
-@@ -1294,11 +1294,22 @@ int diff_populate_filespec(struct diff_f
- 		fd = open(s->path, O_RDONLY);
- 		if (fd < 0)
- 			goto err_empty;
--		s->data = mmap(NULL, s->size, PROT_READ, MAP_PRIVATE, fd, 0);
-+		if (s->size < MINIMUM_MMAP) {
-+			s->data = xmalloc(s->size);
-+			s->should_free = 1;
-+			if (xread(fd, s->data, s->size) != s->size) {
-+				free(s->data);
-+				goto err_empty;
-+			}
-+		}
-+		else {
-+			s->data = mmap(NULL, s->size, PROT_READ, MAP_PRIVATE,
-+				       fd, 0);
-+			s->should_munmap = 1;
-+		}
- 		close(fd);
- 		if (s->data == MAP_FAILED)
- 			goto err_empty;
--		s->should_munmap = 1;
- 	}
- 	else {
- 		char type[20];
-diff --git a/diffcore.h b/diffcore.h
-index 2249bc2..f129aa0 100644
---- a/diffcore.h
-+++ b/diffcore.h
-@@ -21,6 +21,7 @@
- #define DEFAULT_MERGE_SCORE  36000 /* maximum for break-merge to happen 60%) */
- 
- #define MINIMUM_BREAK_SIZE     400 /* do not break a file smaller than this */
-+#define MINIMUM_MMAP	      4096 /* do not mmap a file smaller than this */
- 
- struct diff_filespec {
- 	unsigned char sha1[20];
