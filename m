@@ -2,64 +2,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: jgit performance update
-Date: Sun, 03 Dec 2006 18:56:33 +0100
-Organization: At home
-Message-ID: <ekv34g$mck$1@sea.gmane.org>
-References: <20061203045953.GE26668@spearce.org> <Pine.LNX.4.64.0612030938140.3476@woody.osdl.org>
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git and bzr
+Date: Thu, 30 Nov 2006 23:45:20 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0611302338190.30004@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <45357CC3.4040507@utoronto.ca> <456E8147.9070304@gmx.net>
+ <fcaeb9bf0611300101s51a53b75lc7e771b067ba6e33@mail.gmail.com>
+ <200611300930.33537.alan@chandlerfamily.org.uk> <ekm8ig$usu$1@sea.gmane.org>
+ <7vbqmpjlsz.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-NNTP-Posting-Date: Sun, 3 Dec 2006 17:57:08 +0000 (UTC)
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Thu, 30 Nov 2006 22:45:41 +0000 (UTC)
+Cc: jnareb@gmail.com, Alan Chandler <alan@chandlerfamily.org.uk>,
+	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 15
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <7vbqmpjlsz.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33120>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GqvaG-0005R9-Vo for gcvg-git@gmane.org; Sun, 03 Dec
- 2006 18:57:01 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32823>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gpuel-0000Jr-1e for gcvg-git@gmane.org; Thu, 30 Nov
+ 2006 23:45:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1758284AbWLCR44 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 3 Dec 2006
- 12:56:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758292AbWLCR44
- (ORCPT <rfc822;git-outgoing>); Sun, 3 Dec 2006 12:56:56 -0500
-Received: from main.gmane.org ([80.91.229.2]:6102 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S1758283AbWLCR4z (ORCPT
- <rfc822;git@vger.kernel.org>); Sun, 3 Dec 2006 12:56:55 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1Gqva4-0005fx-7H for git@vger.kernel.org; Sun, 03 Dec 2006 18:56:48 +0100
-Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Sun, 03 Dec 2006 18:56:48 +0100
-Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Sun, 03 Dec 2006
- 18:56:48 +0100
-To: git@vger.kernel.org
+ S1031602AbWK3WpY (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
+ 17:45:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031603AbWK3WpY
+ (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 17:45:24 -0500
+Received: from mail.gmx.net ([213.165.64.20]:28361 "HELO mail.gmx.net") by
+ vger.kernel.org with SMTP id S1031602AbWK3WpX (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 17:45:23 -0500
+Received: (qmail invoked by alias); 30 Nov 2006 22:45:21 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp030) with SMTP; 30 Nov 2006 23:45:21 +0100
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Linus Torvalds wrote:
+Hi,
 
-> Also, I have to say, one of the reasons I'm interested in your project is 
-> that I've never done any Java programming, because quite frankly, I've 
-> never had any reason what-so-ever to do so. But if there is some simple 
-> setup, and you have jgit exposed somewhere as a git archive, I'd love to 
-> take a look, if only to finally learn more about Java.
+On Thu, 30 Nov 2006, Junio C Hamano wrote:
 
-GitWiki tells us about egit/jgit repository at
-  http://www.spearce.org/projects/scm/egit.git
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+> Somehow we ended up introducing that twisted semantics and that was 
+> where --only came from, which unfortunately later became the default 
+> (and I already said that I realize this was a big mistake).
 
+If you are talking about "git commit file1 file2" ignoring the current 
+index, and building a new index just updating file1 and file2 from the 
+working directory, I disagree that it was a big mistake.
+
+Actually, I was very happy to get that change (IIRC it was me requesting 
+it, so blame me), because I now can say: just specify exactly what you 
+want to commit *1*.
+
+If you want to commit just file2 (even if you added file1, but did not 
+commit it yet) do "git commit file2". If you want to commit all changes, 
+either pass the names of all modified files, or "-a". IMHO this satisfies 
+the principle of least surprise.
+
+Ciao,
+Dscho
+
+Footnote 1: Of course, you can use commit in more ways. But this is 
+sufficient to get people started.
