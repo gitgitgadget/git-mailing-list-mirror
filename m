@@ -1,62 +1,60 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: git-format-patch little gripe
-Date: Fri, 3 Nov 2006 22:22:21 +1300
-Message-ID: <46a038f90611030122reecee87ufac5bbaa910ee933@mail.gmail.com>
-References: <376237.14965.qm@web31805.mail.mud.yahoo.com>
+From: Steven Grimm <koreth@midwinter.com>
+Subject: Re: git and bzr
+Date: Thu, 30 Nov 2006 01:39:59 -0800
+Message-ID: <456EA6EF.4000104@midwinter.com>
+References: <45357CC3.4040507@utoronto.ca> <456E8147.9070304@gmx.net> <fcaeb9bf0611300101s51a53b75lc7e771b067ba6e33@mail.gmail.com> <200611300930.33537.alan@chandlerfamily.org.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Fri, 3 Nov 2006 09:22:38 +0000 (UTC)
+NNTP-Posting-Date: Thu, 30 Nov 2006 09:40:09 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=me62o4OHLQsbUDuiH3c5oxtBLFtMBS7hC/9ny1XWvOOvmH6LT544YHH/UL5S2AT5M8fhDOSuyXhop+TB2OUd1Uuppc+Cj6zFintCF2AZ5b6cZd19i9++Vv2YcJMJb83XA3+uST3FWOnR4xd1vEWySLG8ZI7m+WwS70lbHT0W2/Y=
-In-Reply-To: <376237.14965.qm@web31805.mail.mud.yahoo.com>
-Content-Disposition: inline
+User-Agent: Thunderbird 1.5.0.8 (Macintosh/20061025)
+In-Reply-To: <200611300930.33537.alan@chandlerfamily.org.uk>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30803>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32715>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GfvFr-0003ER-G3 for gcvg-git@gmane.org; Fri, 03 Nov
- 2006 10:22:28 +0100
+ esmtp (Exim 4.43) id 1GpiOZ-0001EN-Q3 for gcvg-git@gmane.org; Thu, 30 Nov
+ 2006 10:39:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751010AbWKCJWY (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 3 Nov 2006
- 04:22:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752526AbWKCJWY
- (ORCPT <rfc822;git-outgoing>); Fri, 3 Nov 2006 04:22:24 -0500
-Received: from nf-out-0910.google.com ([64.233.182.189]:36041 "EHLO
- nf-out-0910.google.com") by vger.kernel.org with ESMTP id S1751010AbWKCJWX
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 3 Nov 2006 04:22:23 -0500
-Received: by nf-out-0910.google.com with SMTP id b2so1204474nfe for
- <git@vger.kernel.org>; Fri, 03 Nov 2006 01:22:22 -0800 (PST)
-Received: by 10.49.27.17 with SMTP id e17mr952580nfj.1162545741988; Fri, 03
- Nov 2006 01:22:21 -0800 (PST)
-Received: by 10.49.60.1 with HTTP; Fri, 3 Nov 2006 01:22:21 -0800 (PST)
-To: ltuikov@yahoo.com
+ S933390AbWK3Jjx (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
+ 04:39:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933351AbWK3Jjw
+ (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 04:39:52 -0500
+Received: from tater.midwinter.com ([216.32.86.90]:39332 "HELO
+ midwinter.com") by vger.kernel.org with SMTP id S933390AbWK3Jjw (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 04:39:52 -0500
+Received: (qmail 11944 invoked from network); 30 Nov 2006 09:39:51 -0000
+Received: from c-76-21-17-123.hsd1.ca.comcast.net (HELO ?192.168.0.128?)
+ (koreth@76.21.17.123) by tater.midwinter.com with SMTP; 30 Nov 2006 09:39:51
+ -0000
+To: Alan Chandler <alan@chandlerfamily.org.uk>
 Sender: git-owner@vger.kernel.org
 
-On 11/3/06, Luben Tuikov <ltuikov@yahoo.com> wrote:
-> Yep, after more than a year, I simply cannot get used to it...
-> http://marc.theaimsgroup.com/?l=git&m=113259043217761&w=2
-> And as I've seen, other people brought that up too.
+Alan Chandler wrote:
+> No you won't.   
+>
+> If you don't use update-index, then index will match HEAD and you will commit 
+> changes in the working tree.  That is the way for newbies
+>
+> As soon as you do the first update-index the index will no longer match HEAD, 
+> so commit will do the same as it does now.
+>
+> And if you are not sure which you have done then presumably you do what you do 
+> now, or git commit -a or git commit -i as you need.
 
-Hi Luben,
+Plus, one assumes, the git-generated comments in the commit message will 
+tell you what kind of commit it has decided to do.
 
-reading the thread, it sounds like you have a couple of shells scripts
-or aliases that do what you want already ;-)
-
-And for the scenario you mention, where upstream has taken some of
-your patches... git-format-patch automatically tries to skip those.
-Works well for me at least (ducks).
-
+I like this suggestion a lot. Thinking back over my git usage recently, 
+which has included both styles of commits (though mostly -a ones), I 
+think this would have done the right thing by default in every case.
 
