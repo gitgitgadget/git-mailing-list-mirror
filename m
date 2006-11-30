@@ -1,84 +1,70 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: Bug in merge-recursive in virtual commit corner case
-Date: Thu, 7 Dec 2006 14:24:01 -0500
-Message-ID: <20061207192401.GB12143@spearce.org>
-References: <20061207083531.GA22701@spearce.org> <Pine.LNX.4.63.0612071636030.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 0/2] Making "git commit" to mean "git commit -a".
+Date: Thu, 30 Nov 2006 17:05:11 +0100
+Organization: At home
+Message-ID: <ekmvc6$inf$1@sea.gmane.org>
+References: <Pine.LNX.4.64.0611271622260.9647@xanadu.home> <7vmz6cfsuw.fsf@assigned-by-dhcp.cox.net> <87bqmswm1e.wl%cworth@cworth.org> <7vodqse90q.fsf@assigned-by-dhcp.cox.net> <87ac2cwha4.wl%cworth@cworth.org> <7vy7pwcsgp.fsf@assigned-by-dhcp.cox.net> <878xhwwdyj.wl%cworth@cworth.org> <7vk61gcnzl.fsf@assigned-by-dhcp.cox.net> <7vd5786opj.fsf@assigned-by-dhcp.cox.net> <ekmkoe$a52$1@sea.gmane.org> <ekmlf4$ask$3@sea.gmane.org> <m2odqpm0d6.fsf@ziti.fhcrc.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 7 Dec 2006 19:24:19 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Transfer-Encoding: 7Bit
+NNTP-Posting-Date: Thu, 30 Nov 2006 16:04:36 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0612071636030.28348@wbgn013.biozentrum.uni-wuerzburg.de>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 20
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33609>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GsOqp-0005YL-Ew for gcvg-git@gmane.org; Thu, 07 Dec
- 2006 20:24:11 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32762>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GpoOH-0003lu-Af for gcvg-git@gmane.org; Thu, 30 Nov
+ 2006 17:04:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1163221AbWLGTYI (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
- 14:24:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1163220AbWLGTYH
- (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 14:24:07 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:34316 "EHLO
- corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S937999AbWLGTYE (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec 2006
- 14:24:04 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1GsOqa-0003Jj-IU; Thu, 07 Dec 2006 14:23:56 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- DF47220FB6E; Thu,  7 Dec 2006 14:24:01 -0500 (EST)
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+ S1030641AbWK3QD6 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
+ 11:03:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030642AbWK3QD5
+ (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 11:03:57 -0500
+Received: from main.gmane.org ([80.91.229.2]:53735 "EHLO ciao.gmane.org") by
+ vger.kernel.org with ESMTP id S1030641AbWK3QD5 (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 11:03:57 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1GpoNn-0003df-59 for git@vger.kernel.org; Thu, 30 Nov 2006 17:03:31 +0100
+Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Thu, 30 Nov 2006 17:03:31 +0100
+Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Thu, 30 Nov 2006
+ 17:03:31 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> On Thu, 7 Dec 2006, Shawn Pearce wrote:
+Seth Falcon wrote:
+
+> Jakub Narebski <jnareb@gmail.com> writes:
+
+>> By the way, I think that git-commit should also watch the return code
+>> from the editor, so you can ^C it to abort git-commit --amend.
 > 
-> > So I managed to create a fairly complex set of branches which are all
-> > merged back against each other at various points in time.  Two of
-> > them have 3 merge bases according to git-merge-base.  Tonight I
-> > tried to merge them together, but received the following wonderful
-> > error from git-merge-recursive:
-> > 
-> >   fatal: unable to read source tree (4b825dc642cb6eb9a060e54bf8d69288fbee4904)
-> > 
-> > For those in the know, that's the empty tree.  This particular 
-> > repository does not have the empty tree anywhere in it, which is why we 
-> > can't read the object: it doesn't exist, and shouldn't exist.
-> 
-> I think there is something else wrong. If you have three merge bases, I do 
-> not see how you could get into that particular code path.
+> For those using emacsclient, I don't think ^C will work.  Is there
+> another way to undo an amended commit?  If not, is there any sense in
+> detecting a magic comment to abort the ammend commit?
 
-Arrgh.  I can redo the merge and try to debug it myself; maybe I
-can at least get enough details about what's going on to create a
-dummy repo which exhibits the same behavior.
- 
-> Any possibility for me to have a private look at your repo?
+You can ^C the git-commit invocation.
 
-No, unfortunately for me (I wish I could let you debug this!).
-Far too many legal issues are involved.  There is possible jail
-time on my part for sharing any of the files in there...  ;-)
-
-Although Junio mentioned he recently saw something like this in
-git.git when he merged in your xdl_merge() code.  I wonder if its
-the same issue.
-
+And I guess ORIG_HEAD would help, and reflog certainly would help
+reverting (undoing) amend of a commit.
 -- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
+
