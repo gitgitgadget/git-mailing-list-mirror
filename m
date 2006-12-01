@@ -1,101 +1,71 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Wink Saville <wink@saville.com>
-Subject: Re: Resolving conflicts
-Date: Fri, 01 Dec 2006 00:22:26 -0800
-Message-ID: <456FE642.6020102@saville.com>
-References: <456FD461.4080002@saville.com> <Pine.LNX.4.64.0611302330000.3695@woody.osdl.org> <456FDF24.1070001@saville.com> <Pine.LNX.4.64.0611302353580.3695@woody.osdl.org> <Pine.LNX.4.64.0611302359400.3695@woody.osdl.org>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH 0/2] Making "git commit" to mean "git commit -a".
+Date: Fri, 01 Dec 2006 09:44:03 +0100
+Message-ID: <456FEB53.7080703@op5.se>
+References: <7virgzuf38.fsf@assigned-by-dhcp.cox.net>	<Pine.LNX.4.64.0611282322320.9647@xanadu.home>	<7vr6vmsnly.fsf@assigned-by-dhcp.cox.net>	<87ejrlvn7r.wl%cworth@cworth.org>	<7vodqpn3t4.fsf@assigned-by-dhcp.cox.net>	<7vk61dn2yj.fsf@assigned-by-dhcp.cox.net>	<Pine.LNX.4.63.0611300310520.30004@wbgn013.biozentrum.uni-wuerzburg.de>	<Pine.LNX.4.64.0611291859070.3513@woody.osdl.org>	<456EBBE7.8030404@op5.se>	<Pine.LNX.4.64.0611300749560.3513@woody.osdl.org>	<20061130164046.GB17715@thunk.org>	<Pine.LNX.4.64.0611300903080.3513@woody.osdl.org>	<Pine.LNX.4.64.0611301229290.9647@xanadu.home>	<87irgwu6e6.wl%cworth@cworth.org>	<ekn8s3$lh6$1@sea.gmane.org> <87fyc0u56z.wl%cworth@cworth.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Fri, 1 Dec 2006 08:22:32 +0000 (UTC)
-Cc: git <git@vger.kernel.org>
+NNTP-Posting-Date: Fri, 1 Dec 2006 08:44:22 +0000 (UTC)
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.8 (Windows/20061025)
-In-Reply-To: <Pine.LNX.4.64.0611302359400.3695@woody.osdl.org>
+User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
+In-Reply-To: <87fyc0u56z.wl%cworth@cworth.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32871>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32873>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gq3f7-0005wG-Vq for gcvg-git@gmane.org; Fri, 01 Dec
- 2006 09:22:26 +0100
+ esmtp (Exim 4.43) id 1Gq40H-0002Xe-Sz for gcvg-git@gmane.org; Fri, 01 Dec
+ 2006 09:44:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S967492AbWLAIWW (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
- 03:22:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967537AbWLAIWW
- (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 03:22:22 -0500
-Received: from 70-91-206-233-BusName-SFBA.hfc.comcastbusiness.net
- ([70.91.206.233]:46251 "EHLO saville.com") by vger.kernel.org with ESMTP id
- S967535AbWLAIWV (ORCPT <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006
- 03:22:21 -0500
-Received: from [192.168.0.52] (unknown [192.168.0.52]) by saville.com
- (Postfix) with ESMTP id A327B57A6F; Fri,  1 Dec 2006 00:18:24 -0800 (PST)
-To: Linus Torvalds <torvalds@osdl.org>
+ S967556AbWLAIoO (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
+ 03:44:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967558AbWLAIoO
+ (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 03:44:14 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:8071 "EHLO
+ smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S967556AbWLAIoM (ORCPT
+ <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 03:44:12 -0500
+Received: from [192.168.1.20] (unknown [213.88.215.14]) by smtp-gw1.op5.se
+ (Postfix) with ESMTP id D81E36BCC3; Fri,  1 Dec 2006 09:44:06 +0100 (CET)
+To: Carl Worth <cworth@cworth.org>
 Sender: git-owner@vger.kernel.org
 
-Linus Torvalds wrote:
+Carl Worth wrote:
 > 
-> On Thu, 30 Nov 2006, Linus Torvalds wrote:
->> No, kdiff3 probably doesn't have the same semantics, so better get the 
->> "real" merge. It's almost certainly in the rcs package, so "emerge rcs" 
->> should do it.
-> 
-> ..and just to be safe, remove the symlink first, so that you don't end up 
-> overwriting the "kdiff3" binary by mistake when you install the real 
-> "merge". Not that I think emerge is quite that stupid a package manager, 
-> but anyway..
-> 
-> 		Linus
+> See? Git _is_ harder to learn, and a user really cannot learn it
+> without being careful about the index right from the very beginning.
 > 
 
-Ubuntu is debian based and I use Synaptic GUI, a front end to apt-get. My earlier problem
-was I couldn't find which package "merge" was in. But now I just figured it out by going
-to debian.org and using "Search the contents of packages" for "merge". Turns out "merge"
-is in devel/rcs which of course the whole world knows, unless your a neophyte like me:)
+I'm not so sure about that. I came from CVS / SVN, although I've fiddled 
+quite a bit with other scm's as well. The two-step commit process of git 
+didn't terrify me at all, and I had used git at least a month before I 
+joined the mailing-list and found out that there's this thing called an 
+"index". I knew about it before, since back then (June or July 2005) 
+there was only git-update-index to mark things to commit. I just didn't 
+worry about it but expected the scm to tell me if I was about to break 
+something horribly (which it often but not always did).
 
-Any way after getting the real merge, I reverted the first pull and re-did it and all was well:
+I think the main thing people are having difficulties with when it comes 
+to git is that it doesn't do things like other SCM's do it. Imo this is 
+a good thing, because it allows git to be more powerful than other 
+SCM's. Otoh it forces users migrating from 
+darcs/hg/monotone/perforce/whatever to git actually read the 
+documentation (and quite a lot of it), while hg -> bzr migrators use 
+pretty much the same commands for pretty much the same actions. This 
+makes users accustomed to not reading docs / trying things out before 
+attempting Real Work(tm), which breaks down horribly when user 
+expectations doesn't match reality. The simplest and usually most 
+effective solution is to meet the users half-way, and tell them early on 
+that this power comes at the cost of having to read the documentation 
+and do the tutorials.
 
-wink@winkc2d1:~/linux/linux-2.6$ git-checkout -f
-wink@winkc2d1:~/linux/linux-2.6$ git-status
-# On branch refs/heads/ace
-nothing to commit
-wink@winkc2d1:~/linux/linux-2.6$ git-pull . master
-Trying really trivial in-index merge...
-fatal: Merge requires file-level merging
-Nope.
-Merging HEAD with 0215ffb08ce99e2bb59eca114a99499a4d06e704
-Merging:
-d7083db038fb98266e331a7f96198ec35a12367a A partial fix BUG 061124 (crashing when 1ms interrrupts).
-0215ffb08ce99e2bb59eca114a99499a4d06e704 Linux 2.6.19
-found 1 common ancestor(s):
-1abbfb412b1610ec3a7ec0164108cee01191d9f5 [PATCH] x86_64: fix bad page state in process 'swapper'
-Auto-merging kernel/fork.c
-Auto-merging kernel/spinlock.c
-
-Merge made by recursive.
-  Documentation/rtc.txt                         |  463 ++++++++++++++++---------
-  Makefile                                      |    2
-  arch/arm/configs/assabet_defconfig            |    1
-  arch/arm/configs/cerfcube_defconfig           |    1
-  arch/arm/configs/corgi_defconfig              |    1
-......
-  sound/pci/emu10k1/emu10k1_main.c              |    1
-  sound/pci/hda/patch_realtek.c                 |    2
-  sound/pci/hda/patch_sigmatel.c                |   14 -
-  sound/usb/usbaudio.c                          |    3
-  usr/Makefile                                  |    2
-  92 files changed, 888 insertions(+), 371 deletions(-)
-  create mode 100644 arch/mips/kernel/topology.c
-  create mode 100644 arch/um/os-Linux/execvp.c
-  create mode 100644 include/asm-arm/mach/udc_pxa2xx.h
-
-
-
-Thank you very much,
-
-Wink
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
