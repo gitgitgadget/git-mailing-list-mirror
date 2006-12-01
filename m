@@ -1,101 +1,72 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Problem with git-push
-Date: Wed, 01 Nov 2006 13:43:22 -0800
-Message-ID: <7v8xiu3ksl.fsf@assigned-by-dhcp.cox.net>
-References: <1162306098.41547.4.camel@mayday.esat.net>
-	<7v64e0qclo.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0611011205340.1670@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7v4ptj5ghj.fsf@assigned-by-dhcp.cox.net>
+From: Martin Waitz <tali@admingilde.org>
+Subject: Re: [RFC] Submodules in GIT
+Date: Fri, 1 Dec 2006 13:37:39 +0100
+Message-ID: <20061201123739.GT18810@admingilde.org>
+References: <20061121223130.GA24909@nan92-1-81-57-214-146.fbx.proxad.net> <200612011029.28059.andyparkins@gmail.com> <20061201113103.GM18810@admingilde.org> <200612011220.43813.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 1 Nov 2006 21:43:47 +0000 (UTC)
-Cc: git@vger.kernel.org, Florent Thoumie <flz@xbsd.org>
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="/U0GMd1Pus0mbMSS"
+NNTP-Posting-Date: Fri, 1 Dec 2006 12:37:49 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <7v4ptj5ghj.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Wed, 01 Nov 2006 07:33:28 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Content-Disposition: inline
+In-Reply-To: <200612011220.43813.andyparkins@gmail.com>
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
+User-Agent: Mutt/1.5.9i
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30660>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32915>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GfNrr-00019f-Fq for gcvg-git@gmane.org; Wed, 01 Nov
- 2006 22:43:28 +0100
+ esmtp (Exim 4.43) id 1Gq7eB-0000I9-Py for gcvg-git@gmane.org; Fri, 01 Dec
+ 2006 13:37:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752479AbWKAVnY (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 1 Nov 2006
- 16:43:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752485AbWKAVnY
- (ORCPT <rfc822;git-outgoing>); Wed, 1 Nov 2006 16:43:24 -0500
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:10901 "EHLO
- fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP id S1752479AbWKAVnX
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 1 Nov 2006 16:43:23 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao05.cox.net
- (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
- <20061101214323.SHIR12909.fed1rmmtao05.cox.net@fed1rmimpo02.cox.net>; Wed, 1
- Nov 2006 16:43:23 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id hZjT1V0011kojtg0000000 Wed, 01 Nov 2006
- 16:43:27 -0500
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+ S1031223AbWLAMhl (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
+ 07:37:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031230AbWLAMhl
+ (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 07:37:41 -0500
+Received: from agent.admingilde.org ([213.95.21.5]:16540 "EHLO
+ mail.admingilde.org") by vger.kernel.org with ESMTP id S1031223AbWLAMhk
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 07:37:40 -0500
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1) id
+ 1Gq7e7-0005YT-E7; Fri, 01 Dec 2006 13:37:39 +0100
+To: Andy Parkins <andyparkins@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano <junkio@cox.net> writes:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->
->>> but more importantly, if the directory in question was created by 
->>> somebody else, I do not think this chmod() would succeed even if you are 
->>> in the same group as the owner (i.e. previous creator) of the directory.
->>
->> But if somebody else created it, it should already have the correct 
->> permissions in the first place (unless the user played around with them, 
->> which is not a pilot error, but a willfull pointing of the barrel in the 
->> general direction of your knee).
->
-> True; I think the yesterday's analysis is still incomplete.  I
-> haven't reached the point where I can explain "is a directory".
-> If the directory was there and mkdir() failed (but we do not
-> check its return value), it would have set errno to EEXIST not
-> to EISDIR.  There is something else going on.
+--/U0GMd1Pus0mbMSS
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Actually, Florent's said the directory permission was screwed up
-to begin with, so after following the code a bit more I can see
-why it said "is a directory".
+hoi :)
 
-mkdir() may have failed because somebody else had a directory
-there, perhaps with wrong permission; link_temp_to_file()
-correctly fails from adjust_shared_perm() (because the directory
-had incorrect permission that it cannot fix), returns -2 with
-truncated filename "object/2d", back to move_temp_to_file(), and
--2 is not EEXIST so it tries to rename the temporary file to
-that directory, which would also fail and sets ret to errno
-(which now is EISDIR).  After unlinking the temporary file, we
-notice that ret is EISDIR and reports the failure.
+On Fri, Dec 01, 2006 at 12:20:42PM +0000, Andy Parkins wrote:
+> Is there a public repository I can look at to see what you've done?
+> I'm interested in the sort of plumbing changes needed to make
+> something like this work.
 
-So there is not much more to explain, other than why mkdir()
-failed in the first place.  Previous driver error?
+link is in the mail that started this thread ;-).
 
-I think idempotent chmod() on somebody else's file or directory
-would fail, so this may be a safer addition to the codepath in
-question.
+--=20
+Martin Waitz
 
-diff --git a/path.c b/path.c
-index bb89fb0..b82f194 100644
---- a/path.c
-+++ b/path.c
-@@ -279,7 +279,7 @@ int adjust_shared_perm(const char *path)
- 			    : 0));
- 	if (S_ISDIR(mode))
- 		mode |= S_ISGID;
--	if (chmod(path, mode) < 0)
-+	if (mode != st.st_mode && chmod(path, mode) < 0)
- 		return -2;
- 	return 0;
- }
+--/U0GMd1Pus0mbMSS
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFFcCITj/Eaxd/oD7IRAjGNAJ4lf80hueuspw7JLPLylWlH1/bRXgCfbPC/
+JB7U4zFcR/6grPXhYWC+I9w=
+=9FqP
+-----END PGP SIGNATURE-----
 
