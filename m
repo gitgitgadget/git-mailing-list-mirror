@@ -1,87 +1,135 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: git-pull from git.git - no remote ref for pu or next?
-Date: Tue, 12 Dec 2006 14:26:17 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0612121420580.18171@xanadu.home>
-References: <863b7l83o9.fsf@blue.stonehenge.com>
- <86y7pd6oz7.fsf@blue.stonehenge.com>
- <Pine.LNX.4.64.0612120949230.3535@woody.osdl.org>
- <Pine.LNX.4.63.0612121908100.2807@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0612121352520.18171@xanadu.home>
- <Pine.LNX.4.63.0612121956470.2807@wbgn013.biozentrum.uni-wuerzburg.de>
+From: pclouds@gmail.com
+Subject: [PATCH 3/3] Group common commands into for groups for easier navigation
+Date: Fri,  1 Dec 2006 22:08:31 +0700
+Message-ID: <11649857351377-git-send-email-pclouds@gmail.com>
+References: <1164985711791-git-send-email-pclouds@gmail.com> <11649857203869-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-NNTP-Posting-Date: Tue, 12 Dec 2006 19:26:26 +0000 (UTC)
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	"Randal L. Schwartz" <merlyn@stonehenge.com>, git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Fri, 1 Dec 2006 15:09:39 +0000 (UTC)
+Cc: =?utf-8?q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
+	<pclouds@gmail.com>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-reply-to: <Pine.LNX.4.63.0612121956470.2807@wbgn013.biozentrum.uni-wuerzburg.de>
-X-X-Sender: nico@xanadu.home
+X-Warning: Original message contained 8-bit characters, however during
+	   the SMTP transport session the receiving system did not announce
+	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
+	   message does not have MIME headers (RFC 2045-2049) to enable
+	   encoding change, we had very little choice.
+X-Warning: We ASSUME it is less harmful to add the MIME headers, and
+	   convert the text to Quoted-Printable, than not to do so,
+	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
+X-Warning: We don't know what character set the user used, thus we had to
+	   write these MIME-headers with our local system default value.
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:to:cc:subject:date:message-id:x-mailer:in-reply-to:references:content-type:content-transfer-encoding:from;
+        b=eHxpbRD1COXOZ5WLRlN+rKLr1ZMLZhspk4ay3Nx6+oyZg0DUcff13IfJP/mjzKoh7rKXmQa2iXMa8i7IDKN7Gs3sxdEDENwOol7YJe8oUL1Ymj0sWbRIKgF8FZs08k1hn/QOxq092aelcWvJvEif0fwfRRctYlATkpnUz9pOccQ=
+X-Mailer: git-send-email 1.4.3.3.g7854-dirty
+In-Reply-To: <11649857203869-git-send-email-pclouds@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34133>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GuDGg-0001ff-8A for gcvg-git@gmane.org; Tue, 12 Dec
- 2006 20:26:22 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32934>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GqA0m-0005uC-1u for gcvg-git@gmane.org; Fri, 01 Dec
+ 2006 16:09:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932390AbWLLT0T (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 12 Dec 2006
- 14:26:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932395AbWLLT0T
- (ORCPT <rfc822;git-outgoing>); Tue, 12 Dec 2006 14:26:19 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:44366 "EHLO
- relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S932390AbWLLT0S (ORCPT <rfc822;git@vger.kernel.org>); Tue, 12 Dec 2006
- 14:26:18 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
- <0JA600JEADZT97C0@VL-MH-MR002.ip.videotron.ca> for git@vger.kernel.org; Tue,
- 12 Dec 2006 14:26:18 -0500 (EST)
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+ S933718AbWLAPJI (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
+ 10:09:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933843AbWLAPJI
+ (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 10:09:08 -0500
+Received: from nz-out-0506.google.com ([64.233.162.230]:23275 "EHLO
+ nz-out-0102.google.com") by vger.kernel.org with ESMTP id S933718AbWLAPJH
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 10:09:07 -0500
+Received: by nz-out-0102.google.com with SMTP id s1so1550824nze for
+ <git@vger.kernel.org>; Fri, 01 Dec 2006 07:09:06 -0800 (PST)
+Received: by 10.65.219.13 with SMTP id w13mr7016733qbq.1164985746536; Fri, 01
+ Dec 2006 07:09:06 -0800 (PST)
+Received: from localhost ( [125.234.253.165]) by mx.google.com with ESMTP id
+ a29sm3204276qbd.2006.12.01.07.09.02; Fri, 01 Dec 2006 07:09:06 -0800 (PST)
+Received: by localhost (sSMTP sendmail emulation); Fri,  1 Dec 2006 22:08:55
+ +0700
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On Tue, 12 Dec 2006, Johannes Schindelin wrote:
+Repository/Branch level commands are grouped into group Repository
+=46ile manipulation commands are in group Manipulation
+Other status commands are in group Status
+The rest is in group Other
 
-> On Tue, 12 Dec 2006, Nicolas Pitre wrote:
-> 
-> > On Tue, 12 Dec 2006, Johannes Schindelin wrote:
-> > 
-> > > On Tue, 12 Dec 2006, Linus Torvalds wrote:
-> > > 
-> > > > But since the thing needs mirroring for non-git uses too, and since 
-> > > > rsync generally _works_ apart from the slight race-condition issue, 
-> > > 
-> > > ... and git would probably change the pack structure (i.e. which objects 
-> > > are in which packs, or even loose) which would be too bad for all those 
-> > > HTTP leechers ...
-> > 
-> > I don't see how that would be more of a concern than the current 
-> > situation with occasional repacks.
-> 
-> Oh well. I did not want to get bashed for something which is probably no 
-> problem,
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+This is a suggestion. Someone may have better layout than me.
 
-Sorry, far from me to sound as if I was bashing you.
+ generate-cmdlist.sh |   35 +++++++++++++++++++++--------------
+ 1 files changed, 21 insertions(+), 14 deletions(-)
 
-> but I suspected that the two mirror machines could get out of 
-> sync, which could well mean that the new packs would have to be downloaded 
-> _twice_. As I said, probably no problem.
-
-In theory that should not happen since all mirrors would get the same 
-updates in the same steps.  But in practice if one mirror fails to get 
-updated for whatever reason then the next time around it could have a 
-bigger pack instead of two smaller ones for the same set of objects.
-
-> But it would become a non-problem when the HTTP transport would learn to 
-> read and interpret the .idx files, basically constructing thin packs from 
-> parts of the .pack files ("Content-Range:" comes to mind)...
-
-Woooh.
-
-
+diff --git a/generate-cmdlist.sh b/generate-cmdlist.sh
+index b45495d..f385854 100755
+--- a/generate-cmdlist.sh
++++ b/generate-cmdlist.sh
+@@ -10,33 +10,40 @@ struct cmdname_help
+ struct cmdname_help common_cmds[] =3D {"
+=20
+ cat <<\EOF |
+-add
+-apply
+-archive
+-bisect
++G:Repository
++init-db
+ branch
+-checkout
+-cherry-pick
+ clone
+-commit
+-diff
+ fetch
+-grep
+-init-db
+-log
+ merge
+-mv
+ prune
+ pull
+ push
+-rebase
+ reset
++tag
++
++G:Manipulation
++add
++apply
++checkout
++commit
++mv
+ revert
+ rm
++
++G:Status
++diff
++log
+ show
+ show-branch
+ status
+-tag
++
++G:Other
++archive
++bisect
++cherry-pick
++grep
++rebase
+ verify-tag
+ EOF
+ while read cmd
+--=20
+1.4.4.rc1.g9124
