@@ -1,77 +1,78 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Dave Dillow <dave@thedillows.org>
-Subject: Re: What's in git.git
-Date: Wed, 08 Nov 2006 22:45:31 -0500
-Message-ID: <1163043931.2943.4.camel@obelisk.thedillows.org>
-References: <dlang@digitalinsight.com>
-	 <200611090228.kA92SMqw006666@laptop13.inf.utfsm.cl>
-	 <7vslgtpbx0.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [RFC] Submodules in GIT
+Date: Fri, 1 Dec 2006 15:09:40 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0612011505190.3695@woody.osdl.org>
+References: <20061130170625.GH18810@admingilde.org> <457061A7.2000102@b-i-t.de>
+ <Pine.LNX.4.64.0612011134080.3695@woody.osdl.org> <200612012306.41410.Josef.Weidendorfer@gmx.de>
+ <Pine.LNX.4.64.0612011423100.3695@woody.osdl.org> <4570AF8F.1000801@stephan-feder.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 9 Nov 2006 03:45:46 +0000 (UTC)
-Cc: "Horst H. von Brand" <vonbrand@laptop13.inf.utfsm.cl>,
-	git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Fri, 1 Dec 2006 23:10:27 +0000 (UTC)
+Cc: sf <sf@b-i-t.de>, git@vger.kernel.org,
+	Martin Waitz <tali@admingilde.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authentication-Warning: obelisk.thedillows.org: il1 set sender to dave@thedillows.org using -f
-In-Reply-To: <7vslgtpbx0.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Evolution 2.2.3 (2.2.3-4.fc4) 
+In-Reply-To: <4570AF8F.1000801@stephan-feder.de>
+X-MIMEDefang-Filter: osdl$Revision: 1.161 $
+X-Scanned-By: MIMEDefang 2.36
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31178>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32983>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gi0rC-0003cM-WD for gcvg-git@gmane.org; Thu, 09 Nov
- 2006 04:45:39 +0100
+ esmtp (Exim 4.43) id 1GqHWS-0001yp-AO for gcvg-git@gmane.org; Sat, 02 Dec
+ 2006 00:10:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S964769AbWKIDpf (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 8 Nov 2006
- 22:45:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965668AbWKIDpf
- (ORCPT <rfc822;git-outgoing>); Wed, 8 Nov 2006 22:45:35 -0500
-Received: from smtp.knology.net ([24.214.63.101]:65444 "EHLO
- smtp.knology.net") by vger.kernel.org with ESMTP id S964769AbWKIDpe (ORCPT
- <rfc822;git@vger.kernel.org>); Wed, 8 Nov 2006 22:45:34 -0500
-Received: (qmail 31215 invoked by uid 0); 9 Nov 2006 03:45:32 -0000
-Received: from unknown (HELO obelisk.thedillows.org) (69.73.92.192) by
- smtp2.knology.net with SMTP; 9 Nov 2006 03:45:32 -0000
-Received: from obelisk.thedillows.org (localhost [127.0.0.1]) by
- obelisk.thedillows.org (8.13.7/8.13.4) with ESMTP id kA93jVxR003471; Wed, 8
- Nov 2006 22:45:31 -0500
-Received: (from il1@localhost) by obelisk.thedillows.org
- (8.13.7/8.13.7/Submit) id kA93jVwV003470; Wed, 8 Nov 2006 22:45:31 -0500
-To: Junio C Hamano <junkio@cox.net>
+ S1161179AbWLAXKV (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
+ 18:10:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1162160AbWLAXKV
+ (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 18:10:21 -0500
+Received: from smtp.osdl.org ([65.172.181.25]:43461 "EHLO smtp.osdl.org") by
+ vger.kernel.org with ESMTP id S1161179AbWLAXKV (ORCPT
+ <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 18:10:21 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
+ smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kB1N9fjQ014709
+ (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Fri, 1
+ Dec 2006 15:09:42 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
+ shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kB1N9e9R031120; Fri, 1 Dec
+ 2006 15:09:41 -0800
+To: sf <sf-gmane@stephan-feder.de>
 Sender: git-owner@vger.kernel.org
 
-On Wed, 2006-11-08 at 18:54 -0800, Junio C Hamano wrote:
-> "Horst H. von Brand" <vonbrand@laptop13.inf.utfsm.cl> writes:
-> 
-> > David Lang <dlang@digitalinsight.com> wrote:
-> >> On Tue, 7 Nov 2006, Junio C Hamano wrote:
-> >> 
-> >> > [pu]
-> >> >
-> >> >  Johannes's shallow clone work now should rebase cleanly on top
-> >> >  of 'master' although I haven't done so yet.  As he said
-> >> >  himself the series is waiting for people who have needs for
-> >> >  such a feature to raise hands.
-> >> 
-> >> I haven't been watching this recently, but if this is what I
-> >> understand it to be (the ability to get a partial repository from
-> >> upstream and work normally from there with the result of data-mineing
-> >> tools sometimes reporting 'that's part of the truncated history' if
-> >> they hit the cutoff) consider my hand raised.
-> >
-> > +1
-> 
-> What does that plus one mean?  I do not know where people picked
-> up this annoying plus or minus one business, but could you all
-> stop that?
 
-Horst can speak for himself, but I'd wager he's using the Apache voting
-conventions:
+
+On Fri, 1 Dec 2006, sf wrote:
+> Linus Torvalds wrote:
+> ...
+> > In contrast, a submodule that we don't fetch is an all-or-nothing 
+> > situation: we simply don't have the data at all, and it's really a matter 
+> > of simply not recursing into that submodule at all - much more like not 
+> > checking out a particular part of the tree.
+> 
+> If you do not want to fetch all of the supermodule then do not fetch the
+> supermodule.
+
+So why do you want to limit it? There's absolutely no cost to saying "I 
+want to see all the common shared infrastructure, but I'm actually only 
+interested in this one submodule that I work with".
+
+Also, anybody who works on just the build infrastructure simply may not 
+care about all the submodules. The submodules may add up to hundreds of 
+gigs of stuff. Not everybody wants them. But you may still want to get the 
+common build infrastructure.
+
+In other words, your "all or nothing" approach is
+ (a) not friendly
+and
+ (b) has no real advantages anyway, since modules have to be independent 
+     enough that you _can_ split them off for other reasons anyway.
+
+So forcing that "you have to take everything" mentality onyl has 
+negatives, and no positives. Why do it?
 
