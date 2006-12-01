@@ -1,75 +1,73 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 3/3] Remove unsupported C99 style struct initializers in git-archive.
-Date: Sat, 04 Nov 2006 23:32:32 -0800
-Message-ID: <7vd582uz5b.fsf@assigned-by-dhcp.cox.net>
-References: <20061105053723.GC4193@spearce.org>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [PATCH/RFC] Make git-commit cleverer - have it figure out whether it needs -a automatically
+Date: Fri, 1 Dec 2006 10:52:47 +0000
+Message-ID: <200612011052.48784.andyparkins@gmail.com>
+References: <200611301259.32387.andyparkins@gmail.com> <81b0412b0611300914u521a5351idde23618c2fbf017@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sun, 5 Nov 2006 07:32:45 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Fri, 1 Dec 2006 10:53:17 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061105053723.GC4193@spearce.org> (Shawn O. Pearce's message of
-	"Sun, 5 Nov 2006 00:37:23 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=sKCIY4UEEWzaKkPPe8TYwkzoAlFoVkXQROybqpOi4JBP2qxG5+5sBQa37TAUk6DOUXKGqe4S6qf6l8nBGXirpXI4vlq7VbsDN6yRU1xA4kRcDI7vQ896Sh9sPeo7FUdweAjisspy5asnjMY+auA1g9H6v9DqDbtdDxlWjBpTq5Q=
+User-Agent: KMail/1.9.5
+In-Reply-To: <81b0412b0611300914u521a5351idde23618c2fbf017@mail.gmail.com>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30956>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32888>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GgcUf-00086F-J5 for gcvg-git@gmane.org; Sun, 05 Nov
- 2006 08:32:38 +0100
+ esmtp (Exim 4.43) id 1Gq60o-0007u7-5I for gcvg-git@gmane.org; Fri, 01 Dec
+ 2006 11:52:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1161208AbWKEHce (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 5 Nov 2006
- 02:32:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161209AbWKEHce
- (ORCPT <rfc822;git-outgoing>); Sun, 5 Nov 2006 02:32:34 -0500
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:45742 "EHLO
- fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP id S1161208AbWKEHcd
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 5 Nov 2006 02:32:33 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao10.cox.net
- (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
- <20061105073232.QSVT18985.fed1rmmtao10.cox.net@fed1rmimpo02.cox.net>; Sun, 5
- Nov 2006 02:32:32 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id ivYd1V00X1kojtg0000000 Sun, 05 Nov 2006
- 02:32:38 -0500
-To: "Shawn O. Pearce" <spearce@spearce.org>
+ S1030671AbWLAKwy (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
+ 05:52:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936308AbWLAKwy
+ (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 05:52:54 -0500
+Received: from ug-out-1314.google.com ([66.249.92.168]:36482 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S936309AbWLAKwx
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 05:52:53 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so2386013uga for
+ <git@vger.kernel.org>; Fri, 01 Dec 2006 02:52:52 -0800 (PST)
+Received: by 10.66.219.11 with SMTP id r11mr7004928ugg.1164970372124; Fri, 01
+ Dec 2006 02:52:52 -0800 (PST)
+Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
+ ESMTP id l33sm23777076ugc.2006.12.01.02.52.51; Fri, 01 Dec 2006 02:52:51
+ -0800 (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
+On Thursday 2006 November 30 17:14, Alex Riesen wrote:
 
-> +static struct archiver_desc
-> +{
-> +	const char *name;
-> +	write_archive_fn_t write_archive;
-> +	parse_extra_args_fn_t parse_extra;
-> +} archivers[] = {
-> +	{ "tar", write_tar_archive, NULL },
-> +	{ "zip", write_zip_archive, parse_extra_zip_args },
->  };
+> The is dangerous on filesystems which lie to the programs about file
+> metadata. The "virtual filesystem" of cygwin is one of this kind: exec-bit
+> of the files depend
+> on its contents. Just calling git-commit -a will commit executability
+> at this particular
+> moment. For whatever reason, disabling handling of the exec-mode in gits
+> config does not work.
 
-If this were a struct with bazillions of fields I might have had
-trouble swallowing the change, but this is so small that it is
-no brainer.
+Surely this is a separate fault?
 
-I think this actually is an improvement.
+> If you about to change the behaviour, provide at least a config option
+> to go back
+> to the old git-commit, which didn't do any magic.
 
->  static int run_remote_archiver(const char *remote, int argc,
-> @@ -88,7 +86,10 @@ static int init_archiver(const char *nam
->  
->  	for (i = 0; i < ARRAY_SIZE(archivers); i++) {
->  		if (!strcmp(name, archivers[i].name)) {
-> -			memcpy(ar, &archivers[i], sizeof(struct archiver));
-> +			memset(ar, 0, sizeof(*ar));
-> +			ar->name = archivers[i].name;
-> +			ar->write_archive = archivers[i].write_archive;
-> +			ar->parse_extra = archivers[i].parse_extra;
+Wasn't the whole point of this to avoid needing another config option?
 
-But is this change really needed?  Shouldn't a structure
-assignment just work?
+
+Andy
+
+-- 
+Dr Andy Parkins, M Eng (hons), MIEE
