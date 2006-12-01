@@ -1,61 +1,73 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Alan Chandler <alan@chandlerfamily.org.uk>
-Subject: Re: git and bzr
-Date: Thu, 30 Nov 2006 08:31:56 +0000
-Message-ID: <200611300831.56858.alan@chandlerfamily.org.uk>
-References: <45357CC3.4040507@utoronto.ca> <87bqmpvlxf.wl%cworth@cworth.org> <456E8147.9070304@gmx.net>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [PATCH] Make git-commit cleverer - have it figure out whether it needs -a automatically
+Date: Fri, 1 Dec 2006 10:59:00 +0000
+Message-ID: <200612011059.01659.andyparkins@gmail.com>
+References: <fcaeb9bf0611300532x77c7fc8aq2ba77ff57b81cc05@mail.gmail.com> <200611301501.43436.andyparkins@gmail.com> <ekn0ne$nuk$1@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain;
-  charset="iso-8859-1"
+  charset="iso-8859-2"
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 30 Nov 2006 08:32:22 +0000 (UTC)
+NNTP-Posting-Date: Fri, 1 Dec 2006 10:59:50 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=Rttg1wMZFuaaTmamysSnJdBzzUhxflhMCl+OKa1JMJLUUJD5R/TlOCFYmCOtAFzqbdkSlFD58xzdPoNJZ1o6qgKbvTqzcghzRRvBnKE3Mj1EKIogm+xQWyfEyMKHslOwSt8tUqgSBGgdkLpqycRyB8GFFaWo2T04bLyeedq+05M=
 User-Agent: KMail/1.9.5
-In-Reply-To: <456E8147.9070304@gmx.net>
+In-Reply-To: <ekn0ne$nuk$1@sea.gmane.org>
 Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32708>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32890>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GphKy-0001S7-VZ for gcvg-git@gmane.org; Thu, 30 Nov
- 2006 09:32:09 +0100
+ esmtp (Exim 4.43) id 1Gq671-00019n-Ji for gcvg-git@gmane.org; Fri, 01 Dec
+ 2006 11:59:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1759123AbWK3IcD (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
- 03:32:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759127AbWK3IcD
- (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 03:32:03 -0500
-Received: from 82-44-22-127.cable.ubr06.croy.blueyonder.co.uk
- ([82.44.22.127]:58755 "EHLO home.chandlerfamily.org.uk") by vger.kernel.org
- with ESMTP id S1759123AbWK3IcB (ORCPT <rfc822;git@vger.kernel.org>); Thu, 30
- Nov 2006 03:32:01 -0500
-Received: from kanger.home ([192.168.0.21]) by home.chandlerfamily.org.uk
- with esmtp (Exim 4.63) (envelope-from <alan@chandlerfamily.org.uk>) id
- 1GphKp-00040R-Rr for git@vger.kernel.org; Thu, 30 Nov 2006 08:31:59 +0000
+ S1030712AbWLAK7L (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
+ 05:59:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030715AbWLAK7L
+ (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 05:59:11 -0500
+Received: from ug-out-1314.google.com ([66.249.92.173]:54693 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1030712AbWLAK7G
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 05:59:06 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so2387390uga for
+ <git@vger.kernel.org>; Fri, 01 Dec 2006 02:59:05 -0800 (PST)
+Received: by 10.66.243.4 with SMTP id q4mr7058229ugh.1164970745341; Fri, 01
+ Dec 2006 02:59:05 -0800 (PST)
+Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
+ ESMTP id l40sm23801402ugc.2006.12.01.02.59.04; Fri, 01 Dec 2006 02:59:04
+ -0800 (PST)
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On Thursday 30 November 2006 06:59, Raimund Bauer wrote:
-> Maybe we could do that _only_ if the index matches HEAD, and otherwise
-> keep current behavior?
-> So people who don't care about the index won't get tripped up, and when
-> you do have a dirty index, you get told about it?
->
+On Thursday 2006 November 30 16:28, Jakub Narebski wrote:
 
-I have been(silently)  following the git commit discussion and started being 
-fully on the side of git commit -a being the default, but was slowly moving 
-over towards the git commit -i being the default camp.
+> Insount on #git pointed out fragility of this solution with respect
+> to adding/removing/moving files, which dirties index (which might not be
+> understood by newbie user: "git commit" used to work, but doesn't work the
+> same when I added some files).
 
-This post seems like a Eureka moment - chew over the problem long enough and 
-someone comes in from left field with an off the wall remark that suddenly 
-clarifies everything.
+It does, provided they only added files and didn't change anything else.  If 
+they did then we're out of it for this patch anyway.
+
+Anyway, this is only meant to help ease people into the index.  As discussed 
+elsewhere, hiding the index is a silly policy.
+
+This patch isn't /just/ for the newbies by the way (who are already confused, 
+so that hasn't changed), I know about the index, but I still like it.  
+Remember, all it's really saying is "when commit would do nothing, do 
+something".  So it only takes away an option that you can't have been using 
+anyway because it didn't do anything.
 
 
-
+Andy
 -- 
-Alan Chandler
+Dr Andy Parkins, M Eng (hons), MIEE
