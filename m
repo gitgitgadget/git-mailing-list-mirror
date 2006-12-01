@@ -1,76 +1,113 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: fetching packs and storing them as packs
-Date: Thu, 26 Oct 2006 20:50:12 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0610262038320.11384@xanadu.home>
-References: <Pine.LNX.4.64.0610252333540.12418@xanadu.home>
- <4540CA0C.6030300@tromer.org> <Pine.LNX.4.64.0610261105200.12418@xanadu.home>
- <45413209.2000905@tromer.org>
+From: Stephan Feder <sf@b-i-t.de>
+Subject: Re: [RFC] Submodules in GIT
+Date: Fri, 01 Dec 2006 17:04:19 +0100
+Message-ID: <45705283.5080900@b-i-t.de>
+References: <200611281335.38728.andyparkins@gmail.com> <20061129160355.GF18810@admingilde.org> <200611292000.23778.andyparkins@gmail.com> <20061130170625.GH18810@admingilde.org> <456F29A2.1050205@op5.se> <45701A24.5060500@b-i-t.de> <20061201121110.GP18810@admingilde.org> <45702C50.9050307@b-i-t.de> <20061201134311.GV18810@admingilde.org> <45703ACB.6050007@b-i-t.de> <20061201150746.GA18810@admingilde.org>
+Reply-To: sf@b-i-t.de
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-NNTP-Posting-Date: Fri, 27 Oct 2006 01:13:16 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Fri, 1 Dec 2006 16:06:12 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-reply-to: <45413209.2000905@tromer.org>
-X-X-Sender: nico@xanadu.home
+User-Agent: Thunderbird 1.5.0.8 (X11/20061110)
+In-Reply-To: <20061201150746.GA18810@admingilde.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30269>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32939>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GdFvN-0000Av-Sq for gcvg-git@gmane.org; Fri, 27 Oct
- 2006 02:50:19 +0200
+ esmtp (Exim 4.43) id 1GqAsX-0005oi-Fi for gcvg-git@gmane.org; Fri, 01 Dec
+ 2006 17:04:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1423733AbWJ0AuO (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
- 20:50:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423736AbWJ0AuO
- (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 20:50:14 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:49579 "EHLO
- relais.videotron.ca") by vger.kernel.org with ESMTP id S1423733AbWJ0AuN
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 20:50:13 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
- <0J7R0043XRNOQNI0@VL-MH-MR001.ip.videotron.ca> for git@vger.kernel.org; Thu,
- 26 Oct 2006 20:50:12 -0400 (EDT)
-To: Eran Tromer <git2eran@tromer.org>
+ S967633AbWLAQE1 convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006 11:04:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967665AbWLAQE1
+ (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 11:04:27 -0500
+Received: from mail.medianet-world.de ([213.157.0.167]:33160 "HELO
+ mail.medianet-world.de") by vger.kernel.org with SMTP id S967633AbWLAQE1
+ convert rfc822-to-8bit (ORCPT <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006
+ 11:04:27 -0500
+Received: (qmail 31407 invoked by uid 1011); 1 Dec 2006 16:04:26 -0000
+Received: from sf@b-i-t.de by mail1 by uid 1003 with qmail-scanner-1.22 
+ (ExcuBAtor: 1.0.2.  Clear:RC:1(213.157.15.184):SA:0(0.0/5.0):.  Processed in
+ 0.224444 secs); 01 Dec 2006 16:04:26 -0000
+Received: from unknown (HELO IP-213157000067.dialin.heagmedianet.de)
+ (213.157.15.184) by mail.medianet-world.de with SMTP; 1 Dec 2006 16:04:25
+ -0000
+Received: from [192.168.168.40] (groa.b-i-t.de [192.168.168.40]) by
+ mail.b-i-t.de (Postfix) with ESMTP id 6E8A423347; Fri,  1 Dec 2006 17:04:20
+ +0100 (CET)
+To: Martin Waitz <tali@admingilde.org>
 Sender: git-owner@vger.kernel.org
 
-On Fri, 27 Oct 2006, Eran Tromer wrote:
+Martin Waitz wrote:
+> hoi :)
+>=20
+> On Fri, Dec 01, 2006 at 03:23:07PM +0100, Stephan Feder wrote:
+>> And what is already there is a lot of meta information (see above). =
+You=20
+>> do not need that.
+>=20
+> What information are you refering to?
+> Perhaps you have looked into my old branch?
+> The current implementation is in "module2".
 
-> Hi,
-> 
-> On 2006-10-26 17:08, Nicolas Pitre wrote:
-> > On Thu, 26 Oct 2006, Eran Tromer wrote:
-> >> This creates a race condition w.r.t. "git repack -a -d", similar to the
-> >> existing race condition between "git fetch --keep" and
-> >> "git repack -a -d". There's a point in time where the new pack is stored
-> >> but not yet referenced, and if "git repack -a -d" runs at that point it
-> >> will eradicate the pack. When the heads are finally updated, you get a
-> >> corrupted repository.
-> > 
-> > And how is it different from receiving a pack through git-unpack-objects 
-> > where lots of loose objects are created, and git-repack -a -d removing 
-> > those unconnected loose objects before the heads are updated?
-> 
-> git-repack -a -d does not touch unconnected loose objects.
-> It removes only unconnected packed objects.
+I was looking into git-init-module.sh (branch module2). There you set u=
+p=20
+a separate git repository for the submodule and store references to it=20
+into the supermodules's repository.
 
-Right.
+>=20
+>> For example, in the index, if it is a commit (i.e. a subproject), st=
+ore=20
+>> the commit id (not the commit's tree id ).
+>=20
+> This is exactly what I have done.
+>=20
+>> Especially, extend update-index to be able to store a commit=20
+>> instead of the tree.
+>=20
+> Done, except that update-index never stores trees ;-)
 
-> Only git-prune removes unconnected loose objects, and that's documented
-> as unsafe.
+Yes, I forgot.
 
-Well, the race does exist.  Don't do repack -a -d at the same time then.
+>> Or else, do not change what is recorded in the index. Then, at commi=
+t=20
+>> time, you not only commit the superproject but also all subprojects.
+>=20
+> But then submodules would be handled differently to files which I wan=
+ted
+> to avoid.
 
-This race should be adressed somehow if it is really a problem.  Now 
-that I've used index-pack in place of unpack-objects for a while, I 
-don't think I'll want to go back.  It is simply faster to fetch, faster 
-to checkout, faster to repack, wastes less disk space, etc.
+On the other hand, it feels more naturally to only commit at the end of=
+=20
+your work. So both alternatives have their merits.
 
+>=20
+>> To push and pull you have to extend the tools as well. That is the n=
+ext=20
+>> step.
+>=20
+> Also done.
 
+I hope I have time to give your solution a try.
+
+Regards
+
+Stephan
+
+--=20
+b.i.t.
+beratungsgesellschaft f=FCr informations-technologie mbh
+Stephan Feder
+elisabethenstr. 62   fon: +49(0)6151/827575
+64283 darmstadt      fax: +49(0)6151/827576
+mailto:sf@b-i-t.de   www: http://www.b-i-t.de
