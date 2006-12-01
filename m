@@ -1,86 +1,104 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: v2.6.11 tag in kernel tree
-Date: Wed, 29 Nov 2006 20:22:37 -0800
-Message-ID: <7v7ixdlg1e.fsf@assigned-by-dhcp.cox.net>
-References: <9e4733910611292002o289dc4d1u7bde2d457fa97d73@mail.gmail.com>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [RFC] Submodules in GIT
+Date: Fri, 1 Dec 2006 09:02:48 +0000
+Message-ID: <200612010902.51264.andyparkins@gmail.com>
+References: <20061121223130.GA24909@nan92-1-81-57-214-146.fbx.proxad.net> <200611292000.23778.andyparkins@gmail.com> <20061130170625.GH18810@admingilde.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 30 Nov 2006 04:22:52 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain;
+  charset="iso-8859-15"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Fri, 1 Dec 2006 09:03:08 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <9e4733910611292002o289dc4d1u7bde2d457fa97d73@mail.gmail.com>
-	(Jon Smirl's message of "Wed, 29 Nov 2006 23:02:23 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=G+MHKfXDsa72TgE+CUaMUdQ028+siRZsgGgnTBIxTvQEIc3qpDPHazRuAzDDCYHWEFFJWuhhMcxK8nKwAsEeRjvXPL8GdNJxxntbSw0mubCWr/SdTGnuVq9yn0n1fxTMUIT+DT6ZrrSkS41lJAk7CxhVds7lC41rv//nRrHUExk=
+User-Agent: KMail/1.9.5
+In-Reply-To: <20061130170625.GH18810@admingilde.org>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32702>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32876>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GpdRc-0000jX-Vs for gcvg-git@gmane.org; Thu, 30 Nov
- 2006 05:22:45 +0100
+ esmtp (Exim 4.43) id 1Gq4IP-0006qU-D7 for gcvg-git@gmane.org; Fri, 01 Dec
+ 2006 10:03:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S933385AbWK3EWj (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 29 Nov 2006
- 23:22:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759008AbWK3EWj
- (ORCPT <rfc822;git-outgoing>); Wed, 29 Nov 2006 23:22:39 -0500
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:42691 "EHLO
- fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP id S1759005AbWK3EWi
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 29 Nov 2006 23:22:38 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao05.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061130042238.IQPJ20330.fed1rmmtao05.cox.net@fed1rmimpo01.cox.net>; Wed, 29
- Nov 2006 23:22:38 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id ssN41V00J1kojtg0000000; Wed, 29 Nov 2006
- 23:22:05 -0500
-To: "Jon Smirl" <jonsmirl@gmail.com>
+ S1030391AbWLAJC6 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
+ 04:02:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967564AbWLAJC6
+ (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 04:02:58 -0500
+Received: from ug-out-1314.google.com ([66.249.92.175]:38265 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S967536AbWLAJC5
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 04:02:57 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so2363062uga for
+ <git@vger.kernel.org>; Fri, 01 Dec 2006 01:02:55 -0800 (PST)
+Received: by 10.67.19.17 with SMTP id w17mr6927139ugi.1164963775541; Fri, 01
+ Dec 2006 01:02:55 -0800 (PST)
+Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
+ ESMTP id x37sm3592198ugc.2006.12.01.01.02.54; Fri, 01 Dec 2006 01:02:55 -0800
+ (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-"Jon Smirl" <jonsmirl@gmail.com> writes:
+On Thursday 2006 November 30 17:06, Martin Waitz wrote:
 
-> I'm trying to check out v2.6.11 so that I can figure out the changes a
-> vendor made to it.
->
-> jonsmirl@jonsmirl:/extra/linux$ git checkout -b microcross v2.6.11
-> Cannot switch branch to a non-commit.
+> You can easily have several topic-branches and merge updates from the
+> master branch.
+> otherwise you always have to remember which branch holds your current
+> contents from the supermodule.
 
-Sorry, you cannot check it out directly, and there is no easy
-way to start a new branch from a bare tree.
+WHAT?  I've got to make merges (that I don't necessarily want) in order to 
+commit in the supermodule?  This completely negates any useful functioning of 
+branches in the submodule.  I want to be able to make a quick development 
+branch in the submodule and NOT merge that code into master and then be able 
+to still commit that in the supermodule.
 
-I would create a temporary branch from any commit and reset the
-working tree with it.
+I think you're imagining the binding between the super and sub is very much 
+tighter than it should be.  What if I'm working on a development version of 
+the supermodule, which includes a stable version of the submodule?  Vice 
+versa?
 
-	git checkout -b temp master
-        git read-tree -m -u v2.6.11-tree
+> When viewed from the supermodule, you are storing one branch per
+> submodule in your tree.
 
-One BIG caveat is that this in state, only your index and the
-working tree can be trusted.  The history of temp branch does
-not have anything to do with v2.6.11 -- a bare tree object does
-not have any history behind it (or on top of it, for that
-matter).
+That prevents me "trying something out" on a topic branch in the submodule.  
+Here's a scenario using my suggested "supermodule tracks submodule HEAD" 
+method.
 
-A slightly more elaborate way would be
+ * You're developerA
+ * Make a development branch in the supermodule
+ * In the submodule, make a whole load of topic branches
+ * Make a development branch in the submodule
+ * Merge the topic branches into the development branch of the submodule
+ * Commit in the supermodule.  This capture
+ * Tag that commit "my-tested-arrangement-of-submodule-features"
+ * Push that tag to the central repository - tell the world.
+ * DeveloperB checks out that tag and tries it.  Great stuff.
 
-        $ git checkout -b v2.6.11-phoney $(echo 'phoney v2.6.11' |
-	        git commit-tree v2.6.11-tree^{tree})
+Now: here's the secret fact that I didn't tell you that will break 
+your "supermodule tracks submodule branch" method.  DeveloperB has decided to 
+have this in his remote:
+  Pull: refs/heads/master:refs/heads/upstream/master
+Oops. The supermodule, which has been told to track the "master" branch in the 
+submodule is tracking different things in developerA's repository from 
+developerB's repository.  Worse, what if developerB did this:
+  Pull: refs/heads/master:refs/heads/development
+  Pull: refs/heads/development:refs/heads/master
 
-to create a parentless commit that has v2.6.11-tree, and make
-that your current branch.  But again this commit does not have
-any relationship in history with the development line that leads
-to v2.6.19 just released.
+Branches are completely arbitrary per-repository.  You cannot rely on them 
+being consistent between different repositories.  If you store the name of a 
+submodule branch in a supermodule - that supermodule is only valid for that 
+one special case of your particular version of the submodule.
 
-You could graft it as the parent of v2.6.12-rc2 (the first
-commit in git era) after doing the above:
 
-	$ parent=$(git-rev-parse v2.6.11-phoney^0)
-        $ commit=$(git-rev-parse v2.6.12-rc2^0)
-	$ echo $commit $parent >>.git/info/grafts
-
-and pretend as if v2.6.12-rc2 is a child of v2.6.11-phoney.
-
+Andy
+-- 
+Dr Andy Parkins, M Eng (hons), MIEE
