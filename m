@@ -1,93 +1,86 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Dmitry Kakurin <dmitry.kakurin@gmail.com>
-Subject: Re: $GIT_DIR usage
-Date: Sun, 5 Aug 2007 04:55:55 -0700
-Message-ID: <678E8953ECEB4B72A99DEA2137B05823@ntdev.corp.microsoft.com>
-References: <46B59F63.8020707@gmail.com>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] (experimental) per-topic shortlog.
+Date: Fri, 1 Dec 2006 03:11:17 -0500
+Message-ID: <20061201081117.GA20025@coredump.intra.peff.net>
+References: <7v8xhxsopp.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611261652520.30076@woody.osdl.org> <Pine.LNX.4.63.0611280040480.30004@wbgn013.biozentrum.uni-wuerzburg.de> <7v7ixge8j2.fsf@assigned-by-dhcp.cox.net> <20061128131139.GA10874@coredump.intra.peff.net> <7v1wnnysrn.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="utf-8";
-	reply-type=response
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sun, 5 Aug 2007 11:56:14 +0000 (UTC)
-Cc: <git@vger.kernel.org>
-To: "Dan Zwell" <dzwell@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Fri, 1 Dec 2006 08:11:36 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:to:cc:references:in-reply-to:subject:date:mime-version:content-type:content-transfer-encoding:x-priority:x-msmail-priority:x-mailer:x-mimeole:from;
-        b=MbnwX2UM8OquPQD/PCehZowZHmVEmPeocFDKVd++aNeoS0JzaJMioRTSXIKsQKOEllWmhAedfXA8LByB5cEFWC+3Fskw8KfQZMeyNsC5/d5N/ArbFscmElyKprcPIdAUwj0ZNvO108fD2gCcO8I8+Q/9i3KkrGdepsYWN1l6Hxk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:to:cc:references:in-reply-to:subject:date:mime-version:content-type:content-transfer-encoding:x-priority:x-msmail-priority:x-mailer:x-mimeole:from;
-        b=NKaC1kiHv1rkzfEFoU2B0/lizSUjy7gGHTkcn2Z9SfYskecWlggzkrFee3yL7LHszMdohAPWp/oFfQJgHo9WT5rtZCT5M/oxIWGJs8EtmC15bNtmDzAftPP+CL533D0bLW+CK5QO8K8yFquf/WTSsfGIS+xf4EmJKjjYY3ZMlF8=
-In-Reply-To: <46B59F63.8020707@gmail.com>
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Windows Mail 6.0.6000.16480
-X-MimeOLE: Produced By Microsoft MimeOLE V6.0.6000.16480
+Content-Disposition: inline
+In-Reply-To: <7v1wnnysrn.fsf@assigned-by-dhcp.cox.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/55000>
-Received: from vger.kernel.org ([209.132.176.167]) by lo.gmane.org with esmtp
- (Exim 4.50) id 1IHeiP-0007oC-02 for gcvg-git@gmane.org; Sun, 05 Aug 2007
- 13:56:09 +0200
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32867>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gq3UZ-0003U3-4b for gcvg-git@gmane.org; Fri, 01 Dec
+ 2006 09:11:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1755480AbXHEL4E (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 5 Aug 2007
- 07:56:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755190AbXHEL4D
- (ORCPT <rfc822;git-outgoing>); Sun, 5 Aug 2007 07:56:03 -0400
-Received: from wa-out-1112.google.com ([209.85.146.182]:20795 "EHLO
- wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1754235AbXHEL4A (ORCPT <rfc822;git@vger.kernel.org>); Sun, 5 Aug
- 2007 07:56:00 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so1448020wah for
- <git@vger.kernel.org>; Sun, 05 Aug 2007 04:56:00 -0700 (PDT)
-Received: by 10.114.53.1 with SMTP id b1mr4643911waa.1186314959494; Sun, 05
- Aug 2007 04:55:59 -0700 (PDT)
-Received: from dmitrykl2 ( [71.112.20.227]) by mx.google.com with ESMTPS id
- l27sm5295632waf.2007.08.05.04.55.57 (version=SSLv3 cipher=OTHER); Sun, 05 Aug
- 2007 04:55:57 -0700 (PDT)
+ S967359AbWLAILU (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
+ 03:11:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967496AbWLAILU
+ (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 03:11:20 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:48053
+ "HELO peff.net") by vger.kernel.org with SMTP id S967359AbWLAILT (ORCPT
+ <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 03:11:19 -0500
+Received: (qmail 32079 invoked from network); 1 Dec 2006 03:11:28 -0500
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2) by
+ 66-23-211-5.clients.speedfactory.net with SMTP; 1 Dec 2006 03:11:28 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 01 Dec
+ 2006 03:11:17 -0500
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-I think you also need to set GIT_WORK_TREE.
-This way Git will know the root of directories that it controls.
+On Tue, Nov 28, 2006 at 04:57:00PM -0800, Junio C Hamano wrote:
 
-- Dmitry
------ Original Message ----- 
-From: "Dan Zwell" <dzwell@gmail.com>
-Newsgroups: gmane.comp.version-control.git
-To: <git@vger.kernel.org>
-Sent: Sunday, 5 August 2007 2:58
-Subject: $GIT_DIR usage
+> > The top 15 for v1.4.3 to v1.4.4 are:
+> >
+> > 1604 6973dcaee76ef7b7bfcabd2f26e76205aae07858 Libify diff-files.
+> 
+> Something is SERIOUSLY wrong.
+> 
+> That commit is not even between v1.4.3 and v1.4.4.
 
+Hmm, you're right. I haven't quite figured out what went wrong with the
+script I posted. However, a somewhat simpler approach is to just use the
+revision limiting in git-blame. The problem with this is that commits
+whose parents aren't in the revision range end up getting blamed for a
+lot of lines they're not responsible for.
 
-> Hi, I had a question about $GIT_DIR. That is to say, it doesn't seem to 
-> work. I am using Git 1.5.2.4. See the following: (all the commands I 
-> tried besides "git-init" failed).
-> 
-> $ export GIT_DIR="`pwd`/.git_public"
-> $ git init
-> warning: templates not found /usr/share//git-core/templates/
-> Initialized empty Git repository in /home/user/temp/.git_public/
-> $ echo > new_file
-> $ git add new_file
-> fatal: add must be run in a work tree
-> $ git commit -a
-> fatal: /usr/bin/git-commit cannot be used without a working tree.
-> $ git commit
-> fatal: /usr/bin/git-commit cannot be used without a working tree.
-> $
-> 
-> Is $GIT_DIR not meant to be used this way? Does it have a different 
-> purpose / use case, or is this just a bug?
-> 
-> Thanks,
+As a quick hack, I just threw out any revisions whose parents weren't in
+range. This is wrong, since those revisions probably _do_ have some
+correctly blamed lines. It made me wonder about a possible feature for
+git-blame: when we can't pass the blame up further, instead of taking
+responsibility, output a "no responsibility line" (blaming on commit
+0{40}, or some other format). I think this should be more informative
+when there is a limit on the range of revisions.
+
+The top of the "blamedness" list for v1.4.3..v1.4.4 is below. Important
+things do seem to float to the top, but it would probably be much more
+accurate if we were scoring groups of commits (generated by some other
+analysis).
+
+-Peff
+
+-- >8 --
+1050 cee7f245dcaef6dade28464f59420095a9949aac git-pickaxe: blame rewritten.
+223 fe142b3a4577a6692a39e2386ed649664ad8bd20 Rework cvsexportcommit to handle binary files for all cases.
+219 c31820c26b8f164433e67d28c403ca0df0316055 Make git-branch a builtin
+216 636171cb80255682bdfc9bf5a98c9e66d4c0444a make index-pack able to complete thin packs.
+182 b1f33d626501c3e080b324e182f1da76f49b5bf9 Swap the porcelain and plumbing commands in the git man page
+173 744d0ac33ab579845808b8b01e526adc4678a226 gitweb: New improved patchset view
+169 e30496dfcb98a305a57b835c248cbc3aa2376bfc gitweb: Support for 'forks'
+142 5b329a5f5e3625cdc204e3d274c89646816f384c t6022: ignoring untracked files by merge-recursive when they do not matter
+134 c0990ff36f0b9b8e806c8f649a0888d05bb22c37 Add man page for git-show-ref
+128 780e6e735be189097dad4b223d8edeb18cce1928 make pack data reuse compatible with both delta types
+121 2d477051ef260aad352d63fc7d9c07e4ebb4359b add the capability for index-pack to read from a stream
+116 576162a45f35e157427300066b0ff566ff698a0f remove .keep pack lock files when done with refs update
+110 e827633a5d7d627eb1170b2d0c71e944d0d56faf Built-in cherry
