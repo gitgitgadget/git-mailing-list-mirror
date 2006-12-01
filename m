@@ -2,61 +2,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Tracking a repository for content instead of history
-Date: Tue, 12 Dec 2006 17:35:42 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612121733580.2807@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <200612121235.09984.andyparkins@gmail.com>
- <200612121326.24508.andyparkins@gmail.com>
- <Pine.LNX.4.63.0612121527070.2807@wbgn013.biozentrum.uni-wuerzburg.de>
- <200612121538.41197.andyparkins@gmail.com>
- <Pine.LNX.4.63.0612121715230.2807@wbgn013.biozentrum.uni-wuerzburg.de>
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] (experimental) per-topic shortlog.
+Date: Fri, 01 Dec 2006 03:00:41 -0800
+Message-ID: <7vhcwfanja.fsf@assigned-by-dhcp.cox.net>
+References: <7v8xhxsopp.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0611261652520.30076@woody.osdl.org>
+	<Pine.LNX.4.63.0611280040480.30004@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7v7ixge8j2.fsf@assigned-by-dhcp.cox.net>
+	<20061128131139.GA10874@coredump.intra.peff.net>
+	<7v1wnnysrn.fsf@assigned-by-dhcp.cox.net>
+	<20061201081117.GA20025@coredump.intra.peff.net>
+	<7vlklranrt.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Tue, 12 Dec 2006 16:35:55 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Fri, 1 Dec 2006 11:01:53 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <Pine.LNX.4.63.0612121715230.2807@wbgn013.biozentrum.uni-wuerzburg.de>
-X-Y-GMX-Trusted: 0
+In-Reply-To: <7vlklranrt.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Fri, 01 Dec 2006 02:55:34 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34108>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GuAbc-0006BQ-SE for gcvg-git@gmane.org; Tue, 12 Dec
- 2006 17:35:49 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32892>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gq68N-0001Vs-9k for gcvg-git@gmane.org; Fri, 01 Dec
+ 2006 12:00:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751533AbWLLQfq (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 12 Dec 2006
- 11:35:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751537AbWLLQfp
- (ORCPT <rfc822;git-outgoing>); Tue, 12 Dec 2006 11:35:45 -0500
-Received: from mail.gmx.net ([213.165.64.20]:53913 "HELO mail.gmx.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S1751533AbWLLQfp
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 12 Dec 2006 11:35:45 -0500
-Received: (qmail invoked by alias); 12 Dec 2006 16:35:43 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp030) with SMTP; 12 Dec 2006 17:35:43 +0100
-To: Andy Parkins <andyparkins@gmail.com>
+ S936388AbWLALAo (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
+ 06:00:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936403AbWLALAo
+ (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 06:00:44 -0500
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:16888 "EHLO
+ fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP id S936388AbWLALAm
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 06:00:42 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao06.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061201110042.IOHK5465.fed1rmmtao06.cox.net@fed1rmimpo02.cox.net>; Fri, 1
+ Dec 2006 06:00:42 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id tP0r1V00D1kojtg0000000; Fri, 01 Dec 2006
+ 06:00:51 -0500
+To: Jeff King <peff@peff.net>
 Sender: git-owner@vger.kernel.org
 
-Hi,
+Junio C Hamano <junkio@cox.net> writes:
 
-On Tue, 12 Dec 2006, Johannes Schindelin wrote:
+> What's wrong is that the ancestry graph around that commit
+> roughly looks like this:
+>
+>          z---o---o---o
+>         /             \
+>   808239a--v1.4.3--o---*---o---v1.4.4
+> ...
+> While what blame outputs is technically correct, it is not very
+> useful for this kind of application.  As you said, it probably
+> makes sense to gray-out the lines that are blamed on boundary
+> commits.
+>
+> Side note: one might be tempted to say "then blame v1.4.3 for
+> lines that 808239a is blamed for", but that is a good
 
-> If it weren't for the recent discussion of kernel.org being overloaded 
-> with gitweb processes, I'd just write down a hint like 
-> [URL edited out]
-> 
-> But since kernel.org is overloaded, I will not do that.
+Gaah.  "that is NOT a good workaround".  Sorry about the wasted
+bandwidth.
 
-Side note: it would probably not help you. The diff is uncompressed, and 
-thus likely _substantially larger_ than getting the snapshot via gitweb, 
-which _is_ compressed.
-
-Ciao,
-Dscho
+> workaround.  The original command line could have more than one
+> bottom commits, and the final blame might go to a common
+> ancestor of them, and we need to randomly choose between them,
+> which is worse than telling the truth as we currently do.
