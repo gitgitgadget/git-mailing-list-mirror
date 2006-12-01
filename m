@@ -1,180 +1,92 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] config option core.showroot to enable showing the diff of the root commit
-Date: Thu, 23 Nov 2006 17:30:37 -0800
-Message-ID: <7vzmahfx6q.fsf@assigned-by-dhcp.cox.net>
-References: <200611211341.48862.andyparkins@gmail.com>
-	<8aa486160611210609h1c2d229ekf0b5e8aeb4f21f11@mail.gmail.com>
-	<slrnem694k.4lm.Peter.B.Baumann@xp.machine.xx>
-	<Pine.LNX.4.64.0611210820100.3338@woody.osdl.org>
-	<20061121180643.GC7201@pasky.or.cz> <ejvfng$cj6$1@sea.gmane.org>
-	<20061121182135.GD7201@pasky.or.cz>
-	<7v64d8y4tu.fsf@assigned-by-dhcp.cox.net>
-	<slrnemaqt1.esn.Peter.B.Baumann@xp.machine.xx>
-	<7virh5khrc.fsf@assigned-by-dhcp.cox.net>
-	<slrnemcc0b.ncc.Peter.B.Baumann@xp.machine.xx>
-	<7vejrthf2y.fsf@assigned-by-dhcp.cox.net>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [RFC] Submodules in GIT
+Date: Fri, 1 Dec 2006 10:38:27 +0000
+Message-ID: <200612011038.29193.andyparkins@gmail.com>
+References: <20061121223130.GA24909@nan92-1-81-57-214-146.fbx.proxad.net> <200612010849.11176.andyparkins@gmail.com> <456FF6D1.4040500@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 24 Nov 2006 01:41:00 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain;
+  charset="iso-8859-15"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Fri, 1 Dec 2006 10:38:57 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <7vejrthf2y.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Thu, 23 Nov 2006 16:18:45 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=H4W7LTvDbCREe6hyVDiEHqQXEcCqSVBEY/XXlGQfCFaAw9QehqBcg/djQH0uly/lQWtpp2YovYWFFsFSXlwz7//eUW19pBi/V0DrfFh3WfOkRO2H9JoGLENTbkH1R7YV5ke7uuc2ccTv851pXuExWSepGZRpesXm7rp2KMbmcvA=
+User-Agent: KMail/1.9.5
+In-Reply-To: <456FF6D1.4040500@op5.se>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32184>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32886>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GnPtx-0005aw-2Y for gcvg-git@gmane.org; Fri, 24 Nov
- 2006 02:31:00 +0100
+ esmtp (Exim 4.43) id 1Gq5n2-0004wz-07 for gcvg-git@gmane.org; Fri, 01 Dec
+ 2006 11:38:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1757548AbWKXBaj (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 23 Nov 2006
- 20:30:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757549AbWKXBaj
- (ORCPT <rfc822;git-outgoing>); Thu, 23 Nov 2006 20:30:39 -0500
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:12190 "EHLO
- fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP id S1757548AbWKXBai
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 23 Nov 2006 20:30:38 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao05.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061124013037.BKYS20330.fed1rmmtao05.cox.net@fed1rmimpo02.cox.net>; Thu, 23
- Nov 2006 20:30:37 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id qRWl1V00X1kojtg0000000; Thu, 23 Nov 2006
- 20:30:45 -0500
-To: Peter Baumann <Peter.B.Baumann@stud.informatik.uni-erlangen.de>
+ S936135AbWLAKif (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
+ 05:38:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936187AbWLAKif
+ (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 05:38:35 -0500
+Received: from ug-out-1314.google.com ([66.249.92.169]:41793 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S936135AbWLAKie
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 05:38:34 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so2382889uga for
+ <git@vger.kernel.org>; Fri, 01 Dec 2006 02:38:33 -0800 (PST)
+Received: by 10.67.119.13 with SMTP id w13mr7029771ugm.1164969513547; Fri, 01
+ Dec 2006 02:38:33 -0800 (PST)
+Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
+ ESMTP id k2sm18654448ugf.2006.12.01.02.38.32; Fri, 01 Dec 2006 02:38:32 -0800
+ (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano <junkio@cox.net> writes:
+On Friday 2006 December 01 09:33, Andreas Ericsson wrote:
 
-> Peter Baumann <Peter.B.Baumann@stud.informatik.uni-erlangen.de>
-> writes:
+> True, but this makes one repo of the submodule special. Let's say you
+> have this layout
+
+In a way, but it's information that doesn't need to be transmitted.
+
+> mozilla/.git
+> mozilla/openssl/.git
+> mozilla/xlat/.git
 >
->> Sorry, but I don't understand. The color handling doesn't look any different
->> to me than the handling of the other config entrys. Did I miss something?
->
-> "git-diff-tree --color HEAD" (with explicit command line
-> instruction to color it) still colours its output, but "[diff]
-> color = auto" in ~/.gitconfig would not affect the coloring.
-> Hence, "git-diff-tree HEAD" with the configuration entry gives
-> monochrome.
->
-> "git diff HEAD" on the other hand looks at '[diff] color = auto"
-> and will color its output without being told on the command
-> line.
+> Now, we can be reasonably sure that the 'xlat' repo is something the
+> mozilla core team can push to, or at least we can consider the core repo
+> owners an official "vendor" of tags for the submodule repo. I'm fairly
+> certain openssl authors won't be too happy with allowing the thousands
+> of projects using its code to push tags to its official repo though.
 
-Since this is about "log" family that deals with revision
-structure, how about....
+No need, when cloning a supermodule, it will make those special tags 
+automatically in the submodule repo.  They are only there to prevent prune 
+from destroying those referenced commits after all.  If the submodule is 
+cloned directly, they aren't needed anyway, and those objects won't be part 
+of the dependency chain so wouldn't be downloaded.
 
--- >8 --
-[PATCH] config option log.showroot to show the diff of root commits
+> Now that I think about it more, I realize this is completely irrelevant
+> as the ui can create the tags in the submodule with info only from the
+> the supermodule, which means the submodule repo will only be special if
+> it's connected to the supermodule. We just need a command for creating
+> those tags in the submodule repo so people who use the same submodule
+> code for several projects can use the alternates mechanism effectively.
 
-From: Peter Baumann <Peter.B.Baumann@stud.informatik.uni-erlangen.de>
+Is that even necessary?  git-clone of a supermodule will make those tags 
+automatically.  If a submodule was alternative-cloned into a different 
+supermodule, well then THAT supermodule would make the right tags for itself.  
+Ah, I think I see what you mean now though, a method would be needed for 
+creating those tags if we managed to manually get a submodule repository in 
+to the supermodule - then supermodule-clone wouldn't have run.  Perhaps they 
+could be checked for at commit time and recreated then?
 
-This allows one to see a root commit as a diff in commands like git-log,
-git-show and git-whatchanged.
 
-Signed-off-by: Peter Baumann <Peter.B.Baumannn@stud.informatik.uni-erlangen.de>
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
- Documentation/config.txt |    6 ++++++
- builtin-log.c            |   20 ++++++++++++++++----
- 2 files changed, 22 insertions(+), 4 deletions(-)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 9d3c71c..9090762 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -219,6 +219,12 @@ i18n.commitEncoding::
- 	browser (and possibly at other places in the future or in other
- 	porcelains). See e.g. gitlink:git-mailinfo[1]. Defaults to 'utf-8'.
- 
-+log.showroot::
-+	If true, the initial commit will be shown as a big creation event.
-+	This is equivalent to a diff against an empty tree.
-+	Tools like gitlink:git-log[1] or gitlink:git-whatchanged[1], which
-+	normally hide the root commit will now show it. True by default.
-+
- merge.summary::
- 	Whether to include summaries of merged commits in newly created
- 	merge commit messages. False by default.
-diff --git a/builtin-log.c b/builtin-log.c
-index fedb013..7acf5d3 100644
---- a/builtin-log.c
-+++ b/builtin-log.c
-@@ -13,6 +13,8 @@
- #include <time.h>
- #include <sys/time.h>
- 
-+static int default_show_root = 1;
-+
- /* this is in builtin-diff.c */
- void add_head(struct rev_info *revs);
- 
-@@ -22,6 +24,7 @@ static void cmd_log_init(int argc, const
- 	rev->abbrev = DEFAULT_ABBREV;
- 	rev->commit_format = CMIT_FMT_DEFAULT;
- 	rev->verbose_header = 1;
-+	rev->show_root_diff = default_show_root;
- 	argc = setup_revisions(argc, argv, rev, "HEAD");
- 	if (rev->diffopt.pickaxe || rev->diffopt.filter)
- 		rev->always_show_header = 0;
-@@ -44,11 +47,20 @@ static int cmd_log_walk(struct rev_info
- 	return 0;
- }
- 
-+static int git_log_config(const char *var, const char *value)
-+{
-+	if (!strcmp(var, "log.showroot")) {
-+		default_show_root = git_config_bool(var, value);
-+		return 0;
-+	}
-+	return git_diff_ui_config(var, value);
-+}
-+
- int cmd_whatchanged(int argc, const char **argv, const char *prefix)
- {
- 	struct rev_info rev;
- 
--	git_config(git_diff_ui_config);
-+	git_config(git_log_config);
- 	init_revisions(&rev, prefix);
- 	rev.diff = 1;
- 	rev.diffopt.recursive = 1;
-@@ -63,7 +75,7 @@ int cmd_show(int argc, const char **argv
- {
- 	struct rev_info rev;
- 
--	git_config(git_diff_ui_config);
-+	git_config(git_log_config);
- 	init_revisions(&rev, prefix);
- 	rev.diff = 1;
- 	rev.diffopt.recursive = 1;
-@@ -80,7 +92,7 @@ int cmd_log(int argc, const char **argv,
- {
- 	struct rev_info rev;
- 
--	git_config(git_diff_ui_config);
-+	git_config(git_log_config);
- 	init_revisions(&rev, prefix);
- 	rev.always_show_header = 1;
- 	cmd_log_init(argc, argv, prefix, &rev);
-@@ -109,7 +121,7 @@ static int git_format_config(const char
- 	if (!strcmp(var, "diff.color")) {
- 		return 0;
- 	}
--	return git_diff_ui_config(var, value);
-+	return git_log_config(var, value);
- }
- 
- 
+Andy
 -- 
-1.4.4.1.g77614
-
+Dr Andy Parkins, M Eng (hons), MIEE
