@@ -1,70 +1,61 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Cleaning up git user-interface warts
-Date: Wed, 15 Nov 2006 11:28:27 +0100
-Organization: At home
-Message-ID: <ejeq20$5hn$1@sea.gmane.org>
-References: <87k61yt1x2.wl%cworth@cworth.org> <455A1137.8030301@shadowen.org> <87hcx1u934.wl%cworth@cworth.org> <20061114194707.GH7201@pasky.or.cz> <87d57pu4qa.wl%cworth@cworth.org> <7v3b8lv9c9.fsf@assigned-by-dhcp.cox.net> <20061115040852.GL7201@pasky.or.cz> <7vd57ps51c.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611142342160.2591@xanadu.home> <ejeotu$vrj$3@sea.gmane.org> <8aa486160611150215n64bb01e6o49aeaf243ad8f817@mail.gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Resolving conflicts
+Date: Thu, 30 Nov 2006 23:57:17 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0611302353580.3695@woody.osdl.org>
+References: <456FD461.4080002@saville.com> <Pine.LNX.4.64.0611302330000.3695@woody.osdl.org>
+ <456FDF24.1070001@saville.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Wed, 15 Nov 2006 10:27:33 +0000 (UTC)
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Fri, 1 Dec 2006 07:57:28 +0000 (UTC)
+Cc: git <git@vger.kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 20
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+In-Reply-To: <456FDF24.1070001@saville.com>
+X-MIMEDefang-Filter: osdl$Revision: 1.161 $
+X-Scanned-By: MIMEDefang 2.36
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31433>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32864>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GkHzO-0002BA-7a for gcvg-git@gmane.org; Wed, 15 Nov
- 2006 11:27:30 +0100
+ esmtp (Exim 4.43) id 1Gq3Gv-0001P3-3D for gcvg-git@gmane.org; Fri, 01 Dec
+ 2006 08:57:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S966747AbWKOK11 convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006 05:27:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966748AbWKOK11
- (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 05:27:27 -0500
-Received: from main.gmane.org ([80.91.229.2]:37597 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S966747AbWKOK10 (ORCPT
- <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 05:27:26 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1GkHzI-0002AB-8N for git@vger.kernel.org; Wed, 15 Nov 2006 11:27:24 +0100
-Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Wed, 15 Nov 2006 11:27:24 +0100
-Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Wed, 15 Nov 2006
- 11:27:24 +0100
-To: git@vger.kernel.org
+ S936099AbWLAH5W (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
+ 02:57:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936100AbWLAH5W
+ (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 02:57:22 -0500
+Received: from smtp.osdl.org ([65.172.181.25]:31162 "EHLO smtp.osdl.org") by
+ vger.kernel.org with ESMTP id S936099AbWLAH5V (ORCPT
+ <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 02:57:21 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
+ smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kB17vIjQ011002
+ (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Thu, 30
+ Nov 2006 23:57:19 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
+ shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kB17vIqI005541; Thu, 30 Nov
+ 2006 23:57:18 -0800
+To: Wink Saville <wink@saville.com>
 Sender: git-owner@vger.kernel.org
 
-Santi B=E9jar wrote:
 
-> On 11/15/06, Jakub Narebski <jnareb@gmail.com> wrote:
 
->> You mean
->>
->>       git merge git://repo.com/time_machine.git#branch
->>
->> don't you (perhaps with 'master' as default branch)?
->=20
-> perhaps with remote 'HEAD' as default branch?
+On Thu, 30 Nov 2006, Wink Saville wrote:
+> 
+> Earlier had a problem with git wanting merge but didn't have it and
+> couldn't figure out which package it was in Ubuntu:( So I symlinked merge
+> to kdiff3 which worked at the time:
 
-No! HEAD might change without your notice, and you want to know
-which branch you merge. With remotes the default could be first
-branch in the pull/fetch list, but with bare URL...
---=20
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Ahh. I'm pretty sure that is it.
+
+No, kdiff3 probably doesn't have the same semantics, so better get the 
+"real" merge. It's almost certainly in the rcs package, so "emerge rcs" 
+should do it.
+
+Or whatever system Ubuntu uses. 
 
