@@ -5,81 +5,90 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
 	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Christian MICHON" <christian.michon@gmail.com>
-Subject: Re: cygwin, 44k files: how to commit only index?
-Date: Thu, 7 Dec 2006 22:26:30 +0100
-Message-ID: <46d6db660612071326m4817165l992e8d6e7bd673c5@mail.gmail.com>
-References: <81b0412b0612070627r3ff0b394s124d95fbf8084f16@mail.gmail.com>
-	 <7vd56vtt2g.fsf@assigned-by-dhcp.cox.net>
-	 <20061207192632.GC12143@spearce.org>
-	 <20061207193555.GD12143@spearce.org>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [RFC] Submodules in GIT
+Date: Fri, 1 Dec 2006 21:04:37 +0000
+Message-ID: <200612012104.39897.andyparkins@gmail.com>
+References: <20061130170625.GH18810@admingilde.org> <200612011917.19252.andyparkins@gmail.com> <20061201193802.GI18810@admingilde.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain;
+  charset="iso-8859-15"
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 7 Dec 2006 21:26:39 +0000 (UTC)
+NNTP-Posting-Date: Fri, 1 Dec 2006 21:07:44 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=A/MZ/77wGN8RHpSmcwzTROyrYShBxdADLLDHiSXDz+aNzO4JIpDjaYBtolqOdcZTN/QXollCwmhzFiCuQe+byQmCuKCkoJRKjYrmZaaPBg3mLF5errvUaWL9moHlSV4+rIk6wbWv5+5J9m10Togr32JL7X0C/pce3oNpH09OCY4=
-In-Reply-To: <20061207193555.GD12143@spearce.org>
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=eaFJWRYSiczMRtGdNburrX2tVJM1Tlg+beuuk8KVTckTEzJ/ezLejn4fYlHuKmZb/xah+NOlDxGU6ezkSW3pw72JAxfMkD8KL0f281OU1b5ipWk6EbNuYSUaK1mJmOZ/9G5r8ntlBMdy2hRXjDJXmwCxKmTHegXZaVaDz6JKHxs=
+User-Agent: KMail/1.9.5
+In-Reply-To: <20061201193802.GI18810@admingilde.org>
 Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33635>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GsQlJ-00072Q-7F for gcvg-git@gmane.org; Thu, 07 Dec
- 2006 22:26:37 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32966>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GqFbY-00085X-OG for gcvg-git@gmane.org; Fri, 01 Dec
+ 2006 22:07:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1163402AbWLGV0e (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
- 16:26:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1163403AbWLGV0e
- (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 16:26:34 -0500
-Received: from ug-out-1314.google.com ([66.249.92.173]:20814 "EHLO
- ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1163402AbWLGV0d (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec
- 2006 16:26:33 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so582171uga for
- <git@vger.kernel.org>; Thu, 07 Dec 2006 13:26:31 -0800 (PST)
-Received: by 10.78.127.3 with SMTP id z3mr1688810huc.1165526791222; Thu, 07
- Dec 2006 13:26:31 -0800 (PST)
-Received: by 10.78.138.1 with HTTP; Thu, 7 Dec 2006 13:26:30 -0800 (PST)
+ S1161413AbWLAVH3 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
+ 16:07:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161415AbWLAVH3
+ (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 16:07:29 -0500
+Received: from ug-out-1314.google.com ([66.249.92.173]:4981 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1161413AbWLAVH2
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 16:07:28 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so2534180uga for
+ <git@vger.kernel.org>; Fri, 01 Dec 2006 13:07:22 -0800 (PST)
+Received: by 10.67.119.9 with SMTP id w9mr7931567ugm.1165007242558; Fri, 01
+ Dec 2006 13:07:22 -0800 (PST)
+Received: from grissom.internal.parkins.org.uk ( [84.201.153.164]) by
+ mx.google.com with ESMTP id b35sm22321178ugd.2006.12.01.13.07.21; Fri, 01 Dec
+ 2006 13:07:21 -0800 (PST)
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On 12/7/06, Shawn Pearce <spearce@spearce.org> wrote:
-> Shawn Pearce <spearce@spearce.org> wrote:
-> > Its Cygwin/NTFS.  lstat() is slow.  readdir() is slow.  I have the
-> > same problem on my Cygwin systems.
+On Friday 2006, December 01 19:38, Martin Waitz wrote:
+
+> On Fri, Dec 01, 2006 at 07:17:17PM +0000, Andy Parkins wrote:
+> > In fact, why should the submodule commits be even visible in the
+> > supermodule?  That tree->submodule commit is sufficient; there isn't
+> > any need to view submodule history in the supermodule.
 >
-> Just to be clear, I'm not trying to blame Cygwin here.
->
-> Windows' dir command is slow.  Windows Explorer is slow while
-> browsing directories.  Eclipse chugs hard while doing any directory
-> scans (it normally runs very fast if its not rescanning the entire
-> directory structure).  The drive is just plain slow.
-> (...)
+> Well, but there is a need for a common object traversal.
+> You need that when sending all objects between two supermodule versions
+> and also when you determine which objects are still reachable.
 
-before buying any new hardware, you could easily imagine the
-following scenario (I'm also "stuck" with windows, so it's an idea
-I've been toying around for a week or so).
+No you don't; when traversing the supermodule history you will come across 
+trees that have submodule commit hashes in them, that is all the other end 
+needs to know.  If it wants it can then connect to the submodule and clone 
+submodule to submodule.  The whole operation doesn't have to be done in the 
+supermodule though.
 
-There're virtualizers around, on which networking capabilities can
-be activated. And we could easily create a vm with linux+git
-inside, using ext2/ext3/ext4 fs virtual disks (you'd benefit from
-windows cache actually...)
+> The easiest way to implement the common object traversal is to have all
+> objects in one object repository.
 
-example: YTech_Subversion_Appliance_v1.1 (ubuntu + subversion).
+That's true; but is it the right way?  I really really think the submodule 
+objects should be in the submodule itself.
 
-I've no prototype yet, but I've 2 scenario possible:
-1) use vmplayer and a minimal uclibc initramfs with git onboard
-2) use qemu+kqemu and a similar mini-distro (but right now networking
-is an issue on windows hosts: I'm exploring tunneling)
+> It may be possible to use two object stores and still do the common
+> object traversal but I do not think that gives you any benefits.
 
-The 1st scenario is "easy". And I start to prefer this idea over
-even mingw porting of git (I tried and it's hard, really).
+There is one benefit - you can git-clone the submodule just as you would if it 
+were not a submodule.  In fact, from the submodule's point of view it knows 
+nothing about the supermodule.
 
-But again, maybe jgit would be a better universal solution.
+> You still don't have a totally separated repository then, because
+> you can't do a reachability analysis in the submodule repository alone.
 
+I'm going to guess by reachability analysis, you mean that the submodule 
+doesn't know that some of it's commits are referenced by the supermodule.  As 
+I suggested elsewhere in the thread, that's easily fixed by making a 
+refs/supermodule/commitXXXX file for each supermodule commit that references 
+as particular submodule commit.  Then you can git-prune, git-fsck whenever 
+you want.
+
+
+Andy
 -- 
+Dr Andrew Parkins, M Eng (Hons), AMIEE
