@@ -1,99 +1,181 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: [PATCH] merge-recursive: add/add really is modify/modify with an empty base
-Date: Thu, 14 Dec 2006 14:15:14 +0000
-Message-ID: <b0943d9e0612140615u2d91fec4qe3c8a3d0b6515026@mail.gmail.com>
-References: <20061207101707.GA19139@spearce.org>
-	 <7vmz5w5tuw.fsf@assigned-by-dhcp.cox.net>
-	 <Pine.LNX.4.63.0612122347590.2807@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <7vvekgog0r.fsf@assigned-by-dhcp.cox.net>
-	 <Pine.LNX.4.63.0612130402300.2807@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <7vvekgl2z2.fsf@assigned-by-dhcp.cox.net>
-	 <b0943d9e0612131401s6cde6d0du5e3c6d2e34bfbbb2@mail.gmail.com>
-	 <Pine.LNX.4.63.0612140045430.3635@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <b0943d9e0612140331q4c3a32e2l361fd04375f091d7@mail.gmail.com>
-	 <Pine.LNX.4.63.0612141436170.3635@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Martin Waitz <tali@admingilde.org>
+Subject: Re: [RFC] Submodules in GIT
+Date: Fri, 1 Dec 2006 17:54:19 +0100
+Message-ID: <20061201165418.GD18810@admingilde.org>
+References: <20061130170625.GH18810@admingilde.org> <200612010902.51264.andyparkins@gmail.com> <20061201110032.GL18810@admingilde.org> <45701B8D.1030508@b-i-t.de> <20061201121234.GQ18810@admingilde.org> <4570289D.9050802@b-i-t.de> <20061201133558.GU18810@admingilde.org> <45703375.4050500@b-i-t.de> <20061201145817.GY18810@admingilde.org> <45704EA3.40203@b-i-t.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 14 Dec 2006 14:15:29 +0000 (UTC)
-Cc: "Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="h4FfhoHh9AMwLYAn"
+NNTP-Posting-Date: Fri, 1 Dec 2006 16:54:41 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=gCKZwc2aUQ9vMMURvpKj8qwGyZSDNV6J9LuXu0h0T0nGC/nAwbx6G6bEvNs15DNPozXQXnKmeGw9P4wjerinK0qe/MhKFXHItCQ6psi4PJ/M/DXtwfOcIRQvw3o/MGmRwc75MeAY94JHyjRxcG/9lADzd1h5ortQPNrZR4f+90I=
-In-Reply-To: <Pine.LNX.4.63.0612141436170.3635@wbgn013.biozentrum.uni-wuerzburg.de>
 Content-Disposition: inline
+In-Reply-To: <45704EA3.40203@b-i-t.de>
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
+User-Agent: Mutt/1.5.9i
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34341>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GurMp-0001tU-6D for gcvg-git@gmane.org; Thu, 14 Dec
- 2006 15:15:23 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32945>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GqBea-0003wy-JO for gcvg-git@gmane.org; Fri, 01 Dec
+ 2006 17:54:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932746AbWLNOPT (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
- 09:15:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932744AbWLNOPS
- (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 09:15:18 -0500
-Received: from nz-out-0506.google.com ([64.233.162.232]:48929 "EHLO
- nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S932746AbWLNOPQ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec
- 2006 09:15:16 -0500
-Received: by nz-out-0506.google.com with SMTP id s1so251344nze for
- <git@vger.kernel.org>; Thu, 14 Dec 2006 06:15:15 -0800 (PST)
-Received: by 10.65.241.20 with SMTP id t20mr1588267qbr.1166105715569; Thu, 14
- Dec 2006 06:15:15 -0800 (PST)
-Received: by 10.65.126.2 with HTTP; Thu, 14 Dec 2006 06:15:14 -0800 (PST)
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+ S1031615AbWLAQyV (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
+ 11:54:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031619AbWLAQyV
+ (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 11:54:21 -0500
+Received: from agent.admingilde.org ([213.95.21.5]:6029 "EHLO
+ mail.admingilde.org") by vger.kernel.org with ESMTP id S1031615AbWLAQyU
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 11:54:20 -0500
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1) id
+ 1GqBeV-0007o6-3c; Fri, 01 Dec 2006 17:54:19 +0100
+To: Stephan Feder <sf@b-i-t.de>
 Sender: git-owner@vger.kernel.org
 
-On 14/12/06, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> On Thu, 14 Dec 2006, Catalin Marinas wrote:
-> > What it the relation between git-merge-recursive and "git-read-tree
-> > -m" (if any)?
->
-> git-merge-recursive internally calls the equivalent of 'git-read-tree -m'
-> (it does not fork() and exec(), but rather calls the C functions
-> directly) and does nothing more if the 'git-write-tree' succeeds. At least
-> that's the theory...
 
-OK, thanks (I imagined it might work like this).
+--h4FfhoHh9AMwLYAn
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> > One nice addition to git-merge-recursive (probably only useful to
-> > StGIT) would be more meaningful labeling of the conflict regions,
-> > passed via a command line similar to the "diff3 -L" option. StGIT
-> > generates "patched", "current" and "ancestor" labels with diff3.
->
-> This is possible. However, it is not _that_ horrible to see "HEAD" and
-> some SHA1 which is obviously non-HEAD. Added to that, a quite common case
-> are the intermediate merges which make merge-recursive so powerful, and
-> they are rightly called "Temporary branch 1" and "... 2".
+hoi :)
 
-From the StGIT perspective, it only does a three-way merge and passes
-commit id to git-merge-recursive, hence the complicated naming.
-However, it wouldn't be hard to modify StGIT to actually replace the
-hashes in the file with meaningful names.
+On Fri, Dec 01, 2006 at 04:47:47PM +0100, Stephan Feder wrote:
+> No so different. The way I see it is that "I" (meaning with submodules=20
+> implemented as I proposed) could pull regularly from "your" repositories=
+=20
+> (implemented as you proposed) and work with the result (including=20
+> submodules). Could you do the same?
 
-> > Yet another nice feature would be the ancestor region (which diff3
-> > doesn't add either but it gets added by emacs'
-> > ediff-merge-files-with-ancestor function if you use the interactive
-> > merge with StGIT).
->
-> Is this really that nice? I never needed it... Besides, it can get really
-> crappy when the conflicting regions are too large.
+Sorry, but with all that many people proposing things I am a bit lost
+now.  Sometimes I thought you want exactly the same thing as I do,
+sometimes I think we are talking in totally different directions.
 
-I think I only used the ancestor region for a mental representation of
-what xdl_merge already produces :-) since emacs (nor diff3) wasn't
-able to show the real differences. Probably no longer needed now.
+> >For me a submodule is responsible for everything in or below a certain
+> >directory.  So by definition when you change something in this
+> >directory, you have to change it in the submodule.
+>=20
+> But you do not consider the case where you cannot change the submodule=20
+> because you do not own it.
 
-Thanks for the explanations.
+I do not understand you here.
+The submodule is part of the supermodule, and the one who sets up the
+repository owns the whole thing, including all submodules, just like all
+the files which are part of the project.
 
--- 
+If you mean the upstream repository of the submodule, then yes, this is
+of course completely separated from the submodule and may be owned by
+someone else.  Consequently, this upstream repository of course does not
+need to change when someone introduces changes in the supermodule.
+
+> For example, git has the subproject xdiff. If git had been able to work=
+=20
+> with subprojects as I envision, and if xdiff had been published as a git=
+=20
+> repository (not necessarily subproject enabled), it could have been=20
+> pulled in git's subdirectory xdiff as a subproject.
+
+This could have been done if submodule support would have been available
+at the time xdiff was introduced, yes.
+
+> There would not have been a separate branch or even repository for
+> xdiff in the git repository.
+
+What separate branch or repository are you talking about?
+
+> All changes to xdiff in git could have been committed to the git=20
+> repository only.
+
+Yes, but if it would have been integrated as a submodule it obviously
+would have been committed to the xdiff submodule inside the git
+repository.
+So the changes are really part of the git repository, but you could go
+to the "git/xdiff" directory and only see the changes in the submodule,
+without the normal supermodule history.
+
+> Independently, they could have been published to upstream and be put
+> into the xdiff repository by its author.  But the last part is what
+> only the owner of the xdiff repository is able to decide.
+
+Of course, everything still works like normal git repositories.
+
+> >You can't change the submodule contents in the supermodule without also
+> >changing the submodule.
+> >This is just like you can't commit a change to a file without also
+> >changing the file.
+>=20
+> There is a difference. I would say: If you commit a change to a file in=
+=20
+> one branch, it need not be changed in all branches.
+
+But you need to change _at_least_ one branch.
+Otherwise you cannot commit to a branch.
+
+So if you change something in a submodule, you have to change one branch
+in the submodule.
+If you call git-checkout in the supermodule this will result in
+something like a git-reset in the submodule.
+
+> >No, this is the benefit you get by introducing submodules.
+> >Why would you want to introduce a submodule when it is not linked to the
+> >supermodule?
+>=20
+> Because the submodule must be independent of the supermodule.
+>=20
+> I see where you are coming from. You have one project that is divided=20
+> into subprojects but the subprojects themselves are not independent.
+>=20
+> What I would like to solve is the followng: You have a project X, an=20
+> this project is made part of two other projects Y and Z (as a submodule=
+=20
+> or subproject or whatever you want to call it). The project X need not,=
+=20
+> must not or cannot care that it was made a subproject. But in projects Y=
+=20
+> and Z, you must be able to bugfix or extend or modify the code of=20
+> projectX, and you must be able to push and pull changes between all=20
+> three projects (of course we are only talking about the code part of=20
+> project X).
+
+Of course.
+
+So if you wanted to check out everything, you could have something like
+~/src/X, ~/src/Y/X, and ~/src/Z/X.
+All of these would be GIT repositories, all of them have their
+independent branches.
+
+What I am saying is just that if you update Y, and the new Y contains an
+updated version of X, then ~/src/Y/X/.git/refs/heads/master will be
+changed by the pull, resulting in the new version of X being checked out
+in ~/src/Y/X (alongside all the other updates inside ~/src/Y).
+This of course is independend from ~/src/X or  ~/src/Z/X.
+
+> Do you see where your solution makes that impossible, and that with more=
+=20
+> changes to the repository layout?
+
+No ;-)
+
+--=20
+Martin Waitz
+
+--h4FfhoHh9AMwLYAn
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFFcF46j/Eaxd/oD7IRAqj/AJwNcBMiH4gJ0fqSTk+W4EaWGJmqZgCfVBS+
+pwPUgnL8PgKtb91M5ZwYN6U=
+=rpOK
+-----END PGP SIGNATURE-----
+
