@@ -1,112 +1,112 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
-Subject: Re: [RFC] Two conceptually distinct commit commands
-Date: Mon, 04 Dec 2006 23:14:07 -0300
-Message-ID: <200612050214.kB52E7mG027926@laptop13.inf.utfsm.cl>
-References: <cworth@cworth.org>
-NNTP-Posting-Date: Tue, 5 Dec 2006 02:14:35 +0000 (UTC)
-Cc: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>, git@vger.kernel.org
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Make git-commit cleverer - have it figure out whether it needs -a automatically
+Date: Fri, 01 Dec 2006 03:32:09 -0800
+Message-ID: <7v7ixbam2u.fsf@assigned-by-dhcp.cox.net>
+References: <200612011106.42272.andyparkins@gmail.com>
+	<7vd573amuy.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Fri, 1 Dec 2006 11:32:27 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: Message from Carl Worth <cworth@cworth.org> 
-   of "Mon, 04 Dec 2006 17:18:43 -0800." <87zma316oc.wl%cworth@cworth.org> 
-X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.5  (beta27)
-X-Greylist: IP, sender and recipient auto-whitelisted, not delayed by milter-greylist-2.0.2 (inti.inf.utfsm.cl [200.1.21.155]); Mon, 04 Dec 2006 23:14:11 -0300 (CLST)
-X-Virus-Scanned: ClamAV version 0.88.5, clamav-milter version 0.88.5 on inti.inf.utfsm.cl
-X-Virus-Status: Clean
+In-Reply-To: <7vd573amuy.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Fri, 01 Dec 2006 03:15:17 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33285>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GrPpJ-0002rW-8r for gcvg-git@gmane.org; Tue, 05 Dec
- 2006 03:14:33 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32899>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gq6cp-00014t-03 for gcvg-git@gmane.org; Fri, 01 Dec
+ 2006 12:32:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S968027AbWLECOU (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
- 21:14:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S968030AbWLECOU
- (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 21:14:20 -0500
-Received: from inti.inf.utfsm.cl ([200.1.21.155]:41259 "EHLO
- inti.inf.utfsm.cl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
- S968027AbWLECOT (ORCPT <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006
- 21:14:19 -0500
-Received: from laptop13.inf.utfsm.cl (pc-173-245-83-200.cm.vtr.net
- [200.83.245.173]) by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id
- kB52E8Ux010164 (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256
- verify=NO); Mon, 4 Dec 2006 23:14:10 -0300
-Received: from laptop13.inf.utfsm.cl (laptop13.inf.utfsm.cl [127.0.0.1]) by
- laptop13.inf.utfsm.cl (8.13.8/8.13.8) with ESMTP id kB52E7mG027926; Mon, 4
- Dec 2006 23:14:07 -0300
-To: Carl Worth <cworth@cworth.org>
+ S936462AbWLALcM (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
+ 06:32:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936464AbWLALcM
+ (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 06:32:12 -0500
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:53500 "EHLO
+ fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP id S936462AbWLALcK
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 06:32:10 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao08.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061201113209.BOTT18207.fed1rmmtao08.cox.net@fed1rmimpo02.cox.net>; Fri, 1
+ Dec 2006 06:32:09 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id tPYJ1V00h1kojtg0000000; Fri, 01 Dec 2006
+ 06:32:19 -0500
+To: Andy Parkins <andyparkins@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Carl Worth <cworth@cworth.org> wrote:
-> On Mon, 04 Dec 2006 21:52:38 -0300, "Horst H. von Brand" wrote:
-> > >     Commits the content of the working tree for the given paths, (or
-> > >     all tracked paths). Untracked files can be committed for the first
-> > >     time by specifying their names on the command-line or by using
-> > >     "git add" to add them just prior to the commit. Any rename or
-> > >     removal of a tracked file will be detected and committed
-> > >     automatically.
+Junio C Hamano <junkio@cox.net> writes:
 
-> > Edit somefile with, e.g, emacs: Get backup called somefile~
-> > Realize that somefile is nonsense, delete it(s edited version)
-> > commit-working-tree-contents: Now you have the undesirable somefile~ saved
+> I think another exception should be needed.  If the index does
+> not match the working tree, it should not default to "-a".
+>
+> Otherwise,
 
-> The semantics I intended to describe for commit-working-tree-content
-> would not add this file. That's a "new file" so would have to be
-> mentioned either explicitly on the command-line or in a git-add
-> command before it would be committed.
+I think there needs a bit of explanation and additional step
+that happened here.  This by the way is not a made-up example.
+Everything, including the 20-minute away, were what happened
+when I did the latest blame fix you saw a few days ago.
 
-How do you distinguish a "new file, same contents as old file" from "old
-file, renamed"? What is the difference between:
+ * I am still futzing with blame from time to time, and have
+   this change almost permanently in my working tree.
 
-  mv somefile newfile
+	$ cat P.diff
+        diff --git a/builtin-blame.c b/builtin-blame.c
+        index dc3ffea..46ce45c 100644
+        --- a/builtin-blame.c
+        +++ b/builtin-blame.c
+        @@ -38,7 +38,7 @@ static int max_digits;
+         static int max_score_digits;
 
-and
+         #ifndef DEBUG
+        -#define DEBUG 0
+        +#define DEBUG 1
+         #endif
 
-  cp somefine newfile
-  rm somefile
+ * I also have the GIT-VERSION-GEN change in my working tree.
 
-?
+> I want to fix another thing in pickaxe.
+>
+> 	$ edit builtin-blame.c
+>
 
-How should
+ * Of course I did tests here.
 
-  cp somefile newfile
-  vi somefile
+> My wife calls me.  Away from desk for 20 minutes.  Later I come
+> back.
 
-be handled? How about
+ * And then reverted the DEBUG back to 0 in preparation for
+   "checking into the index"
 
-  cp somefile oldfile
-  vi somefile
+	$ edit builtin-blame.c
 
-or just
+> 	$ git update-index builtin-pickaxe.c
 
-  mv somefile oldfile
+ * And then I reverted it back for later futing.
 
-? Or
+ 	$ git apply P.diff ;# that is a permanent-temporary file.
 
-  cp somefile somefile.my-own-bakup
-  vi somefile
+>
+> I am so used to that name and did not realize that typo, and I
+> was not paying too much attention.  My wife calls me again.
+> Away from desk and back in 20 minutes.
+>
+> 	$ git commit -m 'git-blame: Another fix.'
+>
+> Oops.
 
-?
+ * Oops here is not just that builtin-blame.c would have been
+   committed; I'd almost never do "commit -a" in this repository,
+   because it would take that "DEBUG 1" change _and_
+   GIT-VERSION-GEN change into the commit.
 
-The whole problem is your description based on "file renaming" and
-such. AFAIU git has a list of file names it is tracking, and for those
-names it keeps track of what the contents for each are at each commit. That
-the name somefile had some contents that later show up as newfile (both
-names tracked) is recorded just as that. You could /interpret/ this as a
-"rename" if somefile is then gone, but it could well be something else.
-Besides, you'd have to search for the old somefile contents among /all/
-newfiles just to find out it was renamed. Better don't mix facts with
-interpretation (== guesses on what operations came in between the snapshots
-git takes). Note that it should never matter what strange ideas a random
-user gets for naming her temporary backup files, or their git configuration.
--- 
-Dr. Horst H. von Brand                   User #22616 counter.li.org
-Departamento de Informatica                    Fono: +56 32 2654431
-Universidad Tecnica Federico Santa Maria             +56 32 2654239
+> So, please turn this "cleverness" off when the index does not
+> match the working tree.
