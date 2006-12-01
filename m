@@ -2,75 +2,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Linus Torvalds <torvalds@osdl.org>
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
 Subject: Re: [RFC] Submodules in GIT
-Date: Fri, 15 Dec 2006 18:12:24 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0612151809510.3557@woody.osdl.org>
-References: <20061130170625.GH18810@admingilde.org> 
- <200612150007.44331.Josef.Weidendorfer@gmx.de> 
- <e7bda7770612150943j71a7362bmb509cea3b7756003@mail.gmail.com> 
- <200612152242.50472.Josef.Weidendorfer@gmx.de> 
- <e7bda7770612151543o39c9d233q91ea643a134196d3@mail.gmail.com>
- <e7bda7770612151713k418434e6gd8d565e49a766477@mail.gmail.com>
- <Pine.LNX.4.64.0612151747470.3849@woody.osdl.org>
+Date: Sat, 2 Dec 2006 00:36:08 +0100
+Message-ID: <200612020036.08826.Josef.Weidendorfer@gmx.de>
+References: <20061130170625.GH18810@admingilde.org> <4570AF8F.1000801@stephan-feder.de> <Pine.LNX.4.64.0612011505190.3695@woody.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Sat, 16 Dec 2006 02:12:39 +0000 (UTC)
-Cc: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>,
-	"R. Steve McKown" <rsmckown@yahoo.com>, git@vger.kernel.org
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Fri, 1 Dec 2006 23:37:05 +0000 (UTC)
+Cc: sf <sf-gmane@stephan-feder.de>, git@vger.kernel.org,
+	Martin Waitz <tali@admingilde.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <Pine.LNX.4.64.0612151747470.3849@woody.osdl.org>
-X-MIMEDefang-Filter: osdl$Revision: 1.163 $
-X-Scanned-By: MIMEDefang 2.36
+X-Authenticated: #352111
+User-Agent: KMail/1.9.3
+In-Reply-To: <Pine.LNX.4.64.0612011505190.3695@woody.osdl.org>
+Content-Disposition: inline
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34586>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GvP2R-0006zj-TK for gcvg-git@gmane.org; Sat, 16 Dec
- 2006 03:12:36 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32989>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GqHw7-00066g-H5 for gcvg-git@gmane.org; Sat, 02 Dec
+ 2006 00:36:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1030582AbWLPCMd (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 15 Dec 2006
- 21:12:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030585AbWLPCMd
- (ORCPT <rfc822;git-outgoing>); Fri, 15 Dec 2006 21:12:33 -0500
-Received: from smtp.osdl.org ([65.172.181.25]:36608 "EHLO smtp.osdl.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1030582AbWLPCMc
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 15 Dec 2006 21:12:32 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
- smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kBG2CPID020042
- (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Fri, 15
- Dec 2006 18:12:25 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
- shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kBG2COig008929; Fri, 15 Dec
- 2006 18:12:24 -0800
-To: Torgil Svensson <torgil.svensson@gmail.com>
+ S1162251AbWLAXg2 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
+ 18:36:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1162389AbWLAXg2
+ (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 18:36:28 -0500
+Received: from mail.gmx.net ([213.165.64.20]:42930 "HELO mail.gmx.net") by
+ vger.kernel.org with SMTP id S1162251AbWLAXgK (ORCPT
+ <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 18:36:10 -0500
+Received: (qmail invoked by alias); 01 Dec 2006 23:36:08 -0000
+Received: from p5496B457.dip0.t-ipconnect.de (EHLO noname) [84.150.180.87] by
+ mail.gmx.net (mp018) with SMTP; 02 Dec 2006 00:36:08 +0100
+To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 
-
-
-On Fri, 15 Dec 2006, Linus Torvalds wrote:
-
+On Saturday 02 December 2006 00:09, Linus Torvalds wrote:
 > 
-> On Sat, 16 Dec 2006, Torgil Svensson wrote:
+> On Fri, 1 Dec 2006, sf wrote:
+> > Linus Torvalds wrote:
+> > ...
+> > > In contrast, a submodule that we don't fetch is an all-or-nothing 
+> > > situation: we simply don't have the data at all, and it's really a matter 
+> > > of simply not recursing into that submodule at all - much more like not 
+> > > checking out a particular part of the tree.
 > > 
-> > 100644 blob <sha1 of blob>    README
-> > 100644 blob <sha1 of blob>    REPORTING-BUGS
-> > 100644 link <sha1 of blob>     <sha1 of commit>
-> > 040000 tree <sha1 of tree>    arch
-> > 040000 tree <sha1 of tree>    block
-> > 040000 link <sha1 of tree>     <sha1 of commit>
+> > If you do not want to fetch all of the supermodule then do not fetch the
+> > supermodule.
 > 
-> That 040000 needs to be something else.
+> So why do you want to limit it? There's absolutely no cost to saying "I 
+> want to see all the common shared infrastructure, but I'm actually only 
+> interested in this one submodule that I work with".
 
-Side note: that's not to say that I would really see why you'd want to 
-have both the tree and the commit SHA1's, and why you seemingly think that 
-the links don't need a filename. Hmm?
+So you are for a global submodule namespace in supermodule repositories,
+do I understand correctly?
 
-If you require the tree objects to be in the database, you might as well 
-require that the commit object be there. But you could make rules that say 
-that subprojects don't need the whole commit history, for example (which 
-is just a shallow clone in the subproject).
+Otherwise, how would you specify the submodules at clone time given the
+ability that submodule roots can have relative path changed arbitrarily
+between commits?
 
