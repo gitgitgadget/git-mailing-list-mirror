@@ -1,64 +1,58 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Kir Kolyshkin <kir@openvz.org>
-Subject: [PATCH] gitweb: make HTML links out of http/https URLs in changelogs
-Date: Tue, 21 Nov 2006 23:02:36 +0100
-Message-ID: <4563777C.4050108@openvz.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Resolving conflicts
+Date: Fri, 1 Dec 2006 00:00:43 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0611302359400.3695@woody.osdl.org>
+References: <456FD461.4080002@saville.com> <Pine.LNX.4.64.0611302330000.3695@woody.osdl.org>
+ <456FDF24.1070001@saville.com> <Pine.LNX.4.64.0611302353580.3695@woody.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=KOI8-R; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Tue, 21 Nov 2006 22:03:02 +0000 (UTC)
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Fri, 1 Dec 2006 08:01:02 +0000 (UTC)
+Cc: git <git@vger.kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.8 (X11/20061109)
-X-Greylist: Sender succeeded SMTP AUTH authentication, not delayed by milter-greylist-3.0rc6 (sacred.ru [62.205.161.221]); Wed, 22 Nov 2006 01:00:05 +0300 (MSK)
+In-Reply-To: <Pine.LNX.4.64.0611302353580.3695@woody.osdl.org>
+X-MIMEDefang-Filter: osdl$Revision: 1.161 $
+X-Scanned-By: MIMEDefang 2.36
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32865>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GmdhS-0002Wn-MF for gcvg-git@gmane.org; Tue, 21 Nov
- 2006 23:02:43 +0100
+ esmtp (Exim 4.43) id 1Gq3KF-0001rv-1x for gcvg-git@gmane.org; Fri, 01 Dec
+ 2006 09:00:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1031166AbWKUWCh (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 21 Nov 2006
- 17:02:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031223AbWKUWCh
- (ORCPT <rfc822;git-outgoing>); Tue, 21 Nov 2006 17:02:37 -0500
-Received: from [62.205.161.221] ([62.205.161.221]:28557 "EHLO sacred.ru") by
- vger.kernel.org with ESMTP id S1031166AbWKUWCf (ORCPT
- <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2006 17:02:35 -0500
-Received: from [10.1.11.22] (darnet.ru [213.152.157.70] (may be forged))
- (authenticated bits=0) by sacred.ru (8.13.7/8.13.7) with ESMTP id
- kALM04jl022318 (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256
- verify=NO) for <git@vger.kernel.org>; Wed, 22 Nov 2006 01:00:05 +0300
-To: git@vger.kernel.org
+ S967124AbWLAIAs (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
+ 03:00:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967175AbWLAIAs
+ (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 03:00:48 -0500
+Received: from smtp.osdl.org ([65.172.181.25]:16571 "EHLO smtp.osdl.org") by
+ vger.kernel.org with ESMTP id S967124AbWLAIAr (ORCPT
+ <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 03:00:47 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
+ smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kB180ijQ011159
+ (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Fri, 1
+ Dec 2006 00:00:44 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
+ shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kB180ho7005660; Fri, 1 Dec
+ 2006 00:00:43 -0800
+To: Wink Saville <wink@saville.com>
 Sender: git-owner@vger.kernel.org
 
-It is a common practice to put links to bugzillas, mailing lists, etc. 
-in git log entries. The fact that gitweb doesn't make HTML links out of 
-that URLs makes following those URLs inconvenient. This patch fixes that 
-problem, trying to address cases when URL is enclosed in round or square 
-brackets.
 
-Slightly tested on http://git.openvz.org/. Applicable to git-1.4.4.
 
-Signed-off-by: Kir Kolyshkin <kir@openvz.org>
----
- gitweb/gitweb.perl |    2 ++
- 1 file changed, 2 insertions(+)
+On Thu, 30 Nov 2006, Linus Torvalds wrote:
+> 
+> No, kdiff3 probably doesn't have the same semantics, so better get the 
+> "real" merge. It's almost certainly in the rcs package, so "emerge rcs" 
+> should do it.
 
---- git-1.4.4/gitweb/gitweb.perl	2006-11-15 08:22:27.000000000 +0100
-+++ git-1.4.4-my/gitweb/gitweb.perl	2006-11-21 22:49:14.000000000 +0100
-@@ -828,6 +828,8 @@
- 			$line =~ s/$hash_text/$link/;
- 		}
- 	}
-+	# make HTML links out of http(s) URLs
-+	$line =~ s/(http[s]?:\/\/[^[:space:]\]\)]+)/<a href="\1">\1<\/a>/g;
- 	return $line;
- }
- 
+..and just to be safe, remove the symlink first, so that you don't end up 
+overwriting the "kdiff3" binary by mistake when you install the real 
+"merge". Not that I think emerge is quite that stupid a package manager, 
+but anyway..
 
