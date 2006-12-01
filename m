@@ -1,112 +1,94 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: [WISH] Store also tag dereferences in packed-refs
-Date: Sat, 18 Nov 2006 19:47:40 +0100
-Message-ID: <e5bfff550611181047w6712774fkccc697d312b87c7e@mail.gmail.com>
-References: <e5bfff550611180115j135746a1h916e8ae029d1374d@mail.gmail.com>
-	 <7vmz6oeh2k.fsf@assigned-by-dhcp.cox.net>
-	 <20061118184345.GO7201@pasky.or.cz>
+From: pclouds@gmail.com
+Subject: [PATCH 2/3] Prepare for grouped common command list generation
+Date: Fri,  1 Dec 2006 22:08:30 +0700
+Message-ID: <11649857203869-git-send-email-pclouds@gmail.com>
+References: <1164985711791-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sat, 18 Nov 2006 18:47:59 +0000 (UTC)
-Cc: "Junio C Hamano" <junkio@cox.net>,
-	"Git Mailing List" <git@vger.kernel.org>
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Fri, 1 Dec 2006 15:09:06 +0000 (UTC)
+Cc: =?utf-8?q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
+	<pclouds@gmail.com>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+X-Warning: Original message contained 8-bit characters, however during
+	   the SMTP transport session the receiving system did not announce
+	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
+	   message does not have MIME headers (RFC 2045-2049) to enable
+	   encoding change, we had very little choice.
+X-Warning: We ASSUME it is less harmful to add the MIME headers, and
+	   convert the text to Quoted-Printable, than not to do so,
+	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
+X-Warning: We don't know what character set the user used, thus we had to
+	   write these MIME-headers with our local system default value.
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=ZCG/IWBixivVCkCdcst5gyRjgDkdTszi6vNRJlMAFyVCO4WIsnPXoQguSuiUW1Qc05GNn2+L/HmRCA+3yw3qEmpz9yaMUyAIJ+0qJdeROt+mgqsFOBI+ffVq5m1Nq9CW0rLDGOik/H+qv8YczIRjZzcuXxYush5DZG1nHw8pP1Y=
-In-Reply-To: <20061118184345.GO7201@pasky.or.cz>
-Content-Disposition: inline
+        h=received:to:cc:subject:date:message-id:x-mailer:in-reply-to:references:content-type:content-transfer-encoding:from;
+        b=PDYjFebnqD+ojlOytzQyWLDQbXS+hEF51kzFC6/VgtrjX5bKP9Teo4fOjpt9gRnO3ZuoQuKNOiIdmjY0Xhm/4x15o42q1xWqrDA12ZnurfxkQFAZkkCjvKyFantan23HhouSdfL8wwkM2gSH+KXHeK3aoH2MTSqYhzjVEW2xV6k=
+X-Mailer: git-send-email 1.4.3.3.g7854-dirty
+In-Reply-To: <1164985711791-git-send-email-pclouds@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31789>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32933>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GlVEK-00085o-G4 for gcvg-git@gmane.org; Sat, 18 Nov
- 2006 19:47:56 +0100
+ esmtp (Exim 4.43) id 1GqA0c-0005qE-B6 for gcvg-git@gmane.org; Fri, 01 Dec
+ 2006 16:09:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1755318AbWKRSrn (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 18 Nov 2006
- 13:47:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756367AbWKRSrn
- (ORCPT <rfc822;git-outgoing>); Sat, 18 Nov 2006 13:47:43 -0500
-Received: from py-out-1112.google.com ([64.233.166.180]:58908 "EHLO
- py-out-1112.google.com") by vger.kernel.org with ESMTP id S1755318AbWKRSrl
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 18 Nov 2006 13:47:41 -0500
-Received: by py-out-1112.google.com with SMTP id a29so654390pyi for
- <git@vger.kernel.org>; Sat, 18 Nov 2006 10:47:41 -0800 (PST)
-Received: by 10.35.39.13 with SMTP id r13mr4785327pyj.1163875660364; Sat, 18
- Nov 2006 10:47:40 -0800 (PST)
-Received: by 10.35.42.4 with HTTP; Sat, 18 Nov 2006 10:47:40 -0800 (PST)
-To: "Petr Baudis" <pasky@suse.cz>
+ S1759190AbWLAPI6 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
+ 10:08:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759285AbWLAPI6
+ (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 10:08:58 -0500
+Received: from nz-out-0506.google.com ([64.233.162.230]:23275 "EHLO
+ nz-out-0102.google.com") by vger.kernel.org with ESMTP id S1759190AbWLAPI5
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 10:08:57 -0500
+Received: by nz-out-0102.google.com with SMTP id s1so1550824nze for
+ <git@vger.kernel.org>; Fri, 01 Dec 2006 07:08:56 -0800 (PST)
+Received: by 10.65.185.13 with SMTP id m13mr7805227qbp.1164985736243; Fri, 01
+ Dec 2006 07:08:56 -0800 (PST)
+Received: from localhost ( [125.234.253.165]) by mx.google.com with ESMTP id
+ c5sm30172766qbc.2006.12.01.07.08.52; Fri, 01 Dec 2006 07:08:55 -0800 (PST)
+Received: by localhost (sSMTP sendmail emulation); Fri,  1 Dec 2006 22:08:40
+ +0700
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On 11/18/06, Petr Baudis <pasky@suse.cz> wrote:
-> On Sat, Nov 18, 2006 at 07:38:11PM CET, Junio C Hamano wrote:
-> > "Marco Costalba" <mcostalba@gmail.com> writes:
-> >
-> > > Time needed to execute git-peek-remote in my box with cold cache currently is:
-> > >
-> > > - git tree 2.347 ms
-> > > - linux tree 2.144 ms
-> > >
-> > > And refs are *already* packed in both repos.
-> > >
-> > > Looking at packed-refs file, it contains something like:
-> > >
-> > > d9b0f913ce0508fcc83e642e0241f373428368e5 refs/tags/v1.4.3
-> > > 4314f5982d2aac08001a977fc0b1b611e858e025 refs/tags/v1.4.3-rc1
-> > >
-> > > while I would need something like git-peek-remote output,
-> > >
-> > > d9b0f913ce0508fcc83e642e0241f373428368e5        refs/tags/v1.4.3
-> > > e0b0830726286287744cc9e1a629a534bbe75452        refs/tags/v1.4.3^{}
-> > > 4314f5982d2aac08001a977fc0b1b611e858e025        refs/tags/v1.4.3-rc1
-> > > 1965efb1599f59b8e3380335d1fa395e2008a30b        refs/tags/v1.4.3-rc1^{}
-> > >
-> > > Because the sha value a tag points to is needed to match against
-> > > git-rev-list output so to identify tagged revisions.
-> > >
-> > > Would be possible to store in packed-refs also the dereferenced tag
-> > > info, so that cold opening of a repository would be much faster?
-> > >
-> > > Just to give an idea, with warmed up cache, refs reading times are:
-> > >
-> > > - git tree 43 ms
-> > > - linux tree 28 ms
-> > >
-> > > Thanks
-> > > Marco
-> > >
-> > > P.S: In case it's not clear I don't suggest to read directly the
-> > > packed-refs file with the added info, but always to use
-> > > git-peek-remote that _would_ became much faster.
-> >
-> > I think the question is why you would want to run peek-remote.
-> > Do you use the ^{} peeled-onion information and if so how and
-> > why?
->
-> My wild guess would be to attach tags to the right commits in qgit?
->
-Yes. It is. From a list like
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ generate-cmdlist.sh |    7 ++++++-
+ 1 files changed, 6 insertions(+), 1 deletions(-)
 
-> > > d9b0f913ce0508fcc83e642e0241f373428368e5        refs/tags/v1.4.3
-> > > e0b0830726286287744cc9e1a629a534bbe75452        refs/tags/v1.4.3^{}
-> > > 4314f5982d2aac08001a977fc0b1b611e858e025        refs/tags/v1.4.3-rc1
-> > > 1965efb1599f59b8e3380335d1fa395e2008a30b        refs/tags/v1.4.3-rc1^{}
->
-qgit (but also gitk FWIK) extracts
-
-e0b0830726286287744cc9e1a629a534bbe75452
-1965efb1599f59b8e3380335d1fa395e2008a30b
-
-Stores in a quick look-up container and then checks against loaded
-commits to, as Pasky says, attach the nice green markers to tags.
-
+diff --git a/generate-cmdlist.sh b/generate-cmdlist.sh
+index 5450918..b45495d 100755
+--- a/generate-cmdlist.sh
++++ b/generate-cmdlist.sh
+@@ -9,7 +9,7 @@ struct cmdname_help
+=20
+ struct cmdname_help common_cmds[] =3D {"
+=20
+-sort <<\EOF |
++cat <<\EOF |
+ add
+ apply
+ archive
+@@ -41,6 +41,11 @@ verify-tag
+ EOF
+ while read cmd
+ do
++     [ -z "$cmd" ] && continue
++     if echo $cmd|grep -q '^G:'; then
++       echo '  {"'$(echo -n $cmd|sed 's/^G://')'",""},'
++       continue
++     fi
+      sed -n '
+      /NAME/,/git-'"$cmd"'/H
+      ${
+--=20
+1.4.4.rc1.g9124
