@@ -1,157 +1,101 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [RFC] git-add update with all-0 object
-Date: Thu, 30 Nov 2006 19:12:31 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0611301749450.20138@iabervon.org>
-References: <Pine.LNX.4.64.0611301634080.20138@iabervon.org>
- <Pine.LNX.4.64.0611301431420.3513@woody.osdl.org>
+From: Wink Saville <wink@saville.com>
+Subject: Re: Resolving conflicts
+Date: Fri, 01 Dec 2006 00:22:26 -0800
+Message-ID: <456FE642.6020102@saville.com>
+References: <456FD461.4080002@saville.com> <Pine.LNX.4.64.0611302330000.3695@woody.osdl.org> <456FDF24.1070001@saville.com> <Pine.LNX.4.64.0611302353580.3695@woody.osdl.org> <Pine.LNX.4.64.0611302359400.3695@woody.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Fri, 1 Dec 2006 00:12:46 +0000 (UTC)
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Fri, 1 Dec 2006 08:22:32 +0000 (UTC)
+Cc: git <git@vger.kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <Pine.LNX.4.64.0611301431420.3513@woody.osdl.org>
+User-Agent: Thunderbird 1.5.0.8 (Windows/20061025)
+In-Reply-To: <Pine.LNX.4.64.0611302359400.3695@woody.osdl.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32837>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32871>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gpw16-0002eu-Qf for gcvg-git@gmane.org; Fri, 01 Dec
- 2006 01:12:37 +0100
+ esmtp (Exim 4.43) id 1Gq3f7-0005wG-Vq for gcvg-git@gmane.org; Fri, 01 Dec
+ 2006 09:22:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1030979AbWLAAMe (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
- 19:12:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031629AbWLAAMe
- (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 19:12:34 -0500
-Received: from iabervon.org ([66.92.72.58]:16140 "EHLO iabervon.org") by
- vger.kernel.org with ESMTP id S1030979AbWLAAMd (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 19:12:33 -0500
-Received: (qmail 13607 invoked by uid 1000); 30 Nov 2006 19:12:32 -0500
-Received: from localhost (sendmail-bs@127.0.0.1) by localhost with SMTP; 30
- Nov 2006 19:12:32 -0500
+ S967492AbWLAIWW (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
+ 03:22:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967537AbWLAIWW
+ (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 03:22:22 -0500
+Received: from 70-91-206-233-BusName-SFBA.hfc.comcastbusiness.net
+ ([70.91.206.233]:46251 "EHLO saville.com") by vger.kernel.org with ESMTP id
+ S967535AbWLAIWV (ORCPT <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006
+ 03:22:21 -0500
+Received: from [192.168.0.52] (unknown [192.168.0.52]) by saville.com
+ (Postfix) with ESMTP id A327B57A6F; Fri,  1 Dec 2006 00:18:24 -0800 (PST)
 To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 
-On Thu, 30 Nov 2006, Linus Torvalds wrote:
-
-> A normal "read tree object" would populate index entries with that bit 
-> cleared, and so it would be possible to have
+Linus Torvalds wrote:
 > 
-> 	git add file.c
-> 	git diff
+> On Thu, 30 Nov 2006, Linus Torvalds wrote:
+>> No, kdiff3 probably doesn't have the same semantics, so better get the 
+>> "real" merge. It's almost certainly in the rcs package, so "emerge rcs" 
+>> should do it.
 > 
-> show something like
+> ..and just to be safe, remove the symlink first, so that you don't end up 
+> overwriting the "kdiff3" binary by mistake when you install the real 
+> "merge". Not that I think emerge is quite that stupid a package manager, 
+> but anyway..
 > 
-> 	diff --git a/file.c b/file.c
-> 	added file <mode> <sha1>
+> 		Linus
 > 
-> rather than show the whole big diff (which I _really_ don't think you want 
-> to see, and which is actually against the whole point, which is that you 
-> add _content_ to the index, and "git diff" will always show you the stuff 
-> that is _not_ added to the index yet).
 
-I'm not sure I want to see the whole added file more when diffing two 
-trees, or when I do "git diff --cached" after "git update-index --add", 
-than when I do "git diff" after "git add", but I'll concede that viewing 
-the content of a new file as a diff is no fun. (Maybe diff-against-nothing 
-for display needs work in general? It's solve the whole root commit thing, 
-too.)
+Ubuntu is debian based and I use Synaptic GUI, a front end to apt-get. My earlier problem
+was I couldn't find which package "merge" was in. But now I just figured it out by going
+to debian.org and using "Search the contents of packages" for "merge". Turns out "merge"
+is in devel/rcs which of course the whole world knows, unless your a neophyte like me:)
 
-> (Of course, if you _also_ had changed it between the "git add" and the 
-> "git diff", you'd get both the "added file <mode> <sha1>" _and_ the diff 
-> that is the diff between the thing you added, and the status it has now).
-> 
-> So showing a real diff after "git add" would really be wrong. The index 
-> really is important. But if it's _only_ an issue of worrying about seeing 
-> added files at all, we can add a "people comfort" bit to do that.
+Any way after getting the real merge, I reverted the first pull and re-did it and all was well:
 
-This is where I think "git add" is really broken. For every other git 
-command, if the command causes the index to not match HEAD, the command 
-contains "index" either in the name of the command or in an option.
+wink@winkc2d1:~/linux/linux-2.6$ git-checkout -f
+wink@winkc2d1:~/linux/linux-2.6$ git-status
+# On branch refs/heads/ace
+nothing to commit
+wink@winkc2d1:~/linux/linux-2.6$ git-pull . master
+Trying really trivial in-index merge...
+fatal: Merge requires file-level merging
+Nope.
+Merging HEAD with 0215ffb08ce99e2bb59eca114a99499a4d06e704
+Merging:
+d7083db038fb98266e331a7f96198ec35a12367a A partial fix BUG 061124 (crashing when 1ms interrrupts).
+0215ffb08ce99e2bb59eca114a99499a4d06e704 Linux 2.6.19
+found 1 common ancestor(s):
+1abbfb412b1610ec3a7ec0164108cee01191d9f5 [PATCH] x86_64: fix bad page state in process 'swapper'
+Auto-merging kernel/fork.c
+Auto-merging kernel/spinlock.c
 
-So, if you understand the index, and you understand git's model, but you 
-don't know this one weird corner case, you will come to the conclusion 
-that "git add <path>" leaves <path> such that the index matches HEAD.
+Merge made by recursive.
+  Documentation/rtc.txt                         |  463 ++++++++++++++++---------
+  Makefile                                      |    2
+  arch/arm/configs/assabet_defconfig            |    1
+  arch/arm/configs/cerfcube_defconfig           |    1
+  arch/arm/configs/corgi_defconfig              |    1
+......
+  sound/pci/emu10k1/emu10k1_main.c              |    1
+  sound/pci/hda/patch_realtek.c                 |    2
+  sound/pci/hda/patch_sigmatel.c                |   14 -
+  sound/usb/usbaudio.c                          |    3
+  usr/Makefile                                  |    2
+  92 files changed, 888 insertions(+), 371 deletions(-)
+  create mode 100644 arch/mips/kernel/topology.c
+  create mode 100644 arch/um/os-Linux/execvp.c
+  create mode 100644 include/asm-arm/mach/udc_pxa2xx.h
 
-Now *you* know that "git add" really is "git update-index --add", because 
-you were typing the latter (well, "git update-cache --add", anyway) before 
-"git add" existed at all. But for new users, and anyone who wasn't adding 
-a lot of files back then, it's a surprising exception that has to be 
-learned and internalized.
 
-"git checkout" leaves the index matching HEAD or its original state.
-"git commit" leaves the index matching HEAD (the new HEAD) or its original 
-state.
-"git reset" (all options) leaves the index matching HEAD or its original 
-state.
-"git pull/merge" does disrupt the index, but it also starts to prepare a 
-commit based on multiple *HEAD files, and it leaves every stage of the 
-index matching some *HEAD or its original state. And new users still seem 
-to wonder where the merge happens, because it doesn't say "in the index".
-"git apply" leaves the index alone.
 
-"git update-index" says it works on the index.
-"git apply --index" says it works on the index.
+Thank you very much,
 
-Am I missing any violations of the rule? I guess "git rm", but that's just 
-for the CVS-damaged, unnecessary anyway, and it still doesn't care about 
-the state of the working directory at any particular point in time. And I 
-still prefer "git update-index --force-remove" as a command for that 
-operation.
-
-So it's obvious that the "add" functionality is properly called "git add 
---index", because whatever "git add" would, it would have to leave the 
-index matching HEAD or its original state.
-
-(Well, okay, '"git commit -i path" ^C', violates the rule. But I forgot 
-until recently that -i stands for --include, not --index, which would make 
-a reasonable expansion, too)
-
-> (Quite frankly, I don't think it's worthwhile. I really think this is a 
-> documentation issue. Make people understand that "git add" adds the 
-> contents too, and that git never tracks filenames on their own at all).
-
-I think people's model is likely to be closer to "touch" for the index, 
-especially since it has no effect if the file is already in the index.
-
-> So it is always going to be true that
-> 
-> 	git add file
-> 	echo New line >> file
-> 	git commit
-> 
-> must commit the old contents of the file. That really _does_ follow from 
-> the whole "track contents" model. Anything that doesn't do this is 
-> fundamnetally broken, and has broken the notion of what "git add" means.
-
-"git add" doesn't *say* it changes the index, and nothing else there 
-*says* it changes the index, so "git commit" there should say "nothing to 
-commit", because you never did "git update-index file", either before or 
-after the change, and you didn't do "git commit file" or "git commit -a". 
-
-Just tossing the words in commands around, it's obvious that what 
-"git add file" should do is mean that you can now do
-"git update-index file" instead of
-"git update-index --add file". Saying you shouldn't need "update-index" 
-after adding a file is like saying you shouldn't need "update-index" after 
-modifying a file.
-
-But it shouldn't change my index any more than "git apply" should, because 
-it doesn't say it updates the index. (Of course, it would be good to have 
-"git add --index file", matching "git apply --index patch", which does 
-what "git add" does now.)
-
-Now, in order to interact correctly with reseting, checking out a 
-different branch, etc, it wants to have the information in the index 
-file, so there isn't a separate file with a list to lose stuff from. And 
-it patterns naturally as an adjunct to the index for some things (like 
-ls-files, which doesn't care at all what the content associated with 
-filenames is). But that's fundamentally an implementation detail, not an 
-aspect of the model.
-
-	-Daniel
+Wink
