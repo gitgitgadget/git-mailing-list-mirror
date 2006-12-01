@@ -1,70 +1,166 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [PATCH] Allow hand-editing of patches before sending
-Date: Fri, 3 Nov 2006 10:58:59 +0100
-Message-ID: <20061103095859.GC16721@diana.vm.bytemark.co.uk>
-References: <20061101090046.1107.81105.stgit@localhost> <b0943d9e0611020232x1e343bbco9451c8183c84d68@mail.gmail.com> <20061102113631.GA30507@diana.vm.bytemark.co.uk> <b0943d9e0611030139i7be9569bh4a29596a768e82a3@mail.gmail.com>
+From: Martin Waitz <tali@admingilde.org>
+Subject: Re: [RFC] Submodules in GIT
+Date: Fri, 1 Dec 2006 19:48:02 +0100
+Message-ID: <20061201184801.GG18810@admingilde.org>
+References: <20061201110032.GL18810@admingilde.org> <45701B8D.1030508@b-i-t.de> <20061201121234.GQ18810@admingilde.org> <4570289D.9050802@b-i-t.de> <20061201133558.GU18810@admingilde.org> <45703375.4050500@b-i-t.de> <20061201145817.GY18810@admingilde.org> <45704EA3.40203@b-i-t.de> <20061201165418.GD18810@admingilde.org> <45706758.2020907@b-i-t.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Fri, 3 Nov 2006 09:59:22 +0000 (UTC)
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="yRy5AYMdKszmZQyZ"
+NNTP-Posting-Date: Fri, 1 Dec 2006 18:48:13 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Content-Disposition: inline
-In-Reply-To: <b0943d9e0611030139i7be9569bh4a29596a768e82a3@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
+In-Reply-To: <45706758.2020907@b-i-t.de>
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
 User-Agent: Mutt/1.5.9i
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30810>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32955>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GfvpR-000377-BF for gcvg-git@gmane.org; Fri, 03 Nov
- 2006 10:59:13 +0100
+ esmtp (Exim 4.43) id 1GqDQf-0007qm-ID for gcvg-git@gmane.org; Fri, 01 Dec
+ 2006 19:48:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752789AbWKCJ7E convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Fri, 3 Nov 2006 04:59:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752790AbWKCJ7D
- (ORCPT <rfc822;git-outgoing>); Fri, 3 Nov 2006 04:59:03 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:22797 "EHLO
- diana.vm.bytemark.co.uk") by vger.kernel.org with ESMTP id S1752789AbWKCJ7B
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 3 Nov 2006 04:59:01 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1
- (Debian)) id 1GfvpD-0004gW-00; Fri, 03 Nov 2006 09:58:59 +0000
-To: Catalin Marinas <catalin.marinas@gmail.com>
+ S1031663AbWLASsG (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
+ 13:48:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031684AbWLASsF
+ (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 13:48:05 -0500
+Received: from agent.admingilde.org ([213.95.21.5]:17111 "EHLO
+ mail.admingilde.org") by vger.kernel.org with ESMTP id S1031663AbWLASsD
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 13:48:03 -0500
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1) id
+ 1GqDQY-0000PM-6g; Fri, 01 Dec 2006 19:48:02 +0100
+To: Stephan Feder <sf@b-i-t.de>
 Sender: git-owner@vger.kernel.org
 
-On 2006-11-03 09:39:57 +0000, Catalin Marinas wrote:
 
-> On 02/11/06, Karl Hasselstr=F6m <kha@treskal.com> wrote:
->
-> > That Gnus shows =3D20 suggests that I haven't got the QP encoding
-> > 100% right. I haven't had time to look at that yet, and it looks
-> > like you may beat me to it.
->
-> Well, it might be just the way I read the list (via the gmane news
-> gateway) but I have to run some tests.
+--yRy5AYMdKszmZQyZ
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I believe all the mails I send with mutt are QP-encoded, and they
-don't look funny, do they? (You'd see the separator just above my
-signature as "--=3D20" if that was the case; it has a trailing
-whitespace.)
+On Fri, Dec 01, 2006 at 06:33:12PM +0100, Stephan Feder wrote:
+> We are in agreement about two fundamental parts of the implementation=20
+> and their meaning:
+>=20
+> 1. A submodule is stored as a commit id in a tree object.
+>=20
+> 2. Every object that is reachable from the submodule's commit are=20
+> reachable from the supermodule's repository.
 
-> However, I'd like the message body to still be 8bit and the QP
-> encoding optional (either command line option or [stgit] config
-> variable).
+Correct.
 
-Are you sure? Wouldn't it be better to teach StGIT to eat QP-encoded
-mails, and use 7bit encoding when the patch is all ascii? (And still
-have an option to force 8bit instead of QP if desired, of course.)
+> >>For example, git has the subproject xdiff. If git had been able to work=
+=20
+> >>with subprojects as I envision, and if xdiff had been published as a gi=
+t=20
+> >>repository (not necessarily subproject enabled), it could have been=20
+> >>pulled in git's subdirectory xdiff as a subproject.
+> >
+> >This could have been done if submodule support would have been available
+> >at the time xdiff was introduced, yes.
+> >
+> >>There would not have been a separate branch or even repository for
+> >>xdiff in the git repository.
+> >
+> >What separate branch or repository are you talking about?
+>=20
+> That's it: There is no need for a separate branch or repository. If you=
+=20
+> have the subproject's commit in the superproject's object database (and=
+=20
+> we really have that, see 1. and 2. above), why do you _have to_ store it=
+=20
+> elsewhere?
 
-I'm really not comfortable with assuming all mail servers are 8-bit
-clean, when they're evidently not. :-)
+Let's see if I understand you correctly:
+
+You don't want to create an additional .git directory for the submodule
+and just handle everything with one toplevel .git repository for the
+whole project.
+Without the .git directory, you of course do not have refs/heads inside
+the submodule.
+
+So this is a different user-interface approach to submodules when
+compared to my approach.  But the basis is the same and both could
+inter-operate.
+
+Now your submodule is no longer seen as an independent git repository
+and I think this would cause problems when you want to push/pull between
+the submodule and its upstream repository.
+No technical problems, but UI-problems because now your submodule is
+handled completly different to a "normal" repository.
+
+
+> >Yes, but if it would have been integrated as a submodule it obviously
+> >would have been committed to the xdiff submodule inside the git
+> >repository.
+>=20
+> No. The xdiff submodule would only exist as part of the git repository.=
+=20
+
+But you could still call the "xdiff" part of the git repository a
+submodule.  And then changes to the xdiff directory result in a new
+submodule commit, even when there is no direct reference to it.
+So you'd still "commit to the xdiff submodule".
+
+> You could, f.e., access the xdiff commit in git HEAD as HEAD:xdiff//=20
+> (again my proposed syntax). HEAD:xdiff//~2:xemit.c would give you the=20
+> grandparent of xemit.c in the xdiff submodule.
+
+git-cat-file commit HEAD:xdiff already works out of the box (even
+cat-file tree to get the submodule tree).  But up to now revision
+parsing follows the file name only once.
+
+What about just separating things with "/"?
+
+commit HEAD
+tree   HEAD/
+blob   HEAD/Makefile
+commit HEAD/xdiff
+tree   HEAD/xdiff/
+blob   HEAD/xdiff~2/xemit.c
+
+this may add some confusion when used with hierarchical branches, but
+it's still unique:
+
+	refs/heads/master/xdiff/xemit.c
+
+Just use as many path components until a matching reference is found,
+then start peeling.
+Or just use / between super and submodule:
+
+	refs/heads/master:xdiff/xemit.c
+
+I think this is easier to read then
+
+	refs/heads/master:xdiff//:xemit.c
+
+
+> If you mean the submodule repository created by init-module I=20
+> understand. But why create this "helper repository at all"?
+
+Because it helps "normal" git operations ;-)
 
 --=20
-Karl Hasselstr=F6m, kha@treskal.com
+Martin Waitz
+
+--yRy5AYMdKszmZQyZ
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFFcHjhj/Eaxd/oD7IRAgb7AJwP+SFMUG9H8mpM6rsbKtNgiEz2jgCfRvxw
+9zP65bdwjLyoZkXNcVYp9ns=
+=az8n
+-----END PGP SIGNATURE-----
+
