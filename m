@@ -1,58 +1,79 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 3/3] add test case for recursive merge
-Date: Sat, 09 Dec 2006 19:10:15 -0800
-Message-ID: <7vmz5w5tuw.fsf@assigned-by-dhcp.cox.net>
-References: <20061207101707.GA19139@spearce.org>
-	<Pine.LNX.4.63.0612100056090.28348@wbgn013.biozentrum.uni-wuerzburg.de>
-	<Pine.LNX.4.63.0612100114440.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [RFC] Submodules in GIT
+Date: Fri, 01 Dec 2006 10:33:05 +0100
+Message-ID: <456FF6D1.4040500@op5.se>
+References: <20061121223130.GA24909@nan92-1-81-57-214-146.fbx.proxad.net> <20061130170625.GH18810@admingilde.org> <456F29A2.1050205@op5.se> <200612010849.11176.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sun, 10 Dec 2006 03:10:24 +0000 (UTC)
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Fri, 1 Dec 2006 09:33:49 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <Pine.LNX.4.63.0612100114440.28348@wbgn013.biozentrum.uni-wuerzburg.de>
-	(Johannes Schindelin's message of "Sun, 10 Dec 2006 01:18:03 +0100
-	(CET)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
+In-Reply-To: <200612010849.11176.andyparkins@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33863>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GtF54-0007nx-5b for gcvg-git@gmane.org; Sun, 10 Dec
- 2006 04:10:22 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32880>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gq4li-0005sR-KB for gcvg-git@gmane.org; Fri, 01 Dec
+ 2006 10:33:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1759876AbWLJDKS (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 9 Dec 2006
- 22:10:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759892AbWLJDKS
- (ORCPT <rfc822;git-outgoing>); Sat, 9 Dec 2006 22:10:18 -0500
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:62158 "EHLO
- fed1rmmtao12.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1759876AbWLJDKR (ORCPT <rfc822;git@vger.kernel.org>); Sat, 9 Dec 2006
- 22:10:17 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao12.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061210031016.RIDC4226.fed1rmmtao12.cox.net@fed1rmimpo02.cox.net>; Sat, 9
- Dec 2006 22:10:16 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id wrAS1V00g1kojtg0000000; Sat, 09 Dec 2006
- 22:10:27 -0500
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+ S1759287AbWLAJdP (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
+ 04:33:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759286AbWLAJdO
+ (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 04:33:14 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:57737 "EHLO
+ smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1759287AbWLAJdO (ORCPT
+ <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 04:33:14 -0500
+Received: from [192.168.1.20] (unknown [213.88.215.14]) by smtp-gw1.op5.se
+ (Postfix) with ESMTP id 0E2FE6BCC2; Fri,  1 Dec 2006 10:33:09 +0100 (CET)
+To: Andy Parkins <andyparkins@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Andy Parkins wrote:
+> On Thursday 2006 November 30 18:57, Andreas Ericsson wrote:
+> 
+> (agree with everything in your mail)
+> 
+>> The only problem I'm seeing atm is that the supermodule somehow has to
+>> mark whatever commits it's using from the submodule inside the submodule
+>> repo so that they effectively become un-prunable, otherwise the
+>> supermodule may some day find itself with a history that it can't restore.
+> 
+> What about submodule/.git/refs/supermodule/commit12345678, where "12345678" is 
+> the hash of the supermodule commit?  This gives a convenient route in the 
+> submodule to which commit contains that commit from the submodule; but 
+> doesn't write anything into the submodule repository itself.  It's just a tag 
+> with a different intent.
+> 
 
-> this test succeeds consistently on the machine where I tested it 
-> originally, but fails on another of my machines, but only when run without 
-> "-v". Very annoying. I will not have time to investigate until Monday, 
-> though.
+True, but this makes one repo of the submodule special. Let's say you 
+have this layout
 
-There seem to be cases where stage #1 contains blob 'B' or 'A'
-or nothing depending on something totally random.  Ring a bell?
+mozilla/.git
+mozilla/openssl/.git
+mozilla/xlat/.git
 
+Now, we can be reasonably sure that the 'xlat' repo is something the 
+mozilla core team can push to, or at least we can consider the core repo 
+owners an official "vendor" of tags for the submodule repo. I'm fairly 
+certain openssl authors won't be too happy with allowing the thousands 
+of projects using its code to push tags to its official repo though.
+
+Now that I think about it more, I realize this is completely irrelevant 
+as the ui can create the tags in the submodule with info only from the 
+the supermodule, which means the submodule repo will only be special if 
+it's connected to the supermodule. We just need a command for creating 
+those tags in the submodule repo so people who use the same submodule 
+code for several projects can use the alternates mechanism effectively.
+
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
