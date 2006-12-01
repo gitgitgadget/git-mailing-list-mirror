@@ -1,78 +1,93 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-2.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,MSGID_FROM_MTA_HEADER,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
-From: Sean <seanlkml@sympatico.ca>
-Subject: Re: [DRAFT] Branching and merging with git
-Date: Fri, 17 Nov 2006 12:01:54 -0500
-Message-ID: <BAYC1-PASMTP07E3595705250158235B01AEE80@CEZ.ICE>
-References: <20061116221701.4499.qmail@science.horizon.com>
-	<20061117153246.GA20065@thunk.org>
-	<BAYC1-PASMTP07C8A8D8E5E78173953CA9AEE80@CEZ.ICE>
-	<fcaeb9bf0611170819j57cda9e1ia4ecd4cd13956447@mail.gmail.com>
-	<20061117113404.810fd4ea.seanlkml@sympatico.ca>
-	<20061117165333.GR4842@pasky.or.cz>
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [RFC] git-add update with all-0 object
+Date: Fri, 1 Dec 2006 09:37:07 +0000
+Message-ID: <200612010937.08468.andyparkins@gmail.com>
+References: <Pine.LNX.4.64.0611301634080.20138@iabervon.org> <20061201045727.GA22622@thunk.org> <Pine.LNX.4.64.0612010223010.20138@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Fri, 17 Nov 2006 17:03:41 +0000 (UTC)
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org
+NNTP-Posting-Date: Fri, 1 Dec 2006 09:37:39 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Originating-IP: [65.93.43.81]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Original-Message-Id: <20061117120154.3eaf5611.seanlkml@sympatico.ca>
-In-Reply-To: <20061117165333.GR4842@pasky.or.cz>
-X-Mailer: Sylpheed version 2.2.9 (GTK+ 2.10.4; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 17 Nov 2006 17:08:13.0500 (UTC) FILETIME=[F74A47C0:01C70A6A]
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=c8LbVVGdV7d41xRFnQnDqlwufaStzSiH93pwcHOf8TZYeDh492UCC+ZJcem1paoRHIUjU/8+4U8fho6t9ms1tIVc2O+2S3Ip7+xFQpWn84992D08TBhNuUItaxIB4gXTka8qqTK1ehSr8t3/+BhUUwlEkIZwkvkrTJkN3dXw00M=
+User-Agent: KMail/1.9.5
+In-Reply-To: <Pine.LNX.4.64.0612010223010.20138@iabervon.org>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32881>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gl76H-0000c2-AX for gcvg-git@gmane.org; Fri, 17 Nov
- 2006 18:02:01 +0100
+ esmtp (Exim 4.43) id 1Gq4pa-0006ue-R4 for gcvg-git@gmane.org; Fri, 01 Dec
+ 2006 10:37:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S933739AbWKQRB5 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 17 Nov 2006
- 12:01:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933740AbWKQRB5
- (ORCPT <rfc822;git-outgoing>); Fri, 17 Nov 2006 12:01:57 -0500
-Received: from bayc1-pasmtp07.bayc1.hotmail.com ([65.54.191.167]:28230 "EHLO
- BAYC1-PASMTP07.CEZ.ICE") by vger.kernel.org with ESMTP id S933739AbWKQRB4
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 17 Nov 2006 12:01:56 -0500
-Received: from linux1.attic.local ([65.93.43.81]) by BAYC1-PASMTP07.CEZ.ICE
- over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830); Fri, 17 Nov
- 2006 09:08:13 -0800
-Received: from guru.attic.local ([10.10.10.28]) by linux1.attic.local with
- esmtp (Exim 4.43) id 1Gl6A5-0000yl-Mf; Fri, 17 Nov 2006 11:01:53 -0500
-To: Petr Baudis <pasky@suse.cz>
+ S1758995AbWLAJhP (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
+ 04:37:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759277AbWLAJhP
+ (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 04:37:15 -0500
+Received: from ug-out-1314.google.com ([66.249.92.173]:6687 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1758995AbWLAJhN
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 04:37:13 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so2369507uga for
+ <git@vger.kernel.org>; Fri, 01 Dec 2006 01:37:12 -0800 (PST)
+Received: by 10.67.20.3 with SMTP id x3mr6920889ugi.1164965832281; Fri, 01
+ Dec 2006 01:37:12 -0800 (PST)
+Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
+ ESMTP id o1sm23512254uge.2006.12.01.01.37.11; Fri, 01 Dec 2006 01:37:11 -0800
+ (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On Fri, 17 Nov 2006 17:53:33 +0100
-Petr Baudis <pasky@suse.cz> wrote:
+On Friday 2006 December 01 08:10, Daniel Barkalow wrote:
 
-> On Fri, Nov 17, 2006 at 05:34:04PM CET, Sean wrote:
-> > It's just that the separate Cogito tool shouldn't have a place on the
-> > Git website any more prominent than say StGit does.
-> 
-> It doesn't - look at the "Maintaining external patches" crash course.
-> 
-> Porcelains are integral part of the Git environment. I think several
-> people have already tried to explain it before.
-> 
+> My position on this subject is that "index" is a good name, but that
+> description is a terrible description, and "index" is a word that needs a
+> good description in context. If we just said up front:
 
-There is enough native Git documentation and hopefully more coming
-that third party tools should be pushed behind the scenes a bit.
-At least on the GIT website.
+If we need to explain what "index" means in the context of diff then it's not 
+a good name :-)
 
-Of course there is nothing wrong with having information there, but
-the main thrust should be about Git and how to use it directly without
-porcelains.  Especially in the light that people have recently
-expressed a desire to advocate and document the use of native Git
-more strongly.
+An index /everywhere else/ is a lookup table.  topic->page number; 
+author->book title.  record id->byte position.  There is never any content in 
+an index, indices just point at content.
 
-Having a link to Cogito off the front page of the Git website that
-says... Cogito makes things "easier", no matter how much you
-personally believe it, isn't the way everyone feels and is at
-odds with the native-git message and improvement effort.
+I imagine that's how git's index got it's name.  (I'm only guessing as I've 
+not looked at what's actually inside git's "index").  Here's my guess:
 
+git update-index file1 hashes file1, stores it somewhere under that hash and 
+writes the hash->filename connection to .git/index.  That is why git's index 
+is called an index.  It's a hash->filename index.
+
+Unfortunately, "index" in colloquial git actually means the combination 
+of .git/index plus the hashed file itself.  That's no longer an index, it's 
+a "book". :-)
+
+It's made worse, I think, by the fact that git doesn't want to do any 
+index-like things with the "index".  Being content-oriented rather than 
+name-oriented means that an entry like "file1->NOTHING" is impossible in git.  
+This leads to the sort of "git-add means track this filename" confusion that 
+turns up a lot with new users.
+
+It's probably all too late to change the nomenclature, but I've always been of 
+the opinion that names are important, they confer meaning.  When we use a 
+common word, with common meaning and deviate from that common meaning we are 
+bound to create confusion.  New users don't have any "git-way-of-thinking" 
+knowledge when they begin, so when they hear "index" they can only fall back 
+on their standard understanding of that word.  We shouldn't be surprised then 
+when new users don't get "the index".
+
+
+
+Andy
+-- 
+Dr Andy Parkins, M Eng (hons), MIEE
