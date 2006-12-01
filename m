@@ -1,62 +1,71 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Bahadir Balban" <bahadir.balban@gmail.com>
-Subject: Re: Adding a new file as if it had existed
-Date: Tue, 12 Dec 2006 11:32:28 +0000
-Message-ID: <7ac1e90c0612120332o20d6778bsa16a788fdc04a3a1@mail.gmail.com>
-References: <7ac1e90c0612120205k38b2fc14jbfd8ea682406efb2@mail.gmail.com>
-	 <7vhcw1whfx.fsf@assigned-by-dhcp.cox.net>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH 0/2] Making "git commit" to mean "git commit -a".
+Date: Thu, 30 Nov 2006 20:20:10 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0611302017120.9647@xanadu.home>
+References: <7virgzuf38.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0611282322320.9647@xanadu.home>
+ <7vr6vmsnly.fsf@assigned-by-dhcp.cox.net> <87ejrlvn7r.wl%cworth@cworth.org>
+ <7vodqpn3t4.fsf@assigned-by-dhcp.cox.net>
+ <7vk61dn2yj.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0611300310520.30004@wbgn013.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.64.0611291859070.3513@woody.osdl.org> <456EBBE7.8030404@op5.se>
+ <Pine.LNX.4.64.0611300749560.3513@woody.osdl.org>
+ <20061130164046.GB17715@thunk.org>
+ <Pine.LNX.4.64.0611300903080.3513@woody.osdl.org>
+ <Pine.LNX.4.64.0611301229290.9647@xanadu.home>
+ <87irgwu6e6.wl%cworth@cworth.org> <87hcwgu5t1.wl%cworth@cworth.org>
+ <Pine.LNX.4.64.0611301132350.3513@woody.osdl.org>
+ <Pine.LNX.4.64.0611301521320.9647@xanadu.home>
+ <7vhcwgiqer.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0611301624430.9647@xanadu.home>
+ <7vlklsfsgz.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Tue, 12 Dec 2006 11:32:38 +0000 (UTC)
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+NNTP-Posting-Date: Fri, 1 Dec 2006 01:20:49 +0000 (UTC)
+Cc: Linus Torvalds <torvalds@osdl.org>, Carl Worth <cworth@cworth.org>,
+	Theodore Tso <tytso@mit.edu>, Andreas Ericsson <ae@op5.se>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=R3f9b0PX4wq39enhjsdNzhk/vCXps6vHbaGRxcyzTOx+Bng4OFZgTb/53UDGSVjJ8egDNqKhfKslK+xlQ6Qz9FhnOcVTz30AhHHFMIbYpZEdt/yThuw+nxAfVjsOc8NJHtPwPOmF1+T4gP2oOdWi5BUVniZ6xXNqxvM6zTcqXbQ=
-In-Reply-To: <7vhcw1whfx.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+In-reply-to: <7vlklsfsgz.fsf@assigned-by-dhcp.cox.net>
+X-X-Sender: nico@xanadu.home
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34083>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gu5s9-0000yH-45 for gcvg-git@gmane.org; Tue, 12 Dec
- 2006 12:32:33 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32842>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gpx50-0001DB-Gd for gcvg-git@gmane.org; Fri, 01 Dec
+ 2006 02:20:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751231AbWLLLca (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 12 Dec 2006
- 06:32:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751235AbWLLLca
- (ORCPT <rfc822;git-outgoing>); Tue, 12 Dec 2006 06:32:30 -0500
-Received: from nf-out-0910.google.com ([64.233.182.184]:13422 "EHLO
- nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1751231AbWLLLc3 (ORCPT <rfc822;git@vger.kernel.org>); Tue, 12 Dec
- 2006 06:32:29 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so212220nfa for
- <git@vger.kernel.org>; Tue, 12 Dec 2006 03:32:28 -0800 (PST)
-Received: by 10.82.169.4 with SMTP id r4mr1294824bue.1165923148114; Tue, 12
- Dec 2006 03:32:28 -0800 (PST)
-Received: by 10.82.186.15 with HTTP; Tue, 12 Dec 2006 03:32:28 -0800 (PST)
-To: git@vger.kernel.org
+ S1031705AbWLABUN (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
+ 20:20:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031702AbWLABUN
+ (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 20:20:13 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:10845 "EHLO
+ relais.videotron.ca") by vger.kernel.org with ESMTP id S1031699AbWLABUL
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 20:20:11 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
+ <0J9K007H9MDMEF60@VL-MO-MR002.ip.videotron.ca> for git@vger.kernel.org; Thu,
+ 30 Nov 2006 20:20:10 -0500 (EST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-On 12/12/06, Junio C Hamano <junkio@cox.net> wrote:
-> No.
->
-> I do not understand why not adding all the files you care about
-> eventually anyway in the initial commit is needed for
-> "performance reasons", if you do not touch majority of them for
-> a long time.  Care to explain?
+On Thu, 30 Nov 2006, Junio C Hamano wrote:
 
-If I don't know which files I may be touching in the future for
-implementing some feature, then I am obliged to add all the files even
-if they are irrelevant. I said "performance reasons" assuming all the
-file hashes need checked for every commit -a to see if they're
-changed, but I just tried on a PIII and it seems not so slow.
+> I sense that you are inviting me to argue for reverting the
+> other "git commit" braindead which is spelled "--only" (and
+> worse yet, it is the default).  I am very tempted.
+
+No no no !
+
+I argued for that at the time and I still stands behind that change !
+
 
