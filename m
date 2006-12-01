@@ -1,70 +1,68 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: svn versus git
-Date: Thu, 14 Dec 2006 00:14:37 +0100
-Organization: At home
-Message-ID: <elq1c8$37d$1@sea.gmane.org>
-References: <200612132200.41420.andyparkins@gmail.com> <elpun9$qp1$1@sea.gmane.org> <200612132251.17202.andyparkins@gmail.com>
+From: Martin Waitz <tali@admingilde.org>
+Subject: Re: [RFC] Submodules in GIT
+Date: Fri, 1 Dec 2006 21:30:02 +0100
+Message-ID: <20061201203002.GJ18810@admingilde.org>
+References: <4570289D.9050802@b-i-t.de> <20061201133558.GU18810@admingilde.org> <45703174.8000609@op5.se> <20061201134610.GW18810@admingilde.org> <457041AD.4010601@op5.se> <20061201150045.GZ18810@admingilde.org> <45705A94.2070509@op5.se> <Pine.LNX.4.64.0612010844380.3695@woody.osdl.org> <457061A7.2000102@b-i-t.de> <Pine.LNX.4.64.0612011134080.3695@woody.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-NNTP-Posting-Date: Wed, 13 Dec 2006 23:13:19 +0000 (UTC)
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="tgQ0jN0vM+YIGDGO"
+NNTP-Posting-Date: Fri, 1 Dec 2006 20:30:39 +0000 (UTC)
+Cc: sf <sf@b-i-t.de>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 20
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-25-107.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0612011134080.3695@woody.osdl.org>
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
+User-Agent: Mutt/1.5.9i
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34249>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GudHd-0007W7-Rh for gcvg-git@gmane.org; Thu, 14 Dec
- 2006 00:13:06 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32964>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GqF1V-0000lQ-B4 for gcvg-git@gmane.org; Fri, 01 Dec
+ 2006 21:30:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751717AbWLMXMr (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 13 Dec 2006
- 18:12:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751722AbWLMXMr
- (ORCPT <rfc822;git-outgoing>); Wed, 13 Dec 2006 18:12:47 -0500
-Received: from main.gmane.org ([80.91.229.2]:52388 "EHLO ciao.gmane.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1751709AbWLMXMb
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 13 Dec 2006 18:12:31 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1GudGp-0003vY-1d for git@vger.kernel.org; Thu, 14 Dec 2006 00:12:15 +0100
-Received: from host-81-190-25-107.torun.mm.pl ([81.190.25.107]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Thu, 14 Dec 2006 00:12:15 +0100
-Received: from jnareb by host-81-190-25-107.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Thu, 14 Dec 2006
- 00:12:15 +0100
-To: git@vger.kernel.org
+ S936547AbWLAUaF (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
+ 15:30:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936548AbWLAUaF
+ (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 15:30:05 -0500
+Received: from agent.admingilde.org ([213.95.21.5]:21424 "EHLO
+ mail.admingilde.org") by vger.kernel.org with ESMTP id S936547AbWLAUaD (ORCPT
+ <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 15:30:03 -0500
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1) id
+ 1GqF1G-0001AZ-DD; Fri, 01 Dec 2006 21:30:02 +0100
+To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 
-Andy Parkins wrote:
 
->> Hmmm... I thought that some progress indicator of download/upload was
->> added... guess I was wrong.
-> 
-> You're not wrong, there is a progress indicator, but it's measured 
-> in "objects" not megabytes.  It's got a percentage as well.  Neither of these 
-> things is a whole lot of use if I want to know how much data (in megabytes) 
-> has been transferred, how much is there left to go and how long is it going 
-> to take.
+--tgQ0jN0vM+YIGDGO
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-No, what you see is if I understand correctly progress indicator for
-local and remote generating pack to send / exploding pack into loose
-objects (or not). There was some patch to add download/upload progress
-indicator, but I guess it was not applied.
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+hoi :)
+
+Linus, you are a lot better in describing all my thoughts than I myself.
+;-)
+
+--=20
+Martin Waitz
+
+--tgQ0jN0vM+YIGDGO
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFFcJDKj/Eaxd/oD7IRAplPAJ91nd0XngWjrJXjxGWWYA+7Rus+VwCfdBRC
+oC6FlD4JjtY8VitGDdiDSkc=
+=dYW2
+-----END PGP SIGNATURE-----
 
