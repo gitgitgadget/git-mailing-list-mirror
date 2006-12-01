@@ -2,103 +2,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH/RFC] avoid accessing _all_ loose refs in git-show-ref
-Date: Sat, 16 Dec 2006 15:20:57 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612161518070.3635@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0612161335140.3635@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vk60sf0hr.fsf@assigned-by-dhcp.cox.net>
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Alan Chandler <alan@chandlerfamily.org.uk>
+Subject: Re: Resolving conflicts
+Date: Fri, 1 Dec 2006 08:13:40 +0000
+Message-ID: <200612010813.41001.alan@chandlerfamily.org.uk>
+References: <456FD461.4080002@saville.com> <Pine.LNX.4.64.0611302353580.3695@woody.osdl.org> <Pine.LNX.4.64.0611302359400.3695@woody.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Sat, 16 Dec 2006 14:21:07 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain;
+  charset="ansi_x3.4-1968"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Fri, 1 Dec 2006 08:14:03 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7vk60sf0hr.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+User-Agent: KMail/1.9.5
+In-Reply-To: <Pine.LNX.4.64.0611302359400.3695@woody.osdl.org>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34620>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GvaPP-00008b-VK for gcvg-git@gmane.org; Sat, 16 Dec
- 2006 15:21:04 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32869>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gq3Wm-0003wu-R8 for gcvg-git@gmane.org; Fri, 01 Dec
+ 2006 09:13:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S965047AbWLPOU7 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 16 Dec 2006
- 09:20:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965437AbWLPOU7
- (ORCPT <rfc822;git-outgoing>); Sat, 16 Dec 2006 09:20:59 -0500
-Received: from mail.gmx.net ([213.165.64.20]:47410 "HELO mail.gmx.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S965047AbWLPOU7
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 16 Dec 2006 09:20:59 -0500
-Received: (qmail invoked by alias); 16 Dec 2006 14:20:57 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp001) with SMTP; 16 Dec 2006 15:20:57 +0100
-To: Junio C Hamano <junkio@cox.net>
+ S967496AbWLAINq (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
+ 03:13:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967497AbWLAINq
+ (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 03:13:46 -0500
+Received: from 82-44-22-127.cable.ubr06.croy.blueyonder.co.uk
+ ([82.44.22.127]:1159 "EHLO home.chandlerfamily.org.uk") by vger.kernel.org
+ with ESMTP id S967496AbWLAINp (ORCPT <rfc822;git@vger.kernel.org>); Fri, 1
+ Dec 2006 03:13:45 -0500
+Received: from kanger.home ([192.168.0.21]) by home.chandlerfamily.org.uk
+ with esmtp (Exim 4.63) (envelope-from <alan@chandlerfamily.org.uk>) id
+ 1Gq3Wi-0007xi-LD for git@vger.kernel.org; Fri, 01 Dec 2006 08:13:44 +0000
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Hi,
+On Friday 01 December 2006 08:00, Linus Torvalds wrote:
+> On Thu, 30 Nov 2006, Linus Torvalds wrote:
+> > No, kdiff3 probably doesn't have the same semantics, so better get the
+> > "real" merge. It's almost certainly in the rcs package, so "emerge rcs"
+> > should do it.
+>
+> ..and just to be safe, remove the symlink first, so that you don't end up
+> overwriting the "kdiff3" binary by mistake when you install the real
+> "merge". Not that I think emerge is quite that stupid a package manager,
+> but anyway..
 
-On Sat, 16 Dec 2006, Junio C Hamano wrote:
-
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > 	This is kind of quick and dirty.
-> 
-> Maybe I am blind, but why don't you just do a resolve_ref()
-> regardless of packedness?  It only builds the packed refs list
-> when it is not found as a loose ref, and never builds the loose
-> refs list.  You probably would want to reject the ones that says
-> REF_ISSYMREF.
-
-But of course!
-
-> > 	An alternative would be to pack the tags _per default_. I once
-> > 	argued for that, but it appears nobody liked that idea. I even
-> > 	proposed to pack _all_ refs, and I still think this would be
-> > 	a good idea.
-> 
-> I do not think packing all refs is such a good idea.  Branches
-> are meant to be worked on and extended so the packed ones
-> would become stale quickly.
-
-My idea would have been to edit them in-place. Since the hashes all take 
-the same amount of bytes, it could be done by seeking around in the file.
-
->  Packing all tags by default is something we would want when everybody 
-> knows how to handle them.
-
-You mean all the scripts? Because if you make it the default, you could 
-hide that implementation detail away from the user.
-
-> > 	Isn't it a bug that --verify succeeds, if only _one_ ref passed to 
-> > 	the command exists?
-> 
-> I think --verify should insist a single parameter, just like
-> rev-parse.
-> 
-> So wouldn't the code be like:
-> 
-> 	if (verify) {
-> 		int flag;
->         	if (pattern[1])
->                 	die("Eh?");
-> 		if (resolve_ref(pattern[0], sha1, 1, &flag) &&
->                 	(flag & REF_ISSYMREF) == 0) {
->                 		printf("%s %s\n",
->                                 	sha1_to_hex(sha1), pattern[0]);
-> 				exit(0);
-> 		} else
->                 	die("no match");
-> 	}
-> 
-> ???
-
-Ack. Scrap my patch.
-
-Ciao,
-Dscho
+Ubuntu is a Debian based.  I think it uses Synaptic as its package manager gui 
+with the standard Debian apt-xxx tools underneath.
+-- 
+Alan Chandler
