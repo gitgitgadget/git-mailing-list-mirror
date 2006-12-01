@@ -4,71 +4,105 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: kernel.org mirroring (Re: [GIT PULL] MMC update)
-Date: Thu, 7 Dec 2006 14:39:03 -0500
-Message-ID: <20061207193903.GE12143@spearce.org>
-References: <45744FA3.7020908@zytor.com> <Pine.LNX.4.64.0612061847190.3615@woody.osdl.org> <45778AA3.7080709@zytor.com> <Pine.LNX.4.64.0612061940170.3615@woody.osdl.org> <4577A84C.3010601@zytor.com> <Pine.LNX.4.64.0612070953290.3615@woody.osdl.org> <45785697.1060001@zytor.com> <Pine.LNX.4.64.0612071052560.3615@woody.osdl.org> <457868AA.2030605@zytor.com> <Pine.LNX.4.64.0612071121410.3615@woody.osdl.org>
+From: Wink Saville <wink@saville.com>
+Subject: Re: Resolving conflicts
+Date: Thu, 30 Nov 2006 23:52:04 -0800
+Message-ID: <456FDF24.1070001@saville.com>
+References: <456FD461.4080002@saville.com> <Pine.LNX.4.64.0611302330000.3695@woody.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 7 Dec 2006 19:39:41 +0000 (UTC)
-Cc: "H. Peter Anvin" <hpa@zytor.com>,
-	Kernel Org Admin <ftpadmin@kernel.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jakub Narebski <jnareb@gmail.com>
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Fri, 1 Dec 2006 07:52:24 +0000 (UTC)
+Cc: git <git@vger.kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0612071121410.3615@woody.osdl.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+User-Agent: Thunderbird 1.5.0.8 (Windows/20061025)
+In-Reply-To: <Pine.LNX.4.64.0611302330000.3695@woody.osdl.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33615>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GsP5n-0007sS-1U for gcvg-git@gmane.org; Thu, 07 Dec
- 2006 20:39:39 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32862>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gq3C2-0000fb-0t for gcvg-git@gmane.org; Fri, 01 Dec
+ 2006 08:52:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1163229AbWLGTjg (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
- 14:39:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1163231AbWLGTjg
- (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 14:39:36 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:35219 "EHLO
- corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1163229AbWLGTjf (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec 2006
- 14:39:35 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1GsP57-0006Ki-R1; Thu, 07 Dec 2006 14:38:57 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- 5D7CF20FB6E; Thu,  7 Dec 2006 14:39:03 -0500 (EST)
+ S935687AbWLAHwB (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
+ 02:52:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935979AbWLAHwA
+ (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 02:52:00 -0500
+Received: from 70-91-206-233-BusName-SFBA.hfc.comcastbusiness.net
+ ([70.91.206.233]:57472 "EHLO saville.com") by vger.kernel.org with ESMTP id
+ S935687AbWLAHv7 (ORCPT <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006
+ 02:51:59 -0500
+Received: from [192.168.0.52] (unknown [192.168.0.52]) by saville.com
+ (Postfix) with ESMTP id A321357A6F; Thu, 30 Nov 2006 23:48:02 -0800 (PST)
 To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 
-Linus Torvalds <torvalds@osdl.org> wrote:
-> I'm surprised that Apache can't do that. Or maybe it can, and it just 
-> needs some configuration entry? I don't know apache.. I realize that 
-> because Apache doesn't know before-hand whether something is cacheable or 
-> not, it must probably _default_ to running the CGI scripts to the same 
-> address in parallel, but it would be stupid to not have the option to 
-> serialize.
+Linus Torvalds wrote:
+> 
+> On Thu, 30 Nov 2006, Wink Saville wrote:
+>> I then searched the net for how to resolve conflicts, seems you
+>> should start by doing a git-diff, so I did and I get this:
+>>
+>>   diff --cc kernel/fork.c
+>>   index d74b4a5,8cdd3e7..0000000
+>>   --- a/kernel/fork.c
+>>   +++ b/kernel/fork.c
+>>   diff --cc kernel/spinlock.c
+>>   index f4d1718,2c6c2bf..0000000
+>>   --- a/kernel/spinlock.c
+>>   +++ b/kernel/spinlock.c
+> 
+> Hmm. That doesn't look like a conflict. If it had a real conflict, I'd 
+> have expected to see it mentioned in that diff..
+> 
+> This may be a stupid question, but if you haven't actually ever needed to 
+> do any file-level merges before, this may be the first time you've 
+> actually had the external 3-way "merge" program called, and that's one of 
+> the few things that git still depends on _external_ programs for. And if 
+> that program is broken or missing, you'd get bubkis.
+> 
+> (This is hopefully getting fixed, and we'll have one less external 
+> dependency to worry about, but it's the only thing that springs to mind)
+> 
+> That's especially true since the merge-head your log shows wasn't even all 
+> that long ago: there's just 80 commits since that common merge base, and 
+> only two of them even change those two files, and only in rather simple 
+> ways at that.
+> 
+> So my guess is that there wasn't actually a conflict at all, but the 
+> "merge" program (usually in /usr/bin/merge) returned an error for some 
+> reason. What does "which merge" and "rpm -qf /usr/bin/merge" say?
+> 
+> But you can also do "git diff --ours" (or "git diff --their") to get a 
+> simple two-way diff of the end result of the merge to what you were 
+> looking at.
+> 
+> 		Linus
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
 
-AFAIK it doesn't have such an option, for basically the reason
-you describe.  I worked on a project which had much more difficult
-to answer queries than gitweb and were also very popular.  Yes,
-the system died under any load, no matter how much money was thrown
-at it.  :-)
+Earlier had a problem with git wanting merge but didn't have it and
+couldn't figure out which package it was in Ubuntu:( So I symlinked merge
+to kdiff3 which worked at the time:
 
-> That said, from some of the other horrors I've heard about, "stupid" may 
-> be just scratching at the surface.
+wink@winkc2d1:~/linux/linux-2.6$ ls -al /usr/bin/merge
+lrwxrwxrwx 1 root root 6 2006-11-17 19:24 /usr/bin/merge -> kdiff3
 
-It is.  :-)
+But doesn't/didn't work this time.
 
--- 
+I tried "git diff --ours"
+
+wink@winkc2d1:~/linux/linux-2.6$ git diff --ours
+* Unmerged path kernel/fork.c
+diff --git a/kernel/fork.c b/kernel/fork.c
+* Unmerged path kernel/spinlock.c
+diff --git a/kernel/spinlock.c b/kernel/spinlock.c
+wink@winkc2d1:~/linux/linux-2.6$
+
+Wink
+
+Not too helpful:(
