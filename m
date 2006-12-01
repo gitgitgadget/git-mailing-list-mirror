@@ -1,68 +1,91 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: Add "next" link to commitdiff view
-Date: Sun, 29 Oct 2006 04:10:29 +0200
-Message-ID: <200610290310.30265.jnareb@gmail.com>
-References: <672246.46875.qm@web31808.mail.mud.yahoo.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [RFC] git-add update with all-0 object
+Date: Fri, 1 Dec 2006 03:10:48 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0612010223010.20138@iabervon.org>
+References: <Pine.LNX.4.64.0611301634080.20138@iabervon.org>
+ <Pine.LNX.4.64.0611301431420.3513@woody.osdl.org> <Pine.LNX.4.64.0611301749450.20138@iabervon.org>
+ <20061201045727.GA22622@thunk.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sun, 29 Oct 2006 02:10:42 +0000 (UTC)
-Cc: Luben Tuikov <ltuikov@yahoo.com>, Junio Hamano <junkio@cox.net>,
-	Petr Baudis <pasky@suse.cz>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Fri, 1 Dec 2006 08:11:42 +0000 (UTC)
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org,
+	Junio C Hamano <junkio@cox.net>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=i9XgwCpekElaOlvTHaoOjbOmr9a3+CwhjZgdSltKnS7TA3gIFytXOhkauYopMzHduGuNonMUOCMZ8giH/U5dDYZSi8ALd5BWXvbKloZwMcD8kV/3dATmsQjp90ii7NxrdRNze6epGw2IQTGKHi1WGLtzXziQg+Imvc1sJvjShu8=
-User-Agent: KMail/1.9.3
-In-Reply-To: <672246.46875.qm@web31808.mail.mud.yahoo.com>
-Content-Disposition: inline
+In-Reply-To: <20061201045727.GA22622@thunk.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30407>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32868>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Ge08E-0001TW-Af for gcvg-git@gmane.org; Sun, 29 Oct
- 2006 03:10:39 +0100
+ esmtp (Exim 4.43) id 1Gq3UZ-0003U3-KX for gcvg-git@gmane.org; Fri, 01 Dec
+ 2006 09:11:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S964900AbWJ2CKf (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 28 Oct 2006
- 22:10:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964941AbWJ2CKf
- (ORCPT <rfc822;git-outgoing>); Sat, 28 Oct 2006 22:10:35 -0400
-Received: from ug-out-1314.google.com ([66.249.92.168]:48960 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S964900AbWJ2CKe
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 28 Oct 2006 22:10:34 -0400
-Received: by ug-out-1314.google.com with SMTP id 32so933912ugm for
- <git@vger.kernel.org>; Sat, 28 Oct 2006 19:10:33 -0700 (PDT)
-Received: by 10.66.252.4 with SMTP id z4mr1939949ugh; Sat, 28 Oct 2006
- 19:10:33 -0700 (PDT)
-Received: from host-81-190-18-116.torun.mm.pl ( [81.190.18.116]) by
- mx.google.com with ESMTP id c1sm1232407ugf.2006.10.28.19.10.32; Sat, 28 Oct
- 2006 19:10:32 -0700 (PDT)
-To: git@vger.kernel.org
+ S933718AbWLAILK (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
+ 03:11:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936105AbWLAILK
+ (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 03:11:10 -0500
+Received: from iabervon.org ([66.92.72.58]:3087 "EHLO iabervon.org") by
+ vger.kernel.org with ESMTP id S933718AbWLAILI (ORCPT
+ <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 03:11:08 -0500
+Received: (qmail 30709 invoked by uid 1000); 1 Dec 2006 03:10:52 -0500
+Received: from localhost (sendmail-bs@127.0.0.1) by localhost with SMTP; 1
+ Dec 2006 03:10:52 -0500
+To: Theodore Tso <tytso@mit.edu>
 Sender: git-owner@vger.kernel.org
 
-Luben Tuikov wrote:
-> --- Jakub Narebski <jnareb@gmail.com> wrote:
->>
->> It is commit-7, but that can be easily changed.
+On Thu, 30 Nov 2006, Theodore Tso wrote:
+
+> By the way, after thinking about this for a while, part of the problem
+> is that the name "index" really sucks.  Which is perhaps why Linus is
+> now trying to stop us from actually using the term "index" in these
+> discussions.  :-)    If we called it a "staging area", as our Great
+> Leader has suggested, I think it would be a lot easier for novice
+> users to understand.    Consider what is in the git man page:
 > 
-> Please do change it to "commit-8" -- it'd be consistent with the rest
-> of GIT.
+> 	The index is a simple binary file, which contains an efficient
+> 	representation of a virtual directory content at some random
+> 	time.  It does so by a simple array that associates a set of
+> 	names, dates, permissions and content (aka "blob") objects
+> 	together. The cache is always kept ordered by name, and names
+> 	are unique (with a few very specific rules) at any point in
+> 	time, but the cache has no long-term meaning, and can be
+> 	partially updated at any time.....
+> 
+> 	In particular, the index file can have the representation of
+> 	an intermediate tree that has not yet been instantiated. So
+> 	the index can be thought of as a write-back cache, which can
+> 	contain dirty information that has not yet been written back
+> 	to the backing store.
+> 
+> For a kernel programmer, this might not be understandable --- but for
+> your typical application programmer, this is enough to cause him or
+> her to conclude that git is simply not meant for use by mere mortals.
 
-Well, some parts of GIT use "commit-8" (for example git-describe),
-other use "commit-7...": this includes git-diff both in --raw
-(git diff --raw, as opposed to git-diff-tree), git-diff in it's patch 
-format in "index <hash>..<hash>" extended header, in "Merge:" line for 
-merges in git-show output.
+My position on this subject is that "index" is a good name, but that 
+description is a terrible description, and "index" is a word that needs a 
+good description in context. If we just said up front:
 
--- 
-Jakub Narebski
+ Git's "index" is a staging area that you use to prepare commits. It maps 
+ filenames to content. It allows git to remember changes you want to put 
+ into the next commit while you do more work. For normal commits, it is 
+ not necessary to use the index, but it is very helpful for complicated 
+ commits, because it lets you focus on the part you're still working on 
+ while git remembers the part you're done with.
+
+I think people would get it. (If it were called the "cache" still, it 
+would be hopeless, because "cache" implies false things; "index" doesn't 
+imply anything initially.)
+
+Of course, we'd still have to disabuse people of the notion that the index 
+can store the information "there's nothing at this path yet, but I'm 
+interested in it", because that's a piece of information people often know 
+before a file is ready, and think git would be able to remember in a 
+staging area.
+
+	-Daniel
