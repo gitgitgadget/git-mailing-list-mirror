@@ -1,91 +1,80 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [PATCH 3/3] Remove unsupported C99 style struct initializers in git-archive.
-Date: Sun, 5 Nov 2006 02:36:34 -0500
-Message-ID: <20061105073634.GA4616@spearce.org>
-References: <20061105053723.GC4193@spearce.org> <7vd582uz5b.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: Re: [RFC] Submodules in GIT
+Date: Sat, 2 Dec 2006 00:17:44 +0100
+Message-ID: <200612020017.44275.Josef.Weidendorfer@gmx.de>
+References: <20061130170625.GH18810@admingilde.org> <200612012306.41410.Josef.Weidendorfer@gmx.de> <20061201221230.GM18810@admingilde.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sun, 5 Nov 2006 07:36:51 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Fri, 1 Dec 2006 23:18:08 +0000 (UTC)
+Cc: Linus Torvalds <torvalds@osdl.org>, sf <sf@b-i-t.de>,
+	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+X-Authenticated: #352111
+User-Agent: KMail/1.9.3
+In-Reply-To: <20061201221230.GM18810@admingilde.org>
 Content-Disposition: inline
-In-Reply-To: <7vd582uz5b.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32984>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GgcYc-000060-GA for gcvg-git@gmane.org; Sun, 05 Nov
- 2006 08:36:43 +0100
+ esmtp (Exim 4.43) id 1GqHdt-0002n0-9z for gcvg-git@gmane.org; Sat, 02 Dec
+ 2006 00:18:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1161209AbWKEHgj (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 5 Nov 2006
- 02:36:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161216AbWKEHgj
- (ORCPT <rfc822;git-outgoing>); Sun, 5 Nov 2006 02:36:39 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:42963 "EHLO
- corvette.plexpod.net") by vger.kernel.org with ESMTP id S1161209AbWKEHgi
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 5 Nov 2006 02:36:38 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1GgcYV-0002cC-47; Sun, 05 Nov 2006 02:36:35 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- B735E20E491; Sun,  5 Nov 2006 02:36:34 -0500 (EST)
-To: Junio C Hamano <junkio@cox.net>
+ S1162217AbWLAXRr (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
+ 18:17:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1162218AbWLAXRr
+ (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 18:17:47 -0500
+Received: from mail.gmx.net ([213.165.64.20]:52173 "HELO mail.gmx.net") by
+ vger.kernel.org with SMTP id S1162217AbWLAXRq (ORCPT
+ <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 18:17:46 -0500
+Received: (qmail invoked by alias); 01 Dec 2006 23:17:44 -0000
+Received: from p5496B457.dip0.t-ipconnect.de (EHLO noname) [84.150.180.87] by
+ mail.gmx.net (mp031) with SMTP; 02 Dec 2006 00:17:44 +0100
+To: Martin Waitz <tali@admingilde.org>
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano <junkio@cox.net> wrote:
-> "Shawn O. Pearce" <spearce@spearce.org> writes:
+On Friday 01 December 2006 23:12, Martin Waitz wrote:
+> hoi :)
 > 
-> > +static struct archiver_desc
-> > +{
-> > +	const char *name;
-> > +	write_archive_fn_t write_archive;
-> > +	parse_extra_args_fn_t parse_extra;
-> > +} archivers[] = {
-> > +	{ "tar", write_tar_archive, NULL },
-> > +	{ "zip", write_zip_archive, parse_extra_zip_args },
-> >  };
+> On Fri, Dec 01, 2006 at 11:06:40PM +0100, Josef Weidendorfer wrote:
+> > > Well, I would actually argue that you may often want to have a
+> > > supermodule and then at least have the _option_ to decide to not
+> > > fetch all the submodules.
+> > 
+> > If you want to allow this, you have to be able to cut off fetching the
+> > objects of the supermodule at borders to given submodules, the ones you
+> > do not want to track. With "border" I mean the submodule commit in some
+> > tree of the supermodule.
 > 
-> If this were a struct with bazillions of fields I might have had
-> trouble swallowing the change, but this is so small that it is
-> no brainer.
+> I don't think this is something special to submodules.  There has been
+> interest in checking out only a part of the tree even before talking
+> about submodules and I really think this feature should be independent
+> to submodules.
 
-Right; if it was larger I would have been in trouble.  :-)
+After some thinking, a submodule namespace even is important for checking
+out only parts of a supermodule, exactly because the root of a submodule
+potentially can change at every commit.
 
-> I think this actually is an improvement.
-> 
-> >  static int run_remote_archiver(const char *remote, int argc,
-> > @@ -88,7 +86,10 @@ static int init_archiver(const char *nam
-> >  
-> >  	for (i = 0; i < ARRAY_SIZE(archivers); i++) {
-> >  		if (!strcmp(name, archivers[i].name)) {
-> > -			memcpy(ar, &archivers[i], sizeof(struct archiver));
-> > +			memset(ar, 0, sizeof(*ar));
-> > +			ar->name = archivers[i].name;
-> > +			ar->write_archive = archivers[i].write_archive;
-> > +			ar->parse_extra = archivers[i].parse_extra;
-> 
-> But is this change really needed?  Shouldn't a structure
-> assignment just work?
+When checking out some arbitrary supermodule commit, how do you check that
+at some submodule border, the user did not want to check out the submodule
+at all? You need a way to check the DAG identity you are diving
+into at this border: lets say by going to the root commit of this DAG (!).
+And via this identity, you have to check whether the user had
+specified that he wants the submodule to be check out.
+Without any further meta information (indexed by a submodule name!), this
+information is only available from the checkout the user switched from,
+as there would be no file in the working tree from this submodule?
 
-No, they are different structs...
+Quite a pain.
 
-Which I did to reduce the size of the initializer (see above)
-so that it was a no brainer for you to swallow.  :-)
-
--- 
