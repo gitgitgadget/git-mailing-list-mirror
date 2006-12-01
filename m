@@ -1,67 +1,74 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: git and "dumb protocols"
-Date: Thu, 2 Nov 2006 11:48:48 +0100
-Message-ID: <20061102104848.GH20017@pasky.or.cz>
-References: <vpqu01i16g8.fsf@ecrins.imag.fr>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Diffs from CVS keyword expansion
+Date: Thu, 30 Nov 2006 23:44:41 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0611302340030.3695@woody.osdl.org>
+References: <9e4733910611301956l6f64b01ftee46971a18e3467b@mail.gmail.com>
+ <17775.54363.376000.140259@lapjr.intranet.kiel.bmiag.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 2 Nov 2006 10:49:07 +0000 (UTC)
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Fri, 1 Dec 2006 07:44:55 +0000 (UTC)
+Cc: Jon Smirl <jonsmirl@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <vpqu01i16g8.fsf@ecrins.imag.fr>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <17775.54363.376000.140259@lapjr.intranet.kiel.bmiag.de>
+X-MIMEDefang-Filter: osdl$Revision: 1.161 $
+X-Scanned-By: MIMEDefang 2.36
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30711>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32861>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gfa7x-00077p-MJ for gcvg-git@gmane.org; Thu, 02 Nov
- 2006 11:48:54 +0100
+ esmtp (Exim 4.43) id 1Gq34l-00087z-RC for gcvg-git@gmane.org; Fri, 01 Dec
+ 2006 08:44:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752551AbWKBKsv (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 2 Nov 2006
- 05:48:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752821AbWKBKsu
- (ORCPT <rfc822;git-outgoing>); Thu, 2 Nov 2006 05:48:50 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:8622 "EHLO machine.or.cz") by
- vger.kernel.org with ESMTP id S1752551AbWKBKst (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 2 Nov 2006 05:48:49 -0500
-Received: (qmail 3627 invoked by uid 2001); 2 Nov 2006 11:48:48 +0100
-To: git@vger.kernel.org
+ S935072AbWLAHot (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
+ 02:44:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935096AbWLAHot
+ (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 02:44:49 -0500
+Received: from smtp.osdl.org ([65.172.181.25]:9399 "EHLO smtp.osdl.org") by
+ vger.kernel.org with ESMTP id S935072AbWLAHos (ORCPT
+ <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 02:44:48 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
+ smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kB17igjQ010362
+ (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Thu, 30
+ Nov 2006 23:44:42 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
+ shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kB17ifSC005161; Thu, 30 Nov
+ 2006 23:44:42 -0800
+To: Juergen Ruehle <j.ruehle@bmiag.de>
 Sender: git-owner@vger.kernel.org
 
-  Hi,
 
-Dear diary, on Thu, Nov 02, 2006 at 11:36:07AM CET, I got a letter
-where Matthieu Moy <Matthieu.Moy@imag.fr> said that...
-> Is it possible with git to push to a server on which git is not
-> installed, and if so, how?
 
-  yes, you can push using HTTP DAV - just push to an HTTP URL; make sure
-you have git-http-push compiled, it is sometimes not compiled because it
-unfortunately adds dependencies on couple of more libraries.
+On Fri, 1 Dec 2006, Juergen Ruehle wrote:
 
-  Beware that this is inherently not safe for anonymous push access,
-since malicious client with write access can destroy the repository. You
-will want to protect write access to the repository by .htaccess file.
+> Jon Smirl writes:
+>  > Anyone have a nice script for suppressing diffs caused by CVS keyword
+>  > expansion when someone checked the kernel sources into CVS?
+> 
+> I usually just say (with GNU diff)
+> 
+>   diff -I $$ ...
+> 
+> which is crude, but should be enough to get rid of the hunks listed by
+> you.
+> 
+> You might also want -x CVS if you have the metadata files.
 
-  I think a patch that would add support for pushing over sftp or some
-other dumb protocol would be welcome. One problem is with proper locking
-of ref updates (not sure how well would sftp cope with that), another is
-that you will need to do git-update-server-info's job on the server
-side.
+Also, if you are actually _using_ CVS to check it out, use
 
-  If you already have SSH access to the server, why not compile Git
-there and install it to your $HOME, though?
+	cvs co -ko
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
-$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
+I think, to not check out with keyword expansion at all.
+
+(Also usable with "cvs diff -ko", I think)
+
+		Linus
+
+PS. Clueless user alert: I have happily not used CVS in years and years, 
