@@ -6,100 +6,63 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 From: Martin Waitz <tali@admingilde.org>
 Subject: Re: [RFC] Submodules in GIT
-Date: Wed, 29 Nov 2006 17:03:56 +0100
-Message-ID: <20061129160355.GF18810@admingilde.org>
-References: <20061121223130.GA24909@nan92-1-81-57-214-146.fbx.proxad.net> <200611281029.11918.andyparkins@gmail.com> <ekh45n$rfc$1@sea.gmane.org> <200611281335.38728.andyparkins@gmail.com>
+Date: Fri, 1 Dec 2006 14:46:11 +0100
+Message-ID: <20061201134610.GW18810@admingilde.org>
+References: <20061121223130.GA24909@nan92-1-81-57-214-146.fbx.proxad.net> <200611292000.23778.andyparkins@gmail.com> <20061130170625.GH18810@admingilde.org> <200612010902.51264.andyparkins@gmail.com> <20061201110032.GL18810@admingilde.org> <45701B8D.1030508@b-i-t.de> <20061201121234.GQ18810@admingilde.org> <4570289D.9050802@b-i-t.de> <20061201133558.GU18810@admingilde.org> <45703174.8000609@op5.se>
 Mime-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="pY3vCvL1qV+PayAL"
-NNTP-Posting-Date: Wed, 29 Nov 2006 16:04:38 +0000 (UTC)
-Cc: git@vger.kernel.org
+	protocol="application/pgp-signature"; boundary="TG7lY2/6mW/akb80"
+NNTP-Posting-Date: Fri, 1 Dec 2006 13:46:44 +0000 (UTC)
+Cc: sf <sf@b-i-t.de>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Content-Disposition: inline
-In-Reply-To: <200611281335.38728.andyparkins@gmail.com>
+In-Reply-To: <45703174.8000609@op5.se>
 X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
 User-Agent: Mutt/1.5.9i
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32647>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32923>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GpRuj-0000VW-TV for gcvg-git@gmane.org; Wed, 29 Nov
- 2006 17:04:02 +0100
+ esmtp (Exim 4.43) id 1Gq8iV-0000nk-Aq for gcvg-git@gmane.org; Fri, 01 Dec
+ 2006 14:46:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S967454AbWK2QD6 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 29 Nov 2006
- 11:03:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935845AbWK2QD6
- (ORCPT <rfc822;git-outgoing>); Wed, 29 Nov 2006 11:03:58 -0500
-Received: from agent.admingilde.org ([213.95.21.5]:29909 "EHLO
- mail.admingilde.org") by vger.kernel.org with ESMTP id S935844AbWK2QD5 (ORCPT
- <rfc822;git@vger.kernel.org>); Wed, 29 Nov 2006 11:03:57 -0500
+ S1031407AbWLANqM (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
+ 08:46:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031510AbWLANqM
+ (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 08:46:12 -0500
+Received: from agent.admingilde.org ([213.95.21.5]:34537 "EHLO
+ mail.admingilde.org") by vger.kernel.org with ESMTP id S1031407AbWLANqM
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 08:46:12 -0500
 Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1) id
- 1GpRue-0005ZQ-5H; Wed, 29 Nov 2006 17:03:56 +0100
-To: Andy Parkins <andyparkins@gmail.com>
+ 1Gq8iR-0006D3-2c; Fri, 01 Dec 2006 14:46:11 +0100
+To: Andreas Ericsson <ae@op5.se>
 Sender: git-owner@vger.kernel.org
 
 
---pY3vCvL1qV+PayAL
+--TG7lY2/6mW/akb80
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
 hoi :)
 
-On Tue, Nov 28, 2006 at 01:35:37PM +0000, Andy Parkins wrote:
-> The reason I thought it would have to be HEAD at all times, is to prevent=
-=20
-> situations where the supermodule commit doesn't reflect the state of the=
-=20
-> current tree.
+On Fri, Dec 01, 2006 at 02:43:16PM +0100, Andreas Ericsson wrote:
+> So a commit in the supermodule turns into a commit in the submodule?=20
 
-The way I wanted to address this is to show in the supermodule
-git-status that the submodule is using another branch.
-That way you are warned and can decide not to commit the supermodule.
+no.
 
-I implemented tracking of refs/heads/master (not HEAD) without much
-thinking, and only recently began to think about possible problems with
-this approach.
+> If it doesn't, why would the submodule HEAD have to change?
 
-But I think it is an important design decision to take, so I'd like to
-have consensus here.
+So how do you update your submodule?
 
-Pro HEAD:
- - update-index on submodule really updates the supermodule index with
-   a commit that resembles the working directory.
-Contra HEAD:
- - HEAD is not garanteed to be equal to the working directory anyway,
-   you may have uncommitted changes.
- - when updating the supermodule, you have to take care that your
-   submodules are on the right branch.
-   You might for example have some testing-throwawy branch in one
-   submodule and don't want to merge it with other changes yet.
-
-Pro refs/heads/master:
- - the supermodule really tracks one defined branch of development.
- - you can easily overwrite one submodule by changing to another branch,
-   without fearing that changes in the supermodule change anything
-   there.
-Contra refs/heads/master:
- - after updating the supermodule, you may not have the correct working
-   directory checked out everywhere, because some submodules may be on a
-   different branch.
- - there is one branch in the submodule which is special to all the other.
-
-I think that most of the disadvantages of refs/heads/master can be
-solved by printing the above-mentioned warning in git-status when the
-submodule is using another branch (similiar to the
-planned-but-not-implemented warn if the submodule has uncommited
-changes).
-
-I don't yet know how to cope with tracking HEAD directly, so I'm still
-in favor of tracking refs/heads/master, as already implemented.
+Remember: if you git-pull in the supermodule, you want to update the
+whole thing, including all submodules.
 
 --=20
 Martin Waitz
 
---pY3vCvL1qV+PayAL
+--TG7lY2/6mW/akb80
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: Digital signature
 Content-Disposition: inline
@@ -107,8 +70,8 @@ Content-Disposition: inline
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.1 (GNU/Linux)
 
-iD8DBQFFba9rj/Eaxd/oD7IRAo9GAJ9hk+C7Edtgk3oPPJSieWI2xxhFCACggXkS
-UgoD/4dz26y+3LV00BpxwPk=
-=95zp
+iD8DBQFFcDIij/Eaxd/oD7IRAjH3AJ479XktDFfKJM6wOcD3m4iixHaFewCfSXwM
+wcfOM1qrOGW4+LasVF4/k2A=
+=h6/P
 -----END PGP SIGNATURE-----
 
