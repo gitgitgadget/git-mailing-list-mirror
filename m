@@ -4,88 +4,60 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: fetching packs and storing them as packs
-Date: Fri, 27 Oct 2006 14:53:59 -0700
-Message-ID: <7v3b99e87c.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0610252333540.12418@xanadu.home>
-	<4540CA0C.6030300@tromer.org>
-	<Pine.LNX.4.64.0610271310450.3849@g5.osdl.org>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [RFC] Submodules in GIT
+Date: Fri, 01 Dec 2006 17:38:44 +0100
+Message-ID: <45705A94.2070509@op5.se>
+References: <20061130170625.GH18810@admingilde.org> <200612010902.51264.andyparkins@gmail.com> <20061201110032.GL18810@admingilde.org> <45701B8D.1030508@b-i-t.de> <20061201121234.GQ18810@admingilde.org> <4570289D.9050802@b-i-t.de> <20061201133558.GU18810@admingilde.org> <45703174.8000609@op5.se> <20061201134610.GW18810@admingilde.org> <457041AD.4010601@op5.se> <20061201150045.GZ18810@admingilde.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 27 Oct 2006 21:54:28 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Fri, 1 Dec 2006 16:39:02 +0000 (UTC)
+Cc: sf <sf@b-i-t.de>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <Pine.LNX.4.64.0610271310450.3849@g5.osdl.org> (Linus Torvalds's
-	message of "Fri, 27 Oct 2006 13:22:18 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
+In-Reply-To: <20061201150045.GZ18810@admingilde.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30349>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32942>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GdZeR-0007NG-U1 for gcvg-git@gmane.org; Fri, 27 Oct
- 2006 23:54:11 +0200
+ esmtp (Exim 4.43) id 1GqBPV-0007LW-RF for gcvg-git@gmane.org; Fri, 01 Dec
+ 2006 17:38:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1750709AbWJ0VyE (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 27 Oct 2006
- 17:54:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750706AbWJ0VyE
- (ORCPT <rfc822;git-outgoing>); Fri, 27 Oct 2006 17:54:04 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:10147 "EHLO
- fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP id S1750705AbWJ0VyB
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 27 Oct 2006 17:54:01 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao08.cox.net
- (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
- <20061027215400.HWBD22977.fed1rmmtao08.cox.net@fed1rmimpo01.cox.net>; Fri, 27
- Oct 2006 17:54:00 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id fZti1V00F1kojtg0000000 Fri, 27 Oct 2006
- 17:53:42 -0400
-To: Linus Torvalds <torvalds@osdl.org>
+ S936525AbWLAQir (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
+ 11:38:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936526AbWLAQir
+ (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 11:38:47 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:61596 "EHLO
+ smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S936525AbWLAQiq (ORCPT
+ <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 11:38:46 -0500
+Received: from [192.168.1.20] (unknown [213.88.215.14]) by smtp-gw1.op5.se
+ (Postfix) with ESMTP id 42C026BCC5; Fri,  1 Dec 2006 17:38:45 +0100 (CET)
+To: Martin Waitz <tali@admingilde.org>
 Sender: git-owner@vger.kernel.org
 
-Linus Torvalds <torvalds@osdl.org> writes:
+Martin Waitz wrote:
+> hoi :)
+> 
+> On Fri, Dec 01, 2006 at 03:52:29PM +0100, Andreas Ericsson wrote:
+>>> Remember: if you git-pull in the supermodule, you want to update the
+>>> whole thing, including all submodules.
+>>>
+>> Only if the new commits I pull into the supermodule DAG has commits 
+>> which includes a new shapshot of the submodule, otherwise it wouldn't be 
+>> necessary.
+> 
+> Of course.
+> 
+> But if the supermodule contains changes to the submodule, you still
+> have to change the submodule.  And this implies changing the submodule
+> HEAD or some branch.
+> 
 
-> We really should _never_ create a pack in-place with the final name.
+Not really. I fail to see why HEAD needs to be changed so long as the 
+commit is in the submodule's odb.
 
-The "fattening" index-pack Nico did does not have this problem
-as far as I can see.  Under --stdin, it creates a temporary pack
-file "$GIT_OBJECT_DIRECTORY/pack_XXXXXX"; after the received
-pack is fattened by adding missing delta-base objects and fixing
-up the pack header, final() moves the {pack,idx} pair to the
-final location.
-
-The race is about this sequence:
-
-	- git-receive-pack is spawned from remove git-send-pack;
-          it lets "index-pack --stdin --fatten" to keep the pack.
-
-	- index-pack does its magic and moves the pack and idx
-          to their final location;
-
-	- "repack -a -d" is started by somebody else; it first
-          remembers all the existing packs; it does the usual
-          repacking-into-one.
-
-	- git-receive-pack that invoked the index-pack waits for
-          index-pack to finish, and then updates the refs;
-
-	- "repack -a -d" is done repacking; removes the packs
-          that existed when it checked earlier.
-
-Two instances of receive-pack running simultaneously is safe (in
-the sense that it does not corrupt the repository; one instance
-can fail after noticing the other updated the ref it wanted to
-update) and there is no reason to exclude each other.  But
-"repack -a -d" and receive-pack are not.
-
-Can we perhaps have reader-writer lock on the filesystem to
-pretect the repository?  "prune" can also be made into a writer
-for that lock and "fetch-pack --keep" would be a reader for the
-lock.  That reader-writer lock would solve the issue rather
-nicely.
-
-> That said, I think some of the "git repack -d" logic is also unnecessarily 
-> fragile.
-
-Noted; will fix.
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
