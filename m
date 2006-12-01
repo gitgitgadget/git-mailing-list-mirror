@@ -1,61 +1,83 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RCVD_NUMERIC_HELO,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
-From: "Aneesh Kumar K.V" <aneesh.kumar@gmail.com>
-Subject: gitweb.cgi and git instaweb
-Date: Fri, 27 Oct 2006 00:19:59 +0530
-Message-ID: <ehr00n$vbe$1@sea.gmane.org>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [RFC] git-add update with all-0 object
+Date: Thu, 30 Nov 2006 23:10:36 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0611302306120.3695@woody.osdl.org>
+References: <Pine.LNX.4.64.0611301634080.20138@iabervon.org>
+ <Pine.LNX.4.64.0611301431420.3513@woody.osdl.org> <Pine.LNX.4.64.0611301749450.20138@iabervon.org>
+ <20061201045727.GA22622@thunk.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 26 Oct 2006 18:51:18 +0000 (UTC)
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Fri, 1 Dec 2006 07:11:14 +0000 (UTC)
+Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org,
+	Junio C Hamano <junkio@cox.net>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 14
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 59.92.131.106
-User-Agent: Thunderbird 1.5.0.7 (X11/20060918)
+In-Reply-To: <20061201045727.GA22622@thunk.org>
+X-MIMEDefang-Filter: osdl$Revision: 1.161 $
+X-Scanned-By: MIMEDefang 2.36
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30257>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32857>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GdAJr-0002g2-7w for gcvg-git@gmane.org; Thu, 26 Oct
- 2006 20:51:11 +0200
+ esmtp (Exim 4.43) id 1Gq2Y7-0003Wc-Q2 for gcvg-git@gmane.org; Fri, 01 Dec
+ 2006 08:11:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1423707AbWJZSvI (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
- 14:51:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423724AbWJZSvI
- (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 14:51:08 -0400
-Received: from main.gmane.org ([80.91.229.2]:8931 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S1423707AbWJZSvF (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 14:51:05 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1GdAJC-0002YL-1T for git@vger.kernel.org; Thu, 26 Oct 2006 20:50:30 +0200
-Received: from 59.92.131.106 ([59.92.131.106]) by main.gmane.org with esmtp
- (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Thu, 26
- Oct 2006 20:50:30 +0200
-Received: from aneesh.kumar by 59.92.131.106 with local (Gmexim 0.1 (Debian))
- id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Thu, 26 Oct 2006 20:50:30
- +0200
-To: git@vger.kernel.org
+ S933390AbWLAHLE (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
+ 02:11:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933577AbWLAHLE
+ (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 02:11:04 -0500
+Received: from smtp.osdl.org ([65.172.181.25]:63662 "EHLO smtp.osdl.org") by
+ vger.kernel.org with ESMTP id S933390AbWLAHLC (ORCPT
+ <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 02:11:02 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
+ smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kB17AbjQ008574
+ (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Thu, 30
+ Nov 2006 23:10:37 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
+ shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kB17AaRb004360; Thu, 30 Nov
+ 2006 23:10:37 -0800
+To: Theodore Tso <tytso@mit.edu>
 Sender: git-owner@vger.kernel.org
 
-I am getting errors as below with git instaweb.
 
 
-kvaneesh@satan:/home/opensource/vanilla/linux-2.6-git$ git instaweb
-2006-10-27 00:12:56: (log.c.75) server started
-kvaneesh@satan:/home/opensource/vanilla/linux-2.6-git$ [Fri Oct 27 00:12:57 2006] gitweb.cgi: "our" variable $stylesheet masks earlier declaration in same scope at /home/opensource/vanilla/linux-2.6-git/.git/gitweb/gitweb.cgi line 59.
-[Fri Oct 27 00:13:21 2006] gitweb.cgi: "our" variable $stylesheet masks earlier declaration in same scope at /home/opensource/vanilla/linux-2.6-git/.git/gitweb/gitweb.cgi line 59.
-[Fri Oct 27 00:13:37 2006] gitweb.cgi: "our" variable $stylesheet masks earlier declaration in same scope at /home/opensource/vanilla/linux-2.6-git/.git/gitweb/gitweb.cgi line 59.
-[Fri Oct 27 00:13:58 2006] gitweb.cgi: "our" variable $stylesheet masks earlier declaration in same scope at /home/opensource/vanilla/linux-2.6-git/.git/gitweb/gitweb.cgi line 59.
-[Fri Oct 27 00:14:08 2006] gitweb.cgi: "our" variable $stylesheet masks earlier declaration in same scope at /home/opensource/vanilla/linux-2.6-git/.git/gitweb/gitweb.cgi line 59.
-[Fri Oct 27 00:14:08 2006] gitweb.cgi: Use of uninitialized value in open at /home/opensource/vanilla/linux-2.6-git/.git/gitweb/gitweb.cgi line 1118.
-fatal: ambiguous argument '': unknown revision or path not in the working tree.
-Use '--' to separate paths from revisions
-[Fri Oct 27 00:14:16 2006] gitweb.cgi: "our" variable $stylesheet masks earlier declaration in same scope at /home/opensource/vanilla/linux-2.6-git/.git/gitweb/gitweb.cgi line 59.
+On Thu, 30 Nov 2006, Theodore Tso wrote:
+>
+> By the way, after thinking about this for a while, part of the problem
+> is that the name "index" really sucks.
+
+Hey, it was originally called "cache".
+
+I don't care _what_ it's called, I just want people knowing about it, 
+because hiding it will just cripple git (ie at the very least, when you 
+hit a merge conflict, you really do want to to understand it if you ever 
+want to go the the "next level").
+
+If people are more comfortable just calling it the "staging area", and 
+talking about it in those terms, I'll be happy.
+
+> Put another way, the reason why I think people are liking the whole
+> "git add" and "git rm" suggestion is that it's a nice middle ground
+> between the "hide the index" and the "shove the index in the user's
+> face" approaches.  It's not that we are hiding the fact that there is
+> this thing with the horribly chosen name "index", but instead we talk
+> about this concept of a staging area and we don't dwell on things like
+> the fact that it is a binary file which stores an efficient
+> representation of a virtual directory.... blah blah blah.
+
+Yes.
+
+And even "git diff" isn't really a problem once you understand the staging 
+area. If people feel worried, let them use "git diff HEAD". You won't need 
+to use git for _that_ long until you realize that since the staging area 
+is going to match the HEAD under normal circumstances (and when it 
+doesn't, you actually tend to prefer to get the diff against the staging 
+area _anyway_), you'll find people just starting to use "git diff" and not 
+worry about it.
+
