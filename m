@@ -1,92 +1,69 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Joseph Wakeling <joseph.wakeling@webdrake.net>
-Subject: git and bzr
-Date: Tue, 28 Nov 2006 01:01:46 +0100
-Message-ID: <456B7C6A.80104@webdrake.net>
-References: <45357CC3.4040507@utoronto.ca>	<20061021130111.GL75501@over-yonder.net>	<453F2FF8.2080903@op5.se> <200610251146.06116.jnareb@gmail.com>	<a7e835d40610250308v5d577482m139742e7fe1db185@mail.gmail.com>	<87slhcz8zh.wl%cworth@cworth.org>	<a7e835d40610260152k658aeaf0hb900cb63870c04e4@mail.gmail.com>	<7vu01ro20b.fsf@assigned-by-dhcp.cox.net>	<a7e835d40610260257r5f05ea4gc934f1c1cc267977@mail.gmail.com>	<20061026101038.GA13310@coredump.intra.peff.net>	<877iyne4dm.fsf@alplog.fr> <Pine.LNX.4.64.0610260753090.3962@g5.osdl.org>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [RFC] Submodules in GIT
+Date: Fri, 1 Dec 2006 08:49:09 +0000
+Message-ID: <200612010849.11176.andyparkins@gmail.com>
+References: <20061121223130.GA24909@nan92-1-81-57-214-146.fbx.proxad.net> <20061130170625.GH18810@admingilde.org> <456F29A2.1050205@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain;
+  charset="iso-8859-15"
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Tue, 28 Nov 2006 00:02:11 +0000 (UTC)
-Cc: bazaar-ng@lists.canonical.com
+NNTP-Posting-Date: Fri, 1 Dec 2006 08:49:26 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.8 (X11/20061115)
-In-Reply-To: <Pine.LNX.4.64.0610260753090.3962@g5.osdl.org>
-X-Enigmail-Version: 0.94.0.0
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=oEI22estaOJowAyaYW0ZvNBsTMZ6k2QitJhyJvR+XudAWuY5TLhmQCPIQRI7lj7HNJbKL5gwDvHdZgyhdFh0/9PmXL7gKCXUstYovaxLUD1rByX2ieGw10iXcy9rOKVhH6UhhSYOmDCG01A4K5egScG05ggP4bCSGA/0/ryGnw8=
+User-Agent: KMail/1.9.5
+In-Reply-To: <456F29A2.1050205@op5.se>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32466>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32874>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GoqQ6-0006ek-D5 for gcvg-git@gmane.org; Tue, 28 Nov
- 2006 01:01:54 +0100
+ esmtp (Exim 4.43) id 1Gq45A-0003gh-Tq for gcvg-git@gmane.org; Fri, 01 Dec
+ 2006 09:49:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1758631AbWK1ABu (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 27 Nov 2006
- 19:01:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758632AbWK1ABu
- (ORCPT <rfc822;git-outgoing>); Mon, 27 Nov 2006 19:01:50 -0500
-Received: from alf.nbi.dk ([130.225.212.55]:40714 "EHLO alf.nbi.dk") by
- vger.kernel.org with ESMTP id S1758631AbWK1ABu (ORCPT
- <rfc822;git@vger.kernel.org>); Mon, 27 Nov 2006 19:01:50 -0500
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by alf.nbi.dk
- (8.9.3/8.9.3) with ESMTP id BAA18711; Tue, 28 Nov 2006 01:01:47 +0100 (MET)
+ S967559AbWLAItR (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
+ 03:49:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967560AbWLAItR
+ (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 03:49:17 -0500
+Received: from ug-out-1314.google.com ([66.249.92.173]:14149 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S967559AbWLAItR
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 03:49:17 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so2360540uga for
+ <git@vger.kernel.org>; Fri, 01 Dec 2006 00:49:15 -0800 (PST)
+Received: by 10.67.21.11 with SMTP id y11mr6885011ugi.1164962955327; Fri, 01
+ Dec 2006 00:49:15 -0800 (PST)
+Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
+ ESMTP id y1sm14075551uge.2006.12.01.00.49.14; Fri, 01 Dec 2006 00:49:14 -0800
+ (PST)
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Hello all,
+On Thursday 2006 November 30 18:57, Andreas Ericsson wrote:
 
-Following the very interesting debate about the differences between bzr
-and git, I thought it was about time I tried to learn properly about git
-and how to use it.  I've been using bzr for a good while now, although
-since I'm not a serious developer I only use it for simple purposes,
-keeping track of code I write on my own for academic projects.
+(agree with everything in your mail)
 
-So, a few questions about differences I don't understand...
+> The only problem I'm seeing atm is that the supermodule somehow has to
+> mark whatever commits it's using from the submodule inside the submodule
+> repo so that they effectively become un-prunable, otherwise the
+> supermodule may some day find itself with a history that it can't restore.
 
-First off a really dumb one: how do I identify myself to git, i.e. give
-it a name and email address?  Currently it uses my system identity,
-My Name <username@computer.(none)>.  I haven't found any equivalent of
-the bzr whoami command.
+What about submodule/.git/refs/supermodule/commit12345678, where "12345678" is 
+the hash of the supermodule commit?  This gives a convenient route in the 
+submodule to which commit contains that commit from the submodule; but 
+doesn't write anything into the submodule repository itself.  It's just a tag 
+with a different intent.
 
-Now to more serious business.  One of the main operational differences I
-see as a new user is that bzr defaults to setting up branches in
-different locations, whereas git by default creates a repository where
-branches are different versions of the directory contents and switching
-branches *changes* the directory contents.  bzr branch seems to be
-closer to git-clone than git-branch (N.B. I have never used bzr repos so
-might not be making a fair comparison).
 
-With this in mind, is there any significance to the "master" branch (is
-it intended e.g. to indicate a git repository's "stable" version
-according to the owner?), or is this just a convenient default name?
-Could I delete or rename it?  Using bzr I would normally give the
-central branch(*) the name of the project.
-
-(* Central or main on my own system.  Not intended to be central in the
-sense of a CVS-style version control setup:-)
-
-Any other useful comments that can be made to a bzr user about working
-with this difference, positive or negative aspects of it?
-
-Next question ... one of the reasons I started seriously thinking about
-git was that in the VCS comparison discussion, it was noted that git is
-a lot more flexible than bzr in terms of how it can track data (e.g. the
-git pickaxe command, although I understand that's not in the released
-version [1.4.4.1] yet?).  A frustration with bzr is that pulling or
-merging patches from another branch or repo requires them to share the
-same HEAD.  Is this a requirement in git or can I say, "Hey, I like that
-particular function in project XXX, I'm going to pull that individual
-bit of code and its development history into project YYY"?
-
-Last off (for now, I'm sure I'll think of more): is there any easy (or
-difficult) way to effectively import version history from a bzr
-repository, and vice versa?
-
-Thanks in advance for any comments,
-
-    -- Joe
+Andy
+-- 
+Dr Andy Parkins, M Eng (hons), MIEE
