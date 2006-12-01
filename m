@@ -1,67 +1,86 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/1] Bypass expensive content comparsion during rename
- detection.
-Date: Thu, 14 Dec 2006 12:18:30 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612141214440.3635@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20061214100746.GA31191@spearce.org>
- <Pine.LNX.4.63.0612141151220.3635@wbgn013.biozentrum.uni-wuerzburg.de>
- <20061214110858.GE1747@spearce.org>
+Subject: Re: selective git-update-index per diff(1) chunks
+Date: Fri, 1 Dec 2006 20:42:50 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0612012039530.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <b6fcc0a0612010323x7554e47m5e6bdafe85fc8224@mail.gmail.com>
+ <slrnen04os.a5.Peter.B.Baumann@xp.machine.xx> <7v3b7zalsq.fsf@assigned-by-dhcp.cox.net>
+ <ekpm6i$s35$1@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Thu, 14 Dec 2006 11:18:46 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+NNTP-Posting-Date: Fri, 1 Dec 2006 19:43:21 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 X-Authenticated: #1490710
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <20061214110858.GE1747@spearce.org>
+In-Reply-To: <ekpm6i$s35$1@sea.gmane.org>
 X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34316>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Guobl-0004CM-Va for gcvg-git@gmane.org; Thu, 14 Dec
- 2006 12:18:38 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32960>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GqEHf-0006IQ-UF for gcvg-git@gmane.org; Fri, 01 Dec
+ 2006 20:42:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932592AbWLNLSd (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
- 06:18:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932598AbWLNLSd
- (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 06:18:33 -0500
-Received: from mail.gmx.net ([213.165.64.20]:48635 "HELO mail.gmx.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S932592AbWLNLSc
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006 06:18:32 -0500
-Received: (qmail invoked by alias); 14 Dec 2006 11:18:30 -0000
+ S1031763AbWLATmx (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
+ 14:42:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031756AbWLATmx
+ (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 14:42:53 -0500
+Received: from mail.gmx.net ([213.165.64.20]:7899 "HELO mail.gmx.net") by
+ vger.kernel.org with SMTP id S1031763AbWLATmw (ORCPT
+ <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 14:42:52 -0500
+Received: (qmail invoked by alias); 01 Dec 2006 19:42:51 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp049) with SMTP; 14 Dec 2006 12:18:30 +0100
-To: Shawn Pearce <spearce@spearce.org>
+ [132.187.25.13] by mail.gmx.net (mp034) with SMTP; 01 Dec 2006 20:42:51 +0100
+To: Anand Kumria <wildfire@progsoc.org>
 Sender: git-owner@vger.kernel.org
 
 Hi,
 
-On Thu, 14 Dec 2006, Shawn Pearce wrote:
+On Fri, 1 Dec 2006, Anand Kumria wrote:
 
-> My first version of the patch had the hash comparsion right after we 
-> called diff_populate_filespec to get the size data.  But then I realized 
-> that very often the sizes will be different and the src->size != 
-> dst->size comparsion will tend to be true most of the time, thus saving 
-> us a (relatively) expensive hash comparsion, which we know must fail 
-> anyway if the sizes differed.
+> On Fri, 01 Dec 2006 03:38:13 -0800, Junio C Hamano wrote:
+> 
+> > Peter Baumann <Peter.B.Baumann@stud.informatik.uni-erlangen.de>
+> > writes:
+> > 
+> >> I don't think it belongs in the plumbing, the git-update-index but I
+> >> think something like this would be very usefull.
+> >>
+> >> AFAIR darcs has this functionality. It selectively ask for each hunk if
+> >> it should be commited. This would be awfull to have in git.
+> > 
+> > I concur, on both counts.  My own now-defunct Porcelain had the
+> > darcs style interactive hunk selection because it felt so
+> > useful (and sometimes it was).
+> 
+> Is there a good receipe on how to do this? Everytime I do it, I try a
+> different method; since I'm testing out my understanding of things.
+> 
+> It'd nice to have some of these "advanced receipes" that people often do
+> noted down somewhere.
 
-Ah! I misunderstood. Since the call to diff_populate_filespec was not 
-visible in the hunk, I erroneously assumed that you meant to _check_ the 
-sizes before checking the hashes.
+Can't say anything about advanced recipes, but I use a poor-man's 
+workflow:
 
-But your explanation makes lots of sense to me. May I request a short 
-comment above the new code, like "let diff_populate_filespec() do its 
-thing since we need the filesize later on anyway, and having that, do the 
-cheaper filesize check before the more expensive hashcmp()"?
+$ git diff > a1.patch
+$ vi a1.patch
+  <edit out what I want to _keep_>
+$ git apply -R < a1.patch
+  <test & commit>
+$ git apply < a1.patch
+
+Of course, you could write a little wrapper around it, even one which asks 
+you which hunks you want to edit out. Should not be that hard...
+
+Note that this is independent of the SCM you are using.
 
 Ciao,
 Dscho
