@@ -1,78 +1,64 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,MSGID_FROM_MTA_HEADER,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
-From: Sean <seanlkml@sympatico.ca>
-Subject: Re: [DRAFT] Branching and merging with git
-Date: Fri, 17 Nov 2006 10:57:48 -0500
-Message-ID: <BAYC1-PASMTP07C8A8D8E5E78173953CA9AEE80@CEZ.ICE>
-References: <20061116221701.4499.qmail@science.horizon.com>
-	<20061117153246.GA20065@thunk.org>
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [RFC] Submodules in GIT
+Date: Fri, 1 Dec 2006 00:01:54 +0000
+Message-ID: <200612010001.57111.andyparkins@gmail.com>
+References: <20061121223130.GA24909@nan92-1-81-57-214-146.fbx.proxad.net> <200611301530.51171.andyparkins@gmail.com> <20061130163304.GN12463MdfPADPa@greensroom.kotnet.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Fri, 17 Nov 2006 15:58:28 +0000 (UTC)
-Cc: linux@horizon.com, git@vger.kernel.org, Petr Baudis <pasky@suse.cz>
+NNTP-Posting-Date: Fri, 1 Dec 2006 00:04:56 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Originating-IP: [65.93.43.81]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Original-Message-Id: <20061117105748.b77c5799.seanlkml@sympatico.ca>
-In-Reply-To: <20061117153246.GA20065@thunk.org>
-X-Mailer: Sylpheed version 2.2.9 (GTK+ 2.10.4; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 17 Nov 2006 16:04:10.0375 (UTC) FILETIME=[049BF170:01C70A62]
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=G1AQCuStt75cF4lkQFUE3Hbc+SsYtg/Z45qjfhQ6kDJLaxzhJj3zqf8BKkkeYzHuvJ5hd6Rzo3WOAqgx0Q5IHKvmPSXNSufIvWaAfSYJSFjRc3ePlenESBHjocoK28L/w9Wfa3ASB0+lbP/0zLFBe+fq+br47+x0N8wd8+3N76w=
+User-Agent: KMail/1.9.5
+In-Reply-To: <20061130163304.GN12463MdfPADPa@greensroom.kotnet.org>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32835>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gl66I-0002ZJ-1q for gcvg-git@gmane.org; Fri, 17 Nov
- 2006 16:57:58 +0100
+ esmtp (Exim 4.43) id 1GpvtX-0001K5-Cn for gcvg-git@gmane.org; Fri, 01 Dec
+ 2006 01:04:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932934AbWKQP5y (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 17 Nov 2006
- 10:57:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932936AbWKQP5y
- (ORCPT <rfc822;git-outgoing>); Fri, 17 Nov 2006 10:57:54 -0500
-Received: from bayc1-pasmtp07.bayc1.hotmail.com ([65.54.191.167]:14560 "EHLO
- BAYC1-PASMTP07.CEZ.ICE") by vger.kernel.org with ESMTP id S932934AbWKQP5x
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 17 Nov 2006 10:57:53 -0500
-Received: from linux1.attic.local ([65.93.43.81]) by BAYC1-PASMTP07.CEZ.ICE
- over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830); Fri, 17 Nov
- 2006 08:04:10 -0800
-Received: from guru.attic.local ([10.10.10.28]) by linux1.attic.local with
- esmtp (Exim 4.43) id 1Gl5A4-0000ms-8m; Fri, 17 Nov 2006 09:57:48 -0500
-To: Theodore Tso <tytso@mit.edu>
+ S967997AbWLAAEp (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
+ 19:04:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967998AbWLAAEo
+ (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 19:04:44 -0500
+Received: from ug-out-1314.google.com ([66.249.92.170]:48407 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S967997AbWLAAEn
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 19:04:43 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so2278352uga for
+ <git@vger.kernel.org>; Thu, 30 Nov 2006 16:04:42 -0800 (PST)
+Received: by 10.66.244.10 with SMTP id r10mr6382687ugh.1164931482244; Thu, 30
+ Nov 2006 16:04:42 -0800 (PST)
+Received: from grissom.internal.parkins.org.uk ( [84.201.153.164]) by
+ mx.google.com with ESMTP id 32sm24517340ugf.2006.11.30.16.04.39; Thu, 30 Nov
+ 2006 16:04:39 -0800 (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On Fri, 17 Nov 2006 10:32:46 -0500
-Theodore Tso <tytso@mit.edu> wrote:
+On Thursday 2006, November 30 16:33, Sven Verdoolaege wrote:
+> > Well, I know what the commit is /that/ was all that was stored.  So I
+>
+> Then I have no idea what you are talking about.
+> A commit _contains_ all the history that lead up to that commit,
+> so if you have the commit, then you also have the history.
 
-> It would be nice if there was an easy way to direct users through the
-> documentation in a way which makes good pedagogical sense.  Right now,
-> one of the reasons why life gets hard for new users is that the
-> current tutorials aren't enough for them to really undersatnd what's
-> going on at a conceptual level.  And if users start using "everyday
-> git" as a crutch, without the right background concepts, the human
-> brain naturally tries to intuit what's happening in the background,
-> but without reading the background docs, git is different enough that
-> they will probably get it wrong, which means more stuff that they have
-> to unlearn later.  
+It's not so much an actual commit, as a reference to a commit in another 
+repository.
 
-It would be nice to post this information on the Git website and not
-have it overshadowed by Cogito examples with paragraphs explaining how
-Cogito makes things easier.  The current website distracts users away
-from learning Git or ever reading about this kind of information.
-Maybe we can pass a hat around for some funds for a separate Cogito
-website. ;o)
+Andy
 
-> Maybe we should change git so that a "Fetch: " line in the remotes
-> file works the same way as "Pull: ", and then recommend that people
-> use "Fetch: " in order to reduce confusion, as opposed to simply
-> explaining it away as "yet another example of the histororical
-> fetch/pull confusion"?
- 
-That's quite a good idea.  The name was fixed when the option to move
-this info into the config file was added (remote.<name>.fetch).  So
-another option would be to show new users the config file method and
-just damn the remotes file to a historical footnote.
-
+-- 
+Dr Andrew Parkins, M Eng (Hons), AMIEE
