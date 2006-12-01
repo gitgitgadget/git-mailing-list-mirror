@@ -1,64 +1,87 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Lars Hjemli" <hjemli@gmail.com>
-Subject: [ANNOUNCE] CGit v0.1-pre
-Date: Mon, 11 Dec 2006 00:42:34 +0100
-Message-ID: <8c5c35580612101542n72d300c7o106e53e219670510@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Make git-commit cleverer - have it figure out whether it needs -a automatically
+Date: Fri, 01 Dec 2006 03:15:17 -0800
+Message-ID: <7vd573amuy.fsf@assigned-by-dhcp.cox.net>
+References: <200612011106.42272.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sun, 10 Dec 2006 23:42:47 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Fri, 1 Dec 2006 11:15:44 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=Fjeytyp3dyfvrzmsu2FktyUz6u85eOliEpOZiudD0W58D77o3qqDPzuA+jHYfGIJ9t2E8uOFHUroW/vokUbkpmfwPocRbd1gL6N0g0Yb4vU8gf0dFvBVj+ODOnYroaoK4NKoy3cjO69VITdGjnxBpclZoBXm5RTlFEkOEouG3c4=
-Content-Disposition: inline
+In-Reply-To: <200612011106.42272.andyparkins@gmail.com> (Andy Parkins's
+	message of "Fri, 1 Dec 2006 11:06:42 +0000")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33964>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GtYJb-000187-Kp for gcvg-git@gmane.org; Mon, 11 Dec
- 2006 00:42:39 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32896>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gq6MV-0005NL-6w for gcvg-git@gmane.org; Fri, 01 Dec
+ 2006 12:15:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1759854AbWLJXmg (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 10 Dec 2006
- 18:42:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762540AbWLJXmg
- (ORCPT <rfc822;git-outgoing>); Sun, 10 Dec 2006 18:42:36 -0500
-Received: from nf-out-0910.google.com ([64.233.182.190]:8335 "EHLO
- nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1759854AbWLJXmg (ORCPT <rfc822;git@vger.kernel.org>); Sun, 10 Dec
- 2006 18:42:36 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so1815779nfa for
- <git@vger.kernel.org>; Sun, 10 Dec 2006 15:42:34 -0800 (PST)
-Received: by 10.82.127.15 with SMTP id z15mr222905buc.1165794154305; Sun, 10
- Dec 2006 15:42:34 -0800 (PST)
-Received: by 10.82.171.10 with HTTP; Sun, 10 Dec 2006 15:42:34 -0800 (PST)
-To: git@vger.kernel.org
+ S936452AbWLALPU (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
+ 06:15:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936454AbWLALPT
+ (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 06:15:19 -0500
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:13242 "EHLO
+ fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP id S936452AbWLALPS
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 06:15:18 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao05.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061201111518.PWDA20330.fed1rmmtao05.cox.net@fed1rmimpo02.cox.net>; Fri, 1
+ Dec 2006 06:15:18 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id tPFT1V0081kojtg0000000; Fri, 01 Dec 2006
+ 06:15:27 -0500
+To: Andy Parkins <andyparkins@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-CGit is another cgi-app for git.
+Andy Parkins <andyparkins@gmail.com> writes:
 
-It is written in C (using libgit.a), and implements an internal page
-cache. A PoC version is available for cloning at
+> Raimund Bauer offered this suggestion (paraphrased):
+>
+> "Maybe we could do git-commit -a  _only_ if the index matches HEAD, and
+> otherwise keep current behavior?  So people who don't care about the
+> index won't get tripped up, and when you do have a dirty index, you get
+> told about it?"
+>
+> Johannes Schindelin pointed out that this isn't the right thing to do for
+> an --amend, so that is checked for. Additionally, it's probably not the
+> right thing to do if any files are specified with "--only" or
+> "--include", so they turn this behaviour off as well.
+>
+> Nguyen Thai Ngoc Duy asked that git-commit let you know it's done this
+> by adding an extra comment to the commit message.
 
-  git://hjemli.net/pub/git/cgit
+I think another exception should be needed.  If the index does
+not match the working tree, it should not default to "-a".
 
-and it is also (barely) selfhosted at
+Otherwise,
 
-  http://hjemli.net/git/
+I want to fix another thing in pickaxe.
+
+	$ edit builtin-blame.c
+
+My wife calls me.  Away from desk for 20 minutes.  Later I come
+back.
+
+	$ git update-index builtin-pickaxe.c
+
+I am so used to that name and did not realize that typo, and I
+was not paying too much attention.  My wife calls me again.
+Away from desk and back in 20 minutes.
+
+	$ git commit -m 'git-blame: Another fix.'
+
+Oops.
+
+So, please turn this "cleverness" off when the index does not
+match the working tree.
 
 
-For a quick summary of the cache algorithm, the project README is here:
-
-  http://hjemli.net/git/cgit/view/?id=5917c37ce30b3f0a374c9fa376955f51f1d7bfbf
-
-Enjoy!
-
--- 
