@@ -4,69 +4,72 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: git-fetching from a big repository is slow
-Date: Sat, 16 Dec 2006 14:32:59 +0100
-Organization: Dewire
-Message-ID: <200612161433.00030.robin.rosenberg.lists@dewire.com>
-References: <20061214194636.GO1747@spearce.org> <20061214223813.GC26202@spearce.org> <loom.20061215T223909-156@post.gmane.org>
+From: Anand Kumria <wildfire@progsoc.org>
+Subject: Re: selective git-update-index per diff(1) chunks
+Date: Fri, 1 Dec 2006 16:45:06 +0000 (UTC)
+Message-ID: <ekpm6i$s35$1@sea.gmane.org>
+References: <b6fcc0a0612010323x7554e47m5e6bdafe85fc8224@mail.gmail.com>
+	<slrnen04os.a5.Peter.B.Baumann@xp.machine.xx>
+	<7v3b7zalsq.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Sat, 16 Dec 2006 13:30:22 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+NNTP-Posting-Date: Fri, 1 Dec 2006 16:47:03 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: KMail/1.9.4
-In-Reply-To: <loom.20061215T223909-156@post.gmane.org>
-Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new at dewire.com
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 26
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: backup.global.cn
+User-Agent: pan 0.119 (Karma Hunters)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34614>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GvZcG-0003w5-ER for gcvg-git@gmane.org; Sat, 16 Dec
- 2006 14:30:16 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32943>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GqBWn-0001Q0-Jy for gcvg-git@gmane.org; Fri, 01 Dec
+ 2006 17:46:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751735AbWLPNaM convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Sat, 16 Dec 2006 08:30:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751967AbWLPNaM
- (ORCPT <rfc822;git-outgoing>); Sat, 16 Dec 2006 08:30:12 -0500
-Received: from [83.140.172.130] ([83.140.172.130]:12483 "EHLO
- torino.dewire.com" rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with
- ESMTP id S1751735AbWLPNaL convert rfc822-to-8bit (ORCPT
- <rfc822;git@vger.kernel.org>); Sat, 16 Dec 2006 08:30:11 -0500
-Received: from localhost (localhost [127.0.0.1]) by torino.dewire.com
- (Postfix) with ESMTP id 36FDE802658; Sat, 16 Dec 2006 14:26:11 +0100 (CET)
-Received: from torino.dewire.com ([127.0.0.1]) by localhost (torino
- [127.0.0.1]) (amavisd-new, port 10024) with ESMTP id 17827-09; Sat, 16 Dec
- 2006 14:26:10 +0100 (CET)
-Received: from [10.9.0.3] (unknown [10.9.0.3]) by torino.dewire.com (Postfix)
- with ESMTP id DDC9B80019B; Sat, 16 Dec 2006 14:26:08 +0100 (CET)
-To: Pazu <pazu@pazu.com.br>
+ S1031592AbWLAQqR (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
+ 11:46:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031594AbWLAQqR
+ (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 11:46:17 -0500
+Received: from main.gmane.org ([80.91.229.2]:59847 "EHLO ciao.gmane.org") by
+ vger.kernel.org with ESMTP id S1031592AbWLAQqR (ORCPT
+ <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 11:46:17 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1GqBW9-0001CK-1r for git@vger.kernel.org; Fri, 01 Dec 2006 17:45:41 +0100
+Received: from backup.global.cn ([195.224.169.69]) by main.gmane.org with
+ esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>;
+ Fri, 01 Dec 2006 17:45:41 +0100
+Received: from wildfire by backup.global.cn with local (Gmexim 0.1 (Debian))
+ id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Fri, 01 Dec 2006 17:45:41
+ +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-fredag 15 december 2006 22:49 skrev Pazu:
-> Shawn Pearce <spearce <at> spearce.org> writes:
-> > identical class file given the same input.  I've seen times where
-> > it doesn't thanks to the automatic serialVersionUID field being
-> > somewhat randomly generated.
->
-> Probably offline, but=E2=80=A6 serialVersionUID isn't randomly genera=
-ted. It's
-> calculated using the types of fields in the class, recursively. The a=
-ctual
-> algorithm is quite arbitrary, but not random. The automatically gener=
-ated
-> serialVersionUID should change only if you add/remove class fields (e=
-ither
-> on the class itself, or to the class of nested objects).
+On Fri, 01 Dec 2006 03:38:13 -0800, Junio C Hamano wrote:
 
-Different java compilers (e.g. SUN's javac and Eclipse) generate slipgh=
-tly=20
-different code for some cases, including somee synthetic member fields.=
- that=20
-get involved in the UID calculation. Neither compiler is wrong. The jav=
-a=20
-specifications don't cover all cases.
+> Peter Baumann <Peter.B.Baumann@stud.informatik.uni-erlangen.de>
+> writes:
+> 
+>> I don't think it belongs in the plumbing, the git-update-index but I
+>> think something like this would be very usefull.
+>>
+>> AFAIR darcs has this functionality. It selectively ask for each hunk if
+>> it should be commited. This would be awfull to have in git.
+> 
+> I concur, on both counts.  My own now-defunct Porcelain had the
+> darcs style interactive hunk selection because it felt so
+> useful (and sometimes it was).
 
+Is there a good receipe on how to do this? Everytime I do it, I try a
+different method; since I'm testing out my understanding of things.
+
+It'd nice to have some of these "advanced receipes" that people often do
+noted down somewhere.
+
+Sometimes I feel git is kind of like the Emacs of VCS ... there is always
+more to learn, even when you think you have a good handle on things.
+
+Cheers,
+Anand
