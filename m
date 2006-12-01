@@ -1,52 +1,80 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Make "git checkout <branch> <path>" work when <path> is a directory.
-Date: Thu, 16 Nov 2006 22:04:53 -0800
-Message-ID: <7vlkmavcai.fsf@assigned-by-dhcp.cox.net>
-References: <f2b55d220611162149m719079f3ubdaeac43fe9798cb@mail.gmail.com>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [PATCH] Make git-commit cleverer - have it figure out whether it needs -a automatically
+Date: Fri, 1 Dec 2006 12:33:20 +0000
+Message-ID: <200612011233.21210.andyparkins@gmail.com>
+References: <200612011106.42272.andyparkins@gmail.com> <7vd573amuy.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 17 Nov 2006 06:05:06 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Fri, 1 Dec 2006 12:35:01 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <f2b55d220611162149m719079f3ubdaeac43fe9798cb@mail.gmail.com>
-	(Michael K. Edwards's message of "Thu, 16 Nov 2006 21:49:21 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=QSrJJwVLlSgch/aVA/zYXjvGqPRKPlAs3zf4NxP8okJiHZVCuII6sXVrBJFBAo0w5051StuXhI+yYVURl9y6xuPS75q4qjimKwQCdRgScmgX47OVFkIjJ9B0LkV7vKl45+ETXt+UvqyA9zHc+OIA0RabD7oEBDR0uqllXC4Ugqk=
+User-Agent: KMail/1.9.5
+In-Reply-To: <7vd573amuy.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31668>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32913>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GkwqS-0003Uf-PL for gcvg-git@gmane.org; Fri, 17 Nov
- 2006 07:05:01 +0100
+ esmtp (Exim 4.43) id 1Gq7a8-0007Yu-Os for gcvg-git@gmane.org; Fri, 01 Dec
+ 2006 13:33:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1754934AbWKQGEz (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 17 Nov 2006
- 01:04:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754939AbWKQGEz
- (ORCPT <rfc822;git-outgoing>); Fri, 17 Nov 2006 01:04:55 -0500
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:5097 "EHLO
- fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP id S1754934AbWKQGEy
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 17 Nov 2006 01:04:54 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao11.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061117060454.XHXX296.fed1rmmtao11.cox.net@fed1rmimpo02.cox.net>; Fri, 17
- Nov 2006 01:04:54 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id ni501V00Y1kojtg0000000; Fri, 17 Nov 2006
- 01:05:01 -0500
-To: "Michael K. Edwards" <medwards.linux@gmail.com>
+ S1030823AbWLAMd2 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
+ 07:33:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030953AbWLAMd2
+ (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 07:33:28 -0500
+Received: from ug-out-1314.google.com ([66.249.92.175]:5227 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1030823AbWLAMd1
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 07:33:27 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so2408346uga for
+ <git@vger.kernel.org>; Fri, 01 Dec 2006 04:33:26 -0800 (PST)
+Received: by 10.67.103.7 with SMTP id f7mr7170800ugm.1164976405948; Fri, 01
+ Dec 2006 04:33:25 -0800 (PST)
+Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
+ ESMTP id o30sm21537967ugd.2006.12.01.04.33.25; Fri, 01 Dec 2006 04:33:25
+ -0800 (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Thanks.
+On Friday 2006 December 01 11:15, Junio C Hamano wrote:
 
-I think I sent out the same yesterday morning, though.
+> I think another exception should be needed.  If the index does
+> not match the working tree, it should not default to "-a".
 
-	Message-ID: <7vbqn8msuw.fsf@assigned-by-dhcp.cox.net>
+No problem: just don't apply the patch :-)  What you've asked for leaves it as 
+a no-op.
 
-The difference is that the one tries to catch misspelled <path>.
+This patch activates "-a" when the index equals HEAD.  i.e. git-commit would 
+do nothing in this situation.  If it is disabled when the index doesn't match 
+the working tree, then we're back to "do nothing".  i.e. HEAD==index==working 
+tree.
 
+> So, please turn this "cleverness" off when the index does not
+> match the working tree.
+
+How does that help you?  You've updated the index manually, so the 
+automatic "-a" is already disabled.  Without this patch you would still have 
+committed the wrong thing.
+
+ $ edit builtin-blame.c
+ $ git update-index builtin-pickaxe.c
+ $ git commit
+
+What is that you would like to have happened at this point?
+
+
+Andy
+-- 
+Dr Andy Parkins, M Eng (hons), MIEE
