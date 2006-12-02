@@ -1,95 +1,74 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: fetching packs and storing them as packs
-Date: Fri, 27 Oct 2006 11:56:14 -0700
-Message-ID: <7vy7r1egfl.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0610252333540.12418@xanadu.home>
-	<4540CA0C.6030300@tromer.org>
-	<Pine.LNX.4.64.0610261105200.12418@xanadu.home>
-	<45413209.2000905@tromer.org>
-	<Pine.LNX.4.64.0610262038320.11384@xanadu.home>
-	<20061027014229.GA28407@spearce.org> <45417205.6020805@tromer.org>
-	<20061027030054.GB28407@spearce.org>
-	<Pine.LNX.4.64.0610271022240.11384@xanadu.home>
-	<20061027143854.GC20017@pasky.or.cz>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: [PATCH 0/2] Making "git commit" to mean "git commit -a".
+Date: Sat, 2 Dec 2006 08:48:33 +0100
+Message-ID: <e5bfff550612012348g4c6bc53bqbc0ff8633ea1a51a@mail.gmail.com>
+References: <7virgzuf38.fsf@assigned-by-dhcp.cox.net> <456EBBE7.8030404@op5.se>
+	 <Pine.LNX.4.64.0611300749560.3513@woody.osdl.org>
+	 <20061130164046.GB17715@thunk.org>
+	 <Pine.LNX.4.64.0611300903080.3513@woody.osdl.org>
+	 <Pine.LNX.4.64.0611301229290.9647@xanadu.home>
+	 <87irgwu6e6.wl%cworth@cworth.org> <87hcwgu5t1.wl%cworth@cworth.org>
+	 <456F4E38.50001@codeweavers.com> <eknj33$q2r$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 27 Oct 2006 19:03:51 +0000 (UTC)
-Cc: Shawn Pearce <spearce@spearce.org>,
-	Eran Tromer <git2eran@tromer.org>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Sat, 2 Dec 2006 07:49:04 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061027143854.GC20017@pasky.or.cz> (Petr Baudis's message of
-	"Fri, 27 Oct 2006 16:38:54 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=CCjToo8OaT9QX491AV/GZwEXe5PiWCKZnfbPt4alHuwHShJ26yEP47ongQZtbAP/HKcuumRMjQonBqbOymRCEhnYz4hPgy9z2d906QmSrNBYhigFpRy++NQiwJHyhUpNcGAiDmPVDd6ozAvUGRnu289HTEhd4bVqxKU2TfrBopg=
+In-Reply-To: <eknj33$q2r$1@sea.gmane.org>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30340>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33002>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GdWsd-0004ei-03 for gcvg-git@gmane.org; Fri, 27 Oct
- 2006 20:56:35 +0200
+ esmtp (Exim 4.43) id 1GqPcJ-0005MU-FL for gcvg-git@gmane.org; Sat, 02 Dec
+ 2006 08:48:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752421AbWJ0S4U (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 27 Oct 2006
- 14:56:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752416AbWJ0S4T
- (ORCPT <rfc822;git-outgoing>); Fri, 27 Oct 2006 14:56:19 -0400
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:40687 "EHLO
- fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP id S1752410AbWJ0S4Q
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 27 Oct 2006 14:56:16 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao10.cox.net
- (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
- <20061027185615.UGBO18985.fed1rmmtao10.cox.net@fed1rmimpo01.cox.net>; Fri, 27
- Oct 2006 14:56:15 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id fWvx1V00V1kojtg0000000 Fri, 27 Oct 2006
- 14:55:58 -0400
-To: Petr Baudis <pasky@suse.cz>
+ S1161343AbWLBHsf (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 2 Dec 2006
+ 02:48:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161383AbWLBHsf
+ (ORCPT <rfc822;git-outgoing>); Sat, 2 Dec 2006 02:48:35 -0500
+Received: from py-out-1112.google.com ([64.233.166.177]:9358 "EHLO
+ py-out-1112.google.com") by vger.kernel.org with ESMTP id S1161343AbWLBHsf
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 2 Dec 2006 02:48:35 -0500
+Received: by py-out-1112.google.com with SMTP id a29so1941343pyi for
+ <git@vger.kernel.org>; Fri, 01 Dec 2006 23:48:33 -0800 (PST)
+Received: by 10.35.94.7 with SMTP id w7mr10278346pyl.1165045713594; Fri, 01
+ Dec 2006 23:48:33 -0800 (PST)
+Received: by 10.35.42.4 with HTTP; Fri, 1 Dec 2006 23:48:33 -0800 (PST)
+To: "Jakub Narebski" <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Petr Baudis <pasky@suse.cz> writes:
-
-> Dear diary, on Fri, Oct 27, 2006 at 04:27:05PM CEST, I got a letter
-> where Nicolas Pitre <nico@cam.org> said that...
->> On Thu, 26 Oct 2006, Shawn Pearce wrote:
->> > OK so the repository won't get corrupted but the repack would be
->> > forced to abort.
->> 
->> Maybe this is the best way out?  Abort git-repack with "a fetch is in 
->> progress -- retry later".  No one will really suffer if the repack has 
->> to wait for the next scheduled cron job, especially if the fetch doesn't 
->> explode packs into loose objects anymore.
 >
-> I don't really like this that much. Big projects can have 10 commits per
-> hour on average, and they also take potentially long time to repack, so
-> you might get to never really repack them.
+> Index is accessible, just like committed contents. The fact that gitk, qgit,
+> git-gui doesn't display state of index is their limitation.
+> --
 
-One question about that statistics is if the frequency of 10
-commits per hour is 10 pushes into the central repository per
-hour or 10 commits distributed all over the world in dozens of
-developers' repositories.
+Actually qgit let's you see state index for each file when committing
+with qgit commit dialog.
 
-Even if the number is 10 pushes into the central repository per
-hour, I do not see it as a big problem in practice from the
-workflow point of view.  Even people sticking to their CVS
-workflow to have a central repository model are gaining big time
-from being able to keep working disconnected by switching to git
-using the shared repository mode, and it should not be a big
-deal if the central repository master shuts down pushes into the
-repository for N minutes a day for scheduled repacking.  So it
-could be that a more practical way out is to say "'repack -a -d'
-and 'prune' are to be run when things are quiescent".
+Indeed you can also choose to update only the index state of a file
+without committing, ie without create a new tree object.
 
-A cron job for the scheduled repack/prune can set a flag
-(repository wide lockfile or something) to ask new push/fetch to
-wait and come back later, and we could set up a pre-* hooks for
-push/fetch to notice it.  While push/fetch processes that have
-already been started can still interfere, as long as they cause
-repack/prune to fail the "deletion" part, eventually outstanding
-push/fetch will die out and the cron job will have that
-quiescent window.
+Internally, the index state of each file is known and tracked. No
+other interface is provided, as example a diff, just because I found
+it confusing and of little concrete help.
+
+Of course if knowning the index state became important to perform some
+concrete and quite common operation I could add whatever GUI would
+suite.
+
+Suggestions are welcomed ;-)
 
