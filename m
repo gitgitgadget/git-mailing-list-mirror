@@ -1,67 +1,77 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 2/2] gitweb: Use git-for-each-ref to generate list of heads and/or tags
-Date: Thu, 02 Nov 2006 18:40:34 -0800
-Message-ID: <7vhcxhl0bh.fsf@assigned-by-dhcp.cox.net>
-References: <200610281930.05889.jnareb@gmail.com>
-	<7vslh86uz9.fsf@assigned-by-dhcp.cox.net>
-	<200611022017.31351.jnareb@gmail.com>
-	<200611022023.12246.jnareb@gmail.com>
+From: Marco Roeland <marco.roeland@xs4all.nl>
+Subject: Test t4118 fails on Mac OS X due to dependency on GNU sed behaviour
+Date: Sat, 2 Dec 2006 21:14:10 +0100
+Message-ID: <20061202201410.GA6353@fiberbit.xs4all.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 3 Nov 2006 03:04:52 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=iso-8859-1
+NNTP-Posting-Date: Sat, 2 Dec 2006 20:14:28 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30778>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33039>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gfp4U-0003wO-Pf for gcvg-git@gmane.org; Fri, 03 Nov
- 2006 03:47:13 +0100
+ esmtp (Exim 4.43) id 1GqbFZ-0003fv-HD for gcvg-git@gmane.org; Sat, 02 Dec
+ 2006 21:14:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752975AbWKCCkj (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 2 Nov 2006
- 21:40:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752978AbWKCCkj
- (ORCPT <rfc822;git-outgoing>); Thu, 2 Nov 2006 21:40:39 -0500
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:37551 "EHLO
- fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP id S1752975AbWKCCkf
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 2 Nov 2006 21:40:35 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao01.cox.net
- (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
- <20061103024035.WDEU6077.fed1rmmtao01.cox.net@fed1rmimpo01.cox.net>; Thu, 2
- Nov 2006 21:40:35 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id i2gD1V00R1kojtg0000000 Thu, 02 Nov 2006
- 21:40:14 -0500
-To: Jakub Narebski <jnareb@gmail.com>
+ S1031567AbWLBUON (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 2 Dec 2006
+ 15:14:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031762AbWLBUON
+ (ORCPT <rfc822;git-outgoing>); Sat, 2 Dec 2006 15:14:13 -0500
+Received: from fiberbit.xs4all.nl ([213.84.224.214]:19667 "EHLO
+ fiberbit.xs4all.nl") by vger.kernel.org with ESMTP id S1031567AbWLBUON (ORCPT
+ <rfc822;git@vger.kernel.org>); Sat, 2 Dec 2006 15:14:13 -0500
+Received: from marco by fiberbit.xs4all.nl with local (Exim 4.63)
+ (envelope-from <marco.roeland@xs4all.nl>) id 1GqbFT-0001hU-0K for
+ git@vger.kernel.org; Sat, 02 Dec 2006 21:14:11 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Hello list!
 
-> From 4d86b34d49dd1f18da465952be8306348fef5150 Mon Sep 17 00:00:00 2001
-> From: Jakub Narebski <jnareb@gmail.com>
-> Date: Thu, 2 Nov 2006 20:14:15 +0100
-> Subject: [PATCH 2/2] gitweb: Use git-for-each-ref to generate list of heads and/or tags
+Recently test t4118 was added to prepare for upcoming changes in
+behaviour of GNU diff.
 
-The first line should not be in the body of the message.
+This test fails on Mac OS X. It turns out that in the end the failure
+comes from a difference in the behaviour between GNU sed and the version
+that comes with OS X.
 
-> CHANGES IN OUTPUT: Before, if ref in refs/tags was tag pointing to
-> commit we used committer epoch as epoch for ref, and used tagger epoch
-> as epoch only for tag pointing to object of other type. If ref in
-> refs/tags was commit, we used committer epoch as epoch for ref (see
-> parse_ref; we sorted in gitweb by 'epoch' field).
+The feature that is tested works fine, but the implementation of the
+examination of the result fails.
 
-I think that behaviour was inconsistent and just silly.  Using
-creatordate consistently is better so if the code generates what
-the commit log claims to, I think that is fine (I haven't looked
-at it deeply yet).
+The difference is that the OS X version of sed always ends the last line
+with a newline character, even if it wasn't there in the input. Strictly
+speaking this is POSIX specified behaviour that was changed in the GNU
+version of sed in 1997, citing from the changelog for the historically
+curious minded people:
 
-Thanks.  Will apply.
+Mon Jul 28 10:50:41 PDT 1997  Ken Pizzini <ken@gnu.org>
 
+* sed.c, sed.h, execute.c: POSIX.2, section 4.55.7, says that
+        a newline must end *every* output line.  But I think
+        that it is useful (when seding a binary file) to omit
+        a trailing newline if the input lacks one.  Thus the addition of
+        POSIXLY_CORRECT behavior.
+
+* execute.c: however, when seding multiple files my feeling
+        is that it makes sense to have each file but the last
+        behave as-if it ended in a newline.  Modified read_pattern_space()
+        accordingly.
+
+A workaround on Mac OS X is easy by for example just installing the GNU
+version of sed from the 'fink' archive with "sudo apt-get install sed".
+Funny enough the system 'diff' is already the GNU version, so the test
+t4118 itself might even be necessary for upcoming feline versions of
+OS X!
+
+Unfortunately I myself don't see an elegant and portable fix in the test
+itself... [hint]
+-- 
