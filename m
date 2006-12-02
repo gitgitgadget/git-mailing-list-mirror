@@ -1,111 +1,86 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: Restore a single file in the index back to HEAD
-Date: Fri, 27 Oct 2006 08:27:15 +0100
-Message-ID: <200610270827.17659.andyparkins@gmail.com>
-References: <200610261641.11239.andyparkins@gmail.com> <81b0412b0610260842x52413570k3971bcdc54b3ccb5@mail.gmail.com>
+From: Martin Waitz <tali@admingilde.org>
+Subject: Re: [RFC] Submodules in GIT
+Date: Sat, 2 Dec 2006 22:06:40 +0100
+Message-ID: <20061202210640.GX18810@admingilde.org>
+References: <20061130170625.GH18810@admingilde.org> <4570AF8F.1000801@stephan-feder.de> <Pine.LNX.4.64.0612011505190.3695@woody.osdl.org> <200612020036.08826.Josef.Weidendorfer@gmx.de> <Pine.LNX.4.64.0612011540010.3695@woody.osdl.org> <20061202201826.GR18810@admingilde.org> <Pine.LNX.4.64.0612021242080.3476@woody.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Fri, 27 Oct 2006 07:27:35 +0000 (UTC)
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="ttZyFY8Q/ImP0sT1"
+NNTP-Posting-Date: Sat, 2 Dec 2006 21:06:54 +0000 (UTC)
+Cc: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>,
+	sf <sf-gmane@stephan-feder.de>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=gawnOAJU67X+yXUAcRQh1O/6CY8aQiE2fR960bJitftN5V4uXIJ9DjvFsukOMdeyOhhZbgKXff58y6FUOGopzfTphCNshLUOagS2qIn/Gje7AGpB38zrx5lh6zdAeDWKC33rWv5ZGFjw5uRfWCsweN3Kp8EwPknjjVy2OPDUr7Y=
-User-Agent: KMail/1.9.5
-In-Reply-To: <81b0412b0610260842x52413570k3971bcdc54b3ccb5@mail.gmail.com>
 Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0612021242080.3476@woody.osdl.org>
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
+User-Agent: Mutt/1.5.9i
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30297>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33051>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GdM7i-0007WT-EJ for gcvg-git@gmane.org; Fri, 27 Oct
- 2006 09:27:26 +0200
+ esmtp (Exim 4.43) id 1Gqc4K-00052y-LL for gcvg-git@gmane.org; Sat, 02 Dec
+ 2006 22:06:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1946163AbWJ0H1X (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 27 Oct 2006
- 03:27:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946170AbWJ0H1X
- (ORCPT <rfc822;git-outgoing>); Fri, 27 Oct 2006 03:27:23 -0400
-Received: from ug-out-1314.google.com ([66.249.92.169]:56733 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1946163AbWJ0H1W
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 27 Oct 2006 03:27:22 -0400
-Received: by ug-out-1314.google.com with SMTP id 32so616054ugm for
- <git@vger.kernel.org>; Fri, 27 Oct 2006 00:27:20 -0700 (PDT)
-Received: by 10.66.224.19 with SMTP id w19mr4462118ugg; Fri, 27 Oct 2006
- 00:27:20 -0700 (PDT)
-Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
- ESMTP id b35sm164414ugd.2006.10.27.00.27.20; Fri, 27 Oct 2006 00:27:20 -0700
- (PDT)
-To: git@vger.kernel.org
+ S1162471AbWLBVGm (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 2 Dec 2006
+ 16:06:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1162475AbWLBVGm
+ (ORCPT <rfc822;git-outgoing>); Sat, 2 Dec 2006 16:06:42 -0500
+Received: from agent.admingilde.org ([213.95.21.5]:34529 "EHLO
+ mail.admingilde.org") by vger.kernel.org with ESMTP id S1162471AbWLBVGl
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 2 Dec 2006 16:06:41 -0500
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1) id
+ 1Gqc4G-0004uT-8X; Sat, 02 Dec 2006 22:06:40 +0100
+To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 
-On Thursday 2006 October 26 16:42, Alex Riesen wrote:
 
-Thanks for your suggestion.
+--ttZyFY8Q/ImP0sT1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> Use "git checkout HEAD oops/file1"
+hoi :)
 
-This returned:
+On Sat, Dec 02, 2006 at 12:44:20PM -0800, Linus Torvalds wrote:
+> On Sat, 2 Dec 2006, Martin Waitz wrote:
+> >=20
+> > I don't buy your scalability argument.
+>=20
+> Try it.
+>=20
+> Really. Get the mozilla import (450MB project), and clone it on a machine=
+=20
+> with half a gig of RAM or less.
+>=20
+> Then, clone a couple of smaller archives that end up being 450MB=20
+> _combined_, but clone them separately.
+>=20
+> And watch the memory usage.
 
-"git checkout: updating paths is incompatible with switching branches/forcing
-Did you intend to checkout 'oops/file1' which can not be resolved as commit?"
+Do I understand you correctly that the problem is not the algorithmic
+complexity but that you have to map the objects at once instead of map
+them in small parts one after the other?
 
-I'm not sure that checkout will do what I want anyway because it would 
-overwrite the working directory copy of oops/file1.  I want to keep the 
-changes but reset the index to have oops/file1 from HEAD.
+--=20
+Martin Waitz
 
-Maybe I need to say a little more about what I'm trying to do:
+--ttZyFY8Q/ImP0sT1
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
 
-I converted a subversion repository to git.  In that repository I maintained 
-my own set of patches in one branch against an upstream branch; I'm now using 
-git-cherry-pick to pull a subset of those patches onto a new branch against 
-the upstream head.  This is all working fine.  The problem is that I've come 
-across a patch that should rightly be two patches instead of one.  
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
 
-So, I cherry-pick a patch, which updates the working directory and index, 
-leaving me with...
+iD8DBQFFcergj/Eaxd/oD7IRAkkXAJ4qENe8tB7Be2H0GsWmIdttkk0jjwCZAeUp
+5jWZfSXTzSGmVyFojrU+h0U=
+=jzWh
+-----END PGP SIGNATURE-----
 
-# On branch refs/heads/newmaster
-# Updated but not checked in:
-#   (will commit)
-#
-#   modified:   oops/file1 
-#   modified:   good/file2
-#   modified:   good/file3
-#   modified:   good/file4
-
-Instead, what I would like is
-
-# On branch refs/heads/newmaster
-# Updated but not checked in:
-#   (will commit)
-#
-#   modified:   good/file2
-#   modified:   good/file3
-#   modified:   good/file4
-#
-# On branch refs/heads/newmaster
-# Changed but not updated:
-#   (use git-update-index to mark for commit)
-#
-#   modified:   oops/file1 
-
-I've actually found a way around the problem.  I do git-reset HEAD, which 
-restores the index entirely but leaves the working directory.  Then I 
-git-update-index the good/* set.  However, it led me to wonder what the 
-inverse of git-update-index is.
-
-
-
-Andy
--- 
-Dr Andy Parkins, M Eng (hons), MIEE
