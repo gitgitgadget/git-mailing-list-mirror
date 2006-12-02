@@ -1,64 +1,66 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Alexandre Julliard <julliard@winehq.org>
-Subject: [PATCH] gitweb: Put back shortlog instead of graphiclog in the project list.
-Date: Wed, 15 Nov 2006 21:37:50 +0100
-Message-ID: <87irhgla3l.fsf@wine.dyndns.org>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [RFC] Submodules in GIT
+Date: Sat, 2 Dec 2006 09:27:49 +0000
+Message-ID: <200612020927.50787.andyparkins@gmail.com>
+References: <20061130170625.GH18810@admingilde.org> <200612020114.42858.Josef.Weidendorfer@gmx.de> <Pine.LNX.4.64.0612011621380.3695@woody.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 15 Nov 2006 20:38:18 +0000 (UTC)
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Sat, 2 Dec 2006 09:30:49 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.90 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=NymfW1+mtxGbYqapKuKGnf6uFoS7dl/zweuedm1Hi8X8lGD4MrP0wNpDoQWsbI8/1xYrf8XLANhfYntkBjN4D2EfIPrfbPS+bjFPAGo7hTy2zG0gc+8M7Va8VLdL/AWL/H2MEFRivL3BLeVD9jFsjfmtR5jtWGiA99R1ZNowl1s=
+User-Agent: KMail/1.9.5
+In-Reply-To: <Pine.LNX.4.64.0612011621380.3695@woody.osdl.org>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31488>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33013>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GkRW9-00027C-88 for gcvg-git@gmane.org; Wed, 15 Nov
- 2006 21:37:57 +0100
+ esmtp (Exim 4.43) id 1GqRCj-000173-BC for gcvg-git@gmane.org; Sat, 02 Dec
+ 2006 10:30:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1030981AbWKOUhy (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
- 15:37:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030983AbWKOUhy
- (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 15:37:54 -0500
-Received: from mail.codeweavers.com ([216.251.189.131]:43463 "EHLO
- mail.codeweavers.com") by vger.kernel.org with ESMTP id S1030981AbWKOUhx
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 15:37:53 -0500
-Received: from adsl-89-217-150-95.adslplus.ch ([89.217.150.95]
- helo=wine.dyndns.org) by mail.codeweavers.com with esmtpsa
- (TLS-1.0:DHE_RSA_AES_256_CBC_SHA:32) (Exim 4.50) id 1GkRW4-0000Ht-BC for
- git@vger.kernel.org; Wed, 15 Nov 2006 14:37:52 -0600
-Received: by wine.dyndns.org (Postfix, from userid 1000) id 38D8610A151; Wed,
- 15 Nov 2006 21:37:50 +0100 (CET)
+ S1162864AbWLBJah (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 2 Dec 2006
+ 04:30:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1162866AbWLBJah
+ (ORCPT <rfc822;git-outgoing>); Sat, 2 Dec 2006 04:30:37 -0500
+Received: from ug-out-1314.google.com ([66.249.92.170]:15857 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1162864AbWLBJag
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 2 Dec 2006 04:30:36 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so2615535uga for
+ <git@vger.kernel.org>; Sat, 02 Dec 2006 01:30:34 -0800 (PST)
+Received: by 10.78.164.13 with SMTP id m13mr5695254hue.1165051834295; Sat, 02
+ Dec 2006 01:30:34 -0800 (PST)
+Received: from grissom.internal.parkins.org.uk ( [84.201.153.164]) by
+ mx.google.com with ESMTP id 36sm14609680huc.2006.12.02.01.30.33; Sat, 02 Dec
+ 2006 01:30:33 -0800 (PST)
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Looks like a repo.or.cz-specific change slipped in.
+On Saturday 2006, December 02 00:33, Linus Torvalds wrote:
 
-Signed-off-by: Alexandre Julliard <julliard@winehq.org>
----
- gitweb/gitweb.perl |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+> Yes, you do need to have a list of submodules somewhere, and you'd need to
+> maintain that separately. One of the results of having the submodules be
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index e54a29e..7587595 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -2454,7 +2454,7 @@ sub git_project_list_body {
- 		      $pr->{'age_string'} . "</td>\n" .
- 		      "<td class=\"link\">" .
- 		      $cgi->a({-href => href(project=>$pr->{'path'}, action=>"summary")}, "summary")   . " | " .
--		      $cgi->a({-href => '/git-browser/by-commit.html?r='.$pr->{'path'}}, "graphiclog") . " | " .
-+		      $cgi->a({-href => href(project=>$pr->{'path'}, action=>"shortlog")}, "shortlog") . " | " .
- 		      $cgi->a({-href => href(project=>$pr->{'path'}, action=>"log")}, "log") . " | " .
- 		      $cgi->a({-href => href(project=>$pr->{'path'}, action=>"tree")}, "tree") .
- 		      ($pr->{'forks'} ? " | " . $cgi->a({-href => href(project=>$pr->{'path'}, action=>"forks")}, "forks") : '') .
+Why?  You just recursively search for every "link" object in the supermodule.  
+That tells you which submodules you need and where they should be.
+
+During a supermodule clone, it can tell the client end to start a new clone 
+with the correct path because it knows what the local path is at that moment.
+
+
+
+Andy
 -- 
-1.4.4.g2e5b
-
--- 
-Alexandre Julliard
+Dr Andrew Parkins, M Eng (Hons), AMIEE
