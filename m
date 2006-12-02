@@ -1,117 +1,90 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Peter Baumann <Peter.B.Baumann@stud.informatik.uni-erlangen.de>
-Subject: Re: [PATCH] Explicitly add the default "git pull" behaviour to .git/config on clone
-Date: Wed, 6 Dec 2006 13:36:46 +0100
-Message-ID: <slrnendeau.7j4.Peter.B.Baumann@xp.machine.xx>
-References: <200612061207.23437.andyparkins@gmail.com>
-NNTP-Posting-Date: Wed, 6 Dec 2006 12:37:24 +0000 (UTC)
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [RFC] Submodules in GIT
+Date: Sat, 2 Dec 2006 09:22:40 +0000
+Message-ID: <200612020922.43832.andyparkins@gmail.com>
+References: <20061130170625.GH18810@admingilde.org> <200612020036.08826.Josef.Weidendorfer@gmx.de> <Pine.LNX.4.64.0612011540010.3695@woody.osdl.org>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Sat, 2 Dec 2006 09:25:38 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 73
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: mason.hofmann.stw.uni-erlangen.de
-User-Agent: slrn/0.9.8.0 (Linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=AHyYRdnERxTLk49p6OEUxazd985umFF5zCTltMTaaMT/jRHNEAfwefWFFH95PhJJdUG2dVLGiO22YSV45q2EnbYqK1kxcVYJqo8oj17GoSfoS2vWbo7UuAKQTzBNy+JFbMarsfFU0rjHa4HcVJBQbz/U6ThKTJg+lMe1YuAyLjU=
+User-Agent: KMail/1.9.5
+In-Reply-To: <Pine.LNX.4.64.0612011540010.3695@woody.osdl.org>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33445>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Grw1W-0002aW-Hr for gcvg-git@gmane.org; Wed, 06 Dec
- 2006 13:37:18 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33012>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GqR7m-0000LD-Dr for gcvg-git@gmane.org; Sat, 02 Dec
+ 2006 10:25:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1760561AbWLFMhP (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
- 07:37:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760562AbWLFMhP
- (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 07:37:15 -0500
-Received: from main.gmane.org ([80.91.229.2]:33907 "EHLO ciao.gmane.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1760561AbWLFMhN
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec 2006 07:37:13 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1Grw1M-0001qs-Db for git@vger.kernel.org; Wed, 06 Dec 2006 13:37:08 +0100
-Received: from mason.hofmann.stw.uni-erlangen.de ([131.188.24.36]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Wed, 06 Dec 2006 13:37:08 +0100
-Received: from Peter.B.Baumann by mason.hofmann.stw.uni-erlangen.de with
- local (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>;
- Wed, 06 Dec 2006 13:37:08 +0100
+ S1162859AbWLBJZb (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 2 Dec 2006
+ 04:25:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1162860AbWLBJZb
+ (ORCPT <rfc822;git-outgoing>); Sat, 2 Dec 2006 04:25:31 -0500
+Received: from nf-out-0910.google.com ([64.233.182.189]:46512 "EHLO
+ nf-out-0910.google.com") by vger.kernel.org with ESMTP id S1162859AbWLBJZa
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 2 Dec 2006 04:25:30 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so3791379nfa for
+ <git@vger.kernel.org>; Sat, 02 Dec 2006 01:25:29 -0800 (PST)
+Received: by 10.78.201.2 with SMTP id y2mr5678801huf.1165051528827; Sat, 02
+ Dec 2006 01:25:28 -0800 (PST)
+Received: from grissom.internal.parkins.org.uk ( [84.201.153.164]) by
+ mx.google.com with ESMTP id 37sm29532581hub.2006.12.02.01.25.26; Sat, 02 Dec
+ 2006 01:25:27 -0800 (PST)
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On 2006-12-06, Andy Parkins <andyparkins@gmail.com> wrote:
-> Without any specification in the .git/config file, git-pull will execute
-> "git-pull origin"; which in turn defaults to pull from the first "pull"
-> definition for the remote, "origin".
->
-> This is a difficult set of defaults to track for a new user, and it's
-> difficult to see what tells git to do this (especially when it is
-> actually hard-coded behaviour).  To ameliorate this slightly, this patch
-> explicitly specifies the default behaviour during a clone using the
-> "branch" section of the config.
->
-> For example, a clone of a typical repository would create a .git/config
-> containing:
->   [remote "origin"]
->   url = proto://host/repo.git
->   fetch = refs/heads/master:refs/remotes/origin/master
->   [branch "master"]
->   remote = origin
->   merge = refs/heads/master
->
-> The [branch "master"] section is such that there is no change to the
-> functionality of git-pull, but that functionality is now explicitly
-> documented.
->
-> Signed-off-by: Andy Parkins <andyparkins@gmail.com>
-> ---
-> This is really to help newbies.  By explicitly documenting the default
-> behaviour, it makes it clearer what is going on.  It also means no routing
-> through documentation to find out what config option needs changing.
->
+On Saturday 2006, December 02 00:12, Linus Torvalds wrote:
 
-I second that. It took me a while to understand why the first entry in
-remotes/origin merged with the current branch. I thought it was a bug
-because sometimes it did the right thing and once in a while nothing
-went wrong.
-
-Obviously, it have switched the branch. I even tried to made this
-"buggy" behaviour reproducable to write a bugreport, but after several
-days the light goes on and I just felt a little bit stupid :-)
-
-> It's possible that we would want to remove the default behaviour entirely
-> if there is no "branch" definition in the config.  That would prevent
-> accidents by users who don't know what pull does fully yet.
+> 	100644 blob 08602f522183dc43787616f37cba9b8af4e3dade	xdiff-interface.c
+> 	100644 blob 1346908bea31319aabeabdfd955e2ea9aab37456	xdiff-interface.h
+> 	040000 tree 959dd5d97e665998eb26c764d3a889ae7903d9c2	xdiff
+> 	050000 link 0215ffb08ce99e2bb59eca114a99499a4d06e704	xyzzy
 >
+> where that 050000 is the new magic type (I picked one out of my *ss: it's
+> not a valid type for a file mode, so it's a godo choice, but it could be
+> anythign that cannot conflict with a real file), which just specifies the
+> "link" part. The SHA1 is the SHA1 of the commit, and the "xyzzy" is
+> obviously just the name within the directory of the submodule.
 
-I'm not absolutly sure about this, but with --use-separate-remote this makes
-sense, because you can easly teach someone new to git that the changes
-from the remote branches are under refs/remotes/<branches> and (s)he
-could merge it with git-pull . refs/remotes/$branch
+Can I argue that the hash in that object should actually be to a real object 
+in the supermodule repository rather than a link?  Then THAT object would 
+contain the hash?  So in your above example:
 
-No more clueless users why git pull on master branch updated the working
-tree and git pull an other branch does nothing.
+  100644 blob 08602f522183dc43787616f37cba9b8af4e3dade	xdiff-interface.c
+  100644 blob 1346908bea31319aabeabdfd955e2ea9aab37456	xdiff-interface.h
+  040000 tree 959dd5d97e665998eb26c764d3a889ae7903d9c2	xdiff
+  050000 link a7f26495b7b7e32bf949efbd91ee32267b792cba	xyzzy
 
--Peter
+And then the local object a7f26495b7b7e32bf949efbd91ee32267b792cba would 
+contain your original hash 0215ffb08ce99e2bb59eca114a99499a4d06e704.
 
->  git-clone.sh |    4 +++-
->  1 files changed, 3 insertions(+), 1 deletions(-)
->
-> diff --git a/git-clone.sh b/git-clone.sh
-> index 826fdda..992cb7c 100755
-> --- a/git-clone.sh
-> +++ b/git-clone.sh
-> @@ -413,7 +413,9 @@ then
->  			rm -f "refs/remotes/$origin/HEAD"
->  			git-symbolic-ref "refs/remotes/$origin/HEAD" \
->  				"refs/remotes/$origin/$head_points_at"
-> -		esac
-> +		esac &&
-> +		git-repo-config branch."$head_points_at".remote "$origin" &&
-> +		git-repo-config branch."$head_points_at".merge "refs/heads/$head_points_at"
->  	esac
->  
->  	case "$no_checkout" in
+The reason I suggest this as without out it the "link" object is the only hash 
+in the tree that doesn't point to a valid object.  The contents of objects is 
+entirely arbitrary so it's perfectly okay for that to contain a hash that 
+won't dereference to a real object in the supermodule.
+
+The main advantage of this is (I think) that git-prune, git-fsck, and whatever 
+else relies on tree objects all being real, don't need to be modified at all.
+
+It also gives you scope to later add fields to the "link" object if you 
+wanted.
+
+
+Andy
+-- 
+Dr Andrew Parkins, M Eng (Hons), AMIEE
