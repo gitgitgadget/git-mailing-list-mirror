@@ -2,62 +2,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Herbert Xu <herbert@gondor.apana.org.au>
-Subject: Re: [PATCH] git-parse-remote: fix ambiguous shell bug in expand_refs_wildcard
-Date: Tue, 19 Dec 2006 11:35:57 +1100
-Message-ID: <20061219003557.GA17799@gondor.apana.org.au>
-References: <20061218080941.GA3857@coredump.intra.peff.net> <7v4prtx9hu.fsf@assigned-by-dhcp.cox.net> <20061218224505.GB13034@coredump.intra.peff.net>
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: Re: [RFC] Submodules in GIT
+Date: Sat, 2 Dec 2006 14:50:45 +0100
+Message-ID: <200612021450.46005.Josef.Weidendorfer@gmx.de>
+References: <20061130170625.GH18810@admingilde.org> <20061201220821.GL18810@admingilde.org> <200612021004.22236.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 19 Dec 2006 01:25:31 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+Content-Type: text/plain;
+  charset="iso-8859-15"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Sat, 2 Dec 2006 13:51:06 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Greylist: delayed 2922 seconds by postgrey-1.27 at vger.kernel.org; Mon, 18 Dec 2006 20:24:46 EST
+X-Authenticated: #352111
+User-Agent: KMail/1.9.3
+In-Reply-To: <200612021004.22236.andyparkins@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <20061218224505.GB13034@coredump.intra.peff.net>
-User-Agent: Mutt/1.5.9i
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34782>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33024>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GwTiu-0000uy-R7 for gcvg-git@gmane.org; Tue, 19 Dec
- 2006 02:24:54 +0100
+ esmtp (Exim 4.43) id 1GqVGe-00080w-Cq for gcvg-git@gmane.org; Sat, 02 Dec
+ 2006 14:51:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932622AbWLSBYr (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 18 Dec 2006
- 20:24:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932623AbWLSBYr
- (ORCPT <rfc822;git-outgoing>); Mon, 18 Dec 2006 20:24:47 -0500
-Received: from rhun.apana.org.au ([64.62.148.172]:4515 "EHLO
- arnor.apana.org.au" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
- id S932622AbWLSBYq (ORCPT <rfc822;git@vger.kernel.org>); Mon, 18 Dec 2006
- 20:24:46 -0500
-Received: from gondolin.me.apana.org.au ([192.168.0.6]) by arnor.apana.org.au
- with esmtp (Exim 4.50 #1 (Debian)) id 1GwSxa-0004YL-D5; Tue, 19 Dec 2006
- 11:35:58 +1100
-Received: from herbert by gondolin.me.apana.org.au with local (Exim 3.36 #1
- (Debian)) id 1GwSxZ-0004dQ-00; Tue, 19 Dec 2006 11:35:57 +1100
-To: Jeff King <peff@peff.net>
+ S1163006AbWLBNuu (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 2 Dec 2006
+ 08:50:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1424091AbWLBNuu
+ (ORCPT <rfc822;git-outgoing>); Sat, 2 Dec 2006 08:50:50 -0500
+Received: from mail.gmx.net ([213.165.64.20]:1211 "HELO mail.gmx.net") by
+ vger.kernel.org with SMTP id S1163009AbWLBNuu (ORCPT
+ <rfc822;git@vger.kernel.org>); Sat, 2 Dec 2006 08:50:50 -0500
+Received: (qmail invoked by alias); 02 Dec 2006 13:50:47 -0000
+Received: from p5496B2C8.dip0.t-ipconnect.de (EHLO noname) [84.150.178.200]
+ by mail.gmx.net (mp030) with SMTP; 02 Dec 2006 14:50:47 +0100
+To: Andy Parkins <andyparkins@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-On Mon, Dec 18, 2006 at 05:45:05PM -0500, Jeff King wrote:
+On Saturday 02 December 2006 11:04, Andy Parkins wrote:
+> > So what do you do with deleted submodules?
+> > You wouldn't want them to still sit around in your working directory,
+> > but you still have to preserve them.
 > 
-> but doing it inside an interpolated string doesn't:
-> 
-> $ foo=bar}
-> $ echo "${foo%'}'}"
-> bar}'}
+> Now that is a tricky one.  Mind you, I think that problem exists for any 
+> implementation.  I haven't got a good answer for that.
 
-Yes it's a bug in dash.  Both quote marks (" and ') are represented
-by the same char internally before processing which is where the
-mix-up occurs.
+That suggests that it is probably better to separate submodule repositories
+from their checked out working trees. Why not put the GITDIRs of the submodules
+in subdirectories of the supermodules GITDIR instead?
 
-I'll work on a fix.
-
-Cheers,
--- 
-Visit Openswan at http://www.openswan.org/
-Email: Herbert Xu ~{PmV>HI~} <herbert@gondor.apana.org.au>
-Home Page: http://gondor.apana.org.au/~herbert/
