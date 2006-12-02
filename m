@@ -2,120 +2,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH (WISP) 0/5] Support shallow repositories
-Date: Mon, 30 Oct 2006 20:08:14 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0610302006301.26682@wbgn013.biozentrum.uni-wuerzburg.de>
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [RFC] Submodules in GIT
+Date: Sat, 2 Dec 2006 13:29:48 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0612021322560.3476@woody.osdl.org>
+References: <20061130170625.GH18810@admingilde.org> <4570AF8F.1000801@stephan-feder.de>
+ <Pine.LNX.4.64.0612011505190.3695@woody.osdl.org> <200612020036.08826.Josef.Weidendorfer@gmx.de>
+ <Pine.LNX.4.64.0612011540010.3695@woody.osdl.org> <20061202201826.GR18810@admingilde.org>
+ <Pine.LNX.4.64.0612021242080.3476@woody.osdl.org> <20061202210640.GX18810@admingilde.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Mon, 30 Oct 2006 19:19:08 +0000 (UTC)
+NNTP-Posting-Date: Sat, 2 Dec 2006 21:30:16 +0000 (UTC)
+Cc: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>,
+	sf <sf-gmane@stephan-feder.de>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-X-Y-GMX-Trusted: 0
+In-Reply-To: <20061202210640.GX18810@admingilde.org>
+X-MIMEDefang-Filter: osdl$Revision: 1.161 $
+X-Scanned-By: MIMEDefang 2.36
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30508>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33056>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GecVY-0005rW-8C for gcvg-git@gmane.org; Mon, 30 Oct
- 2006 20:09:16 +0100
+ esmtp (Exim 4.43) id 1GqcR0-0008Hy-LV for gcvg-git@gmane.org; Sat, 02 Dec
+ 2006 22:30:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1161461AbWJ3TI2 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 30 Oct 2006
- 14:08:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161458AbWJ3TI2
- (ORCPT <rfc822;git-outgoing>); Mon, 30 Oct 2006 14:08:28 -0500
-Received: from mail.gmx.net ([213.165.64.20]:5064 "HELO mail.gmx.net") by
- vger.kernel.org with SMTP id S1161455AbWJ3TI0 (ORCPT
- <rfc822;git@vger.kernel.org>); Mon, 30 Oct 2006 14:08:26 -0500
-Received: (qmail invoked by alias); 30 Oct 2006 19:08:20 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp046) with SMTP; 30 Oct 2006 20:08:20 +0100
-To: git@vger.kernel.org, junkio@cox.net
+ S1162496AbWLBVaG (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 2 Dec 2006
+ 16:30:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1162497AbWLBVaG
+ (ORCPT <rfc822;git-outgoing>); Sat, 2 Dec 2006 16:30:06 -0500
+Received: from smtp.osdl.org ([65.172.181.25]:38329 "EHLO smtp.osdl.org") by
+ vger.kernel.org with ESMTP id S1162496AbWLBVaE (ORCPT
+ <rfc822;git@vger.kernel.org>); Sat, 2 Dec 2006 16:30:04 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
+ smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kB2LTnjQ025510
+ (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Sat, 2
+ Dec 2006 13:29:49 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
+ shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kB2LTmjH029472; Sat, 2 Dec
+ 2006 13:29:48 -0800
+To: Martin Waitz <tali@admingilde.org>
 Sender: git-owner@vger.kernel.org
 
-Hi,
 
-Def.: Shallow commits do have parents, but not in the shallow
-repo, and therefore grafts are introduced pretending that
-these commits have no parents.
 
-The basic idea is to write the SHA1s of shallow commits into
-$GIT_DIR/shallow, and handle its contents like the contents
-of $GIT_DIR/info/grafts (with the difference that shallow
-cannot contain parent information).
+On Sat, 2 Dec 2006, Martin Waitz wrote:
+> 
+> Do I understand you correctly that the problem is not the algorithmic
+> complexity but that you have to map the objects at once instead of map
+> them in small parts one after the other?
 
-This information is stored in a new file instead of grafts, or
-even the config, since the user should not touch that file
-at all (even I did not once edit it myself during development!).
-Each line contains exactly one SHA1. When read, a commit_graft
-will be constructed, which has nr_parent < 0 to make it easier
-to discern from user provided grafts.
+Not map them, but track their "used" flag. Yes. You can unmap objects any 
+time at all (since you can just always re-create them at any time very 
+easily and cheaply), but the one thing you CANNOT recreate is the object 
+flags. See "struct object", and the "used" and FLAG_BITS in particular.
 
-Since fsck-objects relies on the library to read the objects,
-it honours shallow commits automatically.
+Almost all git programs need the FLAG_BITS. Something as simple as just 
+traversing the commit history needs at a minimum one _single_ bit for each 
+object: "Have I already seen this". In reality, you tend to need two or 
+three more (ie the UNINTERESTING bit ends up being as important as the 
+SEEN bit, because it's what determines whether it's reachable from some 
+commit we're _not_ interested in, and in the end that's what allows us to 
+not traverse the whole history).
 
-This stuff is definitely "pu" material:
+So you need at a MINIMUM to track the bits
 
-- I am not quite sure if we have to force non-thin packs when
-fetching into a shallow repo (ATM they are forced non-thin). 
-Comments?
+	#define SEEN            (1u<<0)
+	#define UNINTERESTING   (1u<<1)
 
-- A special handling of a shallow upstream is needed. At some
-stage, upload-pack has to check if it sends a shallow commit,
-and it should send that information early (or fail, if the
-client does not support shallow repositories). There is no
-support at all for this in this patch series.
+and in practice almost everything needs
 
-- Instead of locking $GIT_DIR/shallow at the start, just
-the timestamp of it is noted, and when it comes to writing it,
-a check is performed if the mtime is still the same, dying if
-it is not. Is this enough?
+	#define SHOWN           (1u<<3)
 
-- I have not touched the "push into/from a shallow repo" issue.
-Don't even try it yet.
+too (SEEN is for deciding whether to _traverse_ something, SHOWN is for 
+deciding whether you've already output the data for this, and the 
+difference is crucial for any depth-first DAG algorithm, since you need 
+to test-and-set the one bit when you first encounter the object, and 
+test-and-set the other bit when you "leave" the object).
 
-- If you deepen a history, you'd want to get the tags of the
-newly stored (but older!) commits. I don't think this works
-right now.
+So three bits are minimal to _any_ git traversal algorithm. Many specific 
+issues want more bits (eg the TREECHANGE bit may not be quite as 
+fundamnetal, but it sure ends up being critical for the "track subtree" 
+case).
 
-This series does the following:
-
-- gets rid of the call to rev-list in upload-pack
-
-  It is just a tiny change. It is needed so that the client can
-tell the server which commits to ignore for the moment. Note that
-this is bad for porting to Windows: it should be relatively easy
-to spawn other programs in Win32, but is probably lot more work
-to just fork _and_ maintain the memory and fd's.
-
-- support fetching into shallow repositories
-
-  Up until now (including this patch), we do not have tool
-support to make shallow repos. This patch is separated from
-the rest for your reviewing pleasure only.
-
-- support making a shallow repository by cloning with a depth
-
-  "git-clone --depth 20 repo" will lead to a shallow repository,
-which contains only commit chains with a length of at most 20. It
-also writes an appropriate $GIT_DIR/shallow.
-
-- support deepening a shallow repository
-
-  "git-fetch --depth 20 repo branch" will fetch branch from repo,
-but stop at depth 20, updating $GIT_DIR/shallow.
-
-- add tests to t5500
-
-  Since t5500 conveniently provides all we need to test shallow
-clones, no new test script was added, but t5500 extended.
-
-Unfortunately, my time resources are scarce in the next few days,
-but I did not want to hold this stuff back any longer.
-
-Ciao,
-Dscho
