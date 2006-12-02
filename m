@@ -1,109 +1,129 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: fetching packs and storing them as packs
-Date: Fri, 27 Oct 2006 22:42:12 -0700
-Message-ID: <7vwt6l9etn.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0610252333540.12418@xanadu.home>
-	<4540CA0C.6030300@tromer.org>
-	<Pine.LNX.4.64.0610271310450.3849@g5.osdl.org>
-	<7v3b99e87c.fsf@assigned-by-dhcp.cox.net>
-	<20061028034206.GA14044@spearce.org>
-	<Pine.LNX.4.64.0610272109500.3849@g5.osdl.org>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: Re: [RFC] Submodules in GIT
+Date: Sat, 2 Dec 2006 01:14:42 +0100
+Message-ID: <200612020114.42858.Josef.Weidendorfer@gmx.de>
+References: <20061130170625.GH18810@admingilde.org> <200612012355.03493.Josef.Weidendorfer@gmx.de> <Pine.LNX.4.64.0612011510290.3695@woody.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sat, 28 Oct 2006 05:42:24 +0000 (UTC)
-Cc: git@vger.kernel.org, Shawn Pearce <spearce@spearce.org>
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Sat, 2 Dec 2006 00:14:58 +0000 (UTC)
+Cc: sf <sf@b-i-t.de>, git@vger.kernel.org,
+	Martin Waitz <tali@admingilde.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <Pine.LNX.4.64.0610272109500.3849@g5.osdl.org> (Linus Torvalds's
-	message of "Fri, 27 Oct 2006 21:18:07 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Authenticated: #352111
+User-Agent: KMail/1.9.3
+In-Reply-To: <Pine.LNX.4.64.0612011510290.3695@woody.osdl.org>
+Content-Disposition: inline
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30365>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32994>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GdgxW-0007Ko-2a for gcvg-git@gmane.org; Sat, 28 Oct
- 2006 07:42:18 +0200
+ esmtp (Exim 4.43) id 1GqIWl-00049L-VS for gcvg-git@gmane.org; Sat, 02 Dec
+ 2006 01:14:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751848AbWJ1FmO (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 28 Oct 2006
- 01:42:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751842AbWJ1FmO
- (ORCPT <rfc822;git-outgoing>); Sat, 28 Oct 2006 01:42:14 -0400
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:11935 "EHLO
- fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP id S1751848AbWJ1FmN
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 28 Oct 2006 01:42:13 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao10.cox.net
- (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
- <20061028054213.MFUF18985.fed1rmmtao10.cox.net@fed1rmimpo01.cox.net>; Sat, 28
- Oct 2006 01:42:13 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id fhhu1V00Y1kojtg0000000 Sat, 28 Oct 2006
- 01:41:55 -0400
+ S1161966AbWLBAOp (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
+ 19:14:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161834AbWLBAOp
+ (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 19:14:45 -0500
+Received: from mail.gmx.net ([213.165.64.20]:46480 "HELO mail.gmx.net") by
+ vger.kernel.org with SMTP id S1161966AbWLBAOo (ORCPT
+ <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 19:14:44 -0500
+Received: (qmail invoked by alias); 02 Dec 2006 00:14:42 -0000
+Received: from p5496B457.dip0.t-ipconnect.de (EHLO noname) [84.150.180.87] by
+ mail.gmx.net (mp015) with SMTP; 02 Dec 2006 01:14:42 +0100
 To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 
-Linus Torvalds <torvalds@osdl.org> writes:
+On Saturday 02 December 2006 00:30, Linus Torvalds wrote:
+> On Fri, 1 Dec 2006, Josef Weidendorfer wrote:
+> > 
+> > What about my other argument for a submodule namespace:
+> > You want to be able to move the relative root path of a submodule
+> > inside of your supermodule, but yet want to have a unique name
+> > for the submodule:
+> > - to be able to just clone a submodule without having to know
+> > the current position in HEAD
+> 
+> Umm? I don't get the issue. A submodule is a git repo in its own right, 
+> and you clone it exactly like you'd clone any other repo. It _does_ have a 
+> HEAD. It has it's own branches. It has everything.
 
-> On Fri, 27 Oct 2006, Shawn Pearce wrote:
->> 
->> So a reader-writer lock is preferred over
->> a non-locking solution such as I posted in
->> http://article.gmane.org/gmane.comp.version-control.git/30288 ?
->> 
->> Not to mention that such a solution would also fix the -d issue
->> Linus points out above.
->
-> Be very careful.
->
-> There's a good reason why git doesn't use locking, and tends to use the 
-> "create file exclusively and move over the old version after having tested 
-> that the old version is still relevant" approach.
->
-> Two _major_ issues:
->...
->
-> I would MUCH rather we just rename the index/pack file to something that 
-> git can _use_, but that "git repack -a -d" won't remove....
+I just thought about the case when you want to clone a submodule directly
+out of the supermodule repository, at a given realive path. And that can
+be changing.
 
-Two points.
+Of course, every project which happens to be submodule of some supermodule,
+also can have its own repository, as it is fully independent. And then,
+you of course can clone from without any knowledge of its relative position
+in the supermodule.
 
-The "locking" I mentioned was between receive-pack and repack -a
--d; upload-pack (what millions people are using to read from the
-repository you are pushing into) is not affected.  So in that
-sense, we can afford to use lock without much contention.
+> In the trivial case where the submodule doesn't even _have_ any external 
+> existence at all (ie it's always maintained as _just_ a submodule, it 
+> would probably tend to have just one branch, and a clone would get 
+> whatever that branch is), but that's just a degenerate special case of the 
+> much richer "this submodule actually has a life of its own" case.
 
-I just thought of a cute hack that does not involve renaming
-packs at all (so no need to match new-pack-X.pack with
-pack-X.idx), and Shawn's sequence actually would work, which is:
+Yes.
 
-The receive-pack side:
+> > - more practically, e.g. to be able to name a submodule
+> > independent from any current commit you are on in the supermodule,
+> > e.g. to be able to store some meta information about a submodule:
+> 
+> The current commit within the supermodule would be _totally_ invisible to 
+> the submodule.
 
-  a. Create temporary pack file in $GIT_DIR/objects/pack_XXXXX.
-  b. Create temporary index file in $GIT_DIR/objects/index_XXXXX.
-  c. Write pack and index, in "inactive" state.
-  d. Move pack to $GIT_DIR/objects/pack/...
-  e. Move idx to $GIT_DIR/objects/pack...
-  f. Update refs.
-  g. Mark new pack and idx as "active".
+Of course.
 
-The "repack -a -d" side:
+Yet, you need some name to store meta information of submodules
+into some config file of the supermodule, like whether you want to have
+it checked out (see below).
 
-  1. List all active packs and store in memory.
-  2. Repack only loose objects and objects contained in active packs.
-  3. Move new pack and idx into $GIT_DIR/objects/pack/...
-  4. Mark new pack and idx as "active".
-  5. Delete active packs found by step #1.
+In that case, such a name for a submodule does not have to be global in
+the supermodule project...
 
-Pack-idx pair is marked "active" by "chmod u+s" the .pack file.
-During the normal operation, all .pack/.idx pair in objects/pack/
-directories are usable regardless of the setuid bit; we would
-never make .pack files executable so u+s would not otherwise
-hurt us either.  "active" probably is better read as "eligible
-for repacking".
+> > - "Should git allow to commit rewind actions of this submodule
+> >    in the supermodule?" (which, AFAICS, exactly has the same
+> >    problems as publishing a rewound branch: you will get into
+> >    merge hell when you want to pull upstream changes into the
+> >    supermodule)
+> 
+> The only thing that a submodule must NOT be allowed to do on its own is 
+> pruning (and it's distant cousin "git repack -d"). You must always prune 
+> >from the supermodule, because the submodule cannot really know on its own 
+> what references point into it.
 
+Yes. I just gave an example of a policy some project may want for submodule
+handling.
+
+> > - "Should this submodule be checked out?"
+> 
+> This, I think, requires too much configuration to say separately for every 
+> possible submodule, so I would suggest that the way to make that decision 
+> is:
+> 
+>  - "git clone" by default will fetch and check out all submodules (and 
+>    obviously they have to be described some way outside of the object 
+>    database, just so that you don't have to parse the _whole_ history of 
+>    the _whole_ supermodule just to find all possible submodules. So the 
+>    supermodule _will_ need some "list of submodules and where to get them" 
+>    in a config file or other).
+
+Exactly. And in this list, you have to specify names.
+
+The thing I wanted to discuss is whether such names would need to be globally
+unique in the project containing submodles, or not.
+
+If yes, it IMHO makes a lot of sense to introduce "submodule objects" which contain
+these submodule names, and which are used as pointers to submodule commits in
+supermodule trees.
 
