@@ -2,86 +2,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC] git-add update with all-0 object
-Date: Sat, 02 Dec 2006 09:55:16 +0100
-Organization: At home
-Message-ID: <ekrets$v72$1@sea.gmane.org>
-References: <Pine.LNX.4.64.0611301634080.20138@iabervon.org> <Pine.LNX.4.64.0611301431420.3513@woody.osdl.org> <Pine.LNX.4.64.0611301749450.20138@iabervon.org> <20061201045727.GA22622@thunk.org> <7vhcwgcf39.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [RFC] Submodules in GIT
+Date: Sat, 2 Dec 2006 11:52:13 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0612021144520.3476@woody.osdl.org>
+References: <20061130170625.GH18810@admingilde.org> <200612020036.08826.Josef.Weidendorfer@gmx.de>
+ <Pine.LNX.4.64.0612011540010.3695@woody.osdl.org> <200612021232.08699.Josef.Weidendorfer@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Sat, 2 Dec 2006 08:53:47 +0000 (UTC)
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Sat, 2 Dec 2006 19:52:38 +0000 (UTC)
+Cc: sf <sf-gmane@stephan-feder.de>,
+	Git Mailing List <git@vger.kernel.org>,
+	Martin Waitz <tali@admingilde.org>,
+	Andy Parkins <andyparkins@gmail.com>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 31
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+In-Reply-To: <200612021232.08699.Josef.Weidendorfer@gmx.de>
+X-MIMEDefang-Filter: osdl$Revision: 1.161 $
+X-Scanned-By: MIMEDefang 2.36
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33009>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33036>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GqQcr-0003Sf-Oz for gcvg-git@gmane.org; Sat, 02 Dec
- 2006 09:53:38 +0100
+ esmtp (Exim 4.43) id 1GqauU-0007ql-KA for gcvg-git@gmane.org; Sat, 02 Dec
+ 2006 20:52:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1162840AbWLBIx2 convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Sat, 2 Dec 2006 03:53:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1162841AbWLBIx2
- (ORCPT <rfc822;git-outgoing>); Sat, 2 Dec 2006 03:53:28 -0500
-Received: from main.gmane.org ([80.91.229.2]:215 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S1162840AbWLBIx1 (ORCPT
- <rfc822;git@vger.kernel.org>); Sat, 2 Dec 2006 03:53:27 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1GqQce-0003RC-Em for git@vger.kernel.org; Sat, 02 Dec 2006 09:53:24 +0100
-Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Sat, 02 Dec 2006 09:53:24 +0100
-Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Sat, 02 Dec 2006
- 09:53:24 +0100
-To: git@vger.kernel.org
+ S1759476AbWLBTw1 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 2 Dec 2006
+ 14:52:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759479AbWLBTw1
+ (ORCPT <rfc822;git-outgoing>); Sat, 2 Dec 2006 14:52:27 -0500
+Received: from smtp.osdl.org ([65.172.181.25]:37796 "EHLO smtp.osdl.org") by
+ vger.kernel.org with ESMTP id S1759476AbWLBTw1 (ORCPT
+ <rfc822;git@vger.kernel.org>); Sat, 2 Dec 2006 14:52:27 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
+ smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kB2JqEjQ020368
+ (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Sat, 2
+ Dec 2006 11:52:15 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
+ shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kB2JqDif027322; Sat, 2 Dec
+ 2006 11:52:13 -0800
+To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano wrote:
 
-> =A0=A0=A0=A0=A0=A0=A0=A0* 'git-diff' [--options] <commit> <commit> --=
- [<path>...]
->=20
-> =A0=A0=A0=A0=A0=A0=A0=A0 =A0is to see the changes between two <commit=
->.
->=20
-> =A0=A0=A0=A0=A0=A0=A0=A0Just in case if you are doing something exoti=
-c, it
-> =A0 =A0 =A0 =A0 should be noted that all of the <commit> in the above
-> =A0 =A0 =A0 =A0 descriptoin can be any <tree-ish>.
 
-s/descriptoin/description/
-         =20
-It _might_ be worth mentioning that you can compare two arbitrary
-files using
+On Sat, 2 Dec 2006, Josef Weidendorfer wrote:
+> > 
+> > The only _true_ namespace would be the SHA1 of the commit (and maybe allow 
+> > a pointer to a tag too, but the namespace ends up being the same).
+> 
+> I am not so sure about this.
+> Perhaps we want the namespace to be more than the space of commit ids.
 
-   git diff [--options] <blob1 sha> <blob2 sha>
+I don't think it would be wrong at all to have a "link object" type, and 
+have the "link" tree entry actually point to that "link object" instead of 
+pointing directly to the commit in the submodule.
 
-where <blob sha> can be entered as <tree-ish>:<filename>, usually
-<commit>:<filename> (<filename> is HEAD:<filename>) to compare blob (fi=
-le)
-from a named tree/from a given commit, or as :<stage>:<filename> (or
-just ::<filename> if file is not in merge conflict) to compare blob (fi=
-le)
-from an index.
+And yes, that extra indirection would allow for more flexibility (the 
+"link object" can contain comments about the particular version used, 
+pointers to where you can get it - whether human-readable or strictly 
+meant for automation - etc etc).
 
-If I understand correctly there is currently no way to compare files fr=
-om a
-working tree, not to mention files outside working tree
-(including /dev/null) with that syntax.
---=20
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+So I agree with Andy Parkins' comment about the link object allowing not 
+only extended namespaces, but also allowing a certain amount of 
+flexibility (ie there's some built-in extensibility and ability to perhaps 
+add future fields if there's a new object type).
+
+I just want the naming of the links themselves to use all the same SHA1 
+hashes etc, so that you always have a very explicit, and very trustworthy 
+version - and never end up in the situation that you know which repository 
+you want at that position, but you don't know exactly which commit in that 
+repo was supposed to be checked out with that particular version of the 
+super-module.
 
