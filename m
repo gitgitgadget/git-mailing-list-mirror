@@ -1,68 +1,68 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: What's in git.git (stable)
-Date: Wed, 13 Dec 2006 22:32:52 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0612132231050.18171@xanadu.home>
-References: <7v4przfpir.fsf@assigned-by-dhcp.cox.net>
- <200612132237.10051.andyparkins@gmail.com>
- <7vk60vbcfz.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0612140113340.3635@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [RFC] Submodules in GIT
+Date: Sat, 2 Dec 2006 12:44:20 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0612021242080.3476@woody.osdl.org>
+References: <20061130170625.GH18810@admingilde.org> <4570AF8F.1000801@stephan-feder.de>
+ <Pine.LNX.4.64.0612011505190.3695@woody.osdl.org> <200612020036.08826.Josef.Weidendorfer@gmx.de>
+ <Pine.LNX.4.64.0612011540010.3695@woody.osdl.org> <20061202201826.GR18810@admingilde.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-NNTP-Posting-Date: Thu, 14 Dec 2006 03:33:34 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>,
-	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
+NNTP-Posting-Date: Sat, 2 Dec 2006 20:44:45 +0000 (UTC)
+Cc: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>,
+	sf <sf-gmane@stephan-feder.de>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-reply-to: <Pine.LNX.4.63.0612140113340.3635@wbgn013.biozentrum.uni-wuerzburg.de>
-X-X-Sender: nico@xanadu.home
+In-Reply-To: <20061202201826.GR18810@admingilde.org>
+X-MIMEDefang-Filter: osdl$Revision: 1.161 $
+X-Scanned-By: MIMEDefang 2.36
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34276>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GuhLa-0000O6-ME for gcvg-git@gmane.org; Thu, 14 Dec
- 2006 04:33:27 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33046>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gqbiy-0001WR-IH for gcvg-git@gmane.org; Sat, 02 Dec
+ 2006 21:44:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1750726AbWLNDcx (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 13 Dec 2006
- 22:32:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750729AbWLNDcx
- (ORCPT <rfc822;git-outgoing>); Wed, 13 Dec 2006 22:32:53 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:44141 "EHLO
- relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1750726AbWLNDcx (ORCPT <rfc822;git@vger.kernel.org>); Wed, 13 Dec 2006
- 22:32:53 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
- <0JA800LOHV6S5CE0@VL-MH-MR001.ip.videotron.ca> for git@vger.kernel.org; Wed,
- 13 Dec 2006 22:32:52 -0500 (EST)
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+ S1031785AbWLBUoh (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 2 Dec 2006
+ 15:44:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031786AbWLBUoh
+ (ORCPT <rfc822;git-outgoing>); Sat, 2 Dec 2006 15:44:37 -0500
+Received: from smtp.osdl.org ([65.172.181.25]:39344 "EHLO smtp.osdl.org") by
+ vger.kernel.org with ESMTP id S1031785AbWLBUoh (ORCPT
+ <rfc822;git@vger.kernel.org>); Sat, 2 Dec 2006 15:44:37 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
+ smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kB2KiLjQ023043
+ (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Sat, 2
+ Dec 2006 12:44:22 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
+ shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kB2KiKVO028416; Sat, 2 Dec
+ 2006 12:44:21 -0800
+To: Martin Waitz <tali@admingilde.org>
 Sender: git-owner@vger.kernel.org
 
-On Thu, 14 Dec 2006, Johannes Schindelin wrote:
 
-> Hi,
-> 
-> On Wed, 13 Dec 2006, Junio C Hamano wrote:
-> 
-> > We might want to add a pair of built-in internal aliases though:
-> > 
-> > 	[alias]
-> >         	cat = cat-file -p
-> >                 less = -p cat-file -p
-> > 
-> > or have these as samples in template .git/config file.
-> 
-> I sent a patch which makes "git show" have that functionality, and 
-> frankly, I disagree "less" would be a good name for it. It uses the 
-> _pager_, which is not always "less", and besides, what it does is to show 
-> that particular blob. So obviously, I think my patch is the best approach.
 
-I think your approach is pretty sensible too.
+On Sat, 2 Dec 2006, Martin Waitz wrote:
+> 
+> I don't buy your scalability argument.
 
+Try it.
+
+Really. Get the mozilla import (450MB project), and clone it on a machine 
+with half a gig of RAM or less.
+
+Then, clone a couple of smaller archives that end up being 450MB 
+_combined_, but clone them separately.
+
+And watch the memory usage.
+
+> By separating the repositories you just make reachability analyis be
+> totally awkward, without winning anything.
+
+Trust me. Try it out.
 
