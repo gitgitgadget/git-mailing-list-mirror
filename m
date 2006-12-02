@@ -2,68 +2,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Documentation: reorganize cvs-migration.txt
-Date: Thu, 7 Dec 2006 18:50:50 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612071849340.28348@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20061206.105251.144349770.wl@gnu.org>
- <Pine.LNX.4.63.0612061325320.28348@wbgn013.biozentrum.uni-wuerzburg.de>
- <4576D92A.80307@xs4all.nl> <20061206145802.GC1714@fieldses.org>
- <Pine.LNX.4.63.0612061613460.28348@wbgn013.biozentrum.uni-wuerzburg.de>
- <20061206171950.GD1714@fieldses.org> <20061206172450.GE1714@fieldses.org>
- <7v7ix47wbr.fsf@assigned-by-dhcp.cox.net> <20061207041805.GC3457@fieldses.org>
- <Pine.LNX.4.63.0612071522080.28348@wbgn013.biozentrum.uni-wuerzburg.de>
- <20061207174306.GC16858@fieldses.org>
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: On removing files and "git-rm is pointless"
+Date: Sat, 2 Dec 2006 13:33:56 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0612021330070.3476@woody.osdl.org>
+References: <200612022059.kB2Kx565009646@laptop13.inf.utfsm.cl>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Thu, 7 Dec 2006 17:51:09 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+NNTP-Posting-Date: Sat, 2 Dec 2006 21:34:26 +0000 (UTC)
+Cc: Carl Worth <cworth@cworth.org>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <20061207174306.GC16858@fieldses.org>
-X-Y-GMX-Trusted: 0
+In-Reply-To: <200612022059.kB2Kx565009646@laptop13.inf.utfsm.cl>
+X-MIMEDefang-Filter: osdl$Revision: 1.161 $
+X-Scanned-By: MIMEDefang 2.36
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33601>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GsNOi-0006rY-L1 for gcvg-git@gmane.org; Thu, 07 Dec
- 2006 18:51:05 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33058>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GqcUu-0000PV-RR for gcvg-git@gmane.org; Sat, 02 Dec
+ 2006 22:34:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1162586AbWLGRuz (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
- 12:50:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1162592AbWLGRuz
- (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 12:50:55 -0500
-Received: from mail.gmx.net ([213.165.64.20]:44837 "HELO mail.gmx.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S1162586AbWLGRuy
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec 2006 12:50:54 -0500
-Received: (qmail invoked by alias); 07 Dec 2006 17:50:51 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp043) with SMTP; 07 Dec 2006 18:50:51 +0100
-To: "J. Bruce Fields" <bfields@fieldses.org>
+ S1162505AbWLBVeJ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 2 Dec 2006
+ 16:34:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1162506AbWLBVeJ
+ (ORCPT <rfc822;git-outgoing>); Sat, 2 Dec 2006 16:34:09 -0500
+Received: from smtp.osdl.org ([65.172.181.25]:39866 "EHLO smtp.osdl.org") by
+ vger.kernel.org with ESMTP id S1162505AbWLBVeG (ORCPT
+ <rfc822;git@vger.kernel.org>); Sat, 2 Dec 2006 16:34:06 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
+ smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kB2LXvjQ025768
+ (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Sat, 2
+ Dec 2006 13:33:57 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
+ shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kB2LXuM6029622; Sat, 2 Dec
+ 2006 13:33:56 -0800
+To: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
 Sender: git-owner@vger.kernel.org
 
-Hi,
 
-On Thu, 7 Dec 2006, J. Bruce Fields wrote:
 
-> +$ mkdir /pub/temporary
-> +$ cd /pub/temporary
-> +$ git init-db --shared
-> +$ git fetch /home/alice/myproject master:master
+On Sat, 2 Dec 2006, Horst H. von Brand wrote:
+> 
+> The command should never even see the '*' here. Globbing is handled
+> (uniformly) by the shell. Don't loose that.
 
-Even easier:
+Git supprts an extra level of globbing.
 
-$ mkdir /pub/my-repo.git
-$ cd /pub/my-repo.git
-$ git --bare init-db --shared
-$ git --bare fetch /home/alice/myproject master:master
+In the kernel tree, try the difference between these two command lines:
 
-(Totally untested, of course.)
+	git ls-files fs/*.c
+	
+	git ls-files 'fs/*.c'
 
-Ciao,
-Dscho
+and enjoy.
+
+It's _very_ useful for a number of programs (including "git add") but I 
+find it _especially_ useful for something like
+
+	git grep jiffies -- '*.h'
+
+where the git-level globbign is important.
+
+Not all git programs do that globbing, but many do.
+
