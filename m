@@ -1,97 +1,115 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: linux@horizon.com
-Subject: Missing features in git
-Date: 14 Nov 2006 08:49:58 -0500
-Message-ID: <20061114134958.5326.qmail@science.horizon.com>
-NNTP-Posting-Date: Tue, 14 Nov 2006 13:50:34 +0000 (UTC)
-Cc: linux@horizon.com
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC] git-add update with all-0 object
+Date: Sat, 02 Dec 2006 09:35:52 +0100
+Organization: At home
+Message-ID: <ekrdph$tg6$1@sea.gmane.org>
+References: <Pine.LNX.4.64.0611301634080.20138@iabervon.org> <20061201045727.GA22622@thunk.org> <Pine.LNX.4.64.0612010223010.20138@iabervon.org> <200612010937.08468.andyparkins@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+NNTP-Posting-Date: Sat, 2 Dec 2006 08:34:14 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 65
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31346>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33008>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gjyfv-00027p-AV for gcvg-git@gmane.org; Tue, 14 Nov
- 2006 14:50:10 +0100
+ esmtp (Exim 4.43) id 1GqQK1-00011Y-OU for gcvg-git@gmane.org; Sat, 02 Dec
+ 2006 09:34:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S965744AbWKNNuD (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 14 Nov 2006
- 08:50:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965816AbWKNNuD
- (ORCPT <rfc822;git-outgoing>); Tue, 14 Nov 2006 08:50:03 -0500
-Received: from science.horizon.com ([192.35.100.1]:20301 "HELO
- science.horizon.com") by vger.kernel.org with SMTP id S965744AbWKNNuA (ORCPT
- <rfc822;git@vger.kernel.org>); Tue, 14 Nov 2006 08:50:00 -0500
-Received: (qmail 5327 invoked by uid 1000); 14 Nov 2006 08:49:58 -0500
+ S1162462AbWLBIeG (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 2 Dec 2006
+ 03:34:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1162836AbWLBIeG
+ (ORCPT <rfc822;git-outgoing>); Sat, 2 Dec 2006 03:34:06 -0500
+Received: from main.gmane.org ([80.91.229.2]:29074 "EHLO ciao.gmane.org") by
+ vger.kernel.org with ESMTP id S1162462AbWLBIeD (ORCPT
+ <rfc822;git@vger.kernel.org>); Sat, 2 Dec 2006 03:34:03 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1GqQJr-00010D-09 for git@vger.kernel.org; Sat, 02 Dec 2006 09:33:59 +0100
+Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Sat, 02 Dec 2006 09:33:58 +0100
+Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Sat, 02 Dec 2006
+ 09:33:58 +0100
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-I've been writing some more git docs, and I came across a few
-things git does that I'm not sure are desirable.
+Andy Parkins wrote:
 
+> On Friday 2006 December 01 08:10, Daniel Barkalow wrote:
+> 
+>> My position on this subject is that "index" is a good name, but that
+>> description is a terrible description, and "index" is a word that needs a
+>> good description in context. If we just said up front:
+> 
+> If we need to explain what "index" means in the context of diff then it's not 
+> a good name :-)
 
-One thing I noticed is that with ref logs, you've just re-invented the
-CVS problem of associating history with a name.  If you want to rename
-a branch (say, from "mischacks" to something suitable for publication),
-do you rename the log or not?  It's a less virulent form, but it seems
-like the same disease.
+But "staging area" or more descriptive "staging area for commits" is
+a bit long. But we no longer name the "index" "dircache".
 
-Another minor quibble: AFAICT, "git checkout -f -m" is meaningless (-f
-overrides -m), but doesn't complain.
+> An index /everywhere else/ is a lookup table.  topic->page number; 
+> author->book title.  record id->byte position.  There is never any content in 
+> an index, indices just point at content.
 
+Just like git index.
 
-One feature that I noticed is missing, is that there's no easy way to do a
-"git reset --hard" while doing a "git checkout" style merge.
+> I imagine that's how git's index got it's name.  (I'm only guessing as I've 
+> not looked at what's actually inside git's "index").  Here's my guess:
+> 
+> git update-index file1 hashes file1, stores it somewhere under that hash and 
+> writes the hash->filename connection to .git/index.  That is why git's index 
+> is called an index.  It's a hash->filename index.
 
-An example of when you'd want to do this is performing a "git bisect"
-with a local "#define DEBUG 1" change.  Particularly if you
-hit a non-compiling version and need to back up.
+This "somewhere" is object repository. And it is reverse: it is 
+filename->(stat + hash) index; from a file in the working area to the blob
+(or tree) in the repository.
 
-  
-The only way to do this currently is somethig like:
-        git checkout -b temp HEAD^
-        git branch -f bisect temp
-        git checkout bisect
-        git branch -d temp
+> Unfortunately, "index" in colloquial git actually means the combination 
+> of .git/index plus the hashed file itself.  That's no longer an index, it's 
+> a "book". :-)
 
-or the way git-bisect does it
-  
-        echo "$rev" > "$GIT_DIR/refs/heads/new-bisect"
-        git checkout new-bisect || exit
-        mv "$GIT_DIR/refs/heads/new-bisect" "$GIT_DIR/refs/heads/bisect" &&
-        GIT_DIR="$GIT_DIR" git-symbolic-ref HEAD refs/heads/bisect
-  
-Either way, it reserves a second branch name, and seems like a bit of
-a hack.  I'm already a bit annoyed that "bisect" is reserved but not
-clearly documented as such, and note that the branch name "new-bisect",
-which we are switched to temporarily, does not match the pattern
-"refs/heads/bisect*" that bisect_start checks for.
+Yes, it is true that "index" in colloquial git means "index version"
+(version pointed by the "index").
 
-The only thing I don't know is if this should be a git-checkout
-option or a git-reset option.  The former shares far more code,
-but the latter might make more logical sense.
+> It's made worse, I think, by the fact that git doesn't want to do any 
+> index-like things with the "index".  Being content-oriented rather than 
+> name-oriented means that an entry like "file1->NOTHING" is impossible in git.  
+> This leads to the sort of "git-add means track this filename" confusion that 
+> turns up a lot with new users.
 
-  
-Personally, I'd prefer if the requirement that HEAD point to
-refs/heads were enforced when checking in rather than checking out.
-  
-Then you could check out an arbitrary version without any of the annoyance
-above; I could "git checkout tags/foo" or even "git checkout deadbeef~3".
-I wouldn't be on a current branch (which would necessitate changing
-"git branch" output), so HEAD would simply contain an object ID directly
-rather than being a symlink/symref.
+It is possible. By convention all-0 hash means 'no such object'. The very
+first message in this thread tried to make use of it... but "git add" to
+mark filename as interesting instead of "git add" to add _current_ contents
+of the file goes a bit against git ideas.
 
-It's a bit of a PITA auditing the code base to find everywhere affected
-by changing this invariant, but it doesn't conceptually difficult.
-Is there anything fundamental that this would break?
+> It's probably all too late to change the nomenclature, but I've always been of 
+> the opinion that names are important, they confer meaning.  When we use a 
+> common word, with common meaning and deviate from that common meaning we are 
+> bound to create confusion.  New users don't have any "git-way-of-thinking" 
+> knowledge when they begin, so when they hear "index" they can only fall back 
+> on their standard understanding of that word.  We shouldn't be surprised then 
+> when new users don't get "the index".
 
+Well, "dircache" was changed to "index". "<ent>" was axed in preference
+to "<tree-ish>". I think using "staging area" name in git man pages would
+be a good idea (as would be making --index to be alias to --cached).
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
 
-The above would make a "-b <newbranch>" option to git-commit more useful,
-but it's not a half-bad idea as it is.  It's just one extra command
-(git checkout -b newbranch; git commit), but it takes a bit of
-thinking to realize that "git checkout", which normally modifies the
-working directory, won't touch your ready-to-be-committed changes in
