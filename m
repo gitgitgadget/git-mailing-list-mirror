@@ -4,142 +4,133 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [RFD] making separate-remote layout easier to use
-Date: Sun, 26 Nov 2006 02:39:42 -0500
-Message-ID: <20061126073942.GA30518@spearce.org>
-References: <7v1wnr19do.fsf@assigned-by-dhcp.cox.net> <ekafpm$fs7$1@sea.gmane.org> <20061126033433.GD29394@spearce.org> <7vvel2yi2u.fsf@assigned-by-dhcp.cox.net> <20061126042311.GB30001@spearce.org> <7vk61iyeq4.fsf@assigned-by-dhcp.cox.net>
+From: Martin Waitz <tali@admingilde.org>
+Subject: Re: [RFC] Submodules in GIT
+Date: Sat, 2 Dec 2006 20:46:03 +0100
+Message-ID: <20061202194602.GP18810@admingilde.org>
+References: <20061201121234.GQ18810@admingilde.org> <4570289D.9050802@b-i-t.de> <20061201133558.GU18810@admingilde.org> <45703375.4050500@b-i-t.de> <20061201145817.GY18810@admingilde.org> <45704EA3.40203@b-i-t.de> <20061201165418.GD18810@admingilde.org> <45706758.2020907@b-i-t.de> <20061201184801.GG18810@admingilde.org> <4570BC07.4080203@stephan-feder.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sun, 26 Nov 2006 07:40:00 +0000 (UTC)
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="EmwFttYoLalE/5Ab"
+NNTP-Posting-Date: Sat, 2 Dec 2006 19:46:28 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Content-Disposition: inline
-In-Reply-To: <7vk61iyeq4.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+In-Reply-To: <4570BC07.4080203@stephan-feder.de>
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
+User-Agent: Mutt/1.5.9i
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32332>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33034>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GoEcH-0002ih-GZ for gcvg-git@gmane.org; Sun, 26 Nov
- 2006 08:39:57 +0100
+ esmtp (Exim 4.43) id 1Gqaoa-0006XJ-Ik for gcvg-git@gmane.org; Sat, 02 Dec
+ 2006 20:46:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S967324AbWKZHjr (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 26 Nov 2006
- 02:39:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967328AbWKZHjr
- (ORCPT <rfc822;git-outgoing>); Sun, 26 Nov 2006 02:39:47 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:35480 "EHLO
- corvette.plexpod.net") by vger.kernel.org with ESMTP id S967324AbWKZHjq
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 26 Nov 2006 02:39:46 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1GoEc3-0006Tm-1x; Sun, 26 Nov 2006 02:39:43 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- 69BEF20FB09; Sun, 26 Nov 2006 02:39:42 -0500 (EST)
-To: Junio C Hamano <junkio@cox.net>
+ S1162493AbWLBTqI (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 2 Dec 2006
+ 14:46:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1162507AbWLBTqI
+ (ORCPT <rfc822;git-outgoing>); Sat, 2 Dec 2006 14:46:08 -0500
+Received: from agent.admingilde.org ([213.95.21.5]:44760 "EHLO
+ mail.admingilde.org") by vger.kernel.org with ESMTP id S1162493AbWLBTqE
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 2 Dec 2006 14:46:04 -0500
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1) id
+ 1GqaoF-0004LG-5j; Sat, 02 Dec 2006 20:46:03 +0100
+To: sf <sf-gmane@stephan-feder.de>
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano <junkio@cox.net> wrote:
-> Shawn Pearce <spearce@spearce.org> writes:
-> > So now we're at a point of:
-> >
-> >  * how do we get this branch information from the remote?
-> >  * how does the remote store this branch information?
-> 
-> For the former, I was hoping that we could do a new action
-> against remote repository that is "get remote information".
 
-Yes, that is completely sane.  :)
- 
-> As an implementation detail, I think it is one possibility to
-> store this information in the config of the repository being
-> cloned from.  We should be able to use repo-config to
-> parse that file in config-like syntax to extract what we would
-> want, so we do not have to come up with a new syntax nor a new
-> parser, which is a big plus.
+--EmwFttYoLalE/5Ab
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Also quite sane.  Nobody wants to write new code if we don't really
-have to. :)
+hoi :)
 
-> 	Side note: repo-config, especially the updating side of
-> 	it, is one of the programs I find the most brittle in
-> 	the whole system, and it always makes me hesitate when
-> 	somebody proposes to use config file in any important
-> 	way read-write for this reason.  But this "reading out
-> 	per-branch information from the file" is read-only so I
-> 	would not worry too much about it.
+On Sat, Dec 02, 2006 at 12:34:31AM +0100, sf wrote:
+> > Now your submodule is no longer seen as an independent git repository
+> > and I think this would cause problems when you want to push/pull between
+> > the submodule and its upstream repository.
+>=20
+> You can always pick a single commit or several commits out of a larger
+> repository and have a complete git repository.
+>=20
+> And I already explained how to push and pull even from within superprojec=
+ts.
 
-Now you tell me.  git-gui uses repo-config for all of its option
-data.  It writes back to the config file to save user configured
-options, including window layout at quit.  It also uses both the
-user global and the local repository config files. :)
+Sure it you are able to make it work, but it needs more work on the UI part.
+How do you handle the index? How do you allow to clone only the
+submodule?
 
-We can safely update the index, symrefs and refs.  Why can't we
-also safely update the config file?  The biggest problem is its
-also a hand-modified file complete with support for comments,
-so users expect the file to stay intact during edits.  Aside from
-that little issue its really a fairly simple format...
+I really thought about such a setup too, but then decided that it is
+much easier to work with submodules when you can really see it as a
+repository of its own.
 
-> Strictly speaking, however, the config file is a wrong place to
-> store it.  For one thing it has core.sharedrepository and
-> receive.denynonfastforwards that are true configuration to
-> control the behaviour of git _at_ _the_ _repository_ the
-> configuration is at.  The new "branch property" are primarily to
-> help the other end, and the "filtering rewinding ones" we want
-> at the clone/fetch side wants that information only and not
-> interested in the true configuration information at that
-> repository.
+> > But you could still call the "xdiff" part of the git repository a
+> > submodule.  And then changes to the xdiff directory result in a new
+> > submodule commit, even when there is no direct reference to it.
+> > So you'd still "commit to the xdiff submodule".
+>=20
+> Let's make certain that we understand each other. I see a clear
+> distinction between the submodule code in a supermodule branch (commits
+> in the supermodule's tree and nothing else) and submodule branches which
+> are independent of the superproject. Supermodule branches and submodule
+> branches do not interact, only if I want them to.
 
-Yes, of course.  I never suggested copy the entire configuration
-as is.  What we really want to do is take the branch data from the
-remote and rewrite it for every branch we fetched into a ref, e.g.:
+Agreed.
+I think the thing which caused some discussion is that I make the
+current submodule commit which is used by the supermodule available in a
+refs/head in the submodule.
+So there is one "branch" in the submodule which corresponds to the
+version used by the supermodule, but this is just for user interface.
+It's most important purpose is to give this special commit a name, so
+that it can be used in merges, etc.
 
-  remote:
-    [branch "master"]
-        rewinds = false
-        description = blah blah
+By selecting another refs/heads "branch" in the submodule you can also
+easily detach the submodule from the supermodule.
+It is really important to understand that you can't branch the submodule
+alone and still have it connected to the supermodule, because the
+supermodule always tracks only one commit for each submodule.
+So every branch that affects the project has to be done on project
+(topmost supermodule) level.
+But of course the submodule can have other branches which are not
+tracked by the supermodule.
+So by checking out refs/heads/master (as it is used in my
+implementation) you can attach the submodule to the supermodule (attach
+as in: bring the working directory in sync with the whole project), and
+you can detach it by selecting another refs/heads (the submodule is
+still part of the supermodule, but not in the state which is currently
+visible in the working directory).
+This may sound confusing, but it really is the only semantic for
+submodule branches that makes sense.
+There are fears that you may commit something that does not match your
+current working directory.  Sure, but you explicitly asked for it and I
+think it won't be a problem if git-status tells about this fact.
 
-  local:
-    [branch "remotes/origin/master"]
-        rewinds = false
-        description = blah blah
 
-while skipping other configuration sections and options that have
-no meaning for the local repository.  core.sharedrepository is just
-one of *many* configuration options that the local repository should
-not inherit.  remote.<name>.url is another...  etc.
+> The double slashes is the only way I can think of that clearly indicates
+> that I do not mean the contents named by the path, but the commit that
+> you find there. Once you have named a commit in that way, you can
+> continue to apply other revision naming suffixes, paths, and so on.
 
-> So my preference is:
-> 
->  * store it in a fixed filename under $GIT_DIR/$something, in a
->    format that is similar to the true config file.
+With the current semantics, you can already get to the submodule commit
+(just leave out your double slashes), but what is missing is simply to
+apply all the modifiers again on this submodule commit.
+So I think we can do without the double slashes.
 
-At which point you might as well put it into $GIT_DIR/config.
-People are going to use git-repo-config to edit that file, even if
-you say its brittle and maybe shouldn't be used for heavy editing.
-Its just damn handy.
- 
-Besides of which, lets not forget that something like:
+--=20
+Martin Waitz
 
-  [branch "master"]
-      rewinds = false
-  [branch "pu"]
-      rewinds = true
+--EmwFttYoLalE/5Ab
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
 
-is not only data for the client to examine.  It can be useful in
-say git-receive-pack as a much more fine-grained alternative to
-receive.denynonfastforwards.  If the server's policy is to not
-rewind a branch then receive-pack shouldn't let a remote user
-rewind it.  At which point its useful to have that branch data
-in $GIT_DIR/config.  :-)
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
 
--- 
+iD8DBQFFcdf6j/Eaxd/oD7IRAj2LAJwPSq1vhkaqhr2k1w3Gsd9Cse/zngCcDR6F
+QS6qpYjkXAzwkqH1daS0hwQ=
+=t67z
+-----END PGP SIGNATURE-----
+
