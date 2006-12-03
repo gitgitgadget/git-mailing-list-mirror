@@ -1,97 +1,73 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: [PATCH 1/3] Document some current bugs and add to the TODO list.
-Date: Tue, 5 Dec 2006 17:30:56 +0000
-Message-ID: <b0943d9e0612050930t187e65c4g6a3c44ea1fefc940@mail.gmail.com>
-References: <20061130002304.21981.67797.stgit@gandelf.nowhere.earth>
-	 <20061130002717.21981.38049.stgit@gandelf.nowhere.earth>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: jgit performance update
+Date: Sun, 3 Dec 2006 18:06:27 -0500
+Message-ID: <20061203230627.GF15965@spearce.org>
+References: <20061203045953.GE26668@spearce.org> <200612031455.48032.robin.rosenberg.lists@dewire.com> <ekumdo$imo$1@sea.gmane.org> <200612031653.04019.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Tue, 5 Dec 2006 17:31:14 +0000 (UTC)
-Cc: "GIT list" <git@vger.kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Sun, 3 Dec 2006 23:06:36 +0000 (UTC)
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=ObyI0tmeJZZ7e3ThOq5K9jzFQ39487UuwOXNKEQSqaTc3NAXaF5r74SmqnzYbhyUQgeKE83/Th6Zk4t/jgyhjF48gTWPAOdjde9hA+O9u3irfKVozrwXaK+kS0tQBcBp9FLvT0WQG18TdlyX0Gh/OYa63GXL3EXsediZlZ97asE=
-In-Reply-To: <20061130002717.21981.38049.stgit@gandelf.nowhere.earth>
 Content-Disposition: inline
+In-Reply-To: <200612031653.04019.robin.rosenberg.lists@dewire.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33358>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33151>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gre8D-00032p-BY for gcvg-git@gmane.org; Tue, 05 Dec
- 2006 18:31:01 +0100
+ esmtp (Exim 4.50) id 1Gr0Pq-0000ZB-Bb for gcvg-git@gmane.org; Mon, 04 Dec
+ 2006 00:06:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S968499AbWLERa6 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 5 Dec 2006
- 12:30:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S968501AbWLERa6
- (ORCPT <rfc822;git-outgoing>); Tue, 5 Dec 2006 12:30:58 -0500
-Received: from nz-out-0506.google.com ([64.233.162.229]:1236 "EHLO
- nz-out-0102.google.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with
- ESMTP id S968497AbWLERa5 (ORCPT <rfc822;git@vger.kernel.org>); Tue, 5 Dec
- 2006 12:30:57 -0500
-Received: by nz-out-0102.google.com with SMTP id s1so2139874nze for
- <git@vger.kernel.org>; Tue, 05 Dec 2006 09:30:56 -0800 (PST)
-Received: by 10.65.250.11 with SMTP id c11mr15497190qbs.1165339856188; Tue,
- 05 Dec 2006 09:30:56 -0800 (PST)
-Received: by 10.65.133.7 with HTTP; Tue, 5 Dec 2006 09:30:56 -0800 (PST)
-To: "Yann Dirson" <ydirson@altern.org>
+ S1758570AbWLCXGb convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Sun, 3 Dec 2006 18:06:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758792AbWLCXGb
+ (ORCPT <rfc822;git-outgoing>); Sun, 3 Dec 2006 18:06:31 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:46027 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S1758570AbWLCXGb
+ convert rfc822-to-8bit (ORCPT <rfc822;git@vger.kernel.org>); Sun, 3 Dec 2006
+ 18:06:31 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1Gr0PO-0005Ou-Ha; Sun, 03 Dec 2006 18:06:06 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 8FAD420FB7F; Sun,  3 Dec 2006 18:06:27 -0500 (EST)
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
 Sender: git-owner@vger.kernel.org
 
-Hi Yann,
+Robin Rosenberg <robin.rosenberg.lists@dewire.com> wrote:
+> s=F6ndag 03 december 2006 15:19 skrev Jakub Narebski:
+> > Robin Rosenberg wrote:
+> > > CVS-induced brain damage, I should track the content. next versio=
+n.
+> > > filenames are so much handier to work with).
+> >
+> > Git uses <path> as _revision limiter_, not as output filter. Should=
+n't
+> > jgit do the same?
+> It's egit, i.e. the eclipse plugin I'm referring to so it's a user in=
+terface=20
+> thing and it uses the path name. =20
 
-See some comments below (I removed those which I am OK with or I fixed).
+Jakub's point is that "git log -- a" lists only the revisions
+which affect path 'a'.  Once those revisions have been selected
+then output begins.  The 'a' gets reapplied as an output filter to
+only show changes relevant to file 'a', but its very much a revision
+filter during the revision listing process.
 
-On 30/11/06, Yann Dirson <ydirson@altern.org> wrote:
-> +- numeric shortcuts for naming patches near top (eg. +1, -2)
-
-We currently have the -n option for push and pop that accepts number.
-Because of python, you can also, for example, push to the last but one
-with "push -n -1" (similar for pop). Do you mean shortcuts for the
-"goto" command?
-
-> +- refuse to "stg init" a branch known as remote (through .git/remotes/,
-> +  .git/branches/ or any other info)
-
-I think it is up to the user not to do this. You would first need to
-check out such a branch anyway.
-
-> +- cannot use "stg refresh file" after "cg-rm file"
-
-It seems to work for me. Can you send some log messages?
-
-> +- "stg goto $(stg top)" fails with unhandled exception
-
-It works for me. What StGIT version do you use?
-
-> +- at least "commit is not robust wrt out-of-diskspace condition:
-> +|deps$ stg commit
-> +|error: git-checkout-index: unable to write file MANIFEST
-> +|error: git-checkout-index: unable to write file META.yml
-> +|error: git-checkout-index: unable to write file Makefile.PL
-> +|error: git-checkout-index: unable to write file doc/README.dbk.xml
-> +|error: git-checkout-index: unable to write file graph-includes
-> +|error: git-checkout-index: unable to write file lib/graphincludes/params.pm
-> +|fatal: unable to write new index file
-> +|stg commit: git-read-tree failed (local changes maybe?)
-> +|Committing 4 patches...
-> +(luckily nothing was really committed)
-
-But that's the correct behaviour, not to commit anything. The only
-problem I see (and I fixed) is the "Committing..." message on stdout
-without flushing, causing it to appear afterwards. StGIT cannot know
-how much space is needed by GIT to check this beforehand. It simply
-exits when a GIT command failed.
-
-Thanks.
-
--- 
+--=20
