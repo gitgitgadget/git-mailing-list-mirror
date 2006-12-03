@@ -1,113 +1,81 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] xdiff: add xdl_merge() (was: (unknown))
-Date: Wed, 22 Nov 2006 00:15:09 +0100
-Organization: At home
-Message-ID: <ek0170$h53$1@sea.gmane.org>
-References: <Pine.LNX.4.63.0611212316080.26827@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Juergen Stuber <juergen@jstuber.net>
+Subject: Re: jgit performance update
+Date: Sun, 03 Dec 2006 23:42:04 +0100
+Message-ID: <874psceh4z.fsf@freitag.home.jstuber.net>
+References: <20061203045953.GE26668@spearce.org>
+	<Pine.LNX.4.64.0612030938140.3476@woody.osdl.org>
+	<ekv34g$mck$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Tue, 21 Nov 2006 23:14:08 +0000 (UTC)
+NNTP-Posting-Date: Sun, 3 Dec 2006 23:10:21 +0000 (UTC)
+Cc: jnareb@gmail.com
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 52
+Original-Lines: 26
 Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+X-Gmane-NNTP-Posting-Host: dslb-084-060-106-209.pools.arcor-ip.net
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Cancel-Lock: sha1:muCZzxCkE3hOGMf+RX6r3O87g3A=
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32056>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GmeoV-0002pv-9X for gcvg-git@gmane.org; Wed, 22 Nov
- 2006 00:14:03 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33152>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gr0TP-0000sR-7R for gcvg-git@gmane.org; Mon, 04 Dec
+ 2006 00:10:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1754883AbWKUXN7 convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Tue, 21 Nov 2006 18:13:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754886AbWKUXN7
- (ORCPT <rfc822;git-outgoing>); Tue, 21 Nov 2006 18:13:59 -0500
-Received: from main.gmane.org ([80.91.229.2]:19407 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S1754883AbWKUXN6 (ORCPT
- <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2006 18:13:58 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1GmeoL-0002nL-6P for git@vger.kernel.org; Wed, 22 Nov 2006 00:13:53 +0100
-Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
+ S1758802AbWLCXKK convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Sun, 3 Dec 2006 18:10:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758818AbWLCXKK
+ (ORCPT <rfc822;git-outgoing>); Sun, 3 Dec 2006 18:10:10 -0500
+Received: from main.gmane.org ([80.91.229.2]:17864 "EHLO ciao.gmane.org") by
+ vger.kernel.org with ESMTP id S1758802AbWLCXKI (ORCPT
+ <rfc822;git@vger.kernel.org>); Sun, 3 Dec 2006 18:10:08 -0500
+Received: from root by ciao.gmane.org with local (Exim 4.43) id
+ 1Gr0TC-0008Cw-3B for git@vger.kernel.org; Mon, 04 Dec 2006 00:10:02 +0100
+Received: from dslb-084-060-106-209.pools.arcor-ip.net ([84.60.106.209]) by
  main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Wed, 22 Nov 2006 00:13:53 +0100
-Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Wed, 22 Nov 2006
- 00:13:53 +0100
+ <git@vger.kernel.org>; Mon, 04 Dec 2006 00:10:02 +0100
+Received: from juergen by dslb-084-060-106-209.pools.arcor-ip.net with local
+ (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Mon, 04
+ Dec 2006 00:10:02 +0100
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Johannes Schindelin wrote:
+Hi Jakub,
 
-> [PATCH] xdiff: add xdl_merge()
+Jakub Narebski <jnareb@gmail.com> writes:
+>
+> GitWiki tells us about egit/jgit repository at
+>   http://www.spearce.org/projects/scm/egit.git
 
-Shouldn't this be in the subject of message?
+I tried to access that with git 1.4.4.1 from Debian but=20
 
-> This new function implements the functionality of RCS merge, but
-> in-memory. It returns < 0 on error, otherwise the number of conflicts=
-=2E
+% git clone http://www.spearce.org/projects/scm/egit.git
 
-Only RCS merge, or can you implement whole diff3 (from GNU diffutils)
-functionality with that?
+hangs, the first time after "walk e339766abc2b919e7bb396cae22ddef065821=
+381",
+the second time after "walk 9eec90ec5da239e063eaff6305d77294dc03396e"
+which is the "walk" line just before it.
 
-> Finding the conflicting lines can be a very expensive task. You can
-> control the eagerness of this algorithm:
->=20
-> - a level value of 0 means that all overlapping changes are treated
-> =A0 as conflicts,
-> - a value of 1 means that if the overlapping changes are identical,
-> =A0 it is not treated as a conflict.
-> - If you set level to 2, overlapping changes will be analyzed, so tha=
-t
-> =A0 almost identical changes will not result in huge conflicts. Rathe=
-r,
-> =A0 only the conflicting lines will be shown inside conflict markers.
->=20
-> With each increasing level, the algorithm gets slower, but more accur=
-ate.
-> Note that the code for level 2 depends on the simple definition of
-> mmfile_t specific to git, and therefore it will be harder to port tha=
-t
-> to LibXDiff.
+There's also the following error shortly after the start:
 
-How it compares performance with RCS merge/GNU diff3?
+error: File bc01ab9e5fcd26918d7a334207183fa57ff1ce50 (http://www.spearc=
+e.org/projects/scm/egit.git/objects/75/1c8f2e504c40d1c41ebbd87d8f896852=
+9e9c30) corrupt
 
 
-It is really nice to have that. Bram Cohen (of Codeville, SCM built aro=
-und
-sophisticated merge algorithm) wrote about recursive three-way merge in
-http://revctrl.org/CrissCrossMerge
-
-   Recursive three-way merge _usually_ provides the right answer, howev=
-er
-   there are some edge cases. For example, conflict markers can be matc=
-hed
-   incorrectly, because they aren't given any special semantic meaning =
-for
-   the merge algorithm, and are simply treated as lines. In particular,
-   there are (somewhat complicated) cases where the conflict markers of=
- two
-   unrelated conflicts get matched against each other, even though the
-   content sections of them are totally unrelated.
-
-I'm not sure if he has specific examples, or is it just theoretical tal=
-k,
-but having built-in merge would certainly help revursive merge strategy
-(and perhaps also git-rerere).
+J=C3=BCrgen
 
 --=20
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
-
+J=C3=BCrgen Stuber <juergen@jstuber.net>
+http://www.jstuber.net/
+gnupg key fingerprint =3D 2767 CA3C 5680 58BA 9A91  23D9 BED6 9A7A AF9E=
+ 68B4
