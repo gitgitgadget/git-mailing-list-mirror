@@ -4,100 +4,103 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Add branch.*.localmerge and documentation update
-Date: Fri, 08 Dec 2006 14:34:28 -0800
-Message-ID: <7v1wnaggp7.fsf@assigned-by-dhcp.cox.net>
-References: <cc723f590612052051r62111c4cgfd7ee893cb00f84a@mail.gmail.com>
-	<8aa486160612081252t1e245104x58c8a6654d887af5@mail.gmail.com>
-	<7vr6vagja6.fsf@assigned-by-dhcp.cox.net>
-	<200612082301.57037.Josef.Weidendorfer@gmx.de>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [RFC] Submodules in GIT
+Date: Sun, 3 Dec 2006 14:32:02 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0612031421030.3476@woody.osdl.org>
+References: <20061130170625.GH18810@admingilde.org> <200612012306.41410.Josef.Weidendorfer@gmx.de>
+ <Pine.LNX.4.64.0612011423100.3695@woody.osdl.org> <200612012355.03493.Josef.Weidendorfer@gmx.de>
+ <Pine.LNX.4.64.0612011510290.3695@woody.osdl.org> <20061130170625.GH18810@admingilde.org>
+ <4570AF8F.1000801@stephan-feder.de> <Pine.LNX.4.64.0612011505190.3695@woody.osdl.org>
+ <200612020036.08826.Josef.Weidendorfer@gmx.de> <Pine.LNX.4.64.0612011540010.3695@woody.osdl.org>
+ <20061203221630.GA940MdfPADPa@greensroom.kotnet.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Fri, 8 Dec 2006 22:34:46 +0000 (UTC)
-Cc: Santi =?iso-8859-1?Q?B=E9jar?= <sbejar@gmail.com>,
-	"Aneesh Kumar K.V" <aneesh.kumar@gmail.com>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Sun, 3 Dec 2006 22:32:50 +0000 (UTC)
+Cc: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>,
+	sf <sf-gmane@stephan-feder.de>, git@vger.kernel.org,
+	Martin Waitz <tali@admingilde.org>, sf <sf@b-i-t.de>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <200612082301.57037.Josef.Weidendorfer@gmx.de> (Josef
-	Weidendorfer's message of "Fri, 8 Dec 2006 23:01:56 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+In-Reply-To: <20061203221630.GA940MdfPADPa@greensroom.kotnet.org>
+X-MIMEDefang-Filter: osdl$Revision: 1.161 $
+X-Scanned-By: MIMEDefang 2.36
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33762>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33146>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GsoIm-0007nf-Vk for gcvg-git@gmane.org; Fri, 08 Dec
- 2006 23:34:45 +0100
+ esmtp (Exim 4.50) id 1Gqzt7-0006DA-Hz for gcvg-git@gmane.org; Sun, 03 Dec
+ 2006 23:32:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1761228AbWLHWeb convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006 17:34:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761226AbWLHWeb
- (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 17:34:31 -0500
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:54971 "EHLO
- fed1rmmtao10.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1761228AbWLHWea convert rfc822-to-8bit (ORCPT
- <rfc822;git@vger.kernel.org>); Fri, 8 Dec 2006 17:34:30 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao10.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061208223429.CVVV20715.fed1rmmtao10.cox.net@fed1rmimpo01.cox.net>; Fri, 8
- Dec 2006 17:34:29 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id wNZs1V00S1kojtg0000000; Fri, 08 Dec 2006
- 17:33:53 -0500
-To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+ S1759918AbWLCWcm (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 3 Dec 2006
+ 17:32:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759919AbWLCWcm
+ (ORCPT <rfc822;git-outgoing>); Sun, 3 Dec 2006 17:32:42 -0500
+Received: from smtp.osdl.org ([65.172.181.25]:35753 "EHLO smtp.osdl.org") by
+ vger.kernel.org with ESMTP id S1759918AbWLCWcl (ORCPT
+ <rfc822;git@vger.kernel.org>); Sun, 3 Dec 2006 17:32:41 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
+ smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kB3MW3jQ005931
+ (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Sun, 3
+ Dec 2006 14:32:04 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
+ shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kB3MW2bg031577; Sun, 3 Dec
+ 2006 14:32:03 -0800
+To: skimo@liacs.nl
 Sender: git-owner@vger.kernel.org
 
-Josef Weidendorfer <Josef.Weidendorfer@gmx.de> writes:
 
-> On Friday 08 December 2006 22:38, Junio C Hamano wrote:
->> "Santi B=E9jar" <sbejar@gmail.com> writes:
->>=20
->> > On 12/8/06, Josef Weidendorfer <Josef.Weidendorfer@gmx.de> wrote:
->> >> Clarify the meaning of branch.*.merge option and add a similar
->> >> branch.*.localmerge option, which can be used to specify a local
->> >> tracking branch to be merged by default.
->>=20
->> I am not so sure about the "localmerge" stuff anymore.
->>=20
->> What convenience would it buy us (including but not limited to
->> new people), and if there is any, would that outweigh the
->> potential confusion factor to have two different configuration
->> variables that do exactly the same thing whose sole difference
->> is which side of the fetched branch namespace it uses to specify
->> the merge source?
->
-> I just came up with a concrete patch.
-> I am not saying that this is the only true solution.
 
-I admit that I do not use branch.*.merge and I do not know what
-people find lacking in what Santi did in late September with
-commit 5372806.  What problem are we trying to solve (not a
-rhetorical question -- I am truly lost here)?  Is it only a
-confusion between remote and local, or is there something that
-cannot be expressed with the current scheme?
+On Sun, 3 Dec 2006, Sven Verdoolaege wrote:
+> 
+> On Fri, Dec 01, 2006 at 03:30:32PM -0800, Linus Torvalds wrote:
+> > The only thing that a submodule must NOT be allowed to do on its own is 
+> > pruning (and it's distant cousin "git repack -d").
+> 
+> How are you going to enforce this if the submodule isn't supposed
+> to know that it is being used as a submodule ?
 
-> Actually, Jakubs one with allowing arbitrary refspecs is nice.
-> The only problem is that it is not consistent which refspec
-> shortcuts otherwise, or?
+Note that there's actually two "submodules":
 
-Actually I had a quite opposite reaction about allowing src:dst
-notation there.  Does it solve any real problem?  It is unclear
-to me.  On the other hand, it gives a false impression that it
-can be used instead of remote.*.fetch to copy the remote branch
-into local tracking branch, and raises other questions such as
-what should happen when you have both, i.e. src:dst is given to
-both remote.*.fetch and branch.*.merge, and they do not agree.
-Which means it only adds to the confusion.
+ - there's the submodule "project" itself.
 
-So I do not think it is worth spending brain cycles talking
-about that particular one; it does not even have a patch to=20
-implement it.
+   This one must be totally unaware of the supermodule, because this one 
+   might be cloned and copied _independently_ of the supermodule.
 
-But you have a concrete patch, and if it is fixing a real
-problem, then that is worth talking about.  I just do not know
-if a problem exists, other than that people can get confused and
-write local tracking branch name by mistake when it should be
-remote branch name.
+ - there's the PARTICULAR CHECKED-OUT COPY of the submodule that is 
+   actually checked out in a supermodule.
+
+   This is just a specific _instance_ of the particular submodule.
+
+So a particular instance of a submodule might be "aware" of the fact that 
+it's a submodule of a supermodule. For example, the "awareness" migth be 
+as simple as just a magic flag file inside it's .git/ directory. And that 
+awareness would be what simply disabled pruning or "repack -d" within that 
+particular instance.
+
+But this magic flag doesn't affect the bigger-picture git repository. It's 
+a _private_ flag. So it doesn't affect the git part, any more than it 
+really affects the git repository that you may have a
+
+	[user]
+		name = Myname
+		email = myemail
+
+in your .git/config file.
+
+See? You can have private data in a git repository, but that doesn't mean 
+that it's visible as _repository_ data. But it can still affect how git 
+commands act (eg the "user" definitions above will affect the default user 
+information that "git commit" uses, of course, without actually affecting 
+the git archive in any other way)
+
+> How is one of the supermodules going to know what references from other
+> supermodules containing the submodule point into the submodule ?
+
+Why would it care? They are other supermodules. It doesn't matter, the 
+same way it doesn't matter that _my_ "git" tree may not have all the same 
+references that _your_ "git" repo has. If I want to get the same 
+references, I'd need to fetch them from you, and at that point, I'd need 
+to get all the objects that are pointed to by those refs too. But only on 
+"git fetch" do you actually start caring.
+
