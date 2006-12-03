@@ -2,135 +2,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Sasha Khapyorsky <sashak@voltaire.com>
-Subject: [PATCH] git-svnimport: support for partial imports
-Date: Thu, 26 Oct 2006 00:50:26 +0200
-Message-ID: <20061025225026.GA13031@sashak.voltaire.com>
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: Re: Thoughts about memory requirements in traversals [Was: Re: [RFC] Submodules in GIT]
+Date: Sun, 3 Dec 2006 04:21:18 +0100
+Message-ID: <200612030421.18662.Josef.Weidendorfer@gmx.de>
+References: <20061130170625.GH18810@admingilde.org> <200612030307.26429.Josef.Weidendorfer@gmx.de> <20061203024655.GD26668@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 25 Oct 2006 22:45:20 +0000 (UTC)
-Cc: git@vger.kernel.org, Matthias Urlichs <smurf@smurf.noris.de>
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Sun, 3 Dec 2006 03:21:46 +0000 (UTC)
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Martin Waitz <tali@admingilde.org>,
+	sf <sf-gmane@stephan-feder.de>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+X-Authenticated: #352111
+User-Agent: KMail/1.9.3
+In-Reply-To: <20061203024655.GD26668@spearce.org>
 Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-OriginalArrivalTime: 25 Oct 2006 22:45:03.0331 (UTC) FILETIME=[35C98330:01C6F887]
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30118>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33089>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GcrUo-0002H9-Ix for gcvg-git@gmane.org; Thu, 26 Oct
- 2006 00:45:14 +0200
+ esmtp (Exim 4.43) id 1Gqhv9-0006zX-EJ for gcvg-git@gmane.org; Sun, 03 Dec
+ 2006 04:21:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S965246AbWJYWpK (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 25 Oct 2006
- 18:45:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965248AbWJYWpK
- (ORCPT <rfc822;git-outgoing>); Wed, 25 Oct 2006 18:45:10 -0400
-Received: from taurus.voltaire.com ([193.47.165.240]:24456 "EHLO
- taurus.voltaire.com") by vger.kernel.org with ESMTP id S965246AbWJYWpI (ORCPT
- <rfc822;git@vger.kernel.org>); Wed, 25 Oct 2006 18:45:08 -0400
-Received: from sashak ([172.25.5.107]) by taurus.voltaire.com with Microsoft
- SMTPSVC(6.0.3790.1830); Thu, 26 Oct 2006 00:45:03 +0200
-Received: by sashak (sSMTP sendmail emulation); Thu, 26 Oct 2006 00:50:26
- +0200
-To: Junio C Hamano <junkio@cox.net>
+ S936629AbWLCDVX (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 2 Dec 2006
+ 22:21:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936630AbWLCDVW
+ (ORCPT <rfc822;git-outgoing>); Sat, 2 Dec 2006 22:21:22 -0500
+Received: from mail.gmx.net ([213.165.64.20]:60622 "HELO mail.gmx.net") by
+ vger.kernel.org with SMTP id S936629AbWLCDVW (ORCPT
+ <rfc822;git@vger.kernel.org>); Sat, 2 Dec 2006 22:21:22 -0500
+Received: (qmail invoked by alias); 03 Dec 2006 03:21:20 -0000
+Received: from p5496A934.dip0.t-ipconnect.de (EHLO noname) [84.150.169.52] by
+ mail.gmx.net (mp006) with SMTP; 03 Dec 2006 04:21:20 +0100
+To: Shawn Pearce <spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 
-This adds support for partial svn imports. Let's assume that SVN
-repository layout looks like:
+On Sunday 03 December 2006 03:46, Shawn Pearce wrote:
+> Josef Weidendorfer <Josef.Weidendorfer@gmx.de> wrote:
+> > Thinking even one step further:
+> > Would it make sense to define an encoding format for the content of
+> > commit and tree objects inside of packs, where the SHA1 is replaced by the
+> > offset of the object in this pack?
+> > As exactly the SHA1 is the least compressable thing, this could promise
+> > quite a benefit.
+> [...]
+> 
+> This means that when we start to write out a commit we need to know
+> the offset to the tree that commit references.  But git-pack-objects
+> sorts object by type: commit, tree, blob (I forget where tags go,
+> but they aren't important in this context).  So generally *all*
+> commits appear before the first tree.  So when we write out the first
+> commit we need to know exactly how many bytes every commit will need
+> (compressed mind you) in this pack so we can determine the position
+> of the first tree.  Now do this for every commit and every tree
+> that those commits use...  yes, its a lot of work to precompute
+> and store all offsets before you even write out the first byte.
 
-  $trunk/path/to/our/project
-  $branches/path/to/our/project
-  $tags/path/to/our/project
+Yes, it looks like a hen-and-egg problem, but IMHO you can
+handle it nicely with another redirection, i.e. a table you build
+up while repacking the file, and storing this table at the end.
 
-, and we would like to import only tree under this specific
-'path/to/our/project' and not whole tree under $trunk, $branches, etc..
-Now we will be be able to do it by using '-P path/to/our/project' option
-with git-svnimport.
+You simply sequentially renumber any object SHA, starting from 0
+in the order you see them. You can do two renumberings, one for
+the objects contained in the original pack (1), and one for the
+external ones (2). Put these new numbers (with a bit distinguishing
+(1) and (2)) as replacement into commit/tree objects.
+At the end, you have the new offsets for objects in (1). Put
+redirection tables for (1) [new number -> new offset]
+and (2) [other new number->SHA1 of external object] at the end
+of the new pack.
+This way, you effectivly have removed all incompressable SHAs from
+the pack file aside from one entry in the redirection tables for
+each external object.
 
-Signed-off-by: Sasha Khapyorsky <sashak@voltaire.com>
----
- git-svnimport.perl |   29 +++++++++++++++++++++++++----
- 1 files changed, 25 insertions(+), 4 deletions(-)
+The only problem I see is how to decode the objects, i.e. how to
+get the original SHA1 from an offset: we can not recalculate the
+SHA1 from the object content as we changed the content itself.
+But there should be a way to store the SHA1 in front of the object
+somehow, perhaps it is already given by the current format? 
 
-diff --git a/git-svnimport.perl b/git-svnimport.perl
-index f6eff8e..cbaa8ab 100755
---- a/git-svnimport.perl
-+++ b/git-svnimport.perl
-@@ -31,7 +31,7 @@ die "Need SVN:Core 1.2.1 or better" if $
- $ENV{'TZ'}="UTC";
- 
- our($opt_h,$opt_o,$opt_v,$opt_u,$opt_C,$opt_i,$opt_m,$opt_M,$opt_t,$opt_T,
--    $opt_b,$opt_r,$opt_I,$opt_A,$opt_s,$opt_l,$opt_d,$opt_D,$opt_S,$opt_F);
-+    $opt_b,$opt_r,$opt_I,$opt_A,$opt_s,$opt_l,$opt_d,$opt_D,$opt_S,$opt_F,$opt_P);
- 
- sub usage() {
- 	print STDERR <<END;
-@@ -39,17 +39,19 @@ Usage: ${\basename $0}     # fetch/updat
-        [-o branch-for-HEAD] [-h] [-v] [-l max_rev]
-        [-C GIT_repository] [-t tagname] [-T trunkname] [-b branchname]
-        [-d|-D] [-i] [-u] [-r] [-I ignorefilename] [-s start_chg]
--       [-m] [-M regex] [-A author_file] [-S] [-F] [SVN_URL]
-+       [-m] [-M regex] [-A author_file] [-S] [-F] [-P project_name] [SVN_URL]
- END
- 	exit(1);
- }
- 
--getopts("A:b:C:dDFhiI:l:mM:o:rs:t:T:Suv") or usage();
-+getopts("A:b:C:dDFhiI:l:mM:o:rs:t:T:SP:uv") or usage();
- usage if $opt_h;
- 
- my $tag_name = $opt_t || "tags";
- my $trunk_name = $opt_T || "trunk";
- my $branch_name = $opt_b || "branches";
-+my $project_name = $opt_P || "";
-+$project_name = "/" . $project_name if ($project_name);
- 
- @ARGV == 1 or @ARGV == 2 or usage();
- 
-@@ -427,6 +429,20 @@ sub get_ignore($$$$$) {
- 	}
- }
- 
-+sub project_path($$)
-+{
-+	my ($path, $project) = @_;
-+
-+	$path = "/".$path unless ($path =~ m#^\/#) ;
-+	return $1 if ($path =~ m#^$project\/(.*)$#);
-+
-+	$path =~ s#\.#\\\.#g;
-+	$path =~ s#\+#\\\+#g;
-+	return "/" if ($project =~ m#^$path.*$#);
-+
-+	return undef;
-+}
-+
- sub split_path($$) {
- 	my($rev,$path) = @_;
- 	my $branch;
-@@ -446,7 +462,11 @@ sub split_path($$) {
- 		print STDERR "$rev: Unrecognized path: $path\n" unless (defined $no_error{$path});
- 		return ()
- 	}
--	$path = "/" if $path eq "";
-+	if ($path eq "") {
-+		$path = "/";
-+	} elsif ($project_name) {
-+		$path = project_path($path, $project_name);
-+	}
- 	return ($branch,$path);
- }
- 
-@@ -898,6 +918,7 @@ sub commit_all {
- 	while(my($path,$action) = each %$changed_paths) {
- 		($branch,$path) = split_path($revision,$path);
- 		next if not defined $branch;
-+		next if not defined $path;
- 		$done{$branch}{$path} = $action;
- 	}
- 	while(($branch,$changed_paths) = each %done) {
--- 
-1.4.3.1.g9f9e
+Am I missing something here?
+
