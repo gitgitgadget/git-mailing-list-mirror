@@ -1,89 +1,82 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH 3/3] git-svn: fix multi-init
-Date: Tue, 28 Nov 2006 18:51:42 -0800
-Message-ID: <1164768705707-git-send-email-normalperson@yhbt.net>
-References: <1164768702941-git-send-email-normalperson@yhbt.net> <11647687042130-git-send-email-normalperson@yhbt.net>
-NNTP-Posting-Date: Wed, 29 Nov 2006 02:52:02 +0000 (UTC)
-Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: jgit performance update
+Date: Sat, 2 Dec 2006 23:59:53 -0500
+Message-ID: <20061203045953.GE26668@spearce.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Sun, 3 Dec 2006 05:00:24 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Mailer: git-send-email 1.4.4.1.g22a08
-In-Reply-To: <11647687042130-git-send-email-normalperson@yhbt.net>
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32607>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33095>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GpFY7-0006gY-C1 for gcvg-git@gmane.org; Wed, 29 Nov
- 2006 03:51:51 +0100
+ esmtp (Exim 4.43) id 1GqjSb-0006OM-1D for gcvg-git@gmane.org; Sun, 03 Dec
+ 2006 06:00:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1756498AbWK2Cvs (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 28 Nov 2006
- 21:51:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755795AbWK2Cvs
- (ORCPT <rfc822;git-outgoing>); Tue, 28 Nov 2006 21:51:48 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:12930 "EHLO hand.yhbt.net") by
- vger.kernel.org with ESMTP id S1756498AbWK2Cvr (ORCPT
- <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2006 21:51:47 -0500
-Received: from hand.yhbt.net (localhost [127.0.0.1]) by hand.yhbt.net
- (Postfix) with SMTP id BF2E82DC035; Tue, 28 Nov 2006 18:51:45 -0800 (PST)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Tue, 28 Nov 2006
- 18:51:45 -0800
-To: Junio C Hamano <junkio@cox.net>
+ S1424947AbWLCE76 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 2 Dec 2006
+ 23:59:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1424948AbWLCE76
+ (ORCPT <rfc822;git-outgoing>); Sat, 2 Dec 2006 23:59:58 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:45737 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S1424947AbWLCE75
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 2 Dec 2006 23:59:57 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1GqjS3-0004C7-Im for git@vger.kernel.org; Sat, 02 Dec 2006 23:59:43 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 4AA8120FB7F; Sat,  2 Dec 2006 23:59:54 -0500 (EST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-After the bugfix to connect to repositories where the user has
-limited read permissions, multi-init was broken due to our
-SVN::Ra connection being limited to working in a subdirectory;
-so we now create a new Ra connection for init-ing branches
-and another for tags
+With the help of Robin Rosenberg I've been able to make jgit's log
+operation run (on average) within a few milliseconds of core Git.
 
-Along with that fix, allow the user to use the command-line
-option flags for multi-init (--revision being the most notable;
-but also --no-auth-cache, --config-dir, --username (for passing
-to SVN), and --shared/--template for passing to git-init-db
+Walking the 50,000 most recent commits from the Mozilla trunk[1]:
 
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
----
- git-svn.perl |   13 +++++++++----
- 1 files changed, 9 insertions(+), 4 deletions(-)
+  $ time git rev-list --max-count=50000 HEAD >/dev/null
 
-diff --git a/git-svn.perl b/git-svn.perl
-index d8d8716..3891122 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -124,7 +124,12 @@ my %cmd = (
- 			  'no-graft-copy' => \$_no_graft_copy } ],
- 	'multi-init' => [ \&multi_init,
- 			'Initialize multiple trees (like git-svnimport)',
--			{ %multi_opts, %fc_opts } ],
-+			{ %multi_opts, %init_opts,
-+			 'revision|r=i' => \$_revision,
-+			 'username=s' => \$_username,
-+			 'config-dir=s' => \$_config_dir,
-+			 'no-auth-cache' => \$_no_auth_cache,
-+			} ],
- 	'multi-fetch' => [ \&multi_fetch,
- 			'Fetch multiple trees (like git-svnimport)',
- 			\%fc_opts ],
-@@ -3316,11 +3321,11 @@ sub libsvn_commit_cb {
- 
- sub libsvn_ls_fullurl {
- 	my $fullurl = shift;
--	$SVN ||= libsvn_connect($fullurl);
-+	my $ra = libsvn_connect($fullurl);
- 	my @ret;
- 	my $pool = SVN::Pool->new;
--	my ($dirent, undef, undef) = $SVN->get_dir($SVN->{svn_path},
--						$SVN->get_latest_revnum, $pool);
-+	my $r = defined $_revision ? $_revision : $ra->get_latest_revnum;
-+	my ($dirent, undef, undef) = $ra->get_dir('', $r, $pool);
- 	foreach my $d (keys %$dirent) {
- 		if ($dirent->{$d}->kind == $SVN::Node::dir) {
- 			push @ret, "$d/"; # add '/' for compat with cli svn
+  core Git:  1.882s (average)
+  jgit:      1.932s (average)
+
+  (times are with hot cache and from repeated executions)
+
+I think that is actually pretty good given that jgit is written
+in Java using a fairly object-oriented design and has to deal with
+some of the limitations of the language.
+
+One of the biggest annoyances has been the fact that although Java
+1.4 offers a way to mmap a file into the process, the overhead to
+access that data seems to be far higher than just reading the file
+content into a very large byte array, especially if we are going
+to access that file content multiple times.  So jgit performs worse
+than core Git early on while it copies everything from the OS buffer
+cache into the Java process, but then performs reasonably well once
+the internal cache is hot.  On the other hand using the mmap call
+reduces early latency but hurts the access times so much that we're
+talking closer to 3s average read times for the same log operation.
+
+Anyway, jgit is now hopefully fast enough that we can start to build
+some real functionality on top of it, and not need to wait several
+minutes for answers from those features while debugging them.  :)
+
+
+**1** This is the pack file from Jon Smirl's import attempt.
+
 -- 
-1.4.4.1.g22a08
