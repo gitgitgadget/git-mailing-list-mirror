@@ -1,78 +1,93 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Graham Percival <gpermus@gmail.com>
-Subject: Re: [PATCH] cvs-migration document: make the need for "push" more
- obvious
-Date: Wed, 06 Dec 2006 13:02:58 -0800
-Message-ID: <45773002.5020409@gmail.com>
-References: <4574AC9E.3040506@gmail.com> <4574BF70.8070100@lilypond.org> <45760545.2010801@gmail.com> <20061206.105251.144349770.wl@gnu.org> <Pine.LNX.4.63.0612061325320.28348@wbgn013.biozentrum.uni-wuerzburg.de> <4576D92A.80307@xs4all.nl> <20061206145802.GC1714@fieldses.org> <Pine.LNX.4.63.0612061613460.28348@wbgn013.biozentrum.uni-wuerzburg.de> <20061206171950.GD1714@fieldses.org> <20061206172450.GE1714@fieldses.org>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] git-mv: search more precisely for source directory in index
+Date: Sun, 3 Dec 2006 20:42:47 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0612032036030.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20061203135725.GA7971@procyon.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 6 Dec 2006 21:03:44 +0000 (UTC)
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	hanwen@lilypond.org, git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Sun, 3 Dec 2006 19:42:57 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=Wv2DglY7c7BM4eRcZ+d30WWhuFbEhAqERd0ir0eAx4i1M+SZHbYXN9CM8TD0w5VBDvSQIL3DB9y7KKZrSgilFQ4Nh20FUdW4k+VNuV8g96VO9zKk1N7e+2Mh+5agZ2j5+VJAyE+x0zaDhzv5+ISKC0HSMTwL1/3sxMj1XITCIcE=
-User-Agent: Thunderbird 1.5.0.8 (Macintosh/20061025)
-In-Reply-To: <20061206172450.GE1714@fieldses.org>
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <20061203135725.GA7971@procyon.home>
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33519>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33133>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gs3vP-0006qh-Ax for gcvg-git@gmane.org; Wed, 06 Dec
- 2006 22:03:31 +0100
+ esmtp (Exim 4.50) id 1GqxEk-0007tq-JU for gcvg-git@gmane.org; Sun, 03 Dec
+ 2006 20:42:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S937639AbWLFVDK (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
- 16:03:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937640AbWLFVDK
- (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 16:03:10 -0500
-Received: from ug-out-1314.google.com ([66.249.92.169]:3483 "EHLO
- ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S937639AbWLFVDF (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec
- 2006 16:03:05 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so265948uga for
- <git@vger.kernel.org>; Wed, 06 Dec 2006 13:03:04 -0800 (PST)
-Received: by 10.78.149.13 with SMTP id w13mr955499hud.1165438983611; Wed, 06
- Dec 2006 13:03:03 -0800 (PST)
-Received: from ?192.168.1.139? ( [207.216.3.102]) by mx.google.com with ESMTP
- id 4sm31919006hud.2006.12.06.13.03.01; Wed, 06 Dec 2006 13:03:03 -0800 (PST)
-To: "J. Bruce Fields" <bfields@fieldses.org>
+ S1760042AbWLCTmv (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 3 Dec 2006
+ 14:42:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760043AbWLCTmv
+ (ORCPT <rfc822;git-outgoing>); Sun, 3 Dec 2006 14:42:51 -0500
+Received: from mail.gmx.net ([213.165.64.20]:48526 "HELO mail.gmx.net") by
+ vger.kernel.org with SMTP id S1760042AbWLCTmv (ORCPT
+ <rfc822;git@vger.kernel.org>); Sun, 3 Dec 2006 14:42:51 -0500
+Received: (qmail invoked by alias); 03 Dec 2006 19:42:49 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp044) with SMTP; 03 Dec 2006 20:42:49 +0100
+To: Sergey Vlasov <vsu@altlinux.ru>
 Sender: git-owner@vger.kernel.org
 
-J. Bruce Fields wrote:
-> We should start out with the assumption that a shared repo is already
-> set up and make it:
-> 
-> 	committing to a shared repository
-> 	creating a shared repository
-> 	importing a cvs archive
-> 
-> which puts it in stuff-most-people-need-to-know to
-> stuff-less-people-need-to-know order.  Maybe the current introduction
-> should even be postponed to later.
 
-Yes, definitely!
+A move of a directory should find the entries in the index by
+searching for the name _including_ the slash. Otherwise, the
+directory can be shadowed by a file when it matches the prefix
+and is lexicographically smaller, e.g. "ab.c" shadows "ab/".
 
-I'm not complaining about changing to git, but Dscho's comment really 
-rings true:
+Noticed by Sergey Vlasov.
 
- > A developer, especially those whom Git is forced upon, have an
- > attention span shorter than their pub1c hair.
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+---
 
-I'm in the middle of exam period, I have a term papers to write, and I 
-have two weeks of lilypond bug reports and doc typos to process.  I 
-don't care if git can do branches really nicely or walk my dog or cure 
-cancer.  I can look at that stuff later -- right now I just want to fix 
-things and upload them.
+	Good catch. Thanks!
 
-Cheers,
+ builtin-mv.c |   11 +++++++----
+ 1 files changed, 7 insertions(+), 4 deletions(-)
+
+diff --git a/builtin-mv.c b/builtin-mv.c
+index 54dd3bf..d14a4a7 100644
+--- a/builtin-mv.c
++++ b/builtin-mv.c
+@@ -146,21 +146,24 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
+ 				&& lstat(dst, &st) == 0)
+ 			bad = "cannot move directory over file";
+ 		else if (src_is_dir) {
++			const char *src_w_slash = add_slash(src);
++			int len_w_slash = length + 1;
+ 			int first, last;
+ 
+ 			modes[i] = WORKING_DIRECTORY;
+ 
+-			first = cache_name_pos(src, length);
++			first = cache_name_pos(src_w_slash, len_w_slash);
+ 			if (first >= 0)
+-				die ("Huh? %s/ is in index?", src);
++				die ("Huh? %.*s is in index?",
++						len_w_slash, src_w_slash);
+ 
+ 			first = -1 - first;
+ 			for (last = first; last < active_nr; last++) {
+ 				const char *path = active_cache[last]->name;
+-				if (strncmp(path, src, length)
+-						|| path[length] != '/')
++				if (strncmp(path, src_w_slash, len_w_slash))
+ 					break;
+ 			}
++			free((char *)src_w_slash);
+ 
+ 			if (last - first < 1)
+ 				bad = "source directory is empty";
+-- 
+1.4.4.1.g317bd
