@@ -4,90 +4,88 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Len Brown <len.brown@intel.com>
-Subject: Re: how to ignore merge conflicts?
-Date: Wed, 1 Nov 2006 02:51:20 -0500
-Organization: Intel Open Source Technology Center
-Message-ID: <200611010251.20874.len.brown@intel.com>
-References: <200610301448.38222.len.brown@intel.com> <Pine.LNX.4.64.0610301223021.25218@g5.osdl.org>
-Reply-To: Len Brown <lenb@kernel.org>
+From: Alan Chandler <alan@chandlerfamily.org.uk>
+Subject: Some advanced index playing
+Date: Sun, 3 Dec 2006 17:01:15 +0000
+Message-ID: <200612031701.15594.alan@chandlerfamily.org.uk>
 Mime-Version: 1.0
 Content-Type: text/plain;
-  charset="iso-8859-1"
+  charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 1 Nov 2006 07:48:55 +0000 (UTC)
-Cc: git@vger.kernel.org
+NNTP-Posting-Date: Sun, 3 Dec 2006 17:01:49 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: KMail/1.8.2
-In-Reply-To: <Pine.LNX.4.64.0610301223021.25218@g5.osdl.org>
+User-Agent: KMail/1.9.5
 Content-Disposition: inline
-X-Virus-Scanned: ClamAV 0.88.5/2136/Wed Nov  1 03:06:48 2006 on hera.kernel.org
-X-Virus-Status: Clean
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30616>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GfAq9-00063O-LI for gcvg-git@gmane.org; Wed, 01 Nov
- 2006 08:48:50 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33117>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gquij-0000NC-5q for gcvg-git@gmane.org; Sun, 03 Dec
+ 2006 18:01:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1946677AbWKAHsq (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 1 Nov 2006
- 02:48:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946674AbWKAHsq
- (ORCPT <rfc822;git-outgoing>); Wed, 1 Nov 2006 02:48:46 -0500
-Received: from hera.kernel.org ([140.211.167.34]:18376 "EHLO
- hera.kernel.org") by vger.kernel.org with ESMTP id S1946677AbWKAHsp (ORCPT
- <rfc822;git@vger.kernel.org>); Wed, 1 Nov 2006 02:48:45 -0500
-Received: from lenb-laptop (c-65-96-213-102.hsd1.ma.comcast.net
- [65.96.213.102]) (authenticated bits=0) by hera.kernel.org (8.13.7/8.13.7)
- with ESMTP id kA17mHiJ023631 (version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128
- verify=NO); Wed, 1 Nov 2006 07:48:42 GMT
-To: Linus Torvalds <torvalds@osdl.org>
+ S1757574AbWLCRBh (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 3 Dec 2006
+ 12:01:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757426AbWLCRBh
+ (ORCPT <rfc822;git-outgoing>); Sun, 3 Dec 2006 12:01:37 -0500
+Received: from 82-44-22-127.cable.ubr06.croy.blueyonder.co.uk
+ ([82.44.22.127]:42983 "EHLO home.chandlerfamily.org.uk") by vger.kernel.org
+ with ESMTP id S1757574AbWLCRBg (ORCPT <rfc822;git@vger.kernel.org>); Sun, 3
+ Dec 2006 12:01:36 -0500
+Received: from kanger.home ([192.168.0.21]) by home.chandlerfamily.org.uk
+ with esmtp (Exim 4.63) (envelope-from <alan@chandlerfamily.org.uk>) id
+ 1GquiY-00005N-De for git@vger.kernel.org; Sun, 03 Dec 2006 17:01:30 +0000
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On Monday 30 October 2006 15:29, Linus Torvalds wrote:
-> 
-> On Mon, 30 Oct 2006, Len Brown wrote:
-> >
-> > Sometimes when a multiple-file merge give conflicts, I don't want to edit
-> > one of the resulting <<<<<=====>>>>> files.
-> > Instead, I just want to choose the version of that particular file that
-> > existed in one of the two merged branches and commit that along with
-> > the rest of the merge.
-> > 
-> > How to do this?
-> 
-> Well, if you promise not to do what has happened several times before in 
-> people who maintained their own CVS trees, for example (which is to just 
-> ignore all merge problems, and force _their_ version, even though the 
-> reason for the merge problem was that somebody else had fixed a bug, that 
-> was now unfixed by the "merge"), here's the trivial way to do it:
-> 
-> 	git checkout HEAD the/file/you/wanted.c
-> 
-> (or, if you want to take it from the source you are merging _from_, just 
-> use MERGE_HEAD instead of HEAD).
-> 
-> And you're done.
+With all the discussion about the index file in the last few days I would have 
+thought that this issue would have come up.  But I don't think it has.
 
-Thank you.  This worked, and it is simple enough that I can actually remember it:-)
+I have been editing a set of files to make a commit, and after editing each 
+one had done a git update-index.
 
-No, obviously I wouldn't intentionally blow away a bug  fix.
+At this point I am just about to commit when I realise that one of the files 
+has changes in it that really ought to be a separate commit. 
 
-I believe this scenario is actually quite common, and this action justified.
-Indeed, many years ago Larry McVoy ("He That Must Not Be Named" on this list?:-)
-added commands to the nse-lite merge dialogue at my request to handle exactly this case.
+So effectively, I want to do one of three things
 
-Tonight, for example, I merged a big cleanup patch that removed a bunch of
-unnecessary casts from many files, with a branch that includes a complete
-re-write of one of those files.
+a) git-commit <that-file>
 
-So here I chose the re-written version of the file and discarded the cleaned up version
-that now no longer makes any sense -- while keeping the rest of the cleanup patch
-that does still make sense.  Yes, key here is knowing that there was not a bugfix
-bundled along in the branch with the cleanup that got thrown away.
+Except I can't because there is a safety valve that prevents this and there is 
+no force option.
 
-thanks,
--Len
+b) Revert the index entry for that file back to the previous HEAD commit 
+point, whilst leaving the edits in the working tree, so that I can then 
+commit without that one file.
 
-ps. Maybe residing at the "top of the tree" as you do, other folks do a lot of
+I can't find a command to do that.  The nearest seems to be 
+git-update-index --remove, but the manual says that it will not do anything 
+if the file still exists.
+
+c) Revert the entire index back to the state it was at the last commit so I 
+can selectively add back in the files that I have editted.
+
+The command to do that seems to be
+
+git-read-tree HEAD 
+
+I tried this, and it did indeed seem to exactly this - not quite what I 
+wanted, but actually a reasonable compromise.
+
+However, it took me a long time scanning possible commands before I found it 
+so I thought I might add some text to one of the tutorials
+
+Any ideas of where?
+
+What happened to the text written here
+
+http://marc.theaimsgroup.com/?l=git&m=116406699903565&w=2
+
+I thought this might be a place to put something like this, but having just 
+updated my version of git from source, it doesn't seem to have been put in to 
+git anywhere yet.
+
+
+
+-- 
+Alan Chandler
