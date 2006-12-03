@@ -4,80 +4,57 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [RFC] Submodules in GIT
-Date: Tue, 05 Dec 2006 11:42:47 +0100
-Message-ID: <45754D27.9070701@op5.se>
-References: <20061130170625.GH18810@admingilde.org>	 <4570AF8F.1000801@stephan-feder.de>	 <Pine.LNX.4.64.0612011505190.3695@woody.osdl.org>	 <4570BFA4.8070903@stephan-feder.de>	 <e7bda7770612021057mc9f3eb9q7fc047dd1b5c235f@mail.gmail.com>	 <Pine.LNX.4.64.0612021114270.3476@woody.osdl.org>	 <e7bda7770612030119v197cbc95h6b3fa9e22b78c058@mail.gmail.com>	 <Pine.LNX.4.64.0612030946150.3476@woody.osdl.org>	 <e7bda7770612041226j4d4a5584m279afa9a2d7dfe74@mail.gmail.com>	 <Pine.LNX.4.64.0612041234390.3476@woody.osdl.org> <e7bda7770612041336s73e677ebh758b030f9f75c1d8@mail.gmail.com>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: jgit performance update
+Date: Sun, 3 Dec 2006 16:53:02 +0100
+Organization: Dewire
+Message-ID: <200612031653.04019.robin.rosenberg.lists@dewire.com>
+References: <20061203045953.GE26668@spearce.org> <200612031455.48032.robin.rosenberg.lists@dewire.com> <ekumdo$imo$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Tue, 5 Dec 2006 10:42:57 +0000 (UTC)
-Cc: Linus Torvalds <torvalds@osdl.org>, sf-gmane@stephan-feder.de,
-	sf <sf@b-i-t.de>, git@vger.kernel.org,
-	Martin Waitz <tali@admingilde.org>
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Sun, 3 Dec 2006 15:51:35 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
-In-Reply-To: <e7bda7770612041336s73e677ebh758b030f9f75c1d8@mail.gmail.com>
+User-Agent: KMail/1.9.4
+In-Reply-To: <ekumdo$imo$1@sea.gmane.org>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new at dewire.com
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33336>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33114>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GrXlE-00028k-GL for gcvg-git@gmane.org; Tue, 05 Dec
- 2006 11:42:52 +0100
+ esmtp (Exim 4.50) id 1Gqtcl-0002AD-6Y for gcvg-git@gmane.org; Sun, 03 Dec
+ 2006 16:51:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S937498AbWLEKmu (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 5 Dec 2006
- 05:42:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937499AbWLEKmu
- (ORCPT <rfc822;git-outgoing>); Tue, 5 Dec 2006 05:42:50 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:57057 "EHLO
- smtp-gw1.op5.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
- S937498AbWLEKmt (ORCPT <rfc822;git@vger.kernel.org>); Tue, 5 Dec 2006
- 05:42:49 -0500
-Received: from [192.168.1.20] (unknown [213.88.215.14]) by smtp-gw1.op5.se
- (Postfix) with ESMTP id CC7E06BCBE; Tue,  5 Dec 2006 11:42:47 +0100 (CET)
-To: Torgil Svensson <torgil.svensson@gmail.com>
+ S1753226AbWLCPuu convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Sun, 3 Dec 2006 10:50:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753513AbWLCPuu
+ (ORCPT <rfc822;git-outgoing>); Sun, 3 Dec 2006 10:50:50 -0500
+Received: from [83.140.172.130] ([83.140.172.130]:59145 "EHLO
+ torino.dewire.com") by vger.kernel.org with ESMTP id S1753226AbWLCPut convert
+ rfc822-to-8bit (ORCPT <rfc822;git@vger.kernel.org>); Sun, 3 Dec 2006 10:50:49
+ -0500
+Received: from localhost (localhost [127.0.0.1]) by torino.dewire.com
+ (Postfix) with ESMTP id 397A9802A94; Sun,  3 Dec 2006 16:47:01 +0100 (CET)
+Received: from torino.dewire.com ([127.0.0.1]) by localhost (torino
+ [127.0.0.1]) (amavisd-new, port 10024) with ESMTP id 14737-08; Sun,  3 Dec
+ 2006 16:47:01 +0100 (CET)
+Received: from [10.9.0.2] (unknown [10.9.0.2]) by torino.dewire.com (Postfix)
+ with ESMTP id EAEC9800199; Sun,  3 Dec 2006 16:46:58 +0100 (CET)
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Torgil Svensson wrote:
-> On 12/4/06, Linus Torvalds <torvalds@osdl.org> wrote:
->>
->> So yeah, it's a bit hacky, but for the reasons I've tried to outline, I
->> actually think that users _want_ hacky. Exactly because "deep 
->> integration"
->> ends up having so many _bad_ features, so it's better to have a thin and
->> simple layer that you can actually see past if you want to.
-> 
-> Thin and simple sounds very good. Let's try it with an example. Lets
-> say we have one apllication App1 and three librarys (Lib1, Lib2, Lib3)
-> with the following dependency-graph:
-> 
->        App1
->          /\
->         /  \
->   Lib1   Lib2
->       \     /
->        \   /
->        Lib3 (don't really needed for this example but looks nice)
-> 
-> All components can be used individually and have their own upstream,
-> maintainer etc.
-> 
-> To compile App1 however, I need some files from both Lib1 and Lib2
-> specifying it's API. To satisfy these dependencies, It sounds
-> reasonable to link Lib2 and Lib3 submodules from App1. In your
-> concept, can I construct a modules file to fetch the API files and
-> their history without checking out the whole Lib1 and Lib2 source?
+s=F6ndag 03 december 2006 15:19 skrev Jakub Narebski:
+> Robin Rosenberg wrote:
+> > CVS-induced brain damage, I should track the content. next version.
+> > filenames are so much handier to work with).
+>
+> Git uses <path> as _revision limiter_, not as output filter. Shouldn'=
+t
+> jgit do the same?
+It's egit, i.e. the eclipse plugin I'm referring to so it's a user inte=
+rface=20
+thing and it uses the path name. =20
 
-I think not. Then it wouldn't be a submodule anymore, but just some 
-random sources from an upstream project. Not that it's an uncommon 
-workflow or anything, but it's sort of akin to just importing the SHA1 
-implementation (a few source-files with no real interest in the history 
-of those source-files) from openssl into a different project rather than 
-actually using the entire openssl lib (which would be nice to have as a 
-submodule).
-
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
