@@ -1,55 +1,71 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: [PATCH] Store peeled refs in packed-refs (take 2).
-Date: Wed, 22 Nov 2006 13:25:36 +0100
-Message-ID: <e5bfff550611220425x5cf9e33ds7b7b98229c6b408a@mail.gmail.com>
-References: <7vac2kvsos.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: Re: [RFC] Submodules in GIT
+Date: Sun, 3 Dec 2006 02:02:34 +0100
+Message-ID: <200612030202.34990.Josef.Weidendorfer@gmx.de>
+References: <20061130170625.GH18810@admingilde.org> <200612021450.46005.Josef.Weidendorfer@gmx.de> <20061202204350.GV18810@admingilde.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain;
+  charset="utf-8"
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 22 Nov 2006 12:26:31 +0000 (UTC)
-Cc: git@vger.kernel.org
+NNTP-Posting-Date: Sun, 3 Dec 2006 01:02:46 +0000 (UTC)
+Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=p/bhWMTXyvFXRmSQvz10bFOSU61ftzN0WS1wl4M91DvtOQKxqH80ExBCIA8A8y0Df/+wMVO9RcmGqVni+IdkRJNp3uE3uFbrfYAoSAEOzLIufkqcuDtgsC5dRA+ujq4J4jOthy8RIMjZ091JUdniH45Vhh+b21uNQvMhX27ZTaY=
-In-Reply-To: <7vac2kvsos.fsf@assigned-by-dhcp.cox.net>
+X-Authenticated: #352111
+User-Agent: KMail/1.9.3
+In-Reply-To: <20061202204350.GV18810@admingilde.org>
 Content-Disposition: inline
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32083>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33073>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GmrB7-0005nr-RZ for gcvg-git@gmane.org; Wed, 22 Nov
- 2006 13:26:14 +0100
+ esmtp (Exim 4.43) id 1Gqfkg-0007S4-NS for gcvg-git@gmane.org; Sun, 03 Dec
+ 2006 02:02:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1755084AbWKVM0K (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 22 Nov 2006
- 07:26:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755094AbWKVM0K
- (ORCPT <rfc822;git-outgoing>); Wed, 22 Nov 2006 07:26:10 -0500
-Received: from py-out-1112.google.com ([64.233.166.176]:45834 "EHLO
- py-out-1112.google.com") by vger.kernel.org with ESMTP id S1755084AbWKVM0J
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 22 Nov 2006 07:26:09 -0500
-Received: by py-out-1112.google.com with SMTP id u77so94876pyb for
- <git@vger.kernel.org>; Wed, 22 Nov 2006 04:26:08 -0800 (PST)
-Received: by 10.35.50.9 with SMTP id c9mr861795pyk.1164198336501; Wed, 22 Nov
- 2006 04:25:36 -0800 (PST)
-Received: by 10.35.42.4 with HTTP; Wed, 22 Nov 2006 04:25:36 -0800 (PST)
-To: "Junio C Hamano" <junkio@cox.net>
+ S936605AbWLCBCj (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 2 Dec 2006
+ 20:02:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936607AbWLCBCj
+ (ORCPT <rfc822;git-outgoing>); Sat, 2 Dec 2006 20:02:39 -0500
+Received: from mail.gmx.net ([213.165.64.20]:52941 "HELO mail.gmx.net") by
+ vger.kernel.org with SMTP id S936605AbWLCBCj (ORCPT
+ <rfc822;git@vger.kernel.org>); Sat, 2 Dec 2006 20:02:39 -0500
+Received: (qmail invoked by alias); 03 Dec 2006 01:02:37 -0000
+Received: from p5496B2C8.dip0.t-ipconnect.de (EHLO noname) [84.150.178.200]
+ by mail.gmx.net (mp028) with SMTP; 03 Dec 2006 02:02:37 +0100
+To: Martin Waitz <tali@admingilde.org>
 Sender: git-owner@vger.kernel.org
 
-On 11/22/06, Junio C Hamano <junkio@cox.net> wrote:
-> there is only one such extension defined, "peeled".  This stores
-> the "peeled tag" on a line that immediately follows a line for a
-> tag object itself in the format "^<sha-1>".
->
+On Saturday 02 December 2006 21:43, Martin Waitz wrote:
+> On Sat, Dec 02, 2006 at 02:50:45PM +0100, Josef Weidendorfer wrote:
+> > On Saturday 02 December 2006 11:04, Andy Parkins wrote:
+> > > > So what do you do with deleted submodules?
+> > > > You wouldn't want them to still sit around in your working directory,
+> > > > but you still have to preserve them.
+> > > 
+> > > Now that is a tricky one.  Mind you, I think that problem exists for any 
+> > > implementation.  I haven't got a good answer for that.
+> > 
+> > That suggests that it is probably better to separate submodule repositories
+> > from their checked out working trees. Why not put the GITDIRs of the submodules
+> > in subdirectories of the supermodules GITDIR instead?
+> 
+> Why not simply use a shared object database instead?
 
-Thanks, I will try to do some performance tests this week end.
+Sure. I have no problem with this.
+
+But can we go one step further?
+AFAICS your submodules store the .git/ directories of submodules directly
+at submodule position in the working tree - but you have a link .git/objects
+into the object database of the supermodule.
+When the user wants to delete the submodule, he would remove this .git/ directory,
+too. So you loose the .git/refs of the submodule etc. I would suggest to put
+the submodule .git dirs into the .git dir of the supermodule.
 
