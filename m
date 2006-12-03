@@ -1,62 +1,110 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-2.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,MSGID_FROM_MTA_HEADER,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
-From: Sean <seanlkml@sympatico.ca>
-Subject: Re: Can't fetch 2.6.20-rc1 tag...
-Date: Mon, 18 Dec 2006 07:29:45 -0500
-Message-ID: <BAYC1-PASMTP1091AB27E446DFAD251A6DAEC90@CEZ.ICE>
-References: <38b2ab8a0612180356t5c04f5bn29d7be3d0aa40764@mail.gmail.com>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Some advanced index playing
+Date: Sun, 3 Dec 2006 10:34:40 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0612031024480.3476@woody.osdl.org>
+References: <200612031701.15594.alan@chandlerfamily.org.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Mon, 18 Dec 2006 23:56:21 +0000 (UTC)
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Sun, 3 Dec 2006 18:34:55 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Greylist: delayed 1147 seconds by postgrey-1.27 at vger.kernel.org; Mon, 18 Dec 2006 07:48:55 EST
-X-Originating-IP: [65.93.43.74]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Original-Message-Id: <20061218072945.53eda885.seanlkml@sympatico.ca>
-In-Reply-To: <38b2ab8a0612180356t5c04f5bn29d7be3d0aa40764@mail.gmail.com>
-X-Mailer: Sylpheed version 2.2.10 (GTK+ 2.10.4; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 18 Dec 2006 12:34:08.0296 (UTC) FILETIME=[CFFD8A80:01C722A0]
+In-Reply-To: <200612031701.15594.alan@chandlerfamily.org.uk>
+X-MIMEDefang-Filter: osdl$Revision: 1.161 $
+X-Scanned-By: MIMEDefang 2.36
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GwHvd-0001q6-Jv for gcvg-git@gmane.org; Mon, 18 Dec
- 2006 13:49:13 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33126>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GqwAv-0001wz-4q for gcvg-git@gmane.org; Sun, 03 Dec
+ 2006 19:34:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753947AbWLRMs4 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 18 Dec 2006
- 07:48:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753944AbWLRMs4
- (ORCPT <rfc822;git-outgoing>); Mon, 18 Dec 2006 07:48:56 -0500
-Received: from bayc1-pasmtp10.bayc1.hotmail.com ([65.54.191.170]:6028 "EHLO
- BAYC1-PASMTP10.bayc1.hotmail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
- with ESMTP id S1753947AbWLRMsz (ORCPT <rfc822;git@vger.kernel.org>); Mon, 18
- Dec 2006 07:48:55 -0500
-Received: from linux1.attic.local ([65.93.43.74]) by
- BAYC1-PASMTP10.bayc1.hotmail.com over TLS secured channel with Microsoft
- SMTPSVC(6.0.3790.1830); Mon, 18 Dec 2006 04:34:08 -0800
-Received: from guru.attic.local ([10.10.10.28]) by linux1.attic.local with
- esmtp (Exim 4.43) id 1GwGgi-00070I-7n; Mon, 18 Dec 2006 06:29:44 -0500
-To: "Francis Moreau" <francis.moro@gmail.com>
+ S1758482AbWLCSes (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 3 Dec 2006
+ 13:34:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758892AbWLCSes
+ (ORCPT <rfc822;git-outgoing>); Sun, 3 Dec 2006 13:34:48 -0500
+Received: from smtp.osdl.org ([65.172.181.25]:31946 "EHLO smtp.osdl.org") by
+ vger.kernel.org with ESMTP id S1758482AbWLCSer (ORCPT
+ <rfc822;git@vger.kernel.org>); Sun, 3 Dec 2006 13:34:47 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
+ smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kB3IYejQ028502
+ (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Sun, 3
+ Dec 2006 10:34:41 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
+ shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kB3IYeSo026474; Sun, 3 Dec
+ 2006 10:34:40 -0800
+To: Alan Chandler <alan@chandlerfamily.org.uk>
 Sender: git-owner@vger.kernel.org
 
-On Mon, 18 Dec 2006 12:56:09 +0100
-"Francis Moreau" <francis.moro@gmail.com> wrote:
 
->     fatal: unexpected EOF
->     Fetch failure:
-> git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
-> 
-> My git version is '1.4.4.2'
-> 
-> Can anybody tell me what I'm doing wrong ?
 
-You're not doing anything wrong.  There is a problem on one of the
-kernel.org mirrors, it seems to have been that way for a few days.
-If you use "204.152.191.37" instead of git.kernel.org it should work.
+On Sun, 3 Dec 2006, Alan Chandler wrote:
+> 
+> c) Revert the entire index back to the state it was at the last commit so I 
+> can selectively add back in the files that I have editted.
+> 
+> The command to do that seems to be
+> 
+> git-read-tree HEAD 
+
+A side note on this..
+
+It definitely works, but it's not really the right thing to do for a few 
+reasons:
+
+ - it isn't even what you wanted. You didn't want to reset _all_ the index 
+   values, you only really wanted to reset a few of them. So as mentioned 
+   in the previous email, the command sequence you'd wanted for that 
+   operation is
+
+	git ls-tree <tree> -- <path pattern list> |
+		git update-index --index-info
+
+But, that said, if you actually want to reset the whole index, 
+"git-read-tree HEAD" works, but is not what you should do:
+
+ - you really want to keep the index "stat()" cache valid, and 
+   git-read-tree will throw that all out. So you would need to do a
+
+	git update-index --refresh
+
+   after you've reset the index ("git status" will do it for you, and if 
+   you don't do either "git status" or the above,  
+
+ - instead of re-reading the index 100% and then having to refresh it back 
+   to mostly the same stat() into it already had, you can _merge_ the old 
+   index with the information in HEAD, by using
+
+	git read-tree -m HEAD
+
+   which basically does a merge from the old index and the HEAD tree.
+
+ - However, that actually fails if the old index wasn't just dirty, but 
+   had unmerged paths etc, because then a "merge" would throw away that 
+   unmerged information. So what you _really_ want to do is
+
+	git read-tree --reset HEAD
+
+   which (as the flag implies) will _reset_ the index to the tree in HEAD, 
+   and this will do exactly what you were looking for: keep the "stat()" 
+   information alone, but reset the actual index contents.
+
+ - HOWEVER. This is exactly what "git reset" does.
+
+So in short, you should just have done "git reset", and you'd have reset 
+your index back to the state of your last commit.
+
+So "git reset" is generally your friend whenever something goes wrong. If 
+you also want to reset your checked-out files (which you did NOT want to 
+do in this case, of course), you would have added the "--hard" flag to git 
+reset.
+
+And that (finally) concludes this particularly boring "git usage 101" 
+session.
 
