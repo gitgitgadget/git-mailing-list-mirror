@@ -1,68 +1,77 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] Make git-commit cleverer - have it figure out whether it needs -a automatically
-Date: Thu, 30 Nov 2006 14:41:51 +0100
-Organization: At home
-Message-ID: <ekmmvf$hsr$1@sea.gmane.org>
-References: <ekmlar$ask$2@sea.gmane.org> <200611301324.04993.andyparkins@gmail.com> <fcaeb9bf0611300532x77c7fc8aq2ba77ff57b81cc05@mail.gmail.com>
+From: "Torgil Svensson" <torgil.svensson@gmail.com>
+Subject: Re: [RFC] Submodules in GIT
+Date: Sun, 3 Dec 2006 10:19:13 +0100
+Message-ID: <e7bda7770612030119v197cbc95h6b3fa9e22b78c058@mail.gmail.com>
+References: <20061130170625.GH18810@admingilde.org> <457061A7.2000102@b-i-t.de>
+	 <Pine.LNX.4.64.0612011134080.3695@woody.osdl.org>
+	 <200612012306.41410.Josef.Weidendorfer@gmx.de>
+	 <Pine.LNX.4.64.0612011423100.3695@woody.osdl.org>
+	 <4570AF8F.1000801@stephan-feder.de>
+	 <Pine.LNX.4.64.0612011505190.3695@woody.osdl.org>
+	 <4570BFA4.8070903@stephan-feder.de>
+	 <e7bda7770612021057mc9f3eb9q7fc047dd1b5c235f@mail.gmail.com>
+	 <Pine.LNX.4.64.0612021114270.3476@woody.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-NNTP-Posting-Date: Thu, 30 Nov 2006 13:40:36 +0000 (UTC)
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Sun, 3 Dec 2006 09:19:26 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 18
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Gsyn0jtM0VRdwYagcvprgnIJbf19lEbnoqXv0TYbIMpACWUNK2NgYXYEQ4xC47sWiST7CwqueJQ8Ip14Jtn+zmfPpacR6pDY1wJKNh1rx9EEyrC1dZz6/7n70lqPH8m0PqSw+OFSvehDe/kQdQYy5kXX6fQ/OKzjwCYTmAql2eo=
+In-Reply-To: <Pine.LNX.4.64.0612021114270.3476@woody.osdl.org>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32744>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gpm9R-0006Je-9J for gcvg-git@gmane.org; Thu, 30 Nov
- 2006 14:40:33 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33100>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GqnVH-0007Nv-IB for gcvg-git@gmane.org; Sun, 03 Dec
+ 2006 10:19:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S936322AbWK3Nka (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
- 08:40:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936359AbWK3Nka
- (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 08:40:30 -0500
-Received: from main.gmane.org ([80.91.229.2]:57255 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S936322AbWK3Nk3 (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 08:40:29 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1Gpm9C-0006Fc-BV for git@vger.kernel.org; Thu, 30 Nov 2006 14:40:18 +0100
-Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Thu, 30 Nov 2006 14:40:18 +0100
-Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Thu, 30 Nov 2006
- 14:40:18 +0100
-To: git@vger.kernel.org
+ S935708AbWLCJTQ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 3 Dec 2006
+ 04:19:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935710AbWLCJTQ
+ (ORCPT <rfc822;git-outgoing>); Sun, 3 Dec 2006 04:19:16 -0500
+Received: from nf-out-0910.google.com ([64.233.182.188]:9047 "EHLO
+ nf-out-0910.google.com") by vger.kernel.org with ESMTP id S935708AbWLCJTP
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 3 Dec 2006 04:19:15 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so4049919nfa for
+ <git@vger.kernel.org>; Sun, 03 Dec 2006 01:19:14 -0800 (PST)
+Received: by 10.49.10.17 with SMTP id n17mr11521678nfi.1165137554038; Sun, 03
+ Dec 2006 01:19:14 -0800 (PST)
+Received: by 10.49.28.8 with HTTP; Sun, 3 Dec 2006 01:19:13 -0800 (PST)
+To: "Linus Torvalds" <torvalds@osdl.org>, sf-gmane@stephan-feder.de, sf
+ <sf@b-i-t.de>, git@vger.kernel.org, "Martin Waitz" <tali@admingilde.org>
 Sender: git-owner@vger.kernel.org
 
-Nguyen Thai Ngoc Duy wrote:
+On 12/2/06, Linus Torvalds <torvalds@osdl.org> wrote:
+>
+> In other words, I don't think people expect or want something hugely more
+> complicated than the CVS/modules kind of file.
 
->> +# Clever commit - if this commit would do nothing, then make it an "all"
->> +# commit
->> +if [ -z "$(git-diff-index --cached --name-only HEAD)" \
->> +       -a -z "$amend" -a -z "$only" -a -z "$also" ]; then
->> +       echo "Nothing to commit but changes in working tree. Assuming 'git commit -a'"
-> 
-> This is hardly seen as the editor will immediately pop up. Better
-> pause a second or put it in commit template (I'd prefer the latter).
+What about the case when you want _everything_, do you then have to
+know the names of all submodules, present and past?
 
-Well, if it is VISUAL editor, you would see this. But adding this
-to template is certainly good idea.
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+If you have an old irrelevant submodule in the history that happens to
+have the same name as one of them you are interested in, do you get
+this as well?
+
+During a debugging session it might be convenient to do a "all but X"
+kind of fetch if you have a project dependent on several small modules
+and one of them is the big black sheep.
+
+For simple cases, I think it's sufficient to have the "everyone or
+no-one" option. If git enforces sending submodules one by one and
+requires the fetching side to specify links explicitly couldn't the
+selection be left to the user to decide with "hooks" or plumbing?
+Default hook could implement a simple white- or black-list.
 
