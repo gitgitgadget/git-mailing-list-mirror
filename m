@@ -1,74 +1,112 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-PS1 bash prompt setting
-Date: Sat, 18 Nov 2006 22:28:14 -0800
-Message-ID: <7vhcww7xxd.fsf@assigned-by-dhcp.cox.net>
-References: <20061116130111.921396df.seanlkml@sympatico.ca>
-	<20061117083801.GB11468@fry.bender.fht>
-	<BAYC1-PASMTP0635A081EAC964E03599B4AEE80@CEZ.ICE>
+From: Sergey Vlasov <vsu@altlinux.ru>
+Subject: Re: [PATCH] git-mv: search more precisely for source directory in index
+Date: Sun, 3 Dec 2006 23:04:18 +0300
+Message-ID: <20061203200418.GC7971@procyon.home>
+References: <20061203135725.GA7971@procyon.home> <Pine.LNX.4.63.0612032036030.28348@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sun, 19 Nov 2006 06:28:36 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="YD3LsXFS42OYHhNZ"
+NNTP-Posting-Date: Sun, 3 Dec 2006 20:05:03 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <BAYC1-PASMTP0635A081EAC964E03599B4AEE80@CEZ.ICE>
-	(seanlkml@sympatico.ca's message of "Fri, 17 Nov 2006 04:20:51 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0612032036030.28348@wbgn013.biozentrum.uni-wuerzburg.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31828>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GlgAG-00012z-UJ for gcvg-git@gmane.org; Sun, 19 Nov
- 2006 07:28:29 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33135>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GqxZy-0001Rs-Uj for gcvg-git@gmane.org; Sun, 03 Dec
+ 2006 21:04:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1756481AbWKSG2Q (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 19 Nov 2006
- 01:28:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756480AbWKSG2Q
- (ORCPT <rfc822;git-outgoing>); Sun, 19 Nov 2006 01:28:16 -0500
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:29914 "EHLO
- fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP id S1755204AbWKSG2P
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 19 Nov 2006 01:28:15 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao07.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061119062815.GHAJ27894.fed1rmmtao07.cox.net@fed1rmimpo01.cox.net>; Sun, 19
- Nov 2006 01:28:15 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id oWTm1V00J1kojtg0000000; Sun, 19 Nov 2006
- 01:27:47 -0500
-To: Sean <seanlkml@sympatico.ca>
+ S1760053AbWLCUEr (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 3 Dec 2006
+ 15:04:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760055AbWLCUEr
+ (ORCPT <rfc822;git-outgoing>); Sun, 3 Dec 2006 15:04:47 -0500
+Received: from master.altlinux.org ([62.118.250.235]:3603 "EHLO
+ master.altlinux.org") by vger.kernel.org with ESMTP id S1760053AbWLCUEr
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 3 Dec 2006 15:04:47 -0500
+Received: by master.altlinux.org (Postfix, from userid 584) id B9655E3999;
+ Sun,  3 Dec 2006 23:04:45 +0300 (MSK)
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-Sean <seanlkml@sympatico.ca> writes:
 
-> On Fri, 17 Nov 2006 09:38:02 +0100
-> Nicolas Vilz <niv@iaglans.de> wrote:
->
->> Just a note:
->> 
->> this doesn't work with bash 3.2. I think they altered the way of
->> trimming variables in this version.
->> 
->> on systems with bash 3.2 installed, i get
->> [master!linus-2.6/vm/vm]$ 
->> with the example above.
->> 
->> on systems with bash 3.1, it works properly.
->
-> Sorry bout that, I knew it was a bit fragile.  Was rather
-> comical reading Junio's recent message about all the things not
-> to do if you want portable shell code and noticing my 6 line script
-> did 90% of them ;o)
+--YD3LsXFS42OYHhNZ
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Maybe I should have been more explicit when I said "${paremeter##word}
-and friends".  Might not have been obvious, but I only meant the
-following four: %, %%, # and ##.
+On Sun, Dec 03, 2006 at 08:42:47PM +0100, Johannes Schindelin wrote:
+>=20
+> A move of a directory should find the entries in the index by
+> searching for the name _including_ the slash. Otherwise, the
+> directory can be shadowed by a file when it matches the prefix
+> and is lexicographically smaller, e.g. "ab.c" shadows "ab/".
 
-${parameter/pattern/string} and ${parameter//pattern/string} are
-not even in POSIX.
+Thanks - seems to work now, and the existing tests are not broken.
+
+> Noticed by Sergey Vlasov.
+>=20
+> Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+> ---
+>=20
+> 	Good catch. Thanks!
+>=20
+>  builtin-mv.c |   11 +++++++----
+>  1 files changed, 7 insertions(+), 4 deletions(-)
+>=20
+> diff --git a/builtin-mv.c b/builtin-mv.c
+> index 54dd3bf..d14a4a7 100644
+> --- a/builtin-mv.c
+> +++ b/builtin-mv.c
+> @@ -146,21 +146,24 @@ int cmd_mv(int argc, const char **argv, const char =
+*prefix)
+>  				&& lstat(dst, &st) =3D=3D 0)
+>  			bad =3D "cannot move directory over file";
+>  		else if (src_is_dir) {
+> +			const char *src_w_slash =3D add_slash(src);
+> +			int len_w_slash =3D length + 1;
+>  			int first, last;
+> =20
+>  			modes[i] =3D WORKING_DIRECTORY;
+> =20
+> -			first =3D cache_name_pos(src, length);
+> +			first =3D cache_name_pos(src_w_slash, len_w_slash);
+>  			if (first >=3D 0)
+> -				die ("Huh? %s/ is in index?", src);
+> +				die ("Huh? %.*s is in index?",
+> +						len_w_slash, src_w_slash);
+> =20
+>  			first =3D -1 - first;
+>  			for (last =3D first; last < active_nr; last++) {
+>  				const char *path =3D active_cache[last]->name;
+> -				if (strncmp(path, src, length)
+> -						|| path[length] !=3D '/')
+> +				if (strncmp(path, src_w_slash, len_w_slash))
+>  					break;
+>  			}
+> +			free((char *)src_w_slash);
+> =20
+>  			if (last - first < 1)
+>  				bad =3D "source directory is empty";
+
+--YD3LsXFS42OYHhNZ
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.5 (GNU/Linux)
+
+iD8DBQFFcy3CW82GfkQfsqIRAiC8AKCTzfTu+PzDnOfKVGJP9e2FsKVargCfb6Y6
+WrMXmMmbF/i7fku6QkrWYNc=
+=gtEY
+-----END PGP SIGNATURE-----
 
