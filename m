@@ -1,81 +1,72 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: git-fetching from a big repository is slow
-Date: Thu, 14 Dec 2006 14:46:36 -0500
-Message-ID: <20061214194636.GO1747@spearce.org>
-References: <200612141340.43925.andyparkins@gmail.com> <4581573E.40803@op5.se> <Pine.LNX.4.63.0612141513130.3635@wbgn013.biozentrum.uni-wuerzburg.de> <4581685D.1070407@op5.se> <C287764F-6755-4291-A87A-3E8816E90B49@adacore.com>
+From: Steven Grimm <koreth@midwinter.com>
+Subject: Re: git-svn and empty directories in svn
+Date: Sat, 02 Dec 2006 20:08:16 -0800
+Message-ID: <45724DB0.4060607@midwinter.com>
+References: <loom.20061124T143148-286@post.gmane.org> <20061128054448.GA396@soma> <20061128102958.GA5207@soma> <20061128105017.GA20366@soma> <9e7ab7380611280445r4ebe344cw69cbc18a74c6122f@mail.gmail.com> <9e7ab7380611280732k4e940380tbf2a96146807d671@mail.gmail.com> <m2bqmr1rnw.fsf@ziti.fhcrc.org> <20061128201605.GA1369@localdomain> <m2slg2rzzj.fsf_-_@ziti.fhcrc.org> <20061203014756.GE1369@localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 14 Dec 2006 19:46:52 +0000 (UTC)
-Cc: Andreas Ericsson <ae@op5.se>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Sun, 3 Dec 2006 04:08:15 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <C287764F-6755-4291-A87A-3E8816E90B49@adacore.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+User-Agent: Thunderbird 1.5.0.8 (Macintosh/20061025)
+In-Reply-To: <20061203014756.GE1369@localdomain>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34387>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GuwXZ-0004nm-Fv for gcvg-git@gmane.org; Thu, 14 Dec
- 2006 20:46:49 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33092>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GqieA-0001qb-BD for gcvg-git@gmane.org; Sun, 03 Dec
+ 2006 05:08:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1750865AbWLNTqq (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
- 14:46:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750945AbWLNTqp
- (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 14:46:45 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:59586 "EHLO
- corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1750862AbWLNTqp (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006
- 14:46:45 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1GuwXG-0004jg-Az; Thu, 14 Dec 2006 14:46:30 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- 6C3E920FB65; Thu, 14 Dec 2006 14:46:36 -0500 (EST)
-To: Geert Bosch <bosch@adacore.com>
+ S936654AbWLCEIG (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 2 Dec 2006
+ 23:08:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936655AbWLCEIG
+ (ORCPT <rfc822;git-outgoing>); Sat, 2 Dec 2006 23:08:06 -0500
+Received: from tater.midwinter.com ([216.32.86.90]:32173 "HELO
+ midwinter.com") by vger.kernel.org with SMTP id S936654AbWLCEIE (ORCPT
+ <rfc822;git@vger.kernel.org>); Sat, 2 Dec 2006 23:08:04 -0500
+Received: (qmail 24244 invoked from network); 3 Dec 2006 04:08:03 -0000
+Received: from c-76-21-17-123.hsd1.ca.comcast.net (HELO ?192.168.0.130?)
+ (koreth@76.21.17.123) by tater.midwinter.com with SMTP; 3 Dec 2006 04:08:03
+ -0000
+To: Eric Wong <normalperson@yhbt.net>
 Sender: git-owner@vger.kernel.org
 
-Geert Bosch <bosch@adacore.com> wrote:
-> Such special magic based on filenames is always a bad idea. Tomorrow  
-> somebody
-> comes with .zip files (oh, and of course .ZIP), then it's .jpg's other
-> compressed content. In the end git will be doing lots of magic and  
-> still perform
-> badly on unknown compressed content.
-> 
-> There is a very simple way of detecting compressed files: just look  
-> at the
-> size of the compressed blob and compare against the size of the  
-> expanded blob.
-> If the compressed blob has a non-trivial size which is close to the  
-> expanded
-> size, assume the file is not interesting as source or target for deltas.
-> 
-> Example:
->    if (compressed_size > expanded_size / 4 * 3 + 1024) {
->      /* don't try to deltify if blob doesn't compress well */
->      return ...;
->    }
+Eric Wong wrote:
+> Since git-svn misses some other stuff (many property settings,
+> externals) I'll be working on an internal logging format that can help
+> track those things.  It'd be nice to have a command like git svn
+> checkout which works like git checkout; but empty directories are
+> created.
 
-And yet I get good delta compression on a number of ZIP formatted
-files which don't get good additional zlib compression (<3%).
-Doing the above would cause those packfiles to explode to about
-10x their current size.
+Presumably once the submodule support is worked out, svn externals could 
+be represented as git-svn-managed submodules, yes?
 
--- 
+In fact, I'd go so far as to say it should be a design goal of the 
+submodule support: you should be able to indicate somehow that a 
+submodule is a git clone of some non-git resource, and anything that 
+iterates through the submodules (e.g. to freshen them from their 
+respective origins) should know how to run git-svn or whatever so it's 
+all seamlessly integrated. I suppose that's a special case of making 
+git-svn and friends more tightly integrated with git in general; if the 
+git "push" and "fetch" commands know to run git-svn instead of talking 
+to a remote git repository, then it might Just Work for submodules.
+
+Independent of the supermodule being managed by git-svn, the "my 
+software depends on externally-managed code" problem that submodules are 
+attempting to address would be solved a lot more comprehensively if the 
+remote code base could be an svn repository and git knew enough to run 
+git-svn as appropriate to keep it fresh. (Not just svn, of course; any 
+foreign CM system that has an equivalent of git-svn should work.) It'd 
+be pretty cool to have a supermodule that tied together some 
+native-git-managed code, a couple of external svn repositories, and a 
+CVS tree or two, all under a single umbrella with the details 
+automatically taken care of by default.
+
