@@ -1,76 +1,75 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Aneesh Kumar K.V" <aneesh.kumar@gmail.com>
-Subject: Shallow clone [Was Re: What's in git.git ]
-Date: Wed, 08 Nov 2006 22:10:18 +0530
-Message-ID: <45520872.3090506@gmail.com>
-References: <7v8ximwrm3.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0611072009220.2601@qynat.qvtvafvgr.pbz>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: EGIT unpackedreadr problem
+Date: Sat, 2 Dec 2006 21:25:13 -0500
+Message-ID: <20061203022513.GB26668@spearce.org>
+References: <200612030200.13857.robin.rosenberg@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 8 Nov 2006 16:41:01 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Sun, 3 Dec 2006 02:25:32 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:user-agent:mime-version:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=bCP83D9fdVbLMrcs8joZVpMKIlYdv4+ccBXHp280ucUJN0fJ83DwXqNoOjVAPFGq6Hqc/b0SxFZLgYhklyENzijY2eA0r+Qo6R8u17ahr3HdK+W/NHLpTekAymRqag4Fm55ceWXoZxctD9HKYn5mkO2EVE8Twvp4FAOcvcS44Y8=
-User-Agent: Thunderbird 1.5.0.7 (X11/20060918)
-In-Reply-To: <Pine.LNX.4.63.0611072009220.2601@qynat.qvtvafvgr.pbz>
+Content-Disposition: inline
+In-Reply-To: <200612030200.13857.robin.rosenberg@dewire.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31141>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33085>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GhqTZ-000434-FR for gcvg-git@gmane.org; Wed, 08 Nov
- 2006 17:40:33 +0100
+ esmtp (Exim 4.43) id 1Gqh2f-0001bo-M7 for gcvg-git@gmane.org; Sun, 03 Dec
+ 2006 03:25:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1161237AbWKHQk3 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 8 Nov 2006
- 11:40:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161293AbWKHQk3
- (ORCPT <rfc822;git-outgoing>); Wed, 8 Nov 2006 11:40:29 -0500
-Received: from nz-out-0102.google.com ([64.233.162.206]:24737 "EHLO
- nz-out-0102.google.com") by vger.kernel.org with ESMTP id S1161237AbWKHQk2
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 8 Nov 2006 11:40:28 -0500
-Received: by nz-out-0102.google.com with SMTP id z3so1502664nzf for
- <git@vger.kernel.org>; Wed, 08 Nov 2006 08:40:28 -0800 (PST)
-Received: by 10.35.33.15 with SMTP id l15mr5899213pyj.1163004028121; Wed, 08
- Nov 2006 08:40:28 -0800 (PST)
-Received: from ?192.168.2.47? ( [59.92.130.252]) by mx.google.com with ESMTP
- id a22sm7816281pye.2006.11.08.08.40.26; Wed, 08 Nov 2006 08:40:27 -0800 (PST)
-To: unlisted-recipients:; (no To-header on input)
+ S1424725AbWLCCZS (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 2 Dec 2006
+ 21:25:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759615AbWLCCZS
+ (ORCPT <rfc822;git-outgoing>); Sat, 2 Dec 2006 21:25:18 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:57240 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S1759614AbWLCCZR
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 2 Dec 2006 21:25:17 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1Gqh2O-0005lt-Px; Sat, 02 Dec 2006 21:25:04 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 3C38620FB7F; Sat,  2 Dec 2006 21:25:14 -0500 (EST)
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
 Sender: git-owner@vger.kernel.org
 
-David Lang wrote:
-> On Tue, 7 Nov 2006, Junio C Hamano wrote:
-> 
->> [pu]
->>
->>  Johannes's shallow clone work now should rebase cleanly on top
->>  of 'master' although I haven't done so yet.  As he said
->>  himself the series is waiting for people who have needs for
->>  such a feature to raise hands.
-> 
-> I haven't been watching this recently, but if this is what I understand 
-> it to be (the ability to get a partial repository from upstream and work 
-> normally from there with the result of data-mineing tools sometimes 
-> reporting 'that's part of the truncated history' if they hit the cutoff) 
-> consider my hand raised.
-> 
-> there are a number of cases where I would be interested in following a 
-> project as it moves forwards, but do not have the need to have the full 
-> history (even with the good compression that a git pack provides, it's 
-> still a significant amount of disk space and download time for large 
-> projects)
-> 
+Robin Rosenberg <robin.rosenberg@dewire.com> wrote:
+> Subject: [PATCH] Utility to show a log.
 
-I am trying to test this feature. Is there a documentation .git/shallow some where. Atleast what those entries
-mean ? I know in the mail johannes mentioned only core git will touch this file. But it should be ok to be 
-descriptive like other files. (FETCH_HEAD)
+Thanks.  This is somewhat handy so I've applied the utility program.
 
--aneesh 
+Like your other patch to Commit class this one had some whitespace
+issues.  In the future could you apply the Eclipse formatter (using
+the Java Conventions style) to the source before genererating a diff?
+ 
+> Not sure what's going on. The  UnpackedReader "looks" like it does
+> the equivalent of what it did before,but apparently it isn't. 
+
+Yea...  I broke the legacy header parsing in 42691339.
+The breakage actually showed up in one of the unit tests
+(test009_CreateCommitOldFormat) but I didn't notice it before
+pushing the changes out as I failed to run the entire unit test
+suite first.  Whoops.
+
+I found it and fixed it in f70704f9.  The issue was we were copying
+the remaining data from the Inflater ontop of the data we had
+already decompressed out for the header; this meant that we lost the
+leading bytes of each object.  I just neglated to push the fix out.
+Double whoops.
+
+-- 
