@@ -1,63 +1,96 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] change the unpack limit threshold to a saner value
-Date: Wed, 06 Dec 2006 14:24:39 -0800
-Message-ID: <7vejrcy860.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0612061420410.2630@xanadu.home>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: jgit performance update
+Date: Sun, 3 Dec 2006 17:59:48 -0500
+Message-ID: <20061203225947.GD15965@spearce.org>
+References: <20061203045953.GE26668@spearce.org> <200612031455.48032.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 6 Dec 2006 22:24:53 +0000 (UTC)
+NNTP-Posting-Date: Sun, 3 Dec 2006 23:00:02 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <Pine.LNX.4.64.0612061420410.2630@xanadu.home> (Nicolas Pitre's
-	message of "Wed, 06 Dec 2006 16:08:56 -0500 (EST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Content-Disposition: inline
+In-Reply-To: <200612031455.48032.robin.rosenberg.lists@dewire.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33531>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33149>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gs5C0-0002j5-Lm for gcvg-git@gmane.org; Wed, 06 Dec
- 2006 23:24:45 +0100
+ esmtp (Exim 4.50) id 1Gr0JP-0008Vc-Vf for gcvg-git@gmane.org; Sun, 03 Dec
+ 2006 23:59:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S937739AbWLFWYl (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
- 17:24:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937740AbWLFWYl
- (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 17:24:41 -0500
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:64019 "EHLO
- fed1rmmtao06.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S937739AbWLFWYk (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec 2006
- 17:24:40 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao06.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061206222440.WVLJ2628.fed1rmmtao06.cox.net@fed1rmimpo02.cox.net>; Wed, 6
- Dec 2006 17:24:40 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id vaQq1V00N1kojtg0000000; Wed, 06 Dec 2006
- 17:24:50 -0500
-To: Nicolas Pitre <nico@cam.org>
+ S1760148AbWLCW7w (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 3 Dec 2006
+ 17:59:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760149AbWLCW7w
+ (ORCPT <rfc822;git-outgoing>); Sun, 3 Dec 2006 17:59:52 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:51914 "EHLO
+ corvette.plexpod.net") by vger.kernel.org with ESMTP id S1760148AbWLCW7w
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 3 Dec 2006 17:59:52 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1Gr0Ix-0003ht-Sn; Sun, 03 Dec 2006 17:59:28 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ AB7ED20FB7F; Sun,  3 Dec 2006 17:59:48 -0500 (EST)
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
 Sender: git-owner@vger.kernel.org
 
-Nicolas Pitre <nico@cam.org> writes:
+Robin Rosenberg <robin.rosenberg.lists@dewire.com> wrote:
+> So, just go on to the next case. I added filtering on filenames (yes, 
+> CVS-induced brain damage, I should track the content. next version. filenames 
+> are so much handier to work with). That gives me 4.5s to retrieve a filtered 
+> history (from 10800 commits).Half of the time is spent in re-sorting tree 
+> entries. Is that really necessary?
 
-> Let's assume the average object size is x. Given n objects, the needed 
-> storage size is n*(x + b), where b is the average wasted block size on 
-> disk.
-> ...
-> This is why I think the current default treshold should be 3 instead of 
-> the insane value of 5000.  But since it feels a bit odd to go from 5000 
-> to 3 I setled on 10.
+Yea, I was looking at that code while doing the other performance
+improvements and thought it might start to become a bottleneck. I
+guess I was right.
 
-I see you are optimizing for disk footprint, and this will
-result in tons of tiny packs left between "repack -a".
+What is happening here is jgit wants to store the items in the tree
+in name ordering, but Git stores the items in the tree sorted such
+that subtrees sort with a '/' on the end of their name.  This is a
+different ordering...
 
-I have not benched it yet, but the runtime pack handling code
-was written assuming we have only a handful of big packs; I
-suspect this change would affect the performance at runtime in
-quite a bad way.
+The reason I'm resorting them is so we can find an entry without
+knowing what its type is first.  Looks like that's going to have
+to change somehow.
+ 
+> Most of java's slowness comes from the programmers using it. (Lutz Prechelt. 
+> Technical opinion: comparing Java vs. C/C++ efficiency differences to 
+> interpersonal differences. ACM, Vol 42,#10, 1999)
 
+Yes, that was clearly the case here with jgit!  :-)
+
+_This_ programmer made jgit slow.  Learned from the mistake, and
+made it faster.
+ 
+> > One of the biggest annoyances has been the fact that although Java 
+> > 1.4 offers a way to mmap a file into the process, the overhead to
+> > access that data seems to be far higher than just reading the file
+> > content into a very large byte array, especially if we are going
+> > to access that file content multiple times.  So jgit performs worse
+> > than core Git early on while it copies everything from the OS buffer
+> > cache into the Java process, but then performs reasonably well once
+> > the internal cache is hot.  On the other hand using the mmap call
+> > reduces early latency but hurts the access times so much that we're
+> > talking closer to 3s average read times for the same log operation.
+> 
+> Have you tried that with difference JVM's?
+
+No, I'm on Mac OS X so I don't have a huge JVM selection (that I
+know of).  And I haven't tried jgit or egit on any other system yet.
+
+-- 
