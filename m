@@ -1,71 +1,93 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Sam Vilain <sam@vilain.net>
-Subject: [PATCH 4/5] git-svn: collect revision properties when fetching
-Date: Tue, 05 Dec 2006 16:17:38 +1100
-Message-ID: <20061205051738.16552.36012.stgit@localhost>
-References: <20061205051738.16552.8987.stgit@localhost>
-Content-Type: text/plain; charset=utf-8; format=fixed
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Luben Tuikov <ltuikov@yahoo.com>
+Subject: [PATCH] [checkout-index] Give names to stages
+Date: Sun, 3 Dec 2006 01:49:46 -0800 (PST)
+Message-ID: <651451.91694.qm@web31813.mail.mud.yahoo.com>
+Reply-To: ltuikov@yahoo.com
+Mime-Version: 1.0
+Content-Type: multipart/mixed; boundary="0-1836391200-1165139386=:91694"
 Content-Transfer-Encoding: 8bit
-NNTP-Posting-Date: Tue, 5 Dec 2006 05:22:37 +0000 (UTC)
-Cc: git@vger.kernel.org
+NNTP-Posting-Date: Sun, 3 Dec 2006 09:50:00 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061205051738.16552.8987.stgit@localhost>
-User-Agent: StGIT/0.10
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=X-YMail-OSG:Received:Date:From:Reply-To:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
+  b=oCB4MRlrp4ha7G89uHfw+okOvBq0006I3X9mCMxVRw3Trirr0afhCx5DxurJgN7oUGFFwr5VO2Ngj/YllcxjoZl6/wlW1Wa5DVukS5e9SOR3uoJim1DGJxij7SGiLfgNJDNzC0FXlUFqei8cJP+NZBqgmg90V1ggJa4iEpKLwEk=;
+X-YMail-OSG: lzDD2rwVM1mShZewRevrOX2S.mA4kAysVb_LdIQn_elB8t5MpWH411vgqFVPaON2hb18SfBVD6IMXvghtb_MfGZLeCbpruoKhLsLBTsZuV_gJh.deMGTWfDHc0aqpZMOi5JVz6Nwehilc4U-
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33302>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33102>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GrSlB-0001ly-1V for gcvg-git@gmane.org; Tue, 05 Dec
- 2006 06:22:29 +0100
+ esmtp (Exim 4.50) id 1Gqnyp-0000jR-Uh for gcvg-git@gmane.org; Sun, 03 Dec
+ 2006 10:49:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S937342AbWLEFWZ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 5 Dec 2006
- 00:22:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937341AbWLEFWZ
- (ORCPT <rfc822;git-outgoing>); Tue, 5 Dec 2006 00:22:25 -0500
-Received: from watts.utsl.gen.nz ([202.78.240.73]:42239 "EHLO
- magnus.utsl.gen.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
- S937342AbWLEFWY (ORCPT <rfc822;git@vger.kernel.org>); Tue, 5 Dec 2006
- 00:22:24 -0500
-Received: by magnus.utsl.gen.nz (Postfix, from userid 1003) id 8D0C5139B0E;
- Tue,  5 Dec 2006 18:22:18 +1300 (NZDT)
-To: Eric Wong <normalperson@yhbt.net>
+ S935776AbWLCJts (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 3 Dec 2006
+ 04:49:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936603AbWLCJts
+ (ORCPT <rfc822;git-outgoing>); Sun, 3 Dec 2006 04:49:48 -0500
+Received: from web31813.mail.mud.yahoo.com ([68.142.207.76]:33198 "HELO
+ web31813.mail.mud.yahoo.com") by vger.kernel.org with SMTP id S935776AbWLCJtr
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 3 Dec 2006 04:49:47 -0500
+Received: (qmail 91697 invoked by uid 60001); 3 Dec 2006 09:49:46 -0000
+Received: from [68.186.59.199] by web31813.mail.mud.yahoo.com via HTTP; Sun,
+ 03 Dec 2006 01:49:46 PST
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-From: Sam Vilain <sam@vilain.net>
+--0-1836391200-1165139386=:91694
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: 8bit
+Content-Id: 
+Content-Disposition: inline
 
-Perhaps there is information in the "revision properties" (unversioned
-metadata associated with commits) that will affect the way that we
-save the revision.  Collect them.
+One can now say "git-checkout-index --stage=ours ..."  or
+"git-checkout-index --stage=theirs ...", instead of having
+to remember the corresponding number assigned to each stage.
+
+Signed-off-by: Luben Tuikov <ltuikov@yahoo.com>
 ---
-Sorry for the long lines.
+ builtin-checkout-index.c |   11 ++++++++++-
+ 1 files changed, 10 insertions(+), 1 deletions(-)
 
- git-svn.perl |    4 ++++
- 1 files changed, 4 insertions(+), 0 deletions(-)
+I find this quite helpful when resolving.
 
-diff --git a/git-svn.perl b/git-svn.perl
-index 800c579..70c34b0 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -441,12 +441,16 @@ sub fetch_lib {
- 					if ($last_commit) {
- 						$log_msg = libsvn_fetch(
- 							$last_commit, @_);
-+						$log_msg->{revprops}
-+							= $SVN->rev_proplist($log_msg->{revision});
- 						$last_commit = git_commit(
- 							$log_msg,
- 							$last_commit,
- 							@parents);
- 					} else {
- 						$log_msg = libsvn_new_tree(@_);
-+						$log_msg->{revprops}
-+							= $SVN->rev_proplist($log_msg->{revision});
- 						$last_commit = git_commit(
- 							$log_msg, @parents);
- 					}
+
+--0-1836391200-1165139386=:91694
+Content-Type: text/plain; name="p1.txt"
+Content-Description: 1207600725-p1.txt
+Content-Disposition: inline; filename="p1.txt"
+
+diff --git a/builtin-checkout-index.c b/builtin-checkout-index.c
+index b097c88..d54a290 100644
+--- a/builtin-checkout-index.c
++++ b/builtin-checkout-index.c
+@@ -236,8 +236,17 @@ int cmd_checkout_index(int argc, const char **argv, const char *prefix)
+ 				int ch = arg[8];
+ 				if ('1' <= ch && ch <= '3')
+ 					checkout_stage = arg[8] - '0';
++				else if (!strncmp(arg+8, "ancestor", 8))
++					checkout_stage = 1;
++				else if (!strncmp(arg+8, "ours", 4))
++					checkout_stage = 2;
++				else if (!strncmp(arg+8, "HEAD", 4))
++					checkout_stage = 2;
++				else if (!strncmp(arg+8, "theirs", 6))
++					checkout_stage = 3;
+ 				else
+-					die("stage should be between 1 and 3 or all");
++					die("stage should be "
++					    "(1|ancestor)|(2|ours|HEAD)|(3|theirs)");
+ 			}
+ 			continue;
+ 		}
+-- 
+1.4.4.1.gc87e
+
+
