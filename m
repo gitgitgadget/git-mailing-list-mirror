@@ -1,61 +1,98 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Explicitly add the default "git pull" behaviour to
- .git/config on clone
-Date: Thu, 7 Dec 2006 00:23:02 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612070022180.28348@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <200612061207.23437.andyparkins@gmail.com>
- <200612061800.17087.Josef.Weidendorfer@gmx.de>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Sven Verdoolaege <skimo@kotnet.org>
+Subject: Re: [RFC] Submodules in GIT
+Date: Sun, 03 Dec 2006 23:16:30 +0100
+Message-ID: <20061203221630.GA940MdfPADPa@greensroom.kotnet.org>
+References: <20061130170625.GH18810@admingilde.org>
+ <200612012306.41410.Josef.Weidendorfer@gmx.de>
+ <Pine.LNX.4.64.0612011423100.3695@woody.osdl.org>
+ <200612012355.03493.Josef.Weidendorfer@gmx.de>
+ <Pine.LNX.4.64.0612011510290.3695@woody.osdl.org>
+ <20061130170625.GH18810@admingilde.org> <4570AF8F.1000801@stephan-feder.de>
+ <Pine.LNX.4.64.0612011505190.3695@woody.osdl.org>
+ <200612020036.08826.Josef.Weidendorfer@gmx.de>
+ <Pine.LNX.4.64.0612011540010.3695@woody.osdl.org>
+Reply-To: skimo@liacs.nl
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Wed, 6 Dec 2006 23:23:24 +0000 (UTC)
-Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+NNTP-Posting-Date: Sun, 3 Dec 2006 22:16:49 +0000 (UTC)
+Cc: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>,
+	sf <sf-gmane@stephan-feder.de>, git@vger.kernel.org,
+	Martin Waitz <tali@admingilde.org>, sf <sf@b-i-t.de>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <200612061800.17087.Josef.Weidendorfer@gmx.de>
-X-Y-GMX-Trusted: 0
+In-reply-to: <Pine.LNX.4.64.0612011510290.3695@woody.osdl.org>
+ <Pine.LNX.4.64.0612011540010.3695@woody.osdl.org>
+Content-disposition: inline
+User-Agent: Mutt/1.5.10i
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33534>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33145>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gs66Y-0002tO-QR for gcvg-git@gmane.org; Thu, 07 Dec
- 2006 00:23:11 +0100
+ esmtp (Exim 4.50) id 1Gqzdb-0004tg-3B for gcvg-git@gmane.org; Sun, 03 Dec
+ 2006 23:16:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S937781AbWLFXXH (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
- 18:23:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937782AbWLFXXH
- (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 18:23:07 -0500
-Received: from mail.gmx.net ([213.165.64.20]:37982 "HELO mail.gmx.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S937781AbWLFXXE
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec 2006 18:23:04 -0500
-Received: (qmail invoked by alias); 06 Dec 2006 23:23:03 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp029) with SMTP; 07 Dec 2006 00:23:03 +0100
-To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+ S1758397AbWLCWQk (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 3 Dec 2006
+ 17:16:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758532AbWLCWQk
+ (ORCPT <rfc822;git-outgoing>); Sun, 3 Dec 2006 17:16:40 -0500
+Received: from smtp17.wxs.nl ([195.121.247.8]:482 "EHLO smtp17.wxs.nl") by
+ vger.kernel.org with ESMTP id S1758397AbWLCWQj (ORCPT
+ <rfc822;git@vger.kernel.org>); Sun, 3 Dec 2006 17:16:39 -0500
+Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl
+ [84.81.90.170]) by smtp17.wxs.nl (iPlanet Messaging Server 5.2 Patch 2 (built
+ Jul 14 2004)) with SMTP id <0J9P00JCTXVIOZ@smtp17.wxs.nl> for
+ git@vger.kernel.org; Sun, 03 Dec 2006 23:16:31 +0100 (CET)
+Received: (qmail 14027 invoked by uid 500); Sun, 03 Dec 2006 22:16:30 +0000
+To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 
-Hi,
-
-On Wed, 6 Dec 2006, Josef Weidendorfer wrote:
-
-> On Wednesday 06 December 2006 13:07, Andy Parkins wrote:
-> > The [branch "master"] section is such that there is no change to the
-> > functionality of git-pull, but that functionality is now explicitly
-> > documented.
+On Fri, Dec 01, 2006 at 04:12:10PM -0800, Linus Torvalds wrote:
+> So within the supermodule, on a "git object" level, a submodule should 
+> just be named by the SHA1 that was it's HEAD when it was committed within 
+> the supermodule. So in the "tree object", you'd see something like the 
+> following when you go "git ls-tree HEAD" on the superproject:
 > 
-> Nice. However, changing "git-clone" for this is an adhoc solution and 
-> looks wrong.
+> 	...
+> 	100644 blob 08602f522183dc43787616f37cba9b8af4e3dade	xdiff-interface.c
+> 	100644 blob 1346908bea31319aabeabdfd955e2ea9aab37456	xdiff-interface.h
+> 	040000 tree 959dd5d97e665998eb26c764d3a889ae7903d9c2	xdiff
+> 	050000 link 0215ffb08ce99e2bb59eca114a99499a4d06e704	xyzzy
+> 
+> where that 050000 is the new magic type (I picked one out of my *ss: it's 
+> not a valid type for a file mode, so it's a godo choice, but it could be 
+> anythign that cannot conflict with a real file), which just specifies the 
+> "link" part. The SHA1 is the SHA1 of the commit, and the "xyzzy" is 
+> obviously just the name within the directory of the submodule.
+> 
+> That's all that is actually required for a lot of git commands that 
+> already expect all objects to be available (ie "git checkout", "git diff" 
+> etc).
 
-Not to me. There is _no_ other place to put this, if you want to help 
-people graps the concept of branch.*.merge.
+But is this object (and all the objects it points to) going to be
+available (in the superproject) ?
+The following seems to suggest that you think they shouldn't.
+How is fsck-objects then going to check that such an object is
+valid ?  Is it going to call fsck-objects recursively on the
+(available) submodules ?
 
-Ciao,
-Dscho
+On Fri, Dec 01, 2006 at 03:30:32PM -0800, Linus Torvalds wrote:
+> The only thing that a submodule must NOT be allowed to do on its own is 
+> pruning (and it's distant cousin "git repack -d").
+
+How are you going to enforce this if the submodule isn't supposed
+to know that it is being used as a submodule ?
+
+> You must always prune 
+> from the supermodule, because the submodule cannot really know on its own 
+> what references point into it.
+
+How is one of the supermodules going to know what references from other
+supermodules containing the submodule point into the submodule ?
+
