@@ -2,128 +2,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [PATCH] Allow hand-editing of patches before sending
-Date: Sun, 5 Nov 2006 12:43:53 +0100
-Message-ID: <20061105114353.GB19707@diana.vm.bytemark.co.uk>
-References: <20061101090046.1107.81105.stgit@localhost> <b0943d9e0611020232x1e343bbco9451c8183c84d68@mail.gmail.com> <20061102113631.GA30507@diana.vm.bytemark.co.uk> <b0943d9e0611030139i7be9569bh4a29596a768e82a3@mail.gmail.com> <20061103095859.GC16721@diana.vm.bytemark.co.uk> <20061103100142.GD16721@diana.vm.bytemark.co.uk> <454B30E4.8000909@shadowen.org> <454B4C43.2040607@shadowen.org> <Pine.LNX.4.64.0611031034520.25218@g5.osdl.org>
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: Thoughts about memory requirements in traversals [Was: Re: [RFC] Submodules in GIT]
+Date: Sun, 3 Dec 2006 03:07:26 +0100
+Message-ID: <200612030307.26429.Josef.Weidendorfer@gmx.de>
+References: <20061130170625.GH18810@admingilde.org> <Pine.LNX.4.64.0612021242080.3476@woody.osdl.org> <Pine.LNX.4.64.0612021252380.3476@woody.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Sun, 5 Nov 2006 11:44:26 +0000 (UTC)
-Cc: Andy Whitcroft <apw@shadowen.org>,
-	Catalin Marinas <catalin.marinas@gmail.com>,
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Sun, 3 Dec 2006 02:07:58 +0000 (UTC)
+Cc: Martin Waitz <tali@admingilde.org>, sf <sf-gmane@stephan-feder.de>,
 	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+X-Authenticated: #352111
+User-Agent: KMail/1.9.3
+In-Reply-To: <Pine.LNX.4.64.0612021252380.3476@woody.osdl.org>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0611031034520.25218@g5.osdl.org>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30973>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33082>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GggQB-0003KM-SZ for gcvg-git@gmane.org; Sun, 05 Nov
- 2006 12:44:16 +0100
+ esmtp (Exim 4.43) id 1Gqgle-0008Ay-7t for gcvg-git@gmane.org; Sun, 03 Dec
+ 2006 03:07:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932668AbWKELoM convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Sun, 5 Nov 2006 06:44:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932669AbWKELoM
- (ORCPT <rfc822;git-outgoing>); Sun, 5 Nov 2006 06:44:12 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:10515 "EHLO
- diana.vm.bytemark.co.uk") by vger.kernel.org with ESMTP id S932668AbWKELoL
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 5 Nov 2006 06:44:11 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1
- (Debian)) id 1GggPp-0005Le-00; Sun, 05 Nov 2006 11:43:54 +0000
+ S933420AbWLCCHb (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 2 Dec 2006
+ 21:07:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936614AbWLCCHb
+ (ORCPT <rfc822;git-outgoing>); Sat, 2 Dec 2006 21:07:31 -0500
+Received: from mail.gmx.net ([213.165.64.20]:34231 "HELO mail.gmx.net") by
+ vger.kernel.org with SMTP id S933420AbWLCCHa (ORCPT
+ <rfc822;git@vger.kernel.org>); Sat, 2 Dec 2006 21:07:30 -0500
+Received: (qmail invoked by alias); 03 Dec 2006 02:07:28 -0000
+Received: from p5496BAA4.dip0.t-ipconnect.de (EHLO noname) [84.150.186.164]
+ by mail.gmx.net (mp040) with SMTP; 03 Dec 2006 03:07:28 +0100
 To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 
-On 2006-11-03 10:48:49 -0800, Linus Torvalds wrote:
-
-> If your ISP mailer doesn't answer with "8BITMIME" to your EHLO, your
-> mail client is supposed to downgrade to a 7-bit format (or the same
-> thing can happen anywhere in between on one of the other hops). Of
-> course, that would be a really old and broken mailer, and if you
-> find one of those at the ISP you use, you should probably switch
-> ISPs.
+On Saturday 02 December 2006 22:22, Linus Torvalds wrote:
+> So operations like "git-rev-list --objects" (or, these days, more commonly 
+> anything that just does the equivalent of that internally using the 
+> library interfaces - ie "git pack-objects" and friends) VERY FUNDAMENTALLY 
+> have to hold on to the object flags for the whole lifetime of the whole 
+> operation.
 >
-> Some other mailers have other issues, and qmail for example is
-> apparently totally broken (it accepts 8-bit input, but cannot
-> forward it properly to somebody who wants it converted to 7-bit).
->
-> And some of us use "fetchmail" and ask it do do mimedecode for us,
-> so that even if it arrived as 7-bit crud, we don't have to see it.
-> So the fact that some people see it as 8-bit can be because the hops
-> to them didn't involve a broken remailer, but it could also be
-> because something in between (like fetchmail) tries to fix it up
-> after the fact.
->
-> That said: it tends to be unusual to see true 7-bit mailer setups
-> these days.
->
-> So the most _likely_ cause of unnecessary 7-bit QP crud is not in
-> fact a 7-bit mailserver, but usually just the mail client that is
-> just lazy and just sends out everything as 7-bit because it's too
-> bothersome to even look at whether the mail server supports 8-bit
-> data. Check your Thunderbird settings - it's quite possible that
-> there's a flag there somewhere to turn on 8-bit mail transfers.
+> [...]
+> 
+> So this really isn't a memory management issue. You could somewhat work 
+> around it by adding a "caching layer" on top of git, and allow that 
+> caching layer to modify their cache of old objects (so that they can 
+> contain back-pointers), but for 99% of all users that would actually make 
+> performance MUCH WORSE, and it would also be a serious problem for 
+> coherency issues (one of the things that immutable objects cause is that 
+> there are basically never any race conditions, while a "caching layer" 
+> like this would have some serious issues about serialization).
 
-So the right thing to do would be to teach StGIT to generate
-8bit-encoded output, and trust the SMTP transfer path do mangle it
-correctly? (Hmm. No, since StGIT talks directly with the first SMTP
-server in the chain, it needs to be able to QP-encode the mail itself
-if necessary -- but it should seldom be necessary, then.)
+Thinking about this...
+You have to make very sure to always update the caching layer containing
+the backlinks on every addition of a further object. You can do this
+because you always reached this new object by some other object, which
+exactly is the backpointer.
 
-In that case, the problem with the current implementation (without my
-patch applied) is likely to be that it fails to provide the headers
-needed for the SMTP path to be able to transform it losslessly.
+Now let us suppose we are able to do this.
+What does this give us?
 
-[ ... digs through old mail ... ]
+Take a look at object traversal:
+We have to store the flag "already visited" for objects we could reach
+again in the traversal. But with the backlinks, we can see that most
+of the objects can only be reached via one path, and therefore, there
+is no need to store the flag, as it never will be queried in the
+further traversal.
+(Similar for objects with two paths: When you have visited the object
+two times, you can throw away the flag, as it is not queried any more).
 
-This is the interesting part of such a mail that was sent from my
-computer, passed through the list, and ended up back at my computer
-again:
+Regarding the caching layer and object traversal, it would have been
+enough to only store "is this object reachable via more than 1 path?".
+For this, the "cache" could be the set of objects reachable with
+more than one path.
+And such a set stored in a file should be quite managable, and be
+quite small, relative to the size of the object database.
 
-  Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpa=
-nd
-          id S1750700AbWJVMCV (ORCPT <rfc822;kha-list-git@hemma.treskal=
-=2Ecom>);
-          Sun, 22 Oct 2006 08:02:21 -0400
-  X-Warning: Original message contained 8-bit characters, however durin=
-g
-             the SMTP transport session the receiving system did not an=
-nounce
-             capability of receiving 8-bit SMTP (RFC 1651-1653), and as=
- this
-             message does not have MIME headers (RFC 2045-2049) to enab=
-le
-             encoding change, we had very little choice.
-  X-Warning: We ASSUME it is less harmful to add the MIME headers, and
-             convert the text to Quoted-Printable, than not to do so,
-             and to strip the message to 7-bits.. (RFC 1428 Appendix A)
-  X-Warning: We don't know what character set the user used, thus we ha=
-d to
-             write these MIME-headers with our local system default val=
-ue.
-  MIME-Version: 1.0
-  Content-Transfer-Encoding: QUOTED-PRINTABLE
-  Content-Type: TEXT/PLAIN; charset=3DISO-8859-1
-  Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751780A=
-bWJVMCV
-          (ORCPT <rfc822;git-outgoing>); Sun, 22 Oct 2006 08:02:21 -040=
-0
+In fact, this "cache" can be created with a usual object traversal
+(which has the original memory requirement), but as long as we do
+not add objects to the database, further traversals would only need
+a fraction of memory.
 
-The mail server (vger talking to itself, if the Received: headers were
-added in order) complained that there were no MIME headers, so it had
-to guess the charset. As it happened, it guessed wrong, so the
-non-ascii characters of the mail body was garbled.
+When only adding a small number of objects, it should be easy to
+update the cache; while with big actions like fetching/pulling,
+we simply should remove the file with the backlink information.
 
-My stab at fixing this was to make StGIT QP-encode the mail from the
-outset, but if I've not misunderstood things yet again, the actual
-problem was that StGIT did not produce the right MIME headers.
+> problem. In fact, O(n) is pretty damn good, especially since the constant 
+> is pretty small (basically 28 bytes per object - and 20 of those bytes 
+> are the SHA1 that you simply cannot avoid).
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
+Again only some thoughts...
+Pack files are fully self-contained object stores, yes?
+So in the scope of a single pack file, the offset of this object is enough
+as object identification.
+If we could make sure that in any given algorithm touching objects, like
+commit traversal, we always have the offset available when we need to do
+an object lookup, then, it should be enough to store object flags only
+indexed by the offset of this object in the pack.
+The translation SHA1 -> offset can be done with the pack index.
+As you usually have multiple packs, a (pack number / offset) tuple should
+be enough as object ID.
+
+Thinking even one step further:
+Would it make sense to define an encoding format for the content of
+commit and tree objects inside of packs, where the SHA1 is replaced by the
+offset of the object in this pack?
+As exactly the SHA1 is the least compressable thing, this could promise
+quite a benefit.
+AFAIK, we currently only use these offsets for referencing objects in
+delta chains.
+
+More about the original topic of this thread (and off-topic to the
+new subject):
+
+> But it does mean that supermodules really should NOT be so seamless that 
+> doing a "git clone" on a supermodule does one _large_ clone. Because it's 
+> simply going to be better to:
+> 
+>  - when you clone the supermodule, track the commits you need on all 
+>    submodules (this _may_ be a reason in itself for the "link" object, 
+>    just so that you can traverse the supermodule object dependencies and 
+>    know what subobject you are looking at even _without_ having to look at 
+>    the path you got there from)
+> 
+>  - clone submodules one-by-one, using the list of objects you gathered.
+
+Without submodule identities, we would have to clone path-by-path, as
+we can not distinguish different submodules apart from there location.
+
