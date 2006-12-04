@@ -1,79 +1,107 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [RFC] Submodules in GIT
-Date: Fri, 01 Dec 2006 10:33:05 +0100
-Message-ID: <456FF6D1.4040500@op5.se>
-References: <20061121223130.GA24909@nan92-1-81-57-214-146.fbx.proxad.net> <20061130170625.GH18810@admingilde.org> <456F29A2.1050205@op5.se> <200612010849.11176.andyparkins@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [RFC] gitweb: Add committags support (take 2)
+Date: Mon, 04 Dec 2006 02:53:17 -0800
+Message-ID: <7vmz64ortu.fsf@assigned-by-dhcp.cox.net>
+References: <200612040001.13640.jnareb@gmail.com>
+	<7virgstmg6.fsf@assigned-by-dhcp.cox.net>
+	<200612041133.44816.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Fri, 1 Dec 2006 09:33:49 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Mon, 4 Dec 2006 10:53:32 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
-In-Reply-To: <200612010849.11176.andyparkins@gmail.com>
+In-Reply-To: <200612041133.44816.jnareb@gmail.com> (Jakub Narebski's message
+	of "Mon, 4 Dec 2006 11:33:44 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32880>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gq4li-0005sR-KB for gcvg-git@gmane.org; Fri, 01 Dec
- 2006 10:33:18 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33186>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GrBRw-0001kj-89 for gcvg-git@gmane.org; Mon, 04 Dec
+ 2006 11:53:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1759287AbWLAJdP (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
- 04:33:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759286AbWLAJdO
- (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 04:33:14 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:57737 "EHLO
- smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1759287AbWLAJdO (ORCPT
- <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 04:33:14 -0500
-Received: from [192.168.1.20] (unknown [213.88.215.14]) by smtp-gw1.op5.se
- (Postfix) with ESMTP id 0E2FE6BCC2; Fri,  1 Dec 2006 10:33:09 +0100 (CET)
-To: Andy Parkins <andyparkins@gmail.com>
+ S935842AbWLDKxZ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
+ 05:53:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935868AbWLDKxZ
+ (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 05:53:25 -0500
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:42725 "EHLO
+ fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP id S935842AbWLDKxY
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006 05:53:24 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao08.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061204105319.GAML18207.fed1rmmtao08.cox.net@fed1rmimpo01.cox.net>; Mon, 4
+ Dec 2006 05:53:19 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id uasi1V00M1kojtg0000000; Mon, 04 Dec 2006
+ 05:52:43 -0500
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Andy Parkins wrote:
-> On Thursday 2006 November 30 18:57, Andreas Ericsson wrote:
-> 
-> (agree with everything in your mail)
-> 
->> The only problem I'm seeing atm is that the supermodule somehow has to
->> mark whatever commits it's using from the submodule inside the submodule
->> repo so that they effectively become un-prunable, otherwise the
->> supermodule may some day find itself with a history that it can't restore.
-> 
-> What about submodule/.git/refs/supermodule/commit12345678, where "12345678" is 
-> the hash of the supermodule commit?  This gives a convenient route in the 
-> submodule to which commit contains that commit from the submodule; but 
-> doesn't write anything into the submodule repository itself.  It's just a tag 
-> with a different intent.
-> 
+Jakub Narebski <jnareb@gmail.com> writes:
 
-True, but this makes one repo of the submodule special. Let's say you 
-have this layout
+> I have one gripe about "git-cat-file -t". I'd like it to have 
+> -q/--quiet, -s/--silent, --hush (or --dont-spew-errors-on-stdout)
+> which would prohibit writing "object not found" errors on stderr
+> (and in gitweb case to webserver logs). I know I can use "git-cat-file -e"
+> to check if object exists, or modify git_get_type subroutine
+>
+>   # get type of given object
+>   sub git_get_type {
+> 	my $hash = shift;
+>   	my $git_command = git_cmd_str();
+>   
+>   	open my $fd, "-|",
+>   		"$git_command cat-file -t $hash 2>/dev/null"
+>   		or return '';
 
-mozilla/.git
-mozilla/openssl/.git
-mozilla/xlat/.git
+It is one thing if you tend to randomly throw garbage at this
+function and use it to check for object's existence, but I hope
+you are already checking the user input (which is what $hash is,
+I think, here), and the object is supposed to exist in the
+repository you are looking at.  In such a case, I think you and
+your server administrator have right to know about that
+situation; I do not see why you would want to squelch it.
 
-Now, we can be reasonably sure that the 'xlat' repo is something the 
-mozilla core team can push to, or at least we can consider the core repo 
-owners an official "vendor" of tags for the submodule repo. I'm fairly 
-certain openssl authors won't be too happy with allowing the thousands 
-of projects using its code to push tags to its official repo though.
+>> I do not know how this %committags{} is used per project.  With
+>> a setting like repo.or.cz, it is likely that one instance of
+>> gitweb is serving unrelated projects that have their issue
+>> tracker at different locations using different "committags"
+>> convention.  Is the idea to eventually allow enabling/disabling
+>> elements from the global %committags per repository somehow
+>> (perhaps not just enable/disable but even overriding patterns or
+>> parameters)?
+>
+> I have thought about putting %committags and @committags before
+> loading config file
+>   do $GITWEB_CONFIG if -e $GITWEB_CONFIG;
+> which can load config file depending on the project, but perhaps
+> it is too complicated solution.
 
-Now that I think about it more, I realize this is completely irrelevant 
-as the ui can create the tags in the submodule with info only from the 
-the supermodule, which means the submodule repo will only be special if 
-it's connected to the supermodule. We just need a command for creating 
-those tags in the submodule repo so people who use the same submodule 
-code for several projects can use the alternates mechanism effectively.
+I think you are talking about a gitweb-instance wide
+customization, but that's not what I meant.  I meant per-project
+configuration where w/git-gui.git and w/git.git are served by
+the same instance of gitweb but have pointers to different issue
+trackers.
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
+>>> 3. To not split message into many fragments we concatenate strings
+>>> if possible.
+>> 
+>> I do not know why "avoiding splits" is needed, if it raises 
+>> issues that you need to ask the list about in a message like
+>> this...
+>
+> "Avoiding splits" is needed first for performance, and second to
+> avoid situation where pattern would match on the boundary between
+> two strings in a list of tokens to process.
+
+I wouldn't know if constantly splitting and then concatenating
+is faster than just concatenatting once before output without
+benchmarking, so I'd refrain from talking about performance.
+Two string case may be a valid concern, though.
