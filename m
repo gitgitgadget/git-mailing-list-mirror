@@ -1,119 +1,71 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Re: Some tips for doing a CVS importer
-Date: Mon, 20 Nov 2006 20:53:15 -0500
-Message-ID: <9e4733910611201753m392b5defpb3eb295a075be789@mail.gmail.com>
-References: <9e4733910611201349s4d08b984g772c64982f148bfa@mail.gmail.com>
-	 <46a038f90611201503m6a63ec8ct347026c635190108@mail.gmail.com>
-	 <9e4733910611201537h30b6c9f4oee9d8df75284c284@mail.gmail.com>
-	 <46a038f90611201629o39f11f42ye07b86159360b66e@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [ANNOUNCE] gitfs pre-release 0.04
+Date: Mon, 04 Dec 2006 20:40:38 +0100
+Organization: At home
+Message-ID: <el1tg0$n07$1@sea.gmane.org>
+References: <20061204194011.GW47959@gaz.sfgoth.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Tue, 21 Nov 2006 01:53:27 +0000 (UTC)
-Cc: "Git Mailing List" <git@vger.kernel.org>
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Mon, 4 Dec 2006 19:40:27 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=BPQmEAXxB2276eAX1SbHmZs56Lqu6nLIu+eSFeSMjeKj5kfYSCtD8NOchv0XDkmVvZ7nb8kLFUCMdSsoD03oYrJ72rbQivlhduuC3Q3rYEZQZ0TjoVLG7vjZ3N8wwkVdy0bzCWOCdEh5XbX4yuUjK+7KaGvaN9c1WyICVlpULBc=
-In-Reply-To: <46a038f90611201629o39f11f42ye07b86159360b66e@mail.gmail.com>
-Content-Disposition: inline
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 16
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31969>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GmKp7-0007S4-53 for gcvg-git@gmane.org; Tue, 21 Nov
- 2006 02:53:21 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33228>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GrJfk-0000K7-F1 for gcvg-git@gmane.org; Mon, 04 Dec
+ 2006 20:40:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1030637AbWKUBxQ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 20 Nov 2006
- 20:53:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030651AbWKUBxQ
- (ORCPT <rfc822;git-outgoing>); Mon, 20 Nov 2006 20:53:16 -0500
-Received: from wx-out-0506.google.com ([66.249.82.238]:23183 "EHLO
- wx-out-0506.google.com") by vger.kernel.org with ESMTP id S1030637AbWKUBxP
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 20 Nov 2006 20:53:15 -0500
-Received: by wx-out-0506.google.com with SMTP id s7so1998372wxc for
- <git@vger.kernel.org>; Mon, 20 Nov 2006 17:53:15 -0800 (PST)
-Received: by 10.90.80.8 with SMTP id d8mr4416172agb.1164073995172; Mon, 20
- Nov 2006 17:53:15 -0800 (PST)
-Received: by 10.35.72.13 with HTTP; Mon, 20 Nov 2006 17:53:15 -0800 (PST)
-To: "Martin Langhoff" <martin.langhoff@gmail.com>
+ S937319AbWLDTkN convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006 14:40:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759457AbWLDTkM
+ (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 14:40:12 -0500
+Received: from main.gmane.org ([80.91.229.2]:39992 "EHLO ciao.gmane.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1759442AbWLDTkK
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006 14:40:10 -0500
+Received: from root by ciao.gmane.org with local (Exim 4.43) id
+ 1GrJfW-0007ga-3z for git@vger.kernel.org; Mon, 04 Dec 2006 20:40:03 +0100
+Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Mon, 04 Dec 2006 20:40:02 +0100
+Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Mon, 04 Dec 2006
+ 20:40:02 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On 11/20/06, Martin Langhoff <martin.langhoff@gmail.com> wrote:
-> On 11/21/06, Jon Smirl <jonsmirl@gmail.com> wrote:
-> > > I gather this means that the cvs2svn track hasn't been as productive
-> > > as expected. Any remaining/unsolvable issues with it? I have been
-> > > chronically busy on my e-learning projects, but don't discard coming
-> > > back to this when I have some time.
-> >
-> > Look in this thread
-> > [Fwd: Re: What's in git.git]
-> >
-> > There is a message in there that explains a problem that the cvs2svn
-> > people aren't going to fix and it kills git.
->
-> I see - thanks for the pointer. Sorry to hear others in the Moz
-> project weren't so keen on hearing about alternatives to SVN. Long
-> term only something like GIT seems viable for such a large project (in
-> terms of community, branches/subprojects and codebase).
->
-> Two remaining questions
->  - Where can I get your latest code? :-)
+Mitchell Blank Jr wrote:
 
-I gave up on my cvs2git code, cvs2svn has been refactored so badly
-that it was too much trouble tracking. It would be easier to write it
-again. Most of the smarts from the import process is in the
-git-fastimport code which Shawn has. cvs2svn underwent a major
-algorithm change after I wrote the first version of git2svn.
+> =A0 * At the top of each tree there's now a synthetic ".git" director=
+y
+> =A0 =A0 which includes some symlinks and a "HEAD" file that points to
+> =A0 =A0 the currently viewed root. =A0The idea is to allow some simpl=
+e git
+> =A0 =A0 commands to work inside of a gitfs directory. =A0Unfortunatel=
+y this doesn't
+> =A0 =A0 work yet since git no longer recognizes a non-symbolic ref in=
+ "HEAD".
+> =A0 =A0 I'll try to work around this soon.
 
-I can probably find the code if you really want it, but it will be
-leading you off in the wrong direction.
+Not true. Symlink HEAD still works, and we have even core.preferSymlink=
+Refs
+configuration variable.
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
 
->  - I gather the moz cvs repo has some cases that require getting the
-> symbol resolution right. Could this be performed as an extra pass /
-> task?
-
-Processing the symbols is integral to deciding how to build the change
-sets. Right now cvs2svn ignores the symbol dependency information and
-builds the change sets in a way that forces the mini-branches. That
-causes 60% of the 2,000 symbols in Mozilla CVS to end up as little
-branches. Look at the three commit example in the other thread to see
-exactly what the problem is.
-
-SVN hides the mini branch by creating a symbol like this:
-
-Symbol XXX, change set 70
-copy All from change set 50
-copy file A from change set 55
-copy file B,C from change set 60
-copy file D from change set 61
-copy file E,F,G from change set 63
-copy file H from change set 67
-
-It has to do all of those copies because the change sets weren't
-constructed while taking symbol dependency information into account.
-
-Symbol XXX can't copy from change set 69 because commits from after
-the symbol was created are included in change sets 51-69.
-
-> Eventually the Moz crowd will outgrow SVN - perhaps we should be
-> parsing the SVN dump format instead ;-)
->
-> cheers,
->
->
-> martin
->
-
-
--- 
-Jon Smirl
