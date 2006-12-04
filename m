@@ -1,68 +1,81 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: cloning the kernel - why long time in "Resolving 313037 deltas"
-Date: Tue, 19 Dec 2006 08:57:29 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0612190855300.3479@woody.osdl.org>
-References: <Pine.LNX.4.64.0612181251020.3479@woody.osdl.org>
- <86r6uw9azn.fsf@blue.stonehenge.com> <Pine.LNX.4.64.0612181625140.18171@xanadu.home>
- <86hcvs984c.fsf@blue.stonehenge.com> <Pine.LNX.4.64.0612181414200.3479@woody.osdl.org>
- <8664c896xv.fsf@blue.stonehenge.com> <Pine.LNX.4.64.0612181511260.3479@woody.osdl.org>
- <Pine.LNX.4.64.0612181906450.18171@xanadu.home> <20061219051108.GA29405@thunk.org>
- <20061219063930.GA2511@spearce.org> <20061219161919.GA16980@thunk.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: On removing files and "git-rm is pointless"
+Date: Mon, 04 Dec 2006 11:48:42 +0100
+Organization: At home
+Message-ID: <el0uaf$n7h$1@sea.gmane.org>
+References: <87odqm2ppv.wl%cworth@cworth.org> <Pine.LNX.4.64.0612020919400.3476@woody.osdl.org> <4571DB40.6020800@vilain.net> <Pine.LNX.4.64.0612022246310.2630@xanadu.home> <7vd570q888.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Tue, 19 Dec 2006 16:58:07 +0000 (UTC)
-Cc: Shawn Pearce <spearce@spearce.org>, Nicolas Pitre <nico@cam.org>,
-	"Randal L. Schwartz" <merlyn@stonehenge.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+NNTP-Posting-Date: Mon, 4 Dec 2006 10:46:56 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061219161919.GA16980@thunk.org>
-X-MIMEDefang-Filter: osdl$Revision: 1.163 $
-X-Scanned-By: MIMEDefang 2.36
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 31
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34835>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33184>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GwiHt-0005UU-SB for gcvg-git@gmane.org; Tue, 19 Dec
- 2006 17:57:58 +0100
+ esmtp (Exim 4.50) id 1GrBLZ-00015B-7S for gcvg-git@gmane.org; Mon, 04 Dec
+ 2006 11:46:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932839AbWLSQ5l (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
- 11:57:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932840AbWLSQ5l
- (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 11:57:41 -0500
-Received: from smtp.osdl.org ([65.172.181.25]:45638 "EHLO smtp.osdl.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S932839AbWLSQ5k
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec 2006 11:57:40 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
- smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kBJGvVoQ017729
- (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Tue, 19
- Dec 2006 08:57:31 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
- shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kBJGvTkU003531; Tue, 19 Dec
- 2006 08:57:30 -0800
-To: Theodore Tso <tytso@mit.edu>
+ S935699AbWLDKqu (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
+ 05:46:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935728AbWLDKqu
+ (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 05:46:50 -0500
+Received: from main.gmane.org ([80.91.229.2]:18884 "EHLO ciao.gmane.org") by
+ vger.kernel.org with ESMTP id S935699AbWLDKqt (ORCPT
+ <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006 05:46:49 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1GrBLT-0005WL-Mw for git@vger.kernel.org; Mon, 04 Dec 2006 11:46:47 +0100
+Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Mon, 04 Dec 2006 11:46:47 +0100
+Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Mon, 04 Dec 2006
+ 11:46:47 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
+Junio C Hamano wrote:
 
-
-On Tue, 19 Dec 2006, Theodore Tso wrote:
+> Nicolas Pitre <nico@cam.org> writes:
 > 
-> So the main reason to use mamp, as Linus puts it, is if the management
-> overhead of needing to read lots of small bits of the file makes the
-> use of malloc/read to be a pain in the *ss, then go for it.
+>> I think what Linus is proposing makes tons of sense.
+>>
+>> If you do git rm by mistake then you can always do git checkout on that
+>> file to get it back.
+>>
+>> If you modified it so it doesn't match the index then git rm won't do
+>> anything by default so you have a chance to think a bit more.
+>>
+>> If you updated the index, didn't commit anything but then do git rm then
+>> you certainly wanted to really rm the file.
+> 
+> FWIW, I too am in favor of the proposed fix to "git rm" as Linus
+> outlined.
 
-An example of this in git is the regular pack-file accesses. We're MUCH 
-better off just mmap'ing the whole pack-file (or at least big chunks of 
-it) and not having to maintain difficult structures of "this is where I 
-read that part of the file into memory", or read _big_ chunks when 
-quite often we just use a few kB of it.
++1. I'm also for this change. Of course if the working area version doesn't
+match HEAD version git-rm should remove only index entry, and print warning
+message, for example what it does now, i.e.
+  rm '<filename>'
+or if we want more chatty version (core.gitgor = true) it would print:
+  File '<filename>' changed. Use "rm '<filename>'" to remove.
+(or something like that).
 
-So mmap for pack-files does make sense, but probably only when you can 
-mmap big chunks, and are going to access much smaller (random) parts of 
-it.
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
 
