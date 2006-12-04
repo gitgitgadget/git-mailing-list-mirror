@@ -4,56 +4,81 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: git-pull from git.git - no remote ref for pu or next?
-Date: Tue, 12 Dec 2006 11:13:29 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0612121111510.3535@woody.osdl.org>
-References: <863b7l83o9.fsf@blue.stonehenge.com> <86y7pd6oz7.fsf@blue.stonehenge.com>
- <Pine.LNX.4.64.0612120949230.3535@woody.osdl.org>
- <Pine.LNX.4.63.0612121908100.2807@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0612121021270.3535@woody.osdl.org> <Pine.LNX.4.64.0612121400530.18171@xanadu.home>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: Re: latest update to git-svn blows up for me
+Date: 04 Dec 2006 12:10:50 -0800
+Message-ID: <86odqjl8vp.fsf@blue.stonehenge.com>
+References: <863b7wnwcw.fsf@blue.stonehenge.com>
+	<20061204070021.GG1369@localdomain>
+	<86hcwbnb0o.fsf@blue.stonehenge.com> <20061204181241.GA27342@soma>
+	<86zma3lahj.fsf@blue.stonehenge.com> <20061204195452.GB27342@soma>
+	<86slfvl95j.fsf@blue.stonehenge.com>
+	<20061204200844.GC30316@hand.yhbt.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Tue, 12 Dec 2006 19:13:46 +0000 (UTC)
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	"Randal L. Schwartz" <merlyn@stonehenge.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Mon, 4 Dec 2006 20:11:34 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <Pine.LNX.4.64.0612121400530.18171@xanadu.home>
-X-MIMEDefang-Filter: osdl$Revision: 1.162 $
-X-Scanned-By: MIMEDefang 2.36
+x-mayan-date: Long count = 12.19.13.15.11; tzolkin = 5 Chuen; haab = 4 Mac
+In-Reply-To: <20061204200844.GC30316@hand.yhbt.net>
+Original-Lines: 34
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34130>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33238>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GuD4P-00087b-IW for gcvg-git@gmane.org; Tue, 12 Dec
- 2006 20:13:41 +0100
+ esmtp (Exim 4.50) id 1GrK9m-0005Aw-Pd for gcvg-git@gmane.org; Mon, 04 Dec
+ 2006 21:11:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932364AbWLLTNi (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 12 Dec 2006
- 14:13:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932376AbWLLTNi
- (ORCPT <rfc822;git-outgoing>); Tue, 12 Dec 2006 14:13:38 -0500
-Received: from smtp.osdl.org ([65.172.181.25]:59687 "EHLO smtp.osdl.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S932364AbWLLTNh
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 12 Dec 2006 14:13:37 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
- smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kBCJDVID012526
- (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Tue, 12
- Dec 2006 11:13:31 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
- shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kBCJDT62012754; Tue, 12 Dec
- 2006 11:13:30 -0800
-To: Nicolas Pitre <nico@cam.org>
+ S966640AbWLDULH (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
+ 15:11:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966611AbWLDULG
+ (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 15:11:06 -0500
+Received: from blue.stonehenge.com ([209.223.236.162]:5903 "EHLO
+ blue.stonehenge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S937362AbWLDULE (ORCPT <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006
+ 15:11:04 -0500
+Received: from localhost (localhost [127.0.0.1]) by blue.stonehenge.com
+ (Postfix) with ESMTP id 521D38F3F6; Mon,  4 Dec 2006 12:10:51 -0800 (PST)
+Received: from blue.stonehenge.com ([127.0.0.1]) by localhost
+ (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024) with LMTP id
+ 27297-01-81; Mon,  4 Dec 2006 12:10:50 -0800 (PST)
+Received: by blue.stonehenge.com (Postfix, from userid 1001) id 8F0838F3F1;
+ Mon,  4 Dec 2006 12:10:50 -0800 (PST)
+To: Eric Wong <normalperson@yhbt.net>
 Sender: git-owner@vger.kernel.org
 
+>>>>> "Eric" == Eric Wong <normalperson@yhbt.net> writes:
 
+Eric> "Randal L. Schwartz" <merlyn@stonehenge.com> wrote:
+>> >>>>> "Eric" == Eric Wong <normalperson@yhbt.net> writes:
+>> 
+Eric> Can you try:
+>> 
+Eric> git update-ref refs/remotes/git-svn \
+Eric> <last commit successfully imported from git-svn>
+>> 
+Eric> and running rebuild again?
+>> 
+>> Yes, and now after seeing 14000 lines scroll by, I tried again:
 
-On Tue, 12 Dec 2006, Nicolas Pitre wrote:
-> 
-> Maybe object sharing between repos could be a good idea too?
+Eric> <snip>
 
-We often do. Many people have used "git clone -s -l", and as long as you 
-repack with the "-l" flag too, the object sharing actually increases over 
-time as the base repo gets repacked and the cloned repo keeps using the 
-growing base pack..
+>> Anything you want me to try now?  I'm not in a fast net place (at
+>> least not for a week), so I can't rebuild from scratch.
 
+Eric> Which version of the SVN libraries are you using?
+
+SVN::Core is 1.4.2  - not sure what distro that comes from.
+
+Eric>   Also, are you
+Eric> tracking https://svn.perl.org/parrot/trunk or just
+Eric> https://svn.perl.org/parrot (top-level)
+
+http://svn.perl.org/parrot
+
+-- 
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
