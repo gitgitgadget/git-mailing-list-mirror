@@ -1,87 +1,61 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: kernel.org mirroring (Re: [GIT PULL] MMC update)
-Date: Sat, 9 Dec 2006 18:34:18 +1300
-Message-ID: <46a038f90612082134x38be9c8dgca6fe60c087bf100@mail.gmail.com>
-References: <Pine.LNX.4.64.0612020835110.3476@woody.osdl.org>
-	 <4578722E.9030402@zytor.com> <4579611F.5010303@dawes.za.net>
-	 <200612081438.25493.jnareb@gmail.com>
-	 <46a038f90612081728s65d65ccewe64fa1a496de76fa@mail.gmail.com>
-	 <457A1962.6000401@zytor.com>
-	 <46a038f90612081852u63e05da1qe57504636f3578fd@mail.gmail.com>
-	 <457A44ED.4080606@zytor.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: latest update to git-svn blows up for me
+Date: Mon, 4 Dec 2006 12:08:45 -0800
+Message-ID: <20061204200844.GC30316@hand.yhbt.net>
+References: <863b7wnwcw.fsf@blue.stonehenge.com> <20061204070021.GG1369@localdomain> <86hcwbnb0o.fsf@blue.stonehenge.com> <20061204181241.GA27342@soma> <86zma3lahj.fsf@blue.stonehenge.com> <20061204195452.GB27342@soma> <86slfvl95j.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sat, 9 Dec 2006 05:35:08 +0000 (UTC)
-Cc: "Jakub Narebski" <jnareb@gmail.com>,
-	"Rogan Dawes" <discard@dawes.za.net>,
-	"Linus Torvalds" <torvalds@osdl.org>,
-	"Kernel Org Admin" <ftpadmin@kernel.org>,
-	"Git Mailing List" <git@vger.kernel.org>,
-	"Petr Baudis" <pasky@ucw.cz>
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Mon, 4 Dec 2006 20:08:56 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=NdwaLS6ft0gOb+6AEGyNR8aXhP50O1QBhC7ySEa6N7VEPNrNZl78fQjowCqZPWqlU3fkDjKhOcFjoZxaJix/r/TW09l9Q9gr9cEMQ+MC0lfeaIoihtaCUn26mu04I7wbVrhUXGfH4hbeO6FZQHnjcxccin5+oYNBEQTJfKUx13I=
-In-Reply-To: <457A44ED.4080606@zytor.com>
 Content-Disposition: inline
+In-Reply-To: <86slfvl95j.fsf@blue.stonehenge.com>
+User-Agent: Mutt/1.5.9i
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33802>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33237>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GsurX-0000OR-OL for gcvg-git@gmane.org; Sat, 09 Dec
- 2006 06:35:04 +0100
+ esmtp (Exim 4.50) id 1GrK7R-0004lS-Ou for gcvg-git@gmane.org; Mon, 04 Dec
+ 2006 21:08:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1759007AbWLIFeV (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 9 Dec 2006
- 00:34:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759021AbWLIFeV
- (ORCPT <rfc822;git-outgoing>); Sat, 9 Dec 2006 00:34:21 -0500
-Received: from nf-out-0910.google.com ([64.233.182.191]:31288 "EHLO
- nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1759005AbWLIFeU (ORCPT <rfc822;git@vger.kernel.org>); Sat, 9 Dec
- 2006 00:34:20 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so1332783nfa for
- <git@vger.kernel.org>; Fri, 08 Dec 2006 21:34:18 -0800 (PST)
-Received: by 10.49.41.18 with SMTP id t18mr6452056nfj.1165642458485; Fri, 08
- Dec 2006 21:34:18 -0800 (PST)
-Received: by 10.49.60.1 with HTTP; Fri, 8 Dec 2006 21:34:18 -0800 (PST)
-To: "H. Peter Anvin" <hpa@zytor.com>
+ S966439AbWLDUIr (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
+ 15:08:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966599AbWLDUIq
+ (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 15:08:46 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:42015 "EHLO hand.yhbt.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S966439AbWLDUIp
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006 15:08:45 -0500
+Received: by hand.yhbt.net (Postfix, from userid 500) id 2DA0A2DC034; Mon,  4
+ Dec 2006 12:08:45 -0800 (PST)
+To: "Randal L. Schwartz" <merlyn@stonehenge.com>
 Sender: git-owner@vger.kernel.org
 
-On 12/9/06, H. Peter Anvin <hpa@zytor.com> wrote:
-> Martin Langhoff wrote:
-> > I posted separately about those. And I've been mulling about whether
-> > the thundering herd is really such a big problem that we need to
-> > address it head-on.
->
-> Uhm... yes it is.
+"Randal L. Schwartz" <merlyn@stonehenge.com> wrote:
+> >>>>> "Eric" == Eric Wong <normalperson@yhbt.net> writes:
+> 
+> Eric> Can you try:
+> 
+> Eric> git update-ref refs/remotes/git-svn \
+> Eric>   <last commit successfully imported from git-svn>
+> 
+> Eric> and running rebuild again?
+> 
+> Yes, and now after seeing 14000 lines scroll by, I tried again:
 
-Got some more info, discussion points or links to stuff I should read
-to appreciate why that is? I am trying to articulate why I consider it
-is not a high-payoff task, as well as describing how to tackle it.
+<snip>
 
-To recap, the reasons it is not high payoff is that:
+> Anything you want me to try now?  I'm not in a fast net place (at
+> least not for a week), so I can't rebuild from scratch.
 
- - the main benefit comes from being cacheable and able to revalidate
-the cache cheaply (with the ETags-based strategy discussed above)
- - highly distributed caches/proxies means we'll seldom see a true
-cold cache situation
- - we have a huge set of URLs which are seldom hit, and will never see
-a thundering anything
- - we have a tiny set of very popular URLs that are the key target for
-the thundering herd - (projects page, summary page, shortlog, fulllog)
-- but those are in the clear as soon as the caches are populated
+Which version of the SVN libraries are you using?  Also, are you
+tracking https://svn.perl.org/parrot/trunk or just
+https://svn.perl.org/parrot (top-level)
 
-Why do we have to take it head-on? :-)
-
-
-
+-- 
