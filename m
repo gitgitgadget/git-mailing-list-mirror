@@ -1,81 +1,93 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: kernel.org mirroring (Re: [GIT PULL] MMC update)
-Date: Thu, 7 Dec 2006 11:30:29 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0612071121410.3615@woody.osdl.org>
-References: <45708A56.3040508@drzeus.cx> <Pine.LNX.4.64.0612011639240.3695@woody.osdl.org>
- <457151A0.8090203@drzeus.cx> <Pine.LNX.4.64.0612020835110.3476@woody.osdl.org>
- <45744FA3.7020908@zytor.com> <Pine.LNX.4.64.0612061847190.3615@woody.osdl.org>
- <45778AA3.7080709@zytor.com> <Pine.LNX.4.64.0612061940170.3615@woody.osdl.org>
- <4577A84C.3010601@zytor.com> <Pine.LNX.4.64.0612070953290.3615@woody.osdl.org>
- <45785697.1060001@zytor.com> <Pine.LNX.4.64.0612071052560.3615@woody.osdl.org>
- <457868AA.2030605@zytor.com>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: Set permissions of each new file before "cvs add"ing it.
+Date: Mon, 4 Dec 2006 17:51:49 +0100
+Organization: Dewire
+Message-ID: <200612041751.49652.robin.rosenberg.lists@dewire.com>
+References: <87ac24zrk0.fsf@rho.meyering.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Thu, 7 Dec 2006 19:31:47 +0000 (UTC)
-Cc: Kernel Org Admin <ftpadmin@kernel.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jakub Narebski <jnareb@gmail.com>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Mon, 4 Dec 2006 16:49:56 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <457868AA.2030605@zytor.com>
-X-MIMEDefang-Filter: osdl$Revision: 1.162 $
-X-Scanned-By: MIMEDefang 2.36
+User-Agent: KMail/1.9.4
+In-Reply-To: <87ac24zrk0.fsf@rho.meyering.net>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new at dewire.com
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33612>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33203>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GsOy7-0006m2-A5 for gcvg-git@gmane.org; Thu, 07 Dec
- 2006 20:31:43 +0100
+ esmtp (Exim 4.50) id 1GrH0h-0006JI-FT for gcvg-git@gmane.org; Mon, 04 Dec
+ 2006 17:49:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S937999AbWLGTbk (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
- 14:31:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S938000AbWLGTbk
- (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 14:31:40 -0500
-Received: from smtp.osdl.org ([65.172.181.25]:59088 "EHLO smtp.osdl.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S937999AbWLGTbj
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec 2006 14:31:39 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
- smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kB7JUUID011754
- (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Thu, 7
- Dec 2006 11:30:40 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
- shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kB7JUT0h022691; Thu, 7 Dec
- 2006 11:30:30 -0800
-To: "H. Peter Anvin" <hpa@zytor.com>
+ S937131AbWLDQtb convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006 11:49:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937135AbWLDQtb
+ (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 11:49:31 -0500
+Received: from [83.140.172.130] ([83.140.172.130]:13119 "EHLO
+ torino.dewire.com" rhost-flags-FAIL-??-OK-FAIL) by vger.kernel.org with ESMTP
+ id S937131AbWLDQta convert rfc822-to-8bit (ORCPT
+ <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006 11:49:30 -0500
+Received: from localhost (localhost [127.0.0.1]) by torino.dewire.com
+ (Postfix) with ESMTP id 44EBC802ABB; Mon,  4 Dec 2006 17:45:41 +0100 (CET)
+Received: from torino.dewire.com ([127.0.0.1]) by localhost (torino
+ [127.0.0.1]) (amavisd-new, port 10024) with ESMTP id 28890-07; Mon,  4 Dec
+ 2006 17:45:40 +0100 (CET)
+Received: from [10.9.0.3] (unknown [10.9.0.3]) by torino.dewire.com (Postfix)
+ with ESMTP id E409F802AA9; Mon,  4 Dec 2006 17:45:38 +0100 (CET)
+To: Jim Meyering <jim@meyering.net>
 Sender: git-owner@vger.kernel.org
 
+s=F6ndag 03 december 2006 20:51 skrev Jim Meyering:
+> Without the following patch, git-cvsexportcommit would fail to propag=
+ate
+> permissions of files added in git to the CVS repository.  I.e., when =
+I
+> added an executable script in coreutils' git repo, then tried to prop=
+agate
+> that addition to the mirroring CVS repository, the script ended up ad=
+ded
+> not executable there.
 
+The patch to cvsexportcommit I sent a couple of weeks ago fixes the exe=
+cution=20
+bit, along with most other flaws. Jounio had some objections that I hav=
+en't=20
+fixed yet. Hacking the Eclipse plugin was much more fun :)
 
-On Thu, 7 Dec 2006, H. Peter Anvin wrote:
-> 
-> What it could do better is it could prevent multiple identical queries from
-> being launched in parallel.  That's the real problem we see; under high load,
-> Apache times out so the git query never gets into the cache; but in the
-> meantime, the common queries might easily have been launched 20 times in
-> parallel.  Unfortunately, the most common queries are also extremely
-> expensive.
+I added this test case just to verify it on top of my previous patch.=20
 
-Ahh. I'd have expected that apache itself had some serialization facility, 
-that would kind of go hand-in-hand with any caching.
+-- robin
 
-It really would make more sense to have anything that does caching 
-serialize the address that gets cached (think "page cache" layer in the 
-kernel: the _cache_ is also the serialization point, and is what 
-guarantees that we don't do stupid multiple reads to the same address).
+diff --git a/t/t9200-git-cvsexportcommit.sh b/t/t9200-git-cvsexportcomm=
+it.sh
+index 75b9f38..63eafc8 100755
+--- a/t/t9200-git-cvsexportcommit.sh
++++ b/t/t9200-git-cvsexportcommit.sh
+@@ -195,4 +195,19 @@ test_expect_success \
+       ! git-cvsexportcommit -c $id
+       )'
 
-I'm surprised that Apache can't do that. Or maybe it can, and it just 
-needs some configuration entry? I don't know apache.. I realize that 
-because Apache doesn't know before-hand whether something is cacheable or 
-not, it must probably _default_ to running the CGI scripts to the same 
-address in parallel, but it would be stupid to not have the option to 
-serialize.
-
-That said, from some of the other horrors I've heard about, "stupid" may 
-be just scratching at the surface.
-
++test_expect_success \
++     'Retain execute bit' \
++     'mkdir G &&
++      echo executeon >G/on &&
++      chmod +x G/on &&
++      echo executeoff >G/off &&
++      git add G/on &&
++      git add G/off &&
++      git commit -a -m "Execute test" &&
++      (cd "$CVSWORK" &&
++      git-cvsexportcommit -c HEAD
++      test -x G/on &&
++      ! test -x G/off
++      )'
++
