@@ -4,65 +4,60 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] make cg-commit --review restore original tree state afterwards
-Date: Fri, 27 Oct 2006 04:02:45 +0200
-Message-ID: <20061027020245.GX20017@pasky.or.cz>
-References: <20061021014723.B8E9C13810D@magnus.utsl.gen.nz> <4539EB15.3050405@vilain.net>
+From: Sven Verdoolaege <skimo@kotnet.org>
+Subject: Re: selective git-update-index per diff(1) chunks
+Date: Mon, 04 Dec 2006 22:51:34 +0100
+Message-ID: <20061204215134.GJ940MdfPADPa@greensroom.kotnet.org>
+References: <b6fcc0a0612010323x7554e47m5e6bdafe85fc8224@mail.gmail.com>
+ <el1nsi$vat$1@sea.gmane.org>
+ <20061204202102.GH940MdfPADPa@greensroom.kotnet.org>
+ <200612042146.06419.jnareb@gmail.com>
+Reply-To: skimo@liacs.nl
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 27 Oct 2006 02:08:41 +0000 (UTC)
+Content-Transfer-Encoding: 7BIT
+NNTP-Posting-Date: Mon, 4 Dec 2006 21:51:46 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <4539EB15.3050405@vilain.net>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-reply-to: <200612042146.06419.jnareb@gmail.com>
+Content-disposition: inline
+User-Agent: Mutt/1.5.10i
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30277>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GdH3a-0005qU-FR for gcvg-git@gmane.org; Fri, 27 Oct
- 2006 04:02:51 +0200
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33258>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GrLit-0004lH-NT for gcvg-git@gmane.org; Mon, 04 Dec
+ 2006 22:51:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1946111AbWJ0CCr (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
- 22:02:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946112AbWJ0CCr
- (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 22:02:47 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:47823 "EHLO machine.or.cz") by
- vger.kernel.org with ESMTP id S1946111AbWJ0CCq (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 22:02:46 -0400
-Received: (qmail 9281 invoked by uid 2001); 27 Oct 2006 04:02:45 +0200
-To: Sam Vilain <sam@vilain.net>
+ S967200AbWLDVvh (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
+ 16:51:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967408AbWLDVvh
+ (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 16:51:37 -0500
+Received: from smtp19.wxs.nl ([195.121.247.10]:37170 "EHLO smtp19.wxs.nl"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S967200AbWLDVvg
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006 16:51:36 -0500
+Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl
+ [84.81.90.170]) by smtp19.wxs.nl (iPlanet Messaging Server 5.2 HotFix 2.07
+ (built Jun 24 2005)) with SMTP id <0J9R0034DRDYAP@smtp19.wxs.nl> for
+ git@vger.kernel.org; Mon, 04 Dec 2006 22:51:35 +0100 (CET)
+Received: (qmail 25186 invoked by uid 500); Mon, 04 Dec 2006 21:51:34 +0000
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Dear diary, on Sat, Oct 21, 2006 at 11:40:37AM CEST, I got a letter
-where Sam Vilain <sam@vilain.net> said that...
-> Ok, I ruined the error message.
-> 
-> This could also do with some enhancement; if you edit hunks of the
-> patch, then the numbers in the hunks could be updated so as to not make
-> the patch abort.  Also, if it does abort you should get the option of
-> undoing everything, or editing the patch again...
-> 
-> Will try again with this another time.
+On Mon, Dec 04, 2006 at 09:46:06PM +0100, Jakub Narebski wrote:
+> If it is GPL, you can post it anyway. As I understand from log
+> you have added git interface, isn't it?
 
-Actually, on current master you can now use internal_commit. My idea was
-that you internal_commit with the local changes as X, then rollback to
-HEAD, apply new patch. If you fail at this point, you can do much saner
-recovery since you can reset the tree and timewarp back to X and save
-the modified patch at a suitable place.
+I think Paul added the ability to compare a git tree to a (set of)
+directory trees, while I add a primitive way of committing partial
+changes to a git branch.  It's been over a year, though, so I may
+be mistaken.
 
-Besides, you can just timewarp the tree back to X (w/o updating HEAD) at
-this point to recover the changes excluded from the committed patch!
+> You are then perfectly
+> in the right to post info at GitWiki about this tool.
 
-I guess timewarping/internal_commit may look like magic to everyone but
-me so if the above is unclear, just say so and I'll try to be more
-thorough. :-)
+I feel like I should check first that it hasn't been obsoleted by
+some other tool already and I currently don't have the time to
+investigate.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
-$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
