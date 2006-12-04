@@ -1,75 +1,59 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jon Loeliger <jdl@freescale.com>
-Subject: Re: prune/prune-packed
-Date: Fri, 27 Oct 2006 16:19:57 -0500
-Message-ID: <1161983997.2426.422.camel@cashmere.sps.mot.com>
-References: <20061022035919.GA4420@fieldses.org>
-	 <7vy7r954k7.fsf@assigned-by-dhcp.cox.net>
-	 <20061022231422.GA9375@fieldses.org> <20061023005336.GA12932@fieldses.org>
-	 <453C1A35.70504@gmail.com>  <7vvembzp6y.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Document git-diff whitespace flags -b and -w
+Date: Sun, 03 Dec 2006 18:20:30 -0800
+Message-ID: <7vvekstn9t.fsf@assigned-by-dhcp.cox.net>
+References: <11651630814064-git-send-email-jnareb@gmail.com>
+	<Pine.LNX.4.63.0612031908020.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+	<ekv5k6$1ih$1@sea.gmane.org>
+	<Pine.LNX.4.63.0612032006580.28348@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Fri, 27 Oct 2006 21:29:10 +0000 (UTC)
-Cc: gitzilla@gmail.com, "J. Bruce Fields" <bfields@fieldses.org>,
-	Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Mon, 4 Dec 2006 02:21:28 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <7vvembzp6y.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Ximian Evolution 1.4.6 (1.4.6-2.ydl.1) 
+In-Reply-To: <Pine.LNX.4.63.0612032006580.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Sun, 3 Dec 2006 20:10:10 +0100
+	(CET)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30347>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GdZEO-0000OY-Mf for gcvg-git@gmane.org; Fri, 27 Oct
- 2006 23:27:14 +0200
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33159>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gr3SI-0005pq-QV for gcvg-git@gmane.org; Mon, 04 Dec
+ 2006 03:21:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752485AbWJ0V1J (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 27 Oct 2006
- 17:27:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752487AbWJ0V1J
- (ORCPT <rfc822;git-outgoing>); Fri, 27 Oct 2006 17:27:09 -0400
-Received: from az33egw01.freescale.net ([192.88.158.102]:11771 "EHLO
- az33egw01.freescale.net") by vger.kernel.org with ESMTP id S1752485AbWJ0V1H
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 27 Oct 2006 17:27:07 -0400
-Received: from az33smr02.freescale.net (az33smr02.freescale.net
- [10.64.34.200]) by az33egw01.freescale.net (8.12.11/az33egw01) with ESMTP id
- k9RLR2lx004272; Fri, 27 Oct 2006 14:27:02 -0700 (MST)
-Received: from [10.82.19.2] (cashmere.am.freescale.net [10.82.19.2]) by
- az33smr02.freescale.net (8.13.1/8.13.0) with ESMTP id k9RLR0Vk017892; Fri, 27
- Oct 2006 16:27:01 -0500 (CDT)
-To: Junio C Hamano <junkio@cox.net>
+ S1758768AbWLDCVK (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 3 Dec 2006
+ 21:21:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758795AbWLDCVK
+ (ORCPT <rfc822;git-outgoing>); Sun, 3 Dec 2006 21:21:10 -0500
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:15783 "EHLO
+ fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP id S1758768AbWLDCVJ
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 3 Dec 2006 21:21:09 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao04.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061204022031.BWXM7494.fed1rmmtao04.cox.net@fed1rmimpo02.cox.net>; Sun, 3
+ Dec 2006 21:20:31 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id uSLg1V00F1kojtg0000000; Sun, 03 Dec 2006
+ 21:20:40 -0500
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-On Sun, 2006-10-22 at 22:27, Junio C Hamano wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> Sorry, but you are right and Linus is more right.  How about
-> doing FRSX.
-> 
-> diff --git a/pager.c b/pager.c
-> index 8bd33a1..4587fbb 100644
-> --- a/pager.c
-> +++ b/pager.c
-> @@ -50,7 +50,7 @@ void setup_pager(void)
->  	close(fd[0]);
->  	close(fd[1]);
->  
-> -	setenv("LESS", "FRS", 0);
-> +	setenv("LESS", "FRSX", 0);
->  	run_pager(pager);
->  	die("unable to execute pager '%s'", pager);
->  	exit(255);
+> make tests pass for recent "diff -b" change
 
-I'm a little confused by all this because I
-set the LESS environment variable by myself
-already.  And I use the value that I like.
-Why change it or override the user's settings
-like this?  Or did I miss something?
+Both patches look sane.  Thanks.  Mind if I forge your
+signature?
 
-Thanks,
-jdl
+> 	Am I the only one finding it funny to read diffs of diffs, 
+> 	especially when being used to combined diffs?
 
+I agree that it is very hard to get used to.
