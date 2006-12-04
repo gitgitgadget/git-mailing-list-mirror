@@ -1,76 +1,82 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD,
-	WEIRD_PORT shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: VCS comparison table
-Date: Thu, 26 Oct 2006 01:15:24 +0200
-Organization: At home
-Message-ID: <ehor56$8h5$2@sea.gmane.org>
-References: <Pine.LNX.4.64N.0610232336010.30334@attu2.cs.washington.edu> <Pine.LNX.4.64.0610240812410.3962@g5.osdl.org> <Pine.LNX.4.64N.0610241300450.8112@attu4.cs.washington.edu> <20061025084810.GA26618@coredump.intra.peff.net> <Pine.LNX.4.64N.0610250157470.3467@attu1.cs.washington.edu> <20061025094900.GA26989@coredump.intra.peff.net> <453F6B7A.60805@op5.se> <Pine.LNX.4.63.0610251450040.1754@qynat.qvtvafvgr.pbz> <20061025221531.GB10140@spearce.org> <ehooeo$1g6$2@sea.gmane.org> <20061025224428.GN20017@pasky.or.cz>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Juergen Stuber <juergen@jstuber.net>
+Subject: Re: jgit performance update
+Date: Mon, 04 Dec 2006 21:35:49 +0100
+Message-ID: <87ac23qtzu.fsf@freitag.home.jstuber.net>
+References: <20061203045953.GE26668@spearce.org> <ekv34g$mck$1@sea.gmane.org>
+	<874psceh4z.fsf@freitag.home.jstuber.net>
+	<200612040039.00315.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-NNTP-Posting-Date: Wed, 25 Oct 2006 23:15:28 +0000 (UTC)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Mon, 4 Dec 2006 20:37:22 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 26
+Original-Lines: 29
 Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-23-110.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+X-Gmane-NNTP-Posting-Host: p54aebd03.dip0.t-ipconnect.de
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Cancel-Lock: sha1:Iu+f3c+EzKk4rSEKt0jXHD2ThrA=
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30124>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gcrxs-0007dD-U3 for gcvg-git@gmane.org; Thu, 26 Oct
- 2006 01:15:17 +0200
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33242>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GrKYx-0000qp-64 for gcvg-git@gmane.org; Mon, 04 Dec
+ 2006 21:37:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1030305AbWJYXPJ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 25 Oct 2006
- 19:15:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030334AbWJYXPJ
- (ORCPT <rfc822;git-outgoing>); Wed, 25 Oct 2006 19:15:09 -0400
-Received: from main.gmane.org ([80.91.229.2]:63724 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S1030305AbWJYXPH (ORCPT
- <rfc822;git@vger.kernel.org>); Wed, 25 Oct 2006 19:15:07 -0400
+ S966969AbWLDUhB convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006 15:37:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966975AbWLDUhA
+ (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 15:37:00 -0500
+Received: from main.gmane.org ([80.91.229.2]:46420 "EHLO ciao.gmane.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S966969AbWLDUg7
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006 15:36:59 -0500
 Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1Gcrxd-0007ZM-3o for git@vger.kernel.org; Thu, 26 Oct 2006 01:15:01 +0200
-Received: from host-81-190-23-110.torun.mm.pl ([81.190.23.110]) by
+ 1GrKYT-0006uu-85 for git@vger.kernel.org; Mon, 04 Dec 2006 21:36:49 +0100
+Received: from p54aebd03.dip0.t-ipconnect.de ([84.174.189.3]) by
  main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Thu, 26 Oct 2006 01:15:01 +0200
-Received: from jnareb by host-81-190-23-110.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Thu, 26 Oct 2006
- 01:15:01 +0200
+ <git@vger.kernel.org>; Mon, 04 Dec 2006 21:36:49 +0100
+Received: from juergen by p54aebd03.dip0.t-ipconnect.de with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Mon, 04 Dec 2006
+ 21:36:49 +0100
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Petr Baudis wrote:
+Hej Robin,
 
-> Dear diary, on Thu, Oct 26, 2006 at 12:29:17AM CEST, I got a letter
-> where Jakub Narebski <jnareb@gmail.com> said that...
->> Cute names are taken: CoGITo, gitk, qgit (GTK+ history viewer is gitview,
->> not ggit, curiously ;-) and tig.
-> 
-> wit?
+Robin Rosenberg <robin.rosenberg.lists@dewire.com> writes:
+> s=C3=B6ndag 03 december 2006 23:42 skrev Juergen Stuber:
+>> Jakub Narebski <jnareb@gmail.com> writes:
+>> > GitWiki tells us about egit/jgit repository at
+>> >   http://www.spearce.org/projects/scm/egit.git
+>>
+>> I tried to access that with git 1.4.4.1 from Debian but
+>>
+>> % git clone http://www.spearce.org/projects/scm/egit.git
+>>
+>> hangs, the first time after "walk
+>> e339766abc2b919e7bb396cae22ddef065821381", the second time after "wa=
+lk
+>> 9eec90ec5da239e063eaff6305d77294dc03396e" which is the "walk" line j=
+ust
+>> before it.
+> Works fine here. (git 1.4.4.gf05d).
 
-Taken.
+now it works fine for me, too.
 
-wit ? a Python web interface to git maintained by Christian Meder.
-Example site on http://www.grmso.net:8090/ . It uses PATH_INFO
-much more than gitweb (which uses CGI parameters mostly, but also
-supports multiple projects).
 
-Well, not maintained if http://www.absolutegiganten.org/wit/
-is indicator
+Tack
 
-  wit-0.0.4.tar.gz        08-Sep-2005
+J=C3=BCrgen
 
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
-
+--=20
+J=C3=BCrgen Stuber <juergen@jstuber.net>
+http://www.jstuber.net/
+gnupg key fingerprint =3D 2767 CA3C 5680 58BA 9A91  23D9 BED6 9A7A AF9E=
+ 68B4
