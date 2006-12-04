@@ -1,62 +1,56 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-fetch fails with error code 128
-Date: Fri, 15 Dec 2006 16:37:06 -0800
-Message-ID: <7vy7p8llql.fsf@assigned-by-dhcp.cox.net>
-References: <200612142308.45376.andyparkins@gmail.com>
-	<7vfybiyqk0.fsf@assigned-by-dhcp.cox.net>
-	<200612150946.14439.andyparkins@gmail.com>
-	<7vy7p8omdh.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0612151706150.18171@xanadu.home>
+From: Mitchell Blank Jr <mitch@sfgoth.com>
+Subject: Re: [ANNOUNCE] gitfs pre-release 0.04
+Date: Mon, 4 Dec 2006 12:03:49 -0800
+Message-ID: <20061204200349.GX47959@gaz.sfgoth.com>
+References: <20061204194011.GW47959@gaz.sfgoth.com> <el1tg0$n07$1@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sat, 16 Dec 2006 00:37:24 +0000 (UTC)
-Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
+NNTP-Posting-Date: Mon, 4 Dec 2006 19:48:10 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <Pine.LNX.4.64.0612151706150.18171@xanadu.home> (Nicolas Pitre's
-	message of "Fri, 15 Dec 2006 17:13:35 -0500 (EST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Content-Disposition: inline
+In-Reply-To: <el1tg0$n07$1@sea.gmane.org>
+User-Agent: Mutt/1.4.2.1i
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-1.2.2 (gaz.sfgoth.com [127.0.0.1]); Mon, 04 Dec 2006 12:03:50 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34581>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33230>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GvNYH-00088k-Fi for gcvg-git@gmane.org; Sat, 16 Dec
- 2006 01:37:21 +0100
+ esmtp (Exim 4.50) id 1GrJnB-0001Qe-E4 for gcvg-git@gmane.org; Mon, 04 Dec
+ 2006 20:47:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1030483AbWLPAhK (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 15 Dec 2006
- 19:37:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030488AbWLPAhK
- (ORCPT <rfc822;git-outgoing>); Fri, 15 Dec 2006 19:37:10 -0500
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:43228 "EHLO
- fed1rmmtao10.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1030483AbWLPAhI (ORCPT <rfc822;git@vger.kernel.org>); Fri, 15 Dec 2006
- 19:37:08 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao10.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061216003707.CMMO20715.fed1rmmtao10.cox.net@fed1rmimpo02.cox.net>; Fri, 15
- Dec 2006 19:37:07 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id zCdJ1V01P1kojtg0000000; Fri, 15 Dec 2006
- 19:37:19 -0500
-To: Nicolas Pitre <nico@cam.org>
+ S937341AbWLDTp5 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
+ 14:45:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937335AbWLDTp5
+ (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 14:45:57 -0500
+Received: from gaz.sfgoth.com ([69.36.241.230]:52130 "EHLO gaz.sfgoth.com"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S937348AbWLDTpo
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006 14:45:44 -0500
+Received: from gaz.sfgoth.com (localhost.sfgoth.com [127.0.0.1]) by
+ gaz.sfgoth.com (8.12.10/8.12.10) with ESMTP id kB4K3otV099964; Mon, 4 Dec
+ 2006 12:03:50 -0800 (PST) (envelope-from mitch@gaz.sfgoth.com)
+Received: (from mitch@localhost) by gaz.sfgoth.com (8.12.10/8.12.6/Submit) id
+ kB4K3oee099963; Mon, 4 Dec 2006 12:03:50 -0800 (PST) (envelope-from mitch)
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Nicolas Pitre <nico@cam.org> writes:
+Jakub Narebski wrote:
+> Not true. Symlink HEAD still works, and we have even core.preferSymlinkRefs
+> configuration variable.
 
-> I really doubt it is a compatibility problem.  The provided error 
-> message may only result from the fact that patch_delta() has returned 
-> NULL.
->
-> And since patch-delta is really simple, it doesn't have many reasons for 
-> returning NULL: either the object store on either the remote or local 
-> side is corrupted in which case a git-fsck-objects --full should catch 
-> that, or the system ran out of memory.
+Yes, but it has to be a symlink pointing into "refs/", not just a regular
+file holding a hash value.  Which is fine for most purposes but sort of a
+pain for me.
 
-Hmmmm.  True and sad.  Sad because I do not offhand think of
-places to trim the memory usage.
+I'll probably have it be a symlink to "refs/gitfs-dynamic" or something and
+then have "refs" be populated with that synthetic file and symlinks to
+any of the normal contents of the refs directory.  Not too bad, but will
+take a little bit of code.
+
