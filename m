@@ -4,65 +4,98 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: [RFC] Submodules in GIT
-Date: Fri, 1 Dec 2006 21:30:02 +0100
-Message-ID: <20061201203002.GJ18810@admingilde.org>
-References: <4570289D.9050802@b-i-t.de> <20061201133558.GU18810@admingilde.org> <45703174.8000609@op5.se> <20061201134610.GW18810@admingilde.org> <457041AD.4010601@op5.se> <20061201150045.GZ18810@admingilde.org> <45705A94.2070509@op5.se> <Pine.LNX.4.64.0612010844380.3695@woody.osdl.org> <457061A7.2000102@b-i-t.de> <Pine.LNX.4.64.0612011134080.3695@woody.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [RFC] gitweb: Add committags support (take 2)
+Date: Sun, 03 Dec 2006 18:38:17 -0800
+Message-ID: <7virgstmg6.fsf@assigned-by-dhcp.cox.net>
+References: <200612040001.13640.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="tgQ0jN0vM+YIGDGO"
-NNTP-Posting-Date: Fri, 1 Dec 2006 20:30:39 +0000 (UTC)
-Cc: sf <sf@b-i-t.de>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Mon, 4 Dec 2006 02:38:24 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0612011134080.3695@woody.osdl.org>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <200612040001.13640.jnareb@gmail.com> (Jakub Narebski's message
+	of "Mon, 4 Dec 2006 00:01:12 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32964>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GqF1V-0000lQ-B4 for gcvg-git@gmane.org; Fri, 01 Dec
- 2006 21:30:17 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33160>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gr3in-0006ta-Ll for gcvg-git@gmane.org; Mon, 04 Dec
+ 2006 03:38:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S936547AbWLAUaF (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
- 15:30:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936548AbWLAUaF
- (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 15:30:05 -0500
-Received: from agent.admingilde.org ([213.95.21.5]:21424 "EHLO
- mail.admingilde.org") by vger.kernel.org with ESMTP id S936547AbWLAUaD (ORCPT
- <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 15:30:03 -0500
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1) id
- 1GqF1G-0001AZ-DD; Fri, 01 Dec 2006 21:30:02 +0100
-To: Linus Torvalds <torvalds@osdl.org>
+ S1758959AbWLDCiS (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 3 Dec 2006
+ 21:38:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758965AbWLDCiS
+ (ORCPT <rfc822;git-outgoing>); Sun, 3 Dec 2006 21:38:18 -0500
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:16567 "EHLO
+ fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP id S1758959AbWLDCiS
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 3 Dec 2006 21:38:18 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao04.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061204023818.CNBK7494.fed1rmmtao04.cox.net@fed1rmimpo02.cox.net>; Sun, 3
+ Dec 2006 21:38:18 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id uSeT1V0091kojtg0000000; Sun, 03 Dec 2006
+ 21:38:27 -0500
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
+Jakub Narebski <jnareb@gmail.com> writes:
 
---tgQ0jN0vM+YIGDGO
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> The subroutine should return either reference to scalar which means
+> "do not process", scalar which means changed available for further
+> processing, or void (undef) which means no change. In [PATCH 2/3] we
+> will enable returning also list of elements, each of which could be
+> reference to scalar or scalar (for example signoff would return three
+> element list: opening span element as ref, signoff text as scalar,
+> closing span element as ref).
 
-hoi :)
+Personally I think that "list of elements" should be in the
+first patch to build the foundation.
 
-Linus, you are a lot better in describing all my thoughts than I myself.
-;-)
+>   our %committags = (
+>   	'sha1' => {
+>   		'pattern' => qr/[0-9a-fA-F]{40}/,
+>   		'sub' => sub {
+>   			my $hash_text = shift;
+>   			my $type = git_get_type($hash_text);
+>   			if ($type) {
+>   				return \$cgi->a({-href => href(action=>$type, hash=>$hash_text),
+>   				                -class => "text"}, $hash_text);
+>   			}
+>   			return undef;
+>   		},
+>   	},
 
---=20
-Martin Waitz
+It might make sense to do a /[0-9a-f]{8,40}/ pattern, and make
+sure that the named object exists in the sub (which you already
+do).  People often write abbreviated commit object name that has
+a high chance of staying unique during the life of the project.
 
---tgQ0jN0vM+YIGDGO
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
+>   	'mantis' => {
+>   		'pattern' => qr/(BUG|FEATURE)\(\d+\)/,
+>   	'bugzilla' => {
+>   		'pattern' => qr/bug\s+\d+/,
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
+This is not wrong per-se but somehow feels funny.  It feels as
+if there is a convention that bugzilla bugs are usually spelled
+in lowercase while mantis bugs are in uppercase, but I do not
+think you are suggesting that.
 
-iD8DBQFFcJDKj/Eaxd/oD7IRAplPAJ91nd0XngWjrJXjxGWWYA+7Rus+VwCfdBRC
-oC6FlD4JjtY8VitGDdiDSkc=
-=dYW2
------END PGP SIGNATURE-----
+I do not know how this %committags{} is used per project.  With
+a setting like repo.or.cz, it is likely that one instance of
+gitweb is serving unrelated projects that have their issue
+tracker at different locations using different "committags"
+convention.  Is the idea to eventually allow enabling/disabling
+elements from the global %committags per repository somehow
+(perhaps not just enable/disable but even overriding patterns or
+parameters)?
 
+> 3. To not split message into many fragments we concatenate strings
+> if possible.
+
+I do not know why "avoiding splits" is needed, if it raises 
+issues that you need to ask the list about in a message like
+this...
