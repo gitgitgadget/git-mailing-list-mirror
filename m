@@ -1,86 +1,65 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-2.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [RFC] Submodules in GIT
-Date: Tue, 28 Nov 2006 12:28:47 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0611281218290.20138@iabervon.org>
-References: <20061121223130.GA24909@nan92-1-81-57-214-146.fbx.proxad.net>
- <Pine.LNX.4.64.0611211437430.3338@woody.osdl.org>
- <20061121235429.GH5443@nan92-1-81-57-214-146.fbx.proxad.net>
- <20061122034056.GB23856@spearce.org> <20061123232313.GB24909@nan92-1-81-57-214-146.fbx.proxad.net>
- <20061125065338.GC4528@spearce.org> <20061125111235.GO5443@nan92-1-81-57-214-146.fbx.proxad.net>
- <Pine.LNX.4.64.0611251037000.6991@woody.osdl.org> <45689747.3020403@midwinter.com>
- <Pine.LNX.4.64.0611251128170.3483@woody.osdl.org>
- <20061125234908.GC24909@nan92-1-81-57-214-146.fbx.proxad.net>
- <Pine.LNX.4.64.0611251936590.3483@woody.osdl.org> <Pine.LNX.4.64.0611260241320.20138@iabervon.org>
- <456C0313.3020308@op5.se>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: Re: latest update to git-svn blows up for me
+Date: 04 Dec 2006 03:41:43 -0800
+Message-ID: <86hcwbnb0o.fsf@blue.stonehenge.com>
+References: <863b7wnwcw.fsf@blue.stonehenge.com>
+	<20061204070021.GG1369@localdomain>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Tue, 28 Nov 2006 17:29:15 +0000 (UTC)
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Yann Dirson <ydirson@altern.org>,
-	Steven Grimm <koreth@midwinter.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Mon, 4 Dec 2006 11:41:50 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <456C0313.3020308@op5.se>
+x-mayan-date: Long count = 12.19.13.15.11; tzolkin = 5 Chuen; haab = 4 Mac
+In-Reply-To: <20061204070021.GG1369@localdomain>
+Original-Lines: 20
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32553>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gp6lH-0007Do-P8 for gcvg-git@gmane.org; Tue, 28 Nov
- 2006 18:28:52 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33193>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GrCCi-0007GK-3K for gcvg-git@gmane.org; Mon, 04 Dec
+ 2006 12:41:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S935909AbWK1R2t (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 28 Nov 2006
- 12:28:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935911AbWK1R2t
- (ORCPT <rfc822;git-outgoing>); Tue, 28 Nov 2006 12:28:49 -0500
-Received: from iabervon.org ([66.92.72.58]:21260 "EHLO iabervon.org") by
- vger.kernel.org with ESMTP id S935909AbWK1R2s (ORCPT
- <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2006 12:28:48 -0500
-Received: (qmail 10119 invoked by uid 1000); 28 Nov 2006 12:28:47 -0500
-Received: from localhost (sendmail-bs@127.0.0.1) by localhost with SMTP; 28
- Nov 2006 12:28:47 -0500
-To: Andreas Ericsson <ae@op5.se>
+ S936111AbWLDLlp (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
+ 06:41:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936106AbWLDLlp
+ (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 06:41:45 -0500
+Received: from blue.stonehenge.com ([209.223.236.162]:63809 "EHLO
+ blue.stonehenge.com") by vger.kernel.org with ESMTP id S936111AbWLDLlo (ORCPT
+ <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006 06:41:44 -0500
+Received: from localhost (localhost [127.0.0.1]) by blue.stonehenge.com
+ (Postfix) with ESMTP id 3D1458FD97; Mon,  4 Dec 2006 03:41:44 -0800 (PST)
+Received: from blue.stonehenge.com ([127.0.0.1]) by localhost
+ (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024) with LMTP id
+ 10024-01-98; Mon,  4 Dec 2006 03:41:43 -0800 (PST)
+Received: by blue.stonehenge.com (Postfix, from userid 1001) id 7E9268FD8C;
+ Mon,  4 Dec 2006 03:41:43 -0800 (PST)
+To: Eric Wong <normalperson@yhbt.net>
 Sender: git-owner@vger.kernel.org
 
-On Tue, 28 Nov 2006, Andreas Ericsson wrote:
+>>>>> "Eric" == Eric Wong <normalperson@yhbt.net> writes:
 
-> Daniel Barkalow wrote:
-> > On Sat, 25 Nov 2006, Linus Torvalds wrote:
-> > > I'd actually suggest that "git commit -a" with non-clean submodules error
-> > > out for that reason
-> > 
-> > Just have it run "git commit -a" in each dirty submodule recursively as part
-> > of preparing the index, since that's what the user wants to do anyway, and
-> > nothing already done would be affected.
-> > 
-> 
-> Running "commit -a" is definitely the wrong thing to do, as it prevents one
-> from using the index at all. Erroring out if the submodules are dirty, or just
-> accepting the fact that they are and taking whatever commit HEAD points to is
-> *always* preferrable.
+Eric> "Randal L. Schwartz" <merlyn@stonehenge.com> wrote:
+>> 
+>> Does this ring a bell?
 
-I don't think anyone would actually use the index in submodules but not in 
-the supermodule. If submodules are seen mostly as ordinary directories as 
-far as the supermodule's working directory is concerned, it wouldn't make 
-sense to not commit dirty state in a subdirectory with -a just because 
-it's a submodule.
+Eric> Nope.
 
-It would be wrong to do "commit -a" in submodules if the supermodule 
-weren't being committed with -a, of course.
+Eric> This is on r15941 of  https://svn.perl.org/parrot/trunk ?  I can't seem
+Eric> to reproduce this with git svn fetch -r15940:15941
 
-> > "git commit -a -m <message>" should probably fail, of course.
-> > 
-> 
-> Why? There's no reason to rob this command of its power just because we're
-> using submodules.
+No, and that worked for me as well.  Apparently, I might have corrupted my
+metadata because I updated git-svn while I was using it.  Is there any way to
+reset the metadata without having to re-fetch 15000 revisions?
 
-It should fail if there are dirty submodules, because the user needs to 
-provide a commit message for each of them, and only one commit message can 
-be provided this way, and -m inhibits invoking an editor.
-
-	-Daniel
+-- 
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
