@@ -1,78 +1,57 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Cleaning up git user-interface warts
-Date: Wed, 15 Nov 2006 19:35:22 -0800
-Message-ID: <7v7ixwgj2d.fsf@assigned-by-dhcp.cox.net>
-References: <87k61yt1x2.wl%cworth@cworth.org> <455A1137.8030301@shadowen.org>
-	<87hcx1u934.wl%cworth@cworth.org>
-	<Pine.LNX.4.64.0611141518590.2591@xanadu.home>
-	<87bqn9u43s.wl%cworth@cworth.org> <ejdcg5$4fl$1@sea.gmane.org>
-	<Pine.LNX.4.64.0611141633430.2591@xanadu.home>
-	<7vbqn9y6w6.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0611142007010.2591@xanadu.home>
-	<7v3b8ltq7r.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0611142306090.2591@xanadu.home>
-	<Pine.LNX.4.64.0611150950170.3349@woody.osdl.org>
-	<455BBCE9.4050503@xs4all.nl> <7vhcx0gnbq.fsf@assigned-by-dhcp.cox.net>
-	<455BCD2B.6060603@xs4all.nl> <7vbqn8gjeo.fsf@assigned-by-dhcp.cox.net>
+From: Steven Grimm <koreth@midwinter.com>
+Subject: Re: egit/jgit wishlist
+Date: Mon, 04 Dec 2006 14:06:09 -0800
+Message-ID: <45749BD1.6070804@midwinter.com>
+References: <20061204172836.GB6011@spearce.org> <Pine.LNX.4.63.0612041841280.14187@alpha.polcom.net> <20061204182902.GG6011@spearce.org> <457490EE.30606@midwinter.com> <Pine.LNX.4.63.0612042235270.14187@alpha.polcom.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 16 Nov 2006 03:35:31 +0000 (UTC)
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Mon, 4 Dec 2006 22:06:18 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <7vbqn8gjeo.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Wed, 15 Nov 2006 19:27:59 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=200606; d=midwinter.com;
+  b=Zp4gQ5/+sSXjTxiVAM/BcJkxPxcg6yGIaQV8h1A4Ic9qmR2ULsCXQuATUX1wFl3v  ;
+User-Agent: Mail/News 1.5.0.2 (Macintosh/20060324)
+In-Reply-To: <Pine.LNX.4.63.0612042235270.14187@alpha.polcom.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31552>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GkY2C-0004UP-HJ for gcvg-git@gmane.org; Thu, 16 Nov
- 2006 04:35:28 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33260>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GrLwx-0007OO-RP for gcvg-git@gmane.org; Mon, 04 Dec
+ 2006 23:06:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1031079AbWKPDfY (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
- 22:35:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031078AbWKPDfY
- (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 22:35:24 -0500
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:21897 "EHLO
- fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP id S1031079AbWKPDfX
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 22:35:23 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao09.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061116033523.GDAS18767.fed1rmmtao09.cox.net@fed1rmimpo02.cox.net>; Wed, 15
- Nov 2006 22:35:23 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id nFbU1V00t1kojtg0000000; Wed, 15 Nov 2006
- 22:35:29 -0500
-To: hanwen@xs4all.nl
+ S967717AbWLDWGJ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
+ 17:06:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967721AbWLDWGI
+ (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 17:06:08 -0500
+Received: from tater.midwinter.com ([216.32.86.90]:52049 "HELO midwinter.com"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S967717AbWLDWGG
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006 17:06:06 -0500
+Received: (qmail 1112 invoked from network); 4 Dec 2006 22:06:05 -0000
+Received: from localhost (HELO ?127.0.0.1?) (koreth@127.0.0.1) by localhost
+ with SMTP; 4 Dec 2006 22:06:05 -0000
+To: Grzegorz Kulewski <kangur@polcom.net>
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano <junkio@cox.net> writes:
+Grzegorz Kulewski wrote:
+> Can you name one system where Java (J2SE 1.4 or better 1.5) works 
+> (fully, not sometimes) and where GIT does not work? Does Eclipse work 
+> there too (or will in say next year)?
 
-(not changing what I said but editorial)
-> I myself do prefer, when learning a new tool, to use longhand
-> until I understand the shorthand, but that attitude requires a
-> true commitment to learn the tool, and most people do not go
-> that route.  Tutorial style documents tend to give the commonly
-> used shorthand first for that exact reason.
+Sure, I can name a pretty significant one: Windows. Eclipse, and Java in 
+general, runs fine under Windows and I doubt they'll drop support for it 
+in the next year. Git doesn't run on Windows unless you're willing to 
+fire up the Cygwin environment to run it, which is not acceptable to 
+many Windows developers (see the discussion about the Mozilla project; 
+that's not just my personal opinion.)
 
-Eh, sorry, "prefer to use longhand until I understand what is
-going on before using the shorthand" is what I wanted to say.
-
-> Shorthand to give only the branch name to fetch and merge
-> immediately without using a tracking branch is equivalent to
-> longhand "branch:" as you found out, so if that was what was
-> desired then people with the attitude "before understanding what
-> longhand does I prefer using shorthand" like myself and you
-
-"prefer not using shorthand", sorry again.
-
-> would have liked to learn "git pull url branch:" notation from
-> Tutorial.  But I think we _are_ minority.  People would not want
-> to see that seemingly useless colon there.
+-Steve
