@@ -1,60 +1,70 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_ADSP_NXDOMAIN,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
-From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: sizeof(struct ...)
-Date: Thu, 23 Nov 2006 18:57:00 +0100
-Message-ID: <4565E0EC.4030709@lsrfire.ath.cx>
-References: <20061123101609.1711.qmail@8b73034525b1a6.315fe32.mid.smarden.org> <45659781.5050005@lsrfire.ath.cx> <4565A46C.6090805@lsrfire.ath.cx> <4565A866.8020201@shadowen.org> <4565C205.8050300@lsrfire.ath.cx> <20061123155431.GD6581@harddisk-recovery.com> <4565C8F4.6000606@lsrfire.ath.cx> <4565CA02.20602@shadowen.org>
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: egit/jgit wishlist
+Date: Mon, 4 Dec 2006 13:29:02 -0500
+Message-ID: <20061204182902.GG6011@spearce.org>
+References: <20061204172836.GB6011@spearce.org> <Pine.LNX.4.63.0612041841280.14187@alpha.polcom.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Thu, 23 Nov 2006 17:57:18 +0000 (UTC)
-Cc: Erik Mouw <erik@harddisk-recovery.com>,
-	Gerrit Pape <pape@smarden.org>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Mon, 4 Dec 2006 18:29:18 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.8 (Windows/20061025)
-In-Reply-To: <4565CA02.20602@shadowen.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0612041841280.14187@alpha.polcom.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32152>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GnIoy-0005vk-5X for gcvg-git@gmane.org; Thu, 23 Nov
- 2006 18:57:12 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33215>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GrIYy-0004nJ-5o for gcvg-git@gmane.org; Mon, 04 Dec
+ 2006 19:29:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1757301AbWKWR5I convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Thu, 23 Nov 2006 12:57:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757344AbWKWR5H
- (ORCPT <rfc822;git-outgoing>); Thu, 23 Nov 2006 12:57:07 -0500
-Received: from static-ip-217-172-187-230.inaddr.intergenia.de
- ([217.172.187.230]:57835 "EHLO neapel230.server4you.de") by vger.kernel.org
- with ESMTP id S1757301AbWKWR5E (ORCPT <rfc822;git@vger.kernel.org>); Thu, 23
- Nov 2006 12:57:04 -0500
-Received: from [10.0.1.4] (p508E51A7.dip.t-dialin.net [80.142.81.167]) by
- neapel230.server4you.de (Postfix) with ESMTP id A1D0B2C016; Thu, 23 Nov 2006
- 18:57:03 +0100 (CET)
-To: Andy Whitcroft <apw@shadowen.org>
+ S937235AbWLDS3J (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
+ 13:29:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937236AbWLDS3J
+ (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 13:29:09 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:40518 "EHLO
+ corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S937235AbWLDS3G (ORCPT <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006
+ 13:29:06 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1GrIZa-0008Ia-PO; Mon, 04 Dec 2006 13:29:50 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 8DDBD20FB7F; Mon,  4 Dec 2006 13:29:02 -0500 (EST)
+To: Grzegorz Kulewski <kangur@polcom.net>
 Sender: git-owner@vger.kernel.org
 
-Andy Whitcroft schrieb:
-> Perhaps we can look and see what a portable application like gzip or
-> bzip2 do in this situation.  They must have the same problem.
+Grzegorz Kulewski <kangur@polcom.net> wrote:
+> I think that doing it in 100% pure Java is ok in long run but I wonder if 
+> you couldn't make "wrapper" plugin for a start (that would call the real C 
+> git for every operation) and make it usable (with full pure Java SWT UI 
+> support) and then try to implement feature by feature in pure Java (with 
+> config options telling what should be called by wrapper and what by pure 
+> implementation)?
 
-Info-ZIP's zip uses structs only for in-memory storage and has a write
-function for each of them that writes the members one by one.  I find
-the structs in archive-zip.c easier to read, but I might be biased. ;-)
+Several people have proposed doing exactly that, but thus far
+myself and Robin Rosenburg have been the only two to step forward
+with code.  I personally want to avoid calling external programs
+as much as possible here, and that means staying with a 100% pure
+Java implementation.  Hence the desire to not build a wrapper plugin.
 
-Anyway, archive-zip.c assumes that there is no padding between unsigned
-char arrays and that an unsigned char is exactly one byte wide.  The
-additional current assumption -- that sizeof(struct ...) sums up the
-sizes of all struct members -- is wrong on ARM, and the patches in this
-thread correct this error.
+We have the core repository reading and writing working.  We can
+write out trees.  We can create commits (we just lack UI for it).
+So we're part of the way there...
 
-So we're not as portable as Info-ZIP, but I think the assumptions above
-hold true for all interesting architectures.  And we have a readable
-description of the on-disk ZIP file headers.
-
+-- 
