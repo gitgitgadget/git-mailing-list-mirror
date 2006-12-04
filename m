@@ -1,151 +1,97 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH] gitweb: Add "next" link to commit view
-Date: Fri, 15 Dec 2006 21:57:16 +0100
-Message-ID: <11662162364166-git-send-email-jnareb@gmail.com>
-NNTP-Posting-Date: Fri, 15 Dec 2006 20:54:58 +0000 (UTC)
-Cc: Jakub Narebski <jnareb@gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [RFC] Submodules in GIT
+Date: Mon, 4 Dec 2006 12:41:23 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0612041234390.3476@woody.osdl.org>
+References: <20061130170625.GH18810@admingilde.org> 
+ <200612012306.41410.Josef.Weidendorfer@gmx.de>  <Pine.LNX.4.64.0612011423100.3695@woody.osdl.org>
+  <4570AF8F.1000801@stephan-feder.de>  <Pine.LNX.4.64.0612011505190.3695@woody.osdl.org>
+  <4570BFA4.8070903@stephan-feder.de>  <e7bda7770612021057mc9f3eb9q7fc047dd1b5c235f@mail.gmail.com>
+  <Pine.LNX.4.64.0612021114270.3476@woody.osdl.org> 
+ <e7bda7770612030119v197cbc95h6b3fa9e22b78c058@mail.gmail.com> 
+ <Pine.LNX.4.64.0612030946150.3476@woody.osdl.org>
+ <e7bda7770612041226j4d4a5584m279afa9a2d7dfe74@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Mon, 4 Dec 2006 20:42:16 +0000 (UTC)
+Cc: sf-gmane@stephan-feder.de, sf <sf@b-i-t.de>, git@vger.kernel.org,
+	Martin Waitz <tali@admingilde.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:cc:subject:date:message-id:x-mailer;
-        b=cQutwjt2sNmBrLlM1HsbLEWThOYdgJh98c6k0GTTbC+zhaI3J+n7oaBfZ4T6USgazkEKRJYrhPS3hDcWB9LxplewTWVYwnii+V205VXc1Xm3pZXrBkBL8ItOy8rEIZ33u+ko4Zj+gB7cIc/e/FUPVyZqjvZjFiQARx+rOCceQAw=
-X-Mailer: git-send-email 1.4.4.1
+In-Reply-To: <e7bda7770612041226j4d4a5584m279afa9a2d7dfe74@mail.gmail.com>
+X-MIMEDefang-Filter: osdl$Revision: 1.161 $
+X-Scanned-By: MIMEDefang 2.36
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34548>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33243>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GvK4z-0006pc-KG for gcvg-git@gmane.org; Fri, 15 Dec
- 2006 21:54:54 +0100
+ esmtp (Exim 4.50) id 1GrKdc-0001g3-O9 for gcvg-git@gmane.org; Mon, 04 Dec
+ 2006 21:42:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S964842AbWLOUyv (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 15 Dec 2006
- 15:54:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964856AbWLOUyu
- (ORCPT <rfc822;git-outgoing>); Fri, 15 Dec 2006 15:54:50 -0500
-Received: from ug-out-1314.google.com ([66.249.92.168]:6872 "EHLO
- ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S964842AbWLOUyt (ORCPT <rfc822;git@vger.kernel.org>); Fri, 15 Dec
- 2006 15:54:49 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so914911uga for
- <git@vger.kernel.org>; Fri, 15 Dec 2006 12:54:48 -0800 (PST)
-Received: by 10.67.19.13 with SMTP id w13mr598054ugi.1166216088155; Fri, 15
- Dec 2006 12:54:48 -0800 (PST)
-Received: from roke.D-201 ( [81.190.25.107]) by mx.google.com with ESMTP id
- q1sm4894076uge.2006.12.15.12.54.47; Fri, 15 Dec 2006 12:54:47 -0800 (PST)
-Received: from roke.D-201 (localhost.localdomain [127.0.0.1]) by roke.D-201
- (8.13.4/8.13.4) with ESMTP id kBFKvH8p004374; Fri, 15 Dec 2006 21:57:18 +0100
-Received: (from jnareb@localhost) by roke.D-201 (8.13.4/8.13.4/Submit) id
- kBFKvGt3004373; Fri, 15 Dec 2006 21:57:16 +0100
-To: git@vger.kernel.org
+ S966393AbWLDUmF (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
+ 15:42:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966417AbWLDUmF
+ (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 15:42:05 -0500
+Received: from smtp.osdl.org ([65.172.181.25]:44025 "EHLO smtp.osdl.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S966393AbWLDUmC
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006 15:42:02 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
+ smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kB4KfOID009110
+ (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Mon, 4
+ Dec 2006 12:41:26 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
+ shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kB4KfNkJ002703; Mon, 4 Dec
+ 2006 12:41:23 -0800
+To: Torgil Svensson <torgil.svensson@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Add a kind of "next" view in the bottom part of navigation bar for
-"commit" view, similar to what was added for "commitdiff" view in
-commit 151602df00b8e5c5b4a8193f59a94b85f9b5aebc
-  'gitweb: Add "next" link to commitdiff view'
-
-For "commit" view for single parent commit:
-  (parent: _commit_)
-For "commit" view for merge (multi-parent) commit:
-  (merge: _commit_ _commit_ ...)
-For "commit" view for root (parentless) commit
-  (initial)
-where _link_ denotes hyperlink.  SHA1 of commit is shortened
-to 7 characters on display.
-
-While at it, remove leftovers from commit cae1862a by Petr Baudis:
-  'gitweb: More per-view navigation bar links'
-namely the "blame" link if there exist $file_name and commit has a
-parent; it was added in git_commit probably by mistake.  The rest
-of what mentioned commit added for git_commit was removed in
-commit 6e0e92fda893311ff5af91836e5007bf6bbd4a21 by Luben Tuikov:
-  'gitweb: Do not print "log" and "shortlog" redundantly in commit view'
-(which should have probably removed also this "blame" link removed now).
 
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-By the way, the history shown above was found using git 'pickaxe',
-namely
-  $ git log -p -S'my @views_nav = ();' -- gitweb/
-which found the first commit. I have noticed that some parts of
-what this patch added to git_commit were removed later:
-  $ git log -p -S'push @views_nav,' -- gitweb/
-found the second commit mentioned.
+On Mon, 4 Dec 2006, Torgil Svensson wrote:
+> 
+> Okay, missed that part.  I wasn't familiar with contents of the CVS
+> modules files and misinterpreted your suggestion.
+> 
+> MODULE [OPTIONS] [&OTHERMODULE...] [DIR] [FILES]
+> 
+> So all this is UI only and the "normal" operations on the supermodule
+> will just ignore what's behind the commit-links?
 
-The first part could be found also by git-blame command (or
-any other annotate/blame command in any other SCM), but to
-notice the second...
+Right. That's how CVS modules work (although in the case of CVS modules, 
+the "dir" thing is obviously there in the "modules" file, so it's not 
+_purely_ UI in CVS - this would likely be different in a git 
+implementation, because the "tree" object ends up telling not just the 
+exact version, but the location too).
 
+So my suggestion basically boils down to:
 
- gitweb/gitweb.perl |   38 +++++++++++++++++++++++++++++---------
- 1 files changed, 29 insertions(+), 9 deletions(-)
+ - "fetch" and "clone" etc will just look at the "modules" file, and 
+   recursively fetch/clone whatever the module files talks about. This is 
+   the "thin veneer to make it _look_ like git actually understands 
+   submodules" part. It woudln't really - they're very much tacked on.
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index ebf35a1..902c514 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -3571,8 +3571,34 @@ sub git_commit {
- 	my %ad = parse_date($co{'author_epoch'}, $co{'author_tz'});
- 	my %cd = parse_date($co{'committer_epoch'}, $co{'committer_tz'});
- 
--	my $parent = $co{'parent'};
--	my $parents = $co{'parents'};
-+	my $parent  = $co{'parent'};
-+	my $parents = $co{'parents'}; # listref
-+
-+	# we need to prepare $formats_nav before any parameter munging
-+	my $formats_nav;
-+	if (!defined $parent) {
-+		# --root commitdiff
-+		$formats_nav .= '(initial)';
-+	} elsif (@$parents == 1) {
-+		# single parent commit
-+		$formats_nav .=
-+			'(parent: ' .
-+			$cgi->a({-href => href(action=>"commit",
-+			                       hash=>$parent)},
-+			        esc_html(substr($parent, 0, 7))) .
-+			')';
-+	} else {
-+		# merge commit
-+		$formats_nav .=
-+			'(merge: ' .
-+			join(' ', map {
-+				$cgi->a({-href => href(action=>"commitdiff",
-+				                       hash=>$_)},
-+				        esc_html(substr($_, 0, 7)));
-+			} @$parents ) .
-+			')';
-+	}
-+
- 	if (!defined $parent) {
- 		$parent = "--root";
- 	}
-@@ -3596,16 +3622,10 @@ sub git_commit {
- 
- 	my $have_snapshot = gitweb_have_snapshot();
- 
--	my @views_nav = ();
--	if (defined $file_name && defined $co{'parent'}) {
--		push @views_nav,
--			$cgi->a({-href => href(action=>"blame", hash_parent=>$parent, file_name=>$file_name)},
--			        "blame");
--	}
- 	git_header_html(undef, $expires);
- 	git_print_page_nav('commit', '',
- 	                   $hash, $co{'tree'}, $hash,
--	                   join (' | ', @views_nav));
-+	                   $formats_nav);
- 
- 	if (defined $co{'parent'}) {
- 		git_print_header_div('commitdiff', esc_html($co{'title'}) . $ref, $hash);
--- 
-1.4.4.1
+ - the tree entries are what makes the "once you have all the submodule 
+   objects, this is how you can do 'diff' and 'checkout' on them, and this 
+   is what tells you the exact version that goes along with a particular 
+   supermodule version".
+
+In other words, the simple and stupid way to do this is to just consider 
+these two things two totally independent issues, and have different 
+mechanisms for telling different operations what to do.
+
+Is it "pretty"? No. The whole sub-module thing wouldn't be a tightly 
+integrated low-level thing, it would very much be all about tracking 
+multiple _separate_ git repositories, and just make them work well 
+together. They'd very much still be separate, with just some simple 
+infrastructure glue to make them look somewhat integrated.
+
+So yeah, it's a bit hacky, but for the reasons I've tried to outline, I 
+actually think that users _want_ hacky. Exactly because "deep integration" 
+ends up having so many _bad_ features, so it's better to have a thin and 
+simple layer that you can actually see past if you want to.
+
