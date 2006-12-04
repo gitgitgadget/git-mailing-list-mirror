@@ -1,103 +1,74 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD,
-	UNPARSEABLE_RELAY shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
-From: Bennett Todd <bet@rahul.net>
-Subject: static linking lib order problem
-Date: Mon, 20 Nov 2006 17:32:25 +0000
-Message-ID: <20061120173225.GA16161@rahul.net>
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: "Torgil Svensson" <torgil.svensson@gmail.com>
+Subject: Re: [RFC] Submodules in GIT
+Date: Mon, 4 Dec 2006 21:26:09 +0100
+Message-ID: <e7bda7770612041226j4d4a5584m279afa9a2d7dfe74@mail.gmail.com>
+References: <20061130170625.GH18810@admingilde.org>
+	 <200612012306.41410.Josef.Weidendorfer@gmx.de>
+	 <Pine.LNX.4.64.0612011423100.3695@woody.osdl.org>
+	 <4570AF8F.1000801@stephan-feder.de>
+	 <Pine.LNX.4.64.0612011505190.3695@woody.osdl.org>
+	 <4570BFA4.8070903@stephan-feder.de>
+	 <e7bda7770612021057mc9f3eb9q7fc047dd1b5c235f@mail.gmail.com>
+	 <Pine.LNX.4.64.0612021114270.3476@woody.osdl.org>
+	 <e7bda7770612030119v197cbc95h6b3fa9e22b78c058@mail.gmail.com>
+	 <Pine.LNX.4.64.0612030946150.3476@woody.osdl.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="YZ5djTAD1cGYuMQK"
-NNTP-Posting-Date: Mon, 20 Nov 2006 17:33:06 +0000 (UTC)
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Mon, 4 Dec 2006 20:26:30 +0000 (UTC)
+Cc: sf-gmane@stephan-feder.de, sf <sf@b-i-t.de>, git@vger.kernel.org,
+	"Martin Waitz" <tali@admingilde.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=sPfpixxjZGHjT0KaNHVaiZ942PaBA+egAsJbOAdyfsmk1cfLQbvnu5Y8g8VXDEArGhFJVb65mWyPjjK+Hi1MSKQpuOlsVMYsJ8a4EFz7x3O7dOi/oDr9V9QnZirLiEKwX3B4XzsBiryNjYMzxXHZIKvyGZ7Q5BHNtYbdqGu+Dcw=
+In-Reply-To: <Pine.LNX.4.64.0612030946150.3476@woody.osdl.org>
 Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31925>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GmD0w-0006We-KT for gcvg-git@gmane.org; Mon, 20 Nov
- 2006 18:33:03 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33240>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GrKOJ-0007PG-56 for gcvg-git@gmane.org; Mon, 04 Dec
+ 2006 21:26:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S966259AbWKTRci (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 20 Nov 2006
- 12:32:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966261AbWKTRci
- (ORCPT <rfc822;git-outgoing>); Mon, 20 Nov 2006 12:32:38 -0500
-Received: from og.latency.net ([64.21.79.2]:37639 "EHLO og.latency.net") by
- vger.kernel.org with ESMTP id S966259AbWKTRch (ORCPT
- <rfc822;git@vger.kernel.org>); Mon, 20 Nov 2006 12:32:37 -0500
-Received: by og.latency.net (Postfix, from userid 1053) id 176F613FB2E; Mon,
- 20 Nov 2006 12:32:37 -0500 (EST)
-Received: from pic.bent.dom (localhost [127.0.0.1]) by og.latency.net
- (Postfix) with ESMTP id F3B7313FB69 for <git@vger.kernel.org>; Mon, 20 Nov
- 2006 12:32:32 -0500 (EST)
-Received: (from bet@localhost, uid 500) by pic.bent.dom (femail 0.97) 20 Nov
- 2006 17:32:26 +0000
-To: git@vger.kernel.org
+ S937374AbWLDU0P (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
+ 15:26:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937373AbWLDU0P
+ (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 15:26:15 -0500
+Received: from nf-out-0910.google.com ([64.233.182.188]:23063 "EHLO
+ nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S937370AbWLDU0N (ORCPT <rfc822;git@vger.kernel.org>); Mon, 4 Dec
+ 2006 15:26:13 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so3157nfa for
+ <git@vger.kernel.org>; Mon, 04 Dec 2006 12:26:10 -0800 (PST)
+Received: by 10.49.68.6 with SMTP id v6mr21084181nfk.1165263969969; Mon, 04
+ Dec 2006 12:26:09 -0800 (PST)
+Received: by 10.49.28.8 with HTTP; Mon, 4 Dec 2006 12:26:09 -0800 (PST)
+To: "Linus Torvalds" <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 
+On 12/3/06, Linus Torvalds <torvalds@osdl.org> wrote:
+>
+> > If you have an old irrelevant submodule in the history that happens to
+> > have the same name as one of them you are interested in, do you get
+> > this as well?
+>
+> It could be "solved" by simply having the requirement that all modules
+> need to be named differently (notice that "module name" is _not_ the same
+> thing as "the directory name where the module shows up".
 
---YZ5djTAD1cGYuMQK
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Okay, missed that part.  I wasn't familiar with contents of the CVS
+modules files and misinterpreted your suggestion.
 
-I build git for Bent Linux, with
+MODULE [OPTIONS] [&OTHERMODULE...] [DIR] [FILES]
 
-	make prefix=/usr NEEDS_LIBICONV=YesPlease
-
-It develops compile and link lines that look like:
-
-gcc -g -O2 -Wall  -DSHA1_HEADER='<openssl/sha.h>' -DNO_STRLCPY -o git-http-fetch   fetch.o http.o http-fetch.o \
-                libgit.a xdiff/lib.a -lz  -liconv  -lcrypto -lcurl -lexpat
-
-which produce vast numbers of errors, which look like
-
-/usr/lib/gcc-lib/i686-pc-linux-gnu/3.3.1/../../../libcurl.a(ssluse.o)(.text.rand_enough+0x4): In function `rand_enough':
-: undefined reference to `RAND_status'
-/usr/lib/gcc-lib/i686-pc-linux-gnu/3.3.1/../../../libcurl.a(ssluse.o)(.text.ossl_seed+0x2b): In function `ossl_seed':
-: undefined reference to `RAND_load_file'
-[...]
-/usr/lib/gcc-lib/i686-pc-linux-gnu/3.3.1/../../../libcurl.a(http_ntlm.o)(.text.Curl_output_ntlm+0x370): In function `Curl_output_ntlm':
-: undefined reference to `MD5_Update'
-/usr/lib/gcc-lib/i686-pc-linux-gnu/3.3.1/../../../libcurl.a(http_ntlm.o)(.text.Curl_output_ntlm+0x37d): In function `Curl_output_ntlm':
-: undefined reference to `MD5_Final'
-collect2: ld returned 1 exit status
-make: *** [git-http-fetch] Error 1
-
-I've been kludging around it with this patch:
-
-diff -ru git-1.4.4.orig/Makefile git-1.4.4/Makefile
---- git-1.4.4.orig/Makefile	2006-11-15 07:22:27.000000000 +0000
-+++ git-1.4.4/Makefile	2006-11-15 20:49:26.000000000 +0000
-@@ -439,7 +439,7 @@
- 		BASIC_CFLAGS += -I$(CURLDIR)/include
- 		CURL_LIBCURL = -L$(CURLDIR)/lib -R$(CURLDIR)/lib -lcurl
- 	else
--		CURL_LIBCURL = -lcurl
-+		CURL_LIBCURL = -lcurl -lssl -lcrypto
- 	endif
- 	PROGRAMS += git-http-fetch$X
- 	curl_check := $(shell (echo 070908; curl-config --vernum) | sort -r | sed -ne 2p)
-
-just because I didn't take the time to understand the git build
-process's library conf system.
-
--Bennett
-
---YZ5djTAD1cGYuMQK
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.5 (GNU/Linux)
-
-iD8DBQFFYeapHZWg9mCTffwRAlgwAJ49jD1bmJyKqffOObvDYg0e1hnkLACfV68w
-D9AKge2mYnHp/uynRnqFMXE=
-=kvpj
------END PGP SIGNATURE-----
-
+So all this is UI only and the "normal" operations on the supermodule
