@@ -4,83 +4,59 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: [RFC] Submodules in GIT
-Date: Fri, 1 Dec 2006 22:37:23 +0100
-Message-ID: <20061201213722.GK18810@admingilde.org>
-References: <20061130170625.GH18810@admingilde.org> <200612011917.19252.andyparkins@gmail.com> <20061201193802.GI18810@admingilde.org> <200612012104.39897.andyparkins@gmail.com>
+From: Sven Verdoolaege <skimo@kotnet.org>
+Subject: Re: selective git-update-index per diff(1) chunks
+Date: Mon, 04 Dec 2006 18:33:18 +0100
+Message-ID: <20061204173318.GG940MdfPADPa@greensroom.kotnet.org>
+References: <b6fcc0a0612010323x7554e47m5e6bdafe85fc8224@mail.gmail.com>
+Reply-To: skimo@liacs.nl
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="e7MbhXUj+2isZwqc"
-NNTP-Posting-Date: Fri, 1 Dec 2006 21:37:33 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+NNTP-Posting-Date: Mon, 4 Dec 2006 17:33:32 +0000 (UTC)
+Cc: git@vger.kernel.org, Paul Mackerras <paulus@samba.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <200612012104.39897.andyparkins@gmail.com>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+In-reply-to: <b6fcc0a0612010323x7554e47m5e6bdafe85fc8224@mail.gmail.com>
+Content-disposition: inline
+User-Agent: Mutt/1.5.10i
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32968>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GqG4V-0004jS-Vv for gcvg-git@gmane.org; Fri, 01 Dec
- 2006 22:37:28 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33206>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GrHh0-0004Vo-Aq for gcvg-git@gmane.org; Mon, 04 Dec
+ 2006 18:33:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1161912AbWLAVhZ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
- 16:37:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161927AbWLAVhY
- (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 16:37:24 -0500
-Received: from agent.admingilde.org ([213.95.21.5]:2956 "EHLO
- mail.admingilde.org") by vger.kernel.org with ESMTP id S1161912AbWLAVhY
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 16:37:24 -0500
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1) id
- 1GqG4R-0001oZ-58; Fri, 01 Dec 2006 22:37:23 +0100
-To: Andy Parkins <andyparkins@gmail.com>
+ S1758405AbWLDRdX (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
+ 12:33:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758497AbWLDRdX
+ (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 12:33:23 -0500
+Received: from psmtp02.wxs.nl ([195.121.247.11]:49848 "EHLO psmtp02.wxs.nl"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1758398AbWLDRdW
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006 12:33:22 -0500
+Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl
+ [84.81.90.170]) by psmtp02.wxs.nl (iPlanet Messaging Server 5.2 HotFix 2.07
+ (built Jun 24 2005)) with SMTP id <0J9R007S0FFI41@psmtp02.wxs.nl> for
+ git@vger.kernel.org; Mon, 04 Dec 2006 18:33:19 +0100 (MET)
+Received: (qmail 22677 invoked by uid 500); Mon, 04 Dec 2006 17:33:18 +0000
+To: Alexey Dobriyan <adobriyan@gmail.com>
 Sender: git-owner@vger.kernel.org
 
+On Fri, Dec 01, 2006 at 02:23:14PM +0300, Alexey Dobriyan wrote:
+> Has anyone thought about aggregating this into git-update-index or
+> somewhere?
+> 
+>    git-update-index -C1,3    #chunks 1, 3
+>    git commit
+>    git-update-index -C1,3    # chunks 2,5 in original numbering
+>    git commit
+> 
+> Relying on diff(1) definition of chunks is sorta hacky, though... I admit 
+> it.
 
---e7MbhXUj+2isZwqc
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Paul Mackerras modified his dirdiff tool to do something like this.
+I have a couple of patches on top of his version from way back at
+http://www.liacs.nl/~sverdool/gitweb.cgi?p=dirdiff.git;a=summary
 
-hoi :)
-
-On Fri, Dec 01, 2006 at 09:04:37PM +0000, Andy Parkins wrote:
-> > It may be possible to use two object stores and still do the common
-> > object traversal but I do not think that gives you any benefits.
->=20
-> There is one benefit - you can git-clone the submodule just as you
-> would if it were not a submodule.  In fact, from the submodule's point
-> of view it knows nothing about the supermodule.
-
-The submodule repository obviously has to able to reach all its objects.
-This is easily doable with the shared object database.
-
-So you can already clone the submodule standalone.
-
-> I'm going to guess by reachability analysis, you mean that the
-> submodule doesn't know that some of it's commits are referenced by the
-> supermodule.  As I suggested elsewhere in the thread, that's easily
-> fixed by making a refs/supermodule/commitXXXX file for each
-> supermodule commit that references as particular submodule commit.
-
-I wouldn't call this "easily".
-
---=20
-Martin Waitz
-
---e7MbhXUj+2isZwqc
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFFcKCSj/Eaxd/oD7IRAn3EAJ0VWTFhN1VGs6/1e4WZ1GQecjRF6wCdHlzJ
-6nQoz8Lvy7u2aLlFwnahJ/k=
-=+u2r
------END PGP SIGNATURE-----
+I don't know if he has continued working on this.
 
