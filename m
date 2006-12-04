@@ -1,48 +1,66 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [RFC] requiring Perl SVN libraries for git-svn
-Date: Fri, 15 Dec 2006 10:44:24 -0800
-Message-ID: <20061215184424.GA1442@localdomain>
-References: <20061213202142.GE8179@localdomain>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [PATCH] Print progress message to stderr, not stdout
+Date: Mon, 4 Dec 2006 16:37:05 +0100
+Message-ID: <20061204153705.GA8644@diana.vm.bytemark.co.uk>
+References: <20061111121625.8988.45195.stgit@localhost> <e5bfff550612020520w3ad48a09xfdde63b9050a75cf@mail.gmail.com> <b0943d9e0612040117y6554b891yaf6eb59d0d52ebf0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 15 Dec 2006 18:44:36 +0000 (UTC)
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Mon, 4 Dec 2006 15:37:58 +0000 (UTC)
+Cc: Marco Costalba <mcostalba@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Content-Disposition: inline
-In-Reply-To: <20061213202142.GE8179@localdomain>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <b0943d9e0612040117y6554b891yaf6eb59d0d52ebf0@mail.gmail.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34539>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33197>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GvI2n-0005aZ-Ll for gcvg-git@gmane.org; Fri, 15 Dec
- 2006 19:44:30 +0100
+ esmtp (Exim 4.50) id 1GrFtB-0004SX-UH for gcvg-git@gmane.org; Mon, 04 Dec
+ 2006 16:37:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753155AbWLOSo0 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 15 Dec 2006
- 13:44:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753161AbWLOSo0
- (ORCPT <rfc822;git-outgoing>); Fri, 15 Dec 2006 13:44:26 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:58057 "EHLO hand.yhbt.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1753155AbWLOSo0
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 15 Dec 2006 13:44:26 -0500
-Received: from hand.yhbt.net (localhost [127.0.0.1]) by hand.yhbt.net
- (Postfix) with SMTP id 7333E2DC03A; Fri, 15 Dec 2006 10:44:24 -0800 (PST)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Fri, 15 Dec 2006
- 10:44:24 -0800
-To: git@vger.kernel.org
+ S937024AbWLDPhR convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006 10:37:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937028AbWLDPhR
+ (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 10:37:17 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4543 "EHLO
+ diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S937024AbWLDPhQ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 4 Dec
+ 2006 10:37:16 -0500
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1
+ (Debian)) id 1GrFsP-0002Gl-00; Mon, 04 Dec 2006 15:37:05 +0000
+To: Catalin Marinas <catalin.marinas@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Eric Wong <normalperson@yhbt.net> wrote:
-> Are there any git-svn users out there who would be seriously hurt if I
-> dropped support for using the svn command-line client in git-svn?
+On 2006-12-04 09:17:16 +0000, Catalin Marinas wrote:
 
-One additional comment is that the dcommit command (much favored over
-'git svn commit') does not currently work with the command-line client.
+> On 02/12/06, Marco Costalba <mcostalba@gmail.com> wrote:
+>
+> > On 11/11/06, Karl Hasselstr=F6m <kha@treskal.com> wrote:
+> >
+> > > Printing progress messages to stdout causes them to get mixed up
+> > > with the actual output of the program. Using stderr is much
+> > > better, since the user can then redirect the two components
+> > > separately.
+> >
+> > This patch breaks qgit.
+>
+> Since there are other tools relying on a clean stderr, I think I
+> would revert it and add a verbose flag and/or config option. Karl,
+> any thoughts on this (since you sent the patch)?
 
--- 
+I introduced this since I wanted to divert the output to a file, and
+the progress message had no business being written to that file. But a
+command line option to suppress progress messages would work just as
+well if that's what git does.
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
