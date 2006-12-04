@@ -1,96 +1,68 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Aneesh Kumar" <aneesh.kumar@gmail.com>
-Subject: git-send-email and msmtp
-Date: Tue, 12 Dec 2006 21:07:45 +0530
-Message-ID: <cc723f590612120737t7d7e8dabs4e82ae2ac705e4e1@mail.gmail.com>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: [PATCH 1/3] Ask git for author and committer name
+Date: Mon, 4 Dec 2006 22:24:52 +0000
+Message-ID: <b0943d9e0612041424v42313a2r22d8fc8d1b18cb55@mail.gmail.com>
+References: <20061111232322.17760.26214.stgit@localhost>
+	 <20061111233046.17760.62871.stgit@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Tue, 12 Dec 2006 15:39:07 +0000 (UTC)
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Mon, 4 Dec 2006 22:25:08 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=cSNZvTZIVTshAdLtb4ikTPM5PRQXLS/i3nIObJX3Ky/xEuGnDI1GMywNbVTpDItQ6XZt884sQxBllnV5/DZsPATN88WhWPaPbHqvnWnRySHrmAADtw8j1FLR1g+PHJOP/ImARcGr1MPesOMZc+G8JDL3Jn51HRhwjJxvdmUNGEU=
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=GqqdGlGp1I1vIRuc3qZFccNfoNMkq3imfAs+FyJ0Cz3mdE+n6T0Kb52eA5RRoAc4oLbSoyRyindlKuCGz/y/7uRYiZ0xEqbvcUjK65RS2qlZmN+uqooNJzE+0+hX0ONOjTzyICmS7QfmaMBZV9OKjyBZsp3krLZ9VF1hC5gj/Fk=
+In-Reply-To: <20061111233046.17760.62871.stgit@localhost>
 Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34103>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33262>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gu9ih-0003uH-Ua for gcvg-git@gmane.org; Tue, 12 Dec
- 2006 16:39:04 +0100
+ esmtp (Exim 4.50) id 1GrMF9-0001dC-22 for gcvg-git@gmane.org; Mon, 04 Dec
+ 2006 23:24:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751434AbWLLPht (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 12 Dec 2006
- 10:37:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751435AbWLLPht
- (ORCPT <rfc822;git-outgoing>); Tue, 12 Dec 2006 10:37:49 -0500
-Received: from nf-out-0910.google.com ([64.233.182.191]:55608 "EHLO
- nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1751434AbWLLPhr (ORCPT <rfc822;git@vger.kernel.org>); Tue, 12 Dec
- 2006 10:37:47 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so267182nfa for
- <git@vger.kernel.org>; Tue, 12 Dec 2006 07:37:46 -0800 (PST)
-Received: by 10.48.230.20 with SMTP id c20mr1467197nfh.1165937865635; Tue, 12
- Dec 2006 07:37:45 -0800 (PST)
-Received: by 10.48.212.18 with HTTP; Tue, 12 Dec 2006 07:37:45 -0800 (PST)
-To: "Git Mailing List" <git@vger.kernel.org>
+ S937125AbWLDWYz convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006 17:24:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937174AbWLDWYz
+ (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 17:24:55 -0500
+Received: from nz-out-0506.google.com ([64.233.162.227]:44098 "EHLO
+ nz-out-0102.google.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with
+ ESMTP id S937125AbWLDWYz convert rfc822-to-8bit (ORCPT
+ <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006 17:24:55 -0500
+Received: by nz-out-0102.google.com with SMTP id s1so1973423nze for
+ <git@vger.kernel.org>; Mon, 04 Dec 2006 14:24:52 -0800 (PST)
+Received: by 10.64.148.8 with SMTP id v8mr13040897qbd.1165271092122; Mon, 04
+ Dec 2006 14:24:52 -0800 (PST)
+Received: by 10.65.133.7 with HTTP; Mon, 4 Dec 2006 14:24:52 -0800 (PST)
+To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
 Sender: git-owner@vger.kernel.org
 
-Hi,
+On 11/11/06, Karl Hasselstr=F6m <kha@treskal.com> wrote:
+> Consistently do the following to get hold of default user and
+> committer:
+>
+>   1. Use the value specified on the command line, if any.
+>
+>   1. Otherwise, use the value from stgitrc, if available.
+>
+>   2. Otherwise, ask git for the value. git will produce the value fro=
+m
+>      on of its config files, from environment variables, or make it
+>      up. It might be asking the spirits of the dead for all we care.
 
-I am using msmtp to send email using git-send-email. The problem i am
-facing now is vger.kernel.org is dropping the mails generated by
-git-send-email. When i am sending the same patch as an attachment in
-thunderbird everything works fine. So i guess it is not the patch
-content that is getting filtered. Any idea how to find out what is
-causing the patch to get dropped and how to fix this.
+I haven't forgot about this patch. I switched StGIT to the gitconfig
+files and there won't be a need to invoke "git repo-config". I'll try
+to modify your patch.
 
-The header of the patch that was dropped is
-
-Return-Path: <aneesh.kumar@gmail.com>
-Received: from localhost ( [156.153.255.234])
-        by mx.google.com with ESMTP id q13sm7841591qbq.2006.12.12.00.56.10;
-        Tue, 12 Dec 2006 00:56:12 -0800 (PST)
-From: "Aneesh Kumar K.V" <aneesh.kumar@gmail.com>
-To: linux-kernel@vger.kernel.org
-Cc: trs80@ucc.gu.uwa.edu.au, Aneesh Kumar K.V <aneesh.kumar@gmail.com>
-Subject: [PATCH] Alpha increase PERCPU_ENOUGH_ROOM
-Date: Tue, 12 Dec 2006 14:26:06 +0530
-Message-Id: <11659137661938-git-send-email-aneesh.kumar@gmail.com>
-X-Mailer: git-send-email 1.4.4.2.gdb98-dirty
-
-Header of the patch that went through fine is below
-
-Return-Path: <aneesh.kumar@gmail.com>
-Received: from ?217.236.218.183? ( [156.153.255.234])
-        by mx.google.com with ESMTP id e18sm7940070qba.2006.12.12.01.29.53;
-        Tue, 12 Dec 2006 01:29:55 -0800 (PST)
-Message-ID: <457E768F.6050606@gmail.com>
-Date: Tue, 12 Dec 2006 14:59:51 +0530
-From: "Aneesh Kumar K.V" <aneesh.kumar@gmail.com>
-User-Agent: Thunderbird 1.5.0.8 (X11/20061115)
-MIME-Version: 1.0
-To:  linux-kernel@vger.kernel.org
-Subject: [PATCH] Alpha increase PERCPU_ENOUGH_ROOM
-Content-Type: multipart/mixed;
- boundary="------------040307060102020004050000"
-
-This is a multi-part message in MIME format.
---------------040307060102020004050000
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-
-
---------------040307060102020004050000
-Content-Type: text/plain;
- name="0002-Alpha-increase-PERCPU_ENOUGH_ROOM.txt"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline;
- filename="0002-Alpha-increase-PERCPU_ENOUGH_ROOM.txt"
+--=20
