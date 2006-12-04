@@ -1,133 +1,84 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
-	DATE_IN_PAST_12_24,HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
-From: Sam Vilain <sam@vilain.net>
-Subject: [PATCH] merge-recursive: configurable 'merge' program
-Date: Mon, 4 Dec 2006 22:36:18 +1100
-Message-ID: <20061204235647.9BA8B139B0E@magnus.utsl.gen.nz>
-NNTP-Posting-Date: Mon, 4 Dec 2006 23:57:02 +0000 (UTC)
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: egit/jgit wishlist
+Date: Mon, 4 Dec 2006 13:05:53 -0500
+Message-ID: <20061204180553.GF6011@spearce.org>
+References: <20061204172836.GB6011@spearce.org> <457461BF.6080706@midwinter.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Mon, 4 Dec 2006 18:06:11 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+Content-Disposition: inline
+In-Reply-To: <457461BF.6080706@midwinter.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33265>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33211>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GrNg6-0005Q6-Di for gcvg-git@gmane.org; Tue, 05 Dec
- 2006 00:56:55 +0100
+ esmtp (Exim 4.50) id 1GrICZ-00014T-1x for gcvg-git@gmane.org; Mon, 04 Dec
+ 2006 19:06:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S937189AbWLDX4v (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
- 18:56:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937170AbWLDX4v
- (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 18:56:51 -0500
-Received: from watts.utsl.gen.nz ([202.78.240.73]:41884 "EHLO
- magnus.utsl.gen.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
- S937189AbWLDX4u (ORCPT <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006
- 18:56:50 -0500
-Received: by magnus.utsl.gen.nz (Postfix, from userid 1003) id 9BA8B139B0E;
- Tue,  5 Dec 2006 12:56:47 +1300 (NZDT)
-To: git@vger.kernel.org
+ S936629AbWLDSGA (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
+ 13:06:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936651AbWLDSGA
+ (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 13:06:00 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:39347 "EHLO
+ corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S936629AbWLDSF7 (ORCPT <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006
+ 13:05:59 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1GrIDC-00026p-7b; Mon, 04 Dec 2006 13:06:42 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ D1A3A20FB7F; Mon,  4 Dec 2006 13:05:53 -0500 (EST)
+To: Steven Grimm <koreth@midwinter.com>
 Sender: git-owner@vger.kernel.org
 
-For those who like to spawn interactive merge tools on a merge failure
-or otherwise run some kind of script, allow a "merge.tool" repo-config
-option that will take arguments as merge(1) does.
----
- merge-recursive.c |   23 ++++++++++++++++++++++-
- 1 files changed, 22 insertions(+), 1 deletions(-)
+Steven Grimm <koreth@midwinter.com> wrote:
+> My usual git working style is to not switch branches with a dirty 
+> working directory; I always commit to the current branch before 
+> switching to a new one. I mention that because I assume it'll be easier 
+> to implement that workflow first; once you have commit capability, you 
+> can do that style of branch switching (either preventing the switch or 
+> doing an implicit commit when the working directory is dirty) without 
+> having to worry about merging.
 
-Here's the script I use:
+It is easier to code.  :-)
 
-#!/bin/sh
-
-output=`mktemp -p . .merge_file_XXXXXX`
-branch1="$7"
-branch2="$9"
-ancestor="$8"
-
-cp $branch1 $output
-
-if merge -L $2 -L $4 -L $6 $output $ancestor $branch2
-then
-    mv $output $branch1
-    exit 0
-else
-
-    rm $output
-
-    emacs --eval "(ediff-merge-files-with-ancestor \"${branch1}\" 
-\"${branch2}\" \"${ancestor}\" nil \"${output}\")"
-
-    if [ -s "$output" ]
-    then
-        mv $output $branch1
-        exit 0
-    else
-        exit 1
-    fi
-fi
-
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 5a70a5c..0e2da57 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -627,6 +627,8 @@ static char *git_unpack_file(const unsigned char *sha1, char *path)
- 	return path;
- }
+But users have come to expect the three-way merge during branch
+switches.  I actually get ticked when it fails, because that is
+usually when I need it most.  Anyway, I also know a number of
+Eclipse users who also use Git that would prefer it if the switch
+fails on a dirty working tree, as that usually just means they
+forgot to commit their changes first.
  
-+static char* merge_tool = "merge";
-+
- static struct merge_file_info merge_file(struct diff_filespec *o,
- 		struct diff_filespec *a, struct diff_filespec *b,
- 		const char *branch1, const char *branch2)
-@@ -661,12 +663,14 @@ static struct merge_file_info merge_file(struct diff_filespec *o,
- 			char src1[PATH_MAX];
- 			char src2[PATH_MAX];
- 			const char *argv[] = {
--				"merge", "-L", NULL, "-L", NULL, "-L", NULL,
-+				NULL, "-L", NULL, "-L", NULL, "-L", NULL,
- 				NULL, NULL, NULL,
- 				NULL
- 			};
- 			char *la, *lb, *lo;
- 
-+			argv[0] = merge_tool;
-+
- 			git_unpack_file(o->sha1, orig);
- 			git_unpack_file(a->sha1, src1);
- 			git_unpack_file(b->sha1, src2);
-@@ -1134,6 +1138,21 @@ static int process_entry(const char *path, struct stage_data *entry,
- 	return clean_merge;
- }
- 
-+static int
-+git_merge_config(const char *key, const char *val)
-+{
-+	char merge_key[] = "merge.";
-+	if (strncmp( key, merge_key, sizeof merge_key - 1 ))
-+		return 0;
-+	key += sizeof merge_key - 1;
-+
-+	if (!strcmp( "tool", key )) {
-+	    merge_tool = xstrdup(val);
-+	}
-+
-+	return 0;
-+}
-+
- static int merge_trees(struct tree *head,
- 		       struct tree *merge,
- 		       struct tree *common,
-@@ -1148,6 +1167,8 @@ static int merge_trees(struct tree *head,
- 		return 1;
- 	}
- 
-+	git_config( git_merge_config );
-+
- 	code = git_merge_trees(index_only, common, head, merge);
- 
- 	if (code != 0)
+> And finally, it would be swell -- but put it at the bottom of your 
+> priority list -- to have git-svn interoperability; sadly most of my git 
+> usage at the moment is in cloned svn repositories and it would be great 
+> if egit could do the right thing when the current git repo is cloned 
+> from svn. What "the right thing" is, exactly, is debatable, but I 
+> suppose some kind of integration with the Subclipse plugin is one 
+> possibility (and if nothing else, that plugin probably has code that can 
+> be reused.) I'd like to be able to update from and commit to the parent 
+> svn repository.
+
+SVN integration is probably out of scope for the plugin (at least
+right now) but I won't reject any reasonable patches!  (hint hint)
+:-)
+
 -- 
-1.4.4.1.ge918e-dirty
