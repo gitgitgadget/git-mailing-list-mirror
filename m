@@ -5,125 +5,82 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
 	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Torgil Svensson" <torgil.svensson@gmail.com>
-Subject: Re: [RFC] Submodules in GIT
-Date: Sat, 2 Dec 2006 19:57:46 +0100
-Message-ID: <e7bda7770612021057mc9f3eb9q7fc047dd1b5c235f@mail.gmail.com>
-References: <20061130170625.GH18810@admingilde.org> <457061A7.2000102@b-i-t.de>
-	 <Pine.LNX.4.64.0612011134080.3695@woody.osdl.org>
-	 <200612012306.41410.Josef.Weidendorfer@gmx.de>
-	 <Pine.LNX.4.64.0612011423100.3695@woody.osdl.org>
-	 <4570AF8F.1000801@stephan-feder.de>
-	 <Pine.LNX.4.64.0612011505190.3695@woody.osdl.org>
-	 <4570BFA4.8070903@stephan-feder.de>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: [PATCH] Print progress message to stderr, not stdout
+Date: Mon, 4 Dec 2006 22:13:16 +0000
+Message-ID: <b0943d9e0612041413p4f303176x3d0fa95afd1c4a1@mail.gmail.com>
+References: <20061111121625.8988.45195.stgit@localhost>
+	 <e5bfff550612020520w3ad48a09xfdde63b9050a75cf@mail.gmail.com>
+	 <b0943d9e0612040117y6554b891yaf6eb59d0d52ebf0@mail.gmail.com>
+	 <20061204153705.GA8644@diana.vm.bytemark.co.uk>
+	 <e5bfff550612041034g727a1bebg464f7c523c0fac7f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sat, 2 Dec 2006 18:58:04 +0000 (UTC)
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Mon, 4 Dec 2006 22:13:43 +0000 (UTC)
+Cc: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>,
+	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=dNlxl1nlC5lJLZnSBpE5wKY+aqfSnSyschrWPZhzgiUInSqknYTuAwNhtSsyOeExPZYFQJaMYHPC7rQgAmQp4oFDuKSmJqV9QGUoXktprPCIARxKTAAZ0Im1yZGytJRo16mUTs+HEFpNIbdDQwNxptXGXeSymAYurnGu8Epveag=
-In-Reply-To: <4570BFA4.8070903@stephan-feder.de>
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=VQwJnCIkLuIFaCEwbGBhmkj3oPxZaVbhErYbiZQa0AUaVapjzNnbGOATNhKJ11HcrKCw1WWxopiVUlKrhQLf6pxwleeGFAdtEGZcYEOSgw+BKTpbw+YeFmeVa1oGWG0atm1lxJJ7BHRCkkJD2hLShEI6Y+h4GS9NVagjbTLAOLs=
+In-Reply-To: <e5bfff550612041034g727a1bebg464f7c523c0fac7f@mail.gmail.com>
 Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33032>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gqa3c-0005DM-1D for gcvg-git@gmane.org; Sat, 02 Dec
- 2006 19:57:54 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33261>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GrM47-0008VW-2t for gcvg-git@gmane.org; Mon, 04 Dec
+ 2006 23:13:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932953AbWLBS5s (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 2 Dec 2006
- 13:57:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936565AbWLBS5s
- (ORCPT <rfc822;git-outgoing>); Sat, 2 Dec 2006 13:57:48 -0500
-Received: from nf-out-0910.google.com ([64.233.182.191]:54265 "EHLO
- nf-out-0910.google.com") by vger.kernel.org with ESMTP id S932953AbWLBS5s
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 2 Dec 2006 13:57:48 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so3904077nfa for
- <git@vger.kernel.org>; Sat, 02 Dec 2006 10:57:46 -0800 (PST)
-Received: by 10.49.19.18 with SMTP id w18mr10830732nfi.1165085866528; Sat, 02
- Dec 2006 10:57:46 -0800 (PST)
-Received: by 10.49.28.8 with HTTP; Sat, 2 Dec 2006 10:57:46 -0800 (PST)
-To: sf-gmane@stephan-feder.de, "Linus Torvalds" <torvalds@osdl.org>, sf
- <sf@b-i-t.de>, git@vger.kernel.org, "Martin Waitz" <tali@admingilde.org>
+ S1759628AbWLDWNS convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006 17:13:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759732AbWLDWNS
+ (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 17:13:18 -0500
+Received: from nz-out-0506.google.com ([64.233.162.225]:39750 "EHLO
+ nz-out-0102.google.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with
+ ESMTP id S1758411AbWLDWNR convert rfc822-to-8bit (ORCPT
+ <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006 17:13:17 -0500
+Received: by nz-out-0102.google.com with SMTP id s1so1971318nze for
+ <git@vger.kernel.org>; Mon, 04 Dec 2006 14:13:17 -0800 (PST)
+Received: by 10.65.236.14 with SMTP id n14mr13001786qbr.1165270396894; Mon,
+ 04 Dec 2006 14:13:16 -0800 (PST)
+Received: by 10.65.133.7 with HTTP; Mon, 4 Dec 2006 14:13:16 -0800 (PST)
+To: "Marco Costalba" <mcostalba@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-> If you need a common infrastructure to be able to work with the
-> submodule, then the submodule is not independent of of the supermodule.
-> I see a contradiction in your requirements.
+On 04/12/06, Marco Costalba <mcostalba@gmail.com> wrote:
+> On 12/4/06, Karl Hasselstr=F6m <kha@treskal.com> wrote:
+> > I introduced this since I wanted to divert the output to a file, an=
+d
+> > the progress message had no business being written to that file. Bu=
+t a
+> > command line option to suppress progress messages would work just a=
+s
+> > well if that's what git does.
+>
+> If you don't mind I would prefer a command line option to _enable_
+> progress messages, something like -v or --verbose so to keep back
+> compatibility with current versions of tools that do not expect stder=
+r
+> messages.
 
-Here's an real-world example that doesn't contradict:
+I'll first move the message back to stdout. Does qgit rely on the
+StGIT output to have a certain format/information? Does the progress
+message affect it in any way?
 
-http://amarok.kde.org/wiki/Installation_HowTo#From_Anonymous_SVN
+I consider many of the other messages to be progress messages (like
+"pushing... done") and I haven't differentiated between them until
+Karl's patch. For commands like diff or status, you expect the command
+to check the working copy anyway and it doesn't output this specific
+message.
 
-"svn co -N svn://anonsvn.kde.org/home/kde/trunk/extragear/multimedia
-cd multimedia
-svn co svn://anonsvn.kde.org/home/kde/branches/KDE/3.5/kde-common/admin
-svn up amarok
+The best would probably be to add a "verbose" config option to enable
+this message (and maybe a command line option later but this means
+modifying all the commands to accept this option). I'll try to push
+this change tomorrow (together with moving from stgitrc to gitconfig).
 
-To compile the sources (from the multimedia directory):"
-
-and there's probably very few people that want to clone the entire KDE
-multimedia sub&super-module in this case.
-
-//Torgil
-
-
-On 12/2/06, sf <sf-gmane@stephan-feder.de> wrote:
-> Linus Torvalds wrote:
-> >
-> > On Fri, 1 Dec 2006, sf wrote:
-> >> Linus Torvalds wrote:
-> >> ...
-> >>> In contrast, a submodule that we don't fetch is an all-or-nothing
-> >>> situation: we simply don't have the data at all, and it's really a matter
-> >>> of simply not recursing into that submodule at all - much more like not
-> >>> checking out a particular part of the tree.
-> >> If you do not want to fetch all of the supermodule then do not fetch the
-> >> supermodule.
-> >
-> > So why do you want to limit it? There's absolutely no cost to saying "I
-> > want to see all the common shared infrastructure, but I'm actually only
-> > interested in this one submodule that I work with".
->
-> If you need a common infrastructure to be able to work with the
-> submodule, then the submodule is not independent of of the supermodule.
-> I see a contradiction in your requirements.
->
-> > Also, anybody who works on just the build infrastructure simply may not
-> > care about all the submodules. The submodules may add up to hundreds of
-> > gigs of stuff. Not everybody wants them. But you may still want to get the
-> > common build infrastructure.
->
-> See above.
->
-> > In other words, your "all or nothing" approach is
-> >  (a) not friendly
-> > and
-> >  (b) has no real advantages anyway, since modules have to be independent
-> >      enough that you _can_ split them off for other reasons anyway.
-> >
-> > So forcing that "you have to take everything" mentality onyl has
-> > negatives, and no positives. Why do it?
->
-> (There have been lots of use cases for shallow clones but for a long
-> time git did not support them).
->
-> If you can extend this partial fetch feature to the non-subproject case
-> I would agree with your reasoning. What makes the subprojects so special
-> in this regard. Do I have to turn a plain tree into a subproject to be
-> able to ignore it? Once you can restrict fetches to parts of the
-> contents you get the ability to restrict fetches to the "common
-> infrastructure" and selected submodules for free.
->
-> Regards
->
-> Stephan
->
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+--=20
