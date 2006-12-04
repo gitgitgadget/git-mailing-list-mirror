@@ -1,99 +1,72 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Seth Falcon <sethfalcon@gmail.com>
-Subject: git-svn and empty directories in svn (was: [PATCH 1.2/2 (fixed)] git-svn: fix output reporting from the delta fetcher)
-Date: Wed, 29 Nov 2006 08:15:12 -0800
-Message-ID: <m2slg2rzzj.fsf_-_@ziti.fhcrc.org>
-References: <loom.20061124T143148-286@post.gmane.org>
-	<20061128054448.GA396@soma> <20061128102958.GA5207@soma>
-	<20061128105017.GA20366@soma>
-	<9e7ab7380611280445r4ebe344cw69cbc18a74c6122f@mail.gmail.com>
-	<9e7ab7380611280732k4e940380tbf2a96146807d671@mail.gmail.com>
-	<m2bqmr1rnw.fsf@ziti.fhcrc.org> <20061128201605.GA1369@localdomain>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: latest update to git-svn blows up for me
+Date: Mon, 4 Dec 2006 10:12:41 -0800
+Message-ID: <20061204181241.GA27342@soma>
+References: <863b7wnwcw.fsf@blue.stonehenge.com> <20061204070021.GG1369@localdomain> <86hcwbnb0o.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 29 Nov 2006 16:15:37 +0000 (UTC)
-Cc: Pazu <pazu@pazu.com.br>, git@vger.kernel.org
+NNTP-Posting-Date: Mon, 4 Dec 2006 19:41:36 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:to:cc:subject:references:from:date:in-reply-to:message-id:user-agent:mime-version:content-type;
-        b=fxeVIO1zbvBqc1dKT7XRfILxdVlXFMqIyc+uYQE0iAE/JwUfF01IoBzj0ppDD29II9ffYmAA6O7LSoS4j5ZKILoS18kOTs3NCjfXZ1uJ6fIFRQGAUmvFgyVE8cWdIXjL6h20NfcPyJJvjFYRrKAX8XNhApsW8wlHA9YOst3HU/o=
-In-Reply-To: <20061128201605.GA1369@localdomain> (Eric Wong's message of "Tue, 28 Nov 2006 12:16:05 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (darwin)
+Content-Disposition: inline
+In-Reply-To: <86hcwbnb0o.fsf@blue.stonehenge.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-Virus-Scanned: ClamAV 0.88.6/2277/Mon Dec  4 17:10:23 2006 on zeus1.kernel.org
+X-Virus-Status: Clean
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32648>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GpS5W-0003dm-5L for gcvg-git@gmane.org; Wed, 29 Nov
- 2006 17:15:10 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33229>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GrJgs-0000Wl-7d for gcvg-git@gmane.org; Mon, 04 Dec
+ 2006 20:41:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S967448AbWK2QPF (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 29 Nov 2006
- 11:15:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935845AbWK2QPE
- (ORCPT <rfc822;git-outgoing>); Wed, 29 Nov 2006 11:15:04 -0500
-Received: from nf-out-0910.google.com ([64.233.182.190]:29406 "EHLO
- nf-out-0910.google.com") by vger.kernel.org with ESMTP id S935812AbWK2QPC
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 29 Nov 2006 11:15:02 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so2949619nfa for
- <git@vger.kernel.org>; Wed, 29 Nov 2006 08:15:01 -0800 (PST)
-Received: by 10.49.29.3 with SMTP id g3mr6486266nfj.1164816900333; Wed, 29
- Nov 2006 08:15:00 -0800 (PST)
-Received: from ziti.fhcrc.org ( [67.171.24.140]) by mx.google.com with ESMTP
- id p20sm29539075nfc.2006.11.29.08.14.58; Wed, 29 Nov 2006 08:15:00 -0800
- (PST)
-To: Eric Wong <normalperson@yhbt.net>
+ S937324AbWLDTlQ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
+ 14:41:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937327AbWLDTlQ
+ (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 14:41:16 -0500
+Received: from zeus1.kernel.org ([204.152.191.4]:33401 "EHLO
+ zeus1.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
+ S937324AbWLDTlO (ORCPT <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006
+ 14:41:14 -0500
+Received: from hand.yhbt.net (normalperson@hand.yhbt.net [66.150.188.102]
+ (may be forged)) by zeus1.kernel.org (8.13.8/8.13.1) with ESMTP id
+ kB4IhTkl026347 for <git@vger.kernel.org>; Mon, 4 Dec 2006 18:44:41 GMT
+Received: from hand.yhbt.net (localhost [127.0.0.1]) by hand.yhbt.net
+ (Postfix) with SMTP id 600C82DC034; Mon,  4 Dec 2006 10:12:42 -0800 (PST)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Mon,  4 Dec 2006
+ 10:12:41 -0800
+To: "Randal L. Schwartz" <merlyn@stonehenge.com>
 Sender: git-owner@vger.kernel.org
 
-Hi Eric, and list,
+"Randal L. Schwartz" <merlyn@stonehenge.com> wrote:
+> >>>>> "Eric" == Eric Wong <normalperson@yhbt.net> writes:
+> 
+> Eric> "Randal L. Schwartz" <merlyn@stonehenge.com> wrote:
+> >> 
+> >> Does this ring a bell?
+> 
+> Eric> Nope.
+> 
+> Eric> This is on r15941 of  https://svn.perl.org/parrot/trunk ?  I can't seem
+> Eric> to reproduce this with git svn fetch -r15940:15941
+> 
+> No, and that worked for me as well.  Apparently, I might have corrupted my
+> metadata because I updated git-svn while I was using it.  Is there any way to
+> reset the metadata without having to re-fetch 15000 revisions?
 
-Eric Wong <normalperson@yhbt.net> writes:
-> Seth Falcon <sethfalcon@gmail.com> wrote:
->> I think that presently git-svn does not create empty dirs when pulling
->> from svn.  It would be nice to have such directories created since
->> some projects will expect the empty dir to be there (no need to track
->> it in git, IMO).
->
-> Git itself cannot easily track empty directories (at least as far as
-> update-index and checkout) goes.
->
-> What I *can* do is run mktree and to force the creation of tree objects
-> with a 4b825dc642cb6eb9a060e54bf8d69288fbee4904 (empty) sub tree and run
-> commit-tree on it, but checkout/checkout-index would still need to be
-> modified to support it.
->
-> Is that something the git community wants?
+rm .git/refs/remotes/$GIT_SVN_ID .git/svn/$GIT_SVN_ID/.rev_db
+git svn -i $GIT_SVN_ID rebuild
 
-I recently encountered a situation where code wasn't working for me
-because git-svn didn't create an empty dir that is present in svn.
+I don't think that updating git-svn while using it is a problem, because
+Perl won't (to my knowledge) reread it after it's loaded, and git-svn
+does not re-exec itself (it'll fork, however).  Weird... the change
+(15941) was a property-only change; however.
 
-I'm not trying to argue for the sense/anti-sense of tracking empty
-dirs in an scm, but I think this is an issue worth addressing in some
-fashion.  Here's why.
-
-I think there are many potential git users out there who are currently
-svn users.  And git-svn is a really nice way to get started, but this
-sort of stumbling block could really turn people off.  For example, it
-made me look pretty dumb when I carelessly complained to my colleague
-about his code not working and then it turns out to be because my
-super-advanced scm tool "messed things up".
-
-One simple thing (I think it would be simple) is that git-svn could
-issue a loud warning when it encounters an empty directory that it is
-going to ignore.
-
-I don't understand the implications adding the tracking of empty dirs
-to git.  I suspect it has been discussed before, but haven't yet gone
-fishing in the list archives.  I imagine it would make the argument
-easier for folks wanting to switch a project from svn to git if this
-wasn't one of the differences.  For good or bad, I've often heard this
-svn feature as a motivator to switch from cvs.
-
-
-+ seth
+-- 
