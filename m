@@ -1,77 +1,84 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: David Lang <dlang@digitalinsight.com>
-Subject: Re: VCS comparison table
-Date: Thu, 26 Oct 2006 09:30:52 -0700 (PDT)
-Message-ID: <Pine.LNX.4.63.0610260929040.2424@qynat.qvtvafvgr.pbz>
-References: <45354AD0.1020107@utoronto.ca>  <BAYC1-PASMTP07AB11A64250AAF683424DAE0E0@CEZ.ICE>
-  <vpq4ptz2uh8.fsf@ecrins.imag.fr> <453DAC87.8050203@research.canon.com.au>
-  <Pine.LNX.4.64.0610232318200.3962@g5.osdl.org> 
- <Pine.LNX.4.64N.0610232336010.30334@attu2.cs.washington.edu> 
- <Pine.LNX.4.64.0610240812410.3962@g5.osdl.org> 
- <Pine.LNX.4.64N.0610241300450.8112@attu4.cs.washington.edu> 
- <20061025084810.GA26618@coredump.intra.peff.net> 
- <Pine.LNX.4.64N.0610250157470.3467@attu1.cs.washington.edu> 
- <20061025094900.GA26989@coredump.intra.peff.net> 
- <Pine.LNX.4.64N.0610250954380.31053@attu2.cs.washington.edu> <454098EC.8040406@op5.se>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: [PATCH] Print progress message to stderr, not stdout
+Date: Mon, 4 Dec 2006 19:34:59 +0100
+Message-ID: <e5bfff550612041034g727a1bebg464f7c523c0fac7f@mail.gmail.com>
+References: <20061111121625.8988.45195.stgit@localhost>
+	 <e5bfff550612020520w3ad48a09xfdde63b9050a75cf@mail.gmail.com>
+	 <b0943d9e0612040117y6554b891yaf6eb59d0d52ebf0@mail.gmail.com>
+	 <20061204153705.GA8644@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-NNTP-Posting-Date: Thu, 26 Oct 2006 16:33:24 +0000 (UTC)
-Cc: David Rientjes <rientjes@cs.washington.edu>,
-	Jeff King <peff@peff.net>, Linus Torvalds <torvalds@osdl.org>,
-	Lachlan Patrick <loki@research.canon.com.au>,
-	bazaar-ng@lists.canonical.com, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Mon, 4 Dec 2006 18:35:12 +0000 (UTC)
+Cc: "Catalin Marinas" <catalin.marinas@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-X-Sender: dlang@dlang.diginsite.com
-In-Reply-To: <454098EC.8040406@op5.se>
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Dp1kf0tzCsNuh3NqvRYhbBvxDNyGmU1DZxED8R09q4+Jf2kk1an5mp1Dh99vR84+GlsN/v8zIZzKojtBaYm1rJ2tINYYvvJX2ApJ/VeAxzSu7xciPBwoFMIFBx67UpCpvR8mUZ5OHAoj45LZ+T5Jp3ofC0QMIgGawvf0WtmMy8M=
+In-Reply-To: <20061204153705.GA8644@diana.vm.bytemark.co.uk>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30234>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gd8AI-0001yJ-QD for gcvg-git@gmane.org; Thu, 26 Oct
- 2006 18:33:11 +0200
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33216>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GrIeg-0005mq-VO for gcvg-git@gmane.org; Mon, 04 Dec
+ 2006 19:35:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1423603AbWJZQdH (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
- 12:33:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161434AbWJZQdH
- (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 12:33:07 -0400
-Received: from warden-p.diginsite.com ([208.29.163.248]:986 "HELO
- warden.diginsite.com") by vger.kernel.org with SMTP id S1161433AbWJZQdE
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 12:33:04 -0400
-Received: from wlvims02.diginsite.com by warden.diginsite.com via smtpd (for
- vger.kernel.org [209.132.176.167]) with SMTP; Thu, 26 Oct 2006 09:33:04 -0700
-Received: from dlang.diginsite.com ([10.201.10.67]) by
- wlvims02.corp.ad.diginsite.com with InterScan Message Security Suite; Thu, 26
- Oct 2006 09:32:23 -0700
-To: Andreas Ericsson <ae@op5.se>
+ S937247AbWLDSfD convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006 13:35:03 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937250AbWLDSfD
+ (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 13:35:03 -0500
+Received: from py-out-1112.google.com ([64.233.166.179]:14514 "EHLO
+ py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S937247AbWLDSfA convert rfc822-to-8bit (ORCPT
+ <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006 13:35:00 -0500
+Received: by py-out-1112.google.com with SMTP id a29so2325998pyi for
+ <git@vger.kernel.org>; Mon, 04 Dec 2006 10:34:59 -0800 (PST)
+Received: by 10.35.41.14 with SMTP id t14mr15789221pyj.1165257299705; Mon, 04
+ Dec 2006 10:34:59 -0800 (PST)
+Received: by 10.35.93.11 with HTTP; Mon, 4 Dec 2006 10:34:59 -0800 (PST)
+To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
 Sender: git-owner@vger.kernel.org
 
-On Thu, 26 Oct 2006, Andreas Ericsson wrote:
-
->> 
->> There are _not_ scalability improvements.  There may be some slight 
->> performance improvements, but definitely not scalability.  If you have ever 
->> tried to use git to manage terabytes of data, you will see this becomes 
->> very clear.  And "rebasing with 3-way merge" is not something often used in 
->> industry anyway if you've followed the more common models for revision 
->> control within large companies with thousands of engineers.  Typically they 
->> all work off mainline.
->> 
+On 12/4/06, Karl Hasselstr=F6m <kha@treskal.com> wrote:
+> On 2006-12-04 09:17:16 +0000, Catalin Marinas wrote:
 >
-> Actually, I don't see why git shouldn't be perfectly capable of handling a 
-> repo containing several terabytes of data, provided you don't expect it to 
-> turn up the full history for the project in a couple of seconds and you don't 
-> actually *change* that amount of data in each revision. If you want a vcs 
-> that handles that amount with any kind of speed, I think you'll find rsync 
-> and raw rvs a suitable solution.
+> > On 02/12/06, Marco Costalba <mcostalba@gmail.com> wrote:
+> >
+> > > On 11/11/06, Karl Hasselstr=F6m <kha@treskal.com> wrote:
+> > >
+> > > > Printing progress messages to stdout causes them to get mixed u=
+p
+> > > > with the actual output of the program. Using stderr is much
+> > > > better, since the user can then redirect the two components
+> > > > separately.
+> > >
+> > > This patch breaks qgit.
+> >
+> > Since there are other tools relying on a clean stderr, I think I
+> > would revert it and add a verbose flag and/or config option. Karl,
+> > any thoughts on this (since you sent the patch)?
+>
+> I introduced this since I wanted to divert the output to a file, and
+> the progress message had no business being written to that file. But =
+a
+> command line option to suppress progress messages would work just as
+> well if that's what git does.
+>
 
-actually, there are some real problems in this area. the git pack format can't 
-be larger then 4G, and I wouldn't be surprised if there were other issues with 
-files larger then 4G (these all boil down to 32 bit limits). once these limits 
-are dealt with then you will be right.
+If you don't mind I would prefer a command line option to _enable_
+progress messages, something like -v or --verbose so to keep back
+compatibility with current versions of tools that do not expect stderr
+messages.
 
+Thanks
