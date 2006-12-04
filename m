@@ -1,106 +1,84 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: Rename detection at git log
-Date: Mon, 20 Nov 2006 11:22:08 +0100
-Message-ID: <200611201022.10656.andyparkins@gmail.com>
-References: <200611201157.23680.litvinov2004@gmail.com> <200611200951.05529.andyparkins@gmail.com> <7vejry5t4g.fsf@assigned-by-dhcp.cox.net>
+From: Grzegorz Kulewski <kangur@polcom.net>
+Subject: Re: egit/jgit wishlist
+Date: Mon, 4 Dec 2006 19:16:12 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0612041841280.14187@alpha.polcom.net>
+References: <20061204172836.GB6011@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Mon, 20 Nov 2006 10:22:46 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>,
-	Alexander Litvinov <litvinov2004@gmail.com>
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+NNTP-Posting-Date: Mon, 4 Dec 2006 18:16:42 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=LnUEB4/uYMii4Ls66O1zfJjGE4GmIRvuyLx1BsAGpudA7knboxyzDhZm2Ym1IBnWGzlNIY253fy9LnmPaX8D5FWm4f9gTXP0wuOJJ85MwJOajJdyc6DiB4FV2j1OI6OMrm1iWhlWENcwii3VN+DfTyWp8J/tnIGAJPjDsR3s+Yw=
-User-Agent: KMail/1.9.5
-In-Reply-To: <7vejry5t4g.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+In-Reply-To: <20061204172836.GB6011@spearce.org>
+X-Virus-Scanned: amavisd-new at alpha
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31897>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gm6I7-0006qa-OM for gcvg-git@gmane.org; Mon, 20 Nov
- 2006 11:22:21 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33212>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GrIMp-0002ie-EU for gcvg-git@gmane.org; Mon, 04 Dec
+ 2006 19:16:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S965685AbWKTKWR (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 20 Nov 2006
- 05:22:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965687AbWKTKWR
- (ORCPT <rfc822;git-outgoing>); Mon, 20 Nov 2006 05:22:17 -0500
-Received: from ug-out-1314.google.com ([66.249.92.168]:57117 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S965685AbWKTKWQ
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 20 Nov 2006 05:22:16 -0500
-Received: by ug-out-1314.google.com with SMTP id m3so1133661ugc for
- <git@vger.kernel.org>; Mon, 20 Nov 2006 02:22:15 -0800 (PST)
-Received: by 10.66.219.11 with SMTP id r11mr2509432ugg.1164018135138; Mon, 20
- Nov 2006 02:22:15 -0800 (PST)
-Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
- ESMTP id 72sm7470299ugb.2006.11.20.02.22.13; Mon, 20 Nov 2006 02:22:14 -0800
- (PST)
-To: git@vger.kernel.org
+ S937145AbWLDSQV (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
+ 13:16:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937160AbWLDSQV
+ (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 13:16:21 -0500
+Received: from alpha.polcom.net ([83.143.162.52]:55429 "EHLO
+ alpha.polcom.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
+ S937145AbWLDSQU (ORCPT <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006
+ 13:16:20 -0500
+Received: from localhost (localhost [127.0.0.1]) by alpha.polcom.net
+ (Postfix) with ESMTP id DE8E64ADB; Mon,  4 Dec 2006 19:16:17 +0100 (CET)
+Received: from alpha.polcom.net ([127.0.0.1]) by localhost (alpha
+ [127.0.0.1]) (amavisd-new, port 10024) with ESMTP id 01974-16; Mon,  4 Dec
+ 2006 19:16:13 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1]) by alpha.polcom.net
+ (Postfix) with ESMTP id 02CFD4333; Mon,  4 Dec 2006 19:16:13 +0100 (CET)
+To: Shawn Pearce <spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 
-On Monday 2006 November 20 10:07, Junio C Hamano wrote:
+On Mon, 4 Dec 2006, Shawn Pearce wrote:
+> I've started a wishlist:
+>
+>  http://git.or.cz/gitwiki/EclipsePluginWishlist
+>
+> My idea is to work through these in the order shown on the page.
+> I'm looking for comments from those who may be interested in this
+> plugin, to see what they want/need to make it useful.
+>
+> There's many months worth of work listed there, especially with
+> the amount of time that I have available for jgit/egit.  So I'm of
+> course also hoping that others might see something there and try
+> to implement it themselves.  :-)
 
-> The real issue here is because the b/a on the command line
-> applies on the input-side, and does not act as the output
-> filter.  This comes from _very_ early design decision and if you
-> dig the list archive you will see Linus and I arguing about
-> diffcore-pathspec (which later died off).
+Hi,
 
-I don't think so; even without the b/a on the command line, git does not find 
-copies made in this way...
+I am interested in seeing GIT support in Eclipse.
 
-$ git init-db
-defaulting to local storage area
-$ date > fileA
-$ git add fileA
-$ git commit -a -m "fileA"
-Committing initial tree 3ef607fd139dd955f868305462d99dfc4cfff70f
-$ cp fileA fileB
-$ git add fileB
-$ git commit -a -m "fileA -> fileB"
+I think that doing it in 100% pure Java is ok in long run but I wonder if 
+you couldn't make "wrapper" plugin for a start (that would call the real C 
+git for every operation) and make it usable (with full pure Java SWT UI 
+support) and then try to implement feature by feature in pure Java (with 
+config options telling what should be called by wrapper and what by pure 
+implementation)?
 
-Now let's try and get git-diff to notice this was a copy...
+This way we could probably rather fast (basic versions of other GIT UIs 
+were created rather fast IIRC) have basic support for GIT (preferably 
+with GIT Java wrapper library for other projects) that would be usable for 
+most users and this way you could gain more interest in the project. Also 
+testing new pure implementation would be a lot easier (changing one line 
+in config file to enable some pure Java feature and of course having an 
+option to come back to wrapped version of this feature if new pure 
+implementation was wrong).
 
-$ git diff HEAD^..HEAD | cat
-diff --git a/fileB b/fileB
-new file mode 100644
-index 0000000..ec620df
---- /dev/null
-+++ b/fileB
-@@ -0,0 +1 @@
-+Mon Nov 20 10:16:29 GMT 2006
-$ git diff -C HEAD^..HEAD | cat
-diff --git a/fileB b/fileB
-new file mode 100644
-index 0000000..ec620df
---- /dev/null
-+++ b/fileB
-@@ -0,0 +1 @@
-+Mon Nov 20 10:16:29 GMT 2006
-$ git diff --find-copies-harder HEAD^..HEAD | cat
-diff --git a/fileA b/fileB
-similarity index 100%
-copy from fileA
-copy to fileB
-
-As I said - I don't see what "-C" ever does for you in all but the rarest of 
-uses.  --find-copies-harder is the only way to list copies successfully.  
-It's nothing to do with any input or output filtering.
+What do you think about it?
 
 
+Thanks,
 
-Andy
--- 
-Dr Andy Parkins, M Eng (hons), MIEE
+Grzegorz Kulewski
