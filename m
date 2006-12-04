@@ -1,76 +1,63 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Re: Mozilla, git and Windows
-Date: Mon, 27 Nov 2006 11:13:10 -0500
-Message-ID: <9e4733910611270813g4ff982b0tbe6b57d1d49ca9f7@mail.gmail.com>
-References: <9e4733910611270728p36e58e08w6cc7a2989b7843ce@mail.gmail.com>
-	 <456B057E.4000904@shadowen.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: On removing files and "git-rm is pointless"
+Date: Mon, 04 Dec 2006 02:13:43 -0800
+Message-ID: <7vd570q888.fsf@assigned-by-dhcp.cox.net>
+References: <87odqm2ppv.wl%cworth@cworth.org>
+	<Pine.LNX.4.64.0612020919400.3476@woody.osdl.org>
+	<4571DB40.6020800@vilain.net>
+	<Pine.LNX.4.64.0612022246310.2630@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Mon, 27 Nov 2006 16:13:56 +0000 (UTC)
-Cc: "Git Mailing List" <git@vger.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Mon, 4 Dec 2006 10:13:54 +0000 (UTC)
+Cc: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>,
+	Carl Worth <cworth@cworth.org>, Sam Vilain <sam@vilain.net>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=L+JQcbSgb4r8fhTrj8SQciJAFRby1WxVe5W4pkQf5+QN3Piq+9lZmZShlnC9vXPStZARn8Q3dTJW/RNNUQ1GmaAmv8ESVru8IluyFJpcQIwcI0Ogaz6Tjon6tPgj3U75Ww9IMc7gLbpoUT46z2V8pj+qyzOjCNMhPizioJdVGjI=
-In-Reply-To: <456B057E.4000904@shadowen.org>
-Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0612022246310.2630@xanadu.home> (Nicolas Pitre's
+	message of "Sat, 02 Dec 2006 22:50:46 -0500 (EST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32424>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Goj6l-0002Su-6z for gcvg-git@gmane.org; Mon, 27 Nov
- 2006 17:13:27 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33180>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GrApX-0005yi-NP for gcvg-git@gmane.org; Mon, 04 Dec
+ 2006 11:13:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1757090AbWK0QNN (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 27 Nov 2006
- 11:13:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758352AbWK0QNN
- (ORCPT <rfc822;git-outgoing>); Mon, 27 Nov 2006 11:13:13 -0500
-Received: from nz-out-0102.google.com ([64.233.162.206]:52000 "EHLO
- nz-out-0102.google.com") by vger.kernel.org with ESMTP id S1757090AbWK0QNL
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 27 Nov 2006 11:13:11 -0500
-Received: by nz-out-0102.google.com with SMTP id s1so692637nze for
- <git@vger.kernel.org>; Mon, 27 Nov 2006 08:13:10 -0800 (PST)
-Received: by 10.35.66.13 with SMTP id t13mr13498691pyk.1164643990580; Mon, 27
- Nov 2006 08:13:10 -0800 (PST)
-Received: by 10.35.72.13 with HTTP; Mon, 27 Nov 2006 08:13:10 -0800 (PST)
-To: "Andy Whitcroft" <apw@shadowen.org>
+ S935336AbWLDKNp (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
+ 05:13:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935514AbWLDKNp
+ (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 05:13:45 -0500
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:14847 "EHLO
+ fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP id S935336AbWLDKNo
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006 05:13:44 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao12.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061204101344.ZEWC4226.fed1rmmtao12.cox.net@fed1rmimpo01.cox.net>; Mon, 4
+ Dec 2006 05:13:44 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id uaD81V00T1kojtg0000000; Mon, 04 Dec 2006
+ 05:13:09 -0500
+To: Nicolas Pitre <nico@cam.org>
 Sender: git-owner@vger.kernel.org
 
-On 11/27/06, Andy Whitcroft <apw@shadowen.org> wrote:
-> Jon Smirl wrote:
-> > In the other thread we are discussing the conversion of Mozilla CVS to
-> > git format. This is something that has to be done but it is not the
-> > only issue. Without a native Windows port they won't even consider
-> > using git. There is also the risk that the features needed by Mozilla
-> > will be completed after they choose to use a different SCM.
-> >
-> > Even if we implement all of the needed features git still needs to win
-> > the competition against the other possible choices. The last I heard
-> > the leading candiate is SVN/SVK.
->
-> Do we need to worry too much about taking over the world in one day?
-> Yes of course git is _the_ superior solution etc, but too many new users
-> at once is always painful.
->
-> I think you are more likely to win letting them convert over to SVN.
-> From there people naturally start using git mirrors from the SVN trunk.
->  Cirtainly I have two projects which do not use git, one in CVS and one
-> in SVN.  I just svnimport that and work in git.  I am confident with
-> time the project will migrate, but I am happy other git users are happy
-> all without it being the tool of choice.
+Nicolas Pitre <nico@cam.org> writes:
 
-The SVN version of the Mozilla repository is about 3GB. It takes
-around a week of CPU time for svnimport to process it.
+> I think what Linus is proposing makes tons of sense.
+>
+> If you do git rm by mistake then you can always do git checkout on that
+> file to get it back.
+>
+> If you modified it so it doesn't match the index then git rm won't do
+> anything by default so you have a chance to think a bit more.
+>
+> If you updated the index, didn't commit anything but then do git rm then
+> you certainly wanted to really rm the file.
 
--- 
-Jon Smirl
+FWIW, I too am in favor of the proposed fix to "git rm" as Linus
+outlined.
