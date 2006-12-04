@@ -5,57 +5,80 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
 	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Alexander Litvinov <litvinov2004@gmail.com>
-Subject: Re: Rename detection at git log
-Date: Mon, 20 Nov 2006 17:33:42 +0600
-Message-ID: <200611201733.42723.litvinov2004@gmail.com>
-References: <200611201157.23680.litvinov2004@gmail.com> <200611200951.05529.andyparkins@gmail.com> <7vejry5t4g.fsf@assigned-by-dhcp.cox.net>
+From: "Torgil Svensson" <torgil.svensson@gmail.com>
+Subject: Re: [RFC] Submodules in GIT
+Date: Mon, 4 Dec 2006 22:36:48 +0100
+Message-ID: <e7bda7770612041336s73e677ebh758b030f9f75c1d8@mail.gmail.com>
+References: <20061130170625.GH18810@admingilde.org>
+	 <4570AF8F.1000801@stephan-feder.de>
+	 <Pine.LNX.4.64.0612011505190.3695@woody.osdl.org>
+	 <4570BFA4.8070903@stephan-feder.de>
+	 <e7bda7770612021057mc9f3eb9q7fc047dd1b5c235f@mail.gmail.com>
+	 <Pine.LNX.4.64.0612021114270.3476@woody.osdl.org>
+	 <e7bda7770612030119v197cbc95h6b3fa9e22b78c058@mail.gmail.com>
+	 <Pine.LNX.4.64.0612030946150.3476@woody.osdl.org>
+	 <e7bda7770612041226j4d4a5584m279afa9a2d7dfe74@mail.gmail.com>
+	 <Pine.LNX.4.64.0612041234390.3476@woody.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Mon, 20 Nov 2006 11:34:06 +0000 (UTC)
-Cc: git@vger.kernel.org
+NNTP-Posting-Date: Mon, 4 Dec 2006 21:36:58 +0000 (UTC)
+Cc: sf-gmane@stephan-feder.de, sf <sf@b-i-t.de>, git@vger.kernel.org,
+	"Martin Waitz" <tali@admingilde.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=Ae17fbm0Yx4BqtgxbZPR6lA0NY6f/6UwtaWfPhtHIN8JwKEEMUvv1oyte8zhPiPzBzzyGN7vhKGT8+oIkiNqa93XcN33b2Sw2+idrqV82h0CX2rNvomTEpb2Y3ZPLX6OR0/deUimtcxPhAnU5oSoGZ4knYm5hsXhVGm72lBxlAI=
-User-Agent: KMail/1.8
-In-Reply-To: <7vejry5t4g.fsf@assigned-by-dhcp.cox.net>
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=pxuSyWjyq92eQy4Y03EGxm44fuGO9Or7klnnX3zan7XIAjbDMY5/LhsmdrN+q4GEqRdSRt56H3SkQ7Sa0VLFmmvqRC6khNT4mNA+U8fcvy4pkFesOVs7Exk9WElW3VLybzSU6G+goSpbM5Kn6LyP2lNuPoSk4Ul/0k1TaQcCn3A=
+In-Reply-To: <Pine.LNX.4.64.0612041234390.3476@woody.osdl.org>
 Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31908>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gm7PO-00049R-Q6 for gcvg-git@gmane.org; Mon, 20 Nov
- 2006 12:33:55 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33256>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GrLUd-0002Aa-I9 for gcvg-git@gmane.org; Mon, 04 Dec
+ 2006 22:36:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S933759AbWKTLdw (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 20 Nov 2006
- 06:33:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933762AbWKTLdw
- (ORCPT <rfc822;git-outgoing>); Mon, 20 Nov 2006 06:33:52 -0500
-Received: from ug-out-1314.google.com ([66.249.92.169]:61529 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S933759AbWKTLdv
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 20 Nov 2006 06:33:51 -0500
-Received: by ug-out-1314.google.com with SMTP id m3so1146888ugc for
- <git@vger.kernel.org>; Mon, 20 Nov 2006 03:33:50 -0800 (PST)
-Received: by 10.67.91.6 with SMTP id t6mr7677060ugl.1164022429397; Mon, 20
- Nov 2006 03:33:49 -0800 (PST)
-Received: from lan.ac-sw.lcl ( [81.1.223.2]) by mx.google.com with ESMTP id
- 30sm8230960ugf.2006.11.20.03.33.48; Mon, 20 Nov 2006 03:33:48 -0800 (PST)
-To: Junio C Hamano <junkio@cox.net>
+ S1759755AbWLDVgx (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
+ 16:36:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937155AbWLDVgx
+ (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 16:36:53 -0500
+Received: from nf-out-0910.google.com ([64.233.182.188]:25367 "EHLO
+ nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1759755AbWLDVgw (ORCPT <rfc822;git@vger.kernel.org>); Mon, 4 Dec
+ 2006 16:36:52 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so19566nfa for
+ <git@vger.kernel.org>; Mon, 04 Dec 2006 13:36:49 -0800 (PST)
+Received: by 10.49.91.6 with SMTP id t6mr23914nfl.1165268208869; Mon, 04 Dec
+ 2006 13:36:48 -0800 (PST)
+Received: by 10.49.28.8 with HTTP; Mon, 4 Dec 2006 13:36:48 -0800 (PST)
+To: "Linus Torvalds" <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 
-> What it means is that "git log" will look at path that matches
-> b/a (that means b/a/c and b/a/d are looked at, if b/a were a
-> directory).  Since path "a" which is what the file was
-> originally at is not something the pattern b/a matches, there is
-> no way b/a is noticed as a rename from a.
+On 12/4/06, Linus Torvalds <torvalds@osdl.org> wrote:
+>
+> So yeah, it's a bit hacky, but for the reasons I've tried to outline, I
+> actually think that users _want_ hacky. Exactly because "deep integration"
+> ends up having so many _bad_ features, so it's better to have a thin and
+> simple layer that you can actually see past if you want to.
 
-I have found that git blame show correct commits for this case. But I am still 
-in trouble then examining file's history. I have found I can use 
-git show -C -M commit-sha1 
-for commit there file was created to see if this was a rename :-)
+Thin and simple sounds very good. Let's try it with an example. Lets
+say we have one apllication App1 and three librarys (Lib1, Lib2, Lib3)
+with the following dependency-graph:
 
+        App1
+          /\
+         /  \
+   Lib1   Lib2
+       \     /
+        \   /
+        Lib3 (don't really needed for this example but looks nice)
+
+All components can be used individually and have their own upstream,
+maintainer etc.
+
+To compile App1 however, I need some files from both Lib1 and Lib2
+specifying it's API. To satisfy these dependencies, It sounds
+reasonable to link Lib2 and Lib3 submodules from App1. In your
+concept, can I construct a modules file to fetch the API files and
