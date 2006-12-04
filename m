@@ -1,67 +1,154 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
-	DATE_IN_PAST_06_12,HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
-From: Otavio Salvador <otavio@debian.org>
-Subject: StGit metadata grabbing with git clone
-Date: Wed, 22 Nov 2006 10:05:01 -0200
-Organization: O.S. Systems Ltda.
-Message-ID: <87ac2jwutu.fsf@neumann.lab.ossystems.com.br>
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC] gitweb: Add committags support (take 2)
+Date: Mon, 4 Dec 2006 12:33:19 +0100
+Message-ID: <200612041233.19377.jnareb@gmail.com>
+References: <200612040001.13640.jnareb@gmail.com> <200612041133.44816.jnareb@gmail.com> <7vmz64ortu.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 22 Nov 2006 19:16:45 +0000 (UTC)
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Mon, 4 Dec 2006 11:31:31 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-URL: http://www.debian.org/~otavio/
-X-Attribution: O.S.
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/22.0.90 (gnu/linux)
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at freedom.ind.br
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=XRVxjPNqNzTCQin75LTN32SvjURIfanNx6vtVpdfkUPdAwndBOgJ7Bd5+fHgKxh4nx6TIEfjcIL4xIWTmKmLa3F1eAgy2ZYBzX60AWNWjQJnrVBXIqcm84ote7tumo6WAXAT0z9OwB4seSf34aulQ+8bH0VJF6xBYvYQUsILmgs=
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vmz64ortu.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32093>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GmxZh-0003VF-5V for gcvg-git@gmane.org; Wed, 22 Nov
- 2006 20:16:01 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33189>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GrC2g-00061i-Ow for gcvg-git@gmane.org; Mon, 04 Dec
+ 2006 12:31:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1756691AbWKVTP6 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 22 Nov 2006
- 14:15:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756692AbWKVTP5
- (ORCPT <rfc822;git-outgoing>); Wed, 22 Nov 2006 14:15:57 -0500
-Received: from mail.freedom.ind.br ([201.35.65.90]:55728 "EHLO
- freedom.ind.br") by vger.kernel.org with ESMTP id S1756691AbWKVTP5 (ORCPT
- <rfc822;git@vger.kernel.org>); Wed, 22 Nov 2006 14:15:57 -0500
-Received: from localhost (localhost [127.0.0.1]) by freedom.ind.br (Postfix)
- with ESMTP id 1E18017FF7 for <git@vger.kernel.org>; Wed, 22 Nov 2006 17:15:59
- -0200 (BRST)
-Received: from freedom.ind.br ([127.0.0.1]) by localhost
- (internet.freedom.ind.br [127.0.0.1]) (amavisd-new, port 10024) with ESMTP id
- 28992-06 for <git@vger.kernel.org>; Wed, 22 Nov 2006 17:15:58 -0200 (BRST)
-Received: from lab.ossystems.com.br (lab.ossystems.com.br [201.10.58.28]) by
- freedom.ind.br (Postfix) with SMTP id 2ED0D1CCAC for <git@vger.kernel.org>;
- Wed, 22 Nov 2006 17:15:58 -0200 (BRST)
-Received: (nullmailer pid 6713 invoked by uid 1000); Wed, 22 Nov 2006
- 12:05:01 -0000
-To: git@vger.kernel.org
+ S936044AbWLDLbY convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006 06:31:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936048AbWLDLbY
+ (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 06:31:24 -0500
+Received: from ug-out-1314.google.com ([66.249.92.170]:15636 "EHLO
+ ug-out-1314.google.com") by vger.kernel.org with ESMTP id S936044AbWLDLbX
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006 06:31:23 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so2965719uga for
+ <git@vger.kernel.org>; Mon, 04 Dec 2006 03:31:18 -0800 (PST)
+Received: by 10.66.232.9 with SMTP id e9mr11832264ugh.1165231877664; Mon, 04
+ Dec 2006 03:31:17 -0800 (PST)
+Received: from host-81-190-24-209.torun.mm.pl ( [81.190.24.209]) by
+ mx.google.com with ESMTP id i39sm26018651ugd.2006.12.04.03.31.16; Mon, 04 Dec
+ 2006 03:31:17 -0800 (PST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Hello,
+Dnia poniedzia=B3ek 4. grudnia 2006 11:53, Junio C Hamano napisa=B3:
+> Jakub Narebski <jnareb@gmail.com> writes:
+>=20
+>> I have one gripe about "git-cat-file -t". I'd like it to have=20
+>> -q/--quiet, -s/--silent, --hush (or --dont-spew-errors-on-stdout)
+>> which would prohibit writing "object not found" errors on stderr
+>> (and in gitweb case to webserver logs). I know I can use
+>> "git-cat-file -e" to check if object exists, or modify git_get_type
+>> subroutine=20
+>>
+>>   # get type of given object
+>>   sub git_get_type {
+>> 	my $hash =3D shift;
+>>   	my $git_command =3D git_cmd_str();
+>>  =20
+>>   	open my $fd, "-|",
+>>   		"$git_command cat-file -t $hash 2>/dev/null"
+>>   		or return '';
+>=20
+> It is one thing if you tend to randomly throw garbage at this
+> function and use it to check for object's existence, but I hope
+> you are already checking the user input (which is what $hash is,
+> I think, here), and the object is supposed to exist in the
+> repository you are looking at.  In such a case, I think you and
+> your server administrator have right to know about that
+> situation; I do not see why you would want to squelch it.
 
-I'm a happy user of stgit together with git to maintain a patch queue
-while I or the company team is working on patches that will be send
-for merging. Both works great but we're having troubles when we try to
-clone a stgit repository.
+I'm sorry, I should mention that this "quiet" mode of operation is=20
+needed _only_ for committags support, for example by using
+git_get_type($hash_text, -quiet=3D>1) in 'sha1' committag subroutine.
 
-When I clone the repository it grab the source but it loses the
-metadata. I would like to grab those too. Does anybody has a solution
-or a trick how I can do that?
+You might have sha1 ids in commit message which no longer point to vali=
+d=20
+(existing) object, for example commit which is result of=20
+"git cherry-pick -x" from no longer existing temporary branch, or commi=
+t=20
+which is result of "git revert" on a branch which got rebased (but not=20
+reorganized), or shortened sha1 which is no longer unique. This should=20
+not cause errors to be written to webserver log.
+=20
 
--- 
-        O T A V I O    S A L V A D O R
----------------------------------------------
- E-mail: otavio@debian.org      UIN: 5906116
- GNU/Linux User: 239058     GPG ID: 49A5F855
- Home Page: http://otavio.ossystems.com.br
----------------------------------------------
-"Microsoft gives you Windows ... Linux gives
+By the way, is it better to use anonymous subroutines for committags=20
+subs, or use explicit subroutines?
+
+>>> I do not know how this %committags{} is used per project.  With
+>>> a setting like repo.or.cz, it is likely that one instance of
+>>> gitweb is serving unrelated projects that have their issue
+>>> tracker at different locations using different "committags"
+>>> convention.  Is the idea to eventually allow enabling/disabling
+>>> elements from the global %committags per repository somehow
+>>> (perhaps not just enable/disable but even overriding patterns or
+>>> parameters)?
+>>
+>> I have thought about putting %committags and @committags before
+>> loading config file
+>>   do $GITWEB_CONFIG if -e $GITWEB_CONFIG;
+>> which can load config file depending on the project, but perhaps
+>> it is too complicated solution.
+>=20
+> I think you are talking about a gitweb-instance wide
+> customization, but that's not what I meant.  I meant per-project
+> configuration where w/git-gui.git and w/git.git are served by
+> the same instance of gitweb but have pointers to different issue
+> trackers.
+
+You can always use $ENV{PATH_INFO} in $GITWEB_CONFIG value,
+or check out path_info and/or $cgi->params('p') in the config file.
+Or perhaps other way to set-up per repository config file.
+But this is a bit complicated to set up.
+
+I don't have definite answer about how configure committags
+(both the committags enabled and sequence of committags, and
+committags parameters) per repository. We can use gitweb.committags=20
+config variable for committags enables/sequence, but how configure=20
+committags? gitweb.committag.<name>?
+
+BTW in some cases (e.g. xmms2 projects) issue tracker is common for
+all projects hosted.
+
+>>>> 3. To not split message into many fragments we concatenate strings
+>>>> if possible.
+>>>=20
+>>> I do not know why "avoiding splits" is needed, if it raises=20
+>>> issues that you need to ask the list about in a message like
+>>> this...
+>>
+>> "Avoiding splits" is needed first for performance, and second to
+>> avoid situation where pattern would match on the boundary between
+>> two strings in a list of tokens to process.
+>=20
+> I wouldn't know if constantly splitting and then concatenating
+> is faster than just concatenatting once before output without
+> benchmarking, so I'd refrain from talking about performance.
+> Two string case may be a valid concern, though.
+
+With current implementation it is very easy to switch this one and off.
+You simply either use push, or push_or_append (or make push_or_append
+do just push).
+
+Previous (not published) version used $acc variable to concatenate=20
+strings, but I think this solution is better (and simpler).
+
+--=20
+Jakub Narebski
