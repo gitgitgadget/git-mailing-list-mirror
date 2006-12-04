@@ -4,74 +4,75 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: Re: [StGIT PATCH] Bash snippet to show branch and patch in bash prompt
-Date: Mon, 30 Oct 2006 11:32:44 +0100
-Message-ID: <200610301132.45086.robin.rosenberg@dewire.com>
-References: <20061029233745.24899.1470.stgit@lathund.dewire.com> <4545CC6F.90001@tromer.org>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: latest update to git-svn blows up for me
+Date: Sun, 3 Dec 2006 23:00:21 -0800
+Message-ID: <20061204070021.GG1369@localdomain>
+References: <863b7wnwcw.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Mon, 30 Oct 2006 10:33:12 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Mon, 4 Dec 2006 07:00:35 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: KMail/1.9.4
-In-Reply-To: <4545CC6F.90001@tromer.org>
 Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new at dewire.com
+In-Reply-To: <863b7wnwcw.fsf@blue.stonehenge.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30493>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GeUQb-0005NY-7Q for gcvg-git@gmane.org; Mon, 30 Oct
- 2006 11:31:37 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33167>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gr7oR-0005uz-5H for gcvg-git@gmane.org; Mon, 04 Dec
+ 2006 08:00:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1161216AbWJ3Kbe convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Mon, 30 Oct 2006 05:31:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161217AbWJ3Kbe
- (ORCPT <rfc822;git-outgoing>); Mon, 30 Oct 2006 05:31:34 -0500
-Received: from [83.140.172.130] ([83.140.172.130]:28461 "EHLO
- torino.dewire.com") by vger.kernel.org with ESMTP id S1161216AbWJ3Kbd convert
- rfc822-to-8bit (ORCPT <rfc822;git@vger.kernel.org>); Mon, 30 Oct 2006
- 05:31:33 -0500
-Received: from localhost (localhost [127.0.0.1]) by torino.dewire.com
- (Postfix) with ESMTP id AC0DB8030A5; Mon, 30 Oct 2006 11:28:15 +0100 (CET)
-Received: from torino.dewire.com ([127.0.0.1]) by localhost (torino
- [127.0.0.1]) (amavisd-new, port 10024) with ESMTP id 29172-08; Mon, 30 Oct
- 2006 11:28:15 +0100 (CET)
-Received: from [10.9.0.5] (unknown [10.9.0.5]) by torino.dewire.com (Postfix)
- with ESMTP id 652648030A1; Mon, 30 Oct 2006 11:28:13 +0100 (CET)
-To: Eran Tromer <git2eran@tromer.org>
+ S1758483AbWLDHAY (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
+ 02:00:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758502AbWLDHAY
+ (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 02:00:24 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:31648 "EHLO hand.yhbt.net") by
+ vger.kernel.org with ESMTP id S1758483AbWLDHAX (ORCPT
+ <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006 02:00:23 -0500
+Received: from hand.yhbt.net (localhost [127.0.0.1]) by hand.yhbt.net
+ (Postfix) with SMTP id A449D2DC034; Sun,  3 Dec 2006 23:00:21 -0800 (PST)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Sun, 03 Dec 2006
+ 23:00:21 -0800
+To: "Randal L. Schwartz" <merlyn@stonehenge.com>
 Sender: git-owner@vger.kernel.org
 
-m=C3=A5ndag 30 oktober 2006 10:57 skrev Eran Tromer:
-> That's an annoying 430ms delay at every prompt, on my box. Does StGIT=
- do
-> something expensive on every invocation?
+"Randal L. Schwartz" <merlyn@stonehenge.com> wrote:
+> 
+> Does this ring a bell?
 
-I don't type fast enough to notice really and my machine seems faster, =
-~300 ms=20
-per prompt.
+Nope.
 
->
-> Ben Clifford'd solution is pretty much instantaneous, and the followi=
-ng
-> extends it to StGIT (in a less clean but much faster way):
->
-> ----------------------------------------------
-> __prompt_githead() {
->     __PS_GIT=3D"$(git-symbolic-ref HEAD 2>/dev/null)" || exit
->     __PS_GIT=3D"$(basename $__PS_GIT)"
->     echo -n " $__PS_GIT"
->     __PS_GIT=3D$(cat "${GIT_DIR:-.git}/patches/$__PS_GIT/current" \
->                2>/dev/null) || exit
->     echo -n ":$__PS_GIT"
-> }
-> PS1=3D'[\u@\h \W$(__prompt_githead)]\$ '
-> ----------------------------------------------
+> Fetching git-svn
+>         M       trunk/lib/Perl/Critic/Policy/TestingAndDebugging/MisplacedShebang.pm
+>         M       trunk/lib/Perl/Critic/Policy/TestingAndDebugging/ProhibitShebangWarningsArg.pm
+>         M       trunk/lib/Perl/Critic/Policy/TestingAndDebugging/RequirePortableShebang.pm
+>         M       trunk/compilers/past-pm/POST/Compiler.pir
+>         M       trunk/compilers/past-pm/PAST/Compiler.pir
+>         M       trunk/compilers/past-pm/PAST-pm.pir
+>         M       trunk/languages/perl6/src/quote.pir
+>         M       trunk/languages/perl6/src/classes/Str.pir
+>         M       trunk/languages/perl6/src/classes/Code.pir
+>         M       trunk/languages/perl6/src/classes/Num.pir
+>         M       trunk/languages/plumhead/t/selection.txt
+>         M       trunk/languages/plumhead/t/superglobals.t
+>         M       trunk/languages/plumhead/t/strings.t
+>         M       trunk/languages/tcl/runtime/builtin/clock.pir
+> no blob information
+> 512 at /opt/git/bin/git-svn line 457
+>         main::fetch_lib() called at /opt/git/bin/git-svn line 328
+>         main::fetch() called at /opt/git/bin/git-svn line 973
+>         main::fetch_child_id('git-svn') called at /opt/git/bin/git-svn line 991
+>         main::rec_fetch('', '/Volumes/UFS/MIRROR/parrot-GITSVN/.git/svn') called at /opt/git/bin/git-svn line 747
+>         main::multi_fetch() called at /opt/git/bin/git-svn line 187
+> 512 at /opt/git/bin/git-svn line 980
+>         main::fetch_child_id('git-svn') called at /opt/git/bin/git-svn line 991
+>         main::rec_fetch('', '/Volumes/UFS/MIRROR/parrot-GITSVN/.git/svn') called at /opt/git/bin/git-svn line 747
+>         main::multi_fetch() called at /opt/git/bin/git-svn line 187
 
-This doesn't work if the branch have a / in the name or if you are in a=
-=20
-subdirectory, not the top level. Probably not hard to fix though.
+This is on r15941 of  https://svn.perl.org/parrot/trunk ?  I can't seem
+to reproduce this with git svn fetch -r15940:15941
 
+-- 
