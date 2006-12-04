@@ -1,64 +1,120 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Han-Wen Nienhuys <hanwen@xs4all.nl>
-Subject: multiple branches or  multiple repositories
-Date: Fri, 03 Nov 2006 02:51:30 +0100
-Message-ID: <eie7ae$ib6$1@sea.gmane.org>
-Reply-To: hanwen@xs4all.nl
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: egit/jgit wishlist
+Date: Mon, 4 Dec 2006 22:54:42 +0100
+Organization: Dewire
+Message-ID: <200612042254.43224.robin.rosenberg.lists@dewire.com>
+References: <20061204172836.GB6011@spearce.org> <Pine.LNX.4.63.0612041841280.14187@alpha.polcom.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Fri, 3 Nov 2006 02:10:43 +0000 (UTC)
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Mon, 4 Dec 2006 21:52:37 +0000 (UTC)
+Cc: Shawn Pearce <spearce@spearce.org>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 17
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: muurbloem.xs4all.nl
-User-Agent: Thunderbird 1.5.0.7 (X11/20061027)
+User-Agent: KMail/1.9.4
+In-Reply-To: <Pine.LNX.4.63.0612041841280.14187@alpha.polcom.net>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new at dewire.com
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30768>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GfoU8-0004OM-66 for gcvg-git@gmane.org; Fri, 03 Nov
- 2006 03:08:45 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33259>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GrLje-0004sp-R9 for gcvg-git@gmane.org; Mon, 04 Dec
+ 2006 22:52:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752939AbWKCCIM (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 2 Nov 2006
- 21:08:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752937AbWKCCIL
- (ORCPT <rfc822;git-outgoing>); Thu, 2 Nov 2006 21:08:11 -0500
-Received: from main.gmane.org ([80.91.229.2]:60594 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S1752939AbWKCCIK (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 2 Nov 2006 21:08:10 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1GfoP0-0002Pk-LE for git@vger.kernel.org; Fri, 03 Nov 2006 03:03:26 +0100
-Received: from muurbloem.xs4all.nl ([213.84.26.127]) by main.gmane.org with
- esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>;
- Fri, 03 Nov 2006 03:03:26 +0100
-Received: from hanwen by muurbloem.xs4all.nl with local (Gmexim 0.1 (Debian))
- id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Fri, 03 Nov 2006 03:03:26
- +0100
-To: git@vger.kernel.org
+ S967417AbWLDVwY convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006 16:52:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967412AbWLDVwY
+ (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 16:52:24 -0500
+Received: from [83.140.172.130] ([83.140.172.130]:15610 "EHLO
+ torino.dewire.com" rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with
+ ESMTP id S967408AbWLDVwX convert rfc822-to-8bit (ORCPT
+ <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006 16:52:23 -0500
+Received: from localhost (localhost [127.0.0.1]) by torino.dewire.com
+ (Postfix) with ESMTP id 975D5802ABB; Mon,  4 Dec 2006 22:48:34 +0100 (CET)
+Received: from torino.dewire.com ([127.0.0.1]) by localhost (torino
+ [127.0.0.1]) (amavisd-new, port 10024) with ESMTP id 32005-07; Mon,  4 Dec
+ 2006 22:48:34 +0100 (CET)
+Received: from [10.9.0.3] (unknown [10.9.0.3]) by torino.dewire.com (Postfix)
+ with ESMTP id 2720C800199; Mon,  4 Dec 2006 22:48:32 +0100 (CET)
+To: Grzegorz Kulewski <kangur@polcom.net>
 Sender: git-owner@vger.kernel.org
 
+m=E5ndag 04 december 2006 19:16 skrev Grzegorz Kulewski:
+> Hi,
+>
+> I am interested in seeing GIT support in Eclipse.
+>
+> I think that doing it in 100% pure Java is ok in long run but I wonde=
+r if
+> you couldn't make "wrapper" plugin for a start (that would call the r=
+eal C
+> git for every operation) and make it usable (with full pure Java SWT =
+UI
+> support) and then try to implement feature by feature in pure Java (w=
+ith
+> config options telling what should be called by wrapper and what by p=
+ure
+> implementation)?
+>
+> This way we could probably rather fast (basic versions of other GIT U=
+Is
+> were created rather fast IIRC) have basic support for GIT (preferably
+> with GIT Java wrapper library for other projects) that would be usabl=
+e for
+> most users and this way you could gain more interest in the project. =
+Also
+> testing new pure implementation would be a lot easier (changing one l=
+ine
+> in config file to enable some pure Java feature and of course having =
+an
+> option to come back to wrapped version of this feature if new pure
+> implementation was wrong).
+>
+> What do you think about it?
+>
+Calling wrappers on top of C (JNI/exec), bash script, perl script etc e=
+tc is=20
+not very easy or quick and requiring all dependencies on whatnot, makes=
+=20
+installation of plugins very complicated. There would go a lot of work =
+into=20
+working with the wrappers, instead of creating a pure Java implementati=
+on. As=20
+Shawn knows the Git internals very well, and the datastructures being=20
+documented, implementing a pure java version is the best thing, and may=
+be the=20
+simplest, to do If an complete C library existed, maybe things would be=
+=20
+different. Most of the git storage access is already there.
 
-We're in the process of converting the LilyPond CVS repository at 
-savannah.gnu.org to GIT.  One of the questions we need to deal with, is 
-how handle modules.
+Note that many Git tools work with egit too allowing a smooth transitio=
+n and=20
+the implementation of feature by feature. I use clone, pull, push, Stac=
+ked=20
+git, and the CVS tools today just fine in the same working area as egit=
+=2E=20
+Having a dependency on bash/perl/python etc, etc i EGIT would be counte=
+r=20
+productive. I /could/ imaging a C-implementation of the index to make i=
+t=20
+fully interoperable with the git tools in the same working area, but th=
+at's=20
+about it, because that would have to be C as java's portable API's does=
+ not=20
+include lstat.
 
-There seem to be two approaches:
+It is possible though for those that wish to implement a separate plugi=
+n that=20
+provides wrapper-implementation of certain features. To eclipse that wo=
+uld=20
+just be yet another plugin that provides some git-related feature.  Suc=
+h=20
+plugins could use egit, jgit if necessary.
 
-  - for each module, create a separate git repository.  Inside the 
-repository, each subproject has its own branching
-
-  - put each module as a separate branch in a shared repository.
-
-I think the first option is the most natural one, but are there any 
-issues, besides namespace pollution to the second option?
-
--- 
-  Han-Wen Nienhuys - hanwen@xs4all.nl - http://www.xs4all.nl/~hanwen
