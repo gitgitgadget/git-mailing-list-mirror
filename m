@@ -1,62 +1,62 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Seth Falcon <sethfalcon@gmail.com>
-Subject: Re: Change in git-svn dcommit semantics?
-Date: Tue, 19 Dec 2006 19:07:30 -0800
-Message-ID: <m2vek76z9p.fsf@ziti.local>
-References: <m2mz5jegka.fsf@ziti.local>
-	<94FF72E0-F8BD-4773-803E-F179754BF0ED@silverinsanity.com>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: Seeing added and removed files between two tree states
+Date: Mon, 4 Dec 2006 12:33:20 -0500
+Message-ID: <20061204173320.GD6011@spearce.org>
+References: <1165253146.32764.3.camel@okra.transitives.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 20 Dec 2006 03:07:44 +0000 (UTC)
+NNTP-Posting-Date: Mon, 4 Dec 2006 17:33:34 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:to:cc:subject:references:from:date:in-reply-to:message-id:user-agent:mime-version:content-type;
-        b=odAzew1jZmy35jVK1oKuPC60OoAmnAhLiQhf7pqGvBpBs2kYtqtIhZ74ViFf6HqdGl7qXNsXSsTXSHoMwEyPqYzdtVM0/5edj9tNKEdq8vo94TOW+DfhUWA1KEXO//C+LLiIh2cY+ncFGp3AFdmvhxElOR1e7Az00O+rqSXRouY=
-In-Reply-To: <94FF72E0-F8BD-4773-803E-F179754BF0ED@silverinsanity.com> (Brian Gernhardt's message of "Tue, 19 Dec 2006 18:02:14 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (darwin)
+Content-Disposition: inline
+In-Reply-To: <1165253146.32764.3.camel@okra.transitives.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34904>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33207>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gwrnu-0005F2-3f for gcvg-git@gmane.org; Wed, 20 Dec
- 2006 04:07:38 +0100
+ esmtp (Exim 4.50) id 1GrHh6-0004Wk-K8 for gcvg-git@gmane.org; Mon, 04 Dec
+ 2006 18:33:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S964799AbWLTDHf (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
- 22:07:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964830AbWLTDHf
- (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 22:07:35 -0500
-Received: from nz-out-0506.google.com ([64.233.162.224]:5152 "EHLO
- nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S964799AbWLTDHe (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec
- 2006 22:07:34 -0500
-Received: by nz-out-0506.google.com with SMTP id s1so808099nze for
- <git@vger.kernel.org>; Tue, 19 Dec 2006 19:07:33 -0800 (PST)
-Received: by 10.65.188.4 with SMTP id q4mr8438664qbp.1166584053631; Tue, 19
- Dec 2006 19:07:33 -0800 (PST)
-Received: from ziti.local ( [67.171.24.140]) by mx.google.com with ESMTP id
- f14sm9399858qba.2006.12.19.19.07.32; Tue, 19 Dec 2006 19:07:33 -0800 (PST)
-To: Brian Gernhardt <benji@silverinsanity.com>
+ S1758514AbWLDRd0 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
+ 12:33:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758497AbWLDRd0
+ (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 12:33:26 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:37702 "EHLO
+ corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1758514AbWLDRdY (ORCPT <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006
+ 12:33:24 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1GrHhh-00037F-Fy; Mon, 04 Dec 2006 12:34:09 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ C595220FB7F; Mon,  4 Dec 2006 12:33:20 -0500 (EST)
+To: Alex Bennee <kernel-hacker@bennee.com>
 Sender: git-owner@vger.kernel.org
 
-Brian Gernhardt <benji@silverinsanity.com> writes:
+Alex Bennee <kernel-hacker@bennee.com> wrote:
+> In there a way to see just what files where added between two points in
+> the tree? I want something better than parsing the diffstat.
 
-> On Dec 19, 2006, at 4:12 PM, Seth Falcon wrote:
->
->> git version 1.4.4.2.gee60-dirty
->> (the dirty is a hand edit to Makefile for prefix)
->
-> Just FYI:  You can save Makefile variables in a "config.mak" file
-> instead of having to dirty your working tree (and dealing with
-> conflicts, etc).  For example:
+[spearce@pb15 git]$ git diff-tree -r --abbrev --diff-filter=A next build
+:000000 100644 0000000... 3d53d17... A  shallow.c
+:000000 100644 0000000... 1fe7a1b... A  xdiff/xmerge.c
 
-Hey, thanks, that's much nicer :-)
+?
 
+-- 
