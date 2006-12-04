@@ -1,66 +1,92 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: Collection of stgit issues and wishes
-Date: Wed, 13 Dec 2006 22:14:32 +0000
-Message-ID: <b0943d9e0612131414h25a75bf8h14b5a1731ea47afb@mail.gmail.com>
-References: <20061208221744.GA3288@nan92-1-81-57-214-146.fbx.proxad.net>
-	 <200612101801.58247.jnareb@gmail.com>
-	 <b0943d9e0612101426l763d46cahe15683410cb4398d@mail.gmail.com>
-	 <200612110002.05847.jnareb@gmail.com>
-	 <20061211184105.GC17132@nan92-1-81-57-214-146.fbx.proxad.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 13 Dec 2006 22:14:42 +0000 (UTC)
-Cc: "Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	DATE_IN_PAST_12_24,HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+From: Sam Vilain <sam@vilain.net>
+Subject: [PATCH 2/4] git-svn: collect SVK source URL on mirror paths
+Date: Mon, 4 Dec 2006 20:35:21 +1100
+Message-ID: <20061204235724.5393E1380C2@magnus.utsl.gen.nz>
+NNTP-Posting-Date: Mon, 4 Dec 2006 23:57:33 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=dxKosfbyEiONbNklVXij3ALhOneKRkhe/85v4ge/9hDK4SBF2yr83cLPwCkhBiYztfhdctzvWlYyjZCTGIHVZle/DuP5jFSKGkC7hPP/zXh8Fhr5oFMUm7hTquW+PTTu5IBcvGQeLL1s4fJ3HosU6/YXRJVbd6Isf5VROm71Ysw=
-In-Reply-To: <20061211184105.GC17132@nan92-1-81-57-214-146.fbx.proxad.net>
-Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34238>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33268>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GucN3-0007HO-KJ for gcvg-git@gmane.org; Wed, 13 Dec
- 2006 23:14:37 +0100
+ esmtp (Exim 4.50) id 1GrNgf-0005UP-Ly for gcvg-git@gmane.org; Tue, 05 Dec
+ 2006 00:57:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751222AbWLMWOe (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 13 Dec 2006
- 17:14:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751650AbWLMWOe
- (ORCPT <rfc822;git-outgoing>); Wed, 13 Dec 2006 17:14:34 -0500
-Received: from nz-out-0506.google.com ([64.233.162.234]:32887 "EHLO
- nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1751222AbWLMWOd (ORCPT <rfc822;git@vger.kernel.org>); Wed, 13 Dec
- 2006 17:14:33 -0500
-Received: by nz-out-0506.google.com with SMTP id s1so162556nze for
- <git@vger.kernel.org>; Wed, 13 Dec 2006 14:14:33 -0800 (PST)
-Received: by 10.65.241.20 with SMTP id t20mr165759qbr.1166048072918; Wed, 13
- Dec 2006 14:14:32 -0800 (PST)
-Received: by 10.65.126.2 with HTTP; Wed, 13 Dec 2006 14:14:32 -0800 (PST)
-To: "Yann Dirson" <ydirson@altern.org>
+ S935968AbWLDX50 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
+ 18:57:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937175AbWLDX50
+ (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 18:57:26 -0500
+Received: from watts.utsl.gen.nz ([202.78.240.73]:58164 "EHLO
+ magnus.utsl.gen.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
+ S935968AbWLDX5Z (ORCPT <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006
+ 18:57:25 -0500
+Received: by magnus.utsl.gen.nz (Postfix, from userid 1003) id 5393E1380C2;
+ Tue,  5 Dec 2006 12:57:24 +1300 (NZDT)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On 11/12/06, Yann Dirson <ydirson@altern.org> wrote:
-> Operations just shuffling the stack (eg. "float -s", or "push XXX;
-> push --undo") would probably require putting the series file itself
-> under version-control.
+If you use git-svn to import a mirror path within an SVK depot
+directly (eg, file:///home/you/.svk/local/mirror/foo), then the URLs
+and revisions in the generated commits will be of the wrong URL.
 
-It depends on the numver of undos allowed. With only one, you could
-have a series.old file or similar.
+When we set up with git-svn multi-init, check whether the base URL is
+(the root of) a mirror path, and store it for later.  Set up a couple
+of globals and helper functions for later use.
+---
+ git-svn.perl |   21 +++++++++++++++++++++
+ 1 files changed, 21 insertions(+), 0 deletions(-)
 
-I'll try to add a wiki page with todo/wishlist ideas and prioritise
-those included before 1.0. Post 1.0, I'll try to look at changing the
-repository layout a bit to reduce the amount of metadata and also
-facilitate the support for transactions etc.
-
+diff --git a/git-svn.perl b/git-svn.perl
+index 93cfcc4..c5f82be 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -5,6 +5,7 @@ use warnings;
+ use strict;
+ use vars qw/	$AUTHOR $VERSION
+ 		$SVN_URL $SVN_INFO $SVN_WC $SVN_UUID
++		$SVM_URL $SVM_UUID
+ 		$GIT_SVN_INDEX $GIT_SVN
+ 		$GIT_DIR $GIT_SVN_DIR $REVDB/;
+ $AUTHOR = 'Eric Wong <normalperson@yhbt.net>';
+@@ -733,6 +734,21 @@ sub multi_init {
+ 		init($_trunk);
+ 		sys('git-repo-config', 'svn.trunk', $_trunk);
+ 	}
++	if ( $url ) {
++	    # check for the case of SVK mirror path
++	    my ($ents, $props) = libsvn_ls_fullurl($url, "1");
++	    if ( my $src = $props->{'svm:source'} ) {
++		$src =~ s{!$}{};  # don't know wtf a ! is there for
++		$src =~ s{(^[a-z\+]*://)[^/@]*@}{$1}; # username of no interest
++
++		# store the source as a repo-config item
++		sys('git-repo-config', 'svn.svkmirrorpath', $src);
++		my $uuid = $props->{'svm:uuid'};
++		$uuid =~ m{^[0-9a-f\-]{41,}}
++		    or croak "doesn't look right - svm:uuid is '$uuid'";
++		sys('git-repo-config', 'svn.svkuuid', $uuid);
++	    }
++	}
+ 	complete_url_ls_init($url, $_branches, '--branches/-b', '');
+ 	complete_url_ls_init($url, $_tags, '--tags/-t', 'tags/');
+ }
+@@ -2084,6 +2100,11 @@ sub check_repack {
+ 	}
+ }
+ 
++sub get_svm_url {
++    chomp($SVM_URL = `git-repo-config --get svn.svkmirrorpath`);
++    chomp($SVM_UUID = `git-repo-config --get svn.svkuuid`);
++}
++
+ sub set_commit_env {
+ 	my ($log_msg) = @_;
+ 	my $author = $log_msg->{author};
 -- 
+1.4.4.1.ge918e-dirty
