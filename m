@@ -1,93 +1,93 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-2.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: Git hosting techniques
-Date: Sat, 4 Nov 2006 13:08:45 +0100
-Message-ID: <20061104120845.GA18879@pasky.or.cz>
-References: <20061029175446.GE12285@localhost.localdomain>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Re: Moving a directory into another fails
+Date: Mon, 4 Dec 2006 22:05:12 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0612042201420.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <9e4733910607260800v618edf0em7b0f5c3332bf8fc5@mail.gmail.com>
+ <20060726223459.GA30601@vsectoor.geht-ab-wie-schnitzel.de>
+ <9e4733910607261603m6772602cr333d8c58f555edaa@mail.gmail.com>
+ <20060728014350.GI13776@pasky.or.cz> <f3d7535d0612041019q4bda01a1k9938b056d51f8a78@mail.gmail.com>
+ <el1qtr$bca$1@sea.gmane.org> <Pine.LNX.4.63.0612042001320.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+ <el1rmm$bca$2@sea.gmane.org> <Pine.LNX.4.63.0612042009590.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.64.0612041114240.3476@woody.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sat, 4 Nov 2006 12:09:03 +0000 (UTC)
-Cc: savannah-hackers-public@gnu.org, git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Mon, 4 Dec 2006 21:05:24 +0000 (UTC)
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <20061029175446.GE12285@localhost.localdomain>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <Pine.LNX.4.64.0612041114240.3476@woody.osdl.org>
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30924>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GgKKQ-0002OJ-Uj for gcvg-git@gmane.org; Sat, 04 Nov
- 2006 13:08:51 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33250>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GrL05-0005eS-PQ for gcvg-git@gmane.org; Mon, 04 Dec
+ 2006 22:05:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S965351AbWKDMIs (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 4 Nov 2006
- 07:08:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965354AbWKDMIs
- (ORCPT <rfc822;git-outgoing>); Sat, 4 Nov 2006 07:08:48 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:48261 "EHLO machine.or.cz") by
- vger.kernel.org with ESMTP id S965351AbWKDMIr (ORCPT
- <rfc822;git@vger.kernel.org>); Sat, 4 Nov 2006 07:08:47 -0500
-Received: (qmail 16682 invoked by uid 2001); 4 Nov 2006 13:08:45 +0100
-To: Sylvain Beucler <beuc@gnu.org>
+ S937389AbWLDVFS (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
+ 16:05:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937392AbWLDVFS
+ (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 16:05:18 -0500
+Received: from mail.gmx.net ([213.165.64.20]:38388 "HELO mail.gmx.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S937389AbWLDVFP
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006 16:05:15 -0500
+Received: (qmail invoked by alias); 04 Dec 2006 21:05:13 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp031) with SMTP; 04 Dec 2006 22:05:13 +0100
+To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 
-  Hi,
+Hi,
 
-  cc'ing git@vger.kernel.org since this might be interesting for other
-Git people as well.
+On Mon, 4 Dec 2006, Linus Torvalds wrote:
 
-On Sun, Oct 29, 2006 at 06:54:46PM CET, Sylvain Beucler wrote:
-> We're currently setting up something similar at
-> http://cvs.sv.gnu.org/gitweb/,
+> On Mon, 4 Dec 2006, Johannes Schindelin wrote:
+> > 
+> > On Mon, 4 Dec 2006, Jakub Narebski wrote:
+> > 
+> > > Johannes Schindelin wrote:
+> > > 
+> > > > On Mon, 4 Dec 2006, Jakub Narebski wrote:
+> > > > 
+> > > >> [...] git should acquire core.filesystemEncoding configuration variable 
+> > > >> which would encode from filesystem encoding used in working directory 
+> > > >> and perhaps index to UTF-8 encoding used in repository (in tree objects) 
+> > > >> and perhaps index.
+> > > > 
+> > > > So, you want to pull in all thinkable encodings? Of course, you could rely 
+> > > > on libiconv, adding yet another dependency to git. (Yes, I know, mailinfo 
+> > > > uses it already. But I never use mailinfo, so I do not need libiconv.)
+> > > 
+> > > A conditional dependency. If you don't have libiconv, this feature wouldn't
+> > > be available.
+> > 
+> > You are speaking as somebody compiling git from source. We are a minority.
+> 
+> You guys are ignoring the _real_ problem. 
+> 
+> It has nothing at all to do with dependencies on external packages. The 
+> REAL problem is that if you do locale-dependent trees and other git 
+> objects, git will STOP WORKING.
 
-  That's great!
+The issue was _not_ locale-dependent trees, but file systems which 
+_change_ the encoding. And even then, Jakub's proposition reencoding could 
+work, because it is an _encoding_ after all, i.e. bijective (reversable 
+mapping for you non-Math guys). Not at all comparable to cases 
+insensitivity, which _loses_ information.
 
-> I would like to know if you considered the ability to autopack
-> repositories to optimize space and disk i/o. For example, we're
-> experimenting with the coreutils repository which weighs 1.1GB. Since
-> you mirror the glibc repository, maybe you have similar issues?
+But for reasons described in another mail, there are more fundamental 
+problems with encodings, especially with MacOSX which (braindeadly) 
+encodes _differently_ when writing and reading.
 
-  currently I do it in a rather silly way and when I do an "all-repo
-check" every hour (which updates mirrors of external repositories etc.)
-- I also check for unpacked objects and if there are any, I will repack
-the repository; see
+So, we reach the same conclusion, but for different reasons.
 
-	http://repo.or.cz/w/repo.git?a=blob;f=updatecheck.sh;hb=HEAD
-
-  This is not an optimal behaviour, for two reasons:
-
-  (i) Full repack can be a lot of work on large repositories, so we
-shouldn't *always* repack but more importantly, we should only rarely do
-a full repack - see below.
-
-  (ii) This is very unfriendly to those who fetch over HTTP, because
-after you do a full repack, they will need to download the whole new
-packfile instead of just the missing objects.
-
-  The best solution would be to have a more intelligent repacking
-strategy, where you have "archival" packs with very old history and an
-active pack with just the new changes, and when you pack the loose
-objects they just get appended to the "current" pack. Alternatively,
-a slightly more complicated but even more flexible "logarithmic"
-repacking strategy could be implemented, see
-
-	http://news.gmane.org/find-root.php?message_id=<20051112135947.GC30496@pasky.or.cz>
-
-  Even with the dumb packing strategy though, I think it pays off if you
-have at least a bit of CPU power to spare. The packing saving are
-really immense. For example with the glibc repository, an incremental
-CVS import worth of few days of changes _doubled_ the size of the
-repository (from 100M to 200M), while repacking brought it back to the
-original size (100M) + epsilon.
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
-$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
+Ciao,
