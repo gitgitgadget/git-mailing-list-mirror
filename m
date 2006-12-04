@@ -1,82 +1,59 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Whitcroft <apw@shadowen.org>
-Subject: Re: Suggestion: drop 'g' in git-describe suffix
-Date: Thu, 02 Nov 2006 11:12:39 +0000
-Message-ID: <4549D2A7.7000209@shadowen.org>
-References: <eibh94$t7n$1@sea.gmane.org> <45494E20.1000503@shadowen.org> <4549C083.9060805@xs4all.nl> <4549CA6B.4090909@shadowen.org> <4549CE2A.3010808@xs4all.nl>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH]: Pass -M to diff in request-pull
+Date: Mon, 4 Dec 2006 08:45:28 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0612040843540.3476@woody.osdl.org>
+References: <20061203.231700.55509531.davem@davemloft.net>
+ <7v3b7wrrcr.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 2 Nov 2006 11:13:34 +0000 (UTC)
-Cc: Git Mailing List <git@vger.kernel.org>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Mon, 4 Dec 2006 16:45:53 +0000 (UTC)
+Cc: David Miller <davem@davemloft.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.5 (X11/20060812)
-In-Reply-To: <4549CE2A.3010808@xs4all.nl>
-X-Enigmail-Version: 0.94.0.0
+In-Reply-To: <7v3b7wrrcr.fsf@assigned-by-dhcp.cox.net>
+X-MIMEDefang-Filter: osdl$Revision: 1.161 $
+X-Scanned-By: MIMEDefang 2.36
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30729>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GfaVd-0004M3-2Y for gcvg-git@gmane.org; Thu, 02 Nov
- 2006 12:13:21 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33202>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GrGwo-0005kR-9B for gcvg-git@gmane.org; Mon, 04 Dec
+ 2006 17:45:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752850AbWKBLNS (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 2 Nov 2006
- 06:13:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752851AbWKBLNS
- (ORCPT <rfc822;git-outgoing>); Thu, 2 Nov 2006 06:13:18 -0500
-Received: from hellhawk.shadowen.org ([80.68.90.175]:5643 "EHLO
- hellhawk.shadowen.org") by vger.kernel.org with ESMTP id S1752850AbWKBLNR
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 2 Nov 2006 06:13:17 -0500
-Received: from localhost ([127.0.0.1]) by hellhawk.shadowen.org with esmtp
- (Exim 4.50) id 1GfaUw-00044Y-OG; Thu, 02 Nov 2006 11:12:39 +0000
-To: hanwen@xs4all.nl
+ S937125AbWLDQph (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
+ 11:45:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937126AbWLDQph
+ (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 11:45:37 -0500
+Received: from smtp.osdl.org ([65.172.181.25]:37617 "EHLO smtp.osdl.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S937125AbWLDQpg
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006 11:45:36 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
+ smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kB4GjUjQ024006
+ (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Mon, 4
+ Dec 2006 08:45:30 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
+ shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kB4GjTNa026593; Mon, 4 Dec
+ 2006 08:45:29 -0800
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Han-Wen Nienhuys wrote:
-> Andy Whitcroft escreveu:
->> Han-Wen Nienhuys wrote:
->>> Andy Whitcroft escreveu:
->>>>> or some other non-hex character.
->>>> g is not a hex digit, hex is 0-f ??
->>>>
->>> Yes of course; silly me. Still I think it would be clearer if it used a
->>> non-alphabet char, eg.
->>>
->>>   tag+sha1
->>>
->>> to separate the tag and the committish.
->>
->> Well there is a non-alphabet character in there, a minus (-).  The g
->> prefix on the sha1 _fragment_ it to indicate that it is in fact a
->> truncated sha1, not a complete one.  
-> 
-> is this policy documented somewhere?  None of the tools understand it.
-> 
-> [lilydev@haring git]$ git describe
-> v1.4.3.3-g1e1f76e
-> [lilydev@haring git]$ git show g1e1f76e
-> fatal: ambiguous argument 'g1e1f76e': unknown revision or path not in
-> the working tree.
-> Use '--' to separate paths from revisions
-> 
-> My suggestion is to use
-> 
->   v1.4.3.3+1e1f76e
-> 
-> here.
 
-The 'whole' thing is valid as an object reference:
 
-apw@pinky$ git describe
-v1.4.3.3-g8cf249b
-apw@pinky$ git show v1.4.3.3-g8cf249b
-commit 8cf249b755c257ea19100b888ac612e601cdf96b
-Merge: 15c3ffb... fa438a2...
-[...]
+On Mon, 4 Dec 2006, Junio C Hamano wrote:
+> David Miller <davem@davemloft.net> writes:
+> >
+> > Linus recommended this, otherwise any renames cause the
+> > diffstate output to be rediculious in some circumstances :)
+> 
+> Thanks, but "rediculious"?
+
+Kernel dewalopers can't speel. We all knew that.
+
+At least we don't do 1337-sp33k.
 
