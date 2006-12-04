@@ -1,79 +1,57 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Yann Dirson <ydirson@altern.org>
-Subject: Re: [RFC] Submodules in GIT
-Date: Sat, 25 Nov 2006 12:12:35 +0100
-Message-ID: <20061125111235.GO5443@nan92-1-81-57-214-146.fbx.proxad.net>
-References: <20061120215116.GA20736@admingilde.org> <ejt9dh$kfm$1@sea.gmane.org> <7v7ixp20za.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611201501230.3338@woody.osdl.org> <20061121223130.GA24909@nan92-1-81-57-214-146.fbx.proxad.net> <Pine.LNX.4.64.0611211437430.3338@woody.osdl.org> <20061121235429.GH5443@nan92-1-81-57-214-146.fbx.proxad.net> <20061122034056.GB23856@spearce.org> <20061123232313.GB24909@nan92-1-81-57-214-146.fbx.proxad.net> <20061125065338.GC4528@spearce.org>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: git-svn and empty directories in svn
+Date: Mon, 4 Dec 2006 13:33:27 -0800
+Message-ID: <20061204213327.GA9313@localdomain>
+References: <20061128054448.GA396@soma> <20061128102958.GA5207@soma> <20061128105017.GA20366@soma> <9e7ab7380611280445r4ebe344cw69cbc18a74c6122f@mail.gmail.com> <9e7ab7380611280732k4e940380tbf2a96146807d671@mail.gmail.com> <m2bqmr1rnw.fsf@ziti.fhcrc.org> <20061128201605.GA1369@localdomain> <m2slg2rzzj.fsf_-_@ziti.fhcrc.org> <20061203014756.GE1369@localdomain> <45724DB0.4060607@midwinter.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sat, 25 Nov 2006 11:13:48 +0000 (UTC)
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Junio C Hamano <junkio@cox.net>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+NNTP-Posting-Date: Mon, 4 Dec 2006 21:33:41 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Content-Disposition: inline
-In-Reply-To: <20061125065338.GC4528@spearce.org>
+In-Reply-To: <45724DB0.4060607@midwinter.com>
 User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32284>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GnvTZ-0004d0-I9 for gcvg-git@gmane.org; Sat, 25 Nov
- 2006 12:13:41 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33255>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GrLRQ-0001dY-Rf for gcvg-git@gmane.org; Mon, 04 Dec
+ 2006 22:33:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S966389AbWKYLNb (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 25 Nov 2006
- 06:13:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966423AbWKYLNb
- (ORCPT <rfc822;git-outgoing>); Sat, 25 Nov 2006 06:13:31 -0500
-Received: from smtp5-g19.free.fr ([212.27.42.35]:13706 "EHLO
- smtp5-g19.free.fr") by vger.kernel.org with ESMTP id S966389AbWKYLNa (ORCPT
- <rfc822;git@vger.kernel.org>); Sat, 25 Nov 2006 06:13:30 -0500
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net
- [81.57.214.146]) by smtp5-g19.free.fr (Postfix) with ESMTP id 6E05827B3C;
- Sat, 25 Nov 2006 12:13:24 +0100 (CET)
-Received: by gandelf.nowhere.earth (Postfix, from userid 1000) id 99C06201C;
- Sat, 25 Nov 2006 12:12:35 +0100 (CET)
-To: Shawn Pearce <spearce@spearce.org>
+ S1758482AbWLDVde (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
+ 16:33:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759728AbWLDVde
+ (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 16:33:34 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:42161 "EHLO hand.yhbt.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1759695AbWLDVdd
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006 16:33:33 -0500
+Received: from hand.yhbt.net (localhost [127.0.0.1]) by hand.yhbt.net
+ (Postfix) with SMTP id C28402DC034; Mon,  4 Dec 2006 13:33:27 -0800 (PST)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Mon, 04 Dec 2006
+ 13:33:27 -0800
+To: Steven Grimm <koreth@midwinter.com>
 Sender: git-owner@vger.kernel.org
 
-On Sat, Nov 25, 2006 at 01:53:38AM -0500, Shawn Pearce wrote:
-> Yann Dirson <ydirson@altern.org> wrote:
-> > We don't need to have commits in the tree for this.  We'll just have
-> > submodule commits which are not attached to a supermodule commit, and we
-> > can access the whole submodule history through the submodule .git/HEAD,
-> > just like we do for a standard git project.
+Steven Grimm <koreth@midwinter.com> wrote:
+> Eric Wong wrote:
+> >Since git-svn misses some other stuff (many property settings,
+> >externals) I'll be working on an internal logging format that can help
+> >track those things.  It'd be nice to have a command like git svn
+> >checkout which works like git checkout; but empty directories are
+> >created.
 > 
-> No.  You cannot do that.
-> 
-> How do we setup .git/HEAD when bisecting the supermodule?
-> Or merging it?  Or doing anything else with it?
+> Presumably once the submodule support is worked out, svn externals could 
+> be represented as git-svn-managed submodules, yes?
 
-Would there be any problem assuming git-update-ref would take care of
-updating it ?
+Yes, that is the plan.  Better integration with native git remotes is
+very much on the roadmap for git-svn.  I'll have to work on cleaning up
+how multi-fetch works internally, however.
 
-> Ideally the .git/HEAD of every submodule should seek to the commit
-> that points at the tree of the submodule which the supermodule
-> is referencing.
-
-You mean, whenever we seek the HEAD of the supermodule, right ?
-
-> This lets you then perform a bisect within the
-> submodule when you identify the supermodule commit which caused
-> the breakage.
- 
-That is, first bisect the supermodule (which naturally bisects the
-submodule with rough granularity, assuming there are many submodule
-commits for at least some supermodule commits), then bisect the submodule
-between the two commits identified at supermodule level, right ?
-
-> We need the submodule commits to do this.  Doing it without is
-> too expensive.
-
-Maybe I missed something again, but I'm still not convinced :)
 -- 
