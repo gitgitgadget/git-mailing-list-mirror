@@ -4,103 +4,84 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Yann Dirson <ydirson@altern.org>
-Subject: Re: Handling of branches in stgit
-Date: Fri, 1 Dec 2006 23:19:41 +0100
-Message-ID: <20061201221941.GA32337@nan92-1-81-57-214-146.fbx.proxad.net>
-References: <20061130000038.GA13324@nan92-1-81-57-214-146.fbx.proxad.net> <b0943d9e0612010442gf7bf2ccr8995967403788fe7@mail.gmail.com>
+From: Roman Zippel <zippel@linux-m68k.org>
+Subject: Re: problem in unpack-trees.c
+Date: Mon, 4 Dec 2006 12:36:04 +0100 (CET)
+Message-ID: <Pine.LNX.4.64.0612041214590.1867@scrub.home>
+References: <Pine.LNX.4.64.0612022125530.1867@scrub.home>
+ <7vodqkq956.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 1 Dec 2006 22:20:47 +0000 (UTC)
-Cc: GIT list <git@vger.kernel.org>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Mon, 4 Dec 2006 11:36:29 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <b0943d9e0612010442gf7bf2ccr8995967403788fe7@mail.gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+X-X-Sender: roman@scrub.home
+In-Reply-To: <7vodqkq956.fsf@assigned-by-dhcp.cox.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32973>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GqGkL-0002f0-3i for gcvg-git@gmane.org; Fri, 01 Dec
- 2006 23:20:41 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33191>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GrC7T-0006d8-Qd for gcvg-git@gmane.org; Mon, 04 Dec
+ 2006 12:36:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1162071AbWLAWUh (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
- 17:20:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1162102AbWLAWUh
- (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 17:20:37 -0500
-Received: from smtp3-g19.free.fr ([212.27.42.29]:45486 "EHLO
- smtp3-g19.free.fr") by vger.kernel.org with ESMTP id S1162071AbWLAWUh (ORCPT
- <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 17:20:37 -0500
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net
- [81.57.214.146]) by smtp3-g19.free.fr (Postfix) with ESMTP id 982714A1CA;
- Fri,  1 Dec 2006 23:20:31 +0100 (CET)
-Received: by gandelf.nowhere.earth (Postfix, from userid 1000) id DA1281F066;
- Fri,  1 Dec 2006 23:19:41 +0100 (CET)
-To: Catalin Marinas <catalin.marinas@gmail.com>
+ S936091AbWLDLgR (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
+ 06:36:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936094AbWLDLgR
+ (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 06:36:17 -0500
+Received: from scrub.xs4all.nl ([194.109.195.176]:56226 "EHLO
+ scrub.xs4all.nl") by vger.kernel.org with ESMTP id S936091AbWLDLgP (ORCPT
+ <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006 06:36:15 -0500
+Received: from roman (helo=localhost) by scrub.xs4all.nl with local-esmtp
+ (Exim 3.36 #1 (Debian)) id 1GrC7A-0007Zf-00; Mon, 04 Dec 2006 12:36:04 +0100
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-On Fri, Dec 01, 2006 at 12:42:19PM +0000, Catalin Marinas wrote:
-> On 30/11/06, Yann Dirson <ydirson@altern.org> wrote:
-> >I have started to work on recording parent information for stgit
-> >branches, so we don't need to give the same info on every "git pull".
+Hi,
+
+On Mon, 4 Dec 2006, Junio C Hamano wrote:
+
+> Roman Zippel <zippel@linux-m68k.org> writes:
 > 
-> Isn't this what the branch.<name>.remote configuration option is for?
-> I think we should leave GIT handle this and StGIT only invoke "git
-> pull" without any arguments.
-
-This is one part of the problem (and I admit I have missed this config option),
-the other one being having stgit pull the correct branch, unstead of
-(implicitely) having git-pull using the 1st one in the remotes file.
-
-
-> >I'm facing a problem, in that we have several kind of stgit branches:
-> >
-> >* those created against a cogito branch (eg. by "cg clone" and "stg
-> >  init").  They work pretty much intuitively (and it happens I mostly
-> >  used this flavour before those tests).  All we need is the name of
-> >  the local branch, and "stg pull <branch>" relies on "git fetch" to
-> >  find the repository information in .git/branches/<branch>.
+> > I looked into it and the problem is during the "git-read-tree --reset" 
+> > step and it seems that the local df_conflict_entry variable of 
+> > unpack_trees() survives past that function. If you check in 
+> > add_cache_entry() it's called with this variable and only because 
+> > verify_path() fails it's not added to the tree on the other archs, but on 
+> > m68k the data on the stack is a bit different and thus verify_path() 
+> > succeeds and the stack variable is added to the tree and later saved.
 > 
-> But I think .git/branches got deprecated or it is a cogito-only feature.
-
-.git/branches still seems to be the only type of branch created by
-cogito.  And in fact, when remotes started to appear, I wondered how the 
-cogito branch management (a quite intuitive and classical one) would be
-made to work well with remotes-defining-several-branches, as well as
-branches-potentially-defined-in-several-remotes (possible repo
-inconsistency AFAICT, or maybe to specify different protocols to a
-single repo ?) - and indeed I still don't have an answer, I guess cogito
-would have to possibly change its user interface if it were to be able
-to use multi-branch remotes.
-
-In the meantime, we should support them in cogito.  And indeed, I found
-stgit to work perfectly with those.
-
-
-> >  In this case, it is easy to request pulling from any branch, but
-> >  usually only one of them is what you want, and the results of using
-> >  another one (or forgetting to specify the one you want) can be
-> >  annoying [ISSUE 1].  Hence this work of mine: being able to store
-> >  this info in .git/patches/<stack>/parent (my initial implementation)
-> >  was sufficient in theory.
+> I am very puzzled about this.
 > 
-> I would leave this to GIT and its configuration files. Do you see any
-> problems with this approach?
+> You are correct that the address of the df_conflict_entry is
+> assigned to "struct unpack_trees_options *o" in unpack_trees(),
+> and add_cache_entry() are called from many places in the call
+> chain that starts from that function.  And these call sites do
+> rely on the conflict_entry to have a NUL name to prevent
+> add_cache_entry from adding the entry to the index.  Which feels
+> like a hack, but it should get the job done while it is running.
 
-I'd rather consider it a stgit issue: git itself does no have to know
-which of the various heads descending from our stack base is to be
-"prefered" by our stack.  Where to store it is anothe issue (see below).
+Ok, I see, I wasn't sure that this part was really intentional.
 
+> On my x86-64 box with gcc 4 (i.e. "#define FLEX_ARRAY /* empty */"
+> is used,
+> 
+>         #include "cache.h"
+> 
+>         int
+>         main(int ac, char **av)
+>         {
+>                 printf("sz %zu\n", sizeof(struct cache_entry));
+>                 printf("of %zu\n", offsetof(struct cache_entry, name));
+>                 memset(&dfc, 0, sizeof(dfc));
+>         }
+> 
+> size of "struct cache_entry" is 64 while the offset of name
+> member is 62, so I am luckily getting two bytes of room for
+> memset to fill and cause name[] to be properly NUL terminated.
+> If the alignment requirement of the platform is smaller, we may
+> be overstepping the struct when we access its name[] member.
 
-> I plan to merge the stgit config with the git one (and have a [stgit]
-> section) so that it is more maintainable.
+Yes, on m68k both values are the same and thus name is not initialized.
+Your patch should do the trick, I'll give it a try.
 
-Sure, let's take advantage of git-repo-config !
-My latest 1/3 patch could then be seen as a 1st step towards an
-abstraction of stgit object configuration, which could ease the transition
-from file storage to config items :)
-
-Best regards,
--- 
-Yann.
