@@ -2,77 +2,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: git bug? + question
-Date: Sat, 4 Nov 2006 00:04:02 -0500
-Message-ID: <20061104050402.GB9003@spearce.org>
-References: <buoejsme6ho.fsf@dhapc248.dev.necel.com> <7v4pthmew1.fsf@assigned-by-dhcp.cox.net> <20061102224549.499610d1.seanlkml@sympatico.ca> <20061103081232.GB15972@diana.vm.bytemark.co.uk> <20061103042540.192bbd18.seanlkml@sympatico.ca> <20061103202945.GA7585@spearce.org> <20061103162707.cc8af608.seanlkml@sympatico.ca>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] merge-recursive: configurable 'merge' program
+Date: Tue, 05 Dec 2006 01:01:55 +0100
+Organization: At home
+Message-ID: <el2cpj$cna$1@sea.gmane.org>
+References: <20061204235647.9BA8B139B0E@magnus.utsl.gen.nz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sat, 4 Nov 2006 05:04:21 +0000 (UTC)
-Cc: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>,
-	Junio C Hamano <junkio@cox.net>, Miles Bader <miles@gnu.org>,
-	git@vger.kernel.org
+Content-Transfer-Encoding: 7Bit
+NNTP-Posting-Date: Tue, 5 Dec 2006 00:00:17 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <20061103162707.cc8af608.seanlkml@sympatico.ca>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 13
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30904>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GgDhb-0002t8-EV for gcvg-git@gmane.org; Sat, 04 Nov
- 2006 06:04:19 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33270>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GrNjG-0005rR-JU for gcvg-git@gmane.org; Tue, 05 Dec
+ 2006 01:00:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753587AbWKDFEK (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 4 Nov 2006
- 00:04:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753589AbWKDFEK
- (ORCPT <rfc822;git-outgoing>); Sat, 4 Nov 2006 00:04:10 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:3550 "EHLO
- corvette.plexpod.net") by vger.kernel.org with ESMTP id S1753587AbWKDFEI
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 4 Nov 2006 00:04:08 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1GgDhL-0005MR-G6; Sat, 04 Nov 2006 00:04:03 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- E620520E491; Sat,  4 Nov 2006 00:04:02 -0500 (EST)
-To: Sean <seanlkml@sympatico.ca>
+ S967865AbWLEAAG (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
+ 19:00:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967866AbWLEAAG
+ (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 19:00:06 -0500
+Received: from main.gmane.org ([80.91.229.2]:59543 "EHLO ciao.gmane.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S967865AbWLEAAD
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006 19:00:03 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1GrNj0-0008M4-70 for git@vger.kernel.org; Tue, 05 Dec 2006 00:59:54 +0100
+Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Tue, 05 Dec 2006 00:59:54 +0100
+Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Tue, 05 Dec 2006
+ 00:59:54 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Sean <seanlkml@sympatico.ca> wrote:
-> On Fri, 3 Nov 2006 15:29:45 -0500
-> Shawn Pearce <spearce@spearce.org> wrote:
-> 
-> > Nack.  I'd rather see the entries added/removed from .git/config when
-> > the branch is created/deleted, just like the ref and the reflog are
-> > created/deleted.  It makes behavior more consistent for the user
-> > and it is mostly self documenting...
-> > 
-> > 	"why is branch FOO pulling FOO by default?  ahhh, its in
-> > 	.git/config after git branch FOO FOO."
-> > 
-> > Same goes for git-clone.  The branch.master.merge=origin/master
-> > entry should be in .git/config file after the clone is complete.
-> 
-> Well that's certainly an alternative implementation that achieves 
-> the same thing.  The essential point is that most of the time the
-> Git user should not have to manually create the merge entries
-> in the config file.  Git should be smart enough to get it right
-> most of the time automatically.
+Sam Vilain wrote:
 
-Agreed completely.  At least though with repo-config we have a
-command line tool which users/scripts alike can use to read/edit
-the configuration of a "remote"; .git/remotes/ has no such tool.
+> For those who like to spawn interactive merge tools on a merge failure
+> or otherwise run some kind of script, allow a "merge.tool" repo-config
+> option that will take arguments as merge(1) does.
 
+How it goes together with merge-recursive rewrite using built-in merge tool
+from xdiff, xdl_merge?
 -- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
+
