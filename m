@@ -1,63 +1,68 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Easy shell question: how to make a script killing all his childs when killed?
-Date: Sat, 9 Dec 2006 16:16:32 +0100
-Message-ID: <e5bfff550612090716p215167b9r2277b09c09b18894@mail.gmail.com>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: filesystem encodings and gitweb tests, was Re: Moving a directory
+ into another fails
+Date: Tue, 5 Dec 2006 15:40:04 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0612051539030.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <9e4733910607260800v618edf0em7b0f5c3332bf8fc5@mail.gmail.com>
+ <200612051036.13645.jnareb@gmail.com> <Pine.LNX.4.63.0612051507170.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+ <200612051529.57174.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sat, 9 Dec 2006 15:16:51 +0000 (UTC)
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Tue, 5 Dec 2006 14:40:15 +0000 (UTC)
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=cXSqaS37DufKCSp9tHIH/tKm0TJrlSlv70FS/VpXVzNIpLfDa1yysn4Dy8WXjcX2+0ti8fMd4p2Qp/ULWdtze0GT19OxLiZKOLkB7R3JxS1H+srwK5T9vIjEkSZTrVp8XNix2ZSDTyyqRx1hF0AGoI+kO4GMKQ+ty3xOYkIcAVc=
-Content-Disposition: inline
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <200612051529.57174.jnareb@gmail.com>
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33817>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33345>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gt3wV-00014V-LQ for gcvg-git@gmane.org; Sat, 09 Dec
- 2006 16:16:48 +0100
+ esmtp (Exim 4.50) id 1GrbSu-0008BD-Vy for gcvg-git@gmane.org; Tue, 05 Dec
+ 2006 15:40:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S936828AbWLIPQe (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 9 Dec 2006
- 10:16:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936861AbWLIPQe
- (ORCPT <rfc822;git-outgoing>); Sat, 9 Dec 2006 10:16:34 -0500
-Received: from py-out-1112.google.com ([64.233.166.178]:44547 "EHLO
- py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S936828AbWLIPQd (ORCPT <rfc822;git@vger.kernel.org>); Sat, 9 Dec
- 2006 10:16:33 -0500
-Received: by py-out-1112.google.com with SMTP id a29so592158pyi for
- <git@vger.kernel.org>; Sat, 09 Dec 2006 07:16:33 -0800 (PST)
-Received: by 10.35.57.5 with SMTP id j5mr8065501pyk.1165677392824; Sat, 09
- Dec 2006 07:16:32 -0800 (PST)
-Received: by 10.35.93.11 with HTTP; Sat, 9 Dec 2006 07:16:32 -0800 (PST)
-To: "Git Mailing List" <git@vger.kernel.org>
+ S967508AbWLEOkI (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 5 Dec 2006
+ 09:40:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967583AbWLEOkI
+ (ORCPT <rfc822;git-outgoing>); Tue, 5 Dec 2006 09:40:08 -0500
+Received: from mail.gmx.net ([213.165.64.20]:40941 "HELO mail.gmx.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S967508AbWLEOkH
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 5 Dec 2006 09:40:07 -0500
+Received: (qmail invoked by alias); 05 Dec 2006 14:40:05 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp043) with SMTP; 05 Dec 2006 15:40:05 +0100
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Ok. I am really bad at scripting, so perhaps my question is very silly, but...
+Hi,
 
-I create and run a script with the content:
+On Tue, 5 Dec 2006, Jakub Narebski wrote:
 
-git rev-list --header --boundary --parents --topo-order 2229ff5c7c  >
-/tmp/qgit_135902672.txt
+> Johannes Schindelin wrote:
+> 
+> > On Tue, 5 Dec 2006, Jakub Narebski wrote:
+> > 
+> >> No, the problem showed with stupid HFS+ which uses different encoding
+> >> for creating file, and different for readdir.
+> > 
+> > This is just one of the problems. I described another problem in this 
+> > thread, namely a repo on a usb stick being accessed from different hosts.
+> 
+> That is not much a problem. Yes, the filenames on different hosts would
+> _look_ different, but shouldn't be detected as new file.
 
-Then I kill the script while it's running, but his child
-(git-rev-list) continues to run in background and I would like to stop
-it either.
+Sorry, I should have been clearer. I meant a repo _and_ a working 
+directory going along with it, on a USB stick. They do look different on 
+different hosts, and git-status looks different as a consequence ;-)
 
-So how can I write the script to be sure that when stopped, it will
-kill all his childern?
-
-Thanks
-Marco
-
-P.S: I have no way to exec the script in fancy ways, I can just start
+Ciao,
+Dscho
