@@ -4,67 +4,127 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 2/n] gitweb: Use '&iquot;' instead of '?' in esc_path
-Date: Tue, 07 Nov 2006 14:18:08 -0800
-Message-ID: <7v64dq3nq7.fsf@assigned-by-dhcp.cox.net>
-References: <200610301953.01875.jnareb@gmail.com>
-	<200611062258.08320.jnareb@gmail.com>
-	<7v8xiochw0.fsf@assigned-by-dhcp.cox.net>
-	<200611072253.34291.jnareb@gmail.com>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: Re: latest update to git-svn blows up for me
+Date: 04 Dec 2006 20:33:49 -0800
+Message-ID: <86odqjj70y.fsf@blue.stonehenge.com>
+References: <863b7wnwcw.fsf@blue.stonehenge.com>
+	<20061204070021.GG1369@localdomain>
+	<86hcwbnb0o.fsf@blue.stonehenge.com> <20061204181241.GA27342@soma>
+	<86zma3lahj.fsf@blue.stonehenge.com> <20061204195452.GB27342@soma>
+	<86slfvl95j.fsf@blue.stonehenge.com>
+	<20061204200844.GC30316@hand.yhbt.net>
+	<86odqjl8vp.fsf@blue.stonehenge.com>
+	<20061204205126.GA23853@hand.yhbt.net>
+	<20061205040844.GA6826@localdomain>
+	<86slfvj7oi.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 7 Nov 2006 22:18:19 +0000 (UTC)
+NNTP-Posting-Date: Tue, 5 Dec 2006 04:34:10 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <200611072253.34291.jnareb@gmail.com> (Jakub Narebski's message
-	of "Tue, 7 Nov 2006 22:53:33 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+x-mayan-date: Long count = 12.19.13.15.11; tzolkin = 5 Chuen; haab = 4 Mac
+In-Reply-To: <86slfvj7oi.fsf@blue.stonehenge.com>
+Original-Lines: 76
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31095>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GhZGo-0008MT-Md for gcvg-git@gmane.org; Tue, 07 Nov
- 2006 23:18:15 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33299>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GrS0O-0006Od-9i for gcvg-git@gmane.org; Tue, 05 Dec
+ 2006 05:34:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752928AbWKGWSL (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 7 Nov 2006
- 17:18:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752944AbWKGWSL
- (ORCPT <rfc822;git-outgoing>); Tue, 7 Nov 2006 17:18:11 -0500
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:897 "EHLO
- fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP id S1752928AbWKGWSJ
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 7 Nov 2006 17:18:09 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao10.cox.net
- (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
- <20061107221809.QTQP18985.fed1rmmtao10.cox.net@fed1rmimpo01.cox.net>; Tue, 7
- Nov 2006 17:18:09 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id jyHl1V00r1kojtg0000000; Tue, 07 Nov 2006
- 17:17:46 -0500
-To: Jakub Narebski <jnareb@gmail.com>
+ S968163AbWLEEdw (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
+ 23:33:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S968318AbWLEEdw
+ (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 23:33:52 -0500
+Received: from blue.stonehenge.com ([209.223.236.162]:17413 "EHLO
+ blue.stonehenge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S968163AbWLEEdv (ORCPT <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006
+ 23:33:51 -0500
+Received: from localhost (localhost [127.0.0.1]) by blue.stonehenge.com
+ (Postfix) with ESMTP id EBF3B8F6B4; Mon,  4 Dec 2006 20:33:50 -0800 (PST)
+Received: from blue.stonehenge.com ([127.0.0.1]) by localhost
+ (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024) with LMTP id
+ 05920-01-89; Mon,  4 Dec 2006 20:33:50 -0800 (PST)
+Received: by blue.stonehenge.com (Postfix, from userid 1001) id 2284C8F6D5;
+ Mon,  4 Dec 2006 20:33:50 -0800 (PST)
+To: Eric Wong <normalperson@yhbt.net>
 Sender: git-owner@vger.kernel.org
 
-Jakub Narebski <jnareb@gmail.com> writes:
+>>>>> "Randal" == Randal L Schwartz <merlyn@stonehenge.com> writes:
 
-> I don't think it would be good idea to separate unquote correction with 
-> esc_path work, because havin unquote which unquotes fully means that we 
-> can have filenames which have for exampl newline characters in them, 
-> hence the need of separate quoting subroutine, esc_path, and using it 
-> for filename escaping.
+>>>>> "Eric" == Eric Wong <normalperson@yhbt.net> writes:
+Eric> Eric Wong <normalperson@yhbt.net> wrote:
+>>> Same here..  I'm still waiting for it to fetch and will try to reproduce
+>>> it here.
 
-Yeah, I think that makes sense.
+Eric> Update: Nearly 16k revisions later and I still can't reproduce this on
+Eric> my computer.
 
-No matter what escaping we would end up picking in the second
-part, we should do the unquote plus esc_path anyway, so I think
-a two patch series to replace to '?' first and then pretty-print
-that '?' with whatever encoding and span.cntrl is a very
-sensible way to go.
+Randal> I still say it was odd that it happened exactly when I did a git-svn
+Randal> update in the other window. :)
 
-As to backslash, cute control pictures and just plain '?', I do
-not have a strong preference among them.  Especially if you have
-the span.cntrl around them, we can tell even a plain '?' from
-the substitution of funny byte values, so it probably is just a
-matter of taste and I'd leave that up to you and gitweb cabal on
-the list ;-).
+Randal> So, maybe I'll just toss this archive.  Oh wait, can I back it up a few dozen
+Randal> revs and try to roll forward?  That might be interesting.
 
+Randal> git-reset --hard HEAD~10
+Randal> blow away everything you had me blow away last time
+Randal> make git-svn equal to HEAD
+Randal> git-svn rebuild
+Randal> git-svn fetch
+
+Randal> Lemme try that.
+
+Nope.  I reset it back 20 revs, and it correctly fast forwarded until
+the fatal item again:
+
+            M       trunk/languages/plumhead/past_xml_to_past_pir.xsl
+            M       trunk/languages/plumhead/t/hello.t
+            A       trunk/languages/plumhead/t/strings.t
+            M       trunk/languages/plumhead/t/arithmetics.t
+            M       trunk/languages/plumhead/TODO
+            M       trunk/languages/plumhead/phc_xml_to_past_xml.xsl
+    r15936 = 1933fe5f95d4ff29d9bb086faca9059a765b7abb
+            M       trunk/MANIFEST
+            M       trunk/MANIFEST.SKIP
+    r15937 = 17624a0457339d4eeeecc03632d609b6220ac02d
+            M       trunk/languages/plumhead/phc_xml_to_past_xml.xsl
+    r15938 = bc577df90b886d8afd89774231cd321a40fd06ed
+            M       trunk/languages/tcl/runtime/builtin/string.pir
+    r15939 = dddd42d84b38cb5ab9cc8ca377767459f3966a60
+            M       trunk/languages/tcl/runtime/builtin/binary.pir
+    r15940 = 5cd630a9b67948eb788cb4fdb87998d960977a75
+            M       trunk/lib/Perl/Critic/Policy/TestingAndDebugging/MisplacedShebang.pm
+            M       trunk/lib/Perl/Critic/Policy/TestingAndDebugging/ProhibitShebangWarningsArg.pm
+            M       trunk/lib/Perl/Critic/Policy/TestingAndDebugging/RequirePortableShebang.pm
+            M       trunk/compilers/past-pm/POST/Compiler.pir
+            M       trunk/compilers/past-pm/PAST/Compiler.pir
+            M       trunk/compilers/past-pm/PAST-pm.pir
+            M       trunk/languages/perl6/src/quote.pir
+            M       trunk/languages/perl6/src/classes/Str.pir
+            M       trunk/languages/perl6/src/classes/Code.pir
+            M       trunk/languages/perl6/src/classes/Num.pir
+            M       trunk/languages/plumhead/t/selection.txt
+            M       trunk/languages/plumhead/t/superglobals.t
+            M       trunk/languages/plumhead/t/strings.t
+            M       trunk/languages/tcl/runtime/builtin/clock.pir
+    no blob information
+    512 at /opt/git/bin/git-svn line 457
+            main::fetch_lib() called at /opt/git/bin/git-svn line 328
+            main::fetch() called at /opt/git/bin/git-svn line 973
+            main::fetch_child_id('git-svn') called at /opt/git/bin/git-svn line 991
+            main::rec_fetch('', '/Volumes/UFS/MIRROR/parrot-GITSVN/.git/svn') called at /opt/git/bin/git-svn line 747
+            main::multi_fetch() called at /opt/git/bin/git-svn line 187
+    512 at /opt/git/bin/git-svn line 980
+            main::fetch_child_id('git-svn') called at /opt/git/bin/git-svn line 991
+            main::rec_fetch('', '/Volumes/UFS/MIRROR/parrot-GITSVN/.git/svn') called at /opt/git/bin/git-svn line 747
+            main::multi_fetch() called at /opt/git/bin/git-svn line 187
+
+It just hates me, perhaps.
+
+-- 
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
