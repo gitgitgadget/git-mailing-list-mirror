@@ -1,74 +1,73 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH 2/3] git-svn: documentation updates
-Date: Sat, 2 Dec 2006 17:49:42 -0800
-Message-ID: <20061203014942.GF1369@localdomain>
-References: <1164768702941-git-send-email-normalperson@yhbt.net> <11647687042130-git-send-email-normalperson@yhbt.net> <456D36CE.1060300@midwinter.com> <20061129085419.GB4486@hand.yhbt.net> <m2wt5es0r3.fsf@ziti.fhcrc.org>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: Re: using xdl_merge(), was Re: Resolving conflicts
+Date: Tue, 05 Dec 2006 17:58:07 +0000
+Message-ID: <4575B32F.5060108@ramsay1.demon.co.uk>
+References: <456FD461.4080002@saville.com> <Pine.LNX.4.64.0611302330000.3695@woody.osdl.org> <456FDF24.1070001@saville.com> <Pine.LNX.4.64.0612012018490.3476@woody.osdl.org> <7vejri20mf.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0612021131140.28348@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sun, 3 Dec 2006 01:49:59 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Tue, 5 Dec 2006 18:12:31 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>,
+	Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <m2wt5es0r3.fsf@ziti.fhcrc.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
+In-Reply-To: <Pine.LNX.4.63.0612021131140.28348@wbgn013.biozentrum.uni-wuerzburg.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33080>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GqgUI-0006H0-Ba for gcvg-git@gmane.org; Sun, 03 Dec
- 2006 02:49:50 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33360>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GremI-0001Ag-Rn for gcvg-git@gmane.org; Tue, 05 Dec
+ 2006 19:12:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1424797AbWLCBto (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 2 Dec 2006
- 20:49:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759470AbWLCBto
- (ORCPT <rfc822;git-outgoing>); Sat, 2 Dec 2006 20:49:44 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:17050 "EHLO hand.yhbt.net") by
- vger.kernel.org with ESMTP id S1758633AbWLCBto (ORCPT
- <rfc822;git@vger.kernel.org>); Sat, 2 Dec 2006 20:49:44 -0500
-Received: from hand.yhbt.net (localhost [127.0.0.1]) by hand.yhbt.net
- (Postfix) with SMTP id CA9042DC034; Sat,  2 Dec 2006 17:49:42 -0800 (PST)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Sat, 02 Dec 2006
- 17:49:42 -0800
-To: Seth Falcon <sethfalcon@gmail.com>
+ S968549AbWLESMY (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 5 Dec 2006
+ 13:12:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S968552AbWLESMY
+ (ORCPT <rfc822;git-outgoing>); Tue, 5 Dec 2006 13:12:24 -0500
+Received: from anchor-post-34.mail.demon.net ([194.217.242.92]:1644 "EHLO
+ anchor-post-34.mail.demon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+ with ESMTP id S968549AbWLESMX (ORCPT <rfc822;git@vger.kernel.org>); Tue, 5
+ Dec 2006 13:12:23 -0500
+Received: from ramsay1.demon.co.uk ([193.237.126.196]) by
+ anchor-post-34.mail.demon.net with esmtp (Exim 4.42) id 1GremD-000IP6-D3;
+ Tue, 05 Dec 2006 18:12:21 +0000
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-Seth Falcon <sethfalcon@gmail.com> wrote:
-> Eric Wong <normalperson@yhbt.net> writes:
-> > I've been considering something along those lines.  I'm interested in
-> > renaming the current 'commit' command to something else (it still has
-> > its uses), but I haven't figured out what to call it...
+Johannes Schindelin wrote:
+> On Fri, 1 Dec 2006, Junio C Hamano wrote:
+>> Linus Torvalds <torvalds@osdl.org> writes:
+>>> On Thu, 30 Nov 2006, Wink Saville wrote:
+>>>> Earlier had a problem with git wanting merge but didn't have it and
+>>>> couldn't figure out which package it was in Ubuntu:( So I symlinked merge
+>>>> to kdiff3 which worked at the time:
+>>> Btw, what's the status of the xdl_merge() thing in "pu"?
+>> I haven't looked at the code any further than minimally checking
+>> its external interface to be able to interface it with
+>> merge-recursive and no more.  Namely:
+>>
+>>  - I haven't read the algorithm to judge its correctness;
 > 
-> I think this would be a sensible change and will help new users get
-> started with git-svn.  
+> With my track record of blamable patches, that should be done by somebody 
+> else than me.
 > 
-> > Also, something that can wrap (git commit && git svn dcommit) into one
-> > step would be nice.
-> 
-> For my workflow, that wouldn't be all that useful.  I find that I
-> accumulate a few commits locally and then send them all to svn.  For
-> this workflow, what would be useful is if dcommit could understand a
-> command like:
-> 
->     git svn dcommit remotes/git-svn..HEAD~2
-> 
-> Sometimes I realize I should have sent a stack of commits to svn, but
-> now have some newer commits that aren't quite ready on the head of my
-> branch.  
-> 
-> While the workaround is easy (create a new branch and dcommit from
-> it), I think there is a usability argument in that when one
-> sees an example like dcommit foo..bar, one expects all
-> the other magic to work.  I feel for this and accidentally committed a
-> few commits I didn't want to send.  If nothing else, perhaps git-svn
-> could error out and say, "hey, I don't do that".
 
-Aded to my ever-growing git-svn todo list.   Patches welcome :)
+Have you had time to look at my test cases?
+As I said, I found them very useful when debugging
+my git-diff3 code, and (hopefully) you will find them
+to be equally useful.
 
--- 
+> Ciao,
+> Dscho
+> 
+
+All the best,
+
+Ramsay
+
