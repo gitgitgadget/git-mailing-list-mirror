@@ -4,63 +4,64 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Alexandre Julliard <julliard@winehq.org>
-Subject: [PATCH 2/5] upload-pack: Check for NOT_SHALLOW flag before sending a shallow to the client.
-Date: Fri, 24 Nov 2006 15:58:25 +0100
-Message-ID: <87wt5kuc1a.fsf@wine.dyndns.org>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: Re: Diffs from CVS keyword expansion
+Date: 05 Dec 2006 11:45:50 -0800
+Message-ID: <86k616m8i9.fsf@blue.stonehenge.com>
+References: <9e4733910611301956l6f64b01ftee46971a18e3467b@mail.gmail.com>
+	<20061205121443.GB2428@cepheus>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 24 Nov 2006 14:59:48 +0000 (UTC)
+NNTP-Posting-Date: Tue, 5 Dec 2006 19:46:11 +0000 (UTC)
+Cc: Jon Smirl <jonsmirl@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.90 (gnu/linux)
+x-mayan-date: Long count = 12.19.13.15.12; tzolkin = 6 Eb; haab = 5 Mac
+In-Reply-To: <20061205121443.GB2428@cepheus>
+Original-Lines: 20
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32223>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GncWg-0008QM-9F for gcvg-git@gmane.org; Fri, 24 Nov
- 2006 15:59:39 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33367>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GrgEn-0007NU-JV for gcvg-git@gmane.org; Tue, 05 Dec
+ 2006 20:45:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S934637AbWKXO7d (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 24 Nov 2006
- 09:59:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934639AbWKXO7d
- (ORCPT <rfc822;git-outgoing>); Fri, 24 Nov 2006 09:59:33 -0500
-Received: from mail.codeweavers.com ([216.251.189.131]:4069 "EHLO
- mail.codeweavers.com") by vger.kernel.org with ESMTP id S934637AbWKXO7c
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 24 Nov 2006 09:59:32 -0500
-Received: from adsl-84-226-49-216.adslplus.ch ([84.226.49.216]
- helo=wine.dyndns.org) by mail.codeweavers.com with esmtpsa
- (TLS-1.0:DHE_RSA_AES_256_CBC_SHA:32) (Exim 4.50) id 1GncVX-0005Iv-Lb for
- git@vger.kernel.org; Fri, 24 Nov 2006 08:58:28 -0600
-Received: by wine.dyndns.org (Postfix, from userid 1000) id 9390110A155; Fri,
- 24 Nov 2006 15:58:25 +0100 (CET)
-To: git@vger.kernel.org
+ S1030572AbWLETpy (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 5 Dec 2006
+ 14:45:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030613AbWLETpy
+ (ORCPT <rfc822;git-outgoing>); Tue, 5 Dec 2006 14:45:54 -0500
+Received: from blue.stonehenge.com ([209.223.236.162]:35179 "EHLO
+ blue.stonehenge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1030572AbWLETpx (ORCPT <rfc822;git@vger.kernel.org>); Tue, 5 Dec 2006
+ 14:45:53 -0500
+Received: from localhost (localhost [127.0.0.1]) by blue.stonehenge.com
+ (Postfix) with ESMTP id D7B378E9AD; Tue,  5 Dec 2006 11:45:50 -0800 (PST)
+Received: from blue.stonehenge.com ([127.0.0.1]) by localhost
+ (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024) with LMTP id
+ 06049-01-19; Tue,  5 Dec 2006 11:45:50 -0800 (PST)
+Received: by blue.stonehenge.com (Postfix, from userid 1001) id 62BD08E8A9;
+ Tue,  5 Dec 2006 11:45:50 -0800 (PST)
+To: Uwe Kleine-Koenig <zeisberg@informatik.uni-freiburg.de>
 Sender: git-owner@vger.kernel.org
 
-A commit may have been put on the shallow list, and then reached from
-another branch and marked NOT_SHALLOW without being removed from the
-list.
+>>>>> "Uwe" == Uwe Kleine-Koenig <zeisberg@informatik.uni-freiburg.de> writes:
 
-Signed-off-by: Alexandre Julliard <julliard@winehq.org>
----
- upload-pack.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+Uwe> 	#! /bin/sh
+Uwe> 	exec perl -i -p -e 's/\$(Id|Revision):.*?\$/\$$1: \$/' "$@";
 
-diff --git a/upload-pack.c b/upload-pack.c
-index d5b4750..d4a7b62 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -565,7 +565,7 @@ static void receive_needs(void)
- 			SHALLOW, NOT_SHALLOW);
- 		while (result) {
- 			struct object *object = &result->item->object;
--			if (!(object->flags & CLIENT_SHALLOW)) {
-+			if (!(object->flags & (CLIENT_SHALLOW|NOT_SHALLOW))) {
- 				packet_write(1, "shallow %s",
- 						sha1_to_hex(object->sha1));
- 				register_shallow(object->sha1);
--- 
-1.4.4.1.ga335e
+Ow.  My eyes hurt from that.  How about we rewrite that as a native Perl
+script:
+
+    #!/usr/bin/perl
+    $^I = ""; # this is -i
+    while (<>) {
+      s/\$(Id|Revision):.*?\$/\$$1: \$/;
+      print;
+    }
 
 -- 
-Alexandre Julliard
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
