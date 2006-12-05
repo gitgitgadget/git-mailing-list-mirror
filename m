@@ -1,66 +1,137 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Clemens Koller <clemens.koller@anagramm.de>
-Subject: Bugreport: core-tutorial example outdated?
-Date: Wed, 25 Oct 2006 19:15:17 +0200
-Message-ID: <453F9BA5.3020104@anagramm.de>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH 1/5] git-svn: make test for SVK mirror path import
+Date: Tue, 5 Dec 2006 00:40:05 -0800
+Message-ID: <20061205084005.GA27236@soma>
+References: <20061205051738.16552.8987.stgit@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 25 Oct 2006 17:15:37 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Tue, 5 Dec 2006 08:40:19 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Mozilla Thunderbird 1.0.2 (Windows/20050317)
-X-Accept-Language: en-us, en
-X-Provags-ID: kundenserver.de abuse@kundenserver.de login:224ad0fd4f2efe95e6ec4f0a3ca8a73c
+Content-Disposition: inline
+In-Reply-To: <20061205051738.16552.8987.stgit@localhost>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30078>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GcmLd-0000Ui-C6 for gcvg-git@gmane.org; Wed, 25 Oct
- 2006 19:15:25 +0200
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33318>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GrVqV-0003zK-Qf for gcvg-git@gmane.org; Tue, 05 Dec
+ 2006 09:40:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1160995AbWJYRPT (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 25 Oct 2006
- 13:15:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965224AbWJYRPT
- (ORCPT <rfc822;git-outgoing>); Wed, 25 Oct 2006 13:15:19 -0400
-Received: from moutng.kundenserver.de ([212.227.126.186]:18926 "EHLO
- moutng.kundenserver.de") by vger.kernel.org with ESMTP id S965221AbWJYRPS
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 25 Oct 2006 13:15:18 -0400
-Received: from [84.154.119.220] (helo=[192.168.1.10]) by
- mrelayeu.kundenserver.de (node=mrelayeu5) with ESMTP (Nemesis), id
- 0ML25U-1GcmLU1QAs-0008Bz; Wed, 25 Oct 2006 19:15:16 +0200
-To: git@vger.kernel.org
+ S968090AbWLEIkJ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 5 Dec 2006
+ 03:40:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S968089AbWLEIkI
+ (ORCPT <rfc822;git-outgoing>); Tue, 5 Dec 2006 03:40:08 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:43065 "EHLO hand.yhbt.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S968090AbWLEIkH
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 5 Dec 2006 03:40:07 -0500
+Received: from hand.yhbt.net (localhost [127.0.0.1]) by hand.yhbt.net
+ (Postfix) with SMTP id 8F8A12DC034; Tue,  5 Dec 2006 00:40:05 -0800 (PST)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Tue,  5 Dec 2006
+ 00:40:05 -0800
+To: Sam Vilain <sam@vilain.net>
 Sender: git-owner@vger.kernel.org
 
-Hi there!
+Sam Vilain <sam@vilain.net> wrote:
+> From:  <sam@vilain.net>
+> 
+> A manual test that sets up a repository that looks like an SVK depot,
+> and then imports it to check that it looks like we mirrored the
+> 'original' source.
+> 
+> There is also a minor modification to the git-svn test library shell
+> file which sets a variable for the subversion repository's filesystem
+> path.
+> ---
+> 
+>  t/lib-git-svn.sh                   |    3 -
+>  t/t9107-git-svn-svk-mirrorpaths.sh |   92 ++++++++++++++++++++++++++++++++++++
+>  2 files changed, 93 insertions(+), 2 deletions(-)
+> 
+> diff --git a/t/lib-git-svn.sh b/t/lib-git-svn.sh
+> index 63c6703..dffd1fb 100644
+> --- a/t/lib-git-svn.sh
+> +++ b/t/lib-git-svn.sh
+> @@ -45,6 +45,5 @@ else
+>  	svnadmin create "$svnrepo"
+>  fi
+>  
+> +rawsvnrepo="$svnrepo"
+>  svnrepo="file://$svnrepo"
+> -
+> -
+> diff --git a/t/t9107-git-svn-svk-mirrorpaths.sh b/t/t9107-git-svn-svk-mirrorpaths.sh
+> new file mode 100755
+> index 0000000..130e786
+> --- /dev/null
+> +++ b/t/t9107-git-svn-svk-mirrorpaths.sh
+> @@ -0,0 +1,92 @@
+> +#!/bin/sh
+> +#
+> +# Copyright (c) 2006 Eric Wong
 
-I just studied
-http://www.kernel.org/pub/software/scm/git/docs/core-tutorial.html
-to get more into the details of git. But the following commands:
+Huh? I didn't write this test.
 
-$ git-cat-file -t 557db03de997c86a4a028e1ebd3a1ceb225be238
-$ git-cat-file "blob" 557db03
+> +test_description='git-svn on SVK mirror paths'
+> +. ./lib-git-svn.sh
+> +
+> +if test -n "$GIT_SVN_NO_LIB" && test "$GIT_SVN_NO_LIB" -ne 0
+> +then
+> +	echo 'Skipping: only implemented with SVN libraries'
+> +	test_done
+> +	exit 0
+> +fi
+> +
+> +# ok, people who don't have SVK installed probably don't care about
+> +# this test.
+> +
+> +# we set up the repository manually, because even if SVK is installed
+> +# it is difficult to use it in a way that is idempotent.
+> +
+> +# we are not yet testing merge tickets..
+> +
+> +uuid=b00bface-b1ff-c0ff-f0ff-b0bafe775e1e 
+> +url=https://really.slow.server.com/foobar 
 
-just bring up a
+I had to use --whitespace=strip with git-am above.
 
-fatal: Not a valid object name 557db03de
+> +test_expect_success 'multi-fetch an SVK mirror path' "git-svn multi-fetch"
 
-I guess the documentation is slightly outdated and might need a fix.
+I had to use the following patch to get the multi-fetch test to pass
+with GIT_SVN_DELTA_FETCH=1. (I discovered it while running make -C t
+full-svn-test)
 
-Best greets,
+Is it safe to assume that svk-mirrored URLs will _always_ be file://?
+If so, then the delta fetching code should never be needed.
+
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -3017,8 +3017,7 @@ sub libsvn_fetch_delta {
+ 	my $ed = SVN::Git::Fetcher->new({ c => $last_commit, q => $_q });
+ 	my $reporter = $SVN->do_update($rev, '', 1, $ed, $pool);
+ 	my @lock = $SVN::Core::VERSION ge '1.2.0' ? (undef) : ();
+-	my (undef, $last_rev, undef) = cmt_metadata($last_commit);
+-	$reporter->set_path('', $last_rev, 0, @lock, $pool);
++	$reporter->set_path('', ($rev - 1), 0, @lock, $pool);
+ 	$reporter->finish_report($pool);
+ 	$pool->clear;
+ 	unless ($ed->{git_commit_ok}) {
+
+Also, unconditionally setting ($rev - 1) in the above patch disables the
+ability to do squashed history[1] imports (not sure if anybody cares about
+them, though).
+
+[1] - like shallow clone, but shallow in the middle of history
+
+> +test_expect_success 'got tag history OK' "test \`git-log --pretty=oneline remotes/tags/blah-1.0 | wc -l \` = 3"
+
+But the above test breaks this one...
+
 -- 
-Clemens Koller
-_______________________________
-R&D Imaging Devices
-Anagramm GmbH
-Rupert-Mayer-Str. 45/1
-81379 Muenchen
-Germany
-
-http://www.anagramm.de
-Phone: +49-89-741518-50
