@@ -6,77 +6,107 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: git and bzr
-Date: Thu, 30 Nov 2006 01:30:13 +0100
+Subject: Re: [RFC] Submodules in GIT
+Date: Tue, 05 Dec 2006 12:09:02 +0100
 Organization: At home
-Message-ID: <ekl8j5$in4$1@sea.gmane.org>
-References: <45357CC3.4040507@utoronto.ca> <a7e835d40610260257r5f05ea4gc934f1c1cc267977@mail.gmail.com> <20061026101038.GA13310@coredump.intra.peff.net> <877iyne4dm.fsf@alplog.fr> <Pine.LNX.4.64.0610260753090.3962@g5.osdl.org> <456B7C6A.80104@webdrake.net> <845b6e870611280410j58bdcd99nc05d0f67489293e4@mail.gmail.com> <ekhaeg$etk$1@sea.gmane.org> <Pine.LNX.4.63.0611281433270.30004@wbgn013.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.64.0611280754050.30076@woody.osdl.org> <456C7592.6020700@ableton.com> <ekhtnt$rkk$1@sea.gmane.org> <456C9DFF.1040407@onlinehome.de> <456CA981.4010808@onlinehome.de> <Pine.LNX.4.64.0611281346490.4244@woody.osdl.org> <456CB197.2030201@onlinehome.de> <Pine.LNX.4.64.0611281413310.4244@woody.osdl.org> <Pine.LNX.4.63.0611291149440.30004@wbgn013.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.64.0611290922410.3513@woody.osdl.org> <456DD76C.4010902@gmx.net> <Pine.LNX.4.64.06112
- 91235590.3513@woody.osdl.org> <87bqmpvlxf.wl%cworth@cworth.org>
+Message-ID: <el3jsh$i62$1@sea.gmane.org>
+References: <Pine.LNX.4.64.0612041234390.3476@woody.osdl.org> <e7bda7770612041336s73e677ebh758b030f9f75c1d8@mail.gmail.com> <45754D27.9070701@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Thu, 30 Nov 2006 00:29:53 +0000 (UTC)
-Cc: bazaar-ng@lists.canonical.com
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+NNTP-Posting-Date: Tue, 5 Dec 2006 11:07:17 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 X-Injected-Via-Gmane: http://gmane.org/
-Original-Followup-To: gmane.comp.version-control.git
-Original-Lines: 27
+Original-Lines: 63
 Original-X-Complaints-To: usenet@sea.gmane.org
 X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
 Mail-Copies-To: jnareb@gmail.com
 User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32688>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GpZoC-0002jf-2V for gcvg-git@gmane.org; Thu, 30 Nov
- 2006 01:29:48 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33338>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GrY8n-0005PJ-S9 for gcvg-git@gmane.org; Tue, 05 Dec
+ 2006 12:07:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S967731AbWK3A3p convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Wed, 29 Nov 2006 19:29:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967732AbWK3A3p
- (ORCPT <rfc822;git-outgoing>); Wed, 29 Nov 2006 19:29:45 -0500
-Received: from main.gmane.org ([80.91.229.2]:34254 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S967731AbWK3A3o (ORCPT
- <rfc822;git@vger.kernel.org>); Wed, 29 Nov 2006 19:29:44 -0500
+ S1759947AbWLELHI (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 5 Dec 2006
+ 06:07:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759949AbWLELHI
+ (ORCPT <rfc822;git-outgoing>); Tue, 5 Dec 2006 06:07:08 -0500
+Received: from main.gmane.org ([80.91.229.2]:41371 "EHLO ciao.gmane.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1759947AbWLELHF
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 5 Dec 2006 06:07:05 -0500
 Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1GpZnm-0002ca-08 for git@vger.kernel.org; Thu, 30 Nov 2006 01:29:22 +0100
+ 1GrY8e-0006kV-P6 for git@vger.kernel.org; Tue, 05 Dec 2006 12:07:04 +0100
 Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
  main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Thu, 30 Nov 2006 01:29:21 +0100
+ <git@vger.kernel.org>; Tue, 05 Dec 2006 12:07:04 +0100
 Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Thu, 30 Nov 2006
- 01:29:21 +0100
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Tue, 05 Dec 2006
+ 12:07:04 +0100
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Carl Worth wrote:
+Andreas Ericsson wrote:
 
-> In the thread on the fedora
-> mailing list that prompted my first "user-interface warts" and the
-> patch I mentioned above, the process was worse:
->=20
-> =A0=A0=A0=A0=A0=A0=A0=A0git commit
-> =A0=A0=A0=A0=A0=A0=A0=A0"hmm... why didn't that work"
-> =A0=A0=A0=A0=A0=A0=A0=A0read message
-> =A0=A0=A0=A0=A0=A0=A0=A0git update-index
-> =A0=A0=A0=A0=A0=A0=A0=A0git commit
-> =A0=A0=A0=A0=A0=A0=A0=A0"crap... it still didn't work even when I did=
- what it told me to do"
->=20
-> Here's the original version of that report:
->=20
-> https://www.redhat.com/archives/fedora-maintainers/2006-November/msg0=
-0141.html
+> Torgil Svensson wrote:
+>> On 12/4/06, Linus Torvalds <torvalds@osdl.org> wrote:
+>>>
+>>> So yeah, it's a bit hacky, but for the reasons I've tried to outline, I
+>>> actually think that users _want_ hacky. Exactly because "deep 
+>>> integration"
+>>> ends up having so many _bad_ features, so it's better to have a thin and
+>>> simple layer that you can actually see past if you want to.
+>> 
+>> Thin and simple sounds very good. Let's try it with an example. Lets
+>> say we have one apllication App1 and three librarys (Lib1, Lib2, Lib3)
+>> with the following dependency-graph:
+>> 
+>>        App1
+>>        /  \
+>>       /    \
+>>   Lib1   Lib2
+>>       \    /
+>>        \  /
+>>        Lib3 (don't really needed for this example but looks nice)
+>> 
+>> All components can be used individually and have their own upstream,
+>> maintainer etc.
+>> 
+>> To compile App1 however, I need some files from both Lib1 and Lib2
+>> specifying it's API. To satisfy these dependencies, It sounds
+>> reasonable to link Lib2 and Lib3 submodules from App1. In your
+>> concept, can I construct a modules file to fetch the API files and
+>> their history without checking out the whole Lib1 and Lib2 source?
+> 
+> I think not. Then it wouldn't be a submodule anymore, but just some 
+> random sources from an upstream project. Not that it's an uncommon 
+> workflow or anything, but it's sort of akin to just importing the SHA1 
+> implementation (a few source-files with no real interest in the history 
+> of those source-files) from openssl into a different project rather than 
+> actually using the entire openssl lib (which would be nice to have as a 
+> submodule).
 
-=46rom the SYNOPSIS of git-update-index(1) one can see that git-update-=
-index
-needs files to act on.
+Note that this is what partial checkouts (another great idea nobody
+implemented yet[*1*]; you can do partial checkout but there is no UI for
+this, and working with partial checkouts is bit hard) is about, although it
+would buy you only working area space, and not repository (object database
+storage) space.
 
-But I agree that git is not very user friendly, and has some usability
-warts.
---=20
+For now, you can imitate this by having in in Lib1 and Lib2 the 'includes'
+branch which would contain only the API (and which you would have to keep
+up to date with 'master', but it should be fairly easy: just merge changes
+into 'includes', perhaps with help of git-rerere, or [nonexisting]
+git-rerere2).
+
+[*1*] Although with our track[*2*] I guess it is reasonable to think it
+would get implemented soon.
+[*2*] Out of four "great ideas": shallow clone / sparse clone, submodules
+support, lazy clone / remote alternates, two are in example-implementation
+(submodules support) and beta work (shallow clone is in 'next').
+
+-- 
 Jakub Narebski
 Warsaw, Poland
 ShadeHawk on #git
