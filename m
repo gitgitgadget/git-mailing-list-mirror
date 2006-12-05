@@ -1,117 +1,97 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: [PATCH 1/2] move Git.pm build instructions into perl/Makefile
-Date: Thu, 30 Nov 2006 17:27:34 +0100
-Message-ID: <81b0412b0611300827h64722fa0i7e32808994a97a51@mail.gmail.com>
-References: <20061121225911.GA24201@steel.home>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC] Two conceptually distinct commit commands
+Date: Tue, 05 Dec 2006 02:19:50 +0100
+Organization: At home
+Message-ID: <el2hbm$oi0$1@sea.gmane.org>
+References: <cworth@cworth.org> <200612050052.kB50qcn2026534@laptop13.inf.utfsm.cl>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; 
-	boundary="----=_Part_46634_15347055.1164904054730"
-NNTP-Posting-Date: Thu, 30 Nov 2006 16:27:50 +0000 (UTC)
-Cc: git@vger.kernel.org, "Junio C Hamano" <junkio@cox.net>
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+NNTP-Posting-Date: Tue, 5 Dec 2006 01:18:52 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:references;
-        b=FHoxGMan8Wa39FRZSFEDwNctJ70LVdhrWZ6uILaQeIchutask5+J3G29wO5AqRxflVqyPWnBrbJ0vuwrGHch/cBrBi/EKxrikBlMzPnCl47dpvdDzSqnbdMqMdzYFnunioOUVrGRlGrzlmrY+eL/FitmwqiCuQF+pWWJVz94WsA=
-In-Reply-To: <20061121225911.GA24201@steel.home>
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 47
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32770>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GpolA-0001pb-Tm for gcvg-git@gmane.org; Thu, 30 Nov
- 2006 17:27:44 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33281>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GrOxH-0006DF-PH for gcvg-git@gmane.org; Tue, 05 Dec
+ 2006 02:18:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1758520AbWK3Q1h (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
- 11:27:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759257AbWK3Q1h
- (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 11:27:37 -0500
-Received: from ug-out-1314.google.com ([66.249.92.170]:9775 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1758520AbWK3Q1g
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 11:27:36 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so2163111uga for
- <git@vger.kernel.org>; Thu, 30 Nov 2006 08:27:35 -0800 (PST)
-Received: by 10.78.203.13 with SMTP id a13mr3716914hug.1164904054816; Thu, 30
- Nov 2006 08:27:34 -0800 (PST)
-Received: by 10.78.135.3 with HTTP; Thu, 30 Nov 2006 08:27:34 -0800 (PST)
-To: "Alex Riesen" <fork0@t-online.de>
+ S967959AbWLEBSl (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
+ 20:18:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967960AbWLEBSl
+ (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 20:18:41 -0500
+Received: from main.gmane.org ([80.91.229.2]:43673 "EHLO ciao.gmane.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S967959AbWLEBSk
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006 20:18:40 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1GrOwp-00042P-65 for git@vger.kernel.org; Tue, 05 Dec 2006 02:18:15 +0100
+Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Tue, 05 Dec 2006 02:18:15 +0100
+Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Tue, 05 Dec 2006
+ 02:18:15 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-------=_Part_46634_15347055.1164904054730
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
+Horst H. von Brand wrote:
 
-Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+> Carl Worth <cworth@cworth.org> wrote:
+> 
+> [...]
+> 
+>> Proposal
+>> -------
+>> Here are the two commit commands I would like to see in git:
+>> 
+>>   commit-index-content [paths...]
+>> 
+>>     Commits the content of the index for the given paths, (or all
+>>     paths in the index). The index content can be manipulated with
+>>     "git add", "git rm", "git mv", and "git update-index".
+>> 
+>>   commit-working-tree-content [paths...]
+>> 
+>>     Commits the content of the working tree for the given paths, (or
+>>     all tracked paths). Untracked files can be committed for the first
+>>     time by specifying their names on the command-line or by using
+>>     "git add" to add them just prior to the commit. Any rename or
+>>     removal of a tracked file will be detected and committed
+>>     automatically.
+> 
+> Edit somefile with, e.g, emacs: Get backup called somefile~
+> Realize that somefile is nonsense, delete it(s edited version)
+> commit-working-tree-contents: Now you have the undesirable somefile~ saved
 
----
+No, you don't, assuming that you have *~ in .gitignore or .git/info/exclude
 
-This is the first patch, just rebased upon current master.
-The ActiveState-related parts follow
+> Edit somefile, utterly changing it: Get backup called somefile~
+> mv somefile newfile
+> commit-working-tree-contents: somefile~ saved, newfile lost
 
-------=_Part_46634_15347055.1164904054730
-Content-Type: text/plain; name="0001-move-Git.pm-build-instructions-into-perl-Makefile.txt"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="0001-move-Git.pm-build-instructions-into-perl-Makefile.txt"
-X-Attachment-Id: file0
+No, assuming that you use git-mv as you should.
 
-RnJvbSA5NTQ4M2YyN2FhMGFlZGU3ZDE5YjY0M2YzMjE5OTQwMDFhYjFmMDY1IE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiBBbGV4IFJpZXNlbiA8cmFhLmxrbWxAZ21haWwuY29tPgpEYXRl
-OiBUdWUsIDIxIE5vdiAyMDA2IDIzOjU5OjExICswMTAwClN1YmplY3Q6IFtQQVRDSF0gbW92ZSBH
-aXQucG0gYnVpbGQgaW5zdHJ1Y3Rpb25zIGludG8gcGVybC9NYWtlZmlsZQoKU2lnbmVkLW9mZi1i
-eTogQWxleCBSaWVzZW4gPHJhYS5sa21sQGdtYWlsLmNvbT4KLS0tCiBNYWtlZmlsZSAgICAgICAg
-fCAgIDE1ICsrKysrKysrKy0tLS0tLQogcGVybC8uZ2l0aWdub3JlIHwgICAgMyArKy0KIHBlcmwv
-TWFrZWZpbGUgICB8ICAgMjMgKysrKysrKysrKysrKysrKysrKysrKysKIDMgZmlsZXMgY2hhbmdl
-ZCwgMzQgaW5zZXJ0aW9ucygrKSwgNyBkZWxldGlvbnMoLSkKCmRpZmYgLS1naXQgYS9NYWtlZmls
-ZSBiL01ha2VmaWxlCmluZGV4IGRlM2U5ZjMuLjU5MDNhNmYgMTAwNjQ0Ci0tLSBhL01ha2VmaWxl
-CisrKyBiL01ha2VmaWxlCkBAIC01NjgsOCArNTY4LDggQEAgZXhwb3J0IHByZWZpeCBUQVIgSU5T
-VEFMTCBERVNURElSIFNIRUxMX1BBVEggdGVtcGxhdGVfZGlyCiAKIGFsbDogJChBTExfUFJPR1JB
-TVMpICQoQlVJTFRfSU5TKSBnaXQkWCBnaXRrIGdpdHdlYi9naXR3ZWIuY2dpCiAKLWFsbDogcGVy
-bC9NYWtlZmlsZQotCSQoTUFLRSkgLUMgcGVybAorYWxsOgorCSQoTUFLRSkgLUMgcGVybCBQRVJM
-X1BBVEg9JyQoUEVSTF9QQVRIX1NRKScgcHJlZml4PSckKHByZWZpeF9TUSknIGFsbAogCSQoTUFL
-RSkgLUMgdGVtcGxhdGVzCiAKIHN0cmlwOiAkKFBST0dSQU1TKSBnaXQkWApAQCAtNjAyLDcgKzYw
-MiwxMSBAQCAkKHBhdHN1YnN0ICUuc2gsJSwkKFNDUklQVF9TSCkpIDogJSA6ICUuc2gKIAljaG1v
-ZCAreCAkQCsKIAltdiAkQCsgJEAKIAotJChwYXRzdWJzdCAlLnBlcmwsJSwkKFNDUklQVF9QRVJM
-KSk6IHBlcmwvTWFrZWZpbGUKKyQocGF0c3Vic3QgJS5wZXJsLCUsJChTQ1JJUFRfUEVSTCkpOiBw
-ZXJsL3BlcmwubWFrCisKK3BlcmwvcGVybC5tYWs6IEdJVC1DRkxBR1MKKwkkKE1BS0UpIC1DIHBl
-cmwgUEVSTF9QQVRIPSckKFBFUkxfUEFUSF9TUSknIHByZWZpeD0nJChwcmVmaXhfU1EpJyAkKEBG
-KQorCiAkKHBhdHN1YnN0ICUucGVybCwlLCQoU0NSSVBUX1BFUkwpKTogJSA6ICUucGVybAogCXJt
-IC1mICRAICRAKwogCUlOU1RMSUJESVI9YCQoTUFLRSkgLUMgcGVybCAtcyAtLW5vLXByaW50LWRp
-cmVjdG9yeSBpbnN0bGliZGlyYCAmJiBcCkBAIC03OTYsNyArODAwLDcgQEAgaW5zdGFsbDogYWxs
-CiAJJChJTlNUQUxMKSAkKEFMTF9QUk9HUkFNUykgJyQoREVTVERJUl9TUSkkKGdpdGV4ZWNkaXJf
-U1EpJwogCSQoSU5TVEFMTCkgZ2l0JFggZ2l0ayAnJChERVNURElSX1NRKSQoYmluZGlyX1NRKScK
-IAkkKE1BS0UpIC1DIHRlbXBsYXRlcyBERVNURElSPSckKERFU1RESVJfU1EpJyBpbnN0YWxsCi0J
-JChNQUtFKSAtQyBwZXJsIGluc3RhbGwKKwkkKE1BS0UpIC1DIHBlcmwgcHJlZml4PSckKHByZWZp
-eF9TUSknIGluc3RhbGwKIAlpZiB0ZXN0ICd6JChiaW5kaXJfU1EpJyAhPSAneiQoZ2l0ZXhlY2Rp
-cl9TUSknOyBcCiAJdGhlbiBcCiAJCWxuIC1mICckKERFU1RESVJfU1EpJChiaW5kaXJfU1EpL2dp
-dCRYJyBcCkBAIC04NjYsOCArODcwLDcgQEAgY2xlYW46CiAJcm0gLWYgJChodG1sZG9jcykudGFy
-Lmd6ICQobWFucGFnZXMpLnRhci5negogCXJtIC1mIGdpdHdlYi9naXR3ZWIuY2dpCiAJJChNQUtF
-KSAtQyBEb2N1bWVudGF0aW9uLyBjbGVhbgotCVsgISAtZiBwZXJsL01ha2VmaWxlIF0gfHwgJChN
-QUtFKSAtQyBwZXJsLyBjbGVhbiB8fCAkKE1BS0UpIC1DIHBlcmwvIGNsZWFuCi0Jcm0gLWYgcGVy
-bC9wcHBvcnQuaCBwZXJsL01ha2VmaWxlLm9sZAorCSQoTUFLRSkgLUMgcGVybCBjbGVhbgogCSQo
-TUFLRSkgLUMgdGVtcGxhdGVzLyBjbGVhbgogCSQoTUFLRSkgLUMgdC8gY2xlYW4KIAlybSAtZiBH
-SVQtVkVSU0lPTi1GSUxFIEdJVC1DRkxBR1MKZGlmZiAtLWdpdCBhL3BlcmwvLmdpdGlnbm9yZSBi
-L3BlcmwvLmdpdGlnbm9yZQppbmRleCBlOTkwY2FlLi45OGIyNDc3IDEwMDY0NAotLS0gYS9wZXJs
-Ly5naXRpZ25vcmUKKysrIGIvcGVybC8uZ2l0aWdub3JlCkBAIC0xLDQgKzEsNSBAQAotTWFrZWZp
-bGUKK3BlcmwubWFrCitwZXJsLm1hay5vbGQKIGJsaWIKIGJsaWJkaXJzCiBwbV90b19ibGliCmRp
-ZmYgLS1naXQgYS9wZXJsL01ha2VmaWxlIGIvcGVybC9NYWtlZmlsZQpuZXcgZmlsZSBtb2RlIDEw
-MDY0NAppbmRleCAwMDAwMDAwLi5jZmYyNGRkCi0tLSAvZGV2L251bGwKKysrIGIvcGVybC9NYWtl
-ZmlsZQpAQCAtMCwwICsxLDIzIEBACisjCisjIE1ha2VmaWxlIGZvciBwZXJsIHN1cHBvcnQgbW9k
-dWxlcyBhbmQgcm91dGluZQorIworbWFrZmlsZTo9cGVybC5tYWsKKworUEVSTF9QQVRIX1NRID0g
-JChzdWJzdCAnLCdcJycsJChQRVJMX1BBVEgpKQorcHJlZml4X1NRID0gJChzdWJzdCAnLCdcJycs
-JChwcmVmaXgpKQorCithbGwgaW5zdGFsbCBpbnN0bGliZGlyOiAkKG1ha2ZpbGUpCisJJChNQUtF
-KSAtZiAkKG1ha2ZpbGUpICRACisKK2NsZWFuOgorCXRlc3QgLWYgJChtYWtmaWxlKSAmJiAkKE1B
-S0UpIC1mICQobWFrZmlsZSkgJEAgfHwgZXhpdCAwCisJJChSTSkgcHBwb3J0LmgKKwkkKFJNKSAk
-KG1ha2ZpbGUpCisKKyQobWFrZmlsZSk6IE1ha2VmaWxlLlBMIC4uL0dJVC1DRkxBR1MKKwknJChQ
-RVJMX1BBVEhfU1EpJyAkPCBGSVJTVF9NQUtFRklMRT0nJEAnIFBSRUZJWD0nJChwcmVmaXhfU1Ep
-JworCisjIHRoaXMgaXMganVzdCBhZGRlZCBjb21mb3J0IGZvciBjYWxsaW5nIG1ha2UgZGlyZWN0
-bHkgaW4gcGVybCBkaXIKKyMgKGV2ZW4gdGhvdWdoIEdJVC1DRkxBR1MgYXJlbid0IHVzZWQgeWV0
-LiBJZiBldmVyKQorLi4vR0lULUNGTEFHUzoKKwkkKE1BS0UpIC1DIC4uIEdJVC1DRkxBR1MKLS0g
-CjEuNC40LjEuZzM5MjQtZGlydHkKCg==
+> Edit somefile a bit, move it to newfile. Make sure no backups left over.
+> commit-working-tree-contents: somefile deleted, newfile lost
+
+No, as above.
+
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
+
