@@ -4,56 +4,68 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: [PATCH] Make git-clone --use-separate-remote the default
-Date: Thu, 23 Nov 2006 18:45:58 -0500
-Message-ID: <20061123234558.GA29170@fieldses.org>
-References: <20061123225835.30071.99265.stgit@machine.or.cz> <7vejrtiwqd.fsf@assigned-by-dhcp.cox.net> <20061123234203.GN7201@pasky.or.cz>
+From: Uwe Kleine-Koenig <zeisberg@informatik.uni-freiburg.de>
+Subject: Re: [RFC] Submodules in GIT
+Date: Tue, 5 Dec 2006 10:01:25 +0100
+Organization: Universitaet Freiburg, Institut f. Informatik
+Message-ID: <20061205090125.GA2428@cepheus>
+References: <20061121223130.GA24909@nan92-1-81-57-214-146.fbx.proxad.net> <200611281335.38728.andyparkins@gmail.com> <20061129160355.GF18810@admingilde.org> <200611292000.23778.andyparkins@gmail.com> <20061130170625.GH18810@admingilde.org> <456F29A2.1050205@op5.se>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 23 Nov 2006 23:46:14 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+NNTP-Posting-Date: Tue, 5 Dec 2006 09:01:40 +0000 (UTC)
+Cc: Martin Waitz <tali@admingilde.org>,
+	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+Mail-Followup-To: Uwe Kleine-Koenig <zeisberg@informatik.uni-freiburg.de>,
+	Andreas Ericsson <ae@op5.se>, Martin Waitz <tali@admingilde.org>,
+	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <20061123234203.GN7201@pasky.or.cz>
+In-Reply-To: <456F29A2.1050205@op5.se>
 User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32179>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GnOGf-0005Qn-T2 for gcvg-git@gmane.org; Fri, 24 Nov
- 2006 00:46:10 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33321>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GrWBE-0006Om-1l for gcvg-git@gmane.org; Tue, 05 Dec
+ 2006 10:01:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1757502AbWKWXqG (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 23 Nov 2006
- 18:46:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757503AbWKWXqG
- (ORCPT <rfc822;git-outgoing>); Thu, 23 Nov 2006 18:46:06 -0500
-Received: from mail.fieldses.org ([66.93.2.214]:53694 "EHLO
- pickle.fieldses.org") by vger.kernel.org with ESMTP id S1757502AbWKWXqE
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 23 Nov 2006 18:46:04 -0500
-Received: from bfields by pickle.fieldses.org with local (Exim 4.63)
- (envelope-from <bfields@fieldses.org>) id 1GnOGU-0000On-UD; Thu, 23 Nov 2006
- 18:45:58 -0500
-To: Petr Baudis <pasky@suse.cz>
+ S968121AbWLEJBd (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 5 Dec 2006
+ 04:01:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S968122AbWLEJBd
+ (ORCPT <rfc822;git-outgoing>); Tue, 5 Dec 2006 04:01:33 -0500
+Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:51340 "EHLO
+ atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+ with ESMTP id S968121AbWLEJBc (ORCPT <rfc822;git@vger.kernel.org>); Tue, 5
+ Dec 2006 04:01:32 -0500
+Received: from login.informatik.uni-freiburg.de ([132.230.151.6]) by
+ atlas.informatik.uni-freiburg.de with esmtp (Exim 4.60) (envelope-from
+ <zeisberg@informatik.uni-freiburg.de>) id 1GrWB9-00064D-NW; Tue, 05 Dec 2006
+ 10:01:31 +0100
+Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1]) by
+ login.informatik.uni-freiburg.de (8.13.6/8.12.11) with ESMTP id
+ kB591Tnq007575; Tue, 5 Dec 2006 10:01:29 +0100 (MET)
+Received: (from zeisberg@localhost) by login.informatik.uni-freiburg.de
+ (8.13.6/8.12.11/Submit) id kB591T1c007560; Tue, 5 Dec 2006 10:01:29 +0100
+ (MET)
+To: Andreas Ericsson <ae@op5.se>
 Sender: git-owner@vger.kernel.org
 
-On Fri, Nov 24, 2006 at 12:42:03AM +0100, Petr Baudis wrote:
-> On Fri, Nov 24, 2006 at 12:12:10AM CET, Junio C Hamano wrote:
-> > Petr Baudis <pasky@suse.cz> writes:
-> > 
-> > > and --use-immingled-remote can be used to get the original behaviour;
-> > > it is also implied by --bare.
-> > 
-> > What's immingled?
-> 
-> One dictionary says
-> 
->    Immingle \Im*min"gle\, v. t.
->       To mingle; to mix; to unite; to blend. [R.] --Thomson.
-> 
-> but perhaps it's too much an obscure word... better suggestions
-> welcomed.
+Hello,
 
-commingled? legacy? flat?
+Andreas Ericsson wrote:
+> The only problem I'm seeing atm is that the supermodule somehow has to 
+> mark whatever commits it's using from the submodule inside the submodule 
+> repo so that they effectively become un-prunable, otherwise the 
+> supermodule may some day find itself with a history that it can't restore.
+One could circumvent that by creating a separate repo for the submodule
+at checkout time and pull the needed objects in the supermodule's odb
+when commiting the supermodule.  This way prune in the submodule cannot
+do any harm, because in it's odb are no objects that are important for
+the supermodule.
+
+Uwe
+
+-- 
+Uwe Kleine-Koenig
 
