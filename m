@@ -1,116 +1,100 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Han-Wen Nienhuys <hanwen@xs4all.nl>
-Subject: Re: Cleaning up git user-interface warts
-Date: Thu, 16 Nov 2006 14:03:06 +0100
-Message-ID: <455C618A.7080309@xs4all.nl>
-References: <87k61yt1x2.wl%cworth@cworth.org> <455A1137.8030301@shadowen.org>	<87hcx1u934.wl%cworth@cworth.org>	<Pine.LNX.4.64.0611141518590.2591@xanadu.home>	<87bqn9u43s.wl%cworth@cworth.org> <ejdcg5$4fl$1@sea.gmane.org>	<Pine.LNX.4.64.0611141633430.2591@xanadu.home>	<7vbqn9y6w6.fsf@assigned-by-dhcp.cox.net>	<Pine.LNX.4.64.0611142007010.2591@xanadu.home>	<7v3b8ltq7r.fsf@assigned-by-dhcp.cox.net>	<Pine.LNX.4.64.0611142306090.2591@xanadu.home>	<Pine.LNX.4.64.0611150950170.3349@woody.osdl.org>	<455BBCE9.4050503@xs4all.nl>	<Pine.LNX.4.64.0611151908130.3349@woody.osdl.org>	<455C412D.1030408@xs4all.nl> <7v7ixvbq80.fsf@assigned-by-dhcp.cox.net>
-Reply-To: hanwen@xs4all.nl
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: egit/jgit wishlist
+Date: Tue, 5 Dec 2006 09:37:34 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0612050922590.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20061204172836.GB6011@spearce.org> <Pine.LNX.4.63.0612041841280.14187@alpha.polcom.net>
+ <20061204182902.GG6011@spearce.org> <457490EE.30606@midwinter.com>
+ <Pine.LNX.4.63.0612042235270.14187@alpha.polcom.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 16 Nov 2006 13:04:04 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Tue, 5 Dec 2006 08:37:49 +0000 (UTC)
+Cc: Steven Grimm <koreth@midwinter.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 66
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: muurbloem.xs4all.nl
-User-Agent: Thunderbird 1.5.0.8 (X11/20061107)
-In-Reply-To: <7v7ixvbq80.fsf@assigned-by-dhcp.cox.net>
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <Pine.LNX.4.63.0612042235270.14187@alpha.polcom.net>
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31579>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GkguD-0001PM-VH for gcvg-git@gmane.org; Thu, 16 Nov
- 2006 14:03:50 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33317>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GrVo9-0003or-FJ for gcvg-git@gmane.org; Tue, 05 Dec
+ 2006 09:37:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1423998AbWKPNDr (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 16 Nov 2006
- 08:03:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423995AbWKPNDr
- (ORCPT <rfc822;git-outgoing>); Thu, 16 Nov 2006 08:03:47 -0500
-Received: from main.gmane.org ([80.91.229.2]:41665 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S1423998AbWKPNDp (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 16 Nov 2006 08:03:45 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1Gkgtt-0001Kv-DP for git@vger.kernel.org; Thu, 16 Nov 2006 14:03:29 +0100
-Received: from muurbloem.xs4all.nl ([213.84.26.127]) by main.gmane.org with
- esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>;
- Thu, 16 Nov 2006 14:03:29 +0100
-Received: from hanwen by muurbloem.xs4all.nl with local (Gmexim 0.1 (Debian))
- id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Thu, 16 Nov 2006 14:03:29
- +0100
-To: git@vger.kernel.org
+ S968074AbWLEIhm (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 5 Dec 2006
+ 03:37:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S968076AbWLEIhm
+ (ORCPT <rfc822;git-outgoing>); Tue, 5 Dec 2006 03:37:42 -0500
+Received: from mail.gmx.net ([213.165.64.20]:50052 "HELO mail.gmx.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S968074AbWLEIhl
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 5 Dec 2006 03:37:41 -0500
+Received: (qmail invoked by alias); 05 Dec 2006 08:37:37 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp004) with SMTP; 05 Dec 2006 09:37:37 +0100
+To: Grzegorz Kulewski <kangur@polcom.net>
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano escreveu:
-> You claim it is _an interface_ issue but it is not.
+Hi,
 
- >> I don't want ANYTHING to really change, I just want a sane interface 
- >> to it.
- >
- > I agree that you do not want to change anything.  You just
- > needed a bit of handholding, because you deviated from the
- > cookbook usage, to correct your course.
+On Mon, 4 Dec 2006, Grzegorz Kulewski wrote:
 
-Users (well, I do at least) start fiddling with systems to find out how 
-they work.   Reading the manual is usually done as a last resort. I 
-think this is pretty well documented in usability research.
+> But it will be working (== end user usable) after many months not days.
 
-I'm trying to show how GIT is badly suited to this. Your response is to 
-explain to me what I should have done. That's nice, but that approach 
-doesn't scale, because you don't reach the dozens of users out there who 
-try the same, fail and give up.
+Not really. JNI is not that easy to get to work, you know? _Especially_ 
+with cygwin, where you have to transform pathnames from native to posix 
+format.
 
-If you really want to find out the weaknesses, you'd have to sit someone 
-new to git in front of a computer, and let him figure how to operate it, 
-while videotaping everything.
+It is much work, for just a temporary solution.
 
-Writing a manual for newbies is also an effective (and simpler and 
-cheaper) approach of figuring out what needs to be changed.
+> And please note that Java is not that portable as many people are 
+> suggesting.
 
+But it is.
 
+There are more official Java engines than just those from Sun. For 
+example, I worked on an SGI machine, where I did not have enough quota to 
+install gcc and friends, but Java.
 
-As another example:  annoyances regarding program invocation
+Also, now that it will be GPLed, you can be sure that even more platforms 
+become supported.
 
-  - option handling: -x -f -z != -xfz , "--max-count 1" doesn't work, 
-but needs an '='
+And the most important aspect of portability: You really can run the 
+compiled code anywhere. This is in stark contrast to C, C#, Perl, etc.
 
-  - git --help lists an unordered set, which is too long scan quickly. 
-I'd expect that list to either contain everything or the minimum set for 
-daily use. I.e. the set introduced in a first tutorial.  Why are merge, 
-prune, verify-tag there?
+> Maybe it will change but currently I will bet C + bash + perl (+ 
+> python?) is more portable than Java.
 
-Try "bzr help" for comparison.
+You lost.
 
-  - --pretty option with wholly uninformative options full, medium, 
-short, raw.  It's not even documented what each option does.
+> Java (J2SE) is officially supported mainly under Windows, Solaris, Linux 
+> and maybe Mac. There are more ports but unfortunatelly way too many of 
+> them are old, buggy, have not full library implementations or something 
+> like that.
 
+Aha. But you don't need them. For example, you do not need a full working 
+CORBA library, or JDBC, or whatever. Java 1.1 should be sufficient (except 
+for that stupid mmap bug).
 
-I can go on with listing idiosyncrasies, but my point is not to get help 
-from you, but rather to show how git can be improved.
+> Eclipse also currently works only under Windows, Linux and Mac.
 
+This a completely different beef. IBM, in its infinite wisdom, decided to 
+scrap the platform independent Swing UI, and made its own (SWT). In C++. 
+Yes, you need to compile it for _every_ platform you want to run Eclipse 
+on. Brilliant.
 
->> With GIT, this is what happens
->>
->> [hanwen@haring y]$ git pull ../x
->> fatal: Needed a single revision
->> Pulling into a black hole?
-> 
-> You asked it to fetch from the neighbour repository and merge it
-> into your current branch which does not exist (I presume that
-> you omitted to describe what you did in directory y/ and I am
-> assuming you did "mkdir y && cd y && git initdb" and nothing
-> else).  You are pulling into a black hole.
+> Can you name one system where Java (J2SE 1.4 or better 1.5) works 
+> (fully, not sometimes) and where GIT does not work?
 
-as you remark in the other reply, there is IMO no reason for not having 
-an empty 'master' branch. If master + HEAD gets created on the first 
-commit, it might as well be created on the init-db.
+As has been said, Windows. Oh, and some mobile phones. And some embedded 
+devices. Maybe even VMS.
 
--- 
-  Han-Wen Nienhuys - hanwen@xs4all.nl - http://www.xs4all.nl/~hanwen
+Ciao,
+Dscho
