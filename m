@@ -1,62 +1,106 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: What's cooking in git.git (topics)
-Date: Sun, 17 Dec 2006 23:41:25 +0000
-Message-ID: <200612172341.27709.andyparkins@gmail.com>
-References: <7vodq3a136.fsf@assigned-by-dhcp.cox.net>
+From: Uwe Kleine-Koenig <zeisberg@informatik.uni-freiburg.de>
+Subject: Re: [RFC] Submodules in GIT
+Date: Tue, 5 Dec 2006 16:02:17 +0100
+Organization: Universitaet Freiburg, Institut f. Informatik
+Message-ID: <20061205150217.GA5573@cepheus>
+References: <20061121223130.GA24909@nan92-1-81-57-214-146.fbx.proxad.net> <200611281335.38728.andyparkins@gmail.com> <20061129160355.GF18810@admingilde.org> <200611292000.23778.andyparkins@gmail.com> <20061130170625.GH18810@admingilde.org> <456F29A2.1050205@op5.se> <20061205090125.GA2428@cepheus> <45754AFE.1070207@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sun, 17 Dec 2006 23:44:25 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Tue, 5 Dec 2006 15:02:55 +0000 (UTC)
+Cc: Martin Waitz <tali@admingilde.org>,
+	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=i54iKhHg1fDWitw/HPJYFs4QOMQZdITTf+2vNfbd3/QSDrlrvfqZshbuucW1G9rn/XYaAyNUlinB/3Y8N7uu5zN+1/QsENsAHwH0P43ZueMIU+RqvHpL61HymM7jSdCL+vrwtgMvDAtWo543sv2hJpbx7X0N8KVfhFTP2mupwhs=
-User-Agent: KMail/1.9.5
-In-Reply-To: <7vodq3a136.fsf@assigned-by-dhcp.cox.net>
+Mail-Followup-To: Uwe Kleine-Koenig <zeisberg@informatik.uni-freiburg.de>,
+	Andreas Ericsson <ae@op5.se>, Martin Waitz <tali@admingilde.org>,
+	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
 Content-Disposition: inline
+In-Reply-To: <45754AFE.1070207@op5.se>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34714>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33348>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gw5g2-0005VR-3W for gcvg-git@gmane.org; Mon, 18 Dec
- 2006 00:44:18 +0100
+ esmtp (Exim 4.50) id 1Grboo-0003Z5-4L for gcvg-git@gmane.org; Tue, 05 Dec
+ 2006 16:02:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753240AbWLQXoP (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 17 Dec 2006
- 18:44:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753245AbWLQXoP
- (ORCPT <rfc822;git-outgoing>); Sun, 17 Dec 2006 18:44:15 -0500
-Received: from ug-out-1314.google.com ([66.249.92.173]:7821 "EHLO
- ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1753240AbWLQXoO (ORCPT <rfc822;git@vger.kernel.org>); Sun, 17 Dec
- 2006 18:44:14 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so1353048uga for
- <git@vger.kernel.org>; Sun, 17 Dec 2006 15:44:13 -0800 (PST)
-Received: by 10.66.232.11 with SMTP id e11mr5294887ugh.1166399053192; Sun, 17
- Dec 2006 15:44:13 -0800 (PST)
-Received: from grissom.internal.parkins.org.uk ( [84.201.153.164]) by
- mx.google.com with ESMTP id k28sm8240554ugd.2006.12.17.15.44.12; Sun, 17 Dec
- 2006 15:44:12 -0800 (PST)
-To: git@vger.kernel.org
+ S968263AbWLEPCi (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 5 Dec 2006
+ 10:02:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760206AbWLEPCi
+ (ORCPT <rfc822;git-outgoing>); Tue, 5 Dec 2006 10:02:38 -0500
+Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:55378 "EHLO
+ atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+ with ESMTP id S1760193AbWLEPCh (ORCPT <rfc822;git@vger.kernel.org>); Tue, 5
+ Dec 2006 10:02:37 -0500
+Received: from login.informatik.uni-freiburg.de ([132.230.151.6]) by
+ atlas.informatik.uni-freiburg.de with esmtp (Exim 4.60) (envelope-from
+ <zeisberg@informatik.uni-freiburg.de>) id 1GrboZ-00063m-RQ; Tue, 05 Dec 2006
+ 16:02:36 +0100
+Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1]) by
+ login.informatik.uni-freiburg.de (8.13.6/8.12.11) with ESMTP id
+ kB5F2X6W018096; Tue, 5 Dec 2006 16:02:33 +0100 (MET)
+Received: (from zeisberg@localhost) by login.informatik.uni-freiburg.de
+ (8.13.6/8.12.11/Submit) id kB5F2XUr018095; Tue, 5 Dec 2006 16:02:33 +0100
+ (MET)
+To: Andreas Ericsson <ae@op5.se>
 Sender: git-owner@vger.kernel.org
 
-On Saturday 2006, December 16 23:10, Junio C Hamano wrote:
+Hella Andreas,
 
->    * revisions recorded in the reflog can be pruned out,
->      rendering some entries in reflog useless.
+Andreas Ericsson wrote:
+> >>The only problem I'm seeing atm is that the supermodule somehow has to 
+> >>mark whatever commits it's using from the submodule inside the submodule 
+> >>repo so that they effectively become un-prunable, otherwise the 
+> >>supermodule may some day find itself with a history that it can't restore.
+> >One could circumvent that by creating a separate repo for the submodule
+> >at checkout time and pull the needed objects in the supermodule's odb
+> >when commiting the supermodule.  This way prune in the submodule cannot
+> >do any harm, because in it's odb are no objects that are important for
+> >the supermodule.
+> 
+> Yes, but then you'd lose history connectivity (I'm assuming you'd only 
+> pull in the tree and blob objects from the submodule, and prefix the 
+> tree-entrys with whatever directory you're storing the submodul in).
+That's the reason for me prefering to pull in the complete commit.
 
-Can I suggest that it should be fine to prune reflog entries but that the act 
-of pruning be a log entry itself?
+I don't understand what you mean with "prefix the tree-entrys with
+whatever directory you're storing the submodul in".
+Maybe one of us doesn't understand tree objects correctly.  AFAICT they
+don't store the location where they occur, so there is no need to store
+a prefix.  E.g. 
 
-Andy
+	zeisberg@cepheus:/tmp$ mkdir test-repo
+	zeisberg@cepheus:/tmp$ cd test-repo/
+	zeisberg@cepheus:/tmp/test-repo$ git-init-db 
+	defaulting to local storage area
+	zeisberg@cepheus:/tmp/test-repo$ echo LD_FLAGS=-ltest > Makefile
+	zeisberg@cepheus:/tmp/test-repo$ git add Makefile
+	zeisberg@cepheus:/tmp/test-repo$ git commit -m 'test1'
+	Committing initial tree 754eadab39642175748bb02155d2959176bcf014
+	zeisberg@cepheus:/tmp/test-repo$ mkdir subdir
+	zeisberg@cepheus:/tmp/test-repo$ cp Makefile subdir/
+	zeisberg@cepheus:/tmp/test-repo$ git add subdir/
+	zeisberg@cepheus:/tmp/test-repo$ git commit -m 'test2'
+	zeisberg@cepheus:/tmp/test-repo$ git ls-tree HEAD
+	100644 blob 610bafd79f92c7e546b104d5b22795df1f099723    Makefile
+	040000 tree 754eadab39642175748bb02155d2959176bcf014    subdir
+
+So the tree that only contains the Makefile specifing LD_FLAGS has the
+sha1id 754eadab39642175748bb02155d2959176bcf014 independent of being the
+root of my project or a subtree.
+
+But maybe I misunderstood you?
+
+Best regards
+Uwe
+
 -- 
-Dr Andrew Parkins, M Eng (Hons), AMIEE
+Uwe Kleine-Koenig
+
+If a lawyer and an IRS agent were both drowning, and you could only save
