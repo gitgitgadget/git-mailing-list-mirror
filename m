@@ -1,78 +1,60 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH 0/2] Making "git commit" to mean "git commit -a".
-Date: Thu, 30 Nov 2006 17:31:05 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0611301725560.9647@xanadu.home>
-References: <7virgzuf38.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0611282322320.9647@xanadu.home>
- <7vr6vmsnly.fsf@assigned-by-dhcp.cox.net> <87ejrlvn7r.wl%cworth@cworth.org>
- <7vodqpn3t4.fsf@assigned-by-dhcp.cox.net>
- <7vk61dn2yj.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0611300310520.30004@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0611291859070.3513@woody.osdl.org> <456EBBE7.8030404@op5.se>
- <Pine.LNX.4.64.0611300749560.3513@woody.osdl.org>
- <20061130164046.GB17715@thunk.org>
- <Pine.LNX.4.64.0611300903080.3513@woody.osdl.org>
- <Pine.LNX.4.64.0611301229290.9647@xanadu.home>
- <87irgwu6e6.wl%cworth@cworth.org> <87hcwgu5t1.wl%cworth@cworth.org>
- <Pine.LNX.4.64.0611301132350.3513@woody.osdl.org>
- <Pine.LNX.4.64.0611301521320.9647@xanadu.home>
- <Pine.LNX.4.64.0611301253380.3513@woody.osdl.org> <eknhjr$nce$1@sea.gmane.org>
- <878xhsty3t.wl%cworth@cworth.org>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [PATCH] Print progress message to stderr, not stdout
+Date: Tue, 5 Dec 2006 10:06:08 +0100
+Message-ID: <20061205090608.GA25002@diana.vm.bytemark.co.uk>
+References: <20061111121625.8988.45195.stgit@localhost> <e5bfff550612020520w3ad48a09xfdde63b9050a75cf@mail.gmail.com> <b0943d9e0612040117y6554b891yaf6eb59d0d52ebf0@mail.gmail.com> <20061204153705.GA8644@diana.vm.bytemark.co.uk> <e5bfff550612041034g727a1bebg464f7c523c0fac7f@mail.gmail.com> <b0943d9e0612041413p4f303176x3d0fa95afd1c4a1@mail.gmail.com> <Pine.LNX.4.63.0612050841160.28348@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-NNTP-Posting-Date: Thu, 30 Nov 2006 22:31:45 +0000 (UTC)
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Tue, 5 Dec 2006 09:06:22 +0000 (UTC)
+Cc: Catalin Marinas <catalin.marinas@gmail.com>,
+	Marco Costalba <mcostalba@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-reply-to: <878xhsty3t.wl%cworth@cworth.org>
-X-X-Sender: nico@xanadu.home
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0612050841160.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32817>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GpuR1-0006Oh-D2 for gcvg-git@gmane.org; Thu, 30 Nov
- 2006 23:31:16 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33323>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GrWFl-0006ty-Dq for gcvg-git@gmane.org; Tue, 05 Dec
+ 2006 10:06:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1031576AbWK3WbK (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
- 17:31:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031578AbWK3WbK
- (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 17:31:10 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:41952 "EHLO
- relais.videotron.ca") by vger.kernel.org with ESMTP id S1031576AbWK3WbG
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 17:31:06 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
- <0J9K00LM9EJTX7M0@VL-MH-MR002.ip.videotron.ca> for git@vger.kernel.org; Thu,
- 30 Nov 2006 17:31:05 -0500 (EST)
-To: Carl Worth <cworth@cworth.org>
+ S967481AbWLEJGO convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Tue, 5 Dec 2006 04:06:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967575AbWLEJGO
+ (ORCPT <rfc822;git-outgoing>); Tue, 5 Dec 2006 04:06:14 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2922 "EHLO
+ diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S967481AbWLEJGM (ORCPT <rfc822;git@vger.kernel.org>); Tue, 5 Dec
+ 2006 04:06:12 -0500
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1
+ (Debian)) id 1GrWFc-0006Ww-00; Tue, 05 Dec 2006 09:06:08 +0000
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-On Thu, 30 Nov 2006, Carl Worth wrote:
+On 2006-12-05 08:41:57 +0100, Johannes Schindelin wrote:
 
-> It might even make sense to invent one more name for the case where
-> the user wants to inform git that a file has been edited and that git
-> should accept the new contents. It's the sort of "note that file is
-> edited" operation that could be recommended to the user with "add; fix
-> typo; commit" confusion.
-> 
-> Sure, "add" could be used again, and "update-index" clearly _works_
-> but it's a rather ugly name, (and already has "plumbing" functionality
-> like --add and --remove that we don't want here).
+> On Mon, 4 Dec 2006, Catalin Marinas wrote:
+>
+> > I'll first move the message back to stdout.
+>
+> In other parts of git, the progress message is only printed if
+> output goes to a tty. Why not do the same?
 
-I disagree.  "add" is beautiful. It is short, easy to remember, and 
-transcend pretty much what the index is all about.  And just because 
-"add" and "edited" can be made into the same command is a pretty damn 
-good reason not to create a separate command.
+That sounds like a good idea for two reasons:
 
-   You "add" changes to the changeset then you commit that changeset.
+  1. It will address all concerns raised in this thread (I think).
 
-No need to care whether or not this is a new file, an edited file, etc.
+  2. It will remove an unnecessary difference between git and stgit.
 
-
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
