@@ -1,112 +1,103 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Sergey Vlasov <vsu@altlinux.ru>
-Subject: Re: [PATCH] git-mv: search more precisely for source directory in index
-Date: Sun, 3 Dec 2006 23:04:18 +0300
-Message-ID: <20061203200418.GC7971@procyon.home>
-References: <20061203135725.GA7971@procyon.home> <Pine.LNX.4.63.0612032036030.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Theodore Tso <tytso@mit.edu>
+Subject: Re: [RFC] Two conceptually distinct commit commands
+Date: Mon, 4 Dec 2006 22:51:23 -0500
+Message-ID: <20061205035123.GA8831@thunk.org>
+References: <87d56z32e1.wl%cworth@cworth.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="YD3LsXFS42OYHhNZ"
-NNTP-Posting-Date: Sun, 3 Dec 2006 20:05:03 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Tue, 5 Dec 2006 03:51:43 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0612032036030.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+In-Reply-To: <87d56z32e1.wl%cworth@cworth.org>
+User-Agent: Mutt/1.5.12-2006-07-14
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33135>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33294>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GqxZy-0001Rs-Uj for gcvg-git@gmane.org; Sun, 03 Dec
- 2006 21:04:51 +0100
+ esmtp (Exim 4.50) id 1GrRLF-0002Sk-4A for gcvg-git@gmane.org; Tue, 05 Dec
+ 2006 04:51:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1760053AbWLCUEr (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 3 Dec 2006
- 15:04:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760055AbWLCUEr
- (ORCPT <rfc822;git-outgoing>); Sun, 3 Dec 2006 15:04:47 -0500
-Received: from master.altlinux.org ([62.118.250.235]:3603 "EHLO
- master.altlinux.org") by vger.kernel.org with ESMTP id S1760053AbWLCUEr
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 3 Dec 2006 15:04:47 -0500
-Received: by master.altlinux.org (Postfix, from userid 584) id B9655E3999;
- Sun,  3 Dec 2006 23:04:45 +0300 (MSK)
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+ S968071AbWLEDv3 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
+ 22:51:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S968072AbWLEDv3
+ (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 22:51:29 -0500
+Received: from thunk.org ([69.25.196.29]:36886 "EHLO thunker.thunk.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S968071AbWLEDv1
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006 22:51:27 -0500
+Received: from root (helo=candygram.thunk.org) by thunker.thunk.org with
+ local-esmtps  (tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1
+ (Debian)) id 1GrROm-0001C7-3j; Mon, 04 Dec 2006 22:55:16 -0500
+Received: from tytso by candygram.thunk.org with local (Exim 4.62)
+ (envelope-from <tytso@thunk.org>) id 1GrRL2-0004ov-6e; Mon, 04 Dec 2006
+ 22:51:24 -0500
+To: Carl Worth <cworth@cworth.org>
 Sender: git-owner@vger.kernel.org
 
+On Mon, Dec 04, 2006 at 11:08:22AM -0800, Carl Worth wrote:
+>
+> Here are the two commit commands I would like to see in git:
+> 
+>   commit-index-content [paths...]
+> 
+>     Commits the content of the index for the given paths, (or all
+>     paths in the index). The index content can be manipulated with
+>     "git add", "git rm", "git mv", and "git update-index".
+> 
+>   commit-working-tree-content [paths...]
+> 
+>     Commits the content of the working tree for the given paths, (or
+>     all tracked paths). Untracked files can be committed for the first
+>     time by specifying their names on the command-line or by using
+>     "git add" to add them just prior to the commit. Any rename or
+>     removal of a tracked file will be detected and committed
+>     automatically.
 
---YD3LsXFS42OYHhNZ
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I think this is a very interesting proposal, although I think I
+disagree with the last part:
 
-On Sun, Dec 03, 2006 at 08:42:47PM +0100, Johannes Schindelin wrote:
->=20
-> A move of a directory should find the entries in the index by
-> searching for the name _including_ the slash. Otherwise, the
-> directory can be shadowed by a file when it matches the prefix
-> and is lexicographically smaller, e.g. "ab.c" shadows "ab/".
+      Any [rename or] removal of a tracked file will be detected and
+      committed automatically.
 
-Thanks - seems to work now, and the existing tests are not broken.
+If adds aren't going done automatically (because otherwise you have
+problems with foo.c~ accidentally getting checked it), then it's
+non-symmetric to expect that deletes will also happen automatically.
+It's relatively rare that files are removed or renamed, and sometimes
+files accidentally disappear.  
 
-> Noticed by Sergey Vlasov.
->=20
-> Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-> ---
->=20
-> 	Good catch. Thanks!
->=20
->  builtin-mv.c |   11 +++++++----
->  1 files changed, 7 insertions(+), 4 deletions(-)
->=20
-> diff --git a/builtin-mv.c b/builtin-mv.c
-> index 54dd3bf..d14a4a7 100644
-> --- a/builtin-mv.c
-> +++ b/builtin-mv.c
-> @@ -146,21 +146,24 @@ int cmd_mv(int argc, const char **argv, const char =
-*prefix)
->  				&& lstat(dst, &st) =3D=3D 0)
->  			bad =3D "cannot move directory over file";
->  		else if (src_is_dir) {
-> +			const char *src_w_slash =3D add_slash(src);
-> +			int len_w_slash =3D length + 1;
->  			int first, last;
-> =20
->  			modes[i] =3D WORKING_DIRECTORY;
-> =20
-> -			first =3D cache_name_pos(src, length);
-> +			first =3D cache_name_pos(src_w_slash, len_w_slash);
->  			if (first >=3D 0)
-> -				die ("Huh? %s/ is in index?", src);
-> +				die ("Huh? %.*s is in index?",
-> +						len_w_slash, src_w_slash);
-> =20
->  			first =3D -1 - first;
->  			for (last =3D first; last < active_nr; last++) {
->  				const char *path =3D active_cache[last]->name;
-> -				if (strncmp(path, src, length)
-> -						|| path[length] !=3D '/')
-> +				if (strncmp(path, src_w_slash, len_w_slash))
->  					break;
->  			}
-> +			free((char *)src_w_slash);
-> =20
->  			if (last - first < 1)
->  				bad =3D "source directory is empty";
+So in the case where there are no pathnames given to "git
+commit-working-tree-content", I would argue that it does not do any
+implicit "git add" on new files NOR any implicit "git rm" on missing
+files unless the user actually specifies an --implicit-add or
+--implicit-delete option, respectively.  If users want to make
+--implicit-add and/or --implicit-delete the default, that could be a
+configuration option, but I don't think it should be a default.
 
---YD3LsXFS42OYHhNZ
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.5 (GNU/Linux)
+A second issue which you left unspecified is what should
+commit-working-tree-content do if the index != HEAD.  In particular,
+in this case:
 
-iD8DBQFFcy3CW82GfkQfsqIRAiC8AKCTzfTu+PzDnOfKVGJP9e2FsKVargCfb6Y6
-WrMXmMmbF/i7fku6QkrWYNc=
-=gtEY
------END PGP SIGNATURE-----
+edit foo.c
+git update-index
+edit foo.c
+git commit-working-tree-content foo.c
+
+What should happen to foo.c in the index?  Should it be stay the same?
+Should the contents be replaced with version of foo.c that has just
+been commited?  The latter seems to make sense, but runs the risk of
+losing the data (what was in the index).  The former has the downside
+that the index might have a version of foo.c which is older than what
+has been just commited, which could be confusing.  Or should git
+commit-working-tree abort with an error message if index != HEAD?
 
