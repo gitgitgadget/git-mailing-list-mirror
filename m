@@ -1,82 +1,68 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: What's in git.git (stable)
-Date: Thu, 14 Dec 2006 01:22:18 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612140116430.3635@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <7v4przfpir.fsf@assigned-by-dhcp.cox.net> <200612132237.10051.andyparkins@gmail.com>
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: [PATCH 1/3] Ask git for author and committer name
+Date: Tue, 5 Dec 2006 09:17:15 +0000
+Message-ID: <b0943d9e0612050117i3293f999m3ebf3278aacb8ce4@mail.gmail.com>
+References: <20061111232322.17760.26214.stgit@localhost>
+	 <20061111233046.17760.62871.stgit@localhost>
+	 <b0943d9e0612041424v42313a2r22d8fc8d1b18cb55@mail.gmail.com>
+	 <20061205091017.GB25002@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Thu, 14 Dec 2006 00:22:27 +0000 (UTC)
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Tue, 5 Dec 2006 09:17:27 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <200612132237.10051.andyparkins@gmail.com>
-X-Y-GMX-Trusted: 0
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=eepNmHuWXsAslSyvGhqIWcutgHXeOkGhz66gFae41F5D6KSlBBQco/SgkDkUU7RZe9HL0EyNfHrfiOqsrlkWneEWJzX0W+Hqh2QtZXmn0fj21qal1zzYx7LuUv8mFe3WavJCdZUpiBn3wam/jV4nIxJS7cJe0TagZ4y17CEo/Zg=
+In-Reply-To: <20061205091017.GB25002@diana.vm.bytemark.co.uk>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34270>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33328>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GueMh-0007ZT-Gp for gcvg-git@gmane.org; Thu, 14 Dec
- 2006 01:22:23 +0100
+ esmtp (Exim 4.50) id 1GrWQU-0008E8-In for gcvg-git@gmane.org; Tue, 05 Dec
+ 2006 10:17:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751780AbWLNAWU (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 13 Dec 2006
- 19:22:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751834AbWLNAWU
- (ORCPT <rfc822;git-outgoing>); Wed, 13 Dec 2006 19:22:20 -0500
-Received: from mail.gmx.net ([213.165.64.20]:41516 "HELO mail.gmx.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S1751780AbWLNAWT
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 13 Dec 2006 19:22:19 -0500
-Received: (qmail invoked by alias); 14 Dec 2006 00:22:18 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp032) with SMTP; 14 Dec 2006 01:22:18 +0100
-To: Andy Parkins <andyparkins@gmail.com>
+ S968153AbWLEJRT convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Tue, 5 Dec 2006 04:17:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S968154AbWLEJRT
+ (ORCPT <rfc822;git-outgoing>); Tue, 5 Dec 2006 04:17:19 -0500
+Received: from nz-out-0506.google.com ([64.233.162.232]:14710 "EHLO
+ nz-out-0102.google.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with
+ ESMTP id S968153AbWLEJRS convert rfc822-to-8bit (ORCPT
+ <rfc822;git@vger.kernel.org>); Tue, 5 Dec 2006 04:17:18 -0500
+Received: by nz-out-0102.google.com with SMTP id s1so2048794nze for
+ <git@vger.kernel.org>; Tue, 05 Dec 2006 01:17:15 -0800 (PST)
+Received: by 10.64.10.2 with SMTP id 2mr349445qbj.1165310235188; Tue, 05 Dec
+ 2006 01:17:15 -0800 (PST)
+Received: by 10.65.133.7 with HTTP; Tue, 5 Dec 2006 01:17:15 -0800 (PST)
+To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
 Sender: git-owner@vger.kernel.org
 
-Hi,
-
-On Wed, 13 Dec 2006, Andy Parkins wrote:
-
-> On Wednesday 2006, December 13 21:35, Junio C Hamano wrote:
+On 05/12/06, Karl Hasselstr=F6m <kha@treskal.com> wrote:
+> On 2006-12-04 22:24:52 +0000, Catalin Marinas wrote:
+> > I haven't forgot about this patch. I switched StGIT to the gitconfi=
+g
+> > files and there won't be a need to invoke "git repo-config". I'll
+> > try to modify your patch.
 >
->  * git-revert should be called git-invert.  It doesn't remove a change
->    from history, it simply applies another commit that does the
->    opposite of whatever commit you are "revert"ing.  That's an inversion.
+> Ah, nice. But will you still honor the git author and committer
+> environment variables that way?
 
-No. An inversion is the _opposite_. Not an undo.
+Yes. My understanding is that the environment variables would override
+the config options. I would also keep the [stgit] user information for
+backward compatibility (there are people who use StGIT exclusively and
+don't want to dig into GIT configs).
 
-Besides, The fact that revert _adds_ to history is a nice way to 
-document that you reverted that change. And you can even explain in the 
-commit message, why you did it.
-
->  * git-fetch output is confusing:
->     remote: Generating pack...
->     remote: Done counting 189146 objects.
->     remote: Result has 186566 objects.
->     remote: Deltifying 186566 objects.
->     remote:  100% (186566/186566) done
->     Unpacking 186566 objects
->     24% (44792/186566) done
->    Some questions from the point of view of a newbie: what is a pack?  what is 
->    an object? Why is the remote counting them?  Which remote am I reading 
->    from?  What am I fetching?  What is "Deltifying"?  How much data do I have 
->    to download (number of objects doesn't tell me).  How long has this taken?  
->    How long is left to go?
-
-IMHO it is better for a newbie to see that _something_ is happening. A 
-newbie cannot, and does not want to, understand exactly what is going on.
-
-So, think of it as our response to Windows' non-progress-bar: when you 
-start up Windows, there is a progress-bar, except that it does not show 
-progress, but a Knight Rider like movement, only indicating that it does 
-something.
-
-Ciao,
-Dscho
+--=20
