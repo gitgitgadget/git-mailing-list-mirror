@@ -1,91 +1,73 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Sean Kelley" <sean.v.kelley@gmail.com>
-Subject: Workflow example for remote repository use of GIT
-Date: Tue, 28 Nov 2006 09:08:49 -0600
-Message-ID: <89b129c60611280708x10a9c42fia23e6b7770971838@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] git-explain
+Date: Tue, 5 Dec 2006 02:26:22 -0500
+Message-ID: <20061205072622.GA21839@coredump.intra.peff.net>
+References: <200612031701.15594.alan@chandlerfamily.org.uk> <Pine.LNX.4.64.0612031024480.3476@woody.osdl.org> <7v1wngwws6.fsf@assigned-by-dhcp.cox.net> <7vwt57j94c.fsf_-_@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0612042253250.2630@xanadu.home> <20061205035721.GA26735@fieldses.org> <7v1wnekh6a.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Tue, 28 Nov 2006 15:09:04 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Tue, 5 Dec 2006 07:26:47 +0000 (UTC)
+Cc: "J. Bruce Fields" <bfields@fieldses.org>,
+	Nicolas Pitre <nico@cam.org>, git@vger.kernel.org,
+	Linus Torvalds <torvalds@osdl.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=Ptxi2ZpSpUjpOs5N9d/d1MsbzKBjnemAItMBU1WDKK+UZ26tZ2ZLMFYNqIQEpiT6y63nCrsl4Sn2Cygmyxj9j/k6TVfDOn6KflXItYCBZH2u2kOgKfVJN9yur1qLdzgOE75rDhwR4jKtfv4NHk8L1RvP03IA2WQn2K3dG9sC3sI=
 Content-Disposition: inline
+In-Reply-To: <7v1wnekh6a.fsf@assigned-by-dhcp.cox.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32532>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gp4Zq-0001gr-CS for gcvg-git@gmane.org; Tue, 28 Nov
- 2006 16:08:54 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33311>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GrUhK-0004gI-CH for gcvg-git@gmane.org; Tue, 05 Dec
+ 2006 08:26:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S934539AbWK1PIv (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 28 Nov 2006
- 10:08:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758684AbWK1PIv
- (ORCPT <rfc822;git-outgoing>); Tue, 28 Nov 2006 10:08:51 -0500
-Received: from ug-out-1314.google.com ([66.249.92.173]:11606 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1758683AbWK1PIv
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2006 10:08:51 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so1500349uga for
- <git@vger.kernel.org>; Tue, 28 Nov 2006 07:08:49 -0800 (PST)
-Received: by 10.78.127.3 with SMTP id z3mr992611huc.1164726529347; Tue, 28
- Nov 2006 07:08:49 -0800 (PST)
-Received: by 10.78.179.10 with HTTP; Tue, 28 Nov 2006 07:08:49 -0800 (PST)
-To: git@vger.kernel.org
+ S1759037AbWLEH01 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 5 Dec 2006
+ 02:26:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937376AbWLEH00
+ (ORCPT <rfc822;git-outgoing>); Tue, 5 Dec 2006 02:26:26 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:52427
+ "HELO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id
+ S1759755AbWLEH00 (ORCPT <rfc822;git@vger.kernel.org>); Tue, 5 Dec 2006
+ 02:26:26 -0500
+Received: (qmail 32352 invoked from network); 5 Dec 2006 02:26:24 -0500
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2) by
+ 66-23-211-5.clients.speedfactory.net with SMTP; 5 Dec 2006 02:26:24 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 05 Dec
+ 2006 02:26:22 -0500
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-I have been trying to set-up a workflow for developers in my group
-using GIT. I came up with this simplified flow.  Do you all see any
-problems with this approach?
+On Mon, Dec 04, 2006 at 10:09:17PM -0800, Junio C Hamano wrote:
 
-Thanks,
+> Should I take these responses to mean that you two are negative
+> about the approach of spending extra cycles to commands that can
+> leave the working tree in a "in the middle of doing something"
+> state to help having a unified command to explain what the
+> situation is and suggest the user possible exits, or are you
+> saying that it might be a good idea but "git explain" is a bad
+> name?
 
-Sean
+It seems like the point of this command is to show some state
+information which would otherwise be hard to see. I think of 'git
+status' as the way to look at the repository state. Perhaps we should
+enhance the output of 'git status' to note things such as failed merges,
+whether we're bisecting, in the middle of applying a patch series, etc.
+There could be an optional verbosity switch to give "full explanations"
+including recommended ways to deal with the situation.
 
+> Hardwiring the recommended workflow in the tools would reduce
+> chances of mistakes, but it could rob the flexibility from them
+> if we are not careful and forget to take into account some
+> useful combination of tools when adding such safety valves.
 
+As long as the safety valves don't come up _routinely_ in certain
+workflows, it seems OK to bypass them with a '-f' force switch. I
+suspect the best way to figure out if such workflows are in use is to
+put in the safety valves and see who complains; otherwise we're stuck
+with brainstorming workflows and deciding whether they make sense.
 
-Always work out of master
-
-  git checkout master
-
-Getting The Latest Upstream Code into master
-
-  git pull origin master
-
-Create a topic branch for your development work
-
-  git checkout -b <new topic branch name>
-
-Do your development in the topic branch
-
-  edit/debug/test
-
-Committing Changes
-
-  git commit -a
-
-Switch back to master
-
-  git checkout master
-
-Update the master branch from origin again
-
-  git pull origin master
-
-Now Merge your topic branch
-
-  git pull . <topic branch to merge into current branch>
-
-How do I push my changes to the original repository?
-
-  git push origin master
-
--- 
