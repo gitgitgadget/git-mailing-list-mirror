@@ -6,102 +6,79 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH (take 3)] gitweb: Use git-show-ref instead of git-peek-remote
-Date: Sat, 25 Nov 2006 11:32:08 +0100
-Message-ID: <11644507284105-git-send-email-jnareb@gmail.com>
-References: <7vhcwoa3mx.fsf@assigned-by-dhcp.cox.net>
-NNTP-Posting-Date: Sat, 25 Nov 2006 10:30:54 +0000 (UTC)
-Cc: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] merge-recursive: configurable 'merge' program
+Date: Tue, 5 Dec 2006 11:23:32 +0100
+Message-ID: <200612051123.33210.jnareb@gmail.com>
+References: <20061204235647.9BA8B139B0E@magnus.utsl.gen.nz> <el2cpj$cna$1@sea.gmane.org> <Pine.LNX.4.63.0612050836570.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Tue, 5 Dec 2006 10:21:44 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=uQBY043zWUJx/DvlgGuGy0Tvn/7oqIEzAMDbxYec+VFCn0S66lJnxbN2MGn54Fxwptac7UPLhtNlDT/rgtM/pB58d9X8Bj1HF4RX03X+nB4FETe3F0C0jy++f8nSdl/LuLbiRLuZguKQRaHtvcfD1+RcYOEmfB9iWnTav/ZLCNs=
-X-Mailer: git-send-email 1.4.4.1
-In-Reply-To: <7vhcwoa3mx.fsf@assigned-by-dhcp.cox.net>
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=lMPYMmCXb4HNf2vFZKoHQaRuHRe5jnHZuB93Njm/53G3xaDPScFEFvdFk6cnnJPoOrPBkwWwtVMfguDrumTyE+0+v7ZC3WW+seSImRkT6D2AGHndW8wG9lcRbwWUyXQ8O+tLKdiYyfVGaJOKhXbGopTfJsnNGJtVUFOyst91RrQ=
+User-Agent: KMail/1.9.3
+In-Reply-To: <Pine.LNX.4.63.0612050836570.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32277>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gnuo5-0005vY-6f for gcvg-git@gmane.org; Sat, 25 Nov
- 2006 11:30:50 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33331>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GrXQe-0007dk-Oo for gcvg-git@gmane.org; Tue, 05 Dec
+ 2006 11:21:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S966408AbWKYKac (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 25 Nov 2006
- 05:30:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966403AbWKYKac
- (ORCPT <rfc822;git-outgoing>); Sat, 25 Nov 2006 05:30:32 -0500
-Received: from ug-out-1314.google.com ([66.249.92.170]:48187 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S966408AbWKYKab
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 25 Nov 2006 05:30:31 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so827559uga for
- <git@vger.kernel.org>; Sat, 25 Nov 2006 02:30:30 -0800 (PST)
-Received: by 10.67.97.7 with SMTP id z7mr8653395ugl.1164450629853; Sat, 25
- Nov 2006 02:30:29 -0800 (PST)
-Received: from roke.D-201 ( [81.190.24.209]) by mx.google.com with ESMTP id
- a1sm15959343ugf.2006.11.25.02.30.29; Sat, 25 Nov 2006 02:30:29 -0800 (PST)
-Received: from roke.D-201 (localhost.localdomain [127.0.0.1]) by roke.D-201
- (8.13.4/8.13.4) with ESMTP id kAPAW8Sm011877; Sat, 25 Nov 2006 11:32:09 +0100
-Received: (from jnareb@localhost) by roke.D-201 (8.13.4/8.13.4/Submit) id
- kAPAW8la011876; Sat, 25 Nov 2006 11:32:08 +0100
-To: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
+ S967947AbWLEKVd (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 5 Dec 2006
+ 05:21:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967952AbWLEKVd
+ (ORCPT <rfc822;git-outgoing>); Tue, 5 Dec 2006 05:21:33 -0500
+Received: from ug-out-1314.google.com ([66.249.92.168]:35606 "EHLO
+ ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S967947AbWLEKVc (ORCPT <rfc822;git@vger.kernel.org>); Tue, 5 Dec
+ 2006 05:21:32 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so3282681uga for
+ <git@vger.kernel.org>; Tue, 05 Dec 2006 02:21:29 -0800 (PST)
+Received: by 10.67.26.7 with SMTP id d7mr13441614ugj.1165314089381; Tue, 05
+ Dec 2006 02:21:29 -0800 (PST)
+Received: from host-81-190-24-209.torun.mm.pl ( [81.190.24.209]) by
+ mx.google.com with ESMTP id 30sm31466457ugf.2006.12.05.02.21.28; Tue, 05 Dec
+ 2006 02:21:29 -0800 (PST)
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-Use "git show-ref --dereference" instead of "git peek-remote
-$projectroot/project" in git_get_references. git-show-ref is faster
-than git-peek-remote (40ms vs 56ms user+sys for git.git repository);
-even faster is reading info/refs file (if it exists), but the
-information in info/refs can be stale; that and the fact that
-info/refs is meant for dumb protocol transports, not for gitweb.
+Johannes Schindelin wrote:
+> 
+> On Tue 5 Dec 2006 Jakub Narebski wrote:
+> 
+>> Sam Vilain wrote:
+>> 
+>>> For those who like to spawn interactive merge tools on a merge failure
+>>> or otherwise run some kind of script allow a "merge.tool" repo-config
+>>> option that will take arguments as merge(1) does.
+>> 
+>> How it goes together with merge-recursive rewrite using built-in merge tool
+>> from xdiff xdl_merge?
+> 
+> Not a big problem. If people like Sam's patch it is easy to integrate 
+> since it only means that if merge.tool is set to something non-empty 
+> xdl_merge is not called but the merge.tool is forked.
 
-git-show-ref is available since v1.4.4; the output format is slightly
-different than git-peek-remote output format.
+Good idea. By the way, is it replacement for RCS merge, i.e. is it
+file-level merge tool, merge.onefile rather than merge.tool? What happens
+if there are multiple merge [contents] conflicts: is merge.tool invoked
+in parallel for each conflict, or is it waiting for earlier merge.tool
+to finish (well, in which case we can always do set merge.tool to 
+"<program> &")? And is merge.tool invoked for recursive part of recursive
+merge strategy? This merge startegy depended on resolving conflict
+markers, i.e. had built-in knowledge of 'merge'/'diff3 -E' output.
 
-While at it make git_get_references return hash in list context,
-and reference to hash (as it used to do) in scalar and void contexts.
+Besides, it would be useful not only to spawn interactive merge tools,
+but also to use mergers specific for file-type, for example 3DM or xmlcmp
+tools for merging XML files.
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-This is the final version.
-
-Once again, I'm extremly sorry for the confusion with the previous
-version...
-
- gitweb/gitweb.perl |   11 ++++++-----
- 1 files changed, 6 insertions(+), 5 deletions(-)
-
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index f06cd3e..1cded75 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -1154,14 +1154,15 @@ sub git_get_last_activity {
- sub git_get_references {
- 	my $type = shift || "";
- 	my %refs;
--	# 5dc01c595e6c6ec9ccda4f6f69c131c0dd945f8c	refs/tags/v2.6.11
--	# c39ae07f393806ccf406ef966e9a15afc43cc36a	refs/tags/v2.6.11^{}
--	open my $fd, "-|", $GIT, "peek-remote", "$projectroot/$project/"
-+	# 5dc01c595e6c6ec9ccda4f6f69c131c0dd945f8c refs/tags/v2.6.11
-+	# c39ae07f393806ccf406ef966e9a15afc43cc36a refs/tags/v2.6.11^{}
-+	open my $fd, "-|", git_cmd(), "show-ref", "--dereference",
-+		($type ? ("--", "refs/$type") : ()) # use -- <pattern> if $type
- 		or return;
- 
- 	while (my $line = <$fd>) {
- 		chomp $line;
--		if ($line =~ m/^([0-9a-fA-F]{40})\trefs\/($type\/?[^\^]+)/) {
-+		if ($line =~ m!^([0-9a-fA-F]{40})\srefs/($type/?[^^]+)!) {
- 			if (defined $refs{$1}) {
- 				push @{$refs{$1}}, $2;
- 			} else {
-@@ -1170,7 +1171,7 @@ sub git_get_references {
- 		}
- 	}
- 	close $fd or return;
--	return \%refs;
-+	return wantarray ? %refs : \%refs;
- }
- 
- sub git_get_rev_name_tags {
 -- 
-1.4.4.1
+Jakub Narebski
