@@ -1,67 +1,76 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-PS1 bash prompt setting
-Date: Mon, 27 Nov 2006 00:48:24 -0800
-Message-ID: <7vy7pxjmw7.fsf@assigned-by-dhcp.cox.net>
-References: <BAYC1-PASMTP037FDA6C6465F0541AC613AEE90@CEZ.ICE>
-	<Pine.LNX.4.63.0611261524130.30004@wbgn013.biozentrum.uni-wuerzburg.de>
-	<20061126094212.fde8cce7.seanlkml@sympatico.ca>
-	<20061126150523.GB18828@hermes.lan.home.vilz.de>
+From: "Deepak Barua" <dbbarua@gmail.com>
+Subject: Adding spell checker to GIT
+Date: Tue, 5 Dec 2006 22:09:53 +0530
+Message-ID: <b5a19cd20612050839y30d06e3bk3a718ef29d0e9328@mail.gmail.com>
+References: <b5a19cd20612050805x309d667eq649ba7ef1b8109b7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Mon, 27 Nov 2006 08:48:47 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Tue, 5 Dec 2006 16:40:07 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061126150523.GB18828@hermes.lan.home.vilz.de> (Nicolas Vilz's
-	message of "Sun, 26 Nov 2006 16:05:23 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=a76/Mwh3dYPEkykwtP+cNEE4bkvApP0GPsfrdI+ta/4EDBlTLI/KZbThEvEiJ0+Y3S+aq76n02jnfvuSXHvwDDAfGmx7+BE3IyxarpubiIIP5Y++PkywKcjhtd92LM+W6nZL9UF92CpQu4YVp97brNGx5A4ieOXEBff05F1h4GU=
+In-Reply-To: <b5a19cd20612050805x309d667eq649ba7ef1b8109b7@mail.gmail.com>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32401>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GocAK-0000Ub-DZ for gcvg-git@gmane.org; Mon, 27 Nov
- 2006 09:48:40 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33354>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GrdKu-00035L-Li for gcvg-git@gmane.org; Tue, 05 Dec
+ 2006 17:40:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1757458AbWK0Is0 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 27 Nov 2006
- 03:48:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757464AbWK0Is0
- (ORCPT <rfc822;git-outgoing>); Mon, 27 Nov 2006 03:48:26 -0500
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:27808 "EHLO
- fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP id S1757458AbWK0IsZ
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 27 Nov 2006 03:48:25 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao08.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061127084824.QJWZ18207.fed1rmmtao08.cox.net@fed1rmimpo02.cox.net>; Mon, 27
- Nov 2006 03:48:24 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id rkoY1V00J1kojtg0000000; Mon, 27 Nov 2006
- 03:48:33 -0500
-To: Nicolas Vilz <niv@iaglans.de>
+ S968437AbWLEQj5 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 5 Dec 2006
+ 11:39:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S968440AbWLEQj5
+ (ORCPT <rfc822;git-outgoing>); Tue, 5 Dec 2006 11:39:57 -0500
+Received: from nf-out-0910.google.com ([64.233.182.185]:45007 "EHLO
+ nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S968437AbWLEQjz (ORCPT <rfc822;git@vger.kernel.org>); Tue, 5 Dec
+ 2006 11:39:55 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so271790nfa for
+ <git@vger.kernel.org>; Tue, 05 Dec 2006 08:39:53 -0800 (PST)
+Received: by 10.49.36.6 with SMTP id o6mr1091072nfj.1165336793684; Tue, 05
+ Dec 2006 08:39:53 -0800 (PST)
+Received: by 10.49.11.7 with HTTP; Tue, 5 Dec 2006 08:39:53 -0800 (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Nicolas Vilz <niv@iaglans.de> writes:
+Hi Jakub & Johannes,
+                              Thank you for your help i will consider
+the precommit-hook.
 
-> I glued that in my system bashrc with the extension, that it shows to me
-> user.email out of repo-config, which is also very handy. So I am always
-> reminded to set my user.credentials in .git/config and i always know which 
-> role i play in the repository i am working at.
+Regards
+Deepak
 
-I think there is something wrong if the user needs to be
-_constantly_ reminded who he is.  Care to explain?
+---------- Forwarded message ----------
+From: Deepak Barua <dbbarua@gmail.com>
+Date: Dec 5, 2006 9:35 PM
+Subject: Adding spell checker to GIT
+To: git@vger.kernel.org
 
-There was a talk on the list about making "git-commit" (and
-"git-merge" that does not do a fast-forward) refuse to proceed
-until user.nameemail are explicitly set in the configuration.  I
-think that particular implementation is a bad idea because it
-punishes people who have set up their GECOS and hostname sanely,
-but at the same time I do understand that people who just
-started to use git would be very unhappy to learn that their
-names were misspelled in GECOS field only after accumulating a
-couple dozen commits.
 
+Hi All,
+        I am just thought of a idea to integrate a spell checker with
+git so that when we check in the code the code comments are spell
+checked before being put into the tree,maybe have a optimized
+dictionary search.
+what about this...? is it appropriate ...?
+
+Regards
+Deepak
+
+--
+Code Code Code Away
+
+
+-- 
