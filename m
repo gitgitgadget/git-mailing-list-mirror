@@ -1,84 +1,90 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: protect blob and diff output lines from controls.
-Date: Thu, 9 Nov 2006 10:34:41 +0100
-Message-ID: <200611091034.42190.jnareb@gmail.com>
-References: <7vpsbxqzre.fsf@assigned-by-dhcp.cox.net> <200611090146.25306.jnareb@gmail.com> <7vwt65pgqs.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH 2/2] Loosen "working file will be lost" check in Porcelain-ish
+Date: Mon, 04 Dec 2006 17:11:02 -0800
+Message-ID: <7vbqmjkuzd.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Thu, 9 Nov 2006 09:34:01 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Tue, 5 Dec 2006 01:11:19 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=n2T+iFRsgP7gTZjQ7XRMzUWUhNYaIkNX4gwG7mSda9KDv201la2T6H96a+u+v+olADDXhVDtYv3tYeXltN5Vtgmq0bC803aAMNNGEMmdae7UxggN9j/Jp+rUpx6BiLGBdE53Znfx7Gi9DqC3tyP/UUEGZouMN5YWd4JGLpSbK9k=
-User-Agent: KMail/1.9.3
-In-Reply-To: <7vwt65pgqs.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31185>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gi6II-0002uq-Ct for gcvg-git@gmane.org; Thu, 09 Nov
- 2006 10:33:58 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33280>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GrOpz-0005Rc-2r for gcvg-git@gmane.org; Tue, 05 Dec
+ 2006 02:11:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1754812AbWKIJdy convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Thu, 9 Nov 2006 04:33:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754813AbWKIJdy
- (ORCPT <rfc822;git-outgoing>); Thu, 9 Nov 2006 04:33:54 -0500
-Received: from ug-out-1314.google.com ([66.249.92.171]:54873 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1754812AbWKIJdx
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 9 Nov 2006 04:33:53 -0500
-Received: by ug-out-1314.google.com with SMTP id m3so163362ugc for
- <git@vger.kernel.org>; Thu, 09 Nov 2006 01:33:52 -0800 (PST)
-Received: by 10.67.100.17 with SMTP id c17mr1010667ugm.1163064830152; Thu, 09
- Nov 2006 01:33:50 -0800 (PST)
-Received: from host-81-190-24-209.torun.mm.pl ( [81.190.24.209]) by
- mx.google.com with ESMTP id w40sm555899ugc.2006.11.09.01.33.49; Thu, 09 Nov
- 2006 01:33:50 -0800 (PST)
-To: Junio C Hamano <junkio@cox.net>
+ S967956AbWLEBLG (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
+ 20:11:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967955AbWLEBLG
+ (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 20:11:06 -0500
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:36549 "EHLO
+ fed1rmmtao06.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S967956AbWLEBLD (ORCPT <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006
+ 20:11:03 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao06.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061205011102.WMUE5465.fed1rmmtao06.cox.net@fed1rmimpo02.cox.net>; Mon, 4
+ Dec 2006 20:11:02 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id upBC1V00B1kojtg0000000; Mon, 04 Dec 2006
+ 20:11:12 -0500
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Dnia czwartek 9. listopada 2006 02:10, Junio C Hamano napisa=B3:
-> Jakub Narebski <jnareb@gmail.com> writes:
+This uses the previous update to read-tree in Porcelain-ish
+commands "git checkout" and "git merge" to loosen the check
+when switching branches.
 
->> Well, the pathname has the limit that it must be in single line
->> after quoting. The "blob" output is multipage.
->=20
-> I honestly have _no_ idea what distincition you are seeing
-> here.  Both blob and diff output are processed one line at a
-> time and its result would be on a single line too.
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
+ git-checkout.sh |    5 +++--
+ git-merge.sh    |    2 +-
+ 2 files changed, 4 insertions(+), 3 deletions(-)
 
-I was thinking about _conceptual_ difference, not technical.
-(Perhaps I should make it more clear.)=20
+diff --git a/git-checkout.sh b/git-checkout.sh
+index 737abd0..a2be213 100755
+--- a/git-checkout.sh
++++ b/git-checkout.sh
+@@ -161,7 +161,7 @@ then
+     git-read-tree --reset -u $new
+ else
+     git-update-index --refresh >/dev/null
+-    merge_error=$(git-read-tree -m -u $old $new 2>&1) || (
++    merge_error=$(git-read-tree -m -u --ignore=.gitignore $old $new 2>&1) || (
+ 	case "$merge" in
+ 	'')
+ 		echo >&2 "$merge_error"
+@@ -172,7 +172,8 @@ else
+     	git diff-files --name-only | git update-index --remove --stdin &&
+ 	work=`git write-tree` &&
+ 	git read-tree --reset -u $new &&
+-	git read-tree -m -u --aggressive $old $new $work || exit
++	git read-tree -m -u --aggressive --ignore=.gitignore $old $new $work ||
++	exit
+ 
+ 	if result=`git write-tree 2>/dev/null`
+ 	then
+diff --git a/git-merge.sh b/git-merge.sh
+index 272f004..830f471 100755
+--- a/git-merge.sh
++++ b/git-merge.sh
+@@ -264,7 +264,7 @@ f,*)
+ 	echo "Updating $(git-rev-parse --short $head)..$(git-rev-parse --short $1)"
+ 	git-update-index --refresh 2>/dev/null
+ 	new_head=$(git-rev-parse --verify "$1^0") &&
+-	git-read-tree -u -v -m $head "$new_head" &&
++	git-read-tree -v -m -u --ignore=.gitignore $head "$new_head" &&
+ 	finish "$new_head" "Fast forward"
+ 	dropsave
+ 	exit 0
+-- 
+1.4.4.1.ga37e
 
-Pathname is item (or part of item in the case of page_path)
-which is contained (and must be contained) in single line.
-It is also expected (although if we follow this expectation
-is up to us) that the pathname would quote special characters
-similarly to how shell/operating system quotes pathnames
-(e.g. in ls output).
-
-"Blob" output on the other hand ("blob" view and patch part of
-"blobdiff" and "commitdiff" views) is [a part of] larger, multiline
-whole. One could also expect that special characters would be
-quoted like editor quotes special characters. (Of course question
-is: which editor?)
-
-This of course is complicate by single line output like subject
-or authorship, or signoff, which is not pathname.
-
-
-All this discussion shows that gitweb quoting is more complicated
-that I thought.
---=20
-Jakub Narebski
