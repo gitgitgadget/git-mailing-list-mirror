@@ -1,271 +1,60 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Nicolas Pitre <nico@cam.org>
-Subject: [PATCH] make 'git add' a first class user friendly interface to the
- index
-Date: Fri, 01 Dec 2006 15:06:20 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0612011444310.9647@xanadu.home>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: using xdl_merge(), was Re: Resolving conflicts
+Date: Tue, 5 Dec 2006 19:36:36 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0612051926360.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <456FD461.4080002@saville.com> <Pine.LNX.4.64.0611302330000.3695@woody.osdl.org>
+ <456FDF24.1070001@saville.com> <Pine.LNX.4.64.0612012018490.3476@woody.osdl.org>
+ <7vejri20mf.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0612021131140.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+ <4575B32F.5060108@ramsay1.demon.co.uk>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-NNTP-Posting-Date: Fri, 1 Dec 2006 20:06:41 +0000 (UTC)
+NNTP-Posting-Date: Tue, 5 Dec 2006 18:36:48 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-X-Sender: nico@xanadu.home
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <4575B32F.5060108@ramsay1.demon.co.uk>
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32962>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GqEeP-0003rW-GG for gcvg-git@gmane.org; Fri, 01 Dec
- 2006 21:06:26 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33362>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Grf9p-00057R-Ta for gcvg-git@gmane.org; Tue, 05 Dec
+ 2006 19:36:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S936176AbWLAUGW (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
- 15:06:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759287AbWLAUGW
- (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 15:06:22 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:42532 "EHLO
- relais.videotron.ca") by vger.kernel.org with ESMTP id S1758823AbWLAUGV
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 15:06:21 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR004.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
- <0J9M00A1C2IKSR30@VL-MO-MR004.ip.videotron.ca> for git@vger.kernel.org; Fri,
- 01 Dec 2006 15:06:20 -0500 (EST)
-To: Junio C Hamano <junkio@cox.net>
+ S968586AbWLESgn (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 5 Dec 2006
+ 13:36:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S968587AbWLESgn
+ (ORCPT <rfc822;git-outgoing>); Tue, 5 Dec 2006 13:36:43 -0500
+Received: from mail.gmx.net ([213.165.64.20]:60160 "HELO mail.gmx.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S968586AbWLESgm
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 5 Dec 2006 13:36:42 -0500
+Received: (qmail invoked by alias); 05 Dec 2006 18:36:36 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp044) with SMTP; 05 Dec 2006 19:36:36 +0100
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
 Sender: git-owner@vger.kernel.org
 
-I personally think this is going to make the GIT experience lot more 
-enjoyable for everybody.  This brings the power of the index up front 
-using a proper mental model without talking about the index at all. See 
-for example how all the technical discussion has been evacuated from the 
-git-add man page.
+Hi,
 
-Any content to be committed must be added together.  Whether that 
-content comes from new files or modified files doesn't matter.  You just 
-need to "add" it, either with git-add, or by providing git-commit with 
--a (for already known files only of course). No need for a separate 
-command to distinguish new vs modified files please.  That would only 
-screw the mental model everybody should have when using GIT.
+On Tue, 5 Dec 2006, Ramsay Jones wrote:
 
-Signed-off-by: Nicolas Pitre <nico@cam.org>
+> Have you had time to look at my test cases?
 
----
+Not really. Besides, I did _not_ implement a full diff3, but _just_ the 
+merge. I.e. my function does not output anything, but (in theory) fills a 
+buffer with what merge would have written into the first file.
 
-TODO:
+However, once I understand how your tests work, I'll try to concoct a test 
+script for git-with-xdl_merge.
 
-maybe add a -f/--force argument to allow for adding ignored files 
-instead of going through git-update-index.
-
-maybe add --new-only and --known-only arguments if there is a real need 
-to discriminate between new vs updated files.  I would not suggest 
-against it though, because if someone really has such fancy and uncommon 
-requirements he might just use git-update-index directly at that point.
-
-diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
-index 6342ea3..ffa8446 100644
---- a/Documentation/git-add.txt
-+++ b/Documentation/git-add.txt
-@@ -3,7 +3,7 @@ git-add(1)
- 
- NAME
- ----
--git-add - Add files to the index file
-+git-add - Add file content to the changeset to be committed next
- 
- SYNOPSIS
- --------
-@@ -11,16 +11,31 @@ SYNOPSIS
- 
- DESCRIPTION
- -----------
--A simple wrapper for git-update-index to add files to the index,
--for people used to do "cvs add".
--
--It only adds non-ignored files, to add ignored files use
-+Contrary to other SCMs, with GIT you have to explicitly "add" all the
-+changed file content you want to commit together to form a changeset
-+with the 'add' command before using the 'commit' command.
-+
-+This is not only for adding new files.  Even modified files must be
-+added to the set of changes about to be committed. This command can
-+be performed multiple times before a commit. The 'git status' command
-+will give you a summary of what is included for the next commit.
-+
-+Note: don't forget to 'add' a file again if you modified it after the
-+first 'add' and before 'commit'. Otherwise only the previous added
-+state of that file will be committed. This is because git tracks
-+content, so what you're really 'add'ing to the commit is the *content*
-+of the file in the state it is in when you 'add' it. Of course there are
-+legitimate usage cases for not updating an already added file content
-+in order to commit a previous file state, but in this case you better
-+know what you're doing.
-+
-+This command only adds non-ignored files, to add ignored files use
- "git update-index --add".
- 
- OPTIONS
- -------
- <file>...::
--	Files to add to the index (see gitlink:git-ls-files[1]).
-+	Files to add content from.
- 
- -n::
-         Don't actually add the file(s), just show if they exist.
-@@ -34,27 +49,12 @@ OPTIONS
- 	for command-line options).
- 
- 
--DISCUSSION
------------
--
--The list of <file> given to the command is fed to `git-ls-files`
--command to list files that are not registered in the index and
--are not ignored/excluded by `$GIT_DIR/info/exclude` file or
--`.gitignore` file in each directory.  This means two things:
--
--. You can put the name of a directory on the command line, and
--  the command will add all files in it and its subdirectories;
--
--. Giving the name of a file that is already in index does not
--  run `git-update-index` on that path.
--
--
- EXAMPLES
- --------
- git-add Documentation/\\*.txt::
- 
--	Adds all `\*.txt` files that are not in the index under
--	`Documentation` directory and its subdirectories.
-+	Adds content from all `\*.txt` files under `Documentation`
-+	directory and its subdirectories.
- +
- Note that the asterisk `\*` is quoted from the shell in this
- example; this lets the command to include the files from
-@@ -62,15 +62,17 @@ subdirectories of `Documentation/` directory.
- 
- git-add git-*.sh::
- 
--	Adds all git-*.sh scripts that are not in the index.
-+	Considers adding content from all git-*.sh scripts.
- 	Because this example lets shell expand the asterisk
- 	(i.e. you are listing the files explicitly), it does not
--	add `subdir/git-foo.sh` to the index.
-+	consider `subdir/git-foo.sh`.
- 
- See Also
- --------
- gitlink:git-rm[1]
--gitlink:git-ls-files[1]
-+gitlink:git-mv[1]
-+gitlink:git-commit[1]
-+gitlink:git-update-index[1]
- 
- Author
- ------
-diff --git a/Documentation/tutorial.txt b/Documentation/tutorial.txt
-index fe4491d..8113d79 100644
---- a/Documentation/tutorial.txt
-+++ b/Documentation/tutorial.txt
-@@ -87,14 +87,54 @@ thorough description.  Tools that turn commits into email, for
- example, use the first line on the Subject line and the rest of the
- commit in the body.
- 
--To add a new file, first create the file, then
--
--------------------------------------------------
--$ git add path/to/new/file
--------------------------------------------------
--
--then commit as usual.  No special command is required when removing a
--file; just remove it, then tell `commit` about the file as usual.
-+GIt tracks content not files
-+----------------------------
-+
-+Contrary to other SCMs, with GIT you have to explicitly "add" all
-+the changed _content_ you want to commit together to form a changeset.
-+This can be done in a few different ways:
-+
-+1) By using 'git add <file_spec>...'
-+ 
-+   This can be performed multiple times before a commit.  Note that this
-+   is not only for adding new files.  Even modified files must be
-+   added to the set of changes about to be committed.  The "git status"
-+   command gives you a summary of what is included so far for the
-+   next commit.  When done you should use the 'git commit' command to
-+   make it real.
-+
-+   Note: don't forget to 'add' a file again if you modified it after the
-+   first 'add' and before 'commit'. Otherwise only the previous added
-+   state of that file will be committed. This is because git tracks
-+   content, so what you're really 'add'ing to the commit is the *content*
-+   of the file in the state it is in when you 'add' it.
-+
-+2) By using 'git commit -a' directly
-+
-+   This is a quick way to automatically 'add' the content from all files
-+   that were modified since the previous commit, and perform the actual
-+   commit without having to separately 'add' them beforehand.  This will
-+   not add content from new files i.e. files that were never added before.
-+   Those files still have to be added explicitly before performing a
-+   commit.
-+
-+But here's a twist. If you do 'git commit <file1> <file2> ...' then only
-+the  changes belonging to those explicitly specified files will be
-+committed, entirely bypassing the current "added" changes. Those "added"
-+changes will still remain available for a subsequent commit though.
-+
-+There is a twist about that twist: if you do 'git commit -i <file>...'
-+then the commit will consider changes to those specified files _including_
-+all "added" changes so far.
-+
-+But for instance it is best to only remember 'git add' + 'git commit'
-+and/or 'git commit -a'.
-+
-+No special command is required when removing a file; just remove it,
-+then tell `commit` about the file as usual.
-+
-+Viewing the changelog
-+---------------------
- 
- At any point you can view the history of your changes using
- 
-diff --git a/builtin-add.c b/builtin-add.c
-index febb75e..b3f9206 100644
---- a/builtin-add.c
-+++ b/builtin-add.c
-@@ -94,9 +94,6 @@ int cmd_add(int argc, const char **argv, const char *prefix)
- 
- 	newfd = hold_lock_file_for_update(&lock_file, get_index_file(), 1);
- 
--	if (read_cache() < 0)
--		die("index file corrupt");
--
- 	for (i = 1; i < argc; i++) {
- 		const char *arg = argv[i];
- 
-@@ -131,6 +128,9 @@ int cmd_add(int argc, const char **argv, const char *prefix)
- 		return 0;
- 	}
- 
-+	if (read_cache() < 0)
-+		die("index file corrupt");
-+
- 	for (i = 0; i < dir.nr; i++)
- 		add_file_to_index(dir.entries[i]->name, verbose);
- 
-diff --git a/wt-status.c b/wt-status.c
-index de1be5b..4b8b570 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -163,7 +163,7 @@ static void wt_status_print_changed_cb(struct diff_queue_struct *q,
- 	int i;
- 	if (q->nr)
- 		wt_status_print_header("Changed but not updated",
--				"use git-update-index to mark for commit");
-+				"use git-add on files to include for commit");
- 	for (i = 0; i < q->nr; i++)
- 		wt_status_print_filepair(WT_STATUS_CHANGED, q->queue[i]);
+Ciao,
