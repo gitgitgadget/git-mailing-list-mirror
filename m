@@ -1,80 +1,55 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [RFD] making separate-remote layout easier to use
-Date: Sat, 25 Nov 2006 22:14:21 -0500
-Message-ID: <20061126031421.GC29394@spearce.org>
-References: <7v1wnr19do.fsf@assigned-by-dhcp.cox.net> <ekafpm$fs7$1@sea.gmane.org> <7vvel3yuzz.fsf@assigned-by-dhcp.cox.net>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Adding spell checker to GIT
+Date: Tue, 05 Dec 2006 18:08:01 +0100
+Message-ID: <4575A771.3060007@op5.se>
+References: <b5a19cd20612050805x309d667eq649ba7ef1b8109b7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sun, 26 Nov 2006 03:14:47 +0000 (UTC)
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Tue, 5 Dec 2006 17:08:40 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <7vvel3yuzz.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
+In-Reply-To: <b5a19cd20612050805x309d667eq649ba7ef1b8109b7@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32318>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GoATX-00069q-Lq for gcvg-git@gmane.org; Sun, 26 Nov
- 2006 04:14:40 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33356>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GrdmS-0007iC-AB for gcvg-git@gmane.org; Tue, 05 Dec
+ 2006 18:08:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S967252AbWKZDO1 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 25 Nov 2006
- 22:14:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967253AbWKZDO1
- (ORCPT <rfc822;git-outgoing>); Sat, 25 Nov 2006 22:14:27 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:24549 "EHLO
- corvette.plexpod.net") by vger.kernel.org with ESMTP id S967252AbWKZDO0
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 25 Nov 2006 22:14:26 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1GoAT7-0005Df-1P; Sat, 25 Nov 2006 22:14:13 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- 61FB020FB09; Sat, 25 Nov 2006 22:14:22 -0500 (EST)
-To: Junio C Hamano <junkio@cox.net>
+ S968449AbWLERI3 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 5 Dec 2006
+ 12:08:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S968467AbWLERI3
+ (ORCPT <rfc822;git-outgoing>); Tue, 5 Dec 2006 12:08:29 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:32835 "EHLO
+ smtp-gw1.op5.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
+ S968449AbWLERI2 (ORCPT <rfc822;git@vger.kernel.org>); Tue, 5 Dec 2006
+ 12:08:28 -0500
+Received: from [192.168.1.20] (1-2-9-7a.gkp.gbg.bostream.se [82.182.116.44])
+ by smtp-gw1.op5.se (Postfix) with ESMTP id 9D40E6BCBE; Tue,  5 Dec 2006
+ 18:08:27 +0100 (CET)
+To: Deepak Barua <dbbarua@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano <junkio@cox.net> wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
-> > The question is: do we continue to use remotes/ file, or do we
-> > save remotes info in the config file: remote.<name>.url,
-> > remote.<name>.fetch, remote.<name>.push and branch.<name>.merge
-> > (in our case '[remote "origin"]' section)?
+Deepak Barua wrote:
+> Hi All,
+>         I am just thought of a idea to integrate a spell checker with
+> git so that when we check in the code the code comments are spell
+> checked before being put into the tree,maybe have a optimized
+> dictionary search.
+> what about this...? is it appropriate ...?
 > 
-> It is not "the question"; it is irrelevant because
-> $GIT_DIR/remotes/origin and [remote "origin"] are pretty much
-> interchangeable, and will hopefully continue to be.
 
-I'm all for:
-
- * changing the default made git-clone to be [remote "<origin>"]
- * continuing to support parsing of $GIT_DIR/remotes/*
-
-We moved away from the $GIT_DIR/branches directory to
-$GIT_DIR/remotes, yet we still support $GIT_DIR/branches in
-remote handling code.  I see no reason why we cannot start to use
-remote.<name>.url by default while continuing to support the older
-branches and remotes formats.
-
-For one thing the newer remote.<name>.fetch seems to make more sense
-to new users than Pull: lines do.  For another it appears to be
-supported since v1.4.0, which was released June 10th.  Most users
-cloning a repository with >1.4.4.1 will probably only use 1.4.0
-or later on that same repository, so there is probably low risk of
-breakage due to the remote not being recognized by a pre-1.4.0 Git.
+Sounds like a worthy project for a pre-commit hook, imo.
 
 -- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
