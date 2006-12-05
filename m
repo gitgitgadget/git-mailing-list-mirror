@@ -1,130 +1,134 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] xdl_merge(): fix and simplify conflict handling
-Date: Tue, 5 Dec 2006 22:15:35 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612052209030.28348@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <456FD461.4080002@saville.com> <Pine.LNX.4.64.0611302330000.3695@woody.osdl.org>
- <456FDF24.1070001@saville.com> <Pine.LNX.4.64.0612012018490.3476@woody.osdl.org>
- <7vejri20mf.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0612021131140.28348@wbgn013.biozentrum.uni-wuerzburg.de>
- <4575B32F.5060108@ramsay1.demon.co.uk> <Pine.LNX.4.64.0612051023460.3542@woody.osdl.org>
- <Pine.LNX.4.63.0612051949290.28348@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vac22glzz.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Yann Dirson <ydirson@altern.org>
+Subject: Re: [PATCH 1/3] Document some current bugs and add to the TODO list.
+Date: Tue, 5 Dec 2006 23:02:22 +0100
+Message-ID: <20061205220222.GA5320@nan92-1-81-57-214-146.fbx.proxad.net>
+References: <20061130002304.21981.67797.stgit@gandelf.nowhere.earth> <20061130002717.21981.38049.stgit@gandelf.nowhere.earth> <b0943d9e0612050930t187e65c4g6a3c44ea1fefc940@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Tue, 5 Dec 2006 21:15:47 +0000 (UTC)
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Tue, 5 Dec 2006 22:03:56 +0000 (UTC)
+Cc: GIT list <git@vger.kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7vac22glzz.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+Content-Disposition: inline
+In-Reply-To: <b0943d9e0612050930t187e65c4g6a3c44ea1fefc940@mail.gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33373>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33375>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Grhde-0004WD-GY for gcvg-git@gmane.org; Tue, 05 Dec
- 2006 22:15:42 +0100
+ esmtp (Exim 4.50) id 1GriO9-0003LI-MR for gcvg-git@gmane.org; Tue, 05 Dec
+ 2006 23:03:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1031451AbWLEVPj (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 5 Dec 2006
- 16:15:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031494AbWLEVPj
- (ORCPT <rfc822;git-outgoing>); Tue, 5 Dec 2006 16:15:39 -0500
-Received: from mail.gmx.net ([213.165.64.20]:52443 "HELO mail.gmx.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S1031451AbWLEVPi
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 5 Dec 2006 16:15:38 -0500
-Received: (qmail invoked by alias); 05 Dec 2006 21:15:35 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp042) with SMTP; 05 Dec 2006 22:15:35 +0100
-To: Junio C Hamano <junkio@cox.net>
+ S1760162AbWLEWDm (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 5 Dec 2006
+ 17:03:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760184AbWLEWDm
+ (ORCPT <rfc822;git-outgoing>); Tue, 5 Dec 2006 17:03:42 -0500
+Received: from smtp3-g19.free.fr ([212.27.42.29]:56922 "EHLO
+ smtp3-g19.free.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
+ S1760162AbWLEWDl (ORCPT <rfc822;git@vger.kernel.org>); Tue, 5 Dec 2006
+ 17:03:41 -0500
+Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net
+ [81.57.214.146]) by smtp3-g19.free.fr (Postfix) with ESMTP id 4D26C4A1F5;
+ Tue,  5 Dec 2006 23:03:24 +0100 (CET)
+Received: by gandelf.nowhere.earth (Postfix, from userid 1000) id EAABF1F089;
+ Tue,  5 Dec 2006 23:02:22 +0100 (CET)
+To: Catalin Marinas <catalin.marinas@gmail.com>
 Sender: git-owner@vger.kernel.org
 
+On Tue, Dec 05, 2006 at 05:30:56PM +0000, Catalin Marinas wrote:
+> On 30/11/06, Yann Dirson <ydirson@altern.org> wrote:
+> >+- numeric shortcuts for naming patches near top (eg. +1, -2)
+> 
+> We currently have the -n option for push and pop that accepts number.
+> Because of python, you can also, for example, push to the last but one
+> with "push -n -1" (similar for pop). Do you mean shortcuts for the
+> "goto" command?
 
-Suppose you have changes in new1 to the original lines 10-20,
-and changes in new2 to the original lines 15-25, then the
-changes to 10-25 conflict. But it is possible that the next
-changes in new1 still overlap with this change to new2.
+I rather meant shortcuts for "show", "fold --pick", and possibly a
+handful of others.
 
-So, in the next iteration we have to look at the same change
-to new2 again.
+While we're talking about shortcuts for goto, one that I regularly miss
+would be something like "goto BACK", to allow for short excursions and
+quickly going back without having to worry on which exact patch I was
+before.  "refresh --patch" will make this less essential, but still
+possibly useful.
 
-The old code tried to be a bit too clever. The new code is
-shorter and more to the point: do not fiddle with the ranges
-at all.
 
-Also, xdl_append_merge() tries harder to combine conflicts.
-This is necessary, because with the above simplification,
-some conflicts would not be recognized as conflicts otherwise:
+> >+- refuse to "stg init" a branch known as remote (through .git/remotes/,
+> >+  .git/branches/ or any other info)
+> 
+> I think it is up to the user not to do this.
 
-In the above scenario, it is possible that there is no other
-change to new1. Absent the combine logic, the change in new2
-would be recorded _again_, but as a non-conflict.
+It may not be obvious to a new user, so I'd think it would be useful to
+guard against things we know should not be done.
 
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
----
+"git checkout" being probably used as plumbing in several places should
+probably not be taught to refuse switching to remote branches, so I'd
+think porcelains should take care of this.
 
-	On Tue, 5 Dec 2006, Junio C Hamano wrote:
 
-	> However, the conflict 'next' leaves seems a bit suspicious.
-	> Trying to reproduce
-	> 
-	> 	56f9686c4d1e1d586b731b815bd98d70f84ecda4
-	> 
-	> gives an interesting illustration.
+> You would first need to check out such a branch anyway.
 
-	This is fixed now.
+Sure.  Especially, the following should probably fail :)
 
- xdiff/xmerge.c |   21 +++++----------------
- 1 files changed, 5 insertions(+), 16 deletions(-)
+|stgit$ stg branch origin
+|Switching to branch "origin"... done
 
-diff --git a/xdiff/xmerge.c b/xdiff/xmerge.c
-index 1fe7a1b..352207e 100644
---- a/xdiff/xmerge.c
-+++ b/xdiff/xmerge.c
-@@ -38,8 +38,9 @@ static int xdl_append_merge(xdmerge_t **merge, int mode,
- 		long i1, long chg1, long i2, long chg2)
- {
- 	xdmerge_t *m = *merge;
--	if (m && mode == m->mode &&
--			(i1 == m->i1 + m->chg1 || i2 == m->i2 + m->chg2)) {
-+	if (m && (i1 <= m->i1 + m->chg1 || i2 <= m->i2 + m->chg2)) {
-+		if (mode != m->mode)
-+			m->mode = 0;
- 		m->chg1 = i1 + chg1 - m->i1;
- 		m->chg2 = i2 + chg2 - m->i2;
- 	} else {
-@@ -313,22 +314,10 @@ static int xdl_do_merge(xdfenv_t *xe1, xdchange_t *xscr1, const char *name1,
- 		i1 = xscr1->i1 + xscr1->chg1;
- 		i2 = xscr2->i1 + xscr2->chg1;
- 
--		if (i1 > i2) {
--			xscr1->chg1 -= i1 - i2;
--			xscr1->i1 = i2;
--			xscr1->i2 += xscr1->chg2;
--			xscr1->chg2 = 0;
-+		if (i1 >= i2)
- 			xscr2 = xscr2->next;
--		} else if (i2 > i1) {
--			xscr2->chg1 -= i2 - i1;
--			xscr2->i1 = i1;
--			xscr2->i2 += xscr2->chg2;
--			xscr2->chg2 = 0;
--			xscr1 = xscr1->next;
--		} else {
-+		if (i2 >= i1)
- 			xscr1 = xscr1->next;
--			xscr2 = xscr2->next;
--		}
- 	}
- 	while (xscr1) {
- 		if (!changes)
+Maybe it could be made to accept only to change to stgit-managed
+branches ?
+After all, if we're switching to a non-stgit branch, we're probably
+going to use another set of tools anyway, so we can probably tell the
+user to use git-checkout or cg-switch instead.
+
+
+> >+- cannot use "stg refresh file" after "cg-rm file"
+> 
+> It seems to work for me. Can you send some log messages?
+
+I should have done that first, I cannot reproduce it any more.
+
+
+> >+- "stg goto $(stg top)" fails with unhandled exception
+> 
+> It works for me. What StGIT version do you use?
+
+I got that error on 0.11 - and just checked that
+9b63cf56576bf219d26f490f3c011e937a5f7129 fixes exactly this problem
+already.  Sorry, I should have checked on master first.
+
+
+> >+- at least "commit is not robust wrt out-of-diskspace condition:
+> >+|deps$ stg commit
+> >+|error: git-checkout-index: unable to write file MANIFEST
+> >+|error: git-checkout-index: unable to write file META.yml
+> >+|error: git-checkout-index: unable to write file Makefile.PL
+> >+|error: git-checkout-index: unable to write file doc/README.dbk.xml
+> >+|error: git-checkout-index: unable to write file graph-includes
+> >+|error: git-checkout-index: unable to write file 
+> >lib/graphincludes/params.pm
+> >+|fatal: unable to write new index file
+> >+|stg commit: git-read-tree failed (local changes maybe?)
+> >+|Committing 4 patches...
+> >+(luckily nothing was really committed)
+> 
+> But that's the correct behaviour, not to commit anything.
+
+Right.
+
+> StGIT cannot know
+> how much space is needed by GIT to check this beforehand. It simply
+> exits when a GIT command failed.
+
+What I had in mind, is that when something fails midway, if we just exit
+we may end up in an inconsistent state.  I have not taken the time to
+check about that, that's why I wanted it to appear in the TODO file.
+Again, it was quite poorly worded, to say the least.
+
+Best regards,
 -- 
-1.4.4.1.g394ac-dirty
