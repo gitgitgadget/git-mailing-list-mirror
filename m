@@ -1,63 +1,85 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [RFC] Submodules in GIT
-Date: Tue, 12 Dec 2006 09:32:46 +0100
-Message-ID: <457E692E.7060708@op5.se>
-References: <20061130170625.GH18810@admingilde.org>	 <200612010902.51264.andyparkins@gmail.com>	 <20061201110032.GL18810@admingilde.org> <45701B8D.1030508@b-i-t.de>	 <20061201121234.GQ18810@admingilde.org> <4570289D.9050802@b-i-t.de>	 <20061201133558.GU18810@admingilde.org> <45703174.8000609@op5.se>	 <20061201134610.GW18810@admingilde.org> <457041AD.4010601@op5.se>	 <20061201150045.GZ18810@admingilde.org> <45705A94.2070509@op5.se>	 <Pine.LNX.4.64.0612010844380.3695@woody.osdl.org>	 <457061A7.2000102@b-i-t.de>	 <Pine.LNX.4.64.0612011134080.3695@woody.osdl.org> <1165602554.19135.309.camel@cashmere.sps.mot.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: using xdl_merge(), was Re: Resolving conflicts
+Date: Tue, 5 Dec 2006 10:28:53 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0612051023460.3542@woody.osdl.org>
+References: <456FD461.4080002@saville.com> <Pine.LNX.4.64.0611302330000.3695@woody.osdl.org>
+ <456FDF24.1070001@saville.com> <Pine.LNX.4.64.0612012018490.3476@woody.osdl.org>
+ <7vejri20mf.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0612021131140.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+ <4575B32F.5060108@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Tue, 12 Dec 2006 08:32:57 +0000 (UTC)
-Cc: Linus Torvalds <torvalds@osdl.org>, sf <sf@b-i-t.de>,
-	Git List <git@vger.kernel.org>,
-	Martin Waitz <tali@admingilde.org>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Tue, 5 Dec 2006 18:29:11 +0000 (UTC)
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
-In-Reply-To: <1165602554.19135.309.camel@cashmere.sps.mot.com>
+In-Reply-To: <4575B32F.5060108@ramsay1.demon.co.uk>
+X-MIMEDefang-Filter: osdl$Revision: 1.162 $
+X-Scanned-By: MIMEDefang 2.36
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34068>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33361>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gu34I-0003yt-Eh for gcvg-git@gmane.org; Tue, 12 Dec
- 2006 09:32:54 +0100
+ esmtp (Exim 4.50) id 1Grf2S-0003y7-Ly for gcvg-git@gmane.org; Tue, 05 Dec
+ 2006 19:29:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1750987AbWLLIct (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 12 Dec 2006
- 03:32:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750991AbWLLIct
- (ORCPT <rfc822;git-outgoing>); Tue, 12 Dec 2006 03:32:49 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:53459 "EHLO
- smtp-gw1.op5.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
- S1750987AbWLLIcs (ORCPT <rfc822;git@vger.kernel.org>); Tue, 12 Dec 2006
- 03:32:48 -0500
-Received: from [192.168.1.20] (unknown [213.88.215.14]) by smtp-gw1.op5.se
- (Postfix) with ESMTP id 439146BCBE; Tue, 12 Dec 2006 09:32:47 +0100 (CET)
-To: Jon Loeliger <jdl@freescale.com>
+ S968609AbWLES3F (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 5 Dec 2006
+ 13:29:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S968598AbWLES3F
+ (ORCPT <rfc822;git-outgoing>); Tue, 5 Dec 2006 13:29:05 -0500
+Received: from smtp.osdl.org ([65.172.181.25]:34020 "EHLO smtp.osdl.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S968609AbWLES3C
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 5 Dec 2006 13:29:02 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
+ smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kB5IStID014722
+ (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Tue, 5
+ Dec 2006 10:28:55 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
+ shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kB5ISr8D006469; Tue, 5 Dec
+ 2006 10:28:54 -0800
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
 Sender: git-owner@vger.kernel.org
 
-Jon Loeliger wrote:
-> On Fri, 2006-12-01 at 14:13, Linus Torvalds wrote:
-> 
->> So this is why it's really important that the submodule really is a git 
->> repository in its own right, and why committing stuff in the supermodule 
->> NEVER affect the submodule itself directly (it might _cause_ you to also 
->> do a commit in the submodule indirectly, but the submodule commit MUST be 
->> totally independent, and stand on its own).
-> 
-> An implication of this is that the entire administrative
-> responsibility for having some super-sub module interaction
-> lies entirely with the supermodule.
-> 
 
-That's a good thing. I wouldn't want the openssl maintainers to have to 
-bother with every project that uses their code, and I'm fairly certain 
-they feel the same.
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
+On Tue, 5 Dec 2006, Ramsay Jones wrote:
+>
+> Have you had time to look at my test cases?
+> As I said, I found them very useful when debugging
+> my git-diff3 code, and (hopefully) you will find them
+> to be equally useful.
+
+It might be interesting to also do a simple test:
+
+ - take every single merge in git (or the kernel, if you want even more)
+
+ - ignore all the trivial ones that didn't have any file-level merging at 
+   all (ie done entirely in the index)
+
+ - for all the rest, just compare what the end result is when re-doing the 
+   merge with "xdl_merge" vs "external 3-way merge".
+
+[ Side note: DO NOT COMPARE AGAINST THE ACTUAL RESULT IN GIT OR IN THE 
+  KERNEL ARCHIVE! Those will obviously have been fixed up by humans in the 
+  event of a data conflict, and sometimes even in the _absense_ of a data 
+  conflict (ie "git commit --amend" to fix up something that got mismerged 
+  perfectly automatically or whatever).
+
+  So a script should literally re-do the merge two ways, and compare the 
+  end result ]
+
+Is that any "proof"? Of course not. And it will probably show differences 
+due to any conflict handling, but a lot of the time you'd expect to get 
+exactly the same end result, so the occasional differences are going to be 
+just all the more interesting ("it resolved differently, but it was 
+an equally good resolve" is interesting data on its own).
+
+Anybody want to write a small script to do this?
+
