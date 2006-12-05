@@ -2,64 +2,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] gitk: pass --no-left-right to rev-list
-Date: Tue, 19 Dec 2006 02:28:31 -0800
-Message-ID: <7vac1krxgw.fsf@assigned-by-dhcp.cox.net>
-References: <20061219100534.GA9206@coredump.intra.peff.net>
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [RFC/PATCH] git-reset to remove "$GIT_DIR/MERGE_MSG"
+Date: Tue, 5 Dec 2006 10:03:51 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0612051000280.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <7v4psbknvb.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0612050847340.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+ <45752F8E.9020405@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 19 Dec 2006 10:29:03 +0000 (UTC)
-Cc: Paul Mackerras <paulus@samba.org>, git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Tue, 5 Dec 2006 09:04:03 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
+	ltuikov@yahoo.com
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061219100534.GA9206@coredump.intra.peff.net> (Jeff King's
-	message of "Tue, 19 Dec 2006 05:05:35 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <45752F8E.9020405@op5.se>
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34812>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GwcD9-0000Z8-RA for gcvg-git@gmane.org; Tue, 19 Dec
- 2006 11:28:40 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33322>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GrWDW-0006c8-A1 for gcvg-git@gmane.org; Tue, 05 Dec
+ 2006 10:03:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932743AbWLSK2d (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
- 05:28:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932749AbWLSK2d
- (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 05:28:33 -0500
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:45324 "EHLO
- fed1rmmtao10.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S932743AbWLSK2c (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec 2006
- 05:28:32 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao10.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061219102832.KQCM20715.fed1rmmtao10.cox.net@fed1rmimpo02.cox.net>; Tue, 19
- Dec 2006 05:28:32 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id 0aUk1W0041kojtg0000000; Tue, 19 Dec 2006
- 05:28:44 -0500
-To: Jeff King <peff@peff.net>
+ S968122AbWLEJDz (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 5 Dec 2006
+ 04:03:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S968123AbWLEJDz
+ (ORCPT <rfc822;git-outgoing>); Tue, 5 Dec 2006 04:03:55 -0500
+Received: from mail.gmx.net ([213.165.64.20]:37610 "HELO mail.gmx.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S968122AbWLEJDy
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 5 Dec 2006 04:03:54 -0500
+Received: (qmail invoked by alias); 05 Dec 2006 09:03:52 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp010) with SMTP; 05 Dec 2006 10:03:52 +0100
+To: Andreas Ericsson <ae@op5.se>
 Sender: git-owner@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Hi,
 
-> I think there are three fixes:
->   1. this patch (avoid using left-right)
->   2. gitk can detect and parse the new format
->   3. revert automatic use of left-right
-> The third makes the most sense to me.
+On Tue, 5 Dec 2006, Andreas Ericsson wrote:
 
-1. has the problem that it requires the version of Porcelains
-and the core to be tightly linked.  2. is nice but unnecessary
-burden in the short term.  3. does not break things for anybody,
-but if left-right output is useful on the terminal, it burdens
-the end-user typing from the command line.
+> Johannes Schindelin wrote:
+> > 
+> > The only possible exception I can think of: git-reset --mixed when a merge
+> > failed.
+> 
+> Indeed, but any invocation of git-reset means you'll quite likely have 
+> to re-do the merge to get all changes anyways.
 
-So in the longer term, 2 is probably slightly more preferrable,
-but my philosophy is "do not change anything unless absolutely
-necessary", so 3 is also sensible, at least in the short term.
+But the working directory still contains the changes (and conflicts) with 
+--mixed. A valid workflow would then be to compare to the index directly, 
+instead of having to ask "git diff --ours" all the time. And if I'm not 
+mistaken, a commit (after cleaning up the conflicts) would not record the 
+merge as a merge.
 
-Thanks for catching this quickly, before it hit the master.
-Let's revert 57612319.
+Ciao,
+Dscho
