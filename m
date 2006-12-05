@@ -1,62 +1,55 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: [PATCH] Allow subcommand.color and color.subcommand color configuration
-Date: Wed, 13 Dec 2006 22:52:50 +0000
-Message-ID: <200612132252.51696.andyparkins@gmail.com>
-References: <200612130913.28917.andyparkins@gmail.com> <7vodq7e90z.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] gitweb: Better symbolic link support in "tree" view
+Date: Mon, 04 Dec 2006 17:08:33 -0800
+Message-ID: <7vr6vfkv3i.fsf@assigned-by-dhcp.cox.net>
+References: <1165256780505-git-send-email-jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 13 Dec 2006 22:55:38 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Tue, 5 Dec 2006 01:08:42 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=P18ICzHHpnrCrcTzOfwg7xQIYBKt8kRbAj6k3H68cglowZDjQkT5H0f8MFmaBsOdFjR80e29RkdfWvoOhDBQy92bnbPCjYhu0fIaEmolas902XJUfBOIGuBkgrWtJ6fOGjLjYw0pHGyDLwjFNOWSqYpIRzXynNSgX/Kxios3yi8=
-User-Agent: KMail/1.9.5
-In-Reply-To: <7vodq7e90z.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34247>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33276>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gud0i-0005Gw-Ei for gcvg-git@gmane.org; Wed, 13 Dec
- 2006 23:55:36 +0100
+ esmtp (Exim 4.50) id 1GrOnX-00058l-96 for gcvg-git@gmane.org; Tue, 05 Dec
+ 2006 02:08:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751680AbWLMWze (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 13 Dec 2006
- 17:55:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751682AbWLMWzd
- (ORCPT <rfc822;git-outgoing>); Wed, 13 Dec 2006 17:55:33 -0500
-Received: from ug-out-1314.google.com ([66.249.92.173]:4560 "EHLO
- ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1751680AbWLMWzd (ORCPT <rfc822;git@vger.kernel.org>); Wed, 13 Dec
- 2006 17:55:33 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so316322uga for
- <git@vger.kernel.org>; Wed, 13 Dec 2006 14:55:32 -0800 (PST)
-Received: by 10.66.232.9 with SMTP id e9mr284769ugh.1166050531703; Wed, 13
- Dec 2006 14:55:31 -0800 (PST)
-Received: from grissom.internal.parkins.org.uk ( [84.201.153.164]) by
- mx.google.com with ESMTP id l33sm1267559ugc.2006.12.13.14.55.31; Wed, 13 Dec
- 2006 14:55:31 -0800 (PST)
-To: git@vger.kernel.org
+ S967946AbWLEBIg (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
+ 20:08:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967948AbWLEBIg
+ (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 20:08:36 -0500
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:35444 "EHLO
+ fed1rmmtao06.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S967946AbWLEBIe (ORCPT <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006
+ 20:08:34 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao06.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061205010834.WKLF5465.fed1rmmtao06.cox.net@fed1rmimpo02.cox.net>; Mon, 4
+ Dec 2006 20:08:34 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id up8k1V0051kojtg0000000; Mon, 04 Dec 2006
+ 20:08:44 -0500
+To: Jakub Narebsmi <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-On Wednesday 2006, December 13 22:16, Junio C Hamano wrote:
+Jakub Narebsmi <jnareb@gmail.com> writes:
 
-> I think doing the same makes sense.  Something like this?
+> In "tree" view (git_print_tree_entry subroutine), add for symbolic
+> links after file name " -> link_target", a la "ls -l".  Use
+> git_get_link_target_html to escape target name and make it into
+> hyperlink if possible.
 
-Perfect - yes that is the solution.
+I think " -> link_target" is fine, but I do not know if it is
+useful (while I do not think it is wrong) to make the value that
+would have been returned from readlink() into an href, even when
+it points at something inside the same revision.
 
-
-Andy
-
--- 
-Dr Andrew Parkins, M Eng (Hons), AMIEE
