@@ -1,45 +1,71 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Mitch Bradley <wmb@firmworks.com>
-Subject: Seeking git recipe to grab a single file
-Date: Wed, 06 Dec 2006 11:22:22 -1000
-Message-ID: <4577348E.4090105@firmworks.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [RFC/PATCH] git-reset to remove "$GIT_DIR/MERGE_MSG"
+Date: Tue, 05 Dec 2006 09:36:30 +0100
+Message-ID: <45752F8E.9020405@op5.se>
+References: <7v4psbknvb.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0612050847340.28348@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 6 Dec 2006 21:27:18 +0000 (UTC)
+NNTP-Posting-Date: Tue, 5 Dec 2006 08:36:45 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
+	ltuikov@yahoo.com
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.8 (Windows/20061025)
+User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
+In-Reply-To: <Pine.LNX.4.63.0612050847340.28348@wbgn013.biozentrum.uni-wuerzburg.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33523>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33316>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gs4IL-0001tg-Pt for gcvg-git@gmane.org; Wed, 06 Dec
- 2006 22:27:14 +0100
+ esmtp (Exim 4.50) id 1GrVn2-0003hY-LD for gcvg-git@gmane.org; Tue, 05 Dec
+ 2006 09:36:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S937649AbWLFV0x (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
- 16:26:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937663AbWLFV0w
- (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 16:26:52 -0500
-Received: from rs27.luxsci.com ([66.216.127.24]:39165 "EHLO rs27.luxsci.com"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S937649AbWLFV0v
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec 2006 16:26:51 -0500
-Received: from [10.20.0.14] (user-10cm75o.cable.mindspring.com
- [64.203.28.184]) (authenticated bits=0) by rs27.luxsci.com (8.13.7/8.13.7)
- with ESMTP id kB6LQnPn032181 (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA
- bits=256 verify=NOT) for <git@vger.kernel.org>; Wed, 6 Dec 2006 15:26:50
- -0600
-To: git@vger.kernel.org
+ S967469AbWLEIgd (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 5 Dec 2006
+ 03:36:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S968073AbWLEIgd
+ (ORCPT <rfc822;git-outgoing>); Tue, 5 Dec 2006 03:36:33 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:55741 "EHLO
+ smtp-gw1.op5.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
+ S967469AbWLEIgc (ORCPT <rfc822;git@vger.kernel.org>); Tue, 5 Dec 2006
+ 03:36:32 -0500
+Received: from [192.168.1.20] (unknown [213.88.215.14]) by smtp-gw1.op5.se
+ (Postfix) with ESMTP id CCD0C6BCC7; Tue,  5 Dec 2006 09:36:30 +0100 (CET)
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-I want to grab a single file from a remote git repository into the 
-current directory, which is not a git tree.  Is there an easy way to do 
-that?  I have tried using git-fetch and git-cat-file, without success.
+Johannes Schindelin wrote:
+> Hi,
+> 
+> On Mon, 4 Dec 2006, Junio C Hamano wrote:
+> 
+>>  * Marked as RFC because I suspect I am missing a valid use case
+>>    where a user might want to say "reset" as part of continuing
+>>    the conflicted merge resolution, although I do not think of
+>>    any offhand...
+> 
+> I can only speak for myself, of course: When I use git-reset in a merge, 
+> more often than not I use "--hard", in which case I want to try something 
+> different. So yes, I like this patch.
+> 
+> The only possible exception I can think of: git-reset --mixed when a 
+> merge failed.
+> 
 
-Thanks,
-Mitch Bradley
+Indeed, but any invocation of git-reset means you'll quite likely have 
+to re-do the merge to get all changes anyways.
+
+Like most others, I also use the --hard option most of the times when I 
+have merge-errors (usually because I've forgotten to create a 
+topic-branch to do my work in, so I create one from 'master', reset 
+master to whatever it was last time I pulled and then try rebase'ing on 
+to it).
+
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
