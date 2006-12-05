@@ -1,56 +1,67 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [git failure] failure pulling latest Linus tree
-Date: Wed, 25 Oct 2006 18:13:23 +0200
-Message-ID: <20061025161323.GF11916@pasky.or.cz>
-References: <yq0d58g92u0.fsf@jaguar.mkp.net> <Pine.LNX.4.64.0610250746000.3962@g5.osdl.org> <453F8630.2000608@zytor.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 25 Oct 2006 16:13:57 +0000 (UTC)
-Cc: Linus Torvalds <torvalds@osdl.org>, Jes Sorensen <jes@sgi.com>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+From: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
+Subject: Re: [PATCH] git-explain
+Date: Tue, 05 Dec 2006 14:34:11 -0300
+Message-ID: <200612051734.kB5HYBUs016133@laptop13.inf.utfsm.cl>
+References: <peff@peff.net>
+NNTP-Posting-Date: Tue, 5 Dec 2006 17:35:25 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>,
+	"J. Bruce Fields" <bfields@fieldses.org>,
+	Nicolas Pitre <nico@cam.org>, git@vger.kernel.org,
+	Linus Torvalds <torvalds@osdl.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <453F8630.2000608@zytor.com>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: Message from Jeff King <peff@peff.net> 
+   of "Tue, 05 Dec 2006 02:26:22 CDT." <20061205072622.GA21839@coredump.intra.peff.net> 
+X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.5  (beta27)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-2.0.2 (inti.inf.utfsm.cl [200.1.21.155]); Tue, 05 Dec 2006 14:34:14 -0300 (CLST)
+X-Virus-Scanned: ClamAV version 0.88.5, clamav-milter version 0.88.5 on inti.inf.utfsm.cl
+X-Virus-Status: Clean
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30071>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GclNg-0005mO-Gn for gcvg-git@gmane.org; Wed, 25 Oct
- 2006 18:13:28 +0200
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33359>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GreCO-0003hC-KY for gcvg-git@gmane.org; Tue, 05 Dec
+ 2006 18:35:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932272AbWJYQN0 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 25 Oct 2006
- 12:13:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932444AbWJYQN0
- (ORCPT <rfc822;git-outgoing>); Wed, 25 Oct 2006 12:13:26 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:53648 "EHLO machine.or.cz") by
- vger.kernel.org with ESMTP id S932272AbWJYQNZ (ORCPT
- <rfc822;git@vger.kernel.org>); Wed, 25 Oct 2006 12:13:25 -0400
-Received: (qmail 15430 invoked by uid 2001); 25 Oct 2006 18:13:23 +0200
-To: "H. Peter Anvin" <hpa@zytor.com>
+ S968503AbWLERfM (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 5 Dec 2006
+ 12:35:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S968505AbWLERfM
+ (ORCPT <rfc822;git-outgoing>); Tue, 5 Dec 2006 12:35:12 -0500
+Received: from inti.inf.utfsm.cl ([200.1.21.155]:54691 "EHLO
+ inti.inf.utfsm.cl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
+ S968503AbWLERfK (ORCPT <rfc822;git@vger.kernel.org>); Tue, 5 Dec 2006
+ 12:35:10 -0500
+Received: from laptop13.inf.utfsm.cl (laptop13.inf.utfsm.cl [200.1.19.201])
+ by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id kB5HYEi9030509
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO); Tue, 5
+ Dec 2006 14:34:14 -0300
+Received: from laptop13.inf.utfsm.cl (laptop13.inf.utfsm.cl [127.0.0.1]) by
+ laptop13.inf.utfsm.cl (8.13.8/8.13.8) with ESMTP id kB5HYBUs016133; Tue, 5
+ Dec 2006 14:34:12 -0300
+To: Jeff King <peff@peff.net>
 Sender: git-owner@vger.kernel.org
 
-Dear diary, on Wed, Oct 25, 2006 at 05:43:44PM CEST, I got a letter
-where "H. Peter Anvin" <hpa@zytor.com> said that...
-> HOWEVER, git 1.4.3 seems to have been bad chicken.  When we ran it we 
-> got a neverending stream of segfaults in the logs.
+Jeff King <peff@peff.net> wrote:
 
-Could you provide some details, please? Ideally a backtrace or
-something? Also, it might be a good idea to use 1.4.3.2 since it fixes a
-problem with compatibility of git-daemon and older git clients.
+[...]
 
-Thanks,
+> As long as the safety valves don't come up _routinely_ in certain
+> workflows, it seems OK to bypass them with a '-f' force switch. I
+> suspect the best way to figure out if such workflows are in use is to
+> put in the safety valves and see who complains; otherwise we're stuck
+> with brainstorming workflows and deciding whether they make sense.
 
+Problem is that nobody reads the manuals, next to nobody complains, and
+when it doesn't work out via road A you try plan B. A might have been
+exactly right, but it is blocked, and you'll never know if it is because of
+fundamental reasons or by decree.
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
-$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
+Dr. Horst H. von Brand                   User #22616 counter.li.org
+Departamento de Informatica                    Fono: +56 32 2654431
+Universidad Tecnica Federico Santa Maria             +56 32 2654239
