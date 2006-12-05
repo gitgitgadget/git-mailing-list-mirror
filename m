@@ -2,71 +2,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] git-reset [--mixed] <tree> [--] <paths>...
-Date: Thu, 14 Dec 2006 12:41:39 -0800
-Message-ID: <7v3b7i2osc.fsf@assigned-by-dhcp.cox.net>
-References: <7vwt4u96e8.fsf@assigned-by-dhcp.cox.net>
-	<slrneo2atm.nqa.Peter.B.Baumann@xp.machine.xx>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC] Submodules in GIT
+Date: Tue, 05 Dec 2006 12:11:04 +0100
+Organization: At home
+Message-ID: <el3k0a$i62$2@sea.gmane.org>
+References: <20061121223130.GA24909@nan92-1-81-57-214-146.fbx.proxad.net> <200611281335.38728.andyparkins@gmail.com> <20061129160355.GF18810@admingilde.org> <200611292000.23778.andyparkins@gmail.com> <20061130170625.GH18810@admingilde.org> <456F29A2.1050205@op5.se> <20061205090125.GA2428@cepheus> <45754AFE.1070207@op5.se>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 14 Dec 2006 20:41:47 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Transfer-Encoding: 7Bit
+NNTP-Posting-Date: Tue, 5 Dec 2006 11:14:40 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <slrneo2atm.nqa.Peter.B.Baumann@xp.machine.xx> (Peter Baumann's
-	message of "Thu, 14 Dec 2006 11:47:18 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 28
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34394>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33339>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GuxOi-0004EA-Nl for gcvg-git@gmane.org; Thu, 14 Dec
- 2006 21:41:45 +0100
+ esmtp (Exim 4.50) id 1GrYFy-0006O1-Nn for gcvg-git@gmane.org; Tue, 05 Dec
+ 2006 12:14:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932902AbWLNUln (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
- 15:41:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932909AbWLNUlm
- (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 15:41:42 -0500
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:62516 "EHLO
- fed1rmmtao06.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S932905AbWLNUll (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006
- 15:41:41 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao06.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061214204140.HMOK2628.fed1rmmtao06.cox.net@fed1rmimpo02.cox.net>; Thu, 14
- Dec 2006 15:41:40 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id ykhr1V00V1kojtg0000000; Thu, 14 Dec 2006
- 15:41:51 -0500
-To: Peter Baumann <Peter.B.Baumann@stud.informatik.uni-erlangen.de>
+ S967459AbWLELL0 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 5 Dec 2006
+ 06:11:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S968174AbWLELKs
+ (ORCPT <rfc822;git-outgoing>); Tue, 5 Dec 2006 06:10:48 -0500
+Received: from main.gmane.org ([80.91.229.2]:42164 "EHLO ciao.gmane.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S968124AbWLELKG
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 5 Dec 2006 06:10:06 -0500
+Received: from root by ciao.gmane.org with local (Exim 4.43) id
+ 1GrYBW-0007JL-E7 for git@vger.kernel.org; Tue, 05 Dec 2006 12:10:02 +0100
+Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Tue, 05 Dec 2006 12:10:02 +0100
+Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Tue, 05 Dec 2006
+ 12:10:02 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Peter Baumann <Peter.B.Baumann@stud.informatik.uni-erlangen.de>
-writes:
+Andreas Ericsson wrote:
 
-> Why not make
+> Uwe Kleine-Koenig wrote:
 >
-> 	git-reset --hard <treeish> -- file
->
-> aquivalent to
->
-> 	git-checkout <treeish> -- file
+>> Andreas Ericsson wrote:
+>>> The only problem I'm seeing atm is that the supermodule somehow has to 
+>>> mark whatever commits it's using from the submodule inside the submodule 
+>>> repo so that they effectively become un-prunable, otherwise the 
+>>> supermodule may some day find itself with a history that it can't restore.
+>>>
+>> One could circumvent that by creating a separate repo for the submodule
+>> at checkout time and pull the needed objects in the supermodule's odb
+>> when commiting the supermodule.  This way prune in the submodule cannot
+>> do any harm, because in it's odb are no objects that are important for
+>> the supermodule.
+> 
+> Yes, but then you'd lose history connectivity (I'm assuming you'd only 
+> pull in the tree and blob objects from the submodule, and prefix the 
+> tree-entrys with whatever directory you're storing the submodul in).
 
-Theoretically we could, but I'd rather keep "reset --hard"
-something that people would think a bit about before actually
-running (I am not enthused about giving "reset --mixed" this
-feature for the same reason, but I think it is safe enough).
+I thought that Uwe meant pulling (getting) _all_ the needed objects from
+submodule object repository into supermodule object repository: commits,
+trees and blobs, full history.
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
 
-I'd want to avoid overloading different meanings to the --hard
-form.  Mis-typing checkout (say, accidentally having <RETURN>
-before "-- file" part while cut & paste) would not be so
-dangeous; mis-typing "reset --hard" the same way could be
-disastrous.
-
-> PS:	Your patch didn't apply cleanly.
-
-As I said there is one bug I've fixed in my tree but the
-branches were not pushed out yet.
