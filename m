@@ -1,93 +1,80 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 0/2] Making "git commit" to mean "git commit -a".
-Date: Thu, 30 Nov 2006 22:16:29 +0100
-Organization: At home
-Message-ID: <eknhjr$nce$1@sea.gmane.org>
-References: <7virgzuf38.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611282322320.9647@xanadu.home> <7vr6vmsnly.fsf@assigned-by-dhcp.cox.net> <87ejrlvn7r.wl%cworth@cworth.org> <7vodqpn3t4.fsf@assigned-by-dhcp.cox.net> <7vk61dn2yj.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0611300310520.30004@wbgn013.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.64.0611291859070.3513@woody.osdl.org> <456EBBE7.8030404@op5.se> <Pine.LNX.4.64.0611300749560.3513@woody.osdl.org> <20061130164046.GB17715@thunk.org> <Pine.LNX.4.64.0611300903080.3513@woody.osdl.org> <Pine.LNX.4.64.0611301229290.9647@xanadu.home> <87irgwu6e6.wl%cworth@cworth.org> <87hcwgu5t1.wl%cworth@cworth.org> <Pine.LNX.4.64.0611301132350.3513@woody.osdl.org> <Pine.LNX.4.64.0611301521320.9647@xanadu.home> <Pine.LNX.4.64.0611301253380.3513@woody.osdl.org>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: [PATCH] Print progress message to stderr, not stdout
+Date: Tue, 5 Dec 2006 07:11:04 +0100
+Message-ID: <e5bfff550612042211q4c4e1e79x8e6e08a224209135@mail.gmail.com>
+References: <20061111121625.8988.45195.stgit@localhost>
+	 <e5bfff550612020520w3ad48a09xfdde63b9050a75cf@mail.gmail.com>
+	 <b0943d9e0612040117y6554b891yaf6eb59d0d52ebf0@mail.gmail.com>
+	 <20061204153705.GA8644@diana.vm.bytemark.co.uk>
+	 <e5bfff550612041034g727a1bebg464f7c523c0fac7f@mail.gmail.com>
+	 <b0943d9e0612041413p4f303176x3d0fa95afd1c4a1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Thu, 30 Nov 2006 21:15:28 +0000 (UTC)
+NNTP-Posting-Date: Tue, 5 Dec 2006 06:11:12 +0000 (UTC)
+Cc: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>,
+	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 38
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=qVbc9hbFAOL45DEhbx509iLFaA1zEZwuxvX1hPYvKNtxbSO5K6TGQe/RgXwjYTPBjAFNphmErEqzmJY4N6SF7a6efzyXCAW4JnAMPVzS5DrRRcZCAZPeiVoSCwI+BQxzis/ca8bf5W7inRCnfNlDV0ZRoHY5Fr/NjqDG8xQaP5E=
+In-Reply-To: <b0943d9e0612041413p4f303176x3d0fa95afd1c4a1@mail.gmail.com>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32799>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GptFQ-0005Aj-9K for gcvg-git@gmane.org; Thu, 30 Nov
- 2006 22:15:13 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33307>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GrTWJ-0006IV-AP for gcvg-git@gmane.org; Tue, 05 Dec
+ 2006 07:11:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S936456AbWK3VPH convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006 16:15:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936455AbWK3VPH
- (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 16:15:07 -0500
-Received: from main.gmane.org ([80.91.229.2]:48103 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S936456AbWK3VPF (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 16:15:05 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1GptFB-00057f-BX for git@vger.kernel.org; Thu, 30 Nov 2006 22:14:57 +0100
-Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Thu, 30 Nov 2006 22:14:57 +0100
-Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Thu, 30 Nov 2006
- 22:14:57 +0100
-To: git@vger.kernel.org
+ S967465AbWLEGLI convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Tue, 5 Dec 2006 01:11:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S968039AbWLEGLI
+ (ORCPT <rfc822;git-outgoing>); Tue, 5 Dec 2006 01:11:08 -0500
+Received: from py-out-1112.google.com ([64.233.166.182]:12822 "EHLO
+ py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S967465AbWLEGLF convert rfc822-to-8bit (ORCPT
+ <rfc822;git@vger.kernel.org>); Tue, 5 Dec 2006 01:11:05 -0500
+Received: by py-out-1112.google.com with SMTP id a29so2412058pyi for
+ <git@vger.kernel.org>; Mon, 04 Dec 2006 22:11:04 -0800 (PST)
+Received: by 10.35.93.19 with SMTP id v19mr16938993pyl.1165299064440; Mon, 04
+ Dec 2006 22:11:04 -0800 (PST)
+Received: by 10.35.93.11 with HTTP; Mon, 4 Dec 2006 22:11:04 -0800 (PST)
+To: "Catalin Marinas" <catalin.marinas@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Linus Torvalds wrote:
+On 12/4/06, Catalin Marinas <catalin.marinas@gmail.com> wrote:
+> On 04/12/06, Marco Costalba <mcostalba@gmail.com> wrote:
+> > On 12/4/06, Karl Hasselstr=F6m <kha@treskal.com> wrote:
+> > > I introduced this since I wanted to divert the output to a file, =
+and
+> > > the progress message had no business being written to that file. =
+But a
+> > > command line option to suppress progress messages would work just=
+ as
+> > > well if that's what git does.
+> >
+> > If you don't mind I would prefer a command line option to _enable_
+> > progress messages, something like -v or --verbose so to keep back
+> > compatibility with current versions of tools that do not expect std=
+err
+> > messages.
+>
+> I'll first move the message back to stdout. Does qgit rely on the
+> StGIT output to have a certain format/information? Does the progress
+> message affect it in any way?
+>
 
-> The _original_ "git add" was literally just this one-liner:
->=20
-> =A0=A0=A0=A0=A0=A0=A0=A0#!/bin/sh
-> =A0=A0=A0=A0=A0=A0=A0=A0git-update-index --add -- "$@"
->=20
-> which actually was better in this respect (it updated the content), b=
-ut=20
-> that didn't do sub-directories, so this is arguable a bug introduced =
-by=20
-> commit 37539fbd:=20
->=20
-> =A0 =A0 [PATCH] Improved "git add"
->=20
-> =A0 =A0 This fixes everybodys favourite complaint about "git add", na=
-mely that it
-> =A0 =A0 doesn't take directories.
->=20
-> which started using=20
->=20
-> =A0=A0=A0=A0=A0=A0=A0=A0git-ls-files --others -z -- "$@"
->=20
-> together with the exclude files to generate the list of files to add.=
- At=20
-> that point, we lost files that already existed (since "--others" spec=
-ifies=20
-> just files we don't know about).
+No. It just checks stderr for empty.
 
-So should we use then
-
-        git-ls-files --cached --others -z -- "$@"
-
-in git-add?
-
-I'm very much for having git-add, -rm, -mv and -resolved as porcelain
-wrappers around git update-index, so there would be even less events
-when you have to use this plumbish command directly.
---=20
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
-
+The only commands whose output is used by qgit are stg series/applied/u=
