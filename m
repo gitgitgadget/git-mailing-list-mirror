@@ -1,79 +1,79 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: git and bzr
-Date: Tue, 28 Nov 2006 19:40:38 +0000
-Message-ID: <200611281940.40139.andyparkins@gmail.com>
-References: <45357CC3.4040507@utoronto.ca> <ekhtnt$rkk$1@sea.gmane.org> <456C89E7.8080404@ableton.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC] Submodules in GIT
+Date: Tue, 05 Dec 2006 12:01:28 +0100
+Organization: At home
+Message-ID: <el3jeb$gkr$1@sea.gmane.org>
+References: <20061130170625.GH18810@admingilde.org> <200612012306.41410.Josef.Weidendorfer@gmx.de> <Pine.LNX.4.64.0612011423100.3695@woody.osdl.org> <4570AF8F.1000801@stephan-feder.de> <Pine.LNX.4.64.0612011505190.3695@woody.osdl.org> <4570BFA4.8070903@stephan-feder.de> <e7bda7770612021057mc9f3eb9q7fc047dd1b5c235f@mail.gmail.com> <Pine.LNX.4.64.0612021114270.3476@woody.osdl.org> <e7bda7770612030119v197cbc95h6b3fa9e22b78c058@mail.gmail.com> <Pine.LNX.4.64.0612030946150.3476@woody.osdl.org> <e7bda7770612041226j4d4a5584m279afa9a2d7dfe74@mail.gmail.com> <Pine.LNX.4.64.0612041234390.3476@woody.osdl.org> <45754C0E.3070904@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Tue, 28 Nov 2006 19:44:04 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+NNTP-Posting-Date: Tue, 5 Dec 2006 10:59:41 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=qhhJO1xGdpdD+vzIeQc9AmuEp0ZQfBX2TvQdZRgXYNA1wS5Z2wvbY4UzgW2AsCMqLfGw6IdpiEq4a5wZA5ciNQQOvi1Zm5Jx+Cczo+9ckj5BUlRI5ciSy0m7Ol8qL07QnxIIpi8MNg8DN9+YCrV59YMN4eXd1h2AbLh3+Q1QLVA=
-User-Agent: KMail/1.9.5
-In-Reply-To: <456C89E7.8080404@ableton.com>
-Content-Disposition: inline
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 29
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32568>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gp8rc-00022J-K0 for gcvg-git@gmane.org; Tue, 28 Nov
- 2006 20:43:32 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33337>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GrY1R-0004SW-3L for gcvg-git@gmane.org; Tue, 05 Dec
+ 2006 11:59:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S936074AbWK1Tn0 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 28 Nov 2006
- 14:43:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936071AbWK1Tn0
- (ORCPT <rfc822;git-outgoing>); Tue, 28 Nov 2006 14:43:26 -0500
-Received: from ug-out-1314.google.com ([66.249.92.172]:59610 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S936074AbWK1TnZ
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2006 14:43:25 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so1576238uga for
- <git@vger.kernel.org>; Tue, 28 Nov 2006 11:43:23 -0800 (PST)
-Received: by 10.66.219.11 with SMTP id r11mr2175854ugg.1164743003004; Tue, 28
- Nov 2006 11:43:23 -0800 (PST)
-Received: from grissom.internal.parkins.org.uk ( [84.201.153.164]) by
- mx.google.com with ESMTP id e34sm20964045ugd.2006.11.28.11.43.21; Tue, 28 Nov
- 2006 11:43:22 -0800 (PST)
+ S967739AbWLEK7e (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 5 Dec 2006
+ 05:59:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759943AbWLEK7e
+ (ORCPT <rfc822;git-outgoing>); Tue, 5 Dec 2006 05:59:34 -0500
+Received: from main.gmane.org ([80.91.229.2]:47012 "EHLO ciao.gmane.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1759940AbWLEK7d
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 5 Dec 2006 05:59:33 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1GrY1L-0005e6-1s for git@vger.kernel.org; Tue, 05 Dec 2006 11:59:31 +0100
+Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Tue, 05 Dec 2006 11:59:31 +0100
+Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Tue, 05 Dec 2006
+ 11:59:31 +0100
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On Tuesday 2006, November 28 19:11, Nicholas Allen wrote:
+Andreas Ericsson wrote:
 
-> This can't be fail safe though. I would prefer to also have the option
-> to be able to *explicitly* tell the RCS that a file was renamed and not
-> have it try to detect from the content  which is bound to have corner
-> cases that fail. When I know I renamed a file why can't I explicitly
+> Indeed. With the "tight" integration option we'd also have to have the 
+> mechanism to rewrite the tree-entries with the location where the 
+> submodule is located in the working tree. This might be needed anyways, 
+> but it sure as hell seems a lot easier to just tack that part on when 
+> doing a checkout and actually creating all the files.
 
-You want to tell git about a rename that will never fail to be detected?  No 
-problem.
+Excellent idea! This way most of the concerns for "separate repositories for
+submodules" layout about ability to rename directory the submodule resides
+in, or move submodule are resolved. The other part would be to use
+submodule-aware git-mv to move submodule(s).
 
-$ git mv oldname newname
-$ git commit
+Perhaps the following solution would work best:
+ * refs/submodules/<module> holds sha1 of top commit in submodule
+ * objects/info/submodules is a file which can be automatically generated
+   (or at least automatically updated) on checkout, with the following
+   contents:
 
-The corner cases you speak about are when you rename and edit.
+   <module> TAB or SPC <path to submodule, or GIT_DIR of submodule, or
+                        GIT_OBJECT_DIRECTORY of submodule>
 
-For me, I prefer that to be detected as at least the detection algorithm can 
-be tuned - there is no fixing it if the VCS was forced to consider it a 
-rename.
-
-When I started using git I was worried about the lack of a rename, but now I 
-realise that it's not needed - it's pointless.  The VCS is snapshotting 
-moments in time, that's it.  Then by making cleverer and cleverer 
-interpreters of those snapshots you have the potential to do stuff that is 
-far more useful than "just" rename recording.
-
-
-Andy
+   with the usual rule that # and ; means comment, \ at end of line is used
+   for continuations, empty lines doesn't matter etc.
 -- 
-Dr Andrew Parkins, M Eng (Hons), AMIEE
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
+
