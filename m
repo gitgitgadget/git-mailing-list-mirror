@@ -1,55 +1,70 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] make git-push a bit more verbose
-Date: Wed, 1 Nov 2006 01:08:40 +0100
-Message-ID: <20061101000840.GE20017@pasky.or.cz>
-References: <Pine.LNX.4.64.0610311648220.11384@xanadu.home>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 1/4] git-svn: let libsvn_ls_fullurl return properties too
+Date: Mon, 04 Dec 2006 17:10:50 -0800
+Message-ID: <7vhcwbkuzp.fsf@assigned-by-dhcp.cox.net>
+References: <20061204235724.46FD7139B0C@magnus.utsl.gen.nz>
+	<7v3b7vnqtv.fsf@assigned-by-dhcp.cox.net>
+	<20061205010428.GA26687@soma>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 1 Nov 2006 00:08:55 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+NNTP-Posting-Date: Tue, 5 Dec 2006 01:10:58 +0000 (UTC)
+Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0610311648220.11384@xanadu.home>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <20061205010428.GA26687@soma> (Eric Wong's message of "Mon, 4 Dec
+	2006 17:04:28 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30609>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gf3ew-0006yp-J6 for gcvg-git@gmane.org; Wed, 01 Nov
- 2006 01:08:46 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33279>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GrOpk-0005PD-53 for gcvg-git@gmane.org; Tue, 05 Dec
+ 2006 02:10:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1946203AbWKAAIn (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 31 Oct 2006
- 19:08:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946205AbWKAAIn
- (ORCPT <rfc822;git-outgoing>); Tue, 31 Oct 2006 19:08:43 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:42680 "EHLO machine.or.cz") by
- vger.kernel.org with ESMTP id S1946203AbWKAAIm (ORCPT
- <rfc822;git@vger.kernel.org>); Tue, 31 Oct 2006 19:08:42 -0500
-Received: (qmail 19942 invoked by uid 2001); 1 Nov 2006 01:08:40 +0100
-To: Nicolas Pitre <nico@cam.org>
+ S967952AbWLEBKx (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
+ 20:10:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967954AbWLEBKx
+ (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 20:10:53 -0500
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:61610 "EHLO
+ fed1rmmtao07.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S967952AbWLEBKw (ORCPT <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006
+ 20:10:52 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao07.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061205011052.WBOT27894.fed1rmmtao07.cox.net@fed1rmimpo02.cox.net>; Mon, 4
+ Dec 2006 20:10:52 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id upB11V00h1kojtg0000000; Mon, 04 Dec 2006
+ 20:11:02 -0500
+To: Sam Vilain <sam@vilain.net>
 Sender: git-owner@vger.kernel.org
 
-Dear diary, on Tue, Oct 31, 2006 at 10:58:32PM CET, I got a letter
-where Nicolas Pitre <nico@cam.org> said that...
-> Currently git-push displays progress status for the local packing of 
-> objects to send, but nothing once it starts to push it over the 
-> connection.  Having progress status in that later case is especially 
-> nice when pushing lots of objects over a slow network link.
-> 
-> Signed-off-by: Nicolas Pitre <nico@cam.org>
+Eric Wong <normalperson@yhbt.net> writes:
 
-Yet Another Undocumented Feature? :-(
+> Junio C Hamano <junkio@cox.net> wrote:
+>> 
+>> Please CC people who are primarily working on the part of the
+>> system you are improving.  In the case of git-svn that would be
+>> Eric Wong.
+>
+> Yes, CCs regarding git-svn would be much appreciated, thanks.
+> ...
+> Please fix the coding style so that it's consistent with the rest of
+> git-svn:
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
-$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
+Thanks Eric for your quick response.
+
+> a) indentation is done with hard tabs
+> b) no spaces around parentheses: "if ($foo) {" vs "if ( $foo ) {"
+>
+> Also, adding tests would be helpful in helping me maintain it (I'm not
+> a regular svk user, so I don't want to break anything you've done down
+> the line).
+
+Another request from the maintainer is to Sign-off the patches.
