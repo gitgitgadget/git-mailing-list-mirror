@@ -1,68 +1,64 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-2.0 required=3.0 tests=BAYES_05,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: [PATCH 1/3] Ask git for author and committer name
-Date: Mon, 4 Dec 2006 22:24:52 +0000
-Message-ID: <b0943d9e0612041424v42313a2r22d8fc8d1b18cb55@mail.gmail.com>
-References: <20061111232322.17760.26214.stgit@localhost>
-	 <20061111233046.17760.62871.stgit@localhost>
+From: "Raimund Bauer" <ray@softwarelandschaft.com>
+Subject: RE: [PATCH] git-explain
+Date: Tue, 5 Dec 2006 10:11:30 +0100
+Organization: Softwarelandschaft
+Message-ID: <001b01c7184d$5d142c20$0b0aa8c0@abf.local>
+References: <7v1wnekh6a.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Mon, 4 Dec 2006 22:25:08 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Tue, 5 Dec 2006 09:12:15 +0000 (UTC)
+Cc: <git@vger.kernel.org>, "'Linus Torvalds'" <torvalds@osdl.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=GqqdGlGp1I1vIRuc3qZFccNfoNMkq3imfAs+FyJ0Cz3mdE+n6T0Kb52eA5RRoAc4oLbSoyRyindlKuCGz/y/7uRYiZ0xEqbvcUjK65RS2qlZmN+uqooNJzE+0+hX0ONOjTzyICmS7QfmaMBZV9OKjyBZsp3krLZ9VF1hC5gj/Fk=
-In-Reply-To: <20061111233046.17760.62871.stgit@localhost>
-Content-Disposition: inline
+X-Priority: 3 (Normal)
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook, Build 10.0.6626
+In-Reply-To: <7v1wnekh6a.fsf@assigned-by-dhcp.cox.net>
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.2962
+Importance: Normal
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33262>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33326>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GrMF9-0001dC-22 for gcvg-git@gmane.org; Mon, 04 Dec
- 2006 23:24:59 +0100
+ esmtp (Exim 4.50) id 1GrWLT-0007dm-Qu for gcvg-git@gmane.org; Tue, 05 Dec
+ 2006 10:12:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S937125AbWLDWYz convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006 17:24:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937174AbWLDWYz
- (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 17:24:55 -0500
-Received: from nz-out-0506.google.com ([64.233.162.227]:44098 "EHLO
- nz-out-0102.google.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with
- ESMTP id S937125AbWLDWYz convert rfc822-to-8bit (ORCPT
- <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006 17:24:55 -0500
-Received: by nz-out-0102.google.com with SMTP id s1so1973423nze for
- <git@vger.kernel.org>; Mon, 04 Dec 2006 14:24:52 -0800 (PST)
-Received: by 10.64.148.8 with SMTP id v8mr13040897qbd.1165271092122; Mon, 04
- Dec 2006 14:24:52 -0800 (PST)
-Received: by 10.65.133.7 with HTTP; Mon, 4 Dec 2006 14:24:52 -0800 (PST)
-To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
+ S968137AbWLEJMI (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 5 Dec 2006
+ 04:12:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S968138AbWLEJMI
+ (ORCPT <rfc822;git-outgoing>); Tue, 5 Dec 2006 04:12:08 -0500
+Received: from s15211414.onlinehome-server.info ([87.106.16.196]:44942 "EHLO
+ s15211414.onlinehome-server.info" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+ with ESMTP id S968137AbWLEJMF (ORCPT <rfc822;git@vger.kernel.org>); Tue, 5
+ Dec 2006 04:12:05 -0500
+Received: (qmail 18995 invoked from network); 5 Dec 2006 10:13:08 +0100
+Received: from host-62-245-155-90.customer.m-online.net (HELO swl011)
+ (62.245.155.90) by s15211414.onlinehome-server.info with SMTP; 5 Dec 2006
+ 10:13:08 +0100
+To: "'Junio C Hamano'" <junkio@cox.net>, "'J. Bruce Fields'"
+ <bfields@fieldses.org>, "'Nicolas Pitre'" <nico@cam.org>
 Sender: git-owner@vger.kernel.org
 
-On 11/11/06, Karl Hasselstr=F6m <kha@treskal.com> wrote:
-> Consistently do the following to get hold of default user and
-> committer:
->
->   1. Use the value specified on the command line, if any.
->
->   1. Otherwise, use the value from stgitrc, if available.
->
->   2. Otherwise, ask git for the value. git will produce the value fro=
-m
->      on of its config files, from environment variables, or make it
->      up. It might be asking the spirits of the dead for all we care.
+> An issue with this approach is that this can be the beginning 
+> of hardwiring the official "right way of doing things" in the 
+> set of tools.  Pursuing this approach would enhance the set 
+> of state markers like "FAILED_MERGE" in the example, which means:
 
-I haven't forgot about this patch. I switched StGIT to the gitconfig
-files and there won't be a need to invoke "git repo-config". I'll try
-to modify your patch.
+Wouldn't it be better to create some kind of action-log (that's
+cleared at the end of the command if everything was all right)
+instead of creating special markers for different commands?
 
---=20
+That way there would be only 1 place to check for what happened ...
+
+-- 
+best regards
+
+  Ray
