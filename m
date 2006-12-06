@@ -1,91 +1,90 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [RFC] Submodules in GIT
-Date: Tue, 28 Nov 2006 15:41:01 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0611281407370.20138@iabervon.org>
-References: <Pine.LNX.4.64.0611251037000.6991@woody.osdl.org>
- <45689747.3020403@midwinter.com> <Pine.LNX.4.64.0611251128170.3483@woody.osdl.org>
- <20061125234908.GC24909@nan92-1-81-57-214-146.fbx.proxad.net>
- <Pine.LNX.4.64.0611251936590.3483@woody.osdl.org> <Pine.LNX.4.64.0611260241320.20138@iabervon.org>
- <456C0313.3020308@op5.se> <Pine.LNX.4.64.0611281218290.20138@iabervon.org>
- <20061128180817.GA12463MdfPADPa@greensroom.kotnet.org>
- <Pine.LNX.4.64.0611281315020.20138@iabervon.org>
- <20061128190618.GB12463MdfPADPa@greensroom.kotnet.org>
+From: "Aneesh Kumar" <aneesh.kumar@gmail.com>
+Subject: Re: git pull and merging.
+Date: Wed, 6 Dec 2006 15:35:15 +0530
+Message-ID: <cc723f590612060205p1fd26cd7u3c7efc723b0177de@mail.gmail.com>
+References: <cc723f590612052051r62111c4cgfd7ee893cb00f84a@mail.gmail.com>
+	 <7vodqhaa7o.fsf@assigned-by-dhcp.cox.net>
+	 <cc723f590612052121u1f6e3c9lc7329f40ee1c9e5a@mail.gmail.com>
+	 <Pine.LNX.4.63.0612061019350.28348@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Tue, 28 Nov 2006 20:41:27 +0000 (UTC)
-Cc: Andreas Ericsson <ae@op5.se>, Linus Torvalds <torvalds@osdl.org>,
-	Yann Dirson <ydirson@altern.org>,
-	Steven Grimm <koreth@midwinter.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Wed, 6 Dec 2006 10:05:36 +0000 (UTC)
+Cc: "Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061128190618.GB12463MdfPADPa@greensroom.kotnet.org>
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=NTRlIiXk7QAR2SbaVNlwpaPrgR6esYoLW+ZjedspboClsx42SVjcLcMeB0Izf9OT7lNPM8Z7tAddynkY9MBuQ+PIYfcOCEsEc3AjiVQnnSk5UMM5nfiJFQddMNgYa4yOCECBWU6Kz5+eP64qLTq6opE2JvOWQPjBzlMrXwJge0c=
+In-Reply-To: <Pine.LNX.4.63.0612061019350.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32575>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gp9lN-0008CS-Bv for gcvg-git@gmane.org; Tue, 28 Nov
- 2006 21:41:09 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33419>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Grtef-0008VQ-4Q for gcvg-git@gmane.org; Wed, 06 Dec
+ 2006 11:05:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1755198AbWK1UlF (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 28 Nov 2006
- 15:41:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755277AbWK1UlF
- (ORCPT <rfc822;git-outgoing>); Tue, 28 Nov 2006 15:41:05 -0500
-Received: from iabervon.org ([66.92.72.58]:39697 "EHLO iabervon.org") by
- vger.kernel.org with ESMTP id S1755198AbWK1UlD (ORCPT
- <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2006 15:41:03 -0500
-Received: (qmail 18295 invoked by uid 1000); 28 Nov 2006 15:41:01 -0500
-Received: from localhost (sendmail-bs@127.0.0.1) by localhost with SMTP; 28
- Nov 2006 15:41:01 -0500
-To: skimo@liacs.nl
+ S1760424AbWLFKFU (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
+ 05:05:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760425AbWLFKFT
+ (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 05:05:19 -0500
+Received: from nf-out-0910.google.com ([64.233.182.187]:50157 "EHLO
+ nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1760409AbWLFKFR (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec
+ 2006 05:05:17 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so508047nfa for
+ <git@vger.kernel.org>; Wed, 06 Dec 2006 02:05:16 -0800 (PST)
+Received: by 10.48.14.4 with SMTP id 4mr1941835nfn.1165399515870; Wed, 06 Dec
+ 2006 02:05:15 -0800 (PST)
+Received: by 10.48.210.15 with HTTP; Wed, 6 Dec 2006 02:05:15 -0800 (PST)
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-On Tue, 28 Nov 2006, Sven Verdoolaege wrote:
+On 12/6/06, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+>
+> > I almost felt the branch.<name>.merge was for that.
+>
+> No. This tells git which _default_ branch to merge with. I.e.
+>
+> $ git repo-config branch.master.remote origin
+> $ git repo-config branch.master.merge next
+>
+> means that if your current branch is "master", a "git pull" _without_
+> parameters will default to the branch "next" of the remote "origin" you
+> just set up like above.
 
-> On Tue, Nov 28, 2006 at 01:37:54PM -0500, Daniel Barkalow wrote:
-> > If submodule was the only thing that got changed, it's not dirty; if it 
-> > were dirty, some of its contents would also have gotten changed.
-> 
-> For me, the commit is the only "content" of the subproject that the
-> superproject should care about, so the submodule being dirty or not
-> is completely irrelevant (for committing), but it seems you see the
-> subproject more as a (working) tree than as a commit.
+This doesn't work. So this is what i tried
+test repository with master and devel branch
+cloned it to test.devel
 
-I think we agree on the tree/commit/object database model part.
+.git/config have
 
-I think we disagree on how the working *directories* relate. I see the 
-checked-out state of a submodule as being relevant to the checked-out 
-state of the supermodule, such that dirty state in the submodule directory 
-is dirty state in the supermodule directory.
+[branch "devel"]
+        remote = origin
+        merge = devel
 
-> > Surely:
-> > 
-> > "git commit submodule/foo bar"
-> 
-> I wouldn't dream of doing such an operation, because it doesn't make
-> sense to me.  (So as far as I'm concerned, you can make it do whatever
-> you'd like it to do.)  You can only commit the subproject as a whole.
+Now IIUC this should be when i am in branch devel when i do a git pull
+pull from origin remote and merge with the local branch devel  the
+remote branch devel.
 
-I'm thinking that users of subprojects will often want to work on the
-subprojects rather than exclusively using commits prepared by other 
-people, and it's too much trouble to have to do the work in a repository 
-for just the subproject and pull it into the superproject's submodule to 
-test it. So the submodule working directory needs to function as a working 
-directory for the subproject. Then
+But git pull says already up to date.
 
-  "cd submodule; git commit foo"
+Now i thought merge should be local reference. So i changed it to
+merge = remotes/origin/devel.
 
-does the obvious thing, but that should be the same as
+That also didn't work.
 
-  "git commit submodule/foo" (since it normally is)
+Then i tried the name of the branch should be indicated as
+"refs/heads/devel" . That also didn't work.
 
-and then it makes sense to let you do multiple commits with a single 
-command when the paths end in different modules, since that's obviously 
-what you're requesting, and then -a must do all of them.
+So i guess i am missing something.
 
-	-Daniel
