@@ -1,134 +1,92 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [RFC] Submodules in GIT
-Date: Tue, 28 Nov 2006 11:36:51 -0500
-Message-ID: <20061128163651.GG28337@spearce.org>
-References: <20061121223130.GA24909@nan92-1-81-57-214-146.fbx.proxad.net> <200611281335.38728.andyparkins@gmail.com> <20061128154434.GD28337@spearce.org> <200611281629.08636.andyparkins@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] cvs-migration document: make the need for "push" more obvious
+Date: Wed, 6 Dec 2006 14:27:57 +0100
+Message-ID: <200612061427.58065.jnareb@gmail.com>
+References: <4574AC9E.3040506@gmail.com> <el6d50$p7e$2@sea.gmane.org> <Pine.LNX.4.63.0612061411380.28348@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 28 Nov 2006 16:37:37 +0000 (UTC)
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Wed, 6 Dec 2006 13:26:07 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=ZzHeQYcfZ/z1vJnhilvjGfhwksJWtrxoCraZn7qLMC3XPWnEd3uyUGzc3DH0nZxu//ltcBn/N/uUOF9qURTH7zMjhFNA18nbqRF57lHKqlmyT9ELEC5rjxYdIM6UsfxBVjJAeJjUProiVeLrbmCaBUdQ8Zveb/7QBanRglplSto=
+User-Agent: KMail/1.9.3
+In-Reply-To: <Pine.LNX.4.63.0612061411380.28348@wbgn013.biozentrum.uni-wuerzburg.de>
 Content-Disposition: inline
-In-Reply-To: <200611281629.08636.andyparkins@gmail.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32547>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gp5xC-0001bh-Dv for gcvg-git@gmane.org; Tue, 28 Nov
- 2006 17:37:06 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33456>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Grwma-0000u9-J9 for gcvg-git@gmane.org; Wed, 06 Dec
+ 2006 14:25:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S935881AbWK1Qg4 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 28 Nov 2006
- 11:36:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935882AbWK1Qg4
- (ORCPT <rfc822;git-outgoing>); Tue, 28 Nov 2006 11:36:56 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:41870 "EHLO
- corvette.plexpod.net") by vger.kernel.org with ESMTP id S935881AbWK1Qgz
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2006 11:36:55 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1Gp5wt-0004f7-2x; Tue, 28 Nov 2006 11:36:47 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- 7ACBD20FB7F; Tue, 28 Nov 2006 11:36:51 -0500 (EST)
-To: Andy Parkins <andyparkins@gmail.com>
+ S1760596AbWLFNZy (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
+ 08:25:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760599AbWLFNZy
+ (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 08:25:54 -0500
+Received: from ug-out-1314.google.com ([66.249.92.170]:40625 "EHLO
+ ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1760596AbWLFNZx (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec
+ 2006 08:25:53 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so138891uga for
+ <git@vger.kernel.org>; Wed, 06 Dec 2006 05:25:52 -0800 (PST)
+Received: by 10.67.26.7 with SMTP id d7mr779352ugj.1165411551769; Wed, 06 Dec
+ 2006 05:25:51 -0800 (PST)
+Received: from host-81-190-24-209.torun.mm.pl ( [81.190.24.209]) by
+ mx.google.com with ESMTP id 20sm10046885uga.2006.12.06.05.25.51; Wed, 06 Dec
+ 2006 05:25:51 -0800 (PST)
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-Andy Parkins <andyparkins@gmail.com> wrote:
-> On Tuesday 2006 November 28 15:44, Shawn Pearce wrote:
-> 
-> > So HEAD in a submodule is the current content of that submodule.
-> > Therefore any update-index call on a submodule should load HEAD
-> > (totally ignoring whatever branch it refers to) into the supermodule
-> > index.
-> 
-> I was with you right up until here.
-> 
-> Why should a submodule do anything to the supermodule?  This is like saying, 
-> when I edit a working tree file, it should automatically call update-index.  
-> The supermodule index should only be updated in response to a manual 
-> update-index (or commit -a I suppose).
+Hi!
 
-You misread my poorly written statement.  :-)
+Johannes Schindelin wrote:
 
-What I meant to say was that update-index run in the supermodule
-would load the submodule content into the supermodule index; much
-as an update-index on a file would load the content of that file
-into the index.
+> On Wed, 6 Dec 2006, Jakub Narebski wrote:
+> 
+>> Johannes Schindelin wrote:
+>> 
+>>> +  * Since every working tree contains a repository, a commit will not
+>>> +    publish your changes; it will only create a revision. You have to
+>>> +    "push" your changes to a public repository to make them visible
+>>> +    to others.
+>>> +
+
+I'd perhaps add here that it doesn't "push" your changes to a repository
+you cloned from / you fetch from.
  
-> IMO, it should always be possible to take a submodule and work on it in 
-> isolation - in an extreme case, by moving it out of the supermodule tree 
-> entirely.
-
-Aside from sharing object directories, yes.
- 
-> In summary, from the supermodule's point of view:
->  * A submodule with changed working directory is "dirty-wd"
->  * A submodule with changed index is "dirty-idx" from the supermodule's
->  * A submodule with changed HEAD (since the last supermodule commit) 
->    is "changed but not updated" and can hence be "update-index"ed into the
->    supermodule
->  * A submodule with changed HEAD that has been added to the supermodule index
->    is "updated but not checked in"
->  * A submodule with changed HEAD (since the last supermodule update-index) is
->    both "changed but not updated" _and_ "updated but not checked in", just 
->    like any normal file.
+>> I'm not sure about context of this addition, but it is simply not
+>> true if you publish your working repository.
 > 
-> What's needed then:
->  * A way of telling git to treat a particular directory as a submodule instead
->    of a directory
->  * git-status gets knowledge of how to check for "dirty" submodules
->  * git-commit-tree learns about how to store "submodule" object types in
->    trees.  The submodule object type will be nothing more than the hash of the
->    current HEAD commit.  (This might be my ignorance, perhaps it's just 
->    update-index that needs to know this)
+> Remember, you are talking to CVS users. They are not dumb, but sooo used 
+> to the CVS ways. So, they do not publish their working directory.
 
-Err, uhm, more like git-write-tree.  git-commit-tree doesn't
-care about the tree content.  And all of the tree reading code.
-And all object traversal code (e.g. rev-list --objects).  Martin
-Waitz's submodule prototype has been working on those details.
-Its non-trivial due to the number of locations affected.
-
-> In my head, it would look something like this:
-> 
-> $ mkdir supermodule; cd supermodule
-> $ git init-db
-> $ git clone proto://host/submodule.git
-> $ git add --submodule submodule
-> $ git update-index submodule
-> $ git commit -m "Added submodule to supermodule"
-> [ edit submodule ]
-> $ git status
-> submodule is dirty, the working directory has changed
-> [ update-index in submodule ]
-> $ git status
-> submodule is dirty, the index has changed
-> [ commit in submodule ]
-> $ git status
-> submodule is changed but not updated
-> $ git update-index submodule
-> $ git status
-> submodule is updated but not checked in
-> $ git commit -m "Record submodule change in supermodule"
-
-Yes, exactly my thoughts on the matter.
+So we are talking in context of having CVS-like one central repository
+from which they pull / fetch, and to which they push?
  
-> Am I crazy?
+> Later, when they became familiar with Git, you can tell them: "BTW you can 
+> also publish your working directory, but then you have to be extra careful 
+> with git-commit --amend, and if you allow pushing into your repo you have 
+> to add hooks to prevent updating your current HEAD, etc."
 
-Maybe, but I'm not a shrink.  Your email looked sane.  :-)
+I'd rather say that "publish your working repository", not "working
+directory" here.
+
+> Give them a chance to get used to the concepts of Git.
+
+Well, it would be best to teach them concepts of git along.
 
 -- 
+Jakub Narebski
