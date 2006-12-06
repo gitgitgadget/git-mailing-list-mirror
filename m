@@ -1,77 +1,74 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 2/2] git push: add verbose flag and allow overriding of default target repository
-Date: Mon, 30 Oct 2006 15:02:07 -0800
-Message-ID: <7vy7qxtnkg.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0610300823250.25218@g5.osdl.org>
-	<Pine.LNX.4.64.0610300825470.25218@g5.osdl.org>
+From: Tom Prince <tom.prince@ualberta.net>
+Subject: Re: git newbie problems
+Date: Tue, 05 Dec 2006 18:52:09 -0700
+Message-ID: <20061206015209.GD12211@socrates.priv>
+References: <4574AC9E.3040506@gmail.com> <4574BF70.8070100@lilypond.org>
+ <457611B9.9020907@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Mon, 30 Oct 2006 23:02:37 +0000 (UTC)
+NNTP-Posting-Date: Wed, 6 Dec 2006 01:53:44 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <Pine.LNX.4.64.0610300825470.25218@g5.osdl.org> (Linus Torvalds's
-	message of "Mon, 30 Oct 2006 08:28:59 -0800 (PST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+In-reply-to: <457611B9.9020907@gmail.com>
+Mail-followup-to: Graham Percival <gpermus@gmail.com>, git@vger.kernel.org
+Content-disposition: inline
+User-Agent: Mutt/1.5.11-2006-05-17
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30549>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Geg90-0000aE-2v for gcvg-git@gmane.org; Tue, 31 Oct
- 2006 00:02:15 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33400>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Grlyc-0005ou-52 for gcvg-git@gmane.org; Wed, 06 Dec
+ 2006 02:53:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1161535AbWJ3XCK (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 30 Oct 2006
- 18:02:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161536AbWJ3XCK
- (ORCPT <rfc822;git-outgoing>); Mon, 30 Oct 2006 18:02:10 -0500
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:19662 "EHLO
- fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP id S1161535AbWJ3XCJ
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 30 Oct 2006 18:02:09 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao12.cox.net
- (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
- <20061030230208.RKGF18180.fed1rmmtao12.cox.net@fed1rmimpo01.cox.net>; Mon, 30
- Oct 2006 18:02:08 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id gn1o1V00T1kojtg0000000 Mon, 30 Oct 2006
- 18:01:49 -0500
-To: Linus Torvalds <torvalds@osdl.org>
+ S1759634AbWLFBxf (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 5 Dec 2006
+ 20:53:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759624AbWLFBxf
+ (ORCPT <rfc822;git-outgoing>); Tue, 5 Dec 2006 20:53:35 -0500
+Received: from shawidc-mo1.cg.shawcable.net ([24.71.223.10]:55855 "EHLO
+ pd4mo1so.prod.shaw.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1759634AbWLFBxf (ORCPT <rfc822;git@vger.kernel.org>); Tue, 5 Dec 2006
+ 20:53:35 -0500
+Received: from pd3mr3so.prod.shaw.ca (pd3mr3so-qfe3.prod.shaw.ca
+ [10.0.141.179]) by l-daemon (Sun ONE Messaging Server 6.0 HotFix 1.01 (built
+ Mar 15 2004)) with ESMTP id <0J9T00FTWX7JKZ60@l-daemon> for
+ git@vger.kernel.org; Tue, 05 Dec 2006 18:52:31 -0700 (MST)
+Received: from pn2ml7so.prod.shaw.ca ([10.0.121.151]) by
+ pd3mr3so.prod.shaw.ca (Sun Java System Messaging Server 6.2-7.05 (built Sep 5
+ 2006)) with ESMTP id <0J9T0049TX6XUB90@pd3mr3so.prod.shaw.ca> for
+ git@vger.kernel.org; Tue, 05 Dec 2006 18:52:31 -0700 (MST)
+Received: from socrates.priv ([68.148.57.191]) by l-daemon (Sun ONE Messaging
+ Server 6.0 HotFix 1.01 (built Mar 15 2004)) with ESMTP id
+ <0J9T00FI2X6XWNA0@l-daemon> for git@vger.kernel.org; Tue, 05 Dec 2006
+ 18:52:09 -0700 (MST)
+Received: from socrates.priv (localhost [127.0.0.1]) by socrates.priv
+ (8.13.4/8.13.4) with ESMTP id kB61q99j015398; Tue, 05 Dec 2006 18:52:09 -0700
+Received: (from cougar@localhost)	by socrates.priv (8.13.4/8.13.4/Submit) id
+ kB61q9Bp015397; Tue, 05 Dec 2006 18:52:09 -0700
+To: Graham Percival <gpermus@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Linus Torvalds <torvalds@osdl.org> writes:
+On Tue, Dec 05, 2006 at 04:41:29PM -0800, Graham Percival wrote:
+> Greetings,
+> 
+> I'm posting these problems at Han-Wen and Dscho's insistence.  I'm the 
+> documentation editor for GNU/LilyPond, so I'm reluctant to criticize 
+> other project's documentation unless I spend an hour or more seriously 
+> reading it.
 
-> This adds a command line flag "-v" to enable a more verbose mode, and 
-> "--repo=" to override the default target repository for "git push" (which 
-> otherwise always defaults to "origin").
->
-> This, together with the patch to allow dashes in config variable names, 
-> allows me to do
->
-> 	[alias]
-> 		push-all = push -v --repo=all
->
-> in my user-global config file, and then I can (for any project I maintain) 
-> add to the project-local config file
->
-> 	[remote "all"]
-> 		url=one.target.repo:/directory
-> 		url=another.target:/pub/somewhere/else
->
-> and now "git push-all" just updates all the target repositories, and shows 
-> me what it does - regardless of which repo I am in.
->
-> Signed-off-by: Linus Torvalds <torvalds@osdl.org>
-> ---
->
-> Maybe this is just useful to me?  I dunno.
+It is generally accepted that much of git documentation sucks in various ways,
+and people have stepped up to help fix this. The problem is that most
+people are already well-versed in git, which makes it harder to identify
+the problem areas in the documentation, and that few people unfamiliar
+with git post to report their problems with the documentation, or UI so
+that, at least on the mailinglist itself, we get little direct feedback on the
+documentation or UI.
 
-I would say if something is useful to you it is useful to your
-subsystem people and anybody who has a public tree and more than
-one machines to verify the tips of his branches on, including
-me.
+Thank you from the list for your contribution.
 
