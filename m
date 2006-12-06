@@ -1,125 +1,58 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH/RFC] Documentation: Two more git-rebase --onto examples
-Date: Sat, 04 Nov 2006 17:08:12 -0800
-Message-ID: <7vbqnmwvib.fsf@assigned-by-dhcp.cox.net>
-References: <200611042205.58212.jnareb@gmail.com>
+From: "Aneesh Kumar" <aneesh.kumar@gmail.com>
+Subject: Fwd: git pull and merging.
+Date: Wed, 6 Dec 2006 16:18:52 +0530
+Message-ID: <cc723f590612060248jb151a75y9e9ea316f1c6086f@mail.gmail.com>
+References: <cc723f590612052051r62111c4cgfd7ee893cb00f84a@mail.gmail.com>
+	 <7vodqhaa7o.fsf@assigned-by-dhcp.cox.net>
+	 <cc723f590612052121u1f6e3c9lc7329f40ee1c9e5a@mail.gmail.com>
+	 <Pine.LNX.4.63.0612061019350.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <cc723f590612060205p1fd26cd7u3c7efc723b0177de@mail.gmail.com>
+	 <el65rh$tfj$3@sea.gmane.org>
+	 <cc723f590612060236k7839942el8d048eedfdee3682@mail.gmail.com>
+	 <cc723f590612060248y6f730a54l3a2aadfa6500d36d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sun, 5 Nov 2006 01:08:50 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Wed, 6 Dec 2006 10:49:05 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <200611042205.58212.jnareb@gmail.com> (Jakub Narebski's message
-	of "Sat, 4 Nov 2006 22:05:57 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=DGU9WYI4ZFYltyo9LxnD4379Df4nQC/fWuqstriqWHpDUHpYIJE/EYteDEPDKiQu46JwGLdatjK0gBcfyakefMNy63oJ0qMgtVGlsyzYzpjnVvEt9nAs1eP7rSpG03jaKSeh7JpfY0NzrNqfEW89PsXDG6wIDtj76YM0bBGh84g=
+In-Reply-To: <cc723f590612060248y6f730a54l3a2aadfa6500d36d@mail.gmail.com>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30944>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GgWUk-0001Bz-FR for gcvg-git@gmane.org; Sun, 05 Nov
- 2006 02:08:19 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33433>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GruKl-0005Qe-8J for gcvg-git@gmane.org; Wed, 06 Dec
+ 2006 11:49:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S965770AbWKEBIO (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 4 Nov 2006
- 20:08:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965771AbWKEBIO
- (ORCPT <rfc822;git-outgoing>); Sat, 4 Nov 2006 20:08:14 -0500
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:64642 "EHLO
- fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP id S965770AbWKEBIN
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 4 Nov 2006 20:08:13 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao03.cox.net
- (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
- <20061105010813.RMBB2704.fed1rmmtao03.cox.net@fed1rmimpo02.cox.net>; Sat, 4
- Nov 2006 20:08:13 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id ip8H1V00a1kojtg0000000 Sat, 04 Nov 2006
- 20:08:18 -0500
-To: Jakub Narebski <jnareb@gmail.com>
+ S1760478AbWLFKsz (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
+ 05:48:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760479AbWLFKsz
+ (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 05:48:55 -0500
+Received: from nf-out-0910.google.com ([64.233.182.187]:32001 "EHLO
+ nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1760480AbWLFKsy (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec
+ 2006 05:48:54 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so518080nfa for
+ <git@vger.kernel.org>; Wed, 06 Dec 2006 02:48:53 -0800 (PST)
+Received: by 10.48.216.8 with SMTP id o8mr1978517nfg.1165402132762; Wed, 06
+ Dec 2006 02:48:52 -0800 (PST)
+Received: by 10.48.210.15 with HTTP; Wed, 6 Dec 2006 02:48:52 -0800 (PST)
+To: "Git Mailing List" <git@vger.kernel.org>
 Sender: git-owner@vger.kernel.org
 
-Jakub Narebski <jnareb@gmail.com> writes:
+After printing some debug echo i got this one which seems to be working for me
 
-> I asked for comments because I'm not native English speaker and I'm not
-> sure about correctness of descriptions of added examples.
-
-Ok.
-
-> +More useful example of --onto option usage include transplanting feature
-> +branch from one development branch to other, for example change to branch
-> +based off "next" branch:
-
-By "more" do you mean the following examples are more useful
-than the one before, or having larger number of examples adds to
-the usefulness of the document overall?
-
-How about:
-
-        Here is how you would transplant a topic branch based on one
-        branch to another, to pretend that you forked the topic branch
-        from the latter branch, using `rebase --onto`.
-
-	First let's assume your 'topic' is based on branch 'next'.
-
-        ------------
-            o---o---o---o---o  master
-                 \
-                  o---o---o---o---o  next
-                                   \
-                                    o---o---o  topic
-        ------------
-
-	We would want to make 'topic' forked from branch
-	'master', like this:
-
-> +------------
-> +    o---o---o---o---o  master
-> +        |            \
-> +        |             o'--o'--o'  topic
-> +         \
-> +          o---o---o---o---o  next
-> +------------
-> +
-> +We can get this using the following command:
-> +
-> +    git-rebase --onto master next topic
-> +
-> +
-> +Yet another example of use for --onto option is to rebase part of
-> +branch. If we have the following situation:
-
-This looks the same as the original example for --onto; I would
-either drop it or replace it something of different flavor.
-
-What I find myself doing more is to reorder without using StGIT.
-When I have this:
-
-	1---2---3---4 topic
-
-and 2 is a bit half-baked, and I would want to have:
-
-	1---3'--4'--2' topic
-
-I would usually do this while on "topic":
-
-	git tag -f CG	;# "commit goal"
-	git rebase --onto CG~3 CG~2 ;# plant 3 4 on top of 1
-        git cherry-pick CG~2
-	git diff CG ;# verify that the result matches
-
-In ascii art, that is:
-
-	  3'--4'
-	 /
-	1---2---3---4 CG
-
-then
-
-
-	  3'--4'--2' topic
-	 /
-	1---2---3---4 CG
+[branch "devel"]
+        remote = origin
