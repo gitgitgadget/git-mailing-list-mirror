@@ -1,101 +1,92 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: [PATCH 1/3] Allow short pack names to git-pack-objects --unpacked=.
-Date: Sun, 29 Oct 2006 04:37:11 -0500
-Message-ID: <20061029093711.GC3847@spearce.org>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Fast access git-rev-list output: some OS knowledge required
+Date: Wed, 6 Dec 2006 20:24:42 +0100
+Message-ID: <e5bfff550612061124jcd0d94em47793710866776e7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sun, 29 Oct 2006 09:37:29 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Wed, 6 Dec 2006 19:24:49 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=ouGHOHkpgGhzatwXBwSbj3wuegU9f8dbXcQxvAOR1+dd5xrjUb4dEnvgEDeUg1Y/JRxcbfMyAH6UbuWh+Pqg6YPk3SZcuGkmZeiRSGiOQWY95p5u2MYvSO7RQ2Nb2X+C2ZlPn5vAOhvFZyZLJsss9kcUATiJ5JtnmV9bZ7eh3yU=
 Content-Disposition: inline
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30420>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Ge76Y-0007vl-E4 for gcvg-git@gmane.org; Sun, 29 Oct
- 2006 10:37:22 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33508>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gs2Nr-0000hT-U0 for gcvg-git@gmane.org; Wed, 06 Dec
+ 2006 20:24:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932132AbWJ2JhS (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 29 Oct 2006
- 04:37:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932134AbWJ2JhS
- (ORCPT <rfc822;git-outgoing>); Sun, 29 Oct 2006 04:37:18 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:39562 "EHLO
- corvette.plexpod.net") by vger.kernel.org with ESMTP id S932132AbWJ2JhQ
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 29 Oct 2006 04:37:16 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1Ge76h-0002sW-0U; Sun, 29 Oct 2006 04:37:31 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- 57CD720E45B; Sun, 29 Oct 2006 04:37:12 -0500 (EST)
-To: Junio C Hamano <junkio@cox.net>
+ S937236AbWLFTYo (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
+ 14:24:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937344AbWLFTYo
+ (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 14:24:44 -0500
+Received: from nz-out-0506.google.com ([64.233.162.239]:54174 "EHLO
+ nz-out-0102.google.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with
+ ESMTP id S937236AbWLFTYo (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec
+ 2006 14:24:44 -0500
+Received: by nz-out-0102.google.com with SMTP id s1so198390nze for
+ <git@vger.kernel.org>; Wed, 06 Dec 2006 11:24:42 -0800 (PST)
+Received: by 10.35.125.16 with SMTP id c16mr2047618pyn.1165433082218; Wed, 06
+ Dec 2006 11:24:42 -0800 (PST)
+Received: by 10.35.93.11 with HTTP; Wed, 6 Dec 2006 11:24:42 -0800 (PST)
+To: "Git Mailing List" <git@vger.kernel.org>
 Sender: git-owner@vger.kernel.org
 
-Allow short pack names to git-pack-objects --unpacked=.
+I ask help to the list because my knowledge on this is not enough.
 
-This allows us to pass just the file name of a pack rather than
-the complete path when we want pack-objects to consider its
-contents as though they were loose objects.  This can be helpful
-if $GIT_OBJECT_DIRECTORY contains shell metacharacters which make
-it cumbersome to pass complete paths safely in a shell script.
+Currently qgit uses, socket based, QProcess class to read data from
+'git rev-list'  when loading the repository at startup.
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- sha1_file.c |   20 +++++++++++++++++++-
- 1 files changed, 19 insertions(+), 1 deletions(-)
+The time it takes to read, without processing, the whole Linux tree
+with this approach it's almost _double_ of the time it takes 'git
+rev-list' to write to a file:
 
-diff --git a/sha1_file.c b/sha1_file.c
-index e89d24c..5e6c8b8 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -1203,6 +1203,24 @@ unsigned long find_pack_entry_one(const
- 	return 0;
- }
- 
-+static int matches_pack_name(struct packed_git *p, const char *ig)
-+{
-+	const char *last_c, *c;
-+
-+	if (!strcmp(p->pack_name, ig))
-+		return 0;
-+
-+	for (c = p->pack_name, last_c = c; *c;)
-+		if (*c == '/')
-+			last_c = ++c;
-+		else
-+			++c;
-+	if (!strcmp(last_c, ig))
-+		return 0;
-+
-+	return 1;
-+}
-+
- static int find_pack_entry(const unsigned char *sha1, struct pack_entry *e, const char **ignore_packed)
- {
- 	struct packed_git *p;
-@@ -1214,7 +1232,7 @@ static int find_pack_entry(const unsigne
- 		if (ignore_packed) {
- 			const char **ig;
- 			for (ig = ignore_packed; *ig; ig++)
--				if (!strcmp(p->pack_name, *ig))
-+				if (!matches_pack_name(p, *ig))
- 					break;
- 			if (*ig)
- 				continue;
--- 
-1.4.3.3.g7d63
+$git rev-list --header --boundary --parents --topo-order HEAD >> tmp.txt
+
+We are talking of about 7s against less then 4s, on my box (warm cache).
+
+So I have a patch to make 'git rev-list' writing into a temporary file
+and then read it in memory, perhaps it's not the cleaner way, but it's
+faster, about 1s less.
+
+I have browsed Qt sources and found that QProcess uses internal
+buffers that are then copied again before to be used by the
+application. File approach uses a call to read() /fread() buired
+inside the Qt's QFile class, and no intermediate buffers, so perhaps
+this could be the reason the second way it's faster.
+
+
+Anyway there are some issues:
+
+1) File tmp.txt is deleted as soon as read, but this is not enough
+sometimes to avoid a costly and wasteful write access to disk by the
+OS. What is the easiest, portable way to create a temporary 'in memory
+only' file, with no disk access? Or at least delay the HD write access
+enough to be able to read and delete the file before the fist block of
+tmp.txt is flushed to disk?
+
+2) There is a faster/cleaner (and *safe* ) way to access directly 'git
+rev-list' output, something like (just as an example):
+
+$git rev-list --header --boundary --parents --topo-order HEAD >> /dev/mem
+
+Or something similar, possibly _simple_ and _portable_ , so to be able
+to copy the big amount of 'git rev-list' output just once (about 30MB
+with current tree).
+
+
+3) Other suggestions?  ;-)
+
+
+Thanks
