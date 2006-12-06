@@ -1,63 +1,96 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-*arch* in git-arch rpm
-Date: Wed, 25 Oct 2006 11:35:51 -0700
-Message-ID: <7vslhcb5vc.fsf@assigned-by-dhcp.cox.net>
-References: <20061024200211.17221.qmail@9f622d681978b5.315fe32.mid.smarden.org>
-	<7viri9dkk5.fsf@assigned-by-dhcp.cox.net>
-	<20061025112327.16220.qmail@e5d824cd35b8a9.315fe32.mid.smarden.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: git newbie problems
+Date: Wed, 6 Dec 2006 11:17:31 +0100
+Message-ID: <200612061117.32903.jnareb@gmail.com>
+References: <4574AC9E.3040506@gmail.com> <el55to$952$1@sea.gmane.org> <45768FE8.2030202@xs4all.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 25 Oct 2006 18:36:18 +0000 (UTC)
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Wed, 6 Dec 2006 10:15:39 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061025112327.16220.qmail@e5d824cd35b8a9.315fe32.mid.smarden.org>
-	(Gerrit Pape's message of "Wed, 25 Oct 2006 11:23:27 +0000")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=PytFWgzBxSnEfryyblosKWPdCMl2AnaXTF2Z7It4q+NQ0T2f8diclR/WEjsmhJuvbbdiai7O3rsvOWumoHhWb9qrYA6qTKjV3BMT9b+ea7I9Oz/jsyZDFC23M5iawYuqFrs1PSywHGZ5TBeJgB4L1aJk7vzkxnxGKh8HhEeRgnw=
+User-Agent: KMail/1.9.3
+In-Reply-To: <45768FE8.2030202@xs4all.nl>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30086>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GcnbX-0006Jf-Tt for gcvg-git@gmane.org; Wed, 25 Oct
- 2006 20:35:56 +0200
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33424>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GrtoK-0001Kt-Tx for gcvg-git@gmane.org; Wed, 06 Dec
+ 2006 11:15:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932269AbWJYSfx (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 25 Oct 2006
- 14:35:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932272AbWJYSfw
- (ORCPT <rfc822;git-outgoing>); Wed, 25 Oct 2006 14:35:52 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:52921 "EHLO
- fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP id S932269AbWJYSfw
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 25 Oct 2006 14:35:52 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao06.cox.net
- (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
- <20061025183551.ZVPF6235.fed1rmmtao06.cox.net@fed1rmimpo01.cox.net>; Wed, 25
- Oct 2006 14:35:51 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id eiba1V00W1kojtg0000000 Wed, 25 Oct 2006
- 14:35:35 -0400
-To: Gerrit Pape <pape@smarden.org>
+ S1760430AbWLFKPa (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
+ 05:15:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760431AbWLFKPa
+ (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 05:15:30 -0500
+Received: from ug-out-1314.google.com ([66.249.92.170]:22991 "EHLO
+ ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1760427AbWLFKP3 (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec
+ 2006 05:15:29 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so93919uga for
+ <git@vger.kernel.org>; Wed, 06 Dec 2006 02:15:28 -0800 (PST)
+Received: by 10.67.19.20 with SMTP id w20mr462368ugi.1165400128084; Wed, 06
+ Dec 2006 02:15:28 -0800 (PST)
+Received: from host-81-190-24-209.torun.mm.pl ( [81.190.24.209]) by
+ mx.google.com with ESMTP id c1sm29984617ugf.2006.12.06.02.15.27; Wed, 06 Dec
+ 2006 02:15:27 -0800 (PST)
+To: Han-Wen Nienhuys <hanwen@xs4all.nl>, Graham Percival <gpermus@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Gerrit Pape <pape@smarden.org> writes:
-
-> On Tue, Oct 24, 2006 at 10:35:38PM -0700, Junio C Hamano wrote:
->> Gerrit Pape <pape@smarden.org> writes:
->> > Hi, there're two programs in the git-arch rpm that shouldn't be there:
+Han-Wen Nienhuys wrote:
+ 
+> Jakub Narebski escreveu:
 >
->> So we need at least this?
->
-> And this I think, but can't test it.
+>> Graham Percival wrote:
+>>
+>>> 84219bb don't have input/templates/ any longer.
+>>> fatal: Entry '.gitignore' would be overwritten by merge. Cannot merge.
+>>> No merge strategy handled the merge.
+>>>
+>>> As a git newbie, I'm quite confused.  OK, there's no merge strategy...
 
-Thanks.
+There is no merge strategy used, because problem (conflict) doesn't stem
+from what was committed, but from what was in working directory.
 
-I ended up doing something very similar to yours after sending
-out the initial patch (my FC box is a notebook resurrected from
-boneyard and I need to sneakernet to do any RPM work, so latency
-of feedback from that box is rather long X-<).
+>>> so what do I do now?  With cvs, the changes would be dumped into the
+>>> file.  I look at the file, found the conflict, and tried it again.  I
+>>> got the same error message, and then it occurred to me that although I
+>>> changed the files in my ~/usr/src/lilypond, git might be storing these
+>>> files somewhere else.
+>> 
+>> Yes, the git error messages certainly needs to be made more user-friendly.
+>> What git says here that one version has '.gitignore' file handled by version
+>> control, and second has it outside version control. At least I think what
+>> it does.
+> 
+> Which is actually not true. .gitignore has been in the repo since we
+> started using git.  I have also seen this message pop up a few times
+> in the beginning, but I can't recall why they happened.
 
+I don't know if git allows to pull into dirty tree with impunity. If I
+remeber correctly Cogito (alternate UI for git) allows this[*1*], there is
+currently work on this in git (but it is not as far as I remember in
+git 1.4.4.1). So another possibility is induced by CVS "update then commit"
+mentality pulling changes _before_ commiting changes.
+
+If this is the case, committing changes _then_ pulling would solve this
+problem.
+
+Footnotes:
+----------
+[*1*] This is a bit error prone.
+-- 
+Jakub Narebski
