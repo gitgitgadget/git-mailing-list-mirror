@@ -1,87 +1,85 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD,
-	SUBJ_ALL_CAPS shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 From: Junio C Hamano <junkio@cox.net>
-Subject: [ANNOUNCE] GIT 1.4.3.5
-Date: Sat, 11 Nov 2006 21:23:20 -0800
-Message-ID: <7v64dli6gn.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: [RFC] gitweb: Add committags support (take 2)
+Date: Wed, 06 Dec 2006 11:47:10 -0800
+Message-ID: <7vpsaw3iyp.fsf@assigned-by-dhcp.cox.net>
+References: <200612040001.13640.jnareb@gmail.com>
+	<200612061351.02712.jnareb@gmail.com>
+	<7vveko3km4.fsf@assigned-by-dhcp.cox.net>
+	<200612062032.58706.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sun, 12 Nov 2006 05:23:31 +0000 (UTC)
-Cc: linux-kernel@vger.kernel.org
+NNTP-Posting-Date: Wed, 6 Dec 2006 19:48:05 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+In-Reply-To: <200612062032.58706.jnareb@gmail.com> (Jakub Narebski's message
+	of "Wed, 6 Dec 2006 20:32:58 +0100")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31255>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gj7oV-0003zJ-7X for gcvg-git@gmane.org; Sun, 12 Nov
- 2006 06:23:27 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33514>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gs2kG-0004KW-2k for gcvg-git@gmane.org; Wed, 06 Dec
+ 2006 20:47:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1754974AbWKLFXW (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 12 Nov 2006
- 00:23:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754970AbWKLFXW
- (ORCPT <rfc822;git-outgoing>); Sun, 12 Nov 2006 00:23:22 -0500
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:56468 "EHLO
- fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP id S1752694AbWKLFXV
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 12 Nov 2006 00:23:21 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao02.cox.net
+ S937572AbWLFTrN (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
+ 14:47:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937574AbWLFTrN
+ (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 14:47:13 -0500
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:40188 "EHLO
+ fed1rmmtao06.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S937572AbWLFTrL (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec 2006
+ 14:47:11 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao06.cox.net
  (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061112052320.EXOA97.fed1rmmtao02.cox.net@fed1rmimpo01.cox.net>; Sun, 12
- Nov 2006 00:23:20 -0500
+ <20061206194710.RAXY2628.fed1rmmtao06.cox.net@fed1rmimpo02.cox.net>; Wed, 6
+ Dec 2006 14:47:10 -0500
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id lhNv1V00S1kojtg0000000; Sun, 12 Nov 2006
- 00:22:56 -0500
-To: git@vger.kernel.org
+ fed1rmimpo02.cox.net with bizsmtp id vXnL1V00a1kojtg0000000; Wed, 06 Dec 2006
+ 14:47:21 -0500
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-The latest maintenance release GIT 1.4.3.5 is available at the
-usual places:
+Jakub Narebski <jnareb@gmail.com> writes:
 
-  http://www.kernel.org/pub/software/scm/git/
+> By the way, what is the formal structure of the config file? Perhaps
+> something like the notation used in RFC?
 
-  git-1.4.3.5.tar.{gz,bz2}			(tarball)
-  git-htmldocs-1.4.3.5.tar.{gz,bz2}		(preformatted docs)
-  git-manpages-1.4.3.5.tar.{gz,bz2}		(preformatted docs)
-  RPMS/$arch/git-*-1.4.3.5-1.$arch.rpm	(RPM)
+Is there an RFC for .INI format?
 
-The 'master' front has been very quiet and it will hopefully
-soon produce 1.4.4 but in the meantime here is primarily to fix
-git-svn correctness issues.
+> Is it possible (and doesn't crash current git config parser) having
+>
+>   [gitweb]
+>   	blame = yes
+>   	pickaxe = no
+>   	snapshot = bzip2
+>
+>   [gitweb "committags"]
+>   	message-id = "http://news.gmane.org/find-root.php?message_id="
+>   	mantis = "http://bugs.or.cz/view.php?id="
+>   	url
+>   	sha1
+>
+> in the config file?
 
-----------------------------------------------------------------
+If you are asking about [gitweb] stanza and (seemingly
+overlapping) [gitweb "foo"] stanza, we already have prior
+examples:
 
-Changes since v1.4.3.4 are as follows:
+	[diff]
+        	color = auto
+        [diff "color"]
+        	whitespace = blue reverse
 
-Alex Riesen (1):
-      merge-recursive implicitely depends on trust_executable_bit
+so your example in the above would be legal (the dash in
+'message-id' part might be questionable, though).
 
-Eric Wong (3):
-      git-svn: avoid printing filenames of files we're not tracking
-      git-svn: don't die on rebuild when --upgrade is specified
-      git-svn: fix dcommit losing changes when out-of-date from svn
 
-Jakub Narebski (1):
-      Documentation: Transplanting branch with git-rebase --onto
 
-Jeff King (1):
-      Fix git-runstatus for repositories containing a file named HEAD
-
-Junio C Hamano (3):
-      adjust_shared_perm: chmod() only when needed.
-      path-list: fix path-list-insert return value
-      git-cvsserver: read from git with -z to get non-ASCII pathnames.
-
-Petr Baudis (1):
-      Nicer error messages in case saving an object to db goes wrong
-
-Robert Shearman (1):
-      git-rebase: Use --ignore-if-in-upstream option when executing git-format-patch.
-
-Tero Roponen (1):
-      remove an unneeded test
 
