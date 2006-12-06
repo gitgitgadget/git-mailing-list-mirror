@@ -1,64 +1,58 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Alan Chandler <alan@chandlerfamily.org.uk>
-Subject: Re: [PATCH v2] make 'git add' a first class user friendly interface to the index
-Date: Sun, 3 Dec 2006 09:16:04 +0000
-Message-ID: <200612030916.04791.alan@chandlerfamily.org.uk>
-References: <Pine.LNX.4.64.0612011444310.9647@xanadu.home> <Pine.LNX.4.64.0612030028290.2630@xanadu.home>
+From: "Aneesh Kumar" <aneesh.kumar@gmail.com>
+Subject: git pull and merging.
+Date: Wed, 6 Dec 2006 10:21:46 +0530
+Message-ID: <cc723f590612052051r62111c4cgfd7ee893cb00f84a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sun, 3 Dec 2006 09:16:46 +0000 (UTC)
-Cc: Nicolas Pitre <nico@cam.org>, Junio C Hamano <junkio@cox.net>
+NNTP-Posting-Date: Wed, 6 Dec 2006 04:51:54 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: KMail/1.9.5
-In-Reply-To: <Pine.LNX.4.64.0612030028290.2630@xanadu.home>
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=Ahsc3Wcdylx7CVLjW8+IRAe9sPE2VJ0czBT6vtkkNB2XVv7uWx0X8JAgJOwNdLIRsf3YGEawsdAKyqk+tRF6LFlZjOCqQKJXGhcfwlZCfAJvAFc6+zNopTxrEXXReyG0DT8swbxjNbm1H83ulAZgamNmG/egB/lwNQ48bwcJais=
 Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33099>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33401>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GqnSe-0007FC-S6 for gcvg-git@gmane.org; Sun, 03 Dec
- 2006 10:16:37 +0100
+ esmtp (Exim 4.50) id 1Grol5-0002rS-4Y for gcvg-git@gmane.org; Wed, 06 Dec
+ 2006 05:51:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S935697AbWLCJQT (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 3 Dec 2006
- 04:16:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935701AbWLCJQT
- (ORCPT <rfc822;git-outgoing>); Sun, 3 Dec 2006 04:16:19 -0500
-Received: from 82-44-22-127.cable.ubr06.croy.blueyonder.co.uk
- ([82.44.22.127]:26762 "EHLO home.chandlerfamily.org.uk") by vger.kernel.org
- with ESMTP id S935697AbWLCJQT (ORCPT <rfc822;git@vger.kernel.org>); Sun, 3
- Dec 2006 04:16:19 -0500
-Received: from kanger.home ([192.168.0.21]) by home.chandlerfamily.org.uk
- with esmtp (Exim 4.63) (envelope-from <alan@chandlerfamily.org.uk>) id
- 1GqnSL-0007On-7C; Sun, 03 Dec 2006 09:16:17 +0000
-To: git@vger.kernel.org
+ S1760047AbWLFEvs (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 5 Dec 2006
+ 23:51:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760049AbWLFEvs
+ (ORCPT <rfc822;git-outgoing>); Tue, 5 Dec 2006 23:51:48 -0500
+Received: from nf-out-0910.google.com ([64.233.182.188]:48965 "EHLO
+ nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1760047AbWLFEvr (ORCPT <rfc822;git@vger.kernel.org>); Tue, 5 Dec
+ 2006 23:51:47 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so438068nfa for
+ <git@vger.kernel.org>; Tue, 05 Dec 2006 20:51:46 -0800 (PST)
+Received: by 10.48.217.20 with SMTP id p20mr1643808nfg.1165380706405; Tue, 05
+ Dec 2006 20:51:46 -0800 (PST)
+Received: by 10.48.210.15 with HTTP; Tue, 5 Dec 2006 20:51:46 -0800 (PST)
+To: "Git Mailing List" <git@vger.kernel.org>
 Sender: git-owner@vger.kernel.org
 
-On Sunday 03 December 2006 05:33, Nicolas Pitre wrote:
-...
-> +But here's a twist. If you do 'git commit <file1> <file2> ...' then only
-> +the  changes belonging to those explicitly specified files will be
-> +committed, entirely bypassing the current "added" changes. Those "added"
-> +changes will still remain available for a subsequent commit though.
-> +
-> +But for instance it is best to only remember 'git add' + 'git commit'
-> +and/or 'git commit -a'.
-> +
-
-The "But for instance" seems a strange way of saying that.
-
-How about
-
-However, for normal usage you only have to remember 'git add' + 'git commit' 
-and/or 'git commit -a'.
+I have a git.git clone using --use-separate-remote. That means i have
+the master branch created by default. Now i need to build git from the
+pu branch too. So i created git branch pu remotes/origin/pu.
 
 
--- 
-Alan Chandler
+How how do i track the pu branch using git pull. What i mean is the
+master local branch is tracked by default using git pull. Is there a
+way to track the local pu branch too.
+
+I looked at git-repo-config and branch.<name>. config variable usage
+is confusing. After initial try i concluded that it is to replace
+.git/remotes/origin not the requirement i had.
+
