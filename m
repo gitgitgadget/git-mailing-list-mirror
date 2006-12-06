@@ -1,76 +1,80 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] Fix bad usage of mkpath in builtin-branch.sh
-Date: Thu, 26 Oct 2006 00:43:13 +0200
-Message-ID: <20061025224313.GM20017@pasky.or.cz>
-References: <1161655176461-git-send-email-hjemli@gmail.com> <7vlkn6qkh2.fsf@assigned-by-dhcp.cox.net> <20061024113806.GB20017@pasky.or.cz> <7vac3lf3jl.fsf@assigned-by-dhcp.cox.net> <7vslhddmtu.fsf@assigned-by-dhcp.cox.net>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: Fast access git-rev-list output: some OS knowledge required
+Date: Wed, 6 Dec 2006 14:51:42 -0500
+Message-ID: <20061206195142.GE20320@spearce.org>
+References: <e5bfff550612061124jcd0d94em47793710866776e7@mail.gmail.com> <20061206192800.GC20320@spearce.org> <e5bfff550612061134r3725dcbu2ff2dd6284fcd651@mail.gmail.com> <20061206194258.GD20320@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 25 Oct 2006 22:43:39 +0000 (UTC)
-Cc: git@vger.kernel.org
+NNTP-Posting-Date: Wed, 6 Dec 2006 19:52:02 +0000 (UTC)
+Cc: Git Mailing List <git@vger.kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Content-Disposition: inline
-In-Reply-To: <7vslhddmtu.fsf@assigned-by-dhcp.cox.net>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <20061206194258.GD20320@spearce.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30116>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GcrSx-0001q9-6Q for gcvg-git@gmane.org; Thu, 26 Oct
- 2006 00:43:19 +0200
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33515>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gs2o6-0004xn-Kx for gcvg-git@gmane.org; Wed, 06 Dec
+ 2006 20:51:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S965242AbWJYWnQ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 25 Oct 2006
- 18:43:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965243AbWJYWnQ
- (ORCPT <rfc822;git-outgoing>); Wed, 25 Oct 2006 18:43:16 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:50846 "EHLO machine.or.cz") by
- vger.kernel.org with ESMTP id S965242AbWJYWnP (ORCPT
- <rfc822;git@vger.kernel.org>); Wed, 25 Oct 2006 18:43:15 -0400
-Received: (qmail 24162 invoked by uid 2001); 26 Oct 2006 00:43:13 +0200
-To: Junio C Hamano <junkio@cox.net>
+ S937584AbWLFTvr (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
+ 14:51:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937586AbWLFTvr
+ (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 14:51:47 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:54861 "EHLO
+ corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S937584AbWLFTvq (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec 2006
+ 14:51:46 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1Gs2nZ-0006H7-Pc; Wed, 06 Dec 2006 14:51:21 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ E3BC720FB7F; Wed,  6 Dec 2006 14:51:42 -0500 (EST)
+To: Marco Costalba <mcostalba@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Dear diary, on Wed, Oct 25, 2006 at 06:46:37AM CEST, I got a letter
-where Junio C Hamano <junkio@cox.net> said that...
-> Junio C Hamano <junkio@cox.net> writes:
+Shawn Pearce <spearce@spearce.org> wrote:
+> I think all you may need is:
 > 
-> > Petr Baudis <pasky@suse.cz> writes:
-> >
-> >> I have made my fair share of inadverent mode changes as well (I don't
-> >> even know how that *happenned*), and I don't seem to be alone; since
-> >> this is something you are doing only rarely anyway, perhaps we should
-> >> try to make mode changes more visible?
-> >
-> > Well we already do and that's how I noticed.
-> 
-> Ah, sorry, I think I misunderstood you.
-> Did you mean something like this?
-> 
-> diff --git a/git-commit.sh b/git-commit.sh
-> index 5b1cf85..8bae734 100755
-> --- a/git-commit.sh
-> +++ b/git-commit.sh
-> @@ -629,4 +629,7 @@ if test -x "$GIT_DIR"/hooks/post-commit
->  then
->  	"$GIT_DIR"/hooks/post-commit
->  fi
-> +
-> +test "$ret" = 0 && git-diff-tree --summary --root --no-commit-id HEAD
-> +
->  exit "$ret"
+> 	#include "revision.h"
+> 	...
 
-Yes, this might be a good idea, although after the commit is perhaps too
-late.
+You'll also need to call:
+
+	setup_git_directory();
+
+before any of the below; but that should be done once per process.
+
+> 	struct rev_info revs;
+> 	init_revisions(&revs, prefix);
+> 	revs.abbrev = 0;
+> 	revs.commit_format = CMIT_FMT_UNSPECIFIED;
+> 	argc = setup_revisions(argc, argv, &revs, NULL);
+
+Although now that I think about it the library may not be enough
+of a library.  Some data (e.g. commits) will stay in memory forever
+once loaded.  Pack files won't be released once read; a pack recently
+made available while the application is running may not get noticed.
+
+Perhaps there is some fast IPC API supported by Qt that you could
+use to run the revision listing outside of the main UI process,
+to eliminate the bottlenecks you are seeing and remove the problems
+noted above?  One that doesn't involve reading from a pipe I mean...
 
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
-$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
