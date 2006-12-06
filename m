@@ -1,74 +1,45 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Restore a single file in the index back to HEAD
-Date: Wed, 01 Nov 2006 00:56:35 -0800
-Message-ID: <7v4ptj7dfg.fsf@assigned-by-dhcp.cox.net>
-References: <200610261641.11239.andyparkins@gmail.com>
-	<fcaeb9bf0610312358g1176e4d8q8962b08c2e8ff2c6@mail.gmail.com>
-	<7vpsc78ua3.fsf@assigned-by-dhcp.cox.net>
-	<200611010839.35436.andyparkins@gmail.com>
+From: Mitch Bradley <wmb@firmworks.com>
+Subject: Seeking git recipe to grab a single file
+Date: Wed, 06 Dec 2006 11:22:22 -1000
+Message-ID: <4577348E.4090105@firmworks.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 1 Nov 2006 08:56:53 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Wed, 6 Dec 2006 21:27:18 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <200611010839.35436.andyparkins@gmail.com> (Andy Parkins's
-	message of "Wed, 1 Nov 2006 09:39:31 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+User-Agent: Thunderbird 1.5.0.8 (Windows/20061025)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30624>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GfBtv-0006Rx-H1 for gcvg-git@gmane.org; Wed, 01 Nov
- 2006 09:56:47 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33523>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gs4IL-0001tg-Pt for gcvg-git@gmane.org; Wed, 06 Dec
+ 2006 22:27:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1423954AbWKAI4i (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 1 Nov 2006
- 03:56:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423955AbWKAI4i
- (ORCPT <rfc822;git-outgoing>); Wed, 1 Nov 2006 03:56:38 -0500
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:45015 "EHLO
- fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP id S1423954AbWKAI4h
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 1 Nov 2006 03:56:37 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao08.cox.net
- (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
- <20061101085636.EHBA22977.fed1rmmtao08.cox.net@fed1rmimpo01.cox.net>; Wed, 1
- Nov 2006 03:56:36 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id hLwF1V00P1kojtg0000000 Wed, 01 Nov 2006
- 03:56:16 -0500
-To: Andy Parkins <andyparkins@gmail.com>
+ S937649AbWLFV0x (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
+ 16:26:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937663AbWLFV0w
+ (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 16:26:52 -0500
+Received: from rs27.luxsci.com ([66.216.127.24]:39165 "EHLO rs27.luxsci.com"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S937649AbWLFV0v
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec 2006 16:26:51 -0500
+Received: from [10.20.0.14] (user-10cm75o.cable.mindspring.com
+ [64.203.28.184]) (authenticated bits=0) by rs27.luxsci.com (8.13.7/8.13.7)
+ with ESMTP id kB6LQnPn032181 (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA
+ bits=256 verify=NOT) for <git@vger.kernel.org>; Wed, 6 Dec 2006 15:26:50
+ -0600
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Andy Parkins <andyparkins@gmail.com> writes:
+I want to grab a single file from a remote git repository into the 
+current directory, which is not a git tree.  Is there an easy way to do 
+that?  I have tried using git-fetch and git-cat-file, without success.
 
->> Then perhaps you can use "git checkout HEAD frotz", which is the
->> simplest?
->
-> Doesn't that update the working directory as well as the
-> index?
-
-Yes, sorry, see my other mail.
-
-> (imaginary) "git-update-index --reset" would not.
-
-update-index is a plumbing that is about updating index (hence
-its name) and should not care what the HEAD is, and it does not
-even have to have _any_ head to do its work, so in that sense,
-"update-index --reset" is conceptually a layering violation.
-
-Another possibility is read-tree, which is another plumbing that
-is about updating index from an existing tree (or three).  It
-does not take paths limiter, so conceptually that is not too
-bad.  We _could_ do so if we really wanted to.
-
-But these two commands are meant to be used as building blocks,
-so if there are more suitable UI commands at the Porcelain layer
-to implement what we want to do without introducing more special
-cases to these plumbing commands, I would rather not touch them.
-
+Thanks,
+Mitch Bradley
