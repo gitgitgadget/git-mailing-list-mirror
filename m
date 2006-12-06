@@ -1,99 +1,80 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Subprojects tasks
-Date: Sun, 17 Dec 2006 15:29:02 +0100
-Message-ID: <200612171529.03165.jnareb@gmail.com>
-References: <7vzm9nelob.fsf@assigned-by-dhcp.cox.net> <200612171401.10585.jnareb@gmail.com> <20061217134848.GH12411@admingilde.org>
+From: Han-Wen Nienhuys <hanwen@xs4all.nl>
+Subject: bug: git-sh-setup should not be in $PATH
+Date: Wed, 06 Dec 2006 13:14:27 +0100
+Message-ID: <el6c6o$oa7$1@sea.gmane.org>
+Reply-To: hanwen@xs4all.nl
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sun, 17 Dec 2006 14:26:55 +0000 (UTC)
-Cc: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>,
-	git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
+NNTP-Posting-Date: Wed, 6 Dec 2006 12:14:35 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=ZNmCbZa9T+Ft2QVRBmCci3VJNnvYG9ewfZklWU7v5EgbgmQWftyGD9xRDbK3CKFszmkNEPvHfHdlWkUG9po16LyZnc/RtTjbb0z90UZo6DA8PTIODs/K6+y5Qqjd/uoPvCIJwnPfEGnVLSBa1DwQvQPHbGY5hEBu/zzH9L6N8VI=
-User-Agent: KMail/1.9.3
-In-Reply-To: <20061217134848.GH12411@admingilde.org>
-Content-Disposition: inline
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 33
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: muurbloem.xs4all.nl
+User-Agent: Thunderbird 1.5.0.8 (X11/20061107)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34689>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33437>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GvwyT-0001KR-Gl for gcvg-git@gmane.org; Sun, 17 Dec
- 2006 15:26:45 +0100
+ esmtp (Exim 4.50) id 1GrvfV-00085I-Pe for gcvg-git@gmane.org; Wed, 06 Dec
+ 2006 13:14:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752699AbWLQO0d (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 17 Dec 2006
- 09:26:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752701AbWLQO0d
- (ORCPT <rfc822;git-outgoing>); Sun, 17 Dec 2006 09:26:33 -0500
-Received: from ug-out-1314.google.com ([66.249.92.175]:27946 "EHLO
- ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1752699AbWLQO0c (ORCPT <rfc822;git@vger.kernel.org>); Sun, 17 Dec
- 2006 09:26:32 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so1269401uga for
- <git@vger.kernel.org>; Sun, 17 Dec 2006 06:26:31 -0800 (PST)
-Received: by 10.67.20.3 with SMTP id x3mr4789422ugi.1166365591293; Sun, 17
- Dec 2006 06:26:31 -0800 (PST)
-Received: from host-81-190-25-107.torun.mm.pl ( [81.190.25.107]) by
- mx.google.com with ESMTP id u6sm7631215uge.2006.12.17.06.26.30; Sun, 17 Dec
- 2006 06:26:31 -0800 (PST)
-To: Martin Waitz <tali@admingilde.org>
+ S1760534AbWLFMOa (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
+ 07:14:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760543AbWLFMOa
+ (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 07:14:30 -0500
+Received: from main.gmane.org ([80.91.229.2]:46447 "EHLO ciao.gmane.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1760534AbWLFMOa
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec 2006 07:14:30 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1GrvfQ-00048T-9M for git@vger.kernel.org; Wed, 06 Dec 2006 13:14:28 +0100
+Received: from muurbloem.xs4all.nl ([213.84.26.127]) by main.gmane.org with
+ esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>;
+ Wed, 06 Dec 2006 13:14:28 +0100
+Received: from hanwen by muurbloem.xs4all.nl with local (Gmexim 0.1 (Debian))
+ id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Wed, 06 Dec 2006 13:14:28
+ +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Martin Waitz wrote:
-> On Sun, Dec 17, 2006 at 02:01:09PM +0100, Jakub Narebski wrote:
 
->> Well, in the .gitlink proposal you could specify GIT_DIR for checkout,
->> or separately: GIT_OBJECT_DIRECTORY, GIT_INDEX_FILE, GIT_REFS_DIRECTORY
->> (does not exist yet), GIT_HEAD_FILE (does not exist yet, and I suppose
->> it wouldn't be easy to implement it). By the way, that's why I'm for
->> .gitlink name for the file, not .git -- this way .gitlink can "shadow"
->> what's in .git, for example specifying in a smart way where to search
->> (where to find) object database, but HEAD and index would be stored
->> together with the checked out directory in .git
-> 
-> What about .git/link or something?
-> (Obviously without the capability to change GIT_DIR)
+Hello,
 
-Well, the .gitlink proposal at it is now (by Josef) serves both as a way
-to implement lightweight checkout (i.e. having additional working dir to
-some repository, or having working dir separate from bare repository),
-and as a way to have "smart" submodules (which you can move and rename)
-in submodules/subproject support.
+I often install tools locally so I can run SVN/CVS/etc versions 
+in my own account. To do this, I install into
 
-Besides, I'd rather either use config file for this (core.link or
-core.git_dir), or use .git/GIT_DIR.
- 
->> By the way, I'm rather partial to supermodule following HEAD in submodule,
->> not specified branch. First, I think it is easier from implementation
->> point of view: you don't have to remember which branch supermodule should
->> take submodule commits from; and this cannot be fixed branch name like
->> 'master'. 
-[...]
-> In the setup you described a git-checkout in the supermodule would have
-> to switch to a different branch in the submodule, depending on the
-> branchname which would have to be stored in the supermodule.
-> This a lot more complex.
+  $HOME/usr/pkg/PACKAGE
 
-O.K. Now I understand why you prefer specified branch to HEAD.
-I have forgot that checkout must update submodule ref, and if we track HEAD
-we would have to remember the branch it pointed to.
+and a script that generates scripts in $HOME/usr/bin/ (which is in my $PATH)
+like
 
-By the way, should this ref be in submodule, or in supermodule, e.g. in
-refs/modules/<name>/HEAD? And there is a problam _what_ branch should
-be that.
+ #!/bin/sh
 
-Both approaches have advantages and disadvantages...
--- 
-Jakub Narebski
+ exec /home/lilydev/usr/pkg/git/bin/git-prune "$@"
+ # generated: update-pkgs 
+
+
+this breaks with git-sh-setup; all sh scripts are broken with this
+setup.
+
+git-sh-setup isn't a 'normal' binary, in that it should be called by
+bash only and not run in a subshell. Therefore I propose that it
+
+- be installed in <prefix>/share/git/
+
+- be invoked with an explicit path, i.e.
+
+  . <prefix>/share/git/
+
+
+
+--
+ Han-Wen Nienhuys - hanwen@xs4all.nl - http://www.xs4all.nl/~hanwen
