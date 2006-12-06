@@ -5,52 +5,53 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
 	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Michael K. Edwards" <medwards.linux@gmail.com>
-Subject: git fetch --reference?
-Date: Tue, 14 Nov 2006 16:38:26 -0800
-Message-ID: <f2b55d220611141638k5f4a0aeas1a43301e4b40bf59@mail.gmail.com>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: Seeking git recipe to grab a single file
+Date: Wed, 6 Dec 2006 22:51:39 +0100
+Message-ID: <81b0412b0612061351v16aa6b94q8dce9404a5b2675a@mail.gmail.com>
+References: <4577348E.4090105@firmworks.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 15 Nov 2006 00:38:36 +0000 (UTC)
+NNTP-Posting-Date: Wed, 6 Dec 2006 21:51:54 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=D5y8LvU0oqWzWW1DYCh9uVSqJsGfhp3UGDEkxz2P2YPheWtLoCDMQ1tHCID3Upib9/L+uajFGF7PJMonmZ5kv4lwJO7DjNEaxYTN5X/5FHoT4aTmuyQriBAbDSCMI0ncIQjVR/VIXdw3etuD3yWY5w5Lwx1gIVmqlwioveJQd5o=
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=dTtnxbP6Whjia+8tXwXZOaMfHy/wUQImCT5jmLJgi6iiCckzCs0b9gZuMeizUYACou8HEflf5NwlYGA0IE+t6mW4Odk9IdP2lNQ2gNEE3RnOv0UudkNzRycsLI+sJJO/FhlPiZUfOtVCg68RFhW+QOg8LndErrYkt5E8vom7ka0=
+In-Reply-To: <4577348E.4090105@firmworks.com>
 Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31396>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gk8nP-0000XI-GS for gcvg-git@gmane.org; Wed, 15 Nov
- 2006 01:38:31 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33527>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gs4g3-0005dj-TL for gcvg-git@gmane.org; Wed, 06 Dec
+ 2006 22:51:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S966545AbWKOAi2 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 14 Nov 2006
- 19:38:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966543AbWKOAi2
- (ORCPT <rfc822;git-outgoing>); Tue, 14 Nov 2006 19:38:28 -0500
-Received: from wx-out-0506.google.com ([66.249.82.231]:11854 "EHLO
- wx-out-0506.google.com") by vger.kernel.org with ESMTP id S966545AbWKOAi1
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 14 Nov 2006 19:38:27 -0500
-Received: by wx-out-0506.google.com with SMTP id s7so15434wxc for
- <git@vger.kernel.org>; Tue, 14 Nov 2006 16:38:27 -0800 (PST)
-Received: by 10.90.105.19 with SMTP id d19mr1845298agc.1163551106979; Tue, 14
- Nov 2006 16:38:26 -0800 (PST)
-Received: by 10.90.25.4 with HTTP; Tue, 14 Nov 2006 16:38:26 -0800 (PST)
-To: git@vger.kernel.org
+ S937685AbWLFVvl (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
+ 16:51:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937686AbWLFVvl
+ (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 16:51:41 -0500
+Received: from nz-out-0506.google.com ([64.233.162.225]:46289 "EHLO
+ nz-out-0102.google.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with
+ ESMTP id S937685AbWLFVvk (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec
+ 2006 16:51:40 -0500
+Received: by nz-out-0102.google.com with SMTP id s1so228312nze for
+ <git@vger.kernel.org>; Wed, 06 Dec 2006 13:51:40 -0800 (PST)
+Received: by 10.78.180.18 with SMTP id c18mr1009014huf.1165441899061; Wed, 06
+ Dec 2006 13:51:39 -0800 (PST)
+Received: by 10.78.135.3 with HTTP; Wed, 6 Dec 2006 13:51:38 -0800 (PST)
+To: "Mitch Bradley" <wmb@firmworks.com>
 Sender: git-owner@vger.kernel.org
 
-When setting up a working area for kernel integration for a new
-embedded target, I generally do a "git clone --reference" so that the
-new area has its own repository (and its own branch structure) but
-most of the blobs come from a local reference copy.  But now that I'm
-integrating bits from several non-trivially divergent trees (mtd-2.6,
-netdev-2.6, linux-2.6.16.y, etc.), it would be nice to avoid
-re-downloading blobs for these additional remote branches, which are
-also available in the local reference copy.  Is it feasible to
-implement "git fetch --reference" for this purpose?  Or is there a
-better way to manage this sort of integration effort?
+On 12/6/06, Mitch Bradley <wmb@firmworks.com> wrote:
+> I want to grab a single file from a remote git repository into the
+> current directory, which is not a git tree.  Is there an easy way to do
+> that?  I have tried using git-fetch and git-cat-file, without success.
 
-Cheers,
+If the remote repo has a gitweb interface than it's simple:
+wget 'http://www.kernel.org/git/?p=linux/kernel/git/torvalds/linux-2.6.git;a=blob_plain;h=0451f69353bad4d07de34fd4658f40b805bd467a;f=Kbuild'
+
+Otherwise, there is no simple way to do it yet.
