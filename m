@@ -1,76 +1,71 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: Cleaning up git user-interface warts
-Date: Tue, 14 Nov 2006 21:46:28 +0100
-Message-ID: <20061114204628.GA14741@diana.vm.bytemark.co.uk>
-References: <87k61yt1x2.wl%cworth@cworth.org> <455A1137.8030301@shadowen.org> <87hcx1u934.wl%cworth@cworth.org>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: Fast access git-rev-list output: some OS knowledge required
+Date: Wed, 6 Dec 2006 21:08:55 +0100
+Message-ID: <e5bfff550612061208g6e4003e7ifa7dbd5ed69180c9@mail.gmail.com>
+References: <e5bfff550612061124jcd0d94em47793710866776e7@mail.gmail.com>
+	 <20061206192800.GC20320@spearce.org>
+	 <e5bfff550612061134r3725dcbu2ff2dd6284fcd651@mail.gmail.com>
+	 <20061206194258.GD20320@spearce.org>
+	 <20061206195142.GE20320@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Tue, 14 Nov 2006 20:47:05 +0000 (UTC)
-Cc: Andy Whitcroft <apw@shadowen.org>, Junio C Hamano <junkio@cox.net>,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Wed, 6 Dec 2006 20:09:13 +0000 (UTC)
+Cc: "Git Mailing List" <git@vger.kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=C1gBuLi8Yv1ngQjeGWY5YHHhyiaUI232FFv9x1tGVr8ZaX3jyOTbNZ8L4uLO+O9KWe55iAPodf7SNeahYB4Nd7ITs/e9vqMeyTr/L9wJIJQgB6HEYN6k4giGEXnS4JSDB/mu1mDUjn2x5PWKHxVur1On5NlOos/5yabA1wEMi0w=
+In-Reply-To: <20061206195142.GE20320@spearce.org>
 Content-Disposition: inline
-In-Reply-To: <87hcx1u934.wl%cworth@cworth.org>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31372>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gk5BH-0002qA-NN for gcvg-git@gmane.org; Tue, 14 Nov
- 2006 21:46:56 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33516>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gs34e-0007P8-DP for gcvg-git@gmane.org; Wed, 06 Dec
+ 2006 21:09:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S966341AbWKNUqw convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Tue, 14 Nov 2006 15:46:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966343AbWKNUqw
- (ORCPT <rfc822;git-outgoing>); Tue, 14 Nov 2006 15:46:52 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1553 "EHLO
- diana.vm.bytemark.co.uk") by vger.kernel.org with ESMTP id S966341AbWKNUqv
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 14 Nov 2006 15:46:51 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1
- (Debian)) id 1Gk5Ar-0003yS-00; Tue, 14 Nov 2006 20:46:29 +0000
-To: Carl Worth <cworth@cworth.org>
+ S937592AbWLFUI5 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
+ 15:08:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937594AbWLFUI5
+ (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 15:08:57 -0500
+Received: from py-out-1112.google.com ([64.233.166.179]:55913 "EHLO
+ py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S937592AbWLFUI4 (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec
+ 2006 15:08:56 -0500
+Received: by py-out-1112.google.com with SMTP id a29so172137pyi for
+ <git@vger.kernel.org>; Wed, 06 Dec 2006 12:08:55 -0800 (PST)
+Received: by 10.35.76.9 with SMTP id d9mr1975086pyl.1165435735865; Wed, 06
+ Dec 2006 12:08:55 -0800 (PST)
+Received: by 10.35.93.11 with HTTP; Wed, 6 Dec 2006 12:08:55 -0800 (PST)
+To: "Shawn Pearce" <spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 
-On 2006-11-14 11:22:39 -0800, Carl Worth wrote:
+On 12/6/06, Shawn Pearce <spearce@spearce.org> wrote:
+> Shawn Pearce <spearce@spearce.org> wrote:
+>
+> Perhaps there is some fast IPC API supported by Qt that you could
+> use to run the revision listing outside of the main UI process,
+> to eliminate the bottlenecks you are seeing and remove the problems
+> noted above?  One that doesn't involve reading from a pipe I mean...
+>
 
-> So, the fact that conflict resolution still requires the use of
-> update-index would just be the next thing to fix. A name for a
-> replacement to use there could be "git resolve <paths>", (since the
-> old git-resolve is now officially deprecated). That's a name that
-> matches what hg uses in this situation, (another option is
-> "resolved" which is what stg uses, but I think verbs for commands
-> work better in general).
+Qt it's very fast in reading from files, also git-rev-list is fast in
+write to a file...the problem is I would not want the file to be saved
+on disk, but stay cached in the OS memory for the few seconds needed
+to be written and read back, and then deleted. It's a kind of shared
+memory at the end. But I don't know how to realize it.
 
-Yes, "resolve" sounds better than "resolved". The latter is arguably
-more correct, since you're telling git that you have already resolved
-the file and not asking it to resolve it for you, but I still prefer
-"resolve".
+Also let git-rev-list to write directly in qgit process address space
+would be nice, indeed very nice.
 
-> And then, the next phase of my evil plan would be to introduce a -i
-> option for git-commit making it commit the state in the index. Then
-> git-commit with no options could work like "git-commit -a" does now,
-> (with the additional protection of not committing any unmerged
-> files---that is the new "git resolve" would be required before "git
-> commit" would work after a conflict). Users who really, really like
-> the current behavior of git-commit could use the new alias support
-> to pass the new -i option in order to maintain compatible behavior.
 
-Seems very sane. Default to simple behavior, and provide a switch to
-get more complicated behavior.
-
-> Then, the last thing I'd really like to fix is to allow a usage of
-> "git merge <branch>" instead of the awkward "git pull . <branch>".
-
-This should reduce newbie confusion a lot.
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
