@@ -1,177 +1,64 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Nix <nix@esperi.org.uk>
-Subject: Re: What's the meaning of `parenthood' in git commits?
-Date: Wed, 08 Nov 2006 01:28:24 +0000
-Message-ID: <874ptabubr.fsf@hades.wkstn.nix>
-References: <878ximbwm3.fsf@hades.wkstn.nix>
-	<Pine.LNX.4.64.0611071644430.3667@g5.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] cvs-migration document: make the need for "push" more obvious
+Date: Wed, 06 Dec 2006 09:44:56 -0800
+Message-ID: <7v7ix47wbr.fsf@assigned-by-dhcp.cox.net>
+References: <4574AC9E.3040506@gmail.com> <4574BF70.8070100@lilypond.org>
+	<45760545.2010801@gmail.com> <20061206.105251.144349770.wl@gnu.org>
+	<Pine.LNX.4.63.0612061325320.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+	<4576D92A.80307@xs4all.nl> <20061206145802.GC1714@fieldses.org>
+	<Pine.LNX.4.63.0612061613460.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+	<20061206171950.GD1714@fieldses.org>
+	<20061206172450.GE1714@fieldses.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 8 Nov 2006 01:28:39 +0000 (UTC)
+NNTP-Posting-Date: Wed, 6 Dec 2006 17:45:20 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Emacs: it's like swatting a fly with a supernova.
-In-Reply-To: <Pine.LNX.4.64.0611071644430.3667@g5.osdl.org> (Linus Torvalds's message of "Tue, 7 Nov 2006 16:58:43 -0800 (PST)")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) XEmacs/21.5-b27 (linux)
+In-Reply-To: <20061206172450.GE1714@fieldses.org> (J. Bruce Fields's message
+	of "Wed, 6 Dec 2006 12:24:50 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31109>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GhcF2-0002Qi-NR for gcvg-git@gmane.org; Wed, 08 Nov
- 2006 02:28:37 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33498>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gs0pS-0001LL-KY for gcvg-git@gmane.org; Wed, 06 Dec
+ 2006 18:45:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753818AbWKHB2d (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 7 Nov 2006
- 20:28:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753827AbWKHB2d
- (ORCPT <rfc822;git-outgoing>); Tue, 7 Nov 2006 20:28:33 -0500
-Received: from 41-052.adsl.zetnet.co.uk ([194.247.41.52]:1032 "EHLO
- mail.esperi.org.uk") by vger.kernel.org with ESMTP id S1753818AbWKHB2c (ORCPT
- <rfc822;git@vger.kernel.org>); Tue, 7 Nov 2006 20:28:32 -0500
-Received: from esperi.org.uk (nix@hades.wkstn.nix [192.168.14.18]) by
- mail.esperi.org.uk (8.12.11.20060614/8.12.11) with ESMTP id kA81SPq5013501;
- Wed, 8 Nov 2006 01:28:25 GMT
-Received: (from nix@localhost) by esperi.org.uk
- (8.12.11.20060614/8.12.11/Submit) id kA81SOnF028481; Wed, 8 Nov 2006 01:28:24
- GMT
-To: Linus Torvalds <torvalds@osdl.org>
+ S936945AbWLFRo7 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
+ 12:44:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936957AbWLFRo7
+ (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 12:44:59 -0500
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:56070 "EHLO
+ fed1rmmtao06.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S936945AbWLFRo6 (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec 2006
+ 12:44:58 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao06.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061206174457.MCXO2628.fed1rmmtao06.cox.net@fed1rmimpo02.cox.net>; Wed, 6
+ Dec 2006 12:44:57 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id vVl71V00G1kojtg0000000; Wed, 06 Dec 2006
+ 12:45:07 -0500
+To: "J. Bruce Fields" <bfields@fieldses.org>
 Sender: git-owner@vger.kernel.org
 
-On 8 Nov 2006, Linus Torvalds uttered the following:
-> On Wed, 8 Nov 2006, Nix wrote:
->> 
->> [ Nix explains what he's doing now with SCCS ]: you may be
->> sick now.
->
-> Wow. You've got some strange setup there, Nix.
+"J. Bruce Fields" <bfields@fieldses.org> writes:
 
-It's what happens when a version-control system gets implemented as
-an emergency hack when moving from VMS, by people who don't really
-grok Unix shell scripting... and then you let fifteen years pass,
-and nobody dares touch the hack because it's so damned delicate.
-It took months of agony to implement crude half-functional branching
-in this. Writing a git porcelain should be vastly simpler, even with
-the overhead of a conversion tool as well.
+> And some day we should move that whole final CVS annotate section
+> elsewhere.
 
-Writing that conversion tool will be fun :( e.g. I'm going to have to
-identify branches by diffing/xdeltaing each version of a file with every
-single previous version of that file, and if the diff is smallest
-against a version other than the immediate ancestor, it's assumed to be
-a branch against that version. (I'm going to have to fake up packed refs
-for these tiny branches so that they're at least accessible in
-emergencies, gah.)
+I agree that we should make that particular document shorter by
+catering the immediate need of CVS migrant.  No need for git
+marketting and showing off the power.
 
-It's all, well, nasty. But all will be so much happier in the shining
-world of git.
+In that spirit, I think we can lose the section on 'annotate'
+altogether now.  It was written in June 2005, way before
+'annotate' and 'blame', both of which came in Feb 2006.
 
->> After all that setup, my question's simple. Does a `parent' in git
->> terminology simply mean `this commit was derived in some way from the
->> commit listed here'?
->
-> Well, strictly speaking, git doesn't itself assign much any real meaning 
-> to "parent" at all. It has the obvious meanings:
-
-Oh *good*, that's what I thought.
-
-[snip more things which match my understanding]
-
->  - parenthood will be used to show the diff ("git show", "git log -p" and 
->    friends)
-
-I'll list the patch-merged parent as the second parent, so that you'll only
-get the mostly-useless huge diff from that if you actually ask for it, and
-will get a more useful result with ^.
-
->  - the "merge-base" algorithms obviously use it to find the most recent 
->    common ancestor, and that in turn impacts the normal merge strategies, 
->    of course.
-
-Hm, yeah, if merging iterates down patch-merged branches it might have
-interesting consequences, because the trees on one side of patch- merges
-are likely to be very different to trees on the other side (years of
-development separate them). I'd like a way to specify that those parents
-are *not* to be traversed by the merge-base algorithms, really.
-
-A series of
-
-not-merge-base: <sha1 id>
-
-headers, perhaps? (I think that's likely to involve much less code churn
-than introducing a new `not-merge-base-parent' tag).
-
-> Yeah, git won't care. If you screw up parenthood, you have a few problems:
->
->  - the diffs may look really strange. In particular, if you list multiple 
->    parents, the git "diff" functions will all just assume that it's a 
->    merge, and a "git show" will start showing the combined diff (which is 
->    usually empty).
-
-It is a merge, so that's right. It's just a rather odd merge.
-
-(I don't envisage actual *changes* being made in these commits except to
-resolve conflicts.)
-
->    So if you end up having multiple parents, not because it was "really" a 
->    merge, but because you use the other parent pointer to point to some 
->    "source" for the patch, things like "git log -p" won't give nice output 
->    any more. You need to manually ask for the diff with something like
-
-Well, I was envisaging that the other parent pointer would point to the
-tip of the changes tree. Going back to that graph again:
-
-     B
-------------- ref trunks/latest
-     \
-      ------ ref heads/some-change-foo
-
- ... -------- ref trunks/old-and-grotty
-
-The idea is that the patch-merge of trunks/old-and-grotty and
-heads/some-change-foo would consist textually of the diff between B and
-heads/some-change-foo, applied to trunks/old-and-grotty, and would list
-as its parents trunks/old-and-grotty, *and heads/some-change-foo*.
-
-(Perhaps this isn't really a merge after all? Should merge parents be
-treated as differently as this? It'll all be covered over by the
-porcelain in any case: it won't be possible to confuse a trunk/ with a
-normal head and accidentally patch-merge in the wrong direction.)
-
->  - listing too _few_ parents is potentially more serious, if you have 
->    reachability issues (ie you wanted to keep the other source around, but 
->    since you didn't list it as a parent, git won't know that it had 
->    anything to do with your commit, so it may be pruned away unless you 
->    have some other way to reach it)
-
-Yeah, that would be bad.
-
-> but if you just have a really strange merge algorithm, and the _data_ 
-> associated with the parents is "surprising" from the standpoint of the 
-> default merge, git really won't care at all.
-
-Good.
-
-> Your usage does sound a bit strange.
-
-Agreed. But there are hundreds of people banging on my door asking for a
-proper version control system, quilt isn't a proper version control
-system in that sense, and stgit has... issues when you try to distribute
-it and when you have a lot of people working on one tree at once: plus
-it doesn't fit our weird workflow with multiple parallel release
-branches, at least one active development trunk, and all changes done
-under a carefully-controlled bug tracking system (it's as if *every*
-change has a bugzilla ticket associated, *always*, and we expect to be
-able to get from ticket to change efficiently).
-
-(We do both distribution and working-copy-sharing: the trees are too
-large to have one tree per person, not least because each tree requires
-an entire Oracle instance of its own to play with and massive amounts of
-memory; and we have geographically distributed sites with trees of their
-own.)
-
--- 
-Rich industrial heritage: lifeless wasteland. `The land
