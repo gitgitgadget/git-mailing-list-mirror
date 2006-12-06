@@ -1,64 +1,61 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 2/2] gitweb: New improved formatting of chunk header in diff
-Date: Wed, 8 Nov 2006 21:58:43 +0100
-Message-ID: <200611082158.43652.jnareb@gmail.com>
-References: <200611081147.52952.jnareb@gmail.com> <200611081800.16001.jnareb@gmail.com> <7vfyctsmbm.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Explicitly add the default "git pull" behaviour to
+ .git/config on clone
+Date: Thu, 7 Dec 2006 00:23:02 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0612070022180.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <200612061207.23437.andyparkins@gmail.com>
+ <200612061800.17087.Josef.Weidendorfer@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 8 Nov 2006 20:58:07 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Wed, 6 Dec 2006 23:23:24 +0000 (UTC)
+Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=pWPjDnBhnXQeIitezBrH6omXb5FO850YLqR04q0qtkirx5SVqx1nnAQLV/chwzLU668JlA7UK22HEGrNdk7fN6o9n5Imx01LD66pVkYRPmL+QsP1VstH0vngQTRxK2QT6SguhOa/7zw8QcnY5nsqxDTlAQcVB995EgBD0S1uF7A=
-User-Agent: KMail/1.9.3
-In-Reply-To: <7vfyctsmbm.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <200612061800.17087.Josef.Weidendorfer@gmx.de>
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31158>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GhuUh-0008EZ-Lt for gcvg-git@gmane.org; Wed, 08 Nov
- 2006 21:58:00 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33534>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gs66Y-0002tO-QR for gcvg-git@gmane.org; Thu, 07 Dec
+ 2006 00:23:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1423727AbWKHU54 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 8 Nov 2006
- 15:57:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932764AbWKHU54
- (ORCPT <rfc822;git-outgoing>); Wed, 8 Nov 2006 15:57:56 -0500
-Received: from ug-out-1314.google.com ([66.249.92.174]:9381 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S932763AbWKHU5z
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 8 Nov 2006 15:57:55 -0500
-Received: by ug-out-1314.google.com with SMTP id m3so23540ugc for
- <git@vger.kernel.org>; Wed, 08 Nov 2006 12:57:54 -0800 (PST)
-Received: by 10.66.232.11 with SMTP id e11mr125780ugh.1163019474196; Wed, 08
- Nov 2006 12:57:54 -0800 (PST)
-Received: from host-81-190-24-209.torun.mm.pl ( [81.190.24.209]) by
- mx.google.com with ESMTP id 72sm7565990ugb.2006.11.08.12.57.53; Wed, 08 Nov
- 2006 12:57:53 -0800 (PST)
-To: Junio C Hamano <junkio@cox.net>
+ S937781AbWLFXXH (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
+ 18:23:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937782AbWLFXXH
+ (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 18:23:07 -0500
+Received: from mail.gmx.net ([213.165.64.20]:37982 "HELO mail.gmx.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S937781AbWLFXXE
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec 2006 18:23:04 -0500
+Received: (qmail invoked by alias); 06 Dec 2006 23:23:03 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp029) with SMTP; 07 Dec 2006 00:23:03 +0100
+To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano wrote:
-> This regresses on hunks of form "@@ -n +m,l @@" and friends, so
-> I dropped it for now.
+Hi,
 
-O.K. This one introduced new feature, and wasn't needed for earlier 
-accepted patch (output empty patches) to have sense. And it is rc1 
-phase...
+On Wed, 6 Dec 2006, Josef Weidendorfer wrote:
 
-By the way, where I can find proper specifiction of unified diff format? 
-Do I understand correctly that bot from and to ranges can be without 
-number of lines part if it simplifies to 0?
--- 
-Jakub Narebski
+> On Wednesday 06 December 2006 13:07, Andy Parkins wrote:
+> > The [branch "master"] section is such that there is no change to the
+> > functionality of git-pull, but that functionality is now explicitly
+> > documented.
+> 
+> Nice. However, changing "git-clone" for this is an adhoc solution and 
+> looks wrong.
+
+Not to me. There is _no_ other place to put this, if you want to help 
+people graps the concept of branch.*.merge.
+
+Ciao,
+Dscho
