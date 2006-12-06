@@ -1,51 +1,91 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Kevin Shanahan <kmshanah@disenchant.net>
-Subject: Re: Problem with git-apply?
-Date: Sat, 4 Nov 2006 20:42:00 +1030
-Message-ID: <20061104101200.GC19667@cubit>
-References: <20061104072349.GA19667@cubit> <eihmas$8sj$1@sea.gmane.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: bug: git-sh-setup should not be in $PATH
+Date: Wed, 6 Dec 2006 18:11:28 +0100
+Message-ID: <200612061811.29296.jnareb@gmail.com>
+References: <el6c6o$oa7$1@sea.gmane.org> <200612061752.39443.jnareb@gmail.com> <4576F65A.6010707@xs4all.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sat, 4 Nov 2006 10:12:18 +0000 (UTC)
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Wed, 6 Dec 2006 17:09:44 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=O5w62qO1ximu+YfnNP88M69zK/0YOVTOD2yMolw6iVA/wyiWSx83RK6pOHHf7cZ9aD63Eh43uESi4/ynh3/TKzr0lFxrIAgAi1oY25JukjxJ+ZCWpAIrr3t3KvJlIQ6FPk3kOdXIGFHcVxwp11SyKVUguA/v/E1hTKvqhtfkabQ=
+User-Agent: KMail/1.9.3
+In-Reply-To: <4576F65A.6010707@xs4all.nl>
 Content-Disposition: inline
-In-Reply-To: <eihmas$8sj$1@sea.gmane.org>
-User-Agent: Mutt/1.5.9i
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30914>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GgIVX-0004OX-76 for gcvg-git@gmane.org; Sat, 04 Nov
- 2006 11:12:11 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33494>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gs0H2-0003YB-I7 for gcvg-git@gmane.org; Wed, 06 Dec
+ 2006 18:09:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S965211AbWKDKMG (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 4 Nov 2006
- 05:12:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965194AbWKDKMG
- (ORCPT <rfc822;git-outgoing>); Sat, 4 Nov 2006 05:12:06 -0500
-Received: from whirlwind.netspace.net.au ([203.10.110.76]:60941 "EHLO
- mail.netspace.net.au") by vger.kernel.org with ESMTP id S965191AbWKDKME
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 4 Nov 2006 05:12:04 -0500
-Received: from mail.localnet (dsl-202-45-120-45-static.SA.netspace.net.au
- [202.45.120.45]) by mail.netspace.net.au (Postfix) with ESMTP id 790F2131C06;
- Sat,  4 Nov 2006 21:12:00 +1100 (EST)
-Received: by mail.localnet (Postfix, from userid 1000) id 750B8BB00D2; Sat, 
- 4 Nov 2006 20:42:00 +1030 (CST)
-To: Jakub Narebski <jnareb@gmail.com>
+ S936480AbWLFRJd convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006 12:09:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936499AbWLFRJd
+ (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 12:09:33 -0500
+Received: from nf-out-0910.google.com ([64.233.182.185]:61138 "EHLO
+ nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S936483AbWLFRJc (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec
+ 2006 12:09:32 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so611923nfa for
+ <git@vger.kernel.org>; Wed, 06 Dec 2006 09:09:31 -0800 (PST)
+Received: by 10.49.7.10 with SMTP id k10mr2522595nfi.1165424970353; Wed, 06
+ Dec 2006 09:09:30 -0800 (PST)
+Received: from host-81-190-24-209.torun.mm.pl ( [81.190.24.209]) by
+ mx.google.com with ESMTP id 13sm30535671ugb.2006.12.06.09.09.29; Wed, 06 Dec
+ 2006 09:09:30 -0800 (PST)
+To: Han-Wen Nienhuys <hanwen@xs4all.nl>
 Sender: git-owner@vger.kernel.org
 
-On Sat, Nov 04, 2006 at 10:26:13AM +0100, Jakub Narebski wrote:
-> This I think is a bug, or rather misfeature in git-apply (or at least
-> inconsistency between GNU diff and git patch format). But if you change
-> from-file line from "--- a/foo" to "--- /dev/null" then git-apply happily
-> applies creation patch and creates file.
+Dnia =B6roda 6. grudnia 2006 17:56, Han-Wen Nienhuys napisa=B3:
+> Jakub Narebski escreveu:
+>
+>> I'm still not sure if this has place in git. Is it really common to
+>> support building outside source directory? If git didn't support thi=
+s,
+>> so what?
+>=20
+> lots of serious tools support it, as it this comes automatically
+> when using automake. Eg. emacs, gcc, make, pango, lilypond, etc etc.=20
+>=20
+> It's a quite standard feature ; you should be asking why git=20
+> shouldn't support it.
 
-Thanks. At least that gives me a workaround for now.
+Because git is not autotool'ed project. And people protested vehemently
+against adding yet another dependency. So from the whole autotools suit=
+e
+only autoconf is used, and only to generate config.mak.autogen Makefile
+configuration, which otherwise would be needed to be generated by hand.
 
-Cheers,
+BTW git tries to guess configuration based on uname -a result.
+
+There was also for a little while hand-generated configure script, but
+it got abandoned when it appeared that it is hard to be portable (and
+autoconf did the work; perhaps too hard but did, not using features
+which weren't common but now are in standard, but did), and the fact
+that it was possible to have _optional_ autoconf support.
+=20
+Add to that the fact that people said that ./configure on Cygwin is slo=
+w
+(can be slow), so they prefer _not_ to run this.
+
+
+Besides, the fact that some tools suport some feature is not the reason
+to add it. You have to look at how often is this feature _used_. For
+example you don't need it (you need only DESTDIR support) for creating
+RPMS from sources.
+
+--=20
+Jakub Narebski
