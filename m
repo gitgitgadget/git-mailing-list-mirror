@@ -2,83 +2,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Document git-diff whitespace flags -b and -w
-Date: Sun, 3 Dec 2006 20:10:10 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612032006580.28348@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <11651630814064-git-send-email-jnareb@gmail.com>
- <Pine.LNX.4.63.0612031908020.28348@wbgn013.biozentrum.uni-wuerzburg.de>
- <ekv5k6$1ih$1@sea.gmane.org>
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: Re: Diffs from CVS keyword expansion
+Date: 06 Dec 2006 02:08:35 -0800
+Message-ID: <86irgpl4kc.fsf@blue.stonehenge.com>
+References: <9e4733910611301956l6f64b01ftee46971a18e3467b@mail.gmail.com>
+	<20061205121443.GB2428@cepheus> <86k616m8i9.fsf@blue.stonehenge.com>
+	<Pine.LNX.4.63.0612052048230.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+	<20061206100514.GA7126@informatik.uni-freiburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Sun, 3 Dec 2006 19:10:30 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Wed, 6 Dec 2006 10:09:07 +0000 (UTC)
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jon Smirl <jonsmirl@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <ekv5k6$1ih$1@sea.gmane.org>
-X-Y-GMX-Trusted: 0
+x-mayan-date: Long count = 12.19.13.15.13; tzolkin = 7 Ben; haab = 6 Mac
+In-Reply-To: <20061206100514.GA7126@informatik.uni-freiburg.de>
+Original-Lines: 17
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33130>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33421>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GqwjB-0005IC-7K for gcvg-git@gmane.org; Sun, 03 Dec
- 2006 20:10:17 +0100
+ esmtp (Exim 4.50) id 1Grti3-0000T6-Tr for gcvg-git@gmane.org; Wed, 06 Dec
+ 2006 11:09:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1760011AbWLCTKO (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 3 Dec 2006
- 14:10:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760012AbWLCTKO
- (ORCPT <rfc822;git-outgoing>); Sun, 3 Dec 2006 14:10:14 -0500
-Received: from mail.gmx.net ([213.165.64.20]:6317 "HELO mail.gmx.net") by
- vger.kernel.org with SMTP id S1760011AbWLCTKM (ORCPT
- <rfc822;git@vger.kernel.org>); Sun, 3 Dec 2006 14:10:12 -0500
-Received: (qmail invoked by alias); 03 Dec 2006 19:10:10 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp042) with SMTP; 03 Dec 2006 20:10:10 +0100
-To: Jakub Narebski <jnareb@gmail.com>
+ S1760439AbWLFKIi (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
+ 05:08:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760442AbWLFKIi
+ (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 05:08:38 -0500
+Received: from blue.stonehenge.com ([209.223.236.162]:14129 "EHLO
+ blue.stonehenge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1760447AbWLFKIh (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec 2006
+ 05:08:37 -0500
+Received: from localhost (localhost [127.0.0.1]) by blue.stonehenge.com
+ (Postfix) with ESMTP id 83CBC8F606; Wed,  6 Dec 2006 02:08:36 -0800 (PST)
+Received: from blue.stonehenge.com ([127.0.0.1]) by localhost
+ (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024) with LMTP id
+ 17833-01-87; Wed,  6 Dec 2006 02:08:36 -0800 (PST)
+Received: by blue.stonehenge.com (Postfix, from userid 1001) id 021B38F607;
+ Wed,  6 Dec 2006 02:08:36 -0800 (PST)
+To: Uwe Kleine-Koenig <zeisberg@informatik.uni-freiburg.de>
 Sender: git-owner@vger.kernel.org
 
-Hi,
+>>>>> "Uwe" == Uwe Kleine-Koenig <zeisberg@informatik.uni-freiburg.de> writes:
+Uwe> One thing I don't like about both scripts is, that the timestamp of
+Uwe> a file changes with that, even if there are no changes.  Anyone knows
+Uwe> another predefined variable/trick that doesn't hurt performance (and
+Uwe> readability) too much?
 
-On Sun, 3 Dec 2006, Jakub Narebski wrote:
+You have to do two passes, or a pass-and-a-half, and do the rename/rewrite
+based on whether anything changed.
 
-> Alternate solution would be to fix documentation, to document existing 
-> code. I used GNU diff documentation, perhaps it is better if we are GNU 
-> diff compatibile...
+"Just a few more lines of code." :)  If it's really important, I can
+be coaxed to dig it up.
 
-Since the whole point of "-w/-b" is to steal the nice feature from GNU 
-diff, it does not make any sense breaking compatibility.
-
-BTW on top of my patch you need this, if you want the tests to pass 
-(danger ahead: intentional white space at eol):
-
--- snip --
-make tests pass for recent "diff -b" change
-
----
-
-	Am I the only one finding it funny to read diffs of diffs, 
-	especially when being used to combined diffs?
-
-diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
-index 1bc5b7a..adf4993 100755
---- a/t/t4015-diff-whitespace.sh
-+++ b/t/t4015-diff-whitespace.sh
-@@ -109,12 +109,10 @@ index d99af23..8b32fb5 100644
- +	whitespace at beginning
-  whitespace change
- -whitespace in the middle
---whitespace at end
- +white space in the middle
--+whitespace at end  
-+ whitespace at end
-  unchanged line
---CR at endQ
--+CR at end
-+ CR at endQ
- EOF
- git-diff -b > out
+-- 
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
