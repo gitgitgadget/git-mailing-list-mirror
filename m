@@ -1,209 +1,82 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: [PATCH] Allow subcommand.color and color.subcommand color configuration
-Date: Wed, 13 Dec 2006 09:13:28 +0000
-Message-ID: <200612130913.28917.andyparkins@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: using xdl_merge(), was Re: Resolving conflicts
+Date: Wed, 06 Dec 2006 02:13:31 -0800
+Message-ID: <7vlkll72no.fsf@assigned-by-dhcp.cox.net>
+References: <456FD461.4080002@saville.com>
+	<Pine.LNX.4.64.0611302330000.3695@woody.osdl.org>
+	<456FDF24.1070001@saville.com>
+	<Pine.LNX.4.64.0612012018490.3476@woody.osdl.org>
+	<7vejri20mf.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0612021131140.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+	<4575B32F.5060108@ramsay1.demon.co.uk>
+	<Pine.LNX.4.64.0612051023460.3542@woody.osdl.org>
+	<Pine.LNX.4.63.0612051949290.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7vac22glzz.fsf@assigned-by-dhcp.cox.net>
+	<7vwt5573sy.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0612061058360.28348@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 13 Dec 2006 09:28:09 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Wed, 6 Dec 2006 10:13:41 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Greylist: delayed 861 seconds by postgrey-1.27 at vger.kernel.org; Wed, 13 Dec 2006 04:27:54 EST
-X-TUID: 74426b20ebab10bc
-X-UID: 191
-X-Length: 6179
-Content-Disposition: inline
-X-OriginalArrivalTime: 13 Dec 2006 09:15:28.0991 (UTC) FILETIME=[3B772EF0:01C71E97]
+In-Reply-To: <Pine.LNX.4.63.0612061058360.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Wed, 6 Dec 2006 11:02:10 +0100
+	(CET)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34190>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33422>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GuQPA-0005gL-4Z for gcvg-git@gmane.org; Wed, 13 Dec
- 2006 10:28:00 +0100
+ esmtp (Exim 4.50) id 1GrtmR-00019J-OD for gcvg-git@gmane.org; Wed, 06 Dec
+ 2006 11:13:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932633AbWLMJ14 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 13 Dec 2006
- 04:27:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932635AbWLMJ14
- (ORCPT <rfc822;git-outgoing>); Wed, 13 Dec 2006 04:27:56 -0500
-Received: from mail.360visiontechnology.com ([194.70.53.226]:4702 "EHLO
- 369run02s.360vision.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with
- ESMTP id S932633AbWLMJ1z (ORCPT <rfc822;git@vger.kernel.org>); Wed, 13 Dec
- 2006 04:27:55 -0500
-Received: from dvr.360vision.com ([192.189.1.24]) by 369run02s.360vision.com
- with Microsoft SMTPSVC(5.0.2195.6713); Wed, 13 Dec 2006 09:15:28 +0000
-Received: from localhost ([127.0.0.1]) by dvr.360vision.com with esmtp (Exim
- 3.36 #1 (Debian)) id 1GuQB8-0000o3-00 for <git@vger.kernel.org>; Wed, 13 Dec
- 2006 09:13:30 +0000
-To: git@vger.kernel.org
+ S1760428AbWLFKNd (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
+ 05:13:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760431AbWLFKNc
+ (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 05:13:32 -0500
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:50446 "EHLO
+ fed1rmmtao05.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1759302AbWLFKNc (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec 2006
+ 05:13:32 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao05.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061206101331.KVI15640.fed1rmmtao05.cox.net@fed1rmimpo01.cox.net>; Wed, 6
+ Dec 2006 05:13:31 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id vNCv1V0091kojtg0000000; Wed, 06 Dec 2006
+ 05:12:56 -0500
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-While adding colour to the branch command it was pointed out that a
-config option like "branch.color" conflicts with the pre-existing
-"branch.something" namespace used for specifying default merge urls and
-branches.  The suggested solution was to flip the order of the
-components to "color.branch", which I did for colourising branch.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-This patch does the same thing for
-  - git-log (color.diff)
-  - git-status (color.status)
-  - git-diff (color.diff)
-  - pager (color.pager)
+> Originally, I thought that building in git-merge-one-file, and enhancing 
+> it to recognize by the parameters if it should act as a merge replacement, 
+> would be the way to go. Should I do this, or rather add 
+> builtin-merge-file?
 
-I haven't removed the old config options; but they should probably be
-deprecated and eventually removed to prevent future namespace
-collisions.  I've done this deprecation by changing the documentation
-for the config file to match the new names; and adding the "color.XXX"
-options to contrib/completion/git-completion.bash.
+All in-tree users of git-merge-one-file is of this pattern:
 
-Unfortunately git-svn reads "diff.color" and "pager.color"; which I
-don't like to change unilaterally.
+	git merge-index -o git-merge-one-file -a
 
-Signed-off-by: Andy Parkins <andyparkins@gmail.com>
----
- Documentation/config.txt               |   12 ++++++------
- builtin-log.c                          |    2 +-
- config.c                               |    2 +-
- contrib/completion/git-completion.bash |    3 +++
- diff.c                                 |    4 ++--
- wt-status.c                            |    4 ++--
- 6 files changed, 15 insertions(+), 12 deletions(-)
+so I was hoping we can capture this whole thing as a single
+command (merge-index would fork+exec a merge-one-file per
+unmerged path), instead of doing merge-one-file as a built-in.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 9090762..9bdd824 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -130,16 +130,16 @@ branch.<name>.merge::
- 	When in branch <name>, it tells `git fetch` the default remote branch
- 	to be merged.
- 
--pager.color::
-+color.pager::
- 	A boolean to enable/disable colored output when the pager is in
- 	use (default is true).
- 
--diff.color::
-+color.diff::
- 	When true (or `always`), always use colors in patch.
- 	When false (or `never`), never.  When set to `auto`, use
- 	colors only when the output is to the terminal.
- 
--diff.color.<slot>::
-+color.diff.<slot>::
- 	Use customized color for diff colorization.  `<slot>`
- 	specifies which part of the patch to use the specified
- 	color, and is one of `plain` (context text), `meta`
-@@ -264,19 +264,19 @@ showbranch.default::
- 	The default set of branches for gitlink:git-show-branch[1].
- 	See gitlink:git-show-branch[1].
- 
--status.color::
-+color.status::
- 	A boolean to enable/disable color in the output of
- 	gitlink:git-status[1]. May be set to `true` (or `always`),
- 	`false` (or `never`) or `auto`, in which case colors are used
- 	only when the output is to a terminal. Defaults to false.
- 
--status.color.<slot>::
-+color.status.<slot>::
- 	Use customized color for status colorization. `<slot>` is
- 	one of `header` (the header text of the status message),
- 	`updated` (files which are updated but not committed),
- 	`changed` (files which are changed but not updated in the index),
- 	or `untracked` (files which are not tracked by git). The values of
--	these variables may be specified as in diff.color.<slot>.
-+	these variables may be specified as in color.diff.<slot>.
- 
- tar.umask::
- 	By default, gitlink:git-tar-tree[1] sets file and directories modes
-diff --git a/builtin-log.c b/builtin-log.c
-index 7acf5d3..6821a08 100644
---- a/builtin-log.c
-+++ b/builtin-log.c
-@@ -118,7 +118,7 @@ static int git_format_config(const char *var, const char *value)
- 		strcat(extra_headers, value);
- 		return 0;
- 	}
--	if (!strcmp(var, "diff.color")) {
-+	if (!strcmp(var, "diff.color") || !strcmp(var, "color.diff")) {
- 		return 0;
- 	}
- 	return git_log_config(var, value);
-diff --git a/config.c b/config.c
-index 3cae390..06e7fdb 100644
---- a/config.c
-+++ b/config.c
-@@ -314,7 +314,7 @@ int git_default_config(const char *var, const char *value)
- 		return 0;
- 	}
- 
--	if (!strcmp(var, "pager.color")) {
-+	if (!strcmp(var, "pager.color") || !strcmp(car, "color.pager")) {
- 		pager_use_color = git_config_bool(var,value);
- 		return 0;
- 	}
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 447ec20..9c4d23a 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -712,10 +712,13 @@ _git_repo_config ()
- 		core.legacyHeaders
- 		i18n.commitEncoding
- 		diff.color
-+		color.diff
- 		diff.renameLimit
- 		diff.renames
- 		pager.color
-+		color.pager
- 		status.color
-+		color.status
- 		log.showroot
- 		show.difftree
- 		showbranch.default
-diff --git a/diff.c b/diff.c
-index 3315378..726b01e 100644
---- a/diff.c
-+++ b/diff.c
-@@ -60,7 +60,7 @@ int git_diff_ui_config(const char *var, const char *value)
- 		diff_rename_limit_default = git_config_int(var, value);
- 		return 0;
- 	}
--	if (!strcmp(var, "diff.color")) {
-+	if (!strcmp(var, "diff.color") || !strcmp(var, "color.diff")) {
- 		diff_use_color_default = git_config_colorbool(var, value);
- 		return 0;
- 	}
-@@ -74,7 +74,7 @@ int git_diff_ui_config(const char *var, const char *value)
- 			diff_detect_rename_default = DIFF_DETECT_RENAME;
- 		return 0;
- 	}
--	if (!strncmp(var, "diff.color.", 11)) {
-+	if (!strncmp(var, "diff.color.", 11) || !strncmp(var, "color.diff.", 11)) {
- 		int slot = parse_diff_color_slot(var, 11);
- 		color_parse(value, var, diff_colors[slot]);
- 		return 0;
-diff --git a/wt-status.c b/wt-status.c
-index de1be5b..df582a0 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -297,11 +297,11 @@ void wt_status_print(struct wt_status *s)
- 
- int git_status_config(const char *k, const char *v)
- {
--	if (!strcmp(k, "status.color")) {
-+	if (!strcmp(k, "status.color") || !strcmp(k, "color.status")) {
- 		wt_status_use_color = git_config_colorbool(k, v);
- 		return 0;
- 	}
--	if (!strncmp(k, "status.color.", 13)) {
-+	if (!strncmp(k, "status.color.", 13) || !strncmp(k, "color.status", 13)) {
- 		int slot = parse_status_slot(k, 13);
- 		color_parse(v, k, wt_status_colors[slot]);
- 	}
--- 
-1.4.4.1.g3ece-dirty
+In any case, the way your xdl-merge engine is done, it should be
+almost trivial to write a pure 'RCS merge replacement' as a
+totally separate program -- the bulk of the new code would be
+parsing parameters, opening the three input files, populating
+mmfile structures and writing the result out, and there would be
+almost no "smart" in that part of the code you would want to
+share with the git-aware version.
+
+
+
