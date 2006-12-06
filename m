@@ -4,73 +4,126 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: git-fetch fails with error code 128
-Date: Thu, 14 Dec 2006 21:25:06 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0612142120260.18171@xanadu.home>
-References: <200612142308.45376.andyparkins@gmail.com>
+From: Han-Wen Nienhuys <hanwen@xs4all.nl>
+Subject: Re: bug: git-sh-setup should not be in $PATH
+Date: Wed, 06 Dec 2006 16:03:01 +0100
+Message-ID: <4576DBA5.4080002@xs4all.nl>
+References: <el6c6o$oa7$1@sea.gmane.org> <el6eh6$vg7$2@sea.gmane.org> <4576D0CB.7090408@xs4all.nl> <200612061551.51603.jnareb@gmail.com>
+Reply-To: hanwen@xs4all.nl
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-NNTP-Posting-Date: Fri, 15 Dec 2006 02:25:25 +0000 (UTC)
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Wed, 6 Dec 2006 15:03:06 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-reply-to: <200612142308.45376.andyparkins@gmail.com>
-X-X-Sender: nico@xanadu.home
+User-Agent: Thunderbird 1.5.0.8 (X11/20061107)
+Original-Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <200612061551.51603.jnareb@gmail.com>
+X-Virus-Scanned: by XS4ALL Virus Scanner
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34461>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33466>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gv2lD-00032o-5s for gcvg-git@gmane.org; Fri, 15 Dec
- 2006 03:25:19 +0100
+ esmtp (Exim 4.50) id 1GryIT-0007Hk-5i for gcvg-git@gmane.org; Wed, 06 Dec
+ 2006 16:02:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S965014AbWLOCZK (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
- 21:25:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965026AbWLOCZK
- (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 21:25:10 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:51365 "EHLO
- relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S965014AbWLOCZI (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006
- 21:25:08 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
- <0JAA00AAKMPUSP80@VL-MO-MR002.ip.videotron.ca> for git@vger.kernel.org; Thu,
- 14 Dec 2006 21:25:07 -0500 (EST)
-To: Andy Parkins <andyparkins@gmail.com>
+ S933059AbWLFPCy (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
+ 10:02:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933061AbWLFPCy
+ (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 10:02:54 -0500
+Received: from smtp-vbr9.xs4all.nl ([194.109.24.29]:2851 "EHLO
+ smtp-vbr9.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S933059AbWLFPCx (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec 2006
+ 10:02:53 -0500
+Received: from [192.168.123.187] (muurbloem.xs4all.nl [213.84.26.127])
+ (authenticated bits=0) by smtp-vbr9.xs4all.nl (8.13.8/8.13.8) with ESMTP id
+ kB6F2pqS064137 (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256
+ verify=NO); Wed, 6 Dec 2006 16:02:51 +0100 (CET) (envelope-from
+ hanwen@xs4all.nl)
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-On Thu, 14 Dec 2006, Andy Parkins wrote:
+Jakub Narebski escreveu:
+> Please add some longer commit message.
 
-> Hello,
-> 
-> This is with my big "every linux patch" repository that I talked about in 
-> another thread.  To bring you up to speed:
-> 
->  1. Made repository
->  2. Made a zip of the .git directory
->  3. Copied the zip elsewhere
->  4. Extracted it into a temporary directory
->  5. Went to an out-of-date version of this repository
->  6. Used git-fetch to update it.
-> 
-> This gave me the following output:
-> 
-> $ git fetch
-> remote: Generating pack...
-> remote: Done counting 189146 objects.
-> remote: Result has 186566 objects.
-> remote: Deltifying 186566 objects.
-> remote:  100% (186566/186566) done
-> Unpacking 186566 objects
-> fatal: failed to apply delta
-> fatal: unpack-objects died with error code 128
-> Fetch failure: /home/andyp/projects/temp/.git
-> 
-> What does that mean?  I ran fsck --full on the source repository, but it's 
-> made no difference.
+do you have any specifics you would like me to mention?
 
-Could you please instrument patch-delta.c to determine which of the
-"return NULL" is executed?
+>>  exec_prefix = @exec_prefix@
+>>  bindir = @bindir@
+>> -#gitexecdir = @libexecdir@/git-core/
+>> -datarootdir = @datarootdir@
+>> -template_dir = @datadir@/git-core/templates/
+>>  
+>>  mandir=@mandir@
+> 
+> Why have you removed setting datarootdir and template_dir? I would
+> have thought that you would rather change it to
+> 
+>   #gitexecdir = @libexecdir@/git-core/
+>   datarootdir = @datarootdir@
+>   GIT_datadir = @datadir@/git-core/
+>   template_dir= @datadir@/git-core/templates/
+
+The Makefile already has this code, so adding it here is duplication of work
+and code.
+
+If you think putting code in the generated file is a good idea, I
+propose we just generate the entire Makefile, as is the standard usage
+for autoconf.
+
+>> +## generate subdirectories and sub Makefiles. 
+>> +for d in `cd $srcdir &&  find . -type d -print | grep -v '\.git'` ;
+>> +do
+>> +  if test ! -d  $d ; then
+>> +    echo creating $d 
+>> +    mkdir $d
+>> +  fi
+>> +  
+>> +  if test -f $srcdir/$d/Makefile ; then
+>> +    
+>> +    dnl [[]] is to keep m4 happy
+>> +    depth=`echo $d/ | sed -e 's!^\./!!g' -e 's![[^/]]*/!../!g'`
+>> +    echo creating $d/Makefile
+>> +    cat << EOF > $d/Makefile
+>> +include ${depth}config.mak.autogen
+>> +here-srcdir=\$(srcdir)/$d/
+>> +VPATH=\$(here-srcdir)
+>> +include \$(here-srcdir)/Makefile
+>> +EOF
+>> +
+>> +  fi 
+>> +done
+>> +exit 1
+> 
+> What is this for? The ./configure script, generated by autoconf from
+> configure.ac (by "make configure"), generates config.mak.autogen file
+> from config.mak.in, which is included in main (top) Makefile.
+
+in some cases, the files can also be called stand alone, eg.
+
+  [lilydev@haring perl]$ pwd
+  /home/lilydev/vc/git/perl
+
+  [lilydev@haring perl]$ make
+  make -f perl.mak all
+  make[1]: Entering directory `/home/lilydev/vc/git/perl'
+  make[1]: Leaving directory `/home/lilydev/vc/git/perl'
+
+The above Makefile generation makes sure that this behavior is
+mirrored in the builddir. Also, I'm not sure if the vpath settings get
+exported automatically.
+
+Having multiple Makefiles in the builddir is the standard behavior for
+autotool'ed packages. 
+
+> The variables defined in config.mak.autogen are of course visible in
+> make in subdirectories (make invoked from main makefile). Why the change?
+> What about user-generated config.mak?
+
+good point. I'll include it too.
+
+> This part IMHO has no sense, and has no place here.
 
 
+-- 
