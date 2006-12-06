@@ -1,69 +1,96 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: bash completion in backticks partially broken
-Date: Sun, 05 Nov 2006 01:48:03 -0800
-Message-ID: <7vpsc2teb0.fsf@assigned-by-dhcp.cox.net>
-References: <20061105090540.GA4843@spearce.org>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: Re: git pull and merging.
+Date: Wed, 6 Dec 2006 17:44:30 +0100
+Message-ID: <200612061744.31213.Josef.Weidendorfer@gmx.de>
+References: <cc723f590612052051r62111c4cgfd7ee893cb00f84a@mail.gmail.com> <Pine.LNX.4.63.0612061019350.28348@wbgn013.biozentrum.uni-wuerzburg.de> <cc723f590612060205p1fd26cd7u3c7efc723b0177de@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sun, 5 Nov 2006 09:48:25 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Wed, 6 Dec 2006 16:44:59 +0000 (UTC)
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061105090540.GA4843@spearce.org> (Shawn Pearce's message of
-	"Sun, 5 Nov 2006 04:05:40 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+User-Agent: KMail/1.9.3
+In-Reply-To: <cc723f590612060205p1fd26cd7u3c7efc723b0177de@mail.gmail.com>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay1.informatik.tu-muenchen.de
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30962>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Ggebw-0005Eg-BL for gcvg-git@gmane.org; Sun, 05 Nov
- 2006 10:48:16 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33488>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Grzt7-0007VL-O9 for gcvg-git@gmane.org; Wed, 06 Dec
+ 2006 17:44:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932611AbWKEJsH (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 5 Nov 2006
- 04:48:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932613AbWKEJsH
- (ORCPT <rfc822;git-outgoing>); Sun, 5 Nov 2006 04:48:07 -0500
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:18927 "EHLO
- fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP id S932611AbWKEJsE
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 5 Nov 2006 04:48:04 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao01.cox.net
- (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
- <20061105094803.AZW6077.fed1rmmtao01.cox.net@fed1rmimpo02.cox.net>; Sun, 5
- Nov 2006 04:48:03 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id ixo81V00H1kojtg0000000 Sun, 05 Nov 2006
- 04:48:08 -0500
-To: Shawn Pearce <spearce@spearce.org>
+ S936486AbWLFQom (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
+ 11:44:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936488AbWLFQom
+ (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 11:44:42 -0500
+Received: from mailout1.informatik.tu-muenchen.de ([131.159.0.18]:52487 "EHLO
+ mailout1.informatik.tu-muenchen.de" rhost-flags-OK-OK-OK-OK) by
+ vger.kernel.org with ESMTP id S936492AbWLFQol (ORCPT
+ <rfc822;git@vger.kernel.org>); Wed, 6 Dec 2006 11:44:41 -0500
+Received: from dhcp-3s-49.lrr.in.tum.de (dhcp-3s-49.lrr.in.tum.de
+ [131.159.35.49]) by mail.in.tum.de (Postfix) with ESMTP id 48D1A284A; Wed,  6
+ Dec 2006 17:44:39 +0100 (MET)
+To: "Aneesh Kumar" <aneesh.kumar@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Shawn Pearce <spearce@spearce.org> writes:
+On Wednesday 06 December 2006 11:05, Aneesh Kumar wrote:
+> [branch "devel"]
+>         remote = origin
+>         merge = devel
+> 
+> [....]
+> Now i thought merge should be local reference. So i changed it to
+> merge = remotes/origin/devel.
+> 
+> That also didn't work.
+> 
+> Then i tried the name of the branch should be indicated as
+> "refs/heads/devel" . That also didn't work.
+> 
+> So i guess i am missing something.
 
-> This is really annoying when it comes to less contrived examples.
-> I find myself forming odd pipelines with commit-tree, update-ref,
-> mktree, lstree, sed, rev-list, etc. and always keep bumping up on
-> the limitations of git-completion.bash.
->
-> Any suggestions?
+See man page of git-repo-config:
 
-I am more interested in why you would even need to use
-combinations of such low-level commands in day-to-day workflow.
+ branch.<name>.merge
+  When in branch <name>, it tells git fetch the default
+  remote branch to be merged.
 
-If they are often-needed patterns, you would have scripted them
-already, so completion would not be an issue for you.  So I am
-assuming these are ad-hoc one-shot needs.
+I assume that the "devel" branch on the remote repo you cloned from
+is also "devel", more exactly "refs/heads/devel".
 
-While it is satisfying to know that things you would want to do
-can be scripted even for one-shot use (which is how git is
-designed to, and it shows that the design goal has been
-achieved), maybe it's a sign that we are giving you too much
-flexibility?  Under less capable/flexible system that puts you
-in a straightjacket, you would not even be tempted to do oddball
-things to begin with...
+Now, instead of "git pull", git should default to
 
+	git pull origin refs/heads/devel:refs/remotes/origin/devel
 
+ie. it should update the local tracking branch "refs/remotes/origin/devel"
+with the remote branch "refs/heads/devel".
+The tracking branch "refs/remotes/origin/devel" will be merged with current
+branch afterwards.
+
+Now looking at the documentation for branch.<name>.merge, it talks
+about the remote branch, which is "refs/heads/devel" in your case, ie.
+the first part of the refspec of the full "git pull" command above.
+
+So, as you already posted (without explanation, therefore this mail),
+the config should be
+
+ [branch "devel"]
+         remote = origin
+         merge = refs/heads/devel
+
+However, "devel" alone should work here, as it can be matched with remote
+"refs/heads/devel". Seems to be a bug, as branch.<name>.merge seems to only
+being compared with the full canonical name in the implementation.
+
+Josef
