@@ -2,64 +2,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jeff Garzik <jeff@garzik.org>
-Subject: Re: kernel.org mirroring (Re: [GIT PULL] MMC update)
-Date: Fri, 08 Dec 2006 12:40:32 -0500
-Message-ID: <4579A390.1080202@garzik.org>
-References: <Pine.LNX.4.64.0612020835110.3476@woody.osdl.org> <45744FA3.7020908@zytor.com> <Pine.LNX.4.64.0612061847190.3615@woody.osdl.org> <45778AA3.7080709@zytor.com> <Pine.LNX.4.64.0612061940170.3615@woody.osdl.org> <4577A84C.3010601@zytor.com> <Pine.LNX.4.64.0612070953290.3615@woody.osdl.org> <45785697.1060001@zytor.com> <Pine.LNX.4.64.0612071052560.3615@woody.osdl.org> <457868AA.2030605@zytor.com> <20061207193012.GA84678@dspnet.fr.eu.org> <4578722E.9030402@zytor.com> <4579611F.5010303@dawes.za.net> <45798FE2.9040502@zytor.com> <Pine.LNX.4.64.0612080830380.3516@woody.osdl.org> <457998C8.3050601@garzik.org> <45799B02.3010102@zytor.com>
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] cvs-migration document: make the need for "push" more
+ obvious
+Date: Wed, 6 Dec 2006 16:16:57 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0612061613460.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <4574AC9E.3040506@gmail.com> <4574BF70.8070100@lilypond.org>
+ <45760545.2010801@gmail.com> <20061206.105251.144349770.wl@gnu.org>
+ <Pine.LNX.4.63.0612061325320.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+ <4576D92A.80307@xs4all.nl> <20061206145802.GC1714@fieldses.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Fri, 8 Dec 2006 17:40:56 +0000 (UTC)
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Rogan Dawes <discard@dawes.za.net>,
-	Kernel Org Admin <ftpadmin@kernel.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jakub Narebski <jnareb@gmail.com>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Wed, 6 Dec 2006 15:17:07 +0000 (UTC)
+Cc: Han-Wen Nienhuys <hanwen@xs4all.nl>, gpermus@gmail.com,
+	hanwen@lilypond.org, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.8 (X11/20061107)
-In-Reply-To: <45799B02.3010102@zytor.com>
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <20061206145802.GC1714@fieldses.org>
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33712>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33470>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GsjiO-0002EJ-8z for gcvg-git@gmane.org; Fri, 08 Dec
- 2006 18:40:52 +0100
+ esmtp (Exim 4.50) id 1GryW8-00012C-Pp for gcvg-git@gmane.org; Wed, 06 Dec
+ 2006 16:17:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1426041AbWLHRkt (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
- 12:40:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760781AbWLHRkt
- (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 12:40:49 -0500
-Received: from srv5.dvmed.net ([207.36.208.214]:53704 "EHLO mail.dvmed.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1758219AbWLHRks
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Dec 2006 12:40:48 -0500
-Received: from cpe-065-190-194-075.nc.res.rr.com ([65.190.194.75]
- helo=[10.10.10.10]) by mail.dvmed.net with esmtpsa (Exim 4.63 #1 (Red Hat
- Linux)) id 1Gsji5-0007di-5s; Fri, 08 Dec 2006 17:40:35 +0000
-To: "H. Peter Anvin" <hpa@zytor.com>
+ S933577AbWLFPRA (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
+ 10:17:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934424AbWLFPRA
+ (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 10:17:00 -0500
+Received: from mail.gmx.net ([213.165.64.20]:46465 "HELO mail.gmx.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S933577AbWLFPQ7
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec 2006 10:16:59 -0500
+Received: (qmail invoked by alias); 06 Dec 2006 15:16:58 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp038) with SMTP; 06 Dec 2006 16:16:58 +0100
+To: "J. Bruce Fields" <bfields@fieldses.org>
 Sender: git-owner@vger.kernel.org
 
-H. Peter Anvin wrote:
-> Jeff Garzik wrote:
->>
->> This is quite nice and easy, if memory-only caching works for the 
->> situation:  http://www.danga.com/memcached/
->>
->> There are APIs for C, Perl, and plenty of other languages.
->>
-> 
-> Memory-only caching is kind of nasty.  Memory is a premium resource on 
-> kernel.org.
+Hi,
 
-hmmm.  Well, I have been wondering why nobody ever came up with a 
-system-wide local (==disk) cache for remote and/or calculated objects. 
-Maybe its time to do something about that.
+On Wed, 6 Dec 2006, J. Bruce Fields wrote:
 
-I've been in a daemon-writing mood lately.
+> I'd rather leave that introduction as it is--just as a section that 
+> advertises the git features without trying to explain much.  And I'd 
+> rather not mention push until we have a chance to explain how to use it.
 
-	Jeff
+You talk like you'd have an eternity to explain Git. But that is not true. 
+A developer, especially those whom Git is forced upon, have an attention 
+span shorter than their pub1c hair.
 
+I _know_ that _I_ did not read the whole document about "Branching and 
+merging in Git".
 
+Ciao,
+Dscho
