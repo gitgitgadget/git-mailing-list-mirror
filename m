@@ -1,58 +1,85 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Chris Riddoch" <riddochc@gmail.com>
-Subject: A documentation to-do list
-Date: Tue, 21 Nov 2006 18:13:12 -0700
-Message-ID: <6efbd9b70611211713y4a1574adje48622f7bab6d702@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 2/3] git-fetch: do not use "*" for fetching multiple refs
+Date: Wed, 06 Dec 2006 19:27:00 +0100
+Organization: At home
+Message-ID: <el71tj$edm$1@sea.gmane.org>
+References: <1165261102.20055.9.camel@ibook.zvpunry.de> <el1tud$n07$2@sea.gmane.org> <1165422865.29714.13.camel@ibook.zvpunry.de> <el6sni$re3$1@sea.gmane.org> <1165429001.993.35.camel@ibook.zvpunry.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 22 Nov 2006 01:13:22 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+NNTP-Posting-Date: Wed, 6 Dec 2006 18:25:36 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=n5v2bXL6ZNW4bToyI14VvYNiWqdMWX3J+8fw3sSIO6c+xJTvRnyYfh4bCIDAt537qIoz583ztam2uR7+AZuqMEK4/af+DjC8RF5OcFIihArpAXZ8pWq+fFeb/eBPLf+Qi6nVm+U+RIEDNuOn8VP4Aon9fCF4Jh9G7R6bMF/jtLg=
-Content-Disposition: inline
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 35
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32062>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gmgft-0002jj-Gg for gcvg-git@gmane.org; Wed, 22 Nov
- 2006 02:13:17 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33502>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gs1ST-0008JL-KB for gcvg-git@gmane.org; Wed, 06 Dec
+ 2006 19:25:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S966993AbWKVBNO (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 21 Nov 2006
- 20:13:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966995AbWKVBNO
- (ORCPT <rfc822;git-outgoing>); Tue, 21 Nov 2006 20:13:14 -0500
-Received: from wx-out-0506.google.com ([66.249.82.230]:39650 "EHLO
- wx-out-0506.google.com") by vger.kernel.org with ESMTP id S966993AbWKVBNN
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2006 20:13:13 -0500
-Received: by wx-out-0506.google.com with SMTP id h27so56682wxd for
- <git@vger.kernel.org>; Tue, 21 Nov 2006 17:13:12 -0800 (PST)
-Received: by 10.70.38.12 with SMTP id l12mr13169355wxl.1164157992454; Tue, 21
- Nov 2006 17:13:12 -0800 (PST)
-Received: by 10.70.61.5 with HTTP; Tue, 21 Nov 2006 17:13:12 -0800 (PST)
+ S937045AbWLFSZH (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
+ 13:25:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937043AbWLFSZH
+ (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 13:25:07 -0500
+Received: from main.gmane.org ([80.91.229.2]:50622 "EHLO ciao.gmane.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S937070AbWLFSY7
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec 2006 13:24:59 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1Gs1Rw-0000Bh-V0 for git@vger.kernel.org; Wed, 06 Dec 2006 19:24:56 +0100
+Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Wed, 06 Dec 2006 19:24:56 +0100
+Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Wed, 06 Dec 2006
+ 19:24:56 +0100
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Hi, everyone.
+Michael Loeffler wrote:
 
-Having decided to take it on myself to improve Git's documentation, I
-asked on #git if people had particular things they felt I should focus
-on.  I also was prompted to put up a page on the wiki to make my to-do
-list public.
+>> We could use perl for that, but embedded perl is a bit horrible.
+>
+> I had the same idea after the sed problems with macos/solaris, but
+> embedded perl is really a bit horrible.
 
-So, I present:  http://git.or.cz/gitwiki/Documentation_To-Do_List
+Or you can rewrite git-fetch in Perl (or as built-in in C).
 
-Add your favorite, specific, lack-of-documentation or badly-described
-annoyance here!
+> I would prefer the following ways to do this globfetch stuff:
+> 
+> 1.) The original refspec:
+>     Pull: refs/heads/master:refs/remotes/origin/master
+> 
+> 2.) The one with "prefix match":
+>     Pull: refs/heads/:refs/remotes/origin/
+
+I just worry what would happen when someone would write e.g.
+      Pull: refs/heads/:refs/heads/origin-
+ 
+> 3.) The one with extended regex:
+>     Pull: refs/heads/(.*):refs/remotes/origin/\1
+
+3.) The one with shell-like (fnmatch / glob) globbing
+      Pull: refs/heads/*:refs/remotes/origin/*
+
+By the way, with globbing we really need some other way than
+first Pull: line to select remote head to merge on "git pull".
+For example "Merge:" line / remote.<name>.merge config var.
 
 -- 
-epistemological humility
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
+
