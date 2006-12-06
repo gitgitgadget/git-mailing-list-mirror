@@ -1,85 +1,135 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Alexander Litvinov <litvinov2004@gmail.com>
-Subject: Does pushing to git demon works ?
-Date: Mon, 11 Dec 2006 15:13:05 +0600
-Message-ID: <200612111513.05752.litvinov2004@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: git pull and merging.
+Date: Wed, 06 Dec 2006 10:31:29 +0100
+Organization: At home
+Message-ID: <el62hi$esu$1@sea.gmane.org>
+References: <cc723f590612052051r62111c4cgfd7ee893cb00f84a@mail.gmail.com> <7vodqhaa7o.fsf@assigned-by-dhcp.cox.net> <cc723f590612052121u1f6e3c9lc7329f40ee1c9e5a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Mon, 11 Dec 2006 09:13:22 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+NNTP-Posting-Date: Wed, 6 Dec 2006 09:30:02 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=nKFYyY1zIi1phkl7TIS5uguGV1ZyeKd4W0oKJsu2HpKyhSNKrX3Wmo0PuEXn7fEw6TDmTO4NzUDafOccI8fVc/FkDMqV2f3T4nK5izxPBKHYoZ1Yx3h5Xovt4Kqa7g/8kHJEcbAOyPA/FfPuLtM1dldvjiV1Y5hUtFwfbatbih4=
-User-Agent: KMail/1.8
-Content-Disposition: inline
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 85
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33982>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33409>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GthDr-0005BV-NZ for gcvg-git@gmane.org; Mon, 11 Dec
- 2006 10:13:20 +0100
+ esmtp (Exim 4.50) id 1Grt6F-00041i-8Y for gcvg-git@gmane.org; Wed, 06 Dec
+ 2006 10:29:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1762654AbWLKJNQ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 11 Dec 2006
- 04:13:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762656AbWLKJNQ
- (ORCPT <rfc822;git-outgoing>); Mon, 11 Dec 2006 04:13:16 -0500
-Received: from ug-out-1314.google.com ([66.249.92.170]:43114 "EHLO
- ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1762654AbWLKJNP (ORCPT <rfc822;git@vger.kernel.org>); Mon, 11 Dec
- 2006 04:13:15 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so1268327uga for
- <git@vger.kernel.org>; Mon, 11 Dec 2006 01:13:14 -0800 (PST)
-Received: by 10.78.138.6 with SMTP id l6mr1286675hud.1165828393831; Mon, 11
- Dec 2006 01:13:13 -0800 (PST)
-Received: from lan.ac-sw.lcl ( [81.1.223.2]) by mx.google.com with ESMTP id
- c18sm2192865hub.2006.12.11.01.13.12; Mon, 11 Dec 2006 01:13:12 -0800 (PST)
+ S1760366AbWLFJ34 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
+ 04:29:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760372AbWLFJ34
+ (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 04:29:56 -0500
+Received: from main.gmane.org ([80.91.229.2]:49927 "EHLO ciao.gmane.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1760366AbWLFJ3z
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec 2006 04:29:55 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1Grt5z-0001Z1-0A for git@vger.kernel.org; Wed, 06 Dec 2006 10:29:44 +0100
+Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Wed, 06 Dec 2006 10:29:42 +0100
+Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Wed, 06 Dec 2006
+ 10:29:42 +0100
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-I tried pushing without success:
-> git version
-git version 1.4.4.2
-> mkdir 1 && cd 1 && git init-db
-defaulting to local storage area
-> date >> a && git add a && git commit -m "add a" a
-Committing initial tree 359e888a2d88e9dfcc9b269bc0b2fb1d9ba0013e
-> date >> a && git commit -m "edit a" a
-> touch .git/git-daemon-export-ok
-> git daemon --verbose --reuseaddr --listen=127.0.0.1
-... log here ...
-[21607] Extended attributes (16 bytes) exist <host=127.0.0.1>
-[21607] Request upload-pack for '/tmp/1'
-[21607] Disconnected
-[21669] Connection from 127.0.0.1:49875
-[21669] Extended attributes (16 bytes) exist <host=127.0.0.1>
-[21669] Protocol error: 'git-receive-pack /tmp/1'
-[21669] Disconnected (with error)
+Aneesh Kumar wrote:
 
-at another conole:
-> git clone git://127.0.0.1/tmp/1 2
-remote: Generating pack...
-remote: Done counting 6 objects.
-remote: Deltifying 6 objects.
-remote:  100% (6/6) done
-remote: Total 6, written 6 (delta 0), reused 0 (delta 0)
-Indexing 6 objects.
- 100% (6/6) done
-> cd 2
-> date >> a && git commit -a -m "2"
-> git push
-fatal: unexpected EOF
+> On 12/6/06, Junio C Hamano <junkio@cox.net> wrote:
+>> "Aneesh Kumar" <aneesh.kumar@gmail.com> writes:
+>>
+>>> I have a git.git clone using --use-separate-remote. That means i have
+>>> the master branch created by default. Now i need to build git from the
+>>> pu branch too. So i created git branch pu remotes/origin/pu.
+>>>
+>>>
+>>> How how do i track the pu branch using git pull. What i mean is the
+>>> master local branch is tracked by default using git pull. Is there a
+>>> way to track the local pu branch too.
+>>
+>>         $ cat>.git/remotes/origin <<\EOF
+>>         URL: ...kernel.org/pub/scm/git/git.git
+>>         Pull: refs/heads/master:refs/remotes/origin/master
+>>         Pull: refs/heads/next:refs/remotes/origin/next
+>>         Pull: +refs/heads/pu:refs/remotes/origin/pu
+>>         EOF
+
+Or you can do .git/config equivalent:
+
+$ git repo-config remote.origin.url ...kernel.org/pub/scm/git/git.git
+$ git repo-config remote.origin.fetch  refs/heads/master:refs/remotes/origin/master
+$ git repo-config remote.origin.fetch  refs/heads/next:refs/remotes/origin/next
+$ git repo-config remote.origin.fetch +refs/heads/pu:refs/remotes/origin/pu
+
+>> Then you would checkout 'pu' by having a matching local branch:
+>>
+>>         $ git branch pu remotes/origin/pu
+>>         $ git checkout pu ;# this is your refs/heads/pu
+>>         $ make
+>>
+>> Hacking on it can be done in this branch as usual.  When you are
+>> interested in the latest 'pu' from me:
+>>
+>>         $ git checkout pu ;# this is your refs/heads/pu
+>>         $ git fetch ;# most of the time git pull would also be fine...
+>>
+>> and then:
+>>
+>>         $ git rebase remotes/origin/pu
+>>
+>> The 'rebase' in the last step is because my 'pu' rewinds freely;
+>> otherwise you would do "git merge remotes/origin/pu" instead.
+>>
 > 
+> Okey what i was looking for was a .git/config that will imply as a
+> part of git pull origin that local
+> 
+> master is to track remotes/origin/master
+> pu  should track remotes/origin/pu.
+> 
+> I almost felt the branch.<name>.merge was for that.
+> 
+> What is this git-repo-config used for. I am trying to understand
+> 
+> branch.<name>.remote and branch.<name>.merge usage.
 
-What should I do to make it work ?
+Yes it is what branch.<name>.merge is for... and it would work for
+any branch _except_ pu, which rewinds frequently, and you should
+rebase your changes on top of current version instead of merging.
 
-Thanks for help,
+Still it is useful to add branch.<branch>.remote for pu:
+
+  $ git repo-config branch.refs/heads/pu.remote origin
+
+so you can do just "git fetch" on pu to fetch from origin (well,
+"git fetch" would fetch from origin as it is the default even in
+absence of branch.<branch>.remote).
+
+If it were any other branch, for example next, you could add
+
+  $ git repo-config branch.refs/heads/next.remote origin
+  $ git repo-config branch.refs/heads/next.merge refs/remotes/origin/next
+
+for "git pull" on next branch fo fetch from origin and merge
+next branch from origin. 
+
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
+
