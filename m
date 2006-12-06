@@ -1,80 +1,59 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Peter Baumann <siprbaum@stud.informatik.uni-erlangen.de>
-Subject: Re: git pull and merging.
-Date: Wed, 6 Dec 2006 11:23:38 +0100
-Message-ID: <20061206102338.GA28894@xp.machine.xx>
-References: <cc723f590612052051r62111c4cgfd7ee893cb00f84a@mail.gmail.com> <7vodqhaa7o.fsf@assigned-by-dhcp.cox.net> <cc723f590612052121u1f6e3c9lc7329f40ee1c9e5a@mail.gmail.com> <Pine.LNX.4.63.0612061019350.28348@wbgn013.biozentrum.uni-wuerzburg.de> <slrnend551.arq.Peter.B.Baumann@xp.machine.xx> <Pine.LNX.4.63.0612061111340.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Florian Weimer <fw@deneb.enyo.de>
+Subject: Re: [PATCH] git-svn: error out when the SVN connection fails during a fetch
+Date: Wed, 06 Dec 2006 18:01:48 +0100
+Message-ID: <87psax3qmb.fsf@mid.deneb.enyo.de>
+References: <20061128220605.GA1253@localdomain>
+	<871wnget3b.fsf@mid.deneb.enyo.de> <20061204085253.GA31047@soma>
+	<87zma4yr71.fsf@mid.deneb.enyo.de>
+	<20061204090549.GB30316@hand.yhbt.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 6 Dec 2006 10:23:55 +0000 (UTC)
-Cc: Peter Baumann <Peter.B.Baumann@informatik.stud.uni-erlangen.de>,
-	git@vger.kernel.org
+NNTP-Posting-Date: Wed, 6 Dec 2006 17:04:36 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Mail-Followup-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Peter Baumann <Peter.B.Baumann@informatik.stud.uni-erlangen.de>,
-	git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0612061111340.28348@wbgn013.biozentrum.uni-wuerzburg.de>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <20061204090549.GB30316@hand.yhbt.net> (Eric Wong's message of
+	"Mon, 4 Dec 2006 01:05:49 -0800")
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33428>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33493>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GrtwK-0002HL-G8 for gcvg-git@gmane.org; Wed, 06 Dec
- 2006 11:23:48 +0100
+ esmtp (Exim 4.50) id 1Gs0Bk-0002Sp-SS for gcvg-git@gmane.org; Wed, 06 Dec
+ 2006 18:04:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1760441AbWLFKXp (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
- 05:23:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760452AbWLFKXp
- (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 05:23:45 -0500
-Received: from matlock.hofmann.stw.uni-erlangen.de ([131.188.24.35]:38655
- "HELO mail.hofmann.stw.uni-erlangen.de" rhost-flags-OK-OK-OK-OK) by
- vger.kernel.org with SMTP id S1760440AbWLFKXo (ORCPT
- <rfc822;git@vger.kernel.org>); Wed, 6 Dec 2006 05:23:44 -0500
-Received: (qmail 20789 invoked by uid 0); 6 Dec 2006 10:23:41 -0000
-Received: from ho135.hofmann.stw.uni-erlangen.de (HELO localhost)
- (p.b@hofmann.stw.uni-erlangen.de@172.17.27.135) by
- mail.hofmann.stw.uni-erlangen.de with SMTP; 6 Dec 2006 10:23:41 -0000
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+ S936679AbWLFRC2 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
+ 12:02:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936596AbWLFRC1
+ (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 12:02:27 -0500
+Received: from mail.enyo.de ([212.9.189.167]:3301 "EHLO mail.enyo.de"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S936919AbWLFRCK
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec 2006 12:02:10 -0500
+Received: from deneb.vpn.enyo.de ([212.9.189.177] helo=deneb.enyo.de) by
+ mail.enyo.de with esmtp id 1Gs09o-000623-Rg for git@vger.kernel.org; Wed, 06
+ Dec 2006 18:02:08 +0100
+Received: from fw by deneb.enyo.de with local (Exim 4.63) (envelope-from
+ <fw@deneb.enyo.de>) id 1Gs09U-0001Qe-OG for git@vger.kernel.org; Wed, 06 Dec
+ 2006 18:01:48 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On Wed, Dec 06, 2006 at 11:14:01AM +0100, Johannes Schindelin wrote:
-> Hi,
-> 
-> On Wed, 6 Dec 2006, Peter Baumann wrote:
-> 
-> > On 2006-12-06, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > > You can have the same effect as what Junio wrote with the config:
-> > >
-> > > $ git repo-config remote.origin.url git://git.kernel.org/pub/scm/git/git.git
-> > > $ git repo-config remote.origin.fetch \
-> > > 	refs/heads/master:refs/remotes/origin/master
-> > > $ git repo-config remote.origin.fetch \
-> > > 	refs/heads/next:refs/remotes/origin/next ^$
-> > > $ git repo-config remote.origin.fetch \
-> > > 	+refs/heads/pu:refs/remotes/origin/pu ^$
-> > >
-> > 
-> > What's that ^$ for?
-> 
-> We misuse the "nice" ini format a little bit in git: we allow multiple 
-> values for certain keys, like "remote.origin.fetch".
-> 
-> The normal mode for repo-config is to replace the value for the given key. 
-> By appending a regular expression, you can limit the replacement to 
-> certain matching _values_. And since "^$" means empty string, it does not 
-> match any, ensuring an append instead of a replace.
-> 
-> Ciao,
-> Dscho
-> 
+* Eric Wong:
 
-Another new thing learned today!
-Thanks for the info.
+> Florian Weimer <fw@deneb.enyo.de> wrote:
+>> * Eric Wong:
+>> 
+>> > Does the following patch help?
+>> 
+>> Don't think so.  The issue is not timing-related.  I've seen a failure
+>> every 1000 requests, which suggests to me that it's hitting the
+>> MaxKeepAliveRequests limit configured on the server.
+>
+> Actually, that's exactly what this patch should fix.  git-svn restarts a
+> child every 1000 revisions to avoid memory usage from going through the
+> roof.
 
