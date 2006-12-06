@@ -1,102 +1,84 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH 6/6] Remove more sed invocations from within bash completion.
-Date: Sun, 5 Nov 2006 06:25:25 -0500
-Message-ID: <20061105112525.GF20495@spearce.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 2/3] git-fetch: do not use "*" for fetching multiple refs
+Date: Wed, 06 Dec 2006 17:58:27 +0100
+Organization: At home
+Message-ID: <el6sni$re3$1@sea.gmane.org>
+References: <1165261102.20055.9.camel@ibook.zvpunry.de> <el1tud$n07$2@sea.gmane.org> <1165422865.29714.13.camel@ibook.zvpunry.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sun, 5 Nov 2006 11:25:42 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Transfer-Encoding: 7Bit
+NNTP-Posting-Date: Wed, 6 Dec 2006 16:57:13 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 34
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30971>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Ggg83-0007t0-Ni for gcvg-git@gmane.org; Sun, 05 Nov
- 2006 12:25:32 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33491>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gs04v-00019x-0A for gcvg-git@gmane.org; Wed, 06 Dec
+ 2006 17:57:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932652AbWKELZ2 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 5 Nov 2006
- 06:25:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932655AbWKELZ2
- (ORCPT <rfc822;git-outgoing>); Sun, 5 Nov 2006 06:25:28 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:25217 "EHLO
- corvette.plexpod.net") by vger.kernel.org with ESMTP id S932652AbWKELZ2
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 5 Nov 2006 06:25:28 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1Ggg7v-000092-2V; Sun, 05 Nov 2006 06:25:23 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- 355CF20E491; Sun,  5 Nov 2006 06:25:25 -0500 (EST)
-To: Junio C Hamano <junkio@cox.net>
+ S936458AbWLFQ4n (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
+ 11:56:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936498AbWLFQ4n
+ (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 11:56:43 -0500
+Received: from main.gmane.org ([80.91.229.2]:33639 "EHLO ciao.gmane.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S936458AbWLFQ4m
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec 2006 11:56:42 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1Gs04Q-0003vh-T0 for git@vger.kernel.org; Wed, 06 Dec 2006 17:56:34 +0100
+Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Wed, 06 Dec 2006 17:56:34 +0100
+Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Wed, 06 Dec 2006
+ 17:56:34 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-This change removes between 1 and 4 sed invocations per completion
-entered by the user.  In the case of cat-file the 4 invocations per
-completion can take a while on Cygwin; running these replacements
-directly within bash saves some time for the end user.
+Michael Loeffler wrote:
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- contrib/completion/git-completion.bash |   14 +++++++-------
- 1 files changed, 7 insertions(+), 7 deletions(-)
+> Am Montag, den 04.12.2006, 20:48 +0100 schrieb Jakub Narebski:
+> ...
+>> I'm not sure if regexp support is truly better than the usual path globbing,
+>> as in fnmatch / glob.
+>
+> The current code does not do a real glob, this was the reason for me to
+> think about regex support, I thought it is easy to use sed for this. Now
+> I know it better.
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 74be651..f3be132 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -83,15 +83,15 @@ __git_remotes ()
- 
- __git_complete_file ()
- {
--	local cur="${COMP_WORDS[COMP_CWORD]}"
-+	local pfx ls ref cur="${COMP_WORDS[COMP_CWORD]}"
- 	case "$cur" in
- 	?*:*)
--		local pfx ls ref="$(echo "$cur" | sed 's,:.*$,,')"
--		cur="$(echo "$cur" | sed 's,^.*:,,')"
-+		ref="${cur%%:*}"
-+		cur="${cur#*:}"
- 		case "$cur" in
- 		?*/*)
--			pfx="$(echo "$cur" | sed 's,/[^/]*$,,')"
--			cur="$(echo "$cur" | sed 's,^.*/,,')"
-+			pfx="${cur%/*}"
-+			cur="${cur##*/}"
- 			ls="$ref:$pfx"
- 			pfx="$pfx/"
- 			;;
-@@ -193,7 +193,7 @@ _git_fetch ()
- 	*)
- 		case "$cur" in
- 		*:*)
--	        cur=$(echo "$cur" | sed 's/^.*://')
-+			cur="${cur#*:}"
- 			COMPREPLY=($(compgen -W "$(__git_refs)" -- "$cur"))
- 			;;
- 		*)
-@@ -287,7 +287,7 @@ _git_push ()
- 			git-push)  remote="${COMP_WORDS[1]}" ;;
- 			git)       remote="${COMP_WORDS[2]}" ;;
- 			esac
--	        cur=$(echo "$cur" | sed 's/^.*://')
-+			cur="${cur#*:}"
- 			COMPREPLY=($(compgen -W "$(__git_refs "$remote")" -- "$cur"))
- 			;;
- 		*)
+We could use perl for that, but embedded perl is a bit horrible.
+
+> I want it a bit portable, but sed on other systems (like macos or
+> solaris) does not support extended REs, and the basic REs do not support
+> the | operator (but this works on systems with glibc with \|).
+> 
+> Maybe we should support something like this:
+> Pull: refs/heads/v*:refs/remotes/origin/
+> 
+> I still don't like the * on the destination ref, it looks a bit strange
+> (like cp Downloads/*.mp3 Music/*).
+
+'*' in destination part would mean $n / \n (n-th match for *).
+And you need some way to mark if it is prefix match, or whole path match.
+Ending prefix match with '/' is one way of doing this... Unless it would
+be prefix match always, but I think this leads way to confusion.
+
+Just a thought.
 -- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
+
