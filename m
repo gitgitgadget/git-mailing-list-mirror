@@ -4,64 +4,74 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Alexandre Julliard <julliard@winehq.org>
-Subject: [PATCH 5/5] fetch-pack: Do not fetch tags for shallow clones.
-Date: Fri, 24 Nov 2006 16:00:13 +0100
-Message-ID: <87k61kubya.fsf@wine.dyndns.org>
+From: Han-Wen Nienhuys <hanwen@xs4all.nl>
+Subject: Re: bug: git-sh-setup should not be in $PATH
+Date: Wed, 06 Dec 2006 16:36:47 +0100
+Message-ID: <4576E38F.1020404@xs4all.nl>
+References: <el6c6o$oa7$1@sea.gmane.org> <200612061551.51603.jnareb@gmail.com> <4576DBA5.4080002@xs4all.nl> <200612061627.40359.jnareb@gmail.com>
+Reply-To: hanwen@xs4all.nl
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 24 Nov 2006 15:00:33 +0000 (UTC)
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Wed, 6 Dec 2006 15:37:21 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.90 (gnu/linux)
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 28
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: muurbloem.xs4all.nl
+User-Agent: Thunderbird 1.5.0.8 (X11/20061107)
+In-Reply-To: <200612061627.40359.jnareb@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32224>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GncXO-0000AO-NY for gcvg-git@gmane.org; Fri, 24 Nov
- 2006 16:00:23 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33476>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Grypb-0004K1-Fj for gcvg-git@gmane.org; Wed, 06 Dec
+ 2006 16:37:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S934639AbWKXPAT (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 24 Nov 2006
- 10:00:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934640AbWKXPAT
- (ORCPT <rfc822;git-outgoing>); Fri, 24 Nov 2006 10:00:19 -0500
-Received: from mail.codeweavers.com ([216.251.189.131]:19173 "EHLO
- mail.codeweavers.com") by vger.kernel.org with ESMTP id S934639AbWKXPAR
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 24 Nov 2006 10:00:17 -0500
-Received: from adsl-84-226-49-216.adslplus.ch ([84.226.49.216]
- helo=wine.dyndns.org) by mail.codeweavers.com with esmtpsa
- (TLS-1.0:DHE_RSA_AES_256_CBC_SHA:32) (Exim 4.50) id 1GncXG-0005NU-V8 for
- git@vger.kernel.org; Fri, 24 Nov 2006 09:00:16 -0600
-Received: by wine.dyndns.org (Postfix, from userid 1000) id 11EF610A155; Fri,
- 24 Nov 2006 16:00:13 +0100 (CET)
+ S935753AbWLFPhE (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
+ 10:37:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935871AbWLFPhC
+ (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 10:37:02 -0500
+Received: from main.gmane.org ([80.91.229.2]:55377 "EHLO ciao.gmane.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S935778AbWLFPhA
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec 2006 10:37:00 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1GrypI-00012F-52 for git@vger.kernel.org; Wed, 06 Dec 2006 16:36:52 +0100
+Received: from muurbloem.xs4all.nl ([213.84.26.127]) by main.gmane.org with
+ esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>;
+ Wed, 06 Dec 2006 16:36:52 +0100
+Received: from hanwen by muurbloem.xs4all.nl with local (Gmexim 0.1 (Debian))
+ id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Wed, 06 Dec 2006 16:36:52
+ +0100
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-A better fix may be to only fetch tags that point to commits that we
-are downloading, but git-clone doesn't have support for following
-tags. This will happen automatically on the next git-fetch though.
+Jakub Narebski escreveu:
+> Still I think that at least
+> 
+>   datarootdir = @datarootdir@
+> 
+> should be not removed.
 
-Signed-off-by: Alexandre Julliard <julliard@winehq.org>
----
- fetch-pack.c |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
+yes, agreed.
 
-diff --git a/fetch-pack.c b/fetch-pack.c
-index bb310b6..80979b8 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -342,7 +342,8 @@ static void filter_refs(struct ref **ref
- 		if (!memcmp(ref->name, "refs/", 5) &&
- 		    check_ref_format(ref->name + 5))
- 			; /* trash */
--		else if (fetch_all) {
-+		else if (fetch_all &&
-+			 (!depth || strncmp(ref->name, "refs/tags/", 10) )) {
- 			*newtail = ref;
- 			ref->next = NULL;
- 			newtail = &ref->next;
+>>>> +  if test -f $srcdir/$d/Makefile ; then
+  [..]
+>>>> +    echo creating $d/Makefile
+>>>> +    cat << EOF> $d/Makefile
+
+>>> This part IMHO has no sense, and has no place here.
+> 
+> If you want to create or modify Makefiles, do that. Not generate
+> "minimal" Makefiles in every and each subdirectory.
+
+Look more closely at the patch. It only generates Makefiles in 
+directories that have makefiles in the source dir. The makefiles are
+short because that is the easiest to do.
+
+I'm happy to amend the patch, bUt I can't properly test
+it until the perl problem gets sorted out. 
+
 -- 
-1.4.4.1.ga335e
-
--- 
-Alexandre Julliard
+ Han-Wen Nienhuys - hanwen@xs4all.nl - http://www.xs4all.nl/~hanwen
