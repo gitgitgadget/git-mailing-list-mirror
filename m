@@ -5,77 +5,71 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Cleaning up git user-interface warts
-Date: Fri, 17 Nov 2006 03:41:06 -0800
-Message-ID: <7vpsbmmhbh.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0611150950170.3349@woody.osdl.org>
-	<Pine.LNX.4.64.0611151203450.3349@woody.osdl.org>
-	<Pine.LNX.4.64.0611151516360.2591@xanadu.home>
-	<Pine.LNX.4.64.0611151226590.3349@woody.osdl.org>
-	<87velgs9hx.wl%cworth@cworth.org>
-	<Pine.LNX.4.64.0611151339500.3349@woody.osdl.org>
-	<87psbos4pb.wl%cworth@cworth.org> <20061115230252.GH24861@spearce.org>
-	<Pine.LNX.4.64.0611151523290.3349@woody.osdl.org>
-	<87fycjs5yg.wl%cworth@cworth.org>
-	<f2b55d220611160957s2e68059dk99bbe902e7e1f416@mail.gmail.com>
-	<87r6w3b68p.wl%cworth@cworth.org>
-	<7vu00ysbwi.fsf@assigned-by-dhcp.cox.net>
-	<87ejs2qvmb.wl%cworth@cworth.org>
-	<Pine.LNX.4.63.0611171103150.13772@wbgn013.biozentrum.uni-wuerzburg.de>
+Subject: Re: [PATCH 2/3] git-fetch: do not use "*" for fetching multiple refs
+Date: Wed, 06 Dec 2006 10:37:45 -0800
+Message-ID: <7vejrc50qu.fsf@assigned-by-dhcp.cox.net>
+References: <1165261102.20055.9.camel@ibook.zvpunry.de>
+	<el1tud$n07$2@sea.gmane.org>
+	<1165422865.29714.13.camel@ibook.zvpunry.de>
+	<el6sni$re3$1@sea.gmane.org>
+	<1165429001.993.35.camel@ibook.zvpunry.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 17 Nov 2006 11:41:54 +0000 (UTC)
-Cc: Carl Worth <cworth@cworth.org>,
-	"Michael K. Edwards" <medwards.linux@gmail.com>,
-	git@vger.kernel.org
+NNTP-Posting-Date: Wed, 6 Dec 2006 18:38:01 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <Pine.LNX.4.63.0611171103150.13772@wbgn013.biozentrum.uni-wuerzburg.de>
-	(Johannes Schindelin's message of "Fri, 17 Nov 2006 11:11:19 +0100
-	(CET)")
+In-Reply-To: <1165429001.993.35.camel@ibook.zvpunry.de> (Michael Loeffler's
+	message of "Wed, 06 Dec 2006 19:16:40 +0100")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31692>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gl25r-0004ZK-1P for gcvg-git@gmane.org; Fri, 17 Nov
- 2006 12:41:15 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33504>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gs1eS-0001pk-1p for gcvg-git@gmane.org; Wed, 06 Dec
+ 2006 19:37:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S933529AbWKQLlK (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 17 Nov 2006
- 06:41:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932877AbWKQLlK
- (ORCPT <rfc822;git-outgoing>); Fri, 17 Nov 2006 06:41:10 -0500
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:48104 "EHLO
- fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP id S933529AbWKQLlI
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 17 Nov 2006 06:41:08 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao11.cox.net
+ S937083AbWLFShs (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
+ 13:37:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937084AbWLFShs
+ (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 13:37:48 -0500
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:41402 "EHLO
+ fed1rmmtao01.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S937083AbWLFShr (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec 2006
+ 13:37:47 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao01.cox.net
  (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061117114107.XWT296.fed1rmmtao11.cox.net@fed1rmimpo02.cox.net>; Fri, 17
- Nov 2006 06:41:07 -0500
+ <20061206183746.LGYS9173.fed1rmmtao01.cox.net@fed1rmimpo02.cox.net>; Wed, 6
+ Dec 2006 13:37:46 -0500
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id nnhD1V00a1kojtg0000000; Fri, 17 Nov 2006
- 06:41:14 -0500
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+ fed1rmimpo02.cox.net with bizsmtp id vWdw1V00B1kojtg0000000; Wed, 06 Dec 2006
+ 13:37:56 -0500
+To: Michael Loeffler <zvpunry@zvpunry.de>
 Sender: git-owner@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Michael Loeffler <zvpunry@zvpunry.de> writes:
 
->> 5. Adding something like git-fetch --all to allow it to pick up all new
->>    branches
+>> Just a thought.
+> I would prefer the following ways to do this globfetch stuff:
 >
-> IIRC this idea was rejected, but I would find it useful. Especially with 
-> what Han-Wen said: you can store the branches you fetch with "git fetch 
-> --all <nick>" under .git/refs/remotes/<nick>/<branchname>.
+> 1.) The original refspec:
+>     Pull: refs/heads/master:refs/remotes/origin/master
+>
+> 2.) The one with "prefix match":
+>     Pull: refs/heads/:refs/remotes/origin/
+>
+> 3.) The one with extended regex:
+>     Pull: refs/heads/(.*):refs/remotes/origin/\1
 
-With separate-remote layout, this can be done without risk of
-tracking refname clashing with local refname, which was the
-primary reason for an earlier reluctance.  
+Please, don't do regex when talking about paths.  Uniformly
+using fnmatch/glob is less confusing.  I do not see anything
+wrong with Andy's refspec glob we already have.  Although I
+agree that the second asterisk in "src/*:dst/*" has a certain
+"Huh?" factor to UNIX-trained eyes, I think it is quite obvious
+even to new people what it does.
 
-While separate-remote layout also solves Carl's "do not want to
-track tracking branches remote has" problem, local branch
-namespace can have both for-others (not necessarily "public" but
-could be "for colleagues") and throwaway branches, so --all is
-probably not the right thing to do in most cases.  But I am Ok
-with the approach of seeing how well it works out in practice by
-doing the simplest "--all" and giving options to restrict it
-later.
+Also, while I agree that (2) is logical and less typing, I would
+avoid cases where foo and foo/ behave differently when "foo"
+itself is a directory/tree like thing.  Doing otherwise easily
+invites mistakes.
+
