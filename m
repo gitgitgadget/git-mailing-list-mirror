@@ -4,69 +4,77 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Add support to git-branch to show local and remote branches
-Date: Fri, 03 Nov 2006 11:19:51 -0800
-Message-ID: <7vac388hig.fsf@assigned-by-dhcp.cox.net>
-References: <7v64dxl0bf.fsf@assigned-by-dhcp.cox.net>
-	<200611031052.16095.andyparkins@gmail.com>
-	<7vhcxg91gq.fsf@assigned-by-dhcp.cox.net>
-	<200611031240.34177.andyparkins@gmail.com>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: [PATCH] cvs-migration document: make the need for "push" more obvious
+Date: Wed, 6 Dec 2006 16:45:46 -0500
+Message-ID: <20061206214546.GB25465@fieldses.org>
+References: <4574BF70.8070100@lilypond.org> <45760545.2010801@gmail.com> <20061206.105251.144349770.wl@gnu.org> <Pine.LNX.4.63.0612061325320.28348@wbgn013.biozentrum.uni-wuerzburg.de> <4576D92A.80307@xs4all.nl> <20061206145802.GC1714@fieldses.org> <Pine.LNX.4.63.0612061613460.28348@wbgn013.biozentrum.uni-wuerzburg.de> <20061206171950.GD1714@fieldses.org> <20061206172450.GE1714@fieldses.org> <45773002.5020409@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 3 Nov 2006 19:20:23 +0000 (UTC)
-Cc: git@vger.kernel.org
+NNTP-Posting-Date: Wed, 6 Dec 2006 21:46:00 +0000 (UTC)
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	hanwen@lilypond.org, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <200611031240.34177.andyparkins@gmail.com> (Andy Parkins's
-	message of "Fri, 3 Nov 2006 13:40:30 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Content-Disposition: inline
+In-Reply-To: <45773002.5020409@gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30875>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gg4a5-0005FE-1Y for gcvg-git@gmane.org; Fri, 03 Nov
- 2006 20:19:58 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33525>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gs4aQ-0004fL-2h for gcvg-git@gmane.org; Wed, 06 Dec
+ 2006 22:45:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753483AbWKCTTx (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 3 Nov 2006
- 14:19:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753485AbWKCTTx
- (ORCPT <rfc822;git-outgoing>); Fri, 3 Nov 2006 14:19:53 -0500
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:12469 "EHLO
- fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP id S1753483AbWKCTTw
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 3 Nov 2006 14:19:52 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao01.cox.net
- (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
- <20061103191951.ULCM6077.fed1rmmtao01.cox.net@fed1rmimpo01.cox.net>; Fri, 3
- Nov 2006 14:19:51 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id iKKW1V00D1kojtg0000000 Fri, 03 Nov 2006
- 14:19:30 -0500
-To: Andy Parkins <andyparkins@gmail.com>
+ S937677AbWLFVpv (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
+ 16:45:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937678AbWLFVpv
+ (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 16:45:51 -0500
+Received: from mail.fieldses.org ([66.93.2.214]:36798 "EHLO
+ pickle.fieldses.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S937677AbWLFVpu (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec 2006
+ 16:45:50 -0500
+Received: from bfields by pickle.fieldses.org with local (Exim 4.63)
+ (envelope-from <bfields@fieldses.org>) id 1Gs4aI-0007Ld-2x; Wed, 06 Dec 2006
+ 16:45:46 -0500
+To: Graham Percival <gpermus@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Andy Parkins <andyparkins@gmail.com> writes:
+On Wed, Dec 06, 2006 at 01:02:58PM -0800, Graham Percival wrote:
+> I'm in the middle of exam period, I have a term papers to write, and I 
+> have two weeks of lilypond bug reports and doc typos to process.  I 
+> don't care if git can do branches really nicely or walk my dog or cure 
+> cancer.  I can look at that stuff later -- right now I just want to fix 
+> things and upload them.
 
-> On Friday 2006 November 03 12:08, Junio C Hamano wrote:
->
->> > +static int tidy_ref_list( struct ref_list *ref_list )
->>
->> Style.  No spaces before or after parameter list.
->
-> Bah!  It's so hard getting my fingers to remember what style goes in which 
-> project :-)
->
->> I see you already parse "refs/tags" prefix. "git branch" would
->> not print tags, but that part might be useful when we want to
->> redo git-tag in C.
->
-> I'm going to have a look at that soon;...
+Yeah.  It's a tricky problem; different people need different things,
+and to cover everything (and explain it correctly) the documentation
+needs to be long; but to ensure that impatient people can get to what
+they need quickly, there needs to be a short, clear path to their
+particular need.
 
-Just to make sure you do not misunderstand.  I do not see much
-need for rewriting git-tag in C right now, and often it is more
-convenient to leave higher layer commands in shell scripts to
-allow people to try out new things and flush out UI issues.  I
-was merely pointing out that part of the code would be usable if
-we were to do it.
+A few down-to-earth approaches that could help:
 
- 
+	- Clearer section/chapter titles, so we can generate tables of
+	  contents where people can quickly find stuff--so, titles that
+	  explain what the section will show you how to do with
+	  minimized use of jargon that the user doesn't know yet ("how
+	  to keep a repository up-to-date" as opposed to "git-fetch and
+	  remotes").
+
+	- As in "Everyday Git", think about what different groups of
+	  users need.  But where possible, try to order documentation
+	  with the stuff needed by the largest group of people first.
+	  (For example, right now all the tutorials start with "git
+	  init-db" and "git commit", assuming people are starting a
+	  project from scratch, when the more typical usage is probably
+	  someone joining an existing project, and possibly doing only
+	  read-only stuff at first.)
+
+	- Clearer ordering and dependencies, so when people find the "how
+	  to resolve merges" section, they can quickly see what else
+	  they'd need to read before that.  (And, yeah, I realize 99% of
+	  the time they won't actually do that--they'll just dive right
+	  in and try a few examples.  But at least they'll know where to
+	  turn if that gets them in trouble....)
+
