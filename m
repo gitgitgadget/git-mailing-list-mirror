@@ -1,90 +1,91 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: [PATCH] Make filenames line up in git-status output
-Date: Thu, 26 Oct 2006 15:17:24 +0100
-Message-ID: <200610261517.24468.andyparkins@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: What's cooking in git.git (topics)
+Date: Wed, 06 Dec 2006 14:14:31 -0800
+Message-ID: <7vmz60y8mw.fsf@assigned-by-dhcp.cox.net>
+References: <7vvekoyb79.fsf@assigned-by-dhcp.cox.net>
+	<el7dsn$9a6$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 26 Oct 2006 14:17:46 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Wed, 6 Dec 2006 22:14:42 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-TUID: 3b0d244473e306f7
-X-UID: 134
-X-Length: 1971
-Content-Disposition: inline
-X-OriginalArrivalTime: 26 Oct 2006 14:20:28.0664 (UTC) FILETIME=[E317AF80:01C6F909]
+In-Reply-To: <el7dsn$9a6$1@sea.gmane.org> (Jakub Narebski's message of "Wed,
+	06 Dec 2006 22:51:13 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30222>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gd638-0000ku-N3 for gcvg-git@gmane.org; Thu, 26 Oct
- 2006 16:17:39 +0200
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33529>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gs52C-00010Q-LA for gcvg-git@gmane.org; Wed, 06 Dec
+ 2006 23:14:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1423336AbWJZOR3 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
- 10:17:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423495AbWJZOR3
- (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 10:17:29 -0400
-Received: from mail.360visiontechnology.com ([194.70.53.226]:38252 "EHLO
- 369run02s.360vision.com") by vger.kernel.org with ESMTP id S1423336AbWJZOR2
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 10:17:28 -0400
-Received: from dvr.360vision.com ([192.189.1.24]) by 369run02s.360vision.com
- with Microsoft SMTPSVC(5.0.2195.6713); Thu, 26 Oct 2006 15:20:28 +0100
-Received: from localhost ([127.0.0.1]) by dvr.360vision.com with esmtp (Exim
- 3.36 #1 (Debian)) id 1Gd62w-0002sm-00 for <git@vger.kernel.org>; Thu, 26 Oct
- 2006 15:17:26 +0100
-To: git@vger.kernel.org
+ S937717AbWLFWOd (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
+ 17:14:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937722AbWLFWOd
+ (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 17:14:33 -0500
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:41880 "EHLO
+ fed1rmmtao01.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S937717AbWLFWOc (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec 2006
+ 17:14:32 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao01.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061206221432.THFU9173.fed1rmmtao01.cox.net@fed1rmimpo02.cox.net>; Wed, 6
+ Dec 2006 17:14:32 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id vaEh1V00r1kojtg0000000; Wed, 06 Dec 2006
+ 17:14:42 -0500
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-When all the filenames line up it's much easier to copy and paste them
-somewhere else, or to remove the "modified:", "copied:", etc prefix.
+Jakub Narebski <jnareb@gmail.com> writes:
 
-Signed-off-by: Andy Parkins <andyparkins@gmail.com>
----
- wt-status.c |   14 +++++++-------
- 1 files changed, 7 insertions(+), 7 deletions(-)
+>> * jc/3way (Wed Nov 29 18:53:13 2006 -0800)
+>>  + git-merge: preserve and merge local changes when doing fast forward
+>> 
+>>  This allows you to run a 'git merge' (or 'git pull') that
+>>  results in a fast-forward merge that updates a path your
+>>  working tree has modified locally; it merges your local changes
+>>  into the updated version, in the same way the branch switching
+>>  'git checkout -m' works.  It has been in next for some time and
+>>  unless we hear somebody scream I think it is Ok to merge to
+>>  'master'.
+>
+> Very nice. Less suprises for CVS users (with "update then commit"
+> mentality/habits).
 
-diff --git a/wt-status.c b/wt-status.c
-index 4b74e68..3952809 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -72,25 +72,25 @@ static void wt_status_print_filepair(int
- 	color_printf(color(WT_STATUS_HEADER), "#\t");
- 	switch (p->status) {
- 	case DIFF_STATUS_ADDED:
--		color_printf(c, "new file: %s", p->one->path); break;
-+		color_printf(c, "new file:   %s", p->one->path); break;
- 	case DIFF_STATUS_COPIED:
--		color_printf(c, "copied: %s -> %s",
-+		color_printf(c, "copied:     %s -> %s",
- 				p->one->path, p->two->path);
- 		break;
- 	case DIFF_STATUS_DELETED:
--		color_printf(c, "deleted: %s", p->one->path); break;
-+		color_printf(c, "deleted:    %s", p->one->path); break;
- 	case DIFF_STATUS_MODIFIED:
--		color_printf(c, "modified: %s", p->one->path); break;
-+		color_printf(c, "modified:   %s", p->one->path); break;
- 	case DIFF_STATUS_RENAMED:
--		color_printf(c, "renamed: %s -> %s",
-+		color_printf(c, "renamed:    %s -> %s",
- 				p->one->path, p->two->path);
- 		break;
- 	case DIFF_STATUS_TYPE_CHANGED:
- 		color_printf(c, "typechange: %s", p->one->path); break;
- 	case DIFF_STATUS_UNKNOWN:
--		color_printf(c, "unknown: %s", p->one->path); break;
-+		color_printf(c, "unknown:    %s", p->one->path); break;
- 	case DIFF_STATUS_UNMERGED:
--		color_printf(c, "unmerged: %s", p->one->path); break;
-+		color_printf(c, "unmerged:   %s", p->one->path); break;
- 	default:
- 		die("bug: unhandled diff status %c", p->status);
- 	}
--- 
-1.4.3.3.g5bca6
+This only makes "update; edit; update; commit" to work.  "edit;
+commit; edit; commit; edit; update; commit" would not work,
+because you would be faced to resolving the conflicts upon the
+last update while your working tree is already contaminated with
+your own changes (it can be done and experienced people have
+done so, but you are talking about "CVS users" here).
+
+We'd be much better off to encourage users to shake "update then
+commit" habit, especially if they are on a slow link.
+
+>> * jc/web (Wed Nov 8 14:54:09 2006 -0800)
+>>  - gitweb: steal loadavg throttle from kernel.org
+>
+> Is having loadavg in gitweb, and not configured in server good idea?
+
+Have you looked at the code to see what it does?
+
+>> * lh/branch-rename (Thu Nov 30 03:16:56 2006 +0100)
+>>  + git-branch: let caller specify logmsg
+>>  + rename_ref: use lstat(2) when testing for symlink
+>>  + git-branch: add options and tests for branch renaming
+>> 
+>>  I do not rename branches myself and do not see a need for this
+>>  nor I have tested it in real-world setting.  The code seemed
+>>  clean and may be 'master' material.
+>
+> I'd like to have this, but it MUST work well with reflogs for me.
+
+Then test it and fix breakage if any please.
