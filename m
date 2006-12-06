@@ -1,69 +1,93 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: branch rebase and push
-Date: Tue, 19 Dec 2006 12:58:53 +0100
-Message-ID: <200612191258.55226.jnareb@gmail.com>
-References: <45875EFC.5090408@gmail.com> <em8cti$nff$1@sea.gmane.org> <4587BD31.9030804@gmail.com>
+From: Han-Wen Nienhuys <hanwen@xs4all.nl>
+Subject: Re: bug: git-sh-setup should not be in $PATH
+Date: Wed, 06 Dec 2006 17:40:59 +0100
+Message-ID: <4576F29B.6010105@xs4all.nl>
+References: <el6c6o$oa7$1@sea.gmane.org> <200612061656.55888.jnareb@gmail.com> <4576E9DF.5090709@xs4all.nl> <200612061727.54058.jnareb@gmail.com>
+Reply-To: hanwen@xs4all.nl
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-2
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Tue, 19 Dec 2006 11:56:39 +0000 (UTC)
+NNTP-Posting-Date: Wed, 6 Dec 2006 16:41:39 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=dFTpeI4rPtf7wjATDe1G4g5wDnrNbZnPzmeBpmqhkxlvEQsMRjMgOf05uQup1p9VaI2IHlvNMXwBgoJj84rUxpde+RP+Ep8OCHkDUBbrNltX3HvKG+u0WMmkEEu6MUzuk7BvJ5sP6y5ZFf0RAP6wMCTZoQaywHR1sINgIVh85AE=
-User-Agent: KMail/1.9.3
-In-Reply-To: <4587BD31.9030804@gmail.com>
-Content-Disposition: inline
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 43
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: muurbloem.xs4all.nl
+User-Agent: Thunderbird 1.5.0.8 (X11/20061107)
+In-Reply-To: <200612061727.54058.jnareb@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34824>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gwda7-0001cc-CV for gcvg-git@gmane.org; Tue, 19 Dec
- 2006 12:56:27 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33487>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Grzpw-0006yQ-CU for gcvg-git@gmane.org; Wed, 06 Dec
+ 2006 17:41:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932763AbWLSL4Y (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
- 06:56:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932795AbWLSL4Y
- (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 06:56:24 -0500
-Received: from wr-out-0506.google.com ([64.233.184.230]:37837 "EHLO
- wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S932763AbWLSL4X (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec
- 2006 06:56:23 -0500
-Received: by wr-out-0506.google.com with SMTP id i7so1189948wra for
- <git@vger.kernel.org>; Tue, 19 Dec 2006 03:56:23 -0800 (PST)
-Received: by 10.82.165.1 with SMTP id n1mr954304bue.1166529382492; Tue, 19
- Dec 2006 03:56:22 -0800 (PST)
-Received: from host-81-190-25-107.torun.mm.pl ( [81.190.25.107]) by
- mx.google.com with ESMTP id 39sm9018763ugb.2006.12.19.03.56.21; Tue, 19 Dec
- 2006 03:56:21 -0800 (PST)
-To: SungHyun Nam <goweol@gmail.com>
+ S936427AbWLFQlR (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
+ 11:41:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936399AbWLFQlR
+ (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 11:41:17 -0500
+Received: from main.gmane.org ([80.91.229.2]:50172 "EHLO ciao.gmane.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S936427AbWLFQlQ
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec 2006 11:41:16 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1GrzpO-0001Yh-Lo for git@vger.kernel.org; Wed, 06 Dec 2006 17:41:02 +0100
+Received: from muurbloem.xs4all.nl ([213.84.26.127]) by main.gmane.org with
+ esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>;
+ Wed, 06 Dec 2006 17:41:02 +0100
+Received: from hanwen by muurbloem.xs4all.nl with local (Gmexim 0.1 (Debian))
+ id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Wed, 06 Dec 2006 17:41:02
+ +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-SungHyun Nam wrote:
+Jakub Narebski escreveu:
+>> there should be Makefiles in said directories. Otherwise, every rule
+>> in the toplevel Makefile saying
+>>
+>>
+>>   $(MAKE) -C subdir/
+>>
+>> will fail because $builddir/ does not have a Makefile in
+>> $builddir/subdir.
+> 
+> Wouldn't it be better just to modify toplevel Makefile to say:
+> 
+>    $(MAKE) -C $(srcdir)/subdir/
+> 
+> without messing with ./configure script, and creating "redirect"
+> Makefiles?
+> 
 
-> I'm sorry... but could you teach me how I publish the rebased branch?
-> I think Junio does it for 'pu' branch.
-> Is there recommended workflow? I cannot find.
+that doesn't work.
 
-Either have "Push:+refs/heads/br:refs/heads/br" in your
-.git/remotes/<name> file, or it's equivalent config file
-version, with '+' denoting that this branch sometimes does
-not fast-forward.
+  make -C foo bla
 
-Or use git push with --force option when you had rebased.
+just does 
 
-And of course the server you push to has to not have config variable 
-receive.denyNonFastForwards set to true.
+  (cd foo && make bla)
+
+If you did this, part of the object files would end up in the source dir; 
+The idea of separate srcdir builds,is to keep the srcdir completely clean 
+of generated files.  That can't really be done without aid of a script,
+to setup the builddir. In this case that is the configure script.
+
+I did forget to add a check 
+
+  if "$srcdir" != "." ; then
+    ..
+  fi
+
+around the messy stuff.
+
+
+
 -- 
-Jakub Narebski
+ Han-Wen Nienhuys - hanwen@xs4all.nl - http://www.xs4all.nl/~hanwen
