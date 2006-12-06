@@ -1,57 +1,71 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Fast access git-rev-list output: some OS knowledge required
-Date: Thu, 07 Dec 2006 14:25:13 +0100
-Message-ID: <45781639.1050208@op5.se>
-References: <e5bfff550612061124jcd0d94em47793710866776e7@mail.gmail.com> <20061206192800.GC20320@spearce.org> <e5bfff550612061134r3725dcbu2ff2dd6284fcd651@mail.gmail.com> <20061206194258.GD20320@spearce.org> <20061206195142.GE20320@spearce.org>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Topic descriptions
+Date: Wed, 6 Dec 2006 21:53:28 +0000
+Message-ID: <200612062153.30639.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Type: text/plain;
+  charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 7 Dec 2006 13:26:02 +0000 (UTC)
-Cc: Marco Costalba <mcostalba@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
+NNTP-Posting-Date: Wed, 6 Dec 2006 21:56:28 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
-In-Reply-To: <20061206195142.GE20320@spearce.org>
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=qrxPiFCbAd4foOZUb7rObXMTrXevd/uEGxFHNl0mhnzo8CYmhjYwJBUYQ5toZg1n2SvYLAaD0h1K4Abnhj2HNiwaWohUeAQvk4/Qm64Ce8y2QVGlA6CqCr5kw49DQm06EBD1KNSCbnqFeDxDFwY51q0oxb43oS+DI7vSF4xsryc=
+User-Agent: KMail/1.9.5
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33575>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33528>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GsJGB-0005Yc-SC for gcvg-git@gmane.org; Thu, 07 Dec
- 2006 14:26:00 +0100
+ esmtp (Exim 4.50) id 1Gs4kb-0006MQ-69 for gcvg-git@gmane.org; Wed, 06 Dec
+ 2006 22:56:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1032207AbWLGNZS (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
- 08:25:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1032213AbWLGNZR
- (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 08:25:17 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:58648 "EHLO
- smtp-gw1.op5.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
- S1032208AbWLGNZP (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec 2006
- 08:25:15 -0500
-Received: from [192.168.1.20] (unknown [213.88.215.14]) by smtp-gw1.op5.se
- (Postfix) with ESMTP id 3F6AB6BCBF; Thu,  7 Dec 2006 14:25:14 +0100 (CET)
-To: Shawn Pearce <spearce@spearce.org>
+ S937694AbWLFV4V (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
+ 16:56:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937691AbWLFV4V
+ (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 16:56:21 -0500
+Received: from ug-out-1314.google.com ([66.249.92.168]:20220 "EHLO
+ ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S937694AbWLFV4U (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec
+ 2006 16:56:20 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so279993uga for
+ <git@vger.kernel.org>; Wed, 06 Dec 2006 13:56:19 -0800 (PST)
+Received: by 10.66.243.4 with SMTP id q4mr1646971ugh.1165442179373; Wed, 06
+ Dec 2006 13:56:19 -0800 (PST)
+Received: from grissom.internal.parkins.org.uk ( [84.201.153.164]) by
+ mx.google.com with ESMTP id a1sm34008173ugf.2006.12.06.13.56.18; Wed, 06 Dec
+ 2006 13:56:18 -0800 (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Shawn Pearce wrote:
-> 
-> Perhaps there is some fast IPC API supported by Qt that you could
-> use to run the revision listing outside of the main UI process,
-> to eliminate the bottlenecks you are seeing and remove the problems
-> noted above?  One that doesn't involve reading from a pipe I mean...
-> 
+Hello,
 
-Why not just fork() + exec() and read from the filedescriptor? You can 
-up the output buffer of the forked program to something suitable, which 
-means the OS will cache it for you until you copy it to a buffer in qgit 
-(i.e., read from the descriptor).
+I was just reading Junio's "what's cooking" summary, and it occurred to me 
+that it would be excellent if git had support for this sort of thing.
 
+It seems fairly easy - it wouldn't have to be versioned information.  Could we 
+simply make .git/refs files be more flexible in their syntax.
+
+-----
+<sha1>
+<anything at all>
+-----
+
+I don't know where the UI would go; but it would let Junio generate his what's 
+cooking emails with cat .git/refs/*/*
+
+Just an idea...
+
+
+Andy
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
+Dr Andrew Parkins, M Eng (Hons), AMIEE
