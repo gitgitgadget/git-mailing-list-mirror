@@ -1,120 +1,107 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: Cleaning up git user-interface warts
-Date: Wed, 15 Nov 2006 05:08:52 +0100
-Message-ID: <20061115040852.GL7201@pasky.or.cz>
-References: <87k61yt1x2.wl%cworth@cworth.org> <455A1137.8030301@shadowen.org> <87hcx1u934.wl%cworth@cworth.org> <20061114194707.GH7201@pasky.or.cz> <87d57pu4qa.wl%cworth@cworth.org> <7v3b8lv9c9.fsf@assigned-by-dhcp.cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC] gitweb: Add committags support (take 2)
+Date: Wed, 6 Dec 2006 13:51:01 +0100
+Message-ID: <200612061351.02712.jnareb@gmail.com>
+References: <200612040001.13640.jnareb@gmail.com> <200612041133.44816.jnareb@gmail.com> <7vmz64ortu.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 15 Nov 2006 04:09:15 +0000 (UTC)
-Cc: Carl Worth <cworth@cworth.org>, git@vger.kernel.org,
-	Andy Whitcroft <apw@shadowen.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Wed, 6 Dec 2006 12:49:21 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=VnkpMzFZdDrSIj0O21TBGN1bHTWbOWRahz50TaydqG27syYhjib6I9VRruVrzmlPxBfgfu8RKpxM30ZVLfF1j2hxW0BfHv7ej0TvWZNyECPtMoNrAKv+thqSjp0p7yabf5DAUnJAeaqCoBlyUxg5tvT8XHLgMSuTPCzNcnp3Lls=
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vmz64ortu.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
-In-Reply-To: <7v3b8lv9c9.fsf@assigned-by-dhcp.cox.net>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31409>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GkC53-0006C8-Th for gcvg-git@gmane.org; Wed, 15 Nov
- 2006 05:08:58 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33448>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GrwD1-0004Di-Sq for gcvg-git@gmane.org; Wed, 06 Dec
+ 2006 13:49:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S966506AbWKOEIy (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 14 Nov 2006
- 23:08:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966566AbWKOEIy
- (ORCPT <rfc822;git-outgoing>); Tue, 14 Nov 2006 23:08:54 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:10916 "EHLO machine.or.cz") by
- vger.kernel.org with ESMTP id S966506AbWKOEIx (ORCPT
- <rfc822;git@vger.kernel.org>); Tue, 14 Nov 2006 23:08:53 -0500
-Received: (qmail 23430 invoked by uid 2001); 15 Nov 2006 05:08:52 +0100
+ S1760568AbWLFMs6 convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006 07:48:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760569AbWLFMs6
+ (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 07:48:58 -0500
+Received: from ug-out-1314.google.com ([66.249.92.171]:49477 "EHLO
+ ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1760568AbWLFMs5 (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec
+ 2006 07:48:57 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so129429uga for
+ <git@vger.kernel.org>; Wed, 06 Dec 2006 04:48:56 -0800 (PST)
+Received: by 10.67.92.1 with SMTP id u1mr722033ugl.1165409336590; Wed, 06 Dec
+ 2006 04:48:56 -0800 (PST)
+Received: from host-81-190-24-209.torun.mm.pl ( [81.190.24.209]) by
+ mx.google.com with ESMTP id k28sm24785507ugd.2006.12.06.04.48.56; Wed, 06 Dec
+ 2006 04:48:56 -0800 (PST)
 To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-On Wed, Nov 15, 2006 at 01:31:50AM CET, Junio C Hamano wrote:
-> Carl Worth <cworth@cworth.org> writes:
-> 
-> > On Tue, 14 Nov 2006 20:47:07 +0100, Petr Baudis wrote:
-> >> Hmm, did they (not) consider Cogito? They wouldn't have those issues.
-> >
-> > I didn't ask.
-> >
-> > Frankly, I don't see a lot of value in the git/cogito split right now.
-> > ...
-> > It's great that git is written in a script-friendly way so that new
-> > interfaces can be built on top of it. And I think the benefits of new
-> > user interfaces are clear when they work in fundamentally different
-> > ways, (say, being operated through a GUI). But where git and cogito
-> > are both command-line utilities and have the same basic functionality,
-> > ...
-> > There are some things that cogito does that git does not that I would
-> > like to have in git.
-> > ...
-> > I don't see any defining difference that justifies cogito's
-> > existence ("hide the index" maybe? let's just hide it a tiny bit more
-> > in git). And I would like to help work to get the remaining good
-> > stuff that has been proven in cogito---to get it pushed down into git
-> > itself.
-> 
-> I am of two minds here.
-> 
-> I do not think the Porcelain-ish UI that is shipped with git
-> should be taken with the same degree of "authority" as git
-> Plumbing.
-..snip passage about workflows..
+Junio C Hamano wrote:
 
-Controversy's fun, so...
+> Jakub Narebski <jnareb@gmail.com> writes:
+>
+>> I have thought about putting %committags and @committags before
+>> loading config file
+>> =A0 do $GITWEB_CONFIG if -e $GITWEB_CONFIG;
+>> which can load config file depending on the project, but perhaps
+>> it is too complicated solution.
+>=20
+> I think you are talking about a gitweb-instance wide
+> customization, but that's not what I meant. =A0I meant per-project
+> configuration where w/git-gui.git and w/git.git are served by
+> the same instance of gitweb but have pointers to different issue
+> trackers.
 
-<Cogito maintainer hat _off_> (But yeah, it still looks silly that I'm
-saying this.)
+It looks like the hardest part with committags support wouldn't be the=20
+actual implementation of it, but coming with easy and fast way to set=20
+up those committags.
 
- From the current perspective, I think it has been a mistake that the
-porcelain and plumbing was not kept separate in independent packages,
-and perhaps even maintained separately (and perhaps not; at least having
-a single tree with plumbing/ and porcelain/ directories and separate
-packages in distributions might already help something), so that "git"
-would be kept as a kind of library and then there would be a separate
-package providing an interface to it. Or you could select one of several
-packages. Not only would that make Cogito prevail in the world and bring
-me a flood of marriage proposals, but look at how would it help the
-general public:
+gitweb-xmms2 project from which the idea of committags support in gitwe=
+b=20
+came (I think, correct me if I'm wrong) avoids this issue by having=20
+issue tracker / bug tracker the same for all projects served by single=20
+gitweb installation; the configuration is site-wide, and there is no=20
+per project committags configuration.
 
-  (i) Clearly divided porcelain/plumbing interface, so that you can
-really isolate the two UI-wise; endless confusion reigns there now. Is
-git-update-index porcelain or plumbing? _You_ call git-merge a proper
-porcelain? From my perspective, git-update-ref is as plumbing as it
-gets, but it's classified as porcelain. Etc, etc. This would be by far
-the most important advantage.
 
-  (ii) The plumbing and porcelain would not share the same namespace,
-leading to clearer UI. (I'm just inflating (i).)
+I have imagined the following twofold solution.
 
-  (iii) The documentation would not be a strange mix of porcelain and
-plumbing. (More (i) inflation.)
+1. Make it easier to have per repository gitweb configuration, for
+   example by having gitweb configuration file in GIT_DIR for a project=
+,
+   "gitweb_conf.perl" by default:
 
-  (iv) (i) is troublesome because I have a feeling that Junio declared
-several times that he doesn't care that much about stable API for
-porcelain compared to the plumbing. But with the current mix it's
-desirable to use some porcelain even in other porcelains and in scripts.
+  our $GITWEB_REPO_CONFIG =3D $ENV{'GITWEB_REPO_CONFIG'} ||
+  	"++GITWEB_CONFIG++";
+  do "$projectroot/$project/$GITWEB_REPO_CONFIG"
+  	if -e "$projectroot/$project/$GITWEB_CONFIG";
 
-  (v) Git would be properly libified by now. If you wanted to convert
-bits of porcelain to C, it would be at least much higher priority.
+2. Put the configuration in config file, using/like %features support.
+   For example gitweb.committags.<committag name> would hold parameters
+   for <committag>. Committags sequence would be given by sequence of
+   entries in config file. Comittags without options would have sole
+   variable entry (which I think is equivalent to being bool variable
+   and having 1 or 'yes' as value).
 
-  (vi) You wouldn't need to make the gruesome choice on what is the
-canonical workflow the _the_ Git porcelain supports (see the snipped
-passage). Or you would, but it would have less impact.
+   The trouble with this approach is not overriding defaults provided
+   while still turning on/off specific committag. And of course the fac=
+t
+   that for that we need rather config reader in Perl (Git.pm or
+   gitweb).
 
-  (vii) The world would be a happier place.
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
-$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
+What do you think about it? Junio? Pasky?
+--=20
+Jakub Narebski
