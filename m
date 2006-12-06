@@ -1,83 +1,79 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Use new .git/config for storing "origin" shortcut
- repository
-Date: Sun, 26 Nov 2006 14:45:15 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0611261437270.30004@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <ekafpm@sea.gmane.org> <200611260003.31025.andyparkins@gmail.com>
- <Pine.LNX.4.63.0611260141390.30004@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vzmaeyie6.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Han-Wen Nienhuys <hanwen@xs4all.nl>
+Subject: Re: git patch
+Date: Wed, 06 Dec 2006 12:27:18 +0100
+Message-ID: <4576A916.7090801__8302.57246639139$1165404468$gmane$org@xs4all.nl>
+References: <4574AC9E.3040506@gmail.com> <4574BF70.8070100@lilypond.org> <45760545.2010801@gmail.com> <Pine.LNX.4.63.0612060053400.28348@wbgn013.biozentrum.uni-wuerzburg.de> <45761451.8020006@gmail.com> <Pine.LNX.4.63.0612060157020.28348@wbgn013.biozentrum.uni-wuerzburg.de> <4576937D.1070402@xs4all.nl> <Pine.LNX.4.63.0612061105220.28348@wbgn013.biozentrum.uni-wuerzburg.de> <457698E0.80207@lilypond.org> <Pine.LNX.4.63.0612061147540.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+Reply-To: hanwen@xs4all.nl
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Sun, 26 Nov 2006 13:45:34 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Wed, 6 Dec 2006 11:27:48 +0000 (UTC)
+Cc: lily-devel <lilypond-devel@gnu.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7vzmaeyie6.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 29
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: muurbloem.xs4all.nl
+User-Agent: Thunderbird 1.5.0.8 (X11/20061107)
+In-Reply-To: <Pine.LNX.4.63.0612061147540.28348@wbgn013.biozentrum.uni-wuerzburg.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32345>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GoKK0-0001aa-59 for gcvg-git@gmane.org; Sun, 26 Nov
- 2006 14:45:28 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33435>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GruwA-0001lT-9I for gcvg-git@gmane.org; Wed, 06 Dec
+ 2006 12:27:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S935386AbWKZNpT (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 26 Nov 2006
- 08:45:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935388AbWKZNpT
- (ORCPT <rfc822;git-outgoing>); Sun, 26 Nov 2006 08:45:19 -0500
-Received: from mail.gmx.de ([213.165.64.20]:11428 "HELO mail.gmx.net") by
- vger.kernel.org with SMTP id S935386AbWKZNpR (ORCPT
- <rfc822;git@vger.kernel.org>); Sun, 26 Nov 2006 08:45:17 -0500
-Received: (qmail invoked by alias); 26 Nov 2006 13:45:15 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp019) with SMTP; 26 Nov 2006 14:45:15 +0100
-To: Junio C Hamano <junkio@cox.net>
+ S1760498AbWLFL1d (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
+ 06:27:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760495AbWLFL1d
+ (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 06:27:33 -0500
+Received: from main.gmane.org ([80.91.229.2]:43351 "EHLO ciao.gmane.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1760499AbWLFL1c
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec 2006 06:27:32 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1Gruvp-0001ZP-TH for git@vger.kernel.org; Wed, 06 Dec 2006 12:27:21 +0100
+Received: from muurbloem.xs4all.nl ([213.84.26.127]) by main.gmane.org with
+ esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>;
+ Wed, 06 Dec 2006 12:27:21 +0100
+Received: from hanwen by muurbloem.xs4all.nl with local (Gmexim 0.1 (Debian))
+ id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Wed, 06 Dec 2006 12:27:21
+ +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Hi,
-
-On Sat, 25 Nov 2006, Junio C Hamano wrote:
-
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Johannes Schindelin escreveu:
+>> shows the diff of the change that he just introduced
 > 
-> > This hunk is wrong: "git-repo-config remote.bla.fetch b" will _overwrite_ 
-> > remoter.bla.fetch. To avoid that, you have to use "git repo-config 
-> > remote.bla.fetch b ^$". (The last argument is a regular expression which 
-> > has to be matched by the value-to-be-oreplaced.)
+> Okay. But you mean
 > 
-> Yup, one of the joys of working the config file everybody seems to like 
-> ;-).
+> $ git commit --dry file1 file2...
+> 
+> or
+> 
+> $ git commit --dry -a
 
-The problem is: config files are ubiquitous, so you need not teach 
-users about it. On the other hand, they are just key / value stores, i.e. 
-reflecting a mapping. What we want here, is a multimapping, so we use the 
-wrong tool.
 
-But sometimes it is so much more pragmatic to just take off one shoe and 
-put the darned nail back into the wall than to go to the shop, buy the 
-hammer, go back, put the nail in, and try to sell the hammer via eBay.
+Well, --dry would be usable both with -a and file1, file2.
 
-BTW regarding your criticism of the config file: I agree that the write 
-support of git-repo-config was quite brittle at the start. Which is my 
-fault.
+I agree with Jakub that --diff might be a better name, but it should 
+be part of git-commit command, rather than the git-diff.
 
-However, we had quite some flashing out bugs in the mean time, so I am 
-quite confident in the tool. Of course, what with the recent addition of a 
-user specific config file (which makes the name "repo-config" seem utterly 
-wrong), there might be some dragons in the code.
+> Or, you use the script git-hunk-commit.bash which I posted. Which reminds 
+> me: I wanted to rewrite it for you so it is more non-brand-new-bash 
+> friendly.
 
-So, it seems that the whole config writing code is a perfect opportunity 
-for people wanting to audit source code!
+:)
 
-Ciao,
-Dscho
-
+that's really nice, but actually recording separate hunks is a bit of
+a headache if you have to do it over the command line. Under darcs, I
+always use darcsum in emacs. In git, I always use git-status.
+  
+-- 
+ Han-Wen Nienhuys - hanwen@xs4all.nl - http://www.xs4all.nl/~hanwen
