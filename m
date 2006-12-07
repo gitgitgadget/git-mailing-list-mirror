@@ -4,58 +4,75 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: latest update to git-svn blows up for me
-Date: Mon, 4 Dec 2006 12:08:45 -0800
-Message-ID: <20061204200844.GC30316@hand.yhbt.net>
-References: <863b7wnwcw.fsf@blue.stonehenge.com> <20061204070021.GG1369@localdomain> <86hcwbnb0o.fsf@blue.stonehenge.com> <20061204181241.GA27342@soma> <86zma3lahj.fsf@blue.stonehenge.com> <20061204195452.GB27342@soma> <86slfvl95j.fsf@blue.stonehenge.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Documentation: reorganize cvs-migration.txt
+Date: Wed, 06 Dec 2006 21:51:10 -0800
+Message-ID: <7vu008uucx.fsf@assigned-by-dhcp.cox.net>
+References: <4574BF70.8070100@lilypond.org> <45760545.2010801@gmail.com>
+	<20061206.105251.144349770.wl@gnu.org>
+	<Pine.LNX.4.63.0612061325320.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+	<4576D92A.80307@xs4all.nl> <20061206145802.GC1714@fieldses.org>
+	<Pine.LNX.4.63.0612061613460.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+	<20061206171950.GD1714@fieldses.org>
+	<20061206172450.GE1714@fieldses.org>
+	<7v7ix47wbr.fsf@assigned-by-dhcp.cox.net>
+	<20061207041805.GC3457@fieldses.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Mon, 4 Dec 2006 20:08:56 +0000 (UTC)
+NNTP-Posting-Date: Thu, 7 Dec 2006 05:51:23 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <86slfvl95j.fsf@blue.stonehenge.com>
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <20061207041805.GC3457@fieldses.org> (J. Bruce Fields's message
+	of "Wed, 6 Dec 2006 23:18:05 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33237>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33552>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GrK7R-0004lS-Ou for gcvg-git@gmane.org; Mon, 04 Dec
- 2006 21:08:54 +0100
+ esmtp (Exim 4.50) id 1GsCA7-0005G1-Gt for gcvg-git@gmane.org; Thu, 07 Dec
+ 2006 06:51:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S966439AbWLDUIr (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
- 15:08:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966599AbWLDUIq
- (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 15:08:46 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:42015 "EHLO hand.yhbt.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S966439AbWLDUIp
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006 15:08:45 -0500
-Received: by hand.yhbt.net (Postfix, from userid 500) id 2DA0A2DC034; Mon,  4
- Dec 2006 12:08:45 -0800 (PST)
-To: "Randal L. Schwartz" <merlyn@stonehenge.com>
+ S1031366AbWLGFvN (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
+ 00:51:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031388AbWLGFvN
+ (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 00:51:13 -0500
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:56022 "EHLO
+ fed1rmmtao04.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1031366AbWLGFvM (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec 2006
+ 00:51:12 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao04.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061207055111.WPRH7494.fed1rmmtao04.cox.net@fed1rmimpo01.cox.net>; Thu, 7
+ Dec 2006 00:51:11 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id vhqb1V00K1kojtg0000000; Thu, 07 Dec 2006
+ 00:50:36 -0500
+To: "J. Bruce Fields" <bfields@fieldses.org>
 Sender: git-owner@vger.kernel.org
 
-"Randal L. Schwartz" <merlyn@stonehenge.com> wrote:
-> >>>>> "Eric" == Eric Wong <normalperson@yhbt.net> writes:
-> 
-> Eric> Can you try:
-> 
-> Eric> git update-ref refs/remotes/git-svn \
-> Eric>   <last commit successfully imported from git-svn>
-> 
-> Eric> and running rebuild again?
-> 
-> Yes, and now after seeing 14000 lines scroll by, I tried again:
+"J. Bruce Fields" <bfields@fieldses.org> writes:
 
-<snip>
+> diff --git a/Documentation/cvs-migration.txt b/Documentation/cvs-migration.txt
+> index 6812683..773fc99 100644
+> --- a/Documentation/cvs-migration.txt
+> +++ b/Documentation/cvs-migration.txt
+> @@ -1,113 +1,21 @@
 
-> Anything you want me to try now?  I'm not in a fast net place (at
-> least not for a week), so I can't rebuild from scratch.
+This conflicted in a funny way with your own commit but I think
+this version (773fc99 blob) supersedes its contents.
 
-Which version of the SVN libraries are you using?  Also, are you
-tracking https://svn.perl.org/parrot/trunk or just
-https://svn.perl.org/parrot (top-level)
+I munged only one line, though.  The title of this section 
+should not be "a CVS repository" but "a shared repository" for
+obvious reasons ;-).
 
--- 
+> +Developing against a CVS repository
+>  -----------------------------------
+>  
+> +Suppose a shared repository is set up in /pub/repo.git on the host
+>  foo.com.  Then as an individual committer you can clone the shared
+> +repository over ssh with:
+>  
+>  ------------------------------------------------
+>  $ git clone foo.com:/pub/repo.git/ my-project
+
