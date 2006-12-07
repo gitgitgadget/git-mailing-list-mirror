@@ -1,65 +1,88 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Change in git-svn dcommit semantics?
-Date: Tue, 19 Dec 2006 17:17:17 -0800
-Message-ID: <7v3b7bnz6q.fsf@assigned-by-dhcp.cox.net>
-References: <m2mz5jegka.fsf@ziti.local>
-	<94FF72E0-F8BD-4773-803E-F179754BF0ED@silverinsanity.com>
-	<Pine.LNX.4.63.0612200053550.19693@wbgn013.biozentrum.uni-wuerzburg.de>
-	<C2881A17-27F7-467C-B353-189BB7DBFD1E@silverinsanity.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 20 Dec 2006 01:17:26 +0000 (UTC)
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Seth Falcon <sethfalcon@gmail.com>, git@vger.kernel.org
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: Commit f84871 breaks build on OS X
+Date: Thu, 7 Dec 2006 08:54:38 -0500
+Message-ID: <2D096A57-D7B3-49C7-81E4-EB47A0D933B2@silverinsanity.com>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 7 Dec 2006 13:55:03 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <C2881A17-27F7-467C-B353-189BB7DBFD1E@silverinsanity.com> (Brian
-	Gernhardt's message of "Tue, 19 Dec 2006 19:38:58 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Mailer: Apple Mail (2.752.3)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34884>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33578>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gwq5C-0000tR-L8 for gcvg-git@gmane.org; Wed, 20 Dec
- 2006 02:17:23 +0100
+ esmtp (Exim 4.50) id 1GsJiA-0001BB-7j for gcvg-git@gmane.org; Thu, 07 Dec
+ 2006 14:54:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932815AbWLTBRU (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
- 20:17:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932821AbWLTBRT
- (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 20:17:19 -0500
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:59605 "EHLO
- fed1rmmtao05.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S932815AbWLTBRT (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec 2006
- 20:17:19 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao05.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061220011718.FAIP15640.fed1rmmtao05.cox.net@fed1rmimpo01.cox.net>; Tue, 19
- Dec 2006 20:17:18 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id 0pGc1W00i1kojtg0000000; Tue, 19 Dec 2006
- 20:16:37 -0500
-To: Brian Gernhardt <benji@silverinsanity.com>
+ S1032236AbWLGNyr (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
+ 08:54:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1032237AbWLGNyr
+ (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 08:54:47 -0500
+Received: from vs072.rosehosting.com ([216.114.78.72]:37505 "EHLO
+ silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
+ S1032236AbWLGNyq (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec 2006
+ 08:54:46 -0500
+Received: from [IPv6???1] (localhost [127.0.0.1]) (using TLSv1 with cipher
+ AES128-SHA (128/128 bits)) (No client certificate requested) by
+ silverinsanity.com (Postfix) with ESMTP id CE0EF1FFCECA for
+ <git@vger.kernel.org>; Thu,  7 Dec 2006 13:54:42 +0000 (UTC)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Brian Gernhardt <benji@silverinsanity.com> writes:
+When I pulled the most recent changes for git (de51faf), `make` began  
+failing with the following messages:
 
-> And is there an easier way to find these things than "git rev-list
-> HEAD | git diff-tree -r -s --stdin -SCOLLISION | xargs git show"?  I
-> cobbled that together from poking around inside gitk (which mostly
-> works in OS X, but has some issues that make me prefer the command
-> line).
+make -C perl PERL_PATH='/usr/bin/perl' prefix='/usr/local/stow/git' all
+Makefile out-of-date with respect to Makefile.PL /System/Library/Perl/ 
+5.8.6/darwin-thread-multi-2level/Config.pm /System/Library/Perl/5.8.6/ 
+darwin-thread-multi-2level/CORE/config.h
+Cleaning current config before rebuilding Makefile...
+mv: rename perl.mak to perl.mak.old: No such file or directory
+make[1]: *** [perl.mak] Error 1
+make: *** [all] Error 2
 
-I typically do:
+My system is (OS 10.4.8):
 
-	git log --full-diff -p -SCOLLISION
+$ uname -a
+Darwin 127.0.0.1 8.8.1 Darwin Kernel Version 8.8.1: Mon Sep 25  
+19:42:00 PDT 2006; root:xnu-792.13.8.obj~1/RELEASE_I386 i386 i386
+$ fink --version
+Package manager version: 0.25.2
+Distribution version: 0.8.1.rsync i386
+$ cat config.mak
+prefix=/usr/local/stow/git
+COLLISION_CHECK=y
+NO_DARWIN_PORTS=y
 
-The --full-diff option helps because it shows the diff for other
-files (that do not have different number of substring COLLISION
-in the pre and postimage) in the same commit as well.
+I started trying to use `git bisect` and after several attempts (I  
+eventually learned the correct pattern of `rm perl/Makefile` and `git  
+reset --hard`) I found out that the error began with
+
+commit f848718a6980ebda0eb5afb2ca49c3bc1e7b2b1d
+Author: Alex Riesen <raa.lkml@gmail.com>
+Date:   Mon Dec 4 10:50:04 2006 +0100
+
+     Make perl/ build procedure ActiveState friendly.
+
+     On Cygwin + ActivateState Perl, Makefile generated with
+     MakeMaker is not usable because of line-endings and
+     back-slashes.
+
+     This teaches perl/Makefile to write a handcrafted equivalent
+     perl.mak file with 'make NO_PERL_MAKEMAKER=NoThanks'.
+
+     Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+     Signed-off-by: Junio C Hamano <junkio@cox.net>
+
+I'll admit that I'm not savvy enough with make and perl to figure out  
+how to correct it, although `git revert f84871` does fix it.  Can  
+anyone help?
 
