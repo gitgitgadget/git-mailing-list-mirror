@@ -1,81 +1,75 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: VCS comparison table
-Date: Thu, 26 Oct 2006 00:29:17 +0200
-Organization: At home
-Message-ID: <ehooeo$1g6$2@sea.gmane.org>
-References: <453DAC87.8050203@research.canon.com.au> <Pine.LNX.4.64.0610232318200.3962@g5.osdl.org> <Pine.LNX.4.64N.0610232336010.30334@attu2.cs.washington.edu> <Pine.LNX.4.64.0610240812410.3962@g5.osdl.org> <Pine.LNX.4.64N.0610241300450.8112@attu4.cs.washington.edu> <20061025084810.GA26618@coredump.intra.peff.net> <Pine.LNX.4.64N.0610250157470.3467@attu1.cs.washington.edu> <20061025094900.GA26989@coredump.intra.peff.net> <453F6B7A.60805@op5.se> <Pine.LNX.4.63.0610251450040.1754@qynat.qvtvafvgr.pbz> <20061025221531.GB10140@spearce.org>
+X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
+	DATE_IN_PAST_03_06,HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: [PATCH 5/5] git-svn: re-map repository URLs and UUIDs on SVK
+ mirror paths
+Date: Thu, 07 Dec 2006 11:20:34 +1100
+Message-ID: <45775E52.90102@vilain.net>
+References: <20061205051738.16552.8987.stgit@localhost> <20061205051738.16552.22494.stgit@localhost> <20061205085804.GB27236@soma>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-NNTP-Posting-Date: Wed, 25 Oct 2006 22:29:21 +0000 (UTC)
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 7 Dec 2006 04:27:11 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 31
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-23-110.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+User-Agent: Thunderbird 1.5.0.4 (X11/20060615)
+In-Reply-To: <20061205085804.GB27236@soma>
+X-Enigmail-Version: 0.94.0.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30112>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GcrFK-0007Xf-5B for gcvg-git@gmane.org; Thu, 26 Oct
- 2006 00:29:14 +0200
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33550>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GsAqk-0006qt-1P for gcvg-git@gmane.org; Thu, 07 Dec
+ 2006 05:27:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S965240AbWJYW3K (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 25 Oct 2006
- 18:29:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965241AbWJYW3K
- (ORCPT <rfc822;git-outgoing>); Wed, 25 Oct 2006 18:29:10 -0400
-Received: from main.gmane.org ([80.91.229.2]:54226 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S965240AbWJYW3I (ORCPT
- <rfc822;git@vger.kernel.org>); Wed, 25 Oct 2006 18:29:08 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1GcrF1-0007UN-NF for git@vger.kernel.org; Thu, 26 Oct 2006 00:28:57 +0200
-Received: from host-81-190-23-110.torun.mm.pl ([81.190.23.110]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Thu, 26 Oct 2006 00:28:55 +0200
-Received: from jnareb by host-81-190-23-110.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Thu, 26 Oct 2006
- 00:28:55 +0200
-To: git@vger.kernel.org
+ S968736AbWLGE1H (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
+ 23:27:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S968737AbWLGE1H
+ (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 23:27:07 -0500
+Received: from watts.utsl.gen.nz ([202.78.240.73]:42253 "EHLO
+ magnus.utsl.gen.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
+ S968736AbWLGE1D (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec 2006
+ 23:27:03 -0500
+Received: by magnus.utsl.gen.nz (Postfix, from userid 65534) id 394E7139B0D;
+ Thu,  7 Dec 2006 17:27:02 +1300 (NZDT)
+Received: from [127.0.0.1] (longdrop.magnus.utsl.gen.nz [192.168.253.12])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client
+ certificate requested) by magnus.utsl.gen.nz (Postfix) with ESMTP id
+ 8CF13139AEC; Thu,  7 Dec 2006 17:26:57 +1300 (NZDT)
+To: Eric Wong <normalperson@yhbt.net>
 Sender: git-owner@vger.kernel.org
 
-Shawn Pearce wrote:
+Eric Wong wrote:
+> Upon further review, this would make 'git svn rebuild' behave
+> unexpectedly (it would make the git-svn metadata, including .rev_db
+> entries point to the original repo and not the SVK one).  This may not
+> necessarily be a big deal, however.
 
-> David Lang <dlang@digitalinsight.com> wrote:
->> a quick lesson on program nameing
->> 
->> On Wed, 25 Oct 2006, Andreas Ericsson wrote:
->> 
->> >I'm personally all for a rewrite of the necessary commands in C ("commit" 
->> >comes to mind), but as many others, I have no personal interest in doing 
->> >the actual work. I'm fairly certain that once we get it working natively 
->> >on windows with some decent performance, windows hackers will pick up the 
->> >ball and write "wingit", which will be a log viewer and GUI thing for
->>              ^^^^^^
->> 
->> how many other people read this as 'wing it' rather then 'win git'? ;-)
+Yes, that's the idea; a 'rebuild' should set it up to pull from the
+original SVN repository directly.  That probably needs some documentation...
+
+> Also, incremental fetches (or fetching more than 1k sequential
+> revisions) would probably fail.  To fix this, read the offset of last
+> entry in .rev_db instead of git-svn-id: from the last commit to get the
+> last revision.  But since rebuild won't work as expected; losing the
+> .rev_db file means you wouldn't be able to fetch from the SVK repo
+> anymore (but the original upstream one will be fine).
 > 
-> Yes, that's certainly a less than optimal name...
-> 
-> What about gitk?  Is it "gi tk" or "git k" ?  This has actually
-> been the source of much local debate.  :-)
+> One last thing: feature should be made optional.  I actually work
+> day-to-day on a repository that was created with svm/SVN::Mirror,
+> the original repository no longer exists; but the mirrored one
+> still has these properties (I suppose I could remove the props
+> server-side, but some people may not have the permissions).
 
-You can always use CamelCase, i.e. WinGit or WinGIT (or wgit,
-but this is also silly).
+ok, I'll work on that and the other issues you highlighted... possibly
+the overhead of fetching the revprops during mirroring might hurt a
+little for people not doing this, too.  Thanks for reviewing the patch!
 
-Cute names are taken: CoGITo, gitk, qgit (GTK+ history viewer is gitview,
-not ggit, curiously ;-) and tig.
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Sam.
+
 
