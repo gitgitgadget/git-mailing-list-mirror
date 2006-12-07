@@ -2,93 +2,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] fetch-pack: avoid fixing thin packs when unnecessary
-Date: Mon, 18 Dec 2006 22:55:52 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612182251210.19693@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <86y7p57y05.fsf@blue.stonehenge.com>
- <Pine.LNX.4.63.0612182154170.19693@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.63.0612182213020.19693@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0612181638220.18171@xanadu.home>
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: kernel.org mirroring (Re: [GIT PULL] MMC update)
+Date: Thu, 07 Dec 2006 11:57:34 -0800
+Message-ID: <4578722E.9030402@zytor.com>
+References: <Pine.LNX.4.64.0612020835110.3476@woody.osdl.org> <45744FA3.7020908@zytor.com> <Pine.LNX.4.64.0612061847190.3615@woody.osdl.org> <45778AA3.7080709@zytor.com> <Pine.LNX.4.64.0612061940170.3615@woody.osdl.org> <4577A84C.3010601@zytor.com> <Pine.LNX.4.64.0612070953290.3615@woody.osdl.org> <45785697.1060001@zytor.com> <Pine.LNX.4.64.0612071052560.3615@woody.osdl.org> <457868AA.2030605@zytor.com> <20061207193012.GA84678@dspnet.fr.eu.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Mon, 18 Dec 2006 21:56:10 +0000 (UTC)
-Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 7 Dec 2006 19:59:05 +0000 (UTC)
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Kernel Org Admin <ftpadmin@kernel.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Jakub Narebski <jnareb@gmail.com>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <Pine.LNX.4.64.0612181638220.18171@xanadu.home>
-X-Y-GMX-Trusted: 0
+User-Agent: Thunderbird 1.5.0.8 (X11/20061107)
+In-Reply-To: <20061207193012.GA84678@dspnet.fr.eu.org>
+X-Virus-Scanned: ClamAV 0.88.6/2301/Thu Dec  7 07:20:18 2006 on terminus.zytor.com
+X-Virus-Status: Clean
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34740>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GwQSk-0007GM-HC for gcvg-git@gmane.org; Mon, 18 Dec
- 2006 22:55:59 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33623>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GsPOW-0002eq-Lw for gcvg-git@gmane.org; Thu, 07 Dec
+ 2006 20:59:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1754655AbWLRVz4 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 18 Dec 2006
- 16:55:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754656AbWLRVzz
- (ORCPT <rfc822;git-outgoing>); Mon, 18 Dec 2006 16:55:55 -0500
-Received: from mail.gmx.net ([213.165.64.20]:48141 "HELO mail.gmx.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S1754655AbWLRVzz
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 18 Dec 2006 16:55:55 -0500
-Received: (qmail invoked by alias); 18 Dec 2006 21:55:53 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp049) with SMTP; 18 Dec 2006 22:55:53 +0100
-To: Nicolas Pitre <nico@cam.org>
+ S1163251AbWLGT65 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
+ 14:58:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1163250AbWLGT65
+ (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 14:58:57 -0500
+Received: from terminus.zytor.com ([192.83.249.54]:40027 "EHLO
+ terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
+ S1163248AbWLGT64 (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec 2006
+ 14:58:56 -0500
+Received: from [10.0.6.0] (yardgnome.c2micro.com [69.104.58.50])
+ (authenticated bits=0) by terminus.zytor.com (8.13.8/8.13.7) with ESMTP id
+ kB7Jvb7j024497 (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256
+ verify=NO); Thu, 7 Dec 2006 11:57:37 -0800
+To: Olivier Galibert <galibert@pobox.com>
 Sender: git-owner@vger.kernel.org
 
-Hi,
-
-On Mon, 18 Dec 2006, Nicolas Pitre wrote:
-
-> On Mon, 18 Dec 2006, Johannes Schindelin wrote:
+Olivier Galibert wrote:
+> On Thu, Dec 07, 2006 at 11:16:58AM -0800, H. Peter Anvin wrote:
+>> Unfortunately, the most common queries are also extremely expensive.
 > 
-> > 
-> > When we know that there are no common commits, the pack must be
-> > closed (i.e. non-thin) already. Avoid "fixing" it in that case.
-> > 
-> > Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-> > 
-> > ---
-> > 
-> > 	On Mon, 18 Dec 2006, Johannes Schindelin wrote:
-> > 
-> > 	> On Mon, 18 Dec 2006, Randal L. Schwartz wrote:
-> > 	> 
-> > 	> > But then it took nearly an *hour* at the next phase:
-> > 	> > 
-> > 	> >   Resolving 313037 deltas.
-> > 	> >    100% (313037/313037) done
-> > 	> 
-> > 	> Ouch.
-> > 	> 
-> > 	> We try to avoid unpacking the thin packs received by git-fetch.
-> > 	> This means completing that pack (since it can contain deltas 
-> > 	> against objects which are part of another pack).
-> > 	> 
-> > 	> However, for the clone this is utter overkill. We really should 
-> > 	> try to avoid resolving unnecessarily. This is really for the 
-> > 	> clone case, since we do not have _any_ objects in the local 
-> > 	> repository.
-> > 	> 
-> > 	> It happens that the other case -- fetching an independent branch 
-> > 	> -- is easy enough: we already have the check for it in 
-> > 	> fetch-pack.c:586.
-> > 
-> > 	... and here is a lightly tested fix.
-> 
-> NAK.
-> 
-> This fixes nothing.  See previous message.
+> Do you have a top-ten of queries ?  That would be the ones to optimize
+> for.
 
-You're completely right. My patch does what I say, but it does not fix the 
-problem.
+The front page, summary page of each project, and the RSS feed for each 
+project.
 
-Ciao,
-Dscho
