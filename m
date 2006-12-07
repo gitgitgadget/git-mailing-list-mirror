@@ -1,85 +1,67 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: [PATCH] Added description for inverting git-update-index using --index-info
-Date: Fri, 27 Oct 2006 10:03:03 +0100
-Message-ID: <200610271003.03308.andyparkins@gmail.com>
-References: <200610261641.11239.andyparkins@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Commit f84871 breaks build on OS X
+Date: Thu, 07 Dec 2006 14:36:40 -0800
+Message-ID: <7vmz5zqqo7.fsf@assigned-by-dhcp.cox.net>
+References: <2D096A57-D7B3-49C7-81E4-EB47A0D933B2@silverinsanity.com>
+	<81b0412b0612070633i7aec43dse7a8beda64437103@mail.gmail.com>
+	<86ejrbihnr.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Fri, 27 Oct 2006 09:03:36 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Thu, 7 Dec 2006 22:37:06 +0000 (UTC)
+Cc: git@vger.kernel.org, Alex Riesen <raa.lkml@gmail.com>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <200610261641.11239.andyparkins@gmail.com>
-X-TUID: cad301860ca02bb9
-X-Length: 1637
-Content-Disposition: inline
-X-OriginalArrivalTime: 27 Oct 2006 09:06:07.0315 (UTC) FILETIME=[2343FA30:01C6F9A7]
+In-Reply-To: <86ejrbihnr.fsf@blue.stonehenge.com> (Randal L. Schwartz's
+	message of "07 Dec 2006 12:18:32 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30312>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GdNcO-00026z-Ph for gcvg-git@gmane.org; Fri, 27 Oct
- 2006 11:03:13 +0200
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33642>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GsRrQ-0008Su-97 for gcvg-git@gmane.org; Thu, 07 Dec
+ 2006 23:37:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1946160AbWJ0JDJ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 27 Oct 2006
- 05:03:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946247AbWJ0JDJ
- (ORCPT <rfc822;git-outgoing>); Fri, 27 Oct 2006 05:03:09 -0400
-Received: from mail.360visiontechnology.com ([194.70.53.226]:42669 "EHLO
- 369run02s.360vision.com") by vger.kernel.org with ESMTP id S1946160AbWJ0JDG
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 27 Oct 2006 05:03:06 -0400
-Received: from dvr.360vision.com ([192.189.1.24]) by 369run02s.360vision.com
- with Microsoft SMTPSVC(5.0.2195.6713); Fri, 27 Oct 2006 10:06:07 +0100
-Received: from localhost ([127.0.0.1]) by dvr.360vision.com with esmtp (Exim
- 3.36 #1 (Debian)) id 1GdNcG-00073S-00 for <git@vger.kernel.org>; Fri, 27 Oct
- 2006 10:03:04 +0100
-To: git@vger.kernel.org
+ S1163546AbWLGWgn (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
+ 17:36:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1163548AbWLGWgn
+ (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 17:36:43 -0500
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:60412 "EHLO
+ fed1rmmtao01.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1163546AbWLGWgm (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec 2006
+ 17:36:42 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao01.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061207223642.IQPI9173.fed1rmmtao01.cox.net@fed1rmimpo02.cox.net>; Thu, 7
+ Dec 2006 17:36:42 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id vycr1V00p1kojtg0000000; Thu, 07 Dec 2006
+ 17:36:52 -0500
+To: merlyn@stonehenge.com (Randal L. Schwartz)
 Sender: git-owner@vger.kernel.org
 
-I wanted to restore a single file from HEAD back to the index; Shawn Pearce
-gave me the answer.  git-ls-tree piped to git-update-index --index-info.
+merlyn@stonehenge.com (Randal L. Schwartz) writes:
 
-This patch adds that answer to the git-update-index documentation.
+>>>>>> "Alex" == Alex Riesen <raa.lkml@gmail.com> writes:
+>
+> Alex> Strange. You seem to have the old, generated Makefile you perl/
+> Alex> directory. Haven't your pull failed? If so, I suspect that
+>
+> Alex>  rm perl/Makefile
+> Alex>  git reset --hard
+> Alex>  git pull git...
+>
+> I ended up having to do another reset afterward.
+>
+> Definitely something went weird when Makefile was removed
+> from .gitignore.
 
-Signed-off-by: Andy Parkins <andyparkins@gmail.com>
----
- Documentation/git-update-index.txt |   18 ++++++++++++++++++
- 1 files changed, 18 insertions(+), 0 deletions(-)
+Yes, perl/Makefile is getting overwritten by what Makefile.PL
+generates.  I thought the point of Alex's patch was to have it
+muck with perl.mak and leave the tracked Makefile alone?
 
-diff --git a/Documentation/git-update-index.txt b/Documentation/git-update-index.txt
-index 41bb7e1..5adf717 100644
---- a/Documentation/git-update-index.txt
-+++ b/Documentation/git-update-index.txt
-@@ -215,6 +215,24 @@ $ git ls-files -s
- 100755 8a1218a1024a212bb3db30becd860315f9f3ac52 2	frotz
- ------------
- 
-+One particular use of --index-info is to reverse the effect of
-+"git-update-index frotz":
-+
-+------------
-+git ls-tree HEAD frotz | git update-index --index-info
-+------------
-+
-+This makes the index hold the file frotz from HEAD rather than from the
-+working copy.  Similarly:
-+
-+------------
-+git ls-tree -r HEAD | git update-index --index-info
-+------------
-+
-+Will undo everything except "git add" from the index, as
-+"git-ls-tree -r" lists everything in the last commit.
-+
-+
- 
- Using "assume unchanged" bit
- ----------------------------
--- 
-1.4.3.3.g5bca6
