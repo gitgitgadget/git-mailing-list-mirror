@@ -1,67 +1,91 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Is there a way to trim old SHAs from a git tree (so it's not so
- large)?
-Date: Tue, 21 Nov 2006 23:06:57 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0611212306060.26827@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <455B90AD.3060707@freescale.com> <20061117103611.183640@gmx.net>
- <45632957.5070205@freescale.com> <20061121163206.GA22006@spearce.org>
- <45632EC6.5030902@freescale.com> <20061121165656.GC22006@spearce.org>
- <456330CD.9080503@freescale.com> <20061121183941.GB22283@spearce.org>
- <45637457.1010505@freescale.com>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: cygwin, 44k files: how to commit only index?
+Date: Thu, 7 Dec 2006 15:29:31 -0500
+Message-ID: <20061207202931.GB12502@spearce.org>
+References: <81b0412b0612070627r3ff0b394s124d95fbf8084f16@mail.gmail.com> <7vd56vtt2g.fsf@assigned-by-dhcp.cox.net> <20061207192632.GC12143@spearce.org> <7vhcw7scln.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Tue, 21 Nov 2006 22:07:47 +0000 (UTC)
-Cc: Shawn Pearce <spearce@spearce.org>,
-	Thomas Kolejka <Thomas.Kolejka@gmx.at>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Thu, 7 Dec 2006 20:29:44 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <45637457.1010505@freescale.com>
-X-Y-GMX-Trusted: 0
+Content-Disposition: inline
+In-Reply-To: <7vhcw7scln.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32044>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gmdm0-0003mh-QD for gcvg-git@gmane.org; Tue, 21 Nov
- 2006 23:07:25 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33632>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GsPsB-0007H8-G7 for gcvg-git@gmane.org; Thu, 07 Dec
+ 2006 21:29:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1031243AbWKUWHI (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 21 Nov 2006
- 17:07:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031294AbWKUWHI
- (ORCPT <rfc822;git-outgoing>); Tue, 21 Nov 2006 17:07:08 -0500
-Received: from mail.gmx.net ([213.165.64.20]:37780 "HELO mail.gmx.net") by
- vger.kernel.org with SMTP id S1031243AbWKUWHA (ORCPT
- <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2006 17:07:00 -0500
-Received: (qmail invoked by alias); 21 Nov 2006 22:06:58 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp039) with SMTP; 21 Nov 2006 23:06:58 +0100
-To: Timur Tabi <timur@freescale.com>
+ S1163284AbWLGU3g (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
+ 15:29:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1163294AbWLGU3g
+ (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 15:29:36 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:38205 "EHLO
+ corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1163284AbWLGU3e (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec 2006
+ 15:29:34 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1GsPrx-0001e8-PI; Thu, 07 Dec 2006 15:29:25 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ ADCFF20FB6E; Thu,  7 Dec 2006 15:29:31 -0500 (EST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Hi,
-
-On Tue, 21 Nov 2006, Timur Tabi wrote:
-
-> Shawn Pearce wrote:
+Junio C Hamano <junkio@cox.net> wrote:
+> Shawn Pearce <spearce@spearce.org> writes:
 > 
-> > finally you can either run from that directory (see INSTALL file)
-> > or you can install the binary somewhere else.  We don't really
-> > recommend using `pu` for production level work, so make sure you
-> > have a backup of any repository you run it on.  :)
+> >> I am not sure what you are trying.  Do you mean stat() is slow
+> >> on your filesystem?
+> >> 
+> >> Maybe you want "assume unchanged"?
+> >
+> > Yes, basically.
 > 
-> So how do I make a shallow clone?  I've set it all up, but there is no
-> git-shallow-clone command, and git help clone doesn't have anything either.
+> Then maybe "git grep assume.unchanged" would help?
 
-Try "git clone --depth 1 <url>". This will cut each ancestor chain after 
-one ancestor (IIRC).
+Hmm.  OK, maybe I should have answered "No"" to your first question.
+I keep looking at the assume unchanaged feature of update-index,
+but refuse to use it because I'm a lazy guy who will forget to tell
+the index a file has been modified.  Consequently I'm going to miss
+a change during a commit.
 
-Ciao,
-Dscho
+What may help (and without using assume unchanged) is:
+
+ * skip the `update-index --refresh` part of git-status/git-commit
+ * skip the status template in COMMIT_MSG when using the editor
+
+As Git will still at least make sure a `commit -a` includes
+everything that is dirty.
+
+Files whose modification dates may have been messed with (but
+whose content are unchanged) will just go through expensive SHA1
+computation to arrive at the same value, which is fine.
+
+Users skipping the first part are doing so under the assumption that
+their modification dates are usually always correct, and that then
+they aren't the SHA1 computation of a handful of files is cheap
+compared to stat'ing the entire set of files.
+
+Users skipping the second part are doing so under the assumption
+that knowing the names of the files they are committing doesn't
+really improve their odds of writing a good commit message.
+
+-- 
