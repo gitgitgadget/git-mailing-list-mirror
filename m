@@ -4,74 +4,68 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: VCS comparison table
-Date: Thu, 26 Oct 2006 13:25:59 +0200
-Message-ID: <45409B47.8090402@op5.se>
-References: <453536AE.6060601@utoronto.ca>	<200610172301.27101.jnareb@gmail.com> <45354AD0.1020107@utoronto.ca>	<BAYC1-PASMTP07AB11A64250AAF683424DAE0E0@CEZ.ICE>	<vpq4ptz2uh8.fsf@ecrins.imag.fr>	<453DAC87.8050203@research.canon.com.au>	<Pine.LNX.4.64.0610232318200.3962@g5.osdl.org>	<Pine.LNX.4.64N.0610232336010.30334@attu2.cs.washington.edu>	<Pine.LNX.4.64.0610240812410.3962@g5.osdl.org>	<Pine.LNX.4.64N.0610241300450.8112@attu4.cs.washington.edu>	<20061025084810.GA26618@coredump.intra.peff.net> <7v3b9cnlx7.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 26 Oct 2006 11:26:32 +0000 (UTC)
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	bazaar-ng@lists.canonical.com, Linus Torvalds <torvalds@osdl.org>,
-	Lachlan Patrick <loki@research.canon.com.au>,
-	David Rientjes <rientjes@cs.washington.edu>
+From: Martin Langhoff <martin@catalyst.net.nz>
+Subject: [PATCH] cvsserver: Avoid miscounting bytes in Perl v5.8.x
+Date: Thu,  7 Dec 2006 16:38:50 +1300
+Message-ID: <11654627303222-git-send-email-martin@catalyst.net.nz>
+NNTP-Posting-Date: Thu, 7 Dec 2006 03:37:36 +0000 (UTC)
+Cc: Martin Langhoff <martin@catalyst.net.nz>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
-In-Reply-To: <7v3b9cnlx7.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: git-send-email 1.4.4.1.g7923a
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30192>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gd3NB-0003rN-2T for gcvg-git@gmane.org; Thu, 26 Oct
- 2006 13:26:11 +0200
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33545>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GsA4i-0002op-FM for gcvg-git@gmane.org; Thu, 07 Dec
+ 2006 04:37:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752142AbWJZL0F (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
- 07:26:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752145AbWJZL0F
- (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 07:26:05 -0400
-Received: from linux-server1.op5.se ([193.201.96.2]:47243 "EHLO
- smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1752142AbWJZL0C (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 07:26:02 -0400
-Received: by smtp-gw1.op5.se (Postfix, from userid 588) id 45FE86BE17; Thu,
- 26 Oct 2006 13:26:01 +0200 (CEST)
-Received: from [192.168.1.20] (unknown [213.88.215.14]) by smtp-gw1.op5.se
- (Postfix) with ESMTP id B87D86BD3A; Thu, 26 Oct 2006 13:25:59 +0200 (CEST)
-To: Junio C Hamano <junkio@cox.net>
+ S968056AbWLGDhO (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
+ 22:37:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S968077AbWLGDhO
+ (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 22:37:14 -0500
+Received: from godel.catalyst.net.nz ([202.78.240.40]:57559 "EHLO
+ mail1.catalyst.net.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S968056AbWLGDhM (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec 2006
+ 22:37:12 -0500
+Received: from leibniz.catalyst.net.nz ([202.78.240.7] helo=mltest) by
+ mail1.catalyst.net.nz with esmtp (Exim 4.50) id 1GsA4L-0006my-Sl; Thu, 07 Dec
+ 2006 16:37:09 +1300
+Received: from martin by mltest with local (Exim 3.36 #1 (Debian)) id
+ 1GsA5y-0005hb-00; Thu, 07 Dec 2006 16:38:50 +1300
+To: git@vger.kernel.org, junkio@cox.net
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano wrote:
-> 
->  - Learn the itches David and other people have, that the
->    current git Porcelain-ish does not scratch well, and enrich
->    Documentation/technical with real-world working scripts built
->    around plumbing.
-> 
+At some point between v5.6 and 5.8 Perl started to assume its input,
+output and filehandles are UTF-8. This breaks the counting of bytes
+for the CVS protocol, resulting in the client expecting less data
+than we actually send, and storing truncated files.
 
-Isn't this how git has been developed since day one, more or less? If a 
-command is missing, it gets added as a shell-script. I agree with you on 
-the "pipes from this sent here does this, and look how useful it is" 
-lectures are gone since many commands were rewritten. Otoh, they're gone 
-because they now instead provide examples on how to interface with the 
-libified parts of git, so it's not a loss per se, just a switch in what 
-it teaches.
+Signed-off-by: Martin Langhoff <martin@catalyst.net.nz>
+---
 
-I also agree with David that shell is much more fun to muck around with 
-and prototype in, because you see results to much faster. However, since 
-our plumbing is so rock-solid (and getting extended with --stdin options 
-to more and more commands), I see no reason why we shouldn't have a "how 
-to extend git" with the old shell-based porcelain scripts up somewhere 
-at the web. Perhaps it would kill two birds with one stone and increase 
-the addition of new utilities to git, while at the same time keeping the 
-already rewritten commands in C.
+This has gone unfixed for quite a while. I thought I had seen
+a patch posted addressing it, but it may have been for something else.
 
-Btw, the old shell-versions still work with the new plumbing (well, 
-mostly anyways). They just have problems with filenames and revisions 
-with spaces and special chars and things like that, same as they've 
-always had.
+In fact, our heavily patched gitweb.cgi has needed a similar patch
+as well. Snapshot downloads were getting corrupted until we added
+use bytes; there too. I'm not sure how current gitweb does it though...
 
+---
+ git-cvsserver.perl |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+diff --git a/git-cvsserver.perl b/git-cvsserver.perl
+index ca519b7..197014d 100755
+--- a/git-cvsserver.perl
++++ b/git-cvsserver.perl
+@@ -17,6 +17,7 @@
+ 
+ use strict;
+ use warnings;
++use bytes;
+ 
+ use Fcntl;
+ use File::Temp qw/tempdir tempfile/;
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
+1.4.4.1.g7923a
