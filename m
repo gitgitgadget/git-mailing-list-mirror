@@ -1,81 +1,68 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Seth Falcon <sethfalcon@gmail.com>
-Subject: Re: Trouble with git-svn when upstream svn URL changed
-Date: Fri, 08 Dec 2006 10:34:30 -0800
-Message-ID: <m2wt52fd8p.fsf@ziti.local>
-References: <m21wnai8qe.fsf@ziti.local> <20061208181109.GA10475@localdomain>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: kernel.org mirroring (Re: [GIT PULL] MMC update)
+Date: Thu, 07 Dec 2006 12:05:16 -0800
+Message-ID: <7vac1zsc8z.fsf@assigned-by-dhcp.cox.net>
+References: <45708A56.3040508@drzeus.cx>
+	<Pine.LNX.4.64.0612011639240.3695@woody.osdl.org>
+	<457151A0.8090203@drzeus.cx>
+	<Pine.LNX.4.64.0612020835110.3476@woody.osdl.org>
+	<45744FA3.7020908@zytor.com>
+	<Pine.LNX.4.64.0612061847190.3615@woody.osdl.org>
+	<45778AA3.7080709@zytor.com>
+	<Pine.LNX.4.64.0612061940170.3615@woody.osdl.org>
+	<4577A84C.3010601@zytor.com>
+	<Pine.LNX.4.64.0612070953290.3615@woody.osdl.org>
+	<45785697.1060001@zytor.com>
+	<Pine.LNX.4.64.0612071052560.3615@woody.osdl.org>
+	<457868AA.2030605@zytor.com>
+	<Pine.LNX.4.64.0612071121410.3615@woody.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 8 Dec 2006 18:34:42 +0000 (UTC)
-Cc: git@vger.kernel.org
+NNTP-Posting-Date: Thu, 7 Dec 2006 20:05:26 +0000 (UTC)
+Cc: git@vger.kernel.org, Kernel Org Admin <ftpadmin@kernel.org>,
+	"H. Peter Anvin" <hpa@zytor.com>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:to:cc:subject:references:from:date:in-reply-to:message-id:user-agent:mime-version:content-type;
-        b=rWkCyt+/3k4tvPDS82UAO8yMbNkkB+4IrUQyLk03iyDRYnOn7RbRwDzjR2+xvcjKwr5zo1fjS5VBLQvy1OxexxMNqVbK+pTUq31TdXeuradguJZvhr+6jux//0inhJY2WZZZBk5aJ4s6NYoxSELX1gkbwLREVrh593QUgPu6pIQ=
-In-Reply-To: <20061208181109.GA10475@localdomain> (Eric Wong's message of "Fri, 8 Dec 2006 10:11:09 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (darwin)
+In-Reply-To: <Pine.LNX.4.64.0612071121410.3615@woody.osdl.org> (Linus
+	Torvalds's message of "Thu, 7 Dec 2006 11:30:29 -0800 (PST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33718>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33627>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GskYO-0001mq-NS for gcvg-git@gmane.org; Fri, 08 Dec
- 2006 19:34:37 +0100
+ esmtp (Exim 4.50) id 1GsPUg-0003Uv-P5 for gcvg-git@gmane.org; Thu, 07 Dec
+ 2006 21:05:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1760824AbWLHSee (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
- 13:34:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760827AbWLHSed
- (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 13:34:33 -0500
-Received: from wx-out-0506.google.com ([66.249.82.228]:5837 "EHLO
- wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1760824AbWLHSed (ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Dec
- 2006 13:34:33 -0500
-Received: by wx-out-0506.google.com with SMTP id h27so886022wxd for
- <git@vger.kernel.org>; Fri, 08 Dec 2006 10:34:32 -0800 (PST)
-Received: by 10.90.71.12 with SMTP id t12mr4551315aga.1165602872184; Fri, 08
- Dec 2006 10:34:32 -0800 (PST)
-Received: from ziti.local ( [140.107.181.122]) by mx.google.com with ESMTP id
- 38sm5412537wrl.2006.12.08.10.34.30; Fri, 08 Dec 2006 10:34:31 -0800 (PST)
-To: Eric Wong <normalperson@yhbt.net>
+ S1163250AbWLGUFT (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
+ 15:05:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1163253AbWLGUFT
+ (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 15:05:19 -0500
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:46014 "EHLO
+ fed1rmmtao03.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1163250AbWLGUFR (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec 2006
+ 15:05:17 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao03.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061207200516.FVPW29122.fed1rmmtao03.cox.net@fed1rmimpo02.cox.net>; Thu, 7
+ Dec 2006 15:05:16 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id vw5S1V0101kojtg0000000; Thu, 07 Dec 2006
+ 15:05:27 -0500
+To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 
-Eric Wong <normalperson@yhbt.net> writes:
-> This is incorrect, rebuild is not designed to handle new urls.  
+If I understand correctly, kernel.org is still running the
+version of gitweb Kay last installed there (I am too busy to
+take over the gitweb installation maintenance at kernel.org, and
+I did not ask the $DOCUMENTROOT/git/ directory to be transferred
+to me when I rolled gitweb into the git.git repository).
 
-ok, I was lead astray by this part of the doc for rebuild:
-
-         A Subversion URL may be optionally specified at the
-         command-line if the directory/repository you're tracking has
-         moved or changed protocols.
-
-> However, git/git-svn are very flexible beasts :)
->
->> I guess I can create a fresh git repos using git-svn init and then
->> fetch all of my dev branches from the original repository.
->
-> You can look at "Advanced Example: Tracking a Reorganized Repository"
-> in the manpage.  Ignore the text about --follow-parent since you
-> already have the old stuff fetched, and start following the instructions
-> beginning with "# And now, we continue tracking the new revisions:"
-
-Oh, sorry I didn't find that example.  This worked perfectly, thanks!
-
-One question: My fingers are in the habit of typing remotes/git-svn.
-Can I do:
-   cd .git/svn
-   rm -r git-svn
-   mv git-newsvn git-svn
-
-Or is there a safer way to rename?  Or are there other config-file
-ways to make this work -- to provide an alias?
-
-Thank you so much for the prompt reply.  Nice to get going again and
-with the full history.
-
+I do not know what queries are most popular, but I think a newer
+gitweb is more efficient in the summary page (getting list of
+branches and tags).  It might be worth a try.
