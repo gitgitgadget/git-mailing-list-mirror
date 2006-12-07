@@ -2,76 +2,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] git-svn: correctly access repos when only given partial read permissions
-Date: Sat, 2 Dec 2006 14:24:33 -0800
-Message-ID: <20061202222433.GA21171@localdomain>
-References: <11644366982320-git-send-email-normalperson@yhbt.net> <4571F6E7.4050809@vilain.net>
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Locked down (but still shared) repositories
+Date: Thu, 7 Dec 2006 16:42:43 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0612071640160.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20061207113539.GA10781@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sat, 2 Dec 2006 22:24:42 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Thu, 7 Dec 2006 15:43:02 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <4571F6E7.4050809@vilain.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <20061207113539.GA10781@spearce.org>
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33061>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GqdHj-0007Md-67 for gcvg-git@gmane.org; Sat, 02 Dec
- 2006 23:24:39 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33595>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GsLOb-0001EJ-4O for gcvg-git@gmane.org; Thu, 07 Dec
+ 2006 16:42:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1424470AbWLBWYg (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 2 Dec 2006
- 17:24:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1424471AbWLBWYg
- (ORCPT <rfc822;git-outgoing>); Sat, 2 Dec 2006 17:24:36 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:17561 "EHLO hand.yhbt.net") by
- vger.kernel.org with ESMTP id S1424470AbWLBWYf (ORCPT
- <rfc822;git@vger.kernel.org>); Sat, 2 Dec 2006 17:24:35 -0500
-Received: from hand.yhbt.net (localhost [127.0.0.1]) by hand.yhbt.net
- (Postfix) with SMTP id 098652DC034; Sat,  2 Dec 2006 14:24:34 -0800 (PST)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Sat, 02 Dec 2006
- 14:24:33 -0800
-To: Sam Vilain <sam@vilain.net>
+ S1759420AbWLGPmq (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
+ 10:42:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760074AbWLGPmq
+ (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 10:42:46 -0500
+Received: from mail.gmx.net ([213.165.64.20]:52983 "HELO mail.gmx.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S1759420AbWLGPmp
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec 2006 10:42:45 -0500
+Received: (qmail invoked by alias); 07 Dec 2006 15:42:44 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp045) with SMTP; 07 Dec 2006 16:42:44 +0100
+To: Shawn Pearce <spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 
-Sam Vilain <sam@vilain.net> wrote:
-> Eric Wong wrote:
-> > Sometimes users are given only read access to a subtree inside a
-> > repository, and git-svn could not read log information (and thus
-> > fetch commits) when connecting a session to the root of the
-> > repository.  We now start an SVN::Ra session with the full URL
-> > of what we're tracking, and not the repository root as before.
-> > 
-> > This change was made much easier with a cleanup of
-> > repo_path_split() usage as well as improving the accounting of
-> > authentication batons.
-> 
-> This broke mirroring file:/// URIs;
-> 
-> eg, if I have ~/.svk/local as a SVN repository, which has a complete
-> mirror of a URL under mirror/fai, and I want to copy the revisions into
-> git using git-svn, I use:
-> 
-> perl ~/src/git/git-svn multi-init -t tags -T trunk \
->      file:///home/samv/.svk/local/mirror/fai
-> 
-> I now get this error:
-> 
-> Filesystem has no item: File not found: revision 8514, path
-> '/mirror/fai/tags/mirror/fai/tags' at /home/samv/src/git/git-svn line 3236
+Hi,
 
-This should be fixed in 1ca7558dd838e82f6f6b8611b981654fa4ecde2b in
-Junio's master: "git-svn: fix multi-init".
+On Thu, 7 Dec 2006, Shawn Pearce wrote:
 
-> (next, I'll make git-svn correctly look at the svm:* revprops to get the
-> upstream repo URL and revision number for the commit message)
+> For various auditing reasons the repositories need to be tightly
+> controlled.  That is the following cannot be permitted:
+> 
+>   * delete or overwrite a loose object;
+>   * delete or overwrite a pack file;
+>   * delete or overwrite a ref, except see below;
+>   * change the config;
+>   * change the description;
+>   * change HEAD;
+> 
+> [...]
+>
+> I also cannot create secondary git-only UNIX accounts for each user,
+> using git-shell in the git-only account.
 
-Cool.  While you're at it, would you mind looking into supporting some
-of the merge revprops that I've heard about, too?  Thanks.
+How about just one such user? After all, you already have this user: the 
+repo owner. Of course, people have to push via ssh, even on the same 
+machine.
 
--- 
+Ciao,
+Dscho
