@@ -1,66 +1,89 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] git-checkout: allow pathspec to recover lost working tree directory
-Date: Wed, 15 Nov 2006 18:00:35 -0800
-Message-ID: <7vlkmcgngc.fsf@assigned-by-dhcp.cox.net>
-References: <7vbqn8msuw.fsf@assigned-by-dhcp.cox.net>
-	<ejge6q$bm7$1@sea.gmane.org>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: Commit f84871 breaks build on OS X
+Date: Thu, 7 Dec 2006 16:42:40 +0100
+Message-ID: <81b0412b0612070742x51af6011ua96962c53158cea0@mail.gmail.com>
+References: <2D096A57-D7B3-49C7-81E4-EB47A0D933B2@silverinsanity.com>
+	 <Pine.LNX.4.63.0612071554180.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <E8038C15-B359-4DE9-B3E0-45B065AEDBFA@silverinsanity.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 16 Nov 2006 02:00:45 +0000 (UTC)
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_44617_11716634.1165506160366"
+NNTP-Posting-Date: Thu, 7 Dec 2006 15:43:47 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <ejge6q$bm7$1@sea.gmane.org> (Anand Kumria's message of "Thu, 16
-	Nov 2006 01:17:15 +0000 (UTC)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:references;
+        b=q8ZV42bynsCGHwq6QjgtpVZPeO7Puc2cxQDYSz5ZOjtwbgIGoxHsuZj+ixwBUttO85BOw8tOyl5KxbxiaNaT9Vyu4cLC1b5bjYZIK62e7uGQaiSlDagEUXorJ+EsgYxuojUzRDZBIsdlR+qMBc7Qprz1RgvyyKbur6aEaMJVytY=
+In-Reply-To: <E8038C15-B359-4DE9-B3E0-45B065AEDBFA@silverinsanity.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31542>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GkWYS-0005og-Vn for gcvg-git@gmane.org; Thu, 16 Nov
- 2006 03:00:41 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33596>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GsLPM-0001Kd-BB for gcvg-git@gmane.org; Thu, 07 Dec
+ 2006 16:43:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1162158AbWKPCAh (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
- 21:00:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1162160AbWKPCAh
- (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 21:00:37 -0500
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:51189 "EHLO
- fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP id S1162158AbWKPCAg
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 21:00:36 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao05.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061116020036.RBRI20330.fed1rmmtao05.cox.net@fed1rmimpo02.cox.net>; Wed, 15
- Nov 2006 21:00:36 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id nE0i1V00C1kojtg0000000; Wed, 15 Nov 2006
- 21:00:42 -0500
-To: "Anand Kumria" <wildfire@progsoc.org>
+ S1760676AbWLGPms (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
+ 10:42:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760074AbWLGPms
+ (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 10:42:48 -0500
+Received: from wr-out-0506.google.com ([64.233.184.239]:39882 "EHLO
+ wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1760674AbWLGPmq (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec
+ 2006 10:42:46 -0500
+Received: by wr-out-0506.google.com with SMTP id i7so641514wra for
+ <git@vger.kernel.org>; Thu, 07 Dec 2006 07:42:46 -0800 (PST)
+Received: by 10.78.178.5 with SMTP id a5mr1507698huf.1165506165398; Thu, 07
+ Dec 2006 07:42:45 -0800 (PST)
+Received: by 10.78.135.3 with HTTP; Thu, 7 Dec 2006 07:42:40 -0800 (PST)
+To: "Brian Gernhardt" <benji@silverinsanity.com>
 Sender: git-owner@vger.kernel.org
 
-"Anand Kumria" <wildfire@progsoc.org> writes:
+------=_Part_44617_11716634.1165506160366
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
-> On Wed, 15 Nov 2006 11:07:19 -0800, Junio C Hamano wrote:
->
->> It is often wanted on the #git channel that this were to work to
->> recover removed directory:
->> 
->> 	rm -fr Documentation
->> 	git checkout -- Documentation
->> 	git checkout HEAD -- Documentation ;# alternatively
->> 
->> Now it does.
->
-> One thing I often seem to do is make some changes, test them out and
-> remove the file if it wa a dead end and get my original back with
-> 'cg-restore <file>'. Does this mean that the git equivalent will be 'git
-> checkout -- <file>' as well?
+Does the attached patch help? I highly suspect the perl.mak generated
+by MakeMaker.
 
-Naming individual files has been supported for a long time.
-What this patch adds is an ability to name a whole directory to
-restore to the index state or a named commit state).
+diff --git a/perl/Makefile b/perl/Makefile
+index bd483b0..b936e0d 100644
+--- a/perl/Makefile
++++ b/perl/Makefile
+@@ -29,6 +29,8 @@ $(makfile): ../GIT-CFLAGS Makefile
+ 	echo '	echo $(instdir_SQ)' >> $@
+ else
+ $(makfile): Makefile.PL ../GIT-CFLAGS
++	$(RM) $(makfile)
++	$(RM) $(makfile).old
+ 	'$(PERL_PATH_SQ)' $< FIRST_MAKEFILE='$@' PREFIX='$(prefix_SQ)'
+ endif
+
+------=_Part_44617_11716634.1165506160366
+Content-Type: text/x-diff; name="perl.mak.old.patch"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="perl.mak.old.patch"
+X-Attachment-Id: file0
+
+RnJvbSA1ZTAwZjg2NWZhMTNhNDI1ZDQzOTVhNzBhYWNhNzk4ZGZhZjA5M2RjIE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBBbGV4IFJpZXNlbiA8cmFhLmxrbWxAZ21haWwuY29tPgpEYXRl
+OiBUaHUsIDcgRGVjIDIwMDYgMTY6NDA6MDYgKzAxMDAKU3ViamVjdDogW1BBVENIXSB3b3JrYXJv
+dW5kIGZvciBNYWtlTWFrZXItZ2VuZXJhdGVkIE1ha2VmaWxlcwoKSXQgc2VlbXMgdG8gdHJ5IHRv
+IG12IHBlcmwubWFrIGludG8gcGVybC5tYWsub2xkIGZpbGUgd2l0aG91dCBjaGVja2luZyBpZgou
+b2xkIGV4aXN0cyBmaXJzdC4KClNpZ25lZC1vZmYtYnk6IEFsZXggUmllc2VuIDxyYWEubGttbEBn
+bWFpbC5jb20+CgpkaWZmIC0tZ2l0IGEvcGVybC9NYWtlZmlsZSBiL3BlcmwvTWFrZWZpbGUKaW5k
+ZXggYmQ0ODNiMC4uYjkzNmUwZCAxMDA2NDQKLS0tIGEvcGVybC9NYWtlZmlsZQorKysgYi9wZXJs
+L01ha2VmaWxlCkBAIC0yOSw2ICsyOSw4IEBAICQobWFrZmlsZSk6IC4uL0dJVC1DRkxBR1MgTWFr
+ZWZpbGUKIAllY2hvICcJZWNobyAkKGluc3RkaXJfU1EpJyA+PiAkQAogZWxzZQogJChtYWtmaWxl
+KTogTWFrZWZpbGUuUEwgLi4vR0lULUNGTEFHUworCSQoUk0pICQobWFrZmlsZSkKKwkkKFJNKSAk
+KG1ha2ZpbGUpLm9sZAogCSckKFBFUkxfUEFUSF9TUSknICQ8IEZJUlNUX01BS0VGSUxFPSckQCcg
+UFJFRklYPSckKHByZWZpeF9TUSknCiBlbmRpZgogCg==
