@@ -1,76 +1,52 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Arkadiusz Miskiewicz <arekm@maven.pl>
-Subject: Re: svn versus git
-Date: Thu, 14 Dec 2006 20:00:54 +0100
-Organization: SelfOrganizing
-Message-ID: <200612142000.54409.arekm@maven.pl>
-References: <200612132200.41420.andyparkins@gmail.com>
+From: "Dongsheng Song" <dongsheng.song@gmail.com>
+Subject: How to conver no branches/tags svn repo to git ?
+Date: Thu, 7 Dec 2006 21:31:12 +0800
+Message-ID: <4b3406f0612070531p13611c68lf65a172c5e4e7b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Thu, 14 Dec 2006 19:18:18 +0000 (UTC)
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 7 Dec 2006 13:31:22 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Greylist: delayed 990 seconds by postgrey-1.27 at vger.kernel.org; Thu, 14 Dec 2006 14:17:38 EST
-User-Agent: KMail/1.9.5
-In-Reply-To: <200612132200.41420.andyparkins@gmail.com>
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=QClG2QUM1iAGeV+WOgt3W1ZZ+ppxAiLK/k/w7jLg00AdYeKGJYFCrMPCSy39/xt5Tnb1RFiAWyLrzFp8feZ58aQdMoapDcanTIFC6O8W3KiML74GjOL/DPAL4tN1UhRH9KSuka9Q1zUEHAYortrc+KEe+uWiTj8tAZw52mQur68=
 Content-Disposition: inline
-X-Authenticated-Id: arekm
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34385>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33576>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Guw5m-0000Zf-Oi for gcvg-git@gmane.org; Thu, 14 Dec
- 2006 20:18:07 +0100
+ esmtp (Exim 4.50) id 1GsJLJ-0006N6-KU for gcvg-git@gmane.org; Thu, 07 Dec
+ 2006 14:31:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751969AbWLNTRj convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006 14:17:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751970AbWLNTRj
- (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 14:17:39 -0500
-Received: from outgoing1.smtp.agnat.pl ([193.239.44.83]:47159 "EHLO
- outgoing1.smtp.agnat.pl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1751969AbWLNTRj convert rfc822-to-8bit (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006 14:17:39 -0500
-Received: from [83.11.30.20] (helo=[192.168.0.64]) by tekla.agnat.pl with
- esmtpsa (TLSv1:DHE-RSA-AES256-SHA:256) (Exim 4.63) (envelope-from
- <arekm@maven.pl>) id 1GuvpC-0003Cu-Sz; Thu, 14 Dec 2006 20:00:59 +0100
-To: Andy Parkins <andyparkins@gmail.com>
+ S1032205AbWLGNbP (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
+ 08:31:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1032208AbWLGNbP
+ (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 08:31:15 -0500
+Received: from ug-out-1314.google.com ([66.249.92.173]:18997 "EHLO
+ ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1032205AbWLGNbN (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec
+ 2006 08:31:13 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so462893uga for
+ <git@vger.kernel.org>; Thu, 07 Dec 2006 05:31:12 -0800 (PST)
+Received: by 10.78.83.13 with SMTP id g13mr1399876hub.1165498272021; Thu, 07
+ Dec 2006 05:31:12 -0800 (PST)
+Received: by 10.78.165.2 with HTTP; Thu, 7 Dec 2006 05:31:11 -0800 (PST)
+To: "Shawn O. Pearce" <spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 
-On Wednesday 13 December 2006 23:00, Andy Parkins wrote:
-> Hello,
->
-> With all the discussion about user interface difficulties, I started =
-to
-> write a comparison with subversion document.  (I was assuming that pe=
-ople
-> find subversion easy).  As much as I love git, I was expecting to fin=
-d that
-> it's hard to use interface would have subversion as the clear winner.=
-  I
-> was hoping that would then give guidance as to what could be fixed in=
- git.
->
-> I was surprised, therefore, to find that in each case I was finding t=
-hat
-> git was the winner.
+e.g.
+http://svn.berlios.de/viewcvs/open-iscsi/
+http://svn.berlios.de/svnroot/repos/open-iscsi
 
-subversion is a winner when it comes to options handling (especially --=
-help)=20
-and better (error) messages. That's one of reason why people find it ea=
-sy.
+Can I convert / to master simply ?
 
-ps. I'm blind or there is no documentation about what utilities are nee=
-ded to=20
-get git fully working? (like sed, coreutils, grep, rcs package (merge t=
-ool=20
-afaik needed)...).=20
-
---=20
-Arkadiusz Mi=B6kiewicz        PLD/Linux Team
