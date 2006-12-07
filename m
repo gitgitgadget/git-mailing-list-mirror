@@ -1,81 +1,72 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: kernel.org mirroring (Re: [GIT PULL] MMC update)
-Date: Fri, 08 Dec 2006 12:25:05 +0100
-Organization: At home
-Message-ID: <elbhu9$ke2$1@sea.gmane.org>
-References: <Pine.LNX.4.64.0612061847190.3615@woody.osdl.org> <45778AA3.7080709@zytor.com> <Pine.LNX.4.64.0612061940170.3615@woody.osdl.org> <4577A84C.3010601@zytor.com> <Pine.LNX.4.64.0612070953290.3615@woody.osdl.org> <45785697.1060001@zytor.com> <Pine.LNX.4.64.0612071052560.3615@woody.osdl.org> <457868AA.2030605@zytor.com> <20061207193012.GA84678@dspnet.fr.eu.org> <4578722E.9030402@zytor.com> <20061207235039.GA423@dspnet.fr.eu.org>
+From: Rogan Dawes <discard@dawes.za.net>
+Subject: Re: Locked down (but still shared) repositories
+Date: Thu, 07 Dec 2006 21:45:30 +0200
+Message-ID: <45786F5A.6020400@dawes.za.net>
+References: <20061207113539.GA10781@spearce.org> <Pine.LNX.4.63.0612071640160.28348@wbgn013.biozentrum.uni-wuerzburg.de> <20061207191730.GA12143@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-NNTP-Posting-Date: Fri, 8 Dec 2006 11:23:16 +0000 (UTC)
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 7 Dec 2006 19:46:02 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 31
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-25-107.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+User-Agent: Thunderbird 1.5.0.8 (Windows/20061025)
+Original-Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <20061207191730.GA12143@spearce.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33687>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33618>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gsdow-0006vB-5X for gcvg-git@gmane.org; Fri, 08 Dec
- 2006 12:23:14 +0100
+ esmtp (Exim 4.50) id 1GsPBj-0000WQ-MN for gcvg-git@gmane.org; Thu, 07 Dec
+ 2006 20:45:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1425403AbWLHLXF (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
- 06:23:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1425359AbWLHLXF
- (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 06:23:05 -0500
-Received: from main.gmane.org ([80.91.229.2]:59521 "EHLO ciao.gmane.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1425403AbWLHLXC
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Dec 2006 06:23:02 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1Gsdoe-0002Sr-RJ for git@vger.kernel.org; Fri, 08 Dec 2006 12:22:57 +0100
-Received: from host-81-190-25-107.torun.mm.pl ([81.190.25.107]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Fri, 08 Dec 2006 12:22:56 +0100
-Received: from jnareb by host-81-190-25-107.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Fri, 08 Dec 2006
- 12:22:56 +0100
-To: git@vger.kernel.org
+ S1163239AbWLGTpp (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
+ 14:45:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1163241AbWLGTpp
+ (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 14:45:45 -0500
+Received: from sd-green-bigip-83.dreamhost.com ([208.97.132.83]:47786 "EHLO
+ spunkymail-a6.dreamhost.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+ with ESMTP id S1163239AbWLGTpo (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7
+ Dec 2006 14:45:44 -0500
+Received: from [192.168.201.102] (dsl-146-24-82.telkomadsl.co.za
+ [165.146.24.82]) by spunkymail-a6.dreamhost.com (Postfix) with ESMTP id
+ D77EE109F2B; Thu,  7 Dec 2006 11:45:33 -0800 (PST)
+To: Shawn Pearce <spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 
-Olivier Galibert wrote:
-
-> On Thu, Dec 07, 2006 at 11:57:34AM -0800, H. Peter Anvin wrote:
->> Olivier Galibert wrote:
->>>On Thu, Dec 07, 2006 at 11:16:58AM -0800, H. Peter Anvin wrote:
->>>>
->>>>Unfortunately, the most common queries are also extremely expensive.
+Shawn Pearce wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+>> On Thu, 7 Dec 2006, Shawn Pearce wrote:
+>>
+>>> For various auditing reasons the repositories need to be tightly
+>>> controlled.  That is the following cannot be permitted:
 >>>
->>>Do you have a top-ten of queries ?  That would be the ones to optimize
->>>for.
->> 
->> The front page, summary page of each project, and the RSS feed for each 
->> project.
+>>> [...]
+>> How about just one such user? After all, you already have this user: the 
+>> repo owner. Of course, people have to push via ssh, even on the same 
+>> machine.
 > 
-> Hmmm, maybe you could have the summaries and rss feed generated on
-> push, which could also generate elementary files with lines of the
-> front page.  That would make these top offenders static page serving.
+> How do I know which SSH key the client used to connect?  Remember I'm
+> looking at the real uid to determine who is performing the operation.
+> In the situation you describe everyone looks the same to the
+> update hook...
+> 
+> For (probably stupid) reasons the server is the commerial F-Secure
+> SSH server, btw.  So OpenSSH based things wouldn't apply.  And best
+> that I can tell, F-Secure SSH won't tell me which key was used
+> to authenticate.
+> 
 
-The "extremely aggresive caching solution" could be as follows: cache
-everything, invalidate (remove) on push caches of variable variety related
-to push (list of projects and OPML on any push; summary page and every
-page without h=<hash> or hb=<hash>;f=<filename> for a given project).
+See Section 8.2.6.1
 
-The most important problem is that kernel.org uses old gitweb, the last
-version before incorporating gitweb into git (and also reducing
-significantly the time needed for summary, heads and tags pages).
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+http://www.unix.org.ua/orelly/networking_2ndEd/ssh/ch08_02.htm
 
+You should be able to do something similar for git as they do for SSH.
+
+Rogan
