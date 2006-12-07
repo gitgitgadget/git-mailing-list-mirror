@@ -1,80 +1,64 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: David Lang <dlang@digitalinsight.com>
-Subject: Re: [PATCH] Stop telling users we are 'defaulting to local 
- storagearea'.
-Date: Tue, 19 Dec 2006 11:48:42 -0800 (PST)
-Message-ID: <Pine.LNX.4.63.0612191147300.18007@qynat.qvtvafvgr.pbz>
-References: <20061214230902.GA26506@spearce.org> <Pine.LNX.4.64.0612142059301.18171@xanadu.home>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: cygwin, 44k files: how to commit only index?
+Date: Thu, 07 Dec 2006 11:57:40 -0800
+Message-ID: <7vhcw7scln.fsf@assigned-by-dhcp.cox.net>
+References: <81b0412b0612070627r3ff0b394s124d95fbf8084f16@mail.gmail.com>
+	<7vd56vtt2g.fsf@assigned-by-dhcp.cox.net>
+	<20061207192632.GC12143@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-NNTP-Posting-Date: Tue, 19 Dec 2006 20:11:31 +0000 (UTC)
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
-	Andy Parkins <andyparkins@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Thu, 7 Dec 2006 19:57:49 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Greylist: delayed 301 seconds by postgrey-1.27 at vger.kernel.org; Tue, 19 Dec 2006 15:11:18 EST
-X-X-Sender: dlang@dlang.diginsite.com
-In-Reply-To: <Pine.LNX.4.64.0612142059301.18171@xanadu.home>
+In-Reply-To: <20061207192632.GC12143@spearce.org> (Shawn Pearce's message of
+	"Thu, 7 Dec 2006 14:26:32 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34849>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33621>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GwlJ4-0004Tx-47 for gcvg-git@gmane.org; Tue, 19 Dec
- 2006 21:11:22 +0100
+ esmtp (Exim 4.50) id 1GsPNJ-0002SP-DL for gcvg-git@gmane.org; Thu, 07 Dec
+ 2006 20:57:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932937AbWLSULT (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
- 15:11:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932940AbWLSULT
- (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 15:11:19 -0500
-Received: from warden-p.diginsite.com ([208.29.163.248]:34263 "HELO
- warden.diginsite.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
- id S932937AbWLSULS (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec 2006
- 15:11:18 -0500
-Received: from wlvims02.diginsite.com by warden.diginsite.com via smtpd (for
- vger.kernel.org [209.132.176.167]) with SMTP; Tue, 19 Dec 2006 12:11:18 -0800
-Received: from dlang.diginsite.com ([10.201.10.67]) by
- wlvims02.corp.ad.diginsite.com with InterScan Message Security Suite; Tue, 19
- Dec 2006 12:05:59 -0800
-To: Nicolas Pitre <nico@cam.org>
+ S938015AbWLGT5m (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
+ 14:57:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S938017AbWLGT5m
+ (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 14:57:42 -0500
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:34205 "EHLO
+ fed1rmmtao12.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S938015AbWLGT5l (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec 2006
+ 14:57:41 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao12.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061207195741.YIGF4226.fed1rmmtao12.cox.net@fed1rmimpo02.cox.net>; Thu, 7
+ Dec 2006 14:57:41 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id vvxr1V00R1kojtg0000000; Thu, 07 Dec 2006
+ 14:57:51 -0500
+To: Shawn Pearce <spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 
-On Thu, 14 Dec 2006, Nicolas Pitre wrote:
+Shawn Pearce <spearce@spearce.org> writes:
 
-> On Thu, 14 Dec 2006, Shawn O. Pearce wrote:
+>> I am not sure what you are trying.  Do you mean stat() is slow
+>> on your filesystem?
 >
-> [...]
->> It also breaks from our normal behavior of not printing
->> anything if the command was successful.
+> Its Cygwin/NTFS.  lstat() is slow.  readdir() is slow.  I have the
+> same problem on my Cygwin systems.
+>  
+>> > Is there any simple way to modify git commit for such a workflow?
+>> > Failing that, any simple and _fast_ way to find out if the index
+>> > is any different from HEAD? (so that I don't produce empty commits).
+>> 
+>> Maybe you want "assume unchanged"?
 >
-> Before everybody starts believing  everybody agrees with this I'll have
-> to throw a tile in the pond.
->
-> I really don't think this is a good rule.
->
-> NOte that I'm not against commands that are silent by default.  I really
-> think that git-add should remain silent on success by default when
-> successful.
->
-> But the rule of thumb should be about the importance of the action
-> performed by the command.  git-add is a less important command than
-> git-init-db or git-commit _conceptually_.  You can do multiple git-add
-> in whatever order, even repeatedly, and it won't change the outcome.
-> It is "conceptually lightweight".  But git-init-db is really important.
-> Without it you just can't do anything. It should give the user the
-> impression that something did actually happen, especially since this is
-> the git comand any new git user is most likely to use first.  Saying
-> back "git repository initialized" tells the user "OK you can start now".
-> Saying nothing might just leave the user wondering if everything is
-> actually fine.
+> Yes, basically.
 
-how about makeing it silent on sucess unless the output is a tty? that way you 
-don't mess up scripts with the 'it worked' message and you still reassure the 
-user that something actually happened.
-
-David Lang
+Then maybe "git grep assume.unchanged" would help?
