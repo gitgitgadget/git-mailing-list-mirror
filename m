@@ -1,81 +1,95 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Enable reflogs by default in any repository with a working directory.
-Date: Fri, 15 Dec 2006 13:55:15 -0800
-Message-ID: <7vodq4n7ss.fsf@assigned-by-dhcp.cox.net>
-References: <20061214224117.GA26374@spearce.org>
-	<Pine.LNX.4.63.0612150112010.3635@wbgn013.biozentrum.uni-wuerzburg.de>
-	<20061215002015.GI26202@spearce.org>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Remote 'master' not updated, but works somehow
+Date: Thu, 07 Dec 2006 12:31:55 +0100
+Message-ID: <4577FBAB.4070802@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 15 Dec 2006 21:56:20 +0000 (UTC)
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 7 Dec 2006 11:32:05 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34562>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33569>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GvL2O-0006er-Va for gcvg-git@gmane.org; Fri, 15 Dec
- 2006 22:56:17 +0100
+ esmtp (Exim 4.50) id 1GsHTt-0007uA-1a for gcvg-git@gmane.org; Thu, 07 Dec
+ 2006 12:32:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S965212AbWLOVz3 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 15 Dec 2006
- 16:55:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965195AbWLOVzY
- (ORCPT <rfc822;git-outgoing>); Fri, 15 Dec 2006 16:55:24 -0500
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:36808 "EHLO
- fed1rmmtao07.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S965206AbWLOVzQ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 15 Dec 2006
- 16:55:16 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao07.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061215215515.QGI22053.fed1rmmtao07.cox.net@fed1rmimpo02.cox.net>; Fri, 15
- Dec 2006 16:55:15 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id z9vT1V00H1kojtg0000000; Fri, 15 Dec 2006
- 16:55:27 -0500
-To: Shawn Pearce <spearce@spearce.org>
+ S1032060AbWLGLb6 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
+ 06:31:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1032062AbWLGLb6
+ (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 06:31:58 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:57104 "EHLO
+ smtp-gw1.op5.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
+ S1032060AbWLGLb5 (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec 2006
+ 06:31:57 -0500
+Received: from [192.168.1.20] (unknown [213.88.215.14]) by smtp-gw1.op5.se
+ (Postfix) with ESMTP id 0FB2A6BCBF for <git@vger.kernel.org>; Thu,  7 Dec
+ 2006 12:31:56 +0100 (CET)
+To: Git Mailing List <git@vger.kernel.org>
 Sender: git-owner@vger.kernel.org
 
-Shawn Pearce <spearce@spearce.org> writes:
+Having for a long time been thoroughly annoyed by our strict umasks, I 
+decided to write a little program to deal with it, and naturally I put 
+it in a git repo. After the initial commit 
+(c0fa1db09bad112f7271378d907bf33d74c06f6b) I published it to my git 
+space on our development server and cloned it out again (to get the 
+nifty remotes things set up for free).
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
->> Hi,
->> 
->> On Thu, 14 Dec 2006, Shawn O. Pearce wrote:
->> 
->> > +int is_bare_git_dir (const char *dir)
->> > +{
->> > +	if (!strcmp(dir, DEFAULT_GIT_DIR_ENVIRONMENT))
->> > +		return 0;
->> > +	const char *s = strrchr(dir, '/');
->> > +	return !s || strcmp(s + 1, DEFAULT_GIT_DIR_ENVIRONMENT);
->> >  }
->> 
->> This function does not really determine if the repo is bare. I have no 
->> better name for it, though.
->
-> guess_if_bare_git_dir ?
->
-> I struggled to name that thing because it can't really tell, its just
-> guessing... but it is going to be right most of the time.  Of course
-> I'm sure there's some Git user somewhere who will confuse it.
+Then I noticed I had rushed it, as I usually do with hacks involving a 
+total of less than 200 lines of code, so I had to make a couple of more 
+commits to make it work.
 
-I think the name is fine, but probably a comment in front would
-help unconfuse people.
+After having pushed the fixes to the public site I went to have a look 
+at it in gitweb, at https://devel.op5.se/~exon/git/
 
-	/* Does it look like a repository without a working tree? */
+I was quite surprised to find that 'master' was still pointing to the 
+root commit. After the usual culprits were excluded (permissions, bad 
+paths, whatnot), I decided to try to clone the repo again to a different 
+location.
 
-Unfortunately there currently are public bare repositories that
-have index under them because they were primed by rsync from
-developers' working repositories.  I do not think it is
-unreasonable to persuade owners of them to drop index -- then we
-could use absence of $GIT_DIR/index as a strong clue that the
-repository is bare.
+Here's what happened:
+
+devel!exon:~$ git clone softpub/mkpub.git/ mkpub
+remote: Generating pack...
+remote: Done counting 17 objects.
+remote: Deltifying 17 objects.
+remote:  100% (17/17) done
+Indexing 17 objects.
+remote: Total 17 (delta 3), reused 0 (delta 0)
+  100% (17/17) done
+Resolving 3 deltas.
+
+devel!exon:~$ cat softpub/mkpub.git/refs/heads/master
+c0fa1db09bad112f7271378d907bf33d74c06f6b
+devel!exon:~$ cat mkpub/.git/refs/heads/master
+5ba01a4709bcc8b482b207ba91d78ddb689a4091
+devel!exon:~$ cd mkpub/
+devel!exon:~/mkpub$ git push
+Everything up-to-date
+devel!exon:~/mkpub$ git rev-list master
+5ba01a4709bcc8b482b207ba91d78ddb689a4091
+e6a80831737517aa7ef29628429a18935b71de1d
+8926e1519f69d95685ab5252886e7b237e21108e
+c0bfedaf572ee550af7927acb89a1a2e01c1ef2c
+c0fa1db09bad112f7271378d907bf33d74c06f6b
+devel!exon:~/mkpub$ GIT_DIR=../softpub/mkpub.git/ git rev-list master
+c0fa1db09bad112f7271378d907bf33d74c06f6b
+
+(yes, the repo only has 4 commits)
+
+And that's where I am now. Note that *cloning* from the repo actually 
+works, although I can't for the life of me figure out why.
+
+Any thoughts?
+
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
