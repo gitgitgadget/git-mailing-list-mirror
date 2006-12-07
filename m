@@ -1,59 +1,54 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: git-pull from git.git - no remote ref for pu or next?
-Date: Tue, 12 Dec 2006 14:07:04 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0612121400530.18171@xanadu.home>
-References: <863b7l83o9.fsf@blue.stonehenge.com>
- <86y7pd6oz7.fsf@blue.stonehenge.com>
- <Pine.LNX.4.64.0612120949230.3535@woody.osdl.org>
- <Pine.LNX.4.63.0612121908100.2807@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0612121021270.3535@woody.osdl.org>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Commit f84871 breaks build on OS X
+Date: Thu, 7 Dec 2006 15:55:03 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0612071554180.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <2D096A57-D7B3-49C7-81E4-EB47A0D933B2@silverinsanity.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-NNTP-Posting-Date: Tue, 12 Dec 2006 19:07:13 +0000 (UTC)
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	"Randal L. Schwartz" <merlyn@stonehenge.com>, git@vger.kernel.org
+NNTP-Posting-Date: Thu, 7 Dec 2006 14:55:29 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-reply-to: <Pine.LNX.4.64.0612121021270.3535@woody.osdl.org>
-X-X-Sender: nico@xanadu.home
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <2D096A57-D7B3-49C7-81E4-EB47A0D933B2@silverinsanity.com>
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34129>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33586>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GuCy7-00075I-Ea for gcvg-git@gmane.org; Tue, 12 Dec
- 2006 20:07:11 +0100
+ esmtp (Exim 4.50) id 1GsKei-00021H-Rh for gcvg-git@gmane.org; Thu, 07 Dec
+ 2006 15:55:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932290AbWLLTHH (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 12 Dec 2006
- 14:07:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932240AbWLLTHH
- (ORCPT <rfc822;git-outgoing>); Tue, 12 Dec 2006 14:07:07 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:20431 "EHLO
- relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S932290AbWLLTHF (ORCPT <rfc822;git@vger.kernel.org>); Tue, 12 Dec 2006
- 14:07:05 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR004.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
- <0JA6008KHD3SXZ60@VL-MO-MR004.ip.videotron.ca> for git@vger.kernel.org; Tue,
- 12 Dec 2006 14:07:04 -0500 (EST)
-To: Linus Torvalds <torvalds@osdl.org>
+ S1032275AbWLGOzI (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
+ 09:55:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1032280AbWLGOzI
+ (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 09:55:08 -0500
+Received: from mail.gmx.net ([213.165.64.20]:53800 "HELO mail.gmx.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S1032275AbWLGOzG
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec 2006 09:55:06 -0500
+Received: (qmail invoked by alias); 07 Dec 2006 14:55:04 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp001) with SMTP; 07 Dec 2006 15:55:04 +0100
+To: Brian Gernhardt <benji@silverinsanity.com>
 Sender: git-owner@vger.kernel.org
 
-On Tue, 12 Dec 2006, Linus Torvalds wrote:
+Hi,
 
-> And kernel.org will probably start doing automatic repacking, since the 
-> current situation just means that some people don't repack on their own, 
-> and have tens of thousands of loose objects.
+On Thu, 7 Dec 2006, Brian Gernhardt wrote:
 
-Maybe object sharing between repos could be a good idea too?  All kernel 
-repos are likely to contain a large subset of your own so they could 
-have a reference on it by default.  That would certainly allow for 
-better caching and less IO on the server.
+> When I pulled the most recent changes for git (de51faf), `make` began 
+> failing with the following messages: [...]
 
+I found the same, but could not reproduce it. But a "touch perl/perl.mak" 
+fixes at least compilation.
 
+Ciao,
+Dscho
