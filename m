@@ -1,104 +1,185 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [RFC] Submodules in GIT
-Date: Tue, 28 Nov 2006 10:36:19 +0100
-Message-ID: <456C0313.3020308@op5.se>
-References: <20061121223130.GA24909@nan92-1-81-57-214-146.fbx.proxad.net> <Pine.LNX.4.64.0611211437430.3338@woody.osdl.org> <20061121235429.GH5443@nan92-1-81-57-214-146.fbx.proxad.net> <20061122034056.GB23856@spearce.org> <20061123232313.GB24909@nan92-1-81-57-214-146.fbx.proxad.net> <20061125065338.GC4528@spearce.org> <20061125111235.GO5443@nan92-1-81-57-214-146.fbx.proxad.net> <Pine.LNX.4.64.0611251037000.6991@woody.osdl.org> <45689747.3020403@midwinter.com> <Pine.LNX.4.64.0611251128170.3483@woody.osdl.org> <20061125234908.GC24909@nan92-1-81-57-214-146.fbx.proxad.net> <Pine.LNX.4.64.0611251936590.3483@woody.osdl.org> <Pine.LNX.4.64.0611260241320.20138@iabervon.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Topic descriptions
+Date: Thu, 07 Dec 2006 01:34:30 -0800
+Message-ID: <7v3b7suk0p.fsf@assigned-by-dhcp.cox.net>
+References: <200612062153.30639.andyparkins@gmail.com>
+	<7v4ps8y7un.fsf@assigned-by-dhcp.cox.net>
+	<200612070837.16412.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Tue, 28 Nov 2006 09:36:41 +0000 (UTC)
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Yann Dirson <ydirson@altern.org>,
-	Steven Grimm <koreth@midwinter.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Thu, 7 Dec 2006 09:34:39 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
-In-Reply-To: <Pine.LNX.4.64.0611260241320.20138@iabervon.org>
+In-Reply-To: <200612070837.16412.andyparkins@gmail.com> (Andy Parkins's
+	message of "Thu, 7 Dec 2006 08:37:13 +0000")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32500>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GozO5-0005QS-5n for gcvg-git@gmane.org; Tue, 28 Nov
- 2006 10:36:25 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33563>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GsFeG-0008O6-Gm for gcvg-git@gmane.org; Thu, 07 Dec
+ 2006 10:34:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1758644AbWK1JgW (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 28 Nov 2006
- 04:36:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758645AbWK1JgW
- (ORCPT <rfc822;git-outgoing>); Tue, 28 Nov 2006 04:36:22 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:37306 "EHLO
- smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1758644AbWK1JgV (ORCPT
- <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2006 04:36:21 -0500
-Received: from [192.168.1.20] (unknown [213.88.215.14]) by smtp-gw1.op5.se
- (Postfix) with ESMTP id CA9796BCBE; Tue, 28 Nov 2006 10:36:19 +0100 (CET)
-To: Daniel Barkalow <barkalow@iabervon.org>
+ S1031891AbWLGJed (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
+ 04:34:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031890AbWLGJed
+ (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 04:34:33 -0500
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:32789 "EHLO
+ fed1rmmtao01.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1031891AbWLGJec (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec 2006
+ 04:34:32 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao01.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061207093431.NWAZ9173.fed1rmmtao01.cox.net@fed1rmimpo01.cox.net>; Thu, 7
+ Dec 2006 04:34:31 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id vlZv1V00N1kojtg0000000; Thu, 07 Dec 2006
+ 04:33:55 -0500
+To: Andy Parkins <andyparkins@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Daniel Barkalow wrote:
-> On Sat, 25 Nov 2006, Linus Torvalds wrote:
-> 
->> On Sun, 26 Nov 2006, Yann Dirson wrote:
->>> Also, I'd rather expect "git-commit -a" outside of any submodule to
->>> commit everything in the supermodule, triggering submodule commits as an
->>> intermediate step when needed - just like "git-commit -a" does not
->>> require to manually specify subdirectories to inclue in the commit.  I'd
->>> rather expect a special flag to exclude submodules from a commit.
->> So, how do you do commit messages? It generally doesn't make sense to 
->> share the same commit message for submodules - the sub-commits generally 
->> do different things.
-> 
-> The same way you do the first commit message. Ask independantly for each 
-> commit message in sequence with enough context in the comment section that 
-> you know what you're talking about.
-> 
->> I'd actually suggest that "git commit -a" with non-clean submodules error 
->> out for that reason, with something like
->>
->> 	submodule 'src/xyzzy' is not up-to-date, please commit changes to 
->> 	that first.
->>
->> exactly because you really generally should consider the submodule commits 
->> to be a separate phase.
-> 
-> I think this is getting close to the classic usability blunder of having 
-> the program tell you what you should have done instead of what you did, 
-> and then making you do it yourself, rather than just doing it.
-> 
-> Just have it run "git commit -a" in each dirty submodule recursively as 
-> part of preparing the index, since that's what the user wants to do 
-> anyway, and nothing already done would be affected.
-> 
+Andy Parkins <andyparkins@gmail.com> writes:
 
-Running "commit -a" is definitely the wrong thing to do, as it prevents 
-one from using the index at all. Erroring out if the submodules are 
-dirty, or just accepting the fact that they are and taking whatever 
-commit HEAD points to is *always* preferrable.
+> The actual place it's stored isn't really relevant, more that I could see a 
+> use for it.  If it's going in the config I suppose all it needs is a 
+> magic "and so it shall be" hand wave.
 
-I'd actually prefer the second solution here and let git print a list of 
-submodules with dirty state and ask for some sort of user-response 
-before creating the actual commit. As non-interactive commits should 
-always be clean, requiring user intervention on non-clean state should 
-be a safe thing to do.
+I now have this in my .git/config:
 
-> "git commit -a -m <message>" should probably fail, of course.
-> 
+-- >8 -- snippet from .git/config -- >8 --
+[branch "ap/clone-origin"]
+	description = set up a cloned repository with friendlier defaults.
 
-Why? There's no reason to rob this command of its power just because 
-we're using submodules.
+[branch "jc/3way"]
+	description = use three-way merge to preserve local changes upon branch switch and fast forward.
+-- 8< --
 
-> 	-Daniel
-> *This .sig left intentionally blank*
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
+and have the script attached at the end.  I can say:
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
+	$ git-topic --base=master
+
+to get something like that per-topic summary I sent out earlier.
+The default $base is set to 'next' because usually I am
+interested in keeping track of what could be merged but not yet
+to next.
+
+Hopefully gitweb (and perhaps gitk) can follow suit to read the
+branch description from the same place.
+
+-- >8 -- git-topic.perl -- >8 --
+#!/usr/bin/perl -w
+#
+# Copyright (c) 2006 Junio C Hamano
+#
+
+use strict;
+use Getopt::Long;
+
+my $topic_pattern = '??/*';
+my $base = 'next';
+my @stage = qw(next pu);
+my @mark = ('.', '?', '-', '+');
+my $all = 0;
+
+my @custom_stage;
+my @custom_mark;
+GetOptions("topic=s" => \$topic_pattern,
+	   "base=s" => \$base,
+	   "stage=s" => \@custom_stage,
+	   "mark=s" => \@custom_mark,
+	   "all!" => \$all)
+    or die;
+
+if (@custom_stage) { @stage = @custom_stage; }
+if (@custom_mark) { @mark = @custom_mark; }
+
+sub read_revs_short {
+	my ($bottom, $top) = @_;
+	my @revs;
+	open(REVS, '-|', qw(git rev-list --no-merges), "$bottom..$top")
+	    or die;
+	while (<REVS>) {
+		chomp;
+		push @revs, $_;
+	}
+	close(REVS);
+	return @revs;
+}
+
+sub read_revs {
+	my ($bottom, $top, $mask) = @_;
+	my @revs;
+	open(REVS, '-|', qw(git rev-list --pretty=oneline --no-merges),
+	     "$bottom..$top")
+	    or die;
+	while (<REVS>) {
+		chomp;
+		my ($sha1, $topic) = /^([0-9a-f]{40}) (.*)$/;
+		push @revs, [$sha1, $topic, $mask];
+	}
+	close(REVS);
+	return @revs;
+}
+
+sub describe_topic {
+	my ($topic) = @_;
+	open(CONF, '-|', qw(git repo-config --get),
+		"branch.$topic.description")
+		or die;
+	my $it = join('',<CONF>);
+	close(CONF);
+	chomp($it);
+	if ($it) {
+		wrap_print("  $it");
+	}
+}
+
+sub wrap_print {
+	my ($string) = @_;
+	format STDOUT =
+~^<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+	$string
+ ~~^<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+	$string
+.
+	write;
+}
+
+open(TOPIC, '-|', qw(git for-each-ref),
+	'--sort=-authordate',
+	'--format=%(objectname) %(authordate) %(refname)',
+	"refs/heads/$topic_pattern")
+	or die;
+
+while (<TOPIC>) {
+	chomp;
+	my ($sha1, $date, $topic) = m|^([0-9a-f]{40})\s(.*?)\srefs/heads/(.+)$|
+		or next;
+	my @revs = read_revs($base, $sha1, (1<<@stage)-1);
+	next unless (@revs || $all);
+
+	my %revs = map { $_->[0] => $_ } @revs; # fast index
+	for (my $i = 0; $i < @stage; $i++) {
+		for my $item (read_revs_short($stage[$i], $sha1)) {
+			if (exists $revs{$item}) {
+				$revs{$item}[2] &= ~(1 << $i);
+			}
+		}
+	}
+	print "* $topic ($date)\n";
+	describe_topic($topic);
+	for my $item (@revs) {
+		my $mark = $item->[2];
+		if ($mark < @mark) {
+			$mark = $mark[$mark];
+		}
+		wrap_print("$mark $item->[1]");
+	}
+}
