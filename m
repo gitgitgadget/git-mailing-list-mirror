@@ -1,88 +1,166 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] gitweb: protect blob and diff output lines from controls.
-Date: Wed, 08 Nov 2006 17:10:19 -0800
-Message-ID: <7vwt65pgqs.fsf@assigned-by-dhcp.cox.net>
-References: <7vpsbxqzre.fsf@assigned-by-dhcp.cox.net>
-	<200611090104.32247.jnareb@gmail.com>
-	<7v1wodqxux.fsf@assigned-by-dhcp.cox.net>
-	<200611090146.25306.jnareb@gmail.com>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: [PATCH] Documentation: reorganize cvs-migration.txt
+Date: Thu, 7 Dec 2006 12:43:06 -0500
+Message-ID: <20061207174306.GC16858@fieldses.org>
+References: <20061206.105251.144349770.wl@gnu.org> <Pine.LNX.4.63.0612061325320.28348@wbgn013.biozentrum.uni-wuerzburg.de> <4576D92A.80307@xs4all.nl> <20061206145802.GC1714@fieldses.org> <Pine.LNX.4.63.0612061613460.28348@wbgn013.biozentrum.uni-wuerzburg.de> <20061206171950.GD1714@fieldses.org> <20061206172450.GE1714@fieldses.org> <7v7ix47wbr.fsf@assigned-by-dhcp.cox.net> <20061207041805.GC3457@fieldses.org> <Pine.LNX.4.63.0612071522080.28348@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 9 Nov 2006 01:10:52 +0000 (UTC)
-Cc: git@vger.kernel.org
+NNTP-Posting-Date: Thu, 7 Dec 2006 17:43:21 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <200611090146.25306.jnareb@gmail.com> (Jakub Narebski's message
-	of "Thu, 9 Nov 2006 01:46:25 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0612071522080.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31173>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GhyQz-0006tD-6b for gcvg-git@gmane.org; Thu, 09 Nov
- 2006 02:10:26 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33600>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GsNHB-0005ek-8B for gcvg-git@gmane.org; Thu, 07 Dec
+ 2006 18:43:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1423980AbWKIBKW (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 8 Nov 2006
- 20:10:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423981AbWKIBKV
- (ORCPT <rfc822;git-outgoing>); Wed, 8 Nov 2006 20:10:21 -0500
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:11697 "EHLO
- fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP id S1423980AbWKIBKU
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 8 Nov 2006 20:10:20 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao04.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061109011020.BOOR7494.fed1rmmtao04.cox.net@fed1rmimpo02.cox.net>; Wed, 8
- Nov 2006 20:10:20 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id kRAR1V00M1kojtg0000000; Wed, 08 Nov 2006
- 20:10:26 -0500
-To: Jakub Narebski <jnareb@gmail.com>
+ S1162585AbWLGRnM (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
+ 12:43:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1162584AbWLGRnM
+ (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 12:43:12 -0500
+Received: from mail.fieldses.org ([66.93.2.214]:59941 "EHLO
+ pickle.fieldses.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1162585AbWLGRnL (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec 2006
+ 12:43:11 -0500
+Received: from bfields by pickle.fieldses.org with local (Exim 4.63)
+ (envelope-from <bfields@fieldses.org>) id 1GsNH0-0005oh-TZ; Thu, 07 Dec 2006
+ 12:43:06 -0500
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-Jakub Narebski <jnareb@gmail.com> writes:
+On Thu, Dec 07, 2006 at 03:28:33PM +0100, Johannes Schindelin wrote:
+> This is a laudable goal, and the order makes sense (put first that what 
+> most people are interested in).
+> 
+> A few comments:
 
-> Junio C Hamano wrote:
->> Jakub Narebski <jnareb@gmail.com> writes:
->> 
->>> 1. First, esc_path should _not_ use subroutine which does it's own 
->>> contol characters escaping. That was also a mistake I made in my patch.
->>> Perhaps we should have some quot_html or to_html subroutine which does 
->>> _only_ to_utf8 (decode from Encode module), escapeHTML and optionally 
->>> s/ /&nbsp;/g conversion.
->> 
->> I hated that original arrangement, 
->
-> What did you hate, again?
+Thanks for the comments!  Patch, incremental against the previous one,
+appended.
 
-esc_path calling esc_html you mentioned, of course.
+> - just skimming the patch, I found "commiting" (needs another "t"), and 
+>   "-bare" (needs another "-").
 
+Got it, thanks.
 
->> obviously wrong in the output with the patch you are responding
->> to.  Except that git_blame2 is missing a chomp() on "my $data"
->> after finishing the metainfo loop, that is.
->
-> The original (mine) code for esc_path uses esc_html, which did it's
-> own partial (very partial) special characters esaping, namely
-> \014 (\f) => ^L, \033 (\e) => ^[. So if pathname had form feed character,
-> it would be replaced by ^L, not '\f'.
+> - It might make more sense to "git init-db --shared" and fetch the initial 
+>   revision into it, rather than clone it and then fix.
 
-I know -- that is what I meant by "code reuse and consistency".
+I do like the idea of anything that gets rid of the ugly find|xargs
+chmod.  Result included below (untested).  Is that what you were
+thinking of?
 
-> You have added quot_cec to esc_html subroutine directly. I don't know
-> what is your version of esc_html after the changes you
-> made,...
+>   You might also want
+>   to mention that the "--shared" of -clone is different in meaning from 
+>   that of -init-db (make just a footnote of it, to avoid intimidating 
+>   readers).
 
-See "pu".
+I'm ignoring this for now.  We can add it later if someone says they've
+run into it.  (But honestly it's partly just laziness on my part--no
+objection if you want to make the patch.)
 
-> Well, the pathname has the limit that it must be in single line
-> after quoting. The "blob" output is multipage.
+It's too bad about that option-name conflict.  It'd be nice just to be
+able to do the whole thing with one clone commandline.  And it'd also
+make sense to allow clone and init-db to share commandline options where
+it made sense.
 
-I honestly have _no_ idea what distincition you are seeing
-here.  Both blob and diff output are processed one line at a
-time and its result would be on a single line too.
+> - By far the easiest method to import from cvs is to go to a checked out
+>   _CVS_ working directory, and just say "git cvsimport".
+
+Neat, I didn't know about that.  Done.  I left the "-C" in there on the
+assumption they often won't want to drop the result into the CVS working
+directory.
+
+Also did some miscellaneous cleanup.
+
+--b.
+
+commit 48ec79a74d0daa134b677ed5458beb873aa06e9a
+Author: J. Bruce Fields <bfields@citi.umich.edu>
+Date:   Thu Dec 7 12:38:09 2006 -0500
+
+    Documentation: simpler shared repo creation, miscellaneous cleanup
+    
+    Create the shared repo with init-db --shared, fetch, and manual extraction
+    of .git directory, instead of using clone --bare.
+    
+    Suggest running git-cvsimport from cvs working directory, more convenient
+    thatn providing all the CVS information on the commandline.
+    
+    Fix a couple mispellings, add a couple manpage links.
+    
+    Thanks to Johannes Schindelin.
+    
+    Signed-off-by: J. Bruce Fields <bfields@citi.umich.edu>
+
+diff --git a/Documentation/cvs-migration.txt b/Documentation/cvs-migration.txt
+index 773fc99..4fab0d7 100644
+--- a/Documentation/cvs-migration.txt
++++ b/Documentation/cvs-migration.txt
+@@ -43,8 +43,8 @@ Pull: refs/heads/master:refs/remotes/origin/master
+ ------------
+ ================================
+ 
+-You can update the shared repository with your changes by first commiting
+-your changes, and then using:
++You can update the shared repository with your changes by first committing
++your changes, and then using the gitlink:git-push[1] command:
+ 
+ ------------------------------------------------
+ $ git push origin master
+@@ -76,11 +76,23 @@ possibly created from scratch or from a tarball (see the
+ link:tutorial.html[tutorial]), or imported from an already existing CVS
+ repository (see the next section).
+ 
+-If your project's working directory is /home/alice/myproject, you can
+-create a shared repository at /pub/repo.git with:
++Assume your existing repo is at /home/alice/myproject.  Create a temporary
++empty shared repository and fetch your project into it:
+ 
+ ------------------------------------------------
+-$ git clone -bare /home/alice/myproject /pub/repo.git
++$ mkdir /pub/temporary
++$ cd /pub/temporary
++$ git init-db --shared
++$ git fetch /home/alice/myproject master:master
++------------------------------------------------
++
++Then create a "bare" repository at /pub/repo.git by just moving the contents of
++the .git directory there.  The temporary repository can then be discarded.
++
++------------------------------------------------
++$ mv .git /pub/repo.git
++$ cd ..
++$ rm -rf temporary
+ ------------------------------------------------
+ 
+ Next, give every team member read/write access to this repository.  One
+@@ -107,15 +119,15 @@ Importing a CVS archive
+ 
+ First, install version 2.1 or higher of cvsps from
+ link:http://www.cobite.com/cvsps/[http://www.cobite.com/cvsps/] and make
+-sure it is in your path.  The magic command line is then
++sure it is in your path.  Then cd to a checked out CVS working directory
++of the project you are interested in and run gitlink:git-cvsimport[1]:
+ 
+ -------------------------------------------
+-$ git cvsimport -v -d <cvsroot> -C <destination> <module>
++$ git cvsimport -C <destination>
+ -------------------------------------------
+ 
+ This puts a git archive of the named CVS module in the directory
+-<destination>, which will be created if necessary.  The -v option makes
+-the conversion script very chatty.
++<destination>, which will be created if necessary.
+ 
+ The import checks out from CVS every revision of every file.  Reportedly
