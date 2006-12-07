@@ -1,67 +1,76 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Steven Grimm <koreth@midwinter.com>
-Subject: Re: [PATCH] git-svn: fix dcommit losing changes when out-of-date
- from svn
-Date: Thu, 09 Nov 2006 11:30:15 -0800
-Message-ID: <455381C7.8080207@midwinter.com>
-References: <455277A6.2000404@midwinter.com>	<20061109091937.GA22853@localdomain> <7vfyctkki5.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Bug in merge-recursive in virtual commit corner case
+Date: Thu, 07 Dec 2006 01:13:54 -0800
+Message-ID: <7vmz60ukz1.fsf@assigned-by-dhcp.cox.net>
+References: <20061207083531.GA22701@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 9 Nov 2006 19:30:49 +0000 (UTC)
-Cc: Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Thu, 7 Dec 2006 09:14:04 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=200606; d=midwinter.com;
-  b=euWs6uQ7SfBKK21v4M0O6nSzsntcNVUXCkQ/nEtszLKfGshHvB3vAd+a+nt06TGx  ;
-User-Agent: Mail/News 1.5.0.2 (Macintosh/20060324)
-In-Reply-To: <7vfyctkki5.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <20061207083531.GA22701@spearce.org> (Shawn Pearce's message of
+	"Thu, 7 Dec 2006 03:35:31 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31201>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GiFbc-0004jt-2f for gcvg-git@gmane.org; Thu, 09 Nov
- 2006 20:30:32 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33562>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GsFKK-00066t-0A for gcvg-git@gmane.org; Thu, 07 Dec
+ 2006 10:14:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1030257AbWKITa2 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 9 Nov 2006
- 14:30:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030269AbWKITa2
- (ORCPT <rfc822;git-outgoing>); Thu, 9 Nov 2006 14:30:28 -0500
-Received: from tater.midwinter.com ([216.32.86.90]:35812 "HELO
- midwinter.com") by vger.kernel.org with SMTP id S1030257AbWKITa1 (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 9 Nov 2006 14:30:27 -0500
-Received: (qmail 10675 invoked from network); 9 Nov 2006 19:30:27 -0000
-Received: from localhost (HELO ?127.0.0.1?) (koreth@127.0.0.1) by localhost
- with SMTP; 9 Nov 2006 19:30:27 -0000
-To: Junio C Hamano <junkio@cox.net>
+ S1031881AbWLGJN4 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
+ 04:13:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031879AbWLGJN4
+ (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 04:13:56 -0500
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:50283 "EHLO
+ fed1rmmtao06.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1031877AbWLGJNz (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec 2006
+ 04:13:55 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao06.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061207091354.QZXP2628.fed1rmmtao06.cox.net@fed1rmimpo01.cox.net>; Thu, 7
+ Dec 2006 04:13:54 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id vlDJ1V00B1kojtg0000000; Thu, 07 Dec 2006
+ 04:13:19 -0500
+To: Shawn Pearce <spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano wrote:
-> Steven, I do not interact with real svn repository myself so I
-> can only judge from the test in this patch and Steven's test
-> case, so it would be more assuring for me if you can confirm it
-> fixes the issue for you.
->   
+Shawn Pearce <spearce@spearce.org> writes:
 
-It seems to; I can't make the problem happen any more. I am slightly 
-concerned -- but I don't know libsvn well enough to say for sure -- that 
-this doesn't actually *eliminate* the problem, but rather tightens the 
-window of opportunity down to some very small amount of time. Which is 
-certainly an improvement, of course!
+> I found the above error message in tree-diff.c's diff_tree_sha1
+> function.  I threw in debugging and found that the new tree was
+> the root tree of one branch and the base was the root tree of some
+> other revision.
+>
+> Apparently the empty tree is being created in merge-recursive.c:
+>
+>    1219     if (merged_common_ancestors == NULL) {
+>    1220         /* if there is no common ancestor, make an empty tree */
+>    1221         struct tree *tree = xcalloc(1, sizeof(struct tree));
+>    1222
+>    1223         tree->object.parsed = 1;
+>    1224         tree->object.type = OBJ_TREE;
+>    1225         hash_sha1_file(NULL, 0, tree_type, tree->object.sha1);
+>    1226         merged_common_ancestors = make_virtual_commit(tree, "ancestor");
+>    1227     }
+>
+> So basically this code crashes if its ever used in a repository
+> that hasn't had a need for the empty tree before.  :-(
 
-Maybe only Eric can answer this, but from a cursory inspection, it 
-doesn't look like it actually locks the modified files before generating 
-the patch to apply. Is there still a possibility of losing a change that 
-hits the svn repository in the middle of git-svn dcommit running? Or 
-does locking happen implicitly somewhere I'm not seeing? (Again, I 
-haven't combed the code deeply, so it's entirely possible I've missed 
-something.)
+I hit the same issue when I integrated Johannes's in-core merge;
+I originally used hash_sha1_file() but that results in objects
+that are supposed to be in the virtual parent unreadable when
+merging the real children.  The key is to use write_sha1_file()
+to actually create the needed objects, and trust later prune to
+remove them.
 
--Steve
+Replace it with write_sha1_file() and you should be fine, I
+think.
