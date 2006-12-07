@@ -2,76 +2,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Cleaning up git user-interface warts
-Date: Fri, 17 Nov 2006 00:00:18 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0611162353250.13772@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <87k61yt1x2.wl%cworth@cworth.org> <455A1137.8030301@shadowen.org>
- <87hcx1u934.wl%cworth@cworth.org> <Pine.LNX.4.64.0611141518590.2591@xanadu.home>
- <87bqn9u43s.wl%cworth@cworth.org> <ejdcg5$4fl$1@sea.gmane.org>
- <Pine.LNX.4.64.0611141633430.2591@xanadu.home> <7vbqn9y6w6.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0611142007010.2591@xanadu.home> <7v3b8ltq7r.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0611142306090.2591@xanadu.home> <Pine.LNX.4.64.0611150950170.3349@woody.osdl.org>
- <455BBCE9.4050503@xs4all.nl> <Pine.LNX.4.64.0611151908130.3349@woody.osdl.org>
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git pull and merging.
+Date: Thu, 07 Dec 2006 11:06:34 -0800
+Message-ID: <7vhcw7ttj9.fsf@assigned-by-dhcp.cox.net>
+References: <cc723f590612052051r62111c4cgfd7ee893cb00f84a@mail.gmail.com>
+	<200612061744.31213.Josef.Weidendorfer@gmx.de>
+	<4577B8C0.3060200@gmail.com>
+	<200612071227.46194.Josef.Weidendorfer@gmx.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Thu, 16 Nov 2006 23:00:54 +0000 (UTC)
-Cc: Han-Wen Nienhuys <hanwen@xs4all.nl>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Thu, 7 Dec 2006 19:06:43 +0000 (UTC)
+Cc: "Aneesh Kumar K.V" <aneesh.kumar@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <Pine.LNX.4.64.0611151908130.3349@woody.osdl.org>
-X-Y-GMX-Trusted: 0
+In-Reply-To: <200612071227.46194.Josef.Weidendorfer@gmx.de> (Josef
+	Weidendorfer's message of "Thu, 7 Dec 2006 12:27:45 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31631>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GkqDX-0003sW-QF for gcvg-git@gmane.org; Fri, 17 Nov
- 2006 00:00:24 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33603>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GsOZs-0002pp-0q for gcvg-git@gmane.org; Thu, 07 Dec
+ 2006 20:06:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1755490AbWKPXAU (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 16 Nov 2006
- 18:00:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755491AbWKPXAU
- (ORCPT <rfc822;git-outgoing>); Thu, 16 Nov 2006 18:00:20 -0500
-Received: from mail.gmx.de ([213.165.64.20]:60586 "HELO mail.gmx.net") by
- vger.kernel.org with SMTP id S1755490AbWKPXAT (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 16 Nov 2006 18:00:19 -0500
-Received: (qmail invoked by alias); 16 Nov 2006 23:00:18 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp027) with SMTP; 17 Nov 2006 00:00:18 +0100
-To: Linus Torvalds <torvalds@osdl.org>
+ S1163206AbWLGTGg (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
+ 14:06:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1163207AbWLGTGg
+ (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 14:06:36 -0500
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:58993 "EHLO
+ fed1rmmtao08.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1163206AbWLGTGf (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec 2006
+ 14:06:35 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao08.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061207190635.HOZR3525.fed1rmmtao08.cox.net@fed1rmimpo02.cox.net>; Thu, 7
+ Dec 2006 14:06:35 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id vv6k1V01A1kojtg0000000; Thu, 07 Dec 2006
+ 14:06:45 -0500
+To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-Hi,
+Josef Weidendorfer <Josef.Weidendorfer@gmx.de> writes:
 
-On Wed, 15 Nov 2006, Linus Torvalds wrote:
+> More important: Because "branch.*.merge" specifies a _remote_ branch,
+> the user has to understand that this info is already used in the fetch.
+> The intuitive mental model of a user about how it works IMHO is that
+> "branch.*.merge" is checked in the merge phase (as the name of the option suggests).
+> But this way, how could the merge phase know about any remote branch at all,
+> which does not need to be touched at all in the merge phase?
 
-> Peopel seem to believe that changign a few names or doing other totally 
-> _minimal_ UI changes would somehow magically make things understandable. 
+I accepted the "branch.*.merge" patch long time ago but I did
+not see the point of moving things into config back then, so I
+did not look at the design issue deeply enough to notice that
+this can be a source of confusion (in other words, "I wouldn't
+use it myself, but I've seen some people on the list wanting to
+have it, and the submitter must have thought about what are
+needed a lot more than myself" did not go so well).
 
-Never ever underestimate pet peeves. If we give many people an obvious 
-reason (however trivial and bike-shed-coloured) to complain, they will 
-complain.
+Once you place something like "branch.*.merge" in configuration
+file (either $GIT_DIR/config, or a $GIT_DIR/remotes/* file), you
+are talking about other repositories you regularly interact
+with, so it might be probably Ok to require the user to use a
+tracking branch if he wants the convenience of "branch.*.merge",
+and make its value name the local tracking branch instead of the
+remote branch.
 
-If we pull (pun intended) that reason away under their collective 
-backsides, they will have to find another reason to complain. But by the 
-time they found something, they will already be happy git users!
-
-But since you just provided a patch to make life easier on non-gitters, I 
-guess you agree with that already.
-
-And hopefully you also agree that enhancing the syntax of git-merge to 
-grok "git-merge [-m message] <branch>" and "git-merge [-m message] 
-<url-or-remote> <branch>" would be a lovely thing, luring even more 
-people into using git.
-
-Maybe they even start complaining about subversion and CVS calling a merge 
-"update", who knows?
-
-Ciao,
-Dscho
+But that means I would never be able to benefit from the
+convenience of "branch.*.merge"; I pull from gitk repository to
+get updates, but I do not have (and I do not see the point to
+have) a remote tracking branch to track it.  If you want to
+cater to people who fetch and merge without using tracking
+branches, the remote branch name is the only sane thing you can
+use for the value of "branch.*.merge".
