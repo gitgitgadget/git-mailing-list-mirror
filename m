@@ -4,81 +4,102 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Changes between main releases of git
-Date: Sat, 16 Dec 2006 13:20:05 -0800
-Message-ID: <7v1wmzedx6.fsf@assigned-by-dhcp.cox.net>
-References: <em1n78$iud$1@sea.gmane.org>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Remote 'master' not updated, but works somehow
+Date: Thu, 07 Dec 2006 12:35:06 +0100
+Message-ID: <4577FC6A.9050707@op5.se>
+References: <4577FBAB.4070802@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sat, 16 Dec 2006 21:20:42 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 7 Dec 2006 11:36:13 +0000 (UTC)
+Cc: Git Mailing List <git@vger.kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <em1n78$iud$1@sea.gmane.org> (Jakub Narebski's message of "Sat,
-	16 Dec 2006 22:07:54 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
+In-Reply-To: <4577FBAB.4070802@op5.se>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34642>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33571>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GvgxD-0006XN-ST for gcvg-git@gmane.org; Sat, 16 Dec
- 2006 22:20:24 +0100
+ esmtp (Exim 4.50) id 1GsHXo-0008Og-P5 for gcvg-git@gmane.org; Thu, 07 Dec
+ 2006 12:36:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1161509AbWLPVUM (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 16 Dec 2006
- 16:20:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161512AbWLPVUM
- (ORCPT <rfc822;git-outgoing>); Sat, 16 Dec 2006 16:20:12 -0500
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:63780 "EHLO
- fed1rmmtao04.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1161509AbWLPVUK (ORCPT <rfc822;git@vger.kernel.org>); Sat, 16 Dec 2006
- 16:20:10 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao04.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061216212006.EOFA7494.fed1rmmtao04.cox.net@fed1rmimpo02.cox.net>; Sat, 16
- Dec 2006 16:20:06 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id zZLH1V0181kojtg0000000; Sat, 16 Dec 2006
- 16:20:18 -0500
-To: jnareb@gmail.com
+ S1032074AbWLGLfL (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
+ 06:35:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1032076AbWLGLfL
+ (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 06:35:11 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:57173 "EHLO
+ smtp-gw1.op5.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
+ S1032074AbWLGLfI (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec 2006
+ 06:35:08 -0500
+Received: from [192.168.1.20] (unknown [213.88.215.14]) by smtp-gw1.op5.se
+ (Postfix) with ESMTP id 33B186BCBF; Thu,  7 Dec 2006 12:35:07 +0100 (CET)
+To: Andreas Ericsson <ae@op5.se>
 Sender: git-owner@vger.kernel.org
 
-Jakub Narebski <jnareb@gmail.com> writes:
+scratch this. I just noticed I had somehow managed to get the directory 
+setup like this:
 
-> We are now close according to Junio to git 1.5.0.
+devel:softpub/mkpub.git       <-- a real repo
+devel:softpub/mkpub.git/.git  <-- the repo that got pushed to
 
-We only just started talking about v1.5.0.  I would expect it to
-be at least a month away, probably more.  Definitely not by
-Christmas nor Linus's birthday.
+Andreas Ericsson wrote:
+> Having for a long time been thoroughly annoyed by our strict umasks, I 
+> decided to write a little program to deal with it, and naturally I put 
+> it in a git repo. After the initial commit 
+> (c0fa1db09bad112f7271378d907bf33d74c06f6b) I published it to my git 
+> space on our development server and cloned it out again (to get the 
+> nifty remotes things set up for free).
+> 
+> Then I noticed I had rushed it, as I usually do with hacks involving a 
+> total of less than 200 lines of code, so I had to make a couple of more 
+> commits to make it work.
+> 
+> After having pushed the fixes to the public site I went to have a look 
+> at it in gitweb, at https://devel.op5.se/~exon/git/
+> 
+> I was quite surprised to find that 'master' was still pointing to the 
+> root commit. After the usual culprits were excluded (permissions, bad 
+> paths, whatnot), I decided to try to clone the repo again to a different 
+> location.
+> 
+> Here's what happened:
+> 
+> devel!exon:~$ git clone softpub/mkpub.git/ mkpub
+> remote: Generating pack...
+> remote: Done counting 17 objects.
+> remote: Deltifying 17 objects.
+> remote:  100% (17/17) done
+> Indexing 17 objects.
+> remote: Total 17 (delta 3), reused 0 (delta 0)
+>  100% (17/17) done
+> Resolving 3 deltas.
+> 
+> devel!exon:~$ cat softpub/mkpub.git/refs/heads/master
+> c0fa1db09bad112f7271378d907bf33d74c06f6b
+> devel!exon:~$ cat mkpub/.git/refs/heads/master
+> 5ba01a4709bcc8b482b207ba91d78ddb689a4091
+> devel!exon:~$ cd mkpub/
+> devel!exon:~/mkpub$ git push
+> Everything up-to-date
+> devel!exon:~/mkpub$ git rev-list master
+> 5ba01a4709bcc8b482b207ba91d78ddb689a4091
+> e6a80831737517aa7ef29628429a18935b71de1d
+> 8926e1519f69d95685ab5252886e7b237e21108e
+> c0bfedaf572ee550af7927acb89a1a2e01c1ef2c
+> c0fa1db09bad112f7271378d907bf33d74c06f6b
+> devel!exon:~/mkpub$ GIT_DIR=../softpub/mkpub.git/ git rev-list master
+> c0fa1db09bad112f7271378d907bf33d74c06f6b
+> 
+> (yes, the repo only has 4 commits)
+> 
+> And that's where I am now. Note that *cloning* from the repo actually 
+> works, although I can't for the life of me figure out why.
+> 
+> Any thoughts?
+> 
 
-> I'd like to ask by the occasion what were main changes
-> between main versions (main releases) of git, say starting
-> from v1.0.0?
-
-I would agree we would LOVE to have that list by the time we do
-a real v1.5.0, so that should be on the TO-DO list.  The
-essential sources of information are:
-
- * Previous "What's in" summaries.
-
- * Previous "GIT v1.X.X" announcements.
-
- * Output from this (pick the ones that are not marked with ^)
-
-	for txt in Documentation/*.txt
-	do
-        	git blame v1.0.0..next -- "$txt"
-	done
-
- * Output from this
-
-	git log v1.0.0..next
-
-My time however is rather tight and I feel it is better spent on
-the real development and release management.  People who has
-been following the git list long enough should be able to come
-up with a draft to help the process.
-
-I happen to think you are among the more qualified people.
-
-
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
