@@ -4,75 +4,72 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] (experimental) per-topic shortlog.
-Date: Mon, 27 Nov 2006 16:09:53 -0800
-Message-ID: <7v7ixge8j2.fsf@assigned-by-dhcp.cox.net>
-References: <7v8xhxsopp.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0611261652520.30076@woody.osdl.org>
-	<Pine.LNX.4.63.0611280040480.30004@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Nicolas Pitre <nico@cam.org>
+Subject: [PATCH take 2] change the unpack limit treshold to a saner value
+Date: Wed, 06 Dec 2006 23:01:00 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0612062244090.2630@xanadu.home>
+References: <Pine.LNX.4.64.0612061420410.2630@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 28 Nov 2006 00:10:17 +0000 (UTC)
-Cc: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+NNTP-Posting-Date: Thu, 7 Dec 2006 04:01:08 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <Pine.LNX.4.63.0611280040480.30004@wbgn013.biozentrum.uni-wuerzburg.de>
-	(Johannes Schindelin's message of "Tue, 28 Nov 2006 00:46:33 +0100
-	(CET)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+In-reply-to: <Pine.LNX.4.64.0612061420410.2630@xanadu.home>
+X-X-Sender: nico@xanadu.home
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32467>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GoqXv-0008P8-JX for gcvg-git@gmane.org; Tue, 28 Nov
- 2006 01:10:00 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33548>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GsARX-0004qd-4Z for gcvg-git@gmane.org; Thu, 07 Dec
+ 2006 05:01:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S933563AbWK1AJz (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 27 Nov 2006
- 19:09:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933568AbWK1AJz
- (ORCPT <rfc822;git-outgoing>); Mon, 27 Nov 2006 19:09:55 -0500
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:15329 "EHLO
- fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP id S933563AbWK1AJy
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 27 Nov 2006 19:09:54 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao01.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061128000953.UHYU9173.fed1rmmtao01.cox.net@fed1rmimpo01.cox.net>; Mon, 27
- Nov 2006 19:09:53 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id s09M1V00W1kojtg0000000; Mon, 27 Nov 2006
- 19:09:22 -0500
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+ S968697AbWLGEBE (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
+ 23:01:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S968701AbWLGEBE
+ (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 23:01:04 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:11555 "EHLO
+ relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S968697AbWLGEBB (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec 2006
+ 23:01:01 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
+ <0J9V00A1KXTOOG90@VL-MO-MR002.ip.videotron.ca> for git@vger.kernel.org; Wed,
+ 06 Dec 2006 23:01:01 -0500 (EST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Currently the treshold is 5000.  The likelihood of this value to ever be 
+crossed for a single push is really small making it not really useful.
 
-> As for reducing the number of lines in the shortlog: taking myself as an 
-> example, I often touch the same code several times, just to fix bugs. So, 
-> if the same code was touched several times, just take the first oneline, 
-> and add "(+fixes)". Of course, this is more like a wedding between 
-> shortlog and annotate, and likely to be slow.
+The optimal treshold for a pure space saving on a filesystem with 4kb 
+blocks is 3.  However this is likely to create many small packs 
+concentrating a large number of files in a single directory compared to 
+the same objects which are spread over 256 directories when loose.  This 
+means we would need 512 objects per pack on average to approximagte the 
+same directory cost (a pack has 2 files because of the index).
 
-Interesting.  While driving to work this morning I had the same
-thought.  A revision that does not appear in the output from
+But 512 is a really high value just like 5000 since most pushes are 
+unlikely to have that many objects.  So let's try with a value of 100 
+which should have a good balance between small pushes going to be 
+exploded into loose objects and large pushes kept as whole packs.
 
-	for file in $(list of files the commit touches)
-        do
-		git blame v2.6.17..v2.6.18 -- $file
-	done
+This is not a replacement for periodic repacks of course.
 
-can safely be omitted from the shortlog, because later changes
-fully supersedes it.
+Signed-off-by: Nicolas Pitre <nico@cam.org>
 
-I think the list of "important" changes is an interesting
-problem, but the importance may not directly be related to the
-number of paths a patch touches (e.g. "you reorder the members
-of a structure everybody uses in one include file and everything
-starts performing faster due to better cache behaviour" would be
-a few lines of a single header file).  Also better clues to
-judge the importance would be found outside the repository.
-"The patch discussed by many people on the list" and "the patch
-that had very many iteration to get in the final shape" would
-certainly be interesting ones, but that information is often not
-found in the repository.
+---
 
+diff --git a/receive-pack.c b/receive-pack.c
+index d62ed5b..9140312 100644
+--- a/receive-pack.c
++++ b/receive-pack.c
+@@ -11,7 +11,7 @@
+ static const char receive_pack_usage[] = "git-receive-pack <git-dir>";
+ 
+ static int deny_non_fast_forwards = 0;
+-static int unpack_limit = 5000;
++static int unpack_limit = 100;
+ static int report_status;
+ 
