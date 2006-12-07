@@ -1,99 +1,80 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH] gitweb: Sprinkle some mod_perl goodies
-Date: Tue, 12 Dec 2006 17:55:59 +0100
-Message-ID: <1165942559879-git-send-email-jnareb@gmail.com>
-NNTP-Posting-Date: Tue, 12 Dec 2006 16:54:11 +0000 (UTC)
-Cc: Jakub Narebski <jnareb@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 2/2] Optionally check for uncommitted changes before switching branches.
+Date: Thu, 07 Dec 2006 11:38:26 -0800
+Message-ID: <7vu007sdhp.fsf@assigned-by-dhcp.cox.net>
+References: <6ed9774cb95e873e76a4ac406dd740caf954bd3b.1165485618.git.spearce@spearce.org>
+	<20061207100224.GB12966@spearce.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Thu, 7 Dec 2006 19:38:41 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:cc:subject:date:message-id:x-mailer;
-        b=jOVy/lYzF6pAc+UT4pPY9/cewjSe0R7OGZb9o+e0aPfmrLWHEEWo8pfI3l47QcqtSMJuU49OXo1Uu9xVp/GX9O061GpPE3OvBuX/+Hv7gETKR3UA84WQqU+f2rfsSZIVuDUAXDdBvszOX0UvIxiTEaH6BYbXcGN1rmwiAzM7I2M=
-X-Mailer: git-send-email 1.4.4.1
+In-Reply-To: <20061207100224.GB12966@spearce.org> (Shawn O. Pearce's message
+	of "Thu, 7 Dec 2006 05:02:24 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34111>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33614>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GuAtF-00012e-9P for gcvg-git@gmane.org; Tue, 12 Dec
- 2006 17:54:01 +0100
+ esmtp (Exim 4.50) id 1GsP4n-0007kA-Rn for gcvg-git@gmane.org; Thu, 07 Dec
+ 2006 20:38:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751494AbWLLQx6 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 12 Dec 2006
- 11:53:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751512AbWLLQx6
- (ORCPT <rfc822;git-outgoing>); Tue, 12 Dec 2006 11:53:58 -0500
-Received: from ug-out-1314.google.com ([66.249.92.175]:41716 "EHLO
- ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1751494AbWLLQx5 (ORCPT <rfc822;git@vger.kernel.org>); Tue, 12 Dec
- 2006 11:53:57 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so1719860uga for
- <git@vger.kernel.org>; Tue, 12 Dec 2006 08:53:56 -0800 (PST)
-Received: by 10.67.117.2 with SMTP id u2mr12033307ugm.1165942436248; Tue, 12
- Dec 2006 08:53:56 -0800 (PST)
-Received: from roke.D-201 ( [81.190.25.107]) by mx.google.com with ESMTP id
- j34sm7011046ugc.2006.12.12.08.53.55; Tue, 12 Dec 2006 08:53:55 -0800 (PST)
-Received: from roke.D-201 (localhost.localdomain [127.0.0.1]) by roke.D-201
- (8.13.4/8.13.4) with ESMTP id kBCGu9aQ030930; Tue, 12 Dec 2006 17:56:11 +0100
-Received: (from jnareb@localhost) by roke.D-201 (8.13.4/8.13.4/Submit) id
- kBCGu0st030926; Tue, 12 Dec 2006 17:56:00 +0100
-To: git@vger.kernel.org
+ S1163233AbWLGTi2 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
+ 14:38:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S938006AbWLGTi2
+ (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 14:38:28 -0500
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:60690 "EHLO
+ fed1rmmtao05.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S938004AbWLGTi1 (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec 2006
+ 14:38:27 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao05.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061207193827.IEWF15640.fed1rmmtao05.cox.net@fed1rmimpo02.cox.net>; Thu, 7
+ Dec 2006 14:38:27 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id vved1V0071kojtg0000000; Thu, 07 Dec 2006
+ 14:38:37 -0500
+To: "Shawn O. Pearce" <spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 
-Add $r variable which holds Apache::RequestRec if script is run under
-mod_perl (if $ENV{MOD_PERL} is defined). It is used as argument to
-constructor of CGI object (needs CGI module version at least 2.93).
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-Following advice from CGI(3pm) man page, precompile all CGI routines
-for mod_perl.
+> Git shouldn't cause the user to make mistakes when it can help to
+> prevent them.  So now users may set checkout.requireCleanDirectory
+> to true in their config file to have git-checkout verify the working
+> directory is clean before switching branches.
 
-Use $r->path_info() instead of $ENV{"PATH_INFO"}.
+A lot of times the reason to switch branches is because the user
+starts to make a trivial change in the worktree and realizes
+that the change belongs to another branch.  Other times it is
+done by mistake and making it easier to notice that mistake is a
+laudable goal.
 
-All this makes gitweb slightly faster under mod_perl.
+Your patch allows -m to override this, but that destroys one
+very useful feature of -m.  In the above "ah, this trivial thing
+belongs to the other branch, so let's switch to the branch to
+commit only that trivial piece and come back to the current
+branch to continue what I'm doing" workflow, I usually first say
+"git checkout" without -m to switch, and if it does not allow me
+to switch, it is an indication that "the trivial thing" I
+thought was trivial was not trivial.  I take it as a cue that I
+should instead do it "the right way" (i.e. finish or stash away
+what I am doing, switch to the branch in a clean state and fix
+it properly).
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
- gitweb/gitweb.perl |   11 +++++++++--
- 1 files changed, 9 insertions(+), 2 deletions(-)
+Other times, when all (or most of) the changes in the work tree
+logically should have started on a different branch, I do force
+it with -m (and take the conflict markers in my worktree), but
+being able to forbid the worktree merge by not giving -m is
+important.
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 040ee71..ebe59b8 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -18,11 +18,18 @@ use File::Find qw();
- use File::Basename qw(basename);
- binmode STDOUT, ':utf8';
- 
--our $cgi = new CGI;
-+# mod_perl request
-+my $r;
-+$r = shift @_ if $ENV{MOD_PERL};
-+
-+our $cgi = new CGI($r);
- our $version = "++GIT_VERSION++";
- our $my_url = $cgi->url();
- our $my_uri = $cgi->url(-absolute => 1);
- 
-+# speeding up mod_perl and FastCGI (later)
-+$cgi->compile() if $r;
-+
- # core git executable to use
- # this can just be "git" if your webserver has a sensible PATH
- our $GIT = "++GIT_BINDIR++/git";
-@@ -364,7 +371,7 @@ if (defined $searchtype) {
- # now read PATH_INFO and use it as alternative to parameters
- sub evaluate_path_info {
- 	return if defined $project;
--	my $path_info = $ENV{"PATH_INFO"};
-+	my $path_info = $r ? $r->path_info() : $ENV{"PATH_INFO"};
- 	return if !$path_info;
- 	$path_info =~ s,^/+,,;
- 	return if !$path_info;
--- 
-1.4.4.1
+People with this new configuration set and has to override it
+with a command line switch will lose this ability if you
+overload that on '-m'.
