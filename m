@@ -1,84 +1,67 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: [PATCH] Added description for reversing git-update-index using --index-info
-Date: Thu, 2 Nov 2006 12:13:01 +0100
-Message-ID: <200611021113.01812.andyparkins@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git pull and merging.
+Date: Thu, 07 Dec 2006 15:06:44 -0800
+Message-ID: <7vac1zqpa3.fsf@assigned-by-dhcp.cox.net>
+References: <cc723f590612052051r62111c4cgfd7ee893cb00f84a@mail.gmail.com>
+	<200612061744.31213.Josef.Weidendorfer@gmx.de>
+	<4577B8C0.3060200@gmail.com>
+	<200612071227.46194.Josef.Weidendorfer@gmx.de>
+	<7vhcw7ttj9.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 2 Nov 2006 11:13:13 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Thu, 7 Dec 2006 23:07:36 +0000 (UTC)
+Cc: "Aneesh Kumar K.V" <aneesh.kumar@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-TUID: cc23275c7cf50297
-X-UID: 148
-X-Length: 1540
-Content-Disposition: inline
-X-OriginalArrivalTime: 02 Nov 2006 11:14:08.0280 (UTC) FILETIME=[03F4B980:01C6FE70]
+In-Reply-To: <7vhcw7ttj9.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Thu, 07 Dec 2006 11:06:34 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30728>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GfaVT-0004KF-6v for gcvg-git@gmane.org; Thu, 02 Nov
- 2006 12:13:11 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33647>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GsSKw-0005E0-D0 for gcvg-git@gmane.org; Fri, 08 Dec
+ 2006 00:07:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752848AbWKBLNI (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 2 Nov 2006
- 06:13:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752850AbWKBLNH
- (ORCPT <rfc822;git-outgoing>); Thu, 2 Nov 2006 06:13:07 -0500
-Received: from mail.360visiontechnology.com ([194.70.53.226]:24678 "EHLO
- 369run02s.360vision.com") by vger.kernel.org with ESMTP id S1752848AbWKBLNE
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 2 Nov 2006 06:13:04 -0500
-Received: from dvr.360vision.com ([192.189.1.24]) by 369run02s.360vision.com
- with Microsoft SMTPSVC(5.0.2195.6713); Thu, 2 Nov 2006 11:14:08 +0000
-Received: from localhost ([127.0.0.1]) by dvr.360vision.com with esmtp (Exim
- 3.36 #1 (Debian)) id 1GfaVL-0003xq-00 for <git@vger.kernel.org>; Thu, 02 Nov
- 2006 11:13:03 +0000
-To: git@vger.kernel.org
+ S1163926AbWLGXHY (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
+ 18:07:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1163816AbWLGXHX
+ (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 18:07:23 -0500
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:34766 "EHLO
+ fed1rmmtao03.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1163926AbWLGXHV (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec 2006
+ 18:07:21 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao03.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061207230720.MKJM29122.fed1rmmtao03.cox.net@fed1rmimpo02.cox.net>; Thu, 7
+ Dec 2006 18:07:20 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id vz6v1V00r1kojtg0000000; Thu, 07 Dec 2006
+ 18:06:56 -0500
+To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-I wanted to restore a single file from HEAD back to the index; Shawn Pearce
-gave me the answer.  git-ls-tree piped to git-update-index --index-info.
+Junio C Hamano <junkio@cox.net> writes:
 
-This patch adds that answer to the git-update-index documentation.
+> Once you place something like "branch.*.merge" in configuration
+> file (either $GIT_DIR/config, or a $GIT_DIR/remotes/* file), you
+> are talking about other repositories you regularly interact
+> with, so it might be probably Ok to require the user to use a
+> tracking branch if he wants the convenience of "branch.*.merge",
+> and make its value name the local tracking branch instead of the
+> remote branch.
 
-Signed-off-by: Andy Parkins <andyparkins@gmail.com>
----
- Documentation/git-update-index.txt |   18 ++++++++++++++++++
- 1 files changed, 18 insertions(+), 0 deletions(-)
+In other words, I am all for fixing this.
 
-diff --git a/Documentation/git-update-index.txt b/Documentation/git-update-index.txt
-index 41bb7e1..5adf717 100644
---- a/Documentation/git-update-index.txt
-+++ b/Documentation/git-update-index.txt
-@@ -215,6 +215,24 @@ for that path.  After the above, we woul
- 100755 8a1218a1024a212bb3db30becd860315f9f3ac52 2	frotz
- ------------
- 
-+One particular use of --index-info is to reverse the effect of
-+"git-update-index frotz":
-+
-+------------
-+git ls-tree HEAD frotz | git update-index --index-info
-+------------
-+
-+This makes the index hold the file frotz from HEAD rather than from the
-+working copy.  Similarly:
-+
-+------------
-+git ls-tree -r HEAD | git update-index --index-info
-+------------
-+
-+Will undo everything except "git add" from the index, as
-+"git-ls-tree -r" lists everything in the last commit.
-+
-+
- 
- Using "assume unchanged" bit
- ----------------------------
--- 
-1.4.3.2
+Although it may not hurt too much if we just redefine the
+meaning of it to name the local tracking branch, using a
+different name "branch.*.defaultmerge" is safer and would not
+break existing repositories.
