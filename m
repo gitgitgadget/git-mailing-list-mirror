@@ -4,89 +4,57 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: [RFC] Submodules in GIT
-Date: Sat, 2 Dec 2006 21:18:26 +0100
-Message-ID: <20061202201826.GR18810@admingilde.org>
-References: <20061130170625.GH18810@admingilde.org> <4570AF8F.1000801@stephan-feder.de> <Pine.LNX.4.64.0612011505190.3695@woody.osdl.org> <200612020036.08826.Josef.Weidendorfer@gmx.de> <Pine.LNX.4.64.0612011540010.3695@woody.osdl.org>
+From: Rogan Dawes <discard@dawes.za.net>
+Subject: Re: Locked down (but still shared) repositories
+Date: Thu, 07 Dec 2006 22:32:07 +0200
+Message-ID: <45787A47.8080003@dawes.za.net>
+References: <20061207113539.GA10781@spearce.org>	<Pine.LNX.4.63.0612071640160.28348@wbgn013.biozentrum.uni-wuerzburg.de>	<20061207191730.GA12143@spearce.org> <45786F5A.6020400@dawes.za.net> <86irgnihqf.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="AXAqmCxJPvkQLT2P"
-NNTP-Posting-Date: Sat, 2 Dec 2006 20:18:36 +0000 (UTC)
-Cc: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>,
-	sf <sf-gmane@stephan-feder.de>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 7 Dec 2006 20:32:15 +0000 (UTC)
+Cc: Shawn Pearce <spearce@spearce.org>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0612011540010.3695@woody.osdl.org>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+User-Agent: Thunderbird 1.5.0.8 (Windows/20061025)
+Original-Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <86irgnihqf.fsf@blue.stonehenge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33041>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GqbJe-0004Xj-ET for gcvg-git@gmane.org; Sat, 02 Dec
- 2006 21:18:30 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33633>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GsPub-0007cI-QZ for gcvg-git@gmane.org; Thu, 07 Dec
+ 2006 21:32:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1031762AbWLBUS2 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 2 Dec 2006
- 15:18:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031777AbWLBUS2
- (ORCPT <rfc822;git-outgoing>); Sat, 2 Dec 2006 15:18:28 -0500
-Received: from agent.admingilde.org ([213.95.21.5]:51645 "EHLO
- mail.admingilde.org") by vger.kernel.org with ESMTP id S1031762AbWLBUS1
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 2 Dec 2006 15:18:27 -0500
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1) id
- 1GqbJa-0004Zr-By; Sat, 02 Dec 2006 21:18:26 +0100
-To: Linus Torvalds <torvalds@osdl.org>
+ S1163296AbWLGUcG (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
+ 15:32:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1163298AbWLGUcG
+ (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 15:32:06 -0500
+Received: from sd-green-bigip-177.dreamhost.com ([208.97.132.177]:42807 "EHLO
+ spunkymail-a16.dreamhost.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+ with ESMTP id S1163296AbWLGUcF (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7
+ Dec 2006 15:32:05 -0500
+Received: from [192.168.201.102] (dsl-146-24-82.telkomadsl.co.za
+ [165.146.24.82]) by spunkymail-a16.dreamhost.com (Postfix) with ESMTP id
+ 823FF7CA40; Thu,  7 Dec 2006 12:32:03 -0800 (PST)
+To: "Randal L. Schwartz" <merlyn@stonehenge.com>
 Sender: git-owner@vger.kernel.org
 
+Randal L. Schwartz wrote:
+>>>>>> "Rogan" == Rogan Dawes <discard@dawes.za.net> writes:
+> 
+> Rogan> See Section 8.2.6.1
+> 
+> Rogan> http://[deleted]/orelly/networking_2ndEd/ssh/ch08_02.htm
+> 
+> Please don't point to pirated copies of O'Reilly (or other) books
+> on the web, especially when there are authors (like me) present.
+> 
 
---AXAqmCxJPvkQLT2P
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Oops. I didn't realise/think. I just googled for the keywords I needed . . .
 
-hoi :)
+Not a very good excuse, I admit.
 
-On Fri, Dec 01, 2006 at 04:12:10PM -0800, Linus Torvalds wrote:
-> It only gets interesting for commands that fetch new objects, ie do a=20
-> "pull/fetch" op, and you'd need to know where/how to fetch new objects fo=
-r=20
-> the xyzzy subproject, so that's a "naming" issue. You have a few choices:
->=20
->  - get all the objects directly from the subproject as if it was one big=
-=20
->    project.
->=20
->    I actually think this sucks. Why? Because it puts an insane load on th=
-e=20
->    server side, which basically needs to traverse the object list of the=
-=20
->    _sum_ of all projects. An initial clone (or a really big pull, which=
-=20
->    comes to the same thing) would be absolutely horrendous
+Sorry.
 
-I don't buy your scalability argument.
-By dividing the object traversal in separate steps you do not win
-anything.  The complexity of the operation still stays the same, as you
-still have to traverse the exact same amount of objects.
-
-By separating the repositories you just make reachability analyis be
-totally awkward, without winning anything.
-
---=20
-Martin Waitz
-
---AXAqmCxJPvkQLT2P
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFFcd+Sj/Eaxd/oD7IRAikDAKCCUEFmVNvoTFD9ieksQGAsxH5b2wCbBr3P
-m8knHdN5cvTE+uxPKZItBGY=
-=r77N
------END PGP SIGNATURE-----
-
+Rogan
