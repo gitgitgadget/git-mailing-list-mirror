@@ -1,89 +1,77 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] Colourise git-branch output
-Date: Mon, 11 Dec 2006 21:41:57 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0612112135360.6452@woody.osdl.org>
-References: <200612112210.08327.andyparkins@gmail.com>
- <BAYC1-PASMTP114CF00792AB16B95C1597AED70@CEZ.ICE> <7v7iwx2a0z.fsf@assigned-by-dhcp.cox.net>
- <BAYC1-PASMTP092A9E80667F373BF69AA6AED70@CEZ.ICE>
- <Pine.LNX.4.64.0612111936240.6452@woody.osdl.org> <7vejr5zoqe.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Documentation: reorganize cvs-migration.txt
+Date: Thu, 7 Dec 2006 15:28:33 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0612071522080.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <4574BF70.8070100@lilypond.org> <45760545.2010801@gmail.com>
+ <20061206.105251.144349770.wl@gnu.org>
+ <Pine.LNX.4.63.0612061325320.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+ <4576D92A.80307@xs4all.nl> <20061206145802.GC1714@fieldses.org>
+ <Pine.LNX.4.63.0612061613460.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20061206171950.GD1714@fieldses.org> <20061206172450.GE1714@fieldses.org>
+ <7v7ix47wbr.fsf@assigned-by-dhcp.cox.net> <20061207041805.GC3457@fieldses.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Tue, 12 Dec 2006 05:42:12 +0000 (UTC)
-Cc: Sean <seanlkml@sympatico.ca>, git@vger.kernel.org
+NNTP-Posting-Date: Thu, 7 Dec 2006 14:28:42 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <7vejr5zoqe.fsf@assigned-by-dhcp.cox.net>
-X-MIMEDefang-Filter: osdl$Revision: 1.162 $
-X-Scanned-By: MIMEDefang 2.36
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <20061207041805.GC3457@fieldses.org>
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34063>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33580>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gu0P2-0004rY-Qz for gcvg-git@gmane.org; Tue, 12 Dec
- 2006 06:42:09 +0100
+ esmtp (Exim 4.50) id 1GsKEp-0006Rq-Jn for gcvg-git@gmane.org; Thu, 07 Dec
+ 2006 15:28:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932066AbWLLFmG (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 12 Dec 2006
- 00:42:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751184AbWLLFmF
- (ORCPT <rfc822;git-outgoing>); Tue, 12 Dec 2006 00:42:05 -0500
-Received: from smtp.osdl.org ([65.172.181.25]:45760 "EHLO smtp.osdl.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1751182AbWLLFmD
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 12 Dec 2006 00:42:03 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
- smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kBC5fwID031144
- (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Mon, 11
- Dec 2006 21:41:58 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
- shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kBC5fv7P022659; Mon, 11 Dec
- 2006 21:41:57 -0800
-To: Junio C Hamano <junkio@cox.net>
+ S937956AbWLGO2i (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
+ 09:28:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936939AbWLGO2i
+ (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 09:28:38 -0500
+Received: from mail.gmx.net ([213.165.64.20]:36504 "HELO mail.gmx.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S937957AbWLGO2g
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec 2006 09:28:36 -0500
+Received: (qmail invoked by alias); 07 Dec 2006 14:28:34 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp030) with SMTP; 07 Dec 2006 15:28:34 +0100
+To: "J. Bruce Fields" <bfields@fieldses.org>
 Sender: git-owner@vger.kernel.org
 
+Hi,
 
+On Wed, 6 Dec 2006, J. Bruce Fields wrote:
 
-On Mon, 11 Dec 2006, Junio C Hamano wrote:
-> 
-> 	[color]
->         	diff = auto
->                 branch = auto
->                 # it begs "* = auto" entry perhaps...
-> 	[color.diff]
->         	old = red
->                 new = green
-> 	[color.branch]
->         	remote = purple
+> Modify cvs-migration.txt so it explains first how to develop against a 
+> shared repository, then how to set up a shared repository, then how to 
+> import a repository from cvs.  Though this seems chronologically 
+> backwards, it's still readable in this order, and it puts the more 
+> commonly needed material closer to the front.
 
-I wish you'd learn to use the proper syntax ;)
+This is a laudable goal, and the order makes sense (put first that what 
+most people are interested in).
 
-It would be
+A few comments:
 
-	[color "diff"]
-		old = red
-		new = green
+- just skimming the patch, I found "commiting" (needs another "t"), and 
+  "-bare" (needs another "-").
 
-and what's nice about it is that you can also do
+- It might make more sense to "git init-db --shared" and fetch the initial 
+  revision into it, rather than clone it and then fix. You might also want
+  to mention that the "--shared" of -clone is different in meaning from 
+  that of -init-db (make just a footnote of it, to avoid intimidating 
+  readers).
 
-	[color "diff"]
-		auto
-		old = red
-		new = green
+- By far the easiest method to import from cvs is to go to a checked out
+  _CVS_ working directory, and just say "git cvsimport".
 
-and the config file rules for booleans are such that a config variable 
-without the "= val" part parses the same as "= true", so you can now do
-
-	git repo-config --bool color.diff.auto
-
-and it will say "true".
-
-Now, I just think that would be a nice syntax.
-
-Of course, for legacy reasons, and for people who rather than keeping the 
-_color_ information together want to keep the _diff_ information together, 
-we can/probably-should support both color.diff.* and diff.color.* formats.
-
+Ciao,
+Dscho
