@@ -1,91 +1,110 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: cygwin, 44k files: how to commit only index?
-Date: Thu, 7 Dec 2006 15:29:31 -0500
-Message-ID: <20061207202931.GB12502@spearce.org>
-References: <81b0412b0612070627r3ff0b394s124d95fbf8084f16@mail.gmail.com> <7vd56vtt2g.fsf@assigned-by-dhcp.cox.net> <20061207192632.GC12143@spearce.org> <7vhcw7scln.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, score=-1.7 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_DISCARD,HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+From: Juergen Ruehle <j.ruehle@bmiag.de>
+Subject: Re: how to revert changes in working tree?
+Date: Thu, 7 Dec 2006 08:15:56 +0100
+Message-ID: <17783.49068.189000.958873@lapjr.intranet.kiel.bmiag.de>
+References: <4576680B.7030500@gmail.com>
+	<81b0412b0612060043t488d356du8f5fcdd164a45eb5@mail.gmail.com>
+	<45769417.70601@gmail.com>
+	<81b0412b0612060220n11fb7e19hc6ed202759962bd3@mail.gmail.com>
+	<4576A60A.3060003@gmail.com>
+	<20061206181302.GA20320@spearce.org>
+	<45777197.50805@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 7 Dec 2006 20:29:44 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 7 Dec 2006 07:16:30 +0000 (UTC)
+Cc: Shawn Pearce <spearce@spearce.org>,
+	Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <7vhcw7scln.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+In-Reply-To: <45777197.50805@gmail.com>
+X-Mailer: VM 7.19 under Emacs 21.3.1
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at eorl.intranet.kiel.bmiag.de
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33632>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33557>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GsPsB-0007H8-G7 for gcvg-git@gmane.org; Thu, 07 Dec
- 2006 21:29:39 +0100
+ esmtp (Exim 4.50) id 1GsDUa-0003Yb-1Y for gcvg-git@gmane.org; Thu, 07 Dec
+ 2006 08:16:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1163284AbWLGU3g (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
- 15:29:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1163294AbWLGU3g
- (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 15:29:36 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:38205 "EHLO
- corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1163284AbWLGU3e (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec 2006
- 15:29:34 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1GsPrx-0001e8-PI; Thu, 07 Dec 2006 15:29:25 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- ADCFF20FB6E; Thu,  7 Dec 2006 15:29:31 -0500 (EST)
-To: Junio C Hamano <junkio@cox.net>
+ S1031758AbWLGHQW (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
+ 02:16:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031761AbWLGHQW
+ (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 02:16:22 -0500
+Received: from bilbo.bmiag.de ([62.154.210.131]:2401 "HELO bilbo.bmiag.de"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S1031758AbWLGHQV
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec 2006 02:16:21 -0500
+Received: (qmail 22636 invoked by uid 106); 7 Dec 2006 07:16:18 -0000
+Received: from eorl.intranet.kiel.bmiag.de(10.131.2.1) via SMTP by
+ bilbo.bmiag.de, id smtpdHuP12S; Thu Dec  7 08:16:12 2006
+Received: from localhost (localhost.localdomain [127.0.0.1]) by
+ eorl.intranet.kiel.bmiag.de (Postfix) with ESMTP id 3B59F3AE06; Thu,  7 Dec
+ 2006 08:16:12 +0100 (CET)
+Received: from eorl.intranet.kiel.bmiag.de ([127.0.0.1]) by localhost (eorl
+ [127.0.0.1]) (amavisd-new, port 10024) with ESMTP id 14606-02; Thu, 7 Dec
+ 2006 08:16:04 +0100 (CET)
+Received: from LAPJR (dialin5.galadriel.bmiag.de [192.168.251.5]) by
+ eorl.intranet.kiel.bmiag.de (Postfix) with ESMTP id 239753AE05; Thu,  7 Dec
+ 2006 08:15:59 +0100 (CET)
+To: Liu Yubao <yubao.liu@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano <junkio@cox.net> wrote:
-> Shawn Pearce <spearce@spearce.org> writes:
-> 
-> >> I am not sure what you are trying.  Do you mean stat() is slow
-> >> on your filesystem?
-> >> 
-> >> Maybe you want "assume unchanged"?
-> >
-> > Yes, basically.
-> 
-> Then maybe "git grep assume.unchanged" would help?
+Liu Yubao writes:
+ > Yes, you are very right.
+ > 
+ > $ git ls-files |tr A-Z a-z | sort | uniq -c |grep -v "1 "
+ >       2 include/linux/netfilter/xt_connmark.h
+ >       2 include/linux/netfilter/xt_dscp.h
+ >       2 include/linux/netfilter/xt_mark.h
+ >       2 include/linux/netfilter_ipv4/ipt_connmark.h
+ >       2 include/linux/netfilter_ipv4/ipt_dscp.h
+ >       2 include/linux/netfilter_ipv4/ipt_ecn.h
+ >       2 include/linux/netfilter_ipv4/ipt_mark.h
+ >       2 include/linux/netfilter_ipv4/ipt_tcpmss.h
+ >       2 include/linux/netfilter_ipv4/ipt_tos.h
+ >       2 include/linux/netfilter_ipv4/ipt_ttl.h
+ >       2 include/linux/netfilter_ipv6/ip6t_hl.h
+ >       2 include/linux/netfilter_ipv6/ip6t_mark.h
+ >       2 net/ipv4/netfilter/ipt_ecn.c
+ >       2 net/ipv4/netfilter/ipt_tos.c
+ >       2 net/ipv4/netfilter/ipt_ttl.c
+ >       2 net/ipv6/netfilter/ip6t_hl.c
+ >       2 net/netfilter/xt_connmark.c
+ >       2 net/netfilter/xt_dscp.c
+ >       2 net/netfilter/xt_mark.c
+ > 
+ > poor Windows... :-(
 
-Hmm.  OK, maybe I should have answered "No"" to your first question.
-I keep looking at the assume unchanaged feature of update-index,
-but refuse to use it because I'm a lazy guy who will forget to tell
-the index a file has been modified.  Consequently I'm going to miss
-a change during a commit.
+Incidentally I have this in my tree for a while, but it is not good
+enough for general use, because you really need the original (not
+lowercased) file names to resolve the problem. But my shell scripting
+magic is not up to that task.
 
-What may help (and without using assume unchanged) is:
+diff --git a/templates/hooks--pre-commit b/templates/hooks--pre-commit
+index 723a9ef..0ceb01b 100644
+--- a/templates/hooks--pre-commit
++++ b/templates/hooks--pre-commit
+@@ -7,6 +7,17 @@
+ #
+ # To enable this hook, make this file executable.
 
- * skip the `update-index --refresh` part of git-status/git-commit
- * skip the status template in COMMIT_MSG when using the editor
-
-As Git will still at least make sure a `commit -a` includes
-everything that is dirty.
-
-Files whose modification dates may have been messed with (but
-whose content are unchanged) will just go through expensive SHA1
-computation to arrive at the same value, which is fine.
-
-Users skipping the first part are doing so under the assumption that
-their modification dates are usually always correct, and that then
-they aren't the SHA1 computation of a handful of files is cheap
-compared to stat'ing the entire set of files.
-
-Users skipping the second part are doing so under the assumption
-that knowing the names of the files they are committing doesn't
-really improve their odds of writing a good commit message.
-
--- 
++# Detect case challenges
++
++case_challenge=`git ls-files | tr A-Z a-z | sort | uniq -d`
++if [ -n "$case_challenge" ]
++then
++       echo >&2 "index contains file names differing only in case."
++       echo >&2 "lowercase names follow:"
++       echo >&2 "$case_challenge"
++       exit 1
++fi
++
+ # This is slightly modified from Andrew Morton's Perfect Patch.
+ # Lines you introduce should not have trailing whitespace.
+ # Also check for an indentation that has SP before a TAB.
