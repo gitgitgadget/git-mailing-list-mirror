@@ -1,70 +1,69 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 2/3] gitweb: Filter out commit ID from @difftree in git_commit and git_commitdiff
-Date: Tue, 24 Oct 2006 21:36:26 -0700
-Message-ID: <7v1woxf1v9.fsf@assigned-by-dhcp.cox.net>
-References: <200610241349.54685.jnareb@gmail.com>
-	<200610241354.49396.jnareb@gmail.com>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: [PATCH 1/2] Allow users to require source branch on git-checkout -b.
+Date: Thu, 7 Dec 2006 16:40:53 -0500
+Message-ID: <20061207214053.GC31035@fieldses.org>
+References: <20061207100152.GA12966@spearce.org> <7vlkljsd1k.fsf@assigned-by-dhcp.cox.net> <20061207195715.GG12143@spearce.org> <7v64cns8nf.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 25 Oct 2006 04:36:34 +0000 (UTC)
-Cc: git@vger.kernel.org
+NNTP-Posting-Date: Thu, 7 Dec 2006 21:41:07 +0000 (UTC)
+Cc: Shawn Pearce <spearce@spearce.org>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <200610241354.49396.jnareb@gmail.com> (Jakub Narebski's message
-	of "Tue, 24 Oct 2006 13:54:49 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Content-Disposition: inline
+In-Reply-To: <7v64cns8nf.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30029>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GcaVD-0000Ri-9s for gcvg-git@gmane.org; Wed, 25 Oct
- 2006 06:36:31 +0200
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33636>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GsQzD-0000iV-Q4 for gcvg-git@gmane.org; Thu, 07 Dec
+ 2006 22:41:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1422953AbWJYEg2 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 25 Oct 2006
- 00:36:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422956AbWJYEg2
- (ORCPT <rfc822;git-outgoing>); Wed, 25 Oct 2006 00:36:28 -0400
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:46576 "EHLO
- fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP id S1422953AbWJYEg1
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 25 Oct 2006 00:36:27 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao07.cox.net
- (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
- <20061025043626.KOOL28934.fed1rmmtao07.cox.net@fed1rmimpo01.cox.net>; Wed, 25
- Oct 2006 00:36:26 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id eUc91V01m1kojtg0000000 Wed, 25 Oct 2006
- 00:36:10 -0400
-To: Jakub Narebski <jnareb@gmail.com>
+ S1163431AbWLGVk4 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
+ 16:40:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1163433AbWLGVk4
+ (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 16:40:56 -0500
+Received: from mail.fieldses.org ([66.93.2.214]:36811 "EHLO
+ pickle.fieldses.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1163431AbWLGVkz (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec 2006
+ 16:40:55 -0500
+Received: from bfields by pickle.fieldses.org with local (Exim 4.63)
+ (envelope-from <bfields@fieldses.org>) id 1GsQz7-0002KS-DC; Thu, 07 Dec 2006
+ 16:40:53 -0500
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Jakub Narebski <jnareb@gmail.com> writes:
+On Thu, Dec 07, 2006 at 01:23:00PM -0800, Junio C Hamano wrote:
+> Under my suggestion, the new git-checkout -b (and git-branch)
+> would:
+> 
+>  (0) proceed if there is an explicit branch point specified on
+>      the command like, just like now;
+> 
+>  (1) allow omission of branch-point if the current branch has
+>      allowbranchbydefault configuration set as in above.  A new
+>      branch is created forking off of the current HEAD;
+> 
+>  (2) allow omission of branch-point if no branch has such
+>      configuration; in other words, existing repositories that
+>      do not have the allowbranchbydefault configuration anywhere
+>      are not affected.  A new branch is created forking off of
+>      the current HEAD;
+> 
+>  (3) otherwise, it barfs if you do not give an explicit
+>      branch-point.
+> 
+> and a newly created repository that is newbie friendly has one
+> such configuration automatically set for 'master' (if created
+> with git-init) or whatever the primary branch is (if created
+> with git-clone).
 
-> Filter out commit ID output that git-diff-tree adds when called with
-> only one <tree-ish> (not only for --stdin) in git_commit and
-> git_commitdiff.
+That makes the default behavior more complicated to explain.  Is there
+really sufficient evidence that this a serious problem?
 
-I initially wondered why this, or other existing such sripping,
-is necessary in the first place.
-
-The collected result is given to git_difftree_body() and it
-feeds parse_difftree_raw_line() with it.  Interestingly enough,
-it _is_ prepared to handle the line with the commit object
-name.
-
-However, the very initial part of git_difftree_body assumes that
-the array it gets does not have the commit object name (i.e. it
-counts the array members and says "N files changed").
-
-So I think your change is probably a good one, but I suspect you
-probably are better off to make parse_difftree_raw_line() to
-barf when it gets the commit object name to make sure that all
-callers strip it at the same time; better yet, perhaps you can
-have a single function that invokes git-diff-tree -r (with
-different parameters) and returns the result that is already
-only the difftree body lines?
