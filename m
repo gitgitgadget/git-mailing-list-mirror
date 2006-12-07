@@ -1,109 +1,70 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Fix git-runstatus for repositories containing a file named HEAD
-Date: Sun, 5 Nov 2006 17:22:15 -0500
-Message-ID: <20061105222215.GA29042@coredump.intra.peff.net>
-References: <11627635702846-git-send-email-pdmef@gmx.net>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH] change the unpack limit threshold to a saner value
+Date: Wed, 06 Dec 2006 19:19:41 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0612061915240.2630@xanadu.home>
+References: <Pine.LNX.4.64.0612061420410.2630@xanadu.home>
+ <7vejrcy860.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sun, 5 Nov 2006 22:22:31 +0000 (UTC)
-Cc: git@vger.kernel.org, Rocco Rutte <pdmef@gmx.net>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+NNTP-Posting-Date: Thu, 7 Dec 2006 00:19:52 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <11627635702846-git-send-email-pdmef@gmx.net>
+In-reply-to: <7vejrcy860.fsf@assigned-by-dhcp.cox.net>
+X-X-Sender: nico@xanadu.home
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30988>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GgqNg-0000Uc-F9 for gcvg-git@gmane.org; Sun, 05 Nov
- 2006 23:22:20 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33539>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gs6zK-00016S-9w for gcvg-git@gmane.org; Thu, 07 Dec
+ 2006 01:19:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1422747AbWKEWWT (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 5 Nov 2006
- 17:22:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422749AbWKEWWS
- (ORCPT <rfc822;git-outgoing>); Sun, 5 Nov 2006 17:22:18 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:6337 "HELO
- peff.net") by vger.kernel.org with SMTP id S1422747AbWKEWWR (ORCPT
- <rfc822;git@vger.kernel.org>); Sun, 5 Nov 2006 17:22:17 -0500
-Received: (qmail 19743 invoked from network); 5 Nov 2006 17:21:20 -0500
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2) by
- 66-23-211-5.clients.speedfactory.net with SMTP; 5 Nov 2006 17:21:20 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 05 Nov
- 2006 17:22:15 -0500
+ S937829AbWLGATn (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
+ 19:19:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937830AbWLGATm
+ (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 19:19:42 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:59510 "EHLO
+ relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S937829AbWLGATm (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec 2006
+ 19:19:42 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
+ <0J9V00667NKTM040@VL-MO-MR003.ip.videotron.ca> for git@vger.kernel.org; Wed,
+ 06 Dec 2006 19:19:41 -0500 (EST)
 To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-On Sun, Nov 05, 2006 at 09:52:50PM +0000, Rocco Rutte wrote:
+On Wed, 6 Dec 2006, Junio C Hamano wrote:
 
-> The wt_status_print_updated() and wt_status_print_untracked() routines
-> call setup_revisions() with 'HEAD' being the reference to the tip of the
-> current branch. However, setup_revisions() gets confused if the branch
-> also contains a file named 'HEAD' resulting in a fatal error.
+> Nicolas Pitre <nico@cam.org> writes:
+> 
+> > Let's assume the average object size is x. Given n objects, the needed 
+> > storage size is n*(x + b), where b is the average wasted block size on 
+> > disk.
+> > ...
+> > This is why I think the current default treshold should be 3 instead of 
+> > the insane value of 5000.  But since it feels a bit odd to go from 5000 
+> > to 3 I setled on 10.
+> 
+> I see you are optimizing for disk footprint, and this will
+> result in tons of tiny packs left between "repack -a".
 
-Ack. This is definitely a bug, and the patch fixes it. I wonder if it
-would be slightly more readable to simply get rid of the argv nonsense.
-Junio, please apply whichever you find more readable.
+Depends how often i.e. how big pushes are, and how often you repack.
 
--- >8 --
-The wt_status_print_updated() and wt_status_print_untracked() routines
-call setup_revisions() with 'HEAD' being the reference to the tip of the
-current branch. However, setup_revisions() gets confused if the branch
-also contains a file named 'HEAD' resulting in a fatal error.
+> I have not benched it yet, but the runtime pack handling code
+> was written assuming we have only a handful of big packs; I
+> suspect this change would affect the performance at runtime in
+> quite a bad way.
 
-Instead, don't pass an argv to setup_revisions() at all; simply give it no
-arguments, and make 'HEAD' the default revision.
+Possibly.
 
-Bug noticed by Rocco Rutte <pdmef@gmx.net>.
+Still a treshold of 5000 is way too large IMHO.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- wt-status.c |   11 +++--------
- 1 files changed, 3 insertions(+), 8 deletions(-)
 
-diff --git a/wt-status.c b/wt-status.c
-index 7dd6857..9692dfa 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -154,10 +154,8 @@ void wt_status_print_initial(struct wt_s
- static void wt_status_print_updated(struct wt_status *s)
- {
- 	struct rev_info rev;
--	const char *argv[] = { NULL, NULL, NULL };
--	argv[1] = s->reference;
- 	init_revisions(&rev, NULL);
--	setup_revisions(2, argv, &rev, NULL);
-+	setup_revisions(0, NULL, &rev, s->reference);
- 	rev.diffopt.output_format |= DIFF_FORMAT_CALLBACK;
- 	rev.diffopt.format_callback = wt_status_print_updated_cb;
- 	rev.diffopt.format_callback_data = s;
-@@ -168,9 +166,8 @@ static void wt_status_print_updated(stru
- static void wt_status_print_changed(struct wt_status *s)
- {
- 	struct rev_info rev;
--	const char *argv[] = { NULL, NULL };
- 	init_revisions(&rev, "");
--	setup_revisions(1, argv, &rev, NULL);
-+	setup_revisions(0, NULL, &rev, NULL);
- 	rev.diffopt.output_format |= DIFF_FORMAT_CALLBACK;
- 	rev.diffopt.format_callback = wt_status_print_changed_cb;
- 	rev.diffopt.format_callback_data = s;
-@@ -225,10 +222,8 @@ static void wt_status_print_untracked(co
- static void wt_status_print_verbose(struct wt_status *s)
- {
- 	struct rev_info rev;
--	const char *argv[] = { NULL, NULL, NULL };
--	argv[1] = s->reference;
- 	init_revisions(&rev, NULL);
--	setup_revisions(2, argv, &rev, NULL);
-+	setup_revisions(0, NULL, &rev, s->reference);
- 	rev.diffopt.output_format |= DIFF_FORMAT_PATCH;
- 	rev.diffopt.detect_rename = 1;
- 	run_diff_index(&rev, 1);
--- 
-1.4.3.3.ga02d-dirty
