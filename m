@@ -1,107 +1,79 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Moving a directory into another fails
-Date: Mon, 4 Dec 2006 21:56:44 +0100
-Message-ID: <200612042156.44963.jnareb@gmail.com>
-References: <9e4733910607260800v618edf0em7b0f5c3332bf8fc5@mail.gmail.com> <Pine.LNX.4.63.0612042009590.28348@wbgn013.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.64.0612041114240.3476@woody.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: cygwin, 44k files: how to commit only index?
+Date: Thu, 07 Dec 2006 13:53:52 -0800
+Message-ID: <7vzm9zqsnj.fsf@assigned-by-dhcp.cox.net>
+References: <81b0412b0612070627r3ff0b394s124d95fbf8084f16@mail.gmail.com>
+	<7vd56vtt2g.fsf@assigned-by-dhcp.cox.net>
+	<20061207192632.GC12143@spearce.org>
+	<7vhcw7scln.fsf@assigned-by-dhcp.cox.net>
+	<20061207202931.GB12502@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Mon, 4 Dec 2006 20:54:56 +0000 (UTC)
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Thu, 7 Dec 2006 21:54:38 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=kitZE4L7DwxRZKXtjdp+JaJvst94H0Iz2kVCxCTWfWuYC7C5QzwQWZaJjXJH4OtxKn4Eqp61rDD2zVe0ZCsWdIkgxRgFvyP83IJ5XzKs6HwhLIA6hJCjRK5Q4XDYXVLGRgXKvIwmzD51U0spJj4LSeU8C9Jq7Zv4HuLmJCyO30A=
-User-Agent: KMail/1.9.3
-In-Reply-To: <Pine.LNX.4.64.0612041114240.3476@woody.osdl.org>
-Content-Disposition: inline
+In-Reply-To: <20061207202931.GB12502@spearce.org> (Shawn Pearce's message of
+	"Thu, 7 Dec 2006 15:29:31 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33248>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33637>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GrKpw-0003za-TK for gcvg-git@gmane.org; Mon, 04 Dec
- 2006 21:54:53 +0100
+ esmtp (Exim 4.50) id 1GsRCG-0002aY-4W for gcvg-git@gmane.org; Thu, 07 Dec
+ 2006 22:54:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S937187AbWLDUyu convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006 15:54:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937383AbWLDUyu
- (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 15:54:50 -0500
-Received: from ug-out-1314.google.com ([66.249.92.173]:9645 "EHLO
- ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S937187AbWLDUyt (ORCPT <rfc822;git@vger.kernel.org>); Mon, 4 Dec
- 2006 15:54:49 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so3120985uga for
- <git@vger.kernel.org>; Mon, 04 Dec 2006 12:54:46 -0800 (PST)
-Received: by 10.67.121.15 with SMTP id y15mr12603299ugm.1165265685878; Mon,
- 04 Dec 2006 12:54:45 -0800 (PST)
-Received: from host-81-190-24-209.torun.mm.pl ( [81.190.24.209]) by
- mx.google.com with ESMTP id 54sm30670090ugp.2006.12.04.12.54.45; Mon, 04 Dec
- 2006 12:54:45 -0800 (PST)
-To: Linus Torvalds <torvalds@osdl.org>
+ S1163466AbWLGVxy (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
+ 16:53:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1163465AbWLGVxy
+ (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 16:53:54 -0500
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:48924 "EHLO
+ fed1rmmtao01.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1163460AbWLGVxx (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec 2006
+ 16:53:53 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao01.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061207215353.HBDV9173.fed1rmmtao01.cox.net@fed1rmimpo02.cox.net>; Thu, 7
+ Dec 2006 16:53:53 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id vxu21V0121kojtg0000000; Thu, 07 Dec 2006
+ 16:54:03 -0500
+To: Shawn Pearce <spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 
-Dnia poniedzia=B3ek 4. grudnia 2006 21:26, Linus Torvalds napisa=B3:
-=20
->>>> On Mon, 4 Dec 2006, Jakub Narebski wrote:
->>>>=20
->>>>> [...] git should acquire core.filesystemEncoding configuration va=
-riable=20
->>>>> which would encode from filesystem encoding used in working direc=
-tory=20
->>>>> and perhaps index to UTF-8 encoding used in repository (in tree o=
-bjects)=20
->>>>> and perhaps index.
+Shawn Pearce <spearce@spearce.org> writes:
 
-> You guys are ignoring the _real_ problem.=20
->=20
-> It has nothing at all to do with dependencies on external packages. T=
-he=20
-> REAL problem is that if you do locale-dependent trees and other git=20
-> objects, git will STOP WORKING.
->=20
-> A filename in a tree object _has_ to be see as a pure 8-bit character=
-=20
-> stream. They _have_ to be compared with "memcmp()", and they have to =
-sort=20
-> the same way and mean EXACTLY the same thing for everybody.
+> What may help (and without using assume unchanged) is:
+>
+>  * skip the `update-index --refresh` part of git-status/git-commit
+>  * skip the status template in COMMIT_MSG when using the editor
+>
+> As Git will still at least make sure a `commit -a` includes
+> everything that is dirty.
+>
+> Files whose modification dates may have been messed with (but
+> whose content are unchanged) will just go through expensive SHA1
+> computation to arrive at the same value, which is fine.
+>
+> Users skipping the first part are doing so under the assumption that
+> their modification dates are usually always correct, and that then
+> they aren't the SHA1 computation of a handful of files is cheap
+> compared to stat'ing the entire set of files.
+>
+> Users skipping the second part are doing so under the assumption
+> that knowing the names of the files they are committing doesn't
+> really improve their odds of writing a good commit message.
 
-What I propose is having filename in tree object UTF-8 encoded. I don't
-know if git relies heavily that filename encoding on filesystem (in wor=
-king
-area) is the same as in the index, is the same as in a tree object.
-=20
-Although I'm not sure what is the problem. You checkout non US-ASCII fi=
-lename
-out of git; the file can have strange characters in a name, but should
-encode to the filename as is in git. The problem migh be some forbidden=
- by
-filesystem characters in a filename perhaps.=20
+The second part is not about a good commit message but more
+about a path that should have been updated but forgotten (the
+same mistake you would be likely to make and that is the reason
+assume-unchanged is not good for you).
 
-Although Wolfgang Fischer wrote (to me and Johannes Schindelin) that HF=
-S+
-uses UTF8-NFC (Normalization-Form-Composed) when creating a file, while
-readdir returns encoding used by HFS+, which is UTF8-NFD (Normalization=
--Form-
-Decomposed). [Explitive censored]
-
-> If a filesystem cannot represent that name AS THAT BYTE SEQUENCE then=
- the=20
-> filesystem is broken. No ifs, buts, maybes about it. I'm sorry, but t=
-hat's=20
-> how it is.
-
-We have some configuration variables to work around broken filesystems,
-like core.ignoreStat, so why not core.filesystemEncoding.
-
---=20
-Jakub Narebski
+I do not mind too much if you added a new --quick option to "git
+commit" for this rather specialized need.
