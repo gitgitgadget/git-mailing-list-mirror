@@ -4,83 +4,88 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: git bug? + question
-Date: Sat, 4 Nov 2006 00:10:08 -0500
-Message-ID: <20061104051008.GC9003@spearce.org>
-References: <buoejsme6ho.fsf@dhapc248.dev.necel.com> <7v4pthmew1.fsf@assigned-by-dhcp.cox.net> <20061102224549.499610d1.seanlkml@sympatico.ca> <20061103081232.GB15972@diana.vm.bytemark.co.uk> <20061103042540.192bbd18.seanlkml@sympatico.ca> <20061103202945.GA7585@spearce.org> <20061103232936.GC6970@coredump.intra.peff.net>
+From: fork0@t-online.de (Alex Riesen)
+Subject: Re: cygwin, 44k files: how to commit only index?
+Date: Thu, 7 Dec 2006 23:15:03 +0100
+Message-ID: <20061207221503.GA4990@steel.home>
+References: <81b0412b0612070627r3ff0b394s124d95fbf8084f16@mail.gmail.com> <7vd56vtt2g.fsf@assigned-by-dhcp.cox.net>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sat, 4 Nov 2006 05:10:25 +0000 (UTC)
-Cc: Sean <seanlkml@sympatico.ca>, Karl Hasselstr?m <kha@treskal.com>,
-	Junio C Hamano <junkio@cox.net>, Miles Bader <miles@gnu.org>,
-	git@vger.kernel.org
+NNTP-Posting-Date: Thu, 7 Dec 2006 22:15:30 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Content-Disposition: inline
-In-Reply-To: <20061103232936.GC6970@coredump.intra.peff.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+In-Reply-To: <7vd56vtt2g.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-ID: rfLuA6ZAZe3-XPv30fWPZQN7qSHztKi4Qo0sVmOKbNFoG5a+ljwrEn
+X-TOI-MSGID: 18e1971b-d11a-4aae-85a5-5d3b49952924
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30905>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GgDnQ-0003vP-J8 for gcvg-git@gmane.org; Sat, 04 Nov
- 2006 06:10:20 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33640>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GsRWV-0005Xm-4X for gcvg-git@gmane.org; Thu, 07 Dec
+ 2006 23:15:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753594AbWKDFKR (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 4 Nov 2006
- 00:10:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753591AbWKDFKR
- (ORCPT <rfc822;git-outgoing>); Sat, 4 Nov 2006 00:10:17 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:42462 "EHLO
- corvette.plexpod.net") by vger.kernel.org with ESMTP id S1753364AbWKDFKP
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 4 Nov 2006 00:10:15 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1GgDnF-0006AA-N5; Sat, 04 Nov 2006 00:10:09 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- 115CB20E491; Sat,  4 Nov 2006 00:10:08 -0500 (EST)
-To: Jeff King <peff@peff.net>
+ S1163512AbWLGWPU (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
+ 17:15:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1163501AbWLGWPT
+ (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 17:15:19 -0500
+Received: from mailout06.sul.t-online.com ([194.25.134.19]:42356 "EHLO
+ mailout06.sul.t-online.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1163516AbWLGWPR (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec
+ 2006 17:15:17 -0500
+Received: from fwd33.aul.t-online.de  by mailout06.sul.t-online.com with smtp
+  id 1GsRWL-0006bT-00; Thu, 07 Dec 2006 23:15:13 +0100
+Received: from tigra.home
+ (rfLuA6ZAZe3-XPv30fWPZQN7qSHztKi4Qo0sVmOKbNFoG5a+ljwrEn@[84.163.120.110]) by
+ fwd33.sul.t-online.de with esmtp id 1GsRWD-22TOds0; Thu, 7 Dec 2006 23:15:05
+ +0100
+Received: from steel.home (steel.home [192.168.1.2]) by tigra.home (Postfix)
+ with ESMTP id 7FD55277AF; Thu,  7 Dec 2006 23:15:04 +0100 (CET)
+Received: from raa by steel.home with local (Exim 4.42 #1 (Debian)) id
+ 1GsRWB-000610-I2; Thu, 07 Dec 2006 23:15:03 +0100
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Jeff King <peff@peff.net> wrote:
-> On Fri, Nov 03, 2006 at 03:29:45PM -0500, Shawn Pearce wrote:
+Junio C Hamano, Thu, Dec 07, 2006 20:16:39 +0100:
+> > I have a kind of awkward project to work with (~44k files, many binaries).
+> >
+> > The normal "git commit", which seem to be more than enough
+> > for anything and anyone else, is a really annoying procedure
+> > in my context. It spend too much time refreshing index and
+> > generating list of the files for the commit message.
+> >
+> > At first I stopped using git commit -a (doing only update-index),
 > 
-> > Nack.  I'd rather see the entries added/removed from .git/config when
-> > the branch is created/deleted, just like the ref and the reflog are
-> > created/deleted.  It makes behavior more consistent for the user
-> > and it is mostly self documenting...
+> I am not sure what you are trying.  Do you mean stat() is slow
+> on your filesystem?
+
+incredibly slow. That and the matter of having 44000 files to process
+with that slow stat().
+
+> > Is there any simple way to modify git commit for such a workflow?
+> > Failing that, any simple and _fast_ way to find out if the index
+> > is any different from HEAD? (so that I don't produce empty commits).
 > 
-> If we go this route, please consider updating .git/auto-branch-config or
-> similar, and adding the functionality to include that file into
-> .git/config.
+> Maybe you want "assume unchanged"?
 > 
-> I think the concept of automagically munging a user-editable config file
-> is problematic, especially when users might manage those files with
-> version control or other systems.
 
-Most users that I know use repo-config to munge their .git/config
-rather than editing it by hand.  Though with more data stored in
-it for branches and remotes that is probably going to change.
+If that is core.ignoreState you mean, than maybe this is what I mean.
+I haven't tried it yet (now I wonder myself why I haven't tried it).
+But (I'm repeating myself, in <81b0412b0612060235l5d5f93d0hd1aaf34924f7783@mail.gmail.com>)
+I do not really understand how it _can_ help: "I ask because it does
+not ignore stat info, as the name implies. Because if it would,
+there'd be no point of calling lstat at all, wouldn't it?" That last
+question was about refresh_cache_entry - it calls lstat
+unconditionally.
 
-If we go this route I wonder if want to say create a config file
-per branch and then use a wildcard include like Apache's httpd.conf
-wildcard include, e.g.:
+Still, I guess I'll have to try it.
 
-	.git/config:
-		include branch_configs/**/*.config
-
-	.git/branch_configs/refs/heads/master.config:
-		[branch "master"]
-			...
-
-As then git-branch is only manipulating one file per branch.
-
--- 
+But aside from me trying ignoreState, can anyone help me with that
+question regarding checking if the index is any different from HEAD?
+Because even on a very brocken filesystem and 40k files in a repo you
+sometimes do want to call git-update-index --refresh just to be sure
+you haven't missed anything. And than it'll quickly become annoying
+flicking ignoreState back and forth.
