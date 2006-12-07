@@ -1,64 +1,136 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: git-format-patch little gripe
-Date: Fri, 3 Nov 2006 16:44:45 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0611031640140.25218@g5.osdl.org>
-References: <7vwt6cbwzq.fsf@assigned-by-dhcp.cox.net>
- <20061103195253.9244.qmail@web31814.mail.mud.yahoo.com>
- <7v3b905fqi.fsf@assigned-by-dhcp.cox.net> <87velwupk6.wl%cworth@cworth.org>
- <20061103231647.GB6970@coredump.intra.peff.net> <eigjql$ql$2@sea.gmane.org>
+From: "Aneesh Kumar K.V" <aneesh.kumar@gmail.com>
+Subject: Re: git pull and merging.
+Date: Thu, 07 Dec 2006 12:16:24 +0530
+Message-ID: <4577B8C0.3060200@gmail.com>
+References: <cc723f590612052051r62111c4cgfd7ee893cb00f84a@mail.gmail.com> <Pine.LNX.4.63.0612061019350.28348@wbgn013.biozentrum.uni-wuerzburg.de> <cc723f590612060205p1fd26cd7u3c7efc723b0177de@mail.gmail.com> <200612061744.31213.Josef.Weidendorfer@gmx.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Sat, 4 Nov 2006 00:45:03 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 7 Dec 2006 06:46:57 +0000 (UTC)
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <eigjql$ql$2@sea.gmane.org>
-X-MIMEDefang-Filter: osdl$Revision: 1.155 $
-X-Scanned-By: MIMEDefang 2.36
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:user-agent:mime-version:newsgroups:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=m5+iKOqImtiSrb7lMpM5/4ssruCCND01w8wRyyggjGN70MdETHo+IhmqvoIPaSN4kzHV7+PPGMDMsGzJ3SgVvE5XC2lsUpu6uTHrgCQM8AaQpde3jcbSqKuhuBF2DitGftF0c3xbniduG42bVn/P/vvg16wakuQFudpBL6Qhshs=
+User-Agent: Thunderbird 1.5.0.8 (X11/20061115)
+Original-Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <200612061744.31213.Josef.Weidendorfer@gmx.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30901>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gg9eZ-0000lc-ST for gcvg-git@gmane.org; Sat, 04 Nov
- 2006 01:44:56 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33555>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GsD1t-0001Gr-Lv for gcvg-git@gmane.org; Thu, 07 Dec
+ 2006 07:46:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932531AbWKDAow (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 3 Nov 2006
- 19:44:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932532AbWKDAov
- (ORCPT <rfc822;git-outgoing>); Fri, 3 Nov 2006 19:44:51 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:11757 "EHLO smtp.osdl.org") by
- vger.kernel.org with ESMTP id S932531AbWKDAov (ORCPT
- <rfc822;git@vger.kernel.org>); Fri, 3 Nov 2006 19:44:51 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
- smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kA40ijoZ012080
- (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Fri, 3
- Nov 2006 16:44:46 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
- shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kA40ijqU007602; Fri, 3 Nov
- 2006 16:44:45 -0800
-To: Jakub Narebski <jnareb@gmail.com>
+ S1031732AbWLGGqq (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
+ 01:46:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031733AbWLGGqq
+ (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 01:46:46 -0500
+Received: from nz-out-0506.google.com ([64.233.162.226]:41151 "EHLO
+ nz-out-0102.google.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with
+ ESMTP id S1031732AbWLGGqp (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec
+ 2006 01:46:45 -0500
+Received: by nz-out-0102.google.com with SMTP id s1so284475nze for
+ <git@vger.kernel.org>; Wed, 06 Dec 2006 22:46:44 -0800 (PST)
+Received: by 10.65.185.13 with SMTP id m13mr2897766qbp.1165474004381; Wed, 06
+ Dec 2006 22:46:44 -0800 (PST)
+Received: from ?217.236.224.183? ( [156.153.255.234]) by mx.google.com with
+ ESMTP id e14sm320588qbe.2006.12.06.22.46.40; Wed, 06 Dec 2006 22:46:43 -0800
+ (PST)
+To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
 Sender: git-owner@vger.kernel.org
 
+Josef Weidendorfer wrote:
+> On Wednesday 06 December 2006 11:05, Aneesh Kumar wrote:
+>> [branch "devel"]
+>>         remote = origin
+>>         merge = devel
+>>
+>> [....]
+>> Now i thought merge should be local reference. So i changed it to
+>> merge = remotes/origin/devel.
+>>
+>> That also didn't work.
+>>
+>> Then i tried the name of the branch should be indicated as
+>> "refs/heads/devel" . That also didn't work.
+>>
+>> So i guess i am missing something.
+> 
+> See man page of git-repo-config:
+> 
+>  branch.<name>.merge
+>   When in branch <name>, it tells git fetch the default
+>   remote branch to be merged.
+> 
+> I assume that the "devel" branch on the remote repo you cloned from
+> is also "devel", more exactly "refs/heads/devel".
+> 
+> Now, instead of "git pull", git should default to
+> 
+> 	git pull origin refs/heads/devel:refs/remotes/origin/devel
 
 
-On Sat, 4 Nov 2006, Jakub Narebski wrote:
->
-> YAUO, Yet Another Undocumented Option. ::sigh::
 
-The "--pretty=xxx" is certainly not new, and it's not even totally 
-undocumented. It's mentioned in several of the examples in various forms.
+this means the remote reference is refs/heads/devel and local tracking branch for that is refs/remotes/origin/devel.
 
-All the logging commands take the "pretty" argument.
 
-Try
 
-	git log --pretty={oneline,short,medium,full,fuller,raw}
 
-(and the same things work for "git whatchanged" and "git show" etc)
+> 
+> ie. it should update the local tracking branch "refs/remotes/origin/devel"
+> with the remote branch "refs/heads/devel".
+> The tracking branch "refs/remotes/origin/devel" will be merged with current
+> branch afterwards.
+> 
+
+
+That will be merged is the tricky part. 
+
+
+
+> Now looking at the documentation for branch.<name>.merge, it talks
+> about the remote branch, which is "refs/heads/devel" in your case, ie.
+> the first part of the refspec of the full "git pull" command above.
+> 
+
+This is most confusing part. What merge indicate is not about refs/heads/devel
+should track refs/remotes/origin/devel. That is specfied in the remote config option.
+
+What merge indicate is that when in a local branch ( not the tracking one under remotes/origin)
+which branch from remote need to be used to merge to the local branch.
+
+
+
+
+> So, as you already posted (without explanation, therefore this mail),
+> the config should be
+> 
+>  [branch "devel"]
+>          remote = origin
+>          merge = refs/heads/devel
+> 
+> However, "devel" alone should work here, as it can be matched with remote
+> "refs/heads/devel". Seems to be a bug, as branch.<name>.merge seems to only
+> being compared with the full canonical name in the implementation.
+
+
+I guess we need to have a standard way of saying the branches. 
+
+May be we want to document it in repo-config.
+
+local branch on which changes can be made <branch-name>
+local tracking branch refs/remotes/<remote-name>/<branch-name>
+remote branch refs/heads/<branch-name>
+
 
