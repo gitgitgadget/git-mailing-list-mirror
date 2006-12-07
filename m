@@ -1,59 +1,73 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] git-cvsimport: add suport for CVS pserver method   HTTP/1.x  proxying
-Date: Fri, 24 Nov 2006 03:48:35 -0800
-Message-ID: <7vhcwpawvg.fsf@assigned-by-dhcp.cox.net>
-References: <11642344172790-git-send-email-iarenuno@eteo.mondragon.edu> <7v64
-	d5keke.fsf@assigned-by-dhcp.cox.net>
-	<67mz6h6xmb.fsf@poseidon.eteo.mond ragon.edu>
-	<7vfyc9cjci.fsf@assigned-by-dhcp.cox.net>
-	<67hcwp6wpp.fsf@poseidon.eteo.mondragon.edu>
+From: Martin Waitz <tali@admingilde.org>
+Subject: Re: Topic descriptions
+Date: Thu, 7 Dec 2006 12:55:52 +0100
+Message-ID: <20061207115552.GC10468@admingilde.org>
+References: <200612062153.30639.andyparkins@gmail.com> <7v4ps8y7un.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 24 Nov 2006 11:48:54 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="nmemrqcdn5VTmUEE"
+NNTP-Posting-Date: Thu, 7 Dec 2006 11:56:01 +0000 (UTC)
+Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Content-Disposition: inline
+In-Reply-To: <7v4ps8y7un.fsf@assigned-by-dhcp.cox.net>
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
+User-Agent: Mutt/1.5.9i
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32212>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GnZXt-00046e-Hd for gcvg-git@gmane.org; Fri, 24 Nov
- 2006 12:48:41 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33573>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GsHr4-0002Oi-Ge for gcvg-git@gmane.org; Thu, 07 Dec
+ 2006 12:55:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S934190AbWKXLsi (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 24 Nov 2006
- 06:48:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934266AbWKXLsi
- (ORCPT <rfc822;git-outgoing>); Fri, 24 Nov 2006 06:48:38 -0500
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:8641 "EHLO
- fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP id S934190AbWKXLsh
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 24 Nov 2006 06:48:37 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao10.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061124114837.JHCZ5575.fed1rmmtao10.cox.net@fed1rmimpo02.cox.net>; Fri, 24
- Nov 2006 06:48:37 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id qbok1V00X1kojtg0000000; Fri, 24 Nov 2006
- 06:48:45 -0500
-To: Ignacio Arenaza <iarenuno@eteo.mondragon.edu>
+ S1032085AbWLGLzz (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
+ 06:55:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1032088AbWLGLzz
+ (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 06:55:55 -0500
+Received: from mail.admingilde.org ([213.95.32.147]:44723 "EHLO
+ mail.admingilde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1032085AbWLGLzy (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec 2006
+ 06:55:54 -0500
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1) id
+ 1GsHqy-0004FW-Up; Thu, 07 Dec 2006 12:55:52 +0100
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Ignacio Arenaza <iarenuno@eteo.mondragon.edu> writes:
 
-> Junio C Hamano <junkio@cox.net> writes:
->
->> Let's save a bit of trouble from you.  Here is what I've queued
->> for 'master', with fixes from the discussion so far.
->
-> Looks good to me, but it seems you missed the 'if(...) {' and
-> 'if(...){' formating issues you raised before.
+--nmemrqcdn5VTmUEE
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I deliberately left out the style changes to avoid cluttering
-the patch; as I said in my first response, that should come as a
-separate patch that does not change anything else.
+hoi :)
+
+On Wed, Dec 06, 2006 at 02:31:28PM -0800, Junio C Hamano wrote:
+> But that description thing would be useful in gitweb, for
+> example.
+
+And it could be useful to automatically generate the summary for
+please-pull mails or for the [0/N] patch introduction mail.
+
+--=20
+Martin Waitz
+
+--nmemrqcdn5VTmUEE
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFFeAFIj/Eaxd/oD7IRAv64AJ4yEN/IN+QyEtpK4sXcdoc6Y1dHiwCfcOWx
+/I8MA39KqFkIRHnOMmCaDYg=
+=1PJd
+-----END PGP SIGNATURE-----
+
