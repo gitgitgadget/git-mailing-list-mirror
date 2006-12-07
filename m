@@ -4,59 +4,62 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] shortlog: fix segfault on empty authorname
-Date: Sat, 9 Dec 2006 22:45:24 -0500
-Message-ID: <20061210034524.GA11819@coredump.intra.peff.net>
-References: <Pine.LNX.4.64.0612082205240.2630@xanadu.home> <20061209040421.GA29113@coredump.intra.peff.net> <Pine.LNX.4.63.0612100019270.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: Re: Commit f84871 breaks build on OS X
+Date: 07 Dec 2006 12:18:32 -0800
+Message-ID: <86ejrbihnr.fsf@blue.stonehenge.com>
+References: <2D096A57-D7B3-49C7-81E4-EB47A0D933B2@silverinsanity.com>
+	<81b0412b0612070633i7aec43dse7a8beda64437103@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sun, 10 Dec 2006 03:45:41 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, Nicolas Pitre <nico@cam.org>,
-	git@vger.kernel.org
+NNTP-Posting-Date: Thu, 7 Dec 2006 20:18:46 +0000 (UTC)
+Cc: "Brian Gernhardt" <benji@silverinsanity.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0612100019270.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+x-mayan-date: Long count = 12.19.13.15.14; tzolkin = 8 Ix; haab = 7 Mac
+In-Reply-To: <81b0412b0612070633i7aec43dse7a8beda64437103@mail.gmail.com>
+Original-Lines: 19
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33864>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33631>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GtFdC-0001VV-5P for gcvg-git@gmane.org; Sun, 10 Dec
- 2006 04:45:38 +0100
+ esmtp (Exim 4.50) id 1GsPhU-0005YY-QS for gcvg-git@gmane.org; Thu, 07 Dec
+ 2006 21:18:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1760121AbWLJDp1 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 9 Dec 2006
- 22:45:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760110AbWLJDp1
- (ORCPT <rfc822;git-outgoing>); Sat, 9 Dec 2006 22:45:27 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:34661
- "HELO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id
- S1760121AbWLJDp1 (ORCPT <rfc822;git@vger.kernel.org>); Sat, 9 Dec 2006
- 22:45:27 -0500
-Received: (qmail 20594 invoked from network); 9 Dec 2006 22:45:26 -0500
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2) by
- 66-23-211-5.clients.speedfactory.net with SMTP; 9 Dec 2006 22:45:26 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 09 Dec
- 2006 22:45:24 -0500
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+ S1163273AbWLGUSe (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
+ 15:18:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1163276AbWLGUSe
+ (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 15:18:34 -0500
+Received: from blue.stonehenge.com ([209.223.236.162]:42000 "EHLO
+ blue.stonehenge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1163273AbWLGUSd (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec 2006
+ 15:18:33 -0500
+Received: from localhost (localhost [127.0.0.1]) by blue.stonehenge.com
+ (Postfix) with ESMTP id EF9B88FD33; Thu,  7 Dec 2006 12:18:32 -0800 (PST)
+Received: from blue.stonehenge.com ([127.0.0.1]) by localhost
+ (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024) with LMTP id
+ 02642-02-98; Thu,  7 Dec 2006 12:18:32 -0800 (PST)
+Received: by blue.stonehenge.com (Postfix, from userid 1001) id 8016F8FD7B;
+ Thu,  7 Dec 2006 12:18:32 -0800 (PST)
+To: "Alex Riesen" <raa.lkml@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-On Sun, Dec 10, 2006 at 12:21:03AM +0100, Johannes Schindelin wrote:
+>>>>> "Alex" == Alex Riesen <raa.lkml@gmail.com> writes:
 
-> > Instead, remove at most one space between name and address.
-> 
-> Why? We can fix it properly: Instead of
-> 
-> > -				while (isspace(bob[-1]))
-> > +				if (isspace(bob[-1]))
-> 
-> do something like
-> 
-> 				while (bob - 1 != buffer + 7 && 
-> 						isspace(bob[-1]))
+Alex> Strange. You seem to have the old, generated Makefile you perl/
+Alex> directory. Haven't your pull failed? If so, I suspect that
 
-It doesn't look like there are ever extra spaces to get soaked up in the
-kernel or git repositories, but if there is a reason to expect
-  Full Name    <user@domain>
-then we should probably replace my fix with yours.
+Alex>  rm perl/Makefile
+Alex>  git reset --hard
+Alex>  git pull git...
 
+I ended up having to do another reset afterward.
+
+Definitely something went weird when Makefile was removed
+from .gitignore.
+
+-- 
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
