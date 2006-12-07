@@ -1,155 +1,145 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH] gitweb: Finish restoring "blob" links in git_difftree_body
-Date: Sun, 19 Nov 2006 22:51:39 +0100
-Message-ID: <1163973099476-git-send-email-jnareb@gmail.com>
-NNTP-Posting-Date: Sun, 19 Nov 2006 21:50:25 +0000 (UTC)
-Cc: Petr Baudis <pasky@suse.cz>, Jakub Narebski <jnareb@gmail.com>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Locked down (but still shared) repositories
+Date: Thu, 7 Dec 2006 06:35:39 -0500
+Message-ID: <20061207113539.GA10781@spearce.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Thu, 7 Dec 2006 11:36:13 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:cc:subject:date:message-id:x-mailer;
-        b=DvDhO47GMrghCWibrT2SXF4uZRffMcz2qP/VUP4XSC0Phaq5koFqmB6+lhKVc/heav8mSCenMojmZBugRVSgtMstAhJqH6E+QVoiAjfG5biQ7jlLu6l+wVhKIOlf2iKsojijJtKp7M7jigBPHnb/0OU15jC3zUSLZq4HjJTotmE=
-X-Mailer: git-send-email 1.4.3.4
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31867>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GluYQ-0007Zp-RV for gcvg-git@gmane.org; Sun, 19 Nov
- 2006 22:50:23 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33570>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GsHXq-0008Og-Br for gcvg-git@gmane.org; Thu, 07 Dec
+ 2006 12:36:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S933386AbWKSVuS (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 19 Nov 2006
- 16:50:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933387AbWKSVuS
- (ORCPT <rfc822;git-outgoing>); Sun, 19 Nov 2006 16:50:18 -0500
-Received: from ug-out-1314.google.com ([66.249.92.172]:27444 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S933386AbWKSVuQ
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 19 Nov 2006 16:50:16 -0500
-Received: by ug-out-1314.google.com with SMTP id m3so1061131ugc for
- <git@vger.kernel.org>; Sun, 19 Nov 2006 13:50:15 -0800 (PST)
-Received: by 10.67.101.10 with SMTP id d10mr6168625ugm.1163973014811; Sun, 19
- Nov 2006 13:50:14 -0800 (PST)
-Received: from roke.D-201 ( [81.190.24.209]) by mx.google.com with ESMTP id
- 53sm5213168ugn.2006.11.19.13.50.13; Sun, 19 Nov 2006 13:50:14 -0800 (PST)
-Received: from roke.D-201 (localhost.localdomain [127.0.0.1]) by roke.D-201
- (8.13.4/8.13.4) with ESMTP id kAJLpe6u026769; Sun, 19 Nov 2006 22:51:41 +0100
-Received: (from jnareb@localhost) by roke.D-201 (8.13.4/8.13.4/Submit) id
- kAJLpd5r026768; Sun, 19 Nov 2006 22:51:39 +0100
+ S1032076AbWLGLfo (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
+ 06:35:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1032077AbWLGLfo
+ (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 06:35:44 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:37825 "EHLO
+ corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1032076AbWLGLfn (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec 2006
+ 06:35:43 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1GsHXO-0007KD-LX for git@vger.kernel.org; Thu, 07 Dec 2006 06:35:38 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 90DD320FB6E; Thu,  7 Dec 2006 06:35:39 -0500 (EST)
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-This finishes work started by commit 4777b0141a4812177390da4b6ebc9d40ac3da4b5
-  "gitweb: Restore object-named links in item lists"
-by Petr Baudis. It brings back rest of "blob" links in difftree-raw
-like part of "commit" and "commitdiff" views, namely in
-git_difftree_body subroutine.
+I have a number of repositories that I want to share across a number
+of users on the same UNIX system.
 
-Now the td.link table cell has the following links:
- * link to diff ("blobdiff" view) in "commit" view, if applicable
-   (there is no link to uninteresting creation/deletion diff), or
-   link to patch anchor in "commitdiff" view.
- * link to current version of file ("blob" view), with the obvious
-   exception of file deletion, where it is link to the parent
-   version.
- * link to "blame" view, if it is enabled, and file was not just
-   created (i.e. it has any history).
- * link to history of the file ("history" view), again with sole
-   exception of the case of new file.
+For various auditing reasons the repositories need to be tightly
+controlled.  That is the following cannot be permitted:
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-This goes in the opposite version to the previous patch
-  " gitweb: Remove redundant "blob" links from git_difftree_body"
-in the 10/n series.
+  * delete or overwrite a loose object;
+  * delete or overwrite a pack file;
+  * delete or overwrite a ref, except see below;
+  * change the config;
+  * change the description;
+  * change HEAD;
 
- gitweb/gitweb.perl |   42 +++++++++++++++++++++---------------------
- 1 files changed, 21 insertions(+), 21 deletions(-)
+The only changes that are permissible can be made through
+git-receive-pack, which limits the user to only the following:
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index a32a6b7..ce185d9 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -2092,7 +2092,11 @@ sub git_difftree_body {
- 				# link to patch
- 				$patchno++;
- 				print $cgi->a({-href => "#patch$patchno"}, "patch");
-+				print " | ";
- 			}
-+			print $cgi->a({-href => href(action=>"blob", hash=>$diff{'to_id'},
-+			                             hash_base=>$hash, file_name=>$diff{'file'})},
-+			              "blob") . " | ";
- 			print "</td>\n";
- 
- 		} elsif ($diff{'status'} eq "D") { # deleted
-@@ -2112,13 +2116,11 @@ sub git_difftree_body {
- 			}
- 			print $cgi->a({-href => href(action=>"blob", hash=>$diff{'from_id'},
- 			                             hash_base=>$parent, file_name=>$diff{'file'})},
--				      "blob") . " | ";
-+			              "blob") . " | ";
- 			if ($have_blame) {
--				print $cgi->a({-href =>
--						   href(action=>"blame",
--							hash_base=>$parent,
--							file_name=>$diff{'file'})},
--					      "blame") . " | ";
-+				print $cgi->a({-href => href(action=>"blame", hash_base=>$parent,
-+				                             file_name=>$diff{'file'})},
-+				              "blame") . " | ";
- 			}
- 			print $cgi->a({-href => href(action=>"history", hash_base=>$parent,
- 			                             file_name=>$diff{'file'})},
-@@ -2163,13 +2165,12 @@ sub git_difftree_body {
- 				      " | ";
- 			}
- 			print $cgi->a({-href => href(action=>"blob", hash=>$diff{'to_id'},
--						     hash_base=>$hash, file_name=>$diff{'file'})},
--				      "blob") . " | ";
-+			                             hash_base=>$hash, file_name=>$diff{'file'})},
-+			               "blob") . " | ";
- 			if ($have_blame) {
--				print $cgi->a({-href => href(action=>"blame",
--							     hash_base=>$hash,
--							     file_name=>$diff{'file'})},
--					      "blame") . " | ";
-+				print $cgi->a({-href => href(action=>"blame", hash_base=>$hash,
-+				                             file_name=>$diff{'file'})},
-+				              "blame") . " | ";
- 			}
- 			print $cgi->a({-href => href(action=>"history", hash_base=>$hash,
- 			                             file_name=>$diff{'file'})},
-@@ -2208,17 +2209,16 @@ sub git_difftree_body {
- 				              "diff") .
- 				      " | ";
- 			}
--			print $cgi->a({-href => href(action=>"blob", hash=>$diff{'from_id'},
--						     hash_base=>$parent, file_name=>$diff{'from_file'})},
--				      "blob") . " | ";
-+			print $cgi->a({-href => href(action=>"blob", hash=>$diff{'to_id'},
-+			                             hash_base=>$parent, file_name=>$diff{'to_file'})},
-+			              "blob") . " | ";
- 			if ($have_blame) {
--				print $cgi->a({-href => href(action=>"blame",
--							     hash_base=>$hash,
--							     file_name=>$diff{'to_file'})},
--					      "blame") . " | ";
-+				print $cgi->a({-href => href(action=>"blame", hash_base=>$hash,
-+				                             file_name=>$diff{'to_file'})},
-+				              "blame") . " | ";
- 			}
--			print $cgi->a({-href => href(action=>"history", hash_base=>$parent,
--			                            file_name=>$diff{'from_file'})},
-+			print $cgi->a({-href => href(action=>"history", hash_base=>$hash,
-+			                            file_name=>$diff{'to_file'})},
- 			              "history");
- 			print "</td>\n";
- 
+ * upload (possibly new) objects;
+ * create/update/force-update a ref;
+ * delete a ref;
+
+And the latter two are controlled by a very strict update hook.
+The update hook checks the ref name and real user id against
+an ACL file (info/allowed-users) and checks to see if the user
+can perform the requested operation against that ref, with four
+operations being recognized:
+
+  * A == the ref is being created;
+  * U == the ref is being fast-forwarded;
+  * R == the ref is being rewound/reset;
+  * D == the ref is being deleted;
+
+The update hook also requires that all lines returned by:
+
+  git-rev-list --pretty=raw $3 --not --all | egrep ^committer
+
+correspond to a name/email address combination registered in another
+table for the real user id (info/allowed-committers).  Which means
+we can actually trust the committer field of all commits which
+are referenced by refs, as the UNIX system authenticated them.
+The tagger field is also checked for every tag, but its slightly
+more involved than the simple line above as it peels back the tag
+layers as needed.  :)
+
+So the update hook is update-hook-example.txt, but suffering from
+extreme paranoia and has been put on steriods.  I'm considering
+sending it in for Documentation/howto, or contrib.
+
+
+Which brings me to the following problem:
+
+I can't create the repository with --shared, as the UNIX users
+all have normal shell access to the system.  (/bin/rm would work
+wonders to let a user violate a number of the items above.)
+
+I also cannot create secondary git-only UNIX accounts for each user,
+using git-shell in the git-only account.  (For example "spearce"
+and "spearce-git", with the latter using git-shell and being in a
+group which does have repository access, while the former doesn't.)
+
+The workaround that I have come up with is the following:
+
+The repositories are all owned by a single user, and were created
+without --shared, so only the owner can modify the repository.
+The repositories are however readable by a specific group, and
+all permitted users of that repository are members of that group.
+So they can read the repository files directory, which works very
+well with objects/info/alternates.  :-)
+
+git-receive-pack on this system is owned by the same repository
+owner, and is also marked setuid.  Consequently when a user pushes
+into a repository the effective uid is that of the repository owner,
+objects can be written, refs can be changed, the update hook runs
+setuid, and it enforces everything.
+
+
+The problem now is what happens when users try to use Git
+as a distributed tool and push changes between their own two
+repositories?  Even if the two specific users can agree on using
+--shared (because maybe they actually read the Git manual and want
+to use that feature), git-receive-pack runs setuid as the blessed
+repository user.  Any update hook installed within one of these
+'user private' repositories is untrusted, but will be running with
+enough permissions to run /bin/rm and destroy data.  See above
+about how I can't have that...
+
+So I've patched git-receive-pack to refuse to run if its running
+setuid and the hook's owner isn't the effective uid, or the hook
+is group/world writable.  This seems to close the last hole, but
+it also makes hooks/update and hooks/post-update useless in user
+private repositories on this system.
+
+
+I'm sending this to try and solicit better ideas from the mailing
+list.  We have a lot of UNIX guru types, and a lot of Git guru types,
+and they are all smarter than I...  ;-)
+
 -- 
-1.4.3.4
