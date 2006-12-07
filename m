@@ -1,96 +1,70 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: linux@horizon.com
-Subject: Re: multi-project repos (was Re: Cleaning up git user-interface
-Date: 17 Nov 2006 00:11:57 -0500
-Message-ID: <20061117051157.27896.qmail@science.horizon.com>
-NNTP-Posting-Date: Fri, 17 Nov 2006 05:12:08 +0000 (UTC)
-Cc: git@vger.kernel.org, linux@horizon.com
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Fast access git-rev-list output: some OS knowledge required
+Date: Thu, 7 Dec 2006 15:53:58 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0612071553090.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <e5bfff550612061124jcd0d94em47793710866776e7@mail.gmail.com>
+ <20061206192800.GC20320@spearce.org> <e5bfff550612061134r3725dcbu2ff2dd6284fcd651@mail.gmail.com>
+ <20061206194258.GD20320@spearce.org> <20061206195142.GE20320@spearce.org>
+ <45781639.1050208@op5.se>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Thu, 7 Dec 2006 14:54:20 +0000 (UTC)
+Cc: Shawn Pearce <spearce@spearce.org>,
+	Marco Costalba <mcostalba@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <45781639.1050208@op5.se>
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31664>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gkw1E-0005EO-6m for gcvg-git@gmane.org; Fri, 17 Nov
- 2006 06:12:04 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33585>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GsKdW-0001rE-Bq for gcvg-git@gmane.org; Thu, 07 Dec
+ 2006 15:54:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1031209AbWKQFL7 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 17 Nov 2006
- 00:11:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031210AbWKQFL7
- (ORCPT <rfc822;git-outgoing>); Fri, 17 Nov 2006 00:11:59 -0500
-Received: from science.horizon.com ([192.35.100.1]:57412 "HELO
- science.horizon.com") by vger.kernel.org with SMTP id S1031209AbWKQFL6 (ORCPT
- <rfc822;git@vger.kernel.org>); Fri, 17 Nov 2006 00:11:58 -0500
-Received: (qmail 27897 invoked by uid 1000); 17 Nov 2006 00:11:57 -0500
-To: hanwen@xs4all.nl
+ S937967AbWLGOyF (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
+ 09:54:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937969AbWLGOyE
+ (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 09:54:04 -0500
+Received: from mail.gmx.net ([213.165.64.20]:52181 "HELO mail.gmx.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S937967AbWLGOyB
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec 2006 09:54:01 -0500
+Received: (qmail invoked by alias); 07 Dec 2006 14:53:59 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp019) with SMTP; 07 Dec 2006 15:53:59 +0100
+To: Andreas Ericsson <ae@op5.se>
 Sender: git-owner@vger.kernel.org
 
->> A lot of the complaints seem to not be about the interfaces, but about 
->> people not _understanding_ and knowing what the interfaces do. If you were 
+Hi,
 
-> From the point of view of a user, there is not really a difference
-> between the two.  As a user, you form a mental model of how things
-> work by looking at the interface.  If the interface is bad, the user
-> creates a faulty model in his head, and starts doing things that
-> are perfectly logical in the faulty model, but stupid and silly when
-> you consider the actual internals.
+On Thu, 7 Dec 2006, Andreas Ericsson wrote:
 
-"The only intuitive user interface is the nipple; all else is learned."
+> Shawn Pearce wrote:
+> > 
+> > Perhaps there is some fast IPC API supported by Qt that you could use 
+> > to run the revision listing outside of the main UI process, to 
+> > eliminate the bottlenecks you are seeing and remove the problems noted 
+> > above?  One that doesn't involve reading from a pipe I mean...
+> > 
+> 
+> Why not just fork() + exec() and read from the filedescriptor? You can 
+> up the output buffer of the forked program to something suitable, which 
+> means the OS will cache it for you until you copy it to a buffer in qgit 
+> (i.e., read from the descriptor).
 
-As Linus is explaining, the fundamental *problem* is the mental model.
-Once you know how to break your goals apart into the right kind of pieces,
-little things like terminology are truly little.
+Could somebody remind me why different processes are needed? I thought 
+that the revision machinery should be used directly, by linking to 
+libgit.a...
 
-I'm not sure that git is sufficiently like anything else that a few
-well-chosen command names can bring a good analogy to mind.  There just
-isn't a simple analogy that won't lead you astray; you have to understand
-the thing on its own terms.
-
-How do you explain the point of an electric screwdriver to someone who's
-never seen a screw?  He'll think it's a silly way to wind up yarn.
-
-
-I'll be the first to explain that the git docs have some major problems.
-"git show" is a really useful command.  It has a zillion options to do
-cool things.  Have you read the man page?
-
-Didn't take long, did it?  "git log" is even more powerful, and almost
-as bad.  The information is all available, it's just on the plumbing
-man pages.
-
-And I even understand *why* it's there.  Because writing the plumbing is
-when the coders were thinking about the problem.  And writing good docs
-is very simple: when you learn something, write it down.  Not later,
-or next week, but right now, when you still remember how confused you
-were before and what led you to the revelation.
-
-The only problem, for a person looking at it top-down, is that git was
-written bottom-up, so the bottom is very well documented, and once you
-understand that, the top is pretty obvious and trivial.
-
-But if you want to improve the situation for someone like yourself,
-the solution is the same: when you learn something non-trivial, write
-it down.  Not later, after you've finished learning, but right now when
-you still remember the process of learning.
-
-Now, when you show people what you wrote, one of two things will
-happen:
-1) They'll say "thank you, that's a good way of looking at it", or
-2) They'll say, "that's not quite right; the truth is actually...".
-   The second case means that you have a bit more to learn.
-   But by taking the first step, you've given the learning process
-   some momentum.  It gets easier after that.
-
-I hope my recent postings ([DRAFT] Branching and merging with git)
-form a reasonable example of that.
-
-
-There are a few key concepts in the git tools.  I don't care if
-"git-rev-list" is an ugly name; the name isn't learly as important as
-realizing that *every* command that works on a list of commits uses
-the same primitive, and what you learn about one command in that family
+Ciao,
+Dscho
