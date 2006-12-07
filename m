@@ -1,92 +1,91 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Diffs from CVS keyword expansion
-Date: Thu, 30 Nov 2006 22:56:57 -0500
-Message-ID: <9e4733910611301956l6f64b01ftee46971a18e3467b@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 1/2] Allow users to require source branch on git-checkout -b.
+Date: Thu, 07 Dec 2006 13:23:00 -0800
+Message-ID: <7v64cns8nf.fsf@assigned-by-dhcp.cox.net>
+References: <20061207100152.GA12966@spearce.org>
+	<7vlkljsd1k.fsf@assigned-by-dhcp.cox.net>
+	<20061207195715.GG12143@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Fri, 1 Dec 2006 03:57:21 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Thu, 7 Dec 2006 21:23:12 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=K80SMvLpynkCBKHCR9eXfAD7sbp3njc9iPhTOMnT0/LC+VbLhlSdMzkU5F5uvzJGBSowFt5sO3W5UbFfeDCc4Mx8V2wNu6uN4Y3J7Uq03+xQ3eD+HRq5w1phRw0AUxJ5k5EZBl7jeTagGAYzRw/e7dRNgNKKHw5sGqn7L/sYzwQ=
-Content-Disposition: inline
+In-Reply-To: <20061207195715.GG12143@spearce.org> (Shawn Pearce's message of
+	"Thu, 7 Dec 2006 14:57:15 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32848>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GpzWN-0005kj-Br for gcvg-git@gmane.org; Fri, 01 Dec
- 2006 04:57:07 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33634>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GsQhv-0006Yr-OP for gcvg-git@gmane.org; Thu, 07 Dec
+ 2006 22:23:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1758853AbWLAD5E (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
- 22:57:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758546AbWLAD5E
- (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 22:57:04 -0500
-Received: from py-out-1112.google.com ([64.233.166.178]:36717 "EHLO
- py-out-1112.google.com") by vger.kernel.org with ESMTP id S1758852AbWLAD5D
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 22:57:03 -0500
-Received: by py-out-1112.google.com with SMTP id a29so1754772pyi for
- <git@vger.kernel.org>; Thu, 30 Nov 2006 19:56:57 -0800 (PST)
-Received: by 10.35.110.13 with SMTP id n13mr527968pym.1164945417482; Thu, 30
- Nov 2006 19:56:57 -0800 (PST)
-Received: by 10.35.72.13 with HTTP; Thu, 30 Nov 2006 19:56:57 -0800 (PST)
-To: "Git Mailing List" <git@vger.kernel.org>
+ S1163393AbWLGVXE (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
+ 16:23:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1163394AbWLGVXE
+ (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 16:23:04 -0500
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:36019 "EHLO
+ fed1rmmtao03.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1163393AbWLGVXB (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec 2006
+ 16:23:01 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao03.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061207212300.IOML29122.fed1rmmtao03.cox.net@fed1rmimpo02.cox.net>; Thu, 7
+ Dec 2006 16:23:00 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id vxPA1V00o1kojtg0000000; Thu, 07 Dec 2006
+ 16:23:11 -0500
+To: Shawn Pearce <spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 
-Anyone have a nice script for suppressing diffs caused by CVS keyword
-expansion when someone checked the kernel sources into CVS?
+Shawn Pearce <spearce@spearce.org> writes:
 
-I have 200,000 lines of various forms of this mixed in with real changes
+> Junio C Hamano <junkio@cox.net> wrote:
+>> "Shawn O. Pearce" <spearce@spearce.org> writes:
+>> > This introduces a new config option: checkout.requireSourceBranch,
+>> 
+>> You could turn it around and make it a per-branch configuration,
+>> like:
+>> 
+>> 	[branch "main"]
+>>         	allowbranchbydefault = true
+>
+> Are you suggesting that we change "git-checkout -b" to by default
+> require the source branch, but the user can restore the original
+> behavior by setting the above per-branch configuration option?
 
-It is unclear who checked it into CVS, Microcross or Arch Linux. If it
-is Arch Linux finding the source for their 2.6.11.4-1 release would
-help a lot. I looked on their web site and couldn't locate it.
+Under my suggestion, the new git-checkout -b (and git-branch)
+would:
 
-I'm starting understand why the support for MX21 on a CSB535FS has
-never been added to the mainline.
+ (0) proceed if there is an explicit branch point specified on
+     the command like, just like now;
 
-diff --git a/drivers/char/ftape/lowlevel/ftape-ctl.c
-b/drivers/char/ftape/lowlevel/ftape-ctl.c
-index 32e0439..ff10633 100644
---- a/drivers/char/ftape/lowlevel/ftape-ctl.c
-+++ b/drivers/char/ftape/lowlevel/ftape-ctl.c
-@@ -17,9 +17,9 @@
-  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
+ (1) allow omission of branch-point if the current branch has
+     allowbranchbydefault configuration set as in above.  A new
+     branch is created forking off of the current HEAD;
 
-  *
-- * $Source: /homes/cvs/ftape-stacked/ftape/lowlevel/ftape-ctl.c,v $
-- * $Revision: 1.4 $
-- * $Date: 1997/11/11 14:37:44 $
-+ * $Source: /home/arch-linux/{cvs}/linux--dev--2.6/drivers/char/ftape/lowlevel/ftape-ctl.c,v
-$
-+ * $Revision: 1.1.1.1 $
-+ * $Date: 2005/03/24 06:16:39 $
-  *
-  *      This file contains the non-read/write ftape functions for the
-  *      QIC-40/80/3010/3020 floppy-tape driver "ftape" for Linux.
-diff --git a/drivers/infiniband/ulp/ipoib/ipoib_main.c
-b/drivers/infiniband/ulp/ipoib/ipoib_main.c
-index 63c8168..54d9a10 100644
---- a/drivers/infiniband/ulp/ipoib/ipoib_main.c
-+++ b/drivers/infiniband/ulp/ipoib/ipoib_main.c
-@@ -29,7 +29,7 @@
-  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-  * SOFTWARE.
-  *
-- * $Id: ipoib_main.c 1377 2004-12-23 19:57:12Z roland $
-+ * $Id: ipoib_main.c,v 1.1.1.1 2005/03/24 06:16:41 arch-linux Exp $
-  */
+ (2) allow omission of branch-point if no branch has such
+     configuration; in other words, existing repositories that
+     do not have the allowbranchbydefault configuration anywhere
+     are not affected.  A new branch is created forking off of
+     the current HEAD;
 
- #include "ipoib.h"
+ (3) otherwise, it barfs if you do not give an explicit
+     branch-point.
 
--- 
-Jon Smirl
+and a newly created repository that is newbie friendly has one
+such configuration automatically set for 'master' (if created
+with git-init) or whatever the primary branch is (if created
+with git-clone).
+
+Note that (2) is rather important, although I think the current
+implementation of repo-config is cumbersome to use for this
+purpose and probably needs to be enhanced.
+
