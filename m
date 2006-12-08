@@ -6,74 +6,83 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: On removing files and "git-rm is pointless"
-Date: Mon, 04 Dec 2006 11:48:42 +0100
+Subject: Re: [RFC] Light-weight checkouts via ".gitlink"
+Date: Fri, 08 Dec 2006 23:18:12 +0100
 Organization: At home
-Message-ID: <el0uaf$n7h$1@sea.gmane.org>
-References: <87odqm2ppv.wl%cworth@cworth.org> <Pine.LNX.4.64.0612020919400.3476@woody.osdl.org> <4571DB40.6020800@vilain.net> <Pine.LNX.4.64.0612022246310.2630@xanadu.home> <7vd570q888.fsf@assigned-by-dhcp.cox.net>
+Message-ID: <elco6p$uku$1@sea.gmane.org>
+References: <200612082252.31245.Josef.Weidendorfer@gmx.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7Bit
-NNTP-Posting-Date: Mon, 4 Dec 2006 10:46:56 +0000 (UTC)
+NNTP-Posting-Date: Fri, 8 Dec 2006 22:16:29 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 31
+Original-Lines: 40
 Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
+X-Gmane-NNTP-Posting-Host: host-81-190-25-107.torun.mm.pl
 Mail-Copies-To: jnareb@gmail.com
 User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33184>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33759>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GrBLZ-00015B-7S for gcvg-git@gmane.org; Mon, 04 Dec
- 2006 11:46:53 +0100
+ esmtp (Exim 4.50) id 1Gso0v-0005de-Up for gcvg-git@gmane.org; Fri, 08 Dec
+ 2006 23:16:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S935699AbWLDKqu (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
- 05:46:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935728AbWLDKqu
- (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 05:46:50 -0500
-Received: from main.gmane.org ([80.91.229.2]:18884 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S935699AbWLDKqt (ORCPT
- <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006 05:46:49 -0500
+ S1947437AbWLHWQP (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
+ 17:16:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1947440AbWLHWQP
+ (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 17:16:15 -0500
+Received: from main.gmane.org ([80.91.229.2]:46872 "EHLO ciao.gmane.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1947437AbWLHWQN
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Dec 2006 17:16:13 -0500
 Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1GrBLT-0005WL-Mw for git@vger.kernel.org; Mon, 04 Dec 2006 11:46:47 +0100
-Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
+ 1Gso0k-0007iw-Dc for git@vger.kernel.org; Fri, 08 Dec 2006 23:16:06 +0100
+Received: from host-81-190-25-107.torun.mm.pl ([81.190.25.107]) by
  main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Mon, 04 Dec 2006 11:46:47 +0100
-Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Mon, 04 Dec 2006
- 11:46:47 +0100
+ <git@vger.kernel.org>; Fri, 08 Dec 2006 23:16:06 +0100
+Received: from jnareb by host-81-190-25-107.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Fri, 08 Dec 2006
+ 23:16:06 +0100
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano wrote:
+A few (very few) comments:
 
-> Nicolas Pitre <nico@cam.org> writes:
-> 
->> I think what Linus is proposing makes tons of sense.
->>
->> If you do git rm by mistake then you can always do git checkout on that
->> file to get it back.
->>
->> If you modified it so it doesn't match the index then git rm won't do
->> anything by default so you have a chance to think a bit more.
->>
->> If you updated the index, didn't commit anything but then do git rm then
->> you certainly wanted to really rm the file.
-> 
-> FWIW, I too am in favor of the proposed fix to "git rm" as Linus
-> outlined.
+Josef Weidendorfer wrote:
 
-+1. I'm also for this change. Of course if the working area version doesn't
-match HEAD version git-rm should remove only index entry, and print warning
-message, for example what it does now, i.e.
-  rm '<filename>'
-or if we want more chatty version (core.gitgor = true) it would print:
-  File '<filename>' changed. Use "rm '<filename>'" to remove.
-(or something like that).
+> This can be implemented by enhancing git to ignore any subdirectory which
+> has a file .gitlink in it.
 
+If I remember correctly, while git ignores .git, it does not ignore
+by default (i.e. without entry in either GIT_DIR/info/excludes, or
+.gitignore) the directory which has .git directory in it.
+
+And that should not change for .gitlink. You can always add
+.gitignore file with * .* patterns in it (ignore all).
+ 
+> * Gitdir = "<Path to base git repository>"
+[...]
+> * Name: <explicit name for this checkout>
+
+Why use once "key = value", once "key: value" form? Better to stick
+with one. I Would prefer "key = value" one.
+
+GIT_DIR = path to base git repository
+it is equivalent to setting the following:
+
+GIT_INDEX_FILE = path to index file
+GIT_OBJECT_DIRECTORY = path to object directory
+GIT_HEAD_FILE = path to HEAD file
+GIT_REFS_DIRECTORY = path to refs directory
+
+NAME = name
+should match "name subdirectory" entry in modules file in superproject.
+
+
+Perhaps instead of adding arbitrary number of .. in front of relative
+path, we better use some magic, like ... for finding somewhere up?
 -- 
 Jakub Narebski
 Warsaw, Poland
