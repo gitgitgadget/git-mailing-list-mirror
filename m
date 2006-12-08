@@ -4,65 +4,311 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Marco Roeland <marco.roeland@xs4all.nl>
-Subject: Re: cloning the kernel - why long time in "Resolving 313037 deltas"
-Date: Tue, 19 Dec 2006 10:13:19 +0100
-Message-ID: <20061219091319.GC30448@fiberbit.xs4all.nl>
-References: <Pine.LNX.4.64.0612181414200.3479@woody.osdl.org> <8664c896xv.fsf@blue.stonehenge.com> <Pine.LNX.4.64.0612181511260.3479@woody.osdl.org> <Pine.LNX.4.64.0612181906450.18171@xanadu.home> <20061219051108.GA29405@thunk.org> <20061219063930.GA2511@spearce.org> <Pine.LNX.4.64.0612182248420.3479@woody.osdl.org> <20061219083242.GF2511@spearce.org> <20061219084017.GB30448@fiberbit.xs4all.nl> <20061219084908.GG2511@spearce.org>
+From: Han-Wen Nienhuys <hanwen@xs4all.nl>
+Subject: [PATCH] Allow building GIT in a different directory from the source
+ directory
+Date: Fri, 08 Dec 2006 18:15:25 +0100
+Message-ID: <elc6j2$vej$1@sea.gmane.org>
+Reply-To: hanwen@xs4all.nl
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-NNTP-Posting-Date: Tue, 19 Dec 2006 09:13:57 +0000 (UTC)
-Cc: Marco Roeland <marco.roeland@xs4all.nl>,
-	Linus Torvalds <torvalds@osdl.org>,
-	Theodore Tso <tytso@mit.edu>, Nicolas Pitre <nico@cam.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	"Randal L. Schwartz" <merlyn@stonehenge.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Fri, 8 Dec 2006 17:25:40 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <20061219084908.GG2511@spearce.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 266
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: muurbloem.xs4all.nl
+User-Agent: Thunderbird 1.5.0.8 (X11/20061107)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34805>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gwb2i-0001sY-9c for gcvg-git@gmane.org; Tue, 19 Dec
- 2006 10:13:48 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33711>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GsjTR-0008N4-Ma for gcvg-git@gmane.org; Fri, 08 Dec
+ 2006 18:25:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932707AbWLSJNi (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
- 04:13:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932709AbWLSJNi
- (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 04:13:38 -0500
-Received: from fiberbit.xs4all.nl ([213.84.224.214]:60957 "EHLO
- fiberbit.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
- S932707AbWLSJNg (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec 2006
- 04:13:36 -0500
-Received: from marco by fiberbit.xs4all.nl with local (Exim 4.63)
- (envelope-from <marco.roeland@xs4all.nl>) id 1Gwb2F-0008An-CP; Tue, 19 Dec
- 2006 10:13:19 +0100
-To: Shawn Pearce <spearce@spearce.org>
+ S1425985AbWLHRZW (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
+ 12:25:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1426035AbWLHRZW
+ (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 12:25:22 -0500
+Received: from main.gmane.org ([80.91.229.2]:54520 "EHLO ciao.gmane.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1425985AbWLHRZV
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Dec 2006 12:25:21 -0500
+Received: from root by ciao.gmane.org with local (Exim 4.43) id
+ 1GsjT4-0002aD-Ai for git@vger.kernel.org; Fri, 08 Dec 2006 18:25:02 +0100
+Received: from muurbloem.xs4all.nl ([213.84.26.127]) by main.gmane.org with
+ esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>;
+ Fri, 08 Dec 2006 18:25:02 +0100
+Received: from hanwen by muurbloem.xs4all.nl with local (Gmexim 0.1 (Debian))
+ id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Fri, 08 Dec 2006 18:25:02
+ +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On Tuesday December 19th 2006 at 03:49 Shawn Pearce wrote:
 
-> [pread patch to speed up git-index-pack on Mac OS X]
-> 
-> More testing on Linux is probably needed, but if using pread()
-> on Linux is breakeven or slightly faster (as suggested by Johannes'
-> LilyPond test) this 60x performance improvement on initial clone
-> of largish projects on Mac OS X would be nice to have.
+From 105d331aee95c0cf3610ac0d2fd4aa7688bd5211 Mon Sep 17 00:00:00 2001
+From: Han-Wen Nienhuys <hanwen@xs4all.nl>
+Date: Fri, 8 Dec 2006 18:07:56 +0100
 
-I see a decrease in total time (so an improvement in performance)
-going from 37.3 to 35.2 seconds with the pread patch on Linux x86-64.
-Note that both my testing on Linux and Mac OS X was done on dual core
-processors (Athlon 3800+ XP on Linux and Intel Core 2 Duo 2.16GHz on an
-iMac). Git is only single threaded and thus uses only core, but the
-system can use the other core.
+GIT can now be built in a separate builddirectory. This is done as
+follows:
 
-The minor page faults also decreased from 734866 to 370690. Nice.
+  mkdir build
+  cd build
+  $my_git_dir/configure
+  make
 
-> Not that I personally frequently clone large projects on Mac OS X.
-> But new users to Git might.  :-)
+In this case, configure creates an empty directory tree based on the
+source directory, and wraps Makefiles from source directory in the
+build directory.  The rest of the functionality is delivered with the
+VPATH feature of Make.
 
-And perhaps the Cygwin version might benefit too.
+To make this work the Makefile should not mention ./ explicitly in
+rules, but rather use $< and $^ to automatically look in the source
+dir too.
+
+perl/Makefile and perl/Makefile.PL need special massaging because perl
+is not VPATH aware.
+
+Signed-off-by: Han-Wen Nienhuys <hanwen@xs4all.nl>
+---
+ Makefile            |   21 ++++++++++++---------
+ config.mak.in       |    9 ++++-----
+ configure.ac        |   34 ++++++++++++++++++++++++++++++++++
+ generate-cmdlist.sh |    2 +-
+ perl/Makefile       |    4 ++++
+ perl/Makefile.PL    |   16 +++++++++++++---
+ 6 files changed, 68 insertions(+), 18 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index cb9b745..3ed57ec 100644
+--- a/Makefile
++++ b/Makefile
+@@ -97,7 +97,7 @@ all:
+ #
+ 
+ GIT-VERSION-FILE: .FORCE-GIT-VERSION-FILE
+-	@$(SHELL_PATH) ./GIT-VERSION-GEN
++	@$(SHELL_PATH) $(srcdir)/GIT-VERSION-GEN
+ -include GIT-VERSION-FILE
+ 
+ uname_S := $(shell sh -c 'uname -s 2>/dev/null || echo not')
+@@ -110,7 +110,7 @@ uname_P := $(shell sh -c 'uname -p 2>/dev/null || echo not')
+ 
+ CFLAGS = -g -O2 -Wall
+ LDFLAGS =
+-ALL_CFLAGS = $(CFLAGS)
++ALL_CFLAGS = $(CFLAGS) -I.
+ ALL_LDFLAGS = $(LDFLAGS)
+ STRIP ?= strip
+ 
+@@ -120,7 +120,10 @@ datadir = $(prefix)/share
+ GIT_datadir = $(datadir)/git-core
+ gitexecdir = $(bindir)
+ template_dir = $(GIT_datadir)/templates/
+-# DESTDIR=
++srcdir = .
++
++# this is usually set on the make command line.
++DESTDIR=
+ 
+ # default configuration for gitweb
+ GITWEB_CONFIG = gitweb_config.perl
+@@ -598,8 +601,8 @@ git-merge-recur$X: git-merge-recursive$X
+ $(BUILT_INS): git$X
+ 	rm -f $@ && ln git$X $@
+ 
+-common-cmds.h: Documentation/git-*.txt
+-	./generate-cmdlist.sh > $@+
++common-cmds.h: $(wildcard $(srcdir)/Documentation/git-*.txt)
++	$(srcdir)/generate-cmdlist.sh $(srcdir)/Documentation/ > $@+
+ 	mv $@+ $@
+ 
+ $(patsubst %.sh,%,$(SCRIPT_SH)) : % : %.sh
+@@ -609,7 +612,7 @@ $(patsubst %.sh,%,$(SCRIPT_SH)) : % : %.sh
+ 	    -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
+ 	    -e 's!@@GIT_datadir@@!$(GIT_datadir)!g' \
+ 	    -e 's/@@NO_CURL@@/$(NO_CURL)/g' \
+-	    $@.sh >$@+
++	    $^ >$@+
+ 	chmod +x $@+
+ 	mv $@+ $@
+ 
+@@ -630,7 +633,7 @@ $(patsubst %.perl,%,$(SCRIPT_PERL)): % : %.perl
+ 	    -e '}' \
+ 	    -e 's|@@INSTLIBDIR@@|'"$$INSTLIBDIR"'|g' \
+ 	    -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
+-	    $@.perl >$@+
++	    $^ >$@+
+ 	chmod +x $@+
+ 	mv $@+ $@
+ 
+@@ -674,7 +677,7 @@ git-instaweb: git-instaweb.sh gitweb/gitweb.cgi gitweb/gitweb.css
+ 	    -e '/@@GITWEB_CGI@@/d' \
+ 	    -e '/@@GITWEB_CSS@@/r gitweb/gitweb.css' \
+ 	    -e '/@@GITWEB_CSS@@/d' \
+-	    $@.sh > $@+
++	    $< > $@+
+ 	chmod +x $@+
+ 	mv $@+ $@
+ 
+@@ -821,7 +824,7 @@ install: all
+ 	fi
+ 	$(foreach p,$(BUILT_INS), rm -f '$(DESTDIR_SQ)$(gitexecdir_SQ)/$p' && ln '$(DESTDIR_SQ)$(gitexecdir_SQ)/git$X' '$(DESTDIR_SQ)$(gitexecdir_SQ)/$p' ;)
+ 	$(INSTALL) -d -m755 '$(DESTDIR_SQ)$(GIT_datadir_SQ)'
+-	$(INSTALL) -m755 git-sh-setup.sh '$(DESTDIR_SQ)$(GIT_datadir_SQ)'
++	$(INSTALL) -m755 $(srcdir)/git-sh-setup.sh '$(DESTDIR_SQ)$(GIT_datadir_SQ)'
+ 
+ install-doc:
+ 	$(MAKE) -C Documentation install
+diff --git a/config.mak.in b/config.mak.in
+index 9a57840..bfbbf46 100644
+--- a/config.mak.in
++++ b/config.mak.in
+@@ -10,17 +10,16 @@ TAR = @TAR@
+ prefix = @prefix@
+ exec_prefix = @exec_prefix@
+ bindir = @bindir@
+-#gitexecdir = @libexecdir@/git-core/
++mandir=@mandir@
++
++## unused, but necessary for some autoconf versions (?)
+ datarootdir = @datarootdir@
+-template_dir = @datadir@/git-core/templates/
+ 
+-mandir=@mandir@
+ 
+ srcdir = @srcdir@
+-VPATH = @srcdir@
+ 
+ export exec_prefix mandir
+-export srcdir VPATH
++export srcdir 
+ 
+ NEEDS_SSL_WITH_CRYPTO=@NEEDS_SSL_WITH_CRYPTO@
+ NO_OPENSSL=@NO_OPENSSL@
+diff --git a/configure.ac b/configure.ac
+index 34e3478..403c410 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -5,6 +5,7 @@ AC_PREREQ(2.59)
+ AC_INIT([git], [@@GIT_VERSION@@], [git@vger.kernel.org])
+ 
+ AC_CONFIG_SRCDIR([git.c])
++srcdir=`cd $srcdir && pwd`
+ 
+ config_file=config.mak.autogen
+ config_append=config.mak.append
+@@ -334,6 +335,39 @@ GIT_PARSE_WITH(iconv))
+ AC_CONFIG_FILES(["${config_file}":"${config_in}":"${config_append}"])
+ AC_OUTPUT
+ 
++if test "$srcdir" != "."; then
++
++  ## if we're building in another directory
++  ## we need to set it up like the sourcedir
++  for d in `cd $srcdir &&  find . -type d -print | grep -v '\.git'` ;
++  do
++    if test ! -d  $d ; then
++      echo creating $d 
++      mkdir $d
++    fi
++
++    if test -f $srcdir/$d/Makefile ; then
++
++      dnl [[]] is to keep m4 happy
++      depth=`echo $d/ | sed -e 's!^\./!!g' -e 's![[^/]]*/!../!g'`
++      echo creating $d/Makefile
++
++      if test "$depth"  = "";  then
++        INCLUDE_AUTOGEN="include config.mak.autogen" ;
++      else
++        INCLUDE_AUTOGEN="srcdir=$srcdir" 
++      fi
++ 
++      cat << EOF > $d/Makefile
++$INCLUDE_AUTOGEN
++VPATH = $srcdir/$d
++export VPATH
++include $srcdir/$d/Makefile
++EOF
++
++    fi 
++  done
++fi
+ 
+ ## Cleanup
+ rm -f "${config_append}"
+diff --git a/generate-cmdlist.sh b/generate-cmdlist.sh
+index 5450918..e744fbb 100755
+--- a/generate-cmdlist.sh
++++ b/generate-cmdlist.sh
+@@ -47,6 +47,6 @@ do
+             x
+             s/.*git-'"$cmd"' - \(.*\)/  {"'"$cmd"'", "\1"},/
+ 	    p
+-     }' "Documentation/git-$cmd.txt"
++     }' "$1/git-$cmd.txt"
+ done
+ echo "};"
+diff --git a/perl/Makefile b/perl/Makefile
+index bd483b0..e912191 100644
+--- a/perl/Makefile
++++ b/perl/Makefile
+@@ -28,6 +28,10 @@ $(makfile): ../GIT-CFLAGS Makefile
+ 	echo instlibdir: >> $@
+ 	echo '	echo $(instdir_SQ)' >> $@
+ else
++
++PERL_SRCDIR=$(srcdir)/perl
++export PERL_SRCDIR
++
+ $(makfile): Makefile.PL ../GIT-CFLAGS
+ 	'$(PERL_PATH_SQ)' $< FIRST_MAKEFILE='$@' PREFIX='$(prefix_SQ)'
+ endif
+diff --git a/perl/Makefile.PL b/perl/Makefile.PL
+index de73235..8a1251d 100644
+--- a/perl/Makefile.PL
++++ b/perl/Makefile.PL
+@@ -8,21 +8,31 @@ instlibdir:
+ MAKE_FRAG
+ }
+ 
+-my %pm = ('Git.pm' => '$(INST_LIBDIR)/Git.pm');
++
++$src_prefix = '';
++if (!($ENV{'PERL_SRCDIR'} eq "")) {
++    $src_prefix = $ENV{'PERL_SRCDIR'} . "/"
++}
++
++
++my %pm = ("$src_prefix/Git.pm" => '$(INST_LIBDIR)/Git.pm');
++
++
+ 
+ # We come with our own bundled Error.pm. It's not in the set of default
+ # Perl modules so install it if it's not available on the system yet.
+ eval { require Error };
+ if ($@) {
+-	$pm{'private-Error.pm'} = '$(INST_LIBDIR)/Error.pm';
++	$pm{"$src_prefix/private-Error.pm"} = '$(INST_LIBDIR)/Error.pm';
+ }
+ 
+ my %extra;
+ $extra{DESTDIR} = $ENV{DESTDIR} if $ENV{DESTDIR};
+ 
++
+ WriteMakefile(
+ 	NAME            => 'Git',
+-	VERSION_FROM    => 'Git.pm',
++	VERSION_FROM    => "$src_prefix/Git.pm",
+ 	PM		=> \%pm,
+ 	%extra
+ );
 -- 
+1.4.4.1.gc9922-dirty
+
+
+-- 
+ Han-Wen Nienhuys - hanwen@xs4all.nl - http://www.xs4all.nl/~hanwen
