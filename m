@@ -1,108 +1,92 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Yann Dirson <ydirson@altern.org>
-Subject: [PATCH 2/4] Allows to refresh a non-top applied patch.
-Date: Fri, 24 Nov 2006 00:16:53 +0100
-Message-ID: <20061123231649.9769.46624.stgit@gandelf.nowhere.earth>
-References: <20061123230721.9769.38403.stgit@gandelf.nowhere.earth>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC] Light-weight checkouts via ".gitlink"
+Date: Sat, 9 Dec 2006 00:53:47 +0100
+Message-ID: <200612090053.48186.jnareb@gmail.com>
+References: <200612082252.31245.Josef.Weidendorfer@gmx.de> <200612082354.34488.Josef.Weidendorfer@gmx.de> <200612090025.24234.Josef.Weidendorfer@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 23 Nov 2006 23:17:49 +0000 (UTC)
-Cc: GIT list <git@vger.kernel.org>
+NNTP-Posting-Date: Fri, 8 Dec 2006 23:51:39 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061123230721.9769.38403.stgit@gandelf.nowhere.earth>
-User-Agent: StGIT/0.11
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=JOmqUomIg363dkf4a1fT0v6jeZd1uon1ROAQrCIp6Ur8vkWcZFA8xGww1Bg2IqK2B9pcn2/16XnZedqExdIeXiq9BgC7OTOql8BmOHjHqK46Jqdm2exjg+vciINfB9mn6MsUQKbw1k/SjtwR0vuhAGH79+fPMEiswZlrsGXS4NU=
+User-Agent: KMail/1.9.3
+In-Reply-To: <200612090025.24234.Josef.Weidendorfer@gmx.de>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32170>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GnNpA-0001eR-IQ for gcvg-git@gmane.org; Fri, 24 Nov
- 2006 00:17:45 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33773>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GspVA-0007zL-45 for gcvg-git@gmane.org; Sat, 09 Dec
+ 2006 00:51:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S934246AbWKWXRk (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 23 Nov 2006
- 18:17:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934250AbWKWXRk
- (ORCPT <rfc822;git-outgoing>); Thu, 23 Nov 2006 18:17:40 -0500
-Received: from smtp1-g19.free.fr ([212.27.42.27]:44780 "EHLO
- smtp1-g19.free.fr") by vger.kernel.org with ESMTP id S934246AbWKWXRj (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 23 Nov 2006 18:17:39 -0500
-Received: from bylbo.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net
- [81.57.214.146]) by smtp1-g19.free.fr (Postfix) with ESMTP id B0D529B406;
- Fri, 24 Nov 2006 00:17:38 +0100 (CET)
-Received: from gandelf.nowhere.earth ([10.0.0.5] ident=dwitch) by
- bylbo.nowhere.earth with esmtp (Exim 4.62) (envelope-from
- <ydirson@altern.org>) id 1GnNpO-0002sy-G6; Fri, 24 Nov 2006 00:17:58 +0100
-To: Catalin Marinas <catalin.marinas@gmail.com>
+ S1947508AbWLHXvd (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
+ 18:51:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1947509AbWLHXvd
+ (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 18:51:33 -0500
+Received: from ug-out-1314.google.com ([66.249.92.175]:46559 "EHLO
+ ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1947508AbWLHXvc (ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Dec
+ 2006 18:51:32 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so894378uga for
+ <git@vger.kernel.org>; Fri, 08 Dec 2006 15:51:31 -0800 (PST)
+Received: by 10.67.26.7 with SMTP id d7mr6164337ugj.1165621890808; Fri, 08
+ Dec 2006 15:51:30 -0800 (PST)
+Received: from host-81-190-25-107.torun.mm.pl ( [81.190.25.107]) by
+ mx.google.com with ESMTP id o30sm3657889ugd.2006.12.08.15.51.30; Fri, 08 Dec
+ 2006 15:51:30 -0800 (PST)
+To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
 Sender: git-owner@vger.kernel.org
 
+Josef Weidendorfer wrote:
+> On Friday 08 December 2006 23:54, Josef Weidendorfer wrote:
+>> Jakub Narebski wrote:
+>>> NAME = name
+> 
+> Forgot to mention in the proposal:
+> If you recursively have light-weight checkouts inside each other,
+> the real "name" (for .git/external/<name/ and for further submodule
+> configuration e.g. in .git/modules of the base repository)
+> should of course be the concatenation of the names in the .gitlink
+> files while going up to the base repository.
 
+Why concatenation? I thought the name would be ID of submodule,
+and should be just somehow unique.
 
-
-Signed-off-by: Yann Dirson <ydirson@altern.org>
----
-
- stgit/commands/refresh.py |   25 ++++++++++++++++++++++---
- 1 files changed, 22 insertions(+), 3 deletions(-)
-
-diff --git a/stgit/commands/refresh.py b/stgit/commands/refresh.py
-index 610d18a..ea0fe6f 100644
---- a/stgit/commands/refresh.py
-+++ b/stgit/commands/refresh.py
-@@ -66,6 +66,8 @@ options = [make_option('-f', '--force',
-            make_option('--commemail',
-                        help = 'use COMMEMAIL as the committer ' \
-                        'e-mail'),
-+           make_option('-p', '--patch',
-+                       help = 'refresh named (applied) PATCH instead of the top one'),
-            make_option('--sign',
-                        help = 'add Signed-off-by line',
-                        action = 'store_true'),
-@@ -80,9 +82,15 @@ def func(parser, options, args):
-     if autoresolved != 'yes':
-         check_conflicts()
+And if concatenation, pehaps some forbidden character inserted between
+them? Like '/' for example ;-)
  
--    patch = crt_series.get_current()
--    if not patch:
--        raise CmdException, 'No patches applied'
-+    if options.patch:
-+        patch = options.patch
-+        if not crt_series.patch_applied(patch):
-+            raise CmdException, 'Patches "%s" not applied' % patch
-+        origpatch = crt_series.get_current()
-+    else:
-+        patch = crt_series.get_current()
-+        if not patch:
-+            raise CmdException, 'No patches applied'
- 
-     if not options.force:
-         check_head_top_equal()
-@@ -110,6 +118,13 @@ def func(parser, options, args):
-            or options.authname or options.authemail or options.authdate \
-            or options.commname or options.commemail \
-            or options.sign or options.ack:
-+
-+        if options.patch:
-+            applied = crt_series.get_applied()
-+            between = applied[applied.index(patch)+1:]
-+            between.reverse()
-+            pop_patches(between)
-+
-         print 'Refreshing patch "%s"...' % patch,
-         sys.stdout.flush()
- 
-@@ -126,6 +141,10 @@ def func(parser, options, args):
-                                  committer_email = options.commemail,
-                                  backup = True, sign_str = sign_str)
- 
-+        if options.patch:
-+            between.reverse()
-+            push_patches(between)
-+
-         print 'done'
-     else:
+>>> Perhaps instead of adding arbitrary number of .. in front of
+>>> relative path, we better use some magic, like ... for finding
+>>> somewhere up? 
+> 
+> No need. Something like
+> 
+>> 	/home/user/.../linux
+> 
+> is crazy. Do you want to scan all of your home directory everytime
+> this  lookup is needed? So "..." really only makes sense in front of
+> the relative path, but there, you also can leave it out.
+
+No. I meant /home/user/.../linux to mean searching for
+  /home/user/linux
+  /home/linux
+  /linux
+but I don't think it is useful. As to relative path matching in any
+parent directory... well, that differs only in direction (up instead of 
+down) in matching filename in .gitignore when path does not contain /
+(well, actually it is taken as fileglob).
+-- 
+Jakub Narebski
