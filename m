@@ -4,69 +4,79 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: merlyn@stonehenge.com (Randal L. Schwartz)
-Subject: Re: cloning the kernel - why long time in "Resolving 313037 deltas"
-Date: 18 Dec 2006 14:01:07 -0800
-Message-ID: <86hcvs984c.fsf@blue.stonehenge.com>
-References: <86y7p57y05.fsf@blue.stonehenge.com>
-	<Pine.LNX.4.64.0612181251020.3479@woody.osdl.org>
-	<86r6uw9azn.fsf@blue.stonehenge.com>
-	<Pine.LNX.4.64.0612181625140.18171@xanadu.home>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git pull and merging.
+Date: Thu, 07 Dec 2006 23:07:41 -0800
+Message-ID: <7vvekmn9vm.fsf@assigned-by-dhcp.cox.net>
+References: <cc723f590612052051r62111c4cgfd7ee893cb00f84a@mail.gmail.com>
+	<200612071227.46194.Josef.Weidendorfer@gmx.de>
+	<7vhcw7ttj9.fsf@assigned-by-dhcp.cox.net>
+	<200612072354.01830.Josef.Weidendorfer@gmx.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Mon, 18 Dec 2006 22:01:55 +0000 (UTC)
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+NNTP-Posting-Date: Fri, 8 Dec 2006 07:07:51 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-x-mayan-date: Long count = 12.19.13.16.5; tzolkin = 6 Chicchan; haab = 18 Mac
-In-Reply-To: <Pine.LNX.4.64.0612181625140.18171@xanadu.home>
-Original-Lines: 24
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+In-Reply-To: <200612072354.01830.Josef.Weidendorfer@gmx.de> (Josef
+	Weidendorfer's message of "Thu, 7 Dec 2006 23:54:01 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34741>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GwQY1-0008OC-NT for gcvg-git@gmane.org; Mon, 18 Dec
- 2006 23:01:26 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33665>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GsZpi-0005c9-EZ for gcvg-git@gmane.org; Fri, 08 Dec
+ 2006 08:07:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1754668AbWLRWBK (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 18 Dec 2006
- 17:01:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754672AbWLRWBJ
- (ORCPT <rfc822;git-outgoing>); Mon, 18 Dec 2006 17:01:09 -0500
-Received: from blue.stonehenge.com ([209.223.236.162]:11041 "EHLO
- blue.stonehenge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1754669AbWLRWBI (ORCPT <rfc822;git@vger.kernel.org>); Mon, 18 Dec 2006
- 17:01:08 -0500
-Received: from localhost (localhost [127.0.0.1]) by blue.stonehenge.com
- (Postfix) with ESMTP id 15A4A8F2EB; Mon, 18 Dec 2006 14:01:08 -0800 (PST)
-Received: from blue.stonehenge.com ([127.0.0.1]) by localhost
- (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024) with LMTP id
- 12110-01-9; Mon, 18 Dec 2006 14:01:07 -0800 (PST)
-Received: by blue.stonehenge.com (Postfix, from userid 1001) id 867F58F2EC;
- Mon, 18 Dec 2006 14:01:07 -0800 (PST)
-To: Nicolas Pitre <nico@cam.org>
+ S1424886AbWLHHHn (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
+ 02:07:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1424890AbWLHHHn
+ (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 02:07:43 -0500
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:60261 "EHLO
+ fed1rmmtao10.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1424886AbWLHHHm (ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Dec 2006
+ 02:07:42 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao10.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061208070742.GAIK20715.fed1rmmtao10.cox.net@fed1rmimpo02.cox.net>; Fri, 8
+ Dec 2006 02:07:42 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id w77s1V00W1kojtg0000000; Fri, 08 Dec 2006
+ 02:07:52 -0500
+To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
 Sender: git-owner@vger.kernel.org
 
->>>>> "Nicolas" == Nicolas Pitre <nico@cam.org> writes:
+Josef Weidendorfer <Josef.Weidendorfer@gmx.de> writes:
 
-Nicolas> Could you try the following please:
+>> But that means I would never be able to benefit from the
+>> convenience of "branch.*.merge";
+>
+> Hmm... that's true; actually, I did not thought about people
+> which do not want to have any tracking branches (again!). So
+>
+> [remote "repo"]
+>   url = ...
+>   fetch = branch1
+>   fetch = branch2
+>
+> [branch "mybranch1"]
+>   remote = repo
+>   merge = branch1
+>
+> actually looks fine, and is the only possible way.
 
-Nicolas> 	time git-index-pack -v -o /dev/null .git/objects/pack/*.pack
+Yeah, when you lay it out that way, it absolutely makes sense to
+have "branch1" which is the name of the remote branch, not the
+local counterpart that tracks it, as the value of the "merge"
+configuration.
 
-Nicolas> and provide us with the time it took (or an estimate if it is going to 
-Nicolas> be on hour long)?
+> But still, this does not work. You have to specify
+>
+>   merge = refs/heads/branch1
+>
+> That's confusing (perhaps I can come up with a patch
+> to allow "branch1" alone).
 
-Nicolas> Performing the above on my kernel repository (after it was repacked into 
-Nicolas> a single ~150MB pack) takes only 37 seconds.
-
-I have a single pack.
-
-"Indexing" took about 30 seconds.
-"Resolving 313037 deltas" looks like it's going to take an hour.
-
-So that *was* a local delay.
-
--- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
+I think that might make things easier to read, but it might
+introduce ambiguities, especially you do not control the set of
+remote branches and tags.
