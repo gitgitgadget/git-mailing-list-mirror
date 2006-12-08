@@ -1,64 +1,131 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [PATCH take 2] change the unpack limit treshold to a saner value
-Date: Thu, 7 Dec 2006 02:59:56 -0500
-Message-ID: <20061207075956.GA22558@spearce.org>
-References: <Pine.LNX.4.64.0612061420410.2630@xanadu.home> <Pine.LNX.4.64.0612062244090.2630@xanadu.home>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 7 Dec 2006 08:00:29 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [PATCH] rerere: add clear, diff, and status commands
+Date: Fri,  8 Dec 2006 13:29:55 -0800
+Message-ID: <11656133963055-git-send-email-normalperson@yhbt.net>
+References: <20061208212830.GB13944@localdomain>
+NNTP-Posting-Date: Fri, 8 Dec 2006 21:30:11 +0000 (UTC)
+Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0612062244090.2630@xanadu.home>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+X-Mailer: git-send-email 1.4.4.2.g860f4
+In-Reply-To: <20061208212830.GB13944@localdomain>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33558>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33749>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GsEB4-0007cZ-ON for gcvg-git@gmane.org; Thu, 07 Dec
- 2006 09:00:23 +0100
+ esmtp (Exim 4.50) id 1GsnIE-00088o-4u for gcvg-git@gmane.org; Fri, 08 Dec
+ 2006 22:30:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1031811AbWLGIAO (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
- 03:00:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031815AbWLGIAO
- (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 03:00:14 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:57409 "EHLO
- corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1031811AbWLGIAM (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec 2006
- 03:00:12 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1GsEAj-0001Qz-U1; Thu, 07 Dec 2006 03:00:02 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- 1404920FB6E; Thu,  7 Dec 2006 02:59:57 -0500 (EST)
-To: Nicolas Pitre <nico@cam.org>
+ S1947291AbWLHV37 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
+ 16:29:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1947276AbWLHV37
+ (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 16:29:59 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:48156 "EHLO hand.yhbt.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1947275AbWLHV36
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Dec 2006 16:29:58 -0500
+Received: from hand.yhbt.net (localhost [127.0.0.1]) by hand.yhbt.net
+ (Postfix) with SMTP id C69DA2DC034; Fri,  8 Dec 2006 13:29:56 -0800 (PST)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Fri,  8 Dec 2006
+ 13:29:56 -0800
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Nicolas Pitre <nico@cam.org> wrote:
-> Currently the treshold is 5000.  The likelihood of this value to ever be 
-> crossed for a single push is really small making it not really useful.
+git-am and git-rebase will be updated to use 'clear', and
+diff/status can be used to aid the user in tracking progress in
+the resolution process.
 
-I started that out at 5000 because it was a reasonably safe
-threshold.  Users who didn't explicitly lower this value didn't
-enable the feature.  But it was still useful on initial pushes into
-a brand new repository when the project was very large.  For example
-pushing git.git into a bare repository *sucked* before this change.
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
+---
+ Documentation/git-rerere.txt |   27 +++++++++++++++++++++++++--
+ git-rerere.perl              |   25 +++++++++++++++++++++++++
+ 2 files changed, 50 insertions(+), 2 deletions(-)
 
-Yea, 5000 is probably too high.  Nice to see it drop.
-
+diff --git a/Documentation/git-rerere.txt b/Documentation/git-rerere.txt
+index 8b6b651..22494b2 100644
+--- a/Documentation/git-rerere.txt
++++ b/Documentation/git-rerere.txt
+@@ -7,8 +7,7 @@ git-rerere - Reuse recorded resolve
+ 
+ SYNOPSIS
+ --------
+-'git-rerere'
+-
++'git-rerere' [clear|diff|status]
+ 
+ DESCRIPTION
+ -----------
+@@ -167,6 +166,30 @@ would conflict the same way the test merge you resolved earlier.
+ `git-rerere` is run by `git rebase` to help you resolve this
+ conflict.
+ 
++COMMANDS
++--------
++
++Normally, git-rerere is run without arguments or user-intervention.
++However, it has several commands that allow it to interact with
++its working state.
++
++'clear'::
++
++This resets the metadata used by rerere if a merge resolution is to be
++is aborted.  Calling gitlink:git-am[1] --skip or gitlink:git-rebase[1]
++[--skip|--abort] will automatcally invoke this command.
++
++'diff'::
++
++This displays diffs for the current state of the resolution.  It is
++useful for tracking what has changed while the user is resolving
++conflicts.  Additional arguments are passed directly to the system
++diff(1) command installed in PATH.
++
++'status'::
++
++Like diff, but this only prints the filenames that will be tracked
++for resolutions.
+ 
+ Author
+ ------
+diff --git a/git-rerere.perl b/git-rerere.perl
+index d3664ff..2703d01 100755
+--- a/git-rerere.perl
++++ b/git-rerere.perl
+@@ -172,6 +172,31 @@ sub merge {
+ -d "$rr_dir" || exit(0);
+ 
+ read_rr();
++
++if (my $arg = shift @ARGV) {
++	if ($arg eq 'clear') {
++		for my $path (keys %merge_rr) {
++			my $name = $merge_rr{$path};
++			if (-d "$rr_dir/$name" && ! -f "$rr_dir/$name/postimage") {
++				rmtree(["$rr_dir/$name"]);
++			}
++		}
++		unlink $merge_rr;
++	} elsif ($arg eq 'status') {
++		for my $path (keys %merge_rr) {
++			print $path, "\n";
++		}
++	} elsif ($arg eq 'diff') {
++		for my $path (keys %merge_rr) {
++			my $name = $merge_rr{$path};
++			system(qw/diff/, @ARGV,
++				'-L', "a/$path", '-L', "b/$path",
++				"$rr_dir/$name/preimage", $path);
++		}
++	}
++	exit 0;
++}
++
+ my %conflict = map { $_ => 1 } find_conflict();
+ 
+ # MERGE_RR records paths with conflicts immediately after merge
 -- 
+1.4.4.2.g860f4
