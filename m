@@ -1,80 +1,66 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: If merging that is really fast forwarding creates new commit [Was: Re: how to show log for only one branch]
-Date: Mon, 6 Nov 2006 13:03:21 -0300
-Message-ID: <46a038f90611060803o653b5b8cx44d3adcfda699ec5@mail.gmail.com>
-References: <454EAEDB.8020909@gmail.com>
-	 <7vk629f6is.fsf@assigned-by-dhcp.cox.net> <454F31D7.1030202@gmail.com>
-	 <Pine.LNX.4.64.0611060734490.25218@g5.osdl.org>
+From: "Lars Hjemli" <lh@elementstorage.no>
+Subject: Re: kernel.org mirroring (Re: [GIT PULL] MMC update)
+Date: Fri, 8 Dec 2006 20:59:47 +0100
+Message-ID: <8c5c35580612081159r325bfe1dsa764da050d63606b@mail.gmail.com>
+References: <Pine.LNX.4.64.0612020835110.3476@woody.osdl.org>
+	 <457868AA.2030605@zytor.com> <20061207193012.GA84678@dspnet.fr.eu.org>
+	 <4578722E.9030402@zytor.com> <4579611F.5010303@dawes.za.net>
+	 <45798FE2.9040502@zytor.com>
+	 <Pine.LNX.4.64.0612080830380.3516@woody.osdl.org>
+	 <457995F8.1080405@zytor.com>
+	 <8c5c35580612081149y2042c62j55b1b7b3f23da6ad@mail.gmail.com>
+	 <4579C234.5080709@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Mon, 6 Nov 2006 16:07:07 +0000 (UTC)
-Cc: "Liu Yubao" <yubao.liu@gmail.com>,
-	"Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
+NNTP-Posting-Date: Fri, 8 Dec 2006 20:00:02 +0000 (UTC)
+Cc: "Linus Torvalds" <torvalds@osdl.org>,
+	"Git Mailing List" <git@vger.kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=uQiMRdZk03OxQjcZFXBt+JDB7i8bqDcTymlYmwTBY1Tuky0ODf8X9zgLUwbmSlUTMpjJMKz0x8SUDWTU9fgskld6tmmg8eZH6aAXGSvGWgVdTUVAQY4HPhTZNMC1Vo8FWgagfFeJ3zr2oFc9xxf7ZsJHoSRwcVVUI19sT6ri66E=
-In-Reply-To: <Pine.LNX.4.64.0611060734490.25218@g5.osdl.org>
+        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=XJe1rjoEXJsSKMioST1bfpC1oEQ30FA0fbLmOCzqpE2vLa7z5XqkVzDxHZBHqzKPzofwcYkLQa6MgDnj6pVgi2js0NlEHF/kcL8or4N3xQ/7xs1flpfz9hSxM790KQ1C2Eiwgo8YLl5nN/5+jY0ZPyW9aQ2wXPYmzwujQeMJ8RU=
+In-Reply-To: <4579C234.5080709@zytor.com>
 Content-Disposition: inline
+X-Google-Sender-Auth: ae5847c69a63bb17
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31017>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gh6wm-0001ew-26 for gcvg-git@gmane.org; Mon, 06 Nov
- 2006 17:03:41 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33732>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gslsv-0004JE-4V for gcvg-git@gmane.org; Fri, 08 Dec
+ 2006 20:59:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753333AbWKFQD0 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 6 Nov 2006
- 11:03:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753331AbWKFQD0
- (ORCPT <rfc822;git-outgoing>); Mon, 6 Nov 2006 11:03:26 -0500
-Received: from nf-out-0910.google.com ([64.233.182.186]:4419 "EHLO
- nf-out-0910.google.com") by vger.kernel.org with ESMTP id S1753333AbWKFQDY
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 6 Nov 2006 11:03:24 -0500
-Received: by nf-out-0910.google.com with SMTP id x30so2639476nfb for
- <git@vger.kernel.org>; Mon, 06 Nov 2006 08:03:22 -0800 (PST)
-Received: by 10.48.217.20 with SMTP id p20mr1469942nfg.1162829001254; Mon, 06
- Nov 2006 08:03:21 -0800 (PST)
-Received: by 10.49.51.10 with HTTP; Mon, 6 Nov 2006 08:03:21 -0800 (PST)
-To: "Linus Torvalds" <torvalds@osdl.org>
+ S1426183AbWLHT7t (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
+ 14:59:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1426182AbWLHT7t
+ (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 14:59:49 -0500
+Received: from nf-out-0910.google.com ([64.233.182.187]:30290 "EHLO
+ nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1426183AbWLHT7t (ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Dec
+ 2006 14:59:49 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so1223409nfa for
+ <git@vger.kernel.org>; Fri, 08 Dec 2006 11:59:47 -0800 (PST)
+Received: by 10.82.172.15 with SMTP id u15mr589728bue.1165607987406; Fri, 08
+ Dec 2006 11:59:47 -0800 (PST)
+Received: by 10.82.158.7 with HTTP; Fri, 8 Dec 2006 11:59:47 -0800 (PST)
+To: "H. Peter Anvin" <hpa@zytor.com>
 Sender: git-owner@vger.kernel.org
 
-On 11/6/06, Linus Torvalds <torvalds@osdl.org> wrote:
-> On Mon, 6 Nov 2006, Liu Yubao wrote:
-> > Then, what bad *logical* problem will happen if a merging that is really a
-> > fast forwarding creates a new commit?
-> You MUST NOT do that.
->
-> If a fast-forward were to do a "merge commit", you'd never get into the
-> situation where two people merging each other would really ever get a
-> stable result. They'd just keep doing merge commits on top of each other.
+On 12/8/06, H. Peter Anvin <hpa@zytor.com> wrote:
+> Trust me, perl, or CGI, is not the problem.  It's all about I/O traffic
+> generated by git.
 
-Indeed. I used Arch for quite a while and if you were merging between
-2 or more repos it would never reach a stable point even if the code
-didn't change at all.
+Yes, I understand. That's why I've been thinking about internal
+caching of pages.
 
-If a group of 3 developers (with one repor per developer) was
-developing at a slow pace (say, a daily commit each, plus a couple of
-pull/updates per day) the garbage-commit to content-commit ratio was
-awful. If on a given day noone had made a single commit, we'd still
-have a whole set of useless updates merged and committed.
+It's just a kick doing it in C, playing around with the git internals :-)
 
-> Besides, doing an empty commit like that ("I fast forwarded") literally
-> doesn't add any true history information.
-
-And as the number of developers and repos grows in a distributed
-scenarios, fast-forwards increasingly outnumber real commits. The
-usefulness of your logs sinks to the sewers.
-
-cheers,
-
-
+-- 
