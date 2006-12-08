@@ -1,67 +1,89 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH (amend)] gitweb: Slight visual improvements to commitdiff view
-Date: Fri, 27 Oct 2006 03:47:40 +0200
-Message-ID: <20061027014740.GV20017@pasky.or.cz>
-References: <200610270150.40100.jnareb@gmail.com> <780488.44315.qm@web31803.mail.mud.yahoo.com> <7vu01qilg1.fsf@assigned-by-dhcp.cox.net>
+From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
+Subject: Re: [PATCH] Add branch.*.localmerge and documentation update
+Date: Fri, 8 Dec 2006 23:15:28 +0100
+Message-ID: <8aa486160612081415h30a35c09lc273fd34f1dbceed@mail.gmail.com>
+References: <cc723f590612052051r62111c4cgfd7ee893cb00f84a@mail.gmail.com>
+	 <200612082012.19167.Josef.Weidendorfer@gmx.de>
+	 <8aa486160612081252t1e245104x58c8a6654d887af5@mail.gmail.com>
+	 <200612082239.38423.Josef.Weidendorfer@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 27 Oct 2006 01:50:52 +0000 (UTC)
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
-	ltuikov@yahoo.com
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Fri, 8 Dec 2006 22:15:43 +0000 (UTC)
+Cc: "Junio C Hamano" <junkio@cox.net>,
+	"Aneesh Kumar K.V" <aneesh.kumar@gmail.com>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=jhK+NiiH0ajKLDtiMLHY3GrZYRvXNoaoQqH8y6fvqOOVvnYkBKZP9gUjSe7PSeuH3fT1pNDDObzG07agR5btgbP40mFwOEjdqtWQSkUIRIdOBZNwRqxZ+5NCdfAO09jk1iNPStHMgsSiRpDoRaOAYzAAdimYu0lKyT232JVeUZ0=
+In-Reply-To: <200612082239.38423.Josef.Weidendorfer@gmx.de>
 Content-Disposition: inline
-In-Reply-To: <7vu01qilg1.fsf@assigned-by-dhcp.cox.net>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30271>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GdGoy-0001rk-Mt for gcvg-git@gmane.org; Fri, 27 Oct
- 2006 03:47:56 +0200
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33758>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gso0H-0005We-31 for gcvg-git@gmane.org; Fri, 08 Dec
+ 2006 23:15:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1946100AbWJ0Brm (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
- 21:47:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946101AbWJ0Brm
- (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 21:47:42 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:44423 "EHLO machine.or.cz") by
- vger.kernel.org with ESMTP id S1946100AbWJ0Brl (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 21:47:41 -0400
-Received: (qmail 7914 invoked by uid 2001); 27 Oct 2006 03:47:40 +0200
-To: Junio C Hamano <junkio@cox.net>
+ S1947441AbWLHWPb convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006 17:15:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1947437AbWLHWPb
+ (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 17:15:31 -0500
+Received: from wx-out-0506.google.com ([66.249.82.225]:22561 "EHLO
+ wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1947441AbWLHWPa convert rfc822-to-8bit (ORCPT
+ <rfc822;git@vger.kernel.org>); Fri, 8 Dec 2006 17:15:30 -0500
+Received: by wx-out-0506.google.com with SMTP id h27so930349wxd for
+ <git@vger.kernel.org>; Fri, 08 Dec 2006 14:15:29 -0800 (PST)
+Received: by 10.70.66.18 with SMTP id o18mr6800839wxa.1165616128770; Fri, 08
+ Dec 2006 14:15:28 -0800 (PST)
+Received: by 10.70.45.1 with HTTP; Fri, 8 Dec 2006 14:15:28 -0800 (PST)
+To: "Josef Weidendorfer" <Josef.Weidendorfer@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-Dear diary, on Fri, Oct 27, 2006 at 03:42:06AM CEST, I got a letter
-where Junio C Hamano <junkio@cox.net> said that...
-> Luben Tuikov <ltuikov@yahoo.com> writes:
-> 
-> > --- Jakub Narebski <jnareb@gmail.com> wrote:
-> > ...
-> >> Those changes might wait for proper refactoring of gitweb CSS (having 
-> >> for example 8px padding in one place only).
+On 12/8/06, Josef Weidendorfer <Josef.Weidendorfer@gmx.de> wrote:
+> On Friday 08 December 2006 21:52, Santi B=E9jar wrote:
+> > On 12/8/06, Josef Weidendorfer <Josef.Weidendorfer@gmx.de> wrote:
+> > > Clarify the meaning of branch.*.merge option and add a similar
+> > > branch.*.localmerge option, which can be used to specify a local
+> > > tracking branch to be merged by default.
+> > >
+> > > Previously, if branch.*.merge was specified but did not match any
+> > > ref, the message "No changes." was not really helpful regarding
+> > > the misconfiguration. This now gives a warning.
+> > >
+> > > The value of branch.*.merge can be a list to get an octopus
+> > > merge. I chose the same way for branch.*.localmerge, and if
+> > > you specify both options, the octopus merge will have even
+> > > more parents ;-)
+> > >
+> > > Signed-off-by: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
 > >
-> > Excellent!  I'd like this explanation to be part of the
-> > commit message if that patchset is committed to git.git.
-> 
-> I'd like that kind of explanation with the patch in a single
-> message when it is ready to be applied, too.
-> 
-> I'll leave it up to you guys to decide if CSS refactoring should
-> go in first (I personally feel it probably is the case, in which
-> case this patch would need to be rebased I suspect).
+> > Ack for the documentation part. But the localmerge part is almost
+> > equivalent to my patch to allow the branch.<name>.remote equal to "=
+=2E".
+>
+> Interesting. I did not have a look at your patch.
+> The support for the "branch.*.localmerge" option is one step to be
+> able to support a remote ".". So of course, it probably is similar.
+> I even would say that "." as remote now actually makes sense as
+> logical extension.
+>
+> However, what would you change in the implementation part of my patch=
+?
 
-We don't have any such patch, do we? So let anyone doing that patch take
-this one into account and merge in whatever we have, I'd say.
+I would only take the documentation part (without the localmerge part)
+and the test for the warning.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
-$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
