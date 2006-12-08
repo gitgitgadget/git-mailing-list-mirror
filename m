@@ -1,67 +1,60 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Matthew D. Fuller" <fullermd@over-yonder.net>
-Subject: Re: VCS comparison table
-Date: Sun, 29 Oct 2006 12:24:54 -0600
-Message-ID: <20061029182454.GT17019@over-yonder.net>
-References: <200610270202.k9R22Wxf004208@laptop13.inf.utfsm.cl> <4541D291.5020205@op5.se> <20061027144656.GA32451@fieldses.org> <m3mz7gheoe.fsf@iny.iki.fi> <ehvnal$tjg$1@sea.gmane.org> <m3fyd77gsn.fsf@iny.iki.fi> <ei2563$m1u$1@sea.gmane.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Bug in merge-recursive in virtual commit corner case
+Date: Thu, 07 Dec 2006 22:01:52 -0800
+Message-ID: <7vd56vorhr.fsf@assigned-by-dhcp.cox.net>
+References: <20061207083531.GA22701@spearce.org>
+	<Pine.LNX.4.63.0612071636030.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+	<20061207192401.GB12143@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sun, 29 Oct 2006 18:25:25 +0000 (UTC)
-Cc: bazaar-ng@lists.canonical.com, git@vger.kernel.org
+NNTP-Posting-Date: Fri, 8 Dec 2006 06:02:05 +0000 (UTC)
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <ei2563$m1u$1@sea.gmane.org>
-X-Editor: vi
-X-OS: FreeBSD <http://www.freebsd.org/>
-User-Agent: Mutt/1.5.11-fullermd.3
+In-Reply-To: <20061207192401.GB12143@spearce.org> (Shawn Pearce's message of
+	"Thu, 7 Dec 2006 14:24:01 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30436>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GeFLO-00026R-MS for gcvg-git@gmane.org; Sun, 29 Oct
- 2006 19:25:15 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33659>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GsYo5-00006T-Ex for gcvg-git@gmane.org; Fri, 08 Dec
+ 2006 07:02:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S965319AbWJ2SY5 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 29 Oct 2006
- 13:24:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965325AbWJ2SY5
- (ORCPT <rfc822;git-outgoing>); Sun, 29 Oct 2006 13:24:57 -0500
-Received: from ns.centralmiss.com ([206.156.254.79]:11971 "EHLO
- optimus.centralmiss.com") by vger.kernel.org with ESMTP id S965323AbWJ2SY4
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 29 Oct 2006 13:24:56 -0500
-Received: from draco.over-yonder.net
- (adsl-072-148-013-213.sip.jan.bellsouth.net [72.148.13.213]) (using TLSv1
- with cipher ADH-AES256-SHA (256/256 bits)) (No client certificate requested)
- by optimus.centralmiss.com (Postfix) with ESMTP id C984228430; Sun, 29 Oct
- 2006 12:24:54 -0600 (CST)
-Received: by draco.over-yonder.net (Postfix, from userid 100) id 44F5E61C52;
- Sun, 29 Oct 2006 12:24:54 -0600 (CST)
-To: Jakub Narebski <jnareb@gmail.com>
+ S1424713AbWLHGBz (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
+ 01:01:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1424724AbWLHGBz
+ (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 01:01:55 -0500
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:52890 "EHLO
+ fed1rmmtao08.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1424722AbWLHGBy (ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Dec 2006
+ 01:01:54 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao08.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061208060153.FPAP3525.fed1rmmtao08.cox.net@fed1rmimpo02.cox.net>; Fri, 8
+ Dec 2006 01:01:53 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id w6231V0141kojtg0000000; Fri, 08 Dec 2006
+ 01:02:04 -0500
+To: Shawn Pearce <spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 
-On Sun, Oct 29, 2006 at 01:01:07PM +0100 I heard the voice of
-Jakub Narebski, and lo! it spake thus:
-> 
-> Branch-centric and repo-centric SCM promote different workflows,
-> namely parallel uncommited work on few development branches for
-> branch-centric SCM, one-change per-commit multiple temporary and
-> feature branches for repo-centric SCM.
+Shawn Pearce <spearce@spearce.org> writes:
 
-I don't think that follows at all.
+> Although Junio mentioned he recently saw something like this in
+> git.git when he merged in your xdl_merge() code.  I wonder if its
+> the same issue.
 
+No, that is not related at all.  My initial attempt (which is
+not in any commit that survives til today) used hash_sha1_file()
+on the result from xdl_merge() where I should have used
+write_sha1_file(), and I saw the same "oh, the required object
+is not there" errors from everywhere.
 
-> Do you really often compile and run other branch while developing on
-> other?
-
-Yes.  And I do the same with older revisions along a given branch too,
-where is where [lightweight] checkouts come in handy.
-
-
--- 
-Matthew Fuller     (MF4839)   |  fullermd@over-yonder.net
-Systems/Network Administrator |  http://www.over-yonder.net/~fullermd/
