@@ -2,154 +2,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD,
-	UNPARSEABLE_RELAY shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: [PATCH] Add --add option to git-repo-config
-Date: Fri, 15 Dec 2006 07:39:04 -0500
-Message-ID: <20061215123904.GA21322@162.242.249.10.in-addr.arpa>
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git-commit: select which files to commit while editing the commit message
+Date: Fri, 08 Dec 2006 11:18:16 -0800
+Message-ID: <7vpsaui4cn.fsf@assigned-by-dhcp.cox.net>
+References: <loom.20061208T131919-178@post.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 15 Dec 2006 12:39:18 +0000 (UTC)
+NNTP-Posting-Date: Fri, 8 Dec 2006 19:18:26 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-User-Agent: Mutt/1.4.2.1i
+In-Reply-To: <loom.20061208T131919-178@post.gmane.org> (pazu@pazu.com.br's
+	message of "Fri, 8 Dec 2006 12:36:31 +0000 (UTC)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33724>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GvCLL-0003Fb-47 for gcvg-git@gmane.org; Fri, 15 Dec
- 2006 13:39:15 +0100
+ esmtp (Exim 4.50) id 1GslEj-0007XS-Cu for gcvg-git@gmane.org; Fri, 08 Dec
+ 2006 20:18:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752053AbWLOMjJ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 15 Dec 2006
- 07:39:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752076AbWLOMjJ
- (ORCPT <rfc822;git-outgoing>); Fri, 15 Dec 2006 07:39:09 -0500
-Received: from vs072.rosehosting.com ([216.114.78.72]:47204 "EHLO
- silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
- S1752053AbWLOMjI (ORCPT <rfc822;git@vger.kernel.org>); Fri, 15 Dec 2006
- 07:39:08 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1]) by
- silverinsanity.com (Postfix) with ESMTP id 0D7CF1FFC02B for
- <git@vger.kernel.org>; Fri, 15 Dec 2006 12:39:05 +0000 (UTC)
-Received: from Mutt by mutt-smtp-wrapper.pl 1.2 
- (www.zdo.com/articles/mutt-smtp-wrapper.shtml)
-To: git@vger.kernel.org
+ S968828AbWLHTSS (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
+ 14:18:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S968832AbWLHTSS
+ (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 14:18:18 -0500
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:56015 "EHLO
+ fed1rmmtao04.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S968828AbWLHTSR (ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Dec 2006
+ 14:18:17 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao04.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061208191817.JFBZ7494.fed1rmmtao04.cox.net@fed1rmimpo01.cox.net>; Fri, 8
+ Dec 2006 14:18:17 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id wKHg1V00J1kojtg0000000; Fri, 08 Dec 2006
+ 14:17:41 -0500
+To: Pazu <pazu@pazu.com.br>
 Sender: git-owner@vger.kernel.org
 
-For multivars, the "git-repo-config name value ^$" is useful but
-nonintuitive and troublesome to do repeatedly (since the value is not
-at the end of the command line).  This commit simply adds an --add
-option that adds a new value to a multivar.  Particularly useful for
-tracking a new branch on a remote:
+Pazu <pazu@pazu.com.br> writes:
 
-git-repo-config --add remote.origin.fetch +next:origin/next
+> # Please enter the commit message for your changes.
+> # (Comment lines starting with '#' will not be included)
+> # On branch refs/heads/next
+> # Updated but not checked in:
+> #   (will commit)
+> #
+> #	modified:   perl/Makefile
+> #	modified:   var.c
+>
+> Here's where the magic would happen. Removing the line "modified: var.c" would
+> remove var.c from this commit. Of course, the template message should be
+> modified to tell the user he can do that.
+>
+> So, what do you think about this?
 
-Includes documentation and test.
+Personally, I would refuse to use such a modified git, because
+often the first thing I would do in the commit log buffer is
+check the listed files and remove the '# ...' lines while
+typing.  I do not want that to affect the set of changes I
+staged in any way.
 
-Signed-off-by: Brian Gernhardt <benji@silverinsanity.com>
----
-
-This is unchanged from my last patch, but not mangled by OS X's
-clipboard or Mail.app.
-
- Documentation/git-repo-config.txt |   14 +++++++++++++-
- builtin-repo-config.c             |    6 ++++--
- t/t1300-repo-config.sh            |   10 ++++++++++
- 3 files changed, 27 insertions(+), 3 deletions(-)
-
-diff --git a/Documentation/git-repo-config.txt b/Documentation/git-repo-config.txt
-index 5bede9a..b379ec5 100644
---- a/Documentation/git-repo-config.txt
-+++ b/Documentation/git-repo-config.txt
-@@ -10,6 +10,7 @@ SYNOPSIS
- --------
- [verse]
- 'git-repo-config' [--global] [type] name [value [value_regex]]
-+'git-repo-config' [--global] [type] --add name value
- 'git-repo-config' [--global] [type] --replace-all name [value [value_regex]]
- 'git-repo-config' [--global] [type] --get name [value_regex]
- 'git-repo-config' [--global] [type] --get-all name [value_regex]
-@@ -23,7 +24,8 @@ You can query/set/replace/unset options with this command. The name is
- actually the section and the key separated by a dot, and the value will be
- escaped.
- 
--If you want to set/unset an option which can occur on multiple
-+Multiple lines can be added to an option by using the '--add' option.
-+If you want to update or unset an option which can occur on multiple
- lines, a POSIX regexp `value_regex` needs to be given.  Only the
- existing values that match the regexp are updated or unset.  If
- you want to handle the lines that do *not* match the regex, just
-@@ -53,6 +55,10 @@ OPTIONS
- 	Default behavior is to replace at most one line. This replaces
- 	all lines matching the key (and optionally the value_regex).
- 
-+--add::
-+	Adds a new line to the option without altering any existing
-+	values.  This is the same as providing '^$' as the value_regex.
-+
- --get::
- 	Get the value for a given key (optionally filtered by a regex
- 	matching the value). Returns error code 1 if the key was not
-@@ -194,6 +200,12 @@ To actually match only values with an exclamation mark, you have to
- % git repo-config section.key value '[!]'
- ------------
- 
-+To add a new proxy, without altering any of the existing ones, use
-+
-+------------
-+% git repo-config core.gitproxy '"proxy" for example.com'
-+------------
-+
- 
- include::config.txt[]
- 
-diff --git a/builtin-repo-config.c b/builtin-repo-config.c
-index 7b6e572..64fbdb7 100644
---- a/builtin-repo-config.c
-+++ b/builtin-repo-config.c
-@@ -3,7 +3,7 @@
- #include <regex.h>
- 
- static const char git_config_set_usage[] =
--"git-repo-config [ --global ] [ --bool | --int ] [--get | --get-all | --get-regexp | --replace-all | --unset | --unset-all] name [value [value_regex]] | --list";
-+"git-repo-config [ --global ] [ --bool | --int ] [--get | --get-all | --get-regexp | --replace-all | --add | --unset | --unset-all] name [value [value_regex]] | --list";
- 
- static char *key;
- static regex_t *key_regexp;
-@@ -190,7 +190,9 @@ int cmd_repo_config(int argc, const char **argv, const char *prefix)
- 			use_key_regexp = 1;
- 			do_all = 1;
- 			return get_value(argv[2], argv[3]);
--		} else if (!strcmp(argv[1], "--replace-all"))
-+		} else if (!strcmp(argv[1], "--add"))
-+			return git_config_set_multivar(argv[2], argv[3], "^$", 0);
-+		else if (!strcmp(argv[1], "--replace-all"))
- 
- 			return git_config_set_multivar(argv[2], argv[3], NULL, 1);
- 		else
-diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
-index 0de2497..16cd642 100755
---- a/t/t1300-repo-config.sh
-+++ b/t/t1300-repo-config.sh
-@@ -265,6 +265,16 @@ EOF
- test_expect_success '--get-regexp' \
- 	'git-repo-config --get-regexp in > output && cmp output expect'
- 
-+git-repo-config --add nextsection.nonewline "wow4 for you"
-+
-+cat > expect << EOF
-+wow2 for me
-+wow4 for you
-+EOF
-+
-+test_expect_success '--add' \
-+	'git-repo-config --get-all nextsection.nonewline > output && cmp output expect'
-+
- cat > .git/config << EOF
- [novalue]
- 	variable
--- 
-1.4.4.1.GIT
+But maybe that is just me.
