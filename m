@@ -1,67 +1,125 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Commit f84871 breaks build on OS X
-Date: Thu, 07 Dec 2006 14:36:40 -0800
-Message-ID: <7vmz5zqqo7.fsf@assigned-by-dhcp.cox.net>
-References: <2D096A57-D7B3-49C7-81E4-EB47A0D933B2@silverinsanity.com>
-	<81b0412b0612070633i7aec43dse7a8beda64437103@mail.gmail.com>
-	<86ejrbihnr.fsf@blue.stonehenge.com>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: Re: [RFC] Light-weight checkouts via ".gitlink"
+Date: Sat, 9 Dec 2006 00:40:17 +0100
+Message-ID: <200612090040.17169.Josef.Weidendorfer@gmx.de>
+References: <200612082252.31245.Josef.Weidendorfer@gmx.de> <200612082354.34488.Josef.Weidendorfer@gmx.de> <200612090024.17065.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 7 Dec 2006 22:37:06 +0000 (UTC)
-Cc: git@vger.kernel.org, Alex Riesen <raa.lkml@gmail.com>
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Fri, 8 Dec 2006 23:40:31 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <86ejrbihnr.fsf@blue.stonehenge.com> (Randal L. Schwartz's
-	message of "07 Dec 2006 12:18:32 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+User-Agent: KMail/1.9.5
+In-Reply-To: <200612090024.17065.jnareb@gmail.com>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay1.informatik.tu-muenchen.de
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33642>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33769>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GsRrQ-0008Su-97 for gcvg-git@gmane.org; Thu, 07 Dec
- 2006 23:37:00 +0100
+ esmtp (Exim 4.50) id 1GspKN-0006r2-BJ for gcvg-git@gmane.org; Sat, 09 Dec
+ 2006 00:40:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1163546AbWLGWgn (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
- 17:36:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1163548AbWLGWgn
- (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 17:36:43 -0500
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:60412 "EHLO
- fed1rmmtao01.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1163546AbWLGWgm (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec 2006
- 17:36:42 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao01.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061207223642.IQPI9173.fed1rmmtao01.cox.net@fed1rmimpo02.cox.net>; Thu, 7
- Dec 2006 17:36:42 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id vycr1V00p1kojtg0000000; Thu, 07 Dec 2006
- 17:36:52 -0500
-To: merlyn@stonehenge.com (Randal L. Schwartz)
+ S1761277AbWLHXkY (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
+ 18:40:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761279AbWLHXkY
+ (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 18:40:24 -0500
+Received: from mailout1.informatik.tu-muenchen.de ([131.159.0.18]:36242 "EHLO
+ mailout1.informatik.tu-muenchen.de" rhost-flags-OK-OK-OK-OK) by
+ vger.kernel.org with ESMTP id S1761277AbWLHXkW (ORCPT
+ <rfc822;git@vger.kernel.org>); Fri, 8 Dec 2006 18:40:22 -0500
+Received: from dhcp-3s-46.lrr.in.tum.de (dhcp-3s-46.lrr.in.tum.de
+ [131.159.35.46]) by mail.in.tum.de (Postfix) with ESMTP id 5A1CA79C; Sat,  9
+ Dec 2006 00:40:21 +0100 (MET)
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-merlyn@stonehenge.com (Randal L. Schwartz) writes:
+On Saturday 09 December 2006 00:24, Jakub Narebski wrote:
+> > That is not possible:
+> > .gitignore file has its own meaning inside of the light-weight
+> > checkout aka submodule, as this directory is the root directory of
+> > a git checkout.
+> 
+> I have forgot about that. Right.
+> 
+> The only possibility would be to use GIT_DIR/info/excludes with path
+> to submodule, and this conflict with the ability to rename and move
+> submodules.
 
->>>>>> "Alex" == Alex Riesen <raa.lkml@gmail.com> writes:
->
-> Alex> Strange. You seem to have the old, generated Makefile you perl/
-> Alex> directory. Haven't your pull failed? If so, I suspect that
->
-> Alex>  rm perl/Makefile
-> Alex>  git reset --hard
-> Alex>  git pull git...
->
-> I ended up having to do another reset afterward.
->
-> Definitely something went weird when Makefile was removed
-> from .gitignore.
+Yes. This whole .gitlink thing more or less is about trying to
+avoid as far as possible any path configuration in the supermodule
+which would have to be changed when the user moves or even deletes
+the submodule. Exactly for the latter, we want the GITDIR for submodules
+better be separate.
 
-Yes, perl/Makefile is getting overwritten by what Makefile.PL
-generates.  I thought the point of Alex's patch was to have it
-muck with perl.mak and leave the tracked Makefile alone?
+> >> GIT_DIR = path to base git repository
+> >> it is equivalent to setting the following:
+> >> 
+> >> GIT_INDEX_FILE = path to index file
+> >> GIT_OBJECT_DIRECTORY = path to object directory
+> >> GIT_HEAD_FILE = path to HEAD file
+> >> GIT_REFS_DIRECTORY = path to refs directory
+> > 
+> > AFAIK the latter two do not exist yet, or do they?
+> 
+> They do not exist; perhaps they should for completeness.
+
+Actually, I am fine with allowing them in .gitlink. This makes
+the whole thing much more flexible.
+
+> [...] 
+> > It is enough if GITDIR and NAME is given. With GITDIR_REAL after the
+> > smart lookup, e.g. GIT_INDEX_FILE would default to $GITDIR_REAL/external/$NAME
+> > and so on.
+> 
+> Not $GITDIR_REAL/submodules/<name>/index (or modules instead of
+> submodules)?
+
+Ooops, yes.
+I am not actually sure what's the best name here: "external", "submodule", ... ?
+I thought the the SVN name also fits for the submodule case. The submodule
+is independent, and possibliy comes from an external git repository.
+
+> >> NAME = name
+> >> should match "name subdirectory" entry in modules file in superproject.
+> > 
+> > Yes.
+> > This would be in my next proposal about how to build the submodule support
+> > on light-checkouts ;-)
+> 
+> I have thought that with "each submodule as separate repository" approach
+> to submodules the modules file would have module name and either
+> subdirectory in which submodule resides, or GIT_DIR of submodule. And
+> this file could be generated on checkout... which doesn't survive closer
+> scrutiny.
+
+Of course, that is a more simple approach. But I think the .gitlink thing
+really is more flexible without being more complex.
+
+> > Ah, yes, I see. Perhaps this makes sense with absolute paths:
+> > 
+> > 	/home/user/repos/.../linux
+> 
+> You mean that the above means to check the following paths:
+> 
+>   /home/user/repos/linux
+>   /home/user/linux
+>   /home/linux
+>   /linux
+
+No.
+
+> not the searching subdirectories of /home/user/repos for linux
+> directory (there can be many)?
+
+Yes. But you can scratch this.
 
