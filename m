@@ -1,76 +1,78 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-2.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,MSGID_FROM_MTA_HEADER,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
-From: Sean <seanlkml@sympatico.ca>
-Subject: Re: git-PS1 bash prompt setting
-Date: Fri, 17 Nov 2006 04:20:51 -0500
-Message-ID: <BAYC1-PASMTP0635A081EAC964E03599B4AEE80@CEZ.ICE>
-References: <20061116130111.921396df.seanlkml@sympatico.ca>
-	<20061117083801.GB11468@fry.bender.fht>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: Trouble with git-svn when upstream svn URL changed
+Date: Fri, 8 Dec 2006 10:11:09 -0800
+Message-ID: <20061208181109.GA10475@localdomain>
+References: <m21wnai8qe.fsf@ziti.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Fri, 17 Nov 2006 09:21:15 +0000 (UTC)
-Cc: git@vger.kernel.org, Theodore Tso <tytso@mit.edu>
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Fri, 8 Dec 2006 18:11:36 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Originating-IP: [65.93.43.81]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Original-Message-Id: <20061117042051.d2fbddb6.seanlkml@sympatico.ca>
-In-Reply-To: <20061117083801.GB11468@fry.bender.fht>
-X-Mailer: Sylpheed version 2.2.9 (GTK+ 2.10.4; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 17 Nov 2006 09:24:19.0656 (UTC) FILETIME=[2906BC80:01C70A2A]
+Content-Disposition: inline
+In-Reply-To: <m21wnai8qe.fsf@ziti.local>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gkzu5-00048S-Pc for gcvg-git@gmane.org; Fri, 17 Nov
- 2006 10:21:01 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33715>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GskC6-0006yH-FM for gcvg-git@gmane.org; Fri, 08 Dec
+ 2006 19:11:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1755022AbWKQJUy (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 17 Nov 2006
- 04:20:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755573AbWKQJUy
- (ORCPT <rfc822;git-outgoing>); Fri, 17 Nov 2006 04:20:54 -0500
-Received: from bayc1-pasmtp06.bayc1.hotmail.com ([65.54.191.166]:47737 "EHLO
- BAYC1-PASMTP06.bayc1.hotmail.com") by vger.kernel.org with ESMTP id
- S1755017AbWKQJUx (ORCPT <rfc822;git@vger.kernel.org>); Fri, 17 Nov 2006
- 04:20:53 -0500
-Received: from linux1.attic.local ([65.93.43.81]) by
- BAYC1-PASMTP06.bayc1.hotmail.com over TLS secured channel with Microsoft
- SMTPSVC(6.0.3790.1830); Fri, 17 Nov 2006 01:24:19 -0800
-Received: from guru.attic.local ([10.10.10.28]) by linux1.attic.local with
- esmtp (Exim 4.43) id 1Gkyxu-0008Js-JQ; Fri, 17 Nov 2006 03:20:50 -0500
-To: Nicolas Vilz <niv@iaglans.de>
+ S1760799AbWLHSLN (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
+ 13:11:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760797AbWLHSLN
+ (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 13:11:13 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:47620 "EHLO hand.yhbt.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1760799AbWLHSLL
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Dec 2006 13:11:11 -0500
+Received: from hand.yhbt.net (localhost [127.0.0.1]) by hand.yhbt.net
+ (Postfix) with SMTP id 4968D2DC034; Fri,  8 Dec 2006 10:11:10 -0800 (PST)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Fri, 08 Dec 2006
+ 10:11:09 -0800
+To: Seth Falcon <sethfalcon@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-On Fri, 17 Nov 2006 09:38:02 +0100
-Nicolas Vilz <niv@iaglans.de> wrote:
-
-> Just a note:
+Seth Falcon <sethfalcon@gmail.com> wrote:
+> Hi,
 > 
-> this doesn't work with bash 3.2. I think they altered the way of
-> trimming variables in this version.
+> One of the repositories I have been tracking with git-svn was
+> reorganized and the path that I have been tracking is now in a new
+> location.
 > 
-> on systems with bash 3.2 installed, i get
-> [master!linus-2.6/vm/vm]$ 
-> with the example above.
+> I was hoping that the following would work:
 > 
-> on systems with bash 3.1, it works properly.
+>    git clone orig new
+>    cd new
+>    git svn rebuild $NEW_URL
+> 
+> I also tried 
+> 
+>    git svn rebuild --remote $NEW_URL
+> 
+> This have some output that looked reasonable (svn rev nums and git
+> sha1's).  But git svn fetch does nothing and I don't seem to have any
+> of the new content.  Am I using this incorrectly?
 
-Sorry bout that, I knew it was a bit fragile.  Was rather
-comical reading Junio's recent message about all the things not
-to do if you want portable shell code and noticing my 6 line script
-did 90% of them ;o)  Strange though, I downloaded Bash 3.2
-and gave it a try and didn't see the problem here..
+This is incorrect, rebuild is not designed to handle new urls.  However,
+git/git-svn are very flexible beasts :)
 
-Wanna try this small change, to see if it helps? :
+> I guess I can create a fresh git repos using git-svn init and then
+> fetch all of my dev branches from the original repository.
 
-#!/bin/bash
-BR=$(git symbolic-ref HEAD 2>/dev/null) || { echo "$@" ; exit ; }
-BR=${BR#refs/heads/}
-REL=$(git rev-parse --show-prefix)
-REL="${REL%\/}"
-LOC="${PWD%/$REL}"
-echo "[$BR!${LOC/*\/}${REL:+/$REL}]$ "
+You can look at "Advanced Example: Tracking a Reorganized Repository"
+in the manpage.  Ignore the text about --follow-parent since you
+already have the old stuff fetched, and start following the instructions
+beginning with "# And now, we continue tracking the new revisions:"
+
+If that fails (I don't think it would); you can always link branches
+together using grafts (git-svn graft-branches tries to automate this;
+but it's imperfect).
+
+-- 
