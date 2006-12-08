@@ -2,78 +2,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: On removing files and "git-rm is pointless"
-Date: Mon, 4 Dec 2006 07:42:26 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0612040737120.3476@woody.osdl.org>
-References: <87odqm2ppv.wl%cworth@cworth.org> <Pine.LNX.4.64.0612020919400.3476@woody.osdl.org>
- <4571DB40.6020800@vilain.net> <Pine.LNX.4.64.0612022246310.2630@xanadu.home>
- <7vd570q888.fsf@assigned-by-dhcp.cox.net>
+From: "Aneesh Kumar K.V" <aneesh.kumar@gmail.com>
+Subject: Re: shallow clones, was Re: What's cooking in git.git (topics)
+Date: Fri, 08 Dec 2006 15:42:56 +0530
+Message-ID: <45793AA8.8010704@gmail.com>
+References: <7vvekoyb79.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0612070035570.28348@wbgn013.biozentrum.uni-wuerzburg.de> <87zma06ptm.fsf@wine.dyndns.org> <Pine.LNX.4.63.0612071557580.28348@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Mon, 4 Dec 2006 15:43:03 +0000 (UTC)
-Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org,
-	Carl Worth <cworth@cworth.org>, Sam Vilain <sam@vilain.net>
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Fri, 8 Dec 2006 10:13:31 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <7vd570q888.fsf@assigned-by-dhcp.cox.net>
-X-MIMEDefang-Filter: osdl$Revision: 1.161 $
-X-Scanned-By: MIMEDefang 2.36
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:user-agent:mime-version:newsgroups:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=LwRbHXyoDGeKvd3wjGBElLMvAuAsZaUUKRFsDvzFE1gAoJS2CcOC3ku7A6Bdk6tkLwiHzdqCAWfTt2wzWdoq5KHMKTmhcWjgWuD2/tG/IubgOPYNpTRrCiGpHDSb6V1Oau2einLa1qGPFWhC1vZQUhhfHz9XEzSIoT2Veq+gBZc=
+User-Agent: Thunderbird 1.5.0.8 (X11/20061115)
+Original-Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <Pine.LNX.4.63.0612071557580.28348@wbgn013.biozentrum.uni-wuerzburg.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33198>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33677>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GrFxy-000597-AW for gcvg-git@gmane.org; Mon, 04 Dec
- 2006 16:42:50 +0100
+ esmtp (Exim 4.50) id 1GscjO-00079N-Tp for gcvg-git@gmane.org; Fri, 08 Dec
+ 2006 11:13:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S937035AbWLDPmr (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
- 10:42:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937040AbWLDPmr
- (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 10:42:47 -0500
-Received: from smtp.osdl.org ([65.172.181.25]:60654 "EHLO smtp.osdl.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S937035AbWLDPmq
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006 10:42:46 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
- smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kB4FgRjQ020017
- (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Mon, 4
- Dec 2006 07:42:28 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
- shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kB4FgQDE023871; Mon, 4 Dec
- 2006 07:42:27 -0800
-To: Junio C Hamano <junkio@cox.net>
+ S1425312AbWLHKNW (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
+ 05:13:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1425322AbWLHKNW
+ (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 05:13:22 -0500
+Received: from nz-out-0506.google.com ([64.233.162.238]:34821 "EHLO
+ nz-out-0102.google.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with
+ ESMTP id S1425312AbWLHKNV (ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Dec
+ 2006 05:13:21 -0500
+Received: by nz-out-0102.google.com with SMTP id s1so496895nze for
+ <git@vger.kernel.org>; Fri, 08 Dec 2006 02:13:21 -0800 (PST)
+Received: by 10.65.54.9 with SMTP id g9mr5510652qbk.1165572800932; Fri, 08
+ Dec 2006 02:13:20 -0800 (PST)
+Received: from ?217.76.227.183? ( [156.153.255.234]) by mx.google.com with
+ ESMTP id e11sm2549983qbc.2006.12.08.02.13.12; Fri, 08 Dec 2006 02:13:19 -0800
+ (PST)
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-
-
-On Mon, 4 Dec 2006, Junio C Hamano wrote:
+Johannes Schindelin wrote:
+>.
+>> I'm not sure what reaction you expect, but this is something a lot of 
+>> our occasional Wine users are requesting. The Wine full history is 80Mb, 
+>> and that's a big download if you just want to try a quick patch. Now of 
+>> course you won't see these users around here hacking on shallow clone, 
+>> most likely they just went and downloaded Wine from the CVS mirror 
+>> instead. But it's a shame to have to maintain a CVS mirror just for that 
+>> purpose...
 > 
-> FWIW, I too am in favor of the proposed fix to "git rm" as Linus
-> outlined.
+> Sorry, I was just mumbling about the fact that I would _like_ to hear back 
+> about successes and failures. If there are problems I want to fix them.
+> 
+>>
 
-Note that somebody (sorry, forget who) correctly pointed out that in order 
-to be "safe", the file that you "rm" has to match not only the index, but 
-it should match the HEAD tree too.
 
-If it matches both the index and the HEAD tree, a "git rm filename" is 
-totally safe, since you can always get it back by just doing a
+How about this. This is already reported 
 
-	git checkout HEAD filename
+kvaneesh@kvaneesh-laptop:/tmp$git clone --depth 2 /home/opensource/git git.test
+.....
+ 100% (743/743) done
 
-so the "git rm" really didn't lose any info, and as such, we can _happily_ 
-remove the working tree copy without any concern at all.
 
-If it doesn't match HEAD, we can't get it back as easily, so maybe that's 
-the case when we want to have "git rm -f filename".
+kvaneesh@kvaneesh-laptop:/tmp$cd git.test/
+[master@git.test]$ git fsck-objects
 
-(And obviously, for all the normal reasons, if the index or HEAD doesn't 
-match, the error message should be helpful and also explicitly mention the 
-"-f" flag. Somehing like
 
-	file 'x' does not match HEAD or has been staged for changes.
-	Will not remove. Use '-f' to force removal.
 
-("has been staged for changes" is just a long way of saying "index". See? 
-I _can_ learn.)
+[master@git.test]$ git fetch --depth 4
+remote: Generating pack...
+remote: Done counting 872 objects.
+...
+ 100% (1/1) done
+Total 1 (delta 0), reused 0 (delta 0)
+Unpacking 1 objects
+ 100% (1/1) done
 
+
+[master@git.test]$ git fsck-objects
+dangling commit aca085e577688108a2480b96a2f7077424a74e4d
+dangling commit b360cca0b100e14abffa4cae78521b493c783738
+dangling commit cd976f5c52694acb4b23c3f2425ed4f0a47ec799
