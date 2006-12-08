@@ -1,78 +1,85 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [RFC \ WISH] Add -o option to git-rev-list
-Date: Sun, 10 Dec 2006 12:19:55 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0612101213520.12500@woody.osdl.org>
-References: <e5bfff550612100338ye2ca2a0u1c8f29bbc59c5431@mail.gmail.com> 
- <Pine.LNX.4.64.0612101009040.12500@woody.osdl.org>
- <e5bfff550612101151r5e77ddc0w8f61f36fc1f2920e@mail.gmail.com>
- <Pine.LNX.4.64.0612101159530.12500@woody.osdl.org>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: Re: [PATCH] Add branch.*.localmerge and documentation update
+Date: Sat, 9 Dec 2006 00:17:43 +0100
+Message-ID: <200612090017.44105.Josef.Weidendorfer@gmx.de>
+References: <cc723f590612052051r62111c4cgfd7ee893cb00f84a@mail.gmail.com> <200612082301.57037.Josef.Weidendorfer@gmx.de> <7v1wnaggp7.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Sun, 10 Dec 2006 20:20:24 +0000 (UTC)
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <junkio@cox.net>,
-	Alex Riesen <raa.lkml@gmail.com>,
-	Shawn Pearce <spearce@spearce.org>
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Fri, 8 Dec 2006 23:18:02 +0000 (UTC)
+Cc: Santi =?iso-8859-1?q?B=E9jar?= <sbejar@gmail.com>,
+	"Aneesh Kumar K.V" <aneesh.kumar@gmail.com>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <Pine.LNX.4.64.0612101159530.12500@woody.osdl.org>
-X-MIMEDefang-Filter: osdl$Revision: 1.162 $
-X-Scanned-By: MIMEDefang 2.36
+User-Agent: KMail/1.9.5
+In-Reply-To: <7v1wnaggp7.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay2.informatik.tu-muenchen.de
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33922>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33765>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GtV9g-0006hC-Ua for gcvg-git@gmane.org; Sun, 10 Dec
- 2006 21:20:13 +0100
+ esmtp (Exim 4.50) id 1Gsoye-0004Wu-P1 for gcvg-git@gmane.org; Sat, 09 Dec
+ 2006 00:18:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1762485AbWLJUUF (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 10 Dec 2006
- 15:20:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762490AbWLJUUF
- (ORCPT <rfc822;git-outgoing>); Sun, 10 Dec 2006 15:20:05 -0500
-Received: from smtp.osdl.org ([65.172.181.25]:58451 "EHLO smtp.osdl.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1762485AbWLJUUE
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 10 Dec 2006 15:20:04 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
- smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kBAKJuID019202
- (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Sun, 10
- Dec 2006 12:19:56 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
- shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kBAKJtF5002090; Sun, 10 Dec
- 2006 12:19:55 -0800
-To: Marco Costalba <mcostalba@gmail.com>
+ S1761266AbWLHXRv (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
+ 18:17:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761267AbWLHXRv
+ (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 18:17:51 -0500
+Received: from mailout1.informatik.tu-muenchen.de ([131.159.0.18]:36115 "EHLO
+ mailout1.informatik.tu-muenchen.de" rhost-flags-OK-OK-OK-OK) by
+ vger.kernel.org with ESMTP id S1761266AbWLHXRu (ORCPT
+ <rfc822;git@vger.kernel.org>); Fri, 8 Dec 2006 18:17:50 -0500
+Received: from dhcp-3s-46.lrr.in.tum.de (dhcp-3s-46.lrr.in.tum.de
+ [131.159.35.46]) by mail.in.tum.de (Postfix) with ESMTP id 701B72163; Sat,  9
+ Dec 2006 00:17:48 +0100 (MET)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-
-
-On Sun, 10 Dec 2006, Linus Torvalds wrote:
+On Friday 08 December 2006 23:34, Junio C Hamano wrote:
+> >> What convenience would it buy us (including but not limited to
+> >> new people), and if there is any, would that outweigh the
+> >> potential confusion factor to have two different configuration
+> >> variables that do exactly the same thing whose sole difference
+> >> is which side of the fetched branch namespace it uses to specify
+> >> the merge source?
+> >
+> > I just came up with a concrete patch.
+> > I am not saying that this is the only true solution.
 > 
-> So don't worry too much about low-memory situations.
+> I admit that I do not use branch.*.merge and I do not know what
+> people find lacking in what Santi did in late September with
+> commit 5372806.  What problem are we trying to solve (not a
+> rhetorical question -- I am truly lost here)?  Is it only a
+> confusion between remote and local, or is there something that
+> cannot be expressed with the current scheme?
 
-Btw, I should obviously clarify that. You should _always_ worry about 
-low-memory situations, but the only real issue is really "working set 
-size", not "data in files or in memory".
+More or less, yes.
 
-If the file representation is very dense (like the git pack-files are, for 
-example), then it may well make sense to keep the data in a file, just 
-because it's smaller there than if you keep it in expanded form in memory.
+When this thread started, I remembered being bitten exactly by
+this issue. And I only understood my problem after looking and
+trying to understand the code.
+Therefore, it was quite easy to come up with this patch.
 
-Also, it's nice to keep stuff in the filesystem rather than in process VM 
-memory, because filesystem data that is cached in memory is useful for 
-_other_ processes, ie it has a lifetime that is longer than the process 
-itself. However, that's obviously only true for long-lived files that are 
-shared among processes, it's _not_ true for temporary files.
+IMHO, a problem really is the people do not want to read documentation.
+They see the branch.*.merge option in .git/config, and try to build
+their own mental model how it works.
 
-For temporary files, the memory footprint of a temp-file is usually 
-_larger_ than the memory footprint of the same data kept in memory. You 
-have things like page-cache alignment, and often the issue of marshalling 
-data into ASCII etc. So temp-files are almost never a better solution than 
-keeping things in memory (unless you use those temp-files to truly 
-_share_ data between processes, ie you do a shared mmap and they can 
-re-use the same pages actively in a way they couldn't otherwise).
+Perhaps the warning I added now would have been enough for me to see
+my error; it points at the misconfigured option. For sure, I would
+have looked up the manual for the meaning of this option after seeing
+the warning.
+But the previous documentation simply was way to short.
+
+Should I send a "simplified" patch?
 
