@@ -1,127 +1,77 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Alan Chandler <alan@chandlerfamily.org.uk>
-Subject: Re: [PATCH] make 'git add' a first class user friendly interface to the index
-Date: Sat, 2 Dec 2006 08:28:57 +0000
-Message-ID: <200612020828.57989.alan@chandlerfamily.org.uk>
-References: <Pine.LNX.4.64.0612011444310.9647@xanadu.home> <7vpsb36yem.fsf@assigned-by-dhcp.cox.net> <87veku3i0j.wl%cworth@cworth.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: kernel.org mirroring (Re: [GIT PULL] MMC update)
+Date: Fri, 8 Dec 2006 08:35:22 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0612080830380.3516@woody.osdl.org>
+References: <Pine.LNX.4.64.0612020835110.3476@woody.osdl.org>
+ <45744FA3.7020908@zytor.com> <Pine.LNX.4.64.0612061847190.3615@woody.osdl.org>
+ <45778AA3.7080709@zytor.com> <Pine.LNX.4.64.0612061940170.3615@woody.osdl.org>
+ <4577A84C.3010601@zytor.com> <Pine.LNX.4.64.0612070953290.3615@woody.osdl.org>
+ <45785697.1060001@zytor.com> <Pine.LNX.4.64.0612071052560.3615@woody.osdl.org>
+ <457868AA.2030605@zytor.com> <20061207193012.GA84678@dspnet.fr.eu.org>
+ <4578722E.9030402@zytor.com> <4579611F.5010303@dawes.za.net>
+ <45798FE2.9040502@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-15"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sat, 2 Dec 2006 08:29:16 +0000 (UTC)
-Cc: Carl Worth <cworth@cworth.org>, Junio C Hamano <junkio@cox.net>,
-	Nicolas Pitre <nico@cam.org>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Fri, 8 Dec 2006 16:36:55 +0000 (UTC)
+Cc: Rogan Dawes <discard@dawes.za.net>,
+	Kernel Org Admin <ftpadmin@kernel.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Jakub Narebski <jnareb@gmail.com>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: KMail/1.9.5
-In-Reply-To: <87veku3i0j.wl%cworth@cworth.org>
-Content-Disposition: inline
+In-Reply-To: <45798FE2.9040502@zytor.com>
+X-MIMEDefang-Filter: osdl$Revision: 1.162 $
+X-Scanned-By: MIMEDefang 2.36
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33007>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GqQFD-0000eN-2O for gcvg-git@gmane.org; Sat, 02 Dec
- 2006 09:29:12 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33703>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GsiiK-0007gx-F6 for gcvg-git@gmane.org; Fri, 08 Dec
+ 2006 17:36:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1162833AbWLBI3H (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 2 Dec 2006
- 03:29:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1162834AbWLBI3H
- (ORCPT <rfc822;git-outgoing>); Sat, 2 Dec 2006 03:29:07 -0500
-Received: from 82-44-22-127.cable.ubr06.croy.blueyonder.co.uk
- ([82.44.22.127]:8400 "EHLO home.chandlerfamily.org.uk") by vger.kernel.org
- with ESMTP id S1162833AbWLBI3E (ORCPT <rfc822;git@vger.kernel.org>); Sat, 2
- Dec 2006 03:29:04 -0500
-Received: from kanger.home ([192.168.0.21]) by home.chandlerfamily.org.uk
- with esmtp (Exim 4.63) (envelope-from <alan@chandlerfamily.org.uk>) id
- 1GqQF4-0004AH-BL; Sat, 02 Dec 2006 08:29:02 +0000
-To: git@vger.kernel.org
+ S1760769AbWLHQgl (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
+ 11:36:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760770AbWLHQgl
+ (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 11:36:41 -0500
+Received: from smtp.osdl.org ([65.172.181.25]:59921 "EHLO smtp.osdl.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1760769AbWLHQgk
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Dec 2006 11:36:40 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
+ smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kB8GZNID014454
+ (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Fri, 8
+ Dec 2006 08:35:24 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
+ shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kB8GZMru026849; Fri, 8 Dec
+ 2006 08:35:23 -0800
+To: "H. Peter Anvin" <hpa@zytor.com>
 Sender: git-owner@vger.kernel.org
 
-On Saturday 02 December 2006 06:54, Carl Worth wrote:
-...
-> The proposal in the current thread of using "add" is an improvement on
-> the shortness side, and I am _delighted_ to see documentation
-> appearing that is focused on what the user wants to achieve and what
-> the user should expect to happen. So, Junio, please go ahead with
-> Nico's stuff here. It is an improvement over the current
-> situation. (And thanks, Nico, for fighting against having technical
-> details getting added to user-oriented documentation).
->
-> But I do still think it's a mistake to muddle the concepts of "adding"
-> a file and "staging edited content" for a file. In index terms, the
-> distinction is between adding a new path (and contents, of course) to
-> the index vs. just updating the contents for an existing path.
->
-> But it's not the index distinction that's interesting. It's that users
-> think of those operations differently. An "add" operation takes a
-> files out of the "untracked file" state as reported by git
-> status. That's a very different thing conceptually than updating the
-> contents of a file that is already being tracked by git. And if the
-> user thinks of an operation as being different, the command should
-> reflect that. There is a sense in which the user is always right here,
-> (since if the tool doesn't do what the user wants, the user just goes
-> somewhere else).
->
-...
- 
+
+
+On Fri, 8 Dec 2006, H. Peter Anvin wrote:
 > 
-> Except it does still leave open the user confusion of:
->
-> 	git add file1
-> 	git commit
-> 	"cool, that works"
->
-> 	edit file1
-> 	git add file2
-> 	git commit
-> 	"hmm, why didn't file1 get commited that time?!"
->
-> And the only answer we can give to the poor user is:
->
-> 	Oh, "git add", (and "git commit" for that matter) don't do
-> 	what you think they do. Go read the documentation and try
-> 	again.
->
-...
-> If add really were uniquely about _adding_ files to be tracked,
-> (rather than just a short synonym for update-index), and if we tweaked
-> the default behavior of git-commit, we could fix these things. And
-> all the model and power of git would still exist and be ready to be
-> learned by anyone that wants it, (rather than only by those who manage
-> to get past snags like these).
+> This goes back to the "gitweb needs native caching" again.
 
-There is a conceptual difference between thinking that git-add is about adding 
-a file and git-add adding the current state of a files content.  If your 
-conceptual model is the first of these - then I can see why you see a problem 
-with git-add being used to say a files contents have changed. 
+It should be fairly easy to add a caching layer, but I wouldn't do it 
+inside gitweb itself - it gets too mixed up. It would be better to have 
+it as a separate front-end, that just calls gitweb for anything it doesn't 
+find in the cache.
 
-However, if you regard the git-add command is "adding the current content of 
-the file to a staging area" , and you say this is an SCM which by definition 
-keeps the history of things once its been told about them I don't see why 
-there is a need for a different name for the operation the first time and for 
-the operation later.
+I could write a simple C caching thing that just hashes the CGI arguments 
+and uses a hash to create a cache (and proper lock-files etc to serialize 
+access to a particular cache object while it's being created) fairly 
+easily, but I'm pretty sure people would much prefer a mod_perl thing just 
+to avoid the fork/exec overhead with Apache (I think mod_perl allows 
+Apache to run perl scripts without it), and that means I'm not the right 
+person any more.
 
-Trying to put myself in the shoes of a newbie - if taught to use add in both 
-ways up front - is to ask why git isn't clever enough to notice that I have 
-changed the content of something it already knows about rather than having it 
-to manually add it again.  
-
-So I am with you that we need to effective teach
-
-git add <filename>   #add content of filename to the SCM
-#edit <filename>
-git commit -a		#commit current state of all tracked content
-
-first, and then move on to teach selective commiting
-
-The benefit of one name rather than two is that its less to remember
-
-
-
--- 
-Alan Chandler
+Not that I'm the right person anyway, since I don't have a web server set 
+up on my machine to even test with ;)
+	
+		Linus
