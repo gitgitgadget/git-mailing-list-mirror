@@ -5,71 +5,105 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
 	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Stefano Spinucci" <virgo977virgo@gmail.com>
-Subject: Re: Can git be tweaked to work cross-platform, on FAT32?
-Date: Sun, 17 Dec 2006 15:33:58 +0100
-Message-ID: <906f26060612170633h50e3e974h3b84f1829e546278@mail.gmail.com>
-References: <0MKwpI-1GuWVF2znk-0006fC@mrelayeu.kundenserver.de>
-	 <46a038f90612132155rc987a9cs6a4fa33dd4c882c6@mail.gmail.com>
-	 <0ML25U-1GvWC81sjR-0001UB@mrelayeu.kundenserver.de>
-	 <Pine.LNX.4.63.0612161227510.3635@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <46a038f90612170221u4c3b5c2asef378d3d4e159ba7@mail.gmail.com>
+From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
+Subject: Re: git pull and merging.
+Date: Fri, 8 Dec 2006 21:09:27 +0100
+Message-ID: <8aa486160612081209r91a35f4v4e495357791a934c@mail.gmail.com>
+References: <cc723f590612052051r62111c4cgfd7ee893cb00f84a@mail.gmail.com>
+	 <200612072354.01830.Josef.Weidendorfer@gmx.de>
+	 <8aa486160612071756s18f9530cr7ed26e4b7b47d1de@mail.gmail.com>
+	 <200612081823.45565.Josef.Weidendorfer@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sun, 17 Dec 2006 14:34:16 +0000 (UTC)
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Florian v. Savigny" <lorian@fsavigny.de>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Fri, 8 Dec 2006 20:09:51 +0000 (UTC)
+Cc: "Junio C Hamano" <junkio@cox.net>,
+	"Aneesh Kumar K.V" <aneesh.kumar@gmail.com>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
         h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=CeX3U4KixDEf6KLeaGboUtFsLPth5VKdOpFfHd+J3UzBUiEKxTAhUnSpry99R24wxjOJRLJI4QdVCVQqEuFCg2atuE7DykDq4TxckXKXKOzyq9RyEN7K731jadF9uKV6pdE4JRbxNqr9K+xlgqB8EqIqTdMPTS/AaL4UBR+vR2k=
-In-Reply-To: <46a038f90612170221u4c3b5c2asef378d3d4e159ba7@mail.gmail.com>
+        b=QMaofwYtPCzjmAwv9v1rfo9b+vaFwKyVRLBTCxyUExb5QJ4tx8tyQEQaIl9780h7SjefGU4nTCSeTwqL60iFcXCiocuJxMR5Oxux/JtzaZx4bloDeP88wyYlUvyrtBENmxbkCaavst7bVTqDc8fW0r9T3OZ088VeFTk2LAycNp4=
+In-Reply-To: <200612081823.45565.Josef.Weidendorfer@gmx.de>
 Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34690>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33735>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gvx5e-0002Ga-4u for gcvg-git@gmane.org; Sun, 17 Dec
- 2006 15:34:10 +0100
+ esmtp (Exim 4.50) id 1Gsm2I-0006BY-Du for gcvg-git@gmane.org; Fri, 08 Dec
+ 2006 21:09:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752717AbWLQOeA (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 17 Dec 2006
- 09:34:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752718AbWLQOeA
- (ORCPT <rfc822;git-outgoing>); Sun, 17 Dec 2006 09:34:00 -0500
-Received: from nf-out-0910.google.com ([64.233.182.189]:18990 "EHLO
- nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1752717AbWLQOd7 (ORCPT <rfc822;git@vger.kernel.org>); Sun, 17 Dec
- 2006 09:33:59 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so1678836nfa for
- <git@vger.kernel.org>; Sun, 17 Dec 2006 06:33:58 -0800 (PST)
-Received: by 10.49.75.2 with SMTP id c2mr3314924nfl.1166366038380; Sun, 17
- Dec 2006 06:33:58 -0800 (PST)
-Received: by 10.49.14.13 with HTTP; Sun, 17 Dec 2006 06:33:58 -0800 (PST)
-To: "Martin Langhoff" <martin.langhoff@gmail.com>
+ S1946146AbWLHUJa convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006 15:09:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946262AbWLHUJa
+ (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 15:09:30 -0500
+Received: from wx-out-0506.google.com ([66.249.82.238]:40422 "EHLO
+ wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1946223AbWLHUJ2 convert rfc822-to-8bit (ORCPT
+ <rfc822;git@vger.kernel.org>); Fri, 8 Dec 2006 15:09:28 -0500
+Received: by wx-out-0506.google.com with SMTP id h27so904861wxd for
+ <git@vger.kernel.org>; Fri, 08 Dec 2006 12:09:27 -0800 (PST)
+Received: by 10.70.50.18 with SMTP id x18mr6528298wxx.1165608567658; Fri, 08
+ Dec 2006 12:09:27 -0800 (PST)
+Received: by 10.70.45.1 with HTTP; Fri, 8 Dec 2006 12:09:27 -0800 (PST)
+To: "Josef Weidendorfer" <Josef.Weidendorfer@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-I just tried to use git writing to my FAT32 formatted usb stick.
+On 12/8/06, Josef Weidendorfer <Josef.Weidendorfer@gmx.de> wrote:
+> On Friday 08 December 2006 02:56, Santi B=E9jar wrote:
+> > > [remote "repo"]
+> > >   url =3D ...
+> > >   fetch =3D branch1
+> > >   fetch =3D branch2
+> > >
+> > > [branch "mybranch1"]
+> > >   remote =3D repo
+> > >   merge =3D branch1
+> > >
+> > > actually looks fine, and is the only possible way.
+> > > But still, this does not work.
+> >
+> > It works for me.
+> >
+> > > You have to specify
+> > >
+> > >   merge =3D refs/heads/branch1
+> >
+> > It does not.
+> >
+> > The merge line must match exactly the remote part of the refspec.
+>
+> Yes, you are right; I just looked it up in git-parse-remote.
+> Sorry about any confusion.
+>
+> >
+> > >
+> > > That's confusing (perhaps I can come up with a patch
+> > > to allow "branch1" alone).
+> > >
+> > > So probably the best way is to write some more detailed
+> > > explanation into the docu ...
+> >
+> > Perhaps that the branch.<name>.remote and branch.<name>.merge have =
+the
+> > equivalent meaning as the parameters of git-pull?
+>
+> We want to fetch multiple refs from one remote in a row. So what
+> are you proposing? That branch.<name>.merge has to exactly
+> specify one remote? I do not think this is needed.
 
-On windows XP, I compiled git with and without NO_D_TYPE_IN_DIRENT,
-but after the
-following actions I always got the error "fatal: Unable to write new
-index file" or
-"fatal: unable to create '.git/index': File exists":
+I'm not proposing anything. What I wanted to say is that we could
+document the ...remote and ...merge configs as the default parameters
+of git-pull (this is how it is implemented already).
 
-mkdir git-test-repo
-cd git-test-repo
-git-init-db
-echo iii>test
-git add test
-git commit -m "test msg"
-echo ooo>test1
-git add test1 ***error***
+>
+> Actually, I am really for a new branch.<name>.localmerge option,
+> and keeping branch.<name>.merge (but not advertising it).
 
-converting the stick to NTFS I have no problems.
+I do not see anything wrong with the current ...remote and ...merge
+(see above), but I'm not against the ...localmerge config.
 
-any hint ???
-
----
