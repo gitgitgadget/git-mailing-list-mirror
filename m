@@ -1,67 +1,77 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: kernel.org mirroring (Re: [GIT PULL] MMC update)
-Date: Mon, 11 Dec 2006 15:16:23 +1300
-Message-ID: <46a038f90612101816j33870bb1j39182358440aaa40@mail.gmail.com>
-References: <Pine.LNX.4.64.0612020835110.3476@woody.osdl.org>
-	 <200612102011.52589.jnareb@gmail.com> <457C84AC.7060105@garzik.org>
-	 <200612102359.20083.jnareb@gmail.com>
+From: Jon Loeliger <jdl@freescale.com>
+Subject: Re: [RFC] Submodules in GIT
+Date: Fri, 08 Dec 2006 12:29:14 -0600
+Message-ID: <1165602554.19135.309.camel@cashmere.sps.mot.com>
+References: <20061130170625.GH18810@admingilde.org>
+	 <200612010902.51264.andyparkins@gmail.com>
+	 <20061201110032.GL18810@admingilde.org> <45701B8D.1030508@b-i-t.de>
+	 <20061201121234.GQ18810@admingilde.org> <4570289D.9050802@b-i-t.de>
+	 <20061201133558.GU18810@admingilde.org> <45703174.8000609@op5.se>
+	 <20061201134610.GW18810@admingilde.org> <457041AD.4010601@op5.se>
+	 <20061201150045.GZ18810@admingilde.org> <45705A94.2070509@op5.se>
+	 <Pine.LNX.4.64.0612010844380.3695@woody.osdl.org>
+	 <457061A7.2000102@b-i-t.de>
+	 <Pine.LNX.4.64.0612011134080.3695@woody.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Mon, 11 Dec 2006 02:16:37 +0000 (UTC)
-Cc: "Jeff Garzik" <jeff@garzik.org>,
-	"Git Mailing List" <git@vger.kernel.org>,
-	"Linus Torvalds" <torvalds@osdl.org>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	"Rogan Dawes" <discard@dawes.za.net>,
-	"Kernel Org Admin" <ftpadmin@kernel.org>
+NNTP-Posting-Date: Fri, 8 Dec 2006 18:31:32 +0000 (UTC)
+Cc: sf <sf@b-i-t.de>, Git List <git@vger.kernel.org>,
+	Martin Waitz <tali@admingilde.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=KefIE+CyZQGALuqdnArSBRY2vtA92LQFk3RIWCBUq/hjpVPeTU5tJ1CXLp0KumxPI5i6AG/cqkZATs/wGjvXFah1p+1KQD9F4V94C5F89OUIYot0FyxqnqqG6HJgcnBGstlSelcTkzlwYZCyFB6nCGCw+M2bcaXnKzRrgi9GUJw=
-In-Reply-To: <200612102359.20083.jnareb@gmail.com>
-Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0612011134080.3695@woody.osdl.org>
+X-Mailer: Ximian Evolution 1.4.6 (1.4.6-2.ydl.1) 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33971>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33717>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GtaiS-0005nK-Tt for gcvg-git@gmane.org; Mon, 11 Dec
- 2006 03:16:29 +0100
+ esmtp (Exim 4.50) id 1GskVL-0001LW-Pk for gcvg-git@gmane.org; Fri, 08 Dec
+ 2006 19:31:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1762272AbWLKCQ0 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 10 Dec 2006
- 21:16:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762274AbWLKCQ0
- (ORCPT <rfc822;git-outgoing>); Sun, 10 Dec 2006 21:16:26 -0500
-Received: from nf-out-0910.google.com ([64.233.182.185]:8871 "EHLO
- nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1762272AbWLKCQZ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 10 Dec
- 2006 21:16:25 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so1847260nfa for
- <git@vger.kernel.org>; Sun, 10 Dec 2006 18:16:24 -0800 (PST)
-Received: by 10.48.242.19 with SMTP id p19mr3854253nfh.1165803384060; Sun, 10
- Dec 2006 18:16:24 -0800 (PST)
-Received: by 10.49.60.1 with HTTP; Sun, 10 Dec 2006 18:16:23 -0800 (PST)
-To: "Jakub Narebski" <jnareb@gmail.com>
+ S1760817AbWLHSbX (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
+ 13:31:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760823AbWLHSbX
+ (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 13:31:23 -0500
+Received: from az33egw02.freescale.net ([192.88.158.103]:40402 "EHLO
+ az33egw02.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1760817AbWLHSbW (ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Dec
+ 2006 13:31:22 -0500
+Received: from az33smr02.freescale.net (az33smr02.freescale.net
+ [10.64.34.200]) by az33egw02.freescale.net (8.12.11/az33egw02) with ESMTP id
+ kB8IUpkM027163; Fri, 8 Dec 2006 11:30:55 -0700 (MST)
+Received: from [10.82.19.2] (cashmere.am.freescale.net [10.82.19.2]) by
+ az33smr02.freescale.net (8.13.1/8.13.0) with ESMTP id kB8IUoYL010039; Fri, 8
+ Dec 2006 12:30:50 -0600 (CST)
+To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 
-On 12/11/06, Jakub Narebski <jnareb@gmail.com> wrote:
-> Even if Apache does execute CGI script to completion every time, it might
-> not send the output of the script, but HTTP 304 Not Modified reply. Might.
-> I don't know if it does.
+On Fri, 2006-12-01 at 14:13, Linus Torvalds wrote:
 
-It is up to the script (CGI or via mod_perl) to set the status to 304
-and finish execution. Just setting the status to 304 does not
-forcefully end execution as you may want to cleanup, log, etc.
+> So this is why it's really important that the submodule really is a git 
+> repository in its own right, and why committing stuff in the supermodule 
+> NEVER affect the submodule itself directly (it might _cause_ you to also 
+> do a commit in the submodule indirectly, but the submodule commit MUST be 
+> totally independent, and stand on its own).
 
-cheers,
+An implication of this is that the entire administrative
+responsibility for having some super-sub module interaction
+lies entirely with the supermodule.
 
+Why not have a "glue" object at the "stub"-interface of
+the supermodule tree that provides policy mappings to
+the sub-modules.  Perhaps indicating git URL location,
+mappings of branch names between super- and sub- modules,
+special commit SHA1s, user policy or config choices at
+the boundary, and things like that.
+
+Is that the sort of direction we are headed?
+
+jdl
 
