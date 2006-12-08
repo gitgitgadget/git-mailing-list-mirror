@@ -5,84 +5,62 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] remove "[PATCH]" prefix from shortlog output
-Date: Mon, 11 Dec 2006 00:35:32 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612110031480.1348@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.64.0612091954010.2630@xanadu.home>
- <Pine.LNX.4.63.0612102337090.28348@wbgn013.biozentrum.uni-wuerzburg.de>
- <eli3vr$j6v$1@sea.gmane.org>
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: Re: [RFC] Light-weight checkouts via ".gitlink"
+Date: Sat, 9 Dec 2006 00:25:24 +0100
+Message-ID: <200612090025.24234.Josef.Weidendorfer@gmx.de>
+References: <200612082252.31245.Josef.Weidendorfer@gmx.de> <elco6p$uku$1@sea.gmane.org> <200612082354.34488.Josef.Weidendorfer@gmx.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Sun, 10 Dec 2006 23:35:50 +0000 (UTC)
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Fri, 8 Dec 2006 23:25:36 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <eli3vr$j6v$1@sea.gmane.org>
-X-Y-GMX-Trusted: 0
+User-Agent: KMail/1.9.5
+In-Reply-To: <200612082354.34488.Josef.Weidendorfer@gmx.de>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay2.informatik.tu-muenchen.de
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33962>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33767>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GtYCu-0000Ss-UO for gcvg-git@gmane.org; Mon, 11 Dec
- 2006 00:35:45 +0100
+ esmtp (Exim 4.50) id 1Gsp5w-0005Hh-JO for gcvg-git@gmane.org; Sat, 09 Dec
+ 2006 00:25:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1762464AbWLJXfk (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 10 Dec 2006
- 18:35:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762538AbWLJXfk
- (ORCPT <rfc822;git-outgoing>); Sun, 10 Dec 2006 18:35:40 -0500
-Received: from mail.gmx.net ([213.165.64.20]:37990 "HELO mail.gmx.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S1762464AbWLJXfk
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 10 Dec 2006 18:35:40 -0500
-Received: (qmail invoked by alias); 10 Dec 2006 23:35:38 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp020) with SMTP; 11 Dec 2006 00:35:38 +0100
+ S1758817AbWLHXZa (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
+ 18:25:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758841AbWLHXZa
+ (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 18:25:30 -0500
+Received: from mailout1.informatik.tu-muenchen.de ([131.159.0.18]:36138 "EHLO
+ mailout1.informatik.tu-muenchen.de" rhost-flags-OK-OK-OK-OK) by
+ vger.kernel.org with ESMTP id S1758817AbWLHXZ3 (ORCPT
+ <rfc822;git@vger.kernel.org>); Fri, 8 Dec 2006 18:25:29 -0500
+Received: from dhcp-3s-46.lrr.in.tum.de (dhcp-3s-46.lrr.in.tum.de
+ [131.159.35.46]) by mail.in.tum.de (Postfix) with ESMTP id 33D94282A; Sat,  9
+ Dec 2006 00:25:28 +0100 (MET)
 To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Hi,
+On Friday 08 December 2006 23:54, Josef Weidendorfer wrote:
+> > NAME = name
 
-On Mon, 11 Dec 2006, Jakub Narebski wrote:
+Forgot to mention in the proposal:
+If you recursively have light-weight checkouts inside each other,
+the real "name" (for .git/external/<name/ and for further submodule
+configuration e.g. in .git/modules of the base repository)
+should of course be the concatenation of the names in the .gitlink
+files while going up to the base repository.
 
-> Johannes Schindelin wrote:
-> 
-> > On Sat, 9 Dec 2006, Nicolas Pitre wrote:
-> > 
-> >> This doesn't convey much information in the shortlog context.
-> >> And the perl version did strip it as well.
-> > 
-> > From the current builtin-shortlog.c:128ff:
-> > 
-> >         if (!strncmp(oneline, "[PATCH", 6)) {
-> >                 char *eob = strchr(oneline, ']');
-> > 
-> >                 if (eob) {
-> >                         while (isspace(eob[1]) && eob[1] != '\n')
-> >                                 eob++;
-> >                         if (eob - oneline < onelinelen) {
-> >                                 onelinelen -= eob - oneline;
-> >                                 oneline = eob;
-> >                         }
-> >                 }
-> >         }
-> > 
-> > It tries not only to strip "[PATCH]", but also "[PATCH 0/n]" and basically 
-> > every prefix beginning with "[PATCH" and ending in "]". I do not remember 
-> > if I really tested that code, but it should work.
-> 
-> What happens if you have "[PATCH" without closing "]"? Does it work (and
-> doesn't crash)? Does it strip anything?
+> > Perhaps instead of adding arbitrary number of .. in front of relative
+> > path, we better use some magic, like ... for finding somewhere up?
 
-Use the source, Luke!
+No need. Something like
 
-If "[PATCH" is there, but "]" is not, then eob will be NULL, and nothing 
-happens.
+> 	/home/user/.../linux
 
-Well, actually it is not completely true: the code searches for "]" in the 
-_complete_ commit message (which _is_ terminated by '\0'). But only if it 
-is found, _and_ it is in the first line, the substring is trimmed away.
+is crazy. Do you want to scan all of your home directory everytime this
+lookup is needed? So "..." really only makes sense in front of the
+relative path, but there, you also can leave it out.
 
-Hth,
-Dscho
