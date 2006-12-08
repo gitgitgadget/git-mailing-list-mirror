@@ -1,74 +1,78 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] remove "[PATCH]" prefix from shortlog output
-Date: Sun, 10 Dec 2006 22:17:57 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0612102147460.2630@xanadu.home>
-References: <Pine.LNX.4.64.0612091954010.2630@xanadu.home>
- <Pine.LNX.4.63.0612102337090.28348@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vac1v2uom.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0612110040260.1471@wbgn013.biozentrum.uni-wuerzburg.de>
+From: "Lars Hjemli" <lh@elementstorage.no>
+Subject: Re: kernel.org mirroring (Re: [GIT PULL] MMC update)
+Date: Fri, 8 Dec 2006 20:49:45 +0100
+Message-ID: <8c5c35580612081149y2042c62j55b1b7b3f23da6ad@mail.gmail.com>
+References: <Pine.LNX.4.64.0612020835110.3476@woody.osdl.org>
+	 <45785697.1060001@zytor.com>
+	 <Pine.LNX.4.64.0612071052560.3615@woody.osdl.org>
+	 <457868AA.2030605@zytor.com> <20061207193012.GA84678@dspnet.fr.eu.org>
+	 <4578722E.9030402@zytor.com> <4579611F.5010303@dawes.za.net>
+	 <45798FE2.9040502@zytor.com>
+	 <Pine.LNX.4.64.0612080830380.3516@woody.osdl.org>
+	 <457995F8.1080405@zytor.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-NNTP-Posting-Date: Mon, 11 Dec 2006 03:18:10 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Fri, 8 Dec 2006 19:49:56 +0000 (UTC)
+Cc: "Git Mailing List" <git@vger.kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-reply-to: <Pine.LNX.4.63.0612110040260.1471@wbgn013.biozentrum.uni-wuerzburg.de>
-X-X-Sender: nico@xanadu.home
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=cRD9mBVl3SYP8zSel+frUsGaN50CF2CG2jScJ1RzvdYkg/4imIMimWhXNTDVS+0raMV+D7ab97LbXrXRhHiy2YU5yFWEb94HVT6cJ+q9Hz6Ft52mzTCyaCIoPu1BdTcDglv6ZjH+XpGDYnvaKGA7bakRBbrjJrn2/b2APd5um70=
+In-Reply-To: <457995F8.1080405@zytor.com>
+Content-Disposition: inline
+X-Google-Sender-Auth: 7f506924f6fa9ce5
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33972>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33730>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gtbg6-0001qM-SX for gcvg-git@gmane.org; Mon, 11 Dec
- 2006 04:18:07 +0100
+ esmtp (Exim 4.50) id 1GsljC-00037u-Ui for gcvg-git@gmane.org; Fri, 08 Dec
+ 2006 20:49:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1759737AbWLKDR7 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 10 Dec 2006
- 22:17:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759709AbWLKDR7
- (ORCPT <rfc822;git-outgoing>); Sun, 10 Dec 2006 22:17:59 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:52455 "EHLO
- relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1759715AbWLKDR6 (ORCPT <rfc822;git@vger.kernel.org>); Sun, 10 Dec 2006
- 22:17:58 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
- <0JA300GYEAHX7VF0@VL-MO-MR002.ip.videotron.ca> for git@vger.kernel.org; Sun,
- 10 Dec 2006 22:17:57 -0500 (EST)
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+ S1426172AbWLHTts (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
+ 14:49:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1426176AbWLHTts
+ (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 14:49:48 -0500
+Received: from nf-out-0910.google.com ([64.233.182.190]:21585 "EHLO
+ nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1426172AbWLHTtr (ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Dec
+ 2006 14:49:47 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so1221250nfa for
+ <git@vger.kernel.org>; Fri, 08 Dec 2006 11:49:46 -0800 (PST)
+Received: by 10.82.113.6 with SMTP id l6mr610877buc.1165607385253; Fri, 08
+ Dec 2006 11:49:45 -0800 (PST)
+Received: by 10.82.158.7 with HTTP; Fri, 8 Dec 2006 11:49:45 -0800 (PST)
+To: "H. Peter Anvin" <hpa@zytor.com>, "Linus Torvalds" <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 
-On Mon, 11 Dec 2006, Johannes Schindelin wrote:
+On 12/8/06, H. Peter Anvin <hpa@zytor.com> wrote:
+> Linus Torvalds wrote:
+> > I could write a simple C caching thing that just hashes the CGI arguments
+> > and uses a hash to create a cache (and proper lock-files etc to serialize
+> > access to a particular cache object while it's being created) fairly
+> > easily, but I'm pretty sure people would much prefer a mod_perl thing just
+> > to avoid the fork/exec overhead with Apache (I think mod_perl allows
+> > Apache to run perl scripts without it), and that means I'm not the right
+> > person any more.
+>
+> True about mod_perl.  Haven't messed with that myself, either.
+> fork/exec really is very cheap on Linux, so it's not a huge deal.
 
-> Hi,
-> 
-> On Sun, 10 Dec 2006, Junio C Hamano wrote:
-> 
-> > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> > 
-> > > It tries not only to strip "[PATCH]", but also "[PATCH 0/n]" and basically 
-> > > every prefix beginning with "[PATCH" and ending in "]". I do not remember 
-> > > if I really tested that code, but it should work.
+I've been playing around with a "native git" cgi thingy the last week
+(I call it cgit),  and I've been thinking about adding exactly this
+kind of caching to it. And since it's basically a standard git command
+written in C, it should have less overhead than any perl
+implementation.
 
-Hmmm well, right.  And of course I failed to notice that code was there.
+It's far from ready yet, but I'll try to publish some code this
+weekend just in case someone finds it interesting.
 
-I think I was corrupted by the dark side and failed to properly "use the 
-source" twice on that tool this week.
-
-> > The problem is that you forgot that the lines are indented when
-> > acting as a filter.
-
-Which was indeed my use case.
-
-> Of course!
-> 
-> And your patch looks correct to me.
-
-Confirmed.
-
-
+-- 
