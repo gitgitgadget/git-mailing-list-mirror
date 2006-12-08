@@ -2,101 +2,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] Document git-runstatus
-Date: Sun, 19 Nov 2006 19:13:08 +0100
-Message-ID: <20061119181307.GY7201@pasky.or.cz>
-References: <455F1595.9020009@lsrfire.ath.cx> <20061118092644.a9f15669.seanlkml@sympatico.ca> <20061118143511.GM7201@pasky.or.cz> <455F210B.8000107@lsrfire.ath.cx> <BAYC1-PASMTP06C814AB518D7544770C01AEEF0@CEZ.ICE> <455F4F06.3090902@gmail.com> <BAYC1-PASMTP06DE3E6CFF9E49C2BF16C7AEEF0@CEZ.ICE> <455F60EA.2080009@gmail.com> <20061118150431.81076072.seanlkml@sympatico.ca>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 5/5] rerere: add the diff command
+Date: Fri, 08 Dec 2006 13:07:26 +0100
+Organization: At home
+Message-ID: <elbkdl$og4$2@sea.gmane.org>
+References: <20061205092126.GE27236@soma> <1165574977365-git-send-email-normalperson@yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sun, 19 Nov 2006 18:13:26 +0000 (UTC)
-Cc: Git Mailing List <git@vger.kernel.org>,
-	A Large Angry SCM <gitzilla@gmail.com>,
-	Rene Scharfe <rene.scharfe@lsrfire.ath.cx>,
-	Junio C Hamano <junkio@cox.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jeff King <peff@peff.net>
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Fri, 8 Dec 2006 12:07:35 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <20061118150431.81076072.seanlkml@sympatico.ca>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 16
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-25-107.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31847>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GlrAI-0006Ee-7r for gcvg-git@gmane.org; Sun, 19 Nov
- 2006 19:13:14 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33692>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GseVm-0003fJ-PD for gcvg-git@gmane.org; Fri, 08 Dec
+ 2006 13:07:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932693AbWKSSNL (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 19 Nov 2006
- 13:13:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932743AbWKSSNK
- (ORCPT <rfc822;git-outgoing>); Sun, 19 Nov 2006 13:13:10 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:28806 "EHLO machine.or.cz") by
- vger.kernel.org with ESMTP id S932693AbWKSSNJ (ORCPT
- <rfc822;git@vger.kernel.org>); Sun, 19 Nov 2006 13:13:09 -0500
-Received: (qmail 9913 invoked by uid 2001); 19 Nov 2006 19:13:08 +0100
-To: Sean <seanlkml@sympatico.ca>
+ S1425463AbWLHMGJ convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006 07:06:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S938059AbWLHMGD
+ (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 07:06:03 -0500
+Received: from main.gmane.org ([80.91.229.2]:44969 "EHLO ciao.gmane.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1425446AbWLHMFl
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Dec 2006 07:05:41 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1GseTq-0008MJ-75 for git@vger.kernel.org; Fri, 08 Dec 2006 13:05:30 +0100
+Received: from host-81-190-25-107.torun.mm.pl ([81.190.25.107]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Fri, 08 Dec 2006 13:05:30 +0100
+Received: from jnareb by host-81-190-25-107.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Fri, 08 Dec 2006
+ 13:05:30 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On Sat, Nov 18, 2006 at 09:04:31PM CET, Sean wrote:
-> On Sat, 18 Nov 2006 11:37:14 -0800
-> A Large Angry SCM <gitzilla@gmail.com> wrote:
-> 
-> > I disagree. If a command is install on a system, it's man 
-> > pages/documentation should also be installed.
-> 
-> Well this isn't a huge issue.  One point you made though that struck
-> a chord is that many of the commands should probably not be in
-> section 1.
+Eric Wong wrote:
 
-The trouble is that there's no other good place where to put them. But
-perhaps we can get away with putting them to section 3? After all, Perl
-installs documentation for its modules to section 3 as well.
+> Sometimes I like to see what I'm recording resolutions for and
+> what's changed during a resolution.
+>=20
+> Signed-off-by: Eric Wong <normalperson@yhbt.net>
+> ---
+> =A0git-rerere.perl | =A0 =A07 +++++++
+> =A01 files changed, 7 insertions(+), 0 deletions(-)
 
-> > I'm also not convinced that there are a "large number of commands [...] 
-> > that should only ever be accessed as plumbing". I am convinced, however, 
-> > that there are a number of relatively low level commands with poor user 
-> > interfaces that are useful on their own.
-> 
-> Is there really a reason for a git user to access these from the
-> command line rather than a script:
-> 
-> commit-tree, diff-files, diff-index, diff-tree, for-each-ref,
-> hash-object, http-fetch, http-push, index-pack, local-fetch,
-> merge-base, merge-index, merge-octopus, merge-one-file, merge-ours,
-> merge-recur, merge-recursive, merge-recursive-old, merge-resolve,
-> merge-stupid, merge-tree, receive-pack, runstatus, ssh-fetch, ssh-pull,
-> ssh-push, ssh-upload, symbolic-ref, unpack-file, unpack-objects,
-> update-ref, upload-archive, upload-pack, upload-tar, write-tree
-> 
-> Not a complete list, and maybe i overlooked something in there
-> that is needed from the command line, but for the most part 
-> these could be installed somewhere other than the users path.
+Documentation, please?
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
 
-There certainly are reasons, but the situations where it is needed is
-sufficiently rare; I think that's a reason good enough, when doing
-something exotic like recovery of a corrupted repository it's ok to have
-to do something slightly special to execute a lowlevel command.
-
-It has been proposed for a long time that we put the "pure plumbing"
-commands to /usr/libexec/git/ or somewhere there (some say /usr/libexec/
-is obsolete), and I think it would be a great move.  Note that nowadays
-the transition needs to be done carefully because of backwards
-compatibility.
-
-
-BTW, I've finally found a fine example of situation parallel to Git:
-TeX!  There are the core TeX commands (plumbing) and plain TeX (basic
-porcelain) on top of that as well as a bunch of other macro sets (other
-porcelains). Now I need to dig out The TeXbook from wherever I've put it
-to see how did Knuth deal with it, documentation-wise.
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-The meaning of Stonehenge in Traflamadorian, when viewed from above, is:
-"Replacement part being rushed with all possible speed."
