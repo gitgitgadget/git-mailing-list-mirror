@@ -1,85 +1,76 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Eric Wong <normalperson@yhbt.net>
-Subject: git-svn todo/wishlist
-Date: Thu, 2 Nov 2006 23:01:36 -0800
-Message-ID: <20061103070136.GB31917@hand.yhbt.net>
+From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
+Subject: Re: git pull and merging.
+Date: Fri, 8 Dec 2006 03:04:21 +0100
+Message-ID: <8aa486160612071804t63a86b5ate6b17d8ddcf90a60@mail.gmail.com>
+References: <cc723f590612052051r62111c4cgfd7ee893cb00f84a@mail.gmail.com>
+	 <200612061744.31213.Josef.Weidendorfer@gmx.de>
+	 <4577B8C0.3060200@gmail.com>
+	 <200612071227.46194.Josef.Weidendorfer@gmx.de>
+	 <7vhcw7ttj9.fsf@assigned-by-dhcp.cox.net>
+	 <7vac1zqpa3.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 3 Nov 2006 07:01:52 +0000 (UTC)
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Fri, 8 Dec 2006 02:04:30 +0000 (UTC)
+Cc: "Josef Weidendorfer" <Josef.Weidendorfer@gmx.de>,
+	"Aneesh Kumar K.V" <aneesh.kumar@gmail.com>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=GVHZGDtJuy3J+5fIAs08dv+LI+cP34p4wwzDP9GdD0SXPFT3k5NfxZqHf8s5T/9b1Cq81vjjc6utHvfI0m+iP96dYFhReD2WWcVXqRk3PpEE0dWoUoAtecMJKVBQsV7WNuMSiJugIgvGpT3HGoaUuMwpBiEpxQil+4z9aEqLWVI=
+In-Reply-To: <7vac1zqpa3.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
-User-Agent: Mutt/1.5.9i
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30789>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gft3d-0008MV-0v for gcvg-git@gmane.org; Fri, 03 Nov
- 2006 08:01:41 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33652>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GsV6A-0007sk-4x for gcvg-git@gmane.org; Fri, 08 Dec
+ 2006 03:04:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753171AbWKCHBh (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 3 Nov 2006
- 02:01:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753172AbWKCHBh
- (ORCPT <rfc822;git-outgoing>); Fri, 3 Nov 2006 02:01:37 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:39836 "EHLO hand.yhbt.net") by
- vger.kernel.org with ESMTP id S1753171AbWKCHBg (ORCPT
- <rfc822;git@vger.kernel.org>); Fri, 3 Nov 2006 02:01:36 -0500
-Received: by hand.yhbt.net (Postfix, from userid 500) id 5983A2DC034; Thu,  2
- Nov 2006 23:01:36 -0800 (PST)
-To: git@vger.kernel.org
+ S1423850AbWLHCEW (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
+ 21:04:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423853AbWLHCEW
+ (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 21:04:22 -0500
+Received: from wx-out-0506.google.com ([66.249.82.225]:15437 "EHLO
+ wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1423850AbWLHCEW (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec
+ 2006 21:04:22 -0500
+Received: by wx-out-0506.google.com with SMTP id h27so688546wxd for
+ <git@vger.kernel.org>; Thu, 07 Dec 2006 18:04:21 -0800 (PST)
+Received: by 10.70.83.8 with SMTP id g8mr2075580wxb.1165543461422; Thu, 07
+ Dec 2006 18:04:21 -0800 (PST)
+Received: by 10.70.45.1 with HTTP; Thu, 7 Dec 2006 18:04:21 -0800 (PST)
+To: "Junio C Hamano" <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-There are several things I'd like to see in git-svn, but haven't had
-much time to do myself, and more interesting things keep popping up :)
+On 12/8/06, Junio C Hamano <junkio@cox.net> wrote:
+> Junio C Hamano <junkio@cox.net> writes:
+>
+> > Once you place something like "branch.*.merge" in configuration
+> > file (either $GIT_DIR/config, or a $GIT_DIR/remotes/* file), you
+> > are talking about other repositories you regularly interact
+> > with, so it might be probably Ok to require the user to use a
+> > tracking branch if he wants the convenience of "branch.*.merge",
+> > and make its value name the local tracking branch instead of the
+> > remote branch.
+>
+> In other words, I am all for fixing this.
+>
+> Although it may not hurt too much if we just redefine the
+> meaning of it to name the local tracking branch, using a
+> different name "branch.*.defaultmerge" is safer and would not
+> break existing repositories.
 
-Some of these I dread working on because it involves having to wrangle
-with the (imho) overly complex SVN API, but the end user experience
-should be better afterwards :)
+Or branch.*.localmerge?
 
-1. Ability to transfer deltas over fetches.  Currently, we transfer
-   deltas only when committing, but when we fetch, we fetch whole files
-   if they're modified (like git with dumb protocols).  Our current method
-   is very fast with fast connections and the code is very simple (I
-   ripped the code off svnimport :), but users behind slower links will
-   find the waiting for the svn server to generate a delta to be faster.
-
-2. Ability to login and accept SSL certificates without relying on
-   the caching done by the svn command-line client.  I tried doing this
-   a while back, but was unsuccessful, and didn't look into it further.
-   I couldn't get svm/SVN::Mirror to work with this, either.  This could
-   be a bug in SVN bindings, too...
-
-3. Documentation.  The -i/GIT_SVN_ID= stuff should probably be promoted
-   more now that branches/tags are better supported.  More examples,
-   too...
-
-4. Would storing the SVN URLs in .git/config be a good idea?  I'm
-   considering it as it would potentially simplify some things for
-   people tracking multiple trees.
-
-5. Ability to create tags/branches on the SVN side.  I'd like to avoid
-   having to re-fetch all the new stuff into git if I created a new
-   tag/branch on the SVN side.  This shouldn't be very hard to do.
-   Avoiding re-fetching new stuff when somebody else creates a
-   tag/branch would also be nice, but more involved.
-
-6. Faster multi-fetch across a single repository.  This would probably
-   be easier if we relied less on global variables and subprocesses.
-
-7. Some method of handling svn:externals would be a nice feature to
-   have.  This would be easier with subproject support from git.
-
-8. Packed refs.  I haven't looked into this at all yet, I just heard of
-   it just heard about it a while back and it ("packed refs") sounded
-   like it could replace the .rev_db files I'm using in git-svn.
-
-9. If not packed refs, then .rev_db could be transparently compressed.
-   It's good for high-activity trunks; but very space-inefficient
-   for tags and sparse branches.
-
--- 
