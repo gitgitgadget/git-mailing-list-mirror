@@ -1,122 +1,83 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [DRAFT] Branching and merging with git
-Date: Wed, 22 Nov 2006 03:51:59 -0800
-Message-ID: <7vy7q3snq8.fsf@assigned-by-dhcp.cox.net>
-References: <20061117182157.GC11882@fieldses.org>
-	<20061118001355.23488.qmail@science.horizon.com>
-	<7virhdh9j8.fsf@assigned-by-dhcp.cox.net>
-	<7vslghftix.fsf@assigned-by-dhcp.cox.net>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: Commit f84871 breaks build on OS X
+Date: Fri, 8 Dec 2006 08:40:42 +0100
+Message-ID: <81b0412b0612072340w6af9df37y25a1d15773a3f8d8@mail.gmail.com>
+References: <2D096A57-D7B3-49C7-81E4-EB47A0D933B2@silverinsanity.com>
+	 <81b0412b0612070633i7aec43dse7a8beda64437103@mail.gmail.com>
+	 <86ejrbihnr.fsf@blue.stonehenge.com>
+	 <7vmz5zqqo7.fsf@assigned-by-dhcp.cox.net>
+	 <7virgnqpt5.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 22 Nov 2006 11:53:08 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Fri, 8 Dec 2006 07:40:55 +0000 (UTC)
+Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>, git@vger.kernel.org,
+	"Brian Gernhardt" <benji@silverinsanity.com>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	Pazu <pazu@pazu.com.br>, "Andreas Ericsson" <ae@op5.se>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <7vslghftix.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Fri, 17 Nov 2006 17:11:34 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=mFXrFlDVxHWCl8kx6d44h702ZUbvcwKItcdN0SreZr31K8GcH4rt7qiZ2XAiONp43enVU+0AzINZtt4bopFjaRabtgAG0/K/5Oe6tmqYivfzVUHeYWfBeBWC1uWuAQj/k1KuJakSijgh1OR61DV9g+AoE0JlHPUrsmwR1mxiQTY=
+In-Reply-To: <7virgnqpt5.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32081>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gmqe6-0006Ja-DL for gcvg-git@gmane.org; Wed, 22 Nov
- 2006 12:52:07 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33669>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GsaLh-0000Ff-01 for gcvg-git@gmane.org; Fri, 08 Dec
+ 2006 08:40:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753013AbWKVLwD (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 22 Nov 2006
- 06:52:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753132AbWKVLwB
- (ORCPT <rfc822;git-outgoing>); Wed, 22 Nov 2006 06:52:01 -0500
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:32670 "EHLO
- fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP id S1753013AbWKVLwA
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 22 Nov 2006 06:52:00 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao08.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061122115200.EOWX18207.fed1rmmtao08.cox.net@fed1rmimpo02.cox.net>; Wed, 22
- Nov 2006 06:52:00 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id pns71V0081kojtg0000000; Wed, 22 Nov 2006
- 06:52:07 -0500
-To: linux@horizon.com
+ S1425092AbWLHHkp (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
+ 02:40:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1425095AbWLHHkp
+ (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 02:40:45 -0500
+Received: from nf-out-0910.google.com ([64.233.182.190]:6068 "EHLO
+ nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1425093AbWLHHko (ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Dec
+ 2006 02:40:44 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so1068162nfa for
+ <git@vger.kernel.org>; Thu, 07 Dec 2006 23:40:43 -0800 (PST)
+Received: by 10.78.157.8 with SMTP id f8mr239669hue.1165563642481; Thu, 07
+ Dec 2006 23:40:42 -0800 (PST)
+Received: by 10.78.139.7 with HTTP; Thu, 7 Dec 2006 23:40:42 -0800 (PST)
+To: "Junio C Hamano" <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano <junkio@cox.net> writes:
-
-> If you want an esoteric topic for an introductory documentation,
-> it would be more useful to talk about evil merges (an evil merge
-> is a merge commit whose result does not match any of its
-> parents).  A good example is found in
+On 12/7/06, Junio C Hamano <junkio@cox.net> wrote:
+> >> Definitely something went weird when Makefile was removed
+> >> from .gitignore.
+> >
+> > Yes, perl/Makefile is getting overwritten by what Makefile.PL
+> > generates.  I thought the point of Alex's patch was to have it
+> > muck with perl.mak and leave the tracked Makefile alone?
 >
-> 	git show v1.0.0
+> Now, I am CLUELESS about what MakeMaker does, but would this
+> help?
+>
 
-I actually remembered a better one.
+Much better.
+Works here. Others?
 
-        Subject: Necessity of "evil" merge and topic branches
-        Date: Wed, 17 May 2006 23:25:55 -0700
-        Message-ID: <7vy7wz6e8c.fsf@assigned-by-dhcp.cox.net>
+> diff --git a/perl/Makefile.PL b/perl/Makefile.PL
+> index de73235..4168775 100644
+> --- a/perl/Makefile.PL
+> +++ b/perl/Makefile.PL
+> @@ -24,5 +24,6 @@ WriteMakefile(
+>  	NAME            => 'Git',
+>  	VERSION_FROM    => 'Git.pm',
+>  	PM		=> \%pm,
+> +	MAKEFILE	=> 'perl.mak',
+>  	%extra
+>  );
 
-This talks about a real-world evil merge and the reason why it
-was necessary, and speculates a possible way to make life
-easier.  I actually later used the "third branch to remember the
-evil merge between two topics" technique I talked about in the
-message to merge in another pair of topics, and it turned out
-that it worked rather well.
-
-There were two logically independent topics:
-
- - lt/setup.  Two commits, changing the calling convention of
-   setup_git_directory() function -- the final tip of the topic
-   was at a633fca0.
-
- - js/mv.  Three commits, making git-mv a built-in after
-   refactoring some code from other parts of the system -- the
-   final tip of the topic was at ac64a722).
-
-They were not "obviously correct" when they started, so a topic
-branch was used for each.  They had textually and semantically
-some conflicts, and if they were to progress at different paces,
-there was a need for an evil merge when the later one is merged
-to master.
-
-So I created another branch to merge the two topics together and
-resolved their conflicts while my reading of their code were
-still fresh.
-
-	git checkout -b __/setup-n-mv js/mv
-        git pull . lt/setup
-	git checkout next
-        git pull . __/setup-n-mv
-
-Later js/mv became ready to be merged first.  So I merged it to
-'master'.
-
-	git checkout master
-        git pull . js/mv
-
-I was planning to cook lt/setup a bit longer but eventually
-decided to merge it to 'master' as well after a short while.
-
-	git checkout master
-        git pull . __/setup-n-mv
-
-I could have pulled lt/setup into master but then I would have
-had to resolve the conflict between the two branches.  Since I
-recorded the resolution earlier by making the merge, and pulled
-that branch (which contained all of lt/setup already) into
-'master', I did not have to remember what I need to adjust when
-I did so.  If lt/setup had further updates on its own after the
-"third branch __/setup-n-mv" was made, I would have then pulled
-the tip of lt/setup into 'master' to complete the merge, and
-that would have also resulted in non-conflicting simple merge.
-
-This would have worked equally well if lt/setup were to graduate
-first.
-
-This might look too complex at the first look, but I thought it
-might be an interesting topic in the "hints for managing your
-topic branches" section.
+I should have read the FS of that MakeMaker.pm,
