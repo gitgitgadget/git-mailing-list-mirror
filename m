@@ -1,86 +1,108 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git bug? + question
-Date: Sat, 04 Nov 2006 04:03:39 -0800
-Message-ID: <7vejsjxvtw.fsf@assigned-by-dhcp.cox.net>
-References: <buoejsme6ho.fsf@dhapc248.dev.necel.com>
-	<7v4pthmew1.fsf@assigned-by-dhcp.cox.net>
-	<20061102224549.499610d1.seanlkml@sympatico.ca>
-	<20061103203610.GB7585@spearce.org>
-	<BAYC1-PASMTP01F45766D9195AAFD81789AEFE0@CEZ.ICE>
+From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
+Subject: Re: git pull and merging.
+Date: Fri, 8 Dec 2006 02:56:29 +0100
+Message-ID: <8aa486160612071756s18f9530cr7ed26e4b7b47d1de@mail.gmail.com>
+References: <cc723f590612052051r62111c4cgfd7ee893cb00f84a@mail.gmail.com>
+	 <200612071227.46194.Josef.Weidendorfer@gmx.de>
+	 <7vhcw7ttj9.fsf@assigned-by-dhcp.cox.net>
+	 <200612072354.01830.Josef.Weidendorfer@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sat, 4 Nov 2006 12:03:53 +0000 (UTC)
-Cc: git@vger.kernel.org, Shawn Pearce <spearce@spearce.org>,
-	Miles Bader <miles@gnu.org>,
-	Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Fri, 8 Dec 2006 01:56:39 +0000 (UTC)
+Cc: "Junio C Hamano" <junkio@cox.net>,
+	"Aneesh Kumar K.V" <aneesh.kumar@gmail.com>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=H+0rXLf2KVjlqe/jK8fmopOK6mjzxxXEByQKrhWfWIRTeK/LireVw2zPg0FlQiQ8uFUJX4wDVBQFZBXBMUHaP+ep++ndBWfJwl/wkiHFf/oTKtpGYrMRfJuEZys3tD7JfDa5sez5JpjH2tg7ADbtKtNZClh0PJ1x8bStGQJZmkU=
+In-Reply-To: <200612072354.01830.Josef.Weidendorfer@gmx.de>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30923>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GgKFU-0001M4-17 for gcvg-git@gmane.org; Sat, 04 Nov
- 2006 13:03:44 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33651>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GsUyX-0007BK-J9 for gcvg-git@gmane.org; Fri, 08 Dec
+ 2006 02:56:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S965343AbWKDMDm (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 4 Nov 2006
- 07:03:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965346AbWKDMDm
- (ORCPT <rfc822;git-outgoing>); Sat, 4 Nov 2006 07:03:42 -0500
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:44975 "EHLO
- fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP id S965343AbWKDMDk
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 4 Nov 2006 07:03:40 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao03.cox.net
- (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
- <20061104120340.YZUR2704.fed1rmmtao03.cox.net@fed1rmimpo01.cox.net>; Sat, 4
- Nov 2006 07:03:40 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id ic3J1V0051kojtg0000000 Sat, 04 Nov 2006
- 07:03:18 -0500
-To: Sean <seanlkml@sympatico.ca>
+ S1423710AbWLHB4a (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
+ 20:56:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423715AbWLHB4a
+ (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 20:56:30 -0500
+Received: from wx-out-0506.google.com ([66.249.82.230]:12658 "EHLO
+ wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1423710AbWLHB4a (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec
+ 2006 20:56:30 -0500
+Received: by wx-out-0506.google.com with SMTP id h27so686973wxd for
+ <git@vger.kernel.org>; Thu, 07 Dec 2006 17:56:29 -0800 (PST)
+Received: by 10.70.39.2 with SMTP id m2mr4864797wxm.1165542989388; Thu, 07
+ Dec 2006 17:56:29 -0800 (PST)
+Received: by 10.70.45.1 with HTTP; Thu, 7 Dec 2006 17:56:29 -0800 (PST)
+To: "Josef Weidendorfer" <Josef.Weidendorfer@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-Sean <seanlkml@sympatico.ca> writes:
+On 12/7/06, Josef Weidendorfer <Josef.Weidendorfer@gmx.de> wrote:
+> On Thursday 07 December 2006 20:06, you wrote:
+> > Once you place something like "branch.*.merge" in configuration
+> > file (either $GIT_DIR/config, or a $GIT_DIR/remotes/* file), you
+> > are talking about other repositories you regularly interact
+> > with, so it might be probably Ok to require the user to use a
+> > tracking branch if he wants the convenience of "branch.*.merge",
+> > and make its value name the local tracking branch instead of the
+> > remote branch.
+> >
+> > But that means I would never be able to benefit from the
+> > convenience of "branch.*.merge";
+>
+> Hmm... that's true; actually, I did not thought about people
+> which do not want to have any tracking branches (again!). So
+>
+> [remote "repo"]
+>   url = ...
+>   fetch = branch1
+>   fetch = branch2
+>
+> [branch "mybranch1"]
+>   remote = repo
+>   merge = branch1
+>
+> actually looks fine, and is the only possible way.
+> But still, this does not work.
 
-> I think your Nack was a little rash here.  The feature would be quite
-> useful to work flows other than yours.  It sounds like what _you_ want
-> is a feature to select branches when cloning rather than the current
-> default of cloning all.  That would stop your developers having to 
-> delete branches and editing .git/remotes/origin immediately
-> after cloning.
+It works for me.
 
-I think this conversation demonstrates that this previous
-statement of yours was also rather rash:
+> You have to specify
+>
+>   merge = refs/heads/branch1
 
-  The essential point is that most of the time the Git user
-  should not have to manually create the merge entries in the
-  config file.  Git should be smart enough to get it right most
-  of the time automatically.
+It does not.
 
-There is no "get it right most of the time" that would apply to
-every workflow.  We should just admit that no default layout and
-configuration would suit everybody's needs.  What we should do
-is to try to capture a handful useful patterns and make it easy
-for people to apply those canned patterns.
+The merge line must match exactly the remote part of the refspec.
 
-For example, that is what we did for "git clone".  We identified
-two common layouts, traditional and separate-remote, and we
-support both.  The reason we might want to favor separate-remote
-over traditional should be based on the expected workflow and
-expertise level of the majority of users.  If a census turns out
-that the more experienced people tend to prefer traditional
-layout, then changing the default to separate-remote would be
-easier even if people with workflow separate-remote is more
-appropriate is not the absolute majority, because the layout can
-be easily changed by more experienced folks.
+>
+> That's confusing (perhaps I can come up with a patch
+> to allow "branch1" alone).
+>
+> So probably the best way is to write some more detailed
+> explanation into the docu ...
 
-I think the "what should the default merge source be" topic is
-very similar.  There is no single _right_ way and to some extent
-what the vanilla default is does not really matter.
+Perhaps that the branch.<name>.remote and branch.<name>.merge have the
+equivalent meaning as the parameters of git-pull?
 
+>
+> Josef
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
