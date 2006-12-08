@@ -1,62 +1,79 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Alexey Dobriyan" <adobriyan@gmail.com>
-Subject: selective git-update-index per diff(1) chunks
-Date: Fri, 1 Dec 2006 14:23:14 +0300
-Message-ID: <b6fcc0a0612010323x7554e47m5e6bdafe85fc8224@mail.gmail.com>
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_ADSP_NXDOMAIN,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD,
+	UNPARSEABLE_RELAY shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
+From: Pazu <pazu@pazu.com.br>
+Subject: git-commit: select which files to commit while editing the commit message
+Date: Fri, 8 Dec 2006 12:36:31 +0000 (UTC)
+Message-ID: <loom.20061208T131919-178@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Fri, 1 Dec 2006 11:23:48 +0000 (UTC)
+NNTP-Posting-Date: Fri, 8 Dec 2006 12:37:15 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=Jzh/9lcHT7cJDWuSpnFU5R28nf+QYoCav3pg/dC58JSkeoG5CcxIANnJHR2YP1XQjfMyb+7yKHcugv0YqYNP+FiiN44Bc54NGE8kGTKfm4SOlKC6zezp2ElURgz7q2RCjv60FkzaoCST6VQ83aixiueZ+Kieu1LI7mLvjaYIQ2E=
-Content-Disposition: inline
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 31
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 201.37.99.93 (Mozilla/5.0 (Macintosh; U; Intel Mac OS X; en-GB; rv:1.8.1) Gecko/20061010 Firefox/2.0)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32897>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gq6UV-0007L9-0l for gcvg-git@gmane.org; Fri, 01 Dec
- 2006 12:23:39 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33693>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GseyS-0007Y0-8z for gcvg-git@gmane.org; Fri, 08 Dec
+ 2006 13:37:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S936457AbWLALXQ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
- 06:23:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936458AbWLALXQ
- (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 06:23:16 -0500
-Received: from nf-out-0910.google.com ([64.233.182.185]:25069 "EHLO
- nf-out-0910.google.com") by vger.kernel.org with ESMTP id S936457AbWLALXP
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 06:23:15 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so3530330nfa for
- <git@vger.kernel.org>; Fri, 01 Dec 2006 03:23:14 -0800 (PST)
-Received: by 10.49.20.15 with SMTP id x15mr16951945nfi.1164972194122; Fri, 01
- Dec 2006 03:23:14 -0800 (PST)
-Received: by 10.48.162.17 with HTTP; Fri, 1 Dec 2006 03:23:13 -0800 (PST)
+ S1425492AbWLHMgs (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
+ 07:36:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1425491AbWLHMgr
+ (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 07:36:47 -0500
+Received: from main.gmane.org ([80.91.229.2]:49143 "EHLO ciao.gmane.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1425492AbWLHMgq
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Dec 2006 07:36:46 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1Gsexx-0004OH-IH for git@vger.kernel.org; Fri, 08 Dec 2006 13:36:38 +0100
+Received: from C925635D.poa.virtua.com.br ([C925635D.poa.virtua.com.br]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Fri, 08 Dec 2006 13:36:37 +0100
+Received: from pazu by C925635D.poa.virtua.com.br with local (Gmexim 0.1
+ (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Fri, 08 Dec 2006
+ 13:36:37 +0100
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Pretty often I end up with a file with two simple orthogonal fixes in it.
-git-diff shows me both, that's OK.
+Junio's reworking of the git-commit documentation, and the ensuing discussion
+about what is commited, and how do you select that, made me remember how much I
+liked SVK -- particularly, how much I liked to remove files from the commit
+message template, and have them removed from the commit.
 
-Now I want to commit them as two separate commits. So far, it's
-* getting full diff
-* cp(1)
-* hand-edit both diffs
-* commit first
-* commit second
+At first, I thought "great opportunity to contribute my first patch to git",
+until I realized that git-commit is written in bash, and my brain refuses to
+understand that. Yep, I'm that bad. So I'm writing this, and maybe someone
+well-versed in bash will find this a good idea and code it :-)
 
-Has anyone thought about aggregating this into git-update-index or
-somewhere?
+For those not familiar with SVK, if you remove the files mentioned in the commit
+template (that "here are the files that you're about to commit" part), SVK won't
+commit them. For example, if I modify a couple of files in git, and execute 'git
+commit -a', an editor will popup showing something like this:
 
-    git-update-index -C1,3    #chunks 1, 3
-    git commit
-    git-update-index -C1,3    # chunks 2,5 in original numbering
-    git commit
+# Please enter the commit message for your changes.
+# (Comment lines starting with '#' will not be included)
+# On branch refs/heads/next
+# Updated but not checked in:
+#   (will commit)
+#
+#	modified:   perl/Makefile
+#	modified:   var.c
 
+Here's where the magic would happen. Removing the line "modified: var.c" would
+remove var.c from this commit. Of course, the template message should be
+modified to tell the user he can do that.
+
+So, what do you think about this?
+
+-- Pazu
