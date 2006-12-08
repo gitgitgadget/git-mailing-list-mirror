@@ -1,76 +1,81 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: git UI nit
-Date: Wed, 6 Dec 2006 17:23:23 +0100
-Message-ID: <200612061723.23515.jnareb@gmail.com>
-References: <el6jmt$mej$1@sea.gmane.org> <el6nul$58n$2@sea.gmane.org> <4576EA02.2010809@xs4all.nl>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [PATCH 1/2] Allow users to require source branch on git-checkout -b.
+Date: Fri, 8 Dec 2006 00:59:38 -0500
+Message-ID: <20061208055938.GB13999@spearce.org>
+References: <20061207100152.GA12966@spearce.org> <7vlkljsd1k.fsf@assigned-by-dhcp.cox.net> <20061207195715.GG12143@spearce.org> <7v64cns8nf.fsf@assigned-by-dhcp.cox.net> <20061207214053.GC31035@fieldses.org> <20061207215914.GC12502@spearce.org> <20061208044516.GC5939@fieldses.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 6 Dec 2006 16:21:29 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Fri, 8 Dec 2006 05:59:52 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=tZscLL8L60NhMzY7VamMZpzltDnqDi3h/Ty9VN5UH+vJ5c0RMNsPnX0AsHvdDke23y0B+/I9nxXm7wT2CacmyU8CaxhnArgQa/7GbmIag/t7E+2ZNYQpZL98smj+icVnGvA3/FCcq+RrmOu8pAb8R7j4mB6y0ISae35Yspi+OFg=
-User-Agent: KMail/1.9.3
-In-Reply-To: <4576EA02.2010809@xs4all.nl>
 Content-Disposition: inline
+In-Reply-To: <20061208044516.GC5939@fieldses.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33484>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33658>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GrzWR-0003bx-9U for gcvg-git@gmane.org; Wed, 06 Dec
- 2006 17:21:27 +0100
+ esmtp (Exim 4.50) id 1GsYly-0008OH-Bj for gcvg-git@gmane.org; Fri, 08 Dec
+ 2006 06:59:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S936296AbWLFQVY (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
- 11:21:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936325AbWLFQVY
- (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 11:21:24 -0500
-Received: from ug-out-1314.google.com ([66.249.92.172]:7899 "EHLO
- ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S936296AbWLFQVX (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec
- 2006 11:21:23 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so189460uga for
- <git@vger.kernel.org>; Wed, 06 Dec 2006 08:21:22 -0800 (PST)
-Received: by 10.67.93.6 with SMTP id v6mr1068749ugl.1165422081865; Wed, 06
- Dec 2006 08:21:21 -0800 (PST)
-Received: from host-81-190-24-209.torun.mm.pl ( [81.190.24.209]) by
- mx.google.com with ESMTP id l33sm30378504ugc.2006.12.06.08.21.21; Wed, 06 Dec
- 2006 08:21:21 -0800 (PST)
-To: Han-Wen Nienhuys <hanwen@xs4all.nl>
+ S1424645AbWLHF7o (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
+ 00:59:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1424711AbWLHF7o
+ (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 00:59:44 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:34344 "EHLO
+ corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1424645AbWLHF7o (ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Dec 2006
+ 00:59:44 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1GsYlo-0007JW-DF; Fri, 08 Dec 2006 00:59:40 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ F18DB20FB6E; Fri,  8 Dec 2006 00:59:38 -0500 (EST)
+To: "J. Bruce Fields" <bfields@fieldses.org>
 Sender: git-owner@vger.kernel.org
 
-Han-Wen Nienhuys wrote:
-> Jakub Narebski escreveu:
->> Johannes Schindelin wrote:
->> 
->>> On Wed, 6 Dec 2006, Han-Wen Nienhuys wrote:
->>>
->>>> Johannes Schindelin escreveu:
->>>>>                     }
->>>>>                     if (quiet)
->>>>>                             continue;
->>>>> -                   printf("%s: needs update\n", ce->name);
->>>>> +                   printf("%s: dirty; needs commit\n", ce->name);
->>>> Yes - I'd just mention revert as an option too. 
->>> Actually, I like it that short.
->> 
->> So why not simply use "%s: dirty\n"?
+"J. Bruce Fields" <bfields@fieldses.org> wrote:
+> On Thu, Dec 07, 2006 at 04:59:14PM -0500, Shawn Pearce wrote:
+> > I'm seeing bad branches all to often with some of the folks I have
+> > to work with.  They apparently have been unable to learn the new
+> > trick of either remembering what branch they are currently on and
+> > what changes it has, or to always supply the branch they want to
+> > start from with their new branch.
 > 
-> because a newbie doesn't know how to resolve that problem.
+> Would the trick of putting the branch name in the shell prompt work?
 
-But there are [at least] two ways to resolve this:
-commit or revert (reset).
+Its in the prompt for all of these users; I forced it in as part of
+the system's /etc/profile.d.  They just forget that they should think
+about where they should start their branch from before they make it.
+ 
+> But my main complaint is just that I wouldn't want to see the behavior
+> of defaulting to HEAD--behavior which is simple, easy to explain, and
+> shared by most other git commands--by something significantly more
+> complicated.  That's more a complaint about Junio's suggestion than
+> yours, though.
+
+True, defaulting to HEAD is something that is done almost everywhere.
+Changing it for `git checkout -b` may surprise a lot of people,
+almost as much as --index vs. --cached.
+
+Maybe what I should do is stop whining about the command line
+Porcelain-ish and get branch controls working in git-gui.  Then I
+can take away the command line from these users who are causing me
+so much grief.
 
 -- 
-Jakub Narebski
