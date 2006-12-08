@@ -1,78 +1,139 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: prune/prune-packed
-Date: Fri, 27 Oct 2006 14:55:13 -0700
-Message-ID: <7vy7r1ctku.fsf@assigned-by-dhcp.cox.net>
-References: <20061022035919.GA4420@fieldses.org>
-	<7vy7r954k7.fsf@assigned-by-dhcp.cox.net>
-	<20061022231422.GA9375@fieldses.org>
-	<20061023005336.GA12932@fieldses.org> <453C1A35.70504@gmail.com>
-	<7vvembzp6y.fsf@assigned-by-dhcp.cox.net>
-	<1161983997.2426.422.camel@cashmere.sps.mot.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: kernel.org mirroring (Re: [GIT PULL] MMC update)
+Date: Fri, 8 Dec 2006 15:27:42 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0612081453430.3516@woody.osdl.org>
+References: <Pine.LNX.4.64.0612020835110.3476@woody.osdl.org>
+ <45744FA3.7020908@zytor.com> <Pine.LNX.4.64.0612061847190.3615@woody.osdl.org>
+ <45778AA3.7080709@zytor.com> <Pine.LNX.4.64.0612061940170.3615@woody.osdl.org>
+ <4577A84C.3010601@zytor.com> <Pine.LNX.4.64.0612070953290.3615@woody.osdl.org>
+ <45785697.1060001@zytor.com> <Pine.LNX.4.64.0612071052560.3615@woody.osdl.org>
+ <457868AA.2030605@zytor.com> <20061207193012.GA84678@dspnet.fr.eu.org>
+ <4578722E.9030402@zytor.com> <4579611F.5010303@dawes.za.net>
+ <45798FE2.9040502@zytor.com> <Pine.LNX.4.64.0612080830380.3516@woody.osdl.org>
+ <457998C8.3050601@garzik.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 27 Oct 2006 21:55:59 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Fri, 8 Dec 2006 23:28:45 +0000 (UTC)
+Cc: "H. Peter Anvin" <hpa@zytor.com>,
+	Rogan Dawes <discard@dawes.za.net>,
+	Kernel Org Admin <ftpadmin@kernel.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Jakub Narebski <jnareb@gmail.com>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <1161983997.2426.422.camel@cashmere.sps.mot.com> (Jon Loeliger's
-	message of "Fri, 27 Oct 2006 16:19:57 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+In-Reply-To: <457998C8.3050601@garzik.org>
+X-MIMEDefang-Filter: osdl$Revision: 1.162 $
+X-Scanned-By: MIMEDefang 2.36
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30350>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GdZfc-0007fW-4b for gcvg-git@gmane.org; Fri, 27 Oct
- 2006 23:55:20 +0200
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33768>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gsp8u-0005a0-U3 for gcvg-git@gmane.org; Sat, 09 Dec
+ 2006 00:28:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1750705AbWJ0VzQ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 27 Oct 2006
- 17:55:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750706AbWJ0VzQ
- (ORCPT <rfc822;git-outgoing>); Fri, 27 Oct 2006 17:55:16 -0400
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:665 "EHLO
- fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP id S1750705AbWJ0VzO
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 27 Oct 2006 17:55:14 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao07.cox.net
- (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
- <20061027215514.SHQT28934.fed1rmmtao07.cox.net@fed1rmimpo01.cox.net>; Fri, 27
- Oct 2006 17:55:14 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id fZuv1V00S1kojtg0000000 Fri, 27 Oct 2006
- 17:54:56 -0400
-To: Jon Loeliger <jdl@freescale.com>
+ S1758846AbWLHX2e (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
+ 18:28:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758841AbWLHX2e
+ (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 18:28:34 -0500
+Received: from smtp.osdl.org ([65.172.181.25]:50685 "EHLO smtp.osdl.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1758846AbWLHX2d
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Dec 2006 18:28:33 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
+ smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kB8NRiID009516
+ (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Fri, 8
+ Dec 2006 15:27:46 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
+ shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kB8NRg4G008937; Fri, 8 Dec
+ 2006 15:27:43 -0800
+To: Jeff Garzik <jeff@garzik.org>
 Sender: git-owner@vger.kernel.org
 
-Jon Loeliger <jdl@freescale.com> writes:
 
-> On Sun, 2006-10-22 at 22:27, Junio C Hamano wrote:
->
->> Sorry, but you are right and Linus is more right.  How about
->> doing FRSX.
->> 
->> diff --git a/pager.c b/pager.c
->> index 8bd33a1..4587fbb 100644
->> --- a/pager.c
->> +++ b/pager.c
->> @@ -50,7 +50,7 @@ void setup_pager(void)
->>  	close(fd[0]);
->>  	close(fd[1]);
->>  
->> -	setenv("LESS", "FRS", 0);
->> +	setenv("LESS", "FRSX", 0);
->>  	run_pager(pager);
->>  	die("unable to execute pager '%s'", pager);
->>  	exit(255);
->
-> I'm a little confused by all this because I
-> set the LESS environment variable by myself
-> already.  And I use the value that I like.
-> Why change it or override the user's settings
-> like this?  Or did I miss something?
 
-This is about "if user does not set it, use this default".
+On Fri, 8 Dec 2006, Jeff Garzik wrote:
+> 
+> This is quite nice and easy, if memory-only caching works for the situation:
+> http://www.danga.com/memcached/
+> 
+> There are APIs for C, Perl, and plenty of other languages.
+
+Actually, just looking at the examples, it looks like memcached is 
+fundamentally flawed, exactly the same way Apache mod_cache is 
+fundamentally flawed.
+
+Exactly like mod_perl, it appears that if something isn't cached, the 
+memcached server will just return "not cached" to everybody, and all the 
+clients will, like a stampeding herd, all do the uncached access. Even if 
+they have the exact same query. And you're back to square one: your server 
+load went through the roof.
+
+You can't have a cache architecture where the client just does a "get", 
+like memcached does. You need to have a "read-for-fill" operation, which 
+says:
+
+ - get this cache entry
+
+ - if this cache entry does not exist, get an exclusive lock
+
+ - if you get that exclusive lock, return NULL, and the client promises 
+   that it will fill it (inside the kernel, see for example 
+   "find_get_page()" vs "grab_cache_page()" - the latter will return a 
+   locked page whether it exists or not, and if it didn't exist, it will 
+   have inserted it into the cache datastructures so that you don't have 
+   multiple concurrent readers trying to all create different pages)
+
+ - if you block on the exclusive lock, that means that some other client 
+   is busy fulfilling it. When you unblock, do a regular "read" operation 
+   (not a "repeat": we only block once, and if that fails, that's it).
+
+ - any cachefill operation will release the lock (and allow pending 
+   cache queries to succeed)
+
+ - the locking client going away will release the lock (and allow pending 
+   cache queries to fail, and hopefully cause a "set cache" operation)
+
+ - a timeout (settable by some method) will also force-release a lock in 
+   the case of buggy clients that do "read-for-modify" but never do the 
+   "modify".
+
+The "timeout" thing is to handle the case of buggy clients that crash 
+after trying to get - it will slow down things _enormously_ if that 
+happens, but hey, it's a buggy client. And it will still continue to work.
+
+Looking at the memcached operations, they have the "read" op (aka "get"), 
+but they seem to have no "read-for-fill" op. So memcached fundamentally 
+doesn't fix this problem, at least without explicit serialization by the 
+client.
+
+(The serialization could be done by the client, but that would serialize 
+_everything_, and mean that a uncached lookup will hold up all the cached 
+ones too - which is why you do NOT want to serialize in the caller: you 
+really want to serialize in the layer that does the caching).
+
+It's fairly easy to do the lock. You could just hash the lookup key using 
+some reasonable hash. It doesn't even have to be a _big_ hash: it's ok to 
+have just a few bits for lock hashing, since it's only going to be for 
+misses.
+
+So hashing to eight bits and using 256 locks is probably fine, as long as 
+this is done by the cache server. That means that the cache server only 
+ever needs to track that many timeouts, for example (it also indirectly 
+sets a limit on the number of possible "outstanding uncached requests", 
+which is _exactly_ what you want - but hash collissions will also 
+potentially unlock the _wrong_ bucket, so if you have too many of them, it 
+can make the "only one outstanding unhashed request per key" not be as 
+effective).
+
+So assuming you get good cache hit statistics, the locking shouldn't be a 
+big issue. But you definitely want to do it, because the whole point of 
+caching was to not do the same op multiple times. 
+
+I still don't understand why apache doesn't do it. I guess it wants to be 
+stateless or something.
 
