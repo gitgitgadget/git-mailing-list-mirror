@@ -1,108 +1,104 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Steven Grimm <koreth@midwinter.com>
-Subject: Re: [RFC] Submodules in GIT
-Date: Tue, 28 Nov 2006 11:58:26 -0800
-Message-ID: <456C94E2.6010708@midwinter.com>
-References: <20061121223130.GA24909@nan92-1-81-57-214-146.fbx.proxad.net> <200611281029.11918.andyparkins@gmail.com> <ekh45n$rfc$1@sea.gmane.org> <200611281335.38728.andyparkins@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 1/2] Allow users to require source branch on git-checkout -b.
+Date: Thu, 07 Dec 2006 22:31:52 -0800
+Message-ID: <7vac1yoq3r.fsf@assigned-by-dhcp.cox.net>
+References: <20061207100152.GA12966@spearce.org>
+	<7vlkljsd1k.fsf@assigned-by-dhcp.cox.net>
+	<20061207195715.GG12143@spearce.org>
+	<7v64cns8nf.fsf@assigned-by-dhcp.cox.net>
+	<20061207214053.GC31035@fieldses.org>
+	<20061207215914.GC12502@spearce.org>
+	<20061208044516.GC5939@fieldses.org>
+	<20061208055938.GB13999@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-2; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Tue, 28 Nov 2006 19:59:30 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Fri, 8 Dec 2006 06:32:00 +0000 (UTC)
+Cc: git@vger.kernel.org, "J. Bruce Fields" <bfields@fieldses.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=200606; d=midwinter.com;
-  b=dK6Dh8U/qvi6TAIQJUaI95gafBQTVSC+a5hUcQuH5qfigbSvHTQWmgnvntBhvdpo  ;
-User-Agent: Mail/News 1.5.0.2 (Macintosh/20060324)
-In-Reply-To: <200611281335.38728.andyparkins@gmail.com>
+In-Reply-To: <20061208055938.GB13999@spearce.org> (Shawn Pearce's message of
+	"Fri, 8 Dec 2006 00:59:38 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32570>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gp96l-0005wS-EW for gcvg-git@gmane.org; Tue, 28 Nov
- 2006 20:59:12 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33663>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GsZH4-0002ds-0M for gcvg-git@gmane.org; Fri, 08 Dec
+ 2006 07:31:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S936078AbWK1T6m (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 28 Nov 2006
- 14:58:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936000AbWK1T6m
- (ORCPT <rfc822;git-outgoing>); Tue, 28 Nov 2006 14:58:42 -0500
-Received: from tater.midwinter.com ([216.32.86.90]:16003 "HELO
- midwinter.com") by vger.kernel.org with SMTP id S936078AbWK1T62 (ORCPT
- <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2006 14:58:28 -0500
-Received: (qmail 28211 invoked from network); 28 Nov 2006 19:58:28 -0000
-Received: from localhost (HELO ?127.0.0.1?) (koreth@127.0.0.1) by localhost
- with SMTP; 28 Nov 2006 19:58:28 -0000
-To: Andy Parkins <andyparkins@gmail.com>
+ S1424803AbWLHGby (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
+ 01:31:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1424804AbWLHGby
+ (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 01:31:54 -0500
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:52663 "EHLO
+ fed1rmmtao10.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1424803AbWLHGbx (ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Dec 2006
+ 01:31:53 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao10.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061208063153.FGZS20715.fed1rmmtao10.cox.net@fed1rmimpo02.cox.net>; Fri, 8
+ Dec 2006 01:31:53 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id w6Y31V00j1kojtg0000000; Fri, 08 Dec 2006
+ 01:32:04 -0500
+To: Shawn Pearce <spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 
-Andy Parkins wrote:
-> Unfortunately, during development, you've switched libsubmodule1 to 
-> branch "development", but supermodule isn't tracking libsubmodule1/HEAD it's 
-> tracking libsubmodule1/master.  Your supermodule commit doesn't capture a 
-> snapshot of the tree you're using.
->   
+Shawn Pearce <spearce@spearce.org> writes:
 
-How about if the supermodule commit errors out by default if you commit 
-a different submodule branch than the one you committed the previous 
-time? Require the user to explicitly acknowledge that yes, they want to 
-check in the contents of "development" now, even though the supermodule 
-was tracking "master" before.
+>> But my main complaint is just that I wouldn't want to see the behavior
+>> of defaulting to HEAD--behavior which is simple, easy to explain, and
+>> shared by most other git commands--by something significantly more
+>> complicated.  That's more a complaint about Junio's suggestion than
+>> yours, though.
+>
+> True, defaulting to HEAD is something that is done almost everywhere.
+> Changing it for `git checkout -b` may surprise a lot of people,
+> almost as much as --index vs. --cached.
 
-Otherwise I think you could easily end up with just the opposite 
-situation, where you forget you've checked out "development" for a 
-moment to look at something, and end up inadvertently committing a bunch 
-of stuff that's not ready for prime time yet. In a standalone git 
-setting, that's no big deal since the commit only updates the current 
-branch and doesn't touch the master branch, but (as I understand the 
-proposal) in a supermodule setting you'd actually end up essentially 
-doing a merge between your development branch and the previously 
-committed master. Or maybe not a merge, but worse, you'd *replace* the 
-previously committed master with what's in your dev branch.
+I did not mean to change the default to something other than
+HEAD depending on the configuration.
 
-I think wanting to commit a submodule on a different branch than last 
-time is probably not a typical day-to-day use case, so we should make 
-sure the user really wants to do it (but allow it if so.)
+> (0) proceed if there is an explicit branch point specified on
+>     the command like, just like now;
 
-On a related note, it would be great from a usability point of view if 
-there were a way to say "I always want to be on the same branch in all 
-submodules and the supermodule." I think a common scenario will be that 
-you are doing development that touches a couple of different 
-applications and your development effort is really a single set of 
-changes even though it happens to cross submodule boundaries. If this 
-branches-in-sync option is turned on, I'd want "git checkout 
-development" to check out the development branch in the entire set of 
-repositories.
+... which is the same as before.
 
-More generally, while I 100% agree that it's very useful to be able to 
-operate independently on each submodule, I think it's also going to be 
-common to use submodules to selectively clone different pieces of a 
-larger project. Say your current development effort needs server A, 
-library B, and documentation C, and you want to have *just* those pieces 
-in your environment. You don't particularly care about the details of 
-how the system has assembled the pieces you want; you want to be able to 
-make your changes and push them when you're done. They are really just 
-pieces of a larger code base, not independent entities that happen to be 
-pulled together into a composite workspace temporarily.
+> (1) allow omission of branch-point if the current branch has
+>     allowbranchbydefault configuration set as in above.  A new
+>     branch is created forking off of the current HEAD;
 
-For that use case, I don't want the system to act differently depending 
-on whether server A and library B are in the same submodule or separate 
-ones; I want to treat the supermodule as the repository, and the system 
-should take care of the details of managing the submodules. When I do 
-"git commit -a" I want it to give me one editor to write one commit 
-comment that covers all of the changes I've made, and when I do "git 
-checkout -b" I want a new branch to apply across all the files I'm 
-working with.
+... which allows people to do the same as before, but only on
+selected "primary" branches;
 
-It is entirely possible that the above is a matter best left to the 
-porcelain layer, and that's fine with me. But I think the Perforce-style 
-"compose a single workspace out of different bits of a larger project" 
-model is hugely useful and whatever submodule system Git ends up with, 
-it should be able to emulate as much of that feature as possible.
+> (2) allow omission of branch-point if no branch has such
+>     configuration; in other words, existing repositories that
+>     do not have the allowbranchbydefault configuration anywhere
+>     are not affected.  A new branch is created forking off of
+>     the current HEAD;
 
+... which allows people to keep using the current behaviour in
+existing repositories;
+
+> (3) otherwise, it barfs if you do not give an explicit
+>     branch-point.
+
+... but a newly created repositories would have an
+allowbranchbydefault entry on "master" (and only on "master"),
+which means new people would be prevented from making mistakes
+when on a non-master branch 'foo':
+
+	$ git branch bar
+
+and end up a foobar branch that is not based on 'master'.  They
+will instead get an error message that says "Hey, are you sure
+you want to fork off of this branch 'foo'?"
+
+But I do not deeply care about this.  An option to disable
+"default to HEAD" altogether is fine.
