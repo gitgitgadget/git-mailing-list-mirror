@@ -1,57 +1,62 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: Cleaning up git user-interface warts
-Date: Thu, 16 Nov 2006 11:49:39 -0500
-Message-ID: <20061116164939.GA26278@thunk.org>
-References: <ejdcg5$4fl$1@sea.gmane.org> <Pine.LNX.4.64.0611141633430.2591@xanadu.home> <7vbqn9y6w6.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611142007010.2591@xanadu.home> <7v3b8ltq7r.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611142306090.2591@xanadu.home> <Pine.LNX.4.64.0611150950170.3349@woody.osdl.org> <20061116011411.GB10512@thunk.org> <7vd57of2cv.fsf@assigned-by-dhcp.cox.net> <20061116160700.GA3383@thunk.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: What's in git.git (stable)
+Date: Fri, 08 Dec 2006 16:36:34 +0100
+Organization: At home
+Message-ID: <elc0lp$70v$1@sea.gmane.org>
+References: <7vwt54yb8d.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 16 Nov 2006 16:50:14 +0000 (UTC)
-Cc: git@vger.kernel.org, Nicolas Pitre <nico@cam.org>,
-	Linus Torvalds <torvalds@osdl.org>
+Content-Transfer-Encoding: 7Bit
+NNTP-Posting-Date: Fri, 8 Dec 2006 15:35:03 +0000 (UTC)
+Cc: linux-kernel@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <20061116160700.GA3383@thunk.org>
-User-Agent: Mutt/1.5.12-2006-07-14
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Followup-To: gmane.comp.version-control.git
+Original-Lines: 10
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-25-107.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31599>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GkkQo-0001WL-6f for gcvg-git@gmane.org; Thu, 16 Nov
- 2006 17:49:42 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33698>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GshkV-0006lq-Jd for gcvg-git@gmane.org; Fri, 08 Dec
+ 2006 16:34:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1424285AbWKPQtc (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 16 Nov 2006
- 11:49:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1424294AbWKPQtc
- (ORCPT <rfc822;git-outgoing>); Thu, 16 Nov 2006 11:49:32 -0500
-Received: from thunk.org ([69.25.196.29]:2226 "EHLO thunker.thunk.org") by
- vger.kernel.org with ESMTP id S1424292AbWKPQtb (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 16 Nov 2006 11:49:31 -0500
-Received: from root (helo=candygram.thunk.org) by thunker.thunk.org with
- local-esmtps  (tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1
- (Debian)) id 1GkkU4-0003lA-9A; Thu, 16 Nov 2006 11:53:04 -0500
-Received: from tytso by candygram.thunk.org with local (Exim 4.62)
- (envelope-from <tytso@thunk.org>) id 1GkkQl-0000kn-WC; Thu, 16 Nov 2006
- 11:49:40 -0500
-To: Junio C Hamano <junkio@cox.net>
+ S938074AbWLHPeq (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
+ 10:34:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S938071AbWLHPeq
+ (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 10:34:46 -0500
+Received: from main.gmane.org ([80.91.229.2]:33843 "EHLO ciao.gmane.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S938072AbWLHPep
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Dec 2006 10:34:45 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1Gshk6-0001Kt-Li for git@vger.kernel.org; Fri, 08 Dec 2006 16:34:30 +0100
+Received: from host-81-190-25-107.torun.mm.pl ([81.190.25.107]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Fri, 08 Dec 2006 16:34:30 +0100
+Received: from jnareb by host-81-190-25-107.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Fri, 08 Dec 2006
+ 16:34:30 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On Thu, Nov 16, 2006 at 11:07:00AM -0500, Theodore Tso wrote:
-> I think the problem is the people who have had years of BK or Hg
-> experience.  Maybe it's more of a documentation problem; perhaps a
-> "git for BK" or "git for Hg" users is what's needed.  The problem
-> though is that while use of BK is definitely legacy, there are going
-> to be a lot of people who need to use both BK and Hg.   
+Junio C Hamano wrote:
 
-Err, what I meant to say is that there are going to be a lot of people
-who will need to simultaneously use both git and Hg.
+> * The 'maint' branch has produced a new release 1.4.4.2
+
+What happened to "[ANNOUNCE] GIT 1.4.4.2" thread?
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
 
