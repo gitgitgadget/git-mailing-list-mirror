@@ -2,103 +2,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: merge-recursive, was Re: What's in git.git
-Date: Thu, 26 Oct 2006 03:00:35 -0700
-Message-ID: <7v7iyno0qk.fsf@assigned-by-dhcp.cox.net>
-References: <7vk62npipb.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0610261114520.3286@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7v3b9bpgvs.fsf@assigned-by-dhcp.cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: git-commit: select which files to commit while editing the commit message
+Date: Fri, 08 Dec 2006 20:32:47 +0100
+Organization: At home
+Message-ID: <elcegl$qfh$1@sea.gmane.org>
+References: <loom.20061208T131919-178@post.gmane.org> <7vpsaui4cn.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 26 Oct 2006 10:00:45 +0000 (UTC)
-Cc: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
+Content-Transfer-Encoding: 7Bit
+NNTP-Posting-Date: Fri, 8 Dec 2006 19:31:43 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <7v3b9bpgvs.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Thu, 26 Oct 2006 02:26:31 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 38
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-25-107.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30175>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gd22T-0007vn-VW for gcvg-git@gmane.org; Thu, 26 Oct
- 2006 12:00:42 +0200
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33726>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GslRU-0000hD-Qn for gcvg-git@gmane.org; Fri, 08 Dec
+ 2006 20:31:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1423099AbWJZKAi (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
- 06:00:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423103AbWJZKAh
- (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 06:00:37 -0400
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:37507 "EHLO
- fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP id S1423099AbWJZKAh
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 06:00:37 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao05.cox.net
- (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
- <20061026100036.PTBD12909.fed1rmmtao05.cox.net@fed1rmimpo01.cox.net>; Thu, 26
- Oct 2006 06:00:36 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id ey0K1V0011kojtg0000000 Thu, 26 Oct 2006
- 06:00:19 -0400
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+ S1426151AbWLHTao (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
+ 14:30:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1426153AbWLHTao
+ (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 14:30:44 -0500
+Received: from main.gmane.org ([80.91.229.2]:37123 "EHLO ciao.gmane.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1426151AbWLHTan
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Dec 2006 14:30:43 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1GslQc-0001Qo-4a for git@vger.kernel.org; Fri, 08 Dec 2006 20:30:38 +0100
+Received: from host-81-190-25-107.torun.mm.pl ([81.190.25.107]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Fri, 08 Dec 2006 20:30:38 +0100
+Received: from jnareb by host-81-190-25-107.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Fri, 08 Dec 2006
+ 20:30:38 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano <junkio@cox.net> writes:
+Junio C Hamano wrote:
 
->> BTW what happened to the builtin shortlog? It is the last Perl script I 
->> use regularly... (should make people happy who are stuck with Activision 
->> Perl...)
->
-> Yeah, I was wondering about it too, when I was looking for
-> something readily mergeable to "next" today.  I must have
-> misplaced it.
+> Pazu <pazu@pazu.com.br> writes:
+> 
+>> # Please enter the commit message for your changes.
+>> # (Comment lines starting with '#' will not be included)
+>> # On branch refs/heads/next
+>> # Updated but not checked in:
+>> #   (will commit)
+>> #
+>> #    modified:   perl/Makefile
+>> #    modified:   var.c
+>>
+>> Here's where the magic would happen. Removing the line "modified: var.c" would
+>> remove var.c from this commit. Of course, the template message should be
+>> modified to tell the user he can do that.
+>>
+>> So, what do you think about this?
+> 
+> Personally, I would refuse to use such a modified git, because
+> often the first thing I would do in the commit log buffer is
+> check the listed files and remove the '# ...' lines while
+> typing.  I do not want that to affect the set of changes I
+> staged in any way.
+> 
+> But maybe that is just me.
 
-I looked at the code again.
+I was to raise the same objection. 
 
-This is a prime demonstration that it makes more sense to keep
-script version until we flush out configurability issues.
+But this can be solved by using magic _only_ if the template with exception
+of "modified:" lines matches, and if there is at least one file
+in "modified:" section.
 
-The built-in mailmap list is easily overridden with ".mailmap"
-which presumably projects would want to keep under version
-control, so it is less of an issue, but not everybody would
-necessarily want to name that file ".mailmap".
-
-There is a "dot3" merge source shortening logic that is very
-specific to the kernel, and this cannot be customized per
-project.  If it were kept as Perl script, each project could
-limp along with a copy of this script, modified for their needs,
-without making the script itself customizable.  Rewriting it
-into C does not _forbid_ that kind of use, but certainly it
-makes it more cumbersome to do so.
-
-First I'd probably ask kernel folks to maintain their own
-copy of .mailmap at the toplevel of their source tree, so that
-we can remove this kernel specific built-in mailmap from
-shortlog (I'd even do so before switching from the Perl
-version).
-
-The dot3 logic is probably best substituted with config, a
-version controllable file similar to .mailmap, or command line
-parameters, but I am not sure which one is the best way to go.
-Whatever mechanism is used, It essentially is to define a
-mapping from a long string to its abbreviation (currently there
-is one hardcoded one, that replaces /pub/scm/linux/kernel/git/
-to /.../), to be applied to the first line of log message body.
-Presumably other projects could have more than one "popular"
-prefixes that appear often, so (if we take command line
-approach, which I think is the worst of the three possibilities)
-the "slightly more generalized" version would look something
-like this perhaps?
-
-  git-shortlog --mailmapfile=.mailmap \
-  	--abbrev=/pub/scm/linux/kernel/git/,/.../ \
-        --abbrev=/pub/scm/,/.../../
-
-We could even define the --abbrev stuff as 's/from/to/' but that
-would make it harder for us to shake Perl off, and in practice
-this is to shorten the merge source repository name, so
-deliberately limiting its feature to simple string replace like
-the above might make more sense.
-
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
 
