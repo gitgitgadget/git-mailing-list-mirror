@@ -5,83 +5,91 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: gitk feature request..
-Date: Tue, 07 Nov 2006 14:34:59 -0800
-Message-ID: <7vslgu28do.fsf@assigned-by-dhcp.cox.net>
-References: <452A37FB.60507@adelaide.edu.au>
-	<17745.1213.22769.420355@cargo.ozlabs.ibm.com>
+Subject: Re: cygwin, 44k files: how to commit only index?
+Date: Thu, 07 Dec 2006 22:54:39 -0800
+Message-ID: <7vzm9ynahc.fsf@assigned-by-dhcp.cox.net>
+References: <81b0412b0612070627r3ff0b394s124d95fbf8084f16@mail.gmail.com>
+	<7vd56vtt2g.fsf@assigned-by-dhcp.cox.net>
+	<20061207221503.GA4990@steel.home>
+	<7vr6vbqqzh.fsf@assigned-by-dhcp.cox.net>
+	<20061208052705.GA4318@steel.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 7 Nov 2006 22:35:26 +0000 (UTC)
-Cc: git@vger.kernel.org,
-	Pierre Marc Dumuid <pierre.dumuid@adelaide.edu.au>
+NNTP-Posting-Date: Fri, 8 Dec 2006 06:54:48 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <17745.1213.22769.420355@cargo.ozlabs.ibm.com> (Paul Mackerras's
-	message of "Wed, 8 Nov 2006 09:12:13 +1100")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31096>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GhZXB-0003si-3d for gcvg-git@gmane.org; Tue, 07 Nov
- 2006 23:35:09 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33664>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GsZd6-0004bg-CG for gcvg-git@gmane.org; Fri, 08 Dec
+ 2006 07:54:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753338AbWKGWfE (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 7 Nov 2006
- 17:35:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753781AbWKGWfE
- (ORCPT <rfc822;git-outgoing>); Tue, 7 Nov 2006 17:35:04 -0500
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:42691 "EHLO
- fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP id S1753338AbWKGWfB
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 7 Nov 2006 17:35:01 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao12.cox.net
- (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
- <20061107223500.SNHF18180.fed1rmmtao12.cox.net@fed1rmimpo01.cox.net>; Tue, 7
- Nov 2006 17:35:00 -0500
+ S1424824AbWLHGyl (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
+ 01:54:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1424825AbWLHGyl
+ (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 01:54:41 -0500
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:41762 "EHLO
+ fed1rmmtao04.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1424824AbWLHGyk (ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Dec 2006
+ 01:54:40 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao04.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061208065440.RCFL7494.fed1rmmtao04.cox.net@fed1rmimpo02.cox.net>; Fri, 8
+ Dec 2006 01:54:40 -0500
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id jyad1V0021kojtg0000000; Tue, 07 Nov 2006
- 17:34:37 -0500
-To: Paul Mackerras <paulus@samba.org>
+ fed1rmimpo02.cox.net with bizsmtp id w6uq1V00P1kojtg0000000; Fri, 08 Dec 2006
+ 01:54:50 -0500
+To: Alex Riesen <raa.lkml@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Paul Mackerras <paulus@samba.org> writes:
+fork0@t-online.de (Alex Riesen) writes:
 
-> Good idea.  Junio, is there a canonical place under .git where gitk
-> should put such things?
+> yes, except that it'll compare the whole trees. Could I make it stop
+> at first mismatch? "-q|--quiet" for git-diff-index perhaps?
+> It's just not only stat, but also, open, read, mmap (yes, I try to use
+> it for packs) and close are really slow here as well.
 
-Well, we do not design things in advance but tend to let things
-evolve, which probably is a bad habit but I am not sure how else
-we can avoid overdesigning before knowing the needs.
+That sounds like optimizing for a wrong case -- you expect the
+index to match HEAD and trying to catch mistakes by detecting
+a mismatch, right?
 
-The existing state-keeping programs seem to keep their stuff
-immediately under $GIT_DIR.  Examples are:
+Having said that, I should point out that it is a low hanging
+fruit to optimize "diff-index --cached" for cases where index
+is expected to mostly match HEAD.
 
-	.git/description (gitweb)
-        .git/cvs-authors (cvsimport)
-        .git/gitcvs.<branch>.sqlite (cvsserver)
+The current code for "diff-index --cached" reads the whole tree
+into the index as stage #1 entries (diff-lib.c::run_diff_index),
+and then compares stage #0 (from the original index contents)
+and stage #1 (the tree parameter from the command line).  Even
+if you stop at the first mismatch, you would already have paid
+the overhead to open and read all tree objects before even
+starting the comparison.
 
-So, .git/gitk-<foo> (or .git/gitk/<bar>) would be in line with
-others.  We _might_ want to have a standard plan to keep
-Porcelains stepping on each other's toes, and probably migrating
-everybody to .git/aux/{common,gitcvs,gitk,...}/<foo> would be a
-sane thing to do.  description and cvs-authors could probably be
-shared across Porcelains, so I do not think we mind leaving them
-in the current place or throw them in .git/aux/common/
+However, this code is from the ancient time before cache-tree
+was introduced in the index.  If the index is expected to mostly
+match HEAD, most of the cache-tree nodes are up-to-date, and
+whole subtree can be skipped with a single comparison between
+two tree SHA-1s at a shallower level of the directory tree.
 
-Having said that, is the gitk view supposed to be shared across
-users of a single repository?
+In 'pu' (jc/diff topic), I have a very generic code to walk the
+index, working tree and zero or more trees in parallel, taking
+advantage of cache-tree.  If somebody is interested to learn the
+internals of git, some of the code could be lifted from there
+and simplified to walk just the index and a single tree, and I
+think that would optimize "diff-index --cached" quite a bit.
 
-If you imagine yourself logging into kernel.org (perhaps X
-forwarded over ssh to your local machine) and browsing
-/pub/scm/git/git.git/, the repository itself would not be
-writable by you.  Even if it were, I do not think you would want
-me to reuse the view you used from there next time I did the
-same on the same repository.
+A very unscientific test of running in the kernel repository I
+just pulled (hot cache) on my box is:
 
-It might make sense to give --state=dir/ parameter to gitk and
-tell it to use that directory to keep persistent data.  Also I
-seem to recall you already have one file under $HOME/ to make
-window geometry or something persistent.
+$ /usr/bin/time git diff-index -r --cached --abbrev v2.6.19 >/tmp/1
+0.91user 0.20system 0:01.12elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
+0inputs+0outputs (0major+10949minor)pagefaults 0swaps
 
+while the para-walk to produce the moral equivalent is:
 
-
+$ /usr/bin/time test-para --no-work v2.6.19 >/tmp/2
+0.11user 0.02system 0:00.13elapsed 98%CPU (0avgtext+0avgdata 0maxresident)k
+0inputs+0outputs (0major+4524minor)pagefaults 0swaps
