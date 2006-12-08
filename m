@@ -1,54 +1,72 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Chris Riddoch" <riddochc@gmail.com>
-Subject: The patch documenting --pretty options (oops)
-Date: Fri, 17 Nov 2006 23:28:47 -0700
-Message-ID: <6efbd9b70611172228p69ecb3e6mfd1c60d349968cce@mail.gmail.com>
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Luben Tuikov <ltuikov@yahoo.com>
+Subject: Problem compiling: that perl thing again
+Date: Fri, 8 Dec 2006 12:36:28 -0800 (PST)
+Message-ID: <805469.91804.qm@web31805.mail.mud.yahoo.com>
+Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sat, 18 Nov 2006 06:28:56 +0000 (UTC)
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+NNTP-Posting-Date: Fri, 8 Dec 2006 20:37:01 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=o1zZPe1Yh4/rIVZfHPN37f3Re+a6fizyzsi7LAXO8ml6jsLaQaG5fglwJ35zl7aJtjJvi3AzOp5QadFZFB7/T0tyV/jCyrItkIII6zG21kdcV1oRBw0zJNbANRYezYLDv3OVFcQbaQCP5syIaLD4C5cCBI93bEI00CzK2hP0hbU=
-Content-Disposition: inline
+  s=s1024; d=yahoo.com;
+  h=X-YMail-OSG:Received:Date:From:Reply-To:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
+  b=T7fKDM2suZ7KDdJIwu9ZjIPYArBb2fF80WhNUuvM6dpJwvwPwX/LC44tVnV4Q4c2pV/APPDdZj1ip41bD2n17GLNn/uwdZUIoJ9ZpxlksXuC3NEgL8gaEZpu8BUo/V4YJ9w5cAwaDEUaVYVbz1ZjAJ2+tgfg0oWxgsuI7XouJOs=;
+X-YMail-OSG: tSWsKR4VM1mxpVbtALl2_GLTaoU_nu2hbngjDv1hn9SHjFWZik1Q7d.LU_wxerwp.lhfOwglCQf8lcI54lsZyi0rZ7zYhsVcBUZLIztWygWCeRdaaBO3Sivl_X5eYQ_yDJa1n9PLHb16kEo-
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31760>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GlJh7-00053j-5j for gcvg-git@gmane.org; Sat, 18 Nov
- 2006 07:28:54 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33738>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GsmSe-0001aU-Fk for gcvg-git@gmane.org; Fri, 08 Dec
+ 2006 21:36:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1756051AbWKRG2t (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 18 Nov 2006
- 01:28:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756056AbWKRG2t
- (ORCPT <rfc822;git-outgoing>); Sat, 18 Nov 2006 01:28:49 -0500
-Received: from wx-out-0506.google.com ([66.249.82.228]:64776 "EHLO
- wx-out-0506.google.com") by vger.kernel.org with ESMTP id S1756051AbWKRG2s
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 18 Nov 2006 01:28:48 -0500
-Received: by wx-out-0506.google.com with SMTP id s7so1195263wxc for
- <git@vger.kernel.org>; Fri, 17 Nov 2006 22:28:48 -0800 (PST)
-Received: by 10.70.61.1 with SMTP id j1mr2794wxa.1163831327697; Fri, 17 Nov
- 2006 22:28:47 -0800 (PST)
-Received: by 10.70.59.14 with HTTP; Fri, 17 Nov 2006 22:28:47 -0800 (PST)
+ S1947219AbWLHUga (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
+ 15:36:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1947217AbWLHUga
+ (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 15:36:30 -0500
+Received: from web31805.mail.mud.yahoo.com ([68.142.207.68]:44587 "HELO
+ web31805.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ SMTP id S1947219AbWLHUg3 (ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Dec
+ 2006 15:36:29 -0500
+Received: (qmail 92113 invoked by uid 60001); 8 Dec 2006 20:36:28 -0000
+Received: from [64.215.88.90] by web31805.mail.mud.yahoo.com via HTTP; Fri,
+ 08 Dec 2006 12:36:28 PST
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Hi, folks.
+Over the last 2 months each time I pull, check out next and compile,
+I'm seeing _some_ kind of problem with compiling the perl section
+of git.  Sometimes git-reset --hard, or a fresh checkout, or git-clean
+resolve the situation.  But not this time.
 
-I'm terribly sorry about the repost of my old patch.  I fixed it,
-adding more information about the rest of the output formats and the
-'Merge: ' line, but then accidentally reposted the original one.  I
-hope this new version addresses your original concerns with my patch,
-Junio.
+Here is what I see now:
+$ make
+...
+make -C perl PERL_PATH='/usr/bin/perl' prefix='/home/luben' all
+make[1]: Entering directory `/home/luben/projects/git-next/perl'
+Makefile out-of-date with respect to Makefile.PL
+/usr/lib64/perl5/5.8.6/x86_64-linux-thread-multi/Config.pm
+/usr/lib64/perl5/5.8.6/x86_64-linux-thread-multi/CORE/config.h
+Cleaning current config before rebuilding Makefile...
+mv: cannot stat `perl.mak': No such file or directory
+make[1]: *** [perl.mak] Error 1
+make[1]: *** Waiting for unfinished jobs....
+make[1]: *** Waiting for unfinished jobs....
+make[1]: *** Waiting for unfinished jobs....
+make[1]: *** Waiting for unfinished jobs....
+make[1]: Leaving directory `/home/luben/projects/git-next/perl'
+make: *** [all] Error 2
+$ git-rev-list --max-count=1 HEAD
+e1e8377415c8754c3773c09b78baaffa89d6fa9e
 
--- 
-epistemological humility
+So, where is "perl.mak"?
+
+   Luben
