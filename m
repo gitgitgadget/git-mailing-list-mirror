@@ -1,172 +1,74 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] git-branch: deleting remote branches in new layout
-Date: Sun, 17 Dec 2006 23:49:58 -0800
-Message-ID: <7vodq11w49.fsf@assigned-by-dhcp.cox.net>
-References: <45863044.4040406@gmail.com>
-	<7vbqm13cm0.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: Re: [PATCH] Add branch.*.localmerge and documentation update
+Date: Fri, 8 Dec 2006 23:01:56 +0100
+Message-ID: <200612082301.57037.Josef.Weidendorfer@gmx.de>
+References: <cc723f590612052051r62111c4cgfd7ee893cb00f84a@mail.gmail.com> <8aa486160612081252t1e245104x58c8a6654d887af5@mail.gmail.com> <7vr6vagja6.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Mon, 18 Dec 2006 07:50:10 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Fri, 8 Dec 2006 22:02:12 +0000 (UTC)
+Cc: Santi =?iso-8859-1?q?B=E9jar?= <sbejar@gmail.com>,
+	"Aneesh Kumar K.V" <aneesh.kumar@gmail.com>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <7vbqm13cm0.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Sun, 17 Dec 2006 23:08:23 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+User-Agent: KMail/1.9.5
+In-Reply-To: <7vr6vagja6.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay1.informatik.tu-muenchen.de
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34724>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33756>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GwDG8-0000E0-Me for gcvg-git@gmane.org; Mon, 18 Dec
- 2006 08:50:05 +0100
+ esmtp (Exim 4.50) id 1GsnnE-0003gL-1x for gcvg-git@gmane.org; Fri, 08 Dec
+ 2006 23:02:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753472AbWLRHuA (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 18 Dec 2006
- 02:50:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753473AbWLRHuA
- (ORCPT <rfc822;git-outgoing>); Mon, 18 Dec 2006 02:50:00 -0500
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:56871 "EHLO
- fed1rmmtao11.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1753472AbWLRHuA (ORCPT <rfc822;git@vger.kernel.org>); Mon, 18 Dec 2006
- 02:50:00 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao11.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061218074959.QXVD25875.fed1rmmtao11.cox.net@fed1rmimpo02.cox.net>; Mon, 18
- Dec 2006 02:49:59 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id 07qB1W0051kojtg0000000; Mon, 18 Dec 2006
- 02:50:11 -0500
-To: Quy Tonthat <qtonthat@gmail.com>
+ S1947418AbWLHWCE convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006 17:02:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1947419AbWLHWCE
+ (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 17:02:04 -0500
+Received: from mailout1.informatik.tu-muenchen.de ([131.159.0.18]:35598 "EHLO
+ mailout1.informatik.tu-muenchen.de" rhost-flags-OK-OK-OK-OK) by
+ vger.kernel.org with ESMTP id S1947418AbWLHWCC convert rfc822-to-8bit (ORCPT
+ <rfc822;git@vger.kernel.org>); Fri, 8 Dec 2006 17:02:02 -0500
+Received: from dhcp-3s-46.lrr.in.tum.de (dhcp-3s-46.lrr.in.tum.de
+ [131.159.35.46]) by mail.in.tum.de (Postfix) with ESMTP id 9DAC7282A; Fri,  8
+ Dec 2006 23:02:00 +0100 (MET)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-How about this instead?
+On Friday 08 December 2006 22:38, Junio C Hamano wrote:
+> "Santi B=E9jar" <sbejar@gmail.com> writes:
+>=20
+> > On 12/8/06, Josef Weidendorfer <Josef.Weidendorfer@gmx.de> wrote:
+> >> Clarify the meaning of branch.*.merge option and add a similar
+> >> branch.*.localmerge option, which can be used to specify a local
+> >> tracking branch to be merged by default.
+>=20
+> I am not so sure about the "localmerge" stuff anymore.
+>=20
+> What convenience would it buy us (including but not limited to
+> new people), and if there is any, would that outweigh the
+> potential confusion factor to have two different configuration
+> variables that do exactly the same thing whose sole difference
+> is which side of the fetched branch namespace it uses to specify
+> the merge source?
 
-Because -r already means "remote" when listing, you can say:
+I just came up with a concrete patch.
+I am not saying that this is the only true solution.
 
-	$ git branch -d -r origin/todo origin/html origin/man
+Actually, Jakubs one with allowing arbitrary refspecs is nice.
+The only problem is that it is not consistent which refspec
+shortcuts otherwise, or?
 
-I just twisted it not to do fast-forward check with the current
-branch, because remote tracking branches are more like tags than
-branches, and when you are removing them, most likely that is
-not because you are "done with" them (for a local branch, it
-usually means "you merged it up") but because you are not even
-interested in them.
+However, you should take the documentation part and the warning
+when there is no match .
 
---
-
-Junio C Hamano <junkio@cox.net> writes:
-
-> Quy Tonthat <qtonthat@gmail.com> writes:
->
->> Now that remote branches are in refs/remotes/, branch -D needs to know
->> where to find them.
->>
->> Signed-off-by: Quy Tonthat <qtonthat@gmail.com>
->
-> I recognize that giving end users a way to remove a "remote
-> tracking branch" might be a worthy goal ("update-ref -d" _could_
-> be used, but "branch -D" feels more natural).
-
- builtin-branch.c |   41 ++++++++++++++++++++++++++++-------------
- 1 files changed, 28 insertions(+), 13 deletions(-)
-
-diff --git a/builtin-branch.c b/builtin-branch.c
-index 560309c..7fb93e7 100644
---- a/builtin-branch.c
-+++ b/builtin-branch.c
-@@ -12,8 +12,12 @@
- #include "builtin.h"
- 
- static const char builtin_branch_usage[] =
--  "git-branch (-d | -D) <branchname> | [-l] [-f] <branchname> [<start-point>] | (-m | -M) [<oldbranch>] <newbranch> | [-r | -a] [-v [--abbrev=<length>]]";
-+  "git-branch [-r] (-d | -D) <branchname> | [-l] [-f] <branchname> [<start-point>] | (-m | -M) [<oldbranch>] <newbranch> | [-r | -a] [-v [--abbrev=<length>]]";
- 
-+#define REF_UNKNOWN_TYPE    0x00
-+#define REF_LOCAL_BRANCH    0x01
-+#define REF_REMOTE_BRANCH   0x02
-+#define REF_TAG             0x04
- 
- static const char *head;
- static unsigned char head_sha1[20];
-@@ -89,25 +93,40 @@ static int in_merge_bases(const unsigned char *sha1,
- 	return ret;
- }
- 
--static void delete_branches(int argc, const char **argv, int force)
-+static void delete_branches(int argc, const char **argv, int force, int kinds)
- {
- 	struct commit *rev, *head_rev = head_rev;
- 	unsigned char sha1[20];
- 	char *name;
-+	const char *fmt, *remote;
- 	int i;
- 
-+	switch (kinds) {
-+	case REF_REMOTE_BRANCH:
-+		fmt = "refs/remotes/%s";
-+		remote = "remote ";
-+		force = 1;
-+		break;
-+	case REF_LOCAL_BRANCH:
-+		fmt = "refs/heads/%s";
-+		remote = "";
-+		break;
-+	default:
-+		die("cannot use -a with -d");
-+	}
-+
- 	if (!force) {
- 		head_rev = lookup_commit_reference(head_sha1);
- 		if (!head_rev)
- 			die("Couldn't look up commit object for HEAD");
- 	}
- 	for (i = 0; i < argc; i++) {
--		if (!strcmp(head, argv[i]))
-+		if (kinds == REF_LOCAL_BRANCH && !strcmp(head, argv[i]))
- 			die("Cannot delete the branch you are currently on.");
- 
--		name = xstrdup(mkpath("refs/heads/%s", argv[i]));
-+		name = xstrdup(mkpath(fmt, argv[i]));
- 		if (!resolve_ref(name, sha1, 1, NULL))
--			die("Branch '%s' not found.", argv[i]);
-+			die("%sbranch '%s' not found.", remote, argv[i]);
- 
- 		rev = lookup_commit_reference(sha1);
- 		if (!rev)
-@@ -128,19 +147,15 @@ static void delete_branches(int argc, const char **argv, int force)
- 		}
- 
- 		if (delete_ref(name, sha1))
--			printf("Error deleting branch '%s'\n", argv[i]);
-+			printf("Error deleting %sbranch '%s'\n", remote,
-+			       argv[i]);
- 		else
--			printf("Deleted branch %s.\n", argv[i]);
-+			printf("Deleted %sbranch %s.\n", remote, argv[i]);
- 
- 		free(name);
- 	}
- }
- 
--#define REF_UNKNOWN_TYPE    0x00
--#define REF_LOCAL_BRANCH    0x01
--#define REF_REMOTE_BRANCH   0x02
--#define REF_TAG             0x04
--
- struct ref_item {
- 	char *name;
- 	unsigned int kind;
-@@ -435,7 +450,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 	head += 11;
- 
- 	if (delete)
--		delete_branches(argc - i, argv + i, force_delete);
-+		delete_branches(argc - i, argv + i, force_delete, kinds);
- 	else if (i == argc)
- 		print_ref_list(kinds, verbose, abbrev);
- 	else if (rename && (i == argc - 1))
