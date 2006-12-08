@@ -1,55 +1,73 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: cygwin, 44k files: how to commit only index?
-Date: Thu, 07 Dec 2006 14:29:54 -0800
-Message-ID: <7vr6vbqqzh.fsf@assigned-by-dhcp.cox.net>
-References: <81b0412b0612070627r3ff0b394s124d95fbf8084f16@mail.gmail.com>
-	<7vd56vtt2g.fsf@assigned-by-dhcp.cox.net>
-	<20061207221503.GA4990@steel.home>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: kernel.org mirroring (Re: [GIT PULL] MMC update)
+Date: Fri, 08 Dec 2006 11:51:16 -0800
+Message-ID: <4579C234.5080709@zytor.com>
+References: <Pine.LNX.4.64.0612020835110.3476@woody.osdl.org>	 <45785697.1060001@zytor.com>	 <Pine.LNX.4.64.0612071052560.3615@woody.osdl.org>	 <457868AA.2030605@zytor.com> <20061207193012.GA84678@dspnet.fr.eu.org>	 <4578722E.9030402@zytor.com> <4579611F.5010303@dawes.za.net>	 <45798FE2.9040502@zytor.com>	 <Pine.LNX.4.64.0612080830380.3516@woody.osdl.org>	 <457995F8.1080405@zytor.com> <8c5c35580612081149y2042c62j55b1b7b3f23da6ad@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 7 Dec 2006 22:30:11 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Fri, 8 Dec 2006 19:51:40 +0000 (UTC)
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Git Mailing List <git@vger.kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061207221503.GA4990@steel.home> (Alex Riesen's message of
-	"Thu, 7 Dec 2006 23:15:03 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+User-Agent: Thunderbird 1.5.0.8 (X11/20061107)
+In-Reply-To: <8c5c35580612081149y2042c62j55b1b7b3f23da6ad@mail.gmail.com>
+X-Virus-Scanned: ClamAV 0.88.6/2308/Fri Dec  8 08:10:24 2006 on terminus.zytor.com
+X-Virus-Status: Clean
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33641>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33731>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GsRkc-0007YW-Uu for gcvg-git@gmane.org; Thu, 07 Dec
- 2006 23:29:59 +0100
+ esmtp (Exim 4.50) id 1Gslkv-0003KR-6H for gcvg-git@gmane.org; Fri, 08 Dec
+ 2006 20:51:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1163530AbWLGW34 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
- 17:29:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1163532AbWLGW34
- (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 17:29:56 -0500
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:33226 "EHLO
- fed1rmmtao04.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1163530AbWLGW3z (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec 2006
- 17:29:55 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao04.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061207222955.XLUV7494.fed1rmmtao04.cox.net@fed1rmimpo02.cox.net>; Thu, 7
- Dec 2006 17:29:55 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id vyW51V00H1kojtg0000000; Thu, 07 Dec 2006
- 17:30:05 -0500
-To: Alex Riesen <raa.lkml@gmail.com>
+ S1426176AbWLHTve (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
+ 14:51:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1426179AbWLHTve
+ (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 14:51:34 -0500
+Received: from terminus.zytor.com ([192.83.249.54]:50465 "EHLO
+ terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
+ S1426176AbWLHTvd (ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Dec 2006
+ 14:51:33 -0500
+Received: from [10.0.6.0] (yardgnome.c2micro.com [69.104.58.50])
+ (authenticated bits=0) by terminus.zytor.com (8.13.8/8.13.7) with ESMTP id
+ kB8JpJ7H022105 (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256
+ verify=NO); Fri, 8 Dec 2006 11:51:19 -0800
+To: Lars Hjemli <lh@elementstorage.no>
 Sender: git-owner@vger.kernel.org
 
-fork0@t-online.de (Alex Riesen) writes:
+Lars Hjemli wrote:
+> On 12/8/06, H. Peter Anvin <hpa@zytor.com> wrote:
+>> Linus Torvalds wrote:
+>> > I could write a simple C caching thing that just hashes the CGI 
+>> arguments
+>> > and uses a hash to create a cache (and proper lock-files etc to 
+>> serialize
+>> > access to a particular cache object while it's being created) fairly
+>> > easily, but I'm pretty sure people would much prefer a mod_perl 
+>> thing just
+>> > to avoid the fork/exec overhead with Apache (I think mod_perl allows
+>> > Apache to run perl scripts without it), and that means I'm not the 
+>> right
+>> > person any more.
+>>
+>> True about mod_perl.  Haven't messed with that myself, either.
+>> fork/exec really is very cheap on Linux, so it's not a huge deal.
+> 
+> I've been playing around with a "native git" cgi thingy the last week
+> (I call it cgit),  and I've been thinking about adding exactly this
+> kind of caching to it. And since it's basically a standard git command
+> written in C, it should have less overhead than any perl
+> implementation.
+> 
 
-> But aside from me trying ignoreState, can anyone help me with that
-> question regarding checking if the index is any different from HEAD?
+Trust me, perl, or CGI, is not the problem.  It's all about I/O traffic 
+generated by git.
 
-Comparing index and HEAD should be cheap on a system with slow
-lstat(), I think, as "git-diff-index --cached HEAD" should just
-ignore the working tree altogether.  Is that what you want?
