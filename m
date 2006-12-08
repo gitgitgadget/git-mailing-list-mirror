@@ -1,81 +1,92 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: What's in git.git
-Date: Wed, 08 Nov 2006 08:40:07 +0100
-Organization: At home
-Message-ID: <eis1j6$vug$2@sea.gmane.org>
-References: <7v8ximwrm3.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: Re: git pull and merging.
+Date: Fri, 8 Dec 2006 18:23:45 +0100
+Message-ID: <200612081823.45565.Josef.Weidendorfer@gmx.de>
+References: <cc723f590612052051r62111c4cgfd7ee893cb00f84a@mail.gmail.com> <200612072354.01830.Josef.Weidendorfer@gmx.de> <8aa486160612071756s18f9530cr7ed26e4b7b47d1de@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Wed, 8 Nov 2006 07:39:54 +0000 (UTC)
+NNTP-Posting-Date: Fri, 8 Dec 2006 17:23:57 +0000 (UTC)
+Cc: "Junio C Hamano" <junkio@cox.net>,
+	"Aneesh Kumar K.V" <aneesh.kumar@gmail.com>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 24
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+User-Agent: KMail/1.9.5
+In-Reply-To: <8aa486160612071756s18f9530cr7ed26e4b7b47d1de@mail.gmail.com>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay1.informatik.tu-muenchen.de
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31126>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Ghi2D-0002vk-BO for gcvg-git@gmane.org; Wed, 08 Nov
- 2006 08:39:45 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33710>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GsjRx-00088x-Rs for gcvg-git@gmane.org; Fri, 08 Dec
+ 2006 18:23:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752768AbWKHHjk convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Wed, 8 Nov 2006 02:39:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753189AbWKHHjk
- (ORCPT <rfc822;git-outgoing>); Wed, 8 Nov 2006 02:39:40 -0500
-Received: from main.gmane.org ([80.91.229.2]:46292 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S1752768AbWKHHjj (ORCPT
- <rfc822;git@vger.kernel.org>); Wed, 8 Nov 2006 02:39:39 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1Ghi1v-0002tD-TV for git@vger.kernel.org; Wed, 08 Nov 2006 08:39:27 +0100
-Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Wed, 08 Nov 2006 08:39:27 +0100
-Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Wed, 08 Nov 2006
- 08:39:27 +0100
-To: git@vger.kernel.org
+ S1760778AbWLHRXv convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006 12:23:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760772AbWLHRXu
+ (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 12:23:50 -0500
+Received: from mailout1.informatik.tu-muenchen.de ([131.159.0.18]:62520 "EHLO
+ mailout1.informatik.tu-muenchen.de" rhost-flags-OK-OK-OK-OK) by
+ vger.kernel.org with ESMTP id S1760778AbWLHRXt convert rfc822-to-8bit (ORCPT
+ <rfc822;git@vger.kernel.org>); Fri, 8 Dec 2006 12:23:49 -0500
+Received: from dhcp-3s-46.lrr.in.tum.de (dhcp-3s-46.lrr.in.tum.de
+ [131.159.35.46]) by mail.in.tum.de (Postfix) with ESMTP id 84C9479C; Fri,  8
+ Dec 2006 18:23:48 +0100 (MET)
+To: "Santi =?iso-8859-1?q?B=E9jar?=" <sbejar@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano wrote:
+On Friday 08 December 2006 02:56, Santi B=E9jar wrote:
+> > [remote "repo"]
+> >   url =3D ...
+> >   fetch =3D branch1
+> >   fetch =3D branch2
+> >
+> > [branch "mybranch1"]
+> >   remote =3D repo
+> >   merge =3D branch1
+> >
+> > actually looks fine, and is the only possible way.
+> > But still, this does not work.
+>=20
+> It works for me.
+>=20
+> > You have to specify
+> >
+> >   merge =3D refs/heads/branch1
+>=20
+> It does not.
+>=20
+> The merge line must match exactly the remote part of the refspec.
 
-> =A0 =A0Jakub Narebski (4):
-[...]
-> =A0 =A0 =A0 gitweb: Output also empty patches in "commitdiff" view
+Yes, you are right; I just looked it up in git-parse-remote.
+Sorry about any confusion.
 
-I think that this patch is a bit premature. Without "new improved patch=
-set
-view" the empty patches are just that: totally empty. It is new header =
-and
-especially outputting extended header information which makes outputtin=
-g
-"empty" patches (with no diff) in "commitdiff" view usefull. By "empty"
-patches I mean pure type change, pure rename, pure copy and type change=
- and
-rename.
+>=20
+> >
+> > That's confusing (perhaps I can come up with a patch
+> > to allow "branch1" alone).
+> >
+> > So probably the best way is to write some more detailed
+> > explanation into the docu ...
+>=20
+> Perhaps that the branch.<name>.remote and branch.<name>.merge have th=
+e
+> equivalent meaning as the parameters of git-pull?
 
-The "new improved patchset view" is prepared to send in two stages: upd=
-ated
-filename quoting/unquoting series (two patches: unescape + minimal
-esc_path; esc_path with span.cntrl and backslash sequence quoting), and
-"new improved patchset view" (three patches originally, two remains: us=
-ing
-"git diff" header and extended git diff headers; output and link also t=
-o
-patches with empty diff; improved formatting of chunk header).
---=20
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+We want to fetch multiple refs from one remote in a row. So what
+are you proposing? That branch.<name>.merge has to exactly
+specify one remote? I do not think this is needed.
+
+Actually, I am really for a new branch.<name>.localmerge option,
+and keeping branch.<name>.merge (but not advertising it).
 
