@@ -1,72 +1,134 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-1.5 required=3.0 tests=BAYES_00,DKIM_ADSP_NXDOMAIN,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RCVD_NUMERIC_HELO,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
-From: Jerome Lovy <t2a2e9z8ncbs9qg@brefemail.com>
-Subject: Rationale for the "Never commit to the right side of a Pull line"
- rule
-Date: Thu, 26 Oct 2006 18:47:43 +0200
-Message-ID: <ehqp1u$j4$1@sea.gmane.org>
-Reply-To: t2a2e9z8ncbs9qg@brefemail.com
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [PATCH] git-svn: use do_switch for --follow-parent if the SVN library supports it
+Date: Fri, 8 Dec 2006 02:20:17 -0800
+Message-ID: <20061208102017.GA30955@soma>
+References: <20061205051738.16552.8987.stgit@localhost> <20061205051738.16552.22494.stgit@localhost> <20061205085804.GB27236@soma> <45775E52.90102@vilain.net> <20061207200236.GB8179@localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Thu, 26 Oct 2006 16:52:15 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Fri, 8 Dec 2006 10:20:31 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 20
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 212.11.48.246
-User-Agent: Mozilla Thunderbird 1.0.2-6 (X11/20050513)
-X-Accept-Language: en-us, en
+Content-Disposition: inline
+In-Reply-To: <20061207200236.GB8179@localdomain>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30237>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gd8SO-0005y5-9l for gcvg-git@gmane.org; Thu, 26 Oct
- 2006 18:51:53 +0200
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33678>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GscqD-000850-99 for gcvg-git@gmane.org; Fri, 08 Dec
+ 2006 11:20:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1423490AbWJZQvt convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006 12:51:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423492AbWJZQvt
- (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 12:51:49 -0400
-Received: from main.gmane.org ([80.91.229.2]:31717 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S1423490AbWJZQvs (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 12:51:48 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1Gd8S7-0005ty-Mp for git@vger.kernel.org; Thu, 26 Oct 2006 18:51:36 +0200
-Received: from 212.11.48.246 ([212.11.48.246]) by main.gmane.org with esmtp
- (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Thu, 26
- Oct 2006 18:51:35 +0200
-Received: from t2a2e9z8ncbs9qg by 212.11.48.246 with local (Gmexim 0.1
- (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Thu, 26 Oct 2006
- 18:51:35 +0200
-To: git@vger.kernel.org
+ S1425328AbWLHKUV (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
+ 05:20:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1425329AbWLHKUU
+ (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 05:20:20 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:47069 "EHLO hand.yhbt.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1425328AbWLHKUT
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Dec 2006 05:20:19 -0500
+Received: from hand.yhbt.net (localhost [127.0.0.1]) by hand.yhbt.net
+ (Postfix) with SMTP id 221FD2DC034; Fri,  8 Dec 2006 02:20:18 -0800 (PST)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Fri,  8 Dec 2006
+ 02:20:17 -0800
+To: Sam Vilain <sam@vilain.net>
 Sender: git-owner@vger.kernel.org
 
-Hi,
+do_switch works with the SVN Perl bindings after r22312 in the
+Subversion trunk.  Since no released version of SVN currently
+supports it; we'll just autodetect it and enable its usage
+when a user has a recent-enough version of SVN.
 
-Could someone please point me to / give me the rationale for the "Never=
-=20
-commit to the right side of a Pull line" rule ?
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
+---
+Eric Wong <normalperson@yhbt.net> wrote:
+> For the git-svn in master using the delta fetcher; there's no additional
+> overhead to fetch properties.  I want to ditch the old non-delta
+> fetching code (it's only a mild performance benefit when using local
+> repositories) if I could get do_switch() working correctly.
 
-I found the rule in the second Note of the git-fetch man-page (eg=20
-http://www.kernel.org/pub/software/scm/git/docs/git-fetch.html).
+ I don't think I can ditch the old code anytime soon.  I was tempted to
+ try using do_diff, but it appears SVN downloads the entire files (using
+ get_file) and generates the diffs locally, negating any bandwidth
+ saving it would have over the libsvn_fetch_full() path.
 
-It's been taken over in _bold letters_ by X.Org/freedesktop.org in thei=
-r=20
-"UsingGit" document (http://freedesktop.org/wiki/UsingGit).
+ git-svn.perl |   46 +++++++++++++++++++++++++++++++++++++++-------
+ 1 files changed, 39 insertions(+), 7 deletions(-)
 
-In both places though, I don't see any explanation, but rather a=20
-commandment ;-) . Am I missing the ovious ?
-
-My candid thoughts: to me the practice recommended here seems=20
-subjectively "cleaner" indeed, but is it objectively better or even=20
-essential? Why?
-
-TIA
-J=E9r=F4me
+diff --git a/git-svn.perl b/git-svn.perl
+index 747daf0..c907eb9 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -72,7 +72,7 @@ my ($_revision,$_stdin,$_no_ignore_ext,$_no_stop_copy,$_help,$_rmdir,$_edit,
+ 	$_username, $_config_dir, $_no_auth_cache, $_xfer_delta,
+ 	$_pager, $_color);
+ my (@_branch_from, %tree_map, %users, %rusers, %equiv);
+-my ($_svn_co_url_revs, $_svn_pg_peg_revs);
++my ($_svn_co_url_revs, $_svn_pg_peg_revs, $_svn_can_do_switch);
+ my @repo_path_split_cache;
+ 
+ my %fc_opts = ( 'no-ignore-externals' => \$_no_ignore_ext,
+@@ -2877,6 +2877,24 @@ sub libsvn_connect {
+ 	return $ra;
+ }
+ 
++sub libsvn_can_do_switch {
++	unless (defined $_svn_can_do_switch) {
++		my $pool = SVN::Pool->new;
++		my $rep = eval {
++			$SVN->do_switch(1, '', 0, $SVN->{url},
++			                SVN::Delta::Editor->new, $pool);
++		};
++		if ($@) {
++			$_svn_can_do_switch = 0;
++		} else {
++			$rep->abort_report($pool);
++			$_svn_can_do_switch = 1;
++		}
++		$pool->clear;
++	}
++	$_svn_can_do_switch;
++}
++
+ sub libsvn_dup_ra {
+ 	my ($ra) = @_;
+ 	SVN::Ra->new(map { $_ => $ra->{$_} } qw/config url
+@@ -3198,12 +3216,26 @@ sub libsvn_find_parent_branch {
+ 		unlink $GIT_SVN_INDEX;
+ 		print STDERR "Found branch parent: ($GIT_SVN) $parent\n";
+ 		sys(qw/git-read-tree/, $parent);
+-		# I can't seem to get do_switch() to work correctly with
+-		# the SWIG interface (TypeError when passing switch_url...),
+-		# so we'll unconditionally bypass the delta interface here
+-		# for now
+-		return libsvn_fetch_full($parent, $paths, $rev,
+-					$author, $date, $msg);
++		unless (libsvn_can_do_switch()) {
++			return libsvn_fetch_full($parent, $paths, $rev,
++						$author, $date, $msg);
++		}
++		# do_switch works with svn/trunk >= r22312, but that is not
++		# included with SVN 1.4.2 (the latest version at the moment),
++		# so we can't rely on it.
++		my $ra = libsvn_connect("$url/$branch_from");
++		my $ed = SVN::Git::Fetcher->new({c => $parent, q => $_q});
++		my $pool = SVN::Pool->new;
++		my $reporter = $ra->do_switch($rev, '', 1, $SVN->{url},
++		                              $ed, $pool);
++		my @lock = $SVN::Core::VERSION ge '1.2.0' ? (undef) : ();
++		$reporter->set_path('', $r0, 0, @lock, $pool);
++		$reporter->finish_report($pool);
++		$pool->clear;
++		unless ($ed->{git_commit_ok}) {
++			die "SVN connection failed somewhere...\n";
++		}
++		return libsvn_log_entry($rev, $author, $date, $msg, [$parent]);
+ 	}
+ 	print STDERR "Nope, branch point not imported or unknown\n";
+ 	return undef;
+-- 
