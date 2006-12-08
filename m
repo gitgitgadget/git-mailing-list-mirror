@@ -1,52 +1,53 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] gitweb: Put back shortlog instead of graphiclog in the project list.
-Date: Wed, 15 Nov 2006 12:49:52 -0800
-Message-ID: <7vac2sl9jj.fsf@assigned-by-dhcp.cox.net>
-References: <87irhgla3l.fsf@wine.dyndns.org>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: Re: git-commit: select which files to commit while editing the commit message
+Date: Fri, 8 Dec 2006 23:10:23 +0100
+Message-ID: <200612082310.24140.Josef.Weidendorfer@gmx.de>
+References: <360959.72234.qm@web31809.mail.mud.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 15 Nov 2006 20:50:20 +0000 (UTC)
-Cc: git@vger.kernel.org, pasky@suse.cz
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Fri, 8 Dec 2006 22:10:43 +0000 (UTC)
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <87irhgla3l.fsf@wine.dyndns.org> (Alexandre Julliard's message of
-	"Wed, 15 Nov 2006 21:37:50 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+User-Agent: KMail/1.9.5
+In-Reply-To: <360959.72234.qm@web31809.mail.mud.yahoo.com>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay1.informatik.tu-muenchen.de
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31492>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GkRi5-0004iB-Kr for gcvg-git@gmane.org; Wed, 15 Nov
- 2006 21:50:18 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33757>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GsnvN-0004uL-P0 for gcvg-git@gmane.org; Fri, 08 Dec
+ 2006 23:10:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1161445AbWKOUuM (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
- 15:50:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030987AbWKOUuL
- (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 15:50:11 -0500
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:42155 "EHLO
- fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP id S1030994AbWKOUuI
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 15:50:08 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao08.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061115205008.DIBB18207.fed1rmmtao08.cox.net@fed1rmimpo02.cox.net>; Wed, 15
- Nov 2006 15:50:08 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id n8qE1V00F1kojtg0000000; Wed, 15 Nov 2006
- 15:50:14 -0500
-To: Alexandre Julliard <julliard@winehq.org>
+ S1947434AbWLHWKa (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
+ 17:10:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1947432AbWLHWKa
+ (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 17:10:30 -0500
+Received: from mailout1.informatik.tu-muenchen.de ([131.159.0.18]:35693 "EHLO
+ mailout1.informatik.tu-muenchen.de" rhost-flags-OK-OK-OK-OK) by
+ vger.kernel.org with ESMTP id S1947430AbWLHWK3 (ORCPT
+ <rfc822;git@vger.kernel.org>); Fri, 8 Dec 2006 17:10:29 -0500
+Received: from dhcp-3s-46.lrr.in.tum.de (dhcp-3s-46.lrr.in.tum.de
+ [131.159.35.46]) by mail.in.tum.de (Postfix) with ESMTP id 8B2AD282A; Fri,  8
+ Dec 2006 23:10:28 +0100 (MET)
+To: ltuikov@yahoo.com
 Sender: git-owner@vger.kernel.org
 
-Alexandre Julliard <julliard@winehq.org> writes:
+On Friday 08 December 2006 21:45, Luben Tuikov wrote:
+> This is how perforce does it*, and while it is useful, git is NOT perforce,
+> and I agree with Junio and Jakub.
 
-> Looks like a repo.or.cz-specific change slipped in.
->
-> Signed-off-by: Alexandre Julliard <julliard@winehq.org>
-
-Sorry and thanks.
+However, the idea itself is not bad. AFAIK, cogito does it this way.
+It could be done as separate command, e.g. "git add --interactive",
+and would only update the index.
 
