@@ -1,102 +1,150 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
-From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: Re: [PATCH] gitweb: Add "next" link to commitdiff view
-Date: Sat, 28 Oct 2006 18:50:26 -0700 (PDT)
-Message-ID: <196807.75961.qm@web31801.mail.mud.yahoo.com>
-References: <200610281810.36892.jnareb@gmail.com>
-Reply-To: ltuikov@yahoo.com
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: Re: [RFC] Light-weight checkouts via ".gitlink"
+Date: Fri, 8 Dec 2006 23:54:34 +0100
+Message-ID: <200612082354.34488.Josef.Weidendorfer@gmx.de>
+References: <200612082252.31245.Josef.Weidendorfer@gmx.de> <elco6p$uku$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-NNTP-Posting-Date: Sun, 29 Oct 2006 01:51:53 +0000 (UTC)
-Cc: Junio Hamano <junkio@cox.net>, Petr Baudis <pasky@suse.cz>
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Fri, 8 Dec 2006 22:54:52 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=X-YMail-OSG:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
-  b=GR8U22aWfaT0hzsEEMOG/9nwiG+5xwxW3I9FqSYgNwP3XBgWqyqpgeUKMAHRpk063ow476ZV2DARTY2z7Mhaww9lt7FJOLjwk2cAbLCXmnsAeMo+OlXxMZtevo3WAxXkxOzFeLIYfR8PQkqmmuFDGvz2u31nZOYs0FyNW2B3eq8=  ;
-X-YMail-OSG: mZSS8t4VM1lO.Jutnw.jpb2tqTgHDYVQmHZcyya.w_g_zJijTdSfG3cIEdkq4NUqnDwtYJnpo5dRvlSnosJa0cgo3V4nFgSyiyizhrVrhL17q8KHB2puZxFzPiLb.kDfL8B8xGK62ys-
-In-Reply-To: <200610281810.36892.jnareb@gmail.com>
+User-Agent: KMail/1.9.5
+In-Reply-To: <elco6p$uku$1@sea.gmane.org>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay2.informatik.tu-muenchen.de
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30404>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GdzpB-0005WO-Gi for gcvg-git@gmane.org; Sun, 29 Oct
- 2006 02:50:57 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33763>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GsocA-0001mA-JF for gcvg-git@gmane.org; Fri, 08 Dec
+ 2006 23:54:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751459AbWJ2Bu1 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 28 Oct 2006
- 21:50:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751461AbWJ2Bu1
- (ORCPT <rfc822;git-outgoing>); Sat, 28 Oct 2006 21:50:27 -0400
-Received: from web31801.mail.mud.yahoo.com ([68.142.207.64]:63850 "HELO
- web31801.mail.mud.yahoo.com") by vger.kernel.org with SMTP id
- S1751459AbWJ2Bu0 (ORCPT <rfc822;git@vger.kernel.org>); Sat, 28 Oct 2006
- 21:50:26 -0400
-Received: (qmail 76419 invoked by uid 60001); 29 Oct 2006 01:50:26 -0000
-Received: from [71.80.233.118] by web31801.mail.mud.yahoo.com via HTTP; Sat,
- 28 Oct 2006 18:50:26 PDT
-To: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+ S1947468AbWLHWyn (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
+ 17:54:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1947469AbWLHWyn
+ (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 17:54:43 -0500
+Received: from mailout1.informatik.tu-muenchen.de ([131.159.0.18]:35937 "EHLO
+ mailout1.informatik.tu-muenchen.de" rhost-flags-OK-OK-OK-OK) by
+ vger.kernel.org with ESMTP id S1947468AbWLHWyl (ORCPT
+ <rfc822;git@vger.kernel.org>); Fri, 8 Dec 2006 17:54:41 -0500
+Received: from dhcp-3s-46.lrr.in.tum.de (dhcp-3s-46.lrr.in.tum.de
+ [131.159.35.46]) by mail.in.tum.de (Postfix) with ESMTP id 03E31282A; Fri,  8
+ Dec 2006 23:54:38 +0100 (MET)
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
---- Jakub Narebski <jnareb@gmail.com> wrote:
-> Jakub Narebski wrote:
-> > Add a kind of "next" view in the bottom part of navigation bar for
-> > "commitdiff" view.
-> > 
-> > For commitdiff between two commits:
-> >   (from: _commit_)
-> > For commitdiff for one single parent commit:
-> >   (parent: _commit_)
-> > For commitdiff for one merge commit
-> >   (merge: _commit_ _commit_ ...)
-> > For commitdiff for root (parentless) commit
-> >   (initial)
-> > where _link_ denotes hyperlink. SHA1 is shortened to 7 characters on
-> > display, everything is perhaps unnecessary esc_html on display.
-> > 
-> > Signed-off-by: Jakub Narebski <jnareb@gmail.com>
-> > ---
-> > 
-> > Junio (and others), is it what you wanted? The idea was to change
-> > "commitdiff" view only in minimal way, and preserve similarity
-> > to "commit" format.
+On Friday 08 December 2006 23:18, Jakub Narebski wrote:
+> A few (very few) comments:
 > 
-> Any reasons not to accept this patch? I find it very useful.
+> Josef Weidendorfer wrote:
 > 
-> The idea to use fixed string instead of shortened SHA-1 of commit
-> was abandoned after some discussion in this thread.
+> > This can be implemented by enhancing git to ignore any subdirectory which
+> > has a file .gitlink in it.
+> 
+> If I remember correctly, while git ignores .git, it does not ignore
+> by default (i.e. without entry in either GIT_DIR/info/excludes, or
+> .gitignore) the directory which has .git directory in it.
 
-I prefer using the commit-8 without any "..." postfixed.  Anyone who
-knows squat about git knows very well what a commit-8 is when they
-see one -- the first 8 hexadecimal digits of the full SHA-1.
+I know. But this is essential. We _have_ to ignore all the files and
+subdirectories in the directory which contains the .gitlink file,
+as these files/subdirectories belong to the submodule.
 
-I like using "next" only when there is a "prev" right next to it,
-i.e. based on _context_, something like this:
-   << prev next >>
-where "<< prev" is hyperlinked, and "next >>" is also.
+There is no other way. You could try to use a special name for the
+whole directory with the light-weight checkout, e.g. ".checkout".
 
-I looked at your patch (first email in this thread) and from
-what I gathered that it does, I like it (haven't tried it yet).
+But then, this is useless for submodules, as for submodules, we want to
+be able to specify the root directory name of the submodule, as that
+is the name which will end up in the tree object of the supermodule.
 
-What I like about it is the clear information it conveys:
-it gives me both the commit-8 and what that commit-8 _is_.
+> And that should not change for .gitlink. You can always add
+> .gitignore file with * .* patterns in it (ignore all).
 
-I sometimes remember commit-8s and this helps me a lot when
-I move the mouse pointer to an xterm and want to do
-git-show <commit-8>, and it futhermore helps me _know_ the
-relationship between that commit-8 and the rest of the
-information in the window frame gitweb is showing, (parent, etc).
+That is not possible:
+.gitignore file has its own meaning inside of the light-weight
+checkout aka submodule, as this directory is the root directory of
+a git checkout.
 
-Acked-by: Luben Tuikov <ltuikov@yahoo.com>
-(not that it matters in any way ;-) )
-
-   Luben
+AFAIK, Martin's submodule support does it the same, only for directories
+with .git, as he stores the GITDIR directly in the submodule
+checkout.
 
 
+> > * Gitdir = "<Path to base git repository>"
+> [...]
+> > * Name: <explicit name for this checkout>
+> 
+> Why use once "key = value", once "key: value" form? Better to stick
+> with one. I Would prefer "key = value" one.
+
+Sorry. Typo ;-)
+
+
+> GIT_DIR = path to base git repository
+> it is equivalent to setting the following:
+> 
+> GIT_INDEX_FILE = path to index file
+> GIT_OBJECT_DIRECTORY = path to object directory
+> GIT_HEAD_FILE = path to HEAD file
+> GIT_REFS_DIRECTORY = path to refs directory
+
+AFAIK the latter two do not exist yet, or do they?
+
+I would also be fine with .gitlink looking like some shell script,
+defining these variables. However, we need the smart directory
+lookup.
+And IMHO the keys can be case insensitive as in .git/config.
+
+I am not sure we want to allow the freedom of being able to put any of
+GIT_INDEX_FILE, GIT_OBJECT_DIRECTORY, GIT_HEAD_FILE, GIT_REFS_DIRECTORY
+in the .gitlink file.
+
+It is enough if GITDIR and NAME is given. With GITDIR_REAL after the
+smart lookup, e.g. GIT_INDEX_FILE would default to $GITDIR_REAL/external/$NAME
+and so on.
+
+However, for submodules we really _want_ to have fully independent GITDIRs
+for each submodule somewhere, and we would have to warn:
+
+ # Warning: if you change one GIT_INDEX, ... in this file, you
+ # will screw up the possibility to clone from the GITDIR directory
+
+
+> NAME = name
+> should match "name subdirectory" entry in modules file in superproject.
+
+Yes.
+This would be in my next proposal about how to build the submodule support
+on light-checkouts ;-)
+
+ 
+> Perhaps instead of adding arbitrary number of .. in front of relative
+> path, we better use some magic, like ... for finding somewhere up?
+
+I thought about it. But why whould you need it?
+If the value of GITDIR in .gitlink begins with "/", it is an absolute path.
+If not, I think you always want the smart lookup the go upwards, i.e.
+looking for
+
+  ../<relpath>.git
+  ../../<relpath>.git
+  ../../../<relpath>.git
+
+So there is no need to add "..." in front of the relative path.
+Or do you see a usecase for
+ rel/path/start/.../rel/path/end
+
+Ah, yes, I see. Perhaps this makes sense with absolute paths:
+
+	/home/user/repos/.../linux
+
+Josef
