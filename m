@@ -1,97 +1,121 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Timur Tabi <timur@freescale.com>
-Subject: Re: Is there a way to trim old SHAs from a git tree (so it's not
- so large)?
-Date: Tue, 21 Nov 2006 17:12:21 -0600
-Organization: Freescale
-Message-ID: <456387D5.9080407@freescale.com>
-References: <455B90AD.3060707@freescale.com> <20061117103611.183640@gmx.net> <45632957.5070205@freescale.com> <20061121163206.GA22006@spearce.org> <45632EC6.5030902@freescale.com> <20061121165656.GC22006@spearce.org> <456330CD.9080503@freescale.com> <20061121183941.GB22283@spearce.org> <45637457.1010505@freescale.com> <Pine.LNX.4.63.0611212306060.26827@wbgn013.biozentrum.uni-wuerzburg.de> <45638212.8030501@freescale.com> <Pine.LNX.4.63.0611212349440.26827@wbgn013.biozentrum.uni-wuerzburg.de>
+From: "Francis Moreau" <francis.moro@gmail.com>
+Subject: git-{fetch,pull} default behaviours (was Re: [PATCH] Explicitly add the default "git pull" behaviour to .git/config on clone)
+Date: Fri, 8 Dec 2006 10:03:47 +0100
+Message-ID: <38b2ab8a0612080103h14387513ta53e71fe715441f4@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Tue, 21 Nov 2006 23:12:49 +0000 (UTC)
-Cc: Shawn Pearce <spearce@spearce.org>,
-	Thomas Kolejka <Thomas.Kolejka@gmx.at>, git@vger.kernel.org
+NNTP-Posting-Date: Fri, 8 Dec 2006 09:04:04 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.8.1) Gecko/20061101 SeaMonkey/1.1b
-In-Reply-To: <Pine.LNX.4.63.0611212349440.26827@wbgn013.biozentrum.uni-wuerzburg.de>
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=R/kAIj2oCWO4uBqKIkpcH2CQ59P+Dh00XMcb3t4p6fU0MGLrqDCMo+Zsfg2Z7K/MjyCyZp4pj4qxtY15pogR+AvqSA6prOky+dZn32jxxALLTghzusWb+wyvygxs7AYTUklSzYkcD0JL6UTlLpBhuFEk5rQCxZQSF4gaPYKgjOo=
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32055>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gmen1-0002Tr-T2 for gcvg-git@gmane.org; Wed, 22 Nov
- 2006 00:12:32 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33674>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gsbe4-00084U-Na for gcvg-git@gmane.org; Fri, 08 Dec
+ 2006 10:03:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1754878AbWKUXM3 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 21 Nov 2006
- 18:12:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754881AbWKUXM2
- (ORCPT <rfc822;git-outgoing>); Tue, 21 Nov 2006 18:12:28 -0500
-Received: from de01egw01.freescale.net ([192.88.165.102]:21890 "EHLO
- de01egw01.freescale.net") by vger.kernel.org with ESMTP id S1754878AbWKUXM2
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2006 18:12:28 -0500
-Received: from de01smr01.freescale.net (de01smr01.freescale.net
- [10.208.0.31]) by de01egw01.freescale.net (8.12.11/de01egw01) with ESMTP id
- kAM0Y8G2015225; Tue, 21 Nov 2006 17:34:08 -0700 (MST)
-Received: from [10.82.19.119] (ld0169-tx32.am.freescale.net [10.82.19.119])
- by de01smr01.freescale.net (8.13.1/8.13.0) with ESMTP id kALNCLBU021727; Tue,
- 21 Nov 2006 17:12:21 -0600 (CST)
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+ S1425265AbWLHJDt (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
+ 04:03:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1425261AbWLHJDt
+ (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 04:03:49 -0500
+Received: from wx-out-0506.google.com ([66.249.82.227]:41085 "EHLO
+ wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1425265AbWLHJDs (ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Dec
+ 2006 04:03:48 -0500
+Received: by wx-out-0506.google.com with SMTP id h27so769952wxd for
+ <git@vger.kernel.org>; Fri, 08 Dec 2006 01:03:47 -0800 (PST)
+Received: by 10.90.115.9 with SMTP id n9mr3671542agc.1165568627396; Fri, 08
+ Dec 2006 01:03:47 -0800 (PST)
+Received: by 10.90.55.9 with HTTP; Fri, 8 Dec 2006 01:03:46 -0800 (PST)
+To: andyparkins@gmail.com
 Sender: git-owner@vger.kernel.org
 
-Johannes Schindelin wrote:
-> Hi,
-> 
-> On Tue, 21 Nov 2006, Timur Tabi wrote:
-> 
->> I think you mean git-clone.sh instead of git-clone.
-> 
-> No. If "git clone" does not work for you, the compilation failed. Do you 
-> run git in-place? Then you _have_ to set
-> 
-> 	bindir=$(pwd)
-> 
-> in config.mak.
+Andy Parkins wrote:
+> Without any specification in the .git/config file, git-pull will execute
+> "git-pull origin"; which in turn defaults to pull from the first "pull"
+> definition for the remote, "origin".
+>
+> This is a difficult set of defaults to track for a new user, and it's
+> difficult to see what tells git to do this (especially when it is
+> actually hard-coded behaviour).  To ameliorate this slightly, this patch
+> explicitly specifies the default behaviour during a clone using the
+> "branch" section of the config.
+>
+> For example, a clone of a typical repository would create a .git/config
+> containing:
+>   [remote "origin"]
+>   url = proto://host/repo.git
+>   fetch = refs/heads/master:refs/remotes/origin/master
+>   [branch "master"]
+>   remote = origin
+>   merge = refs/heads/master
+>
+> The [branch "master"] section is such that there is no change to the
+> functionality of git-pull, but that functionality is now explicitly
+> documented.
+>
+> Signed-off-by: Andy Parkins <andyparkins@gmail.com>
+> ---
+> This is really to help newbies.  By explicitly documenting the default
+> behaviour, it makes it clearer what is going on.  It also means no routing
+> through documentation to find out what config option needs changing.
+>
 
-When I tried that, make spits out this:
+Well I would say that if you want newbies (like me) to understand
+git-pull and git-fetch default behaviour, we should first fix their
+documentations. I dunno if it's me but I really find it terrible to
+read. A lot information are spread all across the doc and I haven't
+found a logical organisation in it.
 
-GIT_VERSION = 1.4.4.ge1173-dirty
-     * new build flags or prefix
-(cd perl && /usr/bin/perl Makefile.PL \
-         PREFIX='/home/b04825')
-Writing Makefile for Git
+Just reading the synopsis of these two command at first glance does
+not give a good view of the commands:
 
-So I tried this:
+	git-fetch <options> <repository> <refspec> ...
 
-make configure
-./configure --prefix=$PWD
-make
+For example, it doesn't say that all arguments are optional at first
+look, does it ? How does it say that I can run 'git-fetch origin' ?
 
-and got this:
+When reading git-fetch doc, you find some specific git-pull
+documentation which is confusing. The same is true when reading
+git-pull doc. Why not removing all remote stuffs from git-pull doc and
+just give a link to git-fetch for example ? Why not stopping using
+git-pull word in git-fetch doc ?
 
-     * new build flags or prefix
-(cd perl && /usr/bin/perl Makefile.PL \
-         PREFIX='/temp/git')
-Writing Makefile for Git
+I'm not sure that putting the default behaviour documentation in git's
+config file will help the very newbie that I am. I expect to understand
+how a command works in its documentation not by reading some git's
+internal config file. And my first feeling when reading them is "whoa
+this command seems really complex to use..."
 
-which is better, but git-clone still doesn't work:
+However maybe explaining the default behaviour by giving some examples
+would make things much more easier to understand. For example
 
-$ ./git clone --depth 1 git://127.0.0.1/temp/u-boot-83xx
-Failed to run command 'clone': Success
+Examples
+--------
+	Running 'git-fetch' (without any arguments):
+	This is equivalent to run "git-fetch origin"....
 
-$ ./git-clone --depth 1 git://127.0.0.1/temp/u-boot-83xx
-usage: git-fetch-pack [--all] [-q] [-v] [-k] [--thin] [--exec=upload-pack] 
-[host:]directory <refs>...
-fetch-pack from 'git://127.0.0.1/temp/u-boot-83xx' failed.
+	Running 'git-fetch <repository>':
+	...
 
-In both of these cases, the git-daemon process doesn't log anything.
+	Running 'git-fetch <repository> <refspec>':
+	....
 
-I even tried "export GIT_DIR=$PWD", but that didn't do anything.
+	Running 'git-fetch <refspec>' (if possible):
+	...
 
 -- 
-Timur Tabi
