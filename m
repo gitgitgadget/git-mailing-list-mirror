@@ -1,137 +1,101 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH 1/2] Allow users to require source branch on git-checkout -b.
-Date: Thu, 7 Dec 2006 05:01:52 -0500
-Message-ID: <20061207100152.GA12966@spearce.org>
+From: "Torgil Svensson" <torgil.svensson@gmail.com>
+Subject: Re: cygwin, 44k files: how to commit only index?
+Date: Sat, 9 Dec 2006 09:27:46 +0100
+Message-ID: <e7bda7770612090027x22a06ca5i6d9b768f0ad3c4ad@mail.gmail.com>
+References: <81b0412b0612070627r3ff0b394s124d95fbf8084f16@mail.gmail.com>
+	 <7vd56vtt2g.fsf@assigned-by-dhcp.cox.net>
+	 <20061207192632.GC12143@spearce.org>
+	 <20061207193555.GD12143@spearce.org>
+	 <46d6db660612071326m4817165l992e8d6e7bd673c5@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 7 Dec 2006 10:02:06 +0000 (UTC)
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Sat, 9 Dec 2006 08:28:00 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=bLnxSGloKS/JddAffz36lIQ5AGZsBqsDFjTXoKhobqsLgDkdfj4bZtBbRGJpTVZDAbeUheMxiPDnIu3VoU4cbs2oXtjvOiDwfrpbU1YDg15Rw8YH2vmU6GmOmWVA4Xtk02ABThj0UjTxNKVFsfh5hn7Lje+CtD6o2X3Wneay+mg=
+In-Reply-To: <46d6db660612071326m4817165l992e8d6e7bd673c5@mail.gmail.com>
 Content-Disposition: inline
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33564>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33806>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GsG4p-0003Yz-A2 for gcvg-git@gmane.org; Thu, 07 Dec
- 2006 11:02:03 +0100
+ esmtp (Exim 4.50) id 1GsxYs-0001F5-6L for gcvg-git@gmane.org; Sat, 09 Dec
+ 2006 09:27:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1031942AbWLGKCA (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
- 05:02:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031944AbWLGKCA
- (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 05:02:00 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:33441 "EHLO
- corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1031942AbWLGKB7 (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec 2006
- 05:01:59 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1GsG4h-0008Vu-QM; Thu, 07 Dec 2006 05:01:55 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- B580D20FB6E; Thu,  7 Dec 2006 05:01:52 -0500 (EST)
-To: Junio C Hamano <junkio@cox.net>
+ S936116AbWLII1t (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 9 Dec 2006
+ 03:27:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936120AbWLII1s
+ (ORCPT <rfc822;git-outgoing>); Sat, 9 Dec 2006 03:27:48 -0500
+Received: from nf-out-0910.google.com ([64.233.182.189]:62105 "EHLO
+ nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S936116AbWLII1s (ORCPT <rfc822;git@vger.kernel.org>); Sat, 9 Dec
+ 2006 03:27:48 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so1363285nfa for
+ <git@vger.kernel.org>; Sat, 09 Dec 2006 00:27:46 -0800 (PST)
+Received: by 10.49.27.17 with SMTP id e17mr285935nfj.1165652866762; Sat, 09
+ Dec 2006 00:27:46 -0800 (PST)
+Received: by 10.49.28.8 with HTTP; Sat, 9 Dec 2006 00:27:46 -0800 (PST)
+To: "Christian MICHON" <christian.michon@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-I have recently observed a rather large number of users who forget
-to specify the base revision when they start a new branch with
-git-checkout -b.  Many of these users are shocked many hours and
-commits later when their prior branch is now also part of the new
-branch.  Nasty words about Git usually follow the discovery.
+On 12/7/06, Christian MICHON <christian.michon@gmail.com> wrote:
+> On 12/7/06, Shawn Pearce <spearce@spearce.org> wrote:
+> > Shawn Pearce <spearce@spearce.org> wrote:
+> > > Its Cygwin/NTFS.  lstat() is slow.  readdir() is slow.  I have the
+> > > same problem on my Cygwin systems.
+> >
+> > Just to be clear, I'm not trying to blame Cygwin here.
+> >
+> > Windows' dir command is slow.  Windows Explorer is slow while
+> > browsing directories.
 
-This introduces a new config option: checkout.requireSourceBranch,
-which the user can set to make git-checkout -b require them to supply
-not only the new branch name but also the initial version for that
-branch.  This prevents the command from assuming the user meant HEAD
-when they omitted an argument by accident.
+I think this is a very common scenario costing hideous amounts of
+money around the globe.
 
-To keep behavior backwards compatible with any existing scripts
-this option is currently disabled by default, but it would be more
-friendly to new users if the option was enabled by default.
+If you have lot's of files in a folder, don't even think of
+accidentally touching those folders in Windows Explorer, if you do -
+keep Process Explorer or similar ready. I've ended up using (even w/o
+Cygwin) scripts, automatic compressing and even a database functioning
+as directory cache - basically creating accessibility layers for a
+disabled file-system.
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- Documentation/config.txt |    6 ++++++
- git-checkout.sh          |   12 +++++++++++-
- t/t3200-branch.sh        |   14 ++++++++++++++
- 3 files changed, 31 insertions(+), 1 deletions(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 9090762..9d754c8 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -130,6 +130,12 @@ branch.<name>.merge::
- 	When in branch <name>, it tells `git fetch` the default remote branch
- 	to be merged.
- 
-+checkout.requireSourceBranch::
-+	If true tells git-checkout -b to require the user to
-+	supply two arguments, rather than assuming HEAD should
-+	be the source version if only one argument is supplied.
-+	Default is false, to stay compatible with prior behavior.
-+
- pager.color::
- 	A boolean to enable/disable colored output when the pager is in
- 	use (default is true).
-diff --git a/git-checkout.sh b/git-checkout.sh
-index 737abd0..5f9fb6e 100755
---- a/git-checkout.sh
-+++ b/git-checkout.sh
-@@ -137,7 +137,17 @@ then
- 	cd "$cdup"
- fi
- 
--[ -z "$new" ] && new=$old && new_name="$old_name"
-+# If we have no new name default to 'HEAD', unless we are
-+# making a new branch and the user told us not to assume.
-+if [ -z "$new" ]; then
-+	if [ "$newbranch" ] &&
-+	   [ Xtrue = "X`git-repo-config --bool checkout.requireSourceBranch`" ]
-+	then
-+		die "A source branch is required when creating a branch."
-+	fi
-+	new=$old
-+	new_name="$old_name"
-+fi
- 
- # If we don't have an old branch that we're switching to,
- # and we don't have a new branch name for the target we
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index acb54b6..7e0c48b 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -70,4 +70,18 @@ test_expect_success \
-         git-branch -d l/m &&
-         git-branch l'
- 
-+test_expect_success \
-+	'git checkout -b M works if checkout.requireSourceBranch not set' \
-+	'git-checkout -b M'
-+
-+test_expect_failure \
-+	'git checkout -b N fails if checkout.requireSourceBranch is set' \
-+	'git-repo-config checkout.requireSourceBranch true
-+	 git-checkout -b N'
-+
-+test_expect_success \
-+	'git checkout -b N works if checkout.requireSourceBranch is false' \
-+	'git-repo-config checkout.requireSourceBranch false
-+	 git-checkout -b N'
-+
- test_done
--- 
-1.4.4.2.gb772
+>
+> before buying any new hardware, you could easily imagine the
+> following scenario (I'm also "stuck" with windows, so it's an idea
+> I've been toying around for a week or so).
+>
+> There're virtualizers around, on which networking capabilities can
+> be activated. And we could easily create a vm with linux+git
+> inside, using ext2/ext3/ext4 fs virtual disks (you'd benefit from
+> windows cache actually...)
+>
+> example: YTech_Subversion_Appliance_v1.1 (ubuntu + subversion).
+>
+> I've no prototype yet, but I've 2 scenario possible:
+> 1) use vmplayer and a minimal uclibc initramfs with git onboard
+> 2) use qemu+kqemu and a similar mini-distro (but right now networking
+> is an issue on windows hosts: I'm exploring tunneling)
+>
+> The 1st scenario is "easy". And I start to prefer this idea over
+> even mingw porting of git (I tried and it's hard, really).
+>
+> But again, maybe jgit would be a better universal solution.
+>
+> --
+> Christian
+> -
+
+Very interesting!  Have you a time-frame for this?  Maybe even
