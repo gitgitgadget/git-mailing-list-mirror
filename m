@@ -1,82 +1,100 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [PATCH 2/2] Teach receive-pack how to keep pack files based on object count.
-Date: Tue, 31 Oct 2006 15:11:48 -0500
-Message-ID: <20061031201148.GD23671@spearce.org>
-References: <20061031075704.GB7691@spearce.org> <Pine.LNX.4.64.0610311447250.11384@xanadu.home>
+From: Yann Dirson <ydirson@altern.org>
+Subject: Re: RFC PATCH: support for default remote in StGIT
+Date: Sat, 9 Dec 2006 14:36:18 +0100
+Message-ID: <20061209133618.GB17132@nan92-1-81-57-214-146.fbx.proxad.net>
+References: <1165656205.2816.47.camel@portland.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 31 Oct 2006 20:12:32 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+NNTP-Posting-Date: Sat, 9 Dec 2006 13:37:40 +0000 (UTC)
+Cc: "Catalin Marinas catalin.marinas"@gmail.org, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0610311447250.11384@xanadu.home>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+In-Reply-To: <1165656205.2816.47.camel@portland.localdomain>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30596>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gezxm-0007fn-Aa for gcvg-git@gmane.org; Tue, 31 Oct
- 2006 21:11:58 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33815>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gt2OY-0000Jn-9a for gcvg-git@gmane.org; Sat, 09 Dec
+ 2006 14:37:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1945968AbWJaULz (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 31 Oct 2006
- 15:11:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1945969AbWJaULz
- (ORCPT <rfc822;git-outgoing>); Tue, 31 Oct 2006 15:11:55 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:28894 "EHLO
- corvette.plexpod.net") by vger.kernel.org with ESMTP id S1945968AbWJaULy
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 31 Oct 2006 15:11:54 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1GezxW-0001gy-Sa; Tue, 31 Oct 2006 15:11:42 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- F0B4C20FB0C; Tue, 31 Oct 2006 15:11:48 -0500 (EST)
-To: Nicolas Pitre <nico@cam.org>
+ S1761253AbWLINhf (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 9 Dec 2006
+ 08:37:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761254AbWLINhf
+ (ORCPT <rfc822;git-outgoing>); Sat, 9 Dec 2006 08:37:35 -0500
+Received: from smtp5-g19.free.fr ([212.27.42.35]:54405 "EHLO
+ smtp5-g19.free.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
+ S1761253AbWLINhe (ORCPT <rfc822;git@vger.kernel.org>); Sat, 9 Dec 2006
+ 08:37:34 -0500
+Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net
+ [81.57.214.146]) by smtp5-g19.free.fr (Postfix) with ESMTP id A89EC27A51;
+ Sat,  9 Dec 2006 14:37:32 +0100 (CET)
+Received: by gandelf.nowhere.earth (Postfix, from userid 1000) id 9837C20C1;
+ Sat,  9 Dec 2006 14:36:18 +0100 (CET)
+To: Pavel Roskin <proski@gnu.org>
 Sender: git-owner@vger.kernel.org
 
-Nicolas Pitre <nico@cam.org> wrote:
-> On Tue, 31 Oct 2006, Shawn Pearce wrote:
-> 
-> > Since keeping a pushed pack or exploding it into loose objects
-> > should be a local repository decision this teaches receive-pack
-> > to decide if it should call unpack-objects or index-pack --stdin
-> > --fix-thin based on the setting of receive.unpackLimit and the
-> > number of objects contained in the received pack.
-> 
-> This works fine when used with my replacement patch for your [1/2] one.
-> 
-> > Currently this leaves every received pack as a kept pack.  We really
-> > don't want that as received packs will tend to be small.  Instead we
-> > want to delete the .keep file automatically after all refs have
-> > been updated.  That is being left as room for future improvement.
-> 
-> I think this should be solved before rx packs are actually stored as 
-> packs though.  Otherwise people will end up with unwanted .keep files 
-> left around.  Maybe having a much bigger default for object number 
-> treshold for the time being?  (unless this patch is applied to "next" at 
-> the same time as another one that actually deals with those .keep 
-> files).
+Hi Pavel,
 
-Its next on my list of things to do.  Hopefully I'll be able to
-implement it today.
+This is quite related to the subject of the "Handling of branches in
+stgit" thread I launched recently (Nov 30th).
 
-I'm thinking of just brute forcing it: put enough identifying data
-into the .keep file to make it unique, then go through every local
-pack and look at their .keep file; if the content matches what
-receive-pack asked index-pack to put there then remove it.
+On Sat, Dec 09, 2006 at 04:23:25AM -0500, Pavel Roskin wrote:
+> It's very important for me to have default remote support in StGIT.  I'm
+> trying to track different Linux branches, and I don't want to remember
+> what branch I'm on when I run "stg pull".
 
+Right, that's the main problem with the current implementation.
+
+> One approach is to leave the default remote selection completely to git.
+> The downside is that StGIT prints the remote it's pulling from.  Now
+> StGIT will have to print common words that it's pulling something.  Or
+> maybe it shouldn't print anything?
+
+It could just print a generic message and let GIT print out
+the details.
+
+> Also, git-pull doesn't allow to specify the refspec without the remote.
+> This limitation seems artificial to me, but we have to pass this
+> limitation to the StGIT users.
+
+In which situtation do you need to pass a refspec ?  I thought all
+necessary refspecs should already be part of a remote's definition.
+
+> The positive side if that StGIT is completely unaware of the word
+> "origin", and any changes in git handling of the default remote will
+> propagate to StGIT immediately.
+
+Indeed.
+
+
+> The other approach is to calculate the default remote in StGIT.  This
+> would allow StGIT to tell the user where it's pulling from.
+
+Doing so would probably require to teach StGIT about every new way of
+fetching a branch (we already have 3 ways, as outlined in my initial
+mail).  OTOH, it may be the only way to present the user with a
+uniform way of working, independently of the way we update the parent
+branch.
+
+
+Indeed, we may just want to distinguish whether the parent branch is a
+remote one or not.  Then if it's a remote one, git-fetch already has
+enough info to do its work updating the parent branch (whether using
+.git/remotes or .git/branches).  If it's not a remote branch, there's
+just nothing to do at this step.
+
+Then, we just have to "pop -a" and move the stack base, without
+relying on "pull".  That would also transparently give support for
+branching off a non-forwarding branch (like git's "next" and "pu", or
+like any stgit managed branch).  Would anyone miss the "git-pull" call ?
+
+Best regards,
 -- 
