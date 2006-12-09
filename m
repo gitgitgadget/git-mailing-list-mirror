@@ -1,68 +1,108 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Dongsheng Song" <dongsheng.song@gmail.com>
-Subject: Re: git-svnimport breakage as of git-1.4.4
-Date: Sun, 10 Dec 2006 11:49:28 +0800
-Message-ID: <4b3406f0612091949qc75cb10x13f09e2017d71d91@mail.gmail.com>
-References: <1165505193.26874.13.camel@systems03.lan.brontes3d.com>
-	 <20061208203230.GA9193@sashak.voltaire.com>
+From: Jeff Garzik <jeff@garzik.org>
+Subject: Re: kernel.org mirroring (Re: [GIT PULL] MMC update)
+Date: Sat, 09 Dec 2006 09:43:45 -0500
+Message-ID: <457ACBA1.4090007@garzik.org>
+References: <Pine.LNX.4.64.0612020835110.3476@woody.osdl.org> <200612091251.16460.jnareb@gmail.com> <457AAF31.2050002@garzik.org> <200612091437.01183.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sun, 10 Dec 2006 03:49:38 +0000 (UTC)
-Cc: "Daniel Drake" <ddrake@brontes3d.com>, git@vger.kernel.org
+NNTP-Posting-Date: Sat, 9 Dec 2006 14:43:58 +0000 (UTC)
+Cc: Martin Langhoff <martin.langhoff@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Linus Torvalds <torvalds@osdl.org>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Rogan Dawes <discard@dawes.za.net>,
+	Kernel Org Admin <ftpadmin@kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=KO/8ZIZwqufXN25lRWSfYpgiLC/4u7BfBzQG7cUmq5tH7F+8DaboXwuRNEyZYxII6VbYgxYtQAHM+/9GcfJCRvcY7E5dVzSghbTv9YlAPEquxFlBejCUIYG1bd/b6drIVMZnZoXhdBvV6tWykiKthbi0dMsZkQzj4MX/agl/ddw=
-In-Reply-To: <20061208203230.GA9193@sashak.voltaire.com>
-Content-Disposition: inline
+User-Agent: Thunderbird 1.5.0.8 (X11/20061107)
+In-Reply-To: <200612091437.01183.jnareb@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33865>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33816>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GtFh2-0001k5-1h for gcvg-git@gmane.org; Sun, 10 Dec
- 2006 04:49:36 +0100
+ esmtp (Exim 4.50) id 1Gt3Qf-0006Vu-8v for gcvg-git@gmane.org; Sat, 09 Dec
+ 2006 15:43:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1760131AbWLJDtc (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 9 Dec 2006
- 22:49:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760133AbWLJDtc
- (ORCPT <rfc822;git-outgoing>); Sat, 9 Dec 2006 22:49:32 -0500
-Received: from nf-out-0910.google.com ([64.233.182.191]:50584 "EHLO
- nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1760131AbWLJDtb (ORCPT <rfc822;git@vger.kernel.org>); Sat, 9 Dec
- 2006 22:49:31 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so1588226nfa for
- <git@vger.kernel.org>; Sat, 09 Dec 2006 19:49:29 -0800 (PST)
-Received: by 10.78.180.18 with SMTP id c18mr2374324huf.1165722569021; Sat, 09
- Dec 2006 19:49:29 -0800 (PST)
-Received: by 10.78.165.2 with HTTP; Sat, 9 Dec 2006 19:49:28 -0800 (PST)
-To: "Sasha Khapyorsky" <sashak@voltaire.com>
+ S936409AbWLIOnt (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 9 Dec 2006
+ 09:43:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936420AbWLIOnt
+ (ORCPT <rfc822;git-outgoing>); Sat, 9 Dec 2006 09:43:49 -0500
+Received: from srv5.dvmed.net ([207.36.208.214]:60769 "EHLO mail.dvmed.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S936409AbWLIOnt
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 9 Dec 2006 09:43:49 -0500
+Received: from cpe-065-190-194-075.nc.res.rr.com ([65.190.194.75]
+ helo=[10.10.10.10]) by mail.dvmed.net with esmtpsa (Exim 4.63 #1 (Red Hat
+ Linux)) id 1Gt3QY-0007RC-Mz; Sat, 09 Dec 2006 14:43:47 +0000
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-I met the broken too, when I downgrade to 1.4.3.4, it's fine.
+Jakub Narebski wrote:
+> Sending Last-Modified: should be easy; sending ETag needs some consensus
+> on the contents: mainly about validation. Responding to If-Modified-Since:
+> and If-None-Match: should cut at least _some_ of the page generating time.
 
-I have not test your patch, but you can try your self,
+Definitely.
 
-http://tortoisesvn.tigris.org/svn/tortoisesvn
 
-and the master branch(today) fail between r6000~r7000 too
+> As I said, I'm not talking (at least now) about saving generated HTML
+> output. This I think is better solved in caching engine like Squid can
+> be. Although even here some git specific can be of help: we can invalidate
+> cache on push, and we know that some results doesn't ever change (well,
+> with exception of changing output of gitweb).
 
-2006/12/9, Sasha Khapyorsky <sashak@voltaire.com>:
-> Hi,
->
-> On 10:26 Thu 07 Dec     , Daniel Drake wrote:
-> >
-> > git-svnimport broken between git-1.4.3.5 and git-1.4.4
-> >
->
-> Is this 'server' public? Can I rerun this git-svnimport?
->
-> If not, please try the patch:
+It depends on how creatively you think ;-)
+
+Consider generating static HTML files on each push, via a hook, for many 
+of the toplevel files.  The static HTML would then link to the CGI for 
+further dynamic querying of the git database.
+
+
+
+> What can be _easily_ done:
+>  * Use post 1.4.4 gitweb, which uses git-for-each-ref to generate summary
+>    page; this leads to around 3 times faster summary page.
+
+This re-opens the question mentioned earlier, is Kay (or anyone?) still 
+actively maintaining gitweb on k.org?
+
+
+>  * Perhaps using projects list file (which can be now generated by gitweb)
+>    instead of scanning directories and stat()-ing for owner would help
+>    with time to generate projects lis page
+
+This could be statically generated by a robot.  I think everybody would 
+shrink in horror if a human needed to maintain such a file.
+
+
+> What can be quite easy incorporated into gitweb:
+>  * For immutable pages set Expires: or Cache-Control: max-age (or both)
+>    to infinity
+
+nice!
+
+
+>  * Generate Last-Modified: for those views where it can be calculated,
+>    and respond with 304 Not Modified as soon as it can.
+
+agreed
+
+
+> What can be easily done using caching engine:
+>  * Select top 10 of common queries, and cache them, invalidating cache on push
+>    (depending on query: for example invalidate project list on push to any
+>    project, invalidate RSS/Atom feed and summary pages only on push to specific
+>    project) - can be done with git hooks.
+
+Or simply generate regular filesystem files into the webspace, as 
+triggered by a hook.  Let the standard filesystem mirroring/caching work 
+its magic.
+
+	Jeff
+
