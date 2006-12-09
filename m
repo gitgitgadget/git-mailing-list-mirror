@@ -2,72 +2,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: git-svn bug?
-Date: Wed, 15 Nov 2006 17:37:10 -0500
-Message-ID: <20061115223709.GG24861@spearce.org>
-References: <op.ti2svo0ozidtg1@rygel.lnxi.com> <m2psbocpbo.fsf@ziti.local>
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] shortlog: fix segfault on empty authorname
+Date: Sun, 10 Dec 2006 00:21:03 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0612100019270.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.64.0612082205240.2630@xanadu.home>
+ <20061209040421.GA29113@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 15 Nov 2006 22:37:41 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Sat, 9 Dec 2006 23:21:15 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, Nicolas Pitre <nico@cam.org>,
+	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <m2psbocpbo.fsf@ziti.local>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <20061209040421.GA29113@coredump.intra.peff.net>
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31521>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GkTNh-0008Qv-Mg for gcvg-git@gmane.org; Wed, 15 Nov
- 2006 23:37:22 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33846>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GtBVI-0006d4-HB for gcvg-git@gmane.org; Sun, 10 Dec
+ 2006 00:21:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1162013AbWKOWhQ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
- 17:37:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1162014AbWKOWhQ
- (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 17:37:16 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:29360 "EHLO
- corvette.plexpod.net") by vger.kernel.org with ESMTP id S1162013AbWKOWhN
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 17:37:13 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1GkTNO-0001H5-TH; Wed, 15 Nov 2006 17:37:02 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- 527FB20FB0B; Wed, 15 Nov 2006 17:37:10 -0500 (EST)
-To: Seth Falcon <sethfalcon@gmail.com>
+ S1759764AbWLIXVJ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 9 Dec 2006
+ 18:21:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759770AbWLIXVJ
+ (ORCPT <rfc822;git-outgoing>); Sat, 9 Dec 2006 18:21:09 -0500
+Received: from mail.gmx.net ([213.165.64.20]:34795 "HELO mail.gmx.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S1759764AbWLIXVI
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 9 Dec 2006 18:21:08 -0500
+Received: (qmail invoked by alias); 09 Dec 2006 23:21:05 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp035) with SMTP; 10 Dec 2006 00:21:05 +0100
+To: Jeff King <peff@peff.net>
 Sender: git-owner@vger.kernel.org
 
-Seth Falcon <sethfalcon@gmail.com> wrote:
-> I always send commits as:
-> 
-> git-svn dcommit remotes/git-svn..master
-> 
-> Possibly replacing master with whatever git branch I'm working on.
+Hi,
 
-Or just:
+On Fri, 8 Dec 2006, Jeff King wrote:
 
-   git-svn dcommit remotes/git-svn..
+> Instead, remove at most one space between name and address.
 
-to send the current branch.
+Why? We can fix it properly: Instead of
 
-> One nice thing about this approach is that you can sort of preview the
-> commit as:
-> 
->   git diff remotes/git-svn..master
+> -				while (isspace(bob[-1]))
+> +				if (isspace(bob[-1]))
 
-Or see the log and patch of each commit on the current branch:
+do something like
 
-   git log -p remotes/git-svn..
+				while (bob - 1 != buffer + 7 && 
+						isspace(bob[-1]))
 
--- 
+Ciao,
+Dscho
