@@ -1,91 +1,79 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: Change in git-svn dcommit semantics?
-Date: Tue, 19 Dec 2006 14:09:00 -0800
-Message-ID: <20061219220900.GA3148@localdomain>
-References: <m2mz5jegka.fsf@ziti.local>
+From: Seth Falcon <sethfalcon@gmail.com>
+Subject: Re: git-commit: select which files to commit while editing the commit message
+Date: Fri, 08 Dec 2006 16:37:13 -0800
+Message-ID: <m2d56taoqu.fsf@ziti.local>
+References: <360959.72234.qm@web31809.mail.mud.yahoo.com>
+	<200612082310.24140.Josef.Weidendorfer@gmx.de>
+	<m2lkli9bwv.fsf@ziti.local> <elcujo$g61$1@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 19 Dec 2006 22:09:19 +0000 (UTC)
-Cc: git@vger.kernel.org
+NNTP-Posting-Date: Sat, 9 Dec 2006 00:37:23 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <m2mz5jegka.fsf@ziti.local>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:to:subject:references:from:date:in-reply-to:message-id:user-agent:mime-version:content-type;
+        b=paXB8xCHnw0rJd3R7vcoZI9V76wFPhUHsIu7PGICCEsmDDJJz0hPqNUhEvgiFlmf/5Cdm0v3Q+217oSo9LPbSx4pXDTk3gyzJAvKFSOWjpa6joaynDB3jjUQT3HHRN0JbkFhSY3Yi3nxJfMBt3UCcg9TyGikHuk5j9tDJSQjNdY=
+In-Reply-To: <elcujo$g61$1@sea.gmane.org> (Jakub Narebski's message of "Sat, 09 Dec 2006 01:07:32 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (darwin)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34857>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33778>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gwn9B-0000tP-1t for gcvg-git@gmane.org; Tue, 19 Dec
- 2006 23:09:17 +0100
+ esmtp (Exim 4.50) id 1GsqDS-00049K-Ad for gcvg-git@gmane.org; Sat, 09 Dec
+ 2006 01:37:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932993AbWLSWJO (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
- 17:09:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932966AbWLSWJO
- (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 17:09:14 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:33991 "EHLO hand.yhbt.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S932993AbWLSWJN
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec 2006 17:09:13 -0500
-Received: from hand.yhbt.net (localhost [127.0.0.1]) by hand.yhbt.net
- (Postfix) with SMTP id D060F2DC035; Tue, 19 Dec 2006 14:09:00 -0800 (PST)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Tue, 19 Dec 2006
- 14:09:00 -0800
-To: Seth Falcon <sethfalcon@gmail.com>
+ S1947590AbWLIAhT (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
+ 19:37:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1947592AbWLIAhS
+ (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 19:37:18 -0500
+Received: from wx-out-0506.google.com ([66.249.82.225]:7088 "EHLO
+ wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1947590AbWLIAhR (ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Dec
+ 2006 19:37:17 -0500
+Received: by wx-out-0506.google.com with SMTP id h27so956317wxd for
+ <git@vger.kernel.org>; Fri, 08 Dec 2006 16:37:16 -0800 (PST)
+Received: by 10.70.116.1 with SMTP id o1mr7042018wxc.1165624636479; Fri, 08
+ Dec 2006 16:37:16 -0800 (PST)
+Received: from ziti.local ( [140.107.181.122]) by mx.google.com with ESMTP id
+ 39sm6206321wrl.2006.12.08.16.37.15; Fri, 08 Dec 2006 16:37:15 -0800 (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Seth Falcon <sethfalcon@gmail.com> wrote:
-> Hi Eric,
-> 
-> I just updated to the latest git/git-svn (on branch 'master') and the
-> workflow I've been using no longer seems to work:
-> 
->    # review the commits I'm going to send to svn
->    ziti:~/proj/bioc-2.0-git seth$ git log remotes/git-svn..HEAD
->    
->    # now send them
->    ziti:~/proj/bioc-2.0-git seth$ git svn dcommit remotes/git-svn..HEAD
-> 
->    fatal: ambiguous argument
->    'refs/remotes/git-svn..remotes/git-svn..HEAD': unknown revision or
->    path not in the working tree.  Use '--' to separate paths from
->    revisions 32768 at /Users/seth/scm/bin/git-svn line 2190
->            main::safe_qx('git-rev-list', '--no-merges', 'refs/remotes/git-svn..remotes/git-svn..HEAD') called at /Users/seth/scm/bin/git-svn line 610
->            main::dcommit('remotes/git-svn..HEAD') called at /Users/seth/scm/bin/git-svn line 197
-> 
-> 
-> At this point, my last commit seems to have been reset (although the
-> changes are thankfully still in my working tree).  If this happens to
-> you, you can recover the last commit like:
-> 
->   git commit -a -v -c ORIG_HEAD
+Jakub Narebski <jnareb@gmail.com> writes:
 
-Huh?  safe_qx should've croaked or died, causing git-svn to exit before
-it could do any damage (via git-reset or git-rebase).  dcommit is not
-called inside any eval blocks, either...
+> Seth Falcon wrote:
+>> Spelling out a bunch of files spread around your tree for update-index
+>> can be annoying.  Some way of marking a list seems natural.  Maybe
+>> that is a separate issue.
+>
+> Perhaps git-commit should also accept --exclude=<pattern> option?
+> Would that help?
 
-> And it seems that the new interface requires no extra args:
-> 
->  git svn dcommit
-> 
-> The new interface seems ok until things like 
-> 
->   git svn dcommit remotes/git-svn..HEAD~2
-> 
-> are allowed (if ever).  But it would be nice for the failure mode to
-> not undo commits :-)
- 
-Before, the 'remotes/git-svn..HEAD' argument meant absolutely nothing to
-dcommit (it silently ignored it).  Nowadays, you only need 'HEAD~2', the
-'remotes/git-svn..' is already implied.
+I don't think I understand what an --exclude=<pattern> option would
+do, but I'm pretty sure it doesn't help the use case I'm thinking of:
 
-	git-svn dcommit HEAD~2
+   Editing away, you've made changes in 8 files.
 
-Not specifying any argument implies that it is called with 'HEAD'
+   Reviewing diff, you want to commit 6 of those and continue working
+   on the other two.
 
--- 
+   It seems that there could be a less manual way than 
+   git update-index f1 f2 ... f6
+
+
+Hmm, maybe I could do:
+
+   git diff --name-only > changed
+   ## edit changed
+   cat changed|xargs git update-index
+
+I suppose this could be wrapped in a simple way to bring up an editor.
+
