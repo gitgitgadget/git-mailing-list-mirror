@@ -1,77 +1,63 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: Remove extra "/" in path names for git_get_project_list
-Date: Fri, 03 Nov 2006 12:18:00 +0100
-Organization: At home
-Message-ID: <eif8gd$6u5$1@sea.gmane.org>
-References: <454ACF91.50601@gmail.com> <7vslh1jcji.fsf@assigned-by-dhcp.cox.net>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Easy shell question: how to make a script killing all his childs when killed?
+Date: Sat, 9 Dec 2006 16:16:32 +0100
+Message-ID: <e5bfff550612090716p215167b9r2277b09c09b18894@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-NNTP-Posting-Date: Fri, 3 Nov 2006 11:18:19 +0000 (UTC)
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Sat, 9 Dec 2006 15:16:51 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 27
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-18-116.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=cXSqaS37DufKCSp9tHIH/tKm0TJrlSlv70FS/VpXVzNIpLfDa1yysn4Dy8WXjcX2+0ti8fMd4p2Qp/ULWdtze0GT19OxLiZKOLkB7R3JxS1H+srwK5T9vIjEkSZTrVp8XNix2ZSDTyyqRx1hF0AGoI+kO4GMKQ+ty3xOYkIcAVc=
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30827>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gfx3p-0005CS-5R for gcvg-git@gmane.org; Fri, 03 Nov
- 2006 12:18:10 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33817>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gt3wV-00014V-LQ for gcvg-git@gmane.org; Sat, 09 Dec
+ 2006 16:16:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753226AbWKCLSG (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 3 Nov 2006
- 06:18:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753227AbWKCLSG
- (ORCPT <rfc822;git-outgoing>); Fri, 3 Nov 2006 06:18:06 -0500
-Received: from main.gmane.org ([80.91.229.2]:62675 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S1753226AbWKCLSD (ORCPT
- <rfc822;git@vger.kernel.org>); Fri, 3 Nov 2006 06:18:03 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1Gfx3Q-00056w-Pj for git@vger.kernel.org; Fri, 03 Nov 2006 12:17:47 +0100
-Received: from host-81-190-18-116.torun.mm.pl ([81.190.18.116]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Fri, 03 Nov 2006 12:17:44 +0100
-Received: from jnareb by host-81-190-18-116.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Fri, 03 Nov 2006
- 12:17:44 +0100
-To: git@vger.kernel.org
+ S936828AbWLIPQe (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 9 Dec 2006
+ 10:16:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936861AbWLIPQe
+ (ORCPT <rfc822;git-outgoing>); Sat, 9 Dec 2006 10:16:34 -0500
+Received: from py-out-1112.google.com ([64.233.166.178]:44547 "EHLO
+ py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S936828AbWLIPQd (ORCPT <rfc822;git@vger.kernel.org>); Sat, 9 Dec
+ 2006 10:16:33 -0500
+Received: by py-out-1112.google.com with SMTP id a29so592158pyi for
+ <git@vger.kernel.org>; Sat, 09 Dec 2006 07:16:33 -0800 (PST)
+Received: by 10.35.57.5 with SMTP id j5mr8065501pyk.1165677392824; Sat, 09
+ Dec 2006 07:16:32 -0800 (PST)
+Received: by 10.35.93.11 with HTTP; Sat, 9 Dec 2006 07:16:32 -0800 (PST)
+To: "Git Mailing List" <git@vger.kernel.org>
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano wrote:
+Ok. I am really bad at scripting, so perhaps my question is very silly, but...
 
-> "Aneesh Kumar K.V" <aneesh.kumar@gmail.com> writes:
-> 
->> Without this change we get a wrong $pfxlen value and the check_export_ok()
->> checks with with a wrong directory name. Without this patch the below
->> $projects_list fails with gitweb
->>
->> $projects_list = "/tmp/a/b/";
->>
->> Signed-off-by: Aneesh Kumar K.V <aneesh.kumar@gmail.com>
-> 
-> Hmph.  Doesn't this break $projects_list = "/", I wonder?
-> 
->> +            # remove the trailing "/"
->> +            $dir =~ s!/+$!!;
+I create and run a script with the content:
 
-So perhaps
+git rev-list --header --boundary --parents --topo-order 2229ff5c7c  >
+/tmp/qgit_135902672.txt
 
-        $dir =~ s!(?<=[^/])/+$!!;
+Then I kill the script while it's running, but his child
+(git-rev-list) continues to run in background and I would like to stop
+it either.
 
-(zero-width positive look-behind assertion).
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+So how can I write the script to be sure that when stopped, it will
+kill all his childern?
 
+Thanks
+Marco
+
+P.S: I have no way to exec the script in fancy ways, I can just start
