@@ -2,73 +2,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Eran Tromer <git2eran@tromer.org>
-Subject: Re: fetching packs and storing them as packs
-Date: Fri, 27 Oct 2006 04:42:13 +0200
-Message-ID: <45417205.6020805@tromer.org>
-References: <Pine.LNX.4.64.0610252333540.12418@xanadu.home> <4540CA0C.6030300@tromer.org> <Pine.LNX.4.64.0610261105200.12418@xanadu.home> <45413209.2000905@tromer.org> <Pine.LNX.4.64.0610262038320.11384@xanadu.home> <20061027014229.GA28407@spearce.org>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: Fast access git-rev-list output: some OS knowledge required
+Date: Sat, 9 Dec 2006 13:15:12 +0100
+Message-ID: <e5bfff550612090415i26af8ea5q383889e951659d7e@mail.gmail.com>
+References: <e5bfff550612061124jcd0d94em47793710866776e7@mail.gmail.com>
+	 <20061206192800.GC20320@spearce.org>
+	 <e5bfff550612061134r3725dcbu2ff2dd6284fcd651@mail.gmail.com>
+	 <20061206194258.GD20320@spearce.org>
+	 <20061206195142.GE20320@spearce.org> <45781639.1050208@op5.se>
+	 <e5bfff550612081034q5e4c0c93s3512fce2f11b1fab@mail.gmail.com>
+	 <f2b55d220612081210u6ec3e95ciec6665a6b5e6a827@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Fri, 27 Oct 2006 02:43:50 +0000 (UTC)
-Cc: Nicolas Pitre <nico@cam.org>, Junio C Hamano <junkio@cox.net>,
-	git@vger.kernel.org
+NNTP-Posting-Date: Sat, 9 Dec 2006 12:15:20 +0000 (UTC)
+Cc: "Andreas Ericsson" <ae@op5.se>,
+	"Shawn Pearce" <spearce@spearce.org>,
+	"Git Mailing List" <git@vger.kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.7) Gecko/20060913 Fedora/1.5.0.7-1.fc5 Thunderbird/1.5.0.7 Mnenhy/0.7.4.0
-In-Reply-To: <20061027014229.GA28407@spearce.org>
-X-Enigmail-Version: 0.94.1.0
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=tMGyA3iaeI19/WralvXJWjhIOK5p04OSfHV3Xcqcdvqeumd+IgNmuvxDYbRXu92NcsuTiSnySCQgNQiPJNihM1mqCXzb1Fud0Xo3CRcGQrSMocahrnnlzoLCH7uLlgbEy/Z5j5sj3Y3X6YOEnFxsSOsv3Ha3Lo9T5B0Xoex113A=
+In-Reply-To: <f2b55d220612081210u6ec3e95ciec6665a6b5e6a827@mail.gmail.com>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30282>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GdHh7-000717-7i for gcvg-git@gmane.org; Fri, 27 Oct
- 2006 04:43:41 +0200
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33811>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gt16s-00023k-8a for gcvg-git@gmane.org; Sat, 09 Dec
+ 2006 13:15:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1946132AbWJ0CnL (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
- 22:43:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946117AbWJ0CnL
- (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 22:43:11 -0400
-Received: from line108-16.adsl.actcom.co.il ([192.117.108.16]:17627 "EHLO
- lucian.tromer.org") by vger.kernel.org with ESMTP id S1946132AbWJ0CnJ (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 22:43:09 -0400
-Received: from [192.168.4.6] ([192.168.4.6]) by lucian.tromer.org
- (8.13.7/8.12.11) with ESMTP id k9R2gUeY030415; Fri, 27 Oct 2006 04:42:36
- +0200
-To: Shawn Pearce <spearce@spearce.org>
+ S1030645AbWLIMPO (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 9 Dec 2006
+ 07:15:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030608AbWLIMPO
+ (ORCPT <rfc822;git-outgoing>); Sat, 9 Dec 2006 07:15:14 -0500
+Received: from py-out-1112.google.com ([64.233.166.183]:35056 "EHLO
+ py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1030645AbWLIMPM (ORCPT <rfc822;git@vger.kernel.org>); Sat, 9 Dec
+ 2006 07:15:12 -0500
+Received: by py-out-1112.google.com with SMTP id a29so572096pyi for
+ <git@vger.kernel.org>; Sat, 09 Dec 2006 04:15:12 -0800 (PST)
+Received: by 10.35.66.13 with SMTP id t13mr4656072pyk.1165666512083; Sat, 09
+ Dec 2006 04:15:12 -0800 (PST)
+Received: by 10.35.93.11 with HTTP; Sat, 9 Dec 2006 04:15:12 -0800 (PST)
+To: "Michael K. Edwards" <medwards.linux@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-On 2006-10-27 03:42, Shawn Pearce wrote:
-> Nicolas Pitre <nico@cam.org> wrote:
->> On Fri, 27 Oct 2006, Eran Tromer wrote:
->> Well, the race does exist.  Don't do repack -a -d at the same time then.
-> 
-> This is an issue for "central" repositories that people push into
-> and which might be getting repacked according to a cronjob.
+On 12/8/06, Michael K. Edwards <medwards.linux@gmail.com> wrote:
+> There is a very handy solution to this problem called "tmpfs".  It
+> should already be mounted at /tmp.  Put tmp.txt there and your problem
+> will go away.
+>
 
-AFAICT, the bottom line of the "Re: auto-packing on kernel.org? please?"
-thread last October was "sure, go ahead".
+Thanks Michael,
 
+It seems to work! patch pushed.
 
-> Unfortunately I don't have a solution.  I tried to come up with
-> one but didn't.  :-)
+ Marco
 
-Here's one way to do it.
-Change git-repack to follow references under $GIT_DIR/tmp/refs/ too.
-To receive or fetch a pack:
-1. Add references to the new heads in
-   `mktemp $GIT_DIR/tmp/refs/XXXXXX`.
-2. Put the new .pack under $GIT_DIR/objects/pack/.
-3. Put the new .idx under $GIT_DIR/objects/pack/.
-4. Update the relevant heads under $GIT_DIR/refs/.
-5. Delete the references from step 1.
+P.S: I've looked again to Shawn idea (and code) of linking qgit
+against libgit.a but I found these two difficult points:
 
-This is repack-safe and never corrupts the repo. The worst-case failure
-mode is if you die before cleaning the refs from $GIT_DIR/tmp/refs. That
-may mean some packed objects will never be removed by "repack -a -d"
-even if they lose all references from $GIT_DIR/refs, so do "tmpwatch -m
-240 $GIT_DIR/tmp/refs" to take care of that.
+- traverse_commit_list(&revs, show_commit, show_object) is blocking,
+i.e. the GUI will stop responding for few seconds while traversing the
+list. This is easily and transparently solved by the OS scheduler if
+an external process is used for git-rev-list. To solve this in qgit I
+have two ways: 1) call QEventLoop() once in a while from inside
+show_commit()/ show_object() to process pending events  2) Use a
+separate thread (QThread class). The first idea is not nice, the
+second opens a whole a new set of problems and it's a big amount of
+not trivial new code to add.
 
-  Eran
+-  traverse_commit_list() having an internal state it's not
+re-entrant. git-rev-list it's used to load main view data but also
+file history in another tab, and the two calls _could_ be ran
+concurrently. With external process I simply run two instances of
+DataLoader class and consequently two external git-rev-list processes,
