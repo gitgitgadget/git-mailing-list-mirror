@@ -1,78 +1,56 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: If I were redoing git from scratch...
-Date: Sat, 4 Nov 2006 15:15:26 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0611041509370.25218@g5.osdl.org>
-References: <7vpsc3xx65.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0611040829040.25218@g5.osdl.org> <20061104191651.GC2517@spearce.org>
- <200611042329.46556.robin.rosenberg.lists@dewire.com>
- <Pine.LNX.4.64.0611041436050.25218@g5.osdl.org>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: kernel.org mirroring (Re: [GIT PULL] MMC update)
+Date: Fri, 08 Dec 2006 21:09:01 -0800
+Message-ID: <457A44ED.4080606@zytor.com>
+References: <Pine.LNX.4.64.0612020835110.3476@woody.osdl.org>	 <4578722E.9030402@zytor.com> <4579611F.5010303@dawes.za.net>	 <200612081438.25493.jnareb@gmail.com>	 <46a038f90612081728s65d65ccewe64fa1a496de76fa@mail.gmail.com>	 <457A1962.6000401@zytor.com> <46a038f90612081852u63e05da1qe57504636f3578fd@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Sat, 4 Nov 2006 23:15:51 +0000 (UTC)
-Cc: Shawn Pearce <spearce@spearce.org>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Sat, 9 Dec 2006 05:09:33 +0000 (UTC)
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Rogan Dawes <discard@dawes.za.net>,
+	Linus Torvalds <torvalds@osdl.org>,
+	Kernel Org Admin <ftpadmin@kernel.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Petr Baudis <pasky@ucw.cz>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <Pine.LNX.4.64.0611041436050.25218@g5.osdl.org>
-X-MIMEDefang-Filter: osdl$Revision: 1.155 $
-X-Scanned-By: MIMEDefang 2.36
+User-Agent: Thunderbird 1.5.0.8 (X11/20061107)
+In-Reply-To: <46a038f90612081852u63e05da1qe57504636f3578fd@mail.gmail.com>
+X-Virus-Scanned: ClamAV 0.88.6/2308/Fri Dec  8 08:10:24 2006 on terminus.zytor.com
+X-Virus-Status: Clean
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30942>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GgUjt-0003r8-Bk for gcvg-git@gmane.org; Sun, 05 Nov
- 2006 00:15:49 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33801>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GsuSj-0007JU-1h for gcvg-git@gmane.org; Sat, 09 Dec
+ 2006 06:09:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S965718AbWKDXPq (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 4 Nov 2006
- 18:15:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965743AbWKDXPq
- (ORCPT <rfc822;git-outgoing>); Sat, 4 Nov 2006 18:15:46 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:43225 "EHLO smtp.osdl.org") by
- vger.kernel.org with ESMTP id S965718AbWKDXPp (ORCPT
- <rfc822;git@vger.kernel.org>); Sat, 4 Nov 2006 18:15:45 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
- smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kA4NFRoZ013472
- (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Sat, 4
- Nov 2006 15:15:28 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
- shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kA4NFQr9002675; Sat, 4 Nov
- 2006 15:15:27 -0800
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+ S1758976AbWLIFJP (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 9 Dec 2006
+ 00:09:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758957AbWLIFJP
+ (ORCPT <rfc822;git-outgoing>); Sat, 9 Dec 2006 00:09:15 -0500
+Received: from terminus.zytor.com ([192.83.249.54]:55231 "EHLO
+ terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
+ S1758940AbWLIFJO (ORCPT <rfc822;git@vger.kernel.org>); Sat, 9 Dec 2006
+ 00:09:14 -0500
+Received: from [172.27.0.16] (c-67-180-238-27.hsd1.ca.comcast.net
+ [67.180.238.27]) (authenticated bits=0) by terminus.zytor.com (8.13.8/8.13.7)
+ with ESMTP id kB9591Pc014984 (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA
+ bits=256 verify=NO); Fri, 8 Dec 2006 21:09:03 -0800
+To: Martin Langhoff <martin.langhoff@gmail.com>
 Sender: git-owner@vger.kernel.org
 
+Martin Langhoff wrote:
+> I posted separately about those. And I've been mulling about whether
+> the thundering herd is really such a big problem that we need to
+> address it head-on.
 
-
-On Sat, 4 Nov 2006, Linus Torvalds wrote:
-> 
-> In addition to that, we need one pointer per hash entry, and in order to 
-> keep the hash list size down we need that hash array to be about 25% free, 
-> so say 1.5 pointers per object: ~6 bytes or ~12 bytes depending on whether 
-> it's a 32- or 64-bit architecture.
-
-Btw, one of the things I considered (but rejected as being _too_ far out 
-for now) during the memory shrinking thing was to make both 32-bit and 
-64-bit entities use a 32-bit hash table entry.
-
-The way to do that would be to instead of using a pointer, use a 32-bit 
-integer where the low ~10 bits are an index into the allocation buffer 
-(since we batch allocations), and the rest of the bits would be an index 
-into which batch-buffer it is.
-
-Exactly because 8 bytes per hash entry is actually right now a big part of 
-the object memory allocation overhead on 64-bit architectures, and cutting 
-it down to just 4 bytes would help save memory.
-
-I never got around to it, if only because I actually just compile my 
-user-land git stuff as 32-bit, even on my ppc64 system. And partly because 
-I had shrunk the object allocations enough that I just felt pretty happy 
-with it anyway, and the change would have been pretty painful. But on 
-64-bit architectures, the hash table right now is about a third of the 
-whole memory overhead of the object database, and cutting it down by half 
-would actually be noticeable.
+Uhm... yes it is.
 
