@@ -1,112 +1,73 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Aneesh Kumar K.V" <aneesh.kumar@gmail.com>
-Subject: [PATCH] FIX git pull failure with shallow clone changes
-Date: Fri, 10 Nov 2006 11:57:10 +0530
-Message-ID: <45541BBE.4070303@gmail.com>
-References: <4552A865.5000201@gmail.com> <45541503.4020604@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] git-diff: Introduce --index and deprecate --cached.
+Date: Fri, 08 Dec 2006 18:24:31 -0800
+Message-ID: <7vac1xg61s.fsf@assigned-by-dhcp.cox.net>
+References: <20061130115913.EA36C5BA19@nox.op5.se>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------030008090708000400020600"
-NNTP-Posting-Date: Fri, 10 Nov 2006 06:27:48 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Sat, 9 Dec 2006 02:24:48 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:user-agent:mime-version:to:subject:references:in-reply-to:content-type;
-        b=MvtlGJqK85sCQZS52x1W0GOfQzZeP/k/i6Mivg17lAqCQ2664HnePxATwxP+yhmSJF1Dr5aOPAi3iPZTcoAh4lIc/LBIgBAbdq4EQ4lR3OVPuRg3b+Mt5UkAzuPnr21eAQ2ei3e0UTrxEHQQOw7Tjb5jdyXhMRX2ECVofhs0AI4=
-User-Agent: Thunderbird 1.5.0.7 (X11/20060918)
-In-Reply-To: <45541503.4020604@gmail.com>
+In-Reply-To: <20061130115913.EA36C5BA19@nox.op5.se> (Andreas Ericsson's
+	message of "Thu, 30 Nov 2006 12:43:13 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31205>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GiPrV-0002cI-Qv for gcvg-git@gmane.org; Fri, 10 Nov
- 2006 07:27:38 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33790>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GsrtM-0004fX-87 for gcvg-git@gmane.org; Sat, 09 Dec
+ 2006 03:24:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1424369AbWKJG1Y (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 10 Nov 2006
- 01:27:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966099AbWKJG1Y
- (ORCPT <rfc822;git-outgoing>); Fri, 10 Nov 2006 01:27:24 -0500
-Received: from ug-out-1314.google.com ([66.249.92.170]:28518 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S966097AbWKJG1X
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 10 Nov 2006 01:27:23 -0500
-Received: by ug-out-1314.google.com with SMTP id m3so445194ugc for
- <git@vger.kernel.org>; Thu, 09 Nov 2006 22:27:21 -0800 (PST)
-Received: by 10.78.21.7 with SMTP id 7mr2194919huu.1163140041491; Thu, 09 Nov
- 2006 22:27:21 -0800 (PST)
-Received: from ?217.156.218.183? ( [156.153.255.234]) by mx.google.com with
- ESMTP id 30sm2565724hub.2006.11.09.22.27.19; Thu, 09 Nov 2006 22:27:21 -0800
- (PST)
-To: "Aneesh Kumar K.V" <aneesh.kumar@gmail.com>, git@vger.kernel.org
+ S1761352AbWLICYd (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
+ 21:24:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761351AbWLICYd
+ (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 21:24:33 -0500
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:63435 "EHLO
+ fed1rmmtao02.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1761352AbWLICYd (ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Dec 2006
+ 21:24:33 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao02.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061209022432.HSCG97.fed1rmmtao02.cox.net@fed1rmimpo01.cox.net>; Fri, 8 Dec
+ 2006 21:24:32 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id wSPv1V00L1kojtg0000000; Fri, 08 Dec 2006
+ 21:23:55 -0500
+To: Andreas Ericsson <ae@op5.se>
 Sender: git-owner@vger.kernel.org
 
-This is a multi-part message in MIME format.
---------------030008090708000400020600
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Andreas Ericsson <ae@op5.se> writes:
 
+> 'git diff --cached' still works, but its use is discouraged
+> in the documentation. 'git diff --index' does the same thing
+> and is consistent with how 'git apply --index' works.
 
+Although I've applied this long time ago (in git timescale
+anyway), this patch and the above rationale is wrong.
 
---------------030008090708000400020600
-Content-Type: text/plain;
- name*0="0001-I-was-using-the-pu-branch-i-tried-to-update-the-git-reposit";
- name*1="ory-and-i.txt"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline;
- filename*0="0001-I-was-using-the-pu-branch-i-tried-to-update-the-git-rep";
- filename*1="ository-and-i.txt"
+'diff --cached' is more in line with how 'apply --cached' works,
+not how 'apply --index' works.
 
-I was using the pu branch i tried to update the git repository and i
-got this error.
+With apply, --cached and --index both tell the command to be
+aware of the index, but --cached means "operate on the index,
+and never look at working tree", while --index means "operate
+both on the index and working tree at the same time".  In
+particular, the former does not care if the file in the working
+tree matches the index, while the latter does.
 
-walk 9e950efa20dc8037c27509666cba6999da9368e8
-walk 3b6a792f6ace33584897d1af08630c9acc0ce221
-* refs/heads/origin: fast forward to branch 'master' of
-http://repo.or.cz/r/linux-2.6
-old..new: 3d42488..088406b
-Auto-following refs/tags/v2.6.19-rc5
-shallow clone with http not supported
+'diff --cached' is about the tree and the index without looking
+at the working tree.  Since there is no mode of operation that
+looks at both the index and the working tree in the underlying
+diff-index, I made the mistake of applying this patch, but it is
+conceivable that we may want to have a 'diff --index' that
+compares HEAD, the index and the working tree, perhaps in a
+combined diff format.
 
-This repository was not cloned with -depth. I only updated the git
-tools using the pu branch
-
-Signed-off-by: Aneesh Kumar K.V <aneesh.kumar@gmail.com>
----
- git-fetch.sh |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/git-fetch.sh b/git-fetch.sh
-index 8b46e73..14ba4b2 100755
---- a/git-fetch.sh
-+++ b/git-fetch.sh
-@@ -314,9 +314,9 @@ fetch_main () {
- 	      noepsv_opt="--disable-epsv"
- 	  fi
- 	  max_depth=5
--	  depth=0
-+	  cur_depth=0
- 	  head="ref: $remote_name"
--	  while (expr "z$head" : "zref:" && expr $depth \< $max_depth) >/dev/null
-+	  while (expr "z$head" : "zref:" && expr $cur_depth \< $max_depth) >/dev/null
- 	  do
- 	    remote_name_quoted=$(@@PERL@@ -e '
- 	      my $u = $ARGV[0];
-@@ -325,7 +325,7 @@ fetch_main () {
- 	      print "$u";
- 	  ' "$head")
- 	    head=$(curl -nsfL $curl_extra_args $noepsv_opt "$remote/$remote_name_quoted")
--	    depth=$( expr \( $depth + 1 \) )
-+	    cur_depth=$( expr \( $cur_depth + 1 \) )
- 	  done
- 	  expr "z$head" : "z$_x40\$" >/dev/null ||
- 	      die "Failed to fetch $remote_name from $remote"
--- 
-1.4.4.rc1.g368c-dirty
-
-
+I think we should revert this patch.
