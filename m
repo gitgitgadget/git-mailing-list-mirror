@@ -2,103 +2,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Cleaning up git user-interface warts
-Date: Tue, 14 Nov 2006 21:35:17 -0800
-Message-ID: <7vu011qnl6.fsf@assigned-by-dhcp.cox.net>
-References: <87k61yt1x2.wl%cworth@cworth.org> <455A1137.8030301@shadowen.org>
-	<87hcx1u934.wl%cworth@cworth.org>
-	<Pine.LNX.4.64.0611141518590.2591@xanadu.home>
-	<87bqn9u43s.wl%cworth@cworth.org>
-	<7vr6w5y7to.fsf@assigned-by-dhcp.cox.net>
-	<7virhhy76h.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0611142048350.2591@xanadu.home>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] Documentation/git-commit: rewrite to make it more end-user friendly.
+Date: Sat, 09 Dec 2006 23:05:04 +0100
+Organization: At home
+Message-ID: <elfbq4$tka$1@sea.gmane.org>
+References: <7vy7pik51b.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0612082141260.2630@xanadu.home> <7vd56tei20.fsf_-_@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0612091517010.2630@xanadu.home> <7vpsas91e5.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 15 Nov 2006 05:35:29 +0000 (UTC)
-Cc: git@vger.kernel.org, Andy Whitcroft <apw@shadowen.org>,
-	Carl Worth <cworth@cworth.org>
+Content-Transfer-Encoding: 7Bit
+NNTP-Posting-Date: Sat, 9 Dec 2006 22:05:52 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <Pine.LNX.4.64.0611142048350.2591@xanadu.home> (Nicolas Pitre's
-	message of "Tue, 14 Nov 2006 23:32:06 -0500 (EST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 27
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-25-107.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31417>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GkDQk-0003dv-3P for gcvg-git@gmane.org; Wed, 15 Nov
- 2006 06:35:26 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33841>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GtAKF-0008LT-Ji for gcvg-git@gmane.org; Sat, 09 Dec
+ 2006 23:05:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S966658AbWKOFfV (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
- 00:35:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966657AbWKOFfU
- (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 00:35:20 -0500
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:60413 "EHLO
- fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP id S966658AbWKOFfS
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 00:35:18 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao06.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061115053518.QTTR7157.fed1rmmtao06.cox.net@fed1rmimpo02.cox.net>; Wed, 15
- Nov 2006 00:35:18 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id mtbQ1V0021kojtg0000000; Wed, 15 Nov 2006
- 00:35:24 -0500
-To: Nicolas Pitre <nico@cam.org>
+ S1758738AbWLIWFl (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 9 Dec 2006
+ 17:05:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758779AbWLIWFl
+ (ORCPT <rfc822;git-outgoing>); Sat, 9 Dec 2006 17:05:41 -0500
+Received: from main.gmane.org ([80.91.229.2]:51904 "EHLO ciao.gmane.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1758738AbWLIWFk
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 9 Dec 2006 17:05:40 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1GtAJU-0000V3-3d for git@vger.kernel.org; Sat, 09 Dec 2006 23:04:56 +0100
+Received: from host-81-190-25-107.torun.mm.pl ([81.190.25.107]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Sat, 09 Dec 2006 23:04:56 +0100
+Received: from jnareb by host-81-190-25-107.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Sat, 09 Dec 2006
+ 23:04:56 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Nicolas Pitre <nico@cam.org> writes:
+Junio C Hamano wrote:
 
-> What is the point of hiding tracking branches?  Why just not making them 
-> easier to use instead?  There are currently so many ways to specify 
-> remote branches that even I get confused.
+> Nicolas Pitre <nico@cam.org> writes:
 
-Ok, I think in essence we are saying the same thing except I
-went overboard by suggsting to extend sha1_name to also look at
-.git/remotes/$name which is not necessary, because we already
-have the .git/refs/remotes/%s/HEAD magic there.  Consider the
-suggestion of "upstream#next" syntax retracted, please.
+>>>  -o|--only::
+>>> -   Commit only the files specified on the command line.
+>>> -   This format cannot be used during a merge, nor when the
+>>> -   index and the latest commit does not match on the
+>>> -   specified paths to avoid confusion.
+>>> +   Commit only the files specified on the command line;
+>>> +   this is the default when pathnames are given on the
+>>> +   command line, so you usually do not have to give this
+>>> +   option.  This format cannot be used during a merge.
+>>
+>> Is there some value in keeping this option documented?  What about 
+>> removing it (the documentation not the option)?
+> 
+> True, although the description of <files>... need to be
+> clarified if we do this.
 
-> 1) make "git init" an alias for "git init-db".
-
-Or even better, have "gh init".
-
-> 2) "pull" and "push" should be symmetrical operations
-
-I think that makes a lot of sense to have "gh pull" and "gh
-push" as symmetric operations, and make "gh merge" do the
-fast-forward and 3-way merge magic done in the current "git
-pull".  These three words would have a lot saner meaning.
-
-> 3) remote branch handling should become more straight forward.
->
-> OK! Now that we've solved the pull issue and that everybody agrees with 
-> me (how can't you all agree with me anyway) let's have a look at remote 
-> branches.
-
-I would probably prefer making the default namespace under
-.git/refs/remotes/remote-name for the tracking branches this
-proposal creates, but other than that I agree with the general
-direction this proposal is taking us, including branch groups.
-We have .git/refs/remotes/%s/HEAD magic so I do not think we
-even need to treat one branch repository any specially as you
-suggsted.
-
-The reason I am suggsting "gh" instead of "git" is primarily to
-deal with stale documentation people would find googling.  I can
-easily see people get confused by reading "pull = fetch + merge"
-from either mailing list archive or Git cheat sheet various
-projects seem to have developed.
-
-It does not mean we need to redo _all_ UI.  I think most of the
-archaeology commands have sane UI so during the transition
-period (git 1.99) we can have "git log" and "gh log" which are
-one and the same program, and perhaps git 2.0 can be shipped
-with clear distinction between plumbing (i.e. git-update-index
-and friends) and porcelain (e.g. "gh pull" that only fetches but
-with the user friendliness you outlined here), with backward
-compatibility wart to help old timers (e.g. "git pull" that
-still does "git fetch" followed by "git merge").
+I'm a bit uncomfortable about removing documentation to existing
+(if no-op) option. I'd rather it stay.
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
 
