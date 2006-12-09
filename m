@@ -1,64 +1,104 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Timur Tabi <timur@freescale.com>
-Subject: Re: Is there a way to trim old SHAs from a git tree (so it's not
- so large)?
-Date: Tue, 21 Nov 2006 11:01:01 -0600
-Organization: Freescale
-Message-ID: <456330CD.9080503@freescale.com>
-References: <455B90AD.3060707@freescale.com> <20061117103611.183640@gmx.net> <45632957.5070205@freescale.com> <20061121163206.GA22006@spearce.org> <45632EC6.5030902@freescale.com> <20061121165656.GC22006@spearce.org>
+From: Jeff Garzik <jeff@garzik.org>
+Subject: Re: kernel.org mirroring (Re: [GIT PULL] MMC update)
+Date: Sat, 09 Dec 2006 07:42:25 -0500
+Message-ID: <457AAF31.2050002@garzik.org>
+References: <Pine.LNX.4.64.0612020835110.3476@woody.osdl.org> <Pine.LNX.4.64.0612081453430.3516@woody.osdl.org> <46a038f90612081756w1ab4609epcb4a2cbd9f4d8205@mail.gmail.com> <200612091251.16460.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Tue, 21 Nov 2006 17:02:54 +0000 (UTC)
-Cc: Thomas Kolejka <Thomas.Kolejka@gmx.at>, git@vger.kernel.org
+NNTP-Posting-Date: Sat, 9 Dec 2006 12:43:18 +0000 (UTC)
+Cc: Martin Langhoff <martin.langhoff@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Linus Torvalds <torvalds@osdl.org>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Rogan Dawes <discard@dawes.za.net>,
+	Kernel Org Admin <ftpadmin@kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.8.1) Gecko/20061101 SeaMonkey/1.1b
-In-Reply-To: <20061121165656.GC22006@spearce.org>
+User-Agent: Thunderbird 1.5.0.8 (X11/20061107)
+In-Reply-To: <200612091251.16460.jnareb@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32005>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GmZ14-0006Nr-9y for gcvg-git@gmane.org; Tue, 21 Nov
- 2006 18:02:39 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33812>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gt1Xl-0004E8-6R for gcvg-git@gmane.org; Sat, 09 Dec
+ 2006 13:43:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1031220AbWKURBR (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 21 Nov 2006
- 12:01:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031214AbWKURBO
- (ORCPT <rfc822;git-outgoing>); Tue, 21 Nov 2006 12:01:14 -0500
-Received: from de01egw02.freescale.net ([192.88.165.103]:57801 "EHLO
- de01egw02.freescale.net") by vger.kernel.org with ESMTP id S1031096AbWKURBM
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2006 12:01:12 -0500
-Received: from de01smr01.freescale.net (de01smr01.freescale.net
- [10.208.0.31]) by de01egw02.freescale.net (8.12.11/de01egw02) with ESMTP id
- kALHF913018137; Tue, 21 Nov 2006 10:15:09 -0700 (MST)
-Received: from [10.82.19.119] (ld0169-tx32.am.freescale.net [10.82.19.119])
- by de01smr01.freescale.net (8.13.1/8.13.0) with ESMTP id kALH11wW011908; Tue,
- 21 Nov 2006 11:01:01 -0600 (CST)
-To: Shawn Pearce <spearce@spearce.org>
+ S1030645AbWLIMma (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 9 Dec 2006
+ 07:42:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030722AbWLIMma
+ (ORCPT <rfc822;git-outgoing>); Sat, 9 Dec 2006 07:42:30 -0500
+Received: from srv5.dvmed.net ([207.36.208.214]:60192 "EHLO mail.dvmed.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1030645AbWLIMm3
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 9 Dec 2006 07:42:29 -0500
+Received: from cpe-065-190-194-075.nc.res.rr.com ([65.190.194.75]
+ helo=[10.10.10.10]) by mail.dvmed.net with esmtpsa (Exim 4.63 #1 (Red Hat
+ Linux)) id 1Gt1X8-0005iQ-Jz; Sat, 09 Dec 2006 12:42:27 +0000
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Shawn Pearce wrote:
-> Timur Tabi <timur@freescale.com> wrote:
->>> Shallow clone is a development feature still being working on in
->>> Junio's 'pu' branch of git.git.  It has a few issues still to be
->>> worked out so it hasn't been made part of one of the more stable
->>> branches yet (like 'next', 'master', or 'maint').
->> Well, until it's available on an official git release, it doesn't help me.
+Jakub Narebski wrote:
+> First, it would (and could) work only for serving gitweb over mod_perl.
+> I'm not sure if overhead with IPC and complications implementing are
+> worth it: this perhaps be better solved by caching engine.
+
+It is.  At least for kernel.org, the issue isn't that CGI is expensive, 
+its that I/O is expensive.
+
+
+> In addition to setting either Expires: header or Cache-Control: max-age
+> gitweb should also set Last-Modified: and ETag headers, and also 
+> probably respond to If-Modified-Since: and If-None-Match: requests.
 > 
-> One of the reasons its hanging out in 'pu' still is that there is
-> a lack of people who are interested in the feature, and thus not
-> enough people are testing it.  Perhaps you might be able to lend
-> a hand in that regard?
+> Would be worth implementing this?
 
-Sure, I can do that!  Can you give me some pointers?  I've never done 
-development on git itself, so I don't know Junio or his pu (sorry, I couldn't 
-resist :-)).
+IMO yes, since most major browsers, caches, and spiders support these 
+headers.
 
--- 
-Timur Tabi
+
+> For some pages ETag is natural; for other Last-Modified: would be more
+> natural.
+
+Yes, a good point to note.
+
+
+> Usualy you can compare ETags base on URL alone.
+
+Mostly true:  you must also consider HTTP_ACCEPT
+
+
+> Wouldn't it be simplier to just set Last-Modified: header (and check
+> it?)
+
+That would be a good start, and suffice for many cases.  If the CGI can 
+simply stat(2) files rather than executing git-* programs, that would 
+increase efficiency quite a bit.
+
+A core problem with cache hints via HTTP headers (last-modified, etc.) 
+is that you don't achieve caching across multiple clients, just across 
+repeated queries from the same client (or caching proxy).
+
+At least for the RSS/Atom feeds and the git main page, it makes no sense 
+to regenerate that data repeatedly.
+
+Internally, gitweb would need to do a stat() on key files, and return 
+pre-generated XML for the feeds if the stat() reveals no changes.  Ditto 
+for the front page.
+
+
+> P.S. Can anyone post some benchmark comparing gitweb deployed under 
+> mod_perl as compared to deployed as CGI script? Does kernel.org use 
+> mod_perl, or CGI version of gitweb?
+
+CGI version of gitweb.
+
+But again, mod_perl vs. CGI isn't the issue.
+
+	Jeff
+
