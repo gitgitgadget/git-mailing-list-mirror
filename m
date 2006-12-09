@@ -1,140 +1,54 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: kernel.org mirroring (Re: [GIT PULL] MMC update)
-Date: Sat, 9 Dec 2006 18:02:12 +0100
-Message-ID: <200612091802.12810.jnareb@gmail.com>
-References: <Pine.LNX.4.64.0612020835110.3476@woody.osdl.org> <200612091437.01183.jnareb@gmail.com> <457ACBA1.4090007@garzik.org>
+From: Han-Wen Nienhuys <hanwen@xs4all.nl>
+Subject: Re: doc bug?
+Date: Sat, 09 Dec 2006 19:04:39 +0100
+Message-ID: <457AFAB7.907@xs4all.nl>
+References: <elc64k$t4i$1@sea.gmane.org> <2c6b72b30612090930o7b856223ub87746181f958b7c@mail.gmail.com>
+Reply-To: hanwen@xs4all.nl
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sat, 9 Dec 2006 17:00:25 +0000 (UTC)
-Cc: Martin Langhoff <martin.langhoff@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Linus Torvalds <torvalds@osdl.org>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Rogan Dawes <discard@dawes.za.net>,
-	Kernel Org Admin <ftpadmin@kernel.org>
+NNTP-Posting-Date: Sat, 9 Dec 2006 18:04:47 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=rNEAfFsWHhpQwlF3ZrWrX318EDrcEUQCjhTj4RBQhCcxgrhoggHy3dLnQLQInNH5nETYAHgxrMzOue9X0fq/OskAmVdJkVk9oQlx+0eZOKP+/tpngg19NoNEIWqDtX5sxEFTBz98QLKdrLKYhYrk9EnQ1EGYkeWWlFdU3+oiXgQ=
-User-Agent: KMail/1.9.3
-In-Reply-To: <457ACBA1.4090007@garzik.org>
-Content-Disposition: inline
+User-Agent: Thunderbird 1.5.0.8 (X11/20061107)
+Original-Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <2c6b72b30612090930o7b856223ub87746181f958b7c@mail.gmail.com>
+X-Virus-Scanned: by XS4ALL Virus Scanner
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33820>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33825>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gt5Ye-00039V-5I for gcvg-git@gmane.org; Sat, 09 Dec
- 2006 18:00:16 +0100
+ esmtp (Exim 4.50) id 1Gt6Z2-0001hD-FB for gcvg-git@gmane.org; Sat, 09 Dec
+ 2006 19:04:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S937141AbWLIRAA (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 9 Dec 2006
- 12:00:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937167AbWLIQ76
- (ORCPT <rfc822;git-outgoing>); Sat, 9 Dec 2006 11:59:58 -0500
-Received: from ug-out-1314.google.com ([66.249.92.168]:33163 "EHLO
- ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S937141AbWLIQ75 (ORCPT <rfc822;git@vger.kernel.org>); Sat, 9 Dec
- 2006 11:59:57 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so989333uga for
- <git@vger.kernel.org>; Sat, 09 Dec 2006 08:59:56 -0800 (PST)
-Received: by 10.67.100.17 with SMTP id c17mr7091600ugm.1165683595827; Sat, 09
- Dec 2006 08:59:55 -0800 (PST)
-Received: from host-81-190-25-107.torun.mm.pl ( [81.190.25.107]) by
- mx.google.com with ESMTP id j33sm3628301ugc.2006.12.09.08.59.54; Sat, 09 Dec
- 2006 08:59:55 -0800 (PST)
-To: Jeff Garzik <jeff@garzik.org>
+ S1759111AbWLISEd (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 9 Dec 2006
+ 13:04:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759115AbWLISEd
+ (ORCPT <rfc822;git-outgoing>); Sat, 9 Dec 2006 13:04:33 -0500
+Received: from smtp-vbr9.xs4all.nl ([194.109.24.29]:1709 "EHLO
+ smtp-vbr9.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1758963AbWLISEc (ORCPT <rfc822;git@vger.kernel.org>); Sat, 9 Dec 2006
+ 13:04:32 -0500
+Received: from [192.168.1.35] (cu-c-36d6f.adsl.wanadoo.nl [83.118.11.111])
+ (authenticated bits=0) by smtp-vbr9.xs4all.nl (8.13.8/8.13.8) with ESMTP id
+ kB9I4Ur5092720 (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256
+ verify=NO); Sat, 9 Dec 2006 19:04:30 +0100 (CET) (envelope-from
+ hanwen@xs4all.nl)
+To: Jonas Fonseca <jonas.fonseca@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Jeff Garzik wrote:
-> Jakub Narebski wrote:
-
->> As I said, I'm not talking (at least now) about saving generated HTML
->> output. This I think is better solved in caching engine like Squid can
->> be. Although even here some git specific can be of help: we can invalidate
->> cache on push, and we know that some results doesn't ever change (well,
->> with exception of changing output of gitweb).
+Jonas Fonseca escreveu:
+>> is this a new problem?  I'm on FC6, with  asciidoc 7.0.2
 > 
-> It depends on how creatively you think ;-)
-> 
-> Consider generating static HTML files on each push, via a hook, for many 
-> of the toplevel files.  The static HTML would then link to the CGI for 
-> further dynamic querying of the git database.
+> The git-tools.txt document is not intended to be a man page
 
-You mean that the links in this pre-generated HTML would be to CGI
-pages?
- 
->> What can be _easily_ done:
->>  * Use post 1.4.4 gitweb, which uses git-for-each-ref to generate summary
->>    page; this leads to around 3 times faster summary page.
-> 
-> This re-opens the question mentioned earlier, is Kay (or anyone?) still 
-> actively maintaining gitweb on k.org?
-
-By the way, thanks to Martin Waitz it is much easier to install gitweb.
-I for example use the following script to test changes I have made to gitweb:
-
--- >8 --
-#!/bin/bash
-
-BINDIR="/home/local/git"
-
-function make_gitweb()
-{
-	pushd "/home/jnareb/git/"
-
-	make GITWEB_PROJECTROOT="/home/local/scm" \
-	     GITWEB_CSS="/gitweb/gitweb.css" \
-	     GITWEB_LOGO="/gitweb/git-logo.png" \
-	     GITWEB_FAVICON="/gitweb/git-favicon.png" \
-	     bindir=$BINDIR \
-	     gitweb/gitweb.cgi
-
-	popd
-}
-
-function copy_gitweb()
-{
-	cp -fv /home/jnareb/git/gitweb/gitweb.{cgi,css} /home/local/gitweb/
-}
-
-make_gitweb
-copy_gitweb
-
-# end of gitweb-update.sh
--- >8 --
-
->>  * Perhaps using projects list file (which can be now generated by gitweb)
->>    instead of scanning directories and stat()-ing for owner would help
->>    with time to generate projects lis page
-> 
-> This could be statically generated by a robot.  I think everybody would 
-> shrink in horror if a human needed to maintain such a file.
-
-Gitweb can generate this file. The problem is that one would have to
-temporary turn off using index file. This can be done by having the
-following gitweb_list_projects.perl file:
-
--- >8 --
-#!/usr/bin/perl
-
-$projects_list = "";
--- >8 --
-
-then use the following invocation to generate project index file:
-
-$ GATEWAY_INTERFACE="CGI/1.1" HTTP_ACCEPT="*/*" REQUEST_METHOD="GET" \
-  GITWEB_CONFIG=gitweb_list_projects.perl QUERY_STRING="a=project_index" \
-  gitweb.cgi 
+So why does the doc try make one for it? This is a bug, no?
 
 -- 
-Jakub Narebski
