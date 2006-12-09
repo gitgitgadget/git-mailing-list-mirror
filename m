@@ -1,57 +1,107 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: Seeking git recipe to grab a single file
-Date: Wed, 6 Dec 2006 22:51:39 +0100
-Message-ID: <81b0412b0612061351v16aa6b94q8dce9404a5b2675a@mail.gmail.com>
-References: <4577348E.4090105@firmworks.com>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH 1/3] diff_tree_sha1(): avoid rereading trees if possible
+Date: Sun, 10 Dec 2006 00:55:34 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0612100055160.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20061207101707.GA19139@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 6 Dec 2006 21:51:54 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Sat, 9 Dec 2006 23:55:54 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=dTtnxbP6Whjia+8tXwXZOaMfHy/wUQImCT5jmLJgi6iiCckzCs0b9gZuMeizUYACou8HEflf5NwlYGA0IE+t6mW4Odk9IdP2lNQ2gNEE3RnOv0UudkNzRycsLI+sJJO/FhlPiZUfOtVCg68RFhW+QOg8LndErrYkt5E8vom7ka0=
-In-Reply-To: <4577348E.4090105@firmworks.com>
-Content-Disposition: inline
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <20061207101707.GA19139@spearce.org>
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33527>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33850>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gs4g3-0005dj-TL for gcvg-git@gmane.org; Wed, 06 Dec
- 2006 22:51:44 +0100
+ esmtp (Exim 4.50) id 1GtC2j-0001An-JX for gcvg-git@gmane.org; Sun, 10 Dec
+ 2006 00:55:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S937685AbWLFVvl (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
- 16:51:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937686AbWLFVvl
- (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 16:51:41 -0500
-Received: from nz-out-0506.google.com ([64.233.162.225]:46289 "EHLO
- nz-out-0102.google.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with
- ESMTP id S937685AbWLFVvk (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec
- 2006 16:51:40 -0500
-Received: by nz-out-0102.google.com with SMTP id s1so228312nze for
- <git@vger.kernel.org>; Wed, 06 Dec 2006 13:51:40 -0800 (PST)
-Received: by 10.78.180.18 with SMTP id c18mr1009014huf.1165441899061; Wed, 06
- Dec 2006 13:51:39 -0800 (PST)
-Received: by 10.78.135.3 with HTTP; Wed, 6 Dec 2006 13:51:38 -0800 (PST)
-To: "Mitch Bradley" <wmb@firmworks.com>
+ S1757734AbWLIXzh (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 9 Dec 2006
+ 18:55:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758826AbWLIXzh
+ (ORCPT <rfc822;git-outgoing>); Sat, 9 Dec 2006 18:55:37 -0500
+Received: from mail.gmx.net ([213.165.64.20]:39443 "HELO mail.gmx.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S1757734AbWLIXzg
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 9 Dec 2006 18:55:36 -0500
+Received: (qmail invoked by alias); 09 Dec 2006 23:55:35 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp035) with SMTP; 10 Dec 2006 00:55:35 +0100
+To: "Shawn O. Pearce" <spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 
-On 12/6/06, Mitch Bradley <wmb@firmworks.com> wrote:
-> I want to grab a single file from a remote git repository into the
-> current directory, which is not a git tree.  Is there an easy way to do
-> that?  I have tried using git-fetch and git-cat-file, without success.
 
-If the remote repo has a gitweb interface than it's simple:
-wget 'http://www.kernel.org/git/?p=linux/kernel/git/torvalds/linux-2.6.git;a=blob_plain;h=0451f69353bad4d07de34fd4658f40b805bd467a;f=Kbuild'
+If the tree has already been read, no need to read it into memory
+again.
 
-Otherwise, there is no simple way to do it yet.
+This also helps when this function is called on temporary trees;
+these no longer have to be written to disk.
+
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+---
+ tree-diff.c |   33 ++++++++++++++++++++++-----------
+ 1 files changed, 22 insertions(+), 11 deletions(-)
+
+diff --git a/tree-diff.c b/tree-diff.c
+index 9d80dfb..54a6b44 100644
+--- a/tree-diff.c
++++ b/tree-diff.c
+@@ -195,23 +195,34 @@ int diff_tree(struct tree_desc *t1, struct tree_desc *t2, const char *base, stru
+ 	return 0;
+ }
+ 
++static int get_tree_desc_from_sha1(const unsigned char *sha1,
++		struct tree_desc *t)
++{
++	struct object *o;
++
++	o = lookup_object(sha1);
++	if (o && o->type == OBJ_TREE && o->parsed) {
++		struct tree *tree = (struct tree *)o;
++		t->size = tree->size;
++		t->buf = xmalloc(t->size);
++		memcpy(t->buf, tree->buffer, t->size);
++	} else {
++		t->buf = read_object_with_reference(sha1,
++				tree_type, &t->size, NULL);
++		if (!t->buf)
++			die("unable to read source tree (%s)",
++					sha1_to_hex(sha1));
++	}
++}
++
+ int diff_tree_sha1(const unsigned char *old, const unsigned char *new, const char *base, struct diff_options *opt)
+ {
+-	void *tree1, *tree2;
+ 	struct tree_desc t1, t2;
+ 	int retval;
+ 
+-	tree1 = read_object_with_reference(old, tree_type, &t1.size, NULL);
+-	if (!tree1)
+-		die("unable to read source tree (%s)", sha1_to_hex(old));
+-	tree2 = read_object_with_reference(new, tree_type, &t2.size, NULL);
+-	if (!tree2)
+-		die("unable to read destination tree (%s)", sha1_to_hex(new));
+-	t1.buf = tree1;
+-	t2.buf = tree2;
++	get_tree_desc_from_sha1(old, &t1);
++	get_tree_desc_from_sha1(new, &t2);
+ 	retval = diff_tree(&t1, &t2, base, opt);
+-	free(tree1);
+-	free(tree2);
+ 	return retval;
+ }
+ 
+-- 
+1.4.4.2.g0f32-dirty
+
