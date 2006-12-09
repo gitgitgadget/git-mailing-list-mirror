@@ -2,96 +2,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: can I remove or move a tag in a remote repository?
-Date: Tue, 28 Nov 2006 13:46:04 -0800
-Message-ID: <7virgz1bz7.fsf@assigned-by-dhcp.cox.net>
-References: <87wt5rffbm.fsf@rho.meyering.net>
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: builtin git-shortlog still broken
+Date: Sun, 10 Dec 2006 00:34:37 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0612100034010.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.64.0612082205240.2630@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 28 Nov 2006 21:46:57 +0000 (UTC)
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Sat, 9 Dec 2006 23:34:52 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <87wt5rffbm.fsf@rho.meyering.net> (Jim Meyering's message of
-	"Sun, 19 Nov 2006 19:42:53 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <Pine.LNX.4.64.0612082205240.2630@xanadu.home>
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32584>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GpAmf-0006HN-QZ for gcvg-git@gmane.org; Tue, 28 Nov
- 2006 22:46:35 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33848>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GtBiS-0007rW-7w for gcvg-git@gmane.org; Sun, 10 Dec
+ 2006 00:34:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1757041AbWK1VqR (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 28 Nov 2006
- 16:46:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757049AbWK1VqQ
- (ORCPT <rfc822;git-outgoing>); Tue, 28 Nov 2006 16:46:16 -0500
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:46762 "EHLO
- fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP id S1757041AbWK1VqP
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2006 16:46:15 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao09.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061128214605.OIJK18767.fed1rmmtao09.cox.net@fed1rmimpo02.cox.net>; Tue, 28
- Nov 2006 16:46:05 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id sMmD1V0091kojtg0000000; Tue, 28 Nov 2006
- 16:46:13 -0500
-To: Jim Meyering <jim@meyering.net>
+ S1759781AbWLIXem (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 9 Dec 2006
+ 18:34:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759816AbWLIXel
+ (ORCPT <rfc822;git-outgoing>); Sat, 9 Dec 2006 18:34:41 -0500
+Received: from mail.gmx.net ([213.165.64.20]:38219 "HELO mail.gmx.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S1759781AbWLIXel
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 9 Dec 2006 18:34:41 -0500
+Received: (qmail invoked by alias); 09 Dec 2006 23:34:39 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp034) with SMTP; 10 Dec 2006 00:34:39 +0100
+To: Nicolas Pitre <nico@cam.org>
 Sender: git-owner@vger.kernel.org
 
-Jim Meyering <jim@meyering.net> writes:
+Hi,
 
-> Here's the problem:
-> When I try to push the new tags, git-push fails:
->
->   $ git-push -f --tags ssh+git://git.sv.gnu.org/srv/git/coreutils master:refs/heads/master
->   updating 'refs/tags/cvs-head'
->     from 2fd3fd29a8b40be695bc2327c8cd3bd33e521100
->     to   db18f53ffb221e9957124d8af81c11a7e350ac3b
->   ...
->   Total 1, written 1 (delta 0), reused 0 (delta 0)
->   Unpacking 1 objects
->   error: denying non-fast forward; you should pull first
->
-> I get the same error also when using --force.
+On Fri, 8 Dec 2006, Nicolas Pitre wrote:
 
-I think this is due to overeager receive.denyNonFastForwards
-configuration setting at the repository you are pushing into.
+> On the Linux kernel repository, doing "git shortlog v2.6.18.." works 
+> fine. "git shortlog v2.6.17.." works fine. "git shortlog v2.6.16.." also 
+> works fine.  But "git shortlog v2.6.15.." dies with a segmentation 
+> fault.  Trying "git log v2.6.15.. | git shortlog" also produces the same 
+> crash while "git log v2.6.16.. | git shortlog" works fine.
+> 
+> The old perl version doesn't have any such issue with those test cases, 
+> not even with the whole kernel history.
 
-I _think_ what receive-pack does in this case is totally wrong.
-It should either:
+Yeah, sorry. I assumed that there are enough sanity checks for the author 
+format, but evidently that is/was not the case here.
 
- (1) deny overwriting existing tags -- tags are meant to be
-     immutable so it should not allow them to be "updated"
-     regardless of fast-forwardness, or
-
- (2) allow overwriting things under refs/tags/ without any
-     fast-forward checking.  After all, a tag could point at a
-     tree or a blob, and there is no fast-forwardness among
-     trees.
-
-The client side check in "git fetch" takes the latter viewpoint,
-and I think we should be consistent with it.
-
-Johannes, what do you think?  Does the following patch look sane
-to you?
-
----
-
-diff --git a/receive-pack.c b/receive-pack.c
-index 1a141dc..6c3de47 100644
---- a/receive-pack.c
-+++ b/receive-pack.c
-@@ -120,7 +120,7 @@ static int update(struct command *cmd)
- 			     "but I can't find it!", new_hex);
- 	}
- 	if (deny_non_fast_forwards && !is_null_sha1(new_sha1) &&
--	    !is_null_sha1(old_sha1)) {
-+	    !is_null_sha1(old_sha1) && !strncmp(name, "refs/heads/", 11)) {
- 		struct commit *old_commit, *new_commit;
- 		struct commit_list *bases, *ent;
- 
+Ciao,
+Dscho
