@@ -1,64 +1,90 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Whitcroft <apw@shadowen.org>
-Subject: Re: Mozilla, git and Windows
-Date: Mon, 27 Nov 2006 15:34:22 +0000
-Message-ID: <456B057E.4000904@shadowen.org>
-References: <9e4733910611270728p36e58e08w6cc7a2989b7843ce@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Documentation/git-commit.txt
+Date: Sat, 09 Dec 2006 21:49:13 +0100
+Organization: At home
+Message-ID: <elf7bt$hiq$1@sea.gmane.org>
+References: <7vy7pik51b.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0612082141260.2630@xanadu.home> <7vpsatelvv.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0612091442470.2630@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Mon, 27 Nov 2006 15:35:05 +0000 (UTC)
-Cc: Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+NNTP-Posting-Date: Sat, 9 Dec 2006 20:47:20 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.7 (X11/20060927)
-In-Reply-To: <9e4733910611270728p36e58e08w6cc7a2989b7843ce@mail.gmail.com>
-X-Enigmail-Version: 0.94.0.0
-OpenPGP: url=http://www.shadowen.org/~apw/public-key
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 40
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-25-107.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32421>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GoiV2-0008R2-Qz for gcvg-git@gmane.org; Mon, 27 Nov
- 2006 16:34:29 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33832>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gt96L-0000M3-DT for gcvg-git@gmane.org; Sat, 09 Dec
+ 2006 21:47:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1758292AbWK0Pe0 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 27 Nov 2006
- 10:34:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758294AbWK0PeZ
- (ORCPT <rfc822;git-outgoing>); Mon, 27 Nov 2006 10:34:25 -0500
-Received: from hellhawk.shadowen.org ([80.68.90.175]:19209 "EHLO
- hellhawk.shadowen.org") by vger.kernel.org with ESMTP id S1758292AbWK0PeZ
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 27 Nov 2006 10:34:25 -0500
-Received: from localhost ([127.0.0.1]) by hellhawk.shadowen.org with esmtp
- (Exim 4.50) id 1GoiUF-0001Wb-L3; Mon, 27 Nov 2006 15:33:39 +0000
-To: Jon Smirl <jonsmirl@gmail.com>
+ S937672AbWLIUrP (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 9 Dec 2006
+ 15:47:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937673AbWLIUrO
+ (ORCPT <rfc822;git-outgoing>); Sat, 9 Dec 2006 15:47:14 -0500
+Received: from main.gmane.org ([80.91.229.2]:36415 "EHLO ciao.gmane.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S937672AbWLIUrO
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 9 Dec 2006 15:47:14 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1Gt969-0007ZD-CS for git@vger.kernel.org; Sat, 09 Dec 2006 21:47:05 +0100
+Received: from host-81-190-25-107.torun.mm.pl ([81.190.25.107]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Sat, 09 Dec 2006 21:47:05 +0100
+Received: from jnareb by host-81-190-25-107.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Sat, 09 Dec 2006
+ 21:47:05 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Jon Smirl wrote:
-> In the other thread we are discussing the conversion of Mozilla CVS to
-> git format. This is something that has to be done but it is not the
-> only issue. Without a native Windows port they won't even consider
-> using git. There is also the risk that the features needed by Mozilla
-> will be completed after they choose to use a different SCM.
+Nicolas Pitre wrote:
+
+> On Fri, 8 Dec 2006, Junio C Hamano wrote:
+[...]
+>> Another reason I described the merge workflow is it would become
+>> much less clear why --only is useless in merge situation if the
+>> reader does not know that a conflicted merge stages the
+>> auto-resolved changes.
 > 
-> Even if we implement all of the needed features git still needs to win
-> the competition against the other possible choices. The last I heard
-> the leading candiate is SVN/SVK.
+> Sure, but the whole merge concept might still not make any sense at the 
+> moment the user is learning about commit.  In other words, the "commit" 
+> documentation must not depend on the "merge" concept.  It should rather 
+> be the other way around, i.e. the "merge" documentation can easily 
+> depend on the "commit" documentation.
+> 
+> Just like I carefully avoided talking about "commit -a" in the git-add 
+> man page to avoid circular conceptual dependencies.  But obviously the 
+> git-commit man page must talk about the "add" concept.
+> 
+> This way you get a progressive knowledge base with git-add which pretty 
+> much stands on its own, then you move to git-commit that depends on 
+> git-add, then you move to merging and resolving conflicts that depend on 
+> git-commit.  And so without being distracted by concepts you don't need 
+> to know just yet along the way.
 
-Do we need to worry too much about taking over the world in one day?
-Yes of course git is _the_ superior solution etc, but too many new users
-at once is always painful.
+IMVHO for reference documentation (and manpages for commands are such
+documentation) it is more important to be complete, than to be
+self-contained and without circular conceptual dependencies. The latter
+(and defining things before using it) is more important for things like
+tutorial or quickstart.
 
-I think you are more likely to win letting them convert over to SVN.
-From there people naturally start using git mirrors from the SVN trunk.
- Cirtainly I have two projects which do not use git, one in CVS and one
-in SVN.  I just svnimport that and work in git.  I am confident with
-time the project will migrate, but I am happy other git users are happy
-all without it being the tool of choice.
+If one is not doing merge then one can skip the talk about merges. If one
+git-commit complains about using --only (because of merge), one would
+rather search for information in git-commit(1), not git-merge(1) or
+git-pull(1); well, the merge might be result of git-checkout -m.
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
 
--apw
