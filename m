@@ -1,69 +1,62 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: tracking separate branches with RSS
-Date: Tue, 14 Nov 2006 03:21:58 +0100
-Message-ID: <200611140321.58749.jnareb@gmail.com>
-References: <ejb3hh$nvr$1@sea.gmane.org> <ejb410$nvg$1@sea.gmane.org> <455920EC.7060804@xs4all.nl>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: kernel.org mirroring (Re: [GIT PULL] MMC update)
+Date: Fri, 08 Dec 2006 16:23:48 -0800
+Message-ID: <457A0214.9010900@zytor.com>
+References: <Pine.LNX.4.64.0612020835110.3476@woody.osdl.org>	 <20061207193012.GA84678@dspnet.fr.eu.org> <4578722E.9030402@zytor.com>	 <4579611F.5010303@dawes.za.net> <45798FE2.9040502@zytor.com>	 <Pine.LNX.4.64.0612080830380.3516@woody.osdl.org>	 <457998C8.3050601@garzik.org>	 <Pine.LNX.4.64.0612081453430.3516@woody.osdl.org>	 <f2b55d220612081546u1ffa98e5q75be55d31da82a2f@mail.gmail.com>	 <4579F9FF.7050701@zytor.com> <f2b55d220612081618v26f7c714l7d4ea5315a964aa@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Tue, 14 Nov 2006 02:21:13 +0000 (UTC)
-Cc: git@vger.kernel.org
+NNTP-Posting-Date: Sat, 9 Dec 2006 00:24:27 +0000 (UTC)
+Cc: Linus Torvalds <torvalds@osdl.org>, Jeff Garzik <jeff@garzik.org>,
+	Rogan Dawes <discard@dawes.za.net>,
+	Kernel Org Admin <ftpadmin@kernel.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Jakub Narebski <jnareb@gmail.com>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:references:in-reply-to:cc:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=jLxNBOA9leY5bm/+bwCBHVC4J6BX3b2NLKRm8iCHmte/HiHUkX5HcLMvLZttQxHyADFLxLvGIdJwuvqie6we1XpIvRcxlSlqooBzEwj+/Erb/2oR5fiojcKh3rItxPoc0sdD6AiH2pHovQxcs/tZokucy9hHkozr0tCONO+a/mc=
-User-Agent: KMail/1.9.3
-In-Reply-To: <455920EC.7060804@xs4all.nl>
-Content-Disposition: inline
+User-Agent: Thunderbird 1.5.0.8 (X11/20061107)
+In-Reply-To: <f2b55d220612081618v26f7c714l7d4ea5315a964aa@mail.gmail.com>
+X-Virus-Scanned: ClamAV 0.88.6/2308/Fri Dec  8 08:10:24 2006 on terminus.zytor.com
+X-Virus-Status: Clean
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31333>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gjnv2-0001ar-3O for gcvg-git@gmane.org; Tue, 14 Nov
- 2006 03:21:05 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33777>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gsq0t-0002pX-VH for gcvg-git@gmane.org; Sat, 09 Dec
+ 2006 01:24:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S933318AbWKNCUu (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 13 Nov 2006
- 21:20:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933323AbWKNCUu
- (ORCPT <rfc822;git-outgoing>); Mon, 13 Nov 2006 21:20:50 -0500
-Received: from ug-out-1314.google.com ([66.249.92.172]:46257 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S933322AbWKNCUt
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 13 Nov 2006 21:20:49 -0500
-Received: by ug-out-1314.google.com with SMTP id m3so1273415ugc for
- <git@vger.kernel.org>; Mon, 13 Nov 2006 18:20:47 -0800 (PST)
-Received: by 10.66.232.10 with SMTP id e10mr511851ugh.1163470847177; Mon, 13
- Nov 2006 18:20:47 -0800 (PST)
-Received: from host-81-190-24-209.torun.mm.pl ( [81.190.24.209]) by
- mx.google.com with ESMTP id j2sm6234025ugf.2006.11.13.18.20.46; Mon, 13 Nov
- 2006 18:20:46 -0800 (PST)
-To: hanwen@xs4all.nl
+ S1947531AbWLIAYP (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
+ 19:24:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1947535AbWLIAYP
+ (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 19:24:15 -0500
+Received: from terminus.zytor.com ([192.83.249.54]:36256 "EHLO
+ terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
+ S1947531AbWLIAYO (ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Dec 2006
+ 19:24:14 -0500
+Received: from [10.0.6.0] (yardgnome.c2micro.com [69.104.58.50])
+ (authenticated bits=0) by terminus.zytor.com (8.13.8/8.13.7) with ESMTP id
+ kB90NpBd004797 (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256
+ verify=NO); Fri, 8 Dec 2006 16:23:51 -0800
+To: "Michael K. Edwards" <medwards.linux@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Han-Wen Nienhuys wrote;
-> Jakub Narebski escreveu:
+Michael K. Edwards wrote:
+> On 12/8/06, H. Peter Anvin <hpa@zytor.com> wrote:
+>> There is another thing that probably will be required, and I'm not sure
+>> if something in front of Apache (like Squid) rather than behind it can
+>> easily deal with: on timeout, the process needs to continue in order to
+>> feed the cache.  Otherwise, you're still in a failure scenario as soon
+>> as timeout happens.
 > 
->>> A second possibility -less desirable, but better than nothing- is to 
->>> have commits from all branches show up in the shortlog and the RSS feed.
->> 
->> Use "--all" as 'h' (hash) parameter.
->> 
-> 
-> This doesn't seem to work.  Note that I'm savannah.gnu.org, which may 
-> run an older version. The quickest way to get this up and running is to 
-> have real patches appear in the official release, and convince Sylvain 
-> to upgrade to a better gitweb.
+> I would think this would be a great deal easier to handle in an
+> arm's-length "accelerator" than in the origin server
 
-Sorry, I should have made more clear that it would work only _after_
-mentioned changes.
--- 
-Jakub Narebski
+True, but it needs to run behind Apache rather than in front of it.
+
+	-hpa
