@@ -1,104 +1,79 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: tracking separate branches with RSS
-Date: Tue, 14 Nov 2006 01:54:03 +0100
-Organization: At home
-Message-ID: <ejb410$nvg$1@sea.gmane.org>
-References: <ejb3hh$nvr$1@sea.gmane.org>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: Easy shell question: how to make a script killing all his childs when killed?
+Date: Sat, 9 Dec 2006 18:51:57 +0100
+Message-ID: <e5bfff550612090951l43a83a00o7ea2e244ca562c77@mail.gmail.com>
+References: <e5bfff550612090716p215167b9r2277b09c09b18894@mail.gmail.com>
+	 <20061209173703.GA12373@steel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-NNTP-Posting-Date: Tue, 14 Nov 2006 00:53:26 +0000 (UTC)
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Sat, 9 Dec 2006 17:52:19 +0000 (UTC)
+Cc: "Git Mailing List" <git@vger.kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 54
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=L3iZYbcaZkqzDw7CgKPnzDs9eQntoLC87d+15pEn5CwhyO0H0IlSV6AytASvtl46yRY0q/aAgJ3zN8mJDag7fAKVuwTEPAQMBdBmEN4t+zEg1uNELCBDd04jsolaJzFP2Q1d48J0yB3++hEXWnDTRgUH9esawz1h+j5iSRuJfbw=
+In-Reply-To: <20061209173703.GA12373@steel.home>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31331>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GjmY5-0002ot-5Y for gcvg-git@gmane.org; Tue, 14 Nov
- 2006 01:53:13 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33824>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gt6Mw-0000TD-Nm for gcvg-git@gmane.org; Sat, 09 Dec
+ 2006 18:52:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S933274AbWKNAxK (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 13 Nov 2006
- 19:53:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933288AbWKNAxJ
- (ORCPT <rfc822;git-outgoing>); Mon, 13 Nov 2006 19:53:09 -0500
-Received: from main.gmane.org ([80.91.229.2]:34797 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S933274AbWKNAxI (ORCPT
- <rfc822;git@vger.kernel.org>); Mon, 13 Nov 2006 19:53:08 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1GjmXo-0002mG-Tk for git@vger.kernel.org; Tue, 14 Nov 2006 01:52:57 +0100
-Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Tue, 14 Nov 2006 01:52:56 +0100
-Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Tue, 14 Nov 2006
- 01:52:56 +0100
-To: git@vger.kernel.org
+ S1759133AbWLIRwA (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 9 Dec 2006
+ 12:52:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759140AbWLIRwA
+ (ORCPT <rfc822;git-outgoing>); Sat, 9 Dec 2006 12:52:00 -0500
+Received: from py-out-1112.google.com ([64.233.166.181]:42566 "EHLO
+ py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1759131AbWLIRv7 (ORCPT <rfc822;git@vger.kernel.org>); Sat, 9 Dec
+ 2006 12:51:59 -0500
+Received: by py-out-1112.google.com with SMTP id a29so608328pyi for
+ <git@vger.kernel.org>; Sat, 09 Dec 2006 09:51:58 -0800 (PST)
+Received: by 10.35.82.16 with SMTP id j16mr5536380pyl.1165686717800; Sat, 09
+ Dec 2006 09:51:57 -0800 (PST)
+Received: by 10.35.93.11 with HTTP; Sat, 9 Dec 2006 09:51:57 -0800 (PST)
+To: "Alex Riesen" <raa.lkml@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Han-Wen Nienhuys wrote:
+On 12/9/06, Alex Riesen <fork0@t-online.de> wrote:
+> Marco Costalba, Sat, Dec 09, 2006 16:16:32 +0100:
+>
+> > P.S: I have no way to exec the script in fancy ways, I can just start
+> > it and get is PID.
+>
+> Which is "fancy" enough. What do you mean "start"? Starting a new
+> process usually and notably involves forking and execing (even if the
+> first thing to exec will be your shell).
+>
+>
 
-> I think that the shortlog / RSS support in gitweb is really neat. 
-> However, it seems to track only the master branch.
-> 
-> In our repository (http://git.sv.gnu.org/gitweb/?p=lilypond.git;a=summary),
-> we track two completely disparate branches in one repository: we have 
-> both the project and the website for the project in branches
-> 
->    master
-> 
-> and
-> 
->    web/master
-> 
-> Unfortunately,  I don't seem to get any updates in my RSS reader when I 
-> push something  to web/master. Would it be possible have a separate feed 
-> for each branch?  I tried looking at the gitweb script, but my perl-fu 
-> is too weak to figure out how to pass an argument from the URL into a 
-> git_rss() to replace  the
-> 
->    git_get_head_hash($project)
-> 
-> call.
+By 'start' I mean it is done inside Qt QProcess class back box ;-)
 
-For quick'n'dirty solution it would be enough to just replace
-    git_get_head_hash($project)
-with
-    $hash || "HEAD"
-(or $hash || git_get_head_hash($project)).
+Anyway I have written an homegrown 'wanna be hacker' launching script:
 
-Then to track branch 'branch' with RSS just use 
-    ?p=project.git;a=rss;h=branch
-as a query string.
+git rev-list --header --boundary --parents --topo-order HEAD >
+/tmp/qgit_136224752.txt &
+echo $!
+wait
 
 
-I started doing it, but the problem is that you have to change also a bit
-of contents, for example summary/title, and some links.
+With this I can get the pid of git-rev-list from my QProcess interface
+so to be able to kill it when needed with another command ('kill'
+BTW).
 
-git_rss subroutine is one of the few subroutines which didn't get refactored.
-
-> A second possibility -less desirable, but better than nothing- is to 
-> have commits from all branches show up in the shortlog and the RSS feed.
-
-Use "--all" as 'h' (hash) parameter.
-
-
-P.S. What do you think about moving from RSS to Atom for feeds?
-
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+I have googled around and it seems that 'echo $!' and 'wait' _should_
+be portable among many shell, please correct me if'm wrong or if the
+approach is failing (I already know it's ugly ;-)  )
 
