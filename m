@@ -1,92 +1,64 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "=?ISO-8859-1?Q?Erik_B=E5gfors?=" <zindar@gmail.com>
-Subject: Re: VCS comparison table
-Date: Wed, 25 Oct 2006 15:15:44 +0200
-Message-ID: <845b6e870610250615t713ebeaewcab3050446fc25a6@mail.gmail.com>
-References: <20061022074513.GF29927@artax.karlin.mff.cuni.cz>
-	 <Pine.LNX.4.64.0610231018410.3962@g5.osdl.org>
-	 <20061023222131.GB17019@over-yonder.net> <ehjgli$lft$1@sea.gmane.org>
-	 <845b6e870610231614y681e64eu33bb0806f530c742@mail.gmail.com>
-	 <Pine.LNX.4.64.0610231623340.3962@g5.osdl.org>
-	 <20061024002657.GD17019@over-yonder.net>
-	 <87y7r6zgic.wl%cworth@cworth.org>
-	 <845b6e870610241451x578efe9n77017f3a9404e81c@mail.gmail.com>
-	 <453F5B73.2050504@op5.se>
+From: fork0@t-online.de (Alex Riesen)
+Subject: Re: [PATCH] Allow building GIT in a different directory from the source directory
+Date: Sat, 9 Dec 2006 02:16:39 +0100
+Message-ID: <20061209011639.GA8010@steel.home>
+References: <elc6j2$vej$1@sea.gmane.org>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Wed, 25 Oct 2006 13:16:33 +0000 (UTC)
-Cc: "Carl Worth" <cworth@cworth.org>,
-	"Matthew D. Fuller" <fullermd@over-yonder.net>,
-	"Linus Torvalds" <torvalds@osdl.org>,
-	bazaar-ng@lists.canonical.com, git@vger.kernel.org,
-	"Jakub Narebski" <jnareb@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Sat, 9 Dec 2006 01:17:04 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=n4ydM/69D4651NeN0ferKzmUylI7rHsVjr03+9JOZWsbUC+lgDZ+A/RdHpy4S6YOk02cG/rzBJ+l4ieBWx/pm/hg7TpemAeg7zDkqpFum14l3n3bruUgl2y3PZvbKLhTza5/Jr/aFcmN9GIUz1zAewXbwvBsRXE/4iaeraf3X3c=
-In-Reply-To: <453F5B73.2050504@op5.se>
 Content-Disposition: inline
+In-Reply-To: <elc6j2$vej$1@sea.gmane.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-ID: ZqgRkeZGgetKAxzfFxneiEkkSelZ6isc-+pCFo1VqfW5uFfexNoCE1
+X-TOI-MSGID: fdefeb19-612b-4fcb-89f1-93fc88484082
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30057>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gcic8-0004Le-Om for gcvg-git@gmane.org; Wed, 25 Oct
- 2006 15:16:13 +0200
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33784>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gsqpk-0007fk-1g for gcvg-git@gmane.org; Sat, 09 Dec
+ 2006 02:16:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S964796AbWJYNP6 convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Wed, 25 Oct 2006 09:15:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965205AbWJYNP6
- (ORCPT <rfc822;git-outgoing>); Wed, 25 Oct 2006 09:15:58 -0400
-Received: from nz-out-0102.google.com ([64.233.162.198]:26917 "EHLO
- nz-out-0102.google.com") by vger.kernel.org with ESMTP id S964796AbWJYNP5
- convert rfc822-to-8bit (ORCPT <rfc822;git@vger.kernel.org>); Wed, 25 Oct 2006
- 09:15:57 -0400
-Received: by nz-out-0102.google.com with SMTP id s18so81248nze for
- <git@vger.kernel.org>; Wed, 25 Oct 2006 06:15:56 -0700 (PDT)
-Received: by 10.35.66.13 with SMTP id t13mr1004502pyk; Wed, 25 Oct 2006
- 06:15:44 -0700 (PDT)
-Received: by 10.35.116.4 with HTTP; Wed, 25 Oct 2006 06:15:44 -0700 (PDT)
-To: "Andreas Ericsson" <ae@op5.se>
+ S1947615AbWLIBQx (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
+ 20:16:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761337AbWLIBQx
+ (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 20:16:53 -0500
+Received: from mailout04.sul.t-online.com ([194.25.134.18]:35038 "EHLO
+ mailout04.sul.t-online.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1761336AbWLIBQw (ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Dec
+ 2006 20:16:52 -0500
+Received: from fwd35.aul.t-online.de  by mailout04.sul.t-online.com with smtp
+  id 1Gsqpe-0001uD-01; Sat, 09 Dec 2006 02:16:50 +0100
+Received: from tigra.home
+ (ZqgRkeZGgetKAxzfFxneiEkkSelZ6isc-+pCFo1VqfW5uFfexNoCE1@[84.163.109.21]) by
+ fwd35.sul.t-online.de with esmtp id 1GsqpU-1cOV4C0; Sat, 9 Dec 2006 02:16:40
+ +0100
+Received: from steel.home (steel.home [192.168.1.2]) by tigra.home (Postfix)
+ with ESMTP id 1FE38277AF; Sat,  9 Dec 2006 02:16:40 +0100 (CET)
+Received: from raa by steel.home with local (Exim 4.42 #1 (Debian)) id
+ 1GsqpT-000809-FV; Sat, 09 Dec 2006 02:16:39 +0100
+To: Han-Wen Nienhuys <hanwen@xs4all.nl>
 Sender: git-owner@vger.kernel.org
 
-On 10/25/06, Andreas Ericsson <ae@op5.se> wrote:
-> Erik B=E5gfors wrote:
-> >
-> > Creates the picture you can see at
-> > http://erik.bagfors.nu/bzr-plugins/dotrepo.png
-> >
->
-> Looking at this picture, I found a very annoying thing with bzr's
-> revids: For commits from the same author on the same day, they don't
-> differ in the beginning, making all of them, at a glance, look the sa=
-me.
-> I got a headache just trying to figure out how to read them. It might=
- be
-> worth looking into in the future, especially if you decide to show th=
-em
-> to the users.
->
-> Perhaps it's just my git eyes being used to seeing the first 4 chars
-> (which is all I normally look at) being different for each different
-> commit, but having to look up the near-end of the string to find the
-> actual difference in bzr's revids was actually a quite painful experi=
-ence.
+Han-Wen Nienhuys, Fri, Dec 08, 2006 18:15:25 +0100:
+> -my %pm = ('Git.pm' => '$(INST_LIBDIR)/Git.pm');
+> +
+> +$src_prefix = '';
+> +if (!($ENV{'PERL_SRCDIR'} eq "")) {
+> +    $src_prefix = $ENV{'PERL_SRCDIR'} . "/"
+> +}
 
-I agree, and new formats for how the revisions should look are being
-discussed on the mailinglist right now.  It's not set in stone.
+Hurts my eyes :)
 
-/Erik
+    $src_prefix = defined($ENV{PERL_SRCDIR}) ?  "$ENV{PERL_SRCDIR}/": '';
 
---=20
-google talk/jabber. zindar@gmail.com
-SIP-phones: sip:erik_bagfors@gizmoproject.com
+could be shorter, unless you want (you do) strict syntax check.
