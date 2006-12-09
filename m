@@ -1,66 +1,70 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [RFC/PATCH] Implement poor-man's submodule support in pre-commit hook
-Date: Wed, 20 Dec 2006 11:37:12 -0800
-Message-ID: <7vslfae4uv.fsf@assigned-by-dhcp.cox.net>
-References: <200612200901.30584.andyparkins@gmail.com>
+From: Han-Wen Nienhuys <hanwen@xs4all.nl>
+Subject: Re: [PATCH] Install git-sh-setup.sh into $(prefix)/share/git-core.
+ Call with explicit path.
+Date: Sun, 10 Dec 2006 00:40:49 +0100
+Message-ID: <457B4981.2030408@xs4all.nl>
+References: <elc6g3$v1m$1@sea.gmane.org> <20061208193718.GA11906@soma>	<7v3b7qi0b4.fsf@assigned-by-dhcp.cox.net> <457AB54B.8070107@xs4all.nl> <7v1wn8ah2k.fsf@assigned-by-dhcp.cox.net>
+Reply-To: hanwen@xs4all.nl
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 20 Dec 2006 19:37:27 +0000 (UTC)
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Sat, 9 Dec 2006 23:40:58 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <200612200901.30584.andyparkins@gmail.com> (Andy Parkins's
-	message of "Wed, 20 Dec 2006 09:01:30 +0000")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+User-Agent: Thunderbird 1.5.0.8 (X11/20061107)
+Original-Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <7v1wn8ah2k.fsf@assigned-by-dhcp.cox.net>
+X-Virus-Scanned: by XS4ALL Virus Scanner
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34955>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33849>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gx7Ff-0002HW-DU for gcvg-git@gmane.org; Wed, 20 Dec
- 2006 20:37:19 +0100
+ esmtp (Exim 4.50) id 1GtBoM-0008Rb-DF for gcvg-git@gmane.org; Sun, 10 Dec
+ 2006 00:40:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1030305AbWLTThQ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 20 Dec 2006
- 14:37:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030314AbWLTThP
- (ORCPT <rfc822;git-outgoing>); Wed, 20 Dec 2006 14:37:15 -0500
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:60686 "EHLO
- fed1rmmtao10.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1030311AbWLTThO (ORCPT <rfc822;git@vger.kernel.org>); Wed, 20 Dec 2006
- 14:37:14 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao10.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061220193713.JWUB20715.fed1rmmtao10.cox.net@fed1rmimpo01.cox.net>; Wed, 20
- Dec 2006 14:37:13 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id 17cX1W00V1kojtg0000000; Wed, 20 Dec 2006
- 14:36:32 -0500
-To: Andy Parkins <andyparkins@gmail.com>
+ S1759827AbWLIXkq (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 9 Dec 2006
+ 18:40:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759846AbWLIXkq
+ (ORCPT <rfc822;git-outgoing>); Sat, 9 Dec 2006 18:40:46 -0500
+Received: from smtp-vbr10.xs4all.nl ([194.109.24.30]:3819 "EHLO
+ smtp-vbr10.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1759821AbWLIXkp (ORCPT <rfc822;git@vger.kernel.org>); Sat, 9 Dec 2006
+ 18:40:45 -0500
+Received: from [192.168.1.35] (cu-c-36d6f.adsl.wanadoo.nl [83.118.11.111])
+ (authenticated bits=0) by smtp-vbr10.xs4all.nl (8.13.8/8.13.8) with ESMTP id
+ kB9NeeW2012714 (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256
+ verify=NO); Sun, 10 Dec 2006 00:40:40 +0100 (CET) (envelope-from
+ hanwen@xs4all.nl)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Andy Parkins <andyparkins@gmail.com> writes:
+Junio C Hamano escreveu:
+> Han-Wen Nienhuys <hanwen@xs4all.nl> writes:
+> 
+>> And how about coding the path of git-sh-setup (in <prefix>/bin/git-sh-setup) 
+>> in the shell scripts? This will ensure that the sh-setup is the one
+>> from the right package, but still retain backward compatibility for 
+>> scripts.
+> 
+> Hardcoding $(bin)/git-sh-setup is a non-starter; it breaks
+> GIT_EXEC_PATH convention to allow users to override it.
 
-> Problems:
->  - git-prune in the submodule could destroy supermodule-referenced
->    commits
->  - no checkout support
->  - no merge support (other than what git provides for the .gitmodule
->    file)
->  - no check for dirty submodule before commit
->
-> Signed-off-by: Andy Parkins <andyparkins@gmail.com>
+> In other words, I do not know what real problem you are trying
+> to solve.
 
-I do not think these are insurmountable.
+The real problem is that git is nonstandard to wrap around:
+scripts like git-sh-setup need special attention, because they don't work 
+with
 
-As you fix them and enhance the support, I suspect you would
-want a separate command to manage .gitmodule file and submodules
-referenced by it.  I think it would be better to keep the patch
-to the template to the minimum (for example, run "git submodule
-update" if there is .gitmodules file at the toplevel), and
-implement the body of the processing in "git-submodule.sh", or
-something like that.
+  exec /some/where/else/git-sh-setup "$@"
+
+I admit is a small problem, but IMO that's not an argument not to solve it.
+
+-- 
