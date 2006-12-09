@@ -1,74 +1,140 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Alexandre Julliard <julliard@winehq.org>
-Subject: Re: Cleaning up git user-interface warts
-Date: Fri, 17 Nov 2006 17:49:46 +0100
-Message-ID: <87y7qahvbp.fsf@wine.dyndns.org>
-References: <87hcx1u934.wl%cworth@cworth.org>
-	<Pine.LNX.4.64.0611141518590.2591@xanadu.home>
-	<87bqn9u43s.wl%cworth@cworth.org> <ejdcg5$4fl$1@sea.gmane.org>
-	<Pine.LNX.4.64.0611141633430.2591@xanadu.home>
-	<7vbqn9y6w6.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0611142007010.2591@xanadu.home>
-	<7v3b8ltq7r.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0611142306090.2591@xanadu.home>
-	<Pine.LNX.4.64.0611150950170.3349@woody.osdl.org>
-	<20061116011411.GB10512@thunk.org>
-	<7vd57of2cv.fsf@assigned-by-dhcp.cox.net>
-	<8764dflj5o.fsf@wine.dyndns.org> <ejkdhv$vog$2@sea.gmane.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: kernel.org mirroring (Re: [GIT PULL] MMC update)
+Date: Sat, 9 Dec 2006 18:02:12 +0100
+Message-ID: <200612091802.12810.jnareb@gmail.com>
+References: <Pine.LNX.4.64.0612020835110.3476@woody.osdl.org> <200612091437.01183.jnareb@gmail.com> <457ACBA1.4090007@garzik.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 17 Nov 2006 16:51:01 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Sat, 9 Dec 2006 17:00:25 +0000 (UTC)
+Cc: Martin Langhoff <martin.langhoff@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Linus Torvalds <torvalds@osdl.org>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Rogan Dawes <discard@dawes.za.net>,
+	Kernel Org Admin <ftpadmin@kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <ejkdhv$vog$2@sea.gmane.org> (Jakub Narebski's message of "Fri\, 17 Nov 2006 14\:32\:03 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.90 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=rNEAfFsWHhpQwlF3ZrWrX318EDrcEUQCjhTj4RBQhCcxgrhoggHy3dLnQLQInNH5nETYAHgxrMzOue9X0fq/OskAmVdJkVk9oQlx+0eZOKP+/tpngg19NoNEIWqDtX5sxEFTBz98QLKdrLKYhYrk9EnQ1EGYkeWWlFdU3+oiXgQ=
+User-Agent: KMail/1.9.3
+In-Reply-To: <457ACBA1.4090007@garzik.org>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31709>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gl6ur-0006Dz-28 for gcvg-git@gmane.org; Fri, 17 Nov
- 2006 17:50:14 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33820>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gt5Ye-00039V-5I for gcvg-git@gmane.org; Sat, 09 Dec
+ 2006 18:00:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1755699AbWKQQtv (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 17 Nov 2006
- 11:49:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755703AbWKQQtv
- (ORCPT <rfc822;git-outgoing>); Fri, 17 Nov 2006 11:49:51 -0500
-Received: from mail.codeweavers.com ([216.251.189.131]:50856 "EHLO
- mail.codeweavers.com") by vger.kernel.org with ESMTP id S1755699AbWKQQtu
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 17 Nov 2006 11:49:50 -0500
-Received: from adsl-89-217-154-39.adslplus.ch ([89.217.154.39]
- helo=wine.dyndns.org) by mail.codeweavers.com with esmtpsa
- (TLS-1.0:DHE_RSA_AES_256_CBC_SHA:32) (Exim 4.50) id 1Gl6uT-0003xd-D7; Fri, 17
- Nov 2006 10:49:49 -0600
-Received: by wine.dyndns.org (Postfix, from userid 1000) id CA26710A151; Fri,
- 17 Nov 2006 17:49:46 +0100 (CET)
-To: Jakub Narebski <jnareb@gmail.com>
+ S937141AbWLIRAA (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 9 Dec 2006
+ 12:00:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937167AbWLIQ76
+ (ORCPT <rfc822;git-outgoing>); Sat, 9 Dec 2006 11:59:58 -0500
+Received: from ug-out-1314.google.com ([66.249.92.168]:33163 "EHLO
+ ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S937141AbWLIQ75 (ORCPT <rfc822;git@vger.kernel.org>); Sat, 9 Dec
+ 2006 11:59:57 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so989333uga for
+ <git@vger.kernel.org>; Sat, 09 Dec 2006 08:59:56 -0800 (PST)
+Received: by 10.67.100.17 with SMTP id c17mr7091600ugm.1165683595827; Sat, 09
+ Dec 2006 08:59:55 -0800 (PST)
+Received: from host-81-190-25-107.torun.mm.pl ( [81.190.25.107]) by
+ mx.google.com with ESMTP id j33sm3628301ugc.2006.12.09.08.59.54; Sat, 09 Dec
+ 2006 08:59:55 -0800 (PST)
+To: Jeff Garzik <jeff@garzik.org>
 Sender: git-owner@vger.kernel.org
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Jeff Garzik wrote:
+> Jakub Narebski wrote:
 
-> Alexandre Julliard wrote:
->
->> Junio C Hamano <junkio@cox.net> writes:
->> 
->>> I would rather say "use 'git branch' to make sure if you are
->>> ready to merge".  Who teaches not to use "git pull"?
->> 
->> We do that for Wine. The problem is that we recommend using git-rebase
->> to make it easier for occasional developers to keep a clean history,
->> and rebase and pull interfere badly.
->
-> What about proposed (and I think not accepted) merge strategy
-> "rebase" (formerly called "subordinate" or something like that)?
+>> As I said, I'm not talking (at least now) about saving generated HTML
+>> output. This I think is better solved in caching engine like Squid can
+>> be. Although even here some git specific can be of help: we can invalidate
+>> cache on push, and we know that some results doesn't ever change (well,
+>> with exception of changing output of gitweb).
+> 
+> It depends on how creatively you think ;-)
+> 
+> Consider generating static HTML files on each push, via a hook, for many 
+> of the toplevel files.  The static HTML would then link to the CGI for 
+> further dynamic querying of the git database.
 
-That sounds very interesting. Has it ever been implemented, or only
-discussed?
+You mean that the links in this pre-generated HTML would be to CGI
+pages?
+ 
+>> What can be _easily_ done:
+>>  * Use post 1.4.4 gitweb, which uses git-for-each-ref to generate summary
+>>    page; this leads to around 3 times faster summary page.
+> 
+> This re-opens the question mentioned earlier, is Kay (or anyone?) still 
+> actively maintaining gitweb on k.org?
+
+By the way, thanks to Martin Waitz it is much easier to install gitweb.
+I for example use the following script to test changes I have made to gitweb:
+
+-- >8 --
+#!/bin/bash
+
+BINDIR="/home/local/git"
+
+function make_gitweb()
+{
+	pushd "/home/jnareb/git/"
+
+	make GITWEB_PROJECTROOT="/home/local/scm" \
+	     GITWEB_CSS="/gitweb/gitweb.css" \
+	     GITWEB_LOGO="/gitweb/git-logo.png" \
+	     GITWEB_FAVICON="/gitweb/git-favicon.png" \
+	     bindir=$BINDIR \
+	     gitweb/gitweb.cgi
+
+	popd
+}
+
+function copy_gitweb()
+{
+	cp -fv /home/jnareb/git/gitweb/gitweb.{cgi,css} /home/local/gitweb/
+}
+
+make_gitweb
+copy_gitweb
+
+# end of gitweb-update.sh
+-- >8 --
+
+>>  * Perhaps using projects list file (which can be now generated by gitweb)
+>>    instead of scanning directories and stat()-ing for owner would help
+>>    with time to generate projects lis page
+> 
+> This could be statically generated by a robot.  I think everybody would 
+> shrink in horror if a human needed to maintain such a file.
+
+Gitweb can generate this file. The problem is that one would have to
+temporary turn off using index file. This can be done by having the
+following gitweb_list_projects.perl file:
+
+-- >8 --
+#!/usr/bin/perl
+
+$projects_list = "";
+-- >8 --
+
+then use the following invocation to generate project index file:
+
+$ GATEWAY_INTERFACE="CGI/1.1" HTTP_ACCEPT="*/*" REQUEST_METHOD="GET" \
+  GITWEB_CONFIG=gitweb_list_projects.perl QUERY_STRING="a=project_index" \
+  gitweb.cgi 
 
 -- 
-Alexandre Julliard
+Jakub Narebski
