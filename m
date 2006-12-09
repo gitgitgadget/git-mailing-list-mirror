@@ -5,77 +5,153 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git pull and merging.
-Date: Tue, 05 Dec 2006 21:02:03 -0800
-Message-ID: <7vodqhaa7o.fsf@assigned-by-dhcp.cox.net>
-References: <cc723f590612052051r62111c4cgfd7ee893cb00f84a@mail.gmail.com>
+Subject: Re: [PATCH] Documentation/git-commit: rewrite to make it more end-user friendly.
+Date: Sat, 09 Dec 2006 13:59:14 -0800
+Message-ID: <7vpsas91e5.fsf@assigned-by-dhcp.cox.net>
+References: <7vy7pik51b.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0612082141260.2630@xanadu.home>
+	<7vd56tei20.fsf_-_@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0612091517010.2630@xanadu.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 6 Dec 2006 05:02:15 +0000 (UTC)
-Cc: git@vger.kernel.org
+NNTP-Posting-Date: Sat, 9 Dec 2006 21:59:48 +0000 (UTC)
+Cc: git@vger.kernel.org, "J. Bruce Fields" <bfields@fieldses.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <cc723f590612052051r62111c4cgfd7ee893cb00f84a@mail.gmail.com>
-	(Aneesh Kumar's message of "Wed, 6 Dec 2006 10:21:46 +0530")
+In-Reply-To: <Pine.LNX.4.64.0612091517010.2630@xanadu.home> (Nicolas Pitre's
+	message of "Sat, 09 Dec 2006 16:15:42 -0500 (EST)")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33403>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33840>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Grov5-0003dH-5b for gcvg-git@gmane.org; Wed, 06 Dec
- 2006 06:02:11 +0100
+ esmtp (Exim 4.50) id 1GtAEL-0007nk-Lc for gcvg-git@gmane.org; Sat, 09 Dec
+ 2006 22:59:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1760073AbWLFFCI (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
- 00:02:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760085AbWLFFCI
- (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 00:02:08 -0500
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:63481 "EHLO
- fed1rmmtao01.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1760073AbWLFFCF (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec 2006
- 00:02:05 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao01.cox.net
+ S1758519AbWLIV71 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 9 Dec 2006
+ 16:59:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758682AbWLIV71
+ (ORCPT <rfc822;git-outgoing>); Sat, 9 Dec 2006 16:59:27 -0500
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:59923 "EHLO
+ fed1rmmtao07.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1758519AbWLIV7P (ORCPT <rfc822;git@vger.kernel.org>); Sat, 9 Dec 2006
+ 16:59:15 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao07.cox.net
  (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061206050204.TSGM9173.fed1rmmtao01.cox.net@fed1rmimpo01.cox.net>; Wed, 6
- Dec 2006 00:02:04 -0500
+ <20061209215914.BYFZ22053.fed1rmmtao07.cox.net@fed1rmimpo02.cox.net>; Sat, 9
+ Dec 2006 16:59:14 -0500
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id vH1U1V00n1kojtg0000000; Wed, 06 Dec 2006
- 00:01:29 -0500
-To: "Aneesh Kumar" <aneesh.kumar@gmail.com>
+ fed1rmimpo02.cox.net with bizsmtp id wlzR1V0081kojtg0000000; Sat, 09 Dec 2006
+ 16:59:25 -0500
+To: Nicolas Pitre <nico@cam.org>
 Sender: git-owner@vger.kernel.org
 
-"Aneesh Kumar" <aneesh.kumar@gmail.com> writes:
+Nicolas Pitre <nico@cam.org> writes:
 
-> I have a git.git clone using --use-separate-remote. That means i have
-> the master branch created by default. Now i need to build git from the
-> pu branch too. So i created git branch pu remotes/origin/pu.
+>> +Note that the contents of the paths that resolved cleanly by a
+>> +conflicted merge are automatically staged for the next commit;
+>> +you still need to explicitly identify what you want in the
+>> +resulting commit using one of the above methods before
+>> +recording the merge commit.
 >
+> Like I said in another mail,...IMHO the merge 
+> example included further down should be sufficient information wrt 
+> committing a merge.
+
+You are right --- removed.
+
+>>  -o|--only::
+>> -	Commit only the files specified on the command line.
+>> -	This format cannot be used during a merge, nor when the
+>> -	index and the latest commit does not match on the
+>> -	specified paths to avoid confusion.
+>> +	Commit only the files specified on the command line;
+>> +	this is the default when pathnames are given on the
+>> +	command line, so you usually do not have to give this
+>> +	option.  This format cannot be used during a merge.
 >
-> How how do i track the pu branch using git pull. What i mean is the
-> master local branch is tracked by default using git pull. Is there a
-> way to track the local pu branch too.
+> Is there some value in keeping this option documented?  What about 
+> removing it (the documentation not the option)?
 
-        $ cat >.git/remotes/origin <<\EOF
-        URL: ...kernel.org/pub/scm/git/git.git
-        Pull: refs/heads/master:refs/remotes/origin/master
-        Pull: refs/heads/next:refs/remotes/origin/next
-        Pull: +refs/heads/pu:refs/remotes/origin/pu
-        EOF
+True, although the description of <files>... need to be
+clarified if we do this.
 
-Then you would checkout 'pu' by having a matching local branch:
+>> +When recording your own work, the contents of modified files in
+>> +your working tree are temporarily stored to a staging area
+>> +called the "index" with gitlink:git-add[1].  Removal
+>
+> I like the way the index is introduced at this point.
 
-	$ git branch pu remotes/origin/pu
-	$ git checkout pu ;# this is your refs/heads/pu
-        $ make
+Credit owed to JBF.
 
-Hacking on it can be done in this branch as usual.  When you are
-interested in the latest 'pu' from me:
+> I'd add (with links):
+>
+> SEE ALSO
+> --------
+> git-add, git-rm, git-mv, git-merge, git-commit-tree
 
-	$ git checkout pu ;# this is your refs/heads/pu
-	$ git fetch ;# most of the time git pull would also be fine...
+Done.
 
-and then:
+Attached is an incremental patch on top of what you commented
+on.
 
-	$ git rebase remotes/origin/pu
+-- >8 --
 
-The 'rebase' in the last step is because my 'pu' rewinds freely;
-otherwise you would do "git merge remotes/origin/pu" instead.
+diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+index 8fe42cb..20a2cb3 100644
+--- a/Documentation/git-commit.txt
++++ b/Documentation/git-commit.txt
+@@ -34,12 +34,6 @@ methods:
+    changes from all known files i.e. files that have already been committed
+    before, and perform the actual commit.
+ 
+-Note that the contents of the paths that resolved cleanly by a
+-conflicted merge are automatically staged for the next commit;
+-you still need to explicitly identify what you want in the
+-resulting commit using one of the above methods before
+-recording the merge commit.
+-
+ The gitlink:git-status[1] command can be used to obtain a
+ summary of what is included by any of the above for the next
+ commit by giving the same set of parameters you would give to
+@@ -119,19 +113,15 @@ but can be used to amend a merge commit.
+ 	as well.  This is usually not what you want unless you
+ 	are concluding a conflicted merge.
+ 
+--o|--only::
+-	Commit only the files specified on the command line;
+-	this is the default when pathnames are given on the
+-	command line, so you usually do not have to give this
+-	option.  This format cannot be used during a merge.
+-
+ \--::
+ 	Do not interpret any more arguments as options.
+ 
+ <file>...::
+-	Files to be committed.  The meaning of these is
+-	different between `--include` and `--only`.  Without
+-	either, it defaults `--only` semantics.
++	When files are given on the command line, the command
++	commits the contents of the named files, without
++	recording the changes already staged.  The contents of
++	these files are also staged for the next commit on top
++	of what have been staged before.
+ 
+ 
+ EXAMPLES
+@@ -240,6 +230,15 @@ This command can run `commit-msg`, `pre-commit`, and
+ `post-commit` hooks.  See link:hooks.html[hooks] for more
+ information.
+ 
++
++SEE ALSO
++--------
++gitlink:git-add[1],
++gitlink:git-rm[1],
++gitlink:git-mv[1],
++gitlink:git-merge[1],
++gitlink:git-commit-tree[1]
++
+ Author
+ ------
+ Written by Linus Torvalds <torvalds@osdl.org> and
