@@ -1,83 +1,84 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: Collection of stgit issues and wishes
-Date: Wed, 13 Dec 2006 12:03:14 +0100
-Message-ID: <20061213110314.GA22670@diana.vm.bytemark.co.uk>
-References: <20061208221744.GA3288@nan92-1-81-57-214-146.fbx.proxad.net> <b0943d9e0612120143j7d0c1026rab046c8f44ec43ca@mail.gmail.com> <87y7pc2rc7.fsf@morpheus.local> <457FD3E4.3090104@op5.se>
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: rda <rda@google.com>
+Subject: Re: kernel.org mirroring (Re: [GIT PULL] MMC update)
+Date: Sun, 10 Dec 2006 01:43:04 -0800
+Message-ID: <87dcb0bd0612100143t21932358k42fe5044654e1981@mail.gmail.com>
+References: <Pine.LNX.4.64.0612020835110.3476@woody.osdl.org>
+	 <45785697.1060001@zytor.com>
+	 <Pine.LNX.4.64.0612071052560.3615@woody.osdl.org>
+	 <457868AA.2030605@zytor.com> <20061207193012.GA84678@dspnet.fr.eu.org>
+	 <4578722E.9030402@zytor.com> <4579611F.5010303@dawes.za.net>
+	 <45798FE2.9040502@zytor.com>
+	 <Pine.LNX.4.64.0612080830380.3516@woody.osdl.org>
+	 <457995F8.1080405@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Wed, 13 Dec 2006 11:31:40 +0000 (UTC)
-Cc: David =?iso-8859-1?Q?K=E5gedal?= <davidk@lysator.liu.se>,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Sun, 10 Dec 2006 09:43:28 +0000 (UTC)
+Cc: "Linus Torvalds" <torvalds@osdl.org>,
+	"Rogan Dawes" <discard@dawes.za.net>,
+	"Kernel Org Admin" <ftpadmin@kernel.org>,
+	"Git Mailing List" <git@vger.kernel.org>,
+	"Jakub Narebski" <jnareb@gmail.com>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Greylist: delayed 1693 seconds by postgrey-1.27 at vger.kernel.org; Wed, 13 Dec 2006 06:31:34 EST
+DomainKey-Signature: a=rsa-sha1; s=beta; d=google.com; c=nofws; q=dns;
+	h=received:message-id:date:from:to:subject:cc:in-reply-to:
+	mime-version:content-type:content-transfer-encoding:
+	content-disposition:references;
+	b=eU8LIeeoPgzVSJoEH5TUNkt5GW2zfyXrfBLBQlHNZLgE8qDiP5V+t1xl6lSpKfADm
+	lH6eGVtQOAaXjDWYibG/A==
+In-Reply-To: <457995F8.1080405@zytor.com>
 Content-Disposition: inline
-In-Reply-To: <457FD3E4.3090104@op5.se>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34211>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33873>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GuSKn-00053U-U9 for gcvg-git@gmane.org; Wed, 13 Dec
- 2006 12:31:38 +0100
+ esmtp (Exim 4.50) id 1GtLDL-00066V-H4 for gcvg-git@gmane.org; Sun, 10 Dec
+ 2006 10:43:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S964851AbWLMLbf convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Wed, 13 Dec 2006 06:31:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964857AbWLMLbf
- (ORCPT <rfc822;git-outgoing>); Wed, 13 Dec 2006 06:31:35 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2149 "EHLO
- diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S964851AbWLMLbe (ORCPT <rfc822;git@vger.kernel.org>); Wed, 13 Dec
- 2006 06:31:34 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1
- (Debian)) id 1GuRtK-0006Ow-00; Wed, 13 Dec 2006 11:03:14 +0000
-To: Andreas Ericsson <ae@op5.se>
+ S1760595AbWLJJnO (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 10 Dec 2006
+ 04:43:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760609AbWLJJnO
+ (ORCPT <rfc822;git-outgoing>); Sun, 10 Dec 2006 04:43:14 -0500
+Received: from smtp-out.google.com ([216.239.33.17]:33399 "EHLO
+ smtp-out.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1760595AbWLJJnN (ORCPT <rfc822;git@vger.kernel.org>); Sun, 10 Dec 2006
+ 04:43:13 -0500
+Received: from spaceape8.eur.corp.google.com (spaceape8.eur.corp.google.com
+ [172.28.16.142]) by smtp-out.google.com with ESMTP id kBA9h6dR008462 for
+ <git@vger.kernel.org>; Sun, 10 Dec 2006 09:43:07 GMT
+Received: from py-out-1112.google.com (pyhn24.prod.google.com [10.34.240.24])
+ by spaceape8.eur.corp.google.com with ESMTP id kBA9h545002773 for
+ <git@vger.kernel.org>; Sun, 10 Dec 2006 09:43:05 GMT
+Received: by py-out-1112.google.com with SMTP id n24so783991pyh for
+ <git@vger.kernel.org>; Sun, 10 Dec 2006 01:43:04 -0800 (PST)
+Received: by 10.65.219.6 with SMTP id w6mr178470qbq.1165743784794; Sun, 10
+ Dec 2006 01:43:04 -0800 (PST)
+Received: by 10.64.83.3 with HTTP; Sun, 10 Dec 2006 01:43:04 -0800 (PST)
+To: "H. Peter Anvin" <hpa@zytor.com>
 Sender: git-owner@vger.kernel.org
 
-On 2006-12-13 11:20:20 +0100, Andreas Ericsson wrote:
-
-> David K=E5gedal wrote:
+On 12/8/06, H. Peter Anvin <hpa@zytor.com> wrote:
+> Linus Torvalds wrote:
+> > I could write a simple C caching thing that just hashes the CGI arguments
+> > and uses a hash to create a cache (and proper lock-files etc to serialize
+> > access to a particular cache object while it's being created) fairly
+> > easily, but I'm pretty sure people would much prefer a mod_perl thing just
+> > to avoid the fork/exec overhead with Apache (I think mod_perl allows
+> > Apache to run perl scripts without it), and that means I'm not the right
+> > person any more.
 >
-> > "Catalin Marinas" <catalin.marinas@gmail.com> writes:
-> >
-> > > On 08/12/06, Yann Dirson <ydirson@altern.org> wrote:
-> > >
-> > > > - shortcuts (st -> status, etc.), possibly making use of the
-> > > >   git alias system ?
-> > >
-> > > Did this last night as it was pretty easy and without the GIT
-> > > alias system (which I am not familiar with). The idea is that if
-> > > it cannot find an exact match, it tries to look for all the
-> > > commands starting with the passed argument. If more than one
-> > > command is found, it reports an "ambiguous command".
-> >
-> > That approach can cause problems later on. If "stgit st" is
-> > currently a unique prefix of "stgit status", people might use it
-> > in scripts. Then, one day, you add the "stgit store" command, or
-> > whatever, and their scripts start breaking for no good reason.
->
-> People who use abbreviations of commands in scripts ought to be
-> shot, not catered to, especially if they know this abbreviation is
-> automagically calculated.
+> True about mod_perl.  Haven't messed with that myself, either.
+> fork/exec really is very cheap on Linux, so it's not a huge deal.
 
-Well, yes, but there's no reason to not shoot them _politely_ ...
-
-I'd prefer hand-picked command abbreviations to reduce namespace
-clutter. That way, it's even possible to have "ambiguous" shortcuts --
-for example, "stg st" -> "stg status" even if "stg store" exists. And
-shortcuts that aren't prefixes, like "stg ua" -> "stg unapplied". And
-the user doesn't need to retrain her fingers just because a prefix
-gets ambiguous.
-
-=46or prefixes, tab completion is a much better answer.
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
+In the case of Perl scripts, it's not really the fork/exec overhead,
+but the Perl startup overhead that you want to try to optimize.  But
+given your later statement (lots of spare cpu), this ends up just
+being a bit of a latency hit.   In general, I think mod_perl has a
