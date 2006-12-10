@@ -1,335 +1,99 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH 4/6] Take --git-dir into consideration during bash completion.
-Date: Sun, 5 Nov 2006 06:21:57 -0500
-Message-ID: <20061105112157.GD20495@spearce.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sun, 5 Nov 2006 11:22:17 +0000 (UTC)
-Cc: git@vger.kernel.org
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH 0/3] gitweb: Better symbolic link support in "tree" view
+Date: Sun, 10 Dec 2006 13:25:45 +0100
+Message-ID: <1165753577728-git-send-email-jnareb@gmail.com>
+References: <7vk616ezu5.fsf@assigned-by-dhcp.cox.net>
+NNTP-Posting-Date: Sun, 10 Dec 2006 12:24:33 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=D+1jDWbQfaFHnP/BNQ+BpKvWz+Fs9fvepc9It4sjo32zV/2SnufaMAzVnDHTEdbYtAt9FlrCDSu/iDAgbEd7PBUjmtV92ngn6Wn1uSc3tc2Bl1ob+i8rb0J+3CTlmt3Kx7K5mV4t9X3hFC+sbEGE7adGhR+ss0hf86nCqg1ezcc=
+X-Mailer: git-send-email 1.4.4.1
+In-Reply-To: <7vk616ezu5.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <7vk616ezu5.fsf@assigned-by-dhcp.cox.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30968>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Ggg4l-0007An-1C for gcvg-git@gmane.org; Sun, 05 Nov
- 2006 12:22:07 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33880>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GtNjL-0001nD-Lh for gcvg-git@gmane.org; Sun, 10 Dec
+ 2006 13:24:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932640AbWKELWC (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 5 Nov 2006
- 06:22:02 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932649AbWKELWB
- (ORCPT <rfc822;git-outgoing>); Sun, 5 Nov 2006 06:22:01 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:54400 "EHLO
- corvette.plexpod.net") by vger.kernel.org with ESMTP id S932640AbWKELWA
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 5 Nov 2006 06:22:00 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1Ggg4Z-0008Pg-A8; Sun, 05 Nov 2006 06:21:55 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- 5506420E491; Sun,  5 Nov 2006 06:21:57 -0500 (EST)
-To: Junio C Hamano <junkio@cox.net>
+ S1758797AbWLJMY3 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 10 Dec 2006
+ 07:24:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758849AbWLJMY3
+ (ORCPT <rfc822;git-outgoing>); Sun, 10 Dec 2006 07:24:29 -0500
+Received: from ug-out-1314.google.com ([66.249.92.170]:22549 "EHLO
+ ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1758797AbWLJMY2 (ORCPT <rfc822;git@vger.kernel.org>); Sun, 10 Dec
+ 2006 07:24:28 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so1088384uga for
+ <git@vger.kernel.org>; Sun, 10 Dec 2006 04:24:27 -0800 (PST)
+Received: by 10.67.19.17 with SMTP id w17mr8210705ugi.1165753467600; Sun, 10
+ Dec 2006 04:24:27 -0800 (PST)
+Received: from roke.D-201 ( [81.190.25.107]) by mx.google.com with ESMTP id
+ h1sm4437216ugf.2006.12.10.04.24.21; Sun, 10 Dec 2006 04:24:27 -0800 (PST)
+Received: from roke.D-201 (localhost.localdomain [127.0.0.1]) by roke.D-201
+ (8.13.4/8.13.4) with ESMTP id kBACQJpp025876; Sun, 10 Dec 2006 13:26:25 +0100
+Received: (from jnareb@localhost) by roke.D-201 (8.13.4/8.13.4/Submit) id
+ kBACQH8e025875; Sun, 10 Dec 2006 13:26:17 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-If the user has setup a command line of "git --git-dir=baz" then
-anything we complete must be performed within the scope of "baz"
-and not the current working directory.
+Junio C Hamano wrote in
+"Re: [PATCH] gitweb: Better symbolic link support in "tree" view":
 
-This is useful with commands such as "git --git-dir=git.git log m"
-to complete out "master" and view the log for the master branch of
-the git.git repository.  As a nice side effect this also works for
-aliases within the target repository, just as git would honor them.
+> If you wanted to do this, a better way would be to have a new
+> view that takes a commit/tree object and a path from the top of
+> the repository, and shows either "no such path in that tree" or
+> "here is the view for that object, by the way it was a blob."
+> page.  Then your list drawing would still need to open each
+> symlink blob to show " -> link_target", and need to check if it
+> goes outside the repository (I would assume you are handling
+> relative links as well), but you do not need to do expensive
+> ls-tree step one per symlink on the page.  The href attr of the
+> A element " -> link_target" would point at that "universal
+> object view" with the link_target pathname (that is, the blob
+> contents) and the commit/tree object name (h or hb I do not know
+> which) and you will spend cycles to run ls-tree only when the
+> user actually asks to follow that link.
+> 
+> In other words, I think trying to be lazy is extremely important
+> while drawing a big list.
 
-Unfortunately because we still examine arguments by absolute position
-in most of the more complex commands (e.g. git push) using --git-dir
-with those commands will probably still cause completion to fail.
+I not necessarily agree; I think that symbolic links are sufficnetly
+rare that a bit more time spent to make the view better for end user
+(link only if target exists) is worth it. But...
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- contrib/completion/git-completion.bash |  123 ++++++++++++++++++--------------
- 1 files changed, 70 insertions(+), 53 deletions(-)
+Here follows the implementation of this idea: first to read link
+target and show it in "tree" view _without_ hyperlink, then
+introduction of generic "object" view which does the verification and
+redirect to correct view accorting to the type of object, and last
+show link target hyperlinked in "tree" view using "object" view/action
+link.
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 5f1be46..f258f2f 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -19,15 +19,20 @@
- #        source ~/.git-completion.sh
- #
- 
-+__gitdir ()
-+{
-+	echo "${__git_dir:-$(git rev-parse --git-dir 2>/dev/null)}"
-+}
-+
- __git_refs ()
- {
--	local cmd i is_hash=y
--	if [ -d "$1" ]; then
-+	local cmd i is_hash=y dir="${1:-$(__gitdir)}"
-+	if [ -d "$dir" ]; then
- 		cmd=git-peek-remote
- 	else
- 		cmd=git-ls-remote
- 	fi
--	for i in $($cmd "$1" 2>/dev/null); do
-+	for i in $($cmd "$dir" 2>/dev/null); do
- 		case "$is_hash,$i" in
- 		y,*) is_hash=n ;;
- 		n,*^{}) is_hash=y ;;
-@@ -40,13 +45,13 @@ __git_refs ()
- 
- __git_refs2 ()
- {
--	local cmd i is_hash=y
--	if [ -d "$1" ]; then
-+	local cmd i is_hash=y dir="${1:-$(__gitdir)}"
-+	if [ -d "$dir" ]; then
- 		cmd=git-peek-remote
- 	else
- 		cmd=git-ls-remote
- 	fi
--	for i in $($cmd "$1" 2>/dev/null); do
-+	for i in $($cmd "$dir" 2>/dev/null); do
- 		case "$is_hash,$i" in
- 		y,*) is_hash=n ;;
- 		n,*^{}) is_hash=y ;;
-@@ -59,14 +64,14 @@ __git_refs2 ()
- 
- __git_remotes ()
- {
--	local i ngoff IFS=$'\n'
-+	local i ngoff IFS=$'\n' d="$(__gitdir)"
- 	shopt -q nullglob || ngoff=1
- 	shopt -s nullglob
--	for i in .git/remotes/*; do
--		echo ${i#.git/remotes/}
-+	for i in "$d/remotes"/*; do
-+		echo ${i#$d/remotes/}
- 	done
- 	[ "$ngoff" ] && shopt -u nullglob
--	for i in $(git repo-config --list); do
-+	for i in $(git --git-dir="$d" repo-config --list); do
- 		case "$i" in
- 		remote.*.url=*)
- 			i="${i#remote.}"
-@@ -95,7 +100,7 @@ __git_complete_file ()
- 			;;
- 	    esac
- 		COMPREPLY=($(compgen -P "$pfx" \
--			-W "$(git-ls-tree "$ls" \
-+			-W "$(git --git-dir="$(__gitdir)" ls-tree "$ls" \
- 				| sed '/^100... blob /s,^.*	,,
- 				       /^040000 tree /{
- 				           s,^.*	,,
-@@ -105,7 +110,7 @@ __git_complete_file ()
- 			-- "$cur"))
- 		;;
- 	*)
--		COMPREPLY=($(compgen -W "$(__git_refs .)" -- "$cur"))
-+		COMPREPLY=($(compgen -W "$(__git_refs)" -- "$cur"))
- 		;;
- 	esac
- }
-@@ -113,7 +118,7 @@ __git_complete_file ()
- __git_aliases ()
- {
- 	local i IFS=$'\n'
--	for i in $(git repo-config --list); do
-+	for i in $(git --git-dir="$(__gitdir)" repo-config --list); do
- 		case "$i" in
- 		alias.*)
- 			i="${i#alias.}"
-@@ -125,7 +130,8 @@ __git_aliases ()
- 
- __git_aliased_command ()
- {
--	local word cmdline=$(git repo-config --get "alias.$1")
-+	local word cmdline=$(git --git-dir="$(__gitdir)" \
-+		repo-config --get "alias.$1")
- 	for word in $cmdline; do
- 		if [ "${word##-*}" ]; then
- 			echo $word
-@@ -137,7 +143,7 @@ __git_aliased_command ()
- _git_branch ()
- {
- 	local cur="${COMP_WORDS[COMP_CWORD]}"
--	COMPREPLY=($(compgen -W "-l -f -d -D $(__git_refs .)" -- "$cur"))
-+	COMPREPLY=($(compgen -W "-l -f -d -D $(__git_refs)" -- "$cur"))
- }
- 
- _git_cat_file ()
-@@ -159,7 +165,7 @@ _git_cat_file ()
- _git_checkout ()
- {
- 	local cur="${COMP_WORDS[COMP_CWORD]}"
--	COMPREPLY=($(compgen -W "-l -b $(__git_refs .)" -- "$cur"))
-+	COMPREPLY=($(compgen -W "-l -b $(__git_refs)" -- "$cur"))
- }
- 
- _git_diff ()
-@@ -170,7 +176,7 @@ _git_diff ()
- _git_diff_tree ()
- {
- 	local cur="${COMP_WORDS[COMP_CWORD]}"
--	COMPREPLY=($(compgen -W "-r -p -M $(__git_refs .)" -- "$cur"))
-+	COMPREPLY=($(compgen -W "-r -p -M $(__git_refs)" -- "$cur"))
- }
- 
- _git_fetch ()
-@@ -188,7 +194,7 @@ _git_fetch ()
- 		case "$cur" in
- 		*:*)
- 	        cur=$(echo "$cur" | sed 's/^.*://')
--			COMPREPLY=($(compgen -W "$(__git_refs .)" -- "$cur"))
-+			COMPREPLY=($(compgen -W "$(__git_refs)" -- "$cur"))
- 			;;
- 		*)
- 			local remote
-@@ -221,10 +227,10 @@ _git_log ()
- 	*..*)
- 		local pfx=$(echo "$cur" | sed 's/\.\..*$/../')
- 		cur=$(echo "$cur" | sed 's/^.*\.\.//')
--		COMPREPLY=($(compgen -P "$pfx" -W "$(__git_refs .)" -- "$cur"))
-+		COMPREPLY=($(compgen -P "$pfx" -W "$(__git_refs)" -- "$cur"))
- 		;;
- 	*)
--		COMPREPLY=($(compgen -W "$(__git_refs .)" -- "$cur"))
-+		COMPREPLY=($(compgen -W "$(__git_refs)" -- "$cur"))
- 		;;
- 	esac
- }
-@@ -232,7 +238,7 @@ _git_log ()
- _git_merge_base ()
- {
- 	local cur="${COMP_WORDS[COMP_CWORD]}"
--	COMPREPLY=($(compgen -W "$(__git_refs .)" -- "$cur"))
-+	COMPREPLY=($(compgen -W "$(__git_refs)" -- "$cur"))
- }
- 
- _git_pull ()
-@@ -280,7 +286,7 @@ _git_push ()
- 			COMPREPLY=($(compgen -W "$(__git_refs "$remote")" -- "$cur"))
- 			;;
- 		*)
--			COMPREPLY=($(compgen -W "$(__git_refs2 .)" -- "$cur"))
-+			COMPREPLY=($(compgen -W "$(__git_refs2)" -- "$cur"))
- 			;;
- 		esac
- 		;;
-@@ -291,56 +297,67 @@ _git_reset ()
- {
- 	local cur="${COMP_WORDS[COMP_CWORD]}"
- 	local opt="--mixed --hard --soft"
--	COMPREPLY=($(compgen -W "$opt $(__git_refs .)" -- "$cur"))
-+	COMPREPLY=($(compgen -W "$opt $(__git_refs)" -- "$cur"))
- }
- 
- _git_show ()
- {
- 	local cur="${COMP_WORDS[COMP_CWORD]}"
--	COMPREPLY=($(compgen -W "$(__git_refs .)" -- "$cur"))
-+	COMPREPLY=($(compgen -W "$(__git_refs)" -- "$cur"))
- }
- 
- _git ()
- {
--	if [ $COMP_CWORD = 1 ]; then
-+	local i c=1 command __git_dir
-+
-+	while [ $c -lt $COMP_CWORD ]; do
-+		i="${COMP_WORDS[c]}"
-+		case "$i" in
-+		--git-dir=*) __git_dir="${i#--git-dir=}" ;;
-+		--bare)      __git_dir="." ;;
-+		--version|--help|-p|--paginate) ;;
-+		*) command="$i"; break ;;
-+		esac
-+		c=$((++c))
-+	done
-+
-+	if [ $c -eq $COMP_CWORD -a -z "$command" ]; then
- 		COMPREPLY=($(compgen \
--			-W "--version $(git help -a|egrep '^ ') \
-+			-W "--git-dir= --version \
-+				$(git help -a|egrep '^ ') \
- 			    $(__git_aliases)" \
- 			-- "${COMP_WORDS[COMP_CWORD]}"))
--	else
--		local command="${COMP_WORDS[1]}"
--		local expansion=$(__git_aliased_command "$command")
-+		return;
-+	fi
- 
--		if [ "$expansion" ]; then
--			command="$expansion"
--		fi
-+	local expansion=$(__git_aliased_command "$command")
-+	[ "$expansion" ] && command="$expansion"
- 
--		case "$command" in
--		branch)      _git_branch ;;
--		cat-file)    _git_cat_file ;;
--		checkout)    _git_checkout ;;
--		diff)        _git_diff ;;
--		diff-tree)   _git_diff_tree ;;
--		fetch)       _git_fetch ;;
--		log)         _git_log ;;
--		ls-remote)   _git_ls_remote ;;
--		ls-tree)     _git_ls_tree ;;
--		merge-base)  _git_merge_base ;;
--		pull)        _git_pull ;;
--		push)        _git_push ;;
--		reset)       _git_reset ;;
--		show)        _git_show ;;
--		show-branch) _git_log ;;
--		whatchanged) _git_log ;;
--		*)           COMPREPLY=() ;;
--		esac
--	fi
-+	case "$command" in
-+	branch)      _git_branch ;;
-+	cat-file)    _git_cat_file ;;
-+	checkout)    _git_checkout ;;
-+	diff)        _git_diff ;;
-+	diff-tree)   _git_diff_tree ;;
-+	fetch)       _git_fetch ;;
-+	log)         _git_log ;;
-+	ls-remote)   _git_ls_remote ;;
-+	ls-tree)     _git_ls_tree ;;
-+	merge-base)  _git_merge_base ;;
-+	pull)        _git_pull ;;
-+	push)        _git_push ;;
-+	reset)       _git_reset ;;
-+	show)        _git_show ;;
-+	show-branch) _git_log ;;
-+	whatchanged) _git_log ;;
-+	*)           COMPREPLY=() ;;
-+	esac
- }
- 
- _gitk ()
- {
- 	local cur="${COMP_WORDS[COMP_CWORD]}"
--	COMPREPLY=($(compgen -W "--all $(__git_refs .)" -- "$cur"))
-+	COMPREPLY=($(compgen -W "--all $(__git_refs)" -- "$cur"))
- }
- 
- complete -o default -o nospace -F _git git
+While at it implement the same "lazy" solution in commitsha1 commitag
+in format_log_line_html subroutine.
+
+Table of contents:
+ [PATCH 1/3] gitweb: Show target of symbolic link in "tree" view
+ [PATCH 2/3] gitweb: Add generic git_object subroutine to display object of any type
+ [PATCH 3/3] gitweb: Hyperlink target of symbolic link in "tree" view (if possible)
+ [PATCH/RFC 4/3] gitweb: SHA-1 in commit log message links to "object" view
+
+Diffstat:
+ gitweb/gitweb.perl |  152 ++++++++++++++++++++++++++++++++++++++++++++++-----
+ 1 files changed, 137 insertions(+), 15 deletions(-)
+
 -- 
-1.4.3.3.g9621
+Jakub Narebski
+ShadeHawk on #git
