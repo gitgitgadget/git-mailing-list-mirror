@@ -1,74 +1,154 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Aneesh Kumar" <aneesh.kumar@gmail.com>
-Subject: Re: git_get_projects_list and $projects_list
-Date: Thu, 2 Nov 2006 09:43:37 +0530
-Message-ID: <cc723f590611012013v1359efb9qdb5888fc458da22@mail.gmail.com>
-References: <cc723f590610310347h58cdd69bse6d96b19479a4f6a@mail.gmail.com>
-	 <ei7dq4$828$1@sea.gmane.org> <ei7f7o$bgi$1@sea.gmane.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: reexporting git repository via git-daemon
+Date: Sun, 10 Dec 2006 18:35:24 +0100
+Organization: At home
+Message-ID: <elhgcf$m4r$1@sea.gmane.org>
+References: <200612082212.09682.arekm@maven.pl>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; 
-	boundary="----=_Part_54717_15496548.1162440817845"
-NNTP-Posting-Date: Thu, 2 Nov 2006 04:13:59 +0000 (UTC)
-Cc: "Git Mailing List" <git@vger.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+NNTP-Posting-Date: Sun, 10 Dec 2006 17:33:36 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:references;
-        b=cpsMgzkuQ1MuIKqm4awkGEoi2oJ6R6RRtdAHt0XMv5t7id9ctwt+2VQJAKx7UEiJqf1NuIHt6Xy0A/qvciRLquZG0mLOcGHKXtV+pUtaurIwZzgvOc7Z+oSCBmHygUbsaF2uHV2l8lISnqlsXOw6k2BUU1g4WJNu5EQ62UDIsUw=
-In-Reply-To: <ei7f7o$bgi$1@sea.gmane.org>
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 104
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-25-107.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30685>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GfTxc-0006TY-5e for gcvg-git@gmane.org; Thu, 02 Nov
- 2006 05:13:48 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33906>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GtSYL-0005HV-17 for gcvg-git@gmane.org; Sun, 10 Dec
+ 2006 18:33:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751313AbWKBENk (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 1 Nov 2006
- 23:13:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752641AbWKBENk
- (ORCPT <rfc822;git-outgoing>); Wed, 1 Nov 2006 23:13:40 -0500
-Received: from nf-out-0910.google.com ([64.233.182.188]:47450 "EHLO
- nf-out-0910.google.com") by vger.kernel.org with ESMTP id S1751313AbWKBENj
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 1 Nov 2006 23:13:39 -0500
-Received: by nf-out-0910.google.com with SMTP id c2so1132549nfe for
- <git@vger.kernel.org>; Wed, 01 Nov 2006 20:13:38 -0800 (PST)
-Received: by 10.49.90.18 with SMTP id s18mr3823469nfl.1162440817894; Wed, 01
- Nov 2006 20:13:37 -0800 (PST)
-Received: by 10.48.212.18 with HTTP; Wed, 1 Nov 2006 20:13:37 -0800 (PST)
-To: "Jakub Narebski" <jnareb@gmail.com>
+ S1762277AbWLJRd0 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 10 Dec 2006
+ 12:33:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762267AbWLJRd0
+ (ORCPT <rfc822;git-outgoing>); Sun, 10 Dec 2006 12:33:26 -0500
+Received: from main.gmane.org ([80.91.229.2]:42889 "EHLO ciao.gmane.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1762277AbWLJRdZ
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 10 Dec 2006 12:33:25 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1GtSY3-0000zm-Lm for git@vger.kernel.org; Sun, 10 Dec 2006 18:33:11 +0100
+Received: from host-81-190-25-107.torun.mm.pl ([81.190.25.107]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Sun, 10 Dec 2006 18:33:11 +0100
+Received: from jnareb by host-81-190-25-107.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Sun, 10 Dec 2006
+ 18:33:11 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-------=_Part_54717_15496548.1162440817845
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
+Arkadiusz Miskiewicz wrote:
 
-On 10/31/06, Jakub Narebski <jnareb@gmail.com> wrote:
+> I have weird problem wit git (1.4.4.2).
 
->         $dir =~ s!/+$!!;
->
+I have tried to reproduce this error, but no luck.
+ 
+> $ git --bare clone git://git.kernel.org/pub/scm/git/git.git
+> fetches everything correctly;
 
-That works. Attaching the diff below
+It should be "git clone --bare git://git.kernel.org/pub/scm/git/git.git"
+or "git clone --bare git://git.kernel.org/pub/scm/git/git.git git.git"
+Git doesn't need GIT_DIR for clone.
 
--aneesh
+> $ cd /tmp
+> $ git clone /gitroot/home/gitrepo/git
+> 
+> also correctly fetched. The problem begins with exporting that cloned repo 
+> once again via git-daemon:
 
-------=_Part_54717_15496548.1162440817845
-Content-Type: text/x-patch; name=gitweb.diff; charset=ANSI_X3.4-1968
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_eu0n8ctr
-Content-Disposition: attachment; filename="gitweb.diff"
+I didn't do this second cloning, but it should not matter I think.
 
-ZGlmZiAtLWdpdCBhL2dpdHdlYi9naXR3ZWIucGVybCBiL2dpdHdlYi9naXR3ZWIucGVybAppbmRl
-eCBiZjVmODI5Li40MzQzNDUwIDEwMDc1NQotLS0gYS9naXR3ZWIvZ2l0d2ViLnBlcmwKKysrIGIv
-Z2l0d2ViL2dpdHdlYi5wZXJsCkBAIC04OTcsNiArODk3LDggQEAgc3ViIGdpdF9nZXRfcHJvamVj
-dHNfbGlzdCB7CiAJaWYgKC1kICRwcm9qZWN0c19saXN0KSB7CiAJCSMgc2VhcmNoIGluIGRpcmVj
-dG9yeQogCQlteSAkZGlyID0gJHByb2plY3RzX2xpc3Q7CisJCSMgcmVtb3ZlIHRoZSB0cmFpbGlu
-ZyAiLyIKKwkJJGRpciA9fiBzIS8rJCEhOwogCQlteSAkcGZ4bGVuID0gbGVuZ3RoKCIkZGlyIik7
-CiAKIAkJRmlsZTo6RmluZDo6ZmluZCh7Cg==
+> $ git clone git://git.my-server/git
+> fatal: unexpected EOF
+> fetch-pack from 'git://git.my-server/git' failed.
+
+True, the error messages of git-clone are bit cryptic and doesn't
+give us much information. Does there exist such repository? Perhaps
+it is not exported? Were there any error?
+
+> strace on git-daemon side:
+> [...]
+> 18241 lstat("refs/tags/v1.4.1-rc2", {st_mode=S_IFREG|0644, st_size=41, ...}) = 
+> 0
+> 18241 open("refs/tags/v1.4.1-rc2", O_RDONLY) = 7
+> 18241 read(7, "33c9db007159db11c1ad5fa7101ea95853740acf\n", 255) = 41
+> 18241 close(7)                          = 0
+> 18241 write(1, "004233c9db007159db11c1ad5fa7101ea95853740acf 
+> refs/tags/v1.4.1-rc2\n", 66) = 66
+> 18241 write(1, "0045abc02670169cee9541793a86324a014272ca8ed5 
+> refs/tags/v1.4.1-rc2^{}\n", 69) = 69
+> 18241 stat("refs/tags/v1.4.1.1", {st_mode=S_IFREG|0644, st_size=41, ...}) = 0
+> 18241 lstat("refs/tags/v1.4.1.1", {st_mode=S_IFREG|0644, st_size=41, ...}) = 0
+> 18241 open("refs/tags/v1.4.1.1", O_RDONLY) = 7
+> 18241 read(7, "8419a453dc088b25b63ab1746d3d7e679caf686d\n", 255) = 41
+> 18241 close(7)  
+> 18241 write(1, "00408419a453dc088b25b63ab1746d3d7e679caf686d 
+> refs/tags/v1.4.1.1\n", 64) = 64
+> 18241 write(2, "fatal: ", 7)            = 7
+> 18241 write(2, "corrupted pack 
+> file ./objects/pack/pack-0bb22295a585ac173504a2f8dfb3e31e074a8715.pack", 85) 
+> = 85
+> 18241 write(2, "\n", 1)   
+> 
+> 100% repeatable at this moment. Any ideas?
+
+WORKSFORME
+
+$ git --version
+git version 1.4.4.1
+
+$ git clone --bare git://git.kernel.org/pub/scm/git/git.git
+remote: Generating pack...
+remote: Done counting 33587 objects.
+remote: Deltifying 33587 objects.
+remote:  100% (33587/33587) done
+Indexing 33587 objects.
+remote: Total 33587, written 33587 (delta 23205), reused 33325 (delta 23034)
+ 100% (33587/33587) done
+Resolving 23205 deltas.
+ 100% (23205/23205) done
+
+By the way, I wonder why git-clone names bare repository 'git',
+and not 'git.git' as, I think, it should?
+
+$ git-daemon --verbose --export-all --base-path=<pwd>
+[31823] Connection from 127.0.0.1:46736
+[31823] Extended attributes (16 bytes) exist <host=localhost>
+[31823] Request upload-pack for '/git.git'
+[31823] Disconnected
+
+The above is generated when I was cloning locally, i.e. when I run the
+following command:
+
+$ git clone git://localhost/git.git
+remote: Generating pack...
+remote: Done counting 33587 objects.
+remote: Deltifying 33587 objects.
+remote:  100% (33587/33587) done
+Indexing 33587 objects.
+remote: Total 33587, written 33587 (delta 23205), reused 33587 (delta 23205)
+ 100% (33587/33587) done
+Resolving 23205 deltas.
+ 100% (23205/23205) done
+Checking files out...
+ 100% (743/743) done
+
+which went without any problem.
+
+P.S. Please reply also to git mailing list
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
+
