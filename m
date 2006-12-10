@@ -1,75 +1,144 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Allow hand-editing of patches before sending
-Date: Fri, 03 Nov 2006 03:21:29 -0800
-Message-ID: <7vslh0bwsm.fsf@assigned-by-dhcp.cox.net>
-References: <20061101090046.1107.81105.stgit@localhost>
-	<b0943d9e0611020232x1e343bbco9451c8183c84d68@mail.gmail.com>
-	<20061102113631.GA30507@diana.vm.bytemark.co.uk>
-	<b0943d9e0611030139i7be9569bh4a29596a768e82a3@mail.gmail.com>
-	<20061103095859.GC16721@diana.vm.bytemark.co.uk>
-	<20061103100142.GD16721@diana.vm.bytemark.co.uk>
-	<20061103102119.GO20017@pasky.or.cz> <454B1BC3.1070203@op5.se>
-	<20061103105349.GA18651@diana.vm.bytemark.co.uk>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Kyle Moffett <mrmacman_g4@mac.com>
+Subject: Re: Using GIT to store /etc (Or: How to make GIT store all file permission bits)
+Date: Sun, 10 Dec 2006 12:46:51 -0500
+Message-ID: <28E2300C-8F7A-406F-8FDA-F8786AE95B40@mac.com>
+References: <787BE48C-1808-4A33-A368-5E8A3F00C787@mac.com> <8aa486160612100706y92bc722n93374e394fc58005@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v752.2)
+Content-Type: text/plain; charset=ISO-8859-1;
+	delsp=yes	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Fri, 3 Nov 2006 11:22:08 +0000 (UTC)
-Cc: Petr Baudis <pasky@suse.cz>,
-	Catalin Marinas <catalin.marinas@gmail.com>,
-	git@vger.kernel.org
+NNTP-Posting-Date: Sun, 10 Dec 2006 17:47:15 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061103105349.GA18651@diana.vm.bytemark.co.uk> (Karl
-	=?iso-8859-1?Q?Hasselstr=F6m's?= message of "Fri, 3 Nov 2006 11:53:49
- +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+In-Reply-To: <8aa486160612100706y92bc722n93374e394fc58005@mail.gmail.com>
+X-Mailer: Apple Mail (2.752.2)
+X-Brightmail-Tracker: AAAAAA==
+X-Brightmail-scanned: yes
+X-Proofpoint-Virus-Version: vendor=fsecure engine=4.65.5446:2.3.11,1.2.37,4.0.164 definitions=2006-12-10_01:2006-12-08,2006-12-08,2006-12-10 signatures=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0 ipscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx engine=3.1.0-0611300000 definitions=main-0612100007
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30828>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gfx79-0005rX-1j for gcvg-git@gmane.org; Fri, 03 Nov
- 2006 12:21:35 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33908>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GtSlb-0006qN-KI for gcvg-git@gmane.org; Sun, 10 Dec
+ 2006 18:47:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753227AbWKCLVc convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Fri, 3 Nov 2006 06:21:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753229AbWKCLVc
- (ORCPT <rfc822;git-outgoing>); Fri, 3 Nov 2006 06:21:32 -0500
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:50611 "EHLO
- fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP id S1753227AbWKCLVb
- convert rfc822-to-8bit (ORCPT <rfc822;git@vger.kernel.org>); Fri, 3 Nov 2006
- 06:21:31 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao04.cox.net
- (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
- <20061103112130.RYXW22409.fed1rmmtao04.cox.net@fed1rmimpo02.cox.net>; Fri, 3
- Nov 2006 06:21:30 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id iBMa1V0091kojtg0000000 Fri, 03 Nov 2006
- 06:21:35 -0500
-To: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+ S1762287AbWLJRrI convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Sun, 10 Dec 2006 12:47:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762288AbWLJRrI
+ (ORCPT <rfc822;git-outgoing>); Sun, 10 Dec 2006 12:47:08 -0500
+Received: from smtpout.mac.com ([17.250.248.177]:63389 "EHLO smtpout.mac.com"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1762287AbWLJRrH
+ convert rfc822-to-8bit (ORCPT <rfc822;git@vger.kernel.org>); Sun, 10 Dec 2006
+ 12:47:07 -0500
+Received: from mac.com (smtpin01-en2 [10.13.10.146]) by smtpout.mac.com
+ (Xserve/8.12.11/smtpout07/MantshX 4.0) with ESMTP id kBAHkxON019290; Sun, 10
+ Dec 2006 09:46:59 -0800 (PST)
+Received: from [10.0.7.253] (hc6524e82.dhcp.vt.edu [198.82.78.130])
+ (authenticated bits=0) by mac.com (Xserve/smtpin01/MantshX 4.0) with ESMTP id
+ kBAHksrJ009486 (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+ Sun, 10 Dec 2006 09:46:56 -0800 (PST)
+To: =?ISO-8859-1?Q?Santi_B=E9jar?= <sbejar@gmail.com>, Jeff Garzik
+ <jeff@garzik.org>
 Sender: git-owner@vger.kernel.org
 
-Karl Hasselstr=F6m <kha@treskal.com> writes:
+> On 12/10/06, Kyle Moffett <mrmacman_g4@mac.com> wrote:
+>> I've recently become somewhat interested in the idea of using GIT =20
+>> to store the contents of various folders in /etc.  However after a =20
+>> bit of playing with this, I discovered that GIT doesn't actually =20
+>> preserve all permission bits since that would cause problems with =20
+>> the more traditional software development model.  I'm curious if =20
+>> anyone has done this before; and if so, how they went about =20
+>> handling the permissions and ownership issues.
+>>
+>> I spent a little time looking over how GIT stores and compares =20
+>> permission bits; trying to figure out if it's possible to patch in =20
+>> a new configuration variable or two; say "preserve_all_perms" and =20
+>> "preserve_owner", or maybe even "save_acls".  It looks like =20
+>> standard permission preservation is fairly basic; you would just =20
+>> need to patch a few routines which alter the permissions read in =20
+>> from disk or compare them with ones from the database.  On the =20
+>> other hand, it would appear that preserving ownership or full =20
+>> POSIX ACLs might be a bit of a challenge.
 
-> One thing is certain, though: When I sent 8bit-encoded patches from
-> StGIT to this list, the vger mail server added headers saying that it
-> didn't like 8bit, and had re-encoded the mail (to what, I don't recal=
-l
-> just now). It warned that in doing so, it had to make assumptions
-> about the charset used. The assumption it had made was that the text
-> was latin1, which is not so good when it is in fact utf8.
+On Dec 10, 2006, at 10:06:14, Santi B=E9jar wrote:
+> I have not used it, but you could try:
 >
-> This all just strengthens my belief that StGIT should go to great
-> legths to avoid stepping on mail servers' toes.
+> http://www.isisetup.ch/
+>
+> that uses git as a backend.
 
-I wonder if this can be solved by simply reusing the machinery
-format-patch already has.  If calling it as a standalone script
-does more unnecessary things than what StGIT wants, we should
-certainly be able to separate the only necessary part out to
-suit StGIT's needs.
+Wow, umm, that's actually really interesting for me, given that I'm =20
+most interested in these sorts of things on Debian.  I can't find =20
+much documentation on their site; the tools look vaguely immature but =20
+I haven't really had much time to look at it yet.
 
+On Dec 10, 2006, at 09:49:50, Jeff Garzik wrote:
+> It's a great idea, something I would like to do, and something I've =20
+> suggested before.  You could dig through the mailing list archives, =20
+> if you're motivated.
+
+I have been digging through the archives; I was just holding out hope =20
+that somebody else on the list had already halfway beat me to the =20
+punch.  Guess not :-D
+
+> I actively use git to version, store and distribute an exim mail =20
+> configuration across six servers.  So far my solution has been a =20
+> 'fix perms' script, or using the file perm checking capabilities of =20
+> cfengine.
+>
+> But it would be a lot better if git natively cared about ownership =20
+> and permissions (presumably via an option).
+
+I was thinking about a standard config option in the GIT config file, =20
+that way users could have a personal default and repositories could =20
+specify it locally.
+
+I started tinkering but quickly discovered that permissions handling =20
+in general in GIT seems to be a mess; there's about 4 different tiers =20
+where permissions data is manipulated in various formats.  Some =20
+places use network-endian 16-bit values, there's a couple functions =20
+which do different truncations to 644 or 755 format.  There are 2 =20
+functions which canonicalize the file mode based on symlink or =20
+directory status, each in subtly different ways.
+
+I'm slowly sorting through things but if I could get a few pointers =20
+from someone intimately familiar with the code that would be most =20
+appreciated:  I'd like to try to add new entries to tree objects =20
+which older versions of GIT would ignore but which newer versions of =20
+GIT would use to store ACL or extended-attribute data.
+
+The simplest solution which admittedly breaks the ability of older =20
+GITs to read the data from a file with attributes (ignoring the ext-=20
+attrs themselves) is to create a new "file-with-extended-attributes" =20
+object which contains a binary concatenation (with length bytes and =20
+attribute names and such) of the file and its extended attributes.  =20
+That breaks the old GIT assumption that permission and security data =20
+is part of the directory not the file, but it's more in-line with the =20
+way extended attributes are attached to the inodes in the filesystem =20
+(although that doesn't really matter IMO).
+
+Alternatively I might be able to add a new entry to each tree object =20
+with invalid extended file mods bits (IE: Neither a directory, a =20
+file, nor a symlink), or perhaps an entry with an empty name, which =20
+points to a new "extended attribute table".  That table could either =20
+map from (entry, attribute) =3D> (data) or from (entry) =3D> =20
+((attribute,data),(attribute,data),[...]), depending on which would =20
+be more efficient.  It's essential that the overhead for non-ext-attr =20
+repositories is O(1) and ideally the overhead for a bunch of files =20
+with the same ext-attr is O(size-of-ext-attr) + O(number-of-files-=20
+with-that-attr), although that may vary depending on implementation.
+
+Advice, opinions, problems, and "this-has-no-chance-of-ever-even-=20
+remotely-working" are all useful and welcome!
+
+Cheers,
+Kyle Moffett
