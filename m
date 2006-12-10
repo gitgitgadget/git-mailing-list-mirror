@@ -1,98 +1,95 @@
-Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
-X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
-	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B3E8520193
-	for <e@80x24.org>; Thu, 11 Aug 2016 19:11:47 +0000 (UTC)
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751975AbcHKTLq (ORCPT <rfc822;e@80x24.org>);
-	Thu, 11 Aug 2016 15:11:46 -0400
-Received: from smtp-out-1.talktalk.net ([62.24.135.65]:60017 "EHLO
-	smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750856AbcHKTLp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Aug 2016 15:11:45 -0400
-Received: from PhilipOakley ([92.22.69.35])
-	by smtp.talktalk.net with SMTP
-	id XvOJbUS640KuvXvOJbHxzP; Thu, 11 Aug 2016 20:11:43 +0100
-X-Originating-IP: [92.22.69.35]
-X-Spam:	0
-X-OAuthority: v=2.2 cv=RZjSMBlv c=1 sm=1 tr=0 a=118V6UEFpCLMRzptT8w30g==:117
- a=118V6UEFpCLMRzptT8w30g==:17 a=8nJEP1OIZ-IA:10 a=ybZZDoGAAAAA:8
- a=pGLkceISAAAA:8 a=xtxXYLxNAAAA:8 a=P86X7i9WwggY1kuPCiMA:9
- a=0RhZnL1DYvcuLYC8JZ5M:22 a=6kGIvZw6iX1k4Y-7sg4_:22 a=xts0dhWdiJbonKbuqhAr:22
-Message-ID: <75D9C1DBD21648F0B2511AA183C20CCD@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-From:	"Philip Oakley" <philipoakley@iee.org>
-To:	"Junio C Hamano" <gitster@pobox.com>,
-	"Jacob Keller" <jacob.keller@gmail.com>
-Cc:	"Git List" <git@vger.kernel.org>
-References: <D8F2D8316A4C4E198C6847C1165A8811@PhilipOakley><CA+P7+xpyCQLsEHE-Hqqob5mQisW=aw1gC+5f6Qq3q01etjX2Ng@mail.gmail.com><CA+P7+xrBegRdS-HXi2SfO0Uu6N=gUVVp_F29GCb1rQn9cnxnHQ@mail.gmail.com> <xmqq4m6r2npv.fsf@gitster.mtv.corp.google.com>
-Subject: Re: Can cc's be included in patches sent by send-email
-Date:	Thu, 11 Aug 2016 20:11:42 +0100
-Organization: OPDS
-MIME-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-CMAE-Envelope: MS4wfDsSYg1i8uCu8pn2Km3w+XC3519iFqVsiJ7CKfUflloWEoHdZZbCd+cOwHIIdtBiA9anDA68Ih2rC3lZ9MLd3HCgFDo3SgvLrd2ICxCtlTD9SvKU+brL
- +3yIXFUbhIRkpbk4XYXJAAr91EzXHbWo2ZmoNcJNfRdDcTblx7E4VwR/33I8PT7PlfPheTdyUGk3A21/CQjs+T3kE55p0UcppSu2bEceMkNyDpNwLNoKJs/X
-Sender:	git-owner@vger.kernel.org
+X-Spam-ASN: AS31976 209.132.176.0/21
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Arkadiusz Miskiewicz <arekm@maven.pl>
+Subject: Re: reexporting git repository via git-daemon
+Date: Sun, 10 Dec 2006 17:42:44 +0100
+Organization: SelfOrganizing
+Message-ID: <200612101742.44564.arekm@maven.pl>
+References: <200612082212.09682.arekm@maven.pl>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Sun, 10 Dec 2006 16:43:10 +0000 (UTC)
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git@gmane.org
+User-Agent: KMail/1.9.5
+In-Reply-To: <200612082212.09682.arekm@maven.pl>
+Content-Disposition: inline
+X-Authenticated-Id: arekm
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List:	git@vger.kernel.org
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33900>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GtRlZ-0000Mw-Vz for gcvg-git@gmane.org; Sun, 10 Dec
+ 2006 17:43:06 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
+ S1762257AbWLJQnD convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Sun, 10 Dec 2006 11:43:03 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762258AbWLJQnC
+ (ORCPT <rfc822;git-outgoing>); Sun, 10 Dec 2006 11:43:02 -0500
+Received: from outgoing1.smtp.agnat.pl ([193.239.44.83]:55482 "EHLO
+ outgoing1.smtp.agnat.pl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1762257AbWLJQnA convert rfc822-to-8bit (ORCPT
+ <rfc822;git@vger.kernel.org>); Sun, 10 Dec 2006 11:43:00 -0500
+Received: from [83.11.40.170] (helo=[192.168.0.64]) by tekla.agnat.pl with
+ esmtpsa (TLSv1:DHE-RSA-AES256-SHA:256) (Exim 4.63) (envelope-from
+ <arekm@maven.pl>) id 1GtRlK-0005wu-EM for git@vger.kernel.org; Sun, 10 Dec
+ 2006 17:42:50 +0100
+To: git@vger.kernel.org
+Sender: git-owner@vger.kernel.org
 
-From: "Junio C Hamano" <gitster@pobox.com>
-> Jacob Keller <jacob.keller@gmail.com> writes:
+On Friday 08 December 2006 22:12, Arkadiusz Miskiewicz wrote:
+
+> strace on git-daemon side:
+> [...]
+> 18241 lstat("refs/tags/v1.4.1-rc2", {st_mode=3DS_IFREG|0644, st_size=3D=
+41,
+> ...}) =3D 0
+> 18241 open("refs/tags/v1.4.1-rc2", O_RDONLY) =3D 7
+> 18241 read(7, "33c9db007159db11c1ad5fa7101ea95853740acf\n", 255) =3D =
+41
+> 18241 close(7)                          =3D 0
+> 18241 write(1, "004233c9db007159db11c1ad5fa7101ea95853740acf
+> refs/tags/v1.4.1-rc2\n", 66) =3D 66
+> 18241 write(1, "0045abc02670169cee9541793a86324a014272ca8ed5
+> refs/tags/v1.4.1-rc2^{}\n", 69) =3D 69
+> 18241 stat("refs/tags/v1.4.1.1", {st_mode=3DS_IFREG|0644, st_size=3D4=
+1, ...}) =3D
+> 0 18241 lstat("refs/tags/v1.4.1.1", {st_mode=3DS_IFREG|0644, st_size=3D=
+41,
+> ...}) =3D 0 18241 open("refs/tags/v1.4.1.1", O_RDONLY) =3D 7
+> 18241 read(7, "8419a453dc088b25b63ab1746d3d7e679caf686d\n", 255) =3D =
+41
+> 18241 close(7)
+> 18241 write(1, "00408419a453dc088b25b63ab1746d3d7e679caf686d
+> refs/tags/v1.4.1.1\n", 64) =3D 64
+> 18241 write(2, "fatal: ", 7)            =3D 7
+> 18241 write(2, "corrupted pack
+> file ./objects/pack/pack-0bb22295a585ac173504a2f8dfb3e31e074a8715.pac=
+k",
+> 85) =3D 85
+> 18241 write(2, "\n", 1)
 >
->> On Thu, Aug 11, 2016 at 12:58 AM, Jacob Keller <jacob.keller@gmail.com> 
->> wrote:
->>> On Thu, Aug 11, 2016 at 12:32 AM, Philip Oakley <philipoakley@iee.org> 
->>> wrote:
->>>> While 'git send-email' can have multiple --cc="addressee" options on 
->>>> the
->>>> command line, is it possible for the "cc:addressee<a@b.c>" to actually 
->>>> be
->>>> included in the patches that are to be sent, so that different patches 
->>>> can
->>>> have different addressee?
->>>>
->>>> The fortmat-patch can include appropriate from lines, so it feels as if 
->>>> the
->>>> sender should be able to add cc: lines at the same place. Maybe its 
->>>> just
->>>> part of th docs I've missed.
->>>>
->>>
->>> Yes, just put them in the body as tags below the signed-off-by. It
->>> should be on by default unless you change supresscc or signedoffbycc
->>> configuration.
->>>
->>> Thanks,
->>> Jake
->>>
->>
->> See --suppress-cc or --signed-off-by-cc help in git help send-email.
->
-> Also, those who do not want to see Cc: in headers (like me) can
-> instead edit the header part of the format-patch output to add Cc:
-> lines and they should be picked up.
-> --
-When done via git gui, it looks like the Cc: is also included in the commit 
-message (first initial tries)
+> 100% repeatable at this moment. Any ideas?
 
-I'd probably place them after a --- break so that they don't get into the 
-applied commit message, but will carry around during my rebasing. I've still 
-to test if it works though.
+after:
+$  git repack -a -d
+Generating pack...
+Done counting 33587 objects.
+Deltifying 33587 objects.
+ 100% (33587/33587) done
+Writing 33587 objects.
+ 100% (33587/33587) done
+Total 33587, written 33587 (delta 23205), reused 33587 (delta 23205)
+Pack pack-bc830a5d1c2efa3b727ef9af8faba13c3e719395 created.
 
-Philip 
+the problem disapears and I can safely reexport git repository.
 
+Does anyone care about this bug in git?
+
+--=20
+Arkadiusz Mi=B6kiewicz        PLD/Linux Team
