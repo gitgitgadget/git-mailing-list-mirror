@@ -1,102 +1,90 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH 1/2] add for_each_reflog_ent() iterator
-Date: Mon, 18 Dec 2006 01:40:04 -0800
-Message-ID: <7vzm9lzgnf.fsf@assigned-by-dhcp.cox.net>
-References: <7vodq3a136.fsf@assigned-by-dhcp.cox.net>
+From: Nicolas Vilz <niv@iaglans.de>
+Subject: Problems with git-svn authors file
+Date: Sun, 10 Dec 2006 18:26:05 +0100
+Message-ID: <20061210172604.GA18385@hermes.lan.home.vilz.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Mon, 18 Dec 2006 09:40:16 +0000 (UTC)
+NNTP-Posting-Date: Sun, 10 Dec 2006 17:26:40 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <7vodq3a136.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Sat, 16 Dec 2006 15:10:53 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Virus-Scanned: Debian amavisd-new at vsectoor.geht-ab-wie-schnitzel.de
+Content-Disposition: inline
+X-message-flag: Please send plain text messages only. Thank you.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34733>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33903>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GwEyi-0007uu-8M for gcvg-git@gmane.org; Mon, 18 Dec
- 2006 10:40:12 +0100
+ esmtp (Exim 4.50) id 1GtSRh-0004UB-Lr for gcvg-git@gmane.org; Sun, 10 Dec
+ 2006 18:26:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753645AbWLRJkI (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 18 Dec 2006
- 04:40:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753648AbWLRJkH
- (ORCPT <rfc822;git-outgoing>); Mon, 18 Dec 2006 04:40:07 -0500
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:33343 "EHLO
- fed1rmmtao11.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1753645AbWLRJkG (ORCPT <rfc822;git@vger.kernel.org>); Mon, 18 Dec 2006
- 04:40:06 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao11.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061218094005.RVPS25875.fed1rmmtao11.cox.net@fed1rmimpo02.cox.net>; Mon, 18
- Dec 2006 04:40:05 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id 09gH1W00G1kojtg0000000; Mon, 18 Dec 2006
- 04:40:17 -0500
+ S1762269AbWLJR0f (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 10 Dec 2006
+ 12:26:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762273AbWLJR0f
+ (ORCPT <rfc822;git-outgoing>); Sun, 10 Dec 2006 12:26:35 -0500
+Received: from geht-ab-wie-schnitzel.de ([217.69.165.145]:2921 "EHLO
+ vsectoor.geht-ab-wie-schnitzel.de" rhost-flags-OK-OK-OK-OK) by
+ vger.kernel.org with ESMTP id S1762269AbWLJR0e (ORCPT
+ <rfc822;git@vger.kernel.org>); Sun, 10 Dec 2006 12:26:34 -0500
+Received: from localhost (localhost [127.0.0.1]) by
+ vsectoor.geht-ab-wie-schnitzel.de (Postfix) with ESMTP id EAC853E77 for
+ <git@vger.kernel.org>; Sun, 10 Dec 2006 18:26:31 +0100 (CET)
+Received: from vsectoor.geht-ab-wie-schnitzel.de ([127.0.0.1]) by localhost
+ (vsectoor.geht-ab-wie-schnitzel.de [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id 2u+G67VcWpIJ for <git@vger.kernel.org>; Sun, 10 Dec 2006
+ 18:26:07 +0100 (CET)
+Received: from localhost (hermes.lan.home.vilz.de [192.168.100.26]) (using
+ TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate
+ requested) by vsectoor.geht-ab-wie-schnitzel.de (Postfix) with ESMTP id
+ 4887C3E6A for <git@vger.kernel.org>; Sun, 10 Dec 2006 18:26:06 +0100 (CET)
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
+hello,
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
- refs.c |   25 +++++++++++++++++++++++++
- refs.h |    4 ++++
- 2 files changed, 29 insertions(+), 0 deletions(-)
+i tried to use git-svn with author-files and got stuck with following
+error message:
 
-diff --git a/refs.c b/refs.c
-index d911b9e..db8fdd4 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1093,3 +1093,28 @@ int read_ref_at(const char *ref, unsigned long at_time, int cnt, unsigned char *
- 		logfile, show_rfc2822_date(date, tz));
- 	return 0;
- }
-+
-+void for_each_reflog_ent(const char *ref, each_reflog_ent_fn fn, void *cb_data)
-+{
-+	const char *logfile;
-+	FILE *logfp;
-+	char buf[1024];
-+
-+	logfile = git_path("logs/%s", ref);
-+	logfp = fopen(logfile, "r");
-+	if (!logfp)
-+		return;
-+	while (fgets(buf, sizeof(buf), logfp)) {
-+		unsigned char osha1[20], nsha1[20];
-+		int len;
-+
-+		/* old SP new SP name <email> SP time TAB msg LF */
-+		len = strlen(buf);
-+		if (len < 83 || buf[len-1] != '\n' ||
-+		    get_sha1_hex(buf, osha1) || buf[40] != ' ' ||
-+		    get_sha1_hex(buf + 41, nsha1) || buf[81] != ' ')
-+			continue; /* corrupt? */
-+		fn(osha1, nsha1, buf+82, cb_data);
-+	}
-+	fclose(logfp);
-+}
-diff --git a/refs.h b/refs.h
-index 51aab1e..de43cc7 100644
---- a/refs.h
-+++ b/refs.h
-@@ -44,6 +44,10 @@ extern int write_ref_sha1(struct ref_lock *lock, const unsigned char *sha1, cons
- /** Reads log for the value of ref during at_time. **/
- extern int read_ref_at(const char *ref, unsigned long at_time, int cnt, unsigned char *sha1);
- 
-+/* iterate over reflog entries */
-+typedef int each_reflog_ent_fn(unsigned char *osha1, unsigned char *nsha1, char *, void *);
-+void for_each_reflog_ent(const char *ref, each_reflog_ent_fn fn, void *cb_data);
-+
- /** Returns 0 if target has the right format for a ref. **/
- extern int check_ref_format(const char *target);
- 
--- 
-1.4.4.2.gc30f
+Use of uninitialized value in hash element at /usr/bin/git-svn line
+2952.
+Use of uninitialized value in concatenation (.) or string at
+/usr/bin/git-svn line 2953.
+Author:  not defined in .git/info/svn-authors file
+512 at /usr/bin/git-svn line 457
+        main::fetch_lib() called at /usr/bin/git-svn line 328
+        main::fetch() called at /usr/bin/git-svn line 187
 
+
+my svn-authors file looks like this:
+---->8-----------------
+username = Real Name <email@address>
+---->8-----------------
+It is placed in .git/info/svn-authors and is configured via
+svn.authorsfile. I tried to dig in the code and it says at line 2952 if
+there is an $_author variable defined and no $users{$author}, then die
+with that message... 
+
+above function load_authors i have found
+
+# '<svn username> = real-name <email address>' mapping based on git-svnimport:
+
+now i am a bit confused, because the manual says, the svn-authors file
+looks like my file above and here it sounds like 
+
+<svn username> = real-name <email address>
+
+is the real syntax for that file...
+
+If i ommit the -A or --authors-file= parameter (or unset the
+svn.authorsfile config-parameter)  while git-svn fetch, afterwards in 
+gitk --all, there is only the svn-username and the revision-uuid.
+
+Am i doing something wrong?
+
+Sincerly
