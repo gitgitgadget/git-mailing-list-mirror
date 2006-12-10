@@ -1,65 +1,55 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: Bash completion Issue?
-Date: Sat, 4 Nov 2006 23:28:49 -0500
-Message-ID: <20061105042849.GA3840@spearce.org>
-References: <200611041236.59989.alan@chandlerfamily.org.uk> <20061104184120.GB2311@spearce.org> <200611050033.07716.alan@chandlerfamily.org.uk>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 2/3] merge-recursive: make empty tree a known object
+Date: Mon, 11 Dec 2006 00:16:30 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0612110015410.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20061207101707.GA19139@spearce.org>
+ <Pine.LNX.4.63.0612100055390.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.64.0612101030390.12500@woody.osdl.org> <7vpsar4fcu.fsf@assigned-by-dhcp.cox.net>
+ <7vpsar2xom.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sun, 5 Nov 2006 04:29:09 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Sun, 10 Dec 2006 23:16:41 +0000 (UTC)
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org,
+	"Shawn O. Pearce" <spearce@spearce.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <200611050033.07716.alan@chandlerfamily.org.uk>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <7vpsar2xom.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30945>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GgZd0-0007Gr-HC for gcvg-git@gmane.org; Sun, 05 Nov
- 2006 05:29:02 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33957>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GtXuN-0006yK-BW for gcvg-git@gmane.org; Mon, 11 Dec
+ 2006 00:16:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S965838AbWKEE2z (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 4 Nov 2006
- 23:28:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965839AbWKEE2y
- (ORCPT <rfc822;git-outgoing>); Sat, 4 Nov 2006 23:28:54 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:14268 "EHLO
- corvette.plexpod.net") by vger.kernel.org with ESMTP id S965838AbWKEE2y
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 4 Nov 2006 23:28:54 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1GgZce-0006LH-5S; Sat, 04 Nov 2006 23:28:40 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- 5053220E491; Sat,  4 Nov 2006 23:28:50 -0500 (EST)
-To: Alan Chandler <alan@chandlerfamily.org.uk>
+ S1760836AbWLJXQc (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 10 Dec 2006
+ 18:16:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760327AbWLJXQc
+ (ORCPT <rfc822;git-outgoing>); Sun, 10 Dec 2006 18:16:32 -0500
+Received: from mail.gmx.net ([213.165.64.20]:48993 "HELO mail.gmx.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S1760836AbWLJXQc
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 10 Dec 2006 18:16:32 -0500
+Received: (qmail invoked by alias); 10 Dec 2006 23:16:30 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp019) with SMTP; 11 Dec 2006 00:16:30 +0100
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Alan Chandler <alan@chandlerfamily.org.uk> wrote:
-> Well I have something like this (with git 1.4.3.3)
-> 
-> # 'git' bash completion and library routines used by porcelain completions.
-> #
-> # Copyright (c) Paolo Giarrusso, 2005
-> # Copyright (c) Ben Clifford, 2005
-> #
-> # The master version is available at:
-> #       http://www.hawaga.org.uk/gitcompletion.git
+Hi,
 
-Maybe you can nicely ask the Debian maintainer to switch to using
-use the completion script that is actually shipped with git 1.4.3.3?
+On Sun, 10 Dec 2006, Junio C Hamano wrote:
 
--- 
+> Implement "well known" built-in objects.
+
+Acked-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+
+Ciao,
