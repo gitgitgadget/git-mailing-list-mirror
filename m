@@ -1,80 +1,78 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Cleaning up git user-interface warts
-Date: Tue, 05 Dec 2006 14:58:47 -0800
-Message-ID: <7vy7pmdk60.fsf@assigned-by-dhcp.cox.net>
-References: <87k61yt1x2.wl%cworth@cworth.org> <455A1137.8030301@shadowen.org>
-	<87hcx1u934.wl%cworth@cworth.org>
-	<Pine.LNX.4.64.0611141518590.2591@xanadu.home>
-	<87bqn9u43s.wl%cworth@cworth.org> <ejdcg5$4fl$1@sea.gmane.org>
-	<Pine.LNX.4.64.0611141633430.2591@xanadu.home>
-	<7vbqn9y6w6.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0611142007010.2591@xanadu.home>
-	<7v3b8ltq7r.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0611142306090.2591@xanadu.home>
-	<Pine.LNX.4.64.0611150950170.3349@woody.osdl.org>
-	<455BBCE9.4050503@xs4all.nl>
-	<Pine.LNX.4.64.0611151908130.3349@woody.osdl.org>
-	<455C412D.1030408@xs4all.nl> <7v7ixvbq80.fsf@assigned-by-dhcp.cox.net>
-	<455C618A.7080309@xs4all.nl> <ejkd6g$vog$1@sea.gmane.org>
-	<4566E512.4010405@xs4all.nl>
-	<Pine.LNX.4.63.0612052340260.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH 2/3] merge-recursive: make empty tree a known object
+Date: Sun, 10 Dec 2006 10:37:57 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0612101030390.12500@woody.osdl.org>
+References: <20061207101707.GA19139@spearce.org>
+ <Pine.LNX.4.63.0612100055390.28348@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 5 Dec 2006 22:58:56 +0000 (UTC)
-Cc: git@vger.kernel.org, Han-Wen Nienhuys <hanwen@xs4all.nl>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Sun, 10 Dec 2006 18:38:20 +0000 (UTC)
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <Pine.LNX.4.63.0612052340260.28348@wbgn013.biozentrum.uni-wuerzburg.de>
-	(Johannes Schindelin's message of "Tue, 5 Dec 2006 23:42:46 +0100
-	(CET)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+In-Reply-To: <Pine.LNX.4.63.0612100055390.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+X-MIMEDefang-Filter: osdl$Revision: 1.162 $
+X-Scanned-By: MIMEDefang 2.36
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33385>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33915>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GrjFV-0002ko-Qc for gcvg-git@gmane.org; Tue, 05 Dec
- 2006 23:58:54 +0100
+ esmtp (Exim 4.50) id 1GtTYz-0003fN-Fx for gcvg-git@gmane.org; Sun, 10 Dec
+ 2006 19:38:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S966263AbWLEW6u (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 5 Dec 2006
- 17:58:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966205AbWLEW6u
- (ORCPT <rfc822;git-outgoing>); Tue, 5 Dec 2006 17:58:50 -0500
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:51895 "EHLO
- fed1rmmtao04.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S966263AbWLEW6t (ORCPT <rfc822;git@vger.kernel.org>); Tue, 5 Dec 2006
- 17:58:49 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao04.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061205225849.LHVQ7494.fed1rmmtao04.cox.net@fed1rmimpo02.cox.net>; Tue, 5
- Dec 2006 17:58:49 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id vAyy1V00L1kojtg0000000; Tue, 05 Dec 2006
- 17:58:58 -0500
+ S1762292AbWLJSiK (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 10 Dec 2006
+ 13:38:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762335AbWLJSiK
+ (ORCPT <rfc822;git-outgoing>); Sun, 10 Dec 2006 13:38:10 -0500
+Received: from smtp.osdl.org ([65.172.181.25]:47624 "EHLO smtp.osdl.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1762292AbWLJSiJ
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 10 Dec 2006 13:38:09 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
+ smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kBAIbwID011951
+ (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Sun, 10
+ Dec 2006 10:38:01 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
+ shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kBAIbv6N031715; Sun, 10 Dec
+ 2006 10:37:58 -0800
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> On Fri, 24 Nov 2006, Han-Wen Nienhuys wrote:
->
->> The recently posted patch documenting is an improvement, but why not
->> add an option so you can do
->> 
->>   --format 'committer %c\nauthor %a\n'
->>   
->> this catches all combinations, and is easier for scripting.
->
-> Yes, it would be easier for scripting, and it would probably be relatively 
-> easy, what with the addition of interpolate.[ch] to git. However, it is 
-> work, and I am lazy.
 
-Lazy is good when the details should not matter.  If some people
-are scripting, they are fully capable of reading raw or fuller.
+On Sun, 10 Dec 2006, Johannes Schindelin wrote:
+> 
+> To use it in diff_tree_sha1(), a tree has to be hashed in the
+> global object collection. This actually moves the empty tree (if
+> it is needed) into the global object hash.
 
+I think you should do this more generically.
+
+If we create this kind of "default fake object" that we know about whether 
+the object _really_ exists or not (and I agree it makes sense for the 
+empty tree), we should probably use it for "diff_root_tree_sha1()" too, 
+rather than the special case we have now.
+
+In other words, right now we have that very special 
+"diff_root_tree_sha1()" function, but if you create a generic fake "empty 
+tree" SHA1 that git knows about implicitly, we could entirely replace it 
+with just using
+
+	diff_tree_sha1(EMPTY_TREE_SHA1, tree, base, opt);
+
+instead, and get rid of that special case code (which is efficient, but we 
+don't really _need_ the efficiency).
+
+So you could make "read_sha1_file()" just have a special case for known 
+objects at the end. If the pack entry fails, the loose file case fails, 
+then rather than returning NULL at the end, you could have a list of known 
+fixed objects..
+
+Hmm?
 
