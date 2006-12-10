@@ -1,123 +1,75 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Han-Wen Nienhuys <hanwen@xs4all.nl>
-Subject: Re: Cleaning up git user-interface warts
-Date: Fri, 17 Nov 2006 01:27:53 +0100
-Message-ID: <455D0209.7070608@xs4all.nl>
-References: <87k61yt1x2.wl%cworth@cworth.org> <455A1137.8030301@shadowen.org>	<87hcx1u934.wl%cworth@cworth.org>	<Pine.LNX.4.64.0611141518590.2591@xanadu.home>	<87bqn9u43s.wl%cworth@cworth.org> <ejdcg5$4fl$1@sea.gmane.org>	<Pine.LNX.4.64.0611141633430.2591@xanadu.home>	<7vbqn9y6w6.fsf@assigned-by-dhcp.cox.net>	<Pine.LNX.4.64.0611142007010.2591@xanadu.home>	<7v3b8ltq7r.fsf@assigned-by-dhcp.cox.net>	<Pine.LNX.4.64.0611142306090.2591@xanadu.home>	<Pine.LNX.4.64.0611150950170.3349@woody.osdl.org>	<455BBCE9.4050503@xs4all.nl>	<Pine.LNX.4.64.0611151908130.3349@woody.osdl.org>	<Pine.LNX.4.63.0611162353250.13772@wbgn013.biozentrum.uni-wuerzburg.de>	<Pine.LNX.4.64.0611161508530.3349@woody.osdl.org>	<455CFCBD.8040901@xs4all.nl> <7vmz6r2amf.fsf@assigned-by-dhcp.cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: kernel.org mirroring (Re: [GIT PULL] MMC update)
+Date: Sun, 10 Dec 2006 14:02:50 +0100
+Message-ID: <200612101402.51363.jnareb@gmail.com>
+References: <Pine.LNX.4.64.0612020835110.3476@woody.osdl.org> <200612101109.34267.jnareb@gmail.com> <457C0060.3050605@garzik.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Fri, 17 Nov 2006 00:28:30 +0000 (UTC)
-Cc: git@vger.kernel.org
+NNTP-Posting-Date: Sun, 10 Dec 2006 13:00:43 +0000 (UTC)
+Cc: Martin Langhoff <martin.langhoff@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Linus Torvalds <torvalds@osdl.org>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Rogan Dawes <discard@dawes.za.net>,
+	Kernel Org Admin <ftpadmin@kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.8 (X11/20061107)
-In-Reply-To: <7vmz6r2amf.fsf@assigned-by-dhcp.cox.net>
-X-Virus-Scanned: by XS4ALL Virus Scanner
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=tZMAGdCaBfw2l+G9ql7AoD+m5TQA/rpthEKDDrccbZR9H7h4wvfeojCN7xPxUJk0PBlukBWWEmJV6PDIC/CJAzbiAkSFv7qZLXdcazeI6F9o6mYswQ6daKxSLW2aL36+q3ORv0ralsc3tk1H2x0Qy0Y1z6teCCF4r8FFatf9fYs=
+User-Agent: KMail/1.9.3
+In-Reply-To: <457C0060.3050605@garzik.org>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31643>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GkraW-0000Df-1G for gcvg-git@gmane.org; Fri, 17 Nov
- 2006 01:28:12 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33886>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GtOIJ-0005Jp-SB for gcvg-git@gmane.org; Sun, 10 Dec
+ 2006 14:00:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1424807AbWKQA14 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 16 Nov 2006
- 19:27:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1424808AbWKQA14
- (ORCPT <rfc822;git-outgoing>); Thu, 16 Nov 2006 19:27:56 -0500
-Received: from smtp-vbr11.xs4all.nl ([194.109.24.31]:54021 "EHLO
- smtp-vbr11.xs4all.nl") by vger.kernel.org with ESMTP id S1424807AbWKQA1z
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 16 Nov 2006 19:27:55 -0500
-Received: from [192.168.123.187] (muurbloem.xs4all.nl [213.84.26.127])
- (authenticated bits=0) by smtp-vbr11.xs4all.nl (8.13.8/8.13.8) with ESMTP id
- kAH0RnLf007838; Fri, 17 Nov 2006 01:27:49 +0100 (CET) (envelope-from
- hanwen@xs4all.nl)
-To: Junio C Hamano <junkio@cox.net>
+ S1760022AbWLJNAf (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 10 Dec 2006
+ 08:00:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760223AbWLJNAf
+ (ORCPT <rfc822;git-outgoing>); Sun, 10 Dec 2006 08:00:35 -0500
+Received: from ug-out-1314.google.com ([66.249.92.174]:47045 "EHLO
+ ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1760022AbWLJNAf (ORCPT <rfc822;git@vger.kernel.org>); Sun, 10 Dec
+ 2006 08:00:35 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so1092318uga for
+ <git@vger.kernel.org>; Sun, 10 Dec 2006 05:00:33 -0800 (PST)
+Received: by 10.67.106.3 with SMTP id i3mr8243579ugm.1165755633348; Sun, 10
+ Dec 2006 05:00:33 -0800 (PST)
+Received: from host-81-190-25-107.torun.mm.pl ( [81.190.25.107]) by
+ mx.google.com with ESMTP id 13sm4407841ugb.2006.12.10.05.00.32; Sun, 10 Dec
+ 2006 05:00:32 -0800 (PST)
+To: Jeff Garzik <jeff@garzik.org>
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano escreveu:
-> Han-Wen Nienhuys <hanwen@xs4all.nl> writes:
+Jeff Garzik wrote:
+> Jakub Narebski wrote:
+>>
+>> P.S. Any hints to how to do this with CGI Perl module?
 > 
->>  - clone but not a put-clone,
-> 
-> What's put-clone?  Care to explain?
+> It's impossible, Apache doesn't supply e-tag info to CGI programs.  (it 
+> does supply HTTP_CACHE_CONTROL though apparently)
 
-put clone would be the putative inverse of clone, ie. make a clone of
-a local repository on a remote server.
+By ETag info you mean access to HTTP headers sent by browser
+If-Modified-Since:, If-Match:, If-None-Match: do you?
+ 
+It's a pity that CGI interface doesn't cover that...
 
->>  - pull = merge + fetch, but no command for merge + throw
-> 
-> What's merge+throw?  Care to explain?
+> You could probably do it via mod_perl.
 
-throw is the hypothetical opposite of fetch. I agree that this is
-academical, because it's logical to only allow fast-forwards for
-sending revisions.
-
->>  - clone for getting all branches of a repo, but no command for
->>    updating all branches of a repo.  
-> 
-> This one I can understand, but how would you propose to "update
-> all branches", in other words what's your design for mapping
-> remote branch names to local branch namespaces?
-> 
-> It would be nice if the design does not straightjacket different
-> repository layouts different people seem to like, but I think it
-> would be Ok to limit ourselves only to support the straight
-> one-to-one mapping and support only separate-remote layout.
-
-I think the whole clone design is a bit broken, in that the "master"
-branch gets renamed or copied to "origin", but all of the other
-branches remain unchanged in their names.
-
-It's more logical for clone to either
-
- * leave all names unchanged
-
- * put all remote branches into a subdirectory.  This would also make
-   it easier to track branches from multiple servers.
-
-   At present,  I have in my build-daemon the following branches,
-
-	cvs-head-repo.or.cz-lilypond.git
-	hanwen-repo.or.cz-lilypond.git
-	hwn-jcn-repo.or.cz-lilypond.git
-	lilypond_1_0-repo.or.cz-lilypond.git
-	lilypond_1_2-repo.or.cz-lilypond.git
-	lilypond_1_4-repo.or.cz-lilypond.git
-	lilypond_1_6-repo.or.cz-lilypond.git
-	lilypond_1_8-repo.or.cz-lilypond.git
-	lilypond_2_0-repo.or.cz-lilypond.git
-	lilypond_2_2-repo.or.cz-lilypond.git
-	lilypond_2_3_2b-repo.or.cz-lilypond.git
-	lilypond_2_3_5b-repo.or.cz-lilypond.git
-	lilypond_2_4-repo.or.cz-lilypond.git
-	lilypond_2_6-repo.or.cz-lilypond.git
-	lilypond_2_8-repo.or.cz-lilypond.git
-	master-git.sv.gnu.org-lilypond.git
-	master-hanwen
-	master-repo.or.cz-lilypond.git
-	origin-repo.or.cz-lilypond.git
-	stable
-	stable-2.10
-	stable--2.10-git.sv.gnu.org-lilypond.git
-
-  It would solve lots of problems for me if cloning and fetching would
-  put branches into a subdirectory, ie.
-
-    git clone git://repo.or.cz/lilypond.git
-
-  leads to branches
-
-    repo.or.cz/lilypond_2_8
-    repo.or.cz/lilypond_2_6
-    repo.or.cz/lilypond_2_4
-    repo.or.cz/master
-     (etc..)
-
-	
+So the cache verification should be wrapped in if ($ENV{MOD_PERL}) ?
 -- 
+Jakub Narebski
