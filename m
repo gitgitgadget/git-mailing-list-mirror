@@ -1,74 +1,82 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-Subject: Re: Cleaning up git user-interface warts
-Date: Wed, 15 Nov 2006 22:12:35 +0100
-Message-ID: <200611152212.35978.Josef.Weidendorfer@gmx.de>
-References: <87k61yt1x2.wl%cworth@cworth.org> <200611152131.14883.Josef.Weidendorfer@gmx.de> <20061115203517.GN7201@pasky.or.cz>
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: kernel.org mirroring (Re: [GIT PULL] MMC update)
+Date: Sun, 10 Dec 2006 11:09:33 +0100
+Message-ID: <200612101109.34267.jnareb@gmail.com>
+References: <Pine.LNX.4.64.0612020835110.3476@woody.osdl.org> <200612091437.01183.jnareb@gmail.com> <46a038f90612092007w4637637aya1a01ec18ff16f6f@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain;
   charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 15 Nov 2006 21:12:54 +0000 (UTC)
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
-	Linus Torvalds <torvalds@osdl.org>,
-	Nicolas Pitre <nico@cam.org>, Junio C Hamano <junkio@cox.net>
+NNTP-Posting-Date: Sun, 10 Dec 2006 10:07:38 +0000 (UTC)
+Cc: "Jeff Garzik" <jeff@garzik.org>,
+	"Git Mailing List" <git@vger.kernel.org>,
+	"Linus Torvalds" <torvalds@osdl.org>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	"Rogan Dawes" <discard@dawes.za.net>,
+	"Kernel Org Admin" <ftpadmin@kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #352111
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=jEIV2g5xUL0JtIX1V46My8CD/ayg189PkAJ6+H8F3s54z5FxKoi2mdCPlRxJeWJxPtCUhRDiAcVh4YQk0MihwdBmFjW3knbnBhiF45ArMs8yz7uzKlRJ3uEjpqp5V54+IcVGhdqRcL5G7lM/gQdU13L0B19BZL5avmSUUUqURRo=
 User-Agent: KMail/1.9.3
-In-Reply-To: <20061115203517.GN7201@pasky.or.cz>
+In-Reply-To: <46a038f90612092007w4637637aya1a01ec18ff16f6f@mail.gmail.com>
 Content-Disposition: inline
-X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31498>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GkS3n-000121-RP for gcvg-git@gmane.org; Wed, 15 Nov
- 2006 22:12:44 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33874>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GtLak-0007tY-BS for gcvg-git@gmane.org; Sun, 10 Dec
+ 2006 11:07:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1161689AbWKOVMk (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
- 16:12:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161690AbWKOVMk
- (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 16:12:40 -0500
-Received: from mail.gmx.net ([213.165.64.20]:32986 "HELO mail.gmx.net") by
- vger.kernel.org with SMTP id S1161689AbWKOVMj (ORCPT
- <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 16:12:39 -0500
-Received: (qmail invoked by alias); 15 Nov 2006 21:12:37 -0000
-Received: from p5496A980.dip0.t-ipconnect.de (EHLO noname) [84.150.169.128]
- by mail.gmx.net (mp010) with SMTP; 15 Nov 2006 22:12:37 +0100
-To: Petr Baudis <pasky@suse.cz>
+ S1760617AbWLJKHU (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 10 Dec 2006
+ 05:07:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760612AbWLJKHU
+ (ORCPT <rfc822;git-outgoing>); Sun, 10 Dec 2006 05:07:20 -0500
+Received: from ug-out-1314.google.com ([66.249.92.173]:3282 "EHLO
+ ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1760615AbWLJKHS (ORCPT <rfc822;git@vger.kernel.org>); Sun, 10 Dec
+ 2006 05:07:18 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so1077584uga for
+ <git@vger.kernel.org>; Sun, 10 Dec 2006 02:07:17 -0800 (PST)
+Received: by 10.66.244.11 with SMTP id r11mr8070095ugh.1165745237372; Sun, 10
+ Dec 2006 02:07:17 -0800 (PST)
+Received: from host-81-190-25-107.torun.mm.pl ( [81.190.25.107]) by
+ mx.google.com with ESMTP id y1sm4331435uge.2006.12.10.02.07.16; Sun, 10 Dec
+ 2006 02:07:17 -0800 (PST)
+To: "Martin Langhoff" <martin.langhoff@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-On Wednesday 15 November 2006 21:35, Petr Baudis wrote:
-> On Wed, Nov 15, 2006 at 09:31:13PM CET, Josef Weidendorfer wrote:
-> > Often, I find myself doing "git branch" just to make sure that I am on
-> > "master", so that a following pull does not do a bogus merge.
-> > 
-> > Can we please disable this behavior, e.g. by allowing a fake first
-> > Pull line like "Pull: (not-for-merge)" to prohibit any merge?
+Martin Langhoff wrote:
+> On 12/10/06, Jakub Narebski <jnareb@gmail.com> wrote:
+
+>> Sending Last-Modified: should be easy; sending ETag needs some consensus
+>> on the contents: mainly about validation. Responding to If-Modified-Since:
+>> and If-None-Match: should cut at least _some_ of the page generating time.
+>> If ETag can be calculated on URL alone, then we can cut If-None-Match:
+>> just at beginning of script.
 > 
-> Wait, if you don't want pull to merge, why do you pull and not fetch?
+> Indeed. Let me add myself to the pileup agreeing that a combination of
+> setting Last-Modified and checking for If-Modified-Since for
+> ref-centric pages (log, shortlog, RSS, and summary) is the smartest
+> scheme. I got locked into thinking ETags.
 
-I am not really opposed to pull doing a merge. It only should work in
-a useful way: ie. only do the merge of updated origin branch when
-current branch is master (given "Pull: master:origin").
+Sometimes it is easier to use ETags, sometimes it is easier to use
+Last-Modified:. Usually you can check ETag earlier (after calling
+git-rev-list) than Last-Modified (after parsing first commit). But
+some pages doesn't have natural ETag...
 
-I want "git pull" being harmless if I find myself accidently on a
-branch != master. I always can do "git checkout master; git pull . origin"
-afterwards.
+Besides, because ETag is HTTP/1.1 we should provide and validate
+both.
 
-For this to work, I currently need to specify a "branch.<name>.merge"
-config for _every_ branch I have, as otherwise I get this bogus pull
-merge behavior. This is not needed if there was a way to configure no
-merge at all as default pull behavior.
-
-I just noted that allowing such a config option would be kind of a
-working compromise for all the people which want
-pull to be the opposite of push.
-
+P.S. Any hints to how to do this with CGI Perl module?
+-- 
+Jakub Narebski
