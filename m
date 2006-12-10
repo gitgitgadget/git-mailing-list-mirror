@@ -1,76 +1,76 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: [RFC] Submodules in GIT
-Date: Fri, 1 Dec 2006 13:59:58 +0000
-Message-ID: <200612011400.00262.andyparkins@gmail.com>
-References: <20061121223130.GA24909@nan92-1-81-57-214-146.fbx.proxad.net> <200612011216.04555.andyparkins@gmail.com> <20061201123447.GS18810@admingilde.org>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: Collection of stgit issues and wishes
+Date: Sun, 10 Dec 2006 23:24:32 +0000
+Message-ID: <b0943d9e0612101524w3a2cccecqdd12023233e8ec0c@mail.gmail.com>
+References: <20061208221744.GA3288@nan92-1-81-57-214-146.fbx.proxad.net>
+	 <200612101801.58247.jnareb@gmail.com>
+	 <b0943d9e0612101426l763d46cahe15683410cb4398d@mail.gmail.com>
+	 <200612110002.05847.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-15"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Fri, 1 Dec 2006 14:01:08 +0000 (UTC)
+NNTP-Posting-Date: Sun, 10 Dec 2006 23:25:06 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=n5zQNevGS4xjcDVVgeRw7mAhowxpn2+dpW8MAGGP3mSwB3+REi3l6oEXqDqwMQqXopNC820RqeM873v+hiVFDRknVfB4eDL5serACZXs80n/885h4CAXIrQAXNo+PiRgZlCdK1mAVo9/4Xzit/VL8eWHC0zSLWfd1Iwh3iJSX3E=
-User-Agent: KMail/1.9.5
-In-Reply-To: <20061201123447.GS18810@admingilde.org>
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=HDZ0xc7RTwMP39gw3SvuyKmGH5WM0pJlEiCBe+8w8MjYtUn3Ex0MbSzoSQD0M1rOUDlnswI4xdWqSmFrH5m5EcoRnxuiKF1/Ng6iG6z+rX/LgfBkrBo3qFN6WJHAsiDXs6Ci8kQvJvzIvqcq8Bly6wNjYttCNCaxIFSc987Whuk=
+In-Reply-To: <200612110002.05847.jnareb@gmail.com>
 Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32925>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gq8wQ-0003lS-E0 for gcvg-git@gmane.org; Fri, 01 Dec
- 2006 15:00:38 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33958>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GtY2T-0007km-Ek for gcvg-git@gmane.org; Mon, 11 Dec
+ 2006 00:24:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S967383AbWLAOAL (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
- 09:00:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967359AbWLAOAL
- (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 09:00:11 -0500
-Received: from ug-out-1314.google.com ([66.249.92.168]:59944 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S936509AbWLAOAJ
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 09:00:09 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so2428898uga for
- <git@vger.kernel.org>; Fri, 01 Dec 2006 06:00:07 -0800 (PST)
-Received: by 10.67.97.18 with SMTP id z18mr7208636ugl.1164981607317; Fri, 01
- Dec 2006 06:00:07 -0800 (PST)
-Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
- ESMTP id 59sm25576223ugf.2006.12.01.06.00.04; Fri, 01 Dec 2006 06:00:04 -0800
- (PST)
-To: git@vger.kernel.org
+ S1762424AbWLJXYe (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 10 Dec 2006
+ 18:24:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762526AbWLJXYe
+ (ORCPT <rfc822;git-outgoing>); Sun, 10 Dec 2006 18:24:34 -0500
+Received: from py-out-1112.google.com ([64.233.166.181]:60259 "EHLO
+ py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1762424AbWLJXYd (ORCPT <rfc822;git@vger.kernel.org>); Sun, 10 Dec
+ 2006 18:24:33 -0500
+Received: by py-out-1112.google.com with SMTP id a29so804133pyi for
+ <git@vger.kernel.org>; Sun, 10 Dec 2006 15:24:33 -0800 (PST)
+Received: by 10.65.38.13 with SMTP id q13mr9790395qbj.1165793072861; Sun, 10
+ Dec 2006 15:24:32 -0800 (PST)
+Received: by 10.65.133.7 with HTTP; Sun, 10 Dec 2006 15:24:32 -0800 (PST)
+To: "Jakub Narebski" <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-On Friday 2006 December 01 12:34, Martin Waitz wrote:
+On 10/12/06, Jakub Narebski <jnareb@gmail.com> wrote:
+> Catalin Marinas wrote:
+> > Yes, only for updating HEAD. The refs in refs/patches/<branch>/ are
+> > written directly. I initialy wanted to add patch history support using
+> > reflogs and added "git-update-ref -m ..." for the patch commits but I
+> > found slow the pushing operation a bit. Do you only want to track the
+> > reflogs for HEAD?
+>
+> Yes, I want for StGit to provide reasons when updating HEAD. I know that
+> StGit manages it's own versioning of patches not using reflog -- fine.
+> What matters for me is reflog for HEAD after "stg commit; stg clean".
 
-> It is exactly the aim of my implementation to not have any reference to
-> something that is not accessible in the supermodule repository.
+Just curious, do you run the "stg commit; stg clean" commands together
+and in this order? Neither of them would update the HEAD. The "commit"
+command simply removes the StGIT metadata for the applied patches
+since it no longer needs to track them (permanently stored to the
+repository). It doesn't change HEAD. The "clean" command only affects
+the HEAD if there are empty applied patches but after a "commit" there
+won't be any patches (only the unapplied ones which do not affect
+HEAD).
 
-Okay - I think you've put me right in another reply on this point - the 
-submodule commit is in the supermodule; that was the part I hadn't got.
-
-> Yes, you can't separate it my just moving it out of the supermodule,
-> but you can always clone the submodule alone.
-
-Ah - now that clarifies things a lot.  The fact that you can't separate it by 
-moving it implies lots of things that take away many of my earlier worries.
-
-> have a look at http://git.admingilde.org/tali/git.git/module2.
-> If you want to try it out, have a look at t/t7500-submodule.sh on how to
-> create submodules.
-
-Thanks.  I will look hard at this :-)  My apologies for bothering you so much 
-with all these questions.  I just got a bit interested in it all :-)
-
-
-Andy
+Maybe we could have reflog info for "push", "refresh", some undo
+operations. Are they of any use (I haven't used them so I can't tell)?
 
 -- 
-Dr Andy Parkins, M Eng (hons), MIEE
