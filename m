@@ -1,76 +1,85 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Do not ignore hidden refs
-Date: Sat, 18 Nov 2006 11:50:23 -0800
-Message-ID: <7vejs0cz5s.fsf@assigned-by-dhcp.cox.net>
-References: <20061118041137.6064.75827.stgit@machine.or.cz>
-	<7v8xi9fjw9.fsf@assigned-by-dhcp.cox.net>
-	<20061118045323.GK7201@pasky.or.cz>
-	<7vzmapdxki.fsf@assigned-by-dhcp.cox.net>
-	<20061118192830.GP7201@pasky.or.cz>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: [RFC \ WISH] Add -o option to git-rev-list
+Date: Sun, 10 Dec 2006 20:51:38 +0100
+Message-ID: <e5bfff550612101151r5e77ddc0w8f61f36fc1f2920e@mail.gmail.com>
+References: <e5bfff550612100338ye2ca2a0u1c8f29bbc59c5431@mail.gmail.com>
+	 <Pine.LNX.4.64.0612101009040.12500@woody.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sat, 18 Nov 2006 19:50:40 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Sun, 10 Dec 2006 19:51:50 +0000 (UTC)
+Cc: "Git Mailing List" <git@vger.kernel.org>,
+	"Junio C Hamano" <junkio@cox.net>,
+	"Alex Riesen" <raa.lkml@gmail.com>,
+	"Shawn Pearce" <spearce@spearce.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061118192830.GP7201@pasky.or.cz> (Petr Baudis's message of
-	"Sat, 18 Nov 2006 20:28:30 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=r5pSAuIwnBmnRf/8g+MEMAYV0RfWwl1QE4GqFBC9ZM6Q3ExeHD4g9crmpbbjVCxooiKgSSN2KOKccOjkoR//PeqSAMma/szYFtFhkRYSqQT0saqAOBn2nUpgNvFJI28GONcK8rQgByy0KwC3123Iog1HbfTziRzHnJtR197j+bA=
+In-Reply-To: <Pine.LNX.4.64.0612101009040.12500@woody.osdl.org>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31797>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GlWCu-00046a-KI for gcvg-git@gmane.org; Sat, 18 Nov
- 2006 20:50:32 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33918>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GtUi7-0003Zm-OM for gcvg-git@gmane.org; Sun, 10 Dec
+ 2006 20:51:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1755235AbWKRTuZ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 18 Nov 2006
- 14:50:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755239AbWKRTuZ
- (ORCPT <rfc822;git-outgoing>); Sat, 18 Nov 2006 14:50:25 -0500
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:19688 "EHLO
- fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP id S1755235AbWKRTuZ
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 18 Nov 2006 14:50:25 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao09.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061118195024.HHSF18767.fed1rmmtao09.cox.net@fed1rmimpo01.cox.net>; Sat, 18
- Nov 2006 14:50:24 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id oKpw1V0091kojtg0000000; Sat, 18 Nov 2006
- 14:49:56 -0500
-To: Petr Baudis <pasky@suse.cz>
+ S1762411AbWLJTvk (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 10 Dec 2006
+ 14:51:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762414AbWLJTvk
+ (ORCPT <rfc822;git-outgoing>); Sun, 10 Dec 2006 14:51:40 -0500
+Received: from py-out-1112.google.com ([64.233.166.176]:30385 "EHLO
+ py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1762411AbWLJTvj (ORCPT <rfc822;git@vger.kernel.org>); Sun, 10 Dec
+ 2006 14:51:39 -0500
+Received: by py-out-1112.google.com with SMTP id a29so779413pyi for
+ <git@vger.kernel.org>; Sun, 10 Dec 2006 11:51:38 -0800 (PST)
+Received: by 10.35.79.3 with SMTP id g3mr10742353pyl.1165780298648; Sun, 10
+ Dec 2006 11:51:38 -0800 (PST)
+Received: by 10.35.93.11 with HTTP; Sun, 10 Dec 2006 11:51:38 -0800 (PST)
+To: "Linus Torvalds" <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 
-Petr Baudis <pasky@suse.cz> writes:
-
-> On Sat, Nov 18, 2006 at 08:27:09AM CET, Junio C Hamano wrote:
->> I think, however, if we (collectively as all the Porcelain
->> writers although I am not really one of them) are to support it,
->> they should not make distinction to the core, and it should be
->> handled with the agreed-upon convention.
+On 12/10/06, Linus Torvalds <torvalds@osdl.org> wrote:
 >
-> I guess I agree.
+> Why don't you use the pipe and standard read()?
 >
->> ...  I do not think it is a great
->> enough convention to be promoted as the official BCP, but it has
->> been good enough for me, ...
+> Even if you use "popen()" and get a "FILE *" back, you can still do
 >
-> That's way too arbitrary for my taste, I think I needn't explain why.
+>         int fd = fileno(file);
+>
+> and use the raw IO capabilities.
+>
+> The thing is, temporary files can actually be faster under Linux just
+> because the Linux page-cache simply kicks ass. But it's not going to be
+> _that_ big of a difference, and you need all that crazy "wait for rev-list
+> to finish" and the "clean up temp-file on errors" etc crap, so there's no
+> way it's a better solution.
+>
 
-Because _I_ explained why already ;-).
+Two things.
 
-> What about leading underscore?
+- memory use: the next natural step with files is, instead of loading
+the file content in memory and *keep it there*, we could load one
+chunk at a time, index the chunk and discard. At the end we keep in
+memory only indexing info to quickly get to the data when needed, but
+the big part of data stay on the file.
 
-I would rather prefer to do refs/{heads,private}/ and allow
-checkout to treat either of them as branches.  We are talking
-about allowing checkout to go to a non-branch by storing a raw
-commit object name in HEAD instead of leaving it as a symref, so
-we know we are going to touch that area already.
-
-
+- This is probably my ignorance, but experimenting with popen() I
+found I could not know *when* git-rev-list ends because both feof()
+and ferror() give 0 after a fread() with git-rev-list already defunct.
+Not having a reference to the process (it is hidden behind popen() ),
+I had to check for 0 bytes read after a successful read (to avoid
+racing in case I ask the pipe before the first data it's ready) to
+know that job is finished and call pclose().
 
