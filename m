@@ -1,68 +1,546 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: kernel.org mirroring (Re: [GIT PULL] MMC update)
-Date: Thu, 07 Dec 2006 12:05:16 -0800
-Message-ID: <7vac1zsc8z.fsf@assigned-by-dhcp.cox.net>
-References: <45708A56.3040508@drzeus.cx>
-	<Pine.LNX.4.64.0612011639240.3695@woody.osdl.org>
-	<457151A0.8090203@drzeus.cx>
-	<Pine.LNX.4.64.0612020835110.3476@woody.osdl.org>
-	<45744FA3.7020908@zytor.com>
-	<Pine.LNX.4.64.0612061847190.3615@woody.osdl.org>
-	<45778AA3.7080709@zytor.com>
-	<Pine.LNX.4.64.0612061940170.3615@woody.osdl.org>
-	<4577A84C.3010601@zytor.com>
-	<Pine.LNX.4.64.0612070953290.3615@woody.osdl.org>
-	<45785697.1060001@zytor.com>
-	<Pine.LNX.4.64.0612071052560.3615@woody.osdl.org>
-	<457868AA.2030605@zytor.com>
-	<Pine.LNX.4.64.0612071121410.3615@woody.osdl.org>
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: [PATCH] Make cvsexportcommit work with filenames with spaces and
+	non-ascii characters.
+Date: Mon, 11 Dec 2006 00:30:06 +0100
+Message-ID: <20061210233006.21227.18064.stgit@lathund.dewire.com>
+References: <7v3b7o8s5j.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 7 Dec 2006 20:05:26 +0000 (UTC)
-Cc: git@vger.kernel.org, Kernel Org Admin <ftpadmin@kernel.org>,
-	"H. Peter Anvin" <hpa@zytor.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Sun, 10 Dec 2006 23:33:37 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <Pine.LNX.4.64.0612071121410.3615@woody.osdl.org> (Linus
-	Torvalds's message of "Thu, 7 Dec 2006 11:30:29 -0800 (PST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Virus-Scanned: amavisd-new at localhost.localdomain
+In-Reply-To: <7v3b7o8s5j.fsf@assigned-by-dhcp.cox.net>
+User-Agent: StGIT/0.11
+X-Virus-Scanned: by amavisd-new at dewire.com
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33627>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33960>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GsPUg-0003Uv-P5 for gcvg-git@gmane.org; Thu, 07 Dec
- 2006 21:05:23 +0100
+ esmtp (Exim 4.50) id 1GtYAi-0000DH-BU for gcvg-git@gmane.org; Mon, 11 Dec
+ 2006 00:33:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1163250AbWLGUFT (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
- 15:05:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1163253AbWLGUFT
- (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 15:05:19 -0500
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:46014 "EHLO
- fed1rmmtao03.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1163250AbWLGUFR (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec 2006
- 15:05:17 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao03.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061207200516.FVPW29122.fed1rmmtao03.cox.net@fed1rmimpo02.cox.net>; Thu, 7
- Dec 2006 15:05:16 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id vw5S1V0101kojtg0000000; Thu, 07 Dec 2006
- 15:05:27 -0500
-To: Linus Torvalds <torvalds@osdl.org>
+ S1762391AbWLJXdZ convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Sun, 10 Dec 2006 18:33:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762456AbWLJXdZ
+ (ORCPT <rfc822;git-outgoing>); Sun, 10 Dec 2006 18:33:25 -0500
+Received: from [83.140.172.130] ([83.140.172.130]:13155 "EHLO
+ torino.dewire.com" rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with
+ ESMTP id S1762369AbWLJXdY (ORCPT <rfc822;git@vger.kernel.org>); Sun, 10 Dec
+ 2006 18:33:24 -0500
+Received: from localhost (localhost [127.0.0.1]) by torino.dewire.com
+ (Postfix) with ESMTP id 0EA0C8030B8; Mon, 11 Dec 2006 00:29:29 +0100 (CET)
+Received: from torino.dewire.com ([127.0.0.1]) by localhost (torino
+ [127.0.0.1]) (amavisd-new, port 10024) with ESMTP id 12530-04; Mon, 11 Dec
+ 2006 00:29:28 +0100 (CET)
+Received: from lathund.dewire.com (unknown [10.9.0.3]) by torino.dewire.com
+ (Postfix) with ESMTP id 2AF7980281C; Mon, 11 Dec 2006 00:29:26 +0100 (CET)
+Received: from localhost (lathund.dewire.com [127.0.0.1]) by
+ lathund.dewire.com (Postfix) with ESMTP id 2AA1C28DE9; Mon, 11 Dec 2006
+ 00:33:05 +0100 (CET)
+Received: from lathund.dewire.com ([127.0.0.1]) by localhost
+ (lathund.dewire.com [127.0.0.1]) (amavisd-new, port 10025) with LMTP id
+ 2L0KqxmcIZqE; Mon, 11 Dec 2006 00:33:01 +0100 (CET)
+Received: from lathund.dewire.com (lathund.dewire.com [127.0.0.1]) by
+ lathund.dewire.com (Postfix) with ESMTP id EE5F328DE1; Mon, 11 Dec 2006
+ 00:33:00 +0100 (CET)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-If I understand correctly, kernel.org is still running the
-version of gitweb Kay last installed there (I am too busy to
-take over the gitweb installation maintenance at kernel.org, and
-I did not ask the $DOCUMENTROOT/git/ directory to be transferred
-to me when I rolled gitweb into the git.git repository).
+=46rom: Robin Rosenberg <robin.rosenberg@dewire.com>
 
-I do not know what queries are most popular, but I think a newer
-gitweb is more efficient in the summary page (getting list of
-branches and tags).  It might be worth a try.
+This patch uses git-apply to do the patching which simplifies the code =
+a lot
+and also uses one pass to git-diff. git-apply gives information on adde=
+d,
+removed files as well as which files are binary.
+
+Removed the test for checking for matching binary files when deleting t=
+hem
+since git-apply happily deletes the file. This is matter of taste since=
+ we
+allow some fuzz for text patches also.
+
+Error handling was cleaned up, but not much tested.
+
+Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
+---
+
+Yet another version (maybe I'm learning perl now....). This one uses on=
+e pass
+to git-diff, but compensates that with two to git-apply.
+
+-- robin
+
+ git-cvsexportcommit.perl       |  203 +++++++++++++-------------------=
+--------
+ t/t9200-git-cvsexportcommit.sh |  108 ++++++++++++++++-----
+ 2 files changed, 145 insertions(+), 166 deletions(-)
+
+diff --git a/git-cvsexportcommit.perl b/git-cvsexportcommit.perl
+index c9d1d88..8f37123 100755
+--- a/git-cvsexportcommit.perl
++++ b/git-cvsexportcommit.perl
+@@ -2,9 +2,8 @@
+=20
+ # Known limitations:
+ # - does not propagate permissions
+-# - tells "ready for commit" even when things could not be completed
+-#   (not sure this is true anymore, more testing is needed)
+-# - does not handle whitespace in pathnames at all.
++# - error handling has not been extensively tested
++#
+=20
+ use strict;
+ use Getopt::Std;
+@@ -115,49 +114,40 @@ if ($opt_a) {
+ }
+ close MSG;
+=20
+-my (@afiles, @dfiles, @mfiles, @dirs);
+-my %amodes;
+-my @files =3D safe_pipe_capture('git-diff-tree', '-r', $parent, $commi=
+t);
+-#print @files;
+-$? && die "Error in git-diff-tree";
+-foreach my $f (@files) {
+-    chomp $f;
+-    my @fields =3D split(m!\s+!, $f);
+-    if ($fields[4] eq 'A') {
+-        my $path =3D $fields[5];
+-	$amodes{$path} =3D $fields[1];
+-	push @afiles, $path;
+-        # add any needed parent directories
+-	$path =3D dirname $path;
+-	while (!-d $path and ! grep { $_ eq $path } @dirs) {
+-	    unshift @dirs, $path;
+-	    $path =3D dirname $path;
+-	}
+-    }
+-    if ($fields[4] eq 'M') {
+-	push @mfiles, $fields[5];
+-    }
+-    if ($fields[4] eq 'D') {
+-	push @dfiles, $fields[5];
+-    }
++`git-diff-tree --binary -p $parent $commit >.cvsexportcommit.diff`;# |=
+| die "Cannot diff";
++
++## apply non-binary changes
++my $fuzz =3D $opt_p ? 0 : 2;
++
++print "Checking if patch will apply\n";
++
++my @stat;
++open APPLY, "GIT_DIR=3D git-apply -C$fuzz --binary --summary --numstat=
+<.cvsexportcommit.diff|" || die "cannot patch";
++@stat=3D<APPLY>;
++close APPLY || die "Cannot patch";
++my (@bfiles,@files,@afiles,@dfiles);
++chomp @stat;
++foreach (@stat) {
++	push (@bfiles,$1) if m/^\-\t\-\t(.*)$/;
++	push (@files,$1)  if m/^\-\t\-\t(.*)$/;
++	push (@files, $1) if m/^\d+\t\d+\t(.*)$/;
++	push (@afiles,$1) if m/^ +create mode \d+ (.*)$/;
++	push (@dfiles,$1) if m/^ +delete mode \d{6} (.*)$/;
+ }
+-my (@binfiles, @abfiles, @dbfiles, @bfiles, @mbfiles);
+-@binfiles =3D grep m/^Binary files/, safe_pipe_capture('git-diff-tree'=
+, '-p', $parent, $commit);
+-map { chomp } @binfiles;
+-@abfiles =3D grep s/^Binary files \/dev\/null and b\/(.*) differ$/$1/,=
+ @binfiles;
+-@dbfiles =3D grep s/^Binary files a\/(.*) and \/dev\/null differ$/$1/,=
+ @binfiles;
+-@mbfiles =3D grep s/^Binary files a\/(.*) and b\/(.*) differ$/$1/, @bi=
+nfiles;
+-push @bfiles, @abfiles;
+-push @bfiles, @dbfiles;
+-push @bfiles, @mbfiles;
+-push @mfiles, @mbfiles;
+-
+-$opt_v && print "The commit affects:\n ";
+-$opt_v && print join ("\n ", @afiles,@mfiles,@dfiles) . "\n\n";
+-undef @files; # don't need it anymore
++map { s/^"(.*)"$/$1/g } @bfiles,@files;
++map { s/\\([\d]{3})/sprintf('%c',oct $1)/eg } @bfiles,@files;
+=20
+ # check that the files are clean and up to date according to cvs
+ my $dirty;
++my @dirs;
++foreach my $p (@afiles) {
++    my $path =3D dirname $p;
++    while (!-d $path and ! grep { $_ eq $path } @dirs) {
++    	unshift @dirs, $path;
++        $path =3D dirname $path;
++    }
++}
++
+ foreach my $d (@dirs) {
+     if (-e $d) {
+ 	$dirty =3D 1;
+@@ -180,7 +170,8 @@ foreach my $f (@afiles) {
+     }
+ }
+=20
+-foreach my $f (@mfiles, @dfiles) {
++foreach my $f (@files) {
++    next if grep { $_ eq $f } @afiles;
+     # TODO:we need to handle removed in cvs
+     my @status =3D grep(m/^File/,  safe_pipe_capture('cvs', '-q', 'sta=
+tus' ,$f));
+     if (@status > 1) { warn 'Strange! cvs status returned more than on=
+e line?'};
+@@ -197,87 +188,26 @@ if ($dirty) {
+     }
+ }
+=20
+-###
+-### NOTE: if you are planning to die() past this point
+-###       you MUST call cleanupcvs(@files) before die()
+-###
++print "Applying\n";
++`GIT_DIR=3D git-apply -C$fuzz --binary --summary --numstat --apply <.c=
+vsexportcommit.diff` || die "cannot patch";
+=20
+-
+-print "Creating new directories\n";
++print "Patch applied successfully. Adding new files and directories to=
+ CVS\n";
++my $dirtypatch =3D 0;
+ foreach my $d (@dirs) {
+-    unless (mkdir $d) {
+-        warn "Could not mkdir $d: $!";
+-	$dirty =3D 1;
+-    }
+-    `cvs add $d`;
+-    if ($?) {
+-	$dirty =3D 1;
++    if (system('cvs','add',$d)) {
++	$dirtypatch =3D 1;
+ 	warn "Failed to cvs add directory $d -- you may need to do it manuall=
+y";
+     }
+ }
+=20
+-print "'Patching' binary files\n";
+-
+-foreach my $f (@bfiles) {
+-    # check that the file in cvs matches the "old" file
+-    # extract the file to $tmpdir and compare with cmp
+-    if (not(grep { $_ eq $f } @afiles)) {
+-        my $tree =3D safe_pipe_capture('git-rev-parse', "$parent^{tree=
+}");
+-	chomp $tree;
+-	my $blob =3D `git-ls-tree $tree "$f" | cut -f 1 | cut -d ' ' -f 3`;
+-	chomp $blob;
+-        `git-cat-file blob $blob > $tmpdir/blob`;
+-        if (system('cmp', '-s', $f, "$tmpdir/blob")) {
+-	    warn "Binary file $f in CVS does not match parent.\n";
+-	    if (not $opt_f) {
+-	        $dirty =3D 1;
+-		next;
+-	    }
+-        }
+-    }
+-    if (not(grep { $_ eq $f } @dfiles)) {
+-	my $tree =3D safe_pipe_capture('git-rev-parse', "$commit^{tree}");
+-	chomp $tree;
+-	my $blob =3D `git-ls-tree $tree "$f" | cut -f 1 | cut -d ' ' -f 3`;
+-	chomp $blob;
+-	# replace with the new file
+-	`git-cat-file blob $blob > $f`;
+-    }
+-
+-    # TODO: something smart with file modes
+-
+-}
+-if ($dirty) {
+-    cleanupcvs(@files);
+-    die "Exiting: Binary files in CVS do not match parent";
+-}
+-
+-## apply non-binary changes
+-my $fuzz =3D $opt_p ? 0 : 2;
+-
+-print "Patching non-binary files\n";
+-
+-if (scalar(@afiles)+scalar(@dfiles)+scalar(@mfiles) !=3D scalar(@bfile=
+s)) {
+-    print `(git-diff-tree -p $parent -p $commit | patch -p1 -F $fuzz )=
+ 2>&1`;
+-}
+-
+-my $dirtypatch =3D 0;
+-if (($? >> 8) =3D=3D 2) {
+-    cleanupcvs(@files);
+-    die "Exiting: Patch reported serious trouble -- you will have to a=
+pply this patch manually";
+-} elsif (($? >> 8) =3D=3D 1) { # some hunks failed to apply
+-    $dirtypatch =3D 1;
+-}
+-
+ foreach my $f (@afiles) {
+-    set_new_file_permissions($f, $amodes{$f});
+     if (grep { $_ eq $f } @bfiles) {
+       system('cvs', 'add','-kb',$f);
+     } else {
+       system('cvs', 'add', $f);
+     }
+     if ($?) {
+-	$dirty =3D 1;
++	$dirtypatch =3D 1;
+ 	warn "Failed to cvs add $f -- you may need to do it manually";
+     }
+ }
+@@ -285,35 +215,40 @@ foreach my $f (@afiles) {
+ foreach my $f (@dfiles) {
+     system('cvs', 'rm', '-f', $f);
+     if ($?) {
+-	$dirty =3D 1;
++	$dirtypatch =3D 1;
+ 	warn "Failed to cvs rm -f $f -- you may need to do it manually";
+     }
+ }
+=20
+ print "Commit to CVS\n";
+-print "Patch: $title\n";
+-my $commitfiles =3D join(' ', @afiles, @mfiles, @dfiles);
+-my $cmd =3D "cvs commit -F .msg $commitfiles";
++print "Patch title (first comment line): $title\n";
++my @commitfiles =3D map { unless (m/\s/) { '\''.$_.'\''; } else { $_; =
+}; } (@files);
++my $cmd =3D "cvs commit -F .msg @commitfiles";
+=20
+ if ($dirtypatch) {
+     print "NOTE: One or more hunks failed to apply cleanly.\n";
+-    print "Resolve the conflicts and then commit using:\n";
++    print "You'll need to apply the patch in .cvsexportcommit.diff man=
+ually\n";
++    print "using a patch program. After applying the patch and resolvi=
+ng the\n";
++    print "problems you may commit using:";
+     print "\n    $cmd\n\n";
+     exit(1);
+ }
+=20
+-
+ if ($opt_c) {
+     print "Autocommit\n  $cmd\n";
+-    print safe_pipe_capture('cvs', 'commit', '-F', '.msg', @afiles, @m=
+files, @dfiles);
++    print safe_pipe_capture('cvs', 'commit', '-F', '.msg', @files);
+     if ($?) {
+-	cleanupcvs(@files);
+ 	die "Exiting: The commit did not succeed";
+     }
+     print "Committed successfully to CVS\n";
+ } else {
+     print "Ready for you to commit, just run:\n\n   $cmd\n";
+ }
++
++# clean up
++unlink(".cvsexportcommit.diff");
++unlink(".msg");
++
+ sub usage {
+ 	print STDERR <<END;
+ Usage: GIT_DIR=3D/path/to/.git ${\basename $0} [-h] [-p] [-v] [-c] [-f=
+] [-m msgprefix] [ parent ] commit
+@@ -321,17 +256,6 @@ END
+ 	exit(1);
+ }
+=20
+-# ensure cvs is clean before we die
+-sub cleanupcvs {
+-    my @files =3D @_;
+-    foreach my $f (@files) {
+-	system('cvs', '-q', 'update', '-C', $f);
+-	if ($?) {
+-	    warn "Warning! Failed to cleanup state of $f\n";
+-	}
+-    }
+-}
+-
+ # An alternative to `command` that allows input to be passed as an arr=
+ay
+ # to work around shell problems with weird characters in arguments
+ # if the exec returns non-zero we die
+@@ -346,12 +270,15 @@ sub safe_pipe_capture {
+     return wantarray ? @output : join('',@output);
+ }
+=20
+-# For any file we want to add to cvs, we must first set its permission=
+s
+-# properly, *before* the "cvs add ..." command.  Otherwise, it is impo=
+ssible
+-# to change the permission of the file in the CVS repository using onl=
+y cvs
+-# commands.  This should be fixed in cvs-1.12.14.
+-sub set_new_file_permissions {
+-    my ($file, $perm) =3D @_;
+-    chmod oct($perm), $file
+-      or die "failed to set permissions of \"$file\": $!\n";
++sub safe_pipe_capture_blob {
++    my $output;
++    if (my $pid =3D open my $child, '-|') {
++        local $/;
++	undef $/;
++	$output =3D (<$child>);
++	close $child or die join(' ',@_).": $! $?";
++    } else {
++	exec(@_) or die "$! $?"; # exec() can fail the executable can't be fo=
+und
++    }
++    return $output;
+ }
+diff --git a/t/t9200-git-cvsexportcommit.sh b/t/t9200-git-cvsexportcomm=
+it.sh
+index c102479..ca0513b 100755
+--- a/t/t9200-git-cvsexportcommit.sh
++++ b/t/t9200-git-cvsexportcommit.sh
+@@ -89,18 +89,17 @@ test_expect_success \
+      ! git cvsexportcommit -c $id
+      )'
+=20
+-# Should fail, but only on the git-cvsexportcommit stage
+-test_expect_success \
+-    'Fail to remove binary file more than one generation old' \
+-    'git reset --hard HEAD^ &&
+-     cat F/newfile6.png >>D/newfile4.png &&
+-     git commit -a -m "generation 2 (again)" &&
+-     rm -f D/newfile4.png &&
+-     git commit -a -m "generation 3" &&
+-     id=3D$(git rev-list --max-count=3D1 HEAD) &&
+-     (cd "$CVSWORK" &&
+-     ! git cvsexportcommit -c $id
+-     )'
++#test_expect_success \
++#    'Fail to remove binary file more than one generation old' \
++#    'git reset --hard HEAD^ &&
++#     cat F/newfile6.png >>D/newfile4.png &&
++#     git commit -a -m "generation 2 (again)" &&
++#     rm -f D/newfile4.png &&
++#     git commit -a -m "generation 3" &&
++#     id=3D$(git rev-list --max-count=3D1 HEAD) &&
++#     (cd "$CVSWORK" &&
++#     ! git cvsexportcommit -c $id
++#     )'
+=20
+ # We reuse the state from two tests back here
+=20
+@@ -108,7 +107,7 @@ test_expect_success \
+ # fail with gnu patch, so cvsexportcommit must handle that.
+ test_expect_success \
+     'Remove only binary files' \
+-    'git reset --hard HEAD^^^ &&
++    'git reset --hard HEAD^^ &&
+      rm -f D/newfile4.png &&
+      git commit -a -m "test: remove only a binary file" &&
+      id=3D$(git rev-list --max-count=3D1 HEAD) &&
+@@ -142,20 +141,73 @@ test_expect_success \
+      diff F/newfile6.png ../F/newfile6.png
+      )'
+=20
+-test_expect_success 'Retain execute bit' '
+-	mkdir G &&
+-	echo executeon >G/on &&
+-	chmod +x G/on &&
+-	echo executeoff >G/off &&
+-	git add G/on &&
+-	git add G/off &&
+-	git commit -a -m "Execute test" &&
+-	(
+-		cd "$CVSWORK" &&
+-		git-cvsexportcommit -c HEAD
+-		test -x G/on &&
+-		! test -x G/off
+-	)
+-'
++test_expect_success \
++     'New file with spaces in file name' \
++     'mkdir "G g" &&
++      echo ok then >"G g/with spaces.txt" &&
++      git add "G g/with spaces.txt" && \
++      cp ../test9200a.png "G g/with spaces.png" && \
++      git add "G g/with spaces.png" &&
++      git commit -a -m "With spaces" &&
++      id=3D$(git rev-list --max-count=3D1 HEAD) &&
++      (cd "$CVSWORK" &&
++      git-cvsexportcommit -c $id &&
++      test "$(echo $(sort "G g/CVS/Entries"|cut -d/ -f2,3,5))" =3D "wi=
+th spaces.png/1.1/-kb with spaces.txt/1.1/"
++      )'
++
++test_expect_success \
++     'Update file with spaces in file name' \
++     'echo Ok then >>"G g/with spaces.txt" &&
++      cat ../test9200a.png >>"G g/with spaces.png" && \
++      git add "G g/with spaces.png" &&
++      git commit -a -m "Update with spaces" &&
++      id=3D$(git rev-list --max-count=3D1 HEAD) &&
++      (cd "$CVSWORK" &&
++      git-cvsexportcommit -c $id
++      test "$(echo $(sort "G g/CVS/Entries"|cut -d/ -f2,3,5))" =3D "wi=
+th spaces.png/1.2/-kb with spaces.txt/1.2/"
++      )'
++
++# This test contains ISO-8859-1 characters
++test_expect_success \
++     'File with non-ascii file name' \
++     'mkdir -p =C5/goo/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x=
+/y/z/=E5/=E4/=F6 &&
++      echo Foo >=C5/goo/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/=
+x/y/z/=E5/=E4/=F6/g=E5rdets=E5g=E5rdet.txt &&
++      git add =C5/goo/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/=
+y/z/=E5/=E4/=F6/g=E5rdets=E5g=E5rdet.txt &&
++      cp ../test9200a.png =C5/goo/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/=
+s/t/u/v/w/x/y/z/=E5/=E4/=F6/g=E5rdets=E5g=E5rdet.png &&
++      git add =C5/goo/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/=
+y/z/=E5/=E4/=F6/g=E5rdets=E5g=E5rdet.png &&
++      git commit -a -m "G=E5r det s=E5 g=E5r det" && \
++      id=3D$(git rev-list --max-count=3D1 HEAD) &&
++      (cd "$CVSWORK" &&
++      git-cvsexportcommit -v -c $id &&
++      test "$(echo $(sort =C5/goo/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/=
+s/t/u/v/w/x/y/z/=E5/=E4/=F6/CVS/Entries|cut -d/ -f2,3,5))" =3D "g=E5rde=
+ts=E5g=E5rdet.png/1.1/-kb g=E5rdets=E5g=E5rdet.txt/1.1/"
++      )'
++
++test_expect_success \
++     'Mismatching patch should fail' \
++     'date >>"E/newfile5.txt" &&
++      git add "E/newfile5.txt" &&
++      git commit -a -m "Update one" &&
++      date >>"E/newfile5.txt" &&
++      git add "E/newfile5.txt" &&
++      git commit -a -m "Update two" &&
++      id=3D$(git rev-list --max-count=3D1 HEAD) &&
++      (cd "$CVSWORK" &&
++      ! git-cvsexportcommit -c $id
++      )'
++
++test_expect_success \
++     'Retain execute bit' \
++     'mkdir G &&
++      echo executeon >G/on &&
++      chmod +x G/on &&
++      echo executeoff >G/off &&
++      git add G/on &&
++      git add G/off &&
++      git commit -a -m "Execute test" &&
++      (cd "$CVSWORK" &&
++      git-cvsexportcommit -c HEAD
++      test -x G/on &&
++      ! test -x G/off
++      )'
+=20
