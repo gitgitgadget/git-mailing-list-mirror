@@ -1,70 +1,57 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: Re: [PATCH (amend)] gitweb: Slight visual improvements to commitdiff view
-Date: Thu, 26 Oct 2006 17:39:14 -0700 (PDT)
-Message-ID: <780488.44315.qm@web31803.mail.mud.yahoo.com>
-References: <200610270150.40100.jnareb@gmail.com>
-Reply-To: ltuikov@yahoo.com
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 2/3] merge-recursive: make empty tree a known object
+Date: Sun, 10 Dec 2006 13:21:05 -0800
+Message-ID: <7vpsar4fcu.fsf@assigned-by-dhcp.cox.net>
+References: <20061207101707.GA19139@spearce.org>
+	<Pine.LNX.4.63.0612100055390.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+	<Pine.LNX.4.64.0612101030390.12500@woody.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-NNTP-Posting-Date: Fri, 27 Oct 2006 00:41:18 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Sun, 10 Dec 2006 21:21:28 +0000 (UTC)
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=X-YMail-OSG:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
-  b=aLrzSz/0TIhDHfGE99xBJlUOLgA5jpuXFX/nfp0nT4S0QReMUKKkfXKKieNhxt2fvG0bj/BICC/RmST5w1eQlLeYw/h8a6BA+Zni6Eo8A2L1cUtgUe3bKM60umWD1izVpJ08n3g8MzURpwSA4ngDXEj5HpOrYAo+orfYVgrKYio=  ;
-X-YMail-OSG: YG5LEHkVM1leBuJ3szlXGdFC8M08wjWUwso_sz1b2UHS_ldEwpkXynu9A9D0C9otxvpVHdibDg67lYwUCWPtfOfoxDOGoZUT6FxcXBy9zv7g.xTYOCGKog0kgpjh8K5vARqMHgz4_UrUgWU-
-In-Reply-To: <200610270150.40100.jnareb@gmail.com>
+In-Reply-To: <Pine.LNX.4.64.0612101030390.12500@woody.osdl.org> (Linus
+	Torvalds's message of "Sun, 10 Dec 2006 10:37:57 -0800 (PST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30268>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GdFks-0005qc-Jc for gcvg-git@gmane.org; Fri, 27 Oct
- 2006 02:39:30 +0200
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33929>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GtW6j-0003zk-Kk for gcvg-git@gmane.org; Sun, 10 Dec
+ 2006 22:21:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1423734AbWJ0AjQ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
- 20:39:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423735AbWJ0AjQ
- (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 20:39:16 -0400
-Received: from web31803.mail.mud.yahoo.com ([68.142.207.66]:22184 "HELO
- web31803.mail.mud.yahoo.com") by vger.kernel.org with SMTP id
- S1423734AbWJ0AjP (ORCPT <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006
- 20:39:15 -0400
-Received: (qmail 44642 invoked by uid 60001); 27 Oct 2006 00:39:14 -0000
-Received: from [64.215.88.90] by web31803.mail.mud.yahoo.com via HTTP; Thu,
- 26 Oct 2006 17:39:14 PDT
-To: Jakub Narebski <jnareb@gmail.com>
+ S1762594AbWLJVVJ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 10 Dec 2006
+ 16:21:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762616AbWLJVVJ
+ (ORCPT <rfc822;git-outgoing>); Sun, 10 Dec 2006 16:21:09 -0500
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:58009 "EHLO
+ fed1rmmtao11.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1762594AbWLJVVG (ORCPT <rfc822;git@vger.kernel.org>); Sun, 10 Dec 2006
+ 16:21:06 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao11.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061210212106.BZBQ25875.fed1rmmtao11.cox.net@fed1rmimpo01.cox.net>; Sun, 10
+ Dec 2006 16:21:06 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id x9LU1V0061kojtg0000000; Sun, 10 Dec 2006
+ 16:20:29 -0500
+To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 
---- Jakub Narebski <jnareb@gmail.com> wrote:
-> First, I have removed creating empty divs. The div with number of 
-> changed files in git_difftree_body is added only if the message about 
-> number of changed files is displayed (above 10).
-> 
-> Second, I have moved commit message body in commitdiff outside 
-> "page_body" div, to be together with "author_date" div with authorship 
-> info. The name of class was changed from "log" to more informative 
-> "commitdiff_log". This required some changes and additions to CSS. Now 
-> "commitdiff_log" div is responsible for displaying line separatring it 
-> from "page_body".
-> 
-> I have added not full line above "patchset" div (between patchet and 
-> difftree). It is added by "patchset" div and separated by 8px padding.
-> 
-> 
-> Those changes might wait for proper refactoring of gitweb CSS (having 
-> for example 8px padding in one place only).
+Linus Torvalds <torvalds@osdl.org> writes:
 
-Excellent!  I'd like this explanation to be part of the
-commit message if that patchset is committed to git.git.
+> So you could make "read_sha1_file()" just have a special case for known 
+> objects at the end. If the pack entry fails, the loose file case fails, 
+> then rather than returning NULL at the end, you could have a list of known 
+> fixed objects..
 
-    Luben
+That is fine by me.  We would benefit from an empty blob and an
+empty tree.
