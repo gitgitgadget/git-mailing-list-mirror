@@ -1,72 +1,61 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC] Submodules in GIT
-Date: Tue, 28 Nov 2006 11:50:10 +0100
-Organization: At home
-Message-ID: <ekh45n$rfc$1@sea.gmane.org>
-References: <20061121223130.GA24909@nan92-1-81-57-214-146.fbx.proxad.net> <Pine.LNX.4.64.0611260241320.20138@iabervon.org> <456C0313.3020308@op5.se> <200611281029.11918.andyparkins@gmail.com>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: kernel.org mirroring (Re: [GIT PULL] MMC update)
+Date: Sun, 10 Dec 2006 13:01:50 -0800
+Message-ID: <457C75BE.1010805@zytor.com>
+References: <Pine.LNX.4.64.0612020835110.3476@woody.osdl.org> <200612101402.51363.jnareb@gmail.com> <457C0F8F.7030504@garzik.org> <200612102011.52589.jnareb@gmail.com> <Pine.LNX.4.64.0612101129190.12500@woody.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Tue, 28 Nov 2006 10:48:47 +0000 (UTC)
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Sun, 10 Dec 2006 21:02:22 +0000 (UTC)
+Cc: Jakub Narebski <jnareb@gmail.com>, Jeff Garzik <jeff@garzik.org>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Rogan Dawes <discard@dawes.za.net>,
+	Kernel Org Admin <ftpadmin@kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 20
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+User-Agent: Thunderbird 1.5.0.8 (X11/20061107)
+In-Reply-To: <Pine.LNX.4.64.0612101129190.12500@woody.osdl.org>
+X-Virus-Scanned: ClamAV 0.88.6/2313/Sun Dec 10 07:01:32 2006 on terminus.zytor.com
+X-Virus-Status: Clean
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32507>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gp0W2-0000uF-Au for gcvg-git@gmane.org; Tue, 28 Nov
- 2006 11:48:42 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33927>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GtVoQ-00026D-4X for gcvg-git@gmane.org; Sun, 10 Dec
+ 2006 22:02:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S935844AbWK1Ksj convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Tue, 28 Nov 2006 05:48:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935845AbWK1Ksj
- (ORCPT <rfc822;git-outgoing>); Tue, 28 Nov 2006 05:48:39 -0500
-Received: from main.gmane.org ([80.91.229.2]:60328 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S935844AbWK1Ksi (ORCPT
- <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2006 05:48:38 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1Gp0Vu-0000t0-Va for git@vger.kernel.org; Tue, 28 Nov 2006 11:48:34 +0100
-Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Tue, 28 Nov 2006 11:48:34 +0100
-Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Tue, 28 Nov 2006
- 11:48:34 +0100
-To: git@vger.kernel.org
+ S1762603AbWLJVCP (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 10 Dec 2006
+ 16:02:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762599AbWLJVCP
+ (ORCPT <rfc822;git-outgoing>); Sun, 10 Dec 2006 16:02:15 -0500
+Received: from terminus.zytor.com ([192.83.249.54]:58764 "EHLO
+ terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
+ S1762603AbWLJVCO (ORCPT <rfc822;git@vger.kernel.org>); Sun, 10 Dec 2006
+ 16:02:14 -0500
+Received: from [172.27.0.16] (c-67-180-238-27.hsd1.ca.comcast.net
+ [67.180.238.27]) (authenticated bits=0) by terminus.zytor.com (8.13.8/8.13.7)
+ with ESMTP id kBAL1oWa004482 (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA
+ bits=256 verify=NO); Sun, 10 Dec 2006 13:01:52 -0800
+To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 
-Andy Parkins wrote:
+Linus Torvalds wrote:
+> 
+> Now, hopefully some of it will be in the disk cache, but when the 
+> mirroring happens, it will basically blow the disk caches away totally 
+> (when using the "--checksum" option), and then you literally have tens of 
+> seconds to generate that one top-level page. 
+> 
 
->                                  How does the supermodule know which=20
-> branch to track in the submodule? =A0Does it simply track HEAD or whe=
-n the=20
-> submodule is added to the supermodule is it told which branch to trac=
-k? =A0I=20
-> suppose it's got to be HEAD really hasn't it?
-
-I think that the proper place for that would be supermodule _index_.
-The supermodule tree would have commit entry, and the index would have
-symbolic branch (and perhaps some infor about where to find refs for
-submodule).
-
-This I guess breaks index abstraction slightly, but on the other hand
-allows for tracking non-HEAD branch of submodule, and for submodule to
-not know about supermodule at all...
---=20
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+If that was the only time that happened, it would be a non-issue, since 
+that only happens once every 96 hours.  However, the problem is that we 
+now have lots of large datasets that blow out the caches on a much more 
+frequent basis.
 
