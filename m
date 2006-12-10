@@ -1,144 +1,74 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH] gitweb: Show '...' links in "summary" view only if there are more items
-Date: Tue, 19 Dec 2006 12:14:57 +0100
-Message-ID: <200612191214.58474.jnareb@gmail.com>
-References: <20061218224327.GG16029@localhost> <7vbqm0vkd6.fsf@assigned-by-dhcp.cox.net> <200612190159.24173.jnareb@gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH 2/3] merge-recursive: make empty tree a known object
+Date: Sun, 10 Dec 2006 13:31:56 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0612101326420.12500@woody.osdl.org>
+References: <20061207101707.GA19139@spearce.org>
+ <Pine.LNX.4.63.0612100055390.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.64.0612101030390.12500@woody.osdl.org> <7vpsar4fcu.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Tue, 19 Dec 2006 11:12:40 +0000 (UTC)
-Cc: git@vger.kernel.org, Robert Fitzsimons <robfitz@273k.net>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Sun, 10 Dec 2006 21:32:20 +0000 (UTC)
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=WihlzOsYqCq5XlOUbVaVY7qKjf8l9aIIkR7mdn4oCtP226eTA42uxzIhpss2Nwg7PXrB8h3HJWwM0zHbZfgVSRiUSDNcvKy677LYF0bdnyCWFKVU1hiOc+0kk5BRegzkpuvPXEia0rP/WidRNcZ16IYG9RYarfNoqYuLuA9LARc=
-User-Agent: KMail/1.9.3
-In-Reply-To: <200612190159.24173.jnareb@gmail.com>
-Content-Disposition: inline
+In-Reply-To: <7vpsar4fcu.fsf@assigned-by-dhcp.cox.net>
+X-MIMEDefang-Filter: osdl$Revision: 1.162 $
+X-Scanned-By: MIMEDefang 2.36
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34823>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GwctY-0001Tc-VS for gcvg-git@gmane.org; Tue, 19 Dec
- 2006 12:12:29 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33932>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GtWHN-0004yK-CS for gcvg-git@gmane.org; Sun, 10 Dec
+ 2006 22:32:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752282AbWLSLM0 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
- 06:12:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752578AbWLSLM0
- (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 06:12:26 -0500
-Received: from ug-out-1314.google.com ([66.249.92.173]:31108 "EHLO
- ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1752282AbWLSLMZ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec
- 2006 06:12:25 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so1783166uga for
- <git@vger.kernel.org>; Tue, 19 Dec 2006 03:12:24 -0800 (PST)
-Received: by 10.67.19.17 with SMTP id w17mr8333308ugi.1166526743676; Tue, 19
- Dec 2006 03:12:23 -0800 (PST)
-Received: from host-81-190-25-107.torun.mm.pl ( [81.190.25.107]) by
- mx.google.com with ESMTP id l33sm8943522ugc.2006.12.19.03.12.23; Tue, 19 Dec
- 2006 03:12:23 -0800 (PST)
+ S933575AbWLJVcI (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 10 Dec 2006
+ 16:32:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933568AbWLJVcI
+ (ORCPT <rfc822;git-outgoing>); Sun, 10 Dec 2006 16:32:08 -0500
+Received: from smtp.osdl.org ([65.172.181.25]:36419 "EHLO smtp.osdl.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S933575AbWLJVcH
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 10 Dec 2006 16:32:07 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
+ smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kBALVvID022818
+ (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Sun, 10
+ Dec 2006 13:31:58 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
+ shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kBALVuVi003794; Sun, 10 Dec
+ 2006 13:31:57 -0800
 To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Show "..." links in "summary" view to shortlog, heads (if there are
-any), and tags (if there are any) only if there are more items to show
-than shown already.
 
-This means that "..." link is shown below shortened shortlog if there
-are more than 16 commits, "..." link below shortened heads list if
-there are more than 16 heads refs (16 branches), "..." link below
-shortened tags list if there are more than 16 tags.
 
-Added some comments.
-
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-
-Jakub Narebski wrote:
-> Junio C Hamano wrote:
->> Jakub Narebski <jnareb@gmail.com> writes:
->> 
->>> Actually, that is needed to implement checking if we have more than
->>> the number of commits to show to add '...' at the end only if there
->>> are some commits which we don't show.
-[...]
->> By the way, I wonder how that $extra is omitted when $revlist is
->> longer than $to; it should be a trivial fix but it seems to me
->> that it is always spitted out with the current code.
+On Sun, 10 Dec 2006, Junio C Hamano wrote:
 > 
-> We should check if we want to omit $extra, either in caller or
-> in callee, the *_body subroutine itself.
+> That is fine by me.  We would benefit from an empty blob and an
+> empty tree.
 
-And now it is done.
+I was wondering if we ever had any special case where we wanted the empty 
+blob, and couldn't come up with any. Unlike the "tree diff" case, a "blob 
+diff" will not actually do a "real diff" with a non-existing object, it 
+special-cases it (and, for performance reasons, I think it really should). 
 
-Slightly tested: on my clone (copy) of git repository, which more than
-16 commits, more than 16 heads (most temporary, and no longer worked on,
-few tracking branches) and more than 16 heads show all "..." as it should.
-Test of freshly created repository shown no "..." for commits (only one
-commit), no "..." for heads (only one default head 'master'), and no
-tags list (no tags at all).
+And all the blob-diff routines generally want to be able to take explicit 
+data anyway, not just diffing two SHA1's (since we often don't have a SHA1 
+anyway - the working tree case).
 
-By the way, I have _NOT_ applied Robert Fitzsimons patch, but they
-(this patch and Robert patch) should be not in conflict if we remove
-last chunk of Robert's patch (this changing --count=17 to --count=15
-in git_summary).
+So while I think it would make sense to have both the "empty tree" and the 
+"empty blob" as special cases, off-hand I can't actually see where we'd 
+ever use the empty blob SHA1.
 
- gitweb/gitweb.perl |    9 +++++++--
- 1 files changed, 7 insertions(+), 2 deletions(-)
+In contrast, the empty tree clearly ends up being an interesting special 
+case that actually gets used occasionally, ie here we had two independent 
+uses for the same thing..
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 4059894..73877f2 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -2915,8 +2915,9 @@ sub git_summary {
- 	my $owner = git_get_project_owner($project);
- 
- 	my $refs = git_get_references();
--	my @taglist  = git_get_tags_list(15);
--	my @headlist = git_get_heads_list(15);
-+	# we need to request one more than 16 (0..15) to check if those 16 are all
-+	my @taglist  = git_get_tags_list(17);
-+	my @headlist = git_get_heads_list(17);
- 	my @forklist;
- 	my ($check_forks) = gitweb_check_feature('forks');
- 
-@@ -2952,6 +2953,7 @@ sub git_summary {
- 		}
- 	}
- 
-+	# we need to request one more than 16 (0..15) to check if those 16 are all
- 	open my $fd, "-|", git_cmd(), "rev-list", "--max-count=17",
- 		git_get_head_hash($project), "--"
- 		or die_error(undef, "Open git-rev-list failed");
-@@ -2959,17 +2961,20 @@ sub git_summary {
- 	close $fd;
- 	git_print_header_div('shortlog');
- 	git_shortlog_body(\@revlist, 0, 15, $refs,
-+	                  $#revlist <=  15 ? undef :
- 	                  $cgi->a({-href => href(action=>"shortlog")}, "..."));
- 
- 	if (@taglist) {
- 		git_print_header_div('tags');
- 		git_tags_body(\@taglist, 0, 15,
-+		              $#taglist <=  15 ? undef :
- 		              $cgi->a({-href => href(action=>"tags")}, "..."));
- 	}
- 
- 	if (@headlist) {
- 		git_print_header_div('heads');
- 		git_heads_body(\@headlist, $head, 0, 15,
-+		               $#headlist <= 15 ? undef :
- 		               $cgi->a({-href => href(action=>"heads")}, "..."));
- 	}
- 
--- 
+But maybe somebody can point to a case where we actually would want to 
+internally have an easy representation of "empty blob".
+
