@@ -4,78 +4,73 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Rogan Dawes <discard@dawes.za.net>
-Subject: Re: [RFC/PATCH] Implement poor-man's submodule support using commit
-  hooks
-Date: Wed, 20 Dec 2006 16:33:40 +0200
-Message-ID: <458949C4.1020207@dawes.za.net>
-References: <200612201309.02119.andyparkins@gmail.com> <45893AC6.910D5748@eudaptics.com> <200612201347.13805.andyparkins@gmail.com>
+From: Arkadiusz Miskiewicz <arekm@maven.pl>
+Subject: Re: reexporting git repository via git-daemon
+Date: Sun, 10 Dec 2006 18:28:38 +0100
+Organization: SelfOrganizing
+Message-ID: <200612101828.38165.arekm@maven.pl>
+References: <200612082212.09682.arekm@maven.pl> <200612101822.09385.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 20 Dec 2006 14:35:56 +0000 (UTC)
-Cc: Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Sun, 10 Dec 2006 17:28:55 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 2.0b1 (Windows/20061206)
-Original-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <200612201347.13805.andyparkins@gmail.com>
+User-Agent: KMail/1.9.5
+In-Reply-To: <200612101822.09385.robin.rosenberg.lists@dewire.com>
+Content-Disposition: inline
+X-Authenticated-Id: arekm
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34933>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33905>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gx2X6-0003gQ-3W for gcvg-git@gmane.org; Wed, 20 Dec
- 2006 15:35:00 +0100
+ esmtp (Exim 4.50) id 1GtSTr-0004jq-Vp for gcvg-git@gmane.org; Sun, 10 Dec
+ 2006 18:28:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S965090AbWLTOe5 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 20 Dec 2006
- 09:34:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965095AbWLTOe5
- (ORCPT <rfc822;git-outgoing>); Wed, 20 Dec 2006 09:34:57 -0500
-Received: from sumo.dreamhost.com ([66.33.216.29]:52467 "EHLO
- sumo.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
- S965090AbWLTOe4 (ORCPT <rfc822;git@vger.kernel.org>); Wed, 20 Dec 2006
- 09:34:56 -0500
-Received: from spunkymail-a18.dreamhost.com (sd-green-bigip-81.dreamhost.com
- [208.97.132.81]) by sumo.dreamhost.com (Postfix) with ESMTP id E6C7517D936
- for <git@vger.kernel.org>; Wed, 20 Dec 2006 06:34:53 -0800 (PST)
-Received: from [192.168.201.100] (dsl-146-25-74.telkomadsl.co.za
- [165.146.25.74]) by spunkymail-a18.dreamhost.com (Postfix) with ESMTP id
- C62A85B531; Wed, 20 Dec 2006 06:33:42 -0800 (PST)
-To: Andy Parkins <andyparkins@gmail.com>
+ S1762266AbWLJR2t convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Sun, 10 Dec 2006 12:28:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762277AbWLJR2t
+ (ORCPT <rfc822;git-outgoing>); Sun, 10 Dec 2006 12:28:49 -0500
+Received: from outgoing1.smtp.agnat.pl ([193.239.44.83]:55684 "EHLO
+ outgoing1.smtp.agnat.pl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1762266AbWLJR2s convert rfc822-to-8bit (ORCPT
+ <rfc822;git@vger.kernel.org>); Sun, 10 Dec 2006 12:28:48 -0500
+Received: from [83.11.40.170] (helo=[192.168.0.64]) by tekla.agnat.pl with
+ esmtpsa (TLSv1:DHE-RSA-AES256-SHA:256) (Exim 4.63) (envelope-from
+ <arekm@maven.pl>) id 1GtSTg-0004Ni-Vs; Sun, 10 Dec 2006 18:28:41 +0100
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
 Sender: git-owner@vger.kernel.org
 
-Andy Parkins wrote:
-> On Wednesday 2006 December 20 13:29, Johannes Sixt wrote:
-> 
->>> +       cat "$GITMODULES" |
->> useless-use-of-cat-syndrome
-> 
-> I tried 
-> 
->  while
->  do 
->  done < file1 > file1
-> 
-> And that didn't work. 
+On Sunday 10 December 2006 18:22, Robin Rosenberg wrote:
+> fredag 08 december 2006 22:12 skrev Arkadiusz Miskiewicz:
+> > Hi,
+> >
+> > I have weird problem wit git (1.4.4.2).
+> >
+> >  git --bare clone git://git.kernel.org/pub/scm/git/git.git
+> > fetches everything correctly;
+>
+> You proably ment git clone --bare git://git.kernel.org/pub/scm/git/gi=
+t.git
 
-It wouldn't, since the redirection overwrites the file at the same time 
-as trying to read from it. A better way is to redirect to a temp file, 
-and rename it if the previous operation was successful.
+Tested - result is the same, git-damon strace:
+[pid  6686] write(1, "00408419a453dc088b25b63ab1746d3d7e679caf686d=20
+refs/tags/v1.4.1.1\n", 64) =3D 64
+[pid  6686] write(2, "fatal: ", 7)      =3D 7
+[pid  6686] write(2, "corrupted pack=20
+file ./objects/pack/pack-bc830a5d1c2efa3b727ef9af8faba13c3e719395.pack"=
+, 85)=20
+=3D 85
+[pid  6686] write(2, "\n", 1)           =3D 1
 
-e.g.
 
-0 $ echo true > t
-0 $ sed 's/true/false/g' < t > t~ && mv t~ t || rm t~
-0 $ cat t
-false
+> Maybe git shouldn't accept useless (in this case) options.
+Options handling in git* is a nightmare. It accepts non-existant option=
+s. You=20
+never know if the option is fine, missplaced or ignored :/
 
-and
+> -- robin
 
-0 $ echo true > t
-0 $ (sed 's/true/false/g' < t > t~; false) && mv t~ t || rm t~
-0 $ cat t
-true
-0 $ ls t~
-ls: t~: No such file or directory
-2 $
-
+--=20
+Arkadiusz Mi=B6kiewicz        PLD/Linux Team
