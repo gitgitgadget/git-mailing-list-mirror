@@ -2,80 +2,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Juergen Stuber <juergen@jstuber.net>
-Subject: Re: jgit performance update
-Date: Sun, 03 Dec 2006 23:42:04 +0100
-Message-ID: <874psceh4z.fsf@freitag.home.jstuber.net>
-References: <20061203045953.GE26668@spearce.org>
-	<Pine.LNX.4.64.0612030938140.3476@woody.osdl.org>
-	<ekv34g$mck$1@sea.gmane.org>
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/3] diff_tree_sha1(): avoid rereading trees if possible
+Date: Sun, 10 Dec 2006 23:49:57 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0612102347480.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20061207101707.GA19139@spearce.org>
+ <Pine.LNX.4.63.0612100055160.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vvekk5xpc.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Sun, 3 Dec 2006 23:10:21 +0000 (UTC)
-Cc: jnareb@gmail.com
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Sun, 10 Dec 2006 22:50:18 +0000 (UTC)
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, torvalds@osdl.org,
+	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 26
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: dslb-084-060-106-209.pools.arcor-ip.net
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-Cancel-Lock: sha1:muCZzxCkE3hOGMf+RX6r3O87g3A=
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <7vvekk5xpc.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33152>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33949>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gr0TP-0000sR-7R for gcvg-git@gmane.org; Mon, 04 Dec
- 2006 00:10:15 +0100
+ esmtp (Exim 4.50) id 1GtXUj-00049P-BR for gcvg-git@gmane.org; Sun, 10 Dec
+ 2006 23:50:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1758802AbWLCXKK convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Sun, 3 Dec 2006 18:10:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758818AbWLCXKK
- (ORCPT <rfc822;git-outgoing>); Sun, 3 Dec 2006 18:10:10 -0500
-Received: from main.gmane.org ([80.91.229.2]:17864 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S1758802AbWLCXKI (ORCPT
- <rfc822;git@vger.kernel.org>); Sun, 3 Dec 2006 18:10:08 -0500
-Received: from root by ciao.gmane.org with local (Exim 4.43) id
- 1Gr0TC-0008Cw-3B for git@vger.kernel.org; Mon, 04 Dec 2006 00:10:02 +0100
-Received: from dslb-084-060-106-209.pools.arcor-ip.net ([84.60.106.209]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Mon, 04 Dec 2006 00:10:02 +0100
-Received: from juergen by dslb-084-060-106-209.pools.arcor-ip.net with local
- (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Mon, 04
- Dec 2006 00:10:02 +0100
-To: git@vger.kernel.org
+ S1762364AbWLJWuA (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 10 Dec 2006
+ 17:50:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762358AbWLJWt7
+ (ORCPT <rfc822;git-outgoing>); Sun, 10 Dec 2006 17:49:59 -0500
+Received: from mail.gmx.net ([213.165.64.20]:48674 "HELO mail.gmx.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S1762254AbWLJWt6
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 10 Dec 2006 17:49:58 -0500
+Received: (qmail invoked by alias); 10 Dec 2006 22:49:57 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp001) with SMTP; 10 Dec 2006 23:49:57 +0100
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Hi Jakub,
+Hi,
 
-Jakub Narebski <jnareb@gmail.com> writes:
->
-> GitWiki tells us about egit/jgit repository at
->   http://www.spearce.org/projects/scm/egit.git
+On Sat, 9 Dec 2006, Junio C Hamano wrote:
 
-I tried to access that with git 1.4.4.1 from Debian but=20
+> I think this is overkill that only helps a very narrow "empty tree" 
+> special case that [PATCH 2/3] addresses, and can be easily and 
+> incorrectly abused.  We do not want people to expect that reading many 
+> trees from different revisions as "struct tree" objects and keeping all 
+> of them in memory would magically speed up diff-tree, for example.
+> 
+> I'd prefer write_sha1_file() approach in Shawn's patch for its 
+> simplicity at least for now.
 
-% git clone http://www.spearce.org/projects/scm/egit.git
+Okay, after thinking about it, I agree. merge-recursive is really the only 
+user for such a diff. So, I do not think EMPTY_TREE would be useful.
 
-hangs, the first time after "walk e339766abc2b919e7bb396cae22ddef065821=
-381",
-the second time after "walk 9eec90ec5da239e063eaff6305d77294dc03396e"
-which is the "walk" line just before it.
-
-There's also the following error shortly after the start:
-
-error: File bc01ab9e5fcd26918d7a334207183fa57ff1ce50 (http://www.spearc=
-e.org/projects/scm/egit.git/objects/75/1c8f2e504c40d1c41ebbd87d8f896852=
-9e9c30) corrupt
-
-
-J=C3=BCrgen
-
---=20
-J=C3=BCrgen Stuber <juergen@jstuber.net>
-http://www.jstuber.net/
-gnupg key fingerprint =3D 2767 CA3C 5680 58BA 9A91  23D9 BED6 9A7A AF9E=
- 68B4
+Ciao,
+Dscho
