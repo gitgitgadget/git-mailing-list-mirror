@@ -1,113 +1,84 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-1.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,LIST_MIRROR_BCC,MSGID_FROM_MTA_HEADER,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
-From: Christian Thaeter <ct@pipapo.org>
-Subject: [PATCH] syncing disk in a subprocess with a 60 seconds timeout.
-Date: Tue, 7 Nov 2006 10:07:56 +0100
-Message-ID: <20061107092208.798A3F7044@mail.pipapo.org>
-NNTP-Posting-Date: Tue, 7 Nov 2006 09:22:39 +0000 (UTC)
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH/RFC 4/3] gitweb: SHA-1 in commit log message links to "object" view
+Date: Sun, 10 Dec 2006 13:29:34 -0800
+Message-ID: <7vhcw34eyp.fsf@assigned-by-dhcp.cox.net>
+References: <7vk616ezu5.fsf@assigned-by-dhcp.cox.net>
+	<11657536473295-git-send-email-jnareb@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Sun, 10 Dec 2006 21:29:54 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+In-Reply-To: <11657536473295-git-send-email-jnareb@gmail.com> (Jakub
+	Narebski's message of "Sun, 10 Dec 2006 13:25:49 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31056>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GhN9r-0004u0-Hv for gcvg-git@gmane.org; Tue, 07 Nov
- 2006 10:22:17 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33931>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GtWEx-0004l3-W4 for gcvg-git@gmane.org; Sun, 10 Dec
+ 2006 22:29:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1754120AbWKGJWM (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 7 Nov 2006
- 04:22:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754136AbWKGJWM
- (ORCPT <rfc822;git-outgoing>); Tue, 7 Nov 2006 04:22:12 -0500
-Received: from pipapo.org ([217.140.77.75]:51722 "EHLO mail.pipapo.org") by
- vger.kernel.org with ESMTP id S1754120AbWKGJWL (ORCPT
- <rfc822;git@vger.kernel.org>); Tue, 7 Nov 2006 04:22:11 -0500
-Received: from localhost (unknown [10.20.40.100]) by mail.pipapo.org
- (Postfix) with SMTP id 798A3F7044 for <git@vger.kernel.org>; Tue,  7 Nov 2006
- 10:22:08 +0100 (CET)
-Received: by localhost (sSMTP sendmail emulation); Tue, 07 Nov 2006 10:22:08
- +0100
-To: undisclosed-recipients:;
+ S933336AbWLJV3f (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 10 Dec 2006
+ 16:29:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933385AbWLJV3f
+ (ORCPT <rfc822;git-outgoing>); Sun, 10 Dec 2006 16:29:35 -0500
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:65134 "EHLO
+ fed1rmmtao05.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S933336AbWLJV3f (ORCPT <rfc822;git@vger.kernel.org>); Sun, 10 Dec 2006
+ 16:29:35 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao05.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061210212934.HZSP15640.fed1rmmtao05.cox.net@fed1rmimpo01.cox.net>; Sun, 10
+ Dec 2006 16:29:34 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id x9Uw1V00R1kojtg0000000; Sun, 10 Dec 2006
+ 16:28:57 -0500
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-sync() can take excessive long time, up to hours in some circumstances.
-(eg. running badblocks on slow disk, dd'ing disk images, packet-writing on optical media)
-Running a prune is usually expected to start (and complete) soon, especially
-if it is initiated from a cron-script.
+Jakub Narebski <jnareb@gmail.com> writes:
 
-This patch forks the sync() in a background process and waits at most 60 seconds for
-it's completion. If the sync doesnt complete in time or any other error occurs, prunning
-is aborted and can be tried again a later time. Note that the sync() process will get
-orphaned and sit around until syncing eventually completes.
----
- builtin-prune-packed.c |   35 +++++++++++++++++++++++++++++++++--
- 1 files changed, 33 insertions(+), 2 deletions(-)
+> Instead of checking if explicit SHA-1 in commit log message is sha1 of
+> commit and making link to "commit" view, make [fragment of] explicit
+> SHA-1 in commit log message link to "object" view.  While at it allow
+> to hyperlink also shortened SHA-1, from 8 characters up to full SHA-1,
+> instead of requiring full 40 characters of SHA-1.
+>
+> This makes the following changes:
+>
+>  * SHA-1 of objects which no longer exists, for example in commit
+>    cherry-picked from no longer existing temporary branch, or revert
+>    of commit in rebased branch, are no longer marked as such by not
+>    being made into hyperlink (and not having default hyperlink view:
+>    being underlined among others).  On the other hand it makes gitweb
+>    to not write error messages when object is not found to web serwer
+>    log; it also moves cost of getting type and SHA-1 validation to
+>    when link is clicked, and not only viewed.
+>
+>  * SHA-1 of other objects: blobs, trees, tags are also hyperlinked
+>    and lead to appropriate view (although in the case of tags it is
+>    more natural to just use tag name).
+>
+>  * You can put shortened SHA-1 of commit in the commit message, and it
+>    would be hyperlinked; it would be checked on clicking if abbrev is
+>    unique.
+>
+> Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+> ---
+> This follows the "lazy hyperlink" idea of symbolic link support in the
+> "tree" view.
+>
+> It is an RFC (Requests For Comments) because I'm not sure if it
+> wouldn't be better to make dead SHA-1 marked in commit log message,
+> instead of finfing it out after clicking...
 
-diff --git a/builtin-prune-packed.c b/builtin-prune-packed.c
-index 24e3b0a..05ac696 100644
---- a/builtin-prune-packed.c
-+++ b/builtin-prune-packed.c
-@@ -1,5 +1,7 @@
- #include "builtin.h"
- #include "cache.h"
-+#include <time.h>
-+#include <sys/wait.h>
- 
- static const char prune_packed_usage[] =
- "git-prune-packed [-n]";
-@@ -53,11 +55,16 @@ void prune_packed_objects(int dryrun)
- 	}
- }
- 
-+void sig_nop(int unused){(void)unused;};
-+
- int cmd_prune_packed(int argc, const char **argv, const char *prefix)
- {
- 	int i;
- 	int dryrun = 0;
--
-+	pid_t syncpid;
-+	struct timespec synctimeout;
-+	int sleeping;
-+		
- 	for (i = 1; i < argc; i++) {
- 		const char *arg = argv[i];
- 
-@@ -71,7 +78,31 @@ int cmd_prune_packed(int argc, const cha
- 		/* Handle arguments here .. */
- 		usage(prune_packed_usage);
- 	}
--	sync();
-+	
-+	synctimeout.tv_sec = 60;
-+	synctimeout.tv_nsec = 0;
-+		
-+	signal(SIGCLD, sig_nop);
-+	syncpid = fork();
-+	if (syncpid == 0) {
-+		sync();
-+		return 0;
-+	}
-+	else if (syncpid > 0) {
-+		do {
-+			if (waitpid(syncpid, NULL, WNOHANG) > 0)
-+				break;
-+			sleeping = nanosleep(&synctimeout, &synctimeout);
-+			if (sleeping == -1) {
-+				if (errno != EINTR)
-+					die ("nanosleep error");
-+			}
-+			else
-+				die ("coudn't sync within 60 seconds, nothing pruned");
-+		} while (1);
-+	}
-+	else die("failed to fork sync process");
-+	signal(SIGCLD, SIG_DFL);
- 	prune_packed_objects(dryrun);
- 	return 0;
- }
--- 
-1.4.3.2
+I am certainly in favor of the approach.  Will look at the code
+later.  Thanks.
