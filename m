@@ -1,66 +1,76 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: binary patch compatibility
-Date: Wed, 01 Nov 2006 22:10:11 +0100
-Organization: At home
-Message-ID: <eib2ev$ga7$1@sea.gmane.org>
-References: <4b73d43f0611011303m3e58b227x1a0bd60a9719f9f8@mail.gmail.com>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: Re: [PATCH] editor: make sure $EDITOR is executed as a command
+Date: Sun, 10 Dec 2006 15:04:57 +0100
+Message-ID: <20061210140457.GA13173@kzelldran.dyndns.org>
+References: <20061210135753.GA12905@kzelldran.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-NNTP-Posting-Date: Wed, 1 Nov 2006 21:11:01 +0000 (UTC)
+NNTP-Posting-Date: Sun, 10 Dec 2006 14:04:10 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 16
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-18-116.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+Content-Disposition: inline
+In-Reply-To: <20061210135753.GA12905@kzelldran.dyndns.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-OriginalArrivalTime: 10 Dec 2006 14:03:56.0991 (UTC) FILETIME=[089924F0:01C71C64]
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30658>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GfNM0-0002et-Lr for gcvg-git@gmane.org; Wed, 01 Nov
- 2006 22:10:33 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33890>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GtPHj-0002XQ-C2 for gcvg-git@gmane.org; Sun, 10 Dec
+ 2006 15:04:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752416AbWKAVK3 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 1 Nov 2006
- 16:10:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752418AbWKAVK3
- (ORCPT <rfc822;git-outgoing>); Wed, 1 Nov 2006 16:10:29 -0500
-Received: from main.gmane.org ([80.91.229.2]:30691 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S1752415AbWKAVK2 (ORCPT
- <rfc822;git@vger.kernel.org>); Wed, 1 Nov 2006 16:10:28 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1GfNLc-0002Zd-Pt for git@vger.kernel.org; Wed, 01 Nov 2006 22:10:09 +0100
-Received: from host-81-190-18-116.torun.mm.pl ([81.190.18.116]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Wed, 01 Nov 2006 22:10:08 +0100
-Received: from jnareb by host-81-190-18-116.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Wed, 01 Nov 2006
- 22:10:08 +0100
+ S1760783AbWLJOD6 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 10 Dec 2006
+ 09:03:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760786AbWLJOD6
+ (ORCPT <rfc822;git-outgoing>); Sun, 10 Dec 2006 09:03:58 -0500
+Received: from postman.fh-hagenberg.at ([193.170.124.96]:50865 "EHLO
+ postman.fh-hagenberg.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1760783AbWLJOD6 (ORCPT <rfc822;git@vger.kernel.org>); Sun, 10 Dec
+ 2006 09:03:58 -0500
+Received: from kzelldran.dyndns.org ([84.154.115.16]) by
+ postman.fh-hagenberg.at over TLS secured channel with Microsoft
+ SMTPSVC(6.0.3790.1830); Sun, 10 Dec 2006 15:03:56 +0100
+Received: from drizzd by kzelldran.dyndns.org with local (Exim 4.63)
+ (envelope-from <drizzd@kzelldran.dyndns.org>) id 1GtPIY-0003dd-06 for
+ git@vger.kernel.org; Sun, 10 Dec 2006 15:04:58 +0100
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-John Rigby wrote:
+Hi,
 
-> If I commit a new binary file to a repository and then use
-> git-format-patch --binary to produce a patch the resulting patch file
-> is not compatible with the patch command.
-> 
-> Am I doing something wrong or is this not possible.
+Sorry about the missing subject.
 
-GNU patch doesn't understand git binary patch. git-apply does (as does
-git-am). There is no universal binary diff format.
+Make sure $EDITOR is executed as a command. Otherwise, _editor may fail if
+$EDITOR is set to something like 'editor', which is also a function within
+cg-Xlib.
 
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Signed-off-by: Clemens Buchacher <drizzd@aon.at>
+---
+commit 942341e051fdcbb77a6abfbc58cf08ef8cab388d
+tree 96e8fd08cdc7c59b0d3d55d7cb5b4302db443aff
+parent b6a6e87cb3e1368ad0f78c18fdb6c29dde4ae83e
+author Clemens Buchacher <drizzd@aon.at> Sun, 10 Dec 2006 14:37:37 +0100
+committer Clemens Buchacher <drizzd@aon.at> Sun, 10 Dec 2006 14:37:37 +0100
 
+ cg-Xlib |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/cg-Xlib b/cg-Xlib
+index c1262bf..9d04eb4 100755
+--- a/cg-Xlib
++++ b/cg-Xlib
+@@ -568,7 +568,7 @@ _editor()
+ 	actionname="$1"; shift
+ 	actionkey="$1"; shift
+ 
+-	${EDITOR:-vi} "$LOGMSG2"
++	command ${EDITOR:-vi} "$LOGMSG2"
+ 	[ -z "$force" ] || return 0
+ 	[ ! "$LOGMSG2" -nt "$LOGMSG" ] || return 0
