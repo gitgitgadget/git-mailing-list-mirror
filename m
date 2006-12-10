@@ -2,84 +2,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: using xdl_merge(), was Re: Resolving conflicts
-Date: Tue, 5 Dec 2006 10:28:53 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0612051023460.3542@woody.osdl.org>
-References: <456FD461.4080002@saville.com> <Pine.LNX.4.64.0611302330000.3695@woody.osdl.org>
- <456FDF24.1070001@saville.com> <Pine.LNX.4.64.0612012018490.3476@woody.osdl.org>
- <7vejri20mf.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0612021131140.28348@wbgn013.biozentrum.uni-wuerzburg.de>
- <4575B32F.5060108@ramsay1.demon.co.uk>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: kernel.org mirroring (Re: [GIT PULL] MMC update)
+Date: Sun, 10 Dec 2006 21:27:05 +0100
+Message-ID: <200612102127.05894.jnareb@gmail.com>
+References: <Pine.LNX.4.64.0612020835110.3476@woody.osdl.org> <200612102011.52589.jnareb@gmail.com> <Pine.LNX.4.64.0612101129190.12500@woody.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Tue, 5 Dec 2006 18:29:11 +0000 (UTC)
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Sun, 10 Dec 2006 20:25:08 +0000 (UTC)
+Cc: Jeff Garzik <jeff@garzik.org>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Rogan Dawes <discard@dawes.za.net>,
+	Kernel Org Admin <ftpadmin@kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <4575B32F.5060108@ramsay1.demon.co.uk>
-X-MIMEDefang-Filter: osdl$Revision: 1.162 $
-X-Scanned-By: MIMEDefang 2.36
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=aZyPAE6N5sTdrQqHvLlkhOhCZNR4U5RMQvMVG+mQQ+h5+oJdnNVPS6z//hU2i5Z6mLfo4tM5/CBGn/nq1zgckUBnjiTTYmzoF/QlOFodm1BNQurpsMSU7xJ1NhN/42zI0IujvUHXeyq3R/FuWFB6JrinM+lJl44TS5oeZ1aGyAE=
+User-Agent: KMail/1.9.3
+In-Reply-To: <Pine.LNX.4.64.0612101129190.12500@woody.osdl.org>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33361>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33923>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Grf2S-0003y7-Ly for gcvg-git@gmane.org; Tue, 05 Dec
- 2006 19:29:09 +0100
+ esmtp (Exim 4.50) id 1GtVEL-0007CX-65 for gcvg-git@gmane.org; Sun, 10 Dec
+ 2006 21:25:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S968609AbWLES3F (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 5 Dec 2006
- 13:29:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S968598AbWLES3F
- (ORCPT <rfc822;git-outgoing>); Tue, 5 Dec 2006 13:29:05 -0500
-Received: from smtp.osdl.org ([65.172.181.25]:34020 "EHLO smtp.osdl.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S968609AbWLES3C
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 5 Dec 2006 13:29:02 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
- smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kB5IStID014722
- (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Tue, 5
- Dec 2006 10:28:55 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
- shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kB5ISr8D006469; Tue, 5 Dec
- 2006 10:28:54 -0800
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+ S1762514AbWLJUYx (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 10 Dec 2006
+ 15:24:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762541AbWLJUYx
+ (ORCPT <rfc822;git-outgoing>); Sun, 10 Dec 2006 15:24:53 -0500
+Received: from ug-out-1314.google.com ([66.249.92.174]:59865 "EHLO
+ ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1762514AbWLJUYw (ORCPT <rfc822;git@vger.kernel.org>); Sun, 10 Dec
+ 2006 15:24:52 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so1155797uga for
+ <git@vger.kernel.org>; Sun, 10 Dec 2006 12:24:51 -0800 (PST)
+Received: by 10.67.20.3 with SMTP id x3mr8730959ugi.1165782291416; Sun, 10
+ Dec 2006 12:24:51 -0800 (PST)
+Received: from host-81-190-25-107.torun.mm.pl ( [81.190.25.107]) by
+ mx.google.com with ESMTP id k1sm6154545ugf.2006.12.10.12.24.49; Sun, 10 Dec
+ 2006 12:24:50 -0800 (PST)
+To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 
+Linus Torvalds wrote:
+> On Sun, 10 Dec 2006, Jakub Narebski wrote:
+>>>> If-Modified-Since:, If-Match:, If-None-Match: do you?
+>> 
+>> And in CGI standard there is a way to access additional HTTP headers
+>> info from CGI script: the envirionmental variables are HTTP_HEADER,
+>> for example if browser sent If-Modified-Since: header it's value
+>> can be found in HTTP_IF_MODIFIED_SINCE environmental variable.
+> 
+> Guys, you're missing something fairly fundamnetal. 
+> 
+> It helps almost _nothing_ to support client-side caching with all these 
+> fancy "If-Modified-Since:" etc crap.
+> 
+> That's not the _problem_.
+> 
+> It's usually not one client asking for the gitweb pages: the load comes 
+> from just lots of people independently asking for it. So client-side 
+> caching may help a tiny tiny bit, but it's not actually fixing the 
+> fundamental problem at all.
 
+Well, the idea (perhaps stupid idea: I don't know how caching engines
+/ reverse proxy works) was that there would be caching engine / reverse
+proxy in the front (Squid for example) would cache results and serve it
+to rampaging hordes. But this caching engine has to ask gitweb if the
+cache is valid using "If-Modified-Since:" and "If-None-Match:" headers.
+If gitweb returns 304 Not Modified then it serves contents from cache.
 
-On Tue, 5 Dec 2006, Ramsay Jones wrote:
->
-> Have you had time to look at my test cases?
-> As I said, I found them very useful when debugging
-> my git-diff3 code, and (hopefully) you will find them
-> to be equally useful.
+> So forget about "If-Modified-Since:" etc. It may help in benchmarks when 
+> you try it yourself, and use "refresh" on the client side. But the basic 
+> problem is all about lots of clients that do NOT have things cached, 
+> because all teh client caches are all filled up with pr0n, not with gitweb 
+> data from yesterday.
 
-It might be interesting to also do a simple test:
+What about the other idea, the one with raising expires to infinity for
+immutable pages like "commit" view for commit given by SHA-1? Even if
+the clients won't cache it, the proxies and caches between gitweb and
+client might cache it...
 
- - take every single merge in git (or the kernel, if you want even more)
+Talking about most accessed gitweb pages, the project list page changes
+on every push, the project summary page and project main RSS feed
+(now in both RSS and Atom formats) changes on every push to given project.
+With a help of hooks they can be static pages, generated by push...
+...with the exception that projects list and summary pages have _relative_
+dates.
 
- - ignore all the trivial ones that didn't have any file-level merging at 
-   all (ie done entirely in the index)
-
- - for all the rest, just compare what the end result is when re-doing the 
-   merge with "xdl_merge" vs "external 3-way merge".
-
-[ Side note: DO NOT COMPARE AGAINST THE ACTUAL RESULT IN GIT OR IN THE 
-  KERNEL ARCHIVE! Those will obviously have been fixed up by humans in the 
-  event of a data conflict, and sometimes even in the _absense_ of a data 
-  conflict (ie "git commit --amend" to fix up something that got mismerged 
-  perfectly automatically or whatever).
-
-  So a script should literally re-do the merge two ways, and compare the 
-  end result ]
-
-Is that any "proof"? Of course not. And it will probably show differences 
-due to any conflict handling, but a lot of the time you'd expect to get 
-exactly the same end result, so the occasional differences are going to be 
-just all the more interesting ("it resolved differently, but it was 
-an equally good resolve" is interesting data on its own).
-
-Anybody want to write a small script to do this?
-
+-- 
+Jakub Narebski
