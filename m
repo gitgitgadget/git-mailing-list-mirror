@@ -1,76 +1,88 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Bash completion Issue?
-Date: Sun, 05 Nov 2006 12:45:14 +0100
-Organization: At home
-Message-ID: <eikirg$772$1@sea.gmane.org>
-References: <200611041236.59989.alan@chandlerfamily.org.uk> <20061105042849.GA3840@spearce.org> <200611050930.23455.alan@chandlerfamily.org.uk> <200611051122.46971.alan@chandlerfamily.org.uk> <20061105113115.GC4843@spearce.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH] Documentation/git-commit: rewrite to make it more end-user
+ friendly.
+Date: Sat, 09 Dec 2006 19:51:09 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0612091941230.2630@xanadu.home>
+References: <7vy7pik51b.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0612082141260.2630@xanadu.home>
+ <7vd56tei20.fsf_-_@assigned-by-dhcp.cox.net>
+ <200612100130.48812.Josef.Weidendorfer@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-NNTP-Posting-Date: Sun, 5 Nov 2006 11:45:33 +0000 (UTC)
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+NNTP-Posting-Date: Sun, 10 Dec 2006 00:51:20 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
+	"J. Bruce Fields" <bfields@fieldses.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 26
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+In-reply-to: <200612100130.48812.Josef.Weidendorfer@gmx.de>
+X-X-Sender: nico@xanadu.home
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30974>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GggRF-0003b3-MD for gcvg-git@gmane.org; Sun, 05 Nov
- 2006 12:45:22 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33858>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GtCuR-0005xc-76 for gcvg-git@gmane.org; Sun, 10 Dec
+ 2006 01:51:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932669AbWKELpS (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 5 Nov 2006
- 06:45:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932671AbWKELpS
- (ORCPT <rfc822;git-outgoing>); Sun, 5 Nov 2006 06:45:18 -0500
-Received: from main.gmane.org ([80.91.229.2]:62695 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S932669AbWKELpQ (ORCPT
- <rfc822;git@vger.kernel.org>); Sun, 5 Nov 2006 06:45:16 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1GggQs-0003W8-Ja for git@vger.kernel.org; Sun, 05 Nov 2006 12:44:58 +0100
-Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Sun, 05 Nov 2006 12:44:58 +0100
-Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Sun, 05 Nov 2006
- 12:44:58 +0100
-To: git@vger.kernel.org
+ S1758846AbWLJAvL (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 9 Dec 2006
+ 19:51:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758875AbWLJAvL
+ (ORCPT <rfc822;git-outgoing>); Sat, 9 Dec 2006 19:51:11 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:25287 "EHLO
+ relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1758846AbWLJAvK (ORCPT <rfc822;git@vger.kernel.org>); Sat, 9 Dec 2006
+ 19:51:10 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
+ <0JA1003UL919RK50@VL-MH-MR001.ip.videotron.ca> for git@vger.kernel.org; Sat,
+ 09 Dec 2006 19:51:09 -0500 (EST)
+To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-Shawn Pearce wrote:
+On Sun, 10 Dec 2006, Josef Weidendorfer wrote:
 
-> Alan Chandler <alan@chandlerfamily.org.uk> wrote:
->>  removing the git-completion package and copying the bash completion script 
->> from /usr/share/doc/git-core/contrib/completion to /etc/bash_completion.d 
->> solves the problem.  I am getting completion working fine now.
+> Very nice.
 > 
-> Good.  :-)
+> On Saturday 09 December 2006 06:48, Junio C Hamano wrote:
+> >  DESCRIPTION
+> >  -----------
+> > -Updates the index file for given paths, or all modified files if
+> > -'-a' is specified, and makes a commit object.  The command specified
+> > -by either the VISUAL or EDITOR environment variables are used to edit
+> > -the commit log message.
+> > +Use 'git commit' when you want to record your changes into the repository
+> > +along with a log message describing what the commit is about. All changes
+> > +to be committed must be explicitly identified using one of the following
 > 
-> Let us know if there's anything you'd like to see in the bash
-> completion...  I just sent out two rounds of patches for it, but
-> certainly still have more work to do on it.
+> What about: "... must be explicitly identified (that is,
+> must be "staged") ..."
+> 
+> This way, it will be clear for the reader that "to explicitly identify" is the
+> same thing as "to stage", which is used quite often later.
 
-I'd like to see completion for git-format-patch, git-cherry-pick
-and git-rebase. I tried to start doing completion for git-format-patch,
-but realized that I don't know bash, and bash completion enough for that.
+Hmmm, maybe, maybe not.  Although I don't have particular problem with 
+"staging area", I'm still unconvinced about the verb "stage".
 
-While at it, do git-completion.bash takes into consideration that
-some commands doesn't accept branch which is current branch.
+> > +methods:
+> >  
+> > -Several environment variable are used during commits.  They are
+> > -documented in gitlink:git-commit-tree[1].
+> > +1. by using gitlink:git-add[1] to incrementally "add" changes to the
+> > +   next commit before using the 'commit' command (Note: even modified
+> > +   files must be "added");
+> 
+> Regarding this note: Of course unmodified files do not have to be added ;-)
+> 
+> What about: "(Note: changes in files already known to git, and even new
+> changes done after a previous `git add` for a given file, still must
+> be staged again)" 
 
-Otherwise, I find git-completion for bash very useful.
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+This is getting too long for what it is worth in this case IMHO.
+
 
