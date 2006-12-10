@@ -1,78 +1,75 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 4/5] allow deepening of a shallow repository
-Date: Sat, 18 Nov 2006 13:58:21 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0611181356300.13772@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0610302009390.26682@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vy7qeze0q.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0611141150010.13772@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vy7qaqw12.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0611171050440.13772@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vu00ymhk1.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: kernel.org mirroring (Re: [GIT PULL] MMC update)
+Date: Mon, 11 Dec 2006 11:01:48 +1300
+Message-ID: <46a038f90612101401m5f65aefbh78f7adf84725ade4@mail.gmail.com>
+References: <Pine.LNX.4.64.0612020835110.3476@woody.osdl.org>
+	 <200612102011.52589.jnareb@gmail.com>
+	 <Pine.LNX.4.64.0612101129190.12500@woody.osdl.org>
+	 <200612102127.05894.jnareb@gmail.com>
+	 <Pine.LNX.4.64.0612101228590.12500@woody.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Sat, 18 Nov 2006 12:58:42 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Sun, 10 Dec 2006 22:02:02 +0000 (UTC)
+Cc: "Jakub Narebski" <jnareb@gmail.com>,
+	"Jeff Garzik" <jeff@garzik.org>,
+	"Git Mailing List" <git@vger.kernel.org>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	"Rogan Dawes" <discard@dawes.za.net>,
+	"Kernel Org Admin" <ftpadmin@kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7vu00ymhk1.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=NCIFi1R0g1dY0fAWXc58xnG1LU/1IoTvOtgWjbcqw6LZb6akTjobxl9uzfnGII5eiLVYCDFgXzE/YnOiIAjrnvM3g2chXwiFqd6vSzMfQQQkV/NfZP+aOBEBHlPmZ4GPw+zPgLyUj9eFlenaAZZl8PdMrARDsJO8TvsKTpxbXkY=
+In-Reply-To: <Pine.LNX.4.64.0612101228590.12500@woody.osdl.org>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31771>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GlPmG-0000OM-1w for gcvg-git@gmane.org; Sat, 18 Nov
- 2006 13:58:36 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33934>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GtWk7-0007i0-9K for gcvg-git@gmane.org; Sun, 10 Dec
+ 2006 23:01:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1756341AbWKRM6X (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 18 Nov 2006
- 07:58:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756340AbWKRM6X
- (ORCPT <rfc822;git-outgoing>); Sat, 18 Nov 2006 07:58:23 -0500
-Received: from mail.gmx.net ([213.165.64.20]:52457 "HELO mail.gmx.net") by
- vger.kernel.org with SMTP id S1756339AbWKRM6W (ORCPT
- <rfc822;git@vger.kernel.org>); Sat, 18 Nov 2006 07:58:22 -0500
-Received: (qmail invoked by alias); 18 Nov 2006 12:58:21 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp037) with SMTP; 18 Nov 2006 13:58:21 +0100
-To: Junio C Hamano <junkio@cox.net>
+ S935057AbWLJWBv (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 10 Dec 2006
+ 17:01:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935096AbWLJWBv
+ (ORCPT <rfc822;git-outgoing>); Sun, 10 Dec 2006 17:01:51 -0500
+Received: from nf-out-0910.google.com ([64.233.182.188]:54528 "EHLO
+ nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S935057AbWLJWBu (ORCPT <rfc822;git@vger.kernel.org>); Sun, 10 Dec
+ 2006 17:01:50 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so1795023nfa for
+ <git@vger.kernel.org>; Sun, 10 Dec 2006 14:01:49 -0800 (PST)
+Received: by 10.48.48.13 with SMTP id v13mr3588413nfv.1165788108459; Sun, 10
+ Dec 2006 14:01:48 -0800 (PST)
+Received: by 10.49.60.1 with HTTP; Sun, 10 Dec 2006 14:01:48 -0800 (PST)
+To: "Linus Torvalds" <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 
-Hi,
+On 12/11/06, Linus Torvalds <torvalds@osdl.org> wrote:
+> Sure, if the proxies actually do the rigth thing (which they may or may
+> not do)
 
-On Fri, 17 Nov 2006, Junio C Hamano wrote:
+For a high-traffic setup like kernel.org, you can setup a local
+reverse proxy -- it's a pretty standard practice. That allows you to
+control a well-behaved and locally tuned caching engine just by
+emitting good headers.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> >> Although I am reasonably sure we can eventually make it work, it
-> >> is very subtle and fragile -- somebody touching this code can
-> >> easily break it.
-> >
-> > I fully agree. Even the OA did not understand the code fully ;-)
-> >
-> > How about adding "int force_reparse" to the signature of 
-> > unregister_shallow()? (Just like we added "int cleanup" to 
-> > get_merge_bases() to avoid pilot errors.)
-> 
-> I do not think that's where its fragility lies.  It is that any
-> random place can later call parse_object() on the commit, after
-> you elaborately pre-parsed it with shallow so that it appears to
-> have fewer parents, with the expectation that nobody ever would
-> clear the parsed bit and cause it to be reparsed again.  With
-> that assumption, find_common() manipulated the shallow entry
-> after setting that scheme up.  A mechanism to prevent the commit
-> >from getting re-parsed would have made it more robust.
+It beats writing and maintaining an internal caching mechanism for
+each CGI script out there by a long mile. It means there'll be no
+further tunables or complexity for administrators of other gitweb
+installs.
 
-How about putting yet more meaning into nr_parents: if it is negative, it 
-is a shallow commit, but write_shallow_commits() only writes the SHA1 if 
-nr_parents is -1. Hmm?
+cheers,
 
-Ciao,
-Dscho
+
+
