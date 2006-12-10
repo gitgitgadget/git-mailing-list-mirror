@@ -1,66 +1,93 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH 2/2] git reflog expire
-Date: Tue, 19 Dec 2006 16:58:25 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0612191644290.6766@woody.osdl.org>
-References: <7vodq3a136.fsf@assigned-by-dhcp.cox.net> <7vr6uxzgjb.fsf@assigned-by-dhcp.cox.net>
- <20061218140813.GA32446@spearce.org> <7vy7p4u1au.fsf@assigned-by-dhcp.cox.net>
- <7v64c8thr4.fsf@assigned-by-dhcp.cox.net> <20061219090851.GH2511@spearce.org>
- <7vhcvsry2c.fsf@assigned-by-dhcp.cox.net> <20061219102741.GA21324@spearce.org>
- <Pine.LNX.4.64.0612191524180.6766@woody.osdl.org> <7vvek7o15v.fsf@assigned-by-dhcp.cox.net>
+From: Jeff Garzik <jeff@garzik.org>
+Subject: Re: kernel.org mirroring (Re: [GIT PULL] MMC update)
+Date: Sun, 10 Dec 2006 17:05:32 -0500
+Message-ID: <457C84AC.7060105@garzik.org>
+References: <Pine.LNX.4.64.0612020835110.3476@woody.osdl.org> <200612101402.51363.jnareb@gmail.com> <457C0F8F.7030504@garzik.org> <200612102011.52589.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Wed, 20 Dec 2006 00:58:40 +0000 (UTC)
-Cc: Shawn Pearce <spearce@spearce.org>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-2; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Sun, 10 Dec 2006 22:05:53 +0000 (UTC)
+Cc: Martin Langhoff <martin.langhoff@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Linus Torvalds <torvalds@osdl.org>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Rogan Dawes <discard@dawes.za.net>,
+	Kernel Org Admin <ftpadmin@kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <7vvek7o15v.fsf@assigned-by-dhcp.cox.net>
-X-MIMEDefang-Filter: osdl$Revision: 1.163 $
-X-Scanned-By: MIMEDefang 2.36
+User-Agent: Thunderbird 1.5.0.8 (X11/20061107)
+In-Reply-To: <200612102011.52589.jnareb@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34879>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33935>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gwpn1-0006Kt-C3 for gcvg-git@gmane.org; Wed, 20 Dec
- 2006 01:58:35 +0100
+ esmtp (Exim 4.50) id 1GtWns-00082e-Up for gcvg-git@gmane.org; Sun, 10 Dec
+ 2006 23:05:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932749AbWLTA6c (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
- 19:58:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932763AbWLTA6c
- (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 19:58:32 -0500
-Received: from smtp.osdl.org ([65.172.181.25]:50347 "EHLO smtp.osdl.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S932749AbWLTA6b
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec 2006 19:58:31 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
- smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kBK0wQ2J012205
- (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Tue, 19
- Dec 2006 16:58:26 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
- shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kBK0wP2V015664; Tue, 19 Dec
- 2006 16:58:25 -0800
-To: Junio C Hamano <junkio@cox.net>
+ S935310AbWLJWFh (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 10 Dec 2006
+ 17:05:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935336AbWLJWFg
+ (ORCPT <rfc822;git-outgoing>); Sun, 10 Dec 2006 17:05:36 -0500
+Received: from srv5.dvmed.net ([207.36.208.214]:41227 "EHLO mail.dvmed.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S935310AbWLJWFf
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 10 Dec 2006 17:05:35 -0500
+Received: from cpe-065-190-194-075.nc.res.rr.com ([65.190.194.75]
+ helo=[10.10.10.10]) by mail.dvmed.net with esmtpsa (Exim 4.63 #1 (Red Hat
+ Linux)) id 1GtWnd-0002tw-8C; Sun, 10 Dec 2006 22:05:34 +0000
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
+Jakub Narebski wrote:
+> Adn in CGI standard there is a way to access additional HTTP headers
+> info from CGI script: the envirionmental variables are HTTP_HEADER,
+> for example if browser sent If-Modified-Since: header it's value
+> can be found in HTTP_IF_MODIFIED_SINCE environmental variable.
+
+The CGI spec does not at all guarantee that the CGI environment will 
+contain all the HTTP headers sent by the client.  That was the point of 
+the environment dump script -- you can see exactly which headers are, 
+and are not, passed through to CGI.
+
+CGI only /guarantees/ a bare minimum (things like QUERY_STRING, 
+PATH_INFO, etc.)
+
+Even basic server info environment variables are optional.
 
 
-On Tue, 19 Dec 2006, Junio C Hamano wrote:
->
-> Linus, your userland programming skills are _spoiled_ by Linux
-> ;-).
+> It is ETag, not E-tag. Besides, I don't see what the attached script is
+> meant to do: it does not output the sample file anyway.
 
-Maybe. On the other hand, there's definitely a bit of just my programming 
-style involved: the things I care most about are the kinds of things I'd 
-personally use in programming. So I claim that one of the reasons Linux 
-does pathname lookup well is simply that every single program I've ever 
-done that cared about performance of either open() or stat() or both. And 
-yes, I tend to have a tendency to mmap() rather than read. So I optimize 
-stuff I do.
+It's not meant to output the sample file.  It outputs the server 
+metadata sent to the CGI script (the environment variables).  The sample 
+file was simply a way to play around with etag and last-modified metadata.
 
-That said, Linux does a lot of _other_ things well too, so it's not like 
-it's just the things I do.
+
+> The idea is of course to stop processing in CGI script / mod_perl script
+> as soon as possible if cache validates.
+
+Certainly.  That should help cut down on I/O.  FWIW though the projects 
+list is particularly painful, with its File::Find call, which you'll 
+need to do in order to return 304-not-modified.
+
+
+> I don't know if Apache intercepts and remembers ETag and Last-Modified
+> headers, adds 304 Not Modified HTTP response on finding that cache validates
+> and cuts out CGI script output. I.e. if browser provided If-Modified-Since:,
+> script wrote Last-Modified: header, If-Modified-Since: is no earlier than
+> Last-Modified: (usually is equal in the case of cache validation), then
+> Apache provides 304 Not Modified response instead of CGI script output.
+
+This wanders into the realm of mod_cache configuration, I think.  (which 
+I have tried to get working as reverse proxy, and failed serveral times) 
+  If you are not using mod_*_cache, then Apache must execute the CGI 
+script every time AFAICS, regardless of etag/[if-]last-mod headers.
+
+	Jeff
+
 
