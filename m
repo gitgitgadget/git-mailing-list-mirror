@@ -1,73 +1,101 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] hooks/pre-commit: add example to add Signed-off-by line
- to message
-Date: Wed, 20 Dec 2006 18:37:45 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612201835570.19693@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0611291219190.30004@wbgn013.biozentrum.uni-wuerzburg.de>
- <200612201604.12498.andyparkins@gmail.com>
- <Pine.LNX.4.63.0612201717490.19693@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vmz5ifpbv.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: kernel.org mirroring (Re: [GIT PULL] MMC update)
+Date: Sun, 10 Dec 2006 17:07:22 +1300
+Message-ID: <46a038f90612092007w4637637aya1a01ec18ff16f6f@mail.gmail.com>
+References: <Pine.LNX.4.64.0612020835110.3476@woody.osdl.org>
+	 <200612091251.16460.jnareb@gmail.com> <457AAF31.2050002@garzik.org>
+	 <200612091437.01183.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Wed, 20 Dec 2006 17:38:22 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Sun, 10 Dec 2006 04:07:37 +0000 (UTC)
+Cc: "Jeff Garzik" <jeff@garzik.org>,
+	"Git Mailing List" <git@vger.kernel.org>,
+	"Linus Torvalds" <torvalds@osdl.org>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	"Rogan Dawes" <discard@dawes.za.net>,
+	"Kernel Org Admin" <ftpadmin@kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7vmz5ifpbv.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=kApUaLjyRJZoo4tM08YVQgAboklgBB7qyjH7EHM+81FUF8WehwlonHlGkHsK6XfxinL9Bg4PuZBa3viK36FUnN4AObUU+YC1H03mUoKCVOaF0tNl3iDTwNUz73W4AgmNNY+WM7u7YGdQu5lNJFfO2saUQG5cHj8f016ZIa12gyo=
+In-Reply-To: <200612091437.01183.jnareb@gmail.com>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34951>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33867>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gx5OO-0000jU-Di for gcvg-git@gmane.org; Wed, 20 Dec
- 2006 18:38:12 +0100
+ esmtp (Exim 4.50) id 1GtFyQ-0002t1-Je for gcvg-git@gmane.org; Sun, 10 Dec
+ 2006 05:07:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1030217AbWLTRht (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 20 Dec 2006
- 12:37:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030219AbWLTRht
- (ORCPT <rfc822;git-outgoing>); Wed, 20 Dec 2006 12:37:49 -0500
-Received: from mail.gmx.net ([213.165.64.20]:34071 "HELO mail.gmx.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S1030221AbWLTRhs
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 20 Dec 2006 12:37:48 -0500
-Received: (qmail invoked by alias); 20 Dec 2006 17:37:46 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp048) with SMTP; 20 Dec 2006 18:37:46 +0100
-To: Junio C Hamano <junkio@cox.net>
+ S1759967AbWLJEHY (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 9 Dec 2006
+ 23:07:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759968AbWLJEHY
+ (ORCPT <rfc822;git-outgoing>); Sat, 9 Dec 2006 23:07:24 -0500
+Received: from nf-out-0910.google.com ([64.233.182.186]:1163 "EHLO
+ nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1759967AbWLJEHX (ORCPT <rfc822;git@vger.kernel.org>); Sat, 9 Dec
+ 2006 23:07:23 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so1591361nfa for
+ <git@vger.kernel.org>; Sat, 09 Dec 2006 20:07:22 -0800 (PST)
+Received: by 10.48.4.17 with SMTP id 17mr2555068nfd.1165723642265; Sat, 09
+ Dec 2006 20:07:22 -0800 (PST)
+Received: by 10.49.60.1 with HTTP; Sat, 9 Dec 2006 20:07:22 -0800 (PST)
+To: "Jakub Narebski" <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Hi,
-
-On Wed, 20 Dec 2006, Junio C Hamano wrote:
-
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > Hi,
+On 12/10/06, Jakub Narebski <jnareb@gmail.com> wrote:
+> Jeff Garzik wrote:
+> > Jakub Narebski wrote:
+>
+> >> In addition to setting either Expires: header or Cache-Control: max-age
+> >> gitweb should also set Last-Modified: and ETag headers, and also
+> >> probably respond to If-Modified-Since: and If-None-Match: requests.
+> >>
+> >> Would be worth implementing this?
 > >
-> > On Wed, 20 Dec 2006, Andy Parkins wrote:
-> >
-> >> Signed-off-by: Andy Parkins <andyparkins@gmail.com>
-> >
-> > Acked-by: Johannes E. Schindelin <johannes.schindelin@gmx.de>
-> >
-> > Ciao,
-> > Dscho
-> 
-> Why SQUASH_MSG?  Doesn't it confuse git-explain when it wants to
-> detect that you are in the middle of a squash merge?
+> > IMO yes, since most major browsers, caches, and spiders support these
+> > headers.
+>
+> Sending Last-Modified: should be easy; sending ETag needs some consensus
+> on the contents: mainly about validation. Responding to If-Modified-Since:
+> and If-None-Match: should cut at least _some_ of the page generating time.
+> If ETag can be calculated on URL alone, then we can cut If-None-Match:
+> just at beginning of script.
 
-Yes, it confuses git-explain. Which did not existed when I concocted the 
-first (broken) version of this patch. There are only two ways to give 
-commit message templates AFAICT: misusing SQUASH_MSG and misusing 
-MERGE_MSG.
+Indeed. Let me add myself to the pileup agreeing that a combination of
+setting Last-Modified and checking for If-Modified-Since for
+ref-centric pages (log, shortlog, RSS, and summary) is the smartest
+scheme. I got locked into thinking ETags.
 
-Ciao,
-Dscho
+> > That would be a good start, and suffice for many cases.  If the CGI can
+> > simply stat(2) files rather than executing git-* programs, that would
+> > increase efficiency quite a bit.
+>
+> As I said, I'm not talking (at least now) about saving generated HTML
+> output. This I think is better solved in caching engine like Squid can
+> be. Although even here some git specific can be of help: we can invalidate
+> cache on push, and we know that some results doesn't ever change (well,
+> with exception of changing output of gitweb).
+
+Indeed - gitweb should not be saving HTML around bit giving the best
+possible hints to squid and friends. And improving our ability to
+short-cut and send a 304 - Not Modified.
+
+> What can be _easily_ done:
+
+Great plan. :-)
+
+
+cheers,
+
+
