@@ -1,72 +1,67 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] Document git-diff whitespace flags -b and -w
-Date: Sun, 03 Dec 2006 19:38:55 +0100
-Organization: At home
-Message-ID: <ekv5k6$1ih$1@sea.gmane.org>
-References: <11651630814064-git-send-email-jnareb@gmail.com> <Pine.LNX.4.63.0612031908020.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Spam-Status: No, score=-2.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD,
+	SUBJ_ALL_CAPS shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+From: Clemens Buchacher <clemens.buchacher@fh-hagenberg.at>
+Subject: *** SPAM ***
+Date: Sun, 10 Dec 2006 14:57:53 +0100
+Message-ID: <20061210135753.GA12905@kzelldran.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-NNTP-Posting-Date: Sun, 3 Dec 2006 18:39:27 +0000 (UTC)
+NNTP-Posting-Date: Sun, 10 Dec 2006 13:57:14 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 22
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-OriginalArrivalTime: 10 Dec 2006 13:56:54.0649 (UTC) FILETIME=[0CDCDE90:01C71C63]
+X-Junk-Mail: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33127>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33889>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GqwFJ-0002Nv-8q for gcvg-git@gmane.org; Sun, 03 Dec
- 2006 19:39:25 +0100
+ esmtp (Exim 4.50) id 1GtPB0-0001wo-0r for gcvg-git@gmane.org; Sun, 10 Dec
+ 2006 14:57:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1759974AbWLCSjW (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 3 Dec 2006
- 13:39:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759975AbWLCSjW
- (ORCPT <rfc822;git-outgoing>); Sun, 3 Dec 2006 13:39:22 -0500
-Received: from main.gmane.org ([80.91.229.2]:62923 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S1759974AbWLCSjV (ORCPT
- <rfc822;git@vger.kernel.org>); Sun, 3 Dec 2006 13:39:21 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1GqwF4-0008Nv-VU for git@vger.kernel.org; Sun, 03 Dec 2006 19:39:10 +0100
-Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Sun, 03 Dec 2006 19:39:10 +0100
-Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Sun, 03 Dec 2006
- 19:39:10 +0100
+ S1760759AbWLJN45 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 10 Dec 2006
+ 08:56:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760762AbWLJN45
+ (ORCPT <rfc822;git-outgoing>); Sun, 10 Dec 2006 08:56:57 -0500
+Received: from postman.fh-hagenberg.at ([193.170.124.96]:47592 "EHLO
+ postman.fh-hagenberg.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1760759AbWLJN44 (ORCPT <rfc822;git@vger.kernel.org>); Sun, 10 Dec
+ 2006 08:56:56 -0500
+Received: from kzelldran.dyndns.org ([84.154.115.16]) by
+ postman.fh-hagenberg.at over TLS secured channel with Microsoft
+ SMTPSVC(6.0.3790.1830); Sun, 10 Dec 2006 14:56:53 +0100
+Received: from drizzd by kzelldran.dyndns.org with local (Exim 4.63)
+ (envelope-from <drizzd@kzelldran.dyndns.org>) id 1GtPBh-0003Ni-Mn for
+ git@vger.kernel.org; Sun, 10 Dec 2006 14:57:53 +0100
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Johannes Schindelin wrote:
+Make sure $EDITOR is executed as a command
 
-> On Sun, 3 Dec 2006, Jakub Narebski wrote:
-> 
->> +--ignore-space-change::
->> +    Ignore changes in amount of white space.  This ignores white
->> +    space at line end, and consider all other sequences of one or
->> +    more white space characters to be equivalent.
-> 
-> Thank you for bringing this up. The latter part is correct, but the first 
-> part not yet. I asked at the time if somebody cares, but got no answer, so 
-> "-b" does _not_ ignore white space at the end of line ATM, but only white 
-> space change. So here is a patch to fix that behaviour:
+---
+commit 942341e051fdcbb77a6abfbc58cf08ef8cab388d
+tree 96e8fd08cdc7c59b0d3d55d7cb5b4302db443aff
+parent b6a6e87cb3e1368ad0f78c18fdb6c29dde4ae83e
+author Clemens Buchacher <drizzd@aon.at> Sun, 10 Dec 2006 14:37:37 +0100
+committer Clemens Buchacher <drizzd@aon.at> Sun, 10 Dec 2006 14:37:37 +0100
 
-Alternate solution would be to fix documentation, to document existing code.
-I used GNU diff documentation, perhaps it is better if we are GNU diff
-compatibile...
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+ cg-Xlib |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
+diff --git a/cg-Xlib b/cg-Xlib
+index c1262bf..9d04eb4 100755
+--- a/cg-Xlib
++++ b/cg-Xlib
+@@ -568,7 +568,7 @@ _editor()
+ 	actionname="$1"; shift
+ 	actionkey="$1"; shift
+ 
+-	${EDITOR:-vi} "$LOGMSG2"
++	command ${EDITOR:-vi} "$LOGMSG2"
+ 	[ -z "$force" ] || return 0
+ 	[ ! "$LOGMSG2" -nt "$LOGMSG" ] || return 0
