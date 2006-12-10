@@ -1,73 +1,66 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] Do not ignore hidden refs
-Date: Sat, 18 Nov 2006 20:55:20 +0100
-Message-ID: <20061118195520.GQ7201@pasky.or.cz>
-References: <20061118041137.6064.75827.stgit@machine.or.cz> <7v8xi9fjw9.fsf@assigned-by-dhcp.cox.net> <20061118045323.GK7201@pasky.or.cz> <7vzmapdxki.fsf@assigned-by-dhcp.cox.net> <20061118192830.GP7201@pasky.or.cz> <7vejs0cz5s.fsf@assigned-by-dhcp.cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Collection of stgit issues and wishes
+Date: Sun, 10 Dec 2006 09:55:13 +0100
+Organization: At home
+Message-ID: <elght6$tjb$1@sea.gmane.org>
+References: <20061208221744.GA3288@nan92-1-81-57-214-146.fbx.proxad.net> <elconr$uku$2@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sat, 18 Nov 2006 19:55:46 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Transfer-Encoding: 7Bit
+NNTP-Posting-Date: Sun, 10 Dec 2006 08:53:22 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <7vejs0cz5s.fsf@assigned-by-dhcp.cox.net>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 16
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-25-107.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31798>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GlWHh-0005IP-GF for gcvg-git@gmane.org; Sat, 18 Nov
- 2006 20:55:30 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33870>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GtKQy-00030N-4q for gcvg-git@gmane.org; Sun, 10 Dec
+ 2006 09:53:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1756407AbWKRTzY (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 18 Nov 2006
- 14:55:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756410AbWKRTzY
- (ORCPT <rfc822;git-outgoing>); Sat, 18 Nov 2006 14:55:24 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:32918 "EHLO machine.or.cz") by
- vger.kernel.org with ESMTP id S1756409AbWKRTzW (ORCPT
- <rfc822;git@vger.kernel.org>); Sat, 18 Nov 2006 14:55:22 -0500
-Received: (qmail 28416 invoked by uid 2001); 18 Nov 2006 20:55:20 +0100
-To: Junio C Hamano <junkio@cox.net>
+ S1760504AbWLJIxP (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 10 Dec 2006
+ 03:53:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760513AbWLJIxP
+ (ORCPT <rfc822;git-outgoing>); Sun, 10 Dec 2006 03:53:15 -0500
+Received: from main.gmane.org ([80.91.229.2]:38463 "EHLO ciao.gmane.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1760504AbWLJIxP
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 10 Dec 2006 03:53:15 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1GtKQk-00059w-H3 for git@vger.kernel.org; Sun, 10 Dec 2006 09:53:06 +0100
+Received: from host-81-190-25-107.torun.mm.pl ([81.190.25.107]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Sun, 10 Dec 2006 09:53:06 +0100
+Received: from jnareb by host-81-190-25-107.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Sun, 10 Dec 2006
+ 09:53:06 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On Sat, Nov 18, 2006 at 08:50:23PM CET, Junio C Hamano wrote:
-> Petr Baudis <pasky@suse.cz> writes:
-> 
-> > On Sat, Nov 18, 2006 at 08:27:09AM CET, Junio C Hamano wrote:
-> >> ...  I do not think it is a great
-> >> enough convention to be promoted as the official BCP, but it has
-> >> been good enough for me, ...
-> >
-> > That's way too arbitrary for my taste, I think I needn't explain why.
-> 
-> Because _I_ explained why already ;-).
+Jakub Narebski wrote:
 
-Oops. ;-) Me too sloppy today, sorry.
+> Here are some issues which are a bit annoying for me:
+> - make "stg help" (without command name) equivalent to "stg --help"
+> - stg new lacks --sign option (I have to remember to do this during
+>   "stg refresh").
 
-> > What about leading underscore?
-> 
-> I would rather prefer to do refs/{heads,private}/ and allow
-> checkout to treat either of them as branches.  We are talking
-> about allowing checkout to go to a non-branch by storing a raw
-> commit object name in HEAD instead of leaving it as a symref, so
-> we know we are going to touch that area already.
-
-Cogito _heavily_ assumes on a lot of places that heads live in
-refs/heads/ and tags live in refs/tags/. Besides, I think private tags
-are much more useful to support than private heads (not that you would
-necessarily make more private tags than private heads, but you are more
-likely to want tags autopushed than heads; or perhaps that just in my
-head?). So what about refs/{heads,tags}/private/? :-)
+And another one: git uses VISUAL, then EDITOR, while stgit uses EDITOR
+only, so when I prepare VISUAL for git (I use emacsclient), stgit still
+uses EDITOR.
 
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-The meaning of Stonehenge in Traflamadorian, when viewed from above, is:
-"Replacement part being rushed with all possible speed."
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
+
