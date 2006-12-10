@@ -2,90 +2,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Cleaning up git user-interface warts
-Date: Wed, 15 Nov 2006 19:07:11 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0611151859370.3349@woody.osdl.org>
-References: <Pine.LNX.4.64.0611150950170.3349@woody.osdl.org>
- <200611151858.51833.andyparkins@gmail.com> <Pine.LNX.4.64.0611151111250.3349@woody.osdl.org>
- <f2b55d220611151139v66fba16ax97ce6b9966b33ce7@mail.gmail.com>
- <Pine.LNX.4.64.0611151203450.3349@woody.osdl.org> <Pine.LNX.4.64.0611151516360.2591@xanadu.home>
- <Pine.LNX.4.64.0611151226590.3349@woody.osdl.org> <87velgs9hx.wl%cworth@cworth.org>
- <Pine.LNX.4.64.0611151339500.3349@woody.osdl.org> <87psbos4pb.wl%cworth@cworth.org>
- <20061115230252.GH24861@spearce.org> <Pine.LNX.4.64.0611151523290.3349@woody.osdl.org>
- <Pine.LNX.4.64.0611151905460.2591@xanadu.home>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Using GIT to store /etc (Or: How to make GIT store all file permission bits)
+Date: Sun, 10 Dec 2006 16:30:00 +0100
+Organization: At home
+Message-ID: <elh91b$v6r$1@sea.gmane.org>
+References: <787BE48C-1808-4A33-A368-5E8A3F00C787@mac.com> <457C1E8E.4080407@garzik.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Thu, 16 Nov 2006 03:07:38 +0000 (UTC)
-Cc: Shawn Pearce <spearce@spearce.org>, Carl Worth <cworth@cworth.org>,
-	"Michael K. Edwards" <medwards.linux@gmail.com>,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+NNTP-Posting-Date: Sun, 10 Dec 2006 15:28:31 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <Pine.LNX.4.64.0611151905460.2591@xanadu.home>
-X-MIMEDefang-Filter: osdl$Revision: 1.156 $
-X-Scanned-By: MIMEDefang 2.36
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 54
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-25-107.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31547>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GkXbA-0008IP-RZ for gcvg-git@gmane.org; Thu, 16 Nov
- 2006 04:07:33 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33895>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GtQbK-0001PH-Po for gcvg-git@gmane.org; Sun, 10 Dec
+ 2006 16:28:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1031045AbWKPDH3 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
- 22:07:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031039AbWKPDH3
- (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 22:07:29 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:52368 "EHLO smtp.osdl.org") by
- vger.kernel.org with ESMTP id S1030950AbWKPDH2 (ORCPT
- <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 22:07:28 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
- smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kAG37CoZ023115
- (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Wed, 15
- Nov 2006 19:07:13 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
- shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kAG37Bqs009205; Wed, 15 Nov
- 2006 19:07:11 -0800
-To: Nicolas Pitre <nico@cam.org>
+ S1761180AbWLJP2P (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 10 Dec 2006
+ 10:28:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761183AbWLJP2P
+ (ORCPT <rfc822;git-outgoing>); Sun, 10 Dec 2006 10:28:15 -0500
+Received: from main.gmane.org ([80.91.229.2]:41569 "EHLO ciao.gmane.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1761180AbWLJP2O
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 10 Dec 2006 10:28:14 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1GtQax-0006E3-Em for git@vger.kernel.org; Sun, 10 Dec 2006 16:28:03 +0100
+Received: from host-81-190-25-107.torun.mm.pl ([81.190.25.107]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Sun, 10 Dec 2006 16:28:03 +0100
+Received: from jnareb by host-81-190-25-107.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Sun, 10 Dec 2006
+ 16:28:03 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
+Jeff Garzik wrote:
 
-
-On Wed, 15 Nov 2006, Nicolas Pitre wrote:
+> Kyle Moffett wrote:
+>>
+>> I've recently become somewhat interested in the idea of using GIT to 
+>> store the contents of various folders in /etc.  However after a bit of 
+>> playing with this, I discovered that GIT doesn't actually preserve all 
+>> permission bits since that would cause problems with the more 
+>> traditional software development model.  I'm curious if anyone has done 
+>> this before; and if so, how they went about handling the permissions and 
+>> ownership issues.
+>> 
+>> I spent a little time looking over how GIT stores and compares 
+>> permission bits; trying to figure out if it's possible to patch in a new 
+>> configuration variable or two; say "preserve_all_perms" and 
+>> "preserve_owner", or maybe even "save_acls".  It looks like standard 
+>> permission preservation is fairly basic; you would just need to patch a 
+>> few routines which alter the permissions read in from disk or compare 
+>> them with ones from the database.  On the other hand, it would appear 
+>> that preserving ownership or full POSIX ACLs might be a bit of a challenge.
 > 
-> That is an implementation detail that should be easily overcome once the 
-> notion of tracking branch with URL attribute is implemented.
+> It's a great idea, something I would like to do, and something I've 
+> suggested before.  You could dig through the mailing list archives, if 
+> you're motivated.
+> 
+> I actively use git to version, store and distribute an exim mail 
+> configuration across six servers.  So far my solution has been a 'fix 
+> perms' script, or using the file perm checking capabilities of cfengine.
 
-Nope.
+Fix perms' script used on a checkout hook is a best idea I think.
+ 
+> But it would be a lot better if git natively cared about ownership and 
+> permissions (presumably via an option).
 
-I simply don't _have_ those branches.
+There is currently no place for ownership and extended attributes in
+the tree object; and even full POSIX permissions might be challenge
+because for example currently unused 'is socket' permission bit is
+used for experimental commit-in-tree submodule support. And given Linus
+stance that git is "content tracker"...
 
-Why? Because the kernel is _distributed_. There is no central place 
-(certainly not my repository) that tracks all the possible branches that 
-might get merged.
+In the loooong thread "VCS comparison table" there was some talk
+about using git (or any SCM) to manage /etc. Check out:
 
-In other words, I repeat: in a TRULY DISTRIBUTED ENVIRONMENT it makes more 
-sense to have a "pull" that fetches and merges, over something that 
-fetches separately and then merges. Because in a truly distributed 
-environment, you simply DO NOT HAVE static branches that you can associate 
-with particular sources.
+ * Message-ID: <Pine.LNX.4.64.0610220926170.3962@g5.osdl.org>
+   http://permalink.gmane.org/gmane.comp.version-control.git/29765
+ * Message-ID: <20061023051932.GA8625@evofed.localdomain>
+   http://marc.theaimsgroup.com/?i=<20061023051932.GA8625@evofed.localdomain>
 
-See?
-
-And the thing is, I think the git design should be geared towards true 
-distribution. It should NOT be geared toward a fairly static set of 
-branches that all have a fairly static set of other repositories 
-associated with them. Can you see the difference?
-
-I'm personally convinced that one of the reasons people tend to use git in 
-a centralized manner is just a mental disease that has its roots in how 
-they used _other_ SCM's. I don't want git design to be polluted by such a 
-centralized notion.
-
-So to repeat: you can always make "pull" boil down to "pull from myself" 
-(aka just "merge"), but you can _not_ make "fetch + merge" boil down to 
-"pull" without meking up extra state to track separately. In other words, 
-"pull" really is the strictly more powerful operation.
+(and other messages in this subthread).
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
 
