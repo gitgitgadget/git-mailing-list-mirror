@@ -1,475 +1,69 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Whitcroft <apw@shadowen.org>
-Subject: Wierd tag errors from current 'next'
-Date: Sat, 25 Nov 2006 13:32:16 +0000
-Message-ID: <456845E0.1050001@shadowen.org>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 3/3] add test case for recursive merge
+Date: Sun, 10 Dec 2006 23:51:38 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0612102350050.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20061207101707.GA19139@spearce.org>
+ <Pine.LNX.4.63.0612100056090.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.63.0612100114440.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vmz5w5tuw.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sat, 25 Nov 2006 13:32:42 +0000 (UTC)
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Sun, 10 Dec 2006 23:08:26 +0000 (UTC)
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.7 (X11/20060927)
-X-Enigmail-Version: 0.94.0.0
-OpenPGP: url=http://www.shadowen.org/~apw/public-key
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <7vmz5w5tuw.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32286>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gnxdp-0002Z1-Re for gcvg-git@gmane.org; Sat, 25 Nov
- 2006 14:32:27 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33955>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GtXmP-00062y-RM for gcvg-git@gmane.org; Mon, 11 Dec
+ 2006 00:08:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S935184AbWKYNcT (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 25 Nov 2006
- 08:32:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935185AbWKYNcT
- (ORCPT <rfc822;git-outgoing>); Sat, 25 Nov 2006 08:32:19 -0500
-Received: from hellhawk.shadowen.org ([80.68.90.175]:52740 "EHLO
- hellhawk.shadowen.org") by vger.kernel.org with ESMTP id S935184AbWKYNcS
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 25 Nov 2006 08:32:18 -0500
-Received: from localhost ([127.0.0.1]) by hellhawk.shadowen.org with esmtp
- (Exim 4.50) id 1Gnxcy-0005HO-SK for git@vger.kernel.org; Sat, 25 Nov 2006
- 13:31:33 +0000
-To: Git Mailing List <git@vger.kernel.org>
+ S1759147AbWLJXIS (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 10 Dec 2006
+ 18:08:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762254AbWLJXIS
+ (ORCPT <rfc822;git-outgoing>); Sun, 10 Dec 2006 18:08:18 -0500
+Received: from mail.gmx.net ([213.165.64.20]:38257 "HELO mail.gmx.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S1759147AbWLJXIS
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 10 Dec 2006 18:08:18 -0500
+Received: (qmail invoked by alias); 10 Dec 2006 22:51:38 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp031) with SMTP; 10 Dec 2006 23:51:38 +0100
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-I just was fetching some updates from a repository which I sync from CVS
-into my development repository.  I got the following wierd errors about
-a tag during the fetch, it seemed to fix itself by the end ... hmmmm.
+Hi,
 
-apw@pinky$ git --version
-git version 1.4.4.1.g61fba
+On Sat, 9 Dec 2006, Junio C Hamano wrote:
 
--apw
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > this test succeeds consistently on the machine where I tested it 
+> > originally, but fails on another of my machines, but only when run without 
+> > "-v". Very annoying. I will not have time to investigate until Monday, 
+> > though.
+> 
+> There seem to be cases where stage #1 contains blob 'B' or 'A'
+> or nothing depending on something totally random.  Ring a bell?
 
-apw@pinky$ git fetch
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-remote: Generating pack...
-remote: Done counting 42 objects.
-remote: Result has 28 objects.
-remote: Deltifying 28 objects.
-remote:  100% (28/28) done
-remote: Total 28, written 28 (delta 20), reused 20 (delta 12)
-Unpacking 28 objects
- 100% (28/28) done
-g* refs/heads/origin: fast forward to branch 'master' of
-/home/apw/git/abat-up/
-  old..new: a6bb0e2..1063ab6
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-Auto-following refs/tags/v0_72_3
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-error: refs/tags/v0_72_3 does not point to a valid object!
-remote: Generating pack...
-remote: Done counting 0 objects.
-Total 0, written 0 (delta 0), reused 0 (delta 0)
-Unpacking 0 objects
+Not at all.
 
-* refs/tags/v0_72_3: storing tag 'v0_72_3' of /home/apw/git/abat-up/
-  commit: a38fa34
+It seems that one merge is conflicting on "a1", and not storing _anything_ 
+in the resulting (unclean) tree. So, there is no stage 1.
+
+However, I also saw that something is left in stage 1 on the box where the 
+problem arises. Tomorrow.
+
+Ciao,
+Dscho
