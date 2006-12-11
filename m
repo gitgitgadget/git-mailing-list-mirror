@@ -1,65 +1,66 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [RFC/PATCH 2/2] git-svn: rename 'commit' command to 'set-tree'
-Date: Sat, 16 Dec 2006 05:26:03 -0800
-Message-ID: <7vbqm4ezv8.fsf@assigned-by-dhcp.cox.net>
-References: <m28xh8amxa.fsf@ziti.local>
-	<11662558902535-git-send-email-normalperson@yhbt.net>
+From: Yann Dirson <ydirson@altern.org>
+Subject: Re: Collection of stgit issues and wishes
+Date: Mon, 11 Dec 2006 19:41:05 +0100
+Message-ID: <20061211184105.GC17132@nan92-1-81-57-214-146.fbx.proxad.net>
+References: <20061208221744.GA3288@nan92-1-81-57-214-146.fbx.proxad.net> <200612101801.58247.jnareb@gmail.com> <b0943d9e0612101426l763d46cahe15683410cb4398d@mail.gmail.com> <200612110002.05847.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sat, 16 Dec 2006 13:26:13 +0000 (UTC)
-Cc: git@vger.kernel.org, seth@hand.yhbt.net
+NNTP-Posting-Date: Mon, 11 Dec 2006 18:43:38 +0000 (UTC)
+Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <11662558902535-git-send-email-normalperson@yhbt.net> (Eric
-	Wong's message of "Fri, 15 Dec 2006 23:58:08 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Content-Disposition: inline
+In-Reply-To: <200612110002.05847.jnareb@gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34613>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34027>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GvZYK-0003Zv-Gc for gcvg-git@gmane.org; Sat, 16 Dec
- 2006 14:26:12 +0100
+ esmtp (Exim 4.50) id 1Gtq7f-0001fk-C1 for gcvg-git@gmane.org; Mon, 11 Dec
+ 2006 19:43:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751673AbWLPN0H (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 16 Dec 2006
- 08:26:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753688AbWLPN0H
- (ORCPT <rfc822;git-outgoing>); Sat, 16 Dec 2006 08:26:07 -0500
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:37835 "EHLO
- fed1rmmtao04.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1751673AbWLPN0G (ORCPT <rfc822;git@vger.kernel.org>); Sat, 16 Dec 2006
- 08:26:06 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao04.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061216132604.SNQE7494.fed1rmmtao04.cox.net@fed1rmimpo01.cox.net>; Sat, 16
- Dec 2006 08:26:04 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id zRRQ1V0031kojtg0000000; Sat, 16 Dec 2006
- 08:25:24 -0500
-To: Eric Wong <normalperson@yhbt.net>
+ S937020AbWLKSmd (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 11 Dec 2006
+ 13:42:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937469AbWLKSmd
+ (ORCPT <rfc822;git-outgoing>); Mon, 11 Dec 2006 13:42:33 -0500
+Received: from smtp2-g19.free.fr ([212.27.42.28]:50431 "EHLO
+ smtp2-g19.free.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
+ S937020AbWLKSmc (ORCPT <rfc822;git@vger.kernel.org>); Mon, 11 Dec 2006
+ 13:42:32 -0500
+Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net
+ [81.57.214.146]) by smtp2-g19.free.fr (Postfix) with ESMTP id 63D7D7D28; Mon,
+ 11 Dec 2006 19:42:30 +0100 (CET)
+Received: by gandelf.nowhere.earth (Postfix, from userid 1000) id C8B591F011;
+ Mon, 11 Dec 2006 19:41:05 +0100 (CET)
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Eric Wong <normalperson@yhbt.net> writes:
+On Mon, Dec 11, 2006 at 12:02:05AM +0100, Jakub Narebski wrote:
+> Catalin Marinas wrote:
+> > On 10/12/06, Jakub Narebski <jnareb@gmail.com> wrote:
+> 
+> >> The git commands StGit uses to perform operations automatically record
+> >> changes in branches in reflog. What StGit does not provide is the "reason".
+> >> You do use git-update-ref?
+> > 
+> > Yes, only for updating HEAD. The refs in refs/patches/<branch>/ are
+> > written directly. I initialy wanted to add patch history support using
+> > reflogs and added "git-update-ref -m ..." for the patch commits but I
+> > found slow the pushing operation a bit. Do you only want to track the
+> > reflogs for HEAD?
+> 
+> Yes, I want for StGit to provide reasons when updating HEAD.
 
-> 'set-tree' probably accurately describes what the command
-> formerly known as 'commit' does.
->
-> I'm not entirely sure that 'dcommit' should be renamed to 'commit'
-> just yet...  Perhaps 'push' or 'push-changes'?
+Apart from the use-case you described in a later mail, this could
+provide a path to series-level logging (one of the points in my list);
+since the meaningful changes in a series involve changing the HEAD, we
+would the have most the needed info that way.
 
-I think Pasky did such a three-way rename to avoid breaking
-people's fingers.  I thought it was a reasonable transition
-strategy, but some people might say its only effect was to break
-people's fingers not just once but twice, so Pasky himself
-and/or Cogito users may have some input on this.
-
-We are talking about major UI change between 1.4 series and
-v1.5.0 on the core Porcelain-ish side, so if you feel confident
-that things would settle down in a month or so in the git-svn
-front, it may be a good idea to roll sweeping changes into the
-same timeframe.
+Operations just shuffling the stack (eg. "float -s", or "push XXX;
+push --undo") would probably require putting the series file itself
