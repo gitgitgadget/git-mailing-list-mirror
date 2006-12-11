@@ -5,75 +5,155 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH/RFC (take 2)] gitweb: New improved patchset view
-Date: Mon, 30 Oct 2006 14:58:32 +0100
-Message-ID: <200610301458.33634.jnareb@gmail.com>
-References: <92622.251.qm@web31812.mail.mud.yahoo.com> <7vy7qyw6w6.fsf@assigned-by-dhcp.cox.net> <200610301043.22033.jnareb@gmail.com>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: [RFC \ WISH] Add -o option to git-rev-list
+Date: Mon, 11 Dec 2006 01:15:20 +0100
+Message-ID: <e5bfff550612101615u5f588513n499e3b88ce14a6f6@mail.gmail.com>
+References: <e5bfff550612100338ye2ca2a0u1c8f29bbc59c5431@mail.gmail.com>
+	 <Pine.LNX.4.64.0612101009040.12500@woody.osdl.org>
+	 <e5bfff550612101151r5e77ddc0w8f61f36fc1f2920e@mail.gmail.com>
+	 <Pine.LNX.4.64.0612101159530.12500@woody.osdl.org>
+	 <Pine.LNX.4.64.0612101213520.12500@woody.osdl.org>
+	 <e5bfff550612101405h507cc877k87491264d11b0aa8@mail.gmail.com>
+	 <Pine.LNX.4.64.0612101410220.12500@woody.osdl.org>
+	 <e5bfff550612101435o6bc938acmac28ad6adf0c8844@mail.gmail.com>
+	 <Pine.LNX.4.64.0612101439540.12500@woody.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Mon, 30 Oct 2006 14:00:02 +0000 (UTC)
-Cc: Luben Tuikov <ltuikov@yahoo.com>, git@vger.kernel.org
+NNTP-Posting-Date: Mon, 11 Dec 2006 00:15:35 +0000 (UTC)
+Cc: "Git Mailing List" <git@vger.kernel.org>,
+	"Junio C Hamano" <junkio@cox.net>,
+	"Alex Riesen" <raa.lkml@gmail.com>,
+	"Shawn Pearce" <spearce@spearce.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=jVpMxx0Y6pDTY7rPR8NoahzArr0eF4qZ/ycCpIFdYyg2X4gqcprA3/TMLGxB8FP0E8g5zfjbPh/nBlld3MWRrDhVSHnJY38t5QzbgR+E5qxHihYQZzIp/3VzKXWtb+d74UBsbNnXrwl3+t8ullLbC4W9RH8JTFl3oWmJxMRj5pw=
-User-Agent: KMail/1.9.3
-In-Reply-To: <200610301043.22033.jnareb@gmail.com>
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=ZmUZBzIoY8S2rCxQDtpcrjD3cZvsl6xKNpre1X7nvrWCHNHCItxkJapmX9wZTk+vqaPd5P4dAY4G5IFMWNbaDuh+xQ+skNNX5B3tZ/0MrTwoxHU61MWtOaPriEemvNgqLn1LovDhuRyEhcQJJwofgfhf0RlXME+sNklPyzUCUmI=
+In-Reply-To: <Pine.LNX.4.64.0612101439540.12500@woody.osdl.org>
 Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30499>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GeXex-0001kv-W2 for gcvg-git@gmane.org; Mon, 30 Oct
- 2006 14:58:40 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33967>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GtYpJ-0004CS-4I for gcvg-git@gmane.org; Mon, 11 Dec
+ 2006 01:15:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751651AbWJ3N6g (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 30 Oct 2006
- 08:58:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751650AbWJ3N6g
- (ORCPT <rfc822;git-outgoing>); Mon, 30 Oct 2006 08:58:36 -0500
-Received: from ug-out-1314.google.com ([66.249.92.174]:40710 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1751175AbWJ3N6f
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 30 Oct 2006 08:58:35 -0500
-Received: by ug-out-1314.google.com with SMTP id 32so1135543ugm for
- <git@vger.kernel.org>; Mon, 30 Oct 2006 05:58:34 -0800 (PST)
-Received: by 10.67.105.19 with SMTP id h19mr4128697ugm; Mon, 30 Oct 2006
- 05:58:32 -0800 (PST)
-Received: from host-81-190-18-116.torun.mm.pl ( [81.190.18.116]) by
- mx.google.com with ESMTP id o1sm2830973uge.2006.10.30.05.58.29; Mon, 30 Oct
- 2006 05:58:29 -0800 (PST)
-To: Junio C Hamano <junkio@cox.net>
+ S1760455AbWLKAPW (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 10 Dec 2006
+ 19:15:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762577AbWLKAPW
+ (ORCPT <rfc822;git-outgoing>); Sun, 10 Dec 2006 19:15:22 -0500
+Received: from py-out-1112.google.com ([64.233.166.176]:17375 "EHLO
+ py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1760473AbWLKAPV (ORCPT <rfc822;git@vger.kernel.org>); Sun, 10 Dec
+ 2006 19:15:21 -0500
+Received: by py-out-1112.google.com with SMTP id a29so809757pyi for
+ <git@vger.kernel.org>; Sun, 10 Dec 2006 16:15:21 -0800 (PST)
+Received: by 10.35.112.4 with SMTP id p4mr8463852pym.1165796120720; Sun, 10
+ Dec 2006 16:15:20 -0800 (PST)
+Received: by 10.35.93.11 with HTTP; Sun, 10 Dec 2006 16:15:20 -0800 (PST)
+To: "Linus Torvalds" <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 
-Jakub Narebski wrote:
-> Junio C Hamano wrote:
->>
->> I think the UI layer like gitweb should have freedom to choose
->> its own pathname handling, and should read from -z output.
-> 
-> That's a very good idea. I'll send separate patch (if noone else will
-> do this, that is) which would convert gitweb to always use -z output,
-> both git-ls-tree and git-diff-tree... oh, well, there is no -z patch
-> output, so in patch part we would have to replace git quoted part by
-> gitweb quoted part.
+On 12/10/06, Linus Torvalds <torvalds@osdl.org> wrote:
+>
+> looks about right.
+>
 
-I have realized that it is not as easy as it sounds, at least for the
-git-diff-tree output. For the LF-terminated output (without '-z') you
-know that LF separates records, and you can split on LF ('\n'). It is
-not the case for '-z' '\0' delimited output: NUL ('\0') might also mean
-end of one of the filenames in the rename/copy case, and is used to 
-separate filename(s) from the score (although here TAB would be 
-enough). And that is probably the case that gitweb uses default 
-git-diff-tree output, and _tries_ to unescape(...) filename.
+Yes it's right. Thanks!
 
-The solution would be perhaps to add '--zz' option to use '-z' output 
-but to separate records by double NUL, i.e. '\0\0'...
+But it's still slow. Almost one second (985ms) to read the little qgit repo:
 
-By the way, why diff-tree "raw" format for merge gives only one, final,
-filename?
--- 
-Jakub Narebski
+$ ./qgit HEAD
+Found GNU source-highlight 2.5
+count is <-1>
+count is <60169>
+count is <-1>
+count is <60505>
+count is <-1>
+count is <61462>
+count is <-1>
+count is <61911>
+count is <-1>
+count is <61392>
+count is <-1>
+count is <61880>
+count is <-1>
+count is <62009>
+count is <-1>
+count is <62549>
+count is <-1>
+count is <21354>
+count is <0>
+$
+
+As a compare the temporary file version needs a mere 105ms (1030 revs).
+
+This is the code under test:
+
+bool DataLoader::start(const QStringList& args, const QString& workDir) {
+
+	QDir::setCurrent(workDir);
+	_file = popen(args.join(" ").ascii(), "r");
+	if (!_file)
+		return false;
+
+	fcntl(fileno(_file), F_SETFL, O_NONBLOCK);
+	
+	loadTime.start();
+	guiUpdateTimer.start(10, true);
+	return true;
+}
+
+void DataLoader::on_timeout() {
+
+	if (canceling) {
+		deleteLater();
+		return;
+	}
+
+	int count;
+	for (;;) {
+
+		QByteArray* ba = new QByteArray(FILE_BLOCK_SIZE); // 64KB
+
+		// this is the ONLY deep copy involved in the whole loading
+		count = read(fileno(_file), ba->data(), ba->size());
+
+		dbg(count); // DEBUG print
+
+		if (count == 0) {
+			/* All done, no more to read */
+			delete ba;
+			break;
+		}
+		if (count < 0) {
+			delete ba;
+			if (errno == EAGAIN)
+				break;
+			if (errno == EINTR)
+				continue;
+
+                       /* Anything else is fatal - report error */
+                       dbg("Fatal error");
+                       on_cancel();
+                       deleteLater();
+                       return;
+		}
+		if (count < (int)ba->size()) // very rare
+			ba->resize(count);
+
+		loadedBytes += count;
+		fh->rowData.append(ba);
+		parseSingleBuffer(*ba);
+	}
+
+	if (count == 0) {
+		emit loaded(fh, loadedBytes, loadTime.elapsed(), true, "", "");
+		pclose(_file);
+		_file = NULL;
+		deleteLater();
+	} else
+		guiUpdateTimer.start(100, true);
