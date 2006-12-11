@@ -1,90 +1,73 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Erik Mouw <erik@harddisk-recovery.com>
-Subject: Re: sizeof(struct ...)
-Date: Thu, 23 Nov 2006 17:42:58 +0100
-Organization: Harddisk-recovery.com
-Message-ID: <20061123164258.GE6581@harddisk-recovery.com>
-References: <20061123101609.1711.qmail@8b73034525b1a6.315fe32.mid.smarden.org> <45659781.5050005@lsrfire.ath.cx> <4565A46C.6090805@lsrfire.ath.cx> <4565A866.8020201@shadowen.org> <4565C205.8050300@lsrfire.ath.cx> <20061123155431.GD6581@harddisk-recovery.com> <4565C8F4.6000606@lsrfire.ath.cx>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [RFC \ WISH] Add -o option to git-rev-list
+Date: Mon, 11 Dec 2006 12:40:37 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0612111238560.3515@woody.osdl.org>
+References: <e5bfff550612100338ye2ca2a0u1c8f29bbc59c5431@mail.gmail.com>
+ <Pine.LNX.4.64.0612111003140.12500@woody.osdl.org>
+ <e5bfff550612111059g35f1aa2dmdead17a60f5dfca8@mail.gmail.com>
+ <200612112128.06485.Josef.Weidendorfer@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 23 Nov 2006 16:43:19 +0000 (UTC)
-Cc: Andy Whitcroft <apw@shadowen.org>, Gerrit Pape <pape@smarden.org>,
-	git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Mon, 11 Dec 2006 20:41:12 +0000 (UTC)
+Cc: Marco Costalba <mcostalba@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <junkio@cox.net>,
+	Alex Riesen <raa.lkml@gmail.com>,
+	Shawn Pearce <spearce@spearce.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <4565C8F4.6000606@lsrfire.ath.cx>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <200612112128.06485.Josef.Weidendorfer@gmx.de>
+X-MIMEDefang-Filter: osdl$Revision: 1.162 $
+X-Scanned-By: MIMEDefang 2.36
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32150>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GnHfG-0006Ur-If for gcvg-git@gmane.org; Thu, 23 Nov
- 2006 17:43:06 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34032>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GtrxJ-0003EA-Hz for gcvg-git@gmane.org; Mon, 11 Dec
+ 2006 21:40:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S933877AbWKWQnC (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 23 Nov 2006
- 11:43:02 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933875AbWKWQnB
- (ORCPT <rfc822;git-outgoing>); Thu, 23 Nov 2006 11:43:01 -0500
-Received: from dtp.xs4all.nl ([80.126.206.180]:2726 "HELO
- abra2.bitwizard.nl") by vger.kernel.org with SMTP id S933877AbWKWQnA (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 23 Nov 2006 11:43:00 -0500
-Received: (qmail 18181 invoked from network); 23 Nov 2006 17:42:58 +0100
-Received: from unknown (HELO zurix.bitwizard.nl) (192.168.234.26) by
- abra2.bitwizard.nl with SMTP; 23 Nov 2006 17:42:58 +0100
-Received: from erik by zurix.bitwizard.nl with local (Exim 3.36 #1 (Debian))
- id 1GnHf8-0002Ng-00; Thu, 23 Nov 2006 17:42:58 +0100
-To: Ren? Scharfe <rene.scharfe@lsrfire.ath.cx>
+ S937020AbWLKUky (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 11 Dec 2006
+ 15:40:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763090AbWLKUky
+ (ORCPT <rfc822;git-outgoing>); Mon, 11 Dec 2006 15:40:54 -0500
+Received: from smtp.osdl.org ([65.172.181.25]:34799 "EHLO smtp.osdl.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1762949AbWLKUkx
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 11 Dec 2006 15:40:53 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
+ smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kBBKecID001404
+ (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Mon, 11
+ Dec 2006 12:40:43 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
+ shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kBBKebYQ006674; Mon, 11 Dec
+ 2006 12:40:37 -0800
+To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-On Thu, Nov 23, 2006 at 05:14:44PM +0100, Ren? Scharfe wrote:
-> Erik Mouw schrieb:
-> > On Thu, Nov 23, 2006 at 04:45:09PM +0100, Ren? Scharfe wrote:
-> >>  Is there really a compiler that inserts padding between arrays of
-> >> unsigned chars?
-> > 
-> > Yes, that compiler is called "gcc".
-> > 
-> > #include <stdio.h>
-> > 
-> > struct foo {
-> >         unsigned char a[3];
-> >         unsigned char b[3];
-> > };
-> > 
-> > int main(void)
-> > {
-> >         printf("%d\n", sizeof(struct foo));
-> >         return 0;
-> > }
-> > 
-> > On i386 that prints 6, on ARM it prints 8.
+
+
+On Mon, 11 Dec 2006, Josef Weidendorfer wrote:
 > 
-> Does it add 1 byte after a and and 1 after b or two after b?
-> I suspect it's the latter case -- otherwise Gerrit's patch,
-> which started this thread, wouldn't help solve his problem.
-> Or the pad sizing follows complicated rules that I do not
-> understand at the moment.
+> A general question: How many context switches are involved in such
+> a producer/consumer scenario, given that the consumer writes one
+> line at a time, and the consumer uses poll/select to wait for the
+> data?
+> Is there some possibility to make the kernel write-combine single
+> small producer writes into bigger chunks, which will be delivered
+> at once (or smaller data only after a small timeout)?
 
-You're right, it adds the padding after b:
+The data will be write-combined.
 
-#define offsetof(TYPE, MEMBER)  __builtin_offsetof (TYPE, MEMBER)
-printf("%d %d\n", offsetof(struct foo, a), offsetof(struct foo, b));
+The kernel doesn't context-switch after a write() to a pipe if there is 
+space left (and usually the pipe buffer is 64kB with current kernels, so 
+there obviously will be), unless the reader has a higher priority for some 
+reason (ie the reader has been waiting a long time).
 
-prints "0 3" on ARM.
+So _normally_ you'll see many many writes in one go, and only see context 
+switching when the kernel pipe buffer fills up.
 
-> Time to look for an ARM emulator, it seems.
-
-objdump -D -S is your friend. I didn't have an ARM target ready, but at
-least I know enough ARM assembly that I can see what it will print :)
-
-
-Erik
-
--- 
-+-- Erik Mouw -- www.harddisk-recovery.com -- +31 70 370 12 90 --
