@@ -1,93 +1,75 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: can I remove or move a tag in a remote repository?
-Date: Wed, 29 Nov 2006 10:54:10 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0611291040590.30004@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <87wt5rffbm.fsf@rho.meyering.net> <7virgz1bz7.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Wed, 29 Nov 2006 09:54:30 +0000 (UTC)
-Cc: Jim Meyering <jim@meyering.net>, git@vger.kernel.org
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH] gitweb: Don't use Content-Encoding: header in git_snapshot
+Date: Mon, 11 Dec 2006 18:09:58 +0100
+Message-ID: <11658569982522-git-send-email-jnareb@gmail.com>
+NNTP-Posting-Date: Mon, 11 Dec 2006 17:08:25 +0000 (UTC)
+Cc: Jakub Narebski <jnareb@gmail.com>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7virgz1bz7.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:cc:subject:date:message-id:x-mailer;
+        b=ItlHrYI4oNkWGxhlsnzybk2obWNp1sYQkjYBJIhL+5Au/t1+rWWGob/DC5v/cGb5ZM/MERIYAM7Sr0jexfw5bfDTJQ5UGMdvQwVoDml5BMqUQg3muQqg17sip7sah64nxafSq4W2ABmftJUguaP7tsEP5RzQW0oGAGNcSUCqKqU=
+X-Mailer: git-send-email 1.4.4.1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32627>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GpM91-0008Du-1z for gcvg-git@gmane.org; Wed, 29 Nov
- 2006 10:54:23 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34018>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GtodZ-0002ee-Ec for gcvg-git@gmane.org; Mon, 11 Dec
+ 2006 18:08:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S966410AbWK2JyN (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 29 Nov 2006
- 04:54:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758816AbWK2JyN
- (ORCPT <rfc822;git-outgoing>); Wed, 29 Nov 2006 04:54:13 -0500
-Received: from mail.gmx.net ([213.165.64.20]:64664 "HELO mail.gmx.net") by
- vger.kernel.org with SMTP id S1758813AbWK2JyN (ORCPT
- <rfc822;git@vger.kernel.org>); Wed, 29 Nov 2006 04:54:13 -0500
-Received: (qmail invoked by alias); 29 Nov 2006 09:54:11 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp005) with SMTP; 29 Nov 2006 10:54:11 +0100
-To: Junio C Hamano <junkio@cox.net>
+ S1762949AbWLKRIP (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 11 Dec 2006
+ 12:08:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762959AbWLKRIO
+ (ORCPT <rfc822;git-outgoing>); Mon, 11 Dec 2006 12:08:14 -0500
+Received: from ug-out-1314.google.com ([66.249.92.171]:48399 "EHLO
+ ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1762949AbWLKRIM (ORCPT <rfc822;git@vger.kernel.org>); Mon, 11 Dec
+ 2006 12:08:12 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so1389916uga for
+ <git@vger.kernel.org>; Mon, 11 Dec 2006 09:08:12 -0800 (PST)
+Received: by 10.67.26.7 with SMTP id d7mr10161545ugj.1165856891659; Mon, 11
+ Dec 2006 09:08:11 -0800 (PST)
+Received: from roke.D-201 ( [81.190.25.107]) by mx.google.com with ESMTP id
+ 28sm5777624ugc.2006.12.11.09.08.10; Mon, 11 Dec 2006 09:08:11 -0800 (PST)
+Received: from roke.D-201 (localhost.localdomain [127.0.0.1]) by roke.D-201
+ (8.13.4/8.13.4) with ESMTP id kBBHAFbU027444; Mon, 11 Dec 2006 18:10:17 +0100
+Received: (from jnareb@localhost) by roke.D-201 (8.13.4/8.13.4/Submit) id
+ kBBH9wn5027442; Mon, 11 Dec 2006 18:09:58 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Hi,
+Do not use Content-Encoding: HTTP header in git_snapshot, using
+instead type according to the snapshot type (compression type).
+Some of web browser take Content-Encoding: to be _transparent_
+also for downloading, and store decompressed file (with incorrect
+compression suffix) on download.
 
-On Tue, 28 Nov 2006, Junio C Hamano wrote:
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+ gitweb/gitweb.perl |    3 +--
+ 1 files changed, 1 insertions(+), 2 deletions(-)
 
-> Jim Meyering <jim@meyering.net> writes:
-> 
-> > Here's the problem:
-> > When I try to push the new tags, git-push fails:
-> >
-> >   $ git-push -f --tags ssh+git://git.sv.gnu.org/srv/git/coreutils master:refs/heads/master
-> >   updating 'refs/tags/cvs-head'
-> >     from 2fd3fd29a8b40be695bc2327c8cd3bd33e521100
-> >     to   db18f53ffb221e9957124d8af81c11a7e350ac3b
-> >   ...
-> >   Total 1, written 1 (delta 0), reused 0 (delta 0)
-> >   Unpacking 1 objects
-> >   error: denying non-fast forward; you should pull first
-> >
-> > I get the same error also when using --force.
-> 
-> I think this is due to overeager receive.denyNonFastForwards
-> configuration setting at the repository you are pushing into.
-> 
-> I _think_ what receive-pack does in this case is totally wrong.
-> It should either:
-> 
->  (1) deny overwriting existing tags -- tags are meant to be
->      immutable so it should not allow them to be "updated"
->      regardless of fast-forwardness, or
-> 
->  (2) allow overwriting things under refs/tags/ without any
->      fast-forward checking.  After all, a tag could point at a
->      tree or a blob, and there is no fast-forwardness among
->      trees.
-> 
-> The client side check in "git fetch" takes the latter viewpoint,
-> and I think we should be consistent with it.
-> 
-> Johannes, what do you think?  Does the following patch look sane
-> to you?
-
-It does if you agree that (2) is correct.
-
-But I don't agree. cvs-head really should be a head IMHO, not a tag, 
-because cvs-head really tracks a branch.
-
-I also think that git-fetch silently updating tags is wrong. Rather, it 
-should warn that the tags are different. But I've been wrong before.
-
-Ciao,
-Dscho
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 7d24c10..040ee71 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -3489,8 +3489,7 @@ sub git_snapshot {
+ 	my $filename = basename($project) . "-$hash.tar.$suffix";
+ 
+ 	print $cgi->header(
+-		-type => 'application/x-tar',
+-		-content_encoding => $ctype,
++		-type => "application/$ctype",
+ 		-content_disposition => 'inline; filename="' . "$filename" . '"',
+ 		-status => '200 OK');
+ 
+-- 
+1.4.4.1
