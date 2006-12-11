@@ -4,66 +4,45 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Petr Baudis <pasky@suse.cz>
-Subject: Hanging fetches
-Date: Wed, 25 Oct 2006 18:25:56 +0200
-Message-ID: <20061025162556.GL20017@pasky.or.cz>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: asciidoc, docbook, "book" doctype
+Date: Sun, 10 Dec 2006 22:20:14 -0500
+Message-ID: <20061211032013.GA16054@fieldses.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 25 Oct 2006 16:28:10 +0000 (UTC)
+NNTP-Posting-Date: Mon, 11 Dec 2006 03:20:25 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Content-Disposition: inline
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30073>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GclZq-00085g-Et for gcvg-git@gmane.org; Wed, 25 Oct
- 2006 18:26:02 +0200
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33973>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GtbiG-0001yS-PQ for gcvg-git@gmane.org; Mon, 11 Dec
+ 2006 04:20:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932242AbWJYQZ6 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 25 Oct 2006
- 12:25:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932448AbWJYQZ6
- (ORCPT <rfc822;git-outgoing>); Wed, 25 Oct 2006 12:25:58 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:20887 "EHLO machine.or.cz") by
- vger.kernel.org with ESMTP id S932242AbWJYQZ6 (ORCPT
- <rfc822;git@vger.kernel.org>); Wed, 25 Oct 2006 12:25:58 -0400
-Received: (qmail 16764 invoked by uid 2001); 25 Oct 2006 18:25:56 +0200
+ S1759754AbWLKDUQ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 10 Dec 2006
+ 22:20:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762338AbWLKDUQ
+ (ORCPT <rfc822;git-outgoing>); Sun, 10 Dec 2006 22:20:16 -0500
+Received: from mail.fieldses.org ([66.93.2.214]:45007 "EHLO
+ pickle.fieldses.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1759754AbWLKDUP (ORCPT <rfc822;git@vger.kernel.org>); Sun, 10 Dec 2006
+ 22:20:15 -0500
+Received: from bfields by pickle.fieldses.org with local (Exim 4.63)
+ (envelope-from <bfields@fieldses.org>) id 1GtbiA-0000J4-4s for
+ git@vger.kernel.org; Sun, 10 Dec 2006 22:20:14 -0500
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-  Hi,
+I've been fooling around with producing a longer piece of documentation
+using material from the tutorials, etc., using the docbook backend and
+"book" doctype.  It's not working quite the way I'd expect.  For
+example, it doesn't format the literal blocks correctly, and man page
+links aren't producing useful clickable links.  Should I be going about
+this some other way?
 
-  due to the problem with kernel.org, I have a somewhat ugly situation
-on repo.or.cz now:
+All I really want is automatically generated tables of contents and
+cross-references.
 
-root     16370  0.0  0.0  2112  732 ?        S    16:47   0:00  \_ /USR/SBIN/CRON
-repo     16371  0.0  0.0  2776 1236 ?        Ss   16:47   0:00      \_ /bin/bash /home/repo/repomgr/updatecheck.sh
-repo     16377  0.0  0.0  2776  648 ?        S    16:47   0:00          \_ /bin/bash /home/repo/repomgr/updatecheck.sh
-repo     17685  0.0  0.0  2780 1252 ?        S    16:47   0:00              \_ /bin/bash /home/repo/repomgr/update.sh linux-2.6
-repo     17689  0.0  0.0  2872 1372 ?        S    16:47   0:00                  \_ /bin/sh /home/pasky/bin/git-fetch -f -u -k --mirror-all
-pub/scm/linux/kernel/git/torvalds/linux-2.6.git
-repo     17702  0.0  0.0  2872  720 ?        S    16:47   0:00                      \_ /bin/sh /home/pasky/bin/git-fetch -f -u -k --mirror-org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
-repo     17703  0.0  0.0  2872  644 ?        S    16:47   0:00                          \_ /bin/sh /home/pasky/bin/git-fetch -f -u -k --mirnel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
-repo     17704  0.0  0.0  2836 1328 ?        S    16:47   0:00                          |   \_ /bin/sh /home/pasky/bin/git-ls-remote git://m/linux/kernel/git/torvalds/linux-2.6.git
-repo     17716  0.0  0.0  2836  616 ?        S    16:47   0:00                          |       \_ /bin/sh /home/pasky/bin/git-ls-remote gib/scm/linux/kernel/git/torvalds/linux-2.6.git
-repo     17717  0.0  0.0  2956  940 ?        S    16:47   0:00                          |       |   \_ git-peek-remote git //git.kernel.org/git/torvalds/linux-2.6.git
-repo     17718  0.0  0.0 27488  552 ?        S    16:47   0:00                          |       \_ sort -t ? -k 2
-repo     17719  0.0  0.0  2836  592 ?        S    16:47   0:00                          |       \_ /bin/sh /home/pasky/bin/git-ls-remote gib/scm/linux/kernel/git/torvalds/linux-2.6.git
-repo     17705  0.0  0.0  2872  628 ?        S    16:47   0:00                          \_ /bin/sh /home/pasky/bin/git-fetch -f -u -k --mirnel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
-
-  It's 18:24 now and peek-remote is hanging in a read(). My question is,
-will this *ever* time out, and when? :) Perhaps the timeouts should be
-adjusted to a more reasonable value, or implemented if they are missing
-altogether, but I'm not sure what would be the best way to go about it -
-alarm()? What value would be reasonable?
-
-  Thanks,
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
-$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
