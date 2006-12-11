@@ -1,70 +1,70 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: rebasing, git-am and whitespace cleanup conundrims
-Date: Thu, 26 Oct 2006 11:49:36 +1300
-Message-ID: <46a038f90610251549u46af5ab9gefb56423fb663e96@mail.gmail.com>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: Re: [RFC \ WISH] Add -o option to git-rev-list
+Date: Mon, 11 Dec 2006 21:54:55 +0100
+Message-ID: <200612112154.56166.Josef.Weidendorfer@gmx.de>
+References: <e5bfff550612100338ye2ca2a0u1c8f29bbc59c5431@mail.gmail.com> <200612112128.06485.Josef.Weidendorfer@gmx.de> <Pine.LNX.4.64.0612111238560.3515@woody.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 25 Oct 2006 22:49:45 +0000 (UTC)
+NNTP-Posting-Date: Mon, 11 Dec 2006 20:55:28 +0000 (UTC)
+Cc: Marco Costalba <mcostalba@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <junkio@cox.net>,
+	Alex Riesen <raa.lkml@gmail.com>,
+	Shawn Pearce <spearce@spearce.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=dbovtYgh4rv5r6O9p0HH/wBPVsOqOD/YwJY1M8SYjDBl6hFKTyVDT8KlQzEmWvlSlZa4a9aX3K75mNQDq8Dzc4KpZJUzubthJQ/kUKBl+JKV5tgVq8Rq+wleBPmvPb/FGJ1rE1hb08sbF23aXRkztBJx2c85+TQ5uUjggek6SHU=
+X-Authenticated: #352111
+User-Agent: KMail/1.9.5
+In-Reply-To: <Pine.LNX.4.64.0612111238560.3515@woody.osdl.org>
 Content-Disposition: inline
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30120>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GcrZ8-000344-P3 for gcvg-git@gmane.org; Thu, 26 Oct
- 2006 00:49:43 +0200
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34035>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GtsBG-0005Uh-6T for gcvg-git@gmane.org; Mon, 11 Dec
+ 2006 21:55:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1161052AbWJYWtj (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 25 Oct 2006
- 18:49:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161062AbWJYWtj
- (ORCPT <rfc822;git-outgoing>); Wed, 25 Oct 2006 18:49:39 -0400
-Received: from nf-out-0910.google.com ([64.233.182.187]:457 "EHLO
- nf-out-0910.google.com") by vger.kernel.org with ESMTP id S1161052AbWJYWti
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 25 Oct 2006 18:49:38 -0400
-Received: by nf-out-0910.google.com with SMTP id c2so745380nfe for
- <git@vger.kernel.org>; Wed, 25 Oct 2006 15:49:37 -0700 (PDT)
-Received: by 10.49.19.18 with SMTP id w18mr4254483nfi; Wed, 25 Oct 2006
- 15:49:36 -0700 (PDT)
-Received: by 10.49.11.5 with HTTP; Wed, 25 Oct 2006 15:49:36 -0700 (PDT)
-To: "Git Mailing List" <git@vger.kernel.org>
+ S1763076AbWLKUzM (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 11 Dec 2006
+ 15:55:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763075AbWLKUzM
+ (ORCPT <rfc822;git-outgoing>); Mon, 11 Dec 2006 15:55:12 -0500
+Received: from mail.gmx.net ([213.165.64.20]:50821 "HELO mail.gmx.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S1762953AbWLKUzK
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 11 Dec 2006 15:55:10 -0500
+Received: (qmail invoked by alias); 11 Dec 2006 20:55:08 -0000
+Received: from p5496B761.dip0.t-ipconnect.de (EHLO noname) [84.150.183.97] by
+ mail.gmx.net (mp048) with SMTP; 11 Dec 2006 21:55:08 +0100
+To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 
-Hola!
+On Monday 11 December 2006 21:40, Linus Torvalds wrote:
+> On Mon, 11 Dec 2006, Josef Weidendorfer wrote:
+> > A general question: How many context switches are involved in such
+> > a producer/consumer scenario, given that the consumer writes one
+> > line at a time, and the consumer uses poll/select to wait for the
+> > data?
+> > Is there some possibility to make the kernel write-combine single
+> > small producer writes into bigger chunks, which will be delivered
+> > at once (or smaller data only after a small timeout)?
+> 
+> The data will be write-combined.
+> 
+> The kernel doesn't context-switch after a write() to a pipe if there is 
+> space left (and usually the pipe buffer is 64kB with current kernels, so 
+> there obviously will be), unless the reader has a higher priority for some 
+> reason (ie the reader has been waiting a long time).
 
-i'm going through a rebase of a long series of patches (~50) that have
-quite a bit of trailing whitespace. Once the rebase is done on my repo
-(resolving all the code level conflicts), I want to re-rebase it on
-top of the same commit but cleaning up trailing whitespace.
-
-The problem is that upstream has 'some' trailing whitespace. The
-policy is to reject "new" trailing whitespace and cleanup in stages to
-avoid big merge conflicts and stuff.
-
-Now, once the early patches are "in" with --whitespace=trim, the
-following patches don't apply anymore :-/ and I can't just trim
-whitespace in the whole patch series automatically.
-
-Is there any way to get git-apply to ignore whitespace differences
-when applying like GNU patch -l?
-
-When -3 is passed, it must be calling the merge utility from
-merge_file() -- which doesn't do 'ignore-whitespace'. But if it's a
-straight patch application, it should be possible to do something like
-that... maybe?
-
-cheers,
-
+Ah, thanks.
+So the implementation in Qt's QProcess is a little bit pessimistic, probably
+to make it work fine with other UNIXs out there.
 
