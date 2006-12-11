@@ -1,63 +1,85 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Petr Baudis <pasky@suse.cz>
-Subject: [PATCH] xdiff: Match GNU diff behaviour when deciding hunk comment worthiness of lines
-Date: Wed, 25 Oct 2006 02:28:55 +0200
-Message-ID: <20061025002855.4738.1088.stgit@machine.or.cz>
-References: <7vmz7lfdwj.fsf@assigned-by-dhcp.cox.net>
-Content-Type: text/plain; charset=utf-8; format=fixed
-Content-Transfer-Encoding: 8bit
-NNTP-Posting-Date: Wed, 25 Oct 2006 00:29:09 +0000 (UTC)
-Cc: <git@vger.kernel.org>
+From: Alexander Litvinov <litvinov2004@gmail.com>
+Subject: Does pushing to git demon works ?
+Date: Mon, 11 Dec 2006 15:13:05 +0600
+Message-ID: <200612111513.05752.litvinov2004@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Mon, 11 Dec 2006 09:13:22 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <7vmz7lfdwj.fsf@assigned-by-dhcp.cox.net>
-User-Agent: StGIT/0.11
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=nKFYyY1zIi1phkl7TIS5uguGV1ZyeKd4W0oKJsu2HpKyhSNKrX3Wmo0PuEXn7fEw6TDmTO4NzUDafOccI8fVc/FkDMqV2f3T4nK5izxPBKHYoZ1Yx3h5Xovt4Kqa7g/8kHJEcbAOyPA/FfPuLtM1dldvjiV1Y5hUtFwfbatbih4=
+User-Agent: KMail/1.8
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30022>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GcWdg-00086r-UJ for gcvg-git@gmane.org; Wed, 25 Oct
- 2006 02:29:02 +0200
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33982>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GthDr-0005BV-NZ for gcvg-git@gmane.org; Mon, 11 Dec
+ 2006 10:13:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1422866AbWJYA25 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 24 Oct 2006
- 20:28:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422867AbWJYA25
- (ORCPT <rfc822;git-outgoing>); Tue, 24 Oct 2006 20:28:57 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:5510 "EHLO machine.or.cz") by
- vger.kernel.org with ESMTP id S1422866AbWJYA25 (ORCPT
- <rfc822;git@vger.kernel.org>); Tue, 24 Oct 2006 20:28:57 -0400
-Received: (qmail 4748 invoked from network); 25 Oct 2006 02:28:55 +0200
-Received: from localhost (HELO machine.or.cz) (xpasky@127.0.0.1) by localhost
- with SMTP; 25 Oct 2006 02:28:55 +0200
-To: Junio C Hamano <junkio@cox.net>
+ S1762654AbWLKJNQ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 11 Dec 2006
+ 04:13:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762656AbWLKJNQ
+ (ORCPT <rfc822;git-outgoing>); Mon, 11 Dec 2006 04:13:16 -0500
+Received: from ug-out-1314.google.com ([66.249.92.170]:43114 "EHLO
+ ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1762654AbWLKJNP (ORCPT <rfc822;git@vger.kernel.org>); Mon, 11 Dec
+ 2006 04:13:15 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so1268327uga for
+ <git@vger.kernel.org>; Mon, 11 Dec 2006 01:13:14 -0800 (PST)
+Received: by 10.78.138.6 with SMTP id l6mr1286675hud.1165828393831; Mon, 11
+ Dec 2006 01:13:13 -0800 (PST)
+Received: from lan.ac-sw.lcl ( [81.1.223.2]) by mx.google.com with ESMTP id
+ c18sm2192865hub.2006.12.11.01.13.12; Mon, 11 Dec 2006 01:13:12 -0800 (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-This removes the '#' and '(' tests and adds a '$' test instead although I have
-no idea what it is actually good for - but hey, if that's what GNU diff does...
+I tried pushing without success:
+> git version
+git version 1.4.4.2
+> mkdir 1 && cd 1 && git init-db
+defaulting to local storage area
+> date >> a && git add a && git commit -m "add a" a
+Committing initial tree 359e888a2d88e9dfcc9b269bc0b2fb1d9ba0013e
+> date >> a && git commit -m "edit a" a
+> touch .git/git-daemon-export-ok
+> git daemon --verbose --reuseaddr --listen=127.0.0.1
+... log here ...
+[21607] Extended attributes (16 bytes) exist <host=127.0.0.1>
+[21607] Request upload-pack for '/tmp/1'
+[21607] Disconnected
+[21669] Connection from 127.0.0.1:49875
+[21669] Extended attributes (16 bytes) exist <host=127.0.0.1>
+[21669] Protocol error: 'git-receive-pack /tmp/1'
+[21669] Disconnected (with error)
 
-Pasky only went and did as Junio sayeth.
+at another conole:
+> git clone git://127.0.0.1/tmp/1 2
+remote: Generating pack...
+remote: Done counting 6 objects.
+remote: Deltifying 6 objects.
+remote:  100% (6/6) done
+remote: Total 6, written 6 (delta 0), reused 0 (delta 0)
+Indexing 6 objects.
+ 100% (6/6) done
+> cd 2
+> date >> a && git commit -a -m "2"
+> git push
+fatal: unexpected EOF
+> 
 
-Signed-off-by: Petr Baudis <pasky@suse.cz>
----
+What should I do to make it work ?
 
- xdiff/xemit.c |    3 +--
- 1 files changed, 1 insertions(+), 2 deletions(-)
-
-diff --git a/xdiff/xemit.c b/xdiff/xemit.c
-index 714c563..4139d55 100644
---- a/xdiff/xemit.c
-+++ b/xdiff/xemit.c
-@@ -86,8 +86,7 @@ static void xdl_find_func(xdfile_t *xf, 
- 		if (len > 0 &&
- 		    (isalpha((unsigned char)*rec) || /* identifier? */
- 		     *rec == '_' ||	/* also identifier? */
--		     *rec == '(' ||	/* lisp defun? */
--		     *rec == '#')) {	/* #define? */
-+		     *rec == '$')) {	/* mysterious GNU diff's invention */
- 			if (len > sz)
- 				len = sz;
+Thanks for help,
