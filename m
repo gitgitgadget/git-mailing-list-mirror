@@ -1,94 +1,63 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: git and bzr
-Date: Tue, 28 Nov 2006 20:59:12 +0100
-Organization: At home
-Message-ID: <eki4b1$ivt$1@sea.gmane.org>
-References: <45357CC3.4040507@utoronto.ca> <ekhtnt$rkk$1@sea.gmane.org> <456C89E7.8080404@ableton.com> <200611281940.40139.andyparkins@gmail.com>
+From: Daniel Drake <ddrake@brontes3d.com>
+Subject: Re: git-svnimport breakage as of git-1.4.4
+Date: Mon, 11 Dec 2006 16:03:00 -0500
+Message-ID: <1165870980.31329.3.camel@systems03.lan.brontes3d.com>
+References: <1165505193.26874.13.camel@systems03.lan.brontes3d.com>
+	 <20061208203230.GA9193@sashak.voltaire.com>
+	 <1165847230.13854.2.camel@systems03.lan.brontes3d.com>
+	 <20061211204904.GC1003@sashak.voltaire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-NNTP-Posting-Date: Tue, 28 Nov 2006 19:58:42 +0000 (UTC)
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Mon, 11 Dec 2006 21:03:13 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 44
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+In-Reply-To: <20061211204904.GC1003@sashak.voltaire.com>
+X-Mailer: Evolution 2.8.2.1 
+X-Virus-Scanned: OK
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32569>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gp95o-0005g3-Dn for gcvg-git@gmane.org; Tue, 28 Nov
- 2006 20:58:12 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34037>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GtsIm-0006kE-Lu for gcvg-git@gmane.org; Mon, 11 Dec
+ 2006 22:03:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S936076AbWK1T6I (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 28 Nov 2006
- 14:58:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936077AbWK1T6I
- (ORCPT <rfc822;git-outgoing>); Tue, 28 Nov 2006 14:58:08 -0500
-Received: from main.gmane.org ([80.91.229.2]:43679 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S936076AbWK1T6F (ORCPT
- <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2006 14:58:05 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1Gp95N-0005Y2-1e for git@vger.kernel.org; Tue, 28 Nov 2006 20:57:45 +0100
-Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Tue, 28 Nov 2006 20:57:45 +0100
-Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Tue, 28 Nov 2006
- 20:57:45 +0100
-To: git@vger.kernel.org
+ S937608AbWLKVDF (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 11 Dec 2006
+ 16:03:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937670AbWLKVDF
+ (ORCPT <rfc822;git-outgoing>); Mon, 11 Dec 2006 16:03:05 -0500
+Received: from smtp152.iad.emailsrvr.com ([207.97.245.152]:47716 "EHLO
+ smtp152.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S937608AbWLKVDC (ORCPT <rfc822;git@vger.kernel.org>); Mon, 11 Dec
+ 2006 16:03:02 -0500
+Received: from [10.20.253.243] (host34.155.212.242.conversent.net
+ [155.212.242.34]) (Authenticated sender: ddrake@brontes3d.com) by
+ relay5.relay.iad.emailsrvr.com (SMTP Server) with ESMTP id A8462646F71; Mon,
+ 11 Dec 2006 16:03:01 -0500 (EST)
+To: Sasha Khapyorsky <sashak@voltaire.com>
 Sender: git-owner@vger.kernel.org
 
-Andy Parkins wrote:
+On Mon, 2006-12-11 at 22:49 +0200, Sasha Khapyorsky wrote:
+> Maybe I'm starting to understand. Your svn url (url which points to svn
+> repository) is https://server/repo and not just https://server, right?
 
-> On Tuesday 2006, November 28 19:11, Nicholas Allen wrote:
-> 
->> This can't be fail safe though. I would prefer to also have the option
->> to be able to *explicitly* tell the RCS that a file was renamed and not
->> have it try to detect from the content  which is bound to have corner
->> cases that fail. When I know I renamed a file why can't I explicitly
-> 
-> You want to tell git about a rename that will never fail to be detected?  No 
-> problem.
-> 
-> $ git mv oldname newname
-> $ git commit
-> 
-> The corner cases you speak about are when you rename and edit.
-> 
-> For me, I prefer that to be detected as at least the detection algorithm can 
-> be tuned - there is no fixing it if the VCS was forced to consider it a 
-> rename.
-> 
-> When I started using git I was worried about the lack of a rename, but now I 
-> realise that it's not needed - it's pointless.  The VCS is snapshotting 
-> moments in time, that's it.  Then by making cleverer and cleverer 
-> interpreters of those snapshots you have the potential to do stuff that is 
-> far more useful than "just" rename recording.
+Yes, and then under that we have https://server/repo/trunk
 
-Well, there are two cases where this might be not enough.
+> If so, please remove the patch (you don't need it) and rerun:
+> 
+>   git-svnimport -v -i -C repo -r https://server/repo
 
-On is following file renames for history tracking. git-blame does that,
-but git-log and friends does not; the <path> is just revision limiter.
-There is an idea of --follow option to git-log (and friends), to be
-implemented.
+Ah, that fixes it. However, in versions before 1.4.4, either invokation
+style works.
 
-Second is rename detection for 3way merges: only ancestor and final
-states are considered, so the above would not help. And rename detection
-might fail if ancestor is not similar enough to end states; well, the
-merge has low chance of being without conflict then.
-
+Thanks,
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
-
+Daniel Drake
+Brontes Technologies, A 3M Company
