@@ -5,103 +5,126 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH 4/3] gitweb: Use --no-commit-id in git_commit and git_commitdiff
-Date: Wed, 25 Oct 2006 14:17:19 +0200
-Message-ID: <200610251417.20076.jnareb@gmail.com>
-References: <200610241349.54685.jnareb@gmail.com> <200610241354.49396.jnareb@gmail.com>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: [RFC \ WISH] Add -o option to git-rev-list
+Date: Mon, 11 Dec 2006 08:17:15 +0100
+Message-ID: <e5bfff550612102317w331f3b0fyc3c6b095ff21191a@mail.gmail.com>
+References: <e5bfff550612100338ye2ca2a0u1c8f29bbc59c5431@mail.gmail.com>
+	 <e5bfff550612101151r5e77ddc0w8f61f36fc1f2920e@mail.gmail.com>
+	 <Pine.LNX.4.64.0612101159530.12500@woody.osdl.org>
+	 <Pine.LNX.4.64.0612101213520.12500@woody.osdl.org>
+	 <e5bfff550612101405h507cc877k87491264d11b0aa8@mail.gmail.com>
+	 <Pine.LNX.4.64.0612101410220.12500@woody.osdl.org>
+	 <e5bfff550612101435o6bc938acmac28ad6adf0c8844@mail.gmail.com>
+	 <Pine.LNX.4.64.0612101439540.12500@woody.osdl.org>
+	 <e5bfff550612101615u5f588513n499e3b88ce14a6f6@mail.gmail.com>
+	 <Pine.LNX.4.64.0612101647310.12500@woody.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 25 Oct 2006 12:23:42 +0000 (UTC)
+NNTP-Posting-Date: Mon, 11 Dec 2006 07:17:28 +0000 (UTC)
+Cc: "Git Mailing List" <git@vger.kernel.org>,
+	"Junio C Hamano" <junkio@cox.net>,
+	"Alex Riesen" <raa.lkml@gmail.com>,
+	"Shawn Pearce" <spearce@spearce.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=YwwUNc9ux8MBDjUO5ys6I0296eHYE2LfGFxHYzGvrdKBtKJOzGeF/vOpQYLuaiNA92QcjHpNJzIjdYYGsNdipXONjsgsVlaZp+BTE8J2eRCj6z+vRK5Q2Oe0dNfgfJW5RWhh2epcurK5kp/TLQZuOecN7Qp7veWrHuJWCqXaShw=
-User-Agent: KMail/1.9.3
-In-Reply-To: <200610241354.49396.jnareb@gmail.com>
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=ctufioQD/DZBOhObZ92Lq6DwGur8jTe1PmfZyvUutK/Tn3Wv7asj7PZycXKOuT0DbDkiC747PVatOCykBQKNpzLOqHAkPEpAF/vVofmUgFCdqh3N4I1I+4/GALl4942cX42nJX46JMYrcZVOsiLcMIeeeXw+lMBSScMcHHrCruo=
+In-Reply-To: <Pine.LNX.4.64.0612101647310.12500@woody.osdl.org>
 Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30055>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gchms-0001oi-Mh for gcvg-git@gmane.org; Wed, 25 Oct
- 2006 14:23:15 +0200
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33975>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GtfPi-0002hx-G3 for gcvg-git@gmane.org; Mon, 11 Dec
+ 2006 08:17:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1423336AbWJYMXE (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 25 Oct 2006
- 08:23:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423377AbWJYMXE
- (ORCPT <rfc822;git-outgoing>); Wed, 25 Oct 2006 08:23:04 -0400
-Received: from ug-out-1314.google.com ([66.249.92.175]:46219 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1423336AbWJYMXB
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 25 Oct 2006 08:23:01 -0400
-Received: by ug-out-1314.google.com with SMTP id 32so72834ugm for
- <git@vger.kernel.org>; Wed, 25 Oct 2006 05:23:00 -0700 (PDT)
-Received: by 10.67.101.10 with SMTP id d10mr713607ugm; Wed, 25 Oct 2006
- 05:22:59 -0700 (PDT)
-Received: from host-81-190-23-110.torun.mm.pl ( [81.190.23.110]) by
- mx.google.com with ESMTP id e33sm2164402ugd.2006.10.25.05.22.59; Wed, 25 Oct
- 2006 05:22:59 -0700 (PDT)
-To: git@vger.kernel.org
+ S1762611AbWLKHRR (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 11 Dec 2006
+ 02:17:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762614AbWLKHRR
+ (ORCPT <rfc822;git-outgoing>); Mon, 11 Dec 2006 02:17:17 -0500
+Received: from py-out-1112.google.com ([64.233.166.183]:5284 "EHLO
+ py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1762611AbWLKHRQ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 11 Dec
+ 2006 02:17:16 -0500
+Received: by py-out-1112.google.com with SMTP id a29so864094pyi for
+ <git@vger.kernel.org>; Sun, 10 Dec 2006 23:17:15 -0800 (PST)
+Received: by 10.35.121.2 with SMTP id y2mr9609124pym.1165821435698; Sun, 10
+ Dec 2006 23:17:15 -0800 (PST)
+Received: by 10.35.93.11 with HTTP; Sun, 10 Dec 2006 23:17:15 -0800 (PST)
+To: "Linus Torvalds" <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 
-Use --no-commit-id option to git diff-tree command in git_commit and
-git_commitdiff to filter out commit ID output that git-diff-tree adds
-when called with only one <tree-ish> (not only for --stdin).
+On 12/11/06, Linus Torvalds <torvalds@osdl.org> wrote:
 
-This option is in git since at least v1.0.0, so make use of it.
+>
+> How about you just compare something simpler:
+>
+>         git-rev-list | cat > /dev/null
+>
+> vs
+>
+>         git-rev-list > tmpfile ; cat tmpfile > /dev/null
+>
+> and see which one works better.
+>
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-Gaaah, --no-commit-id is at least since v1.0.0, and we do require
---full-history and --git-dir options which are much later additions.
+These are tipical values (warm cache):
 
-This is "correction" patch.
+  $ time git rev-list --header --boundary --parents --topo-order HEAD  /dev/null
+3.04user 0.05system 0:03.09elapsed 100%CPU (0avgtext+0avgdata 0maxresident)k
+0inputs+0outputs (0major+10141minor)pagefaults 0swaps
 
- gitweb/gitweb.perl |   11 ++++-------
- 1 files changed, 4 insertions(+), 7 deletions(-)
+$ time git rev-list --header --boundary --parents --topo-order HEAD |
+cat > /dev/null
+3.67user 0.36system 0:04.29elapsed 93%CPU (0avgtext+0avgdata 0maxresident)k
+0inputs+0outputs (0major+18033minor)pagefaults 0swaps
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index e35ecb4..345e336 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -3004,14 +3004,12 @@ sub git_commit {
- 	if (!defined $parent) {
- 		$parent = "--root";
- 	}
--	open my $fd, "-|", git_cmd(), "diff-tree", '-r', @diff_opts, $parent, $hash
-+	open my $fd, "-|", git_cmd(), "diff-tree", '-r', "--no-commit-id",
-+		@diff_opts, $parent, $hash
- 		or die_error(undef, "Open git-diff-tree failed");
- 	my @difftree = map { chomp; $_ } <$fd>;
- 	close $fd or die_error(undef, "Reading git-diff-tree failed");
- 
--	# filter out commit ID output
--	@difftree = grep(!/^[0-9a-fA-F]{40}$/, @difftree);
--
- 	# non-textual hash id's can be cached
- 	my $expires;
- 	if ($hash =~ m/^[0-9a-fA-F]{40}$/) {
-@@ -3324,15 +3322,14 @@ sub git_commitdiff {
- 	my @difftree;
- 	if ($format eq 'html') {
- 		open $fd, "-|", git_cmd(), "diff-tree", '-r', @diff_opts,
-+			"--no-commit-id",
- 			"--patch-with-raw", "--full-index", $hash_parent, $hash
- 			or die_error(undef, "Open git-diff-tree failed");
- 
- 		while (chomp(my $line = <$fd>)) {
- 			# empty line ends raw part of diff-tree output
- 			last unless $line;
--			# filter out commit ID output
--			push @difftree, $line
--				unless $line =~ m/^[0-9a-fA-F]{40}$/;
-+			push @difftree, $line;
- 		}
- 
- 	} elsif ($format eq 'plain') {
--- 
-1.4.2.1
+$ time git rev-list --header --boundary --parents --topo-order HEAD >
+/tmp/tmp.txt; cat /tmp/tmp.txt > /dev/null
+3.44user 0.28system 0:03.74elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
+0inputs+0outputs (0major+18033minor)pagefaults 0swaps
+
+For some reason the CPU *never* goes up 93% with pipe (while it's easy
+in the other two cases) and I repeated that test at lest 10 times
+consecutively. Is it perhaps the signature of some blocking around? Or
+too much high frequency of receiver's read call (see below) ?
+
+>
+> This is your problem:
+>
+> >               guiUpdateTimer.start(100, true);
+>
+> rather than just blindly starting a timer, you should ask it to wait until
+> more data is available.
+>
+
+OK. I just don't understand how after waiting 100ms I get only 60KB
+and stay in the loop only one cycle instead of reading, for many
+cycles, much more then 60KB and then wait another 100ms and found
+another big (about 1MB) amount of data ready to be read as with the
+file case.
+
+Perhaps the pipe buffers are small and block the writer when full. In
+the file case when I come back in the loop after 100ms I found _a lot_
+of data to be read and I stay in the loop for much more then 1 cycle
+before to wait again 100ms.
+
+On the other hand, going to read each say less then 10ms is exactly
+what QProcess (socket based) was doing and I ended up with my read
+function being called at furious pace slowing down everything.
+Experimenting with QProcess I found that, for performance reasons,
+it's better to read big chunks few times then small chunks a lot of
+times.
+
+  Marco
+
+P.S: 30MB for 64KB each chunk it's 468, in 3.67s it's 1 call each
+7.8ms. If the pipe calls the receiver for data ready after each 4KB
+(old kernels) then we should have 7.500 calls. Impossible to read in
+3.67s, it would be a theoretical 1 call each 0.48ms average.
+
+So IMHO bigger buffers for each read call could be the way to get
