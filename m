@@ -1,98 +1,84 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [RFC] Submodules in GIT
-Date: Tue, 21 Nov 2006 22:40:56 -0500
-Message-ID: <20061122034056.GB23856@spearce.org>
-References: <20061120215116.GA20736@admingilde.org> <ejt9dh$kfm$1@sea.gmane.org> <7v7ixp20za.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611201501230.3338@woody.osdl.org> <20061121223130.GA24909@nan92-1-81-57-214-146.fbx.proxad.net> <Pine.LNX.4.64.0611211437430.3338@woody.osdl.org> <20061121235429.GH5443@nan92-1-81-57-214-146.fbx.proxad.net>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: kernel.org mirroring (Re: [GIT PULL] MMC update)
+Date: Mon, 11 Dec 2006 23:18:54 +1300
+Message-ID: <46a038f90612110218u48b7737due56437da57091547@mail.gmail.com>
+References: <Pine.LNX.4.64.0612020835110.3476@woody.osdl.org>
+	 <200612102359.20083.jnareb@gmail.com>
+	 <46a038f90612101816j33870bb1j39182358440aaa40@mail.gmail.com>
+	 <200612110959.56492.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 22 Nov 2006 03:41:15 +0000 (UTC)
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Junio C Hamano <junkio@cox.net>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Mon, 11 Dec 2006 10:19:16 +0000 (UTC)
+Cc: "Jeff Garzik" <jeff@garzik.org>,
+	"Git Mailing List" <git@vger.kernel.org>,
+	"Linus Torvalds" <torvalds@osdl.org>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	"Rogan Dawes" <discard@dawes.za.net>,
+	"Kernel Org Admin" <ftpadmin@kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=H/c5aKH07Rx/4KmfMtuoQm0zhwTmvxgVb4YEIIGaFvLs+gykSRXEcLZBA06OZbHapepmjMqidtla//VidGQ1DJZDm0zzDmMP9msALb1OZI0czrNi88phjn4X8XVgowqsV1ic8cPcz3z9CR++pjcKzgpwI62bSeQkkx5qUgv7U7I=
+In-Reply-To: <200612110959.56492.jnareb@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <20061121235429.GH5443@nan92-1-81-57-214-146.fbx.proxad.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32064>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gmiz1-0003W3-3o for gcvg-git@gmane.org; Wed, 22 Nov
- 2006 04:41:11 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33988>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GtiFZ-0004wq-Ov for gcvg-git@gmane.org; Mon, 11 Dec
+ 2006 11:19:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S967040AbWKVDlI (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 21 Nov 2006
- 22:41:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967051AbWKVDlI
- (ORCPT <rfc822;git-outgoing>); Tue, 21 Nov 2006 22:41:08 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:43457 "EHLO
- corvette.plexpod.net") by vger.kernel.org with ESMTP id S967040AbWKVDlE
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2006 22:41:04 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1Gmiyd-0007yh-1r; Tue, 21 Nov 2006 22:40:47 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- 5145720FB09; Tue, 21 Nov 2006 22:40:57 -0500 (EST)
-To: Yann Dirson <ydirson@altern.org>
+ S1762748AbWLKKS5 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 11 Dec 2006
+ 05:18:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762749AbWLKKS5
+ (ORCPT <rfc822;git-outgoing>); Mon, 11 Dec 2006 05:18:57 -0500
+Received: from nf-out-0910.google.com ([64.233.182.185]:54303 "EHLO
+ nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1762748AbWLKKS4 (ORCPT <rfc822;git@vger.kernel.org>); Mon, 11 Dec
+ 2006 05:18:56 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so1954069nfa for
+ <git@vger.kernel.org>; Mon, 11 Dec 2006 02:18:55 -0800 (PST)
+Received: by 10.49.13.14 with SMTP id q14mr4289590nfi.1165832334787; Mon, 11
+ Dec 2006 02:18:54 -0800 (PST)
+Received: by 10.49.60.1 with HTTP; Mon, 11 Dec 2006 02:18:54 -0800 (PST)
+To: "Jakub Narebski" <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Yann Dirson <ydirson@altern.org> wrote:
-> Put it another way, I see the proposal of allowing tree entries to be
-> commits in addition to trees and blobs, akin to recording the submodule
-> _history_ inside the _tree_, which I feel precisely violates the
-> distinction you want to keep between those 2 concepts.
+On 12/11/06, Jakub Narebski <jnareb@gmail.com> wrote:
+> I was thinking not about ending execution, but about not sending script
+> output but sending HTTP 304 Not Modified reply by Apache.
+>
+> I meant the following sequence of events:
+>  1. Script sends headers, among those Last-Modified and/or ETag
+>  2. Apache scans headers (e.g. to add its own), notices that Last-Modified
+>     is earlier or equal to If-Modified-Since: sent by browser or reverse
+>     proxy, or ETag matches If-None-Match:, and sends 304 instead of script
+>     output
+>  3. Script finishes execution, it's output sent to /dev/null
+>
+> Again, I don't know if Apache (or any other web server) does that.
 
-No.  Linus is right.  Submodule commits belong in the tree.
+It doesn't. You want to take the decision to send a 304, cleanup and
+exit _inside_ the CGI. If it was up to apache, then the CGI script
+would end up creating the (potentially expensive to produce) content
+just to see it sent to /dev/null OR if apache was to terminate
+execution of the CGI more violently, the CGI wouldn't have a chance to
+cleanup and release resources.
 
-We want to record a specific subtree within a larger tree.  There are
-three ways we can refer to a tree: by its tree SHA1, by a commit
-which points at the tree SHA1, or by a tag which points at a
-commit which points at the tree SHA1, or by a tag which points
-at a tag which points at a commit which points at a tree SHA1.
-Which is basically a tree-ish.
+So it's a matter of setting the header to 304 and exiting.
 
-The advantage of linking to the commit-ish (commit or tag) and
-not the tree-ish for a submodule is that it also provides you quick
-access to answer the "how did this tree arive at this state" question
-as the answer cannot come solely from the top level commit chain.
-The reason... keep reading...
- 
-> What about the case of a subproject that would evolve fast, and for
-> which we may not want intermediate versions to be part of the
-> supermodule ?  (just exploring an idea without real connection to the
-> one discussed above)
+cheers,
 
-Right.  The submodule is free to be committed to an infinite number
-of times for any given commit in the supermodule.
 
-It is expected that users will commit to a submodule say hundreds of
-times for every commit they make to the supermodule.  Or thousands.
-This is especially true if the submodule is some very large project,
-e.g. the Linux kernel, and the supermodule "upgrades" the kernel it
-is using after 3 months of staying on the same version.  Suddenly the
-supermodule has only 1 commit which covers maybe 10,000 commits in
-the submodule.
+martin
 
-Yet we still want to be able to efficiently perform operations like
-"git bisect" within the scope of that submodule, to help narrow down
-a particular bug that is within that submodule.  To do that we need
-the commit chain (all 10,000 of those commits) in the submodule.
-To get those we really need a commit-ish and not a tree-ish, as
-going from a tree-ish to a commit-ish is not only not unique but
-is also pretty infeasible to do (you need to scan *every* commit).
-
--- 
