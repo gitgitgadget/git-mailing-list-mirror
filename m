@@ -1,98 +1,93 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: [PATCH] Use new .git/config for storing "origin" shortcut repository
-Date: Sun, 26 Nov 2006 12:10:52 +0000
-Message-ID: <200611261210.52154.andyparkins@gmail.com>
-References: <ekbnr6$naq$2@sea.gmane.org>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: [RFC \ WISH] Add -o option to git-rev-list
+Date: Mon, 11 Dec 2006 13:52:39 +0100
+Message-ID: <e5bfff550612110452t5bb18517yc0cf8278d4d9948c@mail.gmail.com>
+References: <e5bfff550612100338ye2ca2a0u1c8f29bbc59c5431@mail.gmail.com>
+	 <Pine.LNX.4.64.0612101439540.12500@woody.osdl.org>
+	 <e5bfff550612101615u5f588513n499e3b88ce14a6f6@mail.gmail.com>
+	 <200612111026.23656.Josef.Weidendorfer@gmx.de>
 Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sun, 26 Nov 2006 12:14:02 +0000 (UTC)
+NNTP-Posting-Date: Mon, 11 Dec 2006 12:52:53 +0000 (UTC)
+Cc: "Linus Torvalds" <torvalds@osdl.org>,
+	"Git Mailing List" <git@vger.kernel.org>,
+	"Junio C Hamano" <junkio@cox.net>,
+	"Alex Riesen" <raa.lkml@gmail.com>,
+	"Shawn Pearce" <spearce@spearce.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:in-reply-to:references:from:date:subject:to:x-tuid:x-uid:x-length:mime-version:content-transfer-encoding:content-disposition:message-id;
-        b=hRHRkWjpPQwIkTeUSNLLFLqIaxVKUEpn3wsJV1B9z+PkbrhcX8nusjpC+RwQZw++hTIKMIpDJx2ORvCsoZH2nS6+ufB0NPCOxrZszXrUwRm7nEMgecV3+biclM8HqzXG6ibT9GqPR04SG35N/F/2aNigcqDzlr+mtSRcfo3e5Bg=
-In-Reply-To: <ekbnr6$naq$2@sea.gmane.org>
-X-TUID: 2b9199289c9be3f5
-X-UID: 173
-X-Length: 1855
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=XIpFQJkEbI2CIek6lolJwz+TtHPZK6j4cPR7UlcIq9+Ch63e/C9i1yvRrf5zGFkTrm0XEFgPvefuGBZwGRLcf+IZgpTC+/v2ppJigxVf/VGNPteK1I+zQoQLaCUmr56W0L1J5LCAZzesmWnQo/FOdJRsSN3ENyjiWotlT74qPDc=
+In-Reply-To: <200612111026.23656.Josef.Weidendorfer@gmx.de>
 Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32342>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GoItI-0007Hw-F4 for gcvg-git@gmane.org; Sun, 26 Nov
- 2006 13:13:48 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33998>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GtkeI-00062i-S8 for gcvg-git@gmane.org; Mon, 11 Dec
+ 2006 13:52:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S935345AbWKZMNj (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 26 Nov 2006
- 07:13:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935346AbWKZMNj
- (ORCPT <rfc822;git-outgoing>); Sun, 26 Nov 2006 07:13:39 -0500
-Received: from nf-out-0910.google.com ([64.233.182.184]:33219 "EHLO
- nf-out-0910.google.com") by vger.kernel.org with ESMTP id S935345AbWKZMNi
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 26 Nov 2006 07:13:38 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so1851558nfa for
- <git@vger.kernel.org>; Sun, 26 Nov 2006 04:13:37 -0800 (PST)
-Received: by 10.78.127.3 with SMTP id z3mr12207648huc.1164543216683; Sun, 26
- Nov 2006 04:13:36 -0800 (PST)
-Received: from grissom.internal.parkins.org.uk ( [84.201.153.164]) by
- mx.google.com with ESMTP id 37sm19468131hub.2006.11.26.04.13.36; Sun, 26 Nov
- 2006 04:13:36 -0800 (PST)
-To: git@vger.kernel.org
+ S1762887AbWLKMwp (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 11 Dec 2006
+ 07:52:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762886AbWLKMwp
+ (ORCPT <rfc822;git-outgoing>); Mon, 11 Dec 2006 07:52:45 -0500
+Received: from py-out-1112.google.com ([64.233.166.179]:29890 "EHLO
+ py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1762887AbWLKMwo (ORCPT <rfc822;git@vger.kernel.org>); Mon, 11 Dec
+ 2006 07:52:44 -0500
+Received: by py-out-1112.google.com with SMTP id a29so909427pyi for
+ <git@vger.kernel.org>; Mon, 11 Dec 2006 04:52:44 -0800 (PST)
+Received: by 10.35.9.15 with SMTP id m15mr9983776pyi.1165841564345; Mon, 11
+ Dec 2006 04:52:44 -0800 (PST)
+Received: by 10.35.93.11 with HTTP; Mon, 11 Dec 2006 04:52:39 -0800 (PST)
+To: "Josef Weidendorfer" <Josef.Weidendorfer@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-Rather than use a separate config .git/remotes/ for remote shortcuts, this
-patch adds the analagous definitions to .git/config using git-repo-config
-calls.
+On 12/11/06, Josef Weidendorfer <Josef.Weidendorfer@gmx.de> wrote:
+> On Monday 11 December 2006 01:15, Marco Costalba wrote:
+> >               guiUpdateTimer.start(100, true);
+>
+> What is the result with "guiUpdateTimer.start(0, true);" ?
+> There is no need to put in any time interval at all, because
+> the timeout is a normal event which will be queued in the GUI
+> event queue.
+>
+> If there were X events in the mean time, they are queued and handled
+> before your timeOut function is called again. So the GUI will be
+> responsive, even if you have a 0 ms timer.
+>
 
-For example what was previously .git/remotes/origin
-  URL: proto://host/path
-  Pull: refs/heads/master:refs/heads/origin
-Is now added to .git/config as
-  [remote "origin"]
-  url = proto://host/path
-  fetch = refs/heads/master:refs/heads/origin
+IOW you suggest to use a brute force polling of the pipe.
 
-Signed-off-by: Andy Parkins <andyparkins@gmail.com>
----
-You're absolutely correct; fixed.  This patch replaces the previous (again).
+I'will try this, just to test the pipe, not the application because I
+would really need to read data in big chunks.
 
- git-clone.sh |    9 ++++-----
- 1 files changed, 4 insertions(+), 5 deletions(-)
+Data read from pipe/file or something else is read in an array (char*
+[]) and do not touched anymore, no more copies are made. For every
+read a new array is allocated on the heap.
 
-diff --git a/git-clone.sh b/git-clone.sh
-index 9ed4135..7e5dc0f 100755
---- a/git-clone.sh
-+++ b/git-clone.sh
-@@ -373,9 +373,8 @@ then
- 		*)	origin_track="$remote_top/$origin"
- 			git-update-ref "refs/heads/$origin" "$head_sha1" ;;
- 		esac &&
--		echo >"$GIT_DIR/remotes/$origin" \
--		"URL: $repo
--Pull: refs/heads/$head_points_at:$origin_track" &&
-+		git-repo-config remote."$origin".url "$repo" &&
-+		git-repo-config remote."$origin".fetch "refs/heads/$head_points_at:$origin_track" ^$ &&
- 		(cd "$GIT_DIR/$remote_top" && find . -type f -print) |
- 		while read dotslref
- 		do
-@@ -389,8 +388,8 @@ Pull: refs/heads/$head_points_at:$origin_track" &&
- 			then
- 				continue
- 			fi
--			echo "Pull: refs/heads/${name}:$remote_top/${name}"
--		done >>"$GIT_DIR/remotes/$origin" &&
-+			git-repo-config remote."$origin".fetch "refs/heads/${name}:$remote_top/${name}" ^$
-+		done &&
- 		case "$use_separate_remote" in
- 		t)
- 			rm -f "refs/remotes/$origin/HEAD"
--- 
-1.4.4.1.g9fd7
+With chunks of 64KB, because each rev descriptions is about few
+hundered bytes only few revs (about 1% with current linux tree) fall
+at the boundary of the chunk, half in one and the rest in the next.
+This boundary revs require a special handling that at the end involves
+an additional copy.
+
+If I get from the pipe very small data (few KB) probably it would be
+better to read always in a local array of fixed size and then copy to
+final destination in memory. But this imply that all the data work
+copy is duplicated: instead of 30MB of data we'll going to move 60MB
+(linux tree)
+
+With big chunks of 64KB only about 1% of data (revs that fall at the
+array boundary) is duplicated.
+
