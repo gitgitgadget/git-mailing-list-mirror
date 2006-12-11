@@ -1,65 +1,69 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Alexandre Julliard <julliard@winehq.org>
-Subject: [PATCH 3/4] git.el: Move point after the log message header when entering log-edit mode.
-Date: Fri, 03 Nov 2006 17:42:17 +0100
-Message-ID: <874ptg32ja.fsf@wine.dyndns.org>
+From: "Bahadir Balban" <bahadir.balban@gmail.com>
+Subject: stgit: No patches to pop
+Date: Mon, 11 Dec 2006 14:32:46 +0000
+Message-ID: <7ac1e90c0612110632x56a2917cu4db33e47923f34c2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 3 Nov 2006 16:43:51 +0000 (UTC)
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Mon, 11 Dec 2006 14:32:55 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.90 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=Ta9iIGiaH/efklC4u8tZJxgGEVhGXnR9k3r/JqEoRMJXTIZjSzMcl+hAaamFozz0rYbnrUtxxCQeZhF4MhSUfl75PzPoEWU8XNijOwiAWzOX1IByi0jJBVeuKbeLth6Xzr8aEzNntje9vLkrf3/bJ4Y1TBHAtbPtwd9fUYtkPmU=
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30865>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gg27b-0003ta-ON for gcvg-git@gmane.org; Fri, 03 Nov
- 2006 17:42:24 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34008>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GtmD7-0003Td-Jb for gcvg-git@gmane.org; Mon, 11 Dec
+ 2006 15:32:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753361AbWKCQmV (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 3 Nov 2006
- 11:42:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753363AbWKCQmV
- (ORCPT <rfc822;git-outgoing>); Fri, 3 Nov 2006 11:42:21 -0500
-Received: from mail.codeweavers.com ([216.251.189.131]:43191 "EHLO
- mail.codeweavers.com") by vger.kernel.org with ESMTP id S1753361AbWKCQmU
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 3 Nov 2006 11:42:20 -0500
-Received: from adsl-84-227-158-29.adslplus.ch ([84.227.158.29]
- helo=wine.dyndns.org) by mail.codeweavers.com with esmtpsa
- (TLS-1.0:DHE_RSA_AES_256_CBC_SHA:32) (Exim 4.50) id 1Gg27X-0004WQ-M0 for
- git@vger.kernel.org; Fri, 03 Nov 2006 10:42:20 -0600
-Received: by wine.dyndns.org (Postfix, from userid 1000) id C34AA109EB7; Fri,
-  3 Nov 2006 17:42:17 +0100 (CET)
+ S935757AbWLKOcu (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 11 Dec 2006
+ 09:32:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935763AbWLKOcu
+ (ORCPT <rfc822;git-outgoing>); Mon, 11 Dec 2006 09:32:50 -0500
+Received: from ug-out-1314.google.com ([66.249.92.168]:53131 "EHLO
+ ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S935757AbWLKOct (ORCPT <rfc822;git@vger.kernel.org>); Mon, 11 Dec
+ 2006 09:32:49 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so1345988uga for
+ <git@vger.kernel.org>; Mon, 11 Dec 2006 06:32:48 -0800 (PST)
+Received: by 10.82.136.4 with SMTP id j4mr1063269bud.1165847566436; Mon, 11
+ Dec 2006 06:32:46 -0800 (PST)
+Received: by 10.82.186.15 with HTTP; Mon, 11 Dec 2006 06:32:46 -0800 (PST)
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Suggested by Han-Wen Nienhuys.
+Hi,
 
-Signed-off-by: Alexandre Julliard <julliard@winehq.org>
----
- contrib/emacs/git.el |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
+I've just recently started using stgit (v0.11, git v1.4.3.4). On a
+test repository, I do:
 
-diff --git a/contrib/emacs/git.el b/contrib/emacs/git.el
-index 08d6404..6f3b46d 100644
---- a/contrib/emacs/git.el
-+++ b/contrib/emacs/git.el
-@@ -899,7 +899,8 @@ and returns the process output as a stri
-               (2 font-lock-function-name-face))
-              (,(concat "^\\(" (regexp-quote git-log-msg-separator) "\\)$")
-               (1 font-lock-comment-face)))))
--      (log-edit #'git-do-commit nil #'git-log-edit-files buffer))))
-+      (log-edit #'git-do-commit nil #'git-log-edit-files buffer)
-+      (re-search-forward (regexp-quote (concat git-log-msg-separator "\n")) nil t))))
- 
- (defun git-find-file ()
-   "Visit the current file in its own buffer."
--- 
-1.4.3.3.gf3240
+% stg applied
+first
+second
+third
 
--- 
-Alexandre Julliard
+but when I pop I get:
+
+% stg pop
+stg pop: No patches to pop
+
+I also get things like:
+
+% stg pop second
+popping patch "third"... done
+Now at patch "second"
+
+Is this normal?
+
+Thanks,
