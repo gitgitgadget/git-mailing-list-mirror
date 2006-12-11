@@ -1,61 +1,75 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [PATCH] Allow hand-editing of patches before sending
-Date: Thu, 2 Nov 2006 12:36:31 +0100
-Message-ID: <20061102113631.GA30507@diana.vm.bytemark.co.uk>
-References: <20061101090046.1107.81105.stgit@localhost> <b0943d9e0611020232x1e343bbco9451c8183c84d68@mail.gmail.com>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: [PATCH] Add comments to update_tree_entry()
+Date: Mon, 11 Dec 2006 22:13:11 +0000
+Message-ID: <200612112213.11829.andyparkins@gmail.com>
+References: <f323e83a37efd3b913004666f2fc104578a92833.1165875140.git.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Thu, 2 Nov 2006 11:37:01 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Mon, 11 Dec 2006 22:16:17 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:in-reply-to:references:from:date:subject:to:x-tuid:x-uid:x-length:mime-version:content-transfer-encoding:content-disposition;
+        b=Jbllw/CHHZORrzHRiZ12B/e6Aqq5A5xUNlil7OM3p1pmSyAka9zTNMcli7k78yCb569V4RpxmFzWqeKP53otad0zg1SbOXgocYCXQ3pVx6IncS2l27Qh/lkB/RqnVPF1Wz/TvhGiEX1v5p4rKB2nJSsqPDt8ycO2d1o2rKP3qas=
+In-Reply-To: <f323e83a37efd3b913004666f2fc104578a92833.1165875140.git.andyparkins@gmail.com>
+X-TUID: 89a2fe079079881e
+X-UID: 185
+X-Length: 1320
 Content-Disposition: inline
-In-Reply-To: <b0943d9e0611020232x1e343bbco9451c8183c84d68@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30737>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GfasC-0000V8-0w for gcvg-git@gmane.org; Thu, 02 Nov
- 2006 12:36:42 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34045>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GttRV-0000Y6-Sc for gcvg-git@gmane.org; Mon, 11 Dec
+ 2006 23:16:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752129AbWKBLgh convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Thu, 2 Nov 2006 06:36:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752801AbWKBLgg
- (ORCPT <rfc822;git-outgoing>); Thu, 2 Nov 2006 06:36:36 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:9745 "EHLO
- diana.vm.bytemark.co.uk") by vger.kernel.org with ESMTP id S1752129AbWKBLgg
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 2 Nov 2006 06:36:36 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1
- (Debian)) id 1Gfas4-00085V-00; Thu, 02 Nov 2006 11:36:32 +0000
-To: Catalin Marinas <catalin.marinas@gmail.com>
+ S1763168AbWLKWQG (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 11 Dec 2006
+ 17:16:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763170AbWLKWQG
+ (ORCPT <rfc822;git-outgoing>); Mon, 11 Dec 2006 17:16:06 -0500
+Received: from ug-out-1314.google.com ([66.249.92.172]:15250 "EHLO
+ ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1763168AbWLKWQE (ORCPT <rfc822;git@vger.kernel.org>); Mon, 11 Dec
+ 2006 17:16:04 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so1471083uga for
+ <git@vger.kernel.org>; Mon, 11 Dec 2006 14:16:04 -0800 (PST)
+Received: by 10.78.17.1 with SMTP id 1mr1986041huq.1165875364016; Mon, 11 Dec
+ 2006 14:16:04 -0800 (PST)
+Received: from grissom.internal.parkins.org.uk ( [84.201.153.164]) by
+ mx.google.com with ESMTP id 39sm3249198hui.2006.12.11.14.16.03; Mon, 11 Dec
+ 2006 14:16:03 -0800 (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On 2006-11-02 10:32:46 +0000, Catalin Marinas wrote:
+Signed-off-by: Andy Parkins <andyparkins@gmail.com>
+---
+ tree-walk.c |    5 +++++
+ 1 files changed, 5 insertions(+), 0 deletions(-)
 
-> On 01/11/06, Karl Hasselstr=F6m <kha@treskal.com> wrote:
->
-> > This adds a new flag to 'stg mail', allowing the user to hand-edit
-> > each patch e-mail before it is sent, just like it is currently
-> > possible to edit the cover message.
->
-> Applied it but with some conflicts since you have some other patches
-> which I haven't merged yet (like QP encoding). I'll try to have a
-> look at this QP encoding this week. The main problem is that Gnus
-> shows plenty of "=3D20" instead of new lines and 'stg import' cannot
-> cope with them.
+diff --git a/tree-walk.c b/tree-walk.c
+index 14cc5ae..5363366 100644
+--- a/tree-walk.c
++++ b/tree-walk.c
+@@ -37,6 +37,11 @@ static void entry_extract(struct tree_desc *t, struct name_entry *a)
+ 
+ void update_tree_entry(struct tree_desc *desc)
+ {
++	/* Each tree is represented by a buffer containing hashes followed
++	 * by space followed by filename; separated with NUL.  To move to the
++	 * next entry we simply move forward by strlen() (which skips the filename)
++	 * then skip the hash and the space. */
++	/* This function should really be called skip_tree_entry() */
+ 	const void *buf = desc->buf;
+ 	unsigned long size = desc->size;
+ 	int len = strlen(buf) + 1 + 20;
+-- 
+1.4.4.1.geeee8
 
-That Gnus shows =3D20 suggests that I haven't got the QP encoding 100%
-right. I haven't had time to look at that yet, and it looks like you
-may beat me to it.
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
