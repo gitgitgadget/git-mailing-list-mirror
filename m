@@ -1,81 +1,64 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: selective git-update-index per diff(1) chunks
-Date: Mon, 04 Dec 2006 19:05:04 +0100
-Organization: At home
-Message-ID: <el1nsi$vat$1@sea.gmane.org>
-References: <b6fcc0a0612010323x7554e47m5e6bdafe85fc8224@mail.gmail.com> <20061204173318.GG940MdfPADPa@greensroom.kotnet.org>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: Re: Using GIT to store /etc (Or: How to make GIT store all file permission bits)
+Date: Mon, 11 Dec 2006 13:13:34 +0100
+Message-ID: <200612111313.34292.Josef.Weidendorfer@gmx.de>
+References: <787BE48C-1808-4A33-A368-5E8A3F00C787@mac.com> <19476830-E30A-42B7-AD9B-4C417D830C8E@mac.com> <457D3573.2010001@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-NNTP-Posting-Date: Mon, 4 Dec 2006 18:03:53 +0000 (UTC)
+Content-Type: text/plain;
+  charset="iso-8859-15"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Mon, 11 Dec 2006 12:14:06 +0000 (UTC)
+Cc: Kyle Moffett <mrmacman_g4@mac.com>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 31
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+User-Agent: KMail/1.9.5
+In-Reply-To: <457D3573.2010001@op5.se>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay1.informatik.tu-muenchen.de
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33210>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33997>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GrIAG-0000c6-4D for gcvg-git@gmane.org; Mon, 04 Dec
- 2006 19:03:40 +0100
+ esmtp (Exim 4.50) id 1Gtk2g-0001Cr-KA for gcvg-git@gmane.org; Mon, 11 Dec
+ 2006 13:13:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S936571AbWLDSDb (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
- 13:03:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936574AbWLDSDb
- (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 13:03:31 -0500
-Received: from main.gmane.org ([80.91.229.2]:47792 "EHLO ciao.gmane.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S936571AbWLDSDa
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006 13:03:30 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1GrI9s-0002Xm-0W for git@vger.kernel.org; Mon, 04 Dec 2006 19:03:16 +0100
-Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Mon, 04 Dec 2006 19:03:16 +0100
-Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Mon, 04 Dec 2006
- 19:03:16 +0100
-To: git@vger.kernel.org
+ S1762852AbWLKMNs (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 11 Dec 2006
+ 07:13:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762864AbWLKMNr
+ (ORCPT <rfc822;git-outgoing>); Mon, 11 Dec 2006 07:13:47 -0500
+Received: from mailout1.informatik.tu-muenchen.de ([131.159.0.18]:55343 "EHLO
+ mailout1.informatik.tu-muenchen.de" rhost-flags-OK-OK-OK-OK) by
+ vger.kernel.org with ESMTP id S1762852AbWLKMNr (ORCPT
+ <rfc822;git@vger.kernel.org>); Mon, 11 Dec 2006 07:13:47 -0500
+Received: from dhcp-3s-46.lrr.in.tum.de (dhcp-3s-46.lrr.in.tum.de
+ [131.159.35.46]) by mail.in.tum.de (Postfix) with ESMTP id E62FD20E9; Mon, 11
+ Dec 2006 13:13:45 +0100 (MET)
+To: Andreas Ericsson <ae@op5.se>
 Sender: git-owner@vger.kernel.org
 
-Sven Verdoolaege wrote:
-
-> On Fri, Dec 01, 2006 at 02:23:14PM +0300, Alexey Dobriyan wrote:
->> Has anyone thought about aggregating this into git-update-index or
->> somewhere?
->> 
->>    git-update-index -C1,3    #chunks 1, 3
->>    git commit
->>    git-update-index -C1,3    # chunks 2,5 in original numbering
->>    git commit
->> 
->> Relying on diff(1) definition of chunks is sorta hacky, though... I admit 
->> it.
+On Monday 11 December 2006 11:39, Andreas Ericsson wrote:
+> > Import/export scripts literally require wrapping every single GIT 
+> > command with a script that changes directory a few times, reads from a 
+> > different checked-out tree, and permutes some extended-attribute data 
+> > slightly before storing it in the underlying GIT tree.  Even without 
+> > adding any new functionality whatsoever that doubles the amount of code 
+> > just for finding your repository and checking command-line arguments, 
+> > and that's a crazy trade-off to make in any situation.
+> > 
 > 
-> Paul Mackerras modified his dirdiff tool to do something like this.
-> I have a couple of patches on top of his version from way back at
-> http://www.liacs.nl/~sverdool/gitweb.cgi?p=dirdiff.git;a=summary
-> 
-> I don't know if he has continued working on this.
+> GIT_DIR=/some/where/else/.git git log -p
 
-If this has support for git, could you add it to GitWiki:
-  http://git.or.cz/gitwiki/InterfacesFrontendsAndTools
-And perhaps also update related page
-  http://git.or.cz/gitwiki/InterfacesFrontendsAndToolsWishlist
+Doing this everytime you want to run a git command *is* a lot of time
+wasted for typing.
 
-Thanks in advance.
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+The .gitlink proposal would come in handy here: you have a simple
+file instead of .git/, which links to the real repository.
 
