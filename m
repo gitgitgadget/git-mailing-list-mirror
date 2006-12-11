@@ -1,69 +1,111 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Cleaning up git user-interface warts
-Date: Tue, 14 Nov 2006 22:30:56 -0800
-Message-ID: <7vpsbpp6fz.fsf@assigned-by-dhcp.cox.net>
-References: <87k61yt1x2.wl%cworth@cworth.org> <455A1137.8030301@shadowen.org>
-	<87hcx1u934.wl%cworth@cworth.org>
-	<Pine.LNX.4.64.0611141518590.2591@xanadu.home>
-	<87bqn9u43s.wl%cworth@cworth.org>
-	<7vr6w5y7to.fsf@assigned-by-dhcp.cox.net>
-	<7virhhy76h.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0611142048350.2591@xanadu.home>
-	<7vu011qnl6.fsf@assigned-by-dhcp.cox.net>
-	<20061115061833.GA6294@spearce.org>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: [PATCH] Comment diff_tree
+Date: Mon, 11 Dec 2006 22:13:06 +0000
+Message-ID: <200612112213.06547.andyparkins@gmail.com>
+References: <f323e83a37efd3b913004666f2fc104578a92833.1165875140.git.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 15 Nov 2006 06:31:06 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Mon, 11 Dec 2006 22:16:17 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061115061833.GA6294@spearce.org> (Shawn Pearce's message of
-	"Wed, 15 Nov 2006 01:18:33 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:in-reply-to:references:from:date:subject:to:x-tuid:x-uid:x-length:mime-version:content-transfer-encoding:content-disposition;
+        b=SfaNZLYEG96aYUDftLbeYeaSMtIj1cKQc1z12NctX0AtxvfBAA89URqWL2ndq98JZR84YOI6w8bMSX6U1weTxnqJui0ghWz3Pbqqy31kc9TSy4+sD48ZugtkBqSRWpvaUB+MasT+/kCTsF7KtdzXGJiJdSxcy5mXj+ndcVWYjCo=
+In-Reply-To: <f323e83a37efd3b913004666f2fc104578a92833.1165875140.git.andyparkins@gmail.com>
+X-TUID: ddca45d095b42a2b
+X-UID: 186
+X-Length: 2432
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31423>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GkEIY-0003sI-HK for gcvg-git@gmane.org; Wed, 15 Nov
- 2006 07:31:02 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34044>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GttRP-0000XO-4M for gcvg-git@gmane.org; Mon, 11 Dec
+ 2006 23:16:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S966548AbWKOGa6 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
- 01:30:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966549AbWKOGa6
- (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 01:30:58 -0500
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:11514 "EHLO
- fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP id S966548AbWKOGa6
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 01:30:58 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao01.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061115063057.RYCD9173.fed1rmmtao01.cox.net@fed1rmimpo02.cox.net>; Wed, 15
- Nov 2006 01:30:57 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id muX31V00X1kojtg0000000; Wed, 15 Nov 2006
- 01:31:04 -0500
-To: Shawn Pearce <spearce@spearce.org>
+ S1763166AbWLKWQD (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 11 Dec 2006
+ 17:16:03 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763169AbWLKWQD
+ (ORCPT <rfc822;git-outgoing>); Mon, 11 Dec 2006 17:16:03 -0500
+Received: from ug-out-1314.google.com ([66.249.92.172]:15250 "EHLO
+ ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1763165AbWLKWQA (ORCPT <rfc822;git@vger.kernel.org>); Mon, 11 Dec
+ 2006 17:16:00 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so1471083uga for
+ <git@vger.kernel.org>; Mon, 11 Dec 2006 14:15:59 -0800 (PST)
+Received: by 10.78.158.11 with SMTP id g11mr1716453hue.1165875359040; Mon, 11
+ Dec 2006 14:15:59 -0800 (PST)
+Received: from grissom.internal.parkins.org.uk ( [84.201.153.164]) by
+ mx.google.com with ESMTP id 28sm2918526hua.2006.12.11.14.15.58; Mon, 11 Dec
+ 2006 14:15:58 -0800 (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Shawn Pearce <spearce@spearce.org> writes:
+Signed-off-by: Andy Parkins <andyparkins@gmail.com>
+---
+ tree-diff.c |   17 ++++++++++++++---
+ 1 files changed, 14 insertions(+), 3 deletions(-)
 
-> Junio C Hamano <junkio@cox.net> wrote:
->> Or even better, have "gh init".
->
-> Why gh?  Is Git just Mercurial backwards?  :)
->
-> I'm all in favor of this discussion, and in particular of just
-> breaking the entire UI in 2.0 by using a new frontend command.
-> I'm just not sure that "Mercurial backwards" describes Git well.
+diff --git a/tree-diff.c b/tree-diff.c
+index 37d235e..009dd17 100644
+--- a/tree-diff.c
++++ b/tree-diff.c
+@@ -160,33 +160,44 @@ static void show_entry(struct diff_options *opt, const char *prefix, struct tree
+ 
+ int diff_tree(struct tree_desc *t1, struct tree_desc *t2, const char *base, struct diff_options *opt)
+ {
++	/* While there are entries left in t1 or t2... */
+ 	while (t1->size | t2->size) {
+ 		if (opt->nr_paths && t1->size && !interesting(t1, base, opt)) {
++			/* If there are paths left in t1, and the current path is
++			 * not interesting, skip it and try the next path in t1 */
+ 			update_tree_entry(t1);
+ 			continue;
+ 		}
+ 		if (opt->nr_paths && t2->size && !interesting(t2, base, opt)) {
++			/* If there are paths left in t2, and the current path is
++			 * not interesting, skip it and try the next path in t2 */
+ 			update_tree_entry(t2);
+ 			continue;
+ 		}
++		/* Here if either
++		 *  - Either t1 or t2 path is available and interesting
++		 *  - No paths available */
+ 		if (!t1->size) {
++			/* If there is no path left in t1, then t2 is a new path */
+ 			show_entry(opt, "+", t2, base);
+ 			update_tree_entry(t2);
+ 			continue;
+ 		}
+ 		if (!t2->size) {
++			/* If there is no path left in t2, then t1 is a remed path */
+ 			show_entry(opt, "-", t1, base);
+ 			update_tree_entry(t1);
+ 			continue;
+ 		}
++		/* If both paths are available and interesting then it is a change */
+ 		switch (compare_tree_entry(t1, t2, base, opt)) {
+-		case -1:
++		case -1: /* Finished with the path in t1 */
+ 			update_tree_entry(t1);
+ 			continue;
+-		case 0:
++		case 0:  /* Finished with both paths */
+ 			update_tree_entry(t1);
+ 			/* Fallthrough */
+-		case 1:
++		case 1: /* Finished with the path in t2 */
+ 			update_tree_entry(t2);
+ 			continue;
+ 		}
+-- 
+1.4.4.1.geeee8
 
-I do not have any obsession to any name as long as it is
-different from "git" to avoid confusion coming from older
-documents that would be found by googling.  gh was just
-shorthand for "git for humans" (and easy to type with index
-fingers).  I think I listed a few other possibilities in my
-previous message.
