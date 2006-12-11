@@ -1,57 +1,48 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] gitweb: Check git base URLs before generating URL from it
-Date: Thu, 26 Oct 2006 10:21:53 -0700
-Message-ID: <7vr6wvkn66.fsf@assigned-by-dhcp.cox.net>
-References: <200610261226.44960.jnareb@gmail.com>
+From: Ian Molton <spyro@f2s.com>
+Subject: trouble with git cvsimport
+Date: Mon, 11 Dec 2006 23:28:00 +0000
+Organization: The Dragon Roost
+Message-ID: <457DE980.50605@f2s.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 26 Oct 2006 17:22:32 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Mon, 11 Dec 2006 23:28:19 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+User-Agent: Thunderbird 2.0a1 (X11/20061107)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30245>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gd8vZ-00030M-Bi for gcvg-git@gmane.org; Thu, 26 Oct
- 2006 19:22:01 +0200
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34049>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GtuZ7-0002aR-39 for gcvg-git@gmane.org; Tue, 12 Dec
+ 2006 00:28:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1423625AbWJZRVz (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
- 13:21:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423627AbWJZRVz
- (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 13:21:55 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:12184 "EHLO
- fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP id S1423625AbWJZRVz
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 13:21:55 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao08.cox.net
- (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
- <20061026172154.GCMS22977.fed1rmmtao08.cox.net@fed1rmimpo01.cox.net>; Thu, 26
- Oct 2006 13:21:54 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id f5Mc1V00d1kojtg0000000 Thu, 26 Oct 2006
- 13:21:37 -0400
-To: Jakub Narebski <jnareb@gmail.com>
+ S1750727AbWLKX2F (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 11 Dec 2006
+ 18:28:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750728AbWLKX2F
+ (ORCPT <rfc822;git-outgoing>); Mon, 11 Dec 2006 18:28:05 -0500
+Received: from outmail1.freedom2surf.net ([194.106.33.237]:49082 "EHLO
+ outmail.freedom2surf.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with
+ ESMTP id S1750727AbWLKX2D (ORCPT <rfc822;git@vger.kernel.org>); Mon, 11 Dec
+ 2006 18:28:03 -0500
+Received: from [192.168.1.2] (i-83-67-116-184.freedom2surf.net
+ [83.67.116.184]) by outmail.freedom2surf.net (Postfix) with ESMTP id
+ 3CA0F50EFC for <git@vger.kernel.org>; Mon, 11 Dec 2006 23:28:01 +0000 (GMT)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Wouldn't this be simpler and more to the point, I wonder?
+Hi.
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 5a81b8f..aceaeb7 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -80,7 +80,7 @@ our $strict_export = "++GITWEB_STRICT_EX
- 
- # list of git base URLs used for URL to where fetch project from,
- # i.e. full URL is "$git_base_url/$project"
--our @git_base_url_list = ("++GITWEB_BASE_URL++");
-+our @git_base_url_list = grep { $_ ne '' } ("++GITWEB_BASE_URL++");
- 
- # default blob_plain mimetype and default charset for text/plain blob
- our $default_blob_plain_mimetype = 'text/plain';
+I imported a CVS repo with git cvsimport, which went well enough, 
+however subsequent repeats of the same command arent updating the git 
+repo. whats up?
+
+command Im using is:
+
+git-cvsimport -d:local:/home/ian/projects/hh.org_cvs/cvs/ -k -m -p x -o 
