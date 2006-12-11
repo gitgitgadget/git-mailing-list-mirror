@@ -1,80 +1,89 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: WARNING: THIS PATCH CAN BREAK YOUR REPO, was Re: [PATCH 2/3] Only repack active packs by skipping over kept packs.
-Date: Mon, 30 Oct 2006 13:48:24 -0800
-Message-ID: <7v7iyhwk47.fsf@assigned-by-dhcp.cox.net>
-References: <20061029093754.GD3847@spearce.org>
-	<Pine.LNX.4.64.0610301332440.11384@xanadu.home>
-	<20061030202611.GA5775@spearce.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: stgit: No patches to pop
+Date: Mon, 11 Dec 2006 23:54:52 +0100
+Message-ID: <200612112354.53124.jnareb@gmail.com>
+References: <7ac1e90c0612110632x56a2917cu4db33e47923f34c2@mail.gmail.com> <elk0c3$ovu$1@sea.gmane.org> <b0943d9e0612111426s3e0c671eqca31558e47d4348b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Mon, 30 Oct 2006 21:54:04 +0000 (UTC)
-Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Mon, 11 Dec 2006 22:52:44 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=jyb/j/+aHu7ESWDYl3bCiohWMg8/IR/Wa/nXjwZUOOx2X9HHfXKW4oFHK+ZLDpr7IZOyctaTVyy5PkYs2QziNwnDZs+Zi7FN3CpPpiSzqhIwa7Xgjn2vXcNdVFUSvSTiFjZGYysCB/FfkQ+Wr+M3gMV0AqG2wTnzBD0CRgrRj70=
+User-Agent: KMail/1.9.3
+In-Reply-To: <b0943d9e0612111426s3e0c671eqca31558e47d4348b@mail.gmail.com>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30530>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Geezd-00086x-QT for gcvg-git@gmane.org; Mon, 30 Oct
- 2006 22:48:30 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34048>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gtu0k-0006HJ-4l for gcvg-git@gmane.org; Mon, 11 Dec
+ 2006 23:52:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1161520AbWJ3Vs1 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 30 Oct 2006
- 16:48:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161521AbWJ3Vs1
- (ORCPT <rfc822;git-outgoing>); Mon, 30 Oct 2006 16:48:27 -0500
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:56229 "EHLO
- fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP id S1161520AbWJ3Vs0
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 30 Oct 2006 16:48:26 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao03.cox.net
- (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
- <20061030214825.FJRZ2704.fed1rmmtao03.cox.net@fed1rmimpo01.cox.net>; Mon, 30
- Oct 2006 16:48:25 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id glo51V00V1kojtg0000000 Mon, 30 Oct 2006
- 16:48:06 -0500
-To: Shawn Pearce <spearce@spearce.org>
+ S1750699AbWLKWwf (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 11 Dec 2006
+ 17:52:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750701AbWLKWwf
+ (ORCPT <rfc822;git-outgoing>); Mon, 11 Dec 2006 17:52:35 -0500
+Received: from ug-out-1314.google.com ([66.249.92.169]:2236 "EHLO
+ ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1750699AbWLKWwe (ORCPT <rfc822;git@vger.kernel.org>); Mon, 11 Dec
+ 2006 17:52:34 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so1479976uga for
+ <git@vger.kernel.org>; Mon, 11 Dec 2006 14:52:33 -0800 (PST)
+Received: by 10.67.100.17 with SMTP id c17mr10680466ugm.1165877553131; Mon,
+ 11 Dec 2006 14:52:33 -0800 (PST)
+Received: from host-81-190-25-107.torun.mm.pl ( [81.190.25.107]) by
+ mx.google.com with ESMTP id 5sm6091319ugc.2006.12.11.14.52.32; Mon, 11 Dec
+ 2006 14:52:32 -0800 (PST)
+To: "Catalin Marinas" <catalin.marinas@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Shawn Pearce <spearce@spearce.org> writes:
+Catalin Marinas wrote:
+> On 11/12/06, Jakub Narebski <jnareb@gmail.com> wrote:
+>> Catalin Marinas wrote:
+>>
+>>>> I also get things like:
+>>>>
+>>>> % stg pop second
+>>>> popping patch "third"... done
+>>>> Now at patch "second"
+>>>
+>>> In version 0.11, the "pop" command is equivalent to "goto". I changed
+>>> this in the latest version (in the StGIT repository) so that "pop
+>>> <patch>" tries to only extract that patch from the stack by popping
+>>> all the patches to the given one and pushing them back without the one
+>>> you specified. It also supports patch ranges (i.e. patch1..patch4).
+>>
+>> That is kind of strange. Pop should work like pop does, for example
+>> the one in Perl or Python, removing n elements from the stack of applied
+>> patches. Not work as "float <patch>"...
+> 
+> Probably I wasn't clear enough. The "pop" operations are as follows:
+> 
+> 1. "stg pop" only removes the top patch from the applied patches
+> 2. "stg pop <patch>.." is equivalent to popping all patches to <patch>
+> (including the latter)
+> 3. "stg pop <patch>" is equivalent to "stg float <patch>; stg pop".
+> 4. "stg pop <patch list or range>" is equivalent to "stg float <patch
+> list or range>; stg pop <all the patches in the list or range>"
+> 
+> These feature was Yann's idea and I find it to be more in line with
+> the "push" command.
 
-> Do the above so you have everything in one pack.  Now use rev-list
-> to simulate the object list construction in pack-objects as though
-> we were doing a 'git repack -a -d':
->
->   git-rev-list --objects --all \
->     --unpacked=.git/objects/pack/pack-*.pack \
-> 	| wc -l
->
-> gives me 102 (WRONG WRONG WRONG WRONG!!!!!!)
+Nice, and easy to understand. By the way, the same works with "stg push",
+doesn't it?
 
-Now I think I know what is going on.
-
-The meaning of "unpacked" (with or without the "pretend as if
-all objects in this pack are loose") has always been to stop
-traversing once we hit a packed object, not "do not include
-already packed object".
-
-So --unpacked=pretend-this-is-loose was wrong to begin with; it
-probably should have been --incremental=pretend-this-is-loose.
-
-How about reverting the following:
-
-commit ce8590748b918687abc4c7cd2d432dd23f07ae40
-Author: Shawn Pearce <spearce@spearce.org>
-
-    Only repack active packs by skipping over kept packs.
-
-
-commit 106d710bc13f34aec1a15c4cff80f062f384edf6
-Author: Junio C Hamano <junkio@cox.net>
-
-    pack-objects --unpacked=<existing pack> option.
-
-
+-- 
+Jakub Narebski
