@@ -1,80 +1,411 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: git-svn: follow parent after the fact?
-Date: Mon, 18 Dec 2006 23:47:45 -0800
-Message-ID: <20061219074745.GA31338@localdomain>
-References: <45873D0A.1040804@midwinter.com>
+From: Han-Wen Nienhuys <hanwen@xs4all.nl>
+Subject: [PATCH] Allow building GIT in a different directory from the source
+ directory
+Date: Mon, 11 Dec 2006 14:56:57 +0100
+Message-ID: <eljo2u$pnq$2@sea.gmane.org>
+Reply-To: hanwen@xs4all.nl
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 19 Dec 2006 07:48:00 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Mon, 11 Dec 2006 14:05:17 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <45873D0A.1040804@midwinter.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 363
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: muurbloem.xs4all.nl
+User-Agent: Thunderbird 1.5.0.8 (X11/20061107)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34793>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GwZhX-0005NS-5I for gcvg-git@gmane.org; Tue, 19 Dec
- 2006 08:47:51 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34006>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GtlmJ-0007lP-AH for gcvg-git@gmane.org; Mon, 11 Dec
+ 2006 15:05:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932622AbWLSHrs (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
- 02:47:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932626AbWLSHrs
- (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 02:47:48 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:33138 "EHLO hand.yhbt.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S932622AbWLSHrr
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec 2006 02:47:47 -0500
-Received: from hand.yhbt.net (localhost [127.0.0.1]) by hand.yhbt.net
- (Postfix) with SMTP id E26927DC02A; Mon, 18 Dec 2006 23:47:45 -0800 (PST)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Mon, 18 Dec 2006
- 23:47:45 -0800
-To: Steven Grimm <koreth@midwinter.com>
+ S1760607AbWLKOFH (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 11 Dec 2006
+ 09:05:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762909AbWLKOFH
+ (ORCPT <rfc822;git-outgoing>); Mon, 11 Dec 2006 09:05:07 -0500
+Received: from main.gmane.org ([80.91.229.2]:43511 "EHLO ciao.gmane.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1762890AbWLKOFF
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 11 Dec 2006 09:05:05 -0500
+Received: from root by ciao.gmane.org with local (Exim 4.43) id
+ 1GtlmA-0001zW-5Z for git@vger.kernel.org; Mon, 11 Dec 2006 15:05:02 +0100
+Received: from muurbloem.xs4all.nl ([213.84.26.127]) by main.gmane.org with
+ esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>;
+ Mon, 11 Dec 2006 15:05:02 +0100
+Received: from hanwen by muurbloem.xs4all.nl with local (Gmexim 0.1 (Debian))
+ id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Mon, 11 Dec 2006 15:05:02
+ +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Steven Grimm <koreth@midwinter.com> wrote:
-> One of the other git users here just noticed that his git-svn clone of a 
-> particular svn repo has an inconsistent set of files compared to the svn 
-> client. Turns out the repo has had its trunk moved around in the past. A 
-> fresh clone with --follow-parent (which he didn't use) produces the 
-> correct results.
 
-The final set of files at the latest (svn) revision was inconsistent?
-That should never happen...  If so, I'd very much like to look into this.
+GIT can now be built in a separate builddirectory. This is done as
+follows:
 
-> Obviously he can blow away his current repo and make a new one, but it'd 
-> be nicer if he could preserve his local change history. Is there any way 
-> to retroactively apply the additional changes --follow-parent would have 
-> applied if it had been used on the initial fetch?
+  mkdir build
+  cd build
+  $my_git_dir/configure
+  make
 
-git-svn graft-branches can probably work (if he imported the parent
-separately).
+In this case, configure creates an empty directory tree based on the
+source directory, and wraps Makefiles from source directory in the
+build directory.  The rest of the functionality is delivered with the
+VPATH feature of Make.
 
-> It would be better, IMO, if you didn't have to figure out whether or not 
-> a given remote svn repository has had branch renames in the past in 
-> order to figure out if you need to provide an extra option to git-svn 
-> fetch. Maybe --follow-parent should be the default behavior and there 
-> should be an option to turn it off? Or is there a good reason to not 
-> want that behavior most of the time? My assumption is that it's not the 
-> default simply because it's a recent addition.
+To make this work the Makefile should not mention ./ explicitly in
+rules, but rather use $< and $^ to automatically look in the source
+dir too.
 
-It may behave unpredictably on some poorly organized repositories.  I
-haven't quite debugged this problem fully as the current code to handle
-multiple repositories is a hacked-on mess.
+perl/Makefile and perl/Makefile.PL need special massaging because perl
+is not VPATH aware.
 
-I'm currently refactoring git-svn to work better on multi-remote
-operations and --follow-parent should be easier to debug as a result.
+The documentation subdirectory has limited support for separate building, 
+as asciidoc doesn't have a --include-path option.
 
-> By the way, I'm completely in favor of renaming commit to set-tree. +1 
-> for that change.
+ Documentation/Makefile |   36 ++++++++++++++++++++++--------------
+ INSTALL                |    7 +++++++
+ Makefile               |   23 ++++++++++++++---------
+ config.mak.in          |    9 ++++-----
+ configure.ac           |   34 ++++++++++++++++++++++++++++++++++
+ generate-cmdlist.sh    |    2 +-
+ perl/Makefile          |    4 ++++
+ perl/Makefile.PL       |   16 +++++++++++++---
+ 8 files changed, 99 insertions(+), 32 deletions(-)
 
-Noted, thanks for the input.
-
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index c00f5f6..39bcd45 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -1,6 +1,6 @@
+ MAN1_TXT= \
+-	$(filter-out $(addsuffix .txt, $(ARTICLES) $(SP_ARTICLES)), \
+-		$(wildcard git-*.txt)) \
++	$(filter-out $(foreach i, $(ARTICLES) $(SP_ARTICLES), $(here-srcdir)/$(i).txt), \
++		$(wildcard $(here-srcdir)/git-*.txt)) \
+ 	gitk.txt
+ MAN7_TXT=git.txt
+ 
+@@ -33,8 +33,16 @@ # DESTDIR=
+ 
+ INSTALL?=install
+ 
+--include ../config.mak.autogen
++ifndef srcdir
++srcdir=..
++endif
++
++
++here-srcdir=$(srcdir)/Documentation
+ 
++ASCIIDOC_CONF=$(here-srcdir)/asciidoc.conf
++
++-include ../config.mak.autogen
+ #
+ # Please note that there is a minor bug in asciidoc.
+ # The version after 6.0.3 _will_ include the patch found here:
+@@ -63,9 +71,9 @@ install: man
+ #
+ # Determine "include::" file references in asciidoc files.
+ #
+-doc.dep : $(wildcard *.txt) build-docdep.perl
++doc.dep : $(wildcard $(here-srcdir)/*.txt) build-docdep.perl
+ 	rm -f $@+ $@
+-	perl ./build-docdep.perl >$@+
++	perl $(lastword $^) >$@+
+ 	mv $@+ $@
+ 
+ -include doc.dep
+@@ -80,35 +88,35 @@ clean:
+ 	rm -f *.xml *.html *.1 *.7 howto-index.txt howto/*.html doc.dep README
+ 
+ %.html : %.txt
+-	asciidoc -b xhtml11 -d manpage -f asciidoc.conf $<
++	asciidoc -b xhtml11 -d manpage -f $(ASCIIDOC_CONF) $<
+ 
+ %.1 %.7 : %.xml
+-	xmlto -m callouts.xsl man $<
++	xmlto --searchpath $(here-srcdir)/  -m callouts.xsl man $<
+ 
+ %.xml : %.txt
+-	asciidoc -b docbook -d manpage -f asciidoc.conf $<
++	asciidoc -b docbook -d manpage -f $(ASCIIDOC_CONF) $<
+ 
+ git.html: git.txt README
+ 
+ glossary.html : glossary.txt sort_glossary.pl
+ 	cat $< | \
+-	perl sort_glossary.pl | \
++	perl $(lastword $^) | \
+ 	asciidoc -b xhtml11 - > glossary.html
+ 
+-howto-index.txt: howto-index.sh $(wildcard howto/*.txt)
++howto-index.txt: howto-index.sh $(wildcard $(here-srcdir)/howto/*.txt)
+ 	rm -f $@+ $@
+-	sh ./howto-index.sh $(wildcard howto/*.txt) >$@+
++	sh $^ >$@+
+ 	mv $@+ $@
+ 
+ $(patsubst %,%.html,$(ARTICLES)) : %.html : %.txt
+-	asciidoc -b xhtml11 $*.txt
++	asciidoc -b xhtml11 $<
+ 
+ WEBDOC_DEST = /pub/software/scm/git/docs
+ 
+-$(patsubst %.txt,%.html,$(wildcard howto/*.txt)): %.html : %.txt
++$(patsubst %.txt,%.html,$(wildcard $(here-srcdir)/howto/*.txt)): %.html : %.txt
+ 	rm -f $@+ $@
+ 	sed -e '1,/^$$/d' $< | asciidoc -b xhtml11 - >$@+
+ 	mv $@+ $@
+ 
+ install-webdoc : html
+-	sh ./install-webdoc.sh $(WEBDOC_DEST)
++	sh $(here-srcdir)/install-webdoc.sh $(WEBDOC_DEST)
+diff --git a/INSTALL b/INSTALL
+index 8f69039..b1355fa 100644
+--- a/INSTALL
++++ b/INSTALL
+@@ -21,6 +21,13 @@ set up install paths (via config.mak.aut
+ 	$ make all doc ;# as yourself
+ 	# make install install-doc ;# as root
+ 
++When using configure, git may be built in a separate directory. Use
++
++	$ mkdir builddir
++	$ cd builddir
++	$ GIT-SOURCE-DIR/configure [options]
++	$ make
++	# make install                          
+ 
+ Issues of note:
+ 
+diff --git a/Makefile b/Makefile
+index a1861de..8e6ec62 100644
+--- a/Makefile
++++ b/Makefile
+@@ -97,7 +97,7 @@ # MakeMaker (e.g. using ActiveState unde
+ #
+ 
+ GIT-VERSION-FILE: .FORCE-GIT-VERSION-FILE
+-	@$(SHELL_PATH) ./GIT-VERSION-GEN
++	@$(SHELL_PATH) $(srcdir)/GIT-VERSION-GEN
+ -include GIT-VERSION-FILE
+ 
+ uname_S := $(shell sh -c 'uname -s 2>/dev/null || echo not')
+@@ -110,15 +110,20 @@ # CFLAGS and LDFLAGS are for the users t
+ 
+ CFLAGS = -g -O2 -Wall
+ LDFLAGS =
+-ALL_CFLAGS = $(CFLAGS)
++ALL_CFLAGS = $(CFLAGS) -I.
+ ALL_LDFLAGS = $(LDFLAGS)
+ STRIP ?= strip
+ 
+ prefix = $(HOME)
+ bindir = $(prefix)/bin
+ gitexecdir = $(bindir)
+-template_dir = $(prefix)/share/git-core/templates/
+-# DESTDIR=
++datadir = $(prefix)/share
++GIT_datadir = $(datadir)/git-core
++template_dir = $(GIT_datadir)/templates/
++srcdir = .
++
++# this is usually set on the make command line.
++DESTDIR=
+ 
+ # default configuration for gitweb
+ GITWEB_CONFIG = gitweb_config.perl
+@@ -595,8 +600,8 @@ git-merge-recur$X: git-merge-recursive$X
+ $(BUILT_INS): git$X
+ 	rm -f $@ && ln git$X $@
+ 
+-common-cmds.h: Documentation/git-*.txt
+-	./generate-cmdlist.sh > $@+
++common-cmds.h: $(wildcard $(srcdir)/Documentation/git-*.txt)
++	$(srcdir)/generate-cmdlist.sh $(srcdir)/Documentation/ > $@+
+ 	mv $@+ $@
+ 
+ $(patsubst %.sh,%,$(SCRIPT_SH)) : % : %.sh
+@@ -605,7 +610,7 @@ common-cmds.h: Documentation/git-*.txt
+ 	    -e 's|@@PERL@@|$(PERL_PATH_SQ)|g' \
+ 	    -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
+ 	    -e 's/@@NO_CURL@@/$(NO_CURL)/g' \
+-	    $@.sh >$@+
++	    $^ >$@+
+ 	chmod +x $@+
+ 	mv $@+ $@
+ 
+@@ -626,7 +631,7 @@ perl/perl.mak: GIT-CFLAGS
+ 	    -e '}' \
+ 	    -e 's|@@INSTLIBDIR@@|'"$$INSTLIBDIR"'|g' \
+ 	    -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
+-	    $@.perl >$@+
++	    $^ >$@+
+ 	chmod +x $@+
+ 	mv $@+ $@
+ 
+@@ -670,7 +675,7 @@ git-instaweb: git-instaweb.sh gitweb/git
+ 	    -e '/@@GITWEB_CGI@@/d' \
+ 	    -e '/@@GITWEB_CSS@@/r gitweb/gitweb.css' \
+ 	    -e '/@@GITWEB_CSS@@/d' \
+-	    $@.sh > $@+
++	    $< > $@+
+ 	chmod +x $@+
+ 	mv $@+ $@
+ 
+diff --git a/config.mak.in b/config.mak.in
+index 9a57840..bfbbf46 100644
+--- a/config.mak.in
++++ b/config.mak.in
+@@ -10,17 +10,16 @@ #INSTALL = @INSTALL@		# needs install-sh
+ prefix = @prefix@
+ exec_prefix = @exec_prefix@
+ bindir = @bindir@
+-#gitexecdir = @libexecdir@/git-core/
++mandir=@mandir@
++
++## unused, but necessary for some autoconf versions (?)
+ datarootdir = @datarootdir@
+-template_dir = @datadir@/git-core/templates/
+ 
+-mandir=@mandir@
+ 
+ srcdir = @srcdir@
+-VPATH = @srcdir@
+ 
+ export exec_prefix mandir
+-export srcdir VPATH
++export srcdir 
+ 
+ NEEDS_SSL_WITH_CRYPTO=@NEEDS_SSL_WITH_CRYPTO@
+ NO_OPENSSL=@NO_OPENSSL@
+diff --git a/configure.ac b/configure.ac
+index 34e3478..403c410 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -5,6 +5,7 @@ AC_PREREQ(2.59)
+ AC_INIT([git], [@@GIT_VERSION@@], [git@vger.kernel.org])
+ 
+ AC_CONFIG_SRCDIR([git.c])
++srcdir=`cd $srcdir && pwd`
+ 
+ config_file=config.mak.autogen
+ config_append=config.mak.append
+@@ -334,6 +335,39 @@ ## Output files
+ AC_CONFIG_FILES(["${config_file}":"${config_in}":"${config_append}"])
+ AC_OUTPUT
+ 
++if test "$srcdir" != "."; then
++
++  ## if we're building in another directory
++  ## we need to set it up like the sourcedir
++  for d in `cd $srcdir &&  find . -type d -print | grep -v '\.git'` ;
++  do
++    if test ! -d  $d ; then
++      echo creating $d 
++      mkdir $d
++    fi
++
++    if test -f $srcdir/$d/Makefile ; then
++
++      dnl [[]] is to keep m4 happy
++      depth=`echo $d/ | sed -e 's!^\./!!g' -e 's![[^/]]*/!../!g'`
++      echo creating $d/Makefile
++
++      if test "$depth"  = "";  then
++        INCLUDE_AUTOGEN="include config.mak.autogen" ;
++      else
++        INCLUDE_AUTOGEN="srcdir=$srcdir" 
++      fi
++ 
++      cat << EOF > $d/Makefile
++$INCLUDE_AUTOGEN
++VPATH = $srcdir/$d
++export VPATH
++include $srcdir/$d/Makefile
++EOF
++
++    fi 
++  done
++fi
+ 
+ ## Cleanup
+ rm -f "${config_append}"
+diff --git a/generate-cmdlist.sh b/generate-cmdlist.sh
+index 5450918..e744fbb 100755
+--- a/generate-cmdlist.sh
++++ b/generate-cmdlist.sh
+@@ -47,6 +47,6 @@ do
+             x
+             s/.*git-'"$cmd"' - \(.*\)/  {"'"$cmd"'", "\1"},/
+ 	    p
+-     }' "Documentation/git-$cmd.txt"
++     }' "$1/git-$cmd.txt"
+ done
+ echo "};"
+diff --git a/perl/Makefile b/perl/Makefile
+index 099beda..ae61cf6 100644
+--- a/perl/Makefile
++++ b/perl/Makefile
+@@ -28,6 +28,10 @@ instdir_SQ = $(subst ','\'',$(prefix)/li
+ 	echo instlibdir: >> $@
+ 	echo '	echo $(instdir_SQ)' >> $@
+ else
++
++PERL_SRCDIR=$(srcdir)/perl
++export PERL_SRCDIR
++
+ $(makfile): Makefile.PL ../GIT-CFLAGS
+ 	'$(PERL_PATH_SQ)' $< PREFIX='$(prefix_SQ)'
+ endif
+diff --git a/perl/Makefile.PL b/perl/Makefile.PL
+index 4168775..c136231 100644
+--- a/perl/Makefile.PL
++++ b/perl/Makefile.PL
+@@ -8,21 +8,31 @@ instlibdir:
+ MAKE_FRAG
+ }
+ 
+-my %pm = ('Git.pm' => '$(INST_LIBDIR)/Git.pm');
++
++$src_prefix = "";
++if (defined ($ENV{PERL_SRCDIR})) {
++    $src_prefix = "$ENV{PERL_SRCDIR}/"
++}
++
++
++my %pm = ("$src_prefix/Git.pm" => '$(INST_LIBDIR)/Git.pm');
++
++
+ 
+ # We come with our own bundled Error.pm. It's not in the set of default
+ # Perl modules so install it if it's not available on the system yet.
+ eval { require Error };
+ if ($@) {
+-	$pm{'private-Error.pm'} = '$(INST_LIBDIR)/Error.pm';
++	$pm{"$src_prefix/private-Error.pm"} = '$(INST_LIBDIR)/Error.pm';
+ }
+ 
+ my %extra;
+ $extra{DESTDIR} = $ENV{DESTDIR} if $ENV{DESTDIR};
+ 
++
+ WriteMakefile(
+ 	NAME            => 'Git',
+-	VERSION_FROM    => 'Git.pm',
++	VERSION_FROM    => "$src_prefix/Git.pm",
+ 	PM		=> \%pm,
+ 	MAKEFILE	=> 'perl.mak',
+ 	%extra
+ 
+ 
 -- 
+ Han-Wen Nienhuys - hanwen@xs4all.nl - http://www.xs4all.nl/~hanwen
