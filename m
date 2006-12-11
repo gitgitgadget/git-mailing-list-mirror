@@ -1,231 +1,189 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: What's cooking in git.git (topics)
-Date: Sat, 16 Dec 2006 15:10:53 -0800
-Message-ID: <7vodq3a136.fsf@assigned-by-dhcp.cox.net>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: [PATCH] Colourise git-branch output
+Date: Mon, 11 Dec 2006 22:10:08 +0000
+Message-ID: <200612112210.08327.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sat, 16 Dec 2006 23:11:48 +0000 (UTC)
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Mon, 11 Dec 2006 22:13:17 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:date:subject:to:x-tuid:x-uid:x-length:mime-version:content-transfer-encoding:content-disposition:message-id;
+        b=bRxlgcpRxfgheWrCXNqWItJZC0j6hqivzRMee2akIIt6DuLobo+5/FjryGAeEEarZJME48CQEqsoK8KzZHQR1JoEXwwzXxq+SJsteqjvJ8Dqca26TO4y5RLp8Qq81DNHRXd281YeBwun6T1gAcxDA39rkW0ThsZKf/P4ouywhzk=
+X-TUID: 78035e8f31c2b6ef
+X-UID: 183
+X-Length: 4112
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34653>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34041>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gvih0-0008Q9-Cz for gcvg-git@gmane.org; Sun, 17 Dec
- 2006 00:11:46 +0100
+ esmtp (Exim 4.50) id 1GttOY-0008V0-1l for gcvg-git@gmane.org; Mon, 11 Dec
+ 2006 23:13:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1422768AbWLPXK4 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 16 Dec 2006
- 18:10:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422712AbWLPXK4
- (ORCPT <rfc822;git-outgoing>); Sat, 16 Dec 2006 18:10:56 -0500
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:59406 "EHLO
- fed1rmmtao02.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1422768AbWLPXKz (ORCPT <rfc822;git@vger.kernel.org>); Sat, 16 Dec 2006
- 18:10:55 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao02.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061216231054.QFQO97.fed1rmmtao02.cox.net@fed1rmimpo02.cox.net>; Sat, 16
- Dec 2006 18:10:54 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id zbB51V00x1kojtg0000000; Sat, 16 Dec 2006
- 18:11:06 -0500
+ S1763156AbWLKWNG (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 11 Dec 2006
+ 17:13:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763157AbWLKWNG
+ (ORCPT <rfc822;git-outgoing>); Mon, 11 Dec 2006 17:13:06 -0500
+Received: from ug-out-1314.google.com ([66.249.92.171]:10703 "EHLO
+ ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1763156AbWLKWND (ORCPT <rfc822;git@vger.kernel.org>); Mon, 11 Dec
+ 2006 17:13:03 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so1470386uga for
+ <git@vger.kernel.org>; Mon, 11 Dec 2006 14:13:02 -0800 (PST)
+Received: by 10.78.185.16 with SMTP id i16mr3534270huf.1165875181840; Mon, 11
+ Dec 2006 14:13:01 -0800 (PST)
+Received: from grissom.internal.parkins.org.uk ( [84.201.153.164]) by
+ mx.google.com with ESMTP id 18sm3243783hue.2006.12.11.14.13.00; Mon, 11 Dec
+ 2006 14:13:00 -0800 (PST)
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Things that I feel should be done need to be done to complete
-v1.5.0 are:
+I wanted to have a visual indication of which branches are local and which are
+remote in git-branch -a output; however Junio was concerned that someone might
+be using the output in a script.  This patch addresses the problem by colouring
+the git-branch output - which in "auto" mode won't be activated.
 
- - 'git-rm' needs to be fixed up as Linus outlined; remove
-   working tree file and index entry but have a sanity check to
-   make sure the working tree file match the index and HEAD.
+I've based it off the colouring code for builtin-diff.c; which means there is a
+branch.color configuration variable that needs setting to something before the
+color will appear.
 
- - tutorials and other Porcelain documentation pages need to be
-   updated to match the updated 'git-add' and 'git-rm' (to be
-   updated), and their description should be made much less
-   about implementation; they should talk in terms of end-user
-   workflows.
+This patch chooses green for local, red for remote and bold green for current.
 
-   We need a full sweep on Porcelain-ish documentation.
+As yet, there is no support for changing the colors using the config file; but
+it wouldn't be hard to add.
 
- - now reflog is enabled by default for user repositories, I
-   have two worries about its effect, fortunately can be killed
-   with a single stone.
+Signed-off-by: Andy Parkins <andyparkins@gmail.com>
+---
+I know Junio isn't keen on adding colour all over the place in git; but I
+think it's appropriate here.  When running in "git-branch -a" mode (or even
+"git-branch -r" mode for that matter), because the "refs/remotes" prefix is
+stripped from the branch name, there is no way to distinguish between local
+and remote branches.  Colouring them makes it easy to see which is which,
+but more importantly doesn't break any scripts because the colour would be
+automatically disabled.
 
-   * the reflog grows unbounded;
+ builtin-branch.c |   64 +++++++++++++++++++++++++++++++++++++++++++++++++----
+ 1 files changed, 59 insertions(+), 5 deletions(-)
 
-   * revisions recorded in the reflog can be pruned out,
-     rendering some entries in reflog useless.
-
-   I am thinking about teaching fsck-objects and prune to keep
-   revisions recorded in the reflog; we would need an end-user
-   way to prune older reflog entries and I would appreciate
-   somebody codes it up, but even without it, people can always
-   use "vi" or "ed" on reflog files ;-).
-
- - 'git-add' might want to do 'update-index --replace'; probably
-   needs a sanity-checking discussion before implementing it.
-
- - 'git-svn' users should speak out about two issues:
-
-   * use of svn command line client as the backend is being
-     removed;
-
-   * 'git-svn commit' command is being renamed to avoid
-     confusion, and potentially 'dcommit' will be renamed to 
-     'commit'.
-
-   Please discuss these with Eric.
-
- - we might want to address the issue that 'git-status' output
-   does not make it easy to tell mode changes from content
-   changes.  Personally I do not like cryptic "M+" output format
-   proposed by Lars and find the current output more readable.
-
-----------------------------------------------------------------
-As usual, '+' are both in 'next' and 'pu', '-' are in 'pu' only.
-
-*  jn/web (Sat Dec 16 17:12:55 2006 +0100) 9 commits
- - gitweb: Add some mod_perl specific support
- + gitweb: Add "next" link to commit view
- + gitweb: Add title attribute to ref marker with full ref name
- + gitweb: Do not show difftree for merges in "commit" view
- + gitweb: SHA-1 in commit log message links to "object" view
- + gitweb: Hyperlink target of symbolic link in "tree" view (if
-   possible)
- + gitweb: Add generic git_object subroutine to display object of any
-   type
- + gitweb: Show target of symbolic link in "tree" view
- + gitweb: Don't use Content-Encoding: header in git_snapshot
-
-All except the tip (mod_perl) looked good and should be in
-v1.5.0; I haven't formed an opinion on mod_perl change yet.
-
-*  js/branch-config (Sat Dec 16 15:15:02 2006 +0100) 2 commits
- + git-branch: rename config vars branch.<branch>.*, too
- + add a function to rename sections in the config
-
-This moves branch.$foo.* variables to branch.$bar.* when $foo
-branch is renamed to $bar.  Because we already have branch -m
-(stands for "mv"), this series is a must-have in v1.5.0.
-
-*  jc/clone (Sat Dec 16 01:53:10 2006 -0800) 4 commits
- + git-clone: lose the traditional 'no-separate-remote' layout
- + git-clone: lose the artificial "first" fetch refspec
- + git-pull: refuse default merge without branch.*.merge
- + git-clone: use wildcard specification for tracking branches
-
-Fixes the workflow wart and removes the traditional layout that
-maps remote 'master' to refs/heads/origin.  Also 'git pull' and
-'git pull origin' would not merge the ref on the first Pull:
-line (nor remote.*.fetch item) anymore.  You either have to give
-an explicit command line parameter or branch.$currbranch.merge
-item.  With blessing from Linus, this will be in v1.5.0.
-
-*  ew/svn-pm (Fri Dec 15 23:58:08 2006 -0800) 3 commits
- + git-svn: rename 'commit' command to 'set-tree'
- + git-svn: remove support for the svn command-line client
- + git-svn: convert to using Git.pm
-
-It is in 'next' because I agree it is in the right direction in
-the longer term, but not in 'master' because this might be
-controvertial for shorter term.  The users should decide.
-
-** jc/reflog (Thu Dec 14 15:58:56 2006 -0800) 1 commit
- - Teach show-branch how to show ref-log data.
-
-A strawman to make reflog data a bit more browsable; it would be
-useful while recovering from a mistake you made recently.  Not
-essential and can wait or be dropped if people do not find it
-useful.
-
-** jc/git-add--interactive (Mon Dec 11 17:09:26 2006 -0800) 2 commits
- - git-add --interactive: hunk splitting
- - git-add --interactive
-
-I've thought about further allowing to edit the patches in the
-'patch' subcommand, but the more I think about it, the less it
-makes sense from the workflow point of view.  Will be the topic
-for a separate message.
-
-** sv/git-svn (Tue Dec 5 16:17:38 2006 +1100) 5 commits
- . git-svn: re-map repository URLs and UUIDs on SVK mirror paths
- . git-svn: collect revision properties when fetching
- . git-svn: collect SVK source URL on mirror paths
- . git-svn: let libsvn_ls_fullurl return properties too
- . git-svn: make test for SVK mirror path import
-
-Still held but dropped from 'pu' for now (depends on "sub sys"
-that was removed from git-svn).
-
-** jc/explain (Mon Dec 4 19:35:04 2006 -0800) 1 commit
- - git-explain
-
-Backburnered.
-
-*  jc/blame-boundary (Fri Dec 1 20:45:45 2006 -0800) 1 commit
- + git-blame: show lines attributed to boundary commits differently.
-
-Will merge.
-
-*  jc/3way (Wed Nov 29 18:53:13 2006 -0800) 1 commit
- + git-merge: preserve and merge local changes when doing fast
-   forward
-
-Will merge, if only to see what breaks.
-
-*  js/shallow (Fri Nov 24 16:00:13 2006 +0100) 15 commits
- + fetch-pack: Do not fetch tags for shallow clones.
- + get_shallow_commits: Avoid memory leak if a commit has been
-   reached already.
- + git-fetch: Reset shallow_depth before auto-following tags.
- + upload-pack: Check for NOT_SHALLOW flag before sending a shallow
-   to the client.
- + fetch-pack: Properly remove the shallow file when it becomes
-   empty.
- + shallow clone: unparse and reparse an unshallowed commit
- + Why didn't we mark want_obj as ~UNINTERESTING in the old code?
- + Why does it mean we do not have to register shallow if we have
-   one?
- + We should make sure that the protocol is still extensible.
- + add tests for shallow stuff
- + Shallow clone: do not ignore shallowness when following tags
- + allow deepening of a shallow repository
- + allow cloning a repository "shallowly"
- + support fetching into a shallow repository
- + upload-pack: no longer call rev-list
-
-Undecided but not likely to be in v1.5.0.  Needs more real
-project testing.
-
-** jc/web (Wed Nov 8 14:54:09 2006 -0800) 1 commit
- - gitweb: steal loadavg throttle from kernel.org
-
-Undecided.
-
-** jc/pickaxe (Sun Nov 5 11:52:43 2006 -0800) 1 commit
- - blame: --show-stats for easier optimization work.
-
-Developer only.
-
-** jc/leftright (Sun Oct 22 17:32:47 2006 -0700) 1 commit
- - rev-list --left-right
-
-Backburnered.
-
-** jc/diff (Mon Sep 25 23:03:34 2006 -0700) 1 commit
- - para-walk: walk n trees, index and working tree in parallel
-
-Backburnered.
-
-*  jc/diff-apply-patch (Fri Sep 22 16:17:58 2006 -0700) 1 commit
- + git-diff/git-apply: make diff output a bit friendlier to GNU patch
-   (part 2)
-
-Not in v1.5.0.
+diff --git a/builtin-branch.c b/builtin-branch.c
+index 3d5cb0e..1c1fa8f 100644
+--- a/builtin-branch.c
++++ b/builtin-branch.c
+@@ -5,6 +5,7 @@
+  * Based on git-branch.sh by Junio C Hamano.
+  */
+ 
++#include "color.h"
+ #include "cache.h"
+ #include "refs.h"
+ #include "commit.h"
+@@ -17,6 +18,38 @@ static const char builtin_branch_usage[] =
+ static const char *head;
+ static unsigned char head_sha1[20];
+ 
++static int branch_use_color;
++static char branch_colors[][COLOR_MAXLEN] = {
++	"\033[m",	/* reset */
++	"",		/* PLAIN (normal) */
++	"\033[31m",	/* REMOTE (red) */
++	"\033[32m",	/* LOCAL (green) */
++	"\033[1;32m",	/* CURRENT (boldgreen) */
++};
++enum color_branch {
++	COLOR_BRANCH_RESET = 0,
++	COLOR_BRANCH_PLAIN = 1,
++	COLOR_BRANCH_REMOTE = 2,
++	COLOR_BRANCH_LOCAL = 3,
++	COLOR_BRANCH_CURRENT = 4,
++};
++
++int git_branch_config(const char *var, const char *value)
++{
++	if (!strcmp(var, "branch.color")) {
++		branch_use_color = git_config_colorbool(var, value);
++		return 0;
++	}
++	return git_default_config(var, value);
++}
++
++const char *branch_get_color(enum color_branch ix)
++{
++	if (branch_use_color)
++		return branch_colors[ix];
++	return "";
++}
++
+ static int in_merge_bases(const unsigned char *sha1,
+ 			  struct commit *rev1,
+ 			  struct commit *rev2)
+@@ -183,6 +216,7 @@ static void print_ref_list(int kinds, int verbose, int abbrev)
+ 	int i;
+ 	char c;
+ 	struct ref_list ref_list;
++	int color;
+ 
+ 	memset(&ref_list, 0, sizeof(ref_list));
+ 	ref_list.kinds = kinds;
+@@ -191,18 +225,38 @@ static void print_ref_list(int kinds, int verbose, int abbrev)
+ 	qsort(ref_list.list, ref_list.index, sizeof(struct ref_item), ref_cmp);
+ 
+ 	for (i = 0; i < ref_list.index; i++) {
++		switch( ref_list.list[i].kind ) {
++			case REF_LOCAL_BRANCH:
++				color = COLOR_BRANCH_LOCAL;
++				break;
++			case REF_REMOTE_BRANCH:
++				color = COLOR_BRANCH_REMOTE;
++				break;
++			default:
++				color = COLOR_BRANCH_PLAIN;
++				break;
++		}
++
+ 		c = ' ';
+ 		if (ref_list.list[i].kind == REF_LOCAL_BRANCH &&
+-				!strcmp(ref_list.list[i].name, head))
++				!strcmp(ref_list.list[i].name, head)) {
+ 			c = '*';
++			color = COLOR_BRANCH_CURRENT;
++		}
+ 
+ 		if (verbose) {
+-			printf("%c %-*s", c, ref_list.maxwidth,
+-			       ref_list.list[i].name);
++			printf("%c %s%-*s%s", c,
++					branch_get_color(color),
++					ref_list.maxwidth,
++					ref_list.list[i].name,
++					branch_get_color(COLOR_BRANCH_RESET));
+ 			print_ref_info(ref_list.list[i].sha1, abbrev);
+ 		}
+ 		else
+-			printf("%c %s\n", c, ref_list.list[i].name);
++			printf("%c %s%s%s\n", c,
++					branch_get_color(color),
++					ref_list.list[i].name,
++					branch_get_color(COLOR_BRANCH_RESET));
+ 	}
+ 
+ 	free_ref_list(&ref_list);
+@@ -253,7 +307,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 	int kinds = REF_LOCAL_BRANCH;
+ 	int i;
+ 
+-	git_config(git_default_config);
++	git_config(git_branch_config);
+ 
+ 	for (i = 1; i < argc; i++) {
+ 		const char *arg = argv[i];
+-- 
+1.4.4.1.geeee8
