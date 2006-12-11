@@ -1,75 +1,68 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Han-Wen Nienhuys <hanwen@xs4all.nl>
-Subject: doc bug?
-Date: Fri, 08 Dec 2006 18:07:43 +0100
-Message-ID: <elc64k$t4i$1@sea.gmane.org>
-Reply-To: hanwen@xs4all.nl
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [ANNOUNCE] CGit v0.1-pre
+Date: Mon, 11 Dec 2006 01:08:50 +0100
+Organization: At home
+Message-ID: <eli7e3$srp$1@sea.gmane.org>
+References: <8c5c35580612101542n72d300c7o106e53e219670510@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Fri, 8 Dec 2006 17:08:45 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+NNTP-Posting-Date: Mon, 11 Dec 2006 00:07:00 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 28
+Original-Lines: 18
 Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: muurbloem.xs4all.nl
-User-Agent: Thunderbird 1.5.0.8 (X11/20061107)
+X-Gmane-NNTP-Posting-Host: host-81-190-25-107.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33707>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33966>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GsjCy-00052T-KS for gcvg-git@gmane.org; Fri, 08 Dec
- 2006 18:08:24 +0100
+ esmtp (Exim 4.50) id 1GtYh6-0003UN-S6 for gcvg-git@gmane.org; Mon, 11 Dec
+ 2006 01:06:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1425948AbWLHRID (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
- 12:08:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1425923AbWLHRIB
- (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 12:08:01 -0500
-Received: from main.gmane.org ([80.91.229.2]:59948 "EHLO ciao.gmane.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1426022AbWLHRH7
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Dec 2006 12:07:59 -0500
+ S1760455AbWLKAGx (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 10 Dec 2006
+ 19:06:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760473AbWLKAGx
+ (ORCPT <rfc822;git-outgoing>); Sun, 10 Dec 2006 19:06:53 -0500
+Received: from main.gmane.org ([80.91.229.2]:44986 "EHLO ciao.gmane.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1757046AbWLKAGw
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 10 Dec 2006 19:06:52 -0500
 Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1GsjCP-0007nI-At for git@vger.kernel.org; Fri, 08 Dec 2006 18:07:49 +0100
-Received: from muurbloem.xs4all.nl ([213.84.26.127]) by main.gmane.org with
- esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>;
- Fri, 08 Dec 2006 18:07:49 +0100
-Received: from hanwen by muurbloem.xs4all.nl with local (Gmexim 0.1 (Debian))
- id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Fri, 08 Dec 2006 18:07:49
- +0100
+ 1GtYgw-0007Rv-Lf for git@vger.kernel.org; Mon, 11 Dec 2006 01:06:46 +0100
+Received: from host-81-190-25-107.torun.mm.pl ([81.190.25.107]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Mon, 11 Dec 2006 01:06:46 +0100
+Received: from jnareb by host-81-190-25-107.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Mon, 11 Dec 2006
+ 01:06:46 +0100
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
+Lars Hjemli wrote:
 
-Hi,
+> CGit is another cgi-app for git.
 
-while messing with GIT's build system, I got
+I have added this to GitWiki: check out
+  http://git.or.cz/gitwiki/InterfacesFrontendsAndTools#cgit
 
-**
-asciidoc -b docbook -d manpage -f ../Documentation/asciidoc.conf ../Documentation/git-tools.txt
-ERROR: git-tools.txt: line 2: malformed manpage title
-ERROR: git-tools.txt: line 6: first section must be named NAME
-ERROR: git-tools.txt: line 9: malformed NAME section body
-FAILED: /home/lilydev/vc/git/Documentation/git-tools.txt: line 9: unexpected error:
-------------------------------------------------------------
-Traceback (most recent call last):
-  File "/usr/bin/asciidoc", line 3639, in asciidoc
-    document.translate()
-  File "/usr/bin/asciidoc", line 966, in translate
-    Header.translate()
-  File "/usr/bin/asciidoc", line 1123, in translate
-    attrs['manname'] = string.strip(mo.group('manname'))
-AttributeError: 'NoneType' object has no attribute 'group'
-------------------------------------------------------------
-**
+Hmmm... git has now 4 web interfaces (5 if counting gittracker, which works
+but gittracker repository shows empty): gitweb in Perl, git-php in PHP, wit
+in Python (is it actively developed? where it can be downloaded from?),
+gitarella in Ruby, now CGit in C...
 
-is this a new problem?  I'm on FC6, with  asciidoc 7.0.2
-
-
+By the way, it is cgit, CGit or CGIt ;-p?
 -- 
- Han-Wen Nienhuys - hanwen@xs4all.nl - http://www.xs4all.nl/~hanwen
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
+
