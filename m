@@ -1,65 +1,83 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: Move git_get_last_activity subroutine earlier
-Date: Sat, 28 Oct 2006 21:20:46 +0200
-Organization: At home
-Message-ID: <ei0ags$l1l$1@sea.gmane.org>
-References: <200610281943.40456.jnareb@gmail.com> <7vvem48dsr.fsf@assigned-by-dhcp.cox.net>
+From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+Subject: Re: Tracking a repository for content instead of history
+Date: Wed, 13 Dec 2006 04:46:10 +0700
+Message-ID: <fcaeb9bf0612121346s3c82bcdbh522c17f4ae9f279b@mail.gmail.com>
+References: <200612121235.09984.andyparkins@gmail.com>
+	 <200612121326.24508.andyparkins@gmail.com>
+	 <Pine.LNX.4.63.0612121527070.2807@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <200612121538.41197.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-NNTP-Posting-Date: Sat, 28 Oct 2006 19:20:34 +0000 (UTC)
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Tue, 12 Dec 2006 21:46:23 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 15
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-18-116.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=dxm7vzTbigJmVr0+gPdxt0O/oqsaY9O7qfkvji5KYqx9ZN0YpNq0mpWtsDojipCi9l3jR+O4EGiNQDzSdRoRbhLJGNEBzcM/XfNS+to4vNddd7PfQCtRUCosb2hcpL99UhLVE/Iit4rX9y18puhnBNh3uLFUN2eoUHnIrtXfU8E=
+In-Reply-To: <200612121538.41197.andyparkins@gmail.com>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30391>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GdtjE-0007Al-6V for gcvg-git@gmane.org; Sat, 28 Oct
- 2006 21:20:24 +0200
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34147>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GuFS4-0006Az-Aa for gcvg-git@gmane.org; Tue, 12 Dec
+ 2006 22:46:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S964833AbWJ1TUU (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 28 Oct 2006
- 15:20:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964857AbWJ1TUU
- (ORCPT <rfc822;git-outgoing>); Sat, 28 Oct 2006 15:20:20 -0400
-Received: from main.gmane.org ([80.91.229.2]:63706 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S964833AbWJ1TUS (ORCPT
- <rfc822;git@vger.kernel.org>); Sat, 28 Oct 2006 15:20:18 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1Gdtj1-00078T-43 for git@vger.kernel.org; Sat, 28 Oct 2006 21:20:11 +0200
-Received: from host-81-190-18-116.torun.mm.pl ([81.190.18.116]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Sat, 28 Oct 2006 21:20:11 +0200
-Received: from jnareb by host-81-190-18-116.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Sat, 28 Oct 2006
- 21:20:11 +0200
-To: git@vger.kernel.org
+ S932442AbWLLVqN (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 12 Dec 2006
+ 16:46:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932445AbWLLVqN
+ (ORCPT <rfc822;git-outgoing>); Tue, 12 Dec 2006 16:46:13 -0500
+Received: from an-out-0708.google.com ([209.85.132.243]:17857 "EHLO
+ an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S932442AbWLLVqM (ORCPT <rfc822;git@vger.kernel.org>); Tue, 12 Dec
+ 2006 16:46:12 -0500
+Received: by an-out-0708.google.com with SMTP id b33so465067ana for
+ <git@vger.kernel.org>; Tue, 12 Dec 2006 13:46:12 -0800 (PST)
+Received: by 10.78.158.11 with SMTP id g11mr37812hue.1165959970942; Tue, 12
+ Dec 2006 13:46:10 -0800 (PST)
+Received: by 10.78.100.8 with HTTP; Tue, 12 Dec 2006 13:46:10 -0800 (PST)
+To: "Andy Parkins" <andyparkins@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano wrote:
+On 12/12/06, Andy Parkins <andyparkins@gmail.com> wrote:
+> I suppose so; but I was thinking more an automated way of getting the data
+> that is supplied for the kernel anyway.  So:
+>
+> base-v1.0.0.tar.gz
+> patch-v1.0.1.gz
+> patch-v1.0.2.gz
+> etc
+>
+> Each patch is obviously smaller than "base".  Git could easily make the
+> patches, and each of those patches could be fed by hand into a repository
+> with git-apply.  It doesn't seem like something that would require support on
+> the other side, because it isn't so much a shallow clone (which /would/
+> preserve history, making it available if wanted); it is pulling just, say,
+> tagged commits out of an existing repository.
+>
+> Given a list of tags it is almost:
+>
+> git-archive <get me base>
+> ssh remote git-diff v1.0.0..v1.0.1 | git-apply; git commit
+> ssh remote git-diff v1.0.1..v1.0.2 | git-apply; git commit
+>
+> If that makes sense?  Obviously though it would be possible to use git rather
+> than ssh to do this.
 
-> Why is this needed?
- 
-This is purely cosmetic, and originally was to be first patch in series
-converting git_summary, git_heads and git_tags to use of git-for-each-ref...
-but unfortunately git-for-each-ref lacks sorting on taggerdate OR
-committerdate (i.e. use taggerdate if applicable, committerdate otherwise).
-
-I'd rather not have git_get_last_activity between two parse_* subroutines...
+Hm.. I'm no git:// expert. But is it possible doing as follow?
+1. git-archive <base>
+2. reconstruct commit, blobs and trees from the archive
+3. tell git server that you have one commit, you need another commit
+(maybe heads only, i'm not sure here)
+4. get the pack from git server, create new commit and a diff
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
-
