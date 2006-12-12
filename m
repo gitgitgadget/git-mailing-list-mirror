@@ -1,77 +1,69 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: changing log entries
-Date: Wed, 13 Dec 2006 18:24:52 -0500
-Message-ID: <20061213232452.GE32568@spearce.org>
-References: <1166051281.1808.1.camel@jcm.boston.redhat.com>
+From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+Subject: index manipulation quickref
+Date: Tue, 12 Dec 2006 17:57:17 +0700
+Message-ID: <fcaeb9bf0612120257p35dc9483ob65eea9ae21b5f7b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 13 Dec 2006 23:25:05 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Tue, 12 Dec 2006 10:57:25 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=SEZ4lsF0mkmHEEc9hjhTRw54ZPoh2OQDrA3KPa0lJUKizbDI9Ozs76AKfbWqOzivgoPKV0Rc8yuugzT9eXnOYpz/Mm7qnCOAo2W2QLSci37/9D9wEqElLZOh8saIiEONvs/o27tuk9kvPpeLQ0PwKGdVd6NYBkXl4AHSlfw0CkI=
 Content-Disposition: inline
-In-Reply-To: <1166051281.1808.1.camel@jcm.boston.redhat.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34254>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34078>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GudTA-0000hg-1K for gcvg-git@gmane.org; Thu, 14 Dec
- 2006 00:25:00 +0100
+ esmtp (Exim 4.50) id 1Gu5K6-0004tk-MK for gcvg-git@gmane.org; Tue, 12 Dec
+ 2006 11:57:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751740AbWLMXY5 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 13 Dec 2006
- 18:24:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751745AbWLMXY4
- (ORCPT <rfc822;git-outgoing>); Wed, 13 Dec 2006 18:24:56 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:39521 "EHLO
- corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1751740AbWLMXY4 (ORCPT <rfc822;git@vger.kernel.org>); Wed, 13 Dec 2006
- 18:24:56 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1GudSv-0000a5-3f; Wed, 13 Dec 2006 18:24:45 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- C17FA20FB6E; Wed, 13 Dec 2006 18:24:52 -0500 (EST)
-To: Jon Masters <jcm@redhat.com>
+ S932188AbWLLK5T (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 12 Dec 2006
+ 05:57:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932185AbWLLK5T
+ (ORCPT <rfc822;git-outgoing>); Tue, 12 Dec 2006 05:57:19 -0500
+Received: from ug-out-1314.google.com ([66.249.92.175]:55413 "EHLO
+ ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S932188AbWLLK5S (ORCPT <rfc822;git@vger.kernel.org>); Tue, 12 Dec
+ 2006 05:57:18 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so1625861uga for
+ <git@vger.kernel.org>; Tue, 12 Dec 2006 02:57:18 -0800 (PST)
+Received: by 10.78.201.15 with SMTP id y15mr3927483huf.1165921037937; Tue, 12
+ Dec 2006 02:57:17 -0800 (PST)
+Received: by 10.78.100.8 with HTTP; Tue, 12 Dec 2006 02:57:17 -0800 (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Jon Masters <jcm@redhat.com> wrote:
-> Hi,
-> 
-> So I figured out that the problem with "Can't lock ref" was down to not
-> having set one of the scripts executable on the http server. Great.
-> 
-> Anyway, now I would like to change an existing log entry to make it a
-> bit cleaner (read: add a first line that's under 80 characters). What's
-> the best way to change an existing log entry for a commit?
+Hi,
 
-If its the most recent commit on that branch, "git commit --amend".
+I'm trying to collect all operations related to index from user
+perspective and corresponding commands. The list may be put to git
+wiki if people think it can help newbies:
 
-Otherwise dump out the branch to patches with git format-patch,
-amend the commit in question, then replay the patches with git am.
+update file content to index: git update-index file
+add a file to index: git add file
+delete a file from index: git update-index --remove --force-remove (or
+remove that file in workdir and do git update-index --remove)
+read a tree to index: git read-tree treeish, git reset treeish
+read a file from a tree to index: git ls-tree treeish file|git
+update-index --index-info --stdin
+copy a file from index to workdir: git checkout-index file
+refresh index: git update-index --refresh
+copy entire index to workdir: git checkout-index
+output a file from index to stdout: ?? (is there a command for this?)
+list files in index: git ls-files
+compare index and workdir file listing: git ls-files (with lots of options here)
+diff between workdir and index: git diff
+diff between index and a tree: git diff --cached treeish
 
-Or use StGIT to uncommit the changes, pop them off, fix the commit,
-then repush the patches and recommit in StGIT.
-
-
-Note that any of the above methods change the SHA1 of that commit
-and every commit which follows it on that branch.  Consequently it
-is generally considered to be impolite to edit commits without
-warning which you have already published, as another person may be
-basing their own work off that commit.
-
+Am I missing any operation here?
 -- 
