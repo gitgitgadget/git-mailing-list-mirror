@@ -1,93 +1,96 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Cleaning up git user-interface warts
-Date: Thu, 16 Nov 2006 17:49:10 -0800
-Message-ID: <7vejs2zvu1.fsf@assigned-by-dhcp.cox.net>
-References: <87k61yt1x2.wl%cworth@cworth.org> <455A1137.8030301@shadowen.org>
-	<87hcx1u934.wl%cworth@cworth.org>
-	<Pine.LNX.4.64.0611141518590.2591@xanadu.home>
-	<87bqn9u43s.wl%cworth@cworth.org>
-	<7vr6w5y7to.fsf@assigned-by-dhcp.cox.net>
-	<20061116051240.GV7201@pasky.or.cz>
-	<7vr6w33vv3.fsf@assigned-by-dhcp.cox.net>
-	<20061116222008.GA7201@pasky.or.cz>
+From: "Aneesh Kumar" <aneesh.kumar@gmail.com>
+Subject: git-send-email and msmtp
+Date: Tue, 12 Dec 2006 21:07:45 +0530
+Message-ID: <cc723f590612120737t7d7e8dabs4e82ae2ac705e4e1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 17 Nov 2006 01:53:04 +0000 (UTC)
-Cc: Carl Worth <cworth@cworth.org>, git@vger.kernel.org,
-	Andy Whitcroft <apw@shadowen.org>, Nicolas Pitre <nico@cam.org>
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Tue, 12 Dec 2006 15:39:07 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061116222008.GA7201@pasky.or.cz> (Petr Baudis's message of
-	"Thu, 16 Nov 2006 23:20:08 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=cSNZvTZIVTshAdLtb4ikTPM5PRQXLS/i3nIObJX3Ky/xEuGnDI1GMywNbVTpDItQ6XZt884sQxBllnV5/DZsPATN88WhWPaPbHqvnWnRySHrmAADtw8j1FLR1g+PHJOP/ImARcGr1MPesOMZc+G8JDL3Jn51HRhwjJxvdmUNGEU=
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31659>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gksr2-00054k-Rb for gcvg-git@gmane.org; Fri, 17 Nov
- 2006 02:49:22 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34103>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gu9ih-0003uH-Ua for gcvg-git@gmane.org; Tue, 12 Dec
+ 2006 16:39:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1424691AbWKQBtR (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 16 Nov 2006
- 20:49:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1424892AbWKQBtR
- (ORCPT <rfc822;git-outgoing>); Thu, 16 Nov 2006 20:49:17 -0500
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:24568 "EHLO
- fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP id S1424691AbWKQBtR
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 16 Nov 2006 20:49:17 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao02.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061117014911.MXJL97.fed1rmmtao02.cox.net@fed1rmimpo02.cox.net>; Thu, 16
- Nov 2006 20:49:11 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id ndpH1V00b1kojtg0000000; Thu, 16 Nov 2006
- 20:49:18 -0500
-To: Petr Baudis <pasky@suse.cz>
+ S1751434AbWLLPht (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 12 Dec 2006
+ 10:37:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751435AbWLLPht
+ (ORCPT <rfc822;git-outgoing>); Tue, 12 Dec 2006 10:37:49 -0500
+Received: from nf-out-0910.google.com ([64.233.182.191]:55608 "EHLO
+ nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1751434AbWLLPhr (ORCPT <rfc822;git@vger.kernel.org>); Tue, 12 Dec
+ 2006 10:37:47 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so267182nfa for
+ <git@vger.kernel.org>; Tue, 12 Dec 2006 07:37:46 -0800 (PST)
+Received: by 10.48.230.20 with SMTP id c20mr1467197nfh.1165937865635; Tue, 12
+ Dec 2006 07:37:45 -0800 (PST)
+Received: by 10.48.212.18 with HTTP; Tue, 12 Dec 2006 07:37:45 -0800 (PST)
+To: "Git Mailing List" <git@vger.kernel.org>
 Sender: git-owner@vger.kernel.org
 
-Petr Baudis <pasky@suse.cz> writes:
+Hi,
 
-You already said this kind of details are subjective so I'd omit
-the usual "I would think" and answer them without worrying about
-a big style flamewar.  People, please be civil ;-).
+I am using msmtp to send email using git-send-email. The problem i am
+facing now is vger.kernel.org is dropping the mails generated by
+git-send-email. When i am sending the same patch as an attachment in
+thunderbird everything works fine. So i guess it is not the patch
+content that is getting filtered. Any idea how to find out what is
+causing the patch to get dropped and how to fix this.
 
-> What about [ instead of test?
+The header of the patch that was dropped is
 
-[ ] is not more readable.
+Return-Path: <aneesh.kumar@gmail.com>
+Received: from localhost ( [156.153.255.234])
+        by mx.google.com with ESMTP id q13sm7841591qbq.2006.12.12.00.56.10;
+        Tue, 12 Dec 2006 00:56:12 -0800 (PST)
+From: "Aneesh Kumar K.V" <aneesh.kumar@gmail.com>
+To: linux-kernel@vger.kernel.org
+Cc: trs80@ucc.gu.uwa.edu.au, Aneesh Kumar K.V <aneesh.kumar@gmail.com>
+Subject: [PATCH] Alpha increase PERCPU_ENOUGH_ROOM
+Date: Tue, 12 Dec 2006 14:26:06 +0530
+Message-Id: <11659137661938-git-send-email-aneesh.kumar@gmail.com>
+X-Mailer: git-send-email 1.4.4.2.gdb98-dirty
 
-> 	if foo; then
->
-> instead of
->
-> 	if foo
-> 	then
+Header of the patch that went through fine is below
 
-Having "then" on the beginning of line is much more readable.
+Return-Path: <aneesh.kumar@gmail.com>
+Received: from ?217.236.218.183? ( [156.153.255.234])
+        by mx.google.com with ESMTP id e18sm7940070qba.2006.12.12.01.29.53;
+        Tue, 12 Dec 2006 01:29:55 -0800 (PST)
+Message-ID: <457E768F.6050606@gmail.com>
+Date: Tue, 12 Dec 2006 14:59:51 +0530
+From: "Aneesh Kumar K.V" <aneesh.kumar@gmail.com>
+User-Agent: Thunderbird 1.5.0.8 (X11/20061115)
+MIME-Version: 1.0
+To:  linux-kernel@vger.kernel.org
+Subject: [PATCH] Alpha increase PERCPU_ENOUGH_ROOM
+Content-Type: multipart/mixed;
+ boundary="------------040307060102020004050000"
 
-> Am I the only one who hates
->
-> case "$log_given" in
-> tt*)
->         die "Only one of -c/-C/-F can be used." ;;
-> *tm*|*mt*)
->         die "Option -m cannot be combined with -c/-C/-F." ;;
-> esac
+This is a multi-part message in MIME format.
+--------------040307060102020004050000
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 
-This is much more readable without "case".  "abandon the old
-rule that told us to avoid if when case would do" applies.
-Although it is about multiple possibility switch (so a case can
-be made that "case" is appropriate here), we should reduce the
-use of "case" to cases like the outermost big "case" you find in
-git-merge-one-file-script.
 
-> It would be really great if Git would have something alike the Cogito's
-> optparse infrastructure. I'm not sure if you can implement it in Bourne
-> sh with reasonable performance, though...
-
-getopt(1) is fine, unless somebody screams that it is not
-available on his platform.
+--------------040307060102020004050000
+Content-Type: text/plain;
+ name="0002-Alpha-increase-PERCPU_ENOUGH_ROOM.txt"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline;
+ filename="0002-Alpha-increase-PERCPU_ENOUGH_ROOM.txt"
