@@ -1,93 +1,84 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFD] making separate-remote layout easier to use
-Date: Sun, 26 Nov 2006 10:32:14 +0100
-Message-ID: <200611261032.15207.jnareb@gmail.com>
-References: <7v1wnr19do.fsf@assigned-by-dhcp.cox.net> <ekafpm$fs7$1@sea.gmane.org> <20061126033433.GD29394@spearce.org>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: [RFC] E-mail aliases
+Date: Tue, 12 Dec 2006 22:36:59 +0000
+Message-ID: <b0943d9e0612121436u6cf7c200i92ba056103a80b13@mail.gmail.com>
+References: <b0943d9e0612120449k4a13ac85t313df1e460ed46e4@mail.gmail.com>
+	 <7vvekhufib.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sun, 26 Nov 2006 09:30:51 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+NNTP-Posting-Date: Tue, 12 Dec 2006 22:37:47 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=mRK7OOQo46l3sRy+eDQ/Wzc3ywNe0UIrpfmVyFUCtbZ3RskgkVyjtrN+2yLPvVXz6BJ8TyXSdX3tr/6heYzwVd2AFcGK9QaXrBIL/VYDoHL3U4pT29DbxLnM1egRg9XEMDEmAc8wjogoqZ6HTNpe4rKCapjPEysv09vA34Lqr1U=
-User-Agent: KMail/1.9.3
-In-Reply-To: <20061126033433.GD29394@spearce.org>
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=VtDhLaM6gV31z0NzVX6rIPv7rTyPo5hT76F0mnMGgiQdiiP/1US0MrZyPNeyaEB0NTYGWbwbTncO6PiQSS5wFt8qiAN4PXb0LnmsGpTXlAakhhYAkPXtr3AIejnGqqqOXe4Ec/m0DPk0wrGvFIBDSFD53x5dc7XhDYJJGFfHVbg=
+In-Reply-To: <7vvekhufib.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32337>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GoGLU-0008CC-UV for gcvg-git@gmane.org; Sun, 26 Nov
- 2006 10:30:45 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34153>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GuGFa-0005li-9X for gcvg-git@gmane.org; Tue, 12 Dec
+ 2006 23:37:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S935285AbWKZJag (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 26 Nov 2006
- 04:30:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935286AbWKZJag
- (ORCPT <rfc822;git-outgoing>); Sun, 26 Nov 2006 04:30:36 -0500
-Received: from ug-out-1314.google.com ([66.249.92.171]:368 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S935285AbWKZJaf
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 26 Nov 2006 04:30:35 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so923834uga for
- <git@vger.kernel.org>; Sun, 26 Nov 2006 01:30:34 -0800 (PST)
-Received: by 10.67.30.6 with SMTP id h6mr10206811ugj.1164533434261; Sun, 26
- Nov 2006 01:30:34 -0800 (PST)
-Received: from host-81-190-24-209.torun.mm.pl ( [81.190.24.209]) by
- mx.google.com with ESMTP id k2sm11056524ugf.2006.11.26.01.30.33; Sun, 26 Nov
- 2006 01:30:33 -0800 (PST)
-To: Shawn Pearce <spearce@spearce.org>
+ S932518AbWLLWhD (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 12 Dec 2006
+ 17:37:03 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932520AbWLLWhD
+ (ORCPT <rfc822;git-outgoing>); Tue, 12 Dec 2006 17:37:03 -0500
+Received: from nz-out-0506.google.com ([64.233.162.229]:37278 "EHLO
+ nz-out-0102.google.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with
+ ESMTP id S932518AbWLLWhA (ORCPT <rfc822;git@vger.kernel.org>); Tue, 12 Dec
+ 2006 17:37:00 -0500
+Received: by nz-out-0102.google.com with SMTP id s1so1079418nze for
+ <git@vger.kernel.org>; Tue, 12 Dec 2006 14:36:59 -0800 (PST)
+Received: by 10.65.232.19 with SMTP id j19mr162872qbr.1165963019607; Tue, 12
+ Dec 2006 14:36:59 -0800 (PST)
+Received: by 10.65.126.2 with HTTP; Tue, 12 Dec 2006 14:36:59 -0800 (PST)
+To: "Junio C Hamano" <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Shawn Pearce wrote:
-> Jakub Narebski <jnareb@gmail.com> wrote:
->> Junio C Hamano wrote:
->>
->>> I am not sure if 'merge in corresponding branch' is the only
->>> valid workflow, however. I am reluctant to make the system
->>> automatically do so if the solution makes other workflows more
->>> painful to follow.  Automatically merging remotes/origin/$foo
->>> when on $foo branch is not good enough, in other words (also,
->>> there may be a hierarchy under remotes/ other than origin).  It
->>> might make sense to introduce "Merge: " in remotes/ file and if
->>> they are present use "Pull: " only to decide what are fetched
->>> and use "Merge: " to decide what is merged (if we were doing the
->>> system from scratch, the former would have been named "Fetch: "
->>> but it is too late now).
->> 
->> If you add "Merge: " in remotes/, then please add it also in
->> remote section in config file. Config file has now 
->> branch.<branchname>.merge (and it would be nice if clone would
->> set ou this for local branches corresponding to remote branches),
->> but it is not the same.
-> 
-> I'm against adding anything to the remotes/ file format.
-> 
-> We already have branch.<name>.merge to indicate what the default
-> source for a git-pull on the branch named <name> should be.
-> git-branch probably should fill that entry in when a branch is
-> created from a remotes ref.
+On 12/12/06, Junio C Hamano <junkio@cox.net> wrote:
+> "Catalin Marinas" <catalin.marinas@gmail.com> writes:
+>
+> > sets the "To:" header to "linux-kernel@vger.kernel.org".
+> >
+> > The aliases are read from the [aliases] section in the gitconfig files
+> > ("git repo-config aliases.lkml" in this case). I just want to make
+> > sure than there isn't any other intended use for the [aliases] section
+> > in the config files.
+>
+> [alias] is used to hold command-line alias, and it seems
+> slightly confusing to have two sections that mean something
+> quite different.
 
-As I said, branch.<name>.merge is about something else: it just means
-that if we are on <name> branch "git pull" will merge 
-branch.<name>.merge branch into it.
+Didn't know about [alias]. It is indeed confusing to have [aliases] as well.
 
-I think the "Merge: " or remote.<repo>.merge is about changing current 
-implicit rule: first branch is to be merged with current branch (if not 
-specified otherwise) when pull-ing, into explicit rule: branch marked 
-as "Merge: " is to be merged with current branch (unless specified 
-otherwise).
+> Perhaps
+>
+> [mail "alias"]
+>         lkml = linux-kernel@vger.kernel.org
 
-Correct me if I'm wrong, Junio.
+The other option would be to teach stgit to parse alias files used by
+mutt etc. as Eric mentioned in the other e-mail (and it doesn't look
+difficult). The problem is that you would need to know how to generate
+them manually if you use other e-mail clients or web-based services.
+
+> if we are going to have other mail-related configurations that
+> might turn out be handy.  send-email would want smtp-server in
+> there, for example.
+
+At a quick look, it seems that git-send-email already uses a
+[sendemail] section. StGIT currently reads the smtpserver and
+authentication information from the [stgit] section.
+
 -- 
-Jakub Narebski
