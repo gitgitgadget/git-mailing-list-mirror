@@ -4,65 +4,58 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [Fwd: Re: What's in git.git]
-Date: Sun, 19 Nov 2006 18:49:02 +0100
-Message-ID: <20061119174902.GW7201@pasky.or.cz>
-References: <20061119171135.GA13054@spearce.org> <9e4733910611190940y147992b8mbdfac5a51f42e0fe@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sun, 19 Nov 2006 17:49:33 +0000 (UTC)
-Cc: Shawn Pearce <spearce@spearce.org>,
-	Git Mailing List <git@vger.kernel.org>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [PATCH 3/3] git-svn: correctly display fatal() error messages
+Date: Tue, 12 Dec 2006 14:47:02 -0800
+Message-ID: <11659636263755-git-send-email-normalperson@yhbt.net>
+References: <11659636223725-git-send-email-normalperson@yhbt.net>
+NNTP-Posting-Date: Tue, 12 Dec 2006 22:47:35 +0000 (UTC)
+Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <9e4733910611190940y147992b8mbdfac5a51f42e0fe@mail.gmail.com>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+X-Mailer: git-send-email 1.4.4.2.g6f98
+In-Reply-To: <11659636223725-git-send-email-normalperson@yhbt.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31843>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Glqn0-0000z9-KS for gcvg-git@gmane.org; Sun, 19 Nov
- 2006 18:49:12 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34157>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GuGPL-0007T7-At for gcvg-git@gmane.org; Tue, 12 Dec
+ 2006 23:47:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932164AbWKSRtH (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 19 Nov 2006
- 12:49:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932168AbWKSRtH
- (ORCPT <rfc822;git-outgoing>); Sun, 19 Nov 2006 12:49:07 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:4752 "EHLO machine.or.cz") by
- vger.kernel.org with ESMTP id S932164AbWKSRtE (ORCPT
- <rfc822;git@vger.kernel.org>); Sun, 19 Nov 2006 12:49:04 -0500
-Received: (qmail 7988 invoked by uid 2001); 19 Nov 2006 18:49:02 +0100
-To: Jon Smirl <jonsmirl@gmail.com>
+ S932543AbWLLWrW (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 12 Dec 2006
+ 17:47:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932536AbWLLWrU
+ (ORCPT <rfc822;git-outgoing>); Tue, 12 Dec 2006 17:47:20 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:54308 "EHLO hand.yhbt.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S932537AbWLLWrP
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 12 Dec 2006 17:47:15 -0500
+Received: from hand.yhbt.net (localhost [127.0.0.1]) by hand.yhbt.net
+ (Postfix) with SMTP id 82ACE7DC099; Tue, 12 Dec 2006 14:47:14 -0800 (PST)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Tue, 12 Dec 2006
+ 14:47:06 -0800
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-On Sun, Nov 19, 2006 at 06:40:06PM CET, Jon Smirl wrote:
-> Brendan told me that he would not consider Mozilla moving to git until
-> a native Windows version is released so I just dropped the whole
-> thing. It is too much effort and they don't even really want it. They
-> are probably going to switch to SVN.  I told him that SVN would end up
-> being a disaster and he got mad at me. That's when I stopped working
-> on cvs2svn/git.
+If I wanted to print $@, I'd pass $@ to fatal().  This looks like
+a stupid typo on my part.
 
-I see. :-(
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
+---
+ git-svn.perl |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-Could you please publish cvs2git in whatever state you have it so that
-someone else possibly interested could pick it up and finish the missing
-bits? It would be shame if the already done work would end up wasted.
-
-> #2) git needs native Windows support, this probably includes MSVC
-> integration. There are a lot of non-technical people working on
-> Mozilla like accessibility, doc, artwork, translations, they are all
-> on Windows. Brendan explicitly ruled out cygwIn.
-
-This is sort of catch-22, we have probably no developers interested
-enough in porting Git to native Windows and it's not clear we are going
-to get any until Git runs on native Windows.
-
+diff --git a/git-svn.perl b/git-svn.perl
+index 819584b..c746a3c 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -31,7 +31,7 @@ my %SKIP = ( 'svn:wc:ra_dav:version-url' => 1,
+              'svn:entry:committed-date' => 1,
+ );
+ 
+-sub fatal (@) { print STDERR $@; exit 1 }
++sub fatal (@) { print STDERR @_; exit 1 }
+ # If SVN:: library support is added, please make the dependencies
+ # optional and preserve the capability to use the command-line client.
+ # use eval { require SVN::... } to make it lazy load
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-The meaning of Stonehenge in Traflamadorian, when viewed from above, is:
-"Replacement part being rushed with all possible speed."
+1.4.4.2.g6f98
