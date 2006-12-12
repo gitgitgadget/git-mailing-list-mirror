@@ -2,71 +2,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] make commit message a little more consistent and conforting
-Date: Fri, 15 Dec 2006 10:21:07 -0800
-Message-ID: <7vmz5pvx4c.fsf@assigned-by-dhcp.cox.net>
-References: <200612132237.10051.andyparkins@gmail.com>
-	<7vk60vbcfz.fsf@assigned-by-dhcp.cox.net>
-	<200612140959.19209.andyparkins@gmail.com>
-	<7v7iwu93rv.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0612141343200.18171@xanadu.home>
-	<Pine.LNX.4.64.0612142307160.18171@xanadu.home>
-	<20061215042459.GC27343@spearce.org> <45825E0B.5010200@op5.se>
-	<20061215150909.GE17860@spearce.org> <4582C022.3030706@op5.se>
-	<20061215154025.GF17860@spearce.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: git-send-email and msmtp
+Date: Tue, 12 Dec 2006 17:11:43 +0100
+Organization: At home
+Message-ID: <elmk7f$6va$1@sea.gmane.org>
+References: <cc723f590612120737t7d7e8dabs4e82ae2ac705e4e1@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 15 Dec 2006 18:21:17 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Transfer-Encoding: 7Bit
+NNTP-Posting-Date: Tue, 12 Dec 2006 16:09:44 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061215154025.GF17860@spearce.org> (Shawn Pearce's message of
-	"Fri, 15 Dec 2006 10:40:25 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 21
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-25-107.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34538>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34106>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GvHgI-0002Lr-AQ for gcvg-git@gmane.org; Fri, 15 Dec
- 2006 19:21:14 +0100
+ esmtp (Exim 4.50) id 1GuACM-0000pn-C0 for gcvg-git@gmane.org; Tue, 12 Dec
+ 2006 17:09:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753128AbWLOSVK (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 15 Dec 2006
- 13:21:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753131AbWLOSVK
- (ORCPT <rfc822;git-outgoing>); Fri, 15 Dec 2006 13:21:10 -0500
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:57148 "EHLO
- fed1rmmtao12.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1753128AbWLOSVJ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 15 Dec 2006
- 13:21:09 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao12.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061215182108.GZTD4226.fed1rmmtao12.cox.net@fed1rmimpo02.cox.net>; Fri, 15
- Dec 2006 13:21:08 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id z6ML1V00B1kojtg0000000; Fri, 15 Dec 2006
- 13:21:20 -0500
-To: Shawn Pearce <spearce@spearce.org>
+ S1751494AbWLLQJj (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 12 Dec 2006
+ 11:09:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751495AbWLLQJj
+ (ORCPT <rfc822;git-outgoing>); Tue, 12 Dec 2006 11:09:39 -0500
+Received: from main.gmane.org ([80.91.229.2]:32838 "EHLO ciao.gmane.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1751494AbWLLQJi
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 12 Dec 2006 11:09:38 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1GuACA-0004SO-Ls for git@vger.kernel.org; Tue, 12 Dec 2006 17:09:30 +0100
+Received: from host-81-190-25-107.torun.mm.pl ([81.190.25.107]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Tue, 12 Dec 2006 17:09:30 +0100
+Received: from jnareb by host-81-190-25-107.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Tue, 12 Dec 2006
+ 17:09:30 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Shawn Pearce <spearce@spearce.org> writes:
+Aneesh Kumar wrote:
 
-> I do the same (diff a lot before commit) and thus find commit
-> outputting anything at all to be noisy and irritating.  Frankly
-> the new
->
->   git-diff-tree --summary --root --no-commit-id HEAD
->
-> that Junio put on the end is already irritating.
->
-> But it was added to help users verify that commit did what they
-> thought it would (see 61f5cb7f).
+> I am using msmtp to send email using git-send-email. The problem i am
+> facing now is vger.kernel.org is dropping the mails generated by
+> git-send-email. When i am sending the same patch as an attachment in
+> thunderbird everything works fine. So i guess it is not the patch
+> content that is getting filtered. Any idea how to find out what is
+> causing the patch to get dropped and how to fix this.
+> 
+> The header of the patch that was dropped is
 
-The credit should go Pasky's way.  Add/delete/mode are rarer
-events and reminding them is sensible.
+Probably problem with vger.kernel.org checking your server if it
+is permitted to send mails. I use sendmail, and have solved this 
+using my gmail mail account as SMTP tunnel/forwarding using
+  define(`SMART_HOST',`[smtp.gmail.com]')
+msmtp can do something like this. Ask chexum on IRC.
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
 
-We do not show the 'summary' when we are concluding a merge that
-conflicted.  Otherwise you will be seeing other people's huge
-changes that was just brought in.
