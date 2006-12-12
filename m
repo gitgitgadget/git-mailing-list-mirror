@@ -1,87 +1,87 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Cleaning up git user-interface warts
-Date: Wed, 15 Nov 2006 19:28:41 +0100
-Organization: At home
-Message-ID: <ejfm6c$bu4$1@sea.gmane.org>
-References: <87k61yt1x2.wl%cworth@cworth.org> <455A1137.8030301@shadowen.org> <87hcx1u934.wl%cworth@cworth.org> <Pine.LNX.4.64.0611141518590.2591@xanadu.home> <87bqn9u43s.wl%cworth@cworth.org> <ejdcg5$4fl$1@sea.gmane.org> <Pine.LNX.4.64.0611141633430.2591@xanadu.home> <7vbqn9y6w6.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611142007010.2591@xanadu.home> <7v3b8ltq7r.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611142306090.2591@xanadu.home> <Pine.LNX.4.64.0611150950170.3349@woody.osdl.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: git-pull from git.git - no remote ref for pu or next?
+Date: Tue, 12 Dec 2006 14:26:17 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0612121420580.18171@xanadu.home>
+References: <863b7l83o9.fsf@blue.stonehenge.com>
+ <86y7pd6oz7.fsf@blue.stonehenge.com>
+ <Pine.LNX.4.64.0612120949230.3535@woody.osdl.org>
+ <Pine.LNX.4.63.0612121908100.2807@wbgn013.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.64.0612121352520.18171@xanadu.home>
+ <Pine.LNX.4.63.0612121956470.2807@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Wed, 15 Nov 2006 18:28:25 +0000 (UTC)
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+NNTP-Posting-Date: Tue, 12 Dec 2006 19:26:26 +0000 (UTC)
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	"Randal L. Schwartz" <merlyn@stonehenge.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 27
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+In-reply-to: <Pine.LNX.4.63.0612121956470.2807@wbgn013.biozentrum.uni-wuerzburg.de>
+X-X-Sender: nico@xanadu.home
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31461>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GkPUf-0005j0-KO for gcvg-git@gmane.org; Wed, 15 Nov
- 2006 19:28:17 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34133>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GuDGg-0001ff-8A for gcvg-git@gmane.org; Tue, 12 Dec
+ 2006 20:26:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1030814AbWKOS1y convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006 13:27:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030816AbWKOS1y
- (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 13:27:54 -0500
-Received: from main.gmane.org ([80.91.229.2]:46736 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S1030814AbWKOS1x (ORCPT
- <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 13:27:53 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1GkPTw-0005aL-5Z for git@vger.kernel.org; Wed, 15 Nov 2006 19:27:32 +0100
-Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Wed, 15 Nov 2006 19:27:32 +0100
-Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Wed, 15 Nov 2006
- 19:27:32 +0100
-To: git@vger.kernel.org
+ S932390AbWLLT0T (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 12 Dec 2006
+ 14:26:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932395AbWLLT0T
+ (ORCPT <rfc822;git-outgoing>); Tue, 12 Dec 2006 14:26:19 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:44366 "EHLO
+ relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S932390AbWLLT0S (ORCPT <rfc822;git@vger.kernel.org>); Tue, 12 Dec 2006
+ 14:26:18 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
+ <0JA600JEADZT97C0@VL-MH-MR002.ip.videotron.ca> for git@vger.kernel.org; Tue,
+ 12 Dec 2006 14:26:18 -0500 (EST)
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-Linus Torvalds wrote:
+On Tue, 12 Dec 2006, Johannes Schindelin wrote:
 
-> But the fact is, git isn't really that hard to work out, and the comm=
-ands=20
-> aren't that complicated. There's no reason to rename them. We do have=
-=20
-> other problems:
->=20
-> =A0- default branch selection for merging is broken (it should defini=
-tely=20
-> =A0 =A0take the current branch into account). When I do "git pull" wi=
-th no=20
-> =A0 =A0branch specification, and I happen to be on a branch that is a=
-ssociated=20
-> =A0 =A0with something else than "master" in the remote, I shouldn't m=
-erge with=20
-> =A0 =A0master.
+> On Tue, 12 Dec 2006, Nicolas Pitre wrote:
+> 
+> > On Tue, 12 Dec 2006, Johannes Schindelin wrote:
+> > 
+> > > On Tue, 12 Dec 2006, Linus Torvalds wrote:
+> > > 
+> > > > But since the thing needs mirroring for non-git uses too, and since 
+> > > > rsync generally _works_ apart from the slight race-condition issue, 
+> > > 
+> > > ... and git would probably change the pack structure (i.e. which objects 
+> > > are in which packs, or even loose) which would be too bad for all those 
+> > > HTTP leechers ...
+> > 
+> > I don't see how that would be more of a concern than the current 
+> > situation with occasional repacks.
+> 
+> Oh well. I did not want to get bashed for something which is probably no 
+> problem,
 
-This problem is _slightly_ migitated by branch.<name>.merge config vari=
-able.
-Slightly because you have to specify branch to merge, instead of forbid=
-ding
-merge if you are not on specific branch (and you don't override it).
+Sorry, far from me to sound as if I was bashing you.
 
-> =A0- I agree that having to create temporary branches to just look at=
- a tag=20
-> =A0 =A0that you don't want to actually develop on is just unnecessari=
-ly=20
-> =A0 =A0bothersome.
+> but I suspected that the two mirror machines could get out of 
+> sync, which could well mean that the new packs would have to be downloaded 
+> _twice_. As I said, probably no problem.
 
-Agreed.
+In theory that should not happen since all mirrors would get the same 
+updates in the same steps.  But in practice if one mirror fails to get 
+updated for whatever reason then the next time around it could have a 
+bigger pack instead of two smaller ones for the same set of objects.
 
---=20
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+> But it would become a non-problem when the HTTP transport would learn to 
+> read and interpret the .idx files, basically constructing thin packs from 
+> parts of the .pack files ("Content-Range:" comes to mind)...
+
+Woooh.
+
 
