@@ -1,55 +1,71 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Use new .git/config for storing "origin" shortcut repository
-Date: Sat, 25 Nov 2006 19:52:01 -0800
-Message-ID: <7vzmaeyie6.fsf@assigned-by-dhcp.cox.net>
-References: <ekafpm@sea.gmane.org> <200611260003.31025.andyparkins@gmail.com>
-	<Pine.LNX.4.63.0611260141390.30004@wbgn013.biozentrum.uni-wuerzburg.de>
+From: "Bahadir Balban" <bahadir.balban@gmail.com>
+Subject: stgit: stg mail
+Date: Tue, 12 Dec 2006 12:12:36 +0000
+Message-ID: <7ac1e90c0612120412i1297ce05uecbeea1107b8c704@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sun, 26 Nov 2006 03:52:11 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Tue, 12 Dec 2006 12:12:50 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <Pine.LNX.4.63.0611260141390.30004@wbgn013.biozentrum.uni-wuerzburg.de>
-	(Johannes Schindelin's message of "Sun, 26 Nov 2006 01:48:11 +0100
-	(CET)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=ikq4mbJ1fMba24Q9z9LQ4kdVFECpW2lqLt8RWgilmht3ukVIb8wMsDzXC1qQT9wNafArB49f1rS6NBtADJ9wJMHwI+bvxINNsbWggAI0XcG9gQATN4MiZf2cnbhuR7zwGddyrCW2NlElUnhr83SLGT6gx3F5maRuIwWKrUOYHik=
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32324>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GoB3n-0002sO-UX for gcvg-git@gmane.org; Sun, 26 Nov
- 2006 04:52:08 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34086>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gu6V0-0006Nq-0V for gcvg-git@gmane.org; Tue, 12 Dec
+ 2006 13:12:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S967284AbWKZDwE (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 25 Nov 2006
- 22:52:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967286AbWKZDwE
- (ORCPT <rfc822;git-outgoing>); Sat, 25 Nov 2006 22:52:04 -0500
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:32465 "EHLO
- fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP id S967284AbWKZDwC
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 25 Nov 2006 22:52:02 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao01.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061126035202.IVEQ9173.fed1rmmtao01.cox.net@fed1rmimpo01.cox.net>; Sat, 25
- Nov 2006 22:52:02 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id rFrW1V00s1kojtg0000000; Sat, 25 Nov 2006
- 22:51:31 -0500
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+ S1751214AbWLLMMj (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 12 Dec 2006
+ 07:12:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751245AbWLLMMi
+ (ORCPT <rfc822;git-outgoing>); Tue, 12 Dec 2006 07:12:38 -0500
+Received: from nf-out-0910.google.com ([64.233.182.184]:49723 "EHLO
+ nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1751214AbWLLMMi (ORCPT <rfc822;git@vger.kernel.org>); Tue, 12 Dec
+ 2006 07:12:38 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so220711nfa for
+ <git@vger.kernel.org>; Tue, 12 Dec 2006 04:12:37 -0800 (PST)
+Received: by 10.82.138.6 with SMTP id l6mr645797bud.1165925556430; Tue, 12
+ Dec 2006 04:12:36 -0800 (PST)
+Received: by 10.82.186.15 with HTTP; Tue, 12 Dec 2006 04:12:36 -0800 (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hi,
 
-> This hunk is wrong: "git-repo-config remote.bla.fetch b" will _overwrite_ 
-> remoter.bla.fetch. To avoid that, you have to use "git repo-config 
-> remote.bla.fetch b ^$". (The last argument is a regular expression which 
-> has to be matched by the value-to-be-oreplaced.)
+I couldn't succeed in getting stg mail produce an mbox file with a
+Signed-off-by line (using stgit 0.11).
 
-Yup, one of the joys of working the config file everybody seems
-to like ;-).
+stg mail -m --to=user@mail.com patchname > patchname.diff
+
+works OK. If I add the template with Signed-off-by I get:
+
+stg mail -m --to=user@mail.com -t ~/patch.tmpl patchname > patchname.diff
+stg mail: No "From" address
+
+Also tried -c with same result.
+
+Config file:
+[stgit]
+# Default author/committer details
+authname: name surname
+authemail: user@mail.com
+commname:  user@mail.com
+commemail: user@mail.com
+
+I guess it expects to find everything in the template? How do you
+normally supply signoff field?
+
+Thanks,
