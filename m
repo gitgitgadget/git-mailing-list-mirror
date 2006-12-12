@@ -1,72 +1,100 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: Cleaning up git user-interface warts
-Date: Thu, 16 Nov 2006 14:43:58 +0100
-Message-ID: <20061116134358.GW7201@pasky.or.cz>
-References: <87k61yt1x2.wl%cworth@cworth.org> <455A1137.8030301@shadowen.org> <87hcx1u934.wl%cworth@cworth.org> <Pine.LNX.4.64.0611141518590.2591@xanadu.home> <87bqn9u43s.wl%cworth@cworth.org> <7vr6w5y7to.fsf@assigned-by-dhcp.cox.net> <20061116051240.GV7201@pasky.or.cz> <7vodr7brfp.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Add verbose comments to split_msg()
+Date: Mon, 11 Dec 2006 17:15:30 -0800
+Message-ID: <7vzm9tzzgt.fsf@assigned-by-dhcp.cox.net>
+References: <200612112212.51533.andyparkins@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 16 Nov 2006 13:44:16 +0000 (UTC)
-Cc: Carl Worth <cworth@cworth.org>, git@vger.kernel.org,
-	Andy Whitcroft <apw@shadowen.org>, Nicolas Pitre <nico@cam.org>
+NNTP-Posting-Date: Tue, 12 Dec 2006 01:15:40 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <7vodr7brfp.fsf@assigned-by-dhcp.cox.net>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31582>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GkhXB-00025E-CU for gcvg-git@gmane.org; Thu, 16 Nov
- 2006 14:44:05 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34052>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GtwF6-0005jU-Pp for gcvg-git@gmane.org; Tue, 12 Dec
+ 2006 02:15:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1424048AbWKPNoA (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 16 Nov 2006
- 08:44:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933503AbWKPNoA
- (ORCPT <rfc822;git-outgoing>); Thu, 16 Nov 2006 08:44:00 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:59851 "EHLO machine.or.cz") by
- vger.kernel.org with ESMTP id S933502AbWKPNoA (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 16 Nov 2006 08:44:00 -0500
-Received: (qmail 24813 invoked by uid 2001); 16 Nov 2006 14:43:58 +0100
-To: Junio C Hamano <junkio@cox.net>
+ S1750798AbWLLBPd (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 11 Dec 2006
+ 20:15:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750807AbWLLBPd
+ (ORCPT <rfc822;git-outgoing>); Mon, 11 Dec 2006 20:15:33 -0500
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:54496 "EHLO
+ fed1rmmtao09.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1750798AbWLLBPc (ORCPT <rfc822;git@vger.kernel.org>); Mon, 11 Dec 2006
+ 20:15:32 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao09.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061212011531.VHTK18767.fed1rmmtao09.cox.net@fed1rmimpo02.cox.net>; Mon, 11
+ Dec 2006 20:15:31 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id xdFi1V00V1kojtg0000000; Mon, 11 Dec 2006
+ 20:15:42 -0500
+To: Andy Parkins <andyparkins@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-On Thu, Nov 16, 2006 at 11:45:46AM CET, Junio C Hamano wrote:
-> Petr Baudis <pasky@suse.cz> writes:
-> 
-> > (v) Library issues...
-> > Git has the advantage of
-> > simply putting that part in C, which is though something I should've
-> > been doing more frequently too.
-> 
-> It should be stressed that git-core plumbing written in C is not
-> just for git Porcelain-ish, and it will continue to be shared
-> service.  We would add core support for what Porcelains need and
-> we would try hard to keep them generic enough so that other
-> Porcelains can use them.  Keeping the core and Porcelain-ish in
-> the same project has made it easier to keep them in sync and to
-> find and add missing features that would benefit Porcelains (not
-> limited to git Porcelain-ish).  But that should not be mistaken
-> as plumbing somehow belongs more to git Porcelain-ish than to
-> Cogito or others.
+Andy Parkins <andyparkins@gmail.com> writes:
 
-  Of course, I didn't mean to say that. I should do more often things
-like adding --stdin to the fetchers. From one part, I'm used to work
-with a fixed set of system tools and extending Git with the
-functionality I want means changing my thinking mode and "jumping out of
-the system" a bit. The other part is that I cannot use the improvements
-in Cogito right away (at least not in the main branch) but I have to
-wait for the next Git release; but this is mostly just an excuse. :-)
+> I was going to fix a bug in imap-send that was making it include the "From "
+> line from git-format-patch in the message sent to the IMAP server.  So I
+> commented up what split_msg already does.
+>
+> It turns out the bug was fixed in commit
+> e0b0830726286287744cc9e1a629a534bbe75452.  So comments only, no fix needed.
+> (cherry picked from 3d5b1768f15b5cd430b869f416e72f4f3afe3d4a commit)
+>
+> Signed-off-by: Andy Parkins <andyparkins@gmail.com>
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
-$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
+3d5b1768 is not a public commit and is not useful information
+other than your self.  Please omit the last line.
+
+        Linus and everybody was right and I was wrong to leave this
+        message default in git-cherry-pick for a long time.
+
+> ---
+>  imap-send.c |   13 +++++++++++++
+>  1 files changed, 13 insertions(+), 0 deletions(-)
+>
+> diff --git a/imap-send.c b/imap-send.c
+> index a6a6568..110bd54 100644
+> --- a/imap-send.c
+> +++ b/imap-send.c
+> @@ -1216,35 +1216,48 @@ split_msg( msg_data_t *all_msgs, msg_data_t *msg, int *ofs )
+>  {
+>  	char *p, *data;
+>  
+> +	/* Clear this message's slot */
+>  	memset( msg, 0, sizeof *msg );
+> +	/* If we've run out of data, stop*/
+
+"..., stop */"
+
+>  	if (*ofs >= all_msgs->len)
+>  		return 0;
+>  
+> +	/* Point at the next message chunk */
+>  	data = &all_msgs->data[ *ofs ];
+> +	/* This message length is at most, the length of all messages
+> +	 * minus our current position */
+
+Style?
+
+/*
+ * This message ...
+ * ... position.
+ */
+
+>  	msg->len = all_msgs->len - *ofs;
+>  
+> +	/* If there isn't enough data remaining for a whole message or there
+> +	 * is no , give up */
+
+"there is no , "???
