@@ -1,54 +1,83 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 2/2] Teach receive-pack how to keep pack files based on object count.
-Date: Tue, 31 Oct 2006 14:27:36 -0800
-Message-ID: <7vslh4qfxj.fsf@assigned-by-dhcp.cox.net>
-References: <20061031075704.GB7691@spearce.org>
-	<Pine.LNX.4.64.0610311447250.11384@xanadu.home>
-	<20061031201148.GD23671@spearce.org>
-	<Pine.LNX.4.64.0610311559150.11384@xanadu.home>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: Adding a new file as if it had existed
+Date: Tue, 12 Dec 2006 12:26:29 +0000
+Message-ID: <200612121226.32772.andyparkins@gmail.com>
+References: <7ac1e90c0612120205k38b2fc14jbfd8ea682406efb2@mail.gmail.com> <7vhcw1whfx.fsf@assigned-by-dhcp.cox.net> <7ac1e90c0612120332o20d6778bsa16a788fdc04a3a1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 31 Oct 2006 22:27:58 +0000 (UTC)
-Cc: Shawn Pearce <spearce@spearce.org>, git@vger.kernel.org
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Tue, 12 Dec 2006 12:26:48 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <Pine.LNX.4.64.0610311559150.11384@xanadu.home> (Nicolas Pitre's
-	message of "Tue, 31 Oct 2006 16:08:32 -0500 (EST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=uCe6qO2PnAp33V3qJNee4DIlxFfUKLzLKyYgo2DAHodKgQpQIPeXje9snGHEOMLeLiFvVoyplMN5MT35J72OX2u9or4r0R1tuKGQn9U0F5RstosefXCP1dAqodoiea2Xszy/q9nodT/tXjj7q5d3cBA8f+2RzPhKwbhaNy0WOBY=
+User-Agent: KMail/1.9.5
+In-Reply-To: <7ac1e90c0612120332o20d6778bsa16a788fdc04a3a1@mail.gmail.com>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30602>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gf257-0003VX-U4 for gcvg-git@gmane.org; Tue, 31 Oct
- 2006 23:27:42 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34088>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gu6iZ-0008GL-9C for gcvg-git@gmane.org; Tue, 12 Dec
+ 2006 13:26:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1423715AbWJaW1i (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 31 Oct 2006
- 17:27:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423724AbWJaW1i
- (ORCPT <rfc822;git-outgoing>); Tue, 31 Oct 2006 17:27:38 -0500
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:47263 "EHLO
- fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP id S1423716AbWJaW1i
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 31 Oct 2006 17:27:38 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao04.cox.net
- (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
- <20061031222737.LWYO22409.fed1rmmtao04.cox.net@fed1rmimpo02.cox.net>; Tue, 31
- Oct 2006 17:27:37 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id hATh1V0161kojtg0000000 Tue, 31 Oct 2006
- 17:27:42 -0500
-To: Nicolas Pitre <nico@cam.org>
+ S1751260AbWLLM0k (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 12 Dec 2006
+ 07:26:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751261AbWLLM0k
+ (ORCPT <rfc822;git-outgoing>); Tue, 12 Dec 2006 07:26:40 -0500
+Received: from ug-out-1314.google.com ([66.249.92.173]:59089 "EHLO
+ ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1751260AbWLLM0j (ORCPT <rfc822;git@vger.kernel.org>); Tue, 12 Dec
+ 2006 07:26:39 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so1646983uga for
+ <git@vger.kernel.org>; Tue, 12 Dec 2006 04:26:37 -0800 (PST)
+Received: by 10.67.101.10 with SMTP id d10mr5333374ugm.1165926397631; Tue, 12
+ Dec 2006 04:26:37 -0800 (PST)
+Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
+ ESMTP id 29sm6731511uga.2006.12.12.04.26.37; Tue, 12 Dec 2006 04:26:37 -0800
+ (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Nicolas Pitre <nico@cam.org> writes:
+On Tuesday 2006 December 12 11:32, Bahadir Balban wrote:
 
-> I used "pack" <tab> <sha1> so it is easy to pick out of the list of refs 
-> that usually comes over the stream in the fetch case (if I understood 
-> that part right).
+> If I don't know which files I may be touching in the future for
+> implementing some feature, then I am obliged to add all the files even
+> if they are irrelevant. I said "performance reasons" assuming all the
+> file hashes need checked for every commit -a to see if they're
+> changed, but I just tried on a PIII and it seems not so slow.
 
-This sounds like a very sane thing to do.
+Here's a handy rule of thumb I've learned in my use of git:
+
+ "git is fast.  Really fast."
+
+That'll hold you in good stead.  In my experience there is no operation in git 
+that is slow.  I've got some trees that are for embedded work and hold the 
+whole linux kernel, often more than once.  Subversion, which I used 
+previously, took literally hours to import the whole tree.  Git takes 
+minutes.
+
+As to your direct concern: git doesn't hash every file at every commit.  There 
+is no need.  git has an "index" that is used to prepare a commit; at the time 
+you do the actual commit, git already knows which files are being checked in.  
+Obviously, Linus uses git for managing the linux kernel, he's said before 
+that he wanted a version control system that can do multiple commits /per 
+second/.  git can do that.
+
+In short - don't worry about making life easy for git - it's a workhorse and 
+does a grand job.
+
+
+Andy
+-- 
+Dr Andy Parkins, M Eng (hons), MIEE
