@@ -1,105 +1,98 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jim Meyering <jim@meyering.net>
-Subject: [PATCH] git-diff: don't add trailing blanks (i.e., do what GNU diff -u now does)
-Date: Sun, 17 Dec 2006 20:32:14 +0100
-Message-ID: <87y7p6nwsh.fsf@rho.meyering.net>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: Problems with git-svn authors file
+Date: Mon, 11 Dec 2006 20:25:58 -0800
+Message-ID: <20061212042558.GA31795@soma>
+References: <20061210172604.GA18385@hermes.lan.home.vilz.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sun, 17 Dec 2006 19:52:02 +0000 (UTC)
+NNTP-Posting-Date: Tue, 12 Dec 2006 04:26:12 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Greylist: delayed 1169 seconds by postgrey-1.27 at vger.kernel.org; Sun, 17 Dec 2006 14:51:44 EST
-Original-Lines: 70
+Content-Disposition: inline
+In-Reply-To: <20061210172604.GA18385@hermes.lan.home.vilz.de>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34702>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34059>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gw23D-0001QT-Md for gcvg-git@gmane.org; Sun, 17 Dec
- 2006 20:52:00 +0100
+ esmtp (Exim 4.50) id 1GtzDV-00075u-6I for gcvg-git@gmane.org; Tue, 12 Dec
+ 2006 05:26:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1750989AbWLQTvp (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 17 Dec 2006
- 14:51:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750994AbWLQTvp
- (ORCPT <rfc822;git-outgoing>); Sun, 17 Dec 2006 14:51:45 -0500
-Received: from mx.meyering.net ([82.230.74.64]:41022 "EHLO mx.meyering.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1750989AbWLQTvo
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 17 Dec 2006 14:51:44 -0500
-Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000) id
- 1D8ED6B03; Sun, 17 Dec 2006 20:32:14 +0100 (CET)
-To: git@vger.kernel.org
+ S1751066AbWLLE0B (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 11 Dec 2006
+ 23:26:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751070AbWLLE0B
+ (ORCPT <rfc822;git-outgoing>); Mon, 11 Dec 2006 23:26:01 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:53027 "EHLO hand.yhbt.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1751066AbWLLE0A
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 11 Dec 2006 23:26:00 -0500
+Received: from hand.yhbt.net (localhost [127.0.0.1]) by hand.yhbt.net
+ (Postfix) with SMTP id C59287DC02A; Mon, 11 Dec 2006 20:25:58 -0800 (PST)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Mon, 11 Dec 2006
+ 20:25:58 -0800
+To: Nicolas Vilz <niv@iaglans.de>
 Sender: git-owner@vger.kernel.org
 
-You may recall that GNU diff -u changed recently so that it no
-longer outputs any trailing space unless the input data has it.
-This means that blank context lines are now blank also in diff -u output.
-Before, they would have a single trailing space.
+Nicolas Vilz <niv@iaglans.de> wrote:
+> hello,
+> 
+> i tried to use git-svn with author-files and got stuck with following
+> error message:
+> 
+> Use of uninitialized value in hash element at /usr/bin/git-svn line
+> 2952.
+> Use of uninitialized value in concatenation (.) or string at
+> /usr/bin/git-svn line 2953.
+> Author:  not defined in .git/info/svn-authors file
+> 512 at /usr/bin/git-svn line 457
+>         main::fetch_lib() called at /usr/bin/git-svn line 328
+>         main::fetch() called at /usr/bin/git-svn line 187
 
-Then, git was changed to allow that new diff output format.
-Now that git-diff generates output using its internal diff, its
-output is no longer identical to what you get when using GNU diff.
+> Am i doing something wrong?
 
-This patch makes the output of git-diff the same as GNU diff's.
+No, this is just a bug in git-svn.
 
-Signed-off-by: Jim Meyering <jim@meyering.net>
+After the following patch, you should be able to use
+--------------------------------------------
+(no author) = real-name <email address>
+--------------------------------------------
+in your authors file.
+
+-- 
+Eric Wong
+
+From b40e14605809b0b1501002a333fbd680913f127f Mon Sep 17 00:00:00 2001
+From: Eric Wong <normalperson@yhbt.net>
+Date: Mon, 11 Dec 2006 20:22:29 -0800
+Subject: [PATCH] git-svn: correctly handle "(no author)" when using an authors file
+
+The low-level parts of the SVN library return NULL/undef for
+author-less revisions, whereas "(no author)" is a (svn) client
+convention.
+
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
 ---
- t/t4016-diff-trailing-space.sh |   31 +++++++++++++++++++++++++++++++
- xdiff/xutils.c                 |    3 +++
- 2 files changed, 34 insertions(+), 0 deletions(-)
+ git-svn.perl |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
 
-diff --git a/t/t4016-diff-trailing-space.sh b/t/t4016-diff-trailing-space.sh
-new file mode 100755
-index 0000000..95c4674
---- /dev/null
-+++ b/t/t4016-diff-trailing-space.sh
-@@ -0,0 +1,31 @@
-+#!/bin/bash
-+#
-+# Copyright (c) Jim Meyering
-+#
-+test_description='diff does not add trailing spaces'
-+
-+. ./test-lib.sh
-+
-+cat <<\EOF > exp ||
-+diff --git a/f b/f
-+index 5f6a263..8cb8bae 100644
-+--- a/f
-++++ b/f
-+@@ -1,2 +1,2 @@
-+
-+-x
-++y
-+EOF
-+exit 1
-+
-+test_expect_success \
-+    "$test_description" \
-+    '(echo; echo x) > f &&
-+     git-add f &&
-+     git-commit -q -m. f &&
-+     (echo; echo y) > f &&
-+     git-diff f > actual &&
-+     cmp exp actual
-+     '
-+
-+test_done
-diff --git a/xdiff/xutils.c b/xdiff/xutils.c
-index 1b899f3..8b7380a 100644
---- a/xdiff/xutils.c
-+++ b/xdiff/xutils.c
-@@ -51,6 +51,9 @@ int xdl_emit_diffrec(char const *rec, long size, char const *pre, long psize,
- 	mb[0].size = psize;
- 	mb[1].ptr = (char *) rec;
- 	mb[1].size = size;
-+	/* Don't emit a trailing space for an empty context line.  */
-+	if (size == 1 && rec[0] == '\n' && psize == 1 && *pre == ' ')
-+		mb[0].size = 0;
- 	if (size > 0 && rec[size - 1] != '\n') {
- 		mb[2].ptr = (char *) "\n\\ No newline at end of file\n";
- 		mb[2].size = strlen(mb[2].ptr);
---
+diff --git a/git-svn.perl b/git-svn.perl
+index 1f8a3b0..17ebb77 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -2948,7 +2948,8 @@ sub libsvn_log_entry {
+ 	my ($Y,$m,$d,$H,$M,$S) = ($date =~ /^(\d{4})\-(\d\d)\-(\d\d)T
+ 					 (\d\d)\:(\d\d)\:(\d\d).\d+Z$/x)
+ 				or die "Unable to parse date: $date\n";
+-	if (defined $_authors && ! defined $users{$author}) {
++	if (defined $author && length $author > 0 &&
++	    defined $_authors && ! defined $users{$author}) {
+ 		die "Author: $author not defined in $_authors file\n";
+ 	}
+ 	$msg = '' if ($rev == 0 && !defined $msg);
+-- 
