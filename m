@@ -1,138 +1,91 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Josh Triplett <josh@freedesktop.org>
-Subject: Re: [RFC] git-split: Split the history of a git repository by subdirectories
- and ranges
-Date: Tue, 24 Oct 2006 18:59:33 -0700
-Message-ID: <453EC505.7060807@freedesktop.org>
-References: <451A30E4.50801@freedesktop.org>	<7vlko5d3bx.fsf@assigned-by-dhcp.cox.net>	<453C96C9.4010005@freedesktop.org>	<Pine.LNX.4.64.0610230846420.3962@g5.osdl.org>	<453D17B5.6070203@freedesktop.org> <7vu01tfe6u.fsf@assigned-by-dhcp.cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: index manipulation quickref
+Date: Tue, 12 Dec 2006 12:16:58 +0100
+Organization: At home
+Message-ID: <elm2ur$3ib$1@sea.gmane.org>
+References: <fcaeb9bf0612120257p35dc9483ob65eea9ae21b5f7b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enigCDE85A4A98B45E40B30ED5CB"
-NNTP-Posting-Date: Wed, 25 Oct 2006 02:06:19 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+NNTP-Posting-Date: Tue, 12 Dec 2006 11:15:29 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.7 (X11/20060927)
-In-Reply-To: <7vu01tfe6u.fsf@assigned-by-dhcp.cox.net>
-X-Enigmail-Version: 0.94.0.0
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 41
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-25-107.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30024>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GcY3X-00032b-SE for gcvg-git@gmane.org; Wed, 25 Oct
- 2006 03:59:49 +0200
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34080>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gu5bX-0007F9-Lg for gcvg-git@gmane.org; Tue, 12 Dec
+ 2006 12:15:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1422778AbWJYB7p (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 24 Oct 2006
- 21:59:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422866AbWJYB7o
- (ORCPT <rfc822;git-outgoing>); Tue, 24 Oct 2006 21:59:44 -0400
-Received: from mail2.sea5.speakeasy.net ([69.17.117.4]:36241 "EHLO
- mail2.sea5.speakeasy.net") by vger.kernel.org with ESMTP id S1422778AbWJYB7n
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 24 Oct 2006 21:59:43 -0400
-Received: (qmail 8211 invoked from network); 25 Oct 2006 01:59:43 -0000
-Received: from dsl093-040-092.pdx1.dsl.speakeasy.net (HELO [192.168.0.142])
- (josh@[66.93.40.92]) (envelope-sender <josh@freedesktop.org>) by
- mail2.sea5.speakeasy.net (qmail-ldap-1.03) with AES256-SHA encrypted SMTP for
- <junkio@cox.net>; 25 Oct 2006 01:59:42 -0000
-To: Junio C Hamano <junkio@cox.net>
+ S932202AbWLLLPH (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 12 Dec 2006
+ 06:15:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932203AbWLLLPH
+ (ORCPT <rfc822;git-outgoing>); Tue, 12 Dec 2006 06:15:07 -0500
+Received: from main.gmane.org ([80.91.229.2]:44963 "EHLO ciao.gmane.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S932202AbWLLLPF
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 12 Dec 2006 06:15:05 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1Gu5b8-0002IT-54 for git@vger.kernel.org; Tue, 12 Dec 2006 12:14:58 +0100
+Received: from host-81-190-25-107.torun.mm.pl ([81.190.25.107]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Tue, 12 Dec 2006 12:14:58 +0100
+Received: from jnareb by host-81-190-25-107.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Tue, 12 Dec 2006
+ 12:14:58 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enigCDE85A4A98B45E40B30ED5CB
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
+Nguyen Thai Ngoc Duy wrote:
 
-Junio C Hamano wrote:
-> Josh Triplett <josh@freedesktop.org> writes:
->> Linus Torvalds wrote:
->>> And yes, that's done by the core revision parsing code, so when you d=
-o
->>>
->>> 	git log --full-history --parents -- $project
->>>
->>> you do get the rewritten parent output (of course, it's not actually =
+> I'm trying to collect all operations related to index from user
+> perspective and corresponding commands. The list may be put to git
+> wiki if people think it can help newbies:
+> 
+> update file content to index: git update-index file
+Or "git add file" woth new git.
 
->>> _simplified_, so you get a fair amount of duplicate parents etc which=
-=20
->>> you'd still have to simplify and which don't do anything at all).
->>>
->>> Without the "--full-history", you get a simplified history, but it's =
+> add a file to index: git add file
+> delete a file from index: git update-index --remove --force-remove
+> (or remove that file in workdir and do git update-index --remove)
+Or "git rm file" (old version did remove only from index, new version
+is to remove also from working directory if it matches HEAD)
 
->>> likely to be _too_ simplified for your use, since it will not only=20
->>> collapse multiple identical parents, it will also totally _remove_ pa=
-rents=20
->>> that don't introduce any new content.
->> Considering that git-split does exactly that (remove parents that don'=
-t
->> introduce new content, assuming they changed things outside the
->> subtree), that might actually work for us.  I just checked, and the
->> output of "git log --parents -- $project" on one of my repositories
->> seems to show the same sequence of commits as git log --parents on the=
+> read a tree to index: git read-tree treeish, git reset treeish
+> read a file from a tree to index: git ls-tree <tree-ish> file|git
+> update-index --index-info --stdin
+> copy a file from index to workdir: git checkout-index file
+Or just "git checkout -- file"
 
->> head commit printed by git-split $project (apart from the rewritten
->> sha1s), including elimination of irrelevant merges.
->=20
-> So one potential action item that came out from this discussion
-> for me is to either modify --pretty=3Draw (or add --pretty=3Drawish)
-> that gives the rewritten parents instead of real parents?  With
-> that, you can drop the code to simplify ancestry by hand in your
-> loop, and also you do not have to do the grafts inforamation
-> yourself either?
->=20
-> If that is the case I'd be very happy.
->=20
-> The only thing left for us to decide is if reporting the true
-> parenthood like the current --pretty=3Draw makes sense (if so we
-> need to keep it and introduce --pretty=3Drawfish).
->=20
-> The only in-tree user of --pretty=3Draw seems to be git-svn but it
-> only looks at path-unlimited log/rev-list from one given commit,
-> so the only difference between dumping what is recorded in the
-> commit object and listing what parents we _think_ the commit has
-> is what we read from grafts.  I think we are safe to just "fix"
-> the behaviour of --pretty=3Draw
+> refresh index: git update-index --refresh
+> copy entire index to workdir: git checkout-index
+Or just "git checkout"
 
-I actually think I want to look further into the idea of just using git
---pretty=3Draw --parents -- $project, and see if I can find any corner ca=
-ses
-where it generates a different history than what we want.  This combinati=
-on of
-options seems like it provides everything we need: redundant history
-simplification, parent rewriting based on simplification and grafts, and =
-easy
-parsing.  If the only case in which it differs occurs when you have two
-distinct commits with identical trees, I don't know that I care too much;=
- that
-particular scenario seems unlikely to occur in any of the trees I care ab=
-out,
-and any sane simplification behavior for it seems OK. :) As long as it ru=
-ns
-correctly with various ancestor/descendant/cousin/unrelated relationships=
+> output a file from index to stdout: ?? (is there a command for this?)
+"git cat-file -p ::<filename>"
 
-between merged branches (which I want to test further), I think it will d=
-o the
-job nicely.
+> list files in index: git ls-files
+> compare index and workdir file listing: 
+>    git ls-files (with lots of options here) 
+> diff between workdir and index: git diff
+> diff between index and a tree: git diff --cached <tree-ish>
 
-- Josh Triplett
+diff between workdir and tree: git diff <tree-ish> 
 
-
---------------enigCDE85A4A98B45E40B30ED5CB
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.5 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
-
-iD8DBQFFPsUNGJuZRtD+evsRAjHSAJ98lvpxIL8CyhBwh8m/TvndwpGm/ACeMv6H
-1m4teG8a7OJYdZg60nkMWAs=
-=G0WX
------END PGP SIGNATURE-----
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
 
