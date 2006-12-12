@@ -1,84 +1,85 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: WARNING: THIS PATCH CAN BREAK YOUR REPO, was Re: [PATCH 2/3] Only repack active packs by skipping over kept packs.
-Date: Mon, 30 Oct 2006 14:54:46 -0800
-Message-ID: <7vbqntv2h5.fsf@assigned-by-dhcp.cox.net>
-References: <20061029093754.GD3847@spearce.org>
-	<Pine.LNX.4.64.0610301332440.11384@xanadu.home>
-	<20061030202611.GA5775@spearce.org>
-	<20061030205200.GA20236@delft.aura.cs.cmu.edu>
-	<7v3b95wjmg.fsf@assigned-by-dhcp.cox.net>
+From: Sebastian Harl <sh@tokkee.org>
+Subject: t9100-git-svn-basic.sh fails
+Date: Wed, 13 Dec 2006 00:23:21 +0100
+Message-ID: <20061212232321.GL2476@albany.tokkee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Mon, 30 Oct 2006 22:55:39 +0000 (UTC)
-Cc: git@vger.kernel.org, Nicolas Pitre <nico@cam.org>,
-	Shawn Pearce <spearce@spearce.org>
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="kkRamCq5m5VQq0L6"
+NNTP-Posting-Date: Tue, 12 Dec 2006 23:46:36 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <7v3b95wjmg.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Mon, 30 Oct 2006 13:59:03 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Greylist: delayed 1381 seconds by postgrey-1.27 at vger.kernel.org; Tue, 12 Dec 2006 18:46:22 EST
+Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30546>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Geg1s-0007dg-G3 for gcvg-git@gmane.org; Mon, 30 Oct
- 2006 23:54:52 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34169>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GuHKM-0007Yx-Jb for gcvg-git@gmane.org; Wed, 13 Dec
+ 2006 00:46:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1422731AbWJ3Wyt (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 30 Oct 2006
- 17:54:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422740AbWJ3Wyt
- (ORCPT <rfc822;git-outgoing>); Mon, 30 Oct 2006 17:54:49 -0500
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:20910 "EHLO
- fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP id S1422731AbWJ3Wys
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 30 Oct 2006 17:54:48 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao11.cox.net
- (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
- <20061030225447.UFCK13992.fed1rmmtao11.cox.net@fed1rmimpo01.cox.net>; Mon, 30
- Oct 2006 17:54:47 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id gmuT1V00Z1kojtg0000000 Mon, 30 Oct 2006
- 17:54:28 -0500
-To: Jan Harkes <jaharkes@cs.cmu.edu>
+ S932515AbWLLXqX (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 12 Dec 2006
+ 18:46:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932565AbWLLXqX
+ (ORCPT <rfc822;git-outgoing>); Tue, 12 Dec 2006 18:46:23 -0500
+Received: from mail.tokkee.org ([212.114.247.92]:39626 "EHLO
+ albany.tokkee.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+ id S932515AbWLLXqX (ORCPT <rfc822;git@vger.kernel.org>); Tue, 12 Dec 2006
+ 18:46:23 -0500
+Received: by albany.tokkee.org (Postfix, from userid 1000) id 46003364001;
+ Wed, 13 Dec 2006 00:23:21 +0100 (CET)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano <junkio@cox.net> writes:
 
-> Jan Harkes <jaharkes@cs.cmu.edu> writes:
->
->> The following patch does fix the problem Nicolas reported, but for some
->> reason I'm still getting only 102 objects (only tags and the commits
->> they refer to?) with your test.
->
-> One potential downside of this is that this makes an obscure but
-> useful "gitk --unpacked" useless (robs performance).
->
-> http://thread.gmane.org/gmane.comp.version-control.git/19197/focus=19207
->
-> But other than that, I think it is an Ok change.  The original
-> semantics of --unpacked (with or without "pretend as if objects
-> in this pack are loose") were, eh, "strange".
+--kkRamCq5m5VQq0L6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I changed my mind.
+Hi,
 
-Even without --unpacked=pretend-this-is-loose nor .keep flag,
-the original semantics of --unpacked and git repack do not play
-with each other well.  You can have a history where you have a
-pack in the middle of the history, and would expect "git repack"
-without -a to make your .git/objects/??/ directories empty but
-it would not because --unpacked has been defined to mean "stop
-traversal when we hit a packed commit".  That would _not_
-corrupt the repository, but is very counter-intuitive.
+When compiling git 1.4.4.2 on my Debian Sarge box t9100-git-svn-basic.sh fa=
+ils
+with the following output:
 
-Unfortunately this is a semantic change in the middle of the
-road (and it would change the _output_ not just performance of
-"gitk --unpacked"), but I think it is a semantic change of a
-good kind.
+  * FAIL 6: detect node change from directory to file #1
+         git-svn commit --find-copies-harder --rmdir remotes/git-svn..mybra=
+nch2
 
-So I'll take Jan's patch as is.  It needs to go all the way down
-to "maint", since we have --unpacked= there already.
+I'm using subversion 1.3.2.
+
+Versions up to 1.4.3.2 built fine.
+
+Any clues what this might be caused by?
+
+Thanks in advance.
+
+Cheers,
+Sebastian
+
+--=20
+Sebastian "tokkee" Harl
+GnuPG-ID: 0x8501C7FC
+http://tokkee.org/
+
+
+--kkRamCq5m5VQq0L6
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFFfznpEFEKc4UBx/wRApGoAKCPbqlVxmrYFH0d2oevJablJSEGbACfSC6Z
+26Flfja+TuvdMm76hFKUjR0=
+=EZj3
+-----END PGP SIGNATURE-----
+
