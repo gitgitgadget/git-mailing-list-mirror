@@ -1,67 +1,65 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Generating docu in 1.4.3.3.g01929
-Date: Fri, 27 Oct 2006 14:34:55 -0700
-Message-ID: <7vodrxe934.fsf@assigned-by-dhcp.cox.net>
-References: <200610271726.k9RHQr0F024712@laptop13.inf.utfsm.cl>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: Using git as a general backup mechanism (was Re: Using GIT to store /etc)
+Date: Wed, 13 Dec 2006 12:15:25 +1300
+Message-ID: <46a038f90612121515l77c77376xd98e148498e889c4@mail.gmail.com>
+References: <787BE48C-1808-4A33-A368-5E8A3F00C787@mac.com>
+	 <Pine.LNX.4.64.0612111837210.20138@iabervon.org>
+	 <8900B938-1360-4A67-AB15-C9E84255107B@mac.com>
+	 <200612121553.37499.andyparkins@gmail.com>
+	 <457F31E6.8090701@midwinter.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 27 Oct 2006 21:36:32 +0000 (UTC)
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Tue, 12 Dec 2006 23:15:44 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <200610271726.k9RHQr0F024712@laptop13.inf.utfsm.cl> (Horst H. von
-	Brand's message of "Fri, 27 Oct 2006 14:26:53 -0300")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=VC71M4UXaPmCHTin1THFIoFx6iWYmlYly2y3dPMqmfOYu65Vf8KqX5Wtt6dUjxSpqDFCdpW7w16pFJ4QlVWW4osdpp3oVYBR+D1NrBbK3fVCdSP+pLXUPIeYBYTyS95klWKeigeeWnsLIw0LJm6MOjmsOQc8nUX88qiJXadzS3Y=
+In-Reply-To: <457F31E6.8090701@midwinter.com>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30348>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GdZLx-0002NV-9K for gcvg-git@gmane.org; Fri, 27 Oct
- 2006 23:35:03 +0200
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34165>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GuGqa-0003jR-Vq for gcvg-git@gmane.org; Wed, 13 Dec
+ 2006 00:15:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752499AbWJ0Ve6 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 27 Oct 2006
- 17:34:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752504AbWJ0Ve5
- (ORCPT <rfc822;git-outgoing>); Fri, 27 Oct 2006 17:34:57 -0400
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:34797 "EHLO
- fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP id S1752499AbWJ0Ve5
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 27 Oct 2006 17:34:57 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao02.cox.net
- (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
- <20061027213456.LVUR12581.fed1rmmtao02.cox.net@fed1rmimpo01.cox.net>; Fri, 27
- Oct 2006 17:34:56 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id fZae1V0021kojtg0000000 Fri, 27 Oct 2006
- 17:34:38 -0400
-To: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
+ S932531AbWLLXP2 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 12 Dec 2006
+ 18:15:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932445AbWLLXP2
+ (ORCPT <rfc822;git-outgoing>); Tue, 12 Dec 2006 18:15:28 -0500
+Received: from nf-out-0910.google.com ([64.233.182.191]:39106 "EHLO
+ nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S932531AbWLLXP1 (ORCPT <rfc822;git@vger.kernel.org>); Tue, 12 Dec
+ 2006 18:15:27 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so364029nfa for
+ <git@vger.kernel.org>; Tue, 12 Dec 2006 15:15:26 -0800 (PST)
+Received: by 10.49.20.5 with SMTP id x5mr2019830nfi.1165965325971; Tue, 12
+ Dec 2006 15:15:25 -0800 (PST)
+Received: by 10.49.60.1 with HTTP; Tue, 12 Dec 2006 15:15:25 -0800 (PST)
+To: "Steven Grimm" <koreth@midwinter.com>
 Sender: git-owner@vger.kernel.org
 
-"Horst H. von Brand" <vonbrand@inf.utfsm.cl> writes:
+Steven,
 
-> I'm getting lots of these after today's pull:
->
-> asciidoc -b docbook -d manpage -f asciidoc.conf git-daemon.txt
-> xmlto -m callouts.xsl man git-daemon.xml
-> error : unterminated entity reference                
-> error : unterminated entity reference                
-> error : unterminated entity reference             ...
-> error : unterminated entity reference                
-> error : unterminated entity reference                
-> Writing git-daemon.1 for refentry
+I've been thinking myself of writing a pdumpfs lookalike that uses git
+internally. Sounds you you've got one already ;-)
 
-Is it only with git-daemon.txt (as opposed to other files like
-git-cat-file.txt), is it only with generating git-daemon.1 (as
-opposed to generating git-daemon.html), and is it only with
-today's pull (as opposed to 1.4.3.3)?
+In terms of getting rid of old history, have you considered moving a
+graft point "forward" in time, and running git-repack -a -d? With your
+history being (mostly?) linear this could be a workable scheme, but I
+don't have much practice with using grafts.
 
-The point I am getting at is if it is only for you and if so
-we might want to pinpoint where the breakage is.
+cheers,
 
-I do not see it with my xmlto and asciidoc combination, either
-on FC6 nor on Debian testing.
+
