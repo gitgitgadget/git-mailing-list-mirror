@@ -4,53 +4,60 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: lockfiles & fork()
-Date: Fri, 27 Oct 2006 18:52:19 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0610271851130.3849@g5.osdl.org>
-References: <Pine.LNX.4.63.0610280319250.26682@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Colourise git-branch output
+Date: Tue, 12 Dec 2006 10:43:42 -0800
+Message-ID: <7vk60xuf8h.fsf@assigned-by-dhcp.cox.net>
+References: <200612120641.52556.andyparkins@gmail.com>
+	<457E6C65.4B6D131@eudaptics.com>
+	<7vpsapwhl2.fsf@assigned-by-dhcp.cox.net>
+	<200612121103.31110.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Sat, 28 Oct 2006 02:01:02 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Tue, 12 Dec 2006 18:43:53 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <Pine.LNX.4.63.0610280319250.26682@wbgn013.biozentrum.uni-wuerzburg.de>
-X-MIMEDefang-Filter: osdl$Revision: 1.155 $
-X-Scanned-By: MIMEDefang 2.36
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30357>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GddNN-0007Cc-ER for gcvg-git@gmane.org; Sat, 28 Oct
- 2006 03:53:11 +0200
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34123>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GuCbT-00037s-Kp for gcvg-git@gmane.org; Tue, 12 Dec
+ 2006 19:43:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751550AbWJ1BwY (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 27 Oct 2006
- 21:52:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751552AbWJ1BwY
- (ORCPT <rfc822;git-outgoing>); Fri, 27 Oct 2006 21:52:24 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:38039 "EHLO smtp.osdl.org") by
- vger.kernel.org with ESMTP id S1751550AbWJ1BwX (ORCPT
- <rfc822;git@vger.kernel.org>); Fri, 27 Oct 2006 21:52:23 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
- smtp.osdl.org (8.12.8/8.12.8) with ESMTP id k9S1qKPo007169
- (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Fri, 27
- Oct 2006 18:52:20 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
- shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id k9S1qJhD011522; Fri, 27 Oct
- 2006 18:52:19 -0700
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+ S932328AbWLLSno (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 12 Dec 2006
+ 13:43:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932329AbWLLSno
+ (ORCPT <rfc822;git-outgoing>); Tue, 12 Dec 2006 13:43:44 -0500
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:60466 "EHLO
+ fed1rmmtao12.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S932328AbWLLSnn (ORCPT <rfc822;git@vger.kernel.org>); Tue, 12 Dec 2006
+ 13:43:43 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao12.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061212184343.KLZJ4226.fed1rmmtao12.cox.net@fed1rmimpo01.cox.net>; Tue, 12
+ Dec 2006 13:43:43 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id xuj41V00h1kojtg0000000; Tue, 12 Dec 2006
+ 13:43:05 -0500
+To: Andy Parkins <andyparkins@gmail.com>
 Sender: git-owner@vger.kernel.org
 
+Andy Parkins <andyparkins@gmail.com> writes:
 
+>> +	"",		/* LOCAL (normal) */
+>> +	"\033[32m",	/* CURRENT (green) */
+>
+> In keeping with the "don't use green" idea - can I suggest just bold normal 
+> for the CURRENT?  That way there is the most minimal use of colour for the 
+> default git-branch output, but still retaining a visual indicator.
 
-On Sat, 28 Oct 2006, Johannes Schindelin wrote:
-> 
-> when you setup a lockfile, and then fork(), you could easily end up with 
-> atexit() kicking in to remove the lockfile, before the main process has a 
-> chance to commit. (Yes, I need to hold the lock long before the fork()).
+I do not have strong preference either way.
 
-The easiest way to handle this would be for the lockfile logic to just 
-save the pid associated with each lockfile... And for the atexit function 
-to just ignore it if the pid doesn't match. 
-
+The CURRENT is highlighted with '*' so I think we certainly can
+lose green and even go vanilla.  I only tried to avoid bold
+because no built-in default coloring currently use it, and in
+the past I've worked with terminals that do not have enough
+contrast between normal and bold and for some people that might
+become an issue.
