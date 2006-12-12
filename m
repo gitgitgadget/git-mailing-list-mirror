@@ -1,48 +1,61 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_ADSP_NXDOMAIN,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
-From: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [Patch to DRAFT 2 (2/2)] Branching and merging with git
-Date: Wed, 22 Nov 2006 14:36:03 +0100
-Message-ID: <45645243.4030400@lsrfire.ath.cx>
-References: <7vslghftix.fsf@assigned-by-dhcp.cox.net>	<20061120235136.4841.qmail@science.horizon.com> <7vlkm3u4kl.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Uninstall rule for top level Makefile
+Date: Tue, 12 Dec 2006 15:15:29 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0612121512060.2807@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <200612112214.09735.andyparkins@gmail.com>
+ <Pine.LNX.4.63.0612121325000.2807@wbgn013.biozentrum.uni-wuerzburg.de>
+ <200612121251.33051.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Wed, 22 Nov 2006 13:36:25 +0000 (UTC)
-Cc: linux@horizon.com, git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Tue, 12 Dec 2006 14:15:39 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.8 (Windows/20061025)
-In-Reply-To: <7vlkm3u4kl.fsf@assigned-by-dhcp.cox.net>
-X-Enigmail-Version: 0.94.0.0
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <200612121251.33051.andyparkins@gmail.com>
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32086>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GmsGs-0005rj-Qu for gcvg-git@gmane.org; Wed, 22 Nov
- 2006 14:36:15 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34100>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gu8Pw-0007DS-5F for gcvg-git@gmane.org; Tue, 12 Dec
+ 2006 15:15:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1755865AbWKVNgJ convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Wed, 22 Nov 2006 08:36:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755870AbWKVNgJ
- (ORCPT <rfc822;git-outgoing>); Wed, 22 Nov 2006 08:36:09 -0500
-Received: from static-ip-217-172-187-230.inaddr.intergenia.de
- ([217.172.187.230]:48273 "EHLO neapel230.server4you.de") by vger.kernel.org
- with ESMTP id S1755865AbWKVNgI (ORCPT <rfc822;git@vger.kernel.org>); Wed, 22
- Nov 2006 08:36:08 -0500
-Received: from [10.0.1.3] (p508E413F.dip.t-dialin.net [80.142.65.63]) by
- neapel230.server4you.de (Postfix) with ESMTP id 1441622005; Wed, 22 Nov 2006
- 14:36:07 +0100 (CET)
-To: Junio C Hamano <junkio@cox.net>
+ S1751306AbWLLOPd (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 12 Dec 2006
+ 09:15:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751364AbWLLOPd
+ (ORCPT <rfc822;git-outgoing>); Tue, 12 Dec 2006 09:15:33 -0500
+Received: from mail.gmx.net ([213.165.64.20]:33166 "HELO mail.gmx.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S1751306AbWLLOPc
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 12 Dec 2006 09:15:32 -0500
+Received: (qmail invoked by alias); 12 Dec 2006 14:15:29 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp041) with SMTP; 12 Dec 2006 15:15:29 +0100
+To: Andy Parkins <andyparkins@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano schrieb:
-> -tools will not let you commit to the branch.
-> +tools will not let you commit to the remote branchbranch.
+Hi,
 
-s/branchbranch/branch/
+On Tue, 12 Dec 2006, Andy Parkins wrote:
 
+> I assume I've missed something in the linked thread - what was it you 
+> wanted me to pick up from it?
+
+The uninstall target _only_ solves the case you mentioned: when you 
+installed Git in the wrong place. But then it is fragile: if you put the 
+new path into config.mak, or you provided the PREFIX on the command line, 
+and possibly do not remember what it was, the uninstall goes wrong.
+
+But then, I do not care at all about that target being in the Makefile or 
+not. I'll just ignore it, just as almost everybody else.
+
+Ciao,
+Dscho
