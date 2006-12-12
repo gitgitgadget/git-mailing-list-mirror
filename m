@@ -1,66 +1,80 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Making literal "20" symbolic
-Date: Mon, 20 Nov 2006 11:49:35 +0100
-Message-ID: <200611201049.41024.andyparkins@gmail.com>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Tracking a repository for content instead of history
+Date: Tue, 12 Dec 2006 17:24:00 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0612121715230.2807@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <200612121235.09984.andyparkins@gmail.com>
+ <200612121326.24508.andyparkins@gmail.com>
+ <Pine.LNX.4.63.0612121527070.2807@wbgn013.biozentrum.uni-wuerzburg.de>
+ <200612121538.41197.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Mon, 20 Nov 2006 10:50:02 +0000 (UTC)
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Tue, 12 Dec 2006 16:27:59 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=iAchpMhwaM1CuMD+gPJh3u66LU+Cve8TSsQxWy2a/rm/NBb+2WNABI0QYwTzTLkklijl13cwS0jZKDQZcmyhWInbdE77t1hOYI/Yvtx85d7z1BGalKHJ/q6dXCpNNGkEdepVnCbW9LQdeFMWjWM4Lz+kbeVP4A2FFe833YzOPgE=
-User-Agent: KMail/1.9.5
-Content-Disposition: inline
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <200612121538.41197.andyparkins@gmail.com>
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31900>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gm6io-0003RH-UD for gcvg-git@gmane.org; Mon, 20 Nov
- 2006 11:49:55 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34107>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GuATy-0004ZX-Lp for gcvg-git@gmane.org; Tue, 12 Dec
+ 2006 17:27:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1755036AbWKTKtu (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 20 Nov 2006
- 05:49:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755748AbWKTKtu
- (ORCPT <rfc822;git-outgoing>); Mon, 20 Nov 2006 05:49:50 -0500
-Received: from ug-out-1314.google.com ([66.249.92.173]:14489 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1755036AbWKTKtt
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 20 Nov 2006 05:49:49 -0500
-Received: by ug-out-1314.google.com with SMTP id m3so1138654ugc for
- <git@vger.kernel.org>; Mon, 20 Nov 2006 02:49:48 -0800 (PST)
-Received: by 10.66.219.11 with SMTP id r11mr2544761ugg.1164019787457; Mon, 20
- Nov 2006 02:49:47 -0800 (PST)
-Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
- ESMTP id w40sm4120271ugc.2006.11.20.02.49.47; Mon, 20 Nov 2006 02:49:47 -0800
- (PST)
-To: git@vger.kernel.org
+ S1751540AbWLLQYu (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 12 Dec 2006
+ 11:24:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751516AbWLLQY0
+ (ORCPT <rfc822;git-outgoing>); Tue, 12 Dec 2006 11:24:26 -0500
+Received: from mail.gmx.net ([213.165.64.20]:42333 "HELO mail.gmx.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S1751521AbWLLQYD
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 12 Dec 2006 11:24:03 -0500
+Received: (qmail invoked by alias); 12 Dec 2006 16:24:01 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp046) with SMTP; 12 Dec 2006 17:24:01 +0100
+To: Andy Parkins <andyparkins@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Hello,
+Hi,
 
-I notice that there are a lot of uses of the literal 20 throughout git; I'd 
-like to change them (as appropriate) to HASH_WIDTH, or similar; and maybe 
-HASH_WIDTH_ASCII for the 40s.
+On Tue, 12 Dec 2006, Andy Parkins wrote:
 
-Is there a particular header file that is appropriate to put 
+> On Tuesday 2006 December 12 14:28, Johannes Schindelin wrote:
+> 
+> > You are not by any chance talking about the --remote option to
+> > git-archive?
+> 
+> I wasn't; but that's certainly a helpful switch.  It's certainly a huge 
+> help.
+> 
+> > If you want to reduce the number of objects to be downloaded, by telling
+> > the other side what you have, you literally end up with something like
+> > shallow clone: the other side _has_ to support it.
+> 
+> I suppose so; but I was thinking more an automated way of getting the data 
+> that is supplied for the kernel anyway.  So:
+> 
+> base-v1.0.0.tar.gz
+> patch-v1.0.1.gz
+> patch-v1.0.2.gz
+> etc
+> 
+> Each patch is obviously smaller than "base".  Git could easily make the 
+> patches, and each of those patches could be fed by hand into a repository 
+> with git-apply.
 
-#define HASH_WIDTH 20
-#define HASH_WIDTH_ASCII (HASH_WIDTH*2)
+If it weren't for the recent discussion of kernel.org being overloaded 
+with gitweb processes, I'd just write down a hint like 
+http://repo.or.cz/w/git/jnareb-git.git?a=commitdiff_plain;h=next;hp=master
 
-Of course, I plan to review each instance to make sure I'm not changing a 
-non-hash width 20.
+But since kernel.org is overloaded, I will not do that.
 
-
-Andy
--- 
-Dr Andy Parkins, M Eng (hons), MIEE
+Ciao,
