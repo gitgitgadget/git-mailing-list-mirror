@@ -1,65 +1,66 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git-pull from git.git - no remote ref for pu or next?
-Date: Tue, 12 Dec 2006 20:32:39 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612122031450.2807@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <863b7l83o9.fsf@blue.stonehenge.com> <86y7pd6oz7.fsf@blue.stonehenge.com>
- <Pine.LNX.4.64.0612120949230.3535@woody.osdl.org>
- <Pine.LNX.4.63.0612121908100.2807@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0612121352520.18171@xanadu.home>
- <Pine.LNX.4.63.0612121956470.2807@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0612121420580.18171@xanadu.home>
+X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+Subject: Re: index manipulation quickref
+Date: Wed, 13 Dec 2006 04:32:15 +0700
+Message-ID: <fcaeb9bf0612121332m51dea9day2f18c80b94ff4d5d@mail.gmail.com>
+References: <fcaeb9bf0612120257p35dc9483ob65eea9ae21b5f7b@mail.gmail.com>
+	 <7vac1tvuyr.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Tue, 12 Dec 2006 19:32:58 +0000 (UTC)
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	"Randal L. Schwartz" <merlyn@stonehenge.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Tue, 12 Dec 2006 21:32:24 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <Pine.LNX.4.64.0612121420580.18171@xanadu.home>
-X-Y-GMX-Trusted: 0
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=GBkzHHgtZowrYXM2Ikc6LhbGcePk/0diwWyweRVrezq8CKjx2JZlITb+AK/Dm3aZurJxcLlatJMssiHlt5A2pcQJprCd525std+E94dE8WzRVZ1CjA+y/WqDFgACWfai4TqT+6t+ye7SFnUyisjXLb4+sS5sn3AMqW8oOB+v7L4=
+In-Reply-To: <7vac1tvuyr.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34135>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34146>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GuDN1-0002kT-0s for gcvg-git@gmane.org; Tue, 12 Dec
- 2006 20:32:55 +0100
+ esmtp (Exim 4.50) id 1GuFEc-0003uh-KN for gcvg-git@gmane.org; Tue, 12 Dec
+ 2006 22:32:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932401AbWLLTcp (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 12 Dec 2006
- 14:32:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932403AbWLLTcp
- (ORCPT <rfc822;git-outgoing>); Tue, 12 Dec 2006 14:32:45 -0500
-Received: from mail.gmx.net ([213.165.64.20]:58655 "HELO mail.gmx.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S932401AbWLLTcn
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 12 Dec 2006 14:32:43 -0500
-Received: (qmail invoked by alias); 12 Dec 2006 19:32:41 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp048) with SMTP; 12 Dec 2006 20:32:41 +0100
-To: Nicolas Pitre <nico@cam.org>
+ S932443AbWLLVcT (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 12 Dec 2006
+ 16:32:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932445AbWLLVcS
+ (ORCPT <rfc822;git-outgoing>); Tue, 12 Dec 2006 16:32:18 -0500
+Received: from an-out-0708.google.com ([209.85.132.244]:9539 "EHLO
+ an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S932402AbWLLVcS (ORCPT <rfc822;git@vger.kernel.org>); Tue, 12 Dec
+ 2006 16:32:18 -0500
+Received: by an-out-0708.google.com with SMTP id b33so462674ana for
+ <git@vger.kernel.org>; Tue, 12 Dec 2006 13:32:16 -0800 (PST)
+Received: by 10.78.81.20 with SMTP id e20mr19119hub.1165959135597; Tue, 12
+ Dec 2006 13:32:15 -0800 (PST)
+Received: by 10.78.100.8 with HTTP; Tue, 12 Dec 2006 13:32:15 -0800 (PST)
+To: "Junio C Hamano" <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Hi,
+On 12/13/06, Junio C Hamano <junkio@cox.net> wrote:
+> I think this goes in the wrong direction.  For "newbies" the
+> Porcelain-ish set is supposed to be enough and if there is
+> something missing that they need to do update-index command
+> itself or a pipeline that involves update-index to achieve
+> common tasks, we should enhance Porcelain-ish that captures the
+> pattern.
 
-On Tue, 12 Dec 2006, Nicolas Pitre wrote:
+It is supposed to be porcelain command only. I figure what operation a
+user may need when manipulating index, then find the corresponding
+porcelain command.
 
-> On Tue, 12 Dec 2006, Johannes Schindelin wrote:
-> 
-> > But it would become a non-problem when the HTTP transport would learn 
-> > to read and interpret the .idx files, basically constructing thin 
-> > packs from parts of the .pack files ("Content-Range:" comes to 
-> > mind)...
-> 
-> Woooh.
-
-Does that mean "Yes, I'll do it"? ;-)
-
-Ciao,
-Dscho
+As you can see, we have porcelain commands for most of operations. The
+missing piece is reset a file in index (and maybe "git cat-file
+::file" -- it's too cryptic). Hopefully "git reset -- file" will be
+implemented soon.
+-- 
