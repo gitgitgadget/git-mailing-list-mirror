@@ -1,59 +1,66 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 1/2] for-each-ref: "creator" and "creatordate" fields
-Date: Thu, 02 Nov 2006 18:40:33 -0800
-Message-ID: <7vmz79l0bi.fsf@assigned-by-dhcp.cox.net>
-References: <200610281930.05889.jnareb@gmail.com>
-	<7vslh86uz9.fsf@assigned-by-dhcp.cox.net>
-	<200611022017.31351.jnareb@gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: git-pull from git.git - no remote ref for pu or next?
+Date: Tue, 12 Dec 2006 10:23:36 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0612121021270.3535@woody.osdl.org>
+References: <863b7l83o9.fsf@blue.stonehenge.com> <86y7pd6oz7.fsf@blue.stonehenge.com>
+ <Pine.LNX.4.64.0612120949230.3535@woody.osdl.org>
+ <Pine.LNX.4.63.0612121908100.2807@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 3 Nov 2006 02:48:30 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Tue, 12 Dec 2006 18:23:57 +0000 (UTC)
+Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+In-Reply-To: <Pine.LNX.4.63.0612121908100.2807@wbgn013.biozentrum.uni-wuerzburg.de>
+X-MIMEDefang-Filter: osdl$Revision: 1.162 $
+X-Scanned-By: MIMEDefang 2.36
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30770>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gfp2D-0003wO-0I for gcvg-git@gmane.org; Fri, 03 Nov
- 2006 03:44:20 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34119>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GuCIF-0008L4-5X for gcvg-git@gmane.org; Tue, 12 Dec
+ 2006 19:23:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752972AbWKCCkh (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 2 Nov 2006
- 21:40:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752978AbWKCCkg
- (ORCPT <rfc822;git-outgoing>); Thu, 2 Nov 2006 21:40:36 -0500
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:9348 "EHLO
- fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP id S1752969AbWKCCke
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 2 Nov 2006 21:40:34 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao11.cox.net
- (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
- <20061103024034.MCAC13992.fed1rmmtao11.cox.net@fed1rmimpo01.cox.net>; Thu, 2
- Nov 2006 21:40:34 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id i2gC1V00f1kojtg0000000 Thu, 02 Nov 2006
- 21:40:13 -0500
-To: Jakub Narebski <jnareb@gmail.com>
+ S932290AbWLLSXs (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 12 Dec 2006
+ 13:23:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932325AbWLLSXs
+ (ORCPT <rfc822;git-outgoing>); Tue, 12 Dec 2006 13:23:48 -0500
+Received: from smtp.osdl.org ([65.172.181.25]:53560 "EHLO smtp.osdl.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S932290AbWLLSXr
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 12 Dec 2006 13:23:47 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
+ smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kBCINeID008856
+ (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Tue, 12
+ Dec 2006 10:23:41 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
+ shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kBCINa3a010914; Tue, 12 Dec
+ 2006 10:23:38 -0800
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-Jakub Narebski <jnareb@gmail.com> writes:
 
-> From fa1a32c9a7c8a31b122df7d07f4a8885cbe120d0 Mon Sep 17 00:00:00 2001
-> From: Junio C Hamano <junkio@cox.net>
-> Date: Sat, 28 Oct 2006 13:33:46 -0700
-> Subject: [PATCH 1/2] for-each-ref: "creator" and "creatordate" fields
->
-> This adds "creator" (which is parallel to "tagger" or "committer")
-> and "creatordate" (corresponds to "taggerdate" and
-> "committerdate").
 
-The first line should not be in the message.  I agree that it is
-sensible not to call this "epoch", and "creator" is fine by me.
+On Tue, 12 Dec 2006, Johannes Schindelin wrote:
+> > rsync generally _works_ apart from the slight race-condition issue, 
+> 
+> ... and git would probably change the pack structure (i.e. which objects 
+> are in which packs, or even loose) which would be too bad for all those 
+> HTTP leechers ...
 
-Thanks.  Will apply.
+Well, as it is, I end up repacking my git archives on kernel.org every two 
+weeks or so anyway, so anybody who uses stupid protocols (rsync or http) 
+will end up downloading everything anew anyway.
+
+And kernel.org will probably start doing automatic repacking, since the 
+current situation just means that some people don't repack on their own, 
+and have tens of thousands of loose objects.
+
+You really don't want to use the non-native protocols unless you have to, 
+or for projects that don't change.
+
