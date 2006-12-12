@@ -1,91 +1,59 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [WISH] Store also tag dereferences in packed-refs
-Date: Sat, 18 Nov 2006 19:43:46 +0100
-Message-ID: <20061118184345.GO7201@pasky.or.cz>
-References: <e5bfff550611180115j135746a1h916e8ae029d1374d@mail.gmail.com> <7vmz6oeh2k.fsf@assigned-by-dhcp.cox.net>
+From: "Bahadir Balban" <bahadir.balban@gmail.com>
+Subject: Adding a new file as if it had existed
+Date: Tue, 12 Dec 2006 10:05:08 +0000
+Message-ID: <7ac1e90c0612120205k38b2fc14jbfd8ea682406efb2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sat, 18 Nov 2006 18:43:55 +0000 (UTC)
-Cc: Marco Costalba <mcostalba@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Tue, 12 Dec 2006 10:05:20 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=YccF2Cl6dK59zW8Lk1X+94pqr//EqrDYLZ5Pfltas+KJffV+HylBJg1iG8Zaplst2aOX8+TcWGo/gpmeRaMdi5CurlFQC6iUk6YzLveXEIacjVaXgaveCB9sw/7JRp4YgbvPrPi7zQniYOExq092uz5jWzt/Z5Dyak4bjw01Fj8=
 Content-Disposition: inline
-In-Reply-To: <7vmz6oeh2k.fsf@assigned-by-dhcp.cox.net>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31788>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GlVAM-0007LS-Ki for gcvg-git@gmane.org; Sat, 18 Nov
- 2006 19:43:51 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34075>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gu4Vf-00073A-TK for gcvg-git@gmane.org; Tue, 12 Dec
+ 2006 11:05:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1755307AbWKRSns (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 18 Nov 2006
- 13:43:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755317AbWKRSns
- (ORCPT <rfc822;git-outgoing>); Sat, 18 Nov 2006 13:43:48 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:19637 "EHLO machine.or.cz") by
- vger.kernel.org with ESMTP id S1755307AbWKRSnr (ORCPT
- <rfc822;git@vger.kernel.org>); Sat, 18 Nov 2006 13:43:47 -0500
-Received: (qmail 18998 invoked by uid 2001); 18 Nov 2006 19:43:46 +0100
-To: Junio C Hamano <junkio@cox.net>
+ S1751025AbWLLKFL (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 12 Dec 2006
+ 05:05:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751086AbWLLKFL
+ (ORCPT <rfc822;git-outgoing>); Tue, 12 Dec 2006 05:05:11 -0500
+Received: from nf-out-0910.google.com ([64.233.182.189]:64175 "EHLO
+ nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1751025AbWLLKFK (ORCPT <rfc822;git@vger.kernel.org>); Tue, 12 Dec
+ 2006 05:05:10 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so193434nfa for
+ <git@vger.kernel.org>; Tue, 12 Dec 2006 02:05:08 -0800 (PST)
+Received: by 10.82.139.17 with SMTP id m17mr788836bud.1165917908469; Tue, 12
+ Dec 2006 02:05:08 -0800 (PST)
+Received: by 10.82.186.15 with HTTP; Tue, 12 Dec 2006 02:05:08 -0800 (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On Sat, Nov 18, 2006 at 07:38:11PM CET, Junio C Hamano wrote:
-> "Marco Costalba" <mcostalba@gmail.com> writes:
-> 
-> > Time needed to execute git-peek-remote in my box with cold cache currently is:
-> >
-> > - git tree 2.347 ms
-> > - linux tree 2.144 ms
-> >
-> > And refs are *already* packed in both repos.
-> >
-> > Looking at packed-refs file, it contains something like:
-> >
-> > d9b0f913ce0508fcc83e642e0241f373428368e5 refs/tags/v1.4.3
-> > 4314f5982d2aac08001a977fc0b1b611e858e025 refs/tags/v1.4.3-rc1
-> >
-> > while I would need something like git-peek-remote output,
-> >
-> > d9b0f913ce0508fcc83e642e0241f373428368e5        refs/tags/v1.4.3
-> > e0b0830726286287744cc9e1a629a534bbe75452        refs/tags/v1.4.3^{}
-> > 4314f5982d2aac08001a977fc0b1b611e858e025        refs/tags/v1.4.3-rc1
-> > 1965efb1599f59b8e3380335d1fa395e2008a30b        refs/tags/v1.4.3-rc1^{}
-> >
-> > Because the sha value a tag points to is needed to match against
-> > git-rev-list output so to identify tagged revisions.
-> >
-> > Would be possible to store in packed-refs also the dereferenced tag
-> > info, so that cold opening of a repository would be much faster?
-> >
-> > Just to give an idea, with warmed up cache, refs reading times are:
-> >
-> > - git tree 43 ms
-> > - linux tree 28 ms
-> >
-> > Thanks
-> > Marco
-> >
-> > P.S: In case it's not clear I don't suggest to read directly the
-> > packed-refs file with the added info, but always to use
-> > git-peek-remote that _would_ became much faster.
-> 
-> I think the question is why you would want to run peek-remote.
-> Do you use the ^{} peeled-onion information and if so how and
-> why?
+Hi,
 
-My wild guess would be to attach tags to the right commits in qgit?
+When I initialise a git repository, I use a subset of files in the
+project and leave out irrelevant files for performance reasons. Then
+when I need to make changes to a file not yet in the repository, the
+file is treated as new, and if I reset the change or change branches
+the file is gone.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-The meaning of Stonehenge in Traflamadorian, when viewed from above, is:
-"Replacement part being rushed with all possible speed."
+Is there a good way of adding new files to git as if they had existed
+from the initial commit (or even better, since a particular commit)?
+This way I would only track the new changes I made to an existing
+file.
+
+Thanks,
