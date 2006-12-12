@@ -1,74 +1,69 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: Problems with git-svn authors file
-Date: Mon, 11 Dec 2006 09:04:52 +0000
-Message-ID: <200612110904.54389.andyparkins@gmail.com>
-References: <20061210172604.GA18385@hermes.lan.home.vilz.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Colourise git-branch output
+Date: Mon, 11 Dec 2006 17:11:24 -0800
+Message-ID: <7v7iwx2a0z.fsf@assigned-by-dhcp.cox.net>
+References: <200612112210.08327.andyparkins@gmail.com>
+	<BAYC1-PASMTP114CF00792AB16B95C1597AED70@CEZ.ICE>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Mon, 11 Dec 2006 09:05:10 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Tue, 12 Dec 2006 01:11:36 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=MD5F2U9Hk6bvYACLFwV3iO26pEa+tguLOB/v9wzP59VsfYUTMSj8cnSTETqTpVldrKXh0qQ6gzfQOF0P45r1g8oFZgCM/pxglrk0/qgrKiVHAy4bRZPnepUhAA4qdZlGrb33AfuYbDGJ+I8lprv79GQf1qUal6kCBi8FWsgGqPc=
-User-Agent: KMail/1.9.5
-In-Reply-To: <20061210172604.GA18385@hermes.lan.home.vilz.de>
-Content-Disposition: inline
+In-Reply-To: <BAYC1-PASMTP114CF00792AB16B95C1597AED70@CEZ.ICE>
+	(seanlkml@sympatico.ca's message of "Mon, 11 Dec 2006 19:38:57 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33980>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34051>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gth5t-00049T-8E for gcvg-git@gmane.org; Mon, 11 Dec
- 2006 10:05:06 +0100
+ esmtp (Exim 4.50) id 1GtwB9-0005NP-Ax for gcvg-git@gmane.org; Tue, 12 Dec
+ 2006 02:11:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1762669AbWLKJFA (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 11 Dec 2006
- 04:05:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762674AbWLKJFA
- (ORCPT <rfc822;git-outgoing>); Mon, 11 Dec 2006 04:05:00 -0500
-Received: from ug-out-1314.google.com ([66.249.92.171]:32666 "EHLO
- ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1762671AbWLKJE7 (ORCPT <rfc822;git@vger.kernel.org>); Mon, 11 Dec
- 2006 04:04:59 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so1266495uga for
- <git@vger.kernel.org>; Mon, 11 Dec 2006 01:04:58 -0800 (PST)
-Received: by 10.67.22.14 with SMTP id z14mr3225741ugi.1165827898119; Mon, 11
- Dec 2006 01:04:58 -0800 (PST)
-Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
- ESMTP id y1sm5336250uge.2006.12.11.01.04.57; Mon, 11 Dec 2006 01:04:57 -0800
- (PST)
-To: git@vger.kernel.org
+ S1750808AbWLLBL2 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 11 Dec 2006
+ 20:11:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750804AbWLLBL1
+ (ORCPT <rfc822;git-outgoing>); Mon, 11 Dec 2006 20:11:27 -0500
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:61766 "EHLO
+ fed1rmmtao03.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1750808AbWLLBL0 (ORCPT <rfc822;git@vger.kernel.org>); Mon, 11 Dec 2006
+ 20:11:26 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao03.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061212011126.UHOH29122.fed1rmmtao03.cox.net@fed1rmimpo02.cox.net>; Mon, 11
+ Dec 2006 20:11:26 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id xdBc1V00k1kojtg0000000; Mon, 11 Dec 2006
+ 20:11:37 -0500
+To: Sean <seanlkml@sympatico.ca>
 Sender: git-owner@vger.kernel.org
 
-On Sunday 2006 December 10 17:26, Nicolas Vilz wrote:
+Sean <seanlkml@sympatico.ca> writes:
 
-> Use of uninitialized value in hash element at /usr/bin/git-svn line
-> 2952.
-> Use of uninitialized value in concatenation (.) or string at
-> /usr/bin/git-svn line 2953.
-> Author:  not defined in .git/info/svn-authors file
-> 512 at /usr/bin/git-svn line 457
->         main::fetch_lib() called at /usr/bin/git-svn line 328
->         main::fetch() called at /usr/bin/git-svn line 187
+> On Mon, 11 Dec 2006 22:10:08 +0000
+> Andy Parkins <andyparkins@gmail.com> wrote:
+>
+>> +int git_branch_config(const char *var, const char *value)
+>> +{
+>> +	if (!strcmp(var, "branch.color")) {
+>> +		branch_use_color = git_config_colorbool(var, value);
+>> +		return 0;
+>> +	}
+>> +	return git_default_config(var, value);
+>> +}
+>
+> As Junio already highlighted, the "branch.*" namespace is for actual
+> branch names.  This config option should go into "color.branch" or some
+> other spot.
 
-I've had errors like this.  For certain repositories (possibly very old ones) 
-there is an unusual, empty, revision 0.  I got around the problem by telling 
-git-svn to start at revision 1.  Everything seemed fine after that.
+I didn't.  And "branch.color = auto" is actually fine.
 
-$ git-svn fetch -r1
-
-I don't know if that will be your fix, but it's worth a try.
+The problematic case is "branch.color.remote = purple".
 
 
-Andy
--- 
-Dr Andy Parkins, M Eng (hons), MIEE
