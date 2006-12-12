@@ -1,171 +1,68 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH 5/10] Teach bash how to complete git-format-patch.
-Date: Mon, 27 Nov 2006 03:41:43 -0500
-Message-ID: <20061127084143.GE19745@spearce.org>
-References: <de7beb117fb963e68e1085b773593be326ffd495.1164616814.git.spearce@spearce.org>
+From: Catalin Marinas <catalin.marinas@arm.com>
+Subject: Re: stgit: No patches to pop
+Date: Tue, 12 Dec 2006 09:10:00 +0000
+Message-ID: <tnxlkldwkd3.fsf@arm.com>
+References: <7ac1e90c0612110632x56a2917cu4db33e47923f34c2@mail.gmail.com>
+	<tnxpsaqwgxl.fsf@arm.com> <elk0c3$ovu$1@sea.gmane.org>
+	<7ac1e90c0612110905x3f1632b9v17bb14e810715cbf@mail.gmail.com>
+Reply-To: Catalin Marinas <catalin.marinas@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Mon, 27 Nov 2006 08:41:59 +0000 (UTC)
-Cc: git@vger.kernel.org
+NNTP-Posting-Date: Tue, 12 Dec 2006 09:10:15 +0000 (UTC)
+Cc: "Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <de7beb117fb963e68e1085b773593be326ffd495.1164616814.git.spearce@spearce.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+In-Reply-To: <7ac1e90c0612110905x3f1632b9v17bb14e810715cbf@mail.gmail.com> (Bahadir
+ Balban's message of "Mon, 11 Dec 2006 17:05:20 +0000")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+X-OriginalArrivalTime: 12 Dec 2006 09:10:24.0129 (UTC) FILETIME=[5B572F10:01C71DCD]
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32395>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Goc3i-0007dL-Ki for gcvg-git@gmane.org; Mon, 27 Nov
- 2006 09:41:50 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34071>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gu3eM-0000K7-3w for gcvg-git@gmane.org; Tue, 12 Dec
+ 2006 10:10:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1757419AbWK0Ilr (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 27 Nov 2006
- 03:41:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757420AbWK0Ilr
- (ORCPT <rfc822;git-outgoing>); Mon, 27 Nov 2006 03:41:47 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:3980 "EHLO
- corvette.plexpod.net") by vger.kernel.org with ESMTP id S1757419AbWK0Ilq
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 27 Nov 2006 03:41:46 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1Goc3b-0004Sz-9L; Mon, 27 Nov 2006 03:41:43 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- C103820FB7F; Mon, 27 Nov 2006 03:41:43 -0500 (EST)
-To: Junio C Hamano <junkio@cox.net>
+ S932157AbWLLJKH (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 12 Dec 2006
+ 04:10:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932158AbWLLJKG
+ (ORCPT <rfc822;git-outgoing>); Tue, 12 Dec 2006 04:10:06 -0500
+Received: from cam-admin0.cambridge.arm.com ([193.131.176.58]:50264 "EHLO
+ cam-admin0.cambridge.arm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+ with ESMTP id S932157AbWLLJKF (ORCPT <rfc822;git@vger.kernel.org>); Tue, 12
+ Dec 2006 04:10:05 -0500
+Received: from cam-owa2.Emea.Arm.com (cam-owa2.emea.arm.com [10.1.105.18]) by
+ cam-admin0.cambridge.arm.com (8.12.6/8.12.6) with ESMTP id kBC9A2Yo006809;
+ Tue, 12 Dec 2006 09:10:02 GMT
+Received: from localhost.localdomain ([10.1.255.211]) by
+ cam-owa2.Emea.Arm.com with Microsoft SMTPSVC(6.0.3790.0); Tue, 12 Dec 2006
+ 09:10:24 +0000
+To: "Bahadir Balban" <bahadir.balban@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Provide completion for currently known long options supported by
-git-format-patch as well as the revision list specification argument,
-which is generally either a refname or in the form a..b.
+"Bahadir Balban" <bahadir.balban@gmail.com> wrote:
+> On 12/11/06, Jakub Narebski <jnareb@gmail.com> wrote:
+>> That is kind of strange. Pop should work like pop does, for example
+>> the one in Perl or Python, removing n elements from the stack of applied
+>> patches. Not work as "float <patch>"...
+>> --
+>> Jakub Narebski
+>> Warsaw, Poland
+>> ShadeHawk on #git
+>
+> As a new user my first expectation was as Catalin has revised. If it's
+> going to stay as in 0.11 at least it would be nice to have it
+> described in the wiki.
 
-Since _git_log was the only code that knew how to complete a..b, but
-we want to start adding option support to _git_log also refactor the
-a..b completion logic out into its own function.
+It was already modified in the StGIT repository and I am won't revert
+it to the 0.11 functionality. Please feel free to modify the wiki
+(which is really out of date - "stg help <command>" has more
+up-to-date information).
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- contrib/completion/git-completion.bash |   60 +++++++++++++++++++++++--------
- 1 files changed, 44 insertions(+), 16 deletions(-)
-
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index a740d05..729e5a9 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -144,6 +144,26 @@ __git_complete_file ()
- 	esac
- }
- 
-+__git_complete_revlist ()
-+{
-+	local pfx cur="${COMP_WORDS[COMP_CWORD]}"
-+	case "$cur" in
-+	*...*)
-+		pfx="${cur%...*}..."
-+		cur="${cur#*...}"
-+		COMPREPLY=($(compgen -P "$pfx" -W "$(__git_refs)" -- "$cur"))
-+		;;
-+	*..*)
-+		pfx="${cur%..*}.."
-+		cur="${cur#*..}"
-+		COMPREPLY=($(compgen -P "$pfx" -W "$(__git_refs)" -- "$cur"))
-+		;;
-+	*)
-+		COMPREPLY=($(compgen -W "$(__git_refs)" -- "$cur"))
-+		;;
-+	esac
-+}
-+
- __git_commands ()
- {
- 	local i IFS=" "$'\n'
-@@ -290,6 +310,26 @@ _git_fetch ()
- 	esac
- }
- 
-+_git_format_patch ()
-+{
-+	local cur="${COMP_WORDS[COMP_CWORD]}"
-+	case "$cur" in
-+	--*)
-+		COMPREPLY=($(compgen -W "
-+			--stdout --attach --thread
-+			--output-directory
-+			--numbered --start-number
-+			--keep-subject
-+			--signoff
-+			--in-repy-to=
-+			--full-index --binary
-+			" -- "$cur"))
-+		return
-+		;;
-+	esac
-+	__git_complete_revlist
-+}
-+
- _git_ls_remote ()
- {
- 	local cur="${COMP_WORDS[COMP_CWORD]}"
-@@ -303,22 +343,7 @@ _git_ls_tree ()
- 
- _git_log ()
- {
--	local pfx cur="${COMP_WORDS[COMP_CWORD]}"
--	case "$cur" in
--	*...*)
--		pfx="${cur%...*}..."
--		cur="${cur#*...}"
--		COMPREPLY=($(compgen -P "$pfx" -W "$(__git_refs)" -- "$cur"))
--		;;
--	*..*)
--		pfx="${cur%..*}.."
--		cur="${cur#*..}"
--		COMPREPLY=($(compgen -P "$pfx" -W "$(__git_refs)" -- "$cur"))
--		;;
--	*)
--		COMPREPLY=($(compgen -W "$(__git_refs)" -- "$cur"))
--		;;
--	esac
-+	__git_complete_revlist
- }
- 
- _git_merge ()
-@@ -450,6 +475,7 @@ _git ()
- 	diff)        _git_diff ;;
- 	diff-tree)   _git_diff_tree ;;
- 	fetch)       _git_fetch ;;
-+	format-patch) _git_format_patch ;;
- 	log)         _git_log ;;
- 	ls-remote)   _git_ls_remote ;;
- 	ls-tree)     _git_ls_tree ;;
-@@ -480,6 +506,7 @@ complete -o default            -F _git_checkout git-checkout
- complete -o default -o nospace -F _git_diff git-diff
- complete -o default            -F _git_diff_tree git-diff-tree
- complete -o default -o nospace -F _git_fetch git-fetch
-+complete -o default -o nospace -F _git_format_patch git-format-patch
- complete -o default -o nospace -F _git_log git-log
- complete -o default            -F _git_ls_remote git-ls-remote
- complete -o default -o nospace -F _git_ls_tree git-ls-tree
-@@ -503,6 +530,7 @@ complete -o default            -F _git_branch git-branch.exe
- complete -o default -o nospace -F _git_cat_file git-cat-file.exe
- complete -o default -o nospace -F _git_diff git-diff.exe
- complete -o default -o nospace -F _git_diff_tree git-diff-tree.exe
-+complete -o default -o nospace -F _git_format_patch git-format-patch.exe
- complete -o default -o nospace -F _git_log git-log.exe
- complete -o default -o nospace -F _git_ls_tree git-ls-tree.exe
- complete -o default            -F _git_merge_base git-merge-base.exe
 -- 
-1.4.4.1.ge3fb
