@@ -1,73 +1,61 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: [PATCH/RFC] Make git-commit cleverer - have it figure out whether it needs -a automatically
-Date: Fri, 1 Dec 2006 10:52:47 +0000
-Message-ID: <200612011052.48784.andyparkins@gmail.com>
-References: <200611301259.32387.andyparkins@gmail.com> <81b0412b0611300914u521a5351idde23618c2fbf017@mail.gmail.com>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: Re: git-pull from git.git - no remote ref for pu or next?
+Date: 12 Dec 2006 09:42:02 -0800
+Message-ID: <86odq96mfp.fsf@blue.stonehenge.com>
+References: <863b7l83o9.fsf@blue.stonehenge.com>
+	<86y7pd6oz7.fsf@blue.stonehenge.com>
+	<Pine.LNX.4.63.0612121839200.2807@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Fri, 1 Dec 2006 10:53:17 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Tue, 12 Dec 2006 17:42:21 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=sKCIY4UEEWzaKkPPe8TYwkzoAlFoVkXQROybqpOi4JBP2qxG5+5sBQa37TAUk6DOUXKGqe4S6qf6l8nBGXirpXI4vlq7VbsDN6yRU1xA4kRcDI7vQ896Sh9sPeo7FUdweAjisspy5asnjMY+auA1g9H6v9DqDbtdDxlWjBpTq5Q=
-User-Agent: KMail/1.9.5
-In-Reply-To: <81b0412b0611300914u521a5351idde23618c2fbf017@mail.gmail.com>
-Content-Disposition: inline
+x-mayan-date: Long count = 12.19.13.15.19; tzolkin = 13 Cauac; haab = 12 Mac
+In-Reply-To: <Pine.LNX.4.63.0612121839200.2807@wbgn013.biozentrum.uni-wuerzburg.de>
+Original-Lines: 14
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32888>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gq60o-0007u7-5I for gcvg-git@gmane.org; Fri, 01 Dec
- 2006 11:52:58 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34114>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GuBdq-0001Sp-JA for gcvg-git@gmane.org; Tue, 12 Dec
+ 2006 18:42:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1030671AbWLAKwy (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
- 05:52:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936308AbWLAKwy
- (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 05:52:54 -0500
-Received: from ug-out-1314.google.com ([66.249.92.168]:36482 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S936309AbWLAKwx
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 05:52:53 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so2386013uga for
- <git@vger.kernel.org>; Fri, 01 Dec 2006 02:52:52 -0800 (PST)
-Received: by 10.66.219.11 with SMTP id r11mr7004928ugg.1164970372124; Fri, 01
- Dec 2006 02:52:52 -0800 (PST)
-Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
- ESMTP id l33sm23777076ugc.2006.12.01.02.52.51; Fri, 01 Dec 2006 02:52:51
- -0800 (PST)
-To: git@vger.kernel.org
+ S932294AbWLLRmG (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 12 Dec 2006
+ 12:42:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932297AbWLLRmF
+ (ORCPT <rfc822;git-outgoing>); Tue, 12 Dec 2006 12:42:05 -0500
+Received: from blue.stonehenge.com ([209.223.236.162]:19653 "EHLO
+ blue.stonehenge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S932294AbWLLRmD (ORCPT <rfc822;git@vger.kernel.org>); Tue, 12 Dec 2006
+ 12:42:03 -0500
+Received: from localhost (localhost [127.0.0.1]) by blue.stonehenge.com
+ (Postfix) with ESMTP id D868A8F3F2; Tue, 12 Dec 2006 09:42:02 -0800 (PST)
+Received: from blue.stonehenge.com ([127.0.0.1]) by localhost
+ (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024) with LMTP id
+ 02061-01-88; Tue, 12 Dec 2006 09:42:02 -0800 (PST)
+Received: by blue.stonehenge.com (Postfix, from userid 1001) id 508778F5B7;
+ Tue, 12 Dec 2006 09:42:02 -0800 (PST)
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-On Thursday 2006 November 30 17:14, Alex Riesen wrote:
+>>>>> "Johannes" == Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> The is dangerous on filesystems which lie to the programs about file
-> metadata. The "virtual filesystem" of cygwin is one of this kind: exec-bit
-> of the files depend
-> on its contents. Just calling git-commit -a will commit executability
-> at this particular
-> moment. For whatever reason, disabling handling of the exec-mode in gits
-> config does not work.
+Johannes> Congratulations!
 
-Surely this is a separate fault?
+Johannes> You are experiencing the Thundering Herd Phenomenon we talked a lot about 
+Johannes> lately (the kernel.org mirroring thread).
 
-> If you about to change the behaviour, provide at least a config option
-> to go back
-> to the old git-commit, which didn't do any magic.
-
-Wasn't the whole point of this to avoid needing another config option?
-
-
-Andy
+As long as others are sharing my pain, I'll be OK. :)
 
 -- 
-Dr Andy Parkins, M Eng (hons), MIEE
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
