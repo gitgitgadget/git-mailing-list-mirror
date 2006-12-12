@@ -1,59 +1,59 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Sven Verdoolaege <skimo@kotnet.org>
-Subject: Re: Subprojects tasks
-Date: Sat, 16 Dec 2006 21:35:53 +0100
-Message-ID: <20061216203553.GA25274MdfPADPa@greensroom.kotnet.org>
-References: <7vzm9nelob.fsf@assigned-by-dhcp.cox.net>
-Reply-To: skimo@liacs.nl
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: Collection of stgit issues and wishes
+Date: Tue, 12 Dec 2006 09:43:52 +0000
+Message-ID: <b0943d9e0612120143j7d0c1026rab046c8f44ec43ca@mail.gmail.com>
+References: <20061208221744.GA3288@nan92-1-81-57-214-146.fbx.proxad.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-NNTP-Posting-Date: Sat, 16 Dec 2006 20:36:48 +0000 (UTC)
-Cc: Martin Waitz <tali@admingilde.org>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Tue, 12 Dec 2006 09:44:08 +0000 (UTC)
+Cc: "GIT list" <git@vger.kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-reply-to: <7vzm9nelob.fsf@assigned-by-dhcp.cox.net>
-Content-disposition: inline
-User-Agent: Mutt/1.5.10i
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=fmwoAYoA3kVikl3tbJ7Dh5Em3Fu52fZS62kwVvx8iDXuFhT7pAQTusMQh4lTKHMjxX5oYnmS2EHmwTc6XYMpNMO6HGO9pmMSjhmGYSeeoLv5yxPXvhjifp9cBYw2N/dX7tTU+DYr8uvCJ2FenvxV2v7zElCWOqZvTSCDN0HHEAo=
+In-Reply-To: <20061208221744.GA3288@nan92-1-81-57-214-146.fbx.proxad.net>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34639>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34073>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GvgGw-0002PS-Vs for gcvg-git@gmane.org; Sat, 16 Dec
- 2006 21:36:43 +0100
+ esmtp (Exim 4.50) id 1Gu4B7-0004Il-0w for gcvg-git@gmane.org; Tue, 12 Dec
+ 2006 10:44:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932618AbWLPUgk (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 16 Dec 2006
- 15:36:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932611AbWLPUgk
- (ORCPT <rfc822;git-outgoing>); Sat, 16 Dec 2006 15:36:40 -0500
-Received: from psmtp12.wxs.nl ([195.121.247.24]:42404 "EHLO psmtp12.wxs.nl"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S932618AbWLPUgj
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 16 Dec 2006 15:36:39 -0500
-Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl
- [84.81.90.170]) by psmtp12.wxs.nl (iPlanet Messaging Server 5.2 HotFix 2.07
- (built Jun 24 2005)) with SMTP id <0JAD006FGVVTV0@psmtp12.wxs.nl> for
- git@vger.kernel.org; Sat, 16 Dec 2006 21:35:54 +0100 (MET)
-Received: (qmail 4963 invoked by uid 500); Sat, 16 Dec 2006 20:35:53 +0000
-To: Junio C Hamano <junkio@cox.net>
+ S1751000AbWLLJnx (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 12 Dec 2006
+ 04:43:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751016AbWLLJnx
+ (ORCPT <rfc822;git-outgoing>); Tue, 12 Dec 2006 04:43:53 -0500
+Received: from nz-out-0506.google.com ([64.233.162.232]:35568 "EHLO
+ nz-out-0102.google.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with
+ ESMTP id S1751000AbWLLJnx (ORCPT <rfc822;git@vger.kernel.org>); Tue, 12 Dec
+ 2006 04:43:53 -0500
+Received: by nz-out-0102.google.com with SMTP id s1so951823nze for
+ <git@vger.kernel.org>; Tue, 12 Dec 2006 01:43:52 -0800 (PST)
+Received: by 10.65.219.5 with SMTP id w5mr7716911qbq.1165916632265; Tue, 12
+ Dec 2006 01:43:52 -0800 (PST)
+Received: by 10.65.126.2 with HTTP; Tue, 12 Dec 2006 01:43:52 -0800 (PST)
+To: "Yann Dirson" <ydirson@altern.org>
 Sender: git-owner@vger.kernel.org
 
-On Sat, Dec 16, 2006 at 10:32:36AM -0800, Junio C Hamano wrote:
-> I suspect the hardest part is "rev-list --objects" (now most of
-> it is found in revision.c).  [..]  But I think the updated
-> code needs to know that "link" needs to be unwrapped and
-> contained "commit" needs to be injected back to the ancestry
-> walking machinery.
+On 08/12/06, Yann Dirson <ydirson@altern.org> wrote:
+> - shortcuts (st -> status, etc.), possibly making use of the git alias
+> system ?
 
-Do we want "link" to be unwrapped, though ?
+Did this last night as it was pretty easy and without the GIT alias
+system (which I am not familiar with). The idea is that if it cannot
+find an exact match, it tries to look for all the commands starting
+with the passed argument. If more than one command is found, it
+reports an "ambiguous command".
 
-> Once you have "rev-list --objects", you should be able to drive
-> pack-objects with its output.
-
-Wouldn't we then run into the scalability problems Linus was
-concerned about ?
-
+-- 
