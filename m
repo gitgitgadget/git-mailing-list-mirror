@@ -4,56 +4,56 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: Re: Change in git-svn dcommit semantics?
-Date: Wed, 20 Dec 2006 06:47:45 -0500
-Message-ID: <360A3F7A-0849-4BCE-8550-1F05BB9821C5@silverinsanity.com>
-References: <m2mz5jegka.fsf@ziti.local> <94FF72E0-F8BD-4773-803E-F179754BF0ED@silverinsanity.com> <Pine.LNX.4.63.0612200053550.19693@wbgn013.biozentrum.uni-wuerzburg.de> <C2881A17-27F7-467C-B353-189BB7DBFD1E@silverinsanity.com> <7v3b7bnz6q.fsf@assigned-by-dhcp.cox.net> <emb77h$cf2$1@sea.gmane.org>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 20 Dec 2006 11:47:58 +0000 (UTC)
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Adding a new file as if it had existed
+Date: Tue, 12 Dec 2006 02:13:06 -0800
+Message-ID: <7vhcw1whfx.fsf@assigned-by-dhcp.cox.net>
+References: <7ac1e90c0612120205k38b2fc14jbfd8ea682406efb2@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Tue, 12 Dec 2006 10:13:24 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <emb77h$cf2$1@sea.gmane.org>
-X-Mailer: Apple Mail (2.752.3)
+In-Reply-To: <7ac1e90c0612120205k38b2fc14jbfd8ea682406efb2@mail.gmail.com>
+	(Bahadir Balban's message of "Tue, 12 Dec 2006 10:05:08 +0000")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34917>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34077>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GwzvM-0006Xz-I6 for gcvg-git@gmane.org; Wed, 20 Dec
- 2006 12:47:52 +0100
+ esmtp (Exim 4.50) id 1Gu4dM-0007y5-Tx for gcvg-git@gmane.org; Tue, 12 Dec
+ 2006 11:13:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752877AbWLTLrt (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 20 Dec 2006
- 06:47:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754431AbWLTLrt
- (ORCPT <rfc822;git-outgoing>); Wed, 20 Dec 2006 06:47:49 -0500
-Received: from vs072.rosehosting.com ([216.114.78.72]:37405 "EHLO
- silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
- S1752877AbWLTLrt (ORCPT <rfc822;git@vger.kernel.org>); Wed, 20 Dec 2006
- 06:47:49 -0500
-Received: from [IPv6???1] (localhost [127.0.0.1]) (using TLSv1 with cipher
- AES128-SHA (128/128 bits)) (No client certificate requested) by
- silverinsanity.com (Postfix) with ESMTP id 5B59B1FFC02B; Wed, 20 Dec 2006
- 11:47:48 +0000 (UTC)
-To: Jakub Narebski <jnareb@gmail.com>
+ S1751061AbWLLKNJ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 12 Dec 2006
+ 05:13:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751082AbWLLKNJ
+ (ORCPT <rfc822;git-outgoing>); Tue, 12 Dec 2006 05:13:09 -0500
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:47122 "EHLO
+ fed1rmmtao10.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1751061AbWLLKNH (ORCPT <rfc822;git@vger.kernel.org>); Tue, 12 Dec 2006
+ 05:13:07 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao10.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061212101306.NXKS20715.fed1rmmtao10.cox.net@fed1rmimpo02.cox.net>; Tue, 12
+ Dec 2006 05:13:06 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id xmDH1V00R1kojtg0000000; Tue, 12 Dec 2006
+ 05:13:18 -0500
+To: "Bahadir Balban" <bahadir.balban@gmail.com>
 Sender: git-owner@vger.kernel.org
 
+"Bahadir Balban" <bahadir.balban@gmail.com> writes:
 
-On Dec 20, 2006, at 6:38 AM, Jakub Narebski wrote:
+> Is there a good way of adding new files to git as if they had existed
+> from the initial commit (or even better, since a particular commit)?
+> This way I would only track the new changes I made to an existing
+> file.
 
-> Junio C Hamano wrote:
->
->> The --full-diff option helps because it shows the diff for other
->> files (that do not have different number of substring COLLISION
->> in the pre and postimage) in the same commit as well.
->
-> Yet another undocumented option. Sigh...
+No.
 
-I'd send in a patch to fix that (little gnome work is what I do in  
-Wikipedia, and seems to be what I do here), but the option seems to  
-be in setup_revision.c:setup_revisions, which is used in several  
-places.  Is there a central place to put that in the documentation?   
-Should there be?
+I do not understand why not adding all the files you care about
+eventually anyway in the initial commit is needed for
+"performance reasons", if you do not touch majority of them for
+a long time.  Care to explain?
 
