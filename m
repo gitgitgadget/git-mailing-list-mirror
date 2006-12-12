@@ -2,73 +2,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Build in shortlog
-Date: Sat, 11 Nov 2006 13:36:05 -0800
-Message-ID: <7virhlis3e.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.63.0610221322370.14200@wbgn013.biozentrum.uni-wuerzburg.de>
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git-pull from git.git - no remote ref for pu or next?
+Date: Tue, 12 Dec 2006 19:09:39 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0612121908100.2807@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <863b7l83o9.fsf@blue.stonehenge.com> <86y7pd6oz7.fsf@blue.stonehenge.com>
+ <Pine.LNX.4.64.0612120949230.3535@woody.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sat, 11 Nov 2006 21:36:34 +0000 (UTC)
-Cc: git@vger.kernel.org, Alex Riesen <raa.lkml@gmail.com>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Tue, 12 Dec 2006 18:10:30 +0000 (UTC)
+Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <Pine.LNX.4.63.0610221322370.14200@wbgn013.biozentrum.uni-wuerzburg.de>
-	(Johannes Schindelin's message of "Sun, 22 Oct 2006 13:23:31 +0200
-	(CEST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <Pine.LNX.4.64.0612120949230.3535@woody.osdl.org>
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31241>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gj0WX-0001Yy-VG for gcvg-git@gmane.org; Sat, 11 Nov
- 2006 22:36:26 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34117>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GuC55-0006La-JM for gcvg-git@gmane.org; Tue, 12 Dec
+ 2006 19:10:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1947310AbWKKVgJ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 11 Nov 2006
- 16:36:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1947309AbWKKVgI
- (ORCPT <rfc822;git-outgoing>); Sat, 11 Nov 2006 16:36:08 -0500
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:47847 "EHLO
- fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP id S1754877AbWKKVgG
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 11 Nov 2006 16:36:06 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao07.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061111213606.MTJZ27894.fed1rmmtao07.cox.net@fed1rmimpo02.cox.net>; Sat, 11
- Nov 2006 16:36:06 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id lZcB1V00M1kojtg0000000; Sat, 11 Nov 2006
- 16:36:12 -0500
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+ S932320AbWLLSKP (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 12 Dec 2006
+ 13:10:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932326AbWLLSKP
+ (ORCPT <rfc822;git-outgoing>); Tue, 12 Dec 2006 13:10:15 -0500
+Received: from mail.gmx.net ([213.165.64.20]:47020 "HELO mail.gmx.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S932320AbWLLSKN
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 12 Dec 2006 13:10:13 -0500
+Received: (qmail invoked by alias); 12 Dec 2006 18:09:43 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp035) with SMTP; 12 Dec 2006 19:09:43 +0100
+To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hi,
 
-> diff --git a/path-list.c b/path-list.c
-> index 0c332dc..f8800f8 100644
-> --- a/path-list.c
-> +++ b/path-list.c
-> @@ -57,7 +57,7 @@ struct path_list_item *path_list_insert(
->  	int index = add_entry(list, path);
->  
->  	if (index < 0)
-> -		index = 1 - index;
-> +		index = -1 - index;
->  
->  	return list->items + index;
->  }
+On Tue, 12 Dec 2006, Linus Torvalds wrote:
 
-This part looks like a genuine bugfix and unrelated to
-shortlog.
+> But since the thing needs mirroring for non-git uses too, and since 
+> rsync generally _works_ apart from the slight race-condition issue, 
 
-Many callers of path_list_insert() seem to ignore its return
-value, but merge_recursive.c seems to use it in three places, to
-find an entry to hang cached rename information to in
-insert_stage_data().
+... and git would probably change the pack structure (i.e. which objects 
+are in which packs, or even loose) which would be too bad for all those 
+HTTP leechers ...
 
-I haven't come up with an example to demonstrate the breakage of
-not having this fix in the existing git-merge-recursive, but I
-think this needs to be applied to even 'maint'.
+> that's what it just uses.
 
-
+Ciao,
+Dscho
