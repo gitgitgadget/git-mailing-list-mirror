@@ -1,77 +1,76 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Documentation: reorganize cvs-migration.txt
-Date: Thu, 7 Dec 2006 15:28:33 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612071522080.28348@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <4574BF70.8070100@lilypond.org> <45760545.2010801@gmail.com>
- <20061206.105251.144349770.wl@gnu.org>
- <Pine.LNX.4.63.0612061325320.28348@wbgn013.biozentrum.uni-wuerzburg.de>
- <4576D92A.80307@xs4all.nl> <20061206145802.GC1714@fieldses.org>
- <Pine.LNX.4.63.0612061613460.28348@wbgn013.biozentrum.uni-wuerzburg.de>
- <20061206171950.GD1714@fieldses.org> <20061206172450.GE1714@fieldses.org>
- <7v7ix47wbr.fsf@assigned-by-dhcp.cox.net> <20061207041805.GC3457@fieldses.org>
+Subject: Re: [PATCH] git-add --interactive (wip)
+Date: Tue, 12 Dec 2006 23:15:56 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0612122311400.2807@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <360959.72234.qm@web31809.mail.mud.yahoo.com>
+ <7vd56s8t9w.fsf@assigned-by-dhcp.cox.net> <7vslfm23co.fsf_-_@assigned-by-dhcp.cox.net>
+ <200612111147.44964.Josef.Weidendorfer@gmx.de> <7vwt4wpytm.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Thu, 7 Dec 2006 14:28:42 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+NNTP-Posting-Date: Tue, 12 Dec 2006 22:16:05 +0000 (UTC)
+Cc: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 X-Authenticated: #1490710
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <20061207041805.GC3457@fieldses.org>
+In-Reply-To: <7vwt4wpytm.fsf@assigned-by-dhcp.cox.net>
 X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33580>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34151>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GsKEp-0006Rq-Jn for gcvg-git@gmane.org; Thu, 07 Dec
- 2006 15:28:40 +0100
+ esmtp (Exim 4.50) id 1GuFut-0002GZ-Fv for gcvg-git@gmane.org; Tue, 12 Dec
+ 2006 23:16:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S937956AbWLGO2i (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
- 09:28:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936939AbWLGO2i
- (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 09:28:38 -0500
-Received: from mail.gmx.net ([213.165.64.20]:36504 "HELO mail.gmx.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S937957AbWLGO2g
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec 2006 09:28:36 -0500
-Received: (qmail invoked by alias); 07 Dec 2006 14:28:34 -0000
+ S932473AbWLLWQA (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 12 Dec 2006
+ 17:16:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932477AbWLLWQA
+ (ORCPT <rfc822;git-outgoing>); Tue, 12 Dec 2006 17:16:00 -0500
+Received: from mail.gmx.net ([213.165.64.20]:44295 "HELO mail.gmx.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S932473AbWLLWP7
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 12 Dec 2006 17:15:59 -0500
+Received: (qmail invoked by alias); 12 Dec 2006 22:15:58 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp030) with SMTP; 07 Dec 2006 15:28:34 +0100
-To: "J. Bruce Fields" <bfields@fieldses.org>
+ [132.187.25.13] by mail.gmx.net (mp047) with SMTP; 12 Dec 2006 23:15:58 +0100
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
 Hi,
 
-On Wed, 6 Dec 2006, J. Bruce Fields wrote:
+On Tue, 12 Dec 2006, Junio C Hamano wrote:
 
-> Modify cvs-migration.txt so it explains first how to develop against a 
-> shared repository, then how to set up a shared repository, then how to 
-> import a repository from cvs.  Though this seems chronologically 
-> backwards, it's still readable in this order, and it puts the more 
-> commonly needed material closer to the front.
+> I've updated my "git add --interactive" in 'pu' and it now knows how to 
+> split a hunk into smaller pieces and recounting the diff offsets before 
+> applying (Johannes pointed out that his partial commit script, entirely 
+> written in bash using shell arrays, has a similar feature.  I guess I 
+> should have stolen his code instead of lifting the logic from my own 
+> abandoned porcelain).
 
-This is a laudable goal, and the order makes sense (put first that what 
-most people are interested in).
+Well, not completely true. I do not split hunks into subhunks.
 
-A few comments:
+Note that you _could_ split hunks at arbitrary lines; if it is a line 
+common between the two files, it is easier though.
 
-- just skimming the patch, I found "commiting" (needs another "t"), and 
-  "-bare" (needs another "-").
+And you could not have ripped from my script: I make heavy use of bash 
+arrays (in fact, I wrote this script partly to learn how to work with bash 
+arrays). If I could think of a clean way to spawn processes piped into 
+"less -FS" several times from a C program, I would already have rewritten 
+it in C.
 
-- It might make more sense to "git init-db --shared" and fetch the initial 
-  revision into it, rather than clone it and then fix. You might also want
-  to mention that the "--shared" of -clone is different in meaning from 
-  that of -init-db (make just a footnote of it, to avoid intimidating 
-  readers).
+> So in short, I think per-hunk update-index is a cute hack and may be 
+> useful in a narrow simple cases, but it would not be so useful in the 
+> real life.
 
-- By far the easiest method to import from cvs is to go to a checked out
-  _CVS_ working directory, and just say "git cvsimport".
+To the contrary! In spite of having written git-hunk-commit to please 
+those poor souls coming from the darcs side, I already used it myself 
+quite often! I think it is a killer feature.
 
 Ciao,
 Dscho
