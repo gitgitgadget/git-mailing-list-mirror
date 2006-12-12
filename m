@@ -1,63 +1,107 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: Git and Mozilla
-Date: Tue, 28 Nov 2006 09:13:06 +0000
-Message-ID: <200611280913.07820.andyparkins@gmail.com>
-References: <9e4733910611272247y7ef8be0fh2f1436d43a57280@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Tue, 28 Nov 2006 09:13:27 +0000 (UTC)
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [PATCH 2/3] git-svn: allow dcommit to take an alternate head
+Date: Tue, 12 Dec 2006 14:47:01 -0800
+Message-ID: <1165963624339-git-send-email-normalperson@yhbt.net>
+References: <11659636223725-git-send-email-normalperson@yhbt.net>
+NNTP-Posting-Date: Tue, 12 Dec 2006 22:47:43 +0000 (UTC)
+Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=AicQ7j7ffOn9CuUg/AbtOQJcwN/NOgRfKbYJzg5Ug4WDsULoPpJKiOND/KXMZm0cu+xt1jLPifN0zzii2Hzc5yIV6xlHHPDu6x+OnBPI32saqKcPV9Cetz6+wKsfLwxKxHsdqEYrPrEKjUTFn/tpg4ori5akujF2q4O+GKUdq80=
-User-Agent: KMail/1.9.5
-In-Reply-To: <9e4733910611272247y7ef8be0fh2f1436d43a57280@mail.gmail.com>
-Content-Disposition: inline
+X-Mailer: git-send-email 1.4.4.2.g6f98
+In-Reply-To: <11659636223725-git-send-email-normalperson@yhbt.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32498>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Goz1h-0007tV-Ha for gcvg-git@gmane.org; Tue, 28 Nov
- 2006 10:13:17 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34158>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GuGPL-0007T7-SA for gcvg-git@gmane.org; Tue, 12 Dec
+ 2006 23:47:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S935713AbWK1JNO (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 28 Nov 2006
- 04:13:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935741AbWK1JNO
- (ORCPT <rfc822;git-outgoing>); Tue, 28 Nov 2006 04:13:14 -0500
-Received: from ug-out-1314.google.com ([66.249.92.168]:40911 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S935713AbWK1JNO
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2006 04:13:14 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so1415557uga for
- <git@vger.kernel.org>; Tue, 28 Nov 2006 01:13:12 -0800 (PST)
-Received: by 10.66.232.10 with SMTP id e10mr1186638ugh.1164705192279; Tue, 28
- Nov 2006 01:13:12 -0800 (PST)
-Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
- ESMTP id e1sm20139029ugf.2006.11.28.01.13.11; Tue, 28 Nov 2006 01:13:11 -0800
- (PST)
-To: git@vger.kernel.org
+ S932533AbWLLWrS (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 12 Dec 2006
+ 17:47:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932535AbWLLWrQ
+ (ORCPT <rfc822;git-outgoing>); Tue, 12 Dec 2006 17:47:16 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:54305 "EHLO hand.yhbt.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S932534AbWLLWrO
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 12 Dec 2006 17:47:14 -0500
+Received: from hand.yhbt.net (localhost [127.0.0.1]) by hand.yhbt.net
+ (Postfix) with SMTP id F40577DC031; Tue, 12 Dec 2006 14:47:12 -0800 (PST)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Tue, 12 Dec 2006
+ 14:47:04 -0800
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-On Tuesday 2006 November 28 06:47, Jon Smirl wrote:
-> It looks like git is out of the race for hosting the Mozilla repository.
-> It's going to be Bazaar or Mercurial.
+Previously dcommit would unconditionally commit all patches
+up-to and including the current HEAD.  Now if an optional
+command-line argument is specified, it will only commit
+up to the specified revision.
 
-This is probably a good thing; Bazaar and Mercurial are both more similar in 
-model to git than SVN; so conversion between them and git will be far easier.
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
+---
+ Documentation/git-svn.txt |    6 ++++--
+ git-svn.perl              |   11 ++++++-----
+ 2 files changed, 10 insertions(+), 7 deletions(-)
 
-
-
-Andy
-
+diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
+index a45067e..c589a98 100644
+--- a/Documentation/git-svn.txt
++++ b/Documentation/git-svn.txt
+@@ -57,11 +57,13 @@ See '<<fetch-args,Additional Fetch Arguments>>' if you are interested in
+ manually joining branches on commit.
+ 
+ 'dcommit'::
+-	Commit all diffs from the current HEAD directly to the SVN
++	Commit all diffs from a specified head directly to the SVN
+ 	repository, and then rebase or reset (depending on whether or
+-	not there is a diff between SVN and HEAD).  It is recommended
++	not there is a diff between SVN and head).  It is recommended
+ 	that you run git-svn fetch and rebase (not pull) your commits
+ 	against the latest changes in the SVN repository.
++	An optional command-line argument may be specified as an
++	alternative to HEAD.
+ 	This is advantageous over 'commit' (below) because it produces
+ 	cleaner, more linear history.
+ 
+diff --git a/git-svn.perl b/git-svn.perl
+index 06e89ff..819584b 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -604,8 +604,9 @@ sub commit_lib {
+ }
+ 
+ sub dcommit {
++	my $head = shift || 'HEAD';
+ 	my $gs = "refs/remotes/$GIT_SVN";
+-	chomp(my @refs = safe_qx(qw/git-rev-list --no-merges/, "$gs..HEAD"));
++	chomp(my @refs = safe_qx(qw/git-rev-list --no-merges/, "$gs..$head"));
+ 	my $last_rev;
+ 	foreach my $d (reverse @refs) {
+ 		if (quiet_run('git-rev-parse','--verify',"$d~1") != 0) {
+@@ -632,16 +633,16 @@ sub dcommit {
+ 	}
+ 	return if $_dry_run;
+ 	fetch();
+-	my @diff = safe_qx(qw/git-diff-tree HEAD/, $gs);
++	my @diff = safe_qx('git-diff-tree', $head, $gs);
+ 	my @finish;
+ 	if (@diff) {
+ 		@finish = qw/rebase/;
+ 		push @finish, qw/--merge/ if $_merge;
+ 		push @finish, "--strategy=$_strategy" if $_strategy;
+-		print STDERR "W: HEAD and $gs differ, using @finish:\n", @diff;
++		print STDERR "W: $head and $gs differ, using @finish:\n", @diff;
+ 	} else {
+-		print "No changes between current HEAD and $gs\n",
+-		      "Hard resetting to the latest $gs\n";
++		print "No changes between current $head and $gs\n",
++		      "Resetting to the latest $gs\n";
+ 		@finish = qw/reset --mixed/;
+ 	}
+ 	sys('git', @finish, $gs);
 -- 
-Dr Andy Parkins, M Eng (hons), MIEE
+1.4.4.2.g6f98
