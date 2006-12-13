@@ -1,103 +1,109 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: [DRAFT 2] Branching and merging with git
-Date: Sun, 3 Dec 2006 20:19:58 -0500
-Message-ID: <20061204011958.GB28043@fieldses.org>
-References: <7vslghftix.fsf@assigned-by-dhcp.cox.net> <20061120235136.4841.qmail@science.horizon.com>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: svn versus git
+Date: Wed, 13 Dec 2006 22:51:15 +0000
+Message-ID: <200612132251.17202.andyparkins@gmail.com>
+References: <200612132200.41420.andyparkins@gmail.com> <elpun9$qp1$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Mon, 4 Dec 2006 01:20:12 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Wed, 13 Dec 2006 22:54:09 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=WD3shfR/hIv1T2w7C430CynWshz5rMBpflaXnAb25nkP0G1VjbcwJsmnIqghu7NpdZES7M+tpj9XgaV1rexDqv5/a6MlWehUPvcuCMC04N7qN+gD8DFzGNhrDUURJ/DETxC2El/SZmAKsx/5d2AUFqdlEupPzMOt3zvNO0gWAP0=
+User-Agent: KMail/1.9.5
+In-Reply-To: <elpun9$qp1$1@sea.gmane.org>
 Content-Disposition: inline
-In-Reply-To: <20061120235136.4841.qmail@science.horizon.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33157>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34246>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gr2V7-0001lr-2B for gcvg-git@gmane.org; Mon, 04 Dec
- 2006 02:20:09 +0100
+ esmtp (Exim 4.50) id 1GuczF-00054c-G2 for gcvg-git@gmane.org; Wed, 13 Dec
+ 2006 23:54:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1760193AbWLDBUB (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 3 Dec 2006
- 20:20:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760192AbWLDBUA
- (ORCPT <rfc822;git-outgoing>); Sun, 3 Dec 2006 20:20:00 -0500
-Received: from mail.fieldses.org ([66.93.2.214]:65470 "EHLO
- pickle.fieldses.org") by vger.kernel.org with ESMTP id S1760193AbWLDBUA
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 3 Dec 2006 20:20:00 -0500
-Received: from bfields by pickle.fieldses.org with local (Exim 4.63)
- (envelope-from <bfields@fieldses.org>) id 1Gr2Uw-0006Es-Tq; Sun, 03 Dec 2006
- 20:19:58 -0500
-To: linux@horizon.com
+ S1751784AbWLMWyB (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 13 Dec 2006
+ 17:54:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751676AbWLMWyB
+ (ORCPT <rfc822;git-outgoing>); Wed, 13 Dec 2006 17:54:01 -0500
+Received: from ug-out-1314.google.com ([66.249.92.168]:63145 "EHLO
+ ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1751785AbWLMWx7 (ORCPT <rfc822;git@vger.kernel.org>); Wed, 13 Dec
+ 2006 17:53:59 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so315795uga for
+ <git@vger.kernel.org>; Wed, 13 Dec 2006 14:53:59 -0800 (PST)
+Received: by 10.66.244.10 with SMTP id r10mr262525ugh.1166050438703; Wed, 13
+ Dec 2006 14:53:58 -0800 (PST)
+Received: from grissom.internal.parkins.org.uk ( [84.201.153.164]) by
+ mx.google.com with ESMTP id q1sm1563959uge.2006.12.13.14.53.57; Wed, 13 Dec
+ 2006 14:53:58 -0800 (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On Mon, Nov 20, 2006 at 06:51:36PM -0500, linux@horizon.com wrote:
-> I tried to incorporate all the suggestions.  There are still a few things
-> I have to research, and now I'm worried it's getting too long.  Sigh.
 
-If you made another pass for it asking whether each sentence was really
-absolutely necessary you'd be able to cut quite a bit without
-compromising on content.  One example:
+> You can use extended sha1 syntax, described in git-rev-parse(1) (although
+> it would be nice to have relevant parts of documentation repeated in
+> git-cat-file(1)), namely
+>   git cat-file -p REV:file
+> (and you can use "git cat-file -p ::file" to get index/staging area
+> version)
 
-> In CVS, branches are difficult and awkward to use, and generally
-> considered an advanced technique.  Many people use CVS for a long time
-> without departing from the trunk.
+Yes; I didn't remember that one.  However, it's still not friendly.
 
-Lots of people have CVS experience, but not everyone does, and this
-paragraph isn't really necessary.  Cut it out, and the following
-paragraph (minus first sentence) stands just fine on its own:
+> git-fsck-objects is needed only if something doesn't work when
+> it should. "git repack" is safe, "git repack -a -d" is almost safe,
+> while "git prune" is not.
 
-> Git is very different.  Branching and merging are central to effective use
-> of git, and if you aren't comfortable with them, you won't be comfortable
-> with git.  In particular, they are required to share work with other
-> people.
+Yes - /I/ know that; bear in mind though that this is intended as a comparison 
+against subversion for a user who doesn't want to know how it works.  How is 
+that sort of user meant to know when they should run each of these commands?  
+Git doesn't tell them, it doesn't even give hints.  As you say, "git-prune" 
+is not necessarilly safe - how does a new user know that?  It's in the output 
+of "git".
 
-Note also "if you aren't comfortable with them..." just repeats
-something you've already said.  So now we're down to just:
+> Perhaps git-archive should support "tree" format, i.e. writing
+> unversioned copy of a tree to filesystem.
 
-	"Branching and merging are central to effective use of git.  In
-	particular, they are required to share work with other people."
+I think git is pretty good in the archive department.  git-archive does 
+exactly what it says on the tin, which is exactly what you would want.
 
-which is short and to the point.  Neat!
+> There was discussion about adding thin wrapper around git-update-index
+> to specifically mark resolved merge conflicts. The option to pick up
+> ours, theirs, ancestor version is another argument for having such command.
 
-I'm not sure of the ordering.  For example:
+I think it's definitely a good idea.  If you introduce git-update-index as a 
+command a normal user will type, you've got a lot of explaining to do as to 
+what else it does and why it does it.
 
-> The only things that are a bit confusing are some of the names.
-> In particular, at least when beginning:
-> - You create new branches with "git checkout -b".
->   "git branch" should only be used to list and delete branches.
-> - You share work with "git fetch" and "git push".  These are opposites.
-> - You merge with "git pull", not "git merge".  "git pull" can also do a
->   "git fetch", but that's optional.  What's not optional is the merge.
->
-> Also, a good habit it to never commit directly to your main "master"
-> branch.  Do all work in temporary "topic" branches, and then merge them
-> into the master.  Most experienced users don't bother to be quite this
-> purist, but you should err on the side of using separate topic branches,
-> so it's excellent practice.
+> It can be done without pipes: "git cat-file -p REV:file".
+> You can use aliases to have shorter name for that.
 
-We're diving in here without explaining what checkout, fetch, push,
-pull, or merge are yet, or what the master branch is.
+This is the problem though.  I realise that git can technically do an awful 
+lot of these things, how many new users are going to stick around when you 
+tell them that they have to learn about the config file and aliases before 
+they can use the command they want?
 
-The document seems to be targetted at someone who has read some
-scattered git documentation, gotten confused, and needs help putting it
-all together.  This is understandable--there are a lot of people like
-that right now!  But if we're going to get the documentation in some
-sort of sensible order then we need to think about how to start with
-someone who is a blank slate and lead them step by step to what they
-most need to know.
+> Hmmm... I thought that some progress indicator of download/upload was
+> added... guess I was wrong.
 
-That doesn't mean *you* need to do everything from scratch, but it would
-be helpful to figure out where this would fit in with the other
-documentation in a logical progression.  As a start, the first paragraph
-could say "before reading this, we assume you've read X, Y, and Z", and
-then the rest of the document could be audited to make sure that it
-didn't assume anything that isn't in X, Y, and Z.
+You're not wrong, there is a progress indicator, but it's measured 
+in "objects" not megabytes.  It's got a percentage as well.  Neither of these 
+things is a whole lot of use if I want to know how much data (in megabytes) 
+has been transferred, how much is there left to go and how long is it going 
+to take.
 
+
+
+Andy
+
+-- 
+Dr Andrew Parkins, M Eng (Hons), AMIEE
