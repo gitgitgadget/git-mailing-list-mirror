@@ -5,112 +5,97 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 From: Andreas Ericsson <ae@op5.se>
-Subject: Re: VCS comparison table
-Date: Thu, 26 Oct 2006 11:50:38 +0200
-Message-ID: <454084EE.90006@op5.se>
-References: <45357CC3.4040507@utoronto.ca>	 <20061021130111.GL75501@over-yonder.net> <453F2FF8.2080903@op5.se>	 <200610251146.06116.jnareb@gmail.com>	 <a7e835d40610250308v5d577482m139742e7fe1db185@mail.gmail.com>	 <87slhcz8zh.wl%cworth@cworth.org> <a7e835d40610260152k658aeaf0hb900cb63870c04e4@mail.gmail.com>
+Subject: Re: Adding a new file as if it had existed
+Date: Wed, 13 Dec 2006 16:52:46 +0100
+Message-ID: <458021CE.1000407@op5.se>
+References: <7ac1e90c0612120205k38b2fc14jbfd8ea682406efb2@mail.gmail.com> <7vhcw1whfx.fsf@assigned-by-dhcp.cox.net> <7ac1e90c0612120332o20d6778bsa16a788fdc04a3a1@mail.gmail.com> <7vzm9tuft7.fsf@assigned-by-dhcp.cox.net> <457FCA8C.6000300@op5.se> <Pine.LNX.4.63.0612131611050.3635@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 26 Oct 2006 09:51:16 +0000 (UTC)
-Cc: Carl Worth <cworth@cworth.org>, bazaar-ng@lists.canonical.com,
-	"Matthew D. Fuller" <fullermd@over-yonder.net>,
-	Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org,
-	Jakub Narebski <jnareb@gmail.com>
+NNTP-Posting-Date: Wed, 13 Dec 2006 15:53:02 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>,
+	Bahadir Balban <bahadir.balban@gmail.com>, git@vger.kernel.org,
+	Andy Parkins <andyparkins@gmail.com>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
-In-Reply-To: <a7e835d40610260152k658aeaf0hb900cb63870c04e4@mail.gmail.com>
+In-Reply-To: <Pine.LNX.4.63.0612131611050.3635@wbgn013.biozentrum.uni-wuerzburg.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30172>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gd1st-0005rC-5k for gcvg-git@gmane.org; Thu, 26 Oct
- 2006 11:50:47 +0200
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34224>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GuWPb-0002qS-Un for gcvg-git@gmane.org; Wed, 13 Dec
+ 2006 16:52:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1423047AbWJZJuo (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
- 05:50:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423049AbWJZJuo
- (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 05:50:44 -0400
-Received: from linux-server1.op5.se ([193.201.96.2]:19846 "EHLO
- smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1423047AbWJZJun (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 05:50:43 -0400
-Received: by smtp-gw1.op5.se (Postfix, from userid 588) id 097156BD65; Thu,
- 26 Oct 2006 11:50:41 +0200 (CEST)
+ S965002AbWLMPwt (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 13 Dec 2006
+ 10:52:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965005AbWLMPwt
+ (ORCPT <rfc822;git-outgoing>); Wed, 13 Dec 2006 10:52:49 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:46443 "EHLO
+ smtp-gw1.op5.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
+ S965002AbWLMPws (ORCPT <rfc822;git@vger.kernel.org>); Wed, 13 Dec 2006
+ 10:52:48 -0500
 Received: from [192.168.1.20] (unknown [213.88.215.14]) by smtp-gw1.op5.se
- (Postfix) with ESMTP id 90B546BD65; Thu, 26 Oct 2006 11:50:38 +0200 (CEST)
-To: James Henstridge <james@jamesh.id.au>
+ (Postfix) with ESMTP id B7D6B6BCC7; Wed, 13 Dec 2006 16:52:46 +0100 (CET)
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-James Henstridge wrote:
-> On 25/10/06, Carl Worth <cworth@cworth.org> wrote:
->> On Wed, 25 Oct 2006 18:08:22 +0800, "James Henstridge" wrote:
->> > If there aren't, or you made the merge by mistake, you can make a call
->> > to "bzr revert" to clean things up without ever having created a new
->> > revision.
->>
->> One result of this approach is that developers of different trees
->> don't necessarily have common revision IDs to compare. Imagine a
->> question like:
->>
->>         When you ran that test did you have the same code I've got?
->>
->> In git, the answer would be determined by comparing revision IDs.
+Johannes Schindelin wrote:
+> Hi,
 > 
-> Can you really just rely on equal revision IDs meaning you have the
-> same code though?
+> On Wed, 13 Dec 2006, Andreas Ericsson wrote:
 > 
-
-Yes. Because each commit contains parent revision id's, which in turn 
-contain *their* parent revision id's, which in turn..., you know you 
-have exactly the same revision, code, and history leading up to that 
-revision. You may have other revisions on top or on other branches, but 
-all commits, including merge-points and whatnot, leading to that 
-particular revision id are EXACTLY identical.
-
-> Lets say that I clone your git repository, and then we both merge the
-> same diverged branch.  Will our head revision IDs match?  From a quick
-> look at the logs of cairo, it seems that the commits generated for
-> such a merge include the date and author, so the two commits would
-> have different SHA1 sums (and hence different revision IDs).
+>> Junio C Hamano wrote:
+>>> "Bahadir Balban" <bahadir.balban@gmail.com> writes:
+>>>
+>>> There is one thing we could further optimize, though.
+>>>
+>>> Switching branches with 100k blobs in a commit even when there
+>>> are a handful paths different between the branches would still
+>>> need to populate the index by reading two trees and collapsing
+>>> them into a single stage.  In theory, we should be able to do a
+>>> lot better if two-tree case of read-tree took advanrage of
+>>> cache-tree information.  If ce_match_stat() says Ok for all
+>>> paths in a subdirectory and the cached tree object name for that
+>>> subdirectory in the index match what we are reading from the new
+>>> tree, we should be able to skip reading that subdirectory (and
+>>> its subdirectories) from the new tree object at all.
+>>>
+>>> Anybody interested to give it a try?
+>>>
+>> I'm not vell-versed enough in git internals to have my hopes high of 
+>> making something useful of it, but if you give me a pointer of where to 
+>> start I'd be happy to try, and perhaps learn something in the process.
 > 
-> So I'd have a revision you don't have and vice versa, even though the
-> trees are identical.
+> Okay, I'll have a stab at explaining it.
 > 
-
-Merges preserve author and commit info. You may need to create a new 
-branch (a git branch, the cheap kind which is a 41-byte file) and fetch 
-"his" into "yours". This will be very cheap if you both have the same 
-code but not the same history, as everything but a few commit-objects 
-will be shared. A more likely scenario though is this;
-
-Bob writes a feature that doesn't work as per spec. He doesn't know why.
-He asks Alice to have a look, so he communicates the commits to her by 
-"please pull this branch from here", or by sending patches and telling 
-Alice the branch-point revision to apply them to.
-Alice creates the "bobs-bugs/nr1232" at the branch-point and fetches 
-Bobs branch into that or applies the patches on top of that (in the 
-fetch scenario she wouldn't need to know the branch point, since git 
-would figure this out for her).
-She knows this should create a revision named 00123989aaddeddad39, so if 
-it doesn't, she doesn't have the same code.
-
-
-I imagine this works roughly the same in bazaar, although the original 
-case where tests have already been done and the testers wanted to know 
-if they had the exact same revision Just Works in git.
-
+> For huge working directories, you usually have a huge number of trees. The 
+> idea of cache_tree is to remember not only the stat information of the 
+> blobs in the index, but to cache the hashes of the trees also (until they 
+> are invalidated, e.g. by an update-index). This avoids recalculation of 
+> the hashes when committing.
 > 
->> In bzr, the only answer I'm hearing is attempting a merge to see if it
->> introduces any changes. (I'm deliberately avoiding "pull" since we're
->> talking about distributed cases here).
+> This cache is accessible by the global variable active_cache_tree. It is 
+> best accessed by the function cache_tree_find(), which you call like that:
 > 
-> Or run "bzr missing".  If the sole missing revision is a merge (and
-> not the revisions introduced by the merge), you could assume that you
-> have the same tree state.
+> 	struct cache_tree *ct = cache_tree_find(active_cache_tree, path);
+> 
+> where the variable "path" may contain slashes. The SHA1 of the 
+> corresponding tree is in ct->sha1, and you can check if the hash is still 
+> valid by asking
+> 
+> 	if (cache_tree_fully_valid(ct))
+> 		/* still valid */
+> 
+> AFAIU Junio would like to take the shortcut of doing nothing at all when 
+> (twoway) reading a tree whose hash is identical to the hash stored in the 
+> corresponding cache_tree _and_ when the cache is still fully valid.
 > 
 
-"assume" != "know", or was that just sloppy phrasing?
+Seems you wrote half the code for me already. :)
+
+Thanks for the excellent explanation. I'll see if I can grok it further 
+tonight.
 
 -- 
 Andreas Ericsson                   andreas.ericsson@op5.se
