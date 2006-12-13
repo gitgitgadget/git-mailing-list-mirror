@@ -1,104 +1,67 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
+	DATE_IN_PAST_03_06,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git newbie problems
-Date: Tue, 05 Dec 2006 17:35:33 -0800
-Message-ID: <7v4ps9byca.fsf@assigned-by-dhcp.cox.net>
-References: <4574AC9E.3040506@gmail.com> <4574BF70.8070100@lilypond.org>
-	<457611B9.9020907@gmail.com>
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: Re: [PATCH] git-add --interactive (wip)
+Date: Wed, 13 Dec 2006 21:31:13 +0100
+Message-ID: <200612132131.15081.Josef.Weidendorfer@gmx.de>
+References: <360959.72234.qm@web31809.mail.mud.yahoo.com> <200612130415.59038.Josef.Weidendorfer@gmx.de> <7v1wn4mk9i.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 6 Dec 2006 01:36:01 +0000 (UTC)
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 14 Dec 2006 01:23:42 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <457611B9.9020907@gmail.com> (Graham Percival's message of "Tue,
-	05 Dec 2006 16:41:29 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Authenticated: #352111
+User-Agent: KMail/1.9.5
+In-Reply-To: <7v1wn4mk9i.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33398>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34273>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GrlhT-000490-5H for gcvg-git@gmane.org; Wed, 06 Dec
- 2006 02:35:55 +0100
+ esmtp (Exim 4.50) id 1GufJw-0005cy-6i for gcvg-git@gmane.org; Thu, 14 Dec
+ 2006 02:23:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1759469AbWLFBff (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 5 Dec 2006
- 20:35:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759481AbWLFBff
- (ORCPT <rfc822;git-outgoing>); Tue, 5 Dec 2006 20:35:35 -0500
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:37903 "EHLO
- fed1rmmtao01.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1759469AbWLFBff (ORCPT <rfc822;git@vger.kernel.org>); Tue, 5 Dec 2006
- 20:35:35 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao01.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061206013534.LNBU9173.fed1rmmtao01.cox.net@fed1rmimpo02.cox.net>; Tue, 5
- Dec 2006 20:35:34 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id vDbk1V00R1kojtg0000000; Tue, 05 Dec 2006
- 20:35:44 -0500
-To: Graham Percival <gpermus@gmail.com>
+ S1751933AbWLNBXY (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 13 Dec 2006
+ 20:23:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751935AbWLNBXY
+ (ORCPT <rfc822;git-outgoing>); Wed, 13 Dec 2006 20:23:24 -0500
+Received: from mail.gmx.net ([213.165.64.20]:36274 "HELO mail.gmx.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S1751933AbWLNBXX
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 13 Dec 2006 20:23:23 -0500
+Received: (qmail invoked by alias); 14 Dec 2006 01:23:21 -0000
+Received: from p5496A4D6.dip0.t-ipconnect.de (EHLO noname) [84.150.164.214]
+ by mail.gmx.net (mp018) with SMTP; 14 Dec 2006 02:23:21 +0100
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Graham Percival <gpermus@gmail.com> writes:
+On Wednesday 13 December 2006 06:34, Junio C Hamano wrote:
+> >> > Just as a sidenote: after deciding to not apply hunks, you
+> >> > lose them in this WIP, as you will find nothing in "unstaged" mode
+> >> > afterwards :-(
+> >> 
+> >> I do not understand this part.  You can 'revert' to match the
+> >> index to HEAD and run 'patch' to pick what you want again.
+> >
+> > I lost my changes in the working directory; there was nothing to
+> > pick again any more.
+> 
+> That's worrysome.  By design, "git add" should not touch working
+> tree at all (only read from there), so if you find cases that
+> violates it that should be fixed; please let me know.
 
-> Trying really trivial in-index merge...
-> Documentation/user/advanced-notation.itely: needs merge
-> fatal: you need to resolve your current index first
+I just tried to reproduce the failure with exact the same hunk I used
+the first time. I wasn't able to get any wrong result.
+So perhaps I did something wrong the first time.
 
-You got from a "git pull", which means you were already in
-another merge (perhaps failed).  That is a no-no.
+However, if I see something suspect, I will tell you ;-)
 
-The error messages need to be cleaned up and be more helpful.
-There is no question about it.
-
-> Nope.
-> Merging HEAD with c21d3f3e1c77722e50d994763442e6f994b03ac2
-> Merging:
-> 038b7fc Misc small updates (trying to make git work).
-> c21d3f3 Merge branch 'master' of
-> ssh+git://hanwen@git.sv.gnu.org/srv/git/lilypond
-> found 1 common ancestor(s):
-> 84219bb don't have input/templates/ any longer.
-> fatal: Entry '.gitignore' would be overwritten by merge. Cannot merge.
-> No merge strategy handled the merge.
-
-So the question is what you did _before_ initiating this "git pull".
-
-For new people, we recommend to:
-
- * make sure you were on a right branch (I think you are.  You
-   are on your 'master' branch and may not even have any other
-   branches, which is fine.)
-
- * make sure all your changes are committed.
-
-before initiating a "git pull".  And after a conflicted "git
-pull", if you choose to punt,
-
-	$ git reset --hard
-
-would take you back to the state before you started the pull.
-
-> SUGGESTIONS
->
-> The "tutorial introduction to git" looks like a nice document, but it
-> assumes that you are in control of the project.  For users who aren't in
-> control (ie me) this is a problem, because it starts me skimming.
-> "Importing a project"... nah, that's not me.  "Merging branches"... I
-> don't care; I'm going to shove everything into the main branch.  "Using
-> git for collaboration"... hmm, maybe this is the stuff I need to read.
-> But by this point, I've already skimmed through five screens of info, so
-> I'm not reading very carefully.
-
-Yes, git caters to too many classes of people.
-
-I've heard people talk about "everyday" document as a good
-table-of-contents, primarily because it first breaks down the
-userbase into roles and talks about common commands for each
-role of the user.  I am not in the position to judge the quality
-of the document, though.
+Thanks,
