@@ -1,60 +1,67 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [PATCH] Add a MIME-Version header to e-mails
-Date: Mon, 6 Nov 2006 08:56:34 +0100
-Message-ID: <20061106075634.GA4532@diana.vm.bytemark.co.uk>
-References: <eile19$p7r$1@sea.gmane.org> <20061106074532.10376.60478.stgit@localhost>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: StGit repo & gitweb, was Re: [PATCH] merge-recursive: add/add really is modify/modify with an empty base
+Date: Thu, 14 Dec 2006 00:57:01 +0100
+Organization: At home
+Message-ID: <elq3ro$93b$2@sea.gmane.org>
+References: <20061207101707.GA19139@spearce.org> <Pine.LNX.4.63.0612100056090.28348@wbgn013.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.63.0612100114440.28348@wbgn013.biozentrum.uni-wuerzburg.de> <7vmz5w5tuw.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0612122347590.2807@wbgn013.biozentrum.uni-wuerzburg.de> <7vvekgog0r.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0612130402300.2807@wbgn013.biozentrum.uni-wuerzburg.de> <7vvekgl2z2.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0612131232270.3635@wbgn013.biozentrum.uni-wuerzburg.de> <b0943d9e0612131409x4a894f72if9c4d44cfa970be@mail.gmail.com> <Pine.LNX.4.63.0612140048120.3635@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Mon, 6 Nov 2006 07:57:04 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+NNTP-Posting-Date: Wed, 13 Dec 2006 23:55:22 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <20061106074532.10376.60478.stgit@localhost>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 17
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-25-107.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31000>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GgzLi-0004cc-53 for gcvg-git@gmane.org; Mon, 06 Nov
- 2006 08:56:54 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34267>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GudwT-0004O9-J0 for gcvg-git@gmane.org; Thu, 14 Dec
+ 2006 00:55:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1030383AbWKFH4i convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Mon, 6 Nov 2006 02:56:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030380AbWKFH4i
- (ORCPT <rfc822;git-outgoing>); Mon, 6 Nov 2006 02:56:38 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:53515 "EHLO
- diana.vm.bytemark.co.uk") by vger.kernel.org with ESMTP id S1030383AbWKFH4h
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 6 Nov 2006 02:56:37 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1
- (Debian)) id 1GgzLO-0001XQ-00; Mon, 06 Nov 2006 07:56:34 +0000
-To: Catalin Marinas <catalin.marinas@gmail.com>
+ S1751774AbWLMXzN (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 13 Dec 2006
+ 18:55:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751773AbWLMXzN
+ (ORCPT <rfc822;git-outgoing>); Wed, 13 Dec 2006 18:55:13 -0500
+Received: from main.gmane.org ([80.91.229.2]:38945 "EHLO ciao.gmane.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1751772AbWLMXzM
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 13 Dec 2006 18:55:12 -0500
+Received: from root by ciao.gmane.org with local (Exim 4.43) id
+ 1GudwE-00037A-8i for git@vger.kernel.org; Thu, 14 Dec 2006 00:55:02 +0100
+Received: from host-81-190-25-107.torun.mm.pl ([81.190.25.107]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Thu, 14 Dec 2006 00:55:02 +0100
+Received: from jnareb by host-81-190-25-107.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Thu, 14 Dec 2006
+ 00:55:02 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On 2006-11-06 08:45:32 +0100, Karl Hasselstr=F6m wrote:
+Johannes Schindelin wrote:
 
-> OK, this is a test to see if adding MIME-Version makes the problem
-> go away. I don't have any other way to test this than sending a
-> patch to the list. :-)
+>> BTW, how can I notify people that only pull from the http repository 
+>> that it will no longer be updated (rather than them thinking the 
+>> development stopped)? One solution would be to create a file with a 
+>> meaningful name in the top dir and hope people will notice it.
+> 
+> IMHO removing it altogether would be a good idea. The website should carry 
+> the news of the new repository site.
 
-All right, it seems to have worked! When I send patches to myself,
-they arrive still 8bit-encoded, and when I get them through the list,
-they have been properly QP-encoded by whatever part of the chain
-didn't like 8bit.
+By the way, would setting http-alternates help? I guess not, not without
+having refs copied from the other place...
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
 
-Catalin, this should replace the QP-encoding patch. (But not the
-RFC2047-encoding patch -- the headers are required to always be ascii,
-if I've not misunderstood something.)
-
-Thanks everyone!
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
