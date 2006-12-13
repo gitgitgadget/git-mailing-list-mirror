@@ -2,72 +2,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Han-Wen Nienhuys <hanwen@xs4all.nl>
-Subject: Re: git newbie problems
-Date: Wed, 06 Dec 2006 10:39:52 +0100
-Message-ID: <45768FE8.2030202@xs4all.nl>
-References: <4574AC9E.3040506@gmail.com> <4574BF70.8070100@lilypond.org> <457611B9.9020907@gmail.com> <el55to$952$1@sea.gmane.org>
-Reply-To: hanwen@xs4all.nl
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] git-add --interactive (wip)
+Date: Wed, 13 Dec 2006 11:42:41 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0612131137100.3635@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <360959.72234.qm@web31809.mail.mud.yahoo.com>
+ <200612111147.44964.Josef.Weidendorfer@gmx.de> <7vwt4wpytm.fsf@assigned-by-dhcp.cox.net>
+ <200612130415.59038.Josef.Weidendorfer@gmx.de> <7v1wn4mk9i.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 6 Dec 2006 09:40:17 +0000 (UTC)
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Wed, 13 Dec 2006 10:43:01 +0000 (UTC)
+Cc: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 24
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 82-171-213-190.dsl.ip.tiscali.nl
-User-Agent: Thunderbird 1.5.0.8 (X11/20061107)
-In-Reply-To: <el55to$952$1@sea.gmane.org>
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <7v1wn4mk9i.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33410>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34204>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GrtGB-0005GF-HD for gcvg-git@gmane.org; Wed, 06 Dec
- 2006 10:40:15 +0100
+ esmtp (Exim 4.50) id 1GuRZZ-00074t-Of for gcvg-git@gmane.org; Wed, 13 Dec
+ 2006 11:42:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1760380AbWLFJkM (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
- 04:40:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760384AbWLFJkM
- (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 04:40:12 -0500
-Received: from main.gmane.org ([80.91.229.2]:57941 "EHLO ciao.gmane.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1760383AbWLFJkK
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec 2006 04:40:10 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1GrtFs-0003tN-In for git@vger.kernel.org; Wed, 06 Dec 2006 10:39:56 +0100
-Received: from 82-171-213-190.dsl.ip.tiscali.nl ([82.171.213.190]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Wed, 06 Dec 2006 10:39:56 +0100
-Received: from hanwen by 82-171-213-190.dsl.ip.tiscali.nl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Wed, 06 Dec 2006
- 10:39:56 +0100
-To: git@vger.kernel.org
+ S932395AbWLMKmp (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 13 Dec 2006
+ 05:42:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932401AbWLMKmp
+ (ORCPT <rfc822;git-outgoing>); Wed, 13 Dec 2006 05:42:45 -0500
+Received: from mail.gmx.net ([213.165.64.20]:53537 "HELO mail.gmx.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S932447AbWLMKmo
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 13 Dec 2006 05:42:44 -0500
+Received: (qmail invoked by alias); 13 Dec 2006 10:42:42 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp045) with SMTP; 13 Dec 2006 11:42:42 +0100
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
+Hi,
 
-Jakub Narebski escreveu:
->> 84219bb don't have input/templates/ any longer.
->> fatal: Entry '.gitignore' would be overwritten by merge. Cannot merge.
->> No merge strategy handled the merge.
->>
->> As a git newbie, I'm quite confused.  OK, there's no merge strategy...
->> so what do I do now?  With cvs, the changes would be dumped into the
->> file.  I look at the file, found the conflict, and tried it again.  I
->> got the same error message, and then it occurred to me that although I
->> changed the files in my ~/usr/src/lilypond, git might be storing these
->> files somewhere else.
+On Tue, 12 Dec 2006, Junio C Hamano wrote:
+
+> Josef Weidendorfer <Josef.Weidendorfer@gmx.de> writes:
 > 
-> Yes, the git error messages certainly needs to be made more user-friendly.
-> What git says here that one version has '.gitignore' file handled by version
-> control, and second has it outside version control. At least I think what
-> it does.
+> > No. It currently is starting to get useful. With the ability
+> > to temporarily store away a dirty state of the working directory,
+> > it really could become very good.
+> 
+> Hmm, a way to easily stash away local changes and restoring
+> would lead to a system where you can easily stash and unstash
+> multiple snapshots and switch between them, and such a model
+> sounds vaguely familiar...
 
-Which is actually not true. .gitignore has been in the repo since we
-started using git.  I have also seen this message pop up a few times
-in the beginning, but I can't recall why they happened.
+Hmm, what might that be? :-)
 
--- 
- Han-Wen Nienhuys - hanwen@xs4all.nl - http://www.xs4all.nl/~hanwen
+A more simple approach than to buy into Python would be to introduce a 
+very simple program, which exchanges work directory contents with index 
+contents. So,
+
+$ git revolve-stage
+$ [test the staged revision]
+$ [possibly fix a thing or two]
+$ git revolve-stage
+$ git commit
+
+Opinions?
+
+Ciao,
+Dscho
