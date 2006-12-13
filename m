@@ -1,68 +1,90 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 2/n] gitweb: Use '&iquot;' instead of '?' in esc_path
-Date: Mon, 30 Oct 2006 17:27:39 -0800
-Message-ID: <7vvem1s29g.fsf@assigned-by-dhcp.cox.net>
-References: <200610301953.01875.jnareb@gmail.com>
-	<200610301959.05313.jnareb@gmail.com>
-	<7vzmbds4pw.fsf@assigned-by-dhcp.cox.net>
+From: "Sean Kelley" <sean.v.kelley@gmail.com>
+Subject: Re: GIT - releases workflow
+Date: Wed, 13 Dec 2006 06:39:22 -0600
+Message-ID: <89b129c60612130439m452b315x2278456396a248a5@mail.gmail.com>
+References: <89b129c60612121444t18ba94ecv57eea4c72be1663a@mail.gmail.com>
+	 <Pine.LNX.4.63.0612122353320.2807@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <1166001019.19098.4.camel@localhost.localdomain>
+	 <89b129c60612130434q18c69c7bxd96b7db0c423d8ea@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 31 Oct 2006 01:28:24 +0000 (UTC)
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Wed, 13 Dec 2006 12:39:35 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <7vzmbds4pw.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Mon, 30 Oct 2006 16:34:35 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=kRZPHTMF9EvezZN0oGsDg/2an8OF4E9IMYf4xPFCuC698E41IM9d+bLBgvzK7TinqsiE3yH+7gVAZY6Ol9NcKUM6PZkbOGGGTTs9zDzdbA/J2Q994rxpY3TXZsQ+4stt3l9S9n3WufPFYJOEGpxua/W1gZws42yvXJAoqihTa3s=
+In-Reply-To: <89b129c60612130434q18c69c7bxd96b7db0c423d8ea@mail.gmail.com>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30557>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GeiQE-0007ww-HV for gcvg-git@gmane.org; Tue, 31 Oct
- 2006 02:28:12 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34216>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GuTOR-00059Q-37 for gcvg-git@gmane.org; Wed, 13 Dec
+ 2006 13:39:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1161566AbWJaB1l (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 30 Oct 2006
- 20:27:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161567AbWJaB1l
- (ORCPT <rfc822;git-outgoing>); Mon, 30 Oct 2006 20:27:41 -0500
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:16006 "EHLO
- fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP id S1161566AbWJaB1k
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 30 Oct 2006 20:27:40 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao07.cox.net
- (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
- <20061031012740.QVSB28934.fed1rmmtao07.cox.net@fed1rmimpo01.cox.net>; Mon, 30
- Oct 2006 20:27:40 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id gpTL1V00K1kojtg0000000 Mon, 30 Oct 2006
- 20:27:21 -0500
-To: Jakub Narebski <jnareb@gmail.com>
+ S964917AbWLMMjY (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 13 Dec 2006
+ 07:39:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964916AbWLMMjY
+ (ORCPT <rfc822;git-outgoing>); Wed, 13 Dec 2006 07:39:24 -0500
+Received: from ug-out-1314.google.com ([66.249.92.169]:50613 "EHLO
+ ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S964897AbWLMMjX (ORCPT <rfc822;git@vger.kernel.org>); Wed, 13 Dec
+ 2006 07:39:23 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so158473uga for
+ <git@vger.kernel.org>; Wed, 13 Dec 2006 04:39:22 -0800 (PST)
+Received: by 10.78.138.6 with SMTP id l6mr581620hud.1166013562074; Wed, 13
+ Dec 2006 04:39:22 -0800 (PST)
+Received: by 10.78.179.10 with HTTP; Wed, 13 Dec 2006 04:39:21 -0800 (PST)
+To: "Matthias Kestenholz" <lists@spinlock.ch>
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano <junkio@cox.net> writes:
+Hi,
 
-> Jakub Narebski <jnareb@gmail.com> writes:
+On 12/13/06, Sean Kelley <sean.v.kelley@gmail.com> wrote:
+> Hi,
 >
->> Use "&iquot;" Latin 1 entity ("&#191;" -- inverted question mark =
->> turned question mark, U+00BF ISOnum) instead '?' as replacements for
->> control characters and other undisplayable characters.
->>
->> Signed-off-by: Jakub Narebski <jnareb@gmail.com>
->
-> Do you have something against our Spanish and Latin American
-> friends?  ;-)
->
-> I wonder if there is a more suitable replacement character that
-> is accepted across scripts?
+> On 12/13/06, Matthias Kestenholz <lists@spinlock.ch> wrote:
+> >
+> How do I push that tag that I created to the maint/v0.1 branch on the
+> remote repository?
 
-I have a suspicion that instead of finding an exotic character,
-just showing the byte value in \octal, perhaps in different
-color, might be more portable and easier.  For one thing, it
-helps to show the exact byte value than just one substitution
-character if you are troubleshooting gitweb.
+Never mind, I answered my own question.  Sorry for asking without
+doing my research first.
 
+   git push --tags origin
+
+Thanks,
+
+Sean
+>
+> Thanks,
+>
+> Sean
+>
+>
+> >
+> > I need a full branch, because I need the ability to do bugfixes for the
+> > already-released version.
+> >
+> > Matthias
+> >
+> >
+>
+>
+> --
+> Sean Kelley
+>
+
+
+-- 
