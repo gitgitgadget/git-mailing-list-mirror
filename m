@@ -1,85 +1,83 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Seth Falcon <sethfalcon@gmail.com>
-Subject: Re: gitk broken or user error?
-Date: Mon, 13 Nov 2006 14:38:57 -0800
-Message-ID: <m2y7qfezum.fsf@ziti.local>
-References: <m2irhkr467.fsf@ziti.local>
-	<17752.60467.854884.206737@cargo.ozlabs.ibm.com>
-	<m27ixzgex4.fsf@ziti.local>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: Collection of stgit issues and wishes
+Date: Wed, 13 Dec 2006 12:03:14 +0100
+Message-ID: <20061213110314.GA22670@diana.vm.bytemark.co.uk>
+References: <20061208221744.GA3288@nan92-1-81-57-214-146.fbx.proxad.net> <b0943d9e0612120143j7d0c1026rab046c8f44ec43ca@mail.gmail.com> <87y7pc2rc7.fsf@morpheus.local> <457FD3E4.3090104@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Mon, 13 Nov 2006 22:39:23 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Wed, 13 Dec 2006 11:31:40 +0000 (UTC)
+Cc: David =?iso-8859-1?Q?K=E5gedal?= <davidk@lysator.liu.se>,
+	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:to:cc:subject:references:from:date:in-reply-to:message-id:user-agent:mime-version:content-type;
-        b=Er4W8zS3oqUpoa5t6cqcY+nXqeRuBQxr7/a3ZNS6hCwTkZlvvgRiAvWlxHthmnFL6rMOXsiQLXOim6xx6vzMBjBVXRxn6zI6nearP+TRab2+d6J/jS+VpiSkbSJzI3z0rzmqJriyv5bIGM/iwf3PAOJyLx+HQS8fItwiEoCrO/c=
-In-Reply-To: <m27ixzgex4.fsf@ziti.local> (Seth Falcon's message of "Mon, 13 Nov 2006 14:28:07 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (darwin)
+X-Greylist: delayed 1693 seconds by postgrey-1.27 at vger.kernel.org; Wed, 13 Dec 2006 06:31:34 EST
+Content-Disposition: inline
+In-Reply-To: <457FD3E4.3090104@op5.se>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31326>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GjkSK-0003qF-K0 for gcvg-git@gmane.org; Mon, 13 Nov
- 2006 23:39:09 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34211>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GuSKn-00053U-U9 for gcvg-git@gmane.org; Wed, 13 Dec
+ 2006 12:31:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S933092AbWKMWjF (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 13 Nov 2006
- 17:39:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933093AbWKMWjE
- (ORCPT <rfc822;git-outgoing>); Mon, 13 Nov 2006 17:39:04 -0500
-Received: from nf-out-0910.google.com ([64.233.182.189]:16286 "EHLO
- nf-out-0910.google.com") by vger.kernel.org with ESMTP id S933092AbWKMWjC
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 13 Nov 2006 17:39:02 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so34837nfa for
- <git@vger.kernel.org>; Mon, 13 Nov 2006 14:39:01 -0800 (PST)
-Received: by 10.49.12.4 with SMTP id p4mr218395nfi.1163457540796; Mon, 13 Nov
- 2006 14:39:00 -0800 (PST)
-Received: from ziti.local ( [140.107.181.122]) by mx.google.com with ESMTP id
- o53sm280604nfa.2006.11.13.14.38.59; Mon, 13 Nov 2006 14:39:00 -0800 (PST)
-To: Paul Mackerras <paulus@samba.org>
+ S964851AbWLMLbf convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Wed, 13 Dec 2006 06:31:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964857AbWLMLbf
+ (ORCPT <rfc822;git-outgoing>); Wed, 13 Dec 2006 06:31:35 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2149 "EHLO
+ diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S964851AbWLMLbe (ORCPT <rfc822;git@vger.kernel.org>); Wed, 13 Dec
+ 2006 06:31:34 -0500
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1
+ (Debian)) id 1GuRtK-0006Ow-00; Wed, 13 Dec 2006 11:03:14 +0000
+To: Andreas Ericsson <ae@op5.se>
 Sender: git-owner@vger.kernel.org
 
-Seth Falcon <sethfalcon@gmail.com> writes:
-> I tried this patch:
+On 2006-12-13 11:20:20 +0100, Andreas Ericsson wrote:
 
-And then I used grep :-)
+> David K=E5gedal wrote:
+>
+> > "Catalin Marinas" <catalin.marinas@gmail.com> writes:
+> >
+> > > On 08/12/06, Yann Dirson <ydirson@altern.org> wrote:
+> > >
+> > > > - shortcuts (st -> status, etc.), possibly making use of the
+> > > >   git alias system ?
+> > >
+> > > Did this last night as it was pretty easy and without the GIT
+> > > alias system (which I am not familiar with). The idea is that if
+> > > it cannot find an exact match, it tries to look for all the
+> > > commands starting with the passed argument. If more than one
+> > > command is found, it reports an "ambiguous command".
+> >
+> > That approach can cause problems later on. If "stgit st" is
+> > currently a unique prefix of "stgit status", people might use it
+> > in scripts. Then, one day, you add the "stgit store" command, or
+> > whatever, and their scripts start breaking for no good reason.
+>
+> People who use abbreviations of commands in scripts ought to be
+> shot, not catered to, especially if they know this abbreviation is
+> automagically calculated.
 
-This patch seems to get the view menu items working.  The only strange
-thing I see now is that if I create a new view and then try to delete
-it, it stays around in the menu.
+Well, yes, but there's no reason to not shoot them _politely_ ...
 
-+ seth
+I'd prefer hand-picked command abbreviations to reduce namespace
+clutter. That way, it's even possible to have "ambiguous" shortcuts --
+for example, "stg st" -> "stg status" even if "stg store" exists. And
+shortcuts that aren't prefixes, like "stg ua" -> "stg unapplied". And
+the user doesn't need to retrain her fingers just because a prefix
+gets ambiguous.
 
-diff --git a/gitk b/gitk
-index ab383b3..d9df0a3 100755
---- a/gitk
-+++ b/gitk
-@@ -1632,8 +1632,8 @@ proc showview {n} {
- 
-     set curview $n
-     set selectedview $n
--    .bar.view entryconf 2 -state [expr {$n == 0? "disabled": "normal"}]
--    .bar.view entryconf 3 -state [expr {$n == 0? "disabled": "normal"}]
-+    .bar.view entryconf "Edit*" -state [expr {$n == 0? "disabled": "normal"}]
-+    .bar.view entryconf "Delete*" -state [expr {$n == 0? "disabled": "normal"}]
- 
-     if {![info exists viewdata($n)]} {
-        set pending_select $selid
-@@ -6305,8 +6305,8 @@ if {$cmdline_files ne {} || $revtreeargs
-     set viewargs(1) $revtreeargs
-     set viewperm(1) 0
-     addviewmenu 1
--    .bar.view entryconf 2 -state normal
--    .bar.view entryconf 3 -state normal
-+    .bar.view entryconf "Edit*" -state normal
-+    .bar.view entryconf "Delete*" -state normal
- }
- 
+=46or prefixes, tab completion is a much better answer.
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
