@@ -1,89 +1,99 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH (take 3)] git blame -C: fix output format tweaks when crossing file boundary.
-Date: Tue, 28 Nov 2006 22:32:00 -0800
-Message-ID: <7vhcwiu5jz.fsf_-_@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0611282013430.3395@woody.osdl.org>
-	<7vu00iu7lb.fsf@assigned-by-dhcp.cox.net>
-	<7vmz6au626.fsf@assigned-by-dhcp.cox.net>
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: [PATCH] Document the simple way of using of git-cat-file
+Date: Thu, 14 Dec 2006 00:20:57 +0100
+Message-ID: <20061213232056.11218.67473.stgit@lathund.dewire.com>
+References: <20061213221841.GB4928@fieldses.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 29 Nov 2006 06:32:11 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Wed, 13 Dec 2006 23:48:30 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <7vmz6au626.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Tue, 28 Nov 2006 22:21:05 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Greylist: delayed 1767 seconds by postgrey-1.27 at vger.kernel.org; Wed, 13 Dec 2006 18:47:48 EST
+X-Virus-Scanned: amavisd-new at localhost.localdomain
+In-Reply-To: <20061213221841.GB4928@fieldses.org>
+User-Agent: StGIT/0.11
+X-Virus-Scanned: by amavisd-new at dewire.com
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32618>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GpIzI-0003nf-Al for gcvg-git@gmane.org; Wed, 29 Nov
- 2006 07:32:08 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34263>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gudpn-0003Y8-Bx for gcvg-git@gmane.org; Thu, 14 Dec
+ 2006 00:48:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S935091AbWK2GcD (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 29 Nov 2006
- 01:32:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934989AbWK2GcD
- (ORCPT <rfc822;git-outgoing>); Wed, 29 Nov 2006 01:32:03 -0500
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:35989 "EHLO
- fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP id S935091AbWK2GcB
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 29 Nov 2006 01:32:01 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao08.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061129063200.XPBF18207.fed1rmmtao08.cox.net@fed1rmimpo01.cox.net>; Wed, 29
- Nov 2006 01:32:00 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id sWXU1V00N1kojtg0000000; Wed, 29 Nov 2006
- 01:31:28 -0500
-To: Linus Torvalds <torvalds@osdl.org>
+ S1751768AbWLMXru (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 13 Dec 2006
+ 18:47:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751666AbWLMXru
+ (ORCPT <rfc822;git-outgoing>); Wed, 13 Dec 2006 18:47:50 -0500
+Received: from [83.140.172.130] ([83.140.172.130]:13115 "EHLO
+ torino.dewire.com" rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with
+ ESMTP id S1751663AbWLMXrt (ORCPT <rfc822;git@vger.kernel.org>); Wed, 13 Dec
+ 2006 18:47:49 -0500
+Received: from localhost (localhost [127.0.0.1]) by torino.dewire.com
+ (Postfix) with ESMTP id 7E83F8030B8 for <git@vger.kernel.org>; Thu, 14 Dec
+ 2006 00:14:24 +0100 (CET)
+Received: from torino.dewire.com ([127.0.0.1]) by localhost (torino
+ [127.0.0.1]) (amavisd-new, port 10024) with ESMTP id 18778-07 for
+ <git@vger.kernel.org>; Thu, 14 Dec 2006 00:14:23 +0100 (CET)
+Received: from lathund.dewire.com (unknown [10.9.0.3]) by torino.dewire.com
+ (Postfix) with ESMTP id E429D800199 for <git@vger.kernel.org>; Thu, 14 Dec
+ 2006 00:14:23 +0100 (CET)
+Received: from localhost (lathund.dewire.com [127.0.0.1]) by
+ lathund.dewire.com (Postfix) with ESMTP id BF2D728E57 for
+ <git@vger.kernel.org>; Thu, 14 Dec 2006 00:21:05 +0100 (CET)
+Received: from lathund.dewire.com ([127.0.0.1]) by localhost
+ (lathund.dewire.com [127.0.0.1]) (amavisd-new, port 10025) with LMTP id
+ jAeXwMlTzBck for <git@vger.kernel.org>; Thu, 14 Dec 2006 00:21:00 +0100 (CET)
+Received: from lathund.dewire.com (lathund.dewire.com [127.0.0.1]) by
+ lathund.dewire.com (Postfix) with ESMTP id 79ACA28E42 for
+ <git@vger.kernel.org>; Thu, 14 Dec 2006 00:20:57 +0100 (CET)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-We used to get the case that more than two paths came from the
-same commit wrong when computing the output width and deciding
-to turn on --show-name option automatically.  When we find that
-lines that came from a path that is different from what we
-started digging from, we should always turn --show-name on, and
-we should count the name length for all files involved.
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
+Since you can give a version and a path name to git-cat-file,
+mention it in the man page.
+
+Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
 ---
 
- * BLUSH.  Both of the previous ones were botched.
-   Third time lucky, hopefully.
+ Documentation/git-cat-file.txt |    8 ++++++--
+ 1 files changed, 6 insertions(+), 2 deletions(-)
 
- builtin-blame.c |   10 +++++-----
- 1 files changed, 5 insertions(+), 5 deletions(-)
-
-diff --git a/builtin-blame.c b/builtin-blame.c
-index 066dee7..53fed45 100644
---- a/builtin-blame.c
-+++ b/builtin-blame.c
-@@ -1435,14 +1435,14 @@ static void find_alignment(struct scoreboard *sb, int *option)
- 		struct commit_info ci;
- 		int num;
+diff --git a/Documentation/git-cat-file.txt b/Documentation/git-cat-file.txt
+index 5e9cbf8..7abbf27 100644
+--- a/Documentation/git-cat-file.txt
++++ b/Documentation/git-cat-file.txt
+@@ -8,13 +8,14 @@ git-cat-file - Provide content or type i
  
-+		if (strcmp(suspect->path, sb->path))
-+			*option |= OUTPUT_SHOW_NAME;
-+		num = strlen(suspect->path);
-+		if (longest_file < num)
-+			longest_file = num;
- 		if (!(suspect->commit->object.flags & METAINFO_SHOWN)) {
- 			suspect->commit->object.flags |= METAINFO_SHOWN;
- 			get_commit_info(suspect->commit, &ci, 1);
--			if (strcmp(suspect->path, sb->path))
--				*option |= OUTPUT_SHOW_NAME;
--			num = strlen(suspect->path);
--			if (longest_file < num)
--				longest_file = num;
- 			num = strlen(ci.author);
- 			if (longest_author < num)
- 				longest_author = num;
--- 
-1.4.4.1.gad0c3-dirty
-
+ SYNOPSIS
+ --------
+-'git-cat-file' [-t | -s | -e | -p | <type>] <object>
++'git-cat-file' [-t | -s | -e | -p | <type>] [<object> | <commit-ish>:<path> ]
+ 
+ DESCRIPTION
+ -----------
+ Provides content or type of objects in the repository. The type
+ is required unless '-t' or '-p' is used to find the object type,
+-or '-s' is used to find the object size.
++or '-s' is used to find the object size. The more user friendly variant
++takes a revision and a path name corresponding to the blob you want to see.
+ 
+ OPTIONS
+ -------
+@@ -57,6 +58,9 @@ If '-p' is specified, the contents of <o
+ Otherwise the raw (though uncompressed) contents of the <object> will
+ be returned.
+ 
++If you don't know the object id, you can supply a version identifies,
++such as a branch name, a commit id or tag followed by a colon and a
++path name.
+ 
+ Author
