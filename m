@@ -4,63 +4,60 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: shortlog, was Re: merge-recursive, was Re: What's in git.git
-Date: Thu, 26 Oct 2006 15:45:03 +0200
-Message-ID: <4540BBDF.1020204@op5.se>
-References: <7vk62npipb.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0610261114520.3286@wbgn013.biozentrum.uni-wuerzburg.de> <45409D79.8010909@op5.se> <Pine.LNX.4.64.0610260937070.12418@xanadu.home>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: t9100-git-svn-basic.sh fails
+Date: Tue, 12 Dec 2006 17:01:03 -0800
+Message-ID: <20061213010103.GA18036@localdomain>
+References: <20061212232321.GL2476@albany.tokkee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 26 Oct 2006 13:45:23 +0000 (UTC)
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Wed, 13 Dec 2006 01:01:30 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
-In-Reply-To: <Pine.LNX.4.64.0610260937070.12418@xanadu.home>
+X-Greylist: delayed 962 seconds by postgrey-1.27 at vger.kernel.org; Tue, 12 Dec 2006 20:01:14 EST
+Content-Disposition: inline
+In-Reply-To: <20061212232321.GL2476@albany.tokkee.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30217>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gd5Xl-00031V-0w for gcvg-git@gmane.org; Thu, 26 Oct
- 2006 15:45:13 +0200
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34174>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GuIUs-00089p-3X for gcvg-git@gmane.org; Wed, 13 Dec
+ 2006 02:01:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1161366AbWJZNpI (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
- 09:45:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161370AbWJZNpI
- (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 09:45:08 -0400
-Received: from linux-server1.op5.se ([193.201.96.2]:7571 "EHLO
- smtp-gw1.op5.se") by vger.kernel.org with ESMTP id S1161366AbWJZNpG (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 09:45:06 -0400
-Received: by smtp-gw1.op5.se (Postfix, from userid 588) id A94FD6BE20; Thu,
- 26 Oct 2006 15:45:05 +0200 (CEST)
-Received: from [192.168.1.20] (unknown [213.88.215.14]) by smtp-gw1.op5.se
- (Postfix) with ESMTP id 499476BDCA; Thu, 26 Oct 2006 15:45:03 +0200 (CEST)
-To: Nicolas Pitre <nico@cam.org>
+ S964863AbWLMBBP (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 12 Dec 2006
+ 20:01:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964864AbWLMBBP
+ (ORCPT <rfc822;git-outgoing>); Tue, 12 Dec 2006 20:01:15 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:54561 "EHLO hand.yhbt.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S964863AbWLMBBO
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 12 Dec 2006 20:01:14 -0500
+Received: from hand.yhbt.net (localhost [127.0.0.1]) by hand.yhbt.net
+ (Postfix) with SMTP id 18F462DC034; Tue, 12 Dec 2006 17:01:12 -0800 (PST)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Tue, 12 Dec 2006
+ 17:01:03 -0800
+To: Sebastian Harl <sh@tokkee.org>
 Sender: git-owner@vger.kernel.org
 
-Nicolas Pitre wrote:
-> On Thu, 26 Oct 2006, Andreas Ericsson wrote:
+Sebastian Harl <sh@tokkee.org> wrote:
+> Hi,
 > 
->> I keep writing
->> 	git log --short
->>
->> when I really want
->> 	git log --pretty=short | git shortlog
->>
->>
->> I'll have a look at making it work if I get a spare moment.
+> When compiling git 1.4.4.2 on my Debian Sarge box t9100-git-svn-basic.sh fails
+> with the following output:
 > 
-> Why don't you simply drop the --pretty=short altogether?
+>   * FAIL 6: detect node change from directory to file #1
+>          git-svn commit --find-copies-harder --rmdir remotes/git-svn..mybranch2
 > 
-> 	git log | git shortlog
+> I'm using subversion 1.3.2.
 > 
+> Versions up to 1.4.3.2 built fine.
+> 
+> Any clues what this might be caused by?
 
-Dunno. Mainly because I saw the "git log --pretty=short | git shortlog" 
-construct somewhere, I guess. Either way, it would make more sense to 
-have it as --pretty=by-author or something like that instead.
+Are you using the svn command-line client or are the Perl SVN libraries
+installed?  I made a fix for people using version 1.4.x of the the
+command-line client, but I recall backwards compatibility was preserved
+as far as svn 1.1 goes.
 
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
