@@ -1,144 +1,76 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Peter Baumann <Peter.B.Baumann@stud.informatik.uni-erlangen.de>
-Subject: Re: [PATCH] config option core.showroot to enable showing the diff of the root commit
-Date: Fri, 24 Nov 2006 08:53:56 +0100
-Message-ID: <slrnemd98k.a3v.Peter.B.Baumann@xp.machine.xx>
-References: <200611211341.48862.andyparkins@gmail.com> <8aa486160611210609h1c2d229ekf0b5e8aeb4f21f11@mail.gmail.com> <slrnem694k.4lm.Peter.B.Baumann@xp.machine.xx> <Pine.LNX.4.64.0611210820100.3338@woody.osdl.org> <20061121180643.GC7201@pasky.or.cz> <ejvfng$cj6$1@sea.gmane.org> <20061121182135.GD7201@pasky.or.cz> <7v64d8y4tu.fsf@assigned-by-dhcp.cox.net> <slrnemaqt1.esn.Peter.B.Baumann@xp.machine.xx> <7virh5khrc.fsf@assigned-by-dhcp.cox.net> <slrnemcc0b.ncc.Peter.B.Baumann@xp.machine.xx> <7vejrthf2y.fsf@assigned-by-dhcp.cox.net> <7vzmahfx6q.fsf@assigned-by-dhcp.cox.net>
-NNTP-Posting-Date: Fri, 24 Nov 2006 07:54:44 +0000 (UTC)
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: svn versus git
+Date: Wed, 13 Dec 2006 15:45:02 -0800
+Message-ID: <7vfybjbbsx.fsf@assigned-by-dhcp.cox.net>
+References: <200612132200.41420.andyparkins@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Wed, 13 Dec 2006 23:45:22 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 100
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: mason.hofmann.stw.uni-erlangen.de
-User-Agent: slrn/0.9.8.0 (Linux)
+In-Reply-To: <200612132200.41420.andyparkins@gmail.com> (Andy Parkins's
+	message of "Wed, 13 Dec 2006 22:00:37 +0000")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32192>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GnVtQ-0005zK-IS for gcvg-git@gmane.org; Fri, 24 Nov
- 2006 08:54:40 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34261>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gudmf-0003A8-SP for gcvg-git@gmane.org; Thu, 14 Dec
+ 2006 00:45:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S934382AbWKXHyh (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 24 Nov 2006
- 02:54:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757638AbWKXHyh
- (ORCPT <rfc822;git-outgoing>); Fri, 24 Nov 2006 02:54:37 -0500
-Received: from main.gmane.org ([80.91.229.2]:21734 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S1757634AbWKXHyg (ORCPT
- <rfc822;git@vger.kernel.org>); Fri, 24 Nov 2006 02:54:36 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1GnVtI-0005xn-NG for git@vger.kernel.org; Fri, 24 Nov 2006 08:54:32 +0100
-Received: from mason.hofmann.stw.uni-erlangen.de ([131.188.24.36]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Fri, 24 Nov 2006 08:54:32 +0100
-Received: from Peter.B.Baumann by mason.hofmann.stw.uni-erlangen.de with
- local (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>;
- Fri, 24 Nov 2006 08:54:32 +0100
-To: git@vger.kernel.org
+ S1751662AbWLMXpG (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 13 Dec 2006
+ 18:45:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751805AbWLMXpF
+ (ORCPT <rfc822;git-outgoing>); Wed, 13 Dec 2006 18:45:05 -0500
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:38689 "EHLO
+ fed1rmmtao04.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1751662AbWLMXpE (ORCPT <rfc822;git@vger.kernel.org>); Wed, 13 Dec 2006
+ 18:45:04 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao04.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061213234503.LWQB7494.fed1rmmtao04.cox.net@fed1rmimpo02.cox.net>; Wed, 13
+ Dec 2006 18:45:03 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id yPlE1V00t1kojtg0000000; Wed, 13 Dec 2006
+ 18:45:15 -0500
+To: Andy Parkins <andyparkins@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-On 2006-11-24, Junio C Hamano <junkio@cox.net> wrote:
->> "git-diff-tree --color HEAD" (with explicit command line
->> instruction to color it) still colours its output, but "[diff]
->> color = auto" in ~/.gitconfig would not affect the coloring.
->> Hence, "git-diff-tree HEAD" with the configuration entry gives
->> monochrome.
->>
->> "git diff HEAD" on the other hand looks at '[diff] color = auto"
->> and will color its output without being told on the command
->> line.
->
-> Since this is about "log" family that deals with revision
-> structure, how about....
->
-> -- >8 --
-> [PATCH] config option log.showroot to show the diff of root commits
-[...]
+Andy Parkins <andyparkins@gmail.com> writes:
 
-Patch looks good.
+> ...  The output of git-ls-tree is not user friendly; it
+> requires some understanding of git internals.
 
-One question, what's the difference between git-log -p and git-whatchanged -p?
-I could only see it differ in the root commit handling.
+ls-tree is not Porcelain and has right to expose the internals
+by default.  "git ls-tree --name-only" could be aliased to give
+"git ls" if you wanted to, but I wonder how often you would want
+to run:
 
-Interesting parts marked with | as first character of the line.
+	svn list -r538
 
-  git-repo-config --get log.showroot
-  false
+and for what purpose?
 
-  git-log -p 8bc9a0c769ac1df7820f2dbf8f7b7d64835e3c68
-  commit 8bc9a0c769ac1df7820f2dbf8f7b7d64835e3c68
-  Author: Linus Torvalds <torvalds@ppc970.osdl.org>
-  Date:   Thu Apr 7 15:16:10 2005 -0700
+I often find myself doing
 
-      Add copyright notices.
+	git diff -r --name-status v1.3.0 HEAD
 
-      The tool interface sucks (especially "committing" information, which is just
-      me doing everything by hand from the command line), but I think this is in
-      theory actually a viable way of describing the world. So copyright it.
+to check if a file was already in v1.3.0 version, and I could do
+the same thing with
 
-  diff --git a/cat-file.c b/cat-file.c
-  index 74a0a23..d8f0121 100644
-  --- a/cat-file.c
-  +++ b/cat-file.c
-  @@ -1,3 +1,8 @@
-  +/*
-  + * GIT - The information manager from hell
-  + *
-  + * Copyright (C) Linus Torvalds, 2005
-  + */
-   #include "cache.h"
+	git list v1.3.0 >/var/tmp/1
+        git list HEAD >/var/tmp/2
+        diff -u /var/tmp/[12]
 
-   int main(int argc, char **argv)
+but that certainly is awkward.
 
-  [... rest of the diff ...]
+What do people use "svn list -r538" for and how often?  In other
+words, when does it become necessary to get the full list of
+paths in an arbitrary revision?
 
-| commit e83c5163316f89bfbde7d9ab23ca2e25604af290
-| Author: Linus Torvalds <torvalds@ppc970.osdl.org>
-| Date:   Thu Apr 7 15:13:13 2005 -0700
-|
-|     Initial revision of "git", the information manager from hell
-|
-  [ ... as specified in log.showroot, no diff of the root commit ...]
-
-  git-whatchanged -p 8bc9a0c769ac1df7820f2dbf8f7b7d64835e3c68
-  commit 8bc9a0c769ac1df7820f2dbf8f7b7d64835e3c68
-  Author: Linus Torvalds <torvalds@ppc970.osdl.org>
-  Date:   Thu Apr 7 15:16:10 2005 -0700
-  
-      Add copyright notices.
-      
-      The tool interface sucks (especially "committing" information, which is just
-      me doing everything by hand from the command line), but I think this is in
-      theory actually a viable way of describing the world. So copyright it.
-  
-  diff --git a/cat-file.c b/cat-file.c
-  index 74a0a23..d8f0121 100644
-  --- a/cat-file.c
-  +++ b/cat-file.c
-  @@ -1,3 +1,8 @@
-  +/*
-  + * GIT - The information manager from hell
-  + *
-  + * Copyright (C) Linus Torvalds, 2005
-  + */
-   #include "cache.h"
-   
-   int main(int argc, char **argv)
-
-  [... rest of the diff ...]
-|
-| [ ... no commit message etc from the root commit is shown ...]
-|
-
-As you can see, the root commit isn't shown. Is this intentional?
-Or is it just me not getting the different meaning of git-log and
-git-whatchanged?
-
-Setting "log.showroot = true" the output of the 2 commands is identical.
-
-Peter
