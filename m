@@ -4,79 +4,58 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
-Subject: [PATCH] Print progress message to stderr, not stdout
-Date: Sat, 11 Nov 2006 13:16:25 +0100
-Message-ID: <20061111121625.8988.45195.stgit@localhost>
+From: Jon Loeliger <jdl@freescale.com>
+Subject: Re: [RFC/PATCH] runstatus: restructure visual appearance
+Date: Wed, 13 Dec 2006 10:12:15 -0600
+Message-ID: <1166026335.19135.462.camel@cashmere.sps.mot.com>
+References: <11650882251452-git-send-email-hjemli@gmail.com>
+	 <8c5c35580612120330n36bcdd00p57b2a7cd1d6c801@mail.gmail.com>
+	 <7v3b7koc6b.fsf@assigned-by-dhcp.cox.net>
+	 <8c5c35580612130127y1b094dbbq34c06376704b0506@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Sat, 11 Nov 2006 12:18:30 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 14 Dec 2006 19:08:26 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, Git List <git@vger.kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: StGIT/0.11
+X-Greylist: delayed 96820 seconds by postgrey-1.27 at vger.kernel.org; Thu, 14 Dec 2006 14:08:07 EST
+In-Reply-To: <8c5c35580612130127y1b094dbbq34c06376704b0506@mail.gmail.com>
+X-Mailer: Ximian Evolution 1.4.6 (1.4.6-2.ydl.1) 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31217>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Giroa-00019D-05 for gcvg-git@gmane.org; Sat, 11 Nov
- 2006 13:18:28 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34384>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GuvwL-0007XN-Ca for gcvg-git@gmane.org; Thu, 14 Dec
+ 2006 20:08:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1424570AbWKKMSW convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Sat, 11 Nov 2006 07:18:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1424571AbWKKMSW
- (ORCPT <rfc822;git-outgoing>); Sat, 11 Nov 2006 07:18:22 -0500
-Received: from mxfep01.bredband.com ([195.54.107.70]:24575 "EHLO
- mxfep01.bredband.com") by vger.kernel.org with ESMTP id S1424570AbWKKMSV
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 11 Nov 2006 07:18:21 -0500
-Received: from ironport.bredband.com ([195.54.107.82] [195.54.107.82]) by
- mxfep01.bredband.com with ESMTP id
- <20061111121820.UBRI9747.mxfep01.bredband.com@ironport.bredband.com> for
- <git@vger.kernel.org>; Sat, 11 Nov 2006 13:18:20 +0100
-Received: from ua-83-227-180-148.cust.bredbandsbolaget.se (HELO
- yoghurt.hemma.treskal.com) ([83.227.180.148]) by ironport.bredband.com with
- ESMTP; 11 Nov 2006 13:18:20 +0100
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by
- yoghurt.hemma.treskal.com (Postfix) with ESMTP id 6CBD84C04D; Sat, 11 Nov
- 2006 13:18:19 +0100 (CET)
-To: Catalin Marinas <catalin.marinas@gmail.com>
+ S932886AbWLNTII (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
+ 14:08:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932894AbWLNTII
+ (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 14:08:08 -0500
+Received: from az33egw02.freescale.net ([192.88.158.103]:43085 "EHLO
+ az33egw02.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S932886AbWLNTIH (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec
+ 2006 14:08:07 -0500
+Received: from az33smr02.freescale.net (az33smr02.freescale.net
+ [10.64.34.200]) by az33egw02.freescale.net (8.12.11/az33egw02) with ESMTP id
+ kBDGEJ0O027670; Wed, 13 Dec 2006 09:14:19 -0700 (MST)
+Received: from [10.82.19.2] (cashmere.am.freescale.net [10.82.19.2]) by
+ az33smr02.freescale.net (8.13.1/8.13.0) with ESMTP id kBDGEIcn019337; Wed, 13
+ Dec 2006 10:14:18 -0600 (CST)
+To: Lars Hjemli <hjemli@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Printing progress messages to stdout causes them to get mixed up with
-the actual output of the program. Using stderr is much better, since
-the user can then redirect the two components separately.
+On Wed, 2006-12-13 at 03:27, Lars Hjemli wrote:
 
-Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
----
+> >If we are designing a new format to make git-status output more
+> >compact and easier to understand, I think it should also attempt
+> >to address this [mode-change] problem as well.
+> 
+> Excellent point, I'll use it as an excuse to refine and resend the patch.
 
-I noticed this when creating a patch with "stg export -s" for the
-import regression test.
+If you are so inclined, you might google on list for a
+patch I submitted down this line last year sometime?
 
- stgit/git.py |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
+jdl
 
-diff --git a/stgit/git.py b/stgit/git.py
-index 2a6ae91..8d88769 100644
---- a/stgit/git.py
-+++ b/stgit/git.py
-@@ -186,8 +186,8 @@ def __tree_status(files =3D None, tree_id
-     """Returns a list of pairs - [status, filename]
-     """
-     if verbose:
--        print 'Checking for changes in the working directory...',
--        sys.stdout.flush()
-+        sys.stderr.write('Checking for changes in the working director=
-y...')
-+        sys.stderr.flush()
-=20
-     refresh_index()
-=20
-@@ -226,7 +226,7 @@ def __tree_status(files =3D None, tree_id
-             cache_files.append(fs)
-=20
-     if verbose:
--        print 'done'
-+        print >> sys.stderr, 'done'
-=20
-     return cache_files
