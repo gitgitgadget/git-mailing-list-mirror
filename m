@@ -4,50 +4,79 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [PATCH] Allow hand-editing of patches before sending
-Date: Fri, 3 Nov 2006 14:42:45 +0100
-Message-ID: <20061103134245.GC21202@diana.vm.bytemark.co.uk>
-References: <20061101090046.1107.81105.stgit@localhost> <b0943d9e0611020232x1e343bbco9451c8183c84d68@mail.gmail.com> <20061102113631.GA30507@diana.vm.bytemark.co.uk> <b0943d9e0611030139i7be9569bh4a29596a768e82a3@mail.gmail.com> <20061103095859.GC16721@diana.vm.bytemark.co.uk> <b0943d9e0611030444w13e04586u185413c2562d45bc@mail.gmail.com> <20061103130259.GA20611@diana.vm.bytemark.co.uk> <b0943d9e0611030525t5da2cce7nf7b41323411e8d2d@mail.gmail.com> <20061103133329.GB21202@diana.vm.bytemark.co.uk>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Fri, 3 Nov 2006 13:43:59 +0000 (UTC)
-Cc: git@vger.kernel.org
+From: Peter Baumann <Peter.B.Baumann@stud.informatik.uni-erlangen.de>
+Subject: Re: svn versus git
+Date: Thu, 14 Dec 2006 00:32:40 +0100
+Message-ID: <slrneo13co.o4k.Peter.B.Baumann@xp.machine.xx>
+References: <200612132200.41420.andyparkins@gmail.com> <elpun9$qp1$1@sea.gmane.org>
+NNTP-Posting-Date: Wed, 13 Dec 2006 23:33:30 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <20061103133329.GB21202@diana.vm.bytemark.co.uk>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 38
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: mason.hofmann.stw.uni-erlangen.de
+User-Agent: slrn/0.9.8.0 (Linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30853>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GfzK3-0006S3-DJ for gcvg-git@gmane.org; Fri, 03 Nov
- 2006 14:43:03 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34259>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GudbF-0001kV-JX for gcvg-git@gmane.org; Thu, 14 Dec
+ 2006 00:33:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753026AbWKCNms convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Fri, 3 Nov 2006 08:42:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753152AbWKCNms
- (ORCPT <rfc822;git-outgoing>); Fri, 3 Nov 2006 08:42:48 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:35087 "EHLO
- diana.vm.bytemark.co.uk") by vger.kernel.org with ESMTP id S1753026AbWKCNmr
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 3 Nov 2006 08:42:47 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1
- (Debian)) id 1GfzJl-0005c3-00; Fri, 03 Nov 2006 13:42:45 +0000
-To: Catalin Marinas <catalin.marinas@gmail.com>
+ S1751728AbWLMXdS (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 13 Dec 2006
+ 18:33:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751750AbWLMXdS
+ (ORCPT <rfc822;git-outgoing>); Wed, 13 Dec 2006 18:33:18 -0500
+Received: from main.gmane.org ([80.91.229.2]:53384 "EHLO ciao.gmane.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1751726AbWLMXdR
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 13 Dec 2006 18:33:17 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1Gudaw-0007mI-3A for git@vger.kernel.org; Thu, 14 Dec 2006 00:33:02 +0100
+Received: from mason.hofmann.stw.uni-erlangen.de ([131.188.24.36]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Thu, 14 Dec 2006 00:33:02 +0100
+Received: from Peter.B.Baumann by mason.hofmann.stw.uni-erlangen.de with
+ local (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>;
+ Thu, 14 Dec 2006 00:33:02 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On 2006-11-03 14:33:29 +0100, Karl Hasselstr=F6m wrote:
+[...]
+>> svn revert::
+>> Restore pristine working copy file (undo most local edits).
+>> git reset --hard::
+>> Reset the repository to an arbitrary point in the past, updating the
+>> working copy as well.
+>> git checkout -f HEAD <file>::
+>> Checks out <file> from HEAD, forcing an overwrite of any working
+>> directory changes to that file.
+>> 
+>> Draw.  There is no easy way to undo changes that have already been
+>> committed to a subversion repository, so git would win.  However, it's
+>> uncomfortable to revert a single file using checkout.
+>
+> There was talk about adding "git reset [<commit-ish>] -- <file>".
+>
 
-> Does that mean that "stg mail" with my QP patch generates output that
-> even git-am can't read? I had guessed from what you said earlier that
-> git-am _could_ read them.
+I would appreciate this. The first thing which comes to my mind if I
+have to actualy revert a change I made was
 
-(Yes, I'm way too lazy. I tested the "stg mail" output by mailing
-patches to myself and making sure that they looked good in my mail
-reader. And by looking at the raw output quite a bit.)
+	git reset file
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
+After that didn't work I figured out I have to use the seperating -- and typed
+
+	git reset -- file
+
+and that didn't work, too. After several hours (ok, I'am just
+exaggerating, it took me only about 15 minutes) reading manpages I figured out
+that I have to use   git checkout [<revision>] -- file
+
+After putting some thought into the mental model behind git checkout -- file
+this command it looks obvious and understantable, but in _my_ mental modell
+
+	git reset [<revision] -- file
+
+would be a much better fit.
+
+-Peter
