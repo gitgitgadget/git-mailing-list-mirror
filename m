@@ -1,73 +1,167 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] cvs-migration document: make the need for "push" more
- obvious
-Date: Wed, 6 Dec 2006 14:14:16 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612061411380.28348@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <4574AC9E.3040506@gmail.com> <4574BF70.8070100@lilypond.org>
- <45760545.2010801@gmail.com> <20061206.105251.144349770.wl@gnu.org>
- <Pine.LNX.4.63.0612061325320.28348@wbgn013.biozentrum.uni-wuerzburg.de>
- <el6d50$p7e$2@sea.gmane.org>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Shawn Pearce <spearce@spearce.org>
+Subject: More merge-recursive woes
+Date: Wed, 13 Dec 2006 02:36:39 -0500
+Message-ID: <20061213073639.GA9289@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Wed, 6 Dec 2006 13:14:24 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Wed, 13 Dec 2006 12:08:43 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <el6d50$p7e$2@sea.gmane.org>
-X-Y-GMX-Trusted: 0
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33455>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34214>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GrwbO-0007gJ-9R for gcvg-git@gmane.org; Wed, 06 Dec
- 2006 14:14:22 +0100
+ esmtp (Exim 4.50) id 1GuSuc-0001QC-0O for gcvg-git@gmane.org; Wed, 13 Dec
+ 2006 13:08:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1760590AbWLFNOT (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
- 08:14:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760592AbWLFNOT
- (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 08:14:19 -0500
-Received: from mail.gmx.net ([213.165.64.20]:42668 "HELO mail.gmx.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S1760590AbWLFNOS
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec 2006 08:14:18 -0500
-Received: (qmail invoked by alias); 06 Dec 2006 13:14:17 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp031) with SMTP; 06 Dec 2006 14:14:17 +0100
-To: Jakub Narebski <jnareb@gmail.com>
+ S964864AbWLMMIX (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 13 Dec 2006
+ 07:08:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964885AbWLMMIX
+ (ORCPT <rfc822;git-outgoing>); Wed, 13 Dec 2006 07:08:23 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:33866 "EHLO
+ corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S964896AbWLMMIV (ORCPT <rfc822;git@vger.kernel.org>); Wed, 13 Dec 2006
+ 07:08:21 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1GuOfR-00044C-5X for git@vger.kernel.org; Wed, 13 Dec 2006 02:36:41 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ E90D420FB6E; Wed, 13 Dec 2006 02:36:39 -0500 (EST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Hi,
+Today I found two new bugs in git-merge-recursive.  I'm still
+researching them, but I at least have a test case for one of the
+two:
 
-On Wed, 6 Dec 2006, Jakub Narebski wrote:
+Bug #1: If one branch renames a file which existed in the merge base,
+when we merge that change into a different branch the old version
+of the file is not deleted from the working directory.  The attached
+test script shows this ("BAD: A still exists in working directory").
 
-> Johannes Schindelin wrote:
-> 
-> > +  * Since every working tree contains a repository, a commit will not
-> > +    publish your changes; it will only create a revision. You have to
-> > +    "push" your changes to a public repository to make them visible
-> > +    to others.
-> > +
-> 
-> I'm not sure about context of this addition, but it is simply not
-> true if you publish your working repository.
+Bug #2: In that horrible repository that I have where I ran into the
+empty tree missing bug I now have a pair of commits which when merged
+together cause git-merge-recursive to go into an infinite loop,
+or least burn CPU for hours on end without doing squat.  I have
+not been able to get enough data to even write a good analysis
+of it yet.  I'll try to do that this week, as I cannot share the
+repository itself.  It just happens to be two new commits along
+the same two branches however.  :-(
 
-Remember, you are talking to CVS users. They are not dumb, but sooo used 
-to the CVS ways. So, they do not publish their working directory.
+Both bugs are appearing with current 'next' (8662d0ea).
 
-Later, when they became familiar with Git, you can tell them: "BTW you can 
-also publish your working directory, but then you have to be extra careful 
-with git-commit --amend, and if you allow pushing into your repo you have 
-to add hooks to prevent updating your current HEAD, etc."
+After I eat something and weed through my inbox I may take a stab
+at the first one, if I haven't passed out on the couch.  :-)
 
-Give them a chance to get used to the concepts of Git.
 
-Ciao,
-Dscho
+->->->->->->--t6024-merge-rename2.sh-->->->->->->->->-
+#!/bin/sh
+
+test_description='Merge-recursive merging renames'
+. ./test-lib.sh
+
+test_expect_success setup \
+'
+cat >A <<\EOF &&
+a aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+b bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+c cccccccccccccccccccccccccccccccccccccccccccccccc
+d dddddddddddddddddddddddddddddddddddddddddddddddd
+e eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+f ffffffffffffffffffffffffffffffffffffffffffffffff
+g gggggggggggggggggggggggggggggggggggggggggggggggg
+h hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+i iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
+j jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
+k kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+l llllllllllllllllllllllllllllllllllllllllllllllll
+m mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+n nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+o oooooooooooooooooooooooooooooooooooooooooooooooo
+EOF
+
+cat >M <<\EOF &&
+A AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+B BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+C CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+D DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+E EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+F FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+G GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
+H HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
+I IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+J JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ
+K KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK
+L LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
+M MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+N NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+O OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
+EOF
+
+git add A M &&
+git commit -m "initial has A and M" &&
+git branch white &&
+git branch red &&
+
+git checkout white &&
+sed -e "/^g /s/.*/g : white changes a line/" <A >B &&
+sed -e "/^G /s/.*/G : colored branch changes a line/" <M >N &&
+rm -f A M &&
+git update-index --add --remove A B M N &&
+git commit -m "white renames A->B, M->N" &&
+
+git checkout red &&
+echo created by red >R &&
+git update-index --add R &&
+git commit -m "red creates R" &&
+
+git checkout master'
+
+test_expect_success 'merge white into red' \
+'
+	git checkout -b red-white red &&
+	git merge white &&
+	git write-tree >/dev/null || {
+		echo "BAD: merge did not complete"
+		return 1
+	}
+
+	test -f B || {
+		echo "BAD: B does not exist in working directory"
+		return 1
+	}
+	test -f N || {
+		echo "BAD: N does not exist in working directory"
+		return 1
+	}
+	test -f R || {
+		echo "BAD: R does not exist in working directory"
+		return 1
+	}
+
+	test -f A && {
+		echo "BAD: A still exists in working directory"
+		return 1
+	}
+	test -f M && {
+		echo "BAD: M still exists in working directory"
+		return 1
+	}
+'
+
