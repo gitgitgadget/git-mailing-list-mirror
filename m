@@ -2,87 +2,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Restore a single file in the index back to HEAD
-Date: Wed, 01 Nov 2006 00:34:37 -0800
-Message-ID: <7vvelz7eg2.fsf@assigned-by-dhcp.cox.net>
-References: <200610261641.11239.andyparkins@gmail.com>
-	<81b0412b0610260842x52413570k3971bcdc54b3ccb5@mail.gmail.com>
-	<200610270827.17659.andyparkins@gmail.com>
-	<20061027073834.GC29057@spearce.org> <4541BE8E.5050605@op5.se>
-	<20061027081545.GF29057@spearce.org>
-	<81b0412b0610270245w6c29b3c3va7967991f53db298@mail.gmail.com>
-	<4541D670.6000900@op5.se> <7vac3igjpd.fsf@assigned-by-dhcp.cox.net>
-	<fcaeb9bf0610312358g1176e4d8q8962b08c2e8ff2c6@mail.gmail.com>
-	<7vpsc78ua3.fsf@assigned-by-dhcp.cox.net>
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Using git as a general backup mechanism (was Re: Using GIT to
+ store /etc)
+Date: Wed, 13 Dec 2006 01:01:39 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0612130100220.2807@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <787BE48C-1808-4A33-A368-5E8A3F00C787@mac.com>
+ <Pine.LNX.4.64.0612111837210.20138@iabervon.org> <8900B938-1360-4A67-AB15-C9E84255107B@mac.com>
+ <200612121553.37499.andyparkins@gmail.com> <457F31E6.8090701@midwinter.com>
+ <Pine.LNX.4.63.0612122355400.2807@wbgn013.biozentrum.uni-wuerzburg.de>
+ <457F3606.7020805@midwinter.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 1 Nov 2006 08:34:55 +0000 (UTC)
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Wed, 13 Dec 2006 00:08:29 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <7vpsc78ua3.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Wed, 01 Nov 2006 00:07:16 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <457F3606.7020805@midwinter.com>
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30621>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GfBYa-0003JK-69 for gcvg-git@gmane.org; Wed, 01 Nov
- 2006 09:34:44 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34171>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GuHfd-0002B9-Mv for gcvg-git@gmane.org; Wed, 13 Dec
+ 2006 01:08:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1423853AbWKAIek (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 1 Nov 2006
- 03:34:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423918AbWKAIek
- (ORCPT <rfc822;git-outgoing>); Wed, 1 Nov 2006 03:34:40 -0500
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:47313 "EHLO
- fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP id S1423853AbWKAIei
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 1 Nov 2006 03:34:38 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao05.cox.net
- (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
- <20061101083438.UYTB12909.fed1rmmtao05.cox.net@fed1rmimpo01.cox.net>; Wed, 1
- Nov 2006 03:34:38 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id hLaH1V0021kojtg0000000 Wed, 01 Nov 2006
- 03:34:18 -0500
-To: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+ S932577AbWLMAIX (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 12 Dec 2006
+ 19:08:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932578AbWLMAIX
+ (ORCPT <rfc822;git-outgoing>); Tue, 12 Dec 2006 19:08:23 -0500
+Received: from mail.gmx.net ([213.165.64.20]:38431 "HELO mail.gmx.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S932577AbWLMAIW
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 12 Dec 2006 19:08:22 -0500
+Received: (qmail invoked by alias); 13 Dec 2006 00:01:41 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp043) with SMTP; 13 Dec 2006 01:01:41 +0100
+To: Steven Grimm <koreth@midwinter.com>
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano <junkio@cox.net> writes:
+Hi,
 
->> I would prefer "git update-index --reset frotz" or "git checkout
->> --index HEAD frotz". git ls-tree|git update-index is too cryptic for
->> me and too long for my fingers.
->
-> Then perhaps you can use "git checkout HEAD frotz", which is the
-> simplest?
+On Tue, 12 Dec 2006, Steven Grimm wrote:
 
-Sorry, Oops.
+> Johannes Schindelin wrote:
+> > $ git pull --depth 1
+> > 
+> > Though it needs a server _and_ a client supporting shallow clones, 
+> > which support is brewed in "next" right now.
+> 
+> Will that actually discard old revisions that are already stored 
+> locally?
 
-One should never respond to a message in an ancient thread
-unless one has enough time to revisit previous messages and
-refresh one's memory.
+No. A pull should _never_ lose anything from the repository. However, if 
+some objects become no-longer reachable (and at the moment it looks like 
+we cut of history, even if we should not need to), they can be pruned from 
+the repo.
 
-The original topic was about updating the index entry without
-touching working tree, so "co HEAD path" would not do what was
-wanted.
-
-I think at the UI level, the most appropriate place would be
-"git reset".  Checkout is a Porcelainish that is primarily about
-working tree and it updates the index as a side effect (from the
-UI point of view); you can update the working tree without
-modifying index or you can update both index and the working
-tree, but updating only index and not working tree does not
-belong there.
-
-Given a commit that is different from the current HEAD, "reset"
-moves the HEAD and depending on hardness of the reset it updates
-the index and the working tree.  Currently the command does not
-take paths limiters and means "the whole tree", but asking to
-update only one would logically fall as a natural extension to
-the current command line if we add paths limiters.
-
-As an implementation detail of the new "reset", the ls-tree to
-update-index pipe could be used.
+Hth,
+Dscho
