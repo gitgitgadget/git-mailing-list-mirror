@@ -4,65 +4,78 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] hooks/pre-commit: add example to add Signed-off-by line to message
-Date: Wed, 20 Dec 2006 09:44:13 -0800
-Message-ID: <7vejqufonm.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.63.0611291219190.30004@wbgn013.biozentrum.uni-wuerzburg.de>
-	<200612201604.12498.andyparkins@gmail.com>
-	<Pine.LNX.4.63.0612201717490.19693@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7vmz5ifpbv.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0612201835570.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: t9100-git-svn-basic.sh fails
+Date: Wed, 13 Dec 2006 01:43:20 -0800
+Message-ID: <20061213094320.GD8179@localdomain>
+References: <20061212232321.GL2476@albany.tokkee.org> <Pine.LNX.4.63.0612130102000.2807@wbgn013.biozentrum.uni-wuerzburg.de> <20061213084620.GN2476@albany.tokkee.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 20 Dec 2006 17:44:32 +0000 (UTC)
+NNTP-Posting-Date: Wed, 13 Dec 2006 09:43:34 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <Pine.LNX.4.63.0612201835570.19693@wbgn013.biozentrum.uni-wuerzburg.de>
-	(Johannes Schindelin's message of "Wed, 20 Dec 2006 18:37:45 +0100
-	(CET)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Content-Disposition: inline
+In-Reply-To: <20061213084620.GN2476@albany.tokkee.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34952>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34194>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gx5UH-0001wt-Ry for gcvg-git@gmane.org; Wed, 20 Dec
- 2006 18:44:18 +0100
+ esmtp (Exim 4.50) id 1GuQe5-0007fH-Do for gcvg-git@gmane.org; Wed, 13 Dec
+ 2006 10:43:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1030220AbWLTRoP (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 20 Dec 2006
- 12:44:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030221AbWLTRoP
- (ORCPT <rfc822;git-outgoing>); Wed, 20 Dec 2006 12:44:15 -0500
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:57077 "EHLO
- fed1rmmtao06.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1030220AbWLTRoO (ORCPT <rfc822;git@vger.kernel.org>); Wed, 20 Dec 2006
- 12:44:14 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao06.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061220174413.PEEA2628.fed1rmmtao06.cox.net@fed1rmimpo01.cox.net>; Wed, 20
- Dec 2006 12:44:13 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id 15jY1W00C1kojtg0000000; Wed, 20 Dec 2006
- 12:43:32 -0500
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+ S932640AbWLMJnW (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 13 Dec 2006
+ 04:43:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932641AbWLMJnW
+ (ORCPT <rfc822;git-outgoing>); Wed, 13 Dec 2006 04:43:22 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:54999 "EHLO hand.yhbt.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S932640AbWLMJnW
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 13 Dec 2006 04:43:22 -0500
+Received: from hand.yhbt.net (localhost [127.0.0.1]) by hand.yhbt.net
+ (Postfix) with SMTP id 5080A2DC034; Wed, 13 Dec 2006 01:43:20 -0800 (PST)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Wed, 13 Dec 2006
+ 01:43:20 -0800
+To: Junio C Hamano <junkio@cox.net>, Sebastian Harl <sh@tokkee.org>
 Sender: git-owner@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Sebastian Harl <sh@tokkee.org> wrote:
+> Hi,
+> 
+> On Wed, Dec 13, 2006 at 01:03:21AM +0100, Johannes Schindelin wrote:
+> > On Wed, 13 Dec 2006, Sebastian Harl wrote:
+> > 
+> > > When compiling git 1.4.4.2 on my Debian Sarge box t9100-git-svn-basic.sh 
+> > > fails with the following output:
+> > > 
+> > >   * FAIL 6: detect node change from directory to file #1
+> > >          git-svn commit --find-copies-harder --rmdir \
+> > >		 remotes/git-svn..mybranch2
+> > 
+> > Could you please run the test like this:
+> > 
+> > git/t> sh t9100-* -i -v
+> 
+>   * expecting failure: git-svn commit --find-copies-harder --rmdir remotes/git-svn..mybranch2
+>   diff-tree 5d3b7d019e8fa8d509091bd1d80113c8f20f9f4f 91d77f97b74783aa97ba2aed5a966e936eb9d30f
+>   Transaction is out of date: Out of date: 'test-git-svn/bar' in transaction '2-2' at /home/tokkee/projects/debian/backports/backports.org/git-core/git-core-1.4.4.2/t/../git-svn line 1573
+>   65280 at /home/tokkee/projects/debian/backports/backports.org/git-core/git-core-1.4.4.2/t/../git-svn line 575
+>   	main::commit_lib('91d77f97b74783aa97ba2aed5a966e936eb9d30f') called at /home/tokkee/projects/debian/backports/backports.org/git-core/git-core-1.4.4.2/t/../git-svn line 481
+>   	main::commit('remotes/git-svn..mybranch2') called at /home/tokkee/projects/debian/backports/backports.org/git-core/git-core-1.4.4.2/t/../git-svn line 173
+>   * FAIL 6: detect node change from directory to file #1
+>   	git-svn commit --find-copies-harder --rmdir remotes/git-svn..mybranch2
 
->> Why SQUASH_MSG?  Doesn't it confuse git-explain when it wants to
->> detect that you are in the middle of a squash merge?
->
-> Yes, it confuses git-explain. Which did not existed when I concocted the 
-> first (broken) version of this patch. There are only two ways to give 
-> commit message templates AFAICT: misusing SQUASH_MSG and misusing 
-> MERGE_MSG.
+Oh, *smacks head*  I'm only half-awake at the moment, but
+it looks like 1.4.4.2 doesn't have commit
+d25c26e771fdf771f264dc85be348719886d354f
+(git-svn: exit with status 1 for test failures)
 
-I wonder...
+Junio:
+can you please cherry-pick that commit (and also apply
+"git-svn: correctly display fatal() error messages"
+(Message-Id: <11659636263755-git-send-email-normalperson@yhbt.net>)
+into maint?
 
-# An example hook script to check the commit log message.
-# Called by git-commit with one argument, the name of the file
-# that has the commit message.  The hook should exit with non-zero
-# status after issuing an appropriate message if it wants to stop the
-# commit.  The hook is allowed to edit the commit message file.
+Thanks.
 
+-- 
