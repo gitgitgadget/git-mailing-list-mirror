@@ -2,76 +2,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Peter Baumann <Peter.B.Baumann@stud.informatik.uni-erlangen.de>
-Subject: Re: What's in git.git (stable)
-Date: Thu, 14 Dec 2006 00:52:47 +0100
-Message-ID: <slrneo14if.qkg.Peter.B.Baumann@xp.machine.xx>
-References: <7v4przfpir.fsf@assigned-by-dhcp.cox.net> <200612132237.10051.andyparkins@gmail.com> <7vk60vbcfz.fsf@assigned-by-dhcp.cox.net>
-NNTP-Posting-Date: Wed, 13 Dec 2006 23:53:25 +0000 (UTC)
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: GIT - releases workflow
+Date: Wed, 13 Dec 2006 11:36:11 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0612131133160.3635@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <89b129c60612121444t18ba94ecv57eea4c72be1663a@mail.gmail.com> 
+ <Pine.LNX.4.63.0612122353320.2807@wbgn013.biozentrum.uni-wuerzburg.de>
+ <1166001019.19098.4.camel@localhost.localdomain>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Wed, 13 Dec 2006 10:36:29 +0000 (UTC)
+Cc: Sean Kelley <sean.v.kelley@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 33
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: mason.hofmann.stw.uni-erlangen.de
-User-Agent: slrn/0.9.8.0 (Linux)
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <1166001019.19098.4.camel@localhost.localdomain>
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34265>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34203>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gudud-00049I-NX for gcvg-git@gmane.org; Thu, 14 Dec
- 2006 00:53:24 +0100
+ esmtp (Exim 4.50) id 1GuRTO-00066s-7t for gcvg-git@gmane.org; Wed, 13 Dec
+ 2006 11:36:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751770AbWLMXxU (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 13 Dec 2006
- 18:53:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751771AbWLMXxU
- (ORCPT <rfc822;git-outgoing>); Wed, 13 Dec 2006 18:53:20 -0500
-Received: from main.gmane.org ([80.91.229.2]:36833 "EHLO ciao.gmane.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1751770AbWLMXxT
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 13 Dec 2006 18:53:19 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1GuduJ-0002gn-Pk for git@vger.kernel.org; Thu, 14 Dec 2006 00:53:04 +0100
-Received: from mason.hofmann.stw.uni-erlangen.de ([131.188.24.36]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Thu, 14 Dec 2006 00:53:03 +0100
-Received: from Peter.B.Baumann by mason.hofmann.stw.uni-erlangen.de with
- local (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>;
- Thu, 14 Dec 2006 00:53:03 +0100
-To: git@vger.kernel.org
+ S964827AbWLMKgP (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 13 Dec 2006
+ 05:36:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932657AbWLMKgP
+ (ORCPT <rfc822;git-outgoing>); Wed, 13 Dec 2006 05:36:15 -0500
+Received: from mail.gmx.net ([213.165.64.20]:43905 "HELO mail.gmx.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S932653AbWLMKgO
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 13 Dec 2006 05:36:14 -0500
+Received: (qmail invoked by alias); 13 Dec 2006 10:36:12 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp039) with SMTP; 13 Dec 2006 11:36:12 +0100
+To: Matthias Kestenholz <lists@spinlock.ch>
 Sender: git-owner@vger.kernel.org
 
->>  * git-branch is not verbose enough when creating a new
->>  branch, for a new user a little reassurance that what they
->>  meant to happen has happened would be nice.
->
-> The same comment applies here.  
->
-> However, perhaps you could make lack of "[user] expert = true"
-> in ~/.gitconfig to trigger more verbose messages that say "yes
-> sir I did what I was told to do".
->
-> Not interested in implementing that myself at all, though.
->
->>  Tell them if they
->>  made a branch as well, which branch they are now on.
->
-> I think you are talking about "checkout -b" not commit here;
-> this might be a borderline (branch creation is less often done
-> and it might warrant assuring feedback), but I think it still
-> falls into the "doing exactly what it was told to do" category.
->
+Hi,
 
-Yes. checkout -b works. But only _if_ you have read the manpage.
-Someone thinking about branching at the current commit would just have
+On Wed, 13 Dec 2006, Matthias Kestenholz wrote:
 
-	git branch
+> On Tue, 2006-12-12 at 23:54 +0100, Johannes Schindelin wrote:
+> > 
+> > On Tue, 12 Dec 2006, Sean Kelley wrote:
+> > 
+> > > I was wondering if anyone could share ideas on how best to use GIT to 
+> > > handle releases for those working with a remote GIT repository?  Do you 
+> > > create a branch and push it to the remote?  Thus you have a new branch 
+> > > referencing the particular release?
+> > 
+> > Why not just tag the release, and push the tag?
+> 
+> I am doing both in my web SDK project.
+> 
+> I currently have two branches, master and maint/v1. Over time, if
+> necessary, I'll open new branches named maint/v2, maint/v3 etc.
+> 
+> New development happens on master, bugfixes go to maint/v1 and get
+> merged into master. If I do bugfix releases (2.0.x), I tag the tip of
+> the maint/v1 branch.
+> 
+> I need a full branch, because I need the ability to do bugfixes for the
+> already-released version.
 
-in mind (so would I). Its not obvious to say
+Ah, that's right. I always forget that there are maintenance releases 
+(mostly in Cathedral-ish projects)... I am not a release engineer during 
+my day job, and I am just as happy about that.
 
-	git checkout -b <newbranchname> oldbranch
+BTW, if the maintenance releases are sparse and long between, you can 
+actually create the branch from the tag, fix, and tag with the new version 
+number. No need to start the branches early.
 
-becouse checkout implies to advance to another version.
-
--Peter
+Ciao,
+Dscho
