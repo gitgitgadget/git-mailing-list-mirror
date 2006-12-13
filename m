@@ -1,79 +1,110 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [WISH] Store also tag dereferences in packed-refs
-Date: Sat, 18 Nov 2006 17:11:28 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0611181706250.3692@woody.osdl.org>
-References: <e5bfff550611180115j135746a1h916e8ae029d1374d@mail.gmail.com> 
- <7vmz6oeh2k.fsf@assigned-by-dhcp.cox.net>  <20061118184345.GO7201@pasky.or.cz>
-  <e5bfff550611181047w6712774fkccc697d312b87c7e@mail.gmail.com> 
- <7vac2oefuz.fsf@assigned-by-dhcp.cox.net> <e5bfff550611181628o41e11652ycd17ddad5dd21225@mail.gmail.com>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: GIT - releases workflow
+Date: Wed, 13 Dec 2006 05:56:14 -0500
+Message-ID: <20061213105614.GB9484@spearce.org>
+References: <89b129c60612121444t18ba94ecv57eea4c72be1663a@mail.gmail.com> <Pine.LNX.4.63.0612122353320.2807@wbgn013.biozentrum.uni-wuerzburg.de> <1166001019.19098.4.camel@localhost.localdomain> <Pine.LNX.4.63.0612131133160.3635@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Sun, 19 Nov 2006 01:11:51 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Wed, 13 Dec 2006 10:56:30 +0000 (UTC)
+Cc: Matthias Kestenholz <lists@spinlock.ch>,
+	Sean Kelley <sean.v.kelley@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <e5bfff550611181628o41e11652ycd17ddad5dd21225@mail.gmail.com>
-X-MIMEDefang-Filter: osdl$Revision: 1.159 $
-X-Scanned-By: MIMEDefang 2.36
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0612131133160.3635@wbgn013.biozentrum.uni-wuerzburg.de>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31819>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GlbDk-0002TD-7L for gcvg-git@gmane.org; Sun, 19 Nov
- 2006 02:11:44 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34207>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GuRmk-0000a2-6Q for gcvg-git@gmane.org; Wed, 13 Dec
+ 2006 11:56:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1755467AbWKSBLf (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 18 Nov 2006
- 20:11:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755471AbWKSBLf
- (ORCPT <rfc822;git-outgoing>); Sat, 18 Nov 2006 20:11:35 -0500
-Received: from smtp.osdl.org ([65.172.181.25]:46266 "EHLO smtp.osdl.org") by
- vger.kernel.org with ESMTP id S1755467AbWKSBLe (ORCPT
- <rfc822;git@vger.kernel.org>); Sat, 18 Nov 2006 20:11:34 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
- smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kAJ1BTix029109
- (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Sat, 18
- Nov 2006 17:11:29 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
- shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kAJ1BSBQ022006; Sat, 18 Nov
- 2006 17:11:28 -0800
-To: Marco Costalba <mcostalba@gmail.com>
+ S932288AbWLMK4U (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 13 Dec 2006
+ 05:56:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932447AbWLMK4U
+ (ORCPT <rfc822;git-outgoing>); Wed, 13 Dec 2006 05:56:20 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:59617 "EHLO
+ corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S932288AbWLMK4U (ORCPT <rfc822;git@vger.kernel.org>); Wed, 13 Dec 2006
+ 05:56:20 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1GuRmX-0007vu-AF; Wed, 13 Dec 2006 05:56:13 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 64E6620FB6E; Wed, 13 Dec 2006 05:56:14 -0500 (EST)
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-
-
-On Sun, 19 Nov 2006, Marco Costalba wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > > On Tue, 12 Dec 2006, Sean Kelley wrote:
+> > > 
+> > > > I was wondering if anyone could share ideas on how best to use GIT to 
+> > > > handle releases for those working with a remote GIT repository?  Do you 
+> > > > create a branch and push it to the remote?  Thus you have a new branch 
+> > > > referencing the particular release?
 > 
-> Tested also with show-ref only, not useful to me, but just as a comparison.
-> 
-> - git tree 1420ms
-> - linux tree 1021ms
-> 
-> Better, but still slower then what I would expected.
+> BTW, if the maintenance releases are sparse and long between, you can 
+> actually create the branch from the tag, fix, and tag with the new version 
+> number. No need to start the branches early.
 
-MUCH slower than expected.
+Indeed.
 
-Can you do
+I actually have a fancy (==~800 poorly written lines) Perl script that:
 
-	strace -o tracefile -Ttt git show-ref
+ * Creates a "build" git repository using objects/info/alternates.
+   The user can reuse an existing directory if they have one.
+   (Obviously reusing an existing directory is faster, less files
+   to setup in the working directory.)
 
-and send out the tracefile?
+ * Offers the user a menu of top 10 most recent tags to choose as
+   a base version.  Tags are displayed first sorted by which tag
+   is considered to be in which runtime environment (QA testing,
+   end user testing, production release), then by tag date for
+   those tags not in any specific environment.
 
-What I _suspect_ is going on is that when you packed your refs, you either 
-didn't prune them (which means that packing didn't actually help you), or 
-if you did prune them, since we don't seem to remove the refs 
-_directories_ when packing, you still have an old and big directory for 
-.git/refs/tags, and just reading that (empty, but non-shrunken) directory 
-takes time.
+ * Offers the user a menu of branches in a pre-configured namespace
+   (e.g. refs/heads/ready) which have commits not yet merged into
+   the selected base.  Users can attempt to pull as many branches
+   as they like, the script merges each in turn until none remain
+   or the user says "build!".
 
-The -Ttt thing should show quite clearly what takes time.
+ * Increments the last component of the 'version number' of the tag
+   and makes an annotated tag object in the local build repository.
 
-(This, btw, is one _huge_ reason why the old shell script things with 
-piping sucked. Doing things like performance analysis is so much easier 
-with a builtin thing and really shows what's going on).
+ * Runs the project's configured build command (from repo-config
+   taken from builder.command variable).
 
+ * If builder.command is successful pushes the tag back to the origin
+   repository; if builder.command fails pushes the HEAD revision
+   up as a branch (e.g. refs/heads/failed/foo) so that someone more
+   skilled in the art of failed builds can look into the matter.
+
+The script is really meant for QA people to take in topic branches
+from developers and apply them to a specific version, test that new
+version, then ship that new version.  Some of the QA people I work
+with aren't developers and have a somewhat difficult time making
+a build from source; this script makes it a pretty simple process.
+
+The version number incrementor is smart; its based off commit
+lineage.  It can automatically create a "2.0.1" tag when "2.1"
+has already been made but "2.0.1" is a bugfix of "2" or "2.0".
+
+I should clean it up some and post it, just in case others may
+be interested.  I'll try to do that this weekend.
+
+-- 
