@@ -1,68 +1,57 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Collection of stgit issues and wishes
-Date: Wed, 13 Dec 2006 11:20:20 +0100
-Message-ID: <457FD3E4.3090104@op5.se>
-References: <20061208221744.GA3288@nan92-1-81-57-214-146.fbx.proxad.net> <b0943d9e0612120143j7d0c1026rab046c8f44ec43ca@mail.gmail.com> <87y7pc2rc7.fsf@morpheus.local>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Wed, 13 Dec 2006 10:20:35 +0000 (UTC)
-Cc: git@vger.kernel.org
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: More Perl fun: man and System directories
+Date: Wed, 13 Dec 2006 08:07:19 -0500
+Message-ID: <4F093D53-CFC7-44F1-9460-22DAD35DBAC8@silverinsanity.com>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Wed, 13 Dec 2006 13:08:11 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
-In-Reply-To: <87y7pc2rc7.fsf@morpheus.local>
+X-Mailer: Apple Mail (2.752.3)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34199>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34217>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GuRDu-0003zZ-NM for gcvg-git@gmane.org; Wed, 13 Dec
- 2006 11:20:27 +0100
+ esmtp (Exim 4.50) id 1GuTq6-0000M7-MT for gcvg-git@gmane.org; Wed, 13 Dec
+ 2006 14:08:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932649AbWLMKUX convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Wed, 13 Dec 2006 05:20:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932652AbWLMKUX
- (ORCPT <rfc822;git-outgoing>); Wed, 13 Dec 2006 05:20:23 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:42320 "EHLO
- smtp-gw1.op5.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
- S932649AbWLMKUW (ORCPT <rfc822;git@vger.kernel.org>); Wed, 13 Dec 2006
- 05:20:22 -0500
-Received: from [192.168.1.20] (unknown [213.88.215.14]) by smtp-gw1.op5.se
- (Postfix) with ESMTP id 44D5C6BCBF; Wed, 13 Dec 2006 11:20:21 +0100 (CET)
-To: =?ISO-8859-15?Q?David_K=E5gedal?= <davidk@lysator.liu.se>
+ S964935AbWLMNH2 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 13 Dec 2006
+ 08:07:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964956AbWLMNH1
+ (ORCPT <rfc822;git-outgoing>); Wed, 13 Dec 2006 08:07:27 -0500
+Received: from vs072.rosehosting.com ([216.114.78.72]:36214 "EHLO
+ silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
+ S964955AbWLMNHZ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 13 Dec 2006
+ 08:07:25 -0500
+Received: from [IPv6???1] (localhost [127.0.0.1]) (using TLSv1 with cipher
+ AES128-SHA (128/128 bits)) (No client certificate requested) by
+ silverinsanity.com (Postfix) with ESMTP id 1AF921FFC05A for
+ <git@vger.kernel.org>; Wed, 13 Dec 2006 13:07:23 +0000 (UTC)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-David K=E5gedal wrote:
-> "Catalin Marinas" <catalin.marinas@gmail.com> writes:
->=20
->> On 08/12/06, Yann Dirson <ydirson@altern.org> wrote:
->>> - shortcuts (st -> status, etc.), possibly making use of the git al=
-ias
->>> system ?
->> Did this last night as it was pretty easy and without the GIT alias
->> system (which I am not familiar with). The idea is that if it cannot
->> find an exact match, it tries to look for all the commands starting
->> with the passed argument. If more than one command is found, it
->> reports an "ambiguous command".
->=20
-> That approach can cause problems later on.  If "stgit st" is currentl=
-y
-> a unique prefix of "stgit status", people might use it in scripts.
-> Then, one day, you add the "stgit store" command, or whatever, and
-> their scripts start breaking for no good reason.
->=20
+Hello again!
 
-People who use abbreviations of commands in scripts ought to be shot,=20
-not catered to, especially if they know this abbreviation is=20
-automagically calculated.
+Perl's MakeMaker seems to be a rather arcane thing.  I'm trying to  
+figure out two things:
 
---=20
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
+1) Perl is creating man files in the wrong place.  My system expects  
+them to be in /usr/local/share/man, but Perl is installing them in / 
+usr/local/man.  Currently I'm just moving them by hand every time I  
+pull-make-install, which is less than optimal.
+
+2) In a bit of what I'm sure is OS X strangeness, Perl is creating a / 
+usr/local/System directory that contains one file: "System/Library/ 
+Perl/5.8.6/darwin-thread-multi-2level/perllocal.pod".  This doesn't  
+seem to be useful, and I'm deleting it without anything exploding  
+(noticeably) since I doubt anything is looking for a System directory  
+there.  Is there a way to keep Perl from creating it in the first place?
+
+Thanks for your time!
