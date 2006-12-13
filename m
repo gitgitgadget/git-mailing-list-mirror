@@ -1,56 +1,62 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: Double From:s in StGIT's patch email template
-Date: Sat, 11 Nov 2006 15:40:57 +0100
-Message-ID: <20061111144057.GG11224@diana.vm.bytemark.co.uk>
-References: <20061111113553.GA11224@diana.vm.bytemark.co.uk>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [PATCH] Allow subcommand.color and color.subcommand color configuration
+Date: Wed, 13 Dec 2006 22:52:50 +0000
+Message-ID: <200612132252.51696.andyparkins@gmail.com>
+References: <200612130913.28917.andyparkins@gmail.com> <7vodq7e90z.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Sat, 11 Nov 2006 14:41:16 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Wed, 13 Dec 2006 22:55:38 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=P18ICzHHpnrCrcTzOfwg7xQIYBKt8kRbAj6k3H68cglowZDjQkT5H0f8MFmaBsOdFjR80e29RkdfWvoOhDBQy92bnbPCjYhu0fIaEmolas902XJUfBOIGuBkgrWtJ6fOGjLjYw0pHGyDLwjFNOWSqYpIRzXynNSgX/Kxios3yi8=
+User-Agent: KMail/1.9.5
+In-Reply-To: <7vodq7e90z.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
-In-Reply-To: <20061111113553.GA11224@diana.vm.bytemark.co.uk>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31227>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Giu2d-0008R7-S9 for gcvg-git@gmane.org; Sat, 11 Nov
- 2006 15:41:08 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34247>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gud0i-0005Gw-Ei for gcvg-git@gmane.org; Wed, 13 Dec
+ 2006 23:55:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1947255AbWKKOlA convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Sat, 11 Nov 2006 09:41:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1947256AbWKKOlA
- (ORCPT <rfc822;git-outgoing>); Sat, 11 Nov 2006 09:41:00 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:8715 "EHLO
- diana.vm.bytemark.co.uk") by vger.kernel.org with ESMTP id S1947255AbWKKOk7
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 11 Nov 2006 09:40:59 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1
- (Debian)) id 1Giu2T-0003v2-00; Sat, 11 Nov 2006 14:40:57 +0000
-To: Catalin Marinas <catalin.marinas@gmail.com>
+ S1751680AbWLMWze (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 13 Dec 2006
+ 17:55:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751682AbWLMWzd
+ (ORCPT <rfc822;git-outgoing>); Wed, 13 Dec 2006 17:55:33 -0500
+Received: from ug-out-1314.google.com ([66.249.92.173]:4560 "EHLO
+ ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1751680AbWLMWzd (ORCPT <rfc822;git@vger.kernel.org>); Wed, 13 Dec
+ 2006 17:55:33 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so316322uga for
+ <git@vger.kernel.org>; Wed, 13 Dec 2006 14:55:32 -0800 (PST)
+Received: by 10.66.232.9 with SMTP id e9mr284769ugh.1166050531703; Wed, 13
+ Dec 2006 14:55:31 -0800 (PST)
+Received: from grissom.internal.parkins.org.uk ( [84.201.153.164]) by
+ mx.google.com with ESMTP id l33sm1267559ugc.2006.12.13.14.55.31; Wed, 13 Dec
+ 2006 14:55:31 -0800 (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On 2006-11-11 12:35:53 +0100, Karl Hasselstr=F6m wrote:
+On Wednesday 2006, December 13 22:16, Junio C Hamano wrote:
 
-> StGIT's default patch email template has both "From: %(maintainer)s"
-> in the e-mail header, and "From: %(authname)s <%(authemail)s>" in
-> the e-mail body. Why?
+> I think doing the same makes sense.  Something like this?
 
-Ah, I just figured it out. "maintainer" is the person sending the
-mail, and "author" is the person who wrote the patch. In general, they
-are not the same.
+Perfect - yes that is the solution.
 
-Hmm. It would be nice to omit the second From: in case they really are
-the same.
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
+Andy
+
+-- 
+Dr Andrew Parkins, M Eng (Hons), AMIEE
