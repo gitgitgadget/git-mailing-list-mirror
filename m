@@ -1,152 +1,125 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Cleaning up git user-interface warts
-Date: Thu, 16 Nov 2006 13:49:36 -0800
-Message-ID: <7vr6w33vv3.fsf@assigned-by-dhcp.cox.net>
-References: <87k61yt1x2.wl%cworth@cworth.org> <455A1137.8030301@shadowen.org>
-	<87hcx1u934.wl%cworth@cworth.org>
-	<Pine.LNX.4.64.0611141518590.2591@xanadu.home>
-	<87bqn9u43s.wl%cworth@cworth.org>
-	<7vr6w5y7to.fsf@assigned-by-dhcp.cox.net>
-	<20061116051240.GV7201@pasky.or.cz>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: Re: [PATCH] git-add --interactive (wip)
+Date: Wed, 13 Dec 2006 04:15:58 +0100
+Message-ID: <200612130415.59038.Josef.Weidendorfer@gmx.de>
+References: <360959.72234.qm@web31809.mail.mud.yahoo.com> <200612111147.44964.Josef.Weidendorfer@gmx.de> <7vwt4wpytm.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 16 Nov 2006 21:50:08 +0000 (UTC)
-Cc: Carl Worth <cworth@cworth.org>, git@vger.kernel.org,
-	Andy Whitcroft <apw@shadowen.org>, Nicolas Pitre <nico@cam.org>
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Wed, 13 Dec 2006 03:23:06 +0000 (UTC)
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061116051240.GV7201@pasky.or.cz> (Petr Baudis's message of
-	"Thu, 16 Nov 2006 06:12:40 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Tue, 12 Dec 2006 22:22:45 EST
+X-Authenticated: #352111
+User-Agent: KMail/1.9.5
+In-Reply-To: <7vwt4wpytm.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31623>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gkp7K-0007CZ-KE for gcvg-git@gmane.org; Thu, 16 Nov
- 2006 22:49:54 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34181>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GuKhz-0004aQ-3S for gcvg-git@gmane.org; Wed, 13 Dec
+ 2006 04:23:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1424707AbWKPVtj (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 16 Nov 2006
- 16:49:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1424708AbWKPVtj
- (ORCPT <rfc822;git-outgoing>); Thu, 16 Nov 2006 16:49:39 -0500
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:13720 "EHLO
- fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP id S1424707AbWKPVth
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 16 Nov 2006 16:49:37 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao02.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061116214937.EFMS97.fed1rmmtao02.cox.net@fed1rmimpo02.cox.net>; Thu, 16
- Nov 2006 16:49:37 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id nZpj1V00F1kojtg0000000; Thu, 16 Nov 2006
- 16:49:44 -0500
-To: Petr Baudis <pasky@suse.cz>
+ S932543AbWLMDWq (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 12 Dec 2006
+ 22:22:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932528AbWLMDWq
+ (ORCPT <rfc822;git-outgoing>); Tue, 12 Dec 2006 22:22:46 -0500
+Received: from mail.gmx.net ([213.165.64.20]:36494 "HELO mail.gmx.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S932543AbWLMDWp
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 12 Dec 2006 22:22:45 -0500
+Received: (qmail invoked by alias); 13 Dec 2006 03:16:02 -0000
+Received: from p5496A4D6.dip0.t-ipconnect.de (EHLO noname) [84.150.164.214]
+ by mail.gmx.net (mp038) with SMTP; 13 Dec 2006 04:16:02 +0100
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Petr Baudis <pasky@suse.cz> writes:
+On Tuesday 12 December 2006 22:51, Junio C Hamano wrote:
+> I've updated my "git add --interactive" in 'pu' and it now knows
+> how to split a hunk into smaller pieces and recounting the diff
+> offsets before applying
 
-> (vi) Coding issues. This is probably very subjective, but a blocker for
-> me. I have no issues about C here, but about the shell part of Git.
-> Well, how to say it... It's just fundamentally incompatible with me. I
-> *could* do things in/with it, but it's certainly something I wouldn't
-> _enjoy_ doing _at all_, on a deep level. I think the current shell code
-> is really hard to read, the ancient constructs are frequently strange at
-> best, etc. It's surely fine code at functional level and there'll be
-> people who hate _my_ style of coding and my shell code which isn't
-> perfect either, but it's just how it is with me.
+Nice.
+Yes, this seems to be a missing piece in this hunk-wise staging.
 
-I've been thinking about revamping the style of shell scripts in
-git-core Porcelain-ish for some time, and I have a feeling that
-now may be a good time to do so, after one feature release is
-out and the list is discussing UI improvements.
+> To make it easier, one possibility might be to add a subcommand
+> to "git add --interactive" that lets you edit what is currently
+> staged in the index by opening a temporary copy in your favorite
+> editor, and stage the result of your edit in the index.
 
-But before mentioning the specifics, let me mention one tangent.
-I recently installed an OpenBSD bochs (it was actually a qemu
-image) without knowing much about the way of the land, and after
-adjusting myself to necessary glitches (like "make" being called
-"gmake" there), I saw git properly built and pass its selftest.
-I was pleasantly surprised when I noticed there was no 'bash' on
-the system after all that.
+Yes. Sounds interesting.
+Another would be to open the editor with the diff of this hunk.
 
-I would like to keep it that way.
+> But I 
+> feel quite uneasy to introduce ways to update the index with
+> something _wildly_ different from what you ever had in your
+> working tree as a whole.
 
-I'll list things I would want to and not want to change.
-Comments from the list are very appreciated.  You can say things
-in two ways:
+Hmm... yes.
+Is this not a general problem with staging, of course to
+a lesser degree if you work at file granularity, because
+the probability of dependence of changes in multiple files,
+which could lead to a wrong commit, is less.
 
- * I guarantee that the _default_ shell on all sane platforms we
-   care about handle this construct correctly, although it was
-   not in the original Bourne.  There is no reason to stay away
-   from it these days.
+> I think it is wrong to commit partially, purely from the index,
+> when you are building a series that has complex changes that
+> come during the series but go away at the end.  The user should
+> be able to verify all the steps in the middle in such a complex
+> series, but it is not easy if you have it only in the index.
 
-or
+What you really want is to test the commit afterwards. If
+you did it wrong, you always can do "git reset --mixed HEAD^"
+or "git commit --amend".
 
- * You've stayed away from this construct but now you say you
-   feel it is Ok to use it.  Don't.  It would break with the
-   shell on my platform (or "it is a bad practice because of
-   such and such reasons").
+However, testing a commit with a dirty working tree is not
+possible. For this to work, you would want that
+"git-checkout --store" can store away a dirty working state when
+going to another revision, e.g. store it into a temporary ref
+"<current branch>.dirtywork".
+You would need a "git-checkout --restore" which would restore
+the dirty state of the branch you are switching too.
 
-I do not think many people can say the former with authority
-unless you have a portability lab (the company I work for used
-to be like that and it was an interesting experience to learn
-all about irritating implementation differences).  And "POSIX
-says shell should behave that way" is _not_ what I want to hear
-about.
+Then, to check the commit of staged things, it should be enough
+to do "git-checkout --store", check the commit, and do a
+"git-checkout --restore" afterwards to get the dirty state back.
 
-But the latter should be a lot easier to say, and would be
-appreciated because it would help us avoid regressions.
+> You could do
+> 
+> 	$ git checkout-index --prefix=testarea/ -f -q -u -a
+> 
+> and run your tests there, but that takes a discipline, and is
+> cumbersome to do.
 
-Things I would want to change:
+IMHO that is too tricky for the average git user.
 
- - One indent level is one tab and the tab-width is eight
-   columns.  Some of our scripts tend to use less than eight
-   spaces for indentation to avoid line wrapping.
+> So in short, I think per-hunk update-index is a cute hack and
+> may be useful in a narrow simple cases, but it would not be so
+> useful in the real life.
 
- - More use of shell functions are fine.   Especially if the
-   above change makes lines too long, the logic should be
-   refactored.
+No. It currently is starting to get useful. With the ability
+to temporarily store away a dirty state of the working directory,
+it really could become very good.
+ 
+> > Just as a sidenote: after deciding to not apply hunks, you
+> > lose them in this WIP, as you will find nothing in "unstaged" mode
+> > afterwards :-(
+> 
+> I do not understand this part.  You can 'revert' to match the
+> index to HEAD and run 'patch' to pick what you want again.
 
- - It is so 80-ish to follow certain portability and performance
-   wisdom.  The following should go:
+Hmmm...
+I lost my changes in the working directory; there was nothing to
+pick again any more.
+Perhaps I did something wrong.
 
-   . Use "case" when you do not have to use "if test".
-
-   . Avoid ${parameter##word} and friends and use `expr` instead
-     to pick a string apart.
-
-   . Avoid "export name=word", write "name=word; export name"
-     instead.
-
-   . Avoid ${parameter:-word} and friends when ${parameter-word}
-     would do.
-
-Things I do not want to change:
-
- - The shell scripts should start with #!/bin/sh, not
-   #!/bin/bash (nor even worse "#!/usr/bin/env sh").
-
- - Shell functions are written as "name () { ... }" without 
-   "function" noiseword.
-
- - 'foo && bar || exit' exits with the error code of what
-   failed; no need to say 'exit $?'.
-
- - String equality check for "test" is a single =, not ==. 
-
- - Do not use locals.
-
- - Do not use shell arrays.
-
- - In general, if something does not behave the same way in ksh,
-   bash and dash, don't use it (that does not mean these three
-   are special; it just means if something is not even portable
-   across these three, it is a definite no-no).
-
-I do not think I need to list other common-sense shell idioms in
-the latter category (e.g. 'using "test z$name = zexpected" when
-we do not know what $name contains' falls into that).
