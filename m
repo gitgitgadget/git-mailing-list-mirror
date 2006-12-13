@@ -1,86 +1,95 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Torgil Svensson" <torgil.svensson@gmail.com>
-Subject: Re: [RFC] Submodules in GIT
-Date: Sat, 16 Dec 2006 02:20:00 +0100
-Message-ID: <e7bda7770612151720w2e65fe83s9942e1ec1f7092a2@mail.gmail.com>
-References: <20061130170625.GH18810@admingilde.org>
-	 <200612150007.44331.Josef.Weidendorfer@gmx.de>
-	 <e7bda7770612150943j71a7362bmb509cea3b7756003@mail.gmail.com>
-	 <200612152242.50472.Josef.Weidendorfer@gmx.de>
-	 <e7bda7770612151543o39c9d233q91ea643a134196d3@mail.gmail.com>
-	 <e7bda7770612151713k418434e6gd8d565e49a766477@mail.gmail.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] Allow subcommand.color and color.subcommand color configuration
+Date: Wed, 13 Dec 2006 15:42:56 -0800
+Message-ID: <20061213234256.GA10423@soma>
+References: <200612130913.28917.andyparkins@gmail.com> <7vodq7e90z.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sat, 16 Dec 2006 01:20:40 +0000 (UTC)
-Cc: "R. Steve McKown" <rsmckown@yahoo.com>,
-	"Linus Torvalds" <torvalds@osdl.org>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Wed, 13 Dec 2006 23:43:14 +0000 (UTC)
+Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=pkW+LRo0Cfp1GFzQYJRAjNp+F5fGLcVPI2KJr/G1hPwMkwZxhxEZhrujtk0vlCXe8CfakH74C3k4xmUtLpjODJh8v6flEvcAWv+HhQp5ZVaJti5+TXaPGzqFstj44gLxfbyiSx+fAhkam9JfVIgnNos6ibvg63R1Km4xWwtPqS4=
-In-Reply-To: <e7bda7770612151713k418434e6gd8d565e49a766477@mail.gmail.com>
 Content-Disposition: inline
+In-Reply-To: <7vodq7e90z.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34583>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34260>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GvOE3-00038U-Op for gcvg-git@gmane.org; Sat, 16 Dec
- 2006 02:20:32 +0100
+ esmtp (Exim 4.50) id 1Gudkh-0002uP-Ky for gcvg-git@gmane.org; Thu, 14 Dec
+ 2006 00:43:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S965315AbWLPBUG (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 15 Dec 2006
- 20:20:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965314AbWLPBUG
- (ORCPT <rfc822;git-outgoing>); Fri, 15 Dec 2006 20:20:06 -0500
-Received: from nf-out-0910.google.com ([64.233.182.184]:1852 "EHLO
- nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S965316AbWLPBUF (ORCPT <rfc822;git@vger.kernel.org>); Fri, 15 Dec
- 2006 20:20:05 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so1281663nfa for
- <git@vger.kernel.org>; Fri, 15 Dec 2006 17:20:02 -0800 (PST)
-Received: by 10.49.58.13 with SMTP id l13mr709747nfk.1166232000534; Fri, 15
- Dec 2006 17:20:00 -0800 (PST)
-Received: by 10.49.28.8 with HTTP; Fri, 15 Dec 2006 17:20:00 -0800 (PST)
-To: "Josef Weidendorfer" <Josef.Weidendorfer@gmx.de>
+ S1751803AbWLMXnF (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 13 Dec 2006
+ 18:43:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751759AbWLMXnD
+ (ORCPT <rfc822;git-outgoing>); Wed, 13 Dec 2006 18:43:03 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:55689 "EHLO hand.yhbt.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1751804AbWLMXnB
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 13 Dec 2006 18:43:01 -0500
+Received: from hand.yhbt.net (localhost [127.0.0.1]) by hand.yhbt.net
+ (Postfix) with SMTP id E03C42DC034; Wed, 13 Dec 2006 15:42:56 -0800 (PST)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Wed, 13 Dec 2006
+ 15:42:56 -0800
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-On 12/16/06, Torgil Svensson <torgil.svensson@gmail.com> wrote:
->
-> example tree object:
->
-> 100644 blob <sha1 of blob>    README
-> 100644 blob <sha1 of blob>    REPORTING-BUGS
-> 100644 link <sha1 of blob>     <sha1 of commit>
-> 040000 tree <sha1 of tree>    arch
-> 040000 tree <sha1 of tree>    block
-> 040000 link <sha1 of tree>     <sha1 of commit>
->
+Junio C Hamano <junkio@cox.net> wrote:
+> Andy Parkins <andyparkins@gmail.com> writes:
+> 
+> > While adding colour to the branch command it was pointed out that a
+> > config option like "branch.color" conflicts with the pre-existing
+> > "branch.something" namespace used for specifying default merge urls and
+> > branches.  The suggested solution was to flip the order of the
+> > components to "color.branch", which I did for colourising branch.
+> > ...
+> > Unfortunately git-svn reads "diff.color" and "pager.color"; which I
+> > don't like to change unilaterally.
+> 
+> I think doing the same makes sense.  Something like this?
 
-Sorry, I was sloppy and forgot the names:
+It works great for me after I fixed some syntax errors (patch below).
 
-100644 blob <sha1 of blob>    README
-100644 blob <sha1 of blob>    REPORTING-BUGS
-100644 link <sha1 of blob>     <sha1 of commit>   AUTHORS
-040000 tree <sha1 of tree>    arch
-040000 tree <sha1 of tree>    block
-040000 link <sha1 of tree>     <sha1 of commit>   misc
+> -- >8 --
+> git-svn: allow both diff.color and color.diff
+> 
+> The list concensus is to group color related configuration under
+> "color.*" so let's be consistent.
+> 
+> Inspired by Andy Parkins's patch to do the same for diff/log
+> family.
+> 
+> Signed-off-by: Junio C Hamano <junkio@cox.net>
 
-Now it doesn't looks like trees/blobs anymore so maybe a link object is handy:
+Signed-off-by: Eric Wong <normalperson@yhbt.net> (with the following
+fixes of course :)
 
-100644 blob <sha1 of blob>    README
-100644 blob <sha1 of blob>    REPORTING-BUGS
-100644 link <sha1 of link>      AUTHORS
-040000 tree <sha1 of tree>    arch
-040000 tree <sha1 of tree>    block
-040000 link <sha1 of link>     misc
+diff --git a/git-svn.perl b/git-svn.perl
+index 2893e3b..73ab8d8 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -926,7 +926,7 @@ sub cmt_showable {
+ sub log_use_color {
+ 	return 1 if $_color;
+ 	my ($dc, $dcvar);
+-	$dcvar = 'color.diff'
++	$dcvar = 'color.diff';
+ 	$dc = `git-repo-config --get $dcvar`;
+ 	if ($dc eq '') {
+ 		# nothing at all; fallback to "diff.color"
+@@ -948,7 +948,7 @@ sub log_use_color {
+ 			}
+ 		}
+ 		chomp($pc);
+-		if (-t *STDOUT || (defined $_pager && $pc eq 'true') {
++		if (-t *STDOUT || (defined $_pager && $pc eq 'true')) {
+ 			return ($ENV{TERM} && $ENV{TERM} ne 'dumb');
+ 		}
+ 		return 0;
 
-link-object:
-<sha1 of commit>
+-- 
