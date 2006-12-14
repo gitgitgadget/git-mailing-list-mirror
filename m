@@ -1,75 +1,114 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jeff King <peff@peff.net>
-Subject: Re: git-format-patch little gripe
-Date: Fri, 3 Nov 2006 13:50:26 -0500
-Message-ID: <20061103185026.GA28566@coredump.intra.peff.net>
-References: <376237.14965.qm@web31805.mail.mud.yahoo.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: What's in git.git (stable)
+Date: Thu, 14 Dec 2006 13:22:00 -0800
+Message-ID: <7vmz5q18cn.fsf@assigned-by-dhcp.cox.net>
+References: <7v4przfpir.fsf@assigned-by-dhcp.cox.net>
+	<200612132237.10051.andyparkins@gmail.com>
+	<7vk60vbcfz.fsf@assigned-by-dhcp.cox.net>
+	<200612140959.19209.andyparkins@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 3 Nov 2006 18:50:48 +0000 (UTC)
+NNTP-Posting-Date: Thu, 14 Dec 2006 21:22:15 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <376237.14965.qm@web31805.mail.mud.yahoo.com>
+In-Reply-To: <200612140959.19209.andyparkins@gmail.com> (Andy Parkins's
+	message of "Thu, 14 Dec 2006 09:59:17 +0000")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30874>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gg47d-0007E6-RJ for gcvg-git@gmane.org; Fri, 03 Nov
- 2006 19:50:34 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34402>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Guy1p-0001Vp-32 for gcvg-git@gmane.org; Thu, 14 Dec
+ 2006 22:22:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753435AbWKCSub (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 3 Nov 2006
- 13:50:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753450AbWKCSub
- (ORCPT <rfc822;git-outgoing>); Fri, 3 Nov 2006 13:50:31 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:50400
- "HELO peff.net") by vger.kernel.org with SMTP id S1753435AbWKCSua (ORCPT
- <rfc822;git@vger.kernel.org>); Fri, 3 Nov 2006 13:50:30 -0500
-Received: (qmail 22154 invoked from network); 3 Nov 2006 13:49:30 -0500
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2) by
- 66-23-211-5.clients.speedfactory.net with SMTP; 3 Nov 2006 13:49:30 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 03 Nov
- 2006 13:50:26 -0500
-To: Luben Tuikov <ltuikov@yahoo.com>
+ S932925AbWLNVWF (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
+ 16:22:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932927AbWLNVWF
+ (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 16:22:05 -0500
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:49563 "EHLO
+ fed1rmmtao11.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S932925AbWLNVWE (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006
+ 16:22:04 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao11.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061214212201.ZYGT25875.fed1rmmtao11.cox.net@fed1rmimpo02.cox.net>; Thu, 14
+ Dec 2006 16:22:01 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id ylNC1V00V1kojtg0000000; Thu, 14 Dec 2006
+ 16:22:12 -0500
+To: Andy Parkins <andyparkins@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-On Fri, Nov 03, 2006 at 01:07:20AM -0800, Luben Tuikov wrote:
+Andy Parkins <andyparkins@gmail.com> writes:
 
-> So I still make the mistake of:
-> # git-rev-list --no-merges --pretty=one-line HEAD -- <somepath>
->     I select a commit
-> # git-format-patch -o /tmp/ <commit>
-> ...
->     Oh, f@#$!  <CTRL-C>
-> # git-format-patch -o /tmp/ <commit>^..<commit>
+>> >  Tell them if they
+>> >  made a branch as well, which branch they are now on.
+>>
+>> I think you are talking about "checkout -b" not commit here;
+>> this might be a borderline (branch creation is less often done
+>> and it might warrant assuring feedback), but I think it still
+>> falls into the "doing exactly what it was told to do" category.
+>
+> You're right, I was.  The reason I think feedback is useful is
+> because of the two ways of making a new branch:
+>
+>  - git-branch XYZ
+>    This makes a new branch but DOESN'T leave me on XYZ
+>  - git-commit -b XYZ
+>    This makes a new branch and switches to XYZ
+>
+> I can't tell you the number of times I get this wrong.  It's not because I 
+> don't know if I stop to think, it's because I'm thinking about the project, 
+> not the VCS.
 
-For my own workflow, I don't want to have to pick the commit out of
-rev-list (or log) output. I want to find it and hit a button to say "OK,
-now mail this patch." So I put _all_ of my patches into an mbox, and
-then browse them with mutt. Sort of a poor man's patch browser, but then
-I'm ready to jump into mailing them immediately.
+This is interesting.  You said "commit -b", were pointed out
+that you were talking about "checkout -b", and just after saying
+"yup, that is right, I was", you again say "commit -b".
 
-I use the following script:
+Maybe the users often need this sequence (I personally don't,
+but others might):
 
-#!/bin/sh
-root=${1:-origin}
-git-format-patch -s --stdout $root >.mbox
-mutt -f .mbox
-rm -f .mbox
+	$ git checkout ;# or the previous day ended with a clean state
+	$ edit edit hack
+        $ git checkout -b XYZ ;# the changes are about different stuff
+        $ git commit ;# commit the changes there
+        $ git checkout master ;# or whatever branch you usually are on
 
-And then in mutt, I use this macro to bind 'b' to editing the full
-message w/ headers:
+and "git commit -b <newbranch>" might be a handy shortcut for
+the last three commands.  I dunno.
 
-macro index b ":set edit_headers=yes<enter><resend-message>:set edit_headers=no<enter>"
+And if we had such a variant of commit, then it is doing
+something unusual, so I would not oppose (actually I would
+probably favor) if the transcript went something like this:
 
-I know that may be useless if you're not using mutt, but I just wanted
-to stimulate some discussion among patch submitters about how they
-actually do it. I'm not sure how configurable tig is, but it shouldn't
-be too hard to add something like this to it.
+	$ git commit -b XYZ -m "implement 'foo' subcommand" -a
+	committed changes to newly created branch XYZ, back on 'master'.
+	$ git show-branch master XYZ
+        * [master] finishing touches to 'hello world'
+         ! [XYZ] implement foo subcommand
+        --
+         + [XYZ] implement foo subcommand
+        -- [master] finishing touches to 'hello world'
+	$ exit
 
+Earlier I said that the command should be silent if it did
+exactly what it was told to do with some 'unless'es.
+
+ * If the command fails, we should report (no question).
+
+ * If the command succeeds the usual way, staying silent is
+   preferable, at least to me.
+
+ * If the command can have more than one mode of successful
+   outcome, stating success in which way is not a useless
+   verbosity.  E.g. 'git merge' should probably tell you if it
+   did a usual three-way or a fast-forward (if the difference
+   matters).  Especially reporting an unusual case a bit more
+   verbosely than usual is a good thing.
