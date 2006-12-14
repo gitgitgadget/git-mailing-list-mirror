@@ -4,74 +4,110 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Marco Roeland <marco.roeland@xs4all.nl>
-Subject: Test t4118 fails on Mac OS X due to dependency on GNU sed behaviour
-Date: Sat, 2 Dec 2006 21:14:10 +0100
-Message-ID: <20061202201410.GA6353@fiberbit.xs4all.nl>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [PATCH 1/1] Bypass expensive content comparsion during rename detection.
+Date: Thu, 14 Dec 2006 06:50:54 -0500
+Message-ID: <20061214115054.GJ1747@spearce.org>
+References: <20061214100746.GA31191@spearce.org> <Pine.LNX.4.63.0612141151220.3635@wbgn013.biozentrum.uni-wuerzburg.de> <20061214110858.GE1747@spearce.org> <Pine.LNX.4.63.0612141214440.3635@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-NNTP-Posting-Date: Sat, 2 Dec 2006 20:14:28 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Thu, 14 Dec 2006 11:51:08 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <Pine.LNX.4.63.0612141214440.3635@wbgn013.biozentrum.uni-wuerzburg.de>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33039>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GqbFZ-0003fv-HD for gcvg-git@gmane.org; Sat, 02 Dec
- 2006 21:14:17 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34323>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gup79-0008LX-8v for gcvg-git@gmane.org; Thu, 14 Dec
+ 2006 12:51:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1031567AbWLBUON (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 2 Dec 2006
- 15:14:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031762AbWLBUON
- (ORCPT <rfc822;git-outgoing>); Sat, 2 Dec 2006 15:14:13 -0500
-Received: from fiberbit.xs4all.nl ([213.84.224.214]:19667 "EHLO
- fiberbit.xs4all.nl") by vger.kernel.org with ESMTP id S1031567AbWLBUON (ORCPT
- <rfc822;git@vger.kernel.org>); Sat, 2 Dec 2006 15:14:13 -0500
-Received: from marco by fiberbit.xs4all.nl with local (Exim 4.63)
- (envelope-from <marco.roeland@xs4all.nl>) id 1GqbFT-0001hU-0K for
- git@vger.kernel.org; Sat, 02 Dec 2006 21:14:11 +0100
-To: git@vger.kernel.org
+ S932636AbWLNLvA (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
+ 06:51:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932642AbWLNLu7
+ (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 06:50:59 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:36902 "EHLO
+ corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S932636AbWLNLu7 (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006
+ 06:50:59 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1Gup6y-0000RR-BI; Thu, 14 Dec 2006 06:50:52 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 6444A20FB65; Thu, 14 Dec 2006 06:50:54 -0500 (EST)
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-Hello list!
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> Hi,
+> 
+> On Thu, 14 Dec 2006, Shawn Pearce wrote:
+> 
+> > My first version of the patch had the hash comparsion right after we 
+> > called diff_populate_filespec to get the size data.  But then I realized 
+> > that very often the sizes will be different and the src->size != 
+> > dst->size comparsion will tend to be true most of the time, thus saving 
+> > us a (relatively) expensive hash comparsion, which we know must fail 
+> > anyway if the sizes differed.
+> 
+> Ah! I misunderstood. Since the call to diff_populate_filespec was not 
+> visible in the hunk, I erroneously assumed that you meant to _check_ the 
+> sizes before checking the hashes.
+> 
+> But your explanation makes lots of sense to me. May I request a short 
+> comment above the new code, like "let diff_populate_filespec() do its 
+> thing since we need the filesize later on anyway, and having that, do the 
+> cheaper filesize check before the more expensive hashcmp()"?
 
-Recently test t4118 was added to prepare for upcoming changes in
-behaviour of GNU diff.
+-- 8> --
+Bypass expensive content comparsion during rename detection.
 
-This test fails on Mac OS X. It turns out that in the end the failure
-comes from a difference in the behaviour between GNU sed and the version
-that comes with OS X.
+When comparing file contents during the second loop through a rename
+detection attempt we can skip the expensive byte-by-byte comparsion
+if both source and destination files have valid SHA1 values.  This
+improves performance by avoiding either an expensive open/mmap to
+read the working tree copy, or an expensive inflate of a blob object.
 
-The feature that is tested works fine, but the implementation of the
-examination of the result fails.
+Unfortunately we still have to at least initialize the sizes of the
+source and destination files even if the SHA1 values don't match.
+Failing to initialize the sizes causes a number of test cases to fail
+and start reporting different copy/rename behavior than was expected.
 
-The difference is that the OS X version of sed always ends the last line
-with a newline character, even if it wasn't there in the input. Strictly
-speaking this is POSIX specified behaviour that was changed in the GNU
-version of sed in 1997, citing from the changelog for the historically
-curious minded people:
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ diffcore-rename.c |    9 +++++++++
+ 1 files changed, 9 insertions(+), 0 deletions(-)
 
-Mon Jul 28 10:50:41 PDT 1997  Ken Pizzini <ken@gnu.org>
-
-* sed.c, sed.h, execute.c: POSIX.2, section 4.55.7, says that
-        a newline must end *every* output line.  But I think
-        that it is useful (when seding a binary file) to omit
-        a trailing newline if the input lacks one.  Thus the addition of
-        POSIXLY_CORRECT behavior.
-
-* execute.c: however, when seding multiple files my feeling
-        is that it makes sense to have each file but the last
-        behave as-if it ended in a newline.  Modified read_pattern_space()
-        accordingly.
-
-A workaround on Mac OS X is easy by for example just installing the GNU
-version of sed from the 'fink' archive with "sudo apt-get install sed".
-Funny enough the system 'diff' is already the GNU version, so the test
-t4118 itself might even be necessary for upcoming feline versions of
-OS X!
-
-Unfortunately I myself don't see an elegant and portable fix in the test
-itself... [hint]
+diff --git a/diffcore-rename.c b/diffcore-rename.c
+index 57a74b6..f7748ce 100644
+--- a/diffcore-rename.c
++++ b/diffcore-rename.c
+@@ -109,6 +109,15 @@ static int is_exact_match(struct diff_filespec *src,
+ 		return 0;
+ 	if (src->size != dst->size)
+ 		return 0;
++	/* Although we can avoid a byte-by-byte comparsion by checking
++	 * hashes we needed to allow diff_populate_filespec to fill in
++	 * the size members, as we need that later on to correctly do
++	 * rename and copy detection.  Not filling in size before we
++	 * return back when contents_too is true causes all sorts of
++	 * havoc (been there, done that, lets not try it again).
++	 */
++	if (src->sha1_valid && dst->sha1_valid)
++	    return !hashcmp(src->sha1, dst->sha1);
+ 	if (diff_populate_filespec(src, 0) || diff_populate_filespec(dst, 0))
+ 		return 0;
+ 	if (src->size == dst->size &&
 -- 
+1.4.4.2.g72f5
