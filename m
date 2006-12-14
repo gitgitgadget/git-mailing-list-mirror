@@ -1,73 +1,68 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH 0/2] Making "git commit" to mean "git commit -a".
-Date: Thu, 30 Nov 2006 12:37:49 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0611301229290.9647@xanadu.home>
-References: <7virgzuf38.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0611282322320.9647@xanadu.home>
- <7vr6vmsnly.fsf@assigned-by-dhcp.cox.net> <87ejrlvn7r.wl%cworth@cworth.org>
- <7vodqpn3t4.fsf@assigned-by-dhcp.cox.net>
- <7vk61dn2yj.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0611300310520.30004@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0611291859070.3513@woody.osdl.org> <456EBBE7.8030404@op5.se>
- <Pine.LNX.4.64.0611300749560.3513@woody.osdl.org>
- <20061130164046.GB17715@thunk.org>
- <Pine.LNX.4.64.0611300903080.3513@woody.osdl.org>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: What's in git.git (stable)
+Date: Thu, 14 Dec 2006 09:28:57 +0100
+Message-ID: <45810B49.2000706@op5.se>
+References: <7v4przfpir.fsf@assigned-by-dhcp.cox.net>	<200612132237.10051.andyparkins@gmail.com> <7vk60vbcfz.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-NNTP-Posting-Date: Thu, 30 Nov 2006 17:38:12 +0000 (UTC)
-Cc: Theodore Tso <tytso@mit.edu>, Andreas Ericsson <ae@op5.se>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <junkio@cox.net>,
-	Carl Worth <cworth@cworth.org>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 14 Dec 2006 08:29:08 +0000 (UTC)
+Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-reply-to: <Pine.LNX.4.64.0611300903080.3513@woody.osdl.org>
-X-X-Sender: nico@xanadu.home
+User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
+In-Reply-To: <7vk60vbcfz.fsf@assigned-by-dhcp.cox.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32781>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GpprD-0003lo-UC for gcvg-git@gmane.org; Thu, 30 Nov
- 2006 18:38:00 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34286>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gulxg-0008Iu-Er for gcvg-git@gmane.org; Thu, 14 Dec
+ 2006 09:29:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1030820AbWK3Rhv (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
- 12:37:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030881AbWK3Rhv
- (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 12:37:51 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:26814 "EHLO
- relais.videotron.ca") by vger.kernel.org with ESMTP id S1030820AbWK3Rhu
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 12:37:50 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
- <0J9K005MT0Z1Q8P0@VL-MO-MR002.ip.videotron.ca> for git@vger.kernel.org; Thu,
- 30 Nov 2006 12:37:50 -0500 (EST)
-To: Linus Torvalds <torvalds@osdl.org>
+ S1751824AbWLNI3A (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
+ 03:29:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751828AbWLNI3A
+ (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 03:29:00 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:57350 "EHLO
+ smtp-gw1.op5.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
+ S1751824AbWLNI3A (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006
+ 03:29:00 -0500
+Received: from [192.168.1.20] (unknown [213.88.215.14]) by smtp-gw1.op5.se
+ (Postfix) with ESMTP id 292976BCC6; Thu, 14 Dec 2006 09:28:58 +0100 (CET)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-On Thu, 30 Nov 2006, Linus Torvalds wrote:
-
-> The default is: commit everything that you ask for to be committed.
+Junio C Hamano wrote:
+> Andy Parkins <andyparkins@gmail.com> writes:
 > 
-> If you haven't marked anything to be committed (which you can do with "git 
-> add" too, or with simply being in the middle of a merge, or by having done 
-> something like "git pull -n" or similar that does everything _but_ 
-> commit), then git commit will say "nothing to do".
+>>  * git-add has no output, whether it works or not
+> 
+> "git add no-such-file" complains, and I think that is adequate.
+> Now with Nico's 'add means adding contents, not path' change is
+> in, we _might_ want to differentiate adding a path that was
+> untracked before and updating the contents, but I think this
+> again falls into "doing exactly as told" category.
+> 
 
-Might it be a good idea to have "git-add" do the same as 
-"git-update-index" on already tracked files?  That could be easily 
-taught as "you must explicitly _add_ files to your next commit" and 
-whether the file is already tracked or not wouldn't matter.  This would 
-help newbies actually getting used the index without mentioning the 
-dreaded word "index" at all.
+Well, it should really let the user know if it fails. I for one would 
+like to know that. I wasn't aware of the fact that it was silent even in 
+those situations (perhaps because I've never run across it).
 
-Right now git-add on an already tracked file does nothing, not even a 
-message to say it did nothing.
+The errors that need to be reported are, afaics:
+Content in 'path/to/file' is ignored according to path/to/.gitignore.
+System error X happened while attempting Y.
+Hash collisions.
 
+Hash collisions wouldn't be too bad to check for in git add, because it 
+only has to compare a single object, although I agree that it probably 
+isn't necessary.
 
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
