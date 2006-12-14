@@ -4,55 +4,82 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Catalin Marinas <catalin.marinas@arm.com>
-Subject: Re: How to prepend data when formatting patches ?
-Date: Thu, 30 Nov 2006 16:00:14 +0000
-Message-ID: <tnx1wnk53ht.fsf@arm.com>
-References: <38b2ab8a0611300616j54a9f8ase9b4f1c305b7c22b@mail.gmail.com>
-Reply-To: Catalin Marinas <catalin.marinas@gmail.com>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: git-fetching from a big repository is slow
+Date: Thu, 14 Dec 2006 18:29:36 -0500
+Message-ID: <20061214232936.GH26202@spearce.org>
+References: <200612141340.43925.andyparkins@gmail.com> <4581573E.40803@op5.se> <Pine.LNX.4.63.0612141513130.3635@wbgn013.biozentrum.uni-wuerzburg.de> <4581685D.1070407@op5.se> <C287764F-6755-4291-A87A-3E8816E90B49@adacore.com> <20061214194636.GO1747@spearce.org> <Pine.LNX.4.63.0612150013390.3635@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 30 Nov 2006 16:01:01 +0000 (UTC)
-Cc: git@vger.kernel.org
+NNTP-Posting-Date: Thu, 14 Dec 2006 23:29:51 +0000 (UTC)
+Cc: Geert Bosch <bosch@adacore.com>, Andreas Ericsson <ae@op5.se>,
+	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <38b2ab8a0611300616j54a9f8ase9b4f1c305b7c22b@mail.gmail.com> (Francis
- Moreau's message of "Thu, 30 Nov 2006 15:16:22 +0100")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
-X-OriginalArrivalTime: 30 Nov 2006 16:00:30.0260 (UTC) FILETIME=[A8C7CF40:01C71498]
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0612150013390.3635@wbgn013.biozentrum.uni-wuerzburg.de>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32760>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GpoKl-0002rH-Ek for gcvg-git@gmane.org; Thu, 30 Nov
- 2006 17:00:24 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34437>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gv01L-0001Wj-15 for gcvg-git@gmane.org; Fri, 15 Dec
+ 2006 00:29:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1030625AbWK3QAU (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
- 11:00:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030636AbWK3QAU
- (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 11:00:20 -0500
-Received: from cam-admin0.cambridge.arm.com ([193.131.176.58]:49318 "EHLO
- cam-admin0.cambridge.arm.com") by vger.kernel.org with ESMTP id
- S1030625AbWK3QAS (ORCPT <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006
- 11:00:18 -0500
-Received: from cam-owa2.Emea.Arm.com (cam-owa2.emea.arm.com [10.1.105.18]) by
- cam-admin0.cambridge.arm.com (8.12.6/8.12.6) with ESMTP id kAUG0FYo012060;
- Thu, 30 Nov 2006 16:00:16 GMT
-Received: from localhost.localdomain ([10.1.255.211]) by
- cam-owa2.Emea.Arm.com with Microsoft SMTPSVC(6.0.3790.0); Thu, 30 Nov 2006
- 16:00:30 +0000
-To: "Francis Moreau" <francis.moro@gmail.com>
+ S1751917AbWLNX3o (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
+ 18:29:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751933AbWLNX3o
+ (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 18:29:44 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:42005 "EHLO
+ corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1751917AbWLNX3n (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006
+ 18:29:43 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1Gv012-0000mz-LG; Thu, 14 Dec 2006 18:29:28 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 0C9A520FB65; Thu, 14 Dec 2006 18:29:37 -0500 (EST)
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-"Francis Moreau" <francis.moro@gmail.com> wrote:
-> I'd like to add to all patchs created by "git-format-patch" command
-> the following line:
->
->         From: xxx.yyy <foo@crazy.com>
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> On Thu, 14 Dec 2006, Shawn Pearce wrote:
+> > Geert Bosch <bosch@adacore.com> wrote:
+> > >    if (compressed_size > expanded_size / 4 * 3 + 1024) {
+> > >      /* don't try to deltify if blob doesn't compress well */
+> > >      return ...;
+> > >    }
+> > 
+> > And yet I get good delta compression on a number of ZIP formatted files 
+> > which don't get good additional zlib compression (<3%). Doing the above 
+> > would cause those packfiles to explode to about 10x their current size.
+> 
+> A pity. Geert's proposition sounded good to me.
+> 
+> However, there's got to be a way to cut short the search for a delta 
+> base/deltification when a certain (maybe even configurable) amount of time 
+> has been spent on it.
 
-In the headers or in the message body? StGIT adds this line
-automatically in the message body (and recently only if the sender is
-different from the patch author but the templates are flexible and can
-be changed).
+I'm not sure time is the best rule there.
+
+Maybe if the object is large (e.g. over 512 KiB or some configured
+limit) and did not compress well when we last deflated it
+(e.g. Geert's rule above) then only try to delta it against another
+object whose hinted filename is very close/exactly matches and
+whose size is very close, and don't make nearly as many attempts
+on the matching hunks within any two files if the file appears to
+be binary and not text.
+
+I'm OK with a small increase in packfile size as a result of slightly
+less optimal delta base selection on the really large binary files
+due to something like the above, but 10x is insane.
 
 -- 
