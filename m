@@ -1,176 +1,80 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: git and bzr
-Date: Tue, 28 Nov 2006 19:51:19 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0611281906520.3395@woody.osdl.org>
-References: <45357CC3.4040507@utoronto.ca> <20061021130111.GL75501@over-yonder.net>
- <453F2FF8.2080903@op5.se> <200610251146.06116.jnareb@gmail.com>
- <a7e835d40610250308v5d577482m139742e7fe1db185@mail.gmail.com>
- <87slhcz8zh.wl%cworth@cworth.org> <a7e835d40610260152k658aeaf0hb900cb63870c04e4@mail.gmail.com>
- <7vu01ro20b.fsf@assigned-by-dhcp.cox.net> <a7e835d40610260257r5f05ea4gc934f1c1cc267977@mail.gmail.com>
- <20061026101038.GA13310@coredump.intra.peff.net> <877iyne4dm.fsf@alplog.fr>
- <Pine.LNX.4.64.0610260753090.3962@g5.osdl.org> <456B7C6A.80104@webdrake.net>
- <Pine.LNX.4.64.0611271834090.30076@woody.osdl.org> <456CEF31.8080600@webdrake.net>
+From: Han-Wen Nienhuys <hanwen@xs4all.nl>
+Subject: Re: [PATCH] "master" should be treated no differently from any other
+     branch
+Date: Thu, 14 Dec 2006 16:59:05 +0100
+Message-ID: <458174C9.2050401@xs4all.nl>
+References: <200612141519.44294.andyparkins@gmail.com> <Pine.LNX.4.63.0612141627090.3635@wbgn013.biozentrum.uni-wuerzburg.de> <4581721B.4050102@xs4all.nl>
+Reply-To: hanwen@xs4all.nl
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Wed, 29 Nov 2006 03:51:49 +0000 (UTC)
-Cc: git@vger.kernel.org, bazaar-ng@lists.canonical.com
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 14 Dec 2006 15:59:07 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <456CEF31.8080600@webdrake.net>
-X-MIMEDefang-Filter: osdl$Revision: 1.161 $
-X-Scanned-By: MIMEDefang 2.36
+User-Agent: Thunderbird 1.5.0.8 (X11/20061107)
+Original-Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <4581721B.4050102@xs4all.nl>
+X-Virus-Scanned: by XS4ALL Virus Scanner
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32611>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GpGTy-0000bK-Am for gcvg-git@gmane.org; Wed, 29 Nov
- 2006 04:51:38 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34358>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gusz8-00025t-D0 for gcvg-git@gmane.org; Thu, 14 Dec
+ 2006 16:59:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1757957AbWK2Dv1 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 28 Nov 2006
- 22:51:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758042AbWK2Dv1
- (ORCPT <rfc822;git-outgoing>); Tue, 28 Nov 2006 22:51:27 -0500
-Received: from smtp.osdl.org ([65.172.181.25]:206 "EHLO smtp.osdl.org") by
- vger.kernel.org with ESMTP id S1757957AbWK2Dv1 (ORCPT
- <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2006 22:51:27 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
- smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kAT3pLix009895
- (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Tue, 28
- Nov 2006 19:51:22 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
- shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kAT3pJe7006540; Tue, 28 Nov
- 2006 19:51:19 -0800
-To: Joseph Wakeling <joseph.wakeling@webdrake.net>
+ S932829AbWLNP67 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
+ 10:58:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932839AbWLNP67
+ (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 10:58:59 -0500
+Received: from smtp-vbr16.xs4all.nl ([194.109.24.36]:4945 "EHLO
+ smtp-vbr16.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S932829AbWLNP66 (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006
+ 10:58:58 -0500
+Received: from [192.168.123.187] (muurbloem.xs4all.nl [213.84.26.127])
+ (authenticated bits=0) by smtp-vbr16.xs4all.nl (8.13.8/8.13.8) with ESMTP id
+ kBEFwtb7047266 (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256
+ verify=NO); Thu, 14 Dec 2006 16:58:55 +0100 (CET) (envelope-from
+ hanwen@xs4all.nl)
+To: hanwen@xs4all.nl
 Sender: git-owner@vger.kernel.org
 
-
-
-On Wed, 29 Nov 2006, Joseph Wakeling wrote:
+Han-Wen Nienhuys escreveu:
+> Johannes Schindelin escreveu:
+>> Hi,
+>>
+>> On Thu, 14 Dec 2006, Andy Parkins wrote:
+>>
+>>> "master" shouldn't get special treatment; making different log messages 
+>>> based on the name of the branch is bad form.  What if a user likes 
+>>> "my/master" or "my/head" as their master branch?
+>> I do not agree. There is usually a principal branch, where you collect the 
+>> topics, and you do want to treat that special. As for the name: better 
+>> have a convention here than configurability. You would not want "git" to 
+>> be called "guitar" for some users, just because they happen to like that 
+>> name more, either, right?
 > 
-> So ... if I understand correctly, I can get patches from somewhere else,
-> but in the branch history, I will not be able to tell the difference
-> from having simply newly created them?
+> Disagree: I have two principal branches, master and stable/2.10.  I don't see
+> why the latter should get different commit messages.
 
-Think of it this way: if the _patch_ looks like it's a code movement, then 
-"git blame" will show it as a code movement. Ie, if the patch (to a human) 
-looks like it's moving a function from one file into another (which in a 
-patch will obviously be a question of removing it from one file, and 
-adding it to another), then git will also see it that way, and then "git 
-blame" will also follow its history as it moved.
+Note that this also confused my codeveloper (who is rather enamoured bzr), who
+was wondering what the other branch was in case of 
 
-But if somebody sends you a patch that just adds a new function that 
-didn't exist in that context at all, then "git blame" won't ever realize 
-that that new function was taken from another branch entirely.
-
-> With regards to git blame/pickaxe/annotate, the idea of tracking *code*
-> rather than files was one thing that really excited me when I read about
-> it in the earlier discussion, and is probably the main reason I'm trying
-> out git.  I'd like to understand this properly so is there a simple
-> exercise I can do to demonstrate its capabilities?  I tried an
-> experiment where I created one file with two lines, then cut one of the
-> lines, pasted it into a new file, and committed both changes at the same
-> time.  But git blame -C on the second file just gives me the
-> time/date/sha1 of its creation, and no indication that the line was
-> taken from elsewhere.
-
-Actually, I think you found a bug.
-
-Now, with small changes, "git blame -C" will just ignore copies entirely, 
-so your particular test might not have even been supposed to work, but 
-trying with a new git repo with two bigger files checked in at the initial 
-commit, I'm actually not seeing "git blame -C" do the right thing even for 
-real code movement.
-
-And the problem seems to go to the "root commit": if the file existed in 
-the root, the logic in "git blame" to diff against the (nonexistent) 
-parent of the root commit won't do the right thing, and that just confuses 
-git blame entirely.
-
-I think Junio screwed up at some point. I'll send him a bug-report once 
-I've triaged this a bit more, but I can recreate your breakage if I start 
-a new git database and create two files in the root, and move data between 
-them in the second commit (but if I instead create the second file in the 
-second commit, and do the movement in the third commit, git blame -C works 
-again ;).
-
-> Back to the more basic queries ... one more difference I've observed
-> from bzr, after playing around for a while, involves the commands to
-> undo changes and commits.  It looks like git reset combines the
-> capabilities of both bzr uncommit and bzr revert: I can undo changes
-> since the last commit by resetting to HEAD, and I can undo commits by
-> resetting to HEAD^ or earlier.
-
-I'm not quite sure what "bzr revert" does. Git does have a "revert" too, 
-but it will append a _new_ commit that actually undoes the commit you're 
-asking to revert. If you want to just "undo history" (whether it's one 
-commit or many - I don't see why it would be different) then yes, "git 
-reset" is the thing to use.
-
-I _suspect_ that bzr people use "uncommit" to undo a commit in order to 
-fix it up. In git, you could do that with "git reset" and a new commit, 
-but the normal thing to do is just to fix it up, and then do 
-
-	git commit --amend
-
-instead (which amends the last commit to include whatever fixups you did).
-
-> Some things here I'm not quite sure about:
-> (1) the difference between git reset --soft and git reset --mixed,
-> probably because I don't understand the way the index works, the
-> difference between changed, updated and committed.
-
-You'd generally not want to use "--soft" unless you know what the index 
-really is. Once you do know about all the index issues, you'll know why 
-it's different from "--mixed", but in general, no normal person would ever 
-use _either_ --soft (because not changing the index is too confusing if 
-you don't know about it) or --mixed (because it's the default).
-
-So in reality, you should use
-
-	git reset
-
-to reset everything but the actual working tree (and it will talk about 
-the files that no longer match the state you are resetting _to_, if any 
-such files exist), or
-
-	git reset --hard
-
-to reset everything.
-
-Any other usage is strictly for hardcore people only, and if you don't 
-know you want to use it, you shouldn't even consider it.
-
-In fact, I'm pretty hardcore, and I don't think I've ever really used 
-"--soft". It's largely been replaced by "git commit --amend", because 
-amending a commit used to be the only reason to use "--soft", really.
-
-So it might even be worthwhile just dropping "--soft" and "--mixed" 
-altogether, but in the meantime, you might as well just ignore them.
-
-> (2) How to remove changes made to an individual file since the last commit.
-
-"git checkout file"
+  Merge branch 'master' of ssh+git://git.sv.gnu.org/srv/git/lilypond
 
 
-> Last, could someone explain the git merge command?
+Wouldn't it be better to mention the id of the local repository too? 
 
-I argued that we should never teach people to use it at all (because "git 
-pull" really does everything it can do), but people on the git list said 
-people are used to merging, so it exists, and these days the syntax is 
-more usable than it used to be.
+  Merge branch 'master' of ssh+git://git.sv.gnu.org/srv/git/lilypond into 
+  'master' of 'hanwen@xs4all.nl'
 
-> git pull seems to do many things which I would need to use bzr merge 
-> for---I can "pull" between branches which have diverged, for example.  
-> I don't understand quite what git merge does that's different, and when 
-> to use one or the other.
+this would give more information when these commit messages get pushed to 
+someone else.
 
-Heh. I'm with you. I'm in the "don't use 'git merge' at all" camp, but it 
-was argued that people coming from non-git backgrounds would find it 
-too confusing to just use "git pull" for merging ;)
-
+-- 
