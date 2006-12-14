@@ -1,67 +1,64 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: David Lang <dlang@digitalinsight.com>
-Subject: Re: VCS comparison table
-Date: Wed, 25 Oct 2006 14:51:30 -0700 (PDT)
-Message-ID: <Pine.LNX.4.63.0610251450040.1754@qynat.qvtvafvgr.pbz>
-References: <45354AD0.1020107@utoronto.ca>  <BAYC1-PASMTP07AB11A64250AAF683424DAE0E0@CEZ.ICE>
-  <vpq4ptz2uh8.fsf@ecrins.imag.fr> <453DAC87.8050203@research.canon.com.au>
-  <Pine.LNX.4.64.0610232318200.3962@g5.osdl.org> 
- <Pine.LNX.4.64N.0610232336010.30334@attu2.cs.washington.edu> 
- <Pine.LNX.4.64.0610240812410.3962@g5.osdl.org> 
- <Pine.LNX.4.64N.0610241300450.8112@attu4.cs.washington.edu> 
- <20061025084810.GA26618@coredump.intra.peff.net> 
- <Pine.LNX.4.64N.0610250157470.3467@attu1.cs.washington.edu> 
- <20061025094900.GA26989@coredump.intra.peff.net> <453F6B7A.60805@op5.se>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: git-fetching from a big repository is slow
+Date: Thu, 14 Dec 2006 14:53:02 +0100
+Message-ID: <4581573E.40803@op5.se>
+References: <200612141340.43925.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-NNTP-Posting-Date: Wed, 25 Oct 2006 21:54:09 +0000 (UTC)
-Cc: Jeff King <peff@peff.net>,
-	David Rientjes <rientjes@cs.washington.edu>,
-	Linus Torvalds <torvalds@osdl.org>,
-	Lachlan Patrick <loki@research.canon.com.au>,
-	bazaar-ng@lists.canonical.com, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 14 Dec 2006 13:53:19 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-X-Sender: dlang@dlang.diginsite.com
-In-Reply-To: <453F6B7A.60805@op5.se>
+User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
+In-Reply-To: <200612141340.43925.andyparkins@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30105>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gcqgw-0000c5-Ma for gcvg-git@gmane.org; Wed, 25 Oct
- 2006 23:53:46 +0200
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34336>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gur1L-0007D4-FD for gcvg-git@gmane.org; Thu, 14 Dec
+ 2006 14:53:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751116AbWJYVxj (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 25 Oct 2006
- 17:53:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751215AbWJYVxj
- (ORCPT <rfc822;git-outgoing>); Wed, 25 Oct 2006 17:53:39 -0400
-Received: from warden-p.diginsite.com ([208.29.163.248]:51598 "HELO
- warden.diginsite.com") by vger.kernel.org with SMTP id S1751116AbWJYVxi
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 25 Oct 2006 17:53:38 -0400
-Received: from wlvims02.diginsite.com by warden.diginsite.com via smtpd (for
- vger.kernel.org [209.132.176.167]) with SMTP; Wed, 25 Oct 2006 14:53:38 -0700
-Received: from dlang.diginsite.com ([10.201.10.67]) by
- wlvims02.corp.ad.diginsite.com with InterScan Message Security Suite; Wed, 25
- Oct 2006 14:52:48 -0700
-To: Andreas Ericsson <ae@op5.se>
+ S932712AbWLNNxH (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
+ 08:53:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932728AbWLNNxH
+ (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 08:53:07 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:33958 "EHLO
+ smtp-gw1.op5.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
+ S932712AbWLNNxG (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006
+ 08:53:06 -0500
+Received: from [192.168.1.20] (unknown [213.88.215.14]) by smtp-gw1.op5.se
+ (Postfix) with ESMTP id 62D2F6BCC7; Thu, 14 Dec 2006 14:53:03 +0100 (CET)
+To: Andy Parkins <andyparkins@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-a quick lesson on program nameing
+Andy Parkins wrote:
+> Hello,
+> 
+> I've got a big repository.  I've got two computers.  One has the repository 
+> up-to-date (164M after repack); one is behind (30M ish).
+> 
+> I used git-fetch to try and update; and the sync took HOURS.  I zipped 
+> the .git directory and transferred that and it took about 15 minutes to 
+> transfer.
+> 
+> Am I doing something wrong?  The git-fetch was done with a git+ssh:// URL.  
+> The zip transfer with scp (so ssh shouldn't be a factor).
+> 
 
-On Wed, 25 Oct 2006, Andreas Ericsson wrote:
+This seems to happen if your repository consists of many large binary 
+files, especially many large binary files of several versions that do 
+not deltify well against each other. Perhaps it's worth adding gzip 
+compression detecion to git? I imagine more people than me are tracking 
+gzipped/bzip2'ed content that pretty much never deltifies well against 
+anything else.
 
-> I'm personally all for a rewrite of the necessary commands in C ("commit" 
-> comes to mind), but as many others, I have no personal interest in doing the 
-> actual work. I'm fairly certain that once we get it working natively on 
-> windows with some decent performance, windows hackers will pick up the ball 
-> and write "wingit", which will be a log viewer and GUI thing for
-              ^^^^^^
-
-how many other people read this as 'wing it' rather then 'win git'? ;-)
-
-David Lang
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
