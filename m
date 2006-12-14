@@ -1,90 +1,76 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Cleaning up git user-interface warts
-Date: Wed, 15 Nov 2006 19:12:19 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0611151908130.3349@woody.osdl.org>
-References: <87k61yt1x2.wl%cworth@cworth.org> <455A1137.8030301@shadowen.org>
- <87hcx1u934.wl%cworth@cworth.org> <Pine.LNX.4.64.0611141518590.2591@xanadu.home>
- <87bqn9u43s.wl%cworth@cworth.org> <ejdcg5$4fl$1@sea.gmane.org>
- <Pine.LNX.4.64.0611141633430.2591@xanadu.home> <7vbqn9y6w6.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0611142007010.2591@xanadu.home> <7v3b8ltq7r.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0611142306090.2591@xanadu.home> <Pine.LNX.4.64.0611150950170.3349@woody.osdl.org>
- <455BBCE9.4050503@xs4all.nl>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: What's in git.git (stable)
+Date: Thu, 14 Dec 2006 07:10:48 -0500
+Message-ID: <20061214121048.GM1747@spearce.org>
+References: <7v4przfpir.fsf@assigned-by-dhcp.cox.net> <200612141123.02346.andyparkins@gmail.com> <Pine.LNX.4.63.0612141224330.3635@wbgn013.biozentrum.uni-wuerzburg.de> <200612141200.42875.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Thu, 16 Nov 2006 03:12:43 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Thu, 14 Dec 2006 12:10:58 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <455BBCE9.4050503@xs4all.nl>
-X-MIMEDefang-Filter: osdl$Revision: 1.156 $
-X-Scanned-By: MIMEDefang 2.36
+Content-Disposition: inline
+In-Reply-To: <200612141200.42875.andyparkins@gmail.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31549>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GkXfy-0000eW-2z for gcvg-git@gmane.org; Thu, 16 Nov
- 2006 04:12:30 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34329>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GupQN-0002A2-Kl for gcvg-git@gmane.org; Thu, 14 Dec
+ 2006 13:10:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1031053AbWKPDM0 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
- 22:12:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031066AbWKPDMZ
- (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 22:12:25 -0500
-Received: from smtp.osdl.org ([65.172.181.4]:3218 "EHLO smtp.osdl.org") by
- vger.kernel.org with ESMTP id S1031053AbWKPDMY (ORCPT
- <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 22:12:24 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
- smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kAG3CKoZ023389
- (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Wed, 15
- Nov 2006 19:12:21 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
- shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kAG3CJHZ009331; Wed, 15 Nov
- 2006 19:12:20 -0800
-To: Han-Wen Nienhuys <hanwen@xs4all.nl>
+ S932683AbWLNMKw (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
+ 07:10:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932684AbWLNMKw
+ (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 07:10:52 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:37691 "EHLO
+ corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S932683AbWLNMKw (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006
+ 07:10:52 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1GupQE-00021j-MB; Thu, 14 Dec 2006 07:10:46 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 02B9020FB65; Thu, 14 Dec 2006 07:10:49 -0500 (EST)
+To: Andy Parkins <andyparkins@gmail.com>
 Sender: git-owner@vger.kernel.org
 
+Andy Parkins <andyparkins@gmail.com> wrote:
+> I wonder if the number of objects is a reasonable measure of progress.  Let's 
+> say we're transferring 100,000 objects.  Let's also say that the average size 
+> of objects is 100 bytes.  Let's finally say that the object sizes are evenly 
+> distributed throughout the 100,000 objects.  This would mean that the first 
+> 1,000 objects are just as representative as the last 1,000 objects; or any 
+> other randomly chosen 1,000 objects.  In which case, the size of the first 
+> thousand objects would be approximately one hundredth the size of the total 
+> transfer.  Volia: an estimate of the total size of the transfer.
 
+Ah, but much like those stock scam emails, "prior performance does
+not predict future results"...  The size of objects in the pack
+tends to be small up front (commits/trees) and larger in the back
+(blobs).  The size distribution probably also gets more erratic
+near the back as the blob sizes may not follow a nice distribution.
 
-On Thu, 16 Nov 2006, Han-Wen Nienhuys wrote:
+E.g. I have a repository with a blob that is 23 MiB.  But I also
+have some 5 MiB blobs, and then a very large number of relatively
+small blobs.  That 23 MiB blob really gums up any estimate.
 
-> Linus Torvalds escreveu:
-> >  - git itself has now done it that way for the last 18 months, and the
-> > fact is, the people _complaining_ are a small subset of the people who
-> > actually use git on a daily basis and don't complain.
-> 
-> 
-> that's not a good argument; the set of git users is a small subset of those
-> that looked at git, and dismissed it because they couldn't wrap their heads
-> around it. 
+But as you state, its easy to refine it over time, and the closer we
+get to the end the more likely it is to be correct.  Unless its that
+23 MiB blob.  As it takes up about 85% of that repository's pack.
 
-And I've said this again, and I'll say it once more: that has basically 
-_nothing_ to do with whether you spell "pull" as "pull" or "merge".
-
-The reason people have trouble wrapping their heads around git is because 
-they have been braindamaged by CVS and SVN, and just don't understand the 
-fairly fundamental new concepts and workflow.
-
-That's totally different from then arguing about stupid naming issues.
-
-Peopel seem to believe that changign a few names or doing other totally 
-_minimal_ UI changes would somehow magically make things understandable. I 
-claim that isn't so at all. The fact is, git is different from CVS and 
-SVN, and git _has_ to be different from CVS and SVN. It has to be 
-different because the whole model of CVS and SVN is simpyl fundamentally 
-BROKEN.
-
-> It's worth trying to get those on board by fixing the annoying
-> little issues that have popped up in this thread.
-
-I claim that those "annoying little issues" are totally made up by people 
-who had trouble wrapping their minds about git, and then make up reasons 
-that have nothing to do with reality for why that might be so.
-
-Let's face it, you could just alias "merge" to "pull", and it wouldn't 
-really change ANYTHING. You'd still have to learn the new model. 
-
+-- 
