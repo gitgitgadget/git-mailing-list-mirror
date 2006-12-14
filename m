@@ -1,117 +1,88 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Steven Grimm <koreth@midwinter.com>
-Subject: Re: Cleaning up git user-interface warts
-Date: Fri, 17 Nov 2006 12:30:41 -0800
-Message-ID: <455E1BF1.1030003@midwinter.com>
-References: <87k61yt1x2.wl%cworth@cworth.org>	<455A1137.8030301@shadowen.org>	<87hcx1u934.wl%cworth@cworth.org>	<20061114194707.GH7201@pasky.or.cz> <87d57pu4qa.wl%cworth@cworth.org>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: What's in git.git (stable)
+Date: Thu, 14 Dec 2006 11:51:02 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0612141147200.3635@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <7v4przfpir.fsf@assigned-by-dhcp.cox.net> <200612132237.10051.andyparkins@gmail.com>
+ <Pine.LNX.4.63.0612140116430.3635@wbgn013.biozentrum.uni-wuerzburg.de>
+ <200612141021.12637.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Fri, 17 Nov 2006 20:33:15 +0000 (UTC)
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Thu, 14 Dec 2006 10:51:28 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=200606; d=midwinter.com;
-  b=jJqvmpXH1qeHX79Us3OJHBhSs+vhbSTis4QxD+IJOsWlzMLGNaKfh3UCOuJ4Zd1V  ;
-User-Agent: Mail/News 1.5.0.2 (Macintosh/20060324)
-In-Reply-To: <87d57pu4qa.wl%cworth@cworth.org>
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <200612141021.12637.andyparkins@gmail.com>
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31728>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GlAOH-0007J6-JV for gcvg-git@gmane.org; Fri, 17 Nov
- 2006 21:32:50 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34310>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GuoBJ-0000ei-4c for gcvg-git@gmane.org; Thu, 14 Dec
+ 2006 11:51:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1755878AbWKQUap (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 17 Nov 2006
- 15:30:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755879AbWKQUap
- (ORCPT <rfc822;git-outgoing>); Fri, 17 Nov 2006 15:30:45 -0500
-Received: from tater.midwinter.com ([216.32.86.90]:61868 "HELO
- midwinter.com") by vger.kernel.org with SMTP id S1755878AbWKQUan (ORCPT
- <rfc822;git@vger.kernel.org>); Fri, 17 Nov 2006 15:30:43 -0500
-Received: (qmail 17731 invoked from network); 17 Nov 2006 20:30:42 -0000
-Received: from localhost (HELO ?127.0.0.1?) (koreth@127.0.0.1) by localhost
- with SMTP; 17 Nov 2006 20:30:42 -0000
-To: git@vger.kernel.org
+ S932413AbWLNKvI (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
+ 05:51:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932470AbWLNKvH
+ (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 05:51:07 -0500
+Received: from mail.gmx.net ([213.165.64.20]:36039 "HELO mail.gmx.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S932447AbWLNKvE
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006 05:51:04 -0500
+Received: (qmail invoked by alias); 14 Dec 2006 10:51:03 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp001) with SMTP; 14 Dec 2006 11:51:03 +0100
+To: Andy Parkins <andyparkins@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Jumping into this a day late, but:
+Hi,
 
-Carl Worth wrote:
-> I don't see any defining difference that justifies cogito's
-> existence ("hide the index" maybe? let's just hide it a tiny bit more
-> in git). And I would like to help work to get the remaining good
-> stuff that has been proven in cogito---to get it pushed down into git
-> itself.
->   
+On Thu, 14 Dec 2006, Andy Parkins wrote:
 
-Agreed totally on the second point. It would be great if git natively 
-supported everything people use in Cogito.
+> On Thursday 2006 December 14 00:22, Johannes Schindelin wrote:
+> 
+> > >  * git-revert should be called git-invert.  It doesn't remove a change
+> > >    from history, it simply applies another commit that does the
+> > >    opposite of whatever commit you are "revert"ing.  That's an inversion.
+> >
+> > No. An inversion is the _opposite_. Not an undo.
+> 
+> That's what I'm saying, we are applying the opposite of the given commit 
+> - that commit is being inverted and applied again.
 
-I find myself using native git commands for the most part, except for 
-one Cogito command: "cg-update". It is vastly more convenient than 
-git-pull in large part because it automatically merges upstream changes 
-with uncommitted working-copy changes. I suppose you could classify this 
-as "hide the index" in some sense.
+Ahh! I get what you are thinking. I was talking about reverting a change 
+from the _content's viewpoint_. I _never_ want to revert history (I am no 
+politician, you know?)
 
-Maybe I should give an example of what I mean. Suppose I have two child 
-repositories (owned by different developers, say):
+> > newbie cannot, and does not want to, understand exactly what is going 
+> > on.
+> 
+> "newbie" doesn't mean "idiot".  Everybody wants to understand what is 
+> going on.
 
-cg-clone repo child1
-cg-clone repo child2
+I heartly disagree. I saw so many faces _begging_ me to just say _what_ to 
+do, not _why_, and quickly, please.
 
-Now I go into both of them and make different (hopefull non-conflicting) 
-edits to the same file.
+> > So, think of it as our response to Windows' non-progress-bar: when you 
+> > start up Windows, there is a progress-bar, except that it does not 
+> > show progress, but a Knight Rider like movement, only indicating that 
+> > it does something.
+> 
+> Given the choice between nothing and a non-progress "doing something" 
+> bar, I would of course pick the "doing something" bar.  However, given 
+> the choice between a "doing something" bar and a progress bar, I'd 
+> rather have the progress bar.
 
-echo foo >> child1/testfile
-perl -pi -e 's/tree/shrub/' child2/testfile
+If I have the choice between a "doing something" bar and a Windows 
+Explorer "14 seconds left" bar showing the same message for two minutes, 
+I'd rather have a Mars bar ;-)
 
-I push the change from child1 into the integration repo.
-
-cd child1
-git-commit -a
-git-push
-
-Now I want to incorporate the change into child2, where I'm still doing 
-work. With Cogito, I go to child2 and run:
-
-cg-update
-
-and afterwards, the upstream changes are merged into testfile and "git 
-diff" still shows my local edits. With Git native commands, updating 
-child2 if I'm not ready to commit yet is more like:
-
-git-diff --binary > /tmp/patch
-git-reset --hard
-git-pull
-git-apply /tmp/patch
-
-I might have gotten that slightly wrong, but I think I have the general 
-idea right; in any event, it's not nearly as convenient! The alternative 
-is to commit then pull, but then when I want to look at my local edits, 
-I have to remember to diff my working copy against the correct revision, 
-which gets increasingly annoying if I update more than once.
-
-Like others on this list, I'm also trying to sell an existing user base 
-(in this case, they're using Subversion) on Git. The lack of a built-in 
-equivalent to "svn update" is actually a pretty big UI annoyance for 
-people whose workflow doesn't require git's more sophisticated feature 
-set at a given point in time. Even a sophisticated user doesn't need the 
-full power of the tool 100% of the time, so this isn't just a novice vs. 
-expert thing in my opinion.
-
-Absent Cogito, would the lack of a simple "svn update" equivalent be a 
-deal-killing "throw your hands up in disgust and give up" thing? Maybe 
-not, but it's a daily "ugh, why am I having to type extra commands to do 
-something that only took one command in svn?" thing. So it's nice to 
-have Cogito to paper over that particular wart.
-
-If there is a native git equivalent to cg-update including the 
-working-copy automatic merges, I'll be delighted to stand corrected!
-
+Ciao,
+Dscho
