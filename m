@@ -1,113 +1,225 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: when is a remote a branch?
-Date: Tue, 14 Nov 2006 21:28:35 +0100
-Message-ID: <20061114202835.GJ7201@pasky.or.cz>
-References: <ej7fra$8ca$2@sea.gmane.org> <ej7h1n$ed8$1@sea.gmane.org> <20061112163624.GE7201@pasky.or.cz> <200611121831.18851.jnareb@gmail.com>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] git-show: grok blobs, trees and tags, too
+Date: Thu, 14 Dec 2006 11:31:05 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0612141129320.3635@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 14 Nov 2006 20:29:14 +0000 (UTC)
-Cc: Anand Kumria <wildfire@progsoc.org>, git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Thu, 14 Dec 2006 10:31:14 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <200611121831.18851.jnareb@gmail.com>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31369>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gk4tc-0007Sk-Nz for gcvg-git@gmane.org; Tue, 14 Nov
- 2006 21:28:43 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34302>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gunrr-0006SQ-SU for gcvg-git@gmane.org; Thu, 14 Dec
+ 2006 11:31:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S966322AbWKNU2h (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 14 Nov 2006
- 15:28:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966326AbWKNU2h
- (ORCPT <rfc822;git-outgoing>); Tue, 14 Nov 2006 15:28:37 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:47020 "EHLO machine.or.cz") by
- vger.kernel.org with ESMTP id S966322AbWKNU2g (ORCPT
- <rfc822;git@vger.kernel.org>); Tue, 14 Nov 2006 15:28:36 -0500
-Received: (qmail 17420 invoked by uid 2001); 14 Nov 2006 21:28:35 +0100
-To: Jakub Narebski <jnareb@gmail.com>
+ S1751851AbWLNKbI (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
+ 05:31:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751917AbWLNKbI
+ (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 05:31:08 -0500
+Received: from mail.gmx.net ([213.165.64.20]:46307 "HELO mail.gmx.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S1751851AbWLNKbH
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006 05:31:07 -0500
+Received: (qmail invoked by alias); 14 Dec 2006 10:31:05 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp042) with SMTP; 14 Dec 2006 11:31:05 +0100
+To: git@vger.kernel.org, junkio@cox.net
 Sender: git-owner@vger.kernel.org
 
-On Sun, Nov 12, 2006 at 06:31:18PM CET, Jakub Narebski wrote:
-> Petr "Pasky" Baudis wrote:
-> > Git and Cogito share the same models of branches. These branches are
-> > 'heads' with commit pointers stored in refs/heads/, etc. 
-> 
-> Not exactly. "Live" branches (i.e. branches you can commit to) are head
-> refs stored in refs/heads/. But in repository cloned with git-clone
-> --use-separate-remotes tracking heads (tracking branches) would be at
-> refs/remotes/<remotename>/. You can fetch to such a ref, but you can't
-> checkout it, nor commit to it.
 
-That was meant to be the "etc". ;-))
+Since git-show is pure Porcelain, it is the ideal candidate to
+pretty print other things than commits, too.
 
-> > The branches/ 
-> > directory says that some branches do not correspond to local development
-> > (and should never be used for that) but instead they correspond to a
-> Does that _should_ is enforced in Cogito? Is it enforced in Git?
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 
-Yes (you cannot switch to it). No (AFAIK).
+---
 
-> > particular branch in some remote repository. Such branches are called
-> > "REMOTE BRANCHES".
-> 
-> I'd rather call them "tracking branches", at least in git. So if there
-> is branch 'localbranch' in refs/heads/ (?), and there is corresponding
-> branches file branches/localbranch, which contains a single URL
->   git://host.domain/path/to/repository#remotebranch
-> it is AFAICU equivalent to having some remotes file, named e.g. 'repo',
-> with the following contents:
->   URL: git://host.domain/path/to/repository
->   Pull: remotebranch:localbranch
->   Push: remotebranch:localbranch
-> or equivalent entry in git config.
+ Documentation/git-show.txt |   40 ++++++++++++++++++---
+ builtin-log.c              |   82 +++++++++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 114 insertions(+), 8 deletions(-)
 
-Yes, except that the remote must be named 'localbranch'.
-
-> > So it's "if branch X has corresponding .git/branch/X file, it's not a
-> > local branch but instead a REMOTE BRANCH corresponding to the URL stored
-> > in that file". That simple. The URL is address of the repository plus
-> > optionally a '#branchname' if the branch name in the remote repository
-> > should not default to remote HEAD or master.
-> 
-> The whole concept of branches file (and marking some branches as "remote"
-> branches) is IMHO from the times where there were most common to have one
-> live branch per repository, and we fetched and pushed single branches.
-> This simple picture changed with more widespread use of multiple heads,
-> and with the introduction of tags (I think).
-
-I completely agree. The original remotes implementation was messy, but
-with refs/remotes/ it's simple again. Only lack of time (or laziness) on
-my side is why Cogito didn't move to this yet.
-
-> By the way, with introduction of branches and remotes in config file,
-> you can say:
->  [branch "localbranch"]
-> 	remote = someremote
->  [remote "someremote"]
-> 	fetch = remotebranch:localbranch
-> 	push  = remotebranch:localbranch
-> 
-> and that would be equivalent to example branches file from the beginning
-> of this email.
-
-According to the documentation, this is not really useful since this
-just tells what should git fetch default to when on branch
-"localbranch". But "localbranch" is still just a branch representing a
-state in a remote repository, so you should never be _on_ it in a sane
-setup, but instead on a different branch which tracks it.
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
-$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
+diff --git a/Documentation/git-show.txt b/Documentation/git-show.txt
+index 4c880a8..1d9d781 100644
+--- a/Documentation/git-show.txt
++++ b/Documentation/git-show.txt
+@@ -3,20 +3,27 @@ git-show(1)
+ 
+ NAME
+ ----
+-git-show - Show one commit with difference it introduces
++git-show - Show blobs, trees, tags and commits with difference they introduce
+ 
+ 
+ SYNOPSIS
+ --------
+-'git-show' <option>...
++'git-show' [options] <object>...
+ 
+ DESCRIPTION
+ -----------
+-Shows commit log and textual diff for a single commit.  The
+-command internally invokes 'git-rev-list' piped to
+-'git-diff-tree', and takes command line options for both of
+-these commands. It also presents the merge commit in a special
+-format as produced by 'git-diff-tree --cc'.
++Shows one or more objects.
++
++For commits it shows the log message and textual diff. It also
++presents the merge commit in a special format as produced by
++'git-diff-tree --cc'.
++
++For tags, it shows the tag message and the referenced objects.
++
++For trees, it shows the names (equivalent to gitlink:git-ls-tree[1]
++with \--name-only).
++
++For plain blobs, it shows the plain contents.
+ 
+ This manual page describes only the most frequently used options.
+ 
+@@ -28,6 +35,25 @@ OPTIONS
+ 
+ include::pretty-formats.txt[]
+ 
++
++EXAMPLES
++--------
++
++git show v1.0.0::
++	Shows the tag `v1.0.0`.
++
++git show v1.0.0^{tree}::
++	Shows the tree pointed to by the tag `v1.0.0`.
++
++git show next~10:Documentation/README
++	Shows the contents of the file `Documentation/README` as
++	they were current in the 10th last commit of the branch
++	`next`.
++
++git show master:Makefile master:t/Makefile
++	Concatenates the contents of said Makefiles in the head
++	of the branch `master`.
++
+ Author
+ ------
+ Written by Linus Torvalds <torvalds@osdl.org> and
+diff --git a/builtin-log.c b/builtin-log.c
+index 6821a08..17014f7 100644
+--- a/builtin-log.c
++++ b/builtin-log.c
+@@ -10,6 +10,7 @@
+ #include "revision.h"
+ #include "log-tree.h"
+ #include "builtin.h"
++#include "tag.h"
+ #include <time.h>
+ #include <sys/time.h>
+ 
+@@ -71,9 +72,43 @@ int cmd_whatchanged(int argc, const char **argv, const char *prefix)
+ 	return cmd_log_walk(&rev);
+ }
+ 
++static int show_object(const unsigned char *sha1, int suppress_header)
++{
++	unsigned long size;
++	char type[20];
++	char *buf = read_sha1_file(sha1, type, &size);
++	int offset = 0;
++
++	if (!buf)
++		return error("Could not read object %s", sha1_to_hex(sha1));
++
++	if (suppress_header)
++		while (offset < size && buf[offset++] != '\n') {
++			int new_offset = offset;
++			while (new_offset < size && buf[new_offset++] != '\n')
++				; /* do nothing */
++			offset = new_offset;
++		}
++
++	if (offset < size)
++		fwrite(buf + offset, size - offset, 1, stdout);
++	free(buf);
++	return 0;
++}
++
++static int show_tree_object(const unsigned char *sha1,
++		const char *base, int baselen,
++		const char *pathname, unsigned mode, int stage)
++{
++	printf("%s%s\n", pathname, S_ISDIR(mode) ? "/" : "");
++	return 0;
++}
++
+ int cmd_show(int argc, const char **argv, const char *prefix)
+ {
+ 	struct rev_info rev;
++	struct object_array_entry *objects;
++	int i, count, ret = 0;
+ 
+ 	git_config(git_log_config);
+ 	init_revisions(&rev, prefix);
+@@ -85,7 +120,52 @@ int cmd_show(int argc, const char **argv, const char *prefix)
+ 	rev.ignore_merges = 0;
+ 	rev.no_walk = 1;
+ 	cmd_log_init(argc, argv, prefix, &rev);
+-	return cmd_log_walk(&rev);
++
++	count = rev.pending.nr;
++	objects = rev.pending.objects;
++	for (i = 0; i < count && !ret; i++) {
++		struct object *o = objects[i].item;
++		const char *name = objects[i].name;
++		switch (o->type) {
++		case OBJ_BLOB:
++			ret = show_object(o->sha1, 0);
++			break;
++		case OBJ_TAG: {
++			struct tag *t = (struct tag *)o;
++
++			printf("%stag %s%s\n\n",
++					diff_get_color(rev.diffopt.color_diff,
++						DIFF_COMMIT),
++					t->tag,
++					diff_get_color(rev.diffopt.color_diff,
++						DIFF_RESET));
++			ret = show_object(o->sha1, 1);
++			objects[i].item = (struct object *)t->tagged;
++			i--;
++			break;
++		}
++		case OBJ_TREE:
++			printf("%stree %s%s\n\n",
++					diff_get_color(rev.diffopt.color_diff,
++						DIFF_COMMIT),
++					name,
++					diff_get_color(rev.diffopt.color_diff,
++						DIFF_RESET));
++			read_tree_recursive((struct tree *)o, "", 0, 0, NULL,
++					show_tree_object);
++			break;
++		case OBJ_COMMIT:
++			rev.pending.nr = rev.pending.alloc = 0;
++			rev.pending.objects = NULL;
++			add_object_array(o, name, &rev.pending);
++			ret = cmd_log_walk(&rev);
++			break;
++		default:
++			ret = error("Unknown type: %d", o->type);
++		}
++	}
++	free(objects);
++	return ret;
+ }
+ 
