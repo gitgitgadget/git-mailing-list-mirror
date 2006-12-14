@@ -1,75 +1,82 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: Git manuals
-Date: Sun, 19 Nov 2006 14:36:09 -0500
-Message-ID: <20061119193609.GA21866@fieldses.org>
-References: <20061116221701.4499.qmail@science.horizon.com> <20061117153246.GA20065@thunk.org> <20061117182157.GC11882@fieldses.org> <20061119175040.GB15608@fieldses.org> <20061119175952.GX7201@pasky.or.cz>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: git-fetch fails with error code 128
+Date: Thu, 14 Dec 2006 23:08:43 +0000
+Message-ID: <200612142308.45376.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sun, 19 Nov 2006 19:36:27 +0000 (UTC)
-Cc: Theodore Tso <tytso@mit.edu>, linux@horizon.com,
-	git@vger.kernel.org
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 14 Dec 2006 23:11:40 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=ZMCb0Jx2UFHAD2Yxp7gJ2xgAz9q6oA/K5ckt9jZnWCtJJDoPlhCSNNoerajMHLFdpPuJ5WzWgY589Sgv0CySxYwwDrm2rdlIiFhRCPvCvAlsgfqlbmZXSxZC5P0anfsQqAz6QeP2M83ewl1yzR8ETelYCQxdsuUajbQr8hcOsdo=
+User-Agent: KMail/1.9.5
 Content-Disposition: inline
-In-Reply-To: <20061119175952.GX7201@pasky.or.cz>
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31857>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GlsSh-0005iA-Bi for gcvg-git@gmane.org; Sun, 19 Nov
- 2006 20:36:19 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34431>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Guzje-0007rU-2o for gcvg-git@gmane.org; Fri, 15 Dec
+ 2006 00:11:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S933071AbWKSTgP (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 19 Nov 2006
- 14:36:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933076AbWKSTgP
- (ORCPT <rfc822;git-outgoing>); Sun, 19 Nov 2006 14:36:15 -0500
-Received: from mail.fieldses.org ([66.93.2.214]:50665 "EHLO
- pickle.fieldses.org") by vger.kernel.org with ESMTP id S933071AbWKSTgO (ORCPT
- <rfc822;git@vger.kernel.org>); Sun, 19 Nov 2006 14:36:14 -0500
-Received: from bfields by pickle.fieldses.org with local (Exim 4.63)
- (envelope-from <bfields@fieldses.org>) id 1GlsSX-0005kG-Av; Sun, 19 Nov 2006
- 14:36:09 -0500
-To: Petr Baudis <pasky@suse.cz>
+ S1751762AbWLNXL1 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
+ 18:11:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751768AbWLNXL1
+ (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 18:11:27 -0500
+Received: from ug-out-1314.google.com ([66.249.92.175]:43673 "EHLO
+ ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1751762AbWLNXL0 (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec
+ 2006 18:11:26 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so649990uga for
+ <git@vger.kernel.org>; Thu, 14 Dec 2006 15:11:26 -0800 (PST)
+Received: by 10.67.21.11 with SMTP id y11mr102964ugi.1166137885934; Thu, 14
+ Dec 2006 15:11:25 -0800 (PST)
+Received: from grissom.internal.parkins.org.uk ( [84.201.153.164]) by
+ mx.google.com with ESMTP id k30sm3292133ugc.2006.12.14.15.11.25; Thu, 14 Dec
+ 2006 15:11:25 -0800 (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On Sun, Nov 19, 2006 at 06:59:52PM +0100, Petr Baudis wrote:
-> On Sun, Nov 19, 2006 at 06:50:40PM CET, J. Bruce Fields wrote:
-> > In fact, I'm tempted to submit a patch that just assigns a chapter
-> > number to everything under Documentation/, slaps a single table of
-> > contents on the front, and calls the result "the git user's manual."
-> > 
-> > Of course, the moment people started trying to read the thing they'd
-> > complain that it was a mess--some stuff referenced without being
-> > introduced, other stuff introduced too many times.  But then over time
-> > maybe that'd force us to mold it into some sort of logical sequence.
-> 
-> Sequencing isn't the only problem. A _manual_ is different from
-> _reference documentation_ in that it does not usually describe command
-> after command, but rather concept after concept. So instead of slamming
-> git-*-pack commands together, you have a section "Handling Packs" where
-> you try to coherently describe the commands together.
-> 
-> Your approach is fine for something you would call "Git Reference
-> Manual", but it is something really different from "The Git Book" or
-> "Git User's Manual".
+Hello,
 
-Yeah, of course, but I wasn't actually thinking of the man pages so much
-as:
-	everyday.txt
-	tutorial.txt
-	tutorial-2.txt
-	core-tutorial.txt
-	howto/
-	hooks.txt
-	README
-	glossary.txt
+This is with my big "every linux patch" repository that I talked about in 
+another thread.  To bring you up to speed:
 
-etc.
+ 1. Made repository
+ 2. Made a zip of the .git directory
+ 3. Copied the zip elsewhere
+ 4. Extracted it into a temporary directory
+ 5. Went to an out-of-date version of this repository
+ 6. Used git-fetch to update it.
 
+This gave me the following output:
+
+$ git fetch
+remote: Generating pack...
+remote: Done counting 189146 objects.
+remote: Result has 186566 objects.
+remote: Deltifying 186566 objects.
+remote:  100% (186566/186566) done
+Unpacking 186566 objects
+fatal: failed to apply delta
+fatal: unpack-objects died with error code 128
+Fetch failure: /home/andyp/projects/temp/.git
+
+What does that mean?  I ran fsck --full on the source repository, but it's 
+made no difference.
+
+
+
+Andy
+-- 
+Dr Andrew Parkins, M Eng (Hons), AMIEE
