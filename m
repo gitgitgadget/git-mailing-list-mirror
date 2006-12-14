@@ -1,64 +1,69 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Sean Kelley" <sean.v.kelley@gmail.com>
-Subject: GIT - error: no such remote ref refs/heads/TestBranch
-Date: Tue, 19 Dec 2006 14:33:07 -0600
-Message-ID: <89b129c60612191233s5a7f36f2hd409c4b9a2bbbc5c@mail.gmail.com>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [PATCH] merge-recursive: add/add really is modify/modify with an empty base
+Date: Thu, 14 Dec 2006 06:41:45 -0500
+Message-ID: <20061214114145.GH1747@spearce.org>
+References: <Pine.LNX.4.63.0612100056090.28348@wbgn013.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.63.0612100114440.28348@wbgn013.biozentrum.uni-wuerzburg.de> <7vmz5w5tuw.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0612122347590.2807@wbgn013.biozentrum.uni-wuerzburg.de> <7vvekgog0r.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0612130402300.2807@wbgn013.biozentrum.uni-wuerzburg.de> <7vvekgl2z2.fsf@assigned-by-dhcp.cox.net> <b0943d9e0612131401s6cde6d0du5e3c6d2e34bfbbb2@mail.gmail.com> <Pine.LNX.4.63.0612140045430.3635@wbgn013.biozentrum.uni-wuerzburg.de> <b0943d9e0612140331q4c3a32e2l361fd04375f091d7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Tue, 19 Dec 2006 20:33:21 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Thu, 14 Dec 2006 11:42:01 +0000 (UTC)
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=r9DA46EG37HsSwAkbuJ3hIwNugLdoVWtLd8c0N7UgV9jb6meaZ8ZLew9uKSFqyESUbvIvzpHIc/a4nG1MNg9OTaTh9YSDk5vXkA0LCNVRKGkrllYihf7b0ULmWTxUVlTqByct7A1sfn9H87NyQ9Z46H+Ed+2k/1HOG3C/H11fAI=
 Content-Disposition: inline
+In-Reply-To: <b0943d9e0612140331q4c3a32e2l361fd04375f091d7@mail.gmail.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34850>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34321>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GwleF-00027k-CT for gcvg-git@gmane.org; Tue, 19 Dec
- 2006 21:33:15 +0100
+ esmtp (Exim 4.50) id 1GuoyJ-0007HZ-N5 for gcvg-git@gmane.org; Thu, 14 Dec
+ 2006 12:41:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932935AbWLSUdK (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
- 15:33:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932891AbWLSUdK
- (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 15:33:10 -0500
-Received: from an-out-0708.google.com ([209.85.132.251]:42284 "EHLO
- an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S932935AbWLSUdJ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec
- 2006 15:33:09 -0500
-Received: by an-out-0708.google.com with SMTP id b33so595740ana for
- <git@vger.kernel.org>; Tue, 19 Dec 2006 12:33:09 -0800 (PST)
-Received: by 10.78.47.15 with SMTP id u15mr4268866huu.1166560387474; Tue, 19
- Dec 2006 12:33:07 -0800 (PST)
-Received: by 10.78.179.5 with HTTP; Tue, 19 Dec 2006 12:33:07 -0800 (PST)
-To: git@vger.kernel.org
+ S932675AbWLNLlx (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
+ 06:41:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932650AbWLNLlx
+ (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 06:41:53 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:36495 "EHLO
+ corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S932675AbWLNLlw (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006
+ 06:41:52 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1Guoy8-0008D6-0T; Thu, 14 Dec 2006 06:41:44 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 06B1A20FB65; Thu, 14 Dec 2006 06:41:45 -0500 (EST)
+To: Catalin Marinas <catalin.marinas@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Hi,
+Catalin Marinas <catalin.marinas@gmail.com> wrote:
+> One nice addition to git-merge-recursive (probably only useful to
+> StGIT) would be more meaningful labeling of the conflict regions,
+> passed via a command line similar to the "diff3 -L" option. StGIT
+> generates "patched", "current" and "ancestor" labels with diff3.
 
-I was wondering if someone could help me.  I had a branch on our
-remote GIT server called TestBranch.  I logged into the Remote server
-and ran:
+Indeed.  Getting a SHA1 hash of the branch that I merged in by
+name with "git merge foof" is horrible UI.  I want to see "foof"
+in the conflict.  Its in my list of things I'd really like to fix,
+but is currently low priority compared to the issues I've run into
+this past week with git-merge-recursive's basic functions.
 
-<from remote server>
-git branch -D TestBranch
+On the other hand Git's open source strategy is really paying off on
+resolving those problems, typically the issue is fixed and accepted
+by Junio into 'next' in under a day of identification.  :-)
 
-But in my local clone:
-
-kelleys@oifig:~/Work/kernel$ git pull origin
-kelleys@git.example.com's password:
-error: no such remote ref refs/heads/TestBranch
-Fetch failure: git+ssh://git.example.com/data/git/proj/kernel/mh.git
-kelleys@oifig:~/Work/kernel$
-
-Any ideas how to correct this?
-
+-- 
