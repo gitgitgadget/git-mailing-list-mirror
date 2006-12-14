@@ -1,65 +1,53 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Florian v. Savigny" <lorian@fsavigny.de>
-Subject: Can git be tweaked to work cross-platform, on FAT32?
-Date: Wed, 13 Dec 2006 16:58:41 +0100
-Message-ID: <0MKwpI-1GuWVF2znk-0006fC@mrelayeu.kundenserver.de>
-NNTP-Posting-Date: Wed, 13 Dec 2006 16:03:53 +0000 (UTC)
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] git-reset [--mixed] <tree> [--] <paths>...
+Date: Thu, 14 Dec 2006 02:02:17 -0800
+Message-ID: <7virge94nq.fsf@assigned-by-dhcp.cox.net>
+References: <7vwt4u96e8.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Thu, 14 Dec 2006 10:02:50 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Greylist: delayed 302 seconds by postgrey-1.27 at vger.kernel.org; Wed, 13 Dec 2006 11:03:46 EST
-X-Provags-ID: kundenserver.de abuse@kundenserver.de login:39e16ec7cf8ca3e7595f9f2370cc61be
+In-Reply-To: <7vwt4u96e8.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Thu, 14 Dec 2006 01:24:47 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34225>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34296>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GuWaF-0004yE-73 for gcvg-git@gmane.org; Wed, 13 Dec
- 2006 17:03:51 +0100
+ esmtp (Exim 4.50) id 1GunQD-0002Wo-2R for gcvg-git@gmane.org; Thu, 14 Dec
+ 2006 11:02:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S964831AbWLMQDr (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 13 Dec 2006
- 11:03:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964774AbWLMQDr
- (ORCPT <rfc822;git-outgoing>); Wed, 13 Dec 2006 11:03:47 -0500
-Received: from moutng.kundenserver.de ([212.227.126.183]:54209 "EHLO
- moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S964831AbWLMQDq (ORCPT <rfc822;git@vger.kernel.org>); Wed, 13 Dec
- 2006 11:03:46 -0500
-Received: from [87.234.143.108] (helo=BERTRANDRUSSELL.teuto.37.de) by
- mrelayeu.kundenserver.de (node=mrelayeu1) with ESMTP (Nemesis), id
- 0MKwpI-1GuWVF2znk-0006fC; Wed, 13 Dec 2006 16:58:42 +0100
+ S932304AbWLNKCT (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
+ 05:02:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932307AbWLNKCT
+ (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 05:02:19 -0500
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:59962 "EHLO
+ fed1rmmtao07.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S932304AbWLNKCS (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006
+ 05:02:18 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao07.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061214100218.BPBN22053.fed1rmmtao07.cox.net@fed1rmimpo01.cox.net>; Thu, 14
+ Dec 2006 05:02:18 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id ya1e1V00h1kojtg0000000; Thu, 14 Dec 2006
+ 05:01:39 -0500
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
+Junio C Hamano <junkio@cox.net> writes:
 
+> Sometimes it is asked on the list how to revert selected path in
+> the index from a tree, most often HEAD, without affecting the
+> files in the working tree...
 
-Hi there,
-
-I would like to use git to develop a somewhat larger Perl project
-which I would need to test and develop under both Linux and Windows,
-i.e. I would need a repository on a FAT32 partition (to my knowledge,
-still the only filesystem that can be fully accessed from both OSes -
-correct me if I'm wrong) which could be accessed by two compatible git
-executables, such that I could switch back and forth.
-
-Before describing how I (unsuccessfully, which is perhaps not
-surprising, as I'm C-illiterate) hacked the Makefile to compile two
-git siblings, I would like to generally ask whether this is possible
-at all (or should be possible in theory, in which case I'm willing to
-test extensively), whether with Cygwin or not. The preliminary
-impression was that the Linux version would not accept a repository on
-FAT32 (it did work with more Unixish filesystems). - I do not need the
-networking capabilities, BTW (standalone development), if that is an
-issue in any way.
-
-Thanks for any hint!
-
-Florian
-
--- 
-                                               Florian von Savigny
-__________________________________________________________________
-lorian@fsavigny.de
+The patch depends on another one that allows the command to work
+from a subdirectory (and also has one bug).  Updated one will
+appear in 'next'.
