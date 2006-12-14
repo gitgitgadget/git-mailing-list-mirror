@@ -2,75 +2,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] git-add --interactive (wip)
-Date: Tue, 12 Dec 2006 23:15:56 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612122311400.2807@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <360959.72234.qm@web31809.mail.mud.yahoo.com>
- <7vd56s8t9w.fsf@assigned-by-dhcp.cox.net> <7vslfm23co.fsf_-_@assigned-by-dhcp.cox.net>
- <200612111147.44964.Josef.Weidendorfer@gmx.de> <7vwt4wpytm.fsf@assigned-by-dhcp.cox.net>
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: What's in git.git (stable)
+Date: Thu, 14 Dec 2006 15:46:17 -0800
+Message-ID: <7vk60uyrau.fsf@assigned-by-dhcp.cox.net>
+References: <7v4przfpir.fsf@assigned-by-dhcp.cox.net>
+	<200612140959.19209.andyparkins@gmail.com>
+	<7vmz5q18cn.fsf@assigned-by-dhcp.cox.net>
+	<200612142255.33564.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Tue, 12 Dec 2006 22:16:05 +0000 (UTC)
-Cc: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Thu, 14 Dec 2006 23:46:37 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7vwt4wpytm.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+In-Reply-To: <200612142255.33564.andyparkins@gmail.com> (Andy Parkins's
+	message of "Thu, 14 Dec 2006 22:55:32 +0000")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34151>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34442>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GuFut-0002GZ-Fv for gcvg-git@gmane.org; Tue, 12 Dec
- 2006 23:16:03 +0100
+ esmtp (Exim 4.50) id 1Gv0HO-0003Zl-Cd for gcvg-git@gmane.org; Fri, 15 Dec
+ 2006 00:46:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932473AbWLLWQA (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 12 Dec 2006
- 17:16:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932477AbWLLWQA
- (ORCPT <rfc822;git-outgoing>); Tue, 12 Dec 2006 17:16:00 -0500
-Received: from mail.gmx.net ([213.165.64.20]:44295 "HELO mail.gmx.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S932473AbWLLWP7
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 12 Dec 2006 17:15:59 -0500
-Received: (qmail invoked by alias); 12 Dec 2006 22:15:58 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp047) with SMTP; 12 Dec 2006 23:15:58 +0100
-To: Junio C Hamano <junkio@cox.net>
+ S1751996AbWLNXqT (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
+ 18:46:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751999AbWLNXqT
+ (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 18:46:19 -0500
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:51067 "EHLO
+ fed1rmmtao05.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1751996AbWLNXqS (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006
+ 18:46:18 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao05.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061214234617.WZWD15640.fed1rmmtao05.cox.net@fed1rmimpo02.cox.net>; Thu, 14
+ Dec 2006 18:46:17 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id ynmV1V0051kojtg0000000; Thu, 14 Dec 2006
+ 18:46:29 -0500
+To: Andy Parkins <andyparkins@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Hi,
+Andy Parkins <andyparkins@gmail.com> writes:
 
-On Tue, 12 Dec 2006, Junio C Hamano wrote:
+> On Thursday 2006, December 14 21:22, Junio C Hamano wrote:
+>
+>> This is interesting.  You said "commit -b", were pointed out
+>> that you were talking about "checkout -b", and just after saying
+>> "yup, that is right, I was", you again say "commit -b".
+>
+> There truly is something wrong with me.
 
-> I've updated my "git add --interactive" in 'pu' and it now knows how to 
-> split a hunk into smaller pieces and recounting the diff offsets before 
-> applying (Johannes pointed out that his partial commit script, entirely 
-> written in bash using shell arrays, has a similar feature.  I guess I 
-> should have stolen his code instead of lifting the logic from my own 
-> abandoned porcelain).
+I did not mean it that way.  I only took it as a sign that maybe
+"first create and switch to a branch and then work and commit
+there, in separate steps", which is how git encourages things to
+be done, does not match people's mental model so well.
 
-Well, not completely true. I do not split hunks into subhunks.
+> I'm not sure about your "commit -b"; is it wise to have /another/ way of 
+> making a branch?  I mean - I'm clearly confused enough, have a heart :-)
 
-Note that you _could_ split hunks at arbitrary lines; if it is a line 
-common between the two files, it is easier though.
+I said "commit -b <newbranch>" and deliberately avoided saying
+"commit -b <anybranch>", because I did not want to open another
+can of worms while we are discussing so many good things
+already, and my head can hold only a handful topics at once.
 
-And you could not have ripped from my script: I make heavy use of bash 
-arrays (in fact, I wrote this script partly to learn how to work with bash 
-arrays). If I could think of a clean way to spawn processes piped into 
-"less -FS" several times from a C program, I would already have rewritten 
-it in C.
+But people on the list (and #git channel) sometimes wished an
+easy way to help the following workflow.
 
-> So in short, I think per-hunk update-index is a cute hack and may be 
-> useful in a narrow simple cases, but it would not be so useful in the 
-> real life.
+ * I am in the middle of working on a new feature.  As a good
+   git user, I am on a topic branch dedicated for that purpose.
 
-To the contrary! In spite of having written git-hunk-commit to please 
-those poor souls coming from the darcs side, I already used it myself 
-quite often! I think it is a killer feature.
+ * While working on it, I find an obvious bug that I would not
+   want to fix on the branch (the topic branch I am currently on
+   is not about fixing that bug).
 
-Ciao,
-Dscho
+ * But I fix it in the working tree anyway, because otherwise I
+   would forget.  It happens to be in an isolated file that my
+   current topic does not need to modify (say, I was looking at
+   a function in that file that my new feature needs to call and
+   I wanted to study its calling convention. And I found a typo in
+   the comment near the function).
+
+ * The fix does not belong to the current topic, but can go to
+   the 'master' branch straight.  It's a fix in the comment that
+   cannot possibly break things, and I can/will test it later
+   anyway.
+
+ * So with the existing set of tools, I would go there, commit
+   and then come back:
+
+	$ git checkout [-m] master
+        $ git commit -m 'fix typo in that-file' that-file
+        $ git checkout [-m] topic
+
+   But it might be faster to say:
+
+   	$ git commit -b master -m 'fix typo in that-file' that-file
+
+   to make a commit on the other branch and come back
+   immediately afterwards.
+
+ * In the same situation, when the 'master' is closed for some
+   administrative reason (e.g. "deep freeze before a release and
+   strict bugfixes and nothing else are allowed"), I would create
+   a new 'typofix' branch and do the same.  I can rebase it
+   later on 'master' when it reopens.
+
+	$ git commit -b typofix -m 'fix typo in that-file' that-file
+
+	... much later when master reopens ...
+        $ git rebase --onto master topic typofix
+
+It's just a possible typesaver, but I am likely not using it
+myself (my fingers are already trained to do the three command
+sequence dance).
+
+I do agree that it adds one more way to do the same thing and
+would make the documentation noisier, potentially adding more to
+the confusion.  So let's not go there.
+
