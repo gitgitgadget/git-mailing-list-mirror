@@ -4,141 +4,138 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Cleaning up git user-interface warts
-Date: Wed, 15 Nov 2006 13:43:44 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0611151315291.2591@xanadu.home>
-References: <87k61yt1x2.wl%cworth@cworth.org> <455A1137.8030301@shadowen.org>
- <87hcx1u934.wl%cworth@cworth.org>
- <Pine.LNX.4.64.0611141518590.2591@xanadu.home>
- <87bqn9u43s.wl%cworth@cworth.org> <ejdcg5$4fl$1@sea.gmane.org>
- <Pine.LNX.4.64.0611141633430.2591@xanadu.home>
- <7vbqn9y6w6.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0611142007010.2591@xanadu.home>
- <7v3b8ltq7r.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0611142306090.2591@xanadu.home>
- <Pine.LNX.4.64.0611150950170.3349@woody.osdl.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [PATCH] Stop telling users we are 'defaulting to local storage area'.
+Date: Thu, 14 Dec 2006 18:09:02 -0500
+Message-ID: <20061214230902.GA26506@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-NNTP-Posting-Date: Wed, 15 Nov 2006 18:44:33 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Thu, 14 Dec 2006 23:09:12 +0000 (UTC)
+Cc: git@vger.kernel.org, Andy Parkins <andyparkins@gmail.com>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-reply-to: <Pine.LNX.4.64.0611150950170.3349@woody.osdl.org>
-X-X-Sender: nico@xanadu.home
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31465>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GkPkK-0000l2-Kp for gcvg-git@gmane.org; Wed, 15 Nov
- 2006 19:44:29 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34428>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GuzhO-0007a9-Vx for gcvg-git@gmane.org; Fri, 15 Dec
+ 2006 00:09:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1030850AbWKOSns (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
- 13:43:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030849AbWKOSns
- (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 13:43:48 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:51178 "EHLO
- relais.videotron.ca") by vger.kernel.org with ESMTP id S1030846AbWKOSnr
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 13:43:47 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
- <0J8S00D1AC0W4AT0@VL-MH-MR001.ip.videotron.ca> for git@vger.kernel.org; Wed,
- 15 Nov 2006 13:43:44 -0500 (EST)
-To: Linus Torvalds <torvalds@osdl.org>
+ S1751731AbWLNXJI (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
+ 18:09:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751742AbWLNXJI
+ (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 18:09:08 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:40941 "EHLO
+ corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1751731AbWLNXJG (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006
+ 18:09:06 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1Guzh8-0005Lq-Ri; Thu, 14 Dec 2006 18:08:55 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 0593320FB65; Thu, 14 Dec 2006 18:09:02 -0500 (EST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-On Wed, 15 Nov 2006, Linus Torvalds wrote:
+Back in the old days of Git when people messed around with their
+GIT_DIR environment variable more often it was nice to know whether
+or not git-init-db created a .git directory or used GIT_DIR.
 
-> 
-> 
-> On Tue, 14 Nov 2006, Nicolas Pitre wrote:
-> > 
-> > But the fact is that HG (which has a growing crowd of happy campers, 
-> > maybe even larger than the BK crowd now) did work with and got used to a 
-> > sensible definition of what a "pull" is.
-> 
-> Guys, before you start thinking this way, the fact is, there's a lot of 
-> happy git users. 
-> 
-> So the reason for using "git pull" is
-> 
->  - bk did it that way, and like it or not, bk was the first usable 
->    distributed system. hg is totally uninteresting.
-> 
->  - git itself has now done it that way for the last 18 months, and the 
->    fact is, the people _complaining_ are a small subset of the people who 
->    actually use git on a daily basis and don't complain.
+But now that we are making excuses in the documentation about why
+this message gets printed by git-init-db we should just remove it
+entirely.  It doesn't really help the user to understand what just
+happened.  It also breaks from our normal behavior of not printing
+anything if the command was successful.
 
-Those arguments are somewhat flawed.  If we stick to "BK did it that way 
-and it was first", then following that logic we would also carry a lot 
-of CVS baggage because "CVS did it that way, and it was the most 
-successful of its kind".  Still, we decided not to follow CVS nor BK in 
-many ways already.
+Suggested by Andy Parkins in his Git 'niggles' list
+(<200612132237.10051.andyparkins@gmail.com>).
 
-As for the fraction of people complaining being a small fraction of 
-current GIT users: that is easily explainable by the fact that most 
-people who would have grown the complainers group are simply not GIT 
-users anymore since they were turned away by GIT's current user 
-interface issues.  The only complainers remaining are those who see 
-value in the GIT technology but who would like to bring more 
-intuitiveness to the GIT interface instead of going for the alternative 
-technology.  And those kind of people are always few.
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ Documentation/core-tutorial.txt |   14 +++-----------
+ Documentation/tutorial-2.txt    |    1 -
+ Documentation/tutorial.txt      |    6 ------
+ builtin-init-db.c               |    4 +---
+ 4 files changed, 4 insertions(+), 21 deletions(-)
 
-> So don't fall for the classic "second system syndrome". The classic reason 
-> for getting the second system wrong is because you focus on the issues 
-> people complain about, and not on the issues that work well (because the 
-> issues that work fine are obviously not getting a lot of attention).
-
-The counter part of that is the possibility to fall for the "ivory tower 
-syndrome" where seasoned GIT users feel they are well satisfied with 
-what is currently available and unwilling to consider changes that would 
-reduce the barrier to entry for new users... simply because they are so 
-used to the way things work that they can't see why others have problems 
-with it.
-
-> If you think "pull" is confusing, I can guarantee you that _changing_ the 
-> name is a hell of a lot more confusing.
-
-Agreed.  This is why the current discussion led to a proposition that 
-allows for "pull" to remain as is but to have a "get" version that would 
-be the alternate (saner) version.
-
-> In fact, I think a lot of the 
-> confusion comes from cogito, not from git - the fact that cogito used 
-> different names and different syntax was a mistake, I think.
-> 
-> And that '#' for branch naming in particular was (and is) total 
-> braindamage. The native git branch naming convention is just fundamentally 
-> much better, and allows you to very naturally fetch multiple branches at 
-> once, in a way that cogito's syntax does not.
-> 
-> So when I see suggestions of using that brain-damaged cogito syntax as an 
-> "improvement", I know for a fact that somebody hasn't thought things 
-> through, and only thinks it's a better syntax beause of totally bogus 
-> reasons.
-
-Do you have comments on my proposed syntax (that would be implemented 
-with a git-get command) which I think doesn't really look like cogito?
-
-> I do agree that we probably could/should re-use the "git merge" name. The 
-> current "git merge" is an esoteric internal routine, and I doubt a lot of 
-> people use it as-is. I don't think it would be a mistake to make "git 
-> merge" basically be an alias for "git pull", for example, and I doubt many 
-> people would really even notice.
-
-Agreed.
-
-> But the fact is, git isn't really that hard to work out, and the commands 
-> aren't that complicated.
-
-I agree with you in general, except for the "pull" behavior which is 
-really really odd.  Maybe it made sense in the BK context, maybe it is 
-fine _once_ you get used to it, but otherwise it is really overloaded.
-
-> But trying to rename "pull" (or the "git" name itself) is just going to 
-> cause more confusion than you fix.
-
-Agreed again.
-
-
+diff --git a/Documentation/core-tutorial.txt b/Documentation/core-tutorial.txt
+index 47505aa..f90c66c 100644
+--- a/Documentation/core-tutorial.txt
++++ b/Documentation/core-tutorial.txt
+@@ -54,17 +54,9 @@ $ cd git-tutorial
+ $ git-init-db
+ ------------------------------------------------
+ 
+-to which git will reply
+-
+-----------------
+-defaulting to local storage area
+-----------------
+-
+-which is just git's way of saying that you haven't been doing anything
+-strange, and that it will have created a local `.git` directory setup for
+-your new project. You will now have a `.git` directory, and you can
+-inspect that with `ls`. For your new empty project, it should show you
+-three entries, among other things:
++You will now have a `.git` directory, and you can inspect that with
++`ls`. For your new empty project, it should show you three entries,
++among other things:
+ 
+  - a file called `HEAD`, that has `ref: refs/heads/master` in it.
+    This is similar to a symbolic link and points at
+diff --git a/Documentation/tutorial-2.txt b/Documentation/tutorial-2.txt
+index 6389de5..f7f2e1c 100644
+--- a/Documentation/tutorial-2.txt
++++ b/Documentation/tutorial-2.txt
+@@ -18,7 +18,6 @@ Let's start a new project and create a small amount of history:
+ $ mkdir test-project
+ $ cd test-project
+ $ git init-db
+-defaulting to local storage area
+ $ echo 'hello world' > file.txt
+ $ git add .
+ $ git commit -a -m "initial commit"
+diff --git a/Documentation/tutorial.txt b/Documentation/tutorial.txt
+index 02dede3..88ace3b 100644
+--- a/Documentation/tutorial.txt
++++ b/Documentation/tutorial.txt
+@@ -35,12 +35,6 @@ $ cd project
+ $ git init-db
+ ------------------------------------------------
+ 
+-Git will reply
+-
+-------------------------------------------------
+-defaulting to local storage area
+-------------------------------------------------
+-
+ You've now initialized the working directory--you may notice a new
+ directory created, named ".git".  Tell git that you want it to track
+ every file under the current directory with (notice the dot '.'
+diff --git a/builtin-init-db.c b/builtin-init-db.c
+index 235a0ee..405b9a1 100644
+--- a/builtin-init-db.c
++++ b/builtin-init-db.c
+@@ -274,10 +274,8 @@ int cmd_init_db(int argc, const char **argv, const char *prefix)
+ 	 * Set up the default .git directory contents
+ 	 */
+ 	git_dir = getenv(GIT_DIR_ENVIRONMENT);
+-	if (!git_dir) {
++	if (!git_dir)
+ 		git_dir = DEFAULT_GIT_DIR_ENVIRONMENT;
+-		fprintf(stderr, "defaulting to local storage area\n");
+-	}
+ 	safe_create_dir(git_dir, 0);
+ 
+ 	/* Check to see if the repository version is right.
+-- 
