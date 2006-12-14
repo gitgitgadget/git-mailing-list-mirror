@@ -1,79 +1,72 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: Easy shell question: how to make a script killing all his childs when killed?
-Date: Sat, 9 Dec 2006 18:51:57 +0100
-Message-ID: <e5bfff550612090951l43a83a00o7ea2e244ca562c77@mail.gmail.com>
-References: <e5bfff550612090716p215167b9r2277b09c09b18894@mail.gmail.com>
-	 <20061209173703.GA12373@steel.home>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] git-reset [--mixed] <tree> [--] <paths>...
+Date: Thu, 14 Dec 2006 12:41:39 -0800
+Message-ID: <7v3b7i2osc.fsf@assigned-by-dhcp.cox.net>
+References: <7vwt4u96e8.fsf@assigned-by-dhcp.cox.net>
+	<slrneo2atm.nqa.Peter.B.Baumann@xp.machine.xx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sat, 9 Dec 2006 17:52:19 +0000 (UTC)
-Cc: "Git Mailing List" <git@vger.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Thu, 14 Dec 2006 20:41:47 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=L3iZYbcaZkqzDw7CgKPnzDs9eQntoLC87d+15pEn5CwhyO0H0IlSV6AytASvtl46yRY0q/aAgJ3zN8mJDag7fAKVuwTEPAQMBdBmEN4t+zEg1uNELCBDd04jsolaJzFP2Q1d48J0yB3++hEXWnDTRgUH9esawz1h+j5iSRuJfbw=
-In-Reply-To: <20061209173703.GA12373@steel.home>
-Content-Disposition: inline
+In-Reply-To: <slrneo2atm.nqa.Peter.B.Baumann@xp.machine.xx> (Peter Baumann's
+	message of "Thu, 14 Dec 2006 11:47:18 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33824>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34394>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gt6Mw-0000TD-Nm for gcvg-git@gmane.org; Sat, 09 Dec
- 2006 18:52:15 +0100
+ esmtp (Exim 4.50) id 1GuxOi-0004EA-Nl for gcvg-git@gmane.org; Thu, 14 Dec
+ 2006 21:41:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1759133AbWLIRwA (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 9 Dec 2006
- 12:52:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759140AbWLIRwA
- (ORCPT <rfc822;git-outgoing>); Sat, 9 Dec 2006 12:52:00 -0500
-Received: from py-out-1112.google.com ([64.233.166.181]:42566 "EHLO
- py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1759131AbWLIRv7 (ORCPT <rfc822;git@vger.kernel.org>); Sat, 9 Dec
- 2006 12:51:59 -0500
-Received: by py-out-1112.google.com with SMTP id a29so608328pyi for
- <git@vger.kernel.org>; Sat, 09 Dec 2006 09:51:58 -0800 (PST)
-Received: by 10.35.82.16 with SMTP id j16mr5536380pyl.1165686717800; Sat, 09
- Dec 2006 09:51:57 -0800 (PST)
-Received: by 10.35.93.11 with HTTP; Sat, 9 Dec 2006 09:51:57 -0800 (PST)
-To: "Alex Riesen" <raa.lkml@gmail.com>
+ S932902AbWLNUln (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
+ 15:41:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932909AbWLNUlm
+ (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 15:41:42 -0500
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:62516 "EHLO
+ fed1rmmtao06.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S932905AbWLNUll (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006
+ 15:41:41 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao06.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061214204140.HMOK2628.fed1rmmtao06.cox.net@fed1rmimpo02.cox.net>; Thu, 14
+ Dec 2006 15:41:40 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id ykhr1V00V1kojtg0000000; Thu, 14 Dec 2006
+ 15:41:51 -0500
+To: Peter Baumann <Peter.B.Baumann@stud.informatik.uni-erlangen.de>
 Sender: git-owner@vger.kernel.org
 
-On 12/9/06, Alex Riesen <fork0@t-online.de> wrote:
-> Marco Costalba, Sat, Dec 09, 2006 16:16:32 +0100:
+Peter Baumann <Peter.B.Baumann@stud.informatik.uni-erlangen.de>
+writes:
+
+> Why not make
 >
-> > P.S: I have no way to exec the script in fancy ways, I can just start
-> > it and get is PID.
+> 	git-reset --hard <treeish> -- file
 >
-> Which is "fancy" enough. What do you mean "start"? Starting a new
-> process usually and notably involves forking and execing (even if the
-> first thing to exec will be your shell).
+> aquivalent to
 >
->
+> 	git-checkout <treeish> -- file
 
-By 'start' I mean it is done inside Qt QProcess class back box ;-)
+Theoretically we could, but I'd rather keep "reset --hard"
+something that people would think a bit about before actually
+running (I am not enthused about giving "reset --mixed" this
+feature for the same reason, but I think it is safe enough).
 
-Anyway I have written an homegrown 'wanna be hacker' launching script:
+I'd want to avoid overloading different meanings to the --hard
+form.  Mis-typing checkout (say, accidentally having <RETURN>
+before "-- file" part while cut & paste) would not be so
+dangeous; mis-typing "reset --hard" the same way could be
+disastrous.
 
-git rev-list --header --boundary --parents --topo-order HEAD >
-/tmp/qgit_136224752.txt &
-echo $!
-wait
+> PS:	Your patch didn't apply cleanly.
 
-
-With this I can get the pid of git-rev-list from my QProcess interface
-so to be able to kill it when needed with another command ('kill'
-BTW).
-
-I have googled around and it seems that 'echo $!' and 'wait' _should_
-be portable among many shell, please correct me if'm wrong or if the
-approach is failing (I already know it's ugly ;-)  )
-
+As I said there is one bug I've fixed in my tree but the
+branches were not pushed out yet.
