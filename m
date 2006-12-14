@@ -1,89 +1,69 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git UI nit
-Date: Wed, 6 Dec 2006 15:46:46 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612061546190.28348@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <el6jmt$mej$1@sea.gmane.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Wed, 6 Dec 2006 14:47:03 +0000 (UTC)
-Cc: git@vger.kernel.org
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
+Subject: Re: What's in git.git (stable)
+Date: Thu, 14 Dec 2006 20:52:08 -0300
+Message-ID: <200612142352.kBENq8Ie002603@laptop13.inf.utfsm.cl>
+References: <junkio@cox.net>
+NNTP-Posting-Date: Thu, 14 Dec 2006 23:52:53 +0000 (UTC)
+Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <el6jmt$mej$1@sea.gmane.org>
-X-Y-GMX-Trusted: 0
+In-Reply-To: Message from Junio C Hamano <junkio@cox.net> 
+   of "Wed, 13 Dec 2006 15:31:12 -0800." <7vk60vbcfz.fsf@assigned-by-dhcp.cox.net> 
+X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.5  (beta27)
+X-Greylist: Recipient e-mail whitelisted, not delayed by milter-greylist-2.0.2 (inti.inf.utfsm.cl [200.1.21.155]); Thu, 14 Dec 2006 20:52:08 -0300 (CLST)
+X-Virus-Scanned: ClamAV version 0.88.5, clamav-milter version 0.88.5 on inti.inf.utfsm.cl
+X-Virus-Status: Clean
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33461>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34443>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gry2u-0004WM-Bs for gcvg-git@gmane.org; Wed, 06 Dec
- 2006 15:46:52 +0100
+ esmtp (Exim 4.50) id 1Gv0Na-0004Ne-DP for gcvg-git@gmane.org; Fri, 15 Dec
+ 2006 00:52:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1760662AbWLFOqt (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
- 09:46:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760664AbWLFOqt
- (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 09:46:49 -0500
-Received: from mail.gmx.net ([213.165.64.20]:51229 "HELO mail.gmx.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S1760662AbWLFOqs
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec 2006 09:46:48 -0500
-Received: (qmail invoked by alias); 06 Dec 2006 14:46:46 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp010) with SMTP; 06 Dec 2006 15:46:46 +0100
-To: Han-Wen Nienhuys <hanwen@xs4all.nl>
+ S1752004AbWLNXwY (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
+ 18:52:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752006AbWLNXwY
+ (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 18:52:24 -0500
+Received: from inti.inf.utfsm.cl ([200.1.21.155]:33155 "EHLO
+ inti.inf.utfsm.cl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
+ S1752004AbWLNXwX (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006
+ 18:52:23 -0500
+Received: from laptop13.inf.utfsm.cl (pc-173-245-83-200.cm.vtr.net
+ [200.83.245.173]) by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id
+ kBENq79G030757 (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256
+ verify=NO); Thu, 14 Dec 2006 20:52:08 -0300
+Received: from laptop13.inf.utfsm.cl (laptop13.inf.utfsm.cl [127.0.0.1]) by
+ laptop13.inf.utfsm.cl (8.13.8/8.13.8) with ESMTP id kBENq8Ie002603; Thu, 14
+ Dec 2006 20:52:08 -0300
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Hi,
+Junio C Hamano <junkio@cox.net> wrote:
 
-On Wed, 6 Dec 2006, Han-Wen Nienhuys wrote:
+[...]
 
-> 
-> When merging changes into a dirty working copy, one may get 
-> 
-> ..
-> Updating 62a005d..7bbd698
-> Makefile: needs update
-> README: needs update
-> config.mak.in: needs update
-> configure.ac: needs update
-> fatal: Entry 'Makefile' not uptodate. Cannot merge.
-> ..
-> 
-> 
-> This is bad error message; "uptodate" suggests that Makefile is too old. 
-> The problem is the reverse.  The Makefile has been
-> edited and hence it is 'newer'.  
+> In general the principle ought to be not to say anything if the
+> command does exactly what it was told to do successfully, unless
+> the operation is expected to take longer than other normal
+> commands in the git suite, or something that is rarely used.
 
-Something like this?
+Nodz. Just hoary Unix tradition.
 
--- snip --
-[PATCH] Replace "needs update" by "dirty; needs commit"
+> Perhaps under "[user] expert" control.
 
-This should clarify why a merge was not even started.
-
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-
----
-
- read-cache.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/read-cache.c b/read-cache.c
-index eae4745..0d22de2 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -721,7 +721,7 @@ int refresh_cache(unsigned int flags)
- 			}
- 			if (quiet)
- 				continue;
--			printf("%s: needs update\n", ce->name);
-+			printf("%s: dirty; needs commit\n", ce->name);
- 			has_errors = 1;
- 			continue;
+Nope. You'd be surprised what kind of people consider themselves
+"experts"... I'd prefer adding -v/--verbose flags to all commands (if
+nothing else, for symmetry's sake), have a '[default] --verbose' controlling
+this across the board (perhaps also '[default "command"] --verbose'), with
+'[default]' setting default switches.
+-- 
+Dr. Horst H. von Brand                   User #22616 counter.li.org
+Departamento de Informatica                    Fono: +56 32 2654431
+Universidad Tecnica Federico Santa Maria             +56 32 2654239
+Casilla 110-V, Valparaiso, Chile               Fax:  +56 32 2797513
