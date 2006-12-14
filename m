@@ -1,60 +1,68 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [WISH] Store also tag dereferences in packed-refs
-Date: Sat, 18 Nov 2006 17:59:08 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0611181758290.3692@woody.osdl.org>
-References: <e5bfff550611180115j135746a1h916e8ae029d1374d@mail.gmail.com>
- <7vmz6oeh2k.fsf@assigned-by-dhcp.cox.net> <20061118184345.GO7201@pasky.or.cz>
- <e5bfff550611181047w6712774fkccc697d312b87c7e@mail.gmail.com>
- <7vac2oefuz.fsf@assigned-by-dhcp.cox.net> <e5bfff550611181628o41e11652ycd17ddad5dd21225@mail.gmail.com>
- <Pine.LNX.4.64.0611181706250.3692@woody.osdl.org> <7vfycg9pu5.fsf@assigned-by-dhcp.cox.net>
- <7vac2o9pln.fsf@assigned-by-dhcp.cox.net>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: What's in git.git (stable)
+Date: Thu, 14 Dec 2006 22:55:32 +0000
+Message-ID: <200612142255.33564.andyparkins@gmail.com>
+References: <7v4przfpir.fsf@assigned-by-dhcp.cox.net> <200612140959.19209.andyparkins@gmail.com> <7vmz5q18cn.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Sun, 19 Nov 2006 01:59:38 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 14 Dec 2006 22:58:27 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <7vac2o9pln.fsf@assigned-by-dhcp.cox.net>
-X-MIMEDefang-Filter: osdl$Revision: 1.159 $
-X-Scanned-By: MIMEDefang 2.36
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=HHBCxFhlWlDbcE41GfZZbQq4vsm9PgAi1+JC+3+e5tCWtUy09fxwCn6uTuvP7tKUJl8xgZ+LEoUyP+wcjDAnz8CyFa7p4z3cWKV668uihRwZo8AQuDaFcI6CTObvPGiMkud0Z79TTCO1/w2Hk4YNvI5n5RZjRHMVaK0ZQRPVOl4=
+User-Agent: KMail/1.9.5
+In-Reply-To: <7vmz5q18cn.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31822>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Glbxw-0005vx-LU for gcvg-git@gmane.org; Sun, 19 Nov
- 2006 02:59:29 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34424>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GuzWw-0006Am-9C for gcvg-git@gmane.org; Thu, 14 Dec
+ 2006 23:58:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1755510AbWKSB7P (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 18 Nov 2006
- 20:59:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755525AbWKSB7O
- (ORCPT <rfc822;git-outgoing>); Sat, 18 Nov 2006 20:59:14 -0500
-Received: from smtp.osdl.org ([65.172.181.25]:48579 "EHLO smtp.osdl.org") by
- vger.kernel.org with ESMTP id S1755510AbWKSB7N (ORCPT
- <rfc822;git@vger.kernel.org>); Sat, 18 Nov 2006 20:59:13 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
- smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kAJ1x9ix031471
- (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Sat, 18
- Nov 2006 17:59:09 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
- shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kAJ1x863025309; Sat, 18 Nov
- 2006 17:59:09 -0800
-To: Junio C Hamano <junkio@cox.net>
+ S1751176AbWLNW6U (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
+ 17:58:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751640AbWLNW6U
+ (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 17:58:20 -0500
+Received: from ug-out-1314.google.com ([66.249.92.169]:26380 "EHLO
+ ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1751655AbWLNW6T (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec
+ 2006 17:58:19 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so646925uga for
+ <git@vger.kernel.org>; Thu, 14 Dec 2006 14:58:18 -0800 (PST)
+Received: by 10.66.244.11 with SMTP id r11mr105385ugh.1166137098310; Thu, 14
+ Dec 2006 14:58:18 -0800 (PST)
+Received: from grissom.internal.parkins.org.uk ( [84.201.153.164]) by
+ mx.google.com with ESMTP id g30sm3284623ugd.2006.12.14.14.58.13; Thu, 14 Dec
+ 2006 14:58:13 -0800 (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
+On Thursday 2006, December 14 21:22, Junio C Hamano wrote:
+
+> This is interesting.  You said "commit -b", were pointed out
+> that you were talking about "checkout -b", and just after saying
+> "yup, that is right, I was", you again say "commit -b".
+
+There truly is something wrong with me.  Is there some sort of record for 
+number of mistakes made in one thread?  Have I won yet?
+
+I'm not sure about your "commit -b"; is it wise to have /another/ way of 
+making a branch?  I mean - I'm clearly confused enough, have a heart :-)
 
 
-On Sat, 18 Nov 2006, Junio C Hamano wrote:
-> 
-> There is something seriously wrong about Marco's number with or
-> without my patch.  I am getting something like this from
-> linux-2.6 with fully packed and pruned refs;
+Andy
 
-Well, Marco is testing cold-cache numbers. But I agree, even with 
-cold-cache, it shouldn't be anywhere close to that bad. 
-
+-- 
+Dr Andrew Parkins, M Eng (Hons), AMIEE
