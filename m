@@ -1,63 +1,69 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [RFC] Submodules in GIT
-Date: Tue, 21 Nov 2006 14:59:00 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0611211456520.3338@woody.osdl.org>
-References: <20061120215116.GA20736@admingilde.org> <ejt9dh$kfm$1@sea.gmane.org>
- <7v7ixp20za.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611201501230.3338@woody.osdl.org>
- <20061121223130.GA24909@nan92-1-81-57-214-146.fbx.proxad.net>
- <Pine.LNX.4.64.0611211437430.3338@woody.osdl.org>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: What's in git.git (stable)
+Date: Thu, 14 Dec 2006 22:50:26 +0000
+Message-ID: <200612142250.27766.andyparkins@gmail.com>
+References: <7v4przfpir.fsf@assigned-by-dhcp.cox.net> <20061214114546.GI1747@spearce.org> <7v4pry16n5.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Tue, 21 Nov 2006 22:59:53 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, Jakub Narebski <jnareb@gmail.com>,
-	git@vger.kernel.org
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 14 Dec 2006 22:53:22 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <Pine.LNX.4.64.0611211437430.3338@woody.osdl.org>
-X-MIMEDefang-Filter: osdl$Revision: 1.159 $
-X-Scanned-By: MIMEDefang 2.36
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=rbXZnAwIUMk577oLL8mLECtzklSM7xaB5FACnz02fudBFdqNGkVc9ew/lNWU2PI0xuYcluGEqhpZMXul9knsT+9aMPjTaZDv8iKeBRyZqVbGXtxrumhNI+ik93ld9FcjYbXZUicIzNVvMoxZx5dHl9inEQy7vnfqzkzVxXwfirA=
+User-Agent: KMail/1.9.5
+In-Reply-To: <7v4pry16n5.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32054>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GmeaF-0007kK-QF for gcvg-git@gmane.org; Tue, 21 Nov
- 2006 23:59:20 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34422>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GuzS0-0005fP-PP for gcvg-git@gmane.org; Thu, 14 Dec
+ 2006 23:53:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1031291AbWKUW7P (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 21 Nov 2006
- 17:59:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031301AbWKUW7P
- (ORCPT <rfc822;git-outgoing>); Tue, 21 Nov 2006 17:59:15 -0500
-Received: from smtp.osdl.org ([65.172.181.25]:32234 "EHLO smtp.osdl.org") by
- vger.kernel.org with ESMTP id S1031291AbWKUW7O (ORCPT
- <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2006 17:59:14 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
- smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kALMx2ix007656
- (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Tue, 21
- Nov 2006 14:59:03 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
- shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kALMx0Kl012498; Tue, 21 Nov
- 2006 14:59:02 -0800
-To: Yann Dirson <ydirson@altern.org>
+ S1750992AbWLNWxN (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
+ 17:53:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750728AbWLNWxN
+ (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 17:53:13 -0500
+Received: from ug-out-1314.google.com ([66.249.92.171]:19547 "EHLO
+ ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1750992AbWLNWxM (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec
+ 2006 17:53:12 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so645625uga for
+ <git@vger.kernel.org>; Thu, 14 Dec 2006 14:53:10 -0800 (PST)
+Received: by 10.66.248.5 with SMTP id v5mr73802ugh.1166136790395; Thu, 14 Dec
+ 2006 14:53:10 -0800 (PST)
+Received: from grissom.internal.parkins.org.uk ( [84.201.153.164]) by
+ mx.google.com with ESMTP id e1sm3289661ugf.2006.12.14.14.53.09; Thu, 14 Dec
+ 2006 14:53:09 -0800 (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
+On Thursday 2006, December 14 21:58, Junio C Hamano wrote:
+
+> Correct but a bad example that does not demonstrate the real
+> power of reflog.  Andy's AGGGHHHHHH can be recovered with a
+> simple:
+>
+> 	$ git reset ORIG_HEAD
+
+HAHA!  I knew reading this mailing list would pay off.
+
+It amazes me that there is always an answer.  It's almost becoming a 
+pantomime - I say "well git can't do this", and you say "oh yes it can".
 
 
-On Tue, 21 Nov 2006, Linus Torvalds wrote:
-> 
-> Submodules are _directories_.
+Andy
 
-Side note - you can do submodules other ways, but if you do, you'll almost 
-certainly go crazy. 
-
-You could, for example, make submodules be some kind of "union 
-filesystem", where you allow overlapping trees. It's conceptually 
-possible. It's also horribly horribly wrong, if only because I guarantee 
-that you'll have so many problems with it that you will only end up with a 
-mess that is even worse than "branches" in CVS.
-
+-- 
+Dr Andrew Parkins, M Eng (Hons), AMIEE
