@@ -1,111 +1,69 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: updating only changed files source directory?
-Date: Tue, 24 Oct 2006 15:12:41 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0610241435420.9789@iabervon.org>
-References: <ehjqgf$ggb$1@sea.gmane.org>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [PATCH] "master" should be treated no differently from any other branch
+Date: Thu, 14 Dec 2006 16:34:51 +0000
+Message-ID: <200612141634.54616.andyparkins@gmail.com>
+References: <200612141519.44294.andyparkins@gmail.com> <Pine.LNX.4.63.0612141627090.3635@wbgn013.biozentrum.uni-wuerzburg.de> <200612141625.08485.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Tue, 24 Oct 2006 19:13:03 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 14 Dec 2006 16:35:13 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <ehjqgf$ggb$1@sea.gmane.org>
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=WlADewIoDKkdvB111DdmXdbGtkakGJOMxQaoqycKN3Z90YVawcB3GzIkyPl0WacHQyQ4xUgJG6Fc75DHYerkLfxyaWRKZPppILzDoLgpxA1cb2tWiwBm9uMDjyYfETdp4lmh5vzbpj2Xis3epvGW9kYFKjK1otRBZpMe5FyBv14=
+User-Agent: KMail/1.9.5
+In-Reply-To: <200612141625.08485.andyparkins@gmail.com>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30002>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GcRhe-0008Uh-Ps for gcvg-git@gmane.org; Tue, 24 Oct
- 2006 21:12:47 +0200
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34366>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GutY3-0008GJ-0J for gcvg-git@gmane.org; Thu, 14 Dec
+ 2006 17:35:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1161196AbWJXTMn (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 24 Oct 2006
- 15:12:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161190AbWJXTMn
- (ORCPT <rfc822;git-outgoing>); Tue, 24 Oct 2006 15:12:43 -0400
-Received: from iabervon.org ([66.92.72.58]:30736 "EHLO iabervon.org") by
- vger.kernel.org with ESMTP id S1161196AbWJXTMm (ORCPT
- <rfc822;git@vger.kernel.org>); Tue, 24 Oct 2006 15:12:42 -0400
-Received: (qmail 21323 invoked by uid 1000); 24 Oct 2006 15:12:41 -0400
-Received: from localhost (sendmail-bs@127.0.0.1) by localhost with SMTP; 24
- Oct 2006 15:12:41 -0400
-To: Han-Wen Nienhuys <hanwen@xs4all.nl>
+ S932862AbWLNQfE (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
+ 11:35:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932860AbWLNQfD
+ (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 11:35:03 -0500
+Received: from ug-out-1314.google.com ([66.249.92.174]:44026 "EHLO
+ ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S932862AbWLNQfB (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec
+ 2006 11:35:01 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so547699uga for
+ <git@vger.kernel.org>; Thu, 14 Dec 2006 08:34:59 -0800 (PST)
+Received: by 10.67.100.17 with SMTP id c17mr1675936ugm.1166114099762; Thu, 14
+ Dec 2006 08:34:59 -0800 (PST)
+Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
+ ESMTP id p32sm2252263ugc.2006.12.14.08.34.58; Thu, 14 Dec 2006 08:34:58 -0800
+ (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On Tue, 24 Oct 2006, Han-Wen Nienhuys wrote:
 
-> 
-> Hello there,
-> 
-> I'm just starting out with GIT.  Initially, I want to use experiment with
-> integrating it into our binary builder structure for LilyPond.
-> 
-> The binary builder roughly does this:
-> 
->  1. get source code updates from a server to a single, local
->     repository. This is currently a git repository that is that
->     tracks our CVS server.
-> 
->  2. copy latest commit from a branch to separate source directory.
->     This copy should only update files that changed.
-> 
->  3. Incrementally compile from that source directory
+> > have a convention here than configurability. You would not want "git" to
+> > be called "guitar" for some users, just because they happen to like that
+> > name more, either, right?
+>
+> You're correct; but we're talking about branch names not program names.
 
-The terminology in the git world is, I think, a little different from what 
-you expect. We call the thing that contains all of the tracked information 
-(what you're calling the repository) the "object database"; what we call 
-the "repository" is a bit different: it primarily keeps track of the heads 
-of branches, in addition to either containing an object database or 
-referencing an external one. So you need a repository for each source 
-directory (because it keeps track of what commit is currently in the 
-source directory), but it doesn't need to have its own complete object 
-database, which is what you're trying to share between all of them.
+And the analogy is flawed.  I don't want git to be called guitar, however I'd 
+be very upset if I got
+  
+ $ mv git guitar
+ Error: git is conventionally called guitar
 
-You have a single repository with no source directory that contains the 
-database and the heads according to the upstream source, and then each 
-source directory has a repository that contains the head as far as you've 
-built it in that directory. You fetch into the single bare repository 
-from upstream, and then pull into each source directory from the bare 
-repository; this will do the minimal update to the contents of the source 
-directory automatically.
 
-I think that you want to request a few git features:
+Andy
 
- - support having a bare repository not on a branch, so that it can fetch 
-   all heads from its upstream. You're not doing anything branch-specific 
-   in the bare repository anyway, but git currently wants a valid HEAD to
-   accept a path as containing a git repository
-
- - support getting an origin remote configuration with a bare repository
-
- - support cloning a branch of a repository, such that the clone's 
-   "origin" is the upstream's chosen branch, not its "master".
-
- - support cloning without generating a "master" branch in the clone, and 
-   instead starting on "origin"
-
-Then you do:
-
-git clone --bare --no-head --with-origin <upstream> REPOSITORY.git
-
-for each branch:
-
-  git clone --shared --branch=<branch> --no-master REPOSITORY.git <branch>
-
-When you want to update:
-
-GIT_DIR=REPOSITORY.git git fetch
-
-for each branch:
-
- (cd <branch>; git pull; make)
-
-Note that all of the features you need are in "clone" for setting things 
-up nicely automatically; if you arrange everything by hand just right, you 
-can already to the updating procedure I give.
-
-	-Daniel
+-- 
+Dr Andy Parkins, M Eng (hons), MIEE
