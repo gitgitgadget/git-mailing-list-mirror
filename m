@@ -4,63 +4,62 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Show remote branches on gitweb
-Date: Fri, 24 Nov 2006 17:04:07 -0800
-Message-ID: <7vu00o8hh4.fsf@assigned-by-dhcp.cox.net>
-References: <loom.20061124T210559-701@post.gmane.org>
-	<ek7jsp$j83$1@sea.gmane.org> <ek7m6m$qqd$1@sea.gmane.org>
-	<20061124235911.GO7201@pasky.or.cz>
-	<7vy7q08iko.fsf@assigned-by-dhcp.cox.net>
-	<20061125005029.GN4842@pasky.or.cz>
+From: Han-Wen Nienhuys <hanwen@xs4all.nl>
+Subject: Re: git-fetching from a big repository is slow
+Date: Thu, 14 Dec 2006 16:45:59 +0100
+Message-ID: <458171B7.1020702@xs4all.nl>
+References: <200612141340.43925.andyparkins@gmail.com> <4581573E.40803@op5.se> <200612141518.05770.andyparkins@gmail.com>
+Reply-To: hanwen@xs4all.nl
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sat, 25 Nov 2006 01:04:36 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 14 Dec 2006 15:46:15 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061125005029.GN4842@pasky.or.cz> (Petr Baudis's message of
-	"Sat, 25 Nov 2006 01:50:29 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 16
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: muurbloem.xs4all.nl
+User-Agent: Thunderbird 1.5.0.8 (X11/20061107)
+In-Reply-To: <200612141518.05770.andyparkins@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32252>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gnlxo-0005jr-Ke for gcvg-git@gmane.org; Sat, 25 Nov
- 2006 02:04:17 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34353>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gusmj-0008G9-Hf for gcvg-git@gmane.org; Thu, 14 Dec
+ 2006 16:46:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S935110AbWKYBEJ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 24 Nov 2006
- 20:04:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935111AbWKYBEJ
- (ORCPT <rfc822;git-outgoing>); Fri, 24 Nov 2006 20:04:09 -0500
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:43905 "EHLO
- fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP id S935110AbWKYBEI
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 24 Nov 2006 20:04:08 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao02.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061125010408.OSPM97.fed1rmmtao02.cox.net@fed1rmimpo02.cox.net>; Fri, 24
- Nov 2006 20:04:08 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id qp4F1V00l1kojtg0000000; Fri, 24 Nov 2006
- 20:04:16 -0500
-To: Petr Baudis <pasky@suse.cz>
+ S932815AbWLNPqH (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
+ 10:46:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932817AbWLNPqG
+ (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 10:46:06 -0500
+Received: from main.gmane.org ([80.91.229.2]:46583 "EHLO ciao.gmane.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S932815AbWLNPqF
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006 10:46:05 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1GusmY-0003rC-Nr for git@vger.kernel.org; Thu, 14 Dec 2006 16:46:02 +0100
+Received: from muurbloem.xs4all.nl ([213.84.26.127]) by main.gmane.org with
+ esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>;
+ Thu, 14 Dec 2006 16:46:02 +0100
+Received: from hanwen by muurbloem.xs4all.nl with local (Gmexim 0.1 (Debian))
+ id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Thu, 14 Dec 2006 16:46:02
+ +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Petr Baudis <pasky@suse.cz> writes:
+Andy Parkins escreveu:
+> On Thursday 2006 December 14 13:53, Andreas Ericsson wrote:
+> 
+>> This seems to happen if your repository consists of many large binary
+>> files, especially many large binary files of several versions that do
+>> not deltify well against each other. Perhaps it's worth adding gzip
+> 
+> It's actually just every released patch to the linux kernel ever issued.  
+> Almost entirely ASCII and every revision (save the first) created by patching 
+> the previous.
 
->> > Does that mean we _can_ parse $GIT_DIR/remotes? ;-)
->> 
->> Surely you should be able to.  You are working in Perl and the
->> remotes and config are trivially parsable text files.
->
-> But so is the configuration file, unless I'm missing something...?
+I just noticed that git-fetch now runs git-show-ref --verify on every
+tag it encounters. This seems to slow down fetch over here.
 
-I do not think you are missing anything.  I said that remotes
-and config are simple trivially parsable text files and Perl
-should be a pleasant tool to read them with.
-
-So yes, we _can_ parse them, and we _can_ parse configuration
-file.
-
-Unless I'm missing something...?
-
+-- 
+ Han-Wen Nienhuys - hanwen@xs4all.nl - http://www.xs4all.nl/~hanwen
