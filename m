@@ -1,127 +1,73 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: cloning the kernel - why long time in "Resolving 313037 deltas"
-Date: Mon, 18 Dec 2006 22:47:24 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0612182234260.3479@woody.osdl.org>
-References: <86y7p57y05.fsf@blue.stonehenge.com> <Pine.LNX.4.64.0612181251020.3479@woody.osdl.org>
- <86r6uw9azn.fsf@blue.stonehenge.com> <Pine.LNX.4.64.0612181625140.18171@xanadu.home>
- <86hcvs984c.fsf@blue.stonehenge.com> <Pine.LNX.4.64.0612181414200.3479@woody.osdl.org>
- <8664c896xv.fsf@blue.stonehenge.com> <Pine.LNX.4.64.0612181511260.3479@woody.osdl.org>
- <Pine.LNX.4.64.0612181906450.18171@xanadu.home> <20061219051108.GA29405@thunk.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Tue, 19 Dec 2006 06:47:46 +0000 (UTC)
-Cc: Nicolas Pitre <nico@cam.org>,
-	"Randal L. Schwartz" <merlyn@stonehenge.com>, git@vger.kernel.org
+From: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
+Subject: Re: git-fetch fails with error code 128
+Date: Thu, 14 Dec 2006 20:25:15 -0300
+Message-ID: <200612142325.kBENPF1u001043@laptop13.inf.utfsm.cl>
+References: <andyparkins@gmail.com>
+NNTP-Posting-Date: Thu, 14 Dec 2006 23:25:32 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061219051108.GA29405@thunk.org>
-X-MIMEDefang-Filter: osdl$Revision: 1.163 $
-X-Scanned-By: MIMEDefang 2.36
+In-Reply-To: Message from Andy Parkins <andyparkins@gmail.com> 
+   of "Thu, 14 Dec 2006 23:08:43 -0000." <200612142308.45376.andyparkins@gmail.com> 
+X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.5  (beta27)
+X-Greylist: Delayed for 01:12:41 by milter-greylist-2.0.2 (inti.inf.utfsm.cl [200.1.19.1]); Thu, 14 Dec 2006 20:25:15 -0300 (CLST)
+X-Virus-Scanned: ClamAV version 0.88.5, clamav-milter version 0.88.5 on inti.inf.utfsm.cl
+X-Virus-Status: Clean
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34789>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GwYlJ-0004wO-Aj for gcvg-git@gmane.org; Tue, 19 Dec
- 2006 07:47:41 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34435>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GuzxA-000144-S1 for gcvg-git@gmane.org; Fri, 15 Dec
+ 2006 00:25:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752874AbWLSGri (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
- 01:47:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752886AbWLSGri
- (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 01:47:38 -0500
-Received: from smtp.osdl.org ([65.172.181.25]:58797 "EHLO smtp.osdl.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1752877AbWLSGrh
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec 2006 01:47:37 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
- smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kBJ6lPID018622
- (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Mon, 18
- Dec 2006 22:47:30 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
- shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kBJ6lOTr025363; Mon, 18 Dec
- 2006 22:47:25 -0800
-To: Theodore Tso <tytso@mit.edu>
+ S1751956AbWLNXZ0 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
+ 18:25:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751965AbWLNXZZ
+ (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 18:25:25 -0500
+Received: from inti.inf.utfsm.cl ([200.1.21.155]:60172 "EHLO
+ inti.inf.utfsm.cl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
+ S1751956AbWLNXZZ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006
+ 18:25:25 -0500
+Received: from laptop13.inf.utfsm.cl (pc-173-245-83-200.cm.vtr.net
+ [200.83.245.173]) by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id
+ kBENPF5Q027844 (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256
+ verify=NO); Thu, 14 Dec 2006 20:25:15 -0300
+Received: from laptop13.inf.utfsm.cl (laptop13.inf.utfsm.cl [127.0.0.1]) by
+ laptop13.inf.utfsm.cl (8.13.8/8.13.8) with ESMTP id kBENPF1u001043; Thu, 14
+ Dec 2006 20:25:15 -0300
+To: Andy Parkins <andyparkins@gmail.com>
 Sender: git-owner@vger.kernel.org
 
+Andy Parkins <andyparkins@gmail.com> wrote:
+> This is with my big "every linux patch" repository that I talked about in 
+> another thread.  To bring you up to speed:
 
+[...]
 
-On Tue, 19 Dec 2006, Theodore Tso wrote:
+> This gave me the following output:
 > 
-> Actually, depending on the size of the chunk, even on Linux
-> malloc/read/free can be faster than the mmap/munmap
+> $ git fetch
+> remote: Generating pack...
+> remote: Done counting 189146 objects.
+> remote: Result has 186566 objects.
+> remote: Deltifying 186566 objects.
+> remote:  100% (186566/186566) done
+> Unpacking 186566 objects
+> fatal: failed to apply delta
+> fatal: unpack-objects died with error code 128
+> Fetch failure: /home/andyp/projects/temp/.git
 
-Yes.
-
-In general, mmap/munmap is faster only if:
- - you access the same data multiple times within one page (ie a single 
-   page-fault will actually result in more than one access)
-OR
- - you can use it to avoid management overhead (ie you know your data is 
-   going to accessed very sparsely, but you don't know the patterns, and 
-   trying to keep track of it is painful as hell)
-
-That said, under Linux, mmap is almost never really _slower_ either, which 
-is why this issue never made any real difference. The overhead of doing 
-page table manipulation is pretty much balanced out by the overhead of 
-doing a memcpy.
-
-But that "mmap is fast" is _not_ true on many other operating systems, 
-which is why it might be worthwhile to try something like the appended on 
-OS X, which uses pread() instead of mmap().
-
-This is _not_ very much tested. It seems to work. Caveat emptor. It would 
-be interesting to hear if many small "pread()" calls are faster than many 
-mmap/munmap calls on OS X. I bet they are. Under Linux, there should be 
-almost no difference.
-
-		Linus
----
-diff --git a/index-pack.c b/index-pack.c
-index 6d6c92b..094f8b2 100644
---- a/index-pack.c
-+++ b/index-pack.c
-@@ -8,6 +8,7 @@
- #include "tree.h"
- #include <sys/time.h>
- #include <signal.h>
-+#include <unistd.h>
- 
- static const char index_pack_usage[] =
- "git-index-pack [-v] [-o <index-file>] [{ ---keep | --keep=<msg> }] { <pack-file> | --stdin [--fix-thin] [<pack-file>] }";
-@@ -279,27 +280,25 @@ static void *get_data_from_pack(struct object_entry *obj)
- {
- 	unsigned long from = obj[0].offset + obj[0].hdr_size;
- 	unsigned long len = obj[1].offset - from;
--	unsigned pg_offset = from % getpagesize();
--	unsigned char *map, *data;
-+	unsigned char *src, *data;
- 	z_stream stream;
- 	int st;
- 
--	map = mmap(NULL, len + pg_offset, PROT_READ, MAP_PRIVATE,
--		   mmap_fd, from - pg_offset);
--	if (map == MAP_FAILED)
--		die("cannot mmap pack file: %s", strerror(errno));
-+	src = xmalloc(len);
-+	if (pread(mmap_fd, src, len, from) != len)
-+		die("cannot pread pack file: %s", strerror(errno));
- 	data = xmalloc(obj->size);
- 	memset(&stream, 0, sizeof(stream));
- 	stream.next_out = data;
- 	stream.avail_out = obj->size;
--	stream.next_in = map + pg_offset;
-+	stream.next_in = src;
- 	stream.avail_in = len;
- 	inflateInit(&stream);
- 	while ((st = inflate(&stream, Z_FINISH)) == Z_OK);
- 	inflateEnd(&stream);
- 	if (st != Z_STREAM_END || stream.total_out != obj->size)
- 		die("serious inflate inconsistency");
--	munmap(map, len + pg_offset);
-+	free(src);
- 	return data;
- }
+Happened to me yesterday or so pulling the vanilla kernel (big push shortly
+before 2.6.20-rc1). Trying again somewhat later went through flawlessly.
+Might have been git running out of memory.
+-- 
+Dr. Horst H. von Brand                   User #22616 counter.li.org
+Departamento de Informatica                    Fono: +56 32 2654431
+Universidad Tecnica Federico Santa Maria             +56 32 2654239
+Casilla 110-V, Valparaiso, Chile               Fax:  +56 32 2797513
