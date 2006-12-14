@@ -1,96 +1,66 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 2/2] git-branch: rename config vars branch.<branch>.*, too
-Date: Sat, 16 Dec 2006 15:15:02 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612161514280.3635@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [PATCH] git-show: grok blobs, trees and tags, too
+Date: Thu, 14 Dec 2006 05:37:41 -0500
+Message-ID: <20061214103741.GD1747@spearce.org>
+References: <Pine.LNX.4.63.0612141129320.3635@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Sat, 16 Dec 2006 14:15:28 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Thu, 14 Dec 2006 10:38:07 +0000 (UTC)
+Cc: git@vger.kernel.org, junkio@cox.net
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-X-Y-GMX-Trusted: 0
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0612141129320.3635@wbgn013.biozentrum.uni-wuerzburg.de>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34619>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34304>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GvaJs-0007zE-Nq for gcvg-git@gmane.org; Sat, 16 Dec
- 2006 15:15:21 +0100
+ esmtp (Exim 4.50) id 1GunyN-0007K9-8q for gcvg-git@gmane.org; Thu, 14 Dec
+ 2006 11:37:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932451AbWLPOPG (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 16 Dec 2006
- 09:15:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932433AbWLPOPF
- (ORCPT <rfc822;git-outgoing>); Sat, 16 Dec 2006 09:15:05 -0500
-Received: from mail.gmx.net ([213.165.64.20]:36659 "HELO mail.gmx.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S932467AbWLPOPE
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 16 Dec 2006 09:15:04 -0500
-Received: (qmail invoked by alias); 16 Dec 2006 14:15:02 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp030) with SMTP; 16 Dec 2006 15:15:02 +0100
-To: git@vger.kernel.org, junkio@cox.net
+ S932311AbWLNKhv (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
+ 05:37:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751922AbWLNKhv
+ (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 05:37:51 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:34239 "EHLO
+ corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1751917AbWLNKhu (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006
+ 05:37:50 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1GunyC-0004DD-JN; Thu, 14 Dec 2006 05:37:44 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ A92D820FB65; Thu, 14 Dec 2006 05:37:42 -0500 (EST)
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+>..
 
-When renaming a branch, the corresponding config section should
-be renamed, too.
+Nice!  I like this.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- refs.c            |   10 ++++++++++
- t/t3200-branch.sh |    6 ++++++
- 2 files changed, 16 insertions(+), 0 deletions(-)
+> +git show master:Makefile master:t/Makefile
+> +	Concatenates the contents of said Makefiles in the head
+> +	of the branch `master`.
+> +
 
-diff --git a/refs.c b/refs.c
-index a02957c..d911b9e 100644
---- a/refs.c
-+++ b/refs.c
-@@ -867,6 +867,16 @@ int rename_ref(const char *oldref, const char *newref, const char *logmsg)
- 		goto rollback;
- 	}
- 
-+	if (!strncmp(oldref, "refs/heads/", 11) &&
-+			!strncmp(newref, "refs/heads/", 11)) {
-+		char oldsection[1024], newsection[1024];
-+
-+		snprintf(oldsection, 1024, "branch.%s", oldref + 11);
-+		snprintf(newsection, 1024, "branch.%s", newref + 11);
-+		if (git_config_rename_section(oldsection, newsection) < 0)
-+			return 1;
-+	}
-+
- 	return 0;
- 
-  rollback:
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index 5782c30..a6ea0f6 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -94,6 +94,8 @@ test_expect_failure \
-          git-branch r &&
-          git-branch -m q r/q'
- 
-+git-repo-config branch.s/s.dummy Hello
-+
- test_expect_success \
-     'git branch -m s/s s should work when s/t is deleted' \
-        'git-branch -l s/s &&
-@@ -104,6 +106,10 @@ test_expect_success \
-         git-branch -m s/s s &&
-         test -f .git/logs/refs/heads/s'
- 
-+test_expect_success 'config information was renamed, too' \
-+	"test $(git-repo-config branch.s.dummy) = Hello &&
-+	 ! git-repo-config branch.s/s/dummy"
-+
- test_expect_failure \
-     'git-branch -m u v should fail when the reflog for u is a symlink' \
-     'git-branch -l u &&
+Uh, isn't that what cat does?  Shouldn't this be "git cat"?  :-)
+
+Nevermind.  :)
+
 -- 
-1.4.4.1.g0604-dirty
