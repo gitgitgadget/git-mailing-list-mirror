@@ -2,60 +2,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Resolving conflicts
-Date: Thu, 30 Nov 2006 23:57:17 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0611302353580.3695@woody.osdl.org>
-References: <456FD461.4080002@saville.com> <Pine.LNX.4.64.0611302330000.3695@woody.osdl.org>
- <456FDF24.1070001@saville.com>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: Can git be tweaked to work cross-platform, on FAT32?
+Date: Thu, 14 Dec 2006 18:55:57 +1300
+Message-ID: <46a038f90612132155rc987a9cs6a4fa33dd4c882c6@mail.gmail.com>
+References: <0MKwpI-1GuWVF2znk-0006fC@mrelayeu.kundenserver.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Fri, 1 Dec 2006 07:57:28 +0000 (UTC)
-Cc: git <git@vger.kernel.org>
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 14 Dec 2006 05:56:15 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <456FDF24.1070001@saville.com>
-X-MIMEDefang-Filter: osdl$Revision: 1.161 $
-X-Scanned-By: MIMEDefang 2.36
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=NYd7t0oUrRq0rx72DifKlUkVejyiNT1tttKdJNwAMzVoeSolimL2QjzLEkk5HbrK+1BRIWWhqcAxpVnNGn/p/+MwPb81J0/pDLTZ+iQePzQcdh2mWRFJkhlkp8VOKdz9yI4vOTQDAhJWuPfhqD6JXCwjfJaJN9LRJ7gqHZI0L4M=
+In-Reply-To: <0MKwpI-1GuWVF2znk-0006fC@mrelayeu.kundenserver.de>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32864>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gq3Gv-0001P3-3D for gcvg-git@gmane.org; Fri, 01 Dec
- 2006 08:57:25 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34279>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GujZg-0002rC-Eh for gcvg-git@gmane.org; Thu, 14 Dec
+ 2006 06:56:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S936099AbWLAH5W (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
- 02:57:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936100AbWLAH5W
- (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 02:57:22 -0500
-Received: from smtp.osdl.org ([65.172.181.25]:31162 "EHLO smtp.osdl.org") by
- vger.kernel.org with ESMTP id S936099AbWLAH5V (ORCPT
- <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 02:57:21 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
- smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kB17vIjQ011002
- (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Thu, 30
- Nov 2006 23:57:19 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
- shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kB17vIqI005541; Thu, 30 Nov
- 2006 23:57:18 -0800
-To: Wink Saville <wink@saville.com>
+ S1751805AbWLNFz7 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
+ 00:55:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751808AbWLNFz7
+ (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 00:55:59 -0500
+Received: from nf-out-0910.google.com ([64.233.182.190]:56132 "EHLO
+ nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1751805AbWLNFz6 (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec
+ 2006 00:55:58 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so732345nfa for
+ <git@vger.kernel.org>; Wed, 13 Dec 2006 21:55:57 -0800 (PST)
+Received: by 10.49.55.18 with SMTP id h18mr196624nfk.1166075757254; Wed, 13
+ Dec 2006 21:55:57 -0800 (PST)
+Received: by 10.49.60.1 with HTTP; Wed, 13 Dec 2006 21:55:57 -0800 (PST)
+To: "Florian v. Savigny" <lorian@fsavigny.de>
 Sender: git-owner@vger.kernel.org
 
+Florian,
 
+a bit of a long shot, but you might be able to access it via Samba,
+and just use git on linux. I have to confess to having setup a few git
+checkouts for Win32 users this way... in some cases with cygwin+x11
+and a shortcut that will do something like
 
-On Thu, 30 Nov 2006, Wink Saville wrote:
-> 
-> Earlier had a problem with git wanting merge but didn't have it and
-> couldn't figure out which package it was in Ubuntu:( So I symlinked merge
-> to kdiff3 which worked at the time:
+    ssh linuxhost gitk --all
 
-Ahh. I'm pretty sure that is it.
+or
 
-No, kdiff3 probably doesn't have the same semantics, so better get the 
-"real" merge. It's almost certainly in the rcs package, so "emerge rcs" 
-should do it.
+    ssh linuxhost qgit
 
-Or whatever system Ubuntu uses. 
+but then again, I'm rumoured to be insane...
+
+cheers,
+
 
