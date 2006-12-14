@@ -4,69 +4,86 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Alan Chandler <alan@chandlerfamily.org.uk>
-Subject: Re: Documentation/git-commit.txt
-Date: Fri, 8 Dec 2006 22:56:45 +0000
-Message-ID: <200612082256.45456.alan@chandlerfamily.org.uk>
-References: <7vy7pik51b.fsf@assigned-by-dhcp.cox.net> <4579529F.9030401@Intel.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: What's in git.git (stable)
+Date: Wed, 13 Dec 2006 22:29:14 -0800
+Message-ID: <7vy7pb9eit.fsf@assigned-by-dhcp.cox.net>
+References: <7v4przfpir.fsf@assigned-by-dhcp.cox.net>
+	<200612132237.10051.andyparkins@gmail.com>
+	<7vk60vbcfz.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0612140113340.3635@wbgn013.biozentrum.uni-wuerzburg.de>
+	<Pine.LNX.4.64.0612132231050.18171@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Fri, 8 Dec 2006 22:56:56 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Thu, 14 Dec 2006 06:29:27 +0000 (UTC)
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: KMail/1.9.5
-In-Reply-To: <4579529F.9030401@Intel.com>
-Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0612132231050.18171@xanadu.home> (Nicolas Pitre's
+	message of "Wed, 13 Dec 2006 22:32:52 -0500 (EST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33764>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34282>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GsoeB-0001zk-Tm for gcvg-git@gmane.org; Fri, 08 Dec
- 2006 23:56:52 +0100
+ esmtp (Exim 4.50) id 1Guk5p-0005xv-23 for gcvg-git@gmane.org; Thu, 14 Dec
+ 2006 07:29:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1947470AbWLHW4s (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
- 17:56:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1947475AbWLHW4s
- (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 17:56:48 -0500
-Received: from 82-44-22-127.cable.ubr06.croy.blueyonder.co.uk
- ([82.44.22.127]:57867 "EHLO home.chandlerfamily.org.uk"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1947474AbWLHW4r
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Dec 2006 17:56:47 -0500
-Received: from kanger.home ([192.168.0.21]) by home.chandlerfamily.org.uk
- with esmtp (Exim 4.63) (envelope-from <alan@chandlerfamily.org.uk>) id
- 1Gsoe6-0001iS-Oq for git@vger.kernel.org; Fri, 08 Dec 2006 22:56:46 +0000
-To: git@vger.kernel.org
+ S1752019AbWLNG3R (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
+ 01:29:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752016AbWLNG3R
+ (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 01:29:17 -0500
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:44556 "EHLO
+ fed1rmmtao11.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1752019AbWLNG3Q (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006
+ 01:29:16 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao11.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061214062914.VWHN25875.fed1rmmtao11.cox.net@fed1rmimpo01.cox.net>; Thu, 14
+ Dec 2006 01:29:14 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id yWUb1V00N1kojtg0000000; Thu, 14 Dec 2006
+ 01:28:36 -0500
+To: Nicolas Pitre <nico@cam.org>
 Sender: git-owner@vger.kernel.org
 
-On Friday 08 December 2006 11:55, Salikh Zakirov wrote:
-> Junio Hamano wrote:
-> > +Instead of staging files after each individual change, you can
-> > +tell `git commit` to notice the changes to the tracked files in
-> > +your working tree and do corresponding `git add` and `git rm`
-> > +for you.
+Nicolas Pitre <nico@cam.org> writes:
+
+> On Thu, 14 Dec 2006, Johannes Schindelin wrote:
 >
-> This part is confusing as hell to anyone having any experience
-> with either CVS, SVN, Hg or Monotone, as doing "corresponding `git
-> add` and `git rm`" commands automatically will be interpreted as
-> adding untracked files automatically, which is not the case here.
+>> I sent a patch which makes "git show" have that functionality, and 
+>> frankly, I disagree "less" would be a good name for it. It uses the 
+>> _pager_, which is not always "less", and besides, what it does is to show 
+>> that particular blob. So obviously, I think my patch is the best approach.
+>
+> I think your approach is pretty sensible too.
 
-I thought the wording here was a little weird too.  I think this stems 
-from the mistake of saying "tracked files" instead of "tracked content" 
-which then leads to you falling back to the git add and git rm 
-commands..
+I think so too for a few reasons.
 
-How about the following wording here
+ * cat-file is a very low level plumbing.  Giving it -p was a
+   mistake made by somebody lazy long time ago back when we were
+   not all that hot about "user friendliness in Porcelain-ish"
+   (the option -p was not originally even meant to be the user
+   level; it was merely a helper feature for verify-tag).
 
-Instead of staging the content of each file immediately after changing 
-it, you can wait until you have completed all the changes you want to 
-make and then use the `-a` option to tell `git commit` to look for all 
-changes to the content it is tracking and commit it automatically. That 
-is, this example ...
+ * If we were to call something 'cat' and make a user-level
+   command, adding the feature to 'show' is a lot more sensible
+   than cat-file; the former takes more than one args already.
+   People expect 'cat' to concatenate the arguments.  cat-file
+   doesn't.
+
+ * Throwing ls-tree output is the most sensible thing to do at
+   'cat-file -p <tree-ish>' level, but not at the UI level (Andy
+   compared ls-tree with 'svn list' today).  With 'git show', it
+   would be more natural to show ls-tree --name-only by default
+   for tree-ish objects, and control the verbosity level with
+   command line option.
+
+One minor issue we may need to decide is what to do when show is
+given a tag object.  Personally I think the current behaviour of
+dereferencing it to commit is fine (people who want to see the
+tag can always do 'git-verify-tag -v').
 
 
-  
 
--- 
-Alan Chandler
