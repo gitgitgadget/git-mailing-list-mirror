@@ -1,68 +1,93 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git and bzr
-Date: Thu, 30 Nov 2006 13:23:27 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0611301322180.30004@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <45357CC3.4040507@utoronto.ca> <456CB197.2030201@onlinehome.de>
-  <Pine.LNX.4.64.0611281413310.4244@woody.osdl.org> 
- <Pine.LNX.4.63.0611291149440.30004@wbgn013.biozentrum.uni-wuerzburg.de> 
- <Pine.LNX.4.64.0611290922410.3513@woody.osdl.org>  <456DD76C.4010902@gmx.net>
-  <Pine.LNX.4.64.0611291235590.3513@woody.osdl.org>  <87bqmpvlxf.wl%cworth@cworth.org>
- <456E8147.9070304@gmx.net>  <Pine.LNX.4.63.0611301111310.30004@wbgn013.biozentrum.uni-wuerzburg.de>
- <fcaeb9bf0611300325r3a3fa8av141359c69d2377b5@mail.gmail.com>
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: svn versus git
+Date: Thu, 14 Dec 2006 09:19:29 +0000
+Message-ID: <200612140919.30495.andyparkins@gmail.com>
+References: <200612132200.41420.andyparkins@gmail.com> <7vfybjbbsx.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Thu, 30 Nov 2006 12:30:49 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 14 Dec 2006 09:19:43 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <fcaeb9bf0611300325r3a3fa8av141359c69d2377b5@mail.gmail.com>
-X-Y-GMX-Trusted: 0
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=Xc4ZdBtH/imTxuPLDFc26cYmic/lvmWkBdIVl5EVpmdnm1QptPnqX0bJwPGsXqHocgrAVd73I5IxoKgU/WGxmzRSa34LGp9tyuS5vQwMzNUNqBDDtng+w/RHgzCVE1gOALIinS3Q/G/SxTG2VSO9h3Hywlic65aEy7XCDVcvL2U=
+User-Agent: KMail/1.9.5
+In-Reply-To: <7vfybjbbsx.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32730>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gpl2a-0004HU-R9 for gcvg-git@gmane.org; Thu, 30 Nov
- 2006 13:29:25 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34290>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gumke-0005ej-Ie for gcvg-git@gmane.org; Thu, 14 Dec
+ 2006 10:19:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S936403AbWK3M11 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
- 07:27:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936394AbWK3MXe
- (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 07:23:34 -0500
-Received: from mail.gmx.net ([213.165.64.20]:9644 "HELO mail.gmx.net") by
- vger.kernel.org with SMTP id S936392AbWK3MX3 (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 07:23:29 -0500
-Received: (qmail invoked by alias); 30 Nov 2006 12:23:27 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp041) with SMTP; 30 Nov 2006 13:23:27 +0100
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+ S932119AbWLNJTh (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
+ 04:19:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932124AbWLNJTh
+ (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 04:19:37 -0500
+Received: from ug-out-1314.google.com ([66.249.92.171]:33245 "EHLO
+ ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S932119AbWLNJTg (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec
+ 2006 04:19:36 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so435874uga for
+ <git@vger.kernel.org>; Thu, 14 Dec 2006 01:19:34 -0800 (PST)
+Received: by 10.66.244.10 with SMTP id r10mr1077908ugh.1166087974714; Thu, 14
+ Dec 2006 01:19:34 -0800 (PST)
+Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
+ ESMTP id j34sm1780749ugc.2006.12.14.01.19.34; Thu, 14 Dec 2006 01:19:34 -0800
+ (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Hi,
+On Wednesday 2006 December 13 23:45, Junio C Hamano wrote:
 
-On Thu, 30 Nov 2006, Nguyen Thai Ngoc Duy wrote:
+> ls-tree is not Porcelain and has right to expose the internals
 
-> On 11/30/06, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > But here's an idea: tell the user that she has to tell git-commit which
-> > files she wants committed. Yes! That's it. Just tell it the friggin'
-> > files. And if you are a lazy bum, and want to commit _all_ modified
-> > files, git has a nice shortcut for ya: "-a".
-> 
-> It reminds me Microsoft Office Assistant :-) Let's make "git assistant
-> mode" that tries hard to guess user's desires and give them guidance.
-> Once they get used to git, they can disable that mode and back to
-> "plain git".
+Of course; but there is no porcelain to do that operation.
 
-See git-gui from Shawn. It should really help new users with a graphical 
-user interface.
+> by default.  "git ls-tree --name-only" could be aliased to give
+> "git ls" if you wanted to, but I wonder how often you would want
+> to run:
+>
+> 	svn list -r538
+>
+> and for what purpose?
 
-Ciao,
-Dscho
+I've never done it.  However, the command is there in subversion, so I was 
+comparing git's implementation of that command.  I wouldn't completely write 
+it off though.  It doesn't seem unreasonable to want to see what files were 
+in an old revision.
+
+> I often find myself doing
+> 	git diff -r --name-status v1.3.0 HEAD
+
+I can live with that as an acceptable alternative to "svn list"; however, as 
+usual, how does my imaginary ex-svn user find out about that?  man git-diff 
+isn't the first place /I'd/ go; and even if you do, you won't find the "-r" 
+or "--name-status" options; you have to go to git-diff-files, git-diff-index 
+or git-diff-tree - and you're meant to guess which is the right one.
+
+Bear in mind that my current theme isn't "can git do...?" it's "how does a 
+user know that git can do...?"
+
+> What do people use "svn list -r538" for and how often?  In other
+> words, when does it become necessary to get the full list of
+> paths in an arbitrary revision?
+
+Me: I don't do it often.  It's not something I'd lose sleep over if git 
+doesn't have an easy way of doing it.  However, it was in the output 
+of "svn --help"; so I included it.
+
+Andy
+-- 
+Dr Andy Parkins, M Eng (hons), MIEE
