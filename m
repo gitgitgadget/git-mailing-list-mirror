@@ -1,90 +1,64 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Tracking a repository for content instead of history
-Date: Tue, 12 Dec 2006 23:25:09 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612122316290.2807@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <200612121235.09984.andyparkins@gmail.com> 
- <200612121326.24508.andyparkins@gmail.com> 
- <Pine.LNX.4.63.0612121527070.2807@wbgn013.biozentrum.uni-wuerzburg.de> 
- <200612121538.41197.andyparkins@gmail.com> 
- <fcaeb9bf0612121346s3c82bcdbh522c17f4ae9f279b@mail.gmail.com>
- <fcaeb9bf0612121348q35549a4cof0adb85e0391b92c@mail.gmail.com>
+X-Spam-Status: No, score=-2.5 required=3.0 tests=BAYES_00,DKIM_ADSP_NXDOMAIN,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+From: Pazu <pazu@pazu.com.br>
+Subject: Re: Ignoring local changes
+Date: Thu, 14 Dec 2006 19:36:51 -0200
+Message-ID: <9e7ab7380612141336p3b930047l3a4a76947239162f@mail.gmail.com>
+References: <loom.20061214T171948-279@post.gmane.org> <45817F8A.3050701@op5.se>
+	 <9e7ab7380612140855p1f4ee6c1l5ef24c4d1d169da6@mail.gmail.com>
+	 <4581C1D4.7080102@dawes.za.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Tue, 12 Dec 2006 22:25:50 +0000 (UTC)
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 14 Dec 2006 21:36:57 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <fcaeb9bf0612121348q35549a4cof0adb85e0391b92c@mail.gmail.com>
-X-Y-GMX-Trusted: 0
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=ThaV6gvv0LVHjIOSujP9s5jCYuupAlK0YC/BTlvhf9IXdYEFAkhAKTOambOBiZewtRMXsnGuC/N5xhsAVdoz//l7BkgNwRw6lX+yUVLlffeLd+M7GossZDeAT0s3YaVhfzY/uL8S5F30rBRqeUvUkp2aUd6llwij7g4WgoSZqdg=
+In-Reply-To: <4581C1D4.7080102@dawes.za.net>
+Content-Disposition: inline
+X-Google-Sender-Auth: af4a7ed2ebe9a094
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34152>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34407>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GuG4G-0003pT-Ij for gcvg-git@gmane.org; Tue, 12 Dec
- 2006 23:25:44 +0100
+ esmtp (Exim 4.50) id 1GuyG8-0003QF-Vx for gcvg-git@gmane.org; Thu, 14 Dec
+ 2006 22:36:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932486AbWLLWZO (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 12 Dec 2006
- 17:25:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932490AbWLLWZO
- (ORCPT <rfc822;git-outgoing>); Tue, 12 Dec 2006 17:25:14 -0500
-Received: from mail.gmx.net ([213.165.64.20]:58327 "HELO mail.gmx.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S932486AbWLLWZM
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 12 Dec 2006 17:25:12 -0500
-Received: (qmail invoked by alias); 12 Dec 2006 22:25:11 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp032) with SMTP; 12 Dec 2006 23:25:11 +0100
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+ S932933AbWLNVgx (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
+ 16:36:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932938AbWLNVgx
+ (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 16:36:53 -0500
+Received: from nf-out-0910.google.com ([64.233.182.191]:47940 "EHLO
+ nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S932933AbWLNVgw (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec
+ 2006 16:36:52 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so951600nfa for
+ <git@vger.kernel.org>; Thu, 14 Dec 2006 13:36:51 -0800 (PST)
+Received: by 10.48.230.20 with SMTP id c20mr1382773nfh.1166132211403; Thu, 14
+ Dec 2006 13:36:51 -0800 (PST)
+Received: by 10.48.216.13 with HTTP; Thu, 14 Dec 2006 13:36:51 -0800 (PST)
+To: "Rogan Dawes" <discard@dawes.za.net>
 Sender: git-owner@vger.kernel.org
 
-Hi,
+2006/12/14, Rogan Dawes <discard@dawes.za.net>:
 
-On Wed, 13 Dec 2006, Nguyen Thai Ngoc Duy wrote:
+> Why not remove it from the repo, then set .gitignore?
+>
+> If it is generated code, or compiled code, it probably shouldn't be in
+> the repo in the first place . . . Simply correct that mistake, and you
+> are good to go.
 
-> On 12/13/06, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
-> > Hm.. I'm no git:// expert. But is it possible doing as follow?
-> > 1. git-archive <base>
-> > 2. reconstruct commit, blobs and trees from the archive
-> > 3. tell git server that you have one commit, you need another commit
-> > (maybe heads only, i'm not sure here)
-> > 4. get the pack from git server, create new commit and a diff
-> 
-> Ok. Stupid idea. The pack may base on objects that I don't have.
+Basically, because I don't want to mess with the upstream. I know, I
+can remove them only from my local branch, and never push the commit
+that removed the files, and that's what I'll probably do if there's no
+other way -- but it would be best if I could just ignore the files. It
+doesn't sound unreasonable, does it?
 
-The only not-so-brilliant idea is to reconstruct the commit from the 
-archive. This is not possible, as not only some author and 
-committer metadata is not reconstructable, but worse: the parents' hash is 
-not either. And since all these are hashed to get the commit hash, you 
-lost.
-
-However, it could work like this:
-
-- reconstruct tree commit
-- ask for a diff between a certain commit, with respect to your tree
-
-It might even be easy to convince git-upload-pack to construct a thin pack 
-containing deltas _only_ against objects which are reachable from your 
-tree.
-
-Note: this is feasible, but not necessarily sensible:
-
-- it puts more strain on the server, which otherwise could probably reuse 
-a lot of deltas, and
-- it contradicts the idea of _distributed_ development (for example, you 
-could not tell which HEAD commit is newer when you fetched from two 
-repos).
-
-Probably, you could add a third argument: merges are not necessarily 
-_possible_ with that setup. Note that this argument applies to shallow 
-clones, too!
-
-Ciao,
-Dscho
