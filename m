@@ -5,58 +5,67 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
 	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: v2.6.11 tag in kernel tree
-Date: Wed, 29 Nov 2006 23:02:23 -0500
-Message-ID: <9e4733910611292002o289dc4d1u7bde2d457fa97d73@mail.gmail.com>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [PATCH] "master" should be treated no differently from any other branch
+Date: Thu, 14 Dec 2006 16:25:07 +0000
+Message-ID: <200612141625.08485.andyparkins@gmail.com>
+References: <200612141519.44294.andyparkins@gmail.com> <Pine.LNX.4.63.0612141627090.3635@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 30 Nov 2006 04:02:35 +0000 (UTC)
+NNTP-Posting-Date: Thu, 14 Dec 2006 16:25:23 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=YVg/P5z7BxontNt8mu9E5wzayJJscJ7nHJu23/O0/FowHYSWdb999VYzJ3e2261+KcPR58Bvjo+Vw0GDI3mun8yV/4MW+K32Y/KLyTSPZ1pvm6phUWr/DvlOnOCind1+U9f3wOLuqYt3afv69RvfcR8RRDYpRZQrq952T4lXWXA=
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=tJBcAkcP1mRSoUEuGm5o8pwlhwSQ6ggNLIpnAX6Hg9k/8Kz6G8ZlwuBbzXjF7+j/dq8bK0/6LkxLU6lAWM/ciB/vVvbmGK/RtW6ZqZqjANm2myWvgQ5RT1dyJSzMra3pSz2hAE5WZX5VIk1KR49gmUc09wDCpychs7b0QlZXYXk=
+User-Agent: KMail/1.9.5
+In-Reply-To: <Pine.LNX.4.63.0612141627090.3635@wbgn013.biozentrum.uni-wuerzburg.de>
 Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32701>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gpd85-00055P-6s for gcvg-git@gmane.org; Thu, 30 Nov
- 2006 05:02:33 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34363>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GutOZ-0006i1-F9 for gcvg-git@gmane.org; Thu, 14 Dec
+ 2006 17:25:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1758404AbWK3ECZ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 29 Nov 2006
- 23:02:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758464AbWK3ECZ
- (ORCPT <rfc822;git-outgoing>); Wed, 29 Nov 2006 23:02:25 -0500
-Received: from py-out-1112.google.com ([64.233.166.179]:52803 "EHLO
- py-out-1112.google.com") by vger.kernel.org with ESMTP id S1758404AbWK3ECY
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 29 Nov 2006 23:02:24 -0500
-Received: by py-out-1112.google.com with SMTP id a29so1585965pyi for
- <git@vger.kernel.org>; Wed, 29 Nov 2006 20:02:24 -0800 (PST)
-Received: by 10.35.20.14 with SMTP id x14mr5538694pyi.1164859343893; Wed, 29
- Nov 2006 20:02:23 -0800 (PST)
-Received: by 10.35.72.13 with HTTP; Wed, 29 Nov 2006 20:02:23 -0800 (PST)
-To: "Git Mailing List" <git@vger.kernel.org>
+ S932857AbWLNQZQ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
+ 11:25:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932859AbWLNQZQ
+ (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 11:25:16 -0500
+Received: from ug-out-1314.google.com ([66.249.92.169]:29411 "EHLO
+ ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S932857AbWLNQZN (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec
+ 2006 11:25:13 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so544853uga for
+ <git@vger.kernel.org>; Thu, 14 Dec 2006 08:25:12 -0800 (PST)
+Received: by 10.67.100.17 with SMTP id c17mr1659499ugm.1166113511984; Thu, 14
+ Dec 2006 08:25:11 -0800 (PST)
+Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
+ ESMTP id 28sm2217955ugc.2006.12.14.08.25.11; Thu, 14 Dec 2006 08:25:11 -0800
+ (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Using this tree git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6
+On Thursday 2006 December 14 15:29, Johannes Schindelin wrote:
 
-These two tags appear to be pointing to a tree instead of a commit.
-v2.6.11
-v2.6.11-tree
+> I do not agree. There is usually a principal branch, where you collect the
+> topics, and you do want to treat that special. As for the name: better
 
-I'm trying to check out v2.6.11 so that I can figure out the changes a
-vendor made to it.
+While there might _usually_ be a principal branch; the special casing is 
+_always_ hard coded.
 
-jonsmirl@jonsmirl:/extra/linux$ git checkout -b microcross v2.6.11
-Cannot switch branch to a non-commit.
+> have a convention here than configurability. You would not want "git" to
+> be called "guitar" for some users, just because they happen to like that
+> name more, either, right?
 
-I can checkout the other tags without problem.
+You're correct; but we're talking about branch names not program names.  
+Making "master" special rather than simply a default means git is dictating 
+policy.  It isn't git's place to decide what my branches are called, 
+especially as it is git itself that lets me choose freely to begin with.
 
-What's the secret to checking out 2.6.11?
-
+Andy
 -- 
-Jon Smirl
+Dr Andy Parkins, M Eng (hons), MIEE
