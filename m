@@ -1,85 +1,73 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: "Ryan Anderson" <rda@google.com>
-Subject: Re: information for a 60-minute "intro to git" needed
-Date: Sat, 11 Nov 2006 20:51:00 -0800
-Message-ID: <87dcb0bd0611112051o3d7efca5r3b2c7c34034e2446@mail.gmail.com>
-References: <8664dmxdrf.fsf@blue.stonehenge.com>
-	 <20061111143304.GA7201@pasky.or.cz> <ej4teo$bjo$1@sea.gmane.org>
-	 <7vac2xkdgi.fsf@assigned-by-dhcp.cox.net>
-	 <46a038f90611111449g63ab5b41p8dc669beea864e51@mail.gmail.com>
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+Subject: Re: svn versus git
+Date: Thu, 14 Dec 2006 23:32:57 +0700
+Message-ID: <fcaeb9bf0612140832v1c80bf7dgd61897111292d31@mail.gmail.com>
+References: <200612132200.41420.andyparkins@gmail.com>
+	 <20061213225627.GC32568@spearce.org>
+	 <200612140908.36952.andyparkins@gmail.com>
+	 <7vodq695ha.fsf@assigned-by-dhcp.cox.net>
+	 <fcaeb9bf0612140708w6bc691f6k2e08fbab2a651421@mail.gmail.com>
+	 <Pine.LNX.4.63.0612141630240.3635@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sun, 12 Nov 2006 04:51:23 +0000 (UTC)
-Cc: "Junio C Hamano" <junkio@cox.net>,
-	"Randal L. Schwartz" <merlyn@stonehenge.com>, jnareb@gmail.com,
-	git@vger.kernel.org
+NNTP-Posting-Date: Thu, 14 Dec 2006 16:33:05 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; s=beta; d=google.com; c=nofws; q=dns;
-	h=received:message-id:date:from:to:subject:cc:in-reply-to:
-	mime-version:content-type:content-transfer-encoding:
-	content-disposition:references;
-	b=QaspGI00r9RhpmRj1xgilkRfKaiCeRmtDjqjWz8lBCrKDklmaFjMKFt+eDB0kFpfY
-	5gABoqWblY/4f2JeJ9Lzg==
-In-Reply-To: <46a038f90611111449g63ab5b41p8dc669beea864e51@mail.gmail.com>
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=J+U/eL9crL7K/zHDEZ6zyma+aQof/Be6UbKpOzeKCTM4LtaMdAhWx3gXado6lDvANWYb8sydZhAsKA/aalhMQrJf0NEMAW1qypA6gWAgigJDSIWbUifveEKpwEc4yJ4FXv5E1K0pSLemCo2Cz3f4G4KKKJRP109MR10DfFvudYU=
+In-Reply-To: <Pine.LNX.4.63.0612141630240.3635@wbgn013.biozentrum.uni-wuerzburg.de>
 Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31254>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gj7JM-0001C1-BD for gcvg-git@gmane.org; Sun, 12 Nov
- 2006 05:51:16 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34365>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GutW3-0007zX-Hf for gcvg-git@gmane.org; Thu, 14 Dec
+ 2006 17:33:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1754963AbWKLEvM (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 11 Nov 2006
- 23:51:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754966AbWKLEvM
- (ORCPT <rfc822;git-outgoing>); Sat, 11 Nov 2006 23:51:12 -0500
-Received: from smtp-out.google.com ([216.239.45.12]:44604 "EHLO
- smtp-out.google.com") by vger.kernel.org with ESMTP id S1754963AbWKLEvK
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 11 Nov 2006 23:51:10 -0500
-Received: from zps76.corp.google.com (zps76.corp.google.com [172.25.146.76])
- by smtp-out.google.com with ESMTP id kAC4p6lH012179 for
- <git@vger.kernel.org>; Sat, 11 Nov 2006 20:51:06 -0800
-Received: from nz-out-0102.google.com (nzbq3.prod.google.com [10.36.93.3]) by
- zps76.corp.google.com with ESMTP id kAC4p1gQ017697 for <git@vger.kernel.org>;
- Sat, 11 Nov 2006 20:51:01 -0800
-Received: by nz-out-0102.google.com with SMTP id q3so23443nzb for
- <git@vger.kernel.org>; Sat, 11 Nov 2006 20:51:00 -0800 (PST)
-Received: by 10.64.156.1 with SMTP id d1mr5570349qbe.1163307060732; Sat, 11
- Nov 2006 20:51:00 -0800 (PST)
-Received: by 10.64.84.4 with HTTP; Sat, 11 Nov 2006 20:51:00 -0800 (PST)
-To: "Martin Langhoff" <martin.langhoff@gmail.com>
+ S932859AbWLNQdA (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
+ 11:33:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932862AbWLNQdA
+ (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 11:33:00 -0500
+Received: from ug-out-1314.google.com ([66.249.92.174]:40873 "EHLO
+ ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S932859AbWLNQc7 (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec
+ 2006 11:32:59 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so547167uga for
+ <git@vger.kernel.org>; Thu, 14 Dec 2006 08:32:58 -0800 (PST)
+Received: by 10.78.205.7 with SMTP id c7mr815318hug.1166113977795; Thu, 14
+ Dec 2006 08:32:57 -0800 (PST)
+Received: by 10.78.100.8 with HTTP; Thu, 14 Dec 2006 08:32:57 -0800 (PST)
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-On 11/11/06, Martin Langhoff <martin.langhoff@gmail.com> wrote:
-> On 11/11/06, Junio C Hamano <junkio@cox.net> wrote:
-> > I think Martin Langhoff promised to make his presentation done
-> > in Mexico available to us sometime ago, but I wonder what
-> > happened to it...
+Hi,
+
+On 12/14/06, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> Two questions arise naturally:
 >
-> Hola! You are right, I never published anything... The Mexico
-> presentation was a combination of your original slides (I ended up
-> using the PDF directly as I didn't have OOv2) plus a version of my
-> older talk notes, updated and in Spanish. So I swapped the two
-> around.... "live".
->
-> The old, outdated talk is based on Cogito, and can be found here. I
-> still use it for my inhouse team --
-> http://wellington.pm.org/archive/200510/git/
+> - what do you need it for?
 
-I gave this talk at Ubucon:
-http://h4x0r5.com/~ryan/presentations/git-why.pdf
-(I modeled this one after Junio's OLS talk, as I thought it was more
-interesting to give a 'why' talk, rather than a 'magic incantation'
-talk.)
+for being user-friendly and consistent. Git porcelain commands seem to
+be grouped by function. So it would be natural to have git-ls as a
+front-end for both ls-files and ls-tree. I don't really care about
+ls-tree but I do about ls-files to examine index.
 
-Back in April, I used these to give a talk at Penguicon:
-http://h4x0r5.com/~ryan/presentations/git-tutorial.pdf
+> - have you seen the patch for git-show today, which would include this
+> functionality?
 
+I didn't. From the patch, it seems git-show can show the index via
+::file syntax. If so, I'd like withdraw my opinion. '::file' syntax is
+not intuitive though. Perhaps you should mention that it can show
+index (and how) in the git-show document
+-- 
