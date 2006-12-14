@@ -4,48 +4,77 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Timur Tabi <timur@freescale.com>
-Subject: Is there a way to trim old SHAs from a git tree (so it's not so large)?
-Date: Wed, 15 Nov 2006 16:11:57 -0600
-Organization: Freescale
-Message-ID: <455B90AD.3060707@freescale.com>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [PATCH 1/1] Bypass expensive content comparsion during rename detection.
+Date: Thu, 14 Dec 2006 06:08:58 -0500
+Message-ID: <20061214110858.GE1747@spearce.org>
+References: <20061214100746.GA31191@spearce.org> <Pine.LNX.4.63.0612141151220.3635@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 15 Nov 2006 22:12:35 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Thu, 14 Dec 2006 11:09:41 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.8.1) Gecko/20061101 SeaMonkey/1.1b
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0612141151220.3635@wbgn013.biozentrum.uni-wuerzburg.de>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31513>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GkSzG-00046L-TN for gcvg-git@gmane.org; Wed, 15 Nov
- 2006 23:12:07 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34313>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GuoT3-000374-Qu for gcvg-git@gmane.org; Thu, 14 Dec
+ 2006 12:09:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1161909AbWKOWMB (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
- 17:12:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161881AbWKOWMB
- (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 17:12:01 -0500
-Received: from de01egw02.freescale.net ([192.88.165.103]:57064 "EHLO
- de01egw02.freescale.net") by vger.kernel.org with ESMTP id S1161883AbWKOWL7
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 17:11:59 -0500
-Received: from de01smr02.am.mot.com (de01smr02.freescale.net [10.208.0.151])
- by de01egw02.freescale.net (8.12.11/de01egw02) with ESMTP id kAFMPvRp025436
- for <git@vger.kernel.org>; Wed, 15 Nov 2006 15:25:57 -0700 (MST)
-Received: from [10.82.19.119] (ld0169-tx32.am.freescale.net [10.82.19.119])
- by de01smr02.am.mot.com (8.13.1/8.13.0) with ESMTP id kAFMBwID011014 for
- <git@vger.kernel.org>; Wed, 15 Nov 2006 16:11:58 -0600 (CST)
-To: git@vger.kernel.org
+ S932281AbWLNLJe (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
+ 06:09:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932513AbWLNLJe
+ (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 06:09:34 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:35352 "EHLO
+ corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S932281AbWLNLJd (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006
+ 06:09:33 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1GuoSf-0005xJ-Hv; Thu, 14 Dec 2006 06:09:13 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ CBE3820FB65; Thu, 14 Dec 2006 06:08:58 -0500 (EST)
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-After doing a "make mrproper" in my Linux git tree, the result is still 1.1GB 
-of files.  Compare that with just the tarball, which is just one-forth the size.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> On Thu, 14 Dec 2006, Shawn O. Pearce wrote:
+> > Unfortunately we still have to at least initialize the sizes of the 
+> > source and destination files even if the SHA1 values don't match. 
+> > Failing to initialize the sizes causes a number of test cases to fail 
+> > and start reporting different copy/rename behavior than was expected.
+> 
+> It has a wrong feel to it when you say we have to check the sizes first. 
+> After all, we are heavily relying on the hashes being different, including 
+> the case when the sizes are different. So, the order of the checks should 
+> _not_ matter. I suspect that somewhere sha1_valid should be set to 0, but 
+> isn't.
 
-Is there a way to "trim away" old commits from the repository, so that it just 
-doesn't take up that much space?  I don't care about any commits made in 2005. 
-  As long as I can still do "git pull" from the source repo to update mine, 
-that's good enough.
+Yes.  :-)
+
+I'll admit, I don't understand the diffcore rename code very well
+so I'm treading around in code that I'm not used to.  I'm not sure
+why the size member of diff_filespec needs to be initialized to get
+rename and copy detection to work properly, but it apparently does.
+
+
+My first version of the patch had the hash comparsion right after
+we called diff_populate_filespec to get the size data.  But then
+I realized that very often the sizes will be different and the
+src->size != dst->size comparsion will tend to be true most of
+the time, thus saving us a (relatively) expensive hash comparsion,
+which we know must fail anyway if the sizes differed.
 
 -- 
-Timur Tabi
