@@ -2,67 +2,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Commit order in git.git, was Re: [RFC] Two conceptually distinct
- commit commands
-Date: Wed, 6 Dec 2006 10:54:24 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612061052490.28348@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <87d56z32e1.wl%cworth@cworth.org> <7vejrdbzdb.fsf@assigned-by-dhcp.cox.net>
- <874ps91v79.wl%cworth@cworth.org>
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Ignoring local changes
+Date: Thu, 14 Dec 2006 17:44:58 +0100
+Message-ID: <45817F8A.3050701@op5.se>
+References: <loom.20061214T171948-279@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Wed, 6 Dec 2006 09:54:35 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 14 Dec 2006 16:45:06 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <874ps91v79.wl%cworth@cworth.org>
-X-Y-GMX-Trusted: 0
+User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
+In-Reply-To: <loom.20061214T171948-279@post.gmane.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33412>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34370>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GrtTy-00078H-O2 for gcvg-git@gmane.org; Wed, 06 Dec
- 2006 10:54:31 +0100
+ esmtp (Exim 4.50) id 1Guthf-0001UU-V9 for gcvg-git@gmane.org; Thu, 14 Dec
+ 2006 17:45:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1760392AbWLFJy1 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
- 04:54:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760396AbWLFJy1
- (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 04:54:27 -0500
-Received: from mail.gmx.net ([213.165.64.20]:47613 "HELO mail.gmx.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S1760392AbWLFJy0
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec 2006 04:54:26 -0500
-Received: (qmail invoked by alias); 06 Dec 2006 09:54:25 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp042) with SMTP; 06 Dec 2006 10:54:25 +0100
-To: Carl Worth <cworth@cworth.org>
+ S1751870AbWLNQpB (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
+ 11:45:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750962AbWLNQpB
+ (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 11:45:01 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:36689 "EHLO
+ smtp-gw1.op5.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
+ S1751767AbWLNQpA (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006
+ 11:45:00 -0500
+Received: from [192.168.1.20] (unknown [213.88.215.14]) by smtp-gw1.op5.se
+ (Postfix) with ESMTP id 30ED86BCC4; Thu, 14 Dec 2006 17:44:59 +0100 (CET)
+To: Pazu <pazu@pazu.com.br>
 Sender: git-owner@vger.kernel.org
 
-Hi,
-
-On Tue, 5 Dec 2006, Carl Worth wrote:
-
-> On Tue, 05 Dec 2006 17:13:20 -0800, Junio C Hamano wrote:
-> > (This is offtopic)
+Pazu wrote:
+> Is there any way to make git completely ignore changes to certain local files? I
+> know about .gitignore, but that doesn't work when the files I want to ignore
+> were already added to the repository.
 > 
-> It's an interesting topic nonetheless, so I'll comment anyway.
+
+Yes it does. Just add the file to .gitignore and it won't be noticed
+anymore.
+
+Correction: I just tested this, and while git-add won't touch the file, 
+git-update-index will, and git-status still shows it as modified.
+
+This feels like a bug to me.
+
+> A little more context should help you understand my need. I'm currently tracking
+> a big subversion repository using git-svn; I do all my develop on local git
+> branches, and later use git-svn dcommit to push these changes to the svn
+> repository. 
 > 
-> >  (1) one commit exposes, then another fixes.
-> >  (2) one commit fixes, then another verifies the bug is no more.
-> >  (3) one commit to include both.
+> There are some files in the svn repository (and by extension, on my local
+> mirrored repository) that are almost always locally modified (eclipse/IDEA
+> project files or generated artifacts that someone else added to svn), but I
+> almost never want to commit then. This is a hassle in several situations:
 > 
-> I feel very strongly that I want (1) in the history.
+> 1) git-status always show these files as modified, polluting the output and
+> making it harder for me to pinpoint the "real" changes.
+> 2) git-rebase refuses to run, since the working copy will always be dirty*
+> 3) since git-svn dcommit uses git-rebase, sometimes it fails for the same reason.
+> 
+> So, is there any way to make git look the other way regarding these files?
+> 
 
-Note that (1) maybe would reflect history better, but (2) and (3) are way 
-nicer to bisecting.
+man git-ls-files, search for .git/info/exclude and see if that works for 
+you.
 
-I fell very strongly that I want (3) in the history.
+On a side-note, it would be neat if it was possible to set 
+--exclude-per-directory as a config option. It would save an awful lot 
+of hassle for imported repositories. Even more so if 
+git-{cvs,svn,p4}import and the lot set it up automagically.
 
-(Though I am guilty of many instances of (2)...)
-
-Ciao,
-Dscho
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
