@@ -2,52 +2,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-Subject: Re: git-commit: select which files to commit while editing the commit message
-Date: Fri, 8 Dec 2006 23:10:23 +0100
-Message-ID: <200612082310.24140.Josef.Weidendorfer@gmx.de>
-References: <360959.72234.qm@web31809.mail.mud.yahoo.com>
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [PATCH 1/1] Bypass expensive content comparsion during rename detection.
+Date: Thu, 14 Dec 2006 06:13:04 -0500
+Message-ID: <20061214111304.GF1747@spearce.org>
+References: <20061214100746.GA31191@spearce.org> <Pine.LNX.4.63.0612141151220.3635@wbgn013.biozentrum.uni-wuerzburg.de> <20061214110858.GE1747@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Fri, 8 Dec 2006 22:10:43 +0000 (UTC)
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Thu, 14 Dec 2006 11:13:17 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: KMail/1.9.5
-In-Reply-To: <360959.72234.qm@web31809.mail.mud.yahoo.com>
 Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay1.informatik.tu-muenchen.de
+In-Reply-To: <20061214110858.GE1747@spearce.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33757>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34314>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GsnvN-0004uL-P0 for gcvg-git@gmane.org; Fri, 08 Dec
- 2006 23:10:34 +0100
+ esmtp (Exim 4.50) id 1GuoWY-0003Z1-DV for gcvg-git@gmane.org; Thu, 14 Dec
+ 2006 12:13:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1947434AbWLHWKa (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
- 17:10:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1947432AbWLHWKa
- (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 17:10:30 -0500
-Received: from mailout1.informatik.tu-muenchen.de ([131.159.0.18]:35693 "EHLO
- mailout1.informatik.tu-muenchen.de" rhost-flags-OK-OK-OK-OK) by
- vger.kernel.org with ESMTP id S1947430AbWLHWK3 (ORCPT
- <rfc822;git@vger.kernel.org>); Fri, 8 Dec 2006 17:10:29 -0500
-Received: from dhcp-3s-46.lrr.in.tum.de (dhcp-3s-46.lrr.in.tum.de
- [131.159.35.46]) by mail.in.tum.de (Postfix) with ESMTP id 8B2AD282A; Fri,  8
- Dec 2006 23:10:28 +0100 (MET)
-To: ltuikov@yahoo.com
+ S932513AbWLNLNL (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
+ 06:13:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932528AbWLNLNL
+ (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 06:13:11 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:35498 "EHLO
+ corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S932513AbWLNLNK (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006
+ 06:13:10 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1GuoWN-0006Co-Kq; Thu, 14 Dec 2006 06:13:03 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 5202820FB65; Thu, 14 Dec 2006 06:13:05 -0500 (EST)
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-On Friday 08 December 2006 21:45, Luben Tuikov wrote:
-> This is how perforce does it*, and while it is useful, git is NOT perforce,
-> and I agree with Junio and Jakub.
+Shawn Pearce <spearce@spearce.org> wrote:
+> I'll admit, I don't understand the diffcore rename code very well
+> so I'm treading around in code that I'm not used to.  I'm not sure
+> why the size member of diff_filespec needs to be initialized to get
+> rename and copy detection to work properly, but it apparently does.
 
-However, the idea itself is not bad. AFAIK, cogito does it this way.
-It could be done as separate command, e.g. "git add --interactive",
-and would only update the index.
+This chunk of code is probably a perfect example of why side-effects
+can be so bad.  Its fast because the size information is loaded
+once and reused later on; its horrible to maintain because you don't
+realize that this simple predicate is actually doing something that
+matters downstream even though it returned false!
 
+-- 
