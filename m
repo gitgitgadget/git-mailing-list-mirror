@@ -1,85 +1,75 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] xdiff: Do not consider lines starting by # hunkworthy
-Date: Tue, 24 Oct 2006 17:16:28 -0700
-Message-ID: <7vmz7lfdwj.fsf@assigned-by-dhcp.cox.net>
-References: <20061025000708.2753.74523.stgit@machine.or.cz>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] Document the simple way of using of git-cat-file
+Date: Thu, 14 Dec 2006 01:35:32 +0100
+Message-ID: <200612140135.33745.jnareb@gmail.com>
+References: <20061213221841.GB4928@fieldses.org> <elq3pa$93b$1@sea.gmane.org> <Pine.LNX.4.63.0612140127520.3635@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 25 Oct 2006 00:16:48 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 14 Dec 2006 00:33:18 +0000 (UTC)
+Cc: git@vger.kernel.org, Robin Rosenberg <robin.rosenberg@dewire.com>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061025000708.2753.74523.stgit@machine.or.cz> (Petr Baudis's
-	message of "Wed, 25 Oct 2006 02:07:08 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=RD5BCWAHMXpkAHVschiD9i3nqN0oj0F7hWJo9OGU0Evmgfvc1oWSqt88tAYvmjXiSnvrYhBu/KXQcpw8NazNEN+GPY+d1TqVysUp+ieKNMoirW6nwdMDyJSD3v8THuPGALHx2GXPns2dZLu01BA09LTJXaOw+wUJTlismzrxFEU=
+User-Agent: KMail/1.9.3
+In-Reply-To: <Pine.LNX.4.63.0612140127520.3635@wbgn013.biozentrum.uni-wuerzburg.de>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30018>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GcWRd-0006IR-D4 for gcvg-git@gmane.org; Wed, 25 Oct
- 2006 02:16:33 +0200
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34272>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GueXC-0000OW-Hz for gcvg-git@gmane.org; Thu, 14 Dec
+ 2006 01:33:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1422852AbWJYAQa (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 24 Oct 2006
- 20:16:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422859AbWJYAQa
- (ORCPT <rfc822;git-outgoing>); Tue, 24 Oct 2006 20:16:30 -0400
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:5289 "EHLO
- fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP id S1422852AbWJYAQ3
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 24 Oct 2006 20:16:29 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao02.cox.net
- (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
- <20061025001629.ZGQK12581.fed1rmmtao02.cox.net@fed1rmimpo01.cox.net>; Tue, 24
- Oct 2006 20:16:29 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id eQGC1V0021kojtg0000000 Tue, 24 Oct 2006
- 20:16:12 -0400
-To: Petr Baudis <pasky@suse.cz>
+ S1751609AbWLNAdK (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 13 Dec 2006
+ 19:33:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751869AbWLNAdK
+ (ORCPT <rfc822;git-outgoing>); Wed, 13 Dec 2006 19:33:10 -0500
+Received: from ug-out-1314.google.com ([66.249.92.169]:9962 "EHLO
+ ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1751609AbWLNAdJ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 13 Dec
+ 2006 19:33:09 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so339989uga for
+ <git@vger.kernel.org>; Wed, 13 Dec 2006 16:33:07 -0800 (PST)
+Received: by 10.67.97.7 with SMTP id z7mr388412ugl.1166056387367; Wed, 13 Dec
+ 2006 16:33:07 -0800 (PST)
+Received: from host-81-190-25-107.torun.mm.pl ( [81.190.25.107]) by
+ mx.google.com with ESMTP id 24sm1674498ugf.2006.12.13.16.33.06; Wed, 13 Dec
+ 2006 16:33:07 -0800 (PST)
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-Petr Baudis <pasky@suse.cz> writes:
+Johannes Schindelin wrote:
 
-> This will be probably controversial but in my personal experience, the
-> amount of time this is the right thing to do because of #defines is negligible
-> compared to amount of time it is wrong, especially because of #ifs and #endifs
-> in the middle of functions and also because of comments at the line start when
-> it concerns non-C files.
->
-> Signed-off-by: Petr Baudis <pasky@suse.cz>
-> ---
->
->  xdiff/xemit.c |    3 +--
->  1 files changed, 1 insertions(+), 2 deletions(-)
->
-> diff --git a/xdiff/xemit.c b/xdiff/xemit.c
-> index 714c563..4f20075 100644
-> --- a/xdiff/xemit.c
-> +++ b/xdiff/xemit.c
-> @@ -86,8 +86,7 @@ static void xdl_find_func(xdfile_t *xf, 
->  		if (len > 0 &&
->  		    (isalpha((unsigned char)*rec) || /* identifier? */
->  		     *rec == '_' ||	/* also identifier? */
-> -		     *rec == '(' ||	/* lisp defun? */
-> -		     *rec == '#')) {	/* #define? */
-> +		     *rec == '(')) {	/* #define? */
->  			if (len > sz)
->  				len = sz;
->  			if (len && rec[len - 1] == '\n')
+> On Thu, 14 Dec 2006, Jakub Narebski wrote:
+> 
+>> Robin Rosenberg wrote:
+>> 
+>>> Since you can give a version and a path name to git-cat-file,
+>>> mention it in the man page.
+>> 
+>> Very nice, with the exception that git cat-file can be used also
+>> for trees and commits (although hit-ls-tree and git-show are usually
+>> used) and for tags, not only for files.
+> 
+> The point is: you are much more likely to look at a blob that at a tree. 
+> And if you want to do that, you can always use git-ls-tree.
+> 
+> But as I mentioned in another thread, I'd rather see git-show do the job 
+> of showing blobs, too, in addition to commits as it does already.
 
-I'd either omit the opening parenthesis or fix the comment ;-).
-
-More seriously, I'd rather just match default GNU diff behaviour
-to use isalpha, underscore or '$'.  I do not particularly like
-to have '$' but I feel it is the easiest to match a prior art in
-cases like this because I do not have to defend my position when
-somebody says "Why do you include '#'???  It makes no sense!".
-Since I do not care too much about it, being able to just say
-"Well we match what GNU diff does by default." is a good thing.
-
-
-
+More important is that git-cat-file is used for _tags_; git-show used
+for tag takes tag as <commit-ish>, so it cannot show tag.
+-- 
+Jakub Narebski
