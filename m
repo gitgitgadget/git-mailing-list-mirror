@@ -2,127 +2,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [WISH] Store also tag dereferences in packed-refs
-Date: Mon, 20 Nov 2006 10:40:15 +0100
-Organization: At home
-Message-ID: <ejrt37$fg9$1@sea.gmane.org>
-References: <e5bfff550611180115j135746a1h916e8ae029d1374d@mail.gmail.com> <7vmz6oeh2k.fsf@assigned-by-dhcp.cox.net> <20061118184345.GO7201@pasky.or.cz> <e5bfff550611181047w6712774fkccc697d312b87c7e@mail.gmail.com> <7vac2oefuz.fsf@assigned-by-dhcp.cox.net> <e5bfff550611181628o41e11652ycd17ddad5dd21225@mail.gmail.com> <Pine.LNX.4.64.0611181706250.3692@woody.osdl.org> <e5bfff550611190140n3277ee26v95feba26dd3348fa@mail.gmail.com> <Pine.LNX.4.64.0611190945500.3692@woody.osdl.org> <e5bfff550611191107o63d89d8bp5ff4080803a0d784@mail.gmail.com> <e5bfff550611191209s63982818vd3999b543e68e8df@mail.gmail.com> <Pine.LNX.4.64.0611191219350.3692@woody.osdl.org> <7vbqn38831.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611191310430.3692@woody.osdl.org> <ejqhvi$9kc$1@sea.gmane.org> <Pine.LNX.4.64.0611191527270.3692@woody.osdl.org> <7vr6vy7smi.fsf@assigned-by-dhcp.cox.net>
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: What's in git.git (stable)
+Date: Thu, 14 Dec 2006 01:16:35 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0612140113340.3635@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <7v4przfpir.fsf@assigned-by-dhcp.cox.net> <200612132237.10051.andyparkins@gmail.com>
+ <7vk60vbcfz.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-NNTP-Posting-Date: Mon, 20 Nov 2006 09:39:06 +0000 (UTC)
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Thu, 14 Dec 2006 00:17:04 +0000 (UTC)
+Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 78
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <7vk60vbcfz.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31890>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gm5cD-00081V-Rw for gcvg-git@gmane.org; Mon, 20 Nov
- 2006 10:39:02 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34269>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GueHN-0006zP-IB for gcvg-git@gmane.org; Thu, 14 Dec
+ 2006 01:16:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S934031AbWKTJi7 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 20 Nov 2006
- 04:38:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934036AbWKTJi7
- (ORCPT <rfc822;git-outgoing>); Mon, 20 Nov 2006 04:38:59 -0500
-Received: from main.gmane.org ([80.91.229.2]:59359 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S934031AbWKTJi6 (ORCPT
- <rfc822;git@vger.kernel.org>); Mon, 20 Nov 2006 04:38:58 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1Gm5c7-00080W-04 for git@vger.kernel.org; Mon, 20 Nov 2006 10:38:55 +0100
-Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Mon, 20 Nov 2006 10:38:54 +0100
-Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Mon, 20 Nov 2006
- 10:38:54 +0100
-To: git@vger.kernel.org
+ S1751826AbWLNAQj (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 13 Dec 2006
+ 19:16:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751823AbWLNAQj
+ (ORCPT <rfc822;git-outgoing>); Wed, 13 Dec 2006 19:16:39 -0500
+Received: from mail.gmx.net ([213.165.64.20]:55741 "HELO mail.gmx.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S1751822AbWLNAQh
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 13 Dec 2006 19:16:37 -0500
+Received: (qmail invoked by alias); 14 Dec 2006 00:16:36 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp011) with SMTP; 14 Dec 2006 01:16:36 +0100
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano wrote:
+Hi,
 
-> Linus Torvalds <torvalds@osdl.org> writes:
+On Wed, 13 Dec 2006, Junio C Hamano wrote:
+
+> Andy Parkins <andyparkins@gmail.com> writes:
 > 
->> So I'd suggest adding - at the very top of the ref-pack file - a line line
->>
->>      # Ref-pack version 2
->>
->> which will be ignored by the current ref-pack reader (again, because it's 
->> not a valid ref line), but we can use it in the future to specify further 
->> extensions if we want to.
->>
->> Now somebody would just need to implement that ;)
+> >  * git-cat-file is badly named.  git-cat-object would be slightly
+> >    better.
 > 
-> For this particular one, there is no need for version 2.
+> Not a Porcelain.
+> 
+> We might want to add a pair of built-in internal aliases though:
+> 
+> 	[alias]
+>         	cat = cat-file -p
+>                 less = -p cat-file -p
+> 
+> or have these as samples in template .git/config file.
 
-Actually, I think it is both true and untrue. True, because we need some
-indicator that we trust packed-refs file to provide tag dereferences to
-distinguish between the case when there are no tag objects at all, so there
-are no tag dereferences in packed-refs, and the situation where we use
-packed-refs generated by older git, and there are no tag dereferences in
-packed-refs because git didn't saved it.
+I sent a patch which makes "git show" have that functionality, and 
+frankly, I disagree "less" would be a good name for it. It uses the 
+_pager_, which is not always "less", and besides, what it does is to show 
+that particular blob. So obviously, I think my patch is the best approach.
 
-Untrue, because it is not enough. In the case[*1*] when packed-refs was
-created with tag dereferences, then some "heavyweight" tags were added
-by older version of git (adding references doesn't rewrite packed-refs
-if I understand correctly), then we use new git again and trust that there
-are no derefs...
+BTW if you now say "git show master:README" it will show _nothing_, not 
+even an error message.
 
-[*1*] For example when git repository is on the network filesystem, but
-programs are installed locally, and perhaps computers in the network are
-heterogenic (perhaps even different architectures: PC vs. Sun and/or
-different operating systems: Linux vs. FreeBSD vs. Solaris vs.
-Windows+Cygwin) and have different versions of git installed (perhaps
-one of them is "your" machine, where you have admin rights, and you have
-newest git installed there). Or for example using git repository on USB
-stick, again on different computers with different version of git installed.
- 
----------------------------------------------------------------------
-
-To summarize, we have the following proposals of the packed-refs format
-extension
-
-
-The unusable Linux Torvalds proposal (unusable because of requiring
-newer packed-refs work with older git, for example in the case [*1*]
-or the case of git downgrade):
-
-lt>    <sha1><space><name>[<space><sha1-of-deref>]*
-
-
-Linus Torvalds "Now somebody would just need to implement that ;)"
-proposal:
-
-lt>    <sha1> refs/tags/tagname
-lt>    ^<sha1-unpeeled>
-lt>    ^<sha1-unpeeled-of-unpeeled>
-lt>    ...
-lt>    <sha1> refs/tags/othertag
-
-
-Junio C Hamano proposal _with code_ (proposal with code usually wins).
-Less elegant IMVHO, but perhaps better.
-
-jc> My current wip does:
-jc> 
-jc>     SHA-1 SP name LF
-jc>     SHA-1 SP SP name^{} LF
-jc> 
-jc> the latter of which is ignored by code in the wild and the new
-jc> code can take advantage of (and fall back the usual deref_tag
-jc> when it is not available).
-
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
-
+Ciao,
