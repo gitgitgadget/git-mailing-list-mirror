@@ -1,71 +1,92 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: Re: [EGIT PATCH] Convert author and comment on demand.
-Date: Sun, 3 Dec 2006 13:18:32 +0100
-Message-ID: <200612031318.33332.robin.rosenberg@dewire.com>
-References: <200612030145.09576.robin.rosenberg@dewire.com> <20061203021655.GA26668@spearce.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Sun, 3 Dec 2006 12:16:36 +0000 (UTC)
-Cc: git@vger.kernel.org
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: [PATCH] Cleanup git-diff documentation
+Date: Thu, 14 Dec 2006 07:32:56 -0500
+Message-ID: <9A80051B-1F6B-4FFD-B33F-84121D3A422F@silverinsanity.com>
+References: <7vr6v2aofs.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0612140957590.3635@wbgn013.biozentrum.uni-wuerzburg.de>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 14 Dec 2006 12:33:11 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: KMail/1.9.4
-In-Reply-To: <20061203021655.GA26668@spearce.org>
-Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new at dewire.com
+In-Reply-To: <Pine.LNX.4.63.0612140957590.3635@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Mailer: Apple Mail (2.752.3)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33107>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34331>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GqqGl-0001oN-I1 for gcvg-git@gmane.org; Sun, 03 Dec
- 2006 13:16:31 +0100
+ esmtp (Exim 4.50) id 1Guplq-00057k-PQ for gcvg-git@gmane.org; Thu, 14 Dec
+ 2006 13:33:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1757053AbWLCMQT convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Sun, 3 Dec 2006 07:16:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759621AbWLCMQT
- (ORCPT <rfc822;git-outgoing>); Sun, 3 Dec 2006 07:16:19 -0500
-Received: from [83.140.172.130] ([83.140.172.130]:41989 "EHLO
- torino.dewire.com") by vger.kernel.org with ESMTP id S1757053AbWLCMQS convert
- rfc822-to-8bit (ORCPT <rfc822;git@vger.kernel.org>); Sun, 3 Dec 2006 07:16:18
- -0500
-Received: from localhost (localhost [127.0.0.1]) by torino.dewire.com
- (Postfix) with ESMTP id F3CF3802A94; Sun,  3 Dec 2006 13:12:30 +0100 (CET)
-Received: from torino.dewire.com ([127.0.0.1]) by localhost (torino
- [127.0.0.1]) (amavisd-new, port 10024) with ESMTP id 13133-10; Sun,  3 Dec
- 2006 13:12:30 +0100 (CET)
-Received: from [10.9.0.2] (unknown [10.9.0.2]) by torino.dewire.com (Postfix)
- with ESMTP id 9447180281C; Sun,  3 Dec 2006 13:12:28 +0100 (CET)
-To: Shawn Pearce <spearce@spearce.org>
+ S932693AbWLNMdD (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
+ 07:33:03 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932697AbWLNMdD
+ (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 07:33:03 -0500
+Received: from vs072.rosehosting.com ([216.114.78.72]:50148 "EHLO
+ silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
+ S932693AbWLNMdB (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006
+ 07:33:01 -0500
+Received: from [IPv6???1] (localhost [127.0.0.1]) (using TLSv1 with cipher
+ AES128-SHA (128/128 bits)) (No client certificate requested) by
+ silverinsanity.com (Postfix) with ESMTP id E06ED1FFCECA; Thu, 14 Dec 2006
+ 12:32:59 +0000 (UTC)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-s=F6ndag 03 december 2006 03:16 skrev Shawn Pearce:
-> Robin Rosenberg <robin.rosenberg@dewire.com> wrote:
-> > This sppeds up reading commits a lot by only store the byte
-> > array data when reading commits.
->
-> Thanks.  I was working on something similar but did not have
-> a chance to finish it.  I've applied your patch instead.
->
-> > +	    try {
-> > +        	BufferedReader br=3Dnew BufferedReader(new InputStreamRea=
-der(new
-> > ByteArrayInputStream(raw)));
-> > +        	String n=3Dbr.readLine();
->
-> Something's wrong with your mail client... the patch was mangled.
+There were a couple inconsistencies in the formatting of the command
+descriptions and a more descriptive initial description is better.
 
-Not really, only the user. KMail by default wraps lines and I didn't tu=
-rn that=20
-off before sending. Usually I send patches just using stg mail, but thi=
-s time=20
-I used git-format-patch and kmail. Generatig attachements may be better=
- (next=20
-time).
+Signed-off-by: Brian Gernhardt <benji@silverinsanity.com>
+---
 
+I agree with Johannes about the original being clearer.  Plus two of
+the command examples were missing brackets around -- and one had a
+* at the beginning the others didn't.  This patch is against Junio's
+changes made on master (1d770), even though his patch didn't apply
+cleanly.
+
+Documentation/git-diff.txt |   11 +++++++----
+1 files changed, 7 insertions(+), 4 deletions(-)
+
+diff --git a/Documentation/git-diff.txt b/Documentation/git-diff.txt
+index 534f824..2ba9145 100644
+--- a/Documentation/git-diff.txt
++++ b/Documentation/git-diff.txt
+@@ -12,7 +12,10 @@ SYNOPSIS
+DESCRIPTION
+-----------
+-This command shows changes between four combinations of states.
++Show changes between two trees, a tree and the working tree, a
++tree and the index file, or the index file and the working tree.
++The combination of what is compared with what is determined by
++the number of trees given to the command.
+'git-diff' [--options] [--] [<path>...]::
+@@ -25,11 +28,11 @@ This command shows changes between four  
+combinations of states.
+'git-diff' [--options] --cached [<commit>] [--] [<path>...]::
+	This form is to view the changes you staged for the next
+-	commit relative to the named <tree-ish>.  Typically you
++	commit relative to the named <commit>.  Typically you
+	would want comparison with the latest commit, so if you
+	do not give <commit>, it defaults to HEAD.
+-'git-diff' [--options] <commit> -- [<path>...]::
++'git-diff' [--options] <commit> [--] [<path>...]::
+	This form is to view the changes you have in your
+	working tree relative to the named <commit>.  You can
+@@ -37,7 +40,7 @@ This command shows changes between four  
+combinations of states.
+	branch name to compare with the tip of a different
+	branch.
+-* 'git-diff' [--options] <commit> <commit> -- [<path>...]
++'git-diff' [--options] <commit> <commit> [--] [<path>...]
+	This form is to view the changes between two <commit>,
+	for example, tips of two branches.
+--
