@@ -1,65 +1,86 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,MSGID_FROM_MTA_HEADER,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
-From: Sean <seanlkml@sympatico.ca>
-Subject: Re: [PATCH] Colourise git-branch output
-Date: Mon, 11 Dec 2006 20:24:46 -0500
-Message-ID: <BAYC1-PASMTP092A9E80667F373BF69AA6AED70@CEZ.ICE>
-References: <200612112210.08327.andyparkins@gmail.com>
-	<BAYC1-PASMTP114CF00792AB16B95C1597AED70@CEZ.ICE>
-	<7v7iwx2a0z.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: What's in git.git (stable)
+Date: Thu, 14 Dec 2006 07:05:18 -0500
+Message-ID: <20061214120518.GL1747@spearce.org>
+References: <7v4przfpir.fsf@assigned-by-dhcp.cox.net> <200612140959.19209.andyparkins@gmail.com> <7v7iwu93rv.fsf@assigned-by-dhcp.cox.net> <200612141136.59041.andyparkins@gmail.com> <20061214114546.GI1747@spearce.org> <8764ce6654.wl%cworth@cworth.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Tue, 12 Dec 2006 01:24:54 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Thu, 14 Dec 2006 12:05:28 +0000 (UTC)
+Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Originating-IP: [65.93.43.74]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Original-Message-Id: <20061211202446.3c263c4f.seanlkml@sympatico.ca>
-In-Reply-To: <7v7iwx2a0z.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Sylpheed version 2.2.10 (GTK+ 2.10.4; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 12 Dec 2006 01:25:47.0687 (UTC) FILETIME=[73AFB370:01C71D8C]
+Content-Disposition: inline
+In-Reply-To: <8764ce6654.wl%cworth@cworth.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34327>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GtwO3-0006ZJ-QQ for gcvg-git@gmane.org; Tue, 12 Dec
- 2006 02:24:52 +0100
+ esmtp (Exim 4.50) id 1GupL4-0001VH-Eb for gcvg-git@gmane.org; Thu, 14 Dec
+ 2006 13:05:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1750771AbWLLBYt (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 11 Dec 2006
- 20:24:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750798AbWLLBYt
- (ORCPT <rfc822;git-outgoing>); Mon, 11 Dec 2006 20:24:49 -0500
-Received: from bayc1-pasmtp09.bayc1.hotmail.com ([65.54.191.169]:38232 "EHLO
- BAYC1-PASMTP09.bayc1.hotmail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
- with ESMTP id S1750771AbWLLBYs (ORCPT <rfc822;git@vger.kernel.org>); Mon, 11
- Dec 2006 20:24:48 -0500
-Received: from linux1.attic.local ([65.93.43.74]) by
- BAYC1-PASMTP09.bayc1.hotmail.com over TLS secured channel with Microsoft
- SMTPSVC(6.0.3790.1830); Mon, 11 Dec 2006 17:25:47 -0800
-Received: from guru.attic.local ([10.10.10.28]) by linux1.attic.local with
- esmtp (Exim 4.43) id 1GtvRs-00037F-Gy; Mon, 11 Dec 2006 19:24:44 -0500
-To: Junio C Hamano <junkio@cox.net>
+ S932681AbWLNMFX (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
+ 07:05:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932682AbWLNMFX
+ (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 07:05:23 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:37449 "EHLO
+ corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S932681AbWLNMFW (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006
+ 07:05:22 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1GupKu-0001Le-PO; Thu, 14 Dec 2006 07:05:16 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ EB11F20FB65; Thu, 14 Dec 2006 07:05:18 -0500 (EST)
+To: Carl Worth <cworth@cworth.org>
 Sender: git-owner@vger.kernel.org
 
-On Mon, 11 Dec 2006 17:11:24 -0800
-Junio C Hamano <junkio@cox.net> wrote:
+Carl Worth <cworth@cworth.org> wrote:
+> This when-you-first-learn-you-want-them-it's-too-late-to-get-them
+> aspect of ref logs is really annoying. It sets up an unkind trap for
+> users.
 
+Yes.  Which is why its in my ~/.gitconfig.  :-(
+ 
+> I know several people have suggested they be enabled by
+> default. What's the status of that suggestion?  Rejected? Just
+> awaiting a patch?
 
-> > As Junio already highlighted, the "branch.*" namespace is for actual
-> > branch names.  This config option should go into "color.branch" or some
-> > other spot.
-> 
-> I didn't.  And "branch.color = auto" is actually fine.
-> 
-> The problematic case is "branch.color.remote = purple".
+Its been suggested and discussed.
 
-Technically it is workable.. but why even start down the road of having
-anything but branch names after a "branch."?   There has to be a better
-spot for this variable, and it makes it more future proof, as you
-highlighted.
+But the problem raised is that there are many types of repositories,
+and not all should always have reflogs enabled, and its hard to
+tell which one should and which shouldn't by default, and its even
+worse to force it into a user's ~/.gitconfig as then repositories
+which should not have reflogs are getting them anyway.
 
+ * Normal working repository (wants reflogs);
+ * Bare private (backup) repository (wants reflogs);
+ * Bare shared repository (probably doesn't want reflogs);
+ * Import generated repository (probably doesn't want reflogs);
+
+...
+
+Find a way to make git-init-db know the difference magically and
+you'll probably see a patch emerge quickly afterwards.  But right
+now I don't think anyone really has a great solution to the problem.
+
+I know Junio wrote something on this not too long ago (and it was a
+good writeup too) but I can never find threads in gmane's archives,
+so I'm just going to leave that to someone else...
+
+-- 
