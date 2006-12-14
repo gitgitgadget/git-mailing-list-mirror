@@ -1,92 +1,72 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Nicolas Pitre <nico@cam.org>
-Subject: WARNING: THIS PATCH CAN BREAK YOUR REPO,
- was Re: [PATCH 2/3] Only repack active packs by skipping over kept packs.
-Date: Mon, 30 Oct 2006 14:07:57 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0610301332440.11384@xanadu.home>
-References: <20061029093754.GD3847@spearce.org>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: [PATCH] Avoid accessing a slow working copy during diffcore operations.
+Date: Thu, 14 Dec 2006 15:49:38 +0100
+Message-ID: <81b0412b0612140649i71643aaar847460ca9e4cea48@mail.gmail.com>
+References: <20061214111557.GA24297@spearce.org>
+	 <81b0412b0612140557u225ca00du5b15823d05fda4b9@mail.gmail.com>
+	 <Pine.LNX.4.63.0612141511110.3635@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-NNTP-Posting-Date: Mon, 30 Oct 2006 19:25:43 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 14 Dec 2006 14:49:49 +0000 (UTC)
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	"Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-reply-to: <20061029093754.GD3847@spearce.org>
-X-X-Sender: nico@xanadu.home
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=hlEWukUBGvlKEGzMc3dQ5io0DanL5Zn562vPwPhMyoVNY61c6bcSCwoJ6k1Bl9R7IweNNjUM2EkTYqYI9EbQeu3L0rvJviOCTvgVt7fS0sdLd/DTKdupt0ejyxIxlLK/achX6KwVTC+XSB0Kea45gpmFspVUzjuo+Y19G0pTavI=
+In-Reply-To: <Pine.LNX.4.63.0612141511110.3635@wbgn013.biozentrum.uni-wuerzburg.de>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30513>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GecUZ-0005ZY-Ao for gcvg-git@gmane.org; Mon, 30 Oct
- 2006 20:08:15 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34343>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Guru5-0007FB-Mr for gcvg-git@gmane.org; Thu, 14 Dec
+ 2006 15:49:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1161449AbWJ3TIA (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 30 Oct 2006
- 14:08:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161451AbWJ3TH7
- (ORCPT <rfc822;git-outgoing>); Mon, 30 Oct 2006 14:07:59 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:18016 "EHLO
- relais.videotron.ca") by vger.kernel.org with ESMTP id S1161449AbWJ3TH6
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 30 Oct 2006 14:07:58 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
- <0J7Y007WGQHAJ7J0@VL-MH-MR002.ip.videotron.ca> for git@vger.kernel.org; Mon,
- 30 Oct 2006 14:07:58 -0500 (EST)
-To: Shawn Pearce <spearce@spearce.org>
+ S932766AbWLNOtk (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
+ 09:49:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932774AbWLNOtk
+ (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 09:49:40 -0500
+Received: from an-out-0708.google.com ([209.85.132.240]:1218 "EHLO
+ an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S932766AbWLNOtj (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec
+ 2006 09:49:39 -0500
+Received: by an-out-0708.google.com with SMTP id b33so159161ana for
+ <git@vger.kernel.org>; Thu, 14 Dec 2006 06:49:38 -0800 (PST)
+Received: by 10.78.166.7 with SMTP id o7mr776194hue.1166107778248; Thu, 14
+ Dec 2006 06:49:38 -0800 (PST)
+Received: by 10.78.135.3 with HTTP; Thu, 14 Dec 2006 06:49:38 -0800 (PST)
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-On Sun, 29 Oct 2006, Shawn Pearce wrote:
+On 12/14/06, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > > If Git is compiled with NO_FAST_WORKING_DIRECTORY set then we will
+> > > avoid looking at the working directory when the blob in question
+> > > is available within a packfile and the caller doesn't need the data
+> > > unpacked into a temporary file.
+> >
+> > Why can't it be useful in generic code? What are the downsides?
+>
+> It is usually cheaper to just read the file, especially if it is still
+> cached, because the alternative means unpacking the loose object, or
+> worse, unpacking the packed object _along_ with the objects in its delta
+> chain.
 
-> During `git repack -a -d` only repack objects which are loose or
-> which reside in an active (a non-kept) pack.  This allows the user
-> to keep large packs as-is without continuous repacking and can be
-> very helpful on large repositories.
+But you have to read less, and even that could be in cache as well
+and unpacking in userspace could be faster than open/write temporary/
+read temporary/close/unlink temporary file on a normal system
 
-Something is really broken here.
+> Not every OS sucks cache-wise, and you should not make others suffer for
+> Redmond's shortcomings.
 
-Here's how to destroy your GIT's git repository.
-
-WARNING: MAKE A COPY BEFORE TRYING THIS!  I'm serious.
-
-First, let's make a single pack just to make things simpler and 
-reproducible:
-
-$ git-repack -a -f -d
-$ git-prune
-$ git-fsck-objects --full
-
-So far everything should be fine.  It's still time to make a backup copy 
-of your .git directory if you've not done so.
-
-Now let's create a second pack containing a subset of the existing one.
-
-$ git-rev-list --objects v1.4.3..v1.4.3.3 | \
-  git-pack-objects --stdout | \
-  git-index-pack --stdin -v --keep
-$ git-fsck-objects --full
-
-At this point the repository is still fine, but the --keep to 
-git-index-pack above will have created a file called 
-.git/objects/pack/pack-aceb4c6394c586abaf65d76dd6cf088f50a5b806.keep and 
-that is the source of all the trouble to come.  You still can remove 
-that file if you don't have a backup yet.
-
-If you still want to give it the coup de grace, just do:
-
-$ git-repack -a -d
-
-And now you've just lost a large amount of objects.  To see the extent 
-of the dammage, just do:
-
-$ git-fsck-objects
-
-So... what is the --unpacked=<pack>.pack switch supposed to mean?  It is 
-not documented anywhere and it certainly doesn't produce the expected 
-result with a repack.
-
-
+I'm just do not understand why avoiding temporary file wouldn't help
