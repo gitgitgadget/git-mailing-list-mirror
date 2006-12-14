@@ -1,120 +1,82 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-1.5 required=3.0 tests=BAYES_00,DKIM_ADSP_NXDOMAIN,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RCVD_NUMERIC_HELO,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
-From: Jerome Lovy <t2a2e9z8ncbs9qg@brefemail.com>
-Subject: [RFC] A unique way to express "all" (vs "add vs "update") ?
-Date: Fri, 15 Dec 2006 12:38:51 +0100
-Message-ID: <elu1cn$k3$1@sea.gmane.org>
-Reply-To: t2a2e9z8ncbs9qg@brefemail.com
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: git-fetching from a big repository is slow
+Date: Thu, 14 Dec 2006 16:06:05 +0100
+Message-ID: <4581685D.1070407@op5.se>
+References: <200612141340.43925.andyparkins@gmail.com> <4581573E.40803@op5.se> <Pine.LNX.4.63.0612141513130.3635@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Fri, 15 Dec 2006 11:37:42 +0000 (UTC)
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 14 Dec 2006 15:06:39 +0000 (UTC)
+Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 70
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 212.11.48.246
-User-Agent: Thunderbird 1.5.0.8 (X11/20061107)
+User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
+In-Reply-To: <Pine.LNX.4.63.0612141513130.3635@wbgn013.biozentrum.uni-wuerzburg.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34496>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34344>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GvBNe-0003yU-BU for gcvg-git@gmane.org; Fri, 15 Dec
- 2006 12:37:34 +0100
+ esmtp (Exim 4.50) id 1GusAL-0001iZ-G0 for gcvg-git@gmane.org; Thu, 14 Dec
+ 2006 16:06:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751958AbWLOLh2 convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Fri, 15 Dec 2006 06:37:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751961AbWLOLh2
- (ORCPT <rfc822;git-outgoing>); Fri, 15 Dec 2006 06:37:28 -0500
-Received: from main.gmane.org ([80.91.229.2]:51250 "EHLO ciao.gmane.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1751958AbWLOLh1
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 15 Dec 2006 06:37:27 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1GvBNO-0005UU-3R for git@vger.kernel.org; Fri, 15 Dec 2006 12:37:20 +0100
-Received: from 212.11.48.246 ([212.11.48.246]) by main.gmane.org with esmtp
- (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Fri, 15
- Dec 2006 12:37:18 +0100
-Received: from t2a2e9z8ncbs9qg by 212.11.48.246 with local (Gmexim 0.1
- (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Fri, 15 Dec 2006
- 12:37:18 +0100
-To: git@vger.kernel.org
+ S932786AbWLNPGI (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
+ 10:06:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932785AbWLNPGI
+ (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 10:06:08 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:35118 "EHLO
+ smtp-gw1.op5.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
+ S932774AbWLNPGH (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006
+ 10:06:07 -0500
+Received: from [192.168.1.20] (unknown [213.88.215.14]) by smtp-gw1.op5.se
+ (Postfix) with ESMTP id 6EC006BCBC; Thu, 14 Dec 2006 16:06:05 +0100 (CET)
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-Hi,
+Johannes Schindelin wrote:
+> Hi,
+> 
+> On Thu, 14 Dec 2006, Andreas Ericsson wrote:
+> 
+>> Andy Parkins wrote:
+>>> Hello,
+>>>
+>>> I've got a big repository.  I've got two computers.  One has the repository
+>>> up-to-date (164M after repack); one is behind (30M ish).
+>>>
+>>> I used git-fetch to try and update; and the sync took HOURS.  I zipped the
+>>> .git directory and transferred that and it took about 15 minutes to
+>>> transfer.
+>>>
+>>> Am I doing something wrong?  The git-fetch was done with a git+ssh:// URL.
+>>> The zip transfer with scp (so ssh shouldn't be a factor).
+>>>
+>> This seems to happen if your repository consists of many large binary files,
+>> especially many large binary files of several versions that do not deltify
+>> well against each other. Perhaps it's worth adding gzip compression detecion
+>> to git? I imagine more people than me are tracking gzipped/bzip2'ed content
+>> that pretty much never deltifies well against anything else.
+> 
+> Or we add something like the heuristics we discovered in another thread, 
+> where rename detection (which is related to delta candidate searching) is 
+> not started if the sizes differ drastically.
+> 
 
-While I am very happy with the refactorings undertaken with regard to
-"git add/git commit" (both for UI and documentation), I am still a
-little confused by the different ways I seem to find to express the ide=
-a
-"I want to add (sort of) all file contents".
+It wouldn't work for this particular case though. In our distribution 
+repository we have ~300 bzip2 compressed tarballs with an average size 
+of 3MiB. 240 of those are between 2.5 and 4 MiB, so they don't 
+drastically differ, but neither do they delta well.
 
-To be more specific, I find the following in the current documentation:
+One option would be to add some sort of config option to skip attempting 
+deltas of files with a certain suffix. That way we could just tell it to 
+ignore *.gz,*.tgz,*.bz2 and everything would work just as it does today, 
+but a lot faster.
 
-git add <dir>
-	"adds content from all files under <dir>  directory and its
-	subdirectories."
-	(as interpreted from the "EXAMPLES" section of the git-add
-	man-page)
-	(BTW, could this <dir> usage be documented in the SYNOPSIS and
-	DESCRIPTION sections (admittedly at a 2nd rank after the
-	currently documented usage)  as well as in the EXAMPLES ?
-	Besides this reference sections would probably include the
-	<dir>/<regexp> usage that I've not mentioned here for the sake
-	of simplicity.)
-=09
-	Moreover, the tutorial documents the typical usage "git add ."
-
-git commit -a|--all
-	"automatically stage files that have been modified and deleted,
-	but new files you have not told git about are not affected."
-
-Granted, the latter semantics for "all" is not exactly the same as the
-former. Nonetheless, I think it would be very nice to only have to=20
-memorize one way to express "all".
-
-To this end, I would be very happy with the following:
-(X-mas is coming soon, isn't it ;-)  )
-
-git add <dir>
-	same semantics
-
-git commit -a|--add <files>
-	"adds content from the specified files before committing
-	(files that are already tracked have their current content
-	staged)"
-
-git commit -a|--add <dir>
-	"adds content from all files under <dir>  directory and its
-	subdirectories before committing"
-	(once again, for simplification of my explanations, I omit the
-	<dir>/<regexp> usage here)
-
-git commit -u|--update <dir>
-	"automatically stage files that have been modified and deleted
-	under <dir>  directory and its subdirectories, but new files you
-	have not told git about are not affected."
-	(once again, for simplification of my explanations, I omit the
-	<dir>/<regexp> usage here)
-
-	(This would allow the typical usage "git commit -u ." which is
-	barely longer than the current "git commit -a")
-
-=46or interface completeness, "git commit -u|--update <files>" could al=
-so
-exist but would probably be of no use.
-
-To sum up, "all" would be consistently expressed with the <dir> syntax.
-"git commit -a" would not mean "--all" anymore. Lastly, a distinction
-would be made between "--add" and "--update":
-- "git commit -add" would have the same semantics as "git add"
-- "git commit --update" on the other hand would only affect the files
-   already tracked
-
-Thank you for your patient attention.
-J=E9r=F4me Lovy
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
