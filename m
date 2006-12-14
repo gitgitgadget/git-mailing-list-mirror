@@ -2,60 +2,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git-PS1 bash prompt setting
-Date: Sun, 26 Nov 2006 16:18:05 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0611261617470.30004@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <BAYC1-PASMTP037FDA6C6465F0541AC613AEE90@CEZ.ICE>
- <Pine.LNX.4.63.0611261524130.30004@wbgn013.biozentrum.uni-wuerzburg.de>
- <BAYC1-PASMTP0478559E108A91E0F2A038AEE70@CEZ.ICE>
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git-show, was Re: What's in git.git (stable)
+Date: Thu, 14 Dec 2006 00:28:48 -0800
+Message-ID: <7vbqm6anjz.fsf@assigned-by-dhcp.cox.net>
+References: <7v4przfpir.fsf@assigned-by-dhcp.cox.net>
+	<200612132237.10051.andyparkins@gmail.com>
+	<7vk60vbcfz.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0612140113340.3635@wbgn013.biozentrum.uni-wuerzburg.de>
+	<Pine.LNX.4.64.0612132231050.18171@xanadu.home>
+	<7vy7pb9eit.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0612140855400.3635@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Sun, 26 Nov 2006 15:18:27 +0000 (UTC)
-Cc: git@vger.kernel.org, Theodore Tso <tytso@mit.edu>
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Thu, 14 Dec 2006 08:28:58 +0000 (UTC)
+Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <BAYC1-PASMTP0478559E108A91E0F2A038AEE70@CEZ.ICE>
-X-Y-GMX-Trusted: 0
+In-Reply-To: <Pine.LNX.4.63.0612140855400.3635@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Thu, 14 Dec 2006 08:59:18 +0100
+	(CET)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32351>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GoLls-0004p2-LP for gcvg-git@gmane.org; Sun, 26 Nov
- 2006 16:18:21 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34285>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GulxV-0008HG-Ef for gcvg-git@gmane.org; Thu, 14 Dec
+ 2006 09:28:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S935412AbWKZPSK (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 26 Nov 2006
- 10:18:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935420AbWKZPSK
- (ORCPT <rfc822;git-outgoing>); Sun, 26 Nov 2006 10:18:10 -0500
-Received: from mail.gmx.net ([213.165.64.20]:25732 "HELO mail.gmx.net") by
- vger.kernel.org with SMTP id S935412AbWKZPSJ (ORCPT
- <rfc822;git@vger.kernel.org>); Sun, 26 Nov 2006 10:18:09 -0500
-Received: (qmail invoked by alias); 26 Nov 2006 15:18:06 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp032) with SMTP; 26 Nov 2006 16:18:06 +0100
-To: Sean <seanlkml@sympatico.ca>
+ S1751820AbWLNI2u (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
+ 03:28:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751828AbWLNI2u
+ (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 03:28:50 -0500
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:57349 "EHLO
+ fed1rmmtao08.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1751820AbWLNI2t (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006
+ 03:28:49 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao08.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061214082849.HJGR16632.fed1rmmtao08.cox.net@fed1rmimpo01.cox.net>; Thu, 14
+ Dec 2006 03:28:49 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id yYU91V00B1kojtg0000000; Thu, 14 Dec 2006
+ 03:28:10 -0500
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-Hi,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On Sun, 26 Nov 2006, Sean wrote:
+> Hi,
+>
+> On Wed, 13 Dec 2006, Junio C Hamano wrote:
+>
+>> One minor issue we may need to decide is what to do when show is
+>> given a tag object.  Personally I think the current behaviour of
+>> dereferencing it to commit is fine (people who want to see the
+>> tag can always do 'git-verify-tag -v').
+>
+> How about adding the command line option "--tag" to git-show, which makes 
+> it only show that tag. I'd also vote for a "--verbose|-v" flag to show the 
+> contents of the tag _before_ showing the referenced object.
 
-> On Sun, 26 Nov 2006 15:27:07 +0100 (CET)
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> 
-> > But there really is no good place to put it: most commands need a git 
-> > repository, and those which do not, are inappropriate to put an option 
-> > "--show-ps1" into. Except maybe repo-config. Thoughts?
-> 
-> What about just making it an option to the git wrapper?
-
-D'oh. Too easy!
-
-Thanks,
-Dscho
+Sounds sensible.  Please make it so.
