@@ -1,69 +1,71 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: git-merge-recursive segmentation error
-Date: Tue, 19 Dec 2006 17:00:38 -0800 (PST)
-Message-ID: <693577.67723.qm@web31813.mail.mud.yahoo.com>
-Reply-To: ltuikov@yahoo.com
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git-svnimport breakage as of git-1.4.4
+Date: Thu, 14 Dec 2006 13:32:28 -0800
+Message-ID: <7vejr217v7.fsf@assigned-by-dhcp.cox.net>
+References: <1165505193.26874.13.camel@systems03.lan.brontes3d.com>
+	<20061208203230.GA9193@sashak.voltaire.com>
+	<1165847230.13854.2.camel@systems03.lan.brontes3d.com>
+	<20061211204904.GC1003@sashak.voltaire.com>
+	<1166027289.21948.4.camel@systems03.lan.brontes3d.com>
+	<20061214022142.GA14521@sashak.voltaire.com>
+	<1166130300.21982.0.camel@systems03.lan.brontes3d.com>
+	<20061214212033.GG7838@sashak.voltaire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-NNTP-Posting-Date: Wed, 20 Dec 2006 01:02:08 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Thu, 14 Dec 2006 21:32:45 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=X-YMail-OSG:Received:Date:From:Reply-To:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
-  b=yJoK//QcMh/CpVnmfmOqivYhYXjjYmMhlbgbjgwqps30YqiGrpkyiL+iSQSE0kcl7Gnkgkzm+M/vEWrRfgWyKL013IG+KspLkmqhF6534pmp3fMurARGDMVt2JOKj4kwpmC8toOHJ297rgsLoK0kwBVPEE3jM7sJRfsB6ZVc9ac=;
-X-YMail-OSG: mqEftPMVM1m2xcrunqCQOnltE3KlkJO.QhV03MgoAGbXo_cpb.OeXPChdjP9NsNpYG58mPgdc6lbBmzmq6DHp0SdzD7e0ggLhQFNXovjhVfy83yzxTUm0Vdh8ydqEFFXtNLcLG8qhyfyhg--
+In-Reply-To: <20061214212033.GG7838@sashak.voltaire.com> (Sasha Khapyorsky's
+	message of "Thu, 14 Dec 2006 23:20:33 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34880>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34406>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GwpqJ-0006pJ-94 for gcvg-git@gmane.org; Wed, 20 Dec
- 2006 02:01:59 +0100
+ esmtp (Exim 4.50) id 1GuyBs-0002tO-FJ for gcvg-git@gmane.org; Thu, 14 Dec
+ 2006 22:32:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932822AbWLTBAk (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
- 20:00:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932826AbWLTBAk
- (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 20:00:40 -0500
-Received: from web31813.mail.mud.yahoo.com ([68.142.207.76]:38530 "HELO
- web31813.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- SMTP id S932821AbWLTBAj (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec
- 2006 20:00:39 -0500
-Received: (qmail 68584 invoked by uid 60001); 20 Dec 2006 01:00:38 -0000
-Received: from [64.215.88.90] by web31813.mail.mud.yahoo.com via HTTP; Tue,
- 19 Dec 2006 17:00:38 PST
-To: git@vger.kernel.org
+ S932930AbWLNVca (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
+ 16:32:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932932AbWLNVca
+ (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 16:32:30 -0500
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:62568 "EHLO
+ fed1rmmtao02.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S932930AbWLNVc3 (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006
+ 16:32:29 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao02.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061214213228.IBIV97.fed1rmmtao02.cox.net@fed1rmimpo02.cox.net>; Thu, 14
+ Dec 2006 16:32:28 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id ylYf1V0161kojtg0000000; Thu, 14 Dec 2006
+ 16:32:40 -0500
+To: Sasha Khapyorsky <sashak@voltaire.com>
 Sender: git-owner@vger.kernel.org
 
-So, I'm merging Linux master into my own dev tree and
-here is what I get in syslog:
+Sasha Khapyorsky <sashak@voltaire.com> writes:
 
-Dec 19 16:56:38 lion kernel: [ 1704.395478] git-merge-recur[12030] general protection rip:4285ef
-rsp:7ffff727bf40 error:0
+> On 16:05 Thu 14 Dec     , Daniel Drake wrote:
+>> On Thu, 2006-12-14 at 04:21 +0200, Sasha Khapyorsky wrote:
+>> > Try this please:
+>> > 
+>> > 
+>> > diff --git a/git-svnimport.perl b/git-svnimport.perl
+>> > index cbaa8ab..071777b 100755
+>> > --- a/git-svnimport.perl
+>> > +++ b/git-svnimport.perl
+>> 
+>> Thanks, it now works for both forms of command line arguments.
+>
+> Thanks for reporting. I still run git-svnimport against
+> http://tortoisesvn.tigris.org/svn/tortoisesvn, works fine up to now.
 
-and on the command line:
-...
-Auto-merging init/Kconfig
-Auto-merging init/version.c
-/home/luben/bin/git-merge: line 394: 12030 Segmentation fault      git-merge-$strategy $common --
-"$head_arg" "$@"
-Merge with strategy recursive failed.
-
-I'm running "next".
-
-Are the people aware of this issue?
-
-It is 100% reproducible on my trees.
-
-Anyone has a patch?
-
-     Luben
-
-
+An applicable version of the patch with proposed commit log
+message would be much appreciated.
