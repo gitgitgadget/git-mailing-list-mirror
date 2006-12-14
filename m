@@ -1,100 +1,87 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Liu Yubao <yubao.liu@gmail.com>
-Subject: If merging that is really fast forwarding creates new commit [Was:
- Re: how to show log for only one branch]
-Date: Mon, 06 Nov 2006 21:00:07 +0800
-Message-ID: <454F31D7.1030202@gmail.com>
-References: <454EAEDB.8020909@gmail.com> <7vk629f6is.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: svn versus git
+Date: Thu, 14 Dec 2006 01:44:33 -0800
+Message-ID: <7vodq695ha.fsf@assigned-by-dhcp.cox.net>
+References: <200612132200.41420.andyparkins@gmail.com>
+	<20061213225627.GC32568@spearce.org>
+	<200612140908.36952.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Mon, 6 Nov 2006 13:02:35 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Thu, 14 Dec 2006 09:44:46 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=k1LkslOZ8rsESQ97dn5atQVcZp/fj5WJfbUfVWYSDEKuBw65YqOr/8HXQbAcn0C8R9SdZ5LvPRHFmwMBhwUw1dW5QtUMHFPUfk4oWYPuSZVdN+UNJ/HeArvDtzFRiYaqnNQuoVcvF0cfgQjue2SqFPjvRkZBQCTf++hXGzEN3mI=
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.0.7) Gecko/20060909 Thunderbird/1.5.0.7 Mnenhy/0.7.4.666
-In-Reply-To: <7vk629f6is.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <200612140908.36952.andyparkins@gmail.com> (Andy Parkins's
+	message of "Thu, 14 Dec 2006 09:08:34 +0000")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31010>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gh46D-0003Nx-Dg for gcvg-git@gmane.org; Mon, 06 Nov
- 2006 14:01:14 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34294>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gun8n-0000Pg-Mr for gcvg-git@gmane.org; Thu, 14 Dec
+ 2006 10:44:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753023AbWKFNBK (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 6 Nov 2006
- 08:01:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753036AbWKFNBJ
- (ORCPT <rfc822;git-outgoing>); Mon, 6 Nov 2006 08:01:09 -0500
-Received: from wx-out-0506.google.com ([66.249.82.229]:30585 "EHLO
- wx-out-0506.google.com") by vger.kernel.org with ESMTP id S1753023AbWKFNBI
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 6 Nov 2006 08:01:08 -0500
-Received: by wx-out-0506.google.com with SMTP id s14so1039556wxc for
- <git@vger.kernel.org>; Mon, 06 Nov 2006 05:01:07 -0800 (PST)
-Received: by 10.90.31.19 with SMTP id e19mr414855age.1162818067366; Mon, 06
- Nov 2006 05:01:07 -0800 (PST)
-Received: from ?192.168.88.85? ( [221.122.47.70]) by mx.google.com with ESMTP
- id 44sm5511392wri.2006.11.06.05.01.05; Mon, 06 Nov 2006 05:01:06 -0800 (PST)
-To: Junio C Hamano <junkio@cox.net>
+ S932186AbWLNJof (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
+ 04:44:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932190AbWLNJoe
+ (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 04:44:34 -0500
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:39124 "EHLO
+ fed1rmmtao11.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S932186AbWLNJoe (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006
+ 04:44:34 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao11.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061214094433.CJSE25875.fed1rmmtao11.cox.net@fed1rmimpo01.cox.net>; Thu, 14
+ Dec 2006 04:44:33 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id yZju1V0071kojtg0000000; Thu, 14 Dec 2006
+ 04:43:55 -0500
+To: Andy Parkins <andyparkins@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Thanks to Junio for his patient explanation about branches in git, I find 
-there is a subtle difference between GIT and regular VCS that can be easily
-neglected by newbies.
+Andy Parkins <andyparkins@gmail.com> writes:
 
-I realize that git is a *content tracker*, it only creates commit object
-when the corresponding tree is really modified, git records content merging
-but not usual merging operation, that's why git is called a content tracker.
-This explains why a merging that is really a fast forwarding doesn't create
-any new commit.
+> On Wednesday 2006 December 13 22:56, Shawn Pearce wrote:
+>
+>>   git cat-file -p $REV:$file
+>>
+>> not sure how much easier it gets than that.  Load in the bash
+>> completion from contrib/completion and you can even tab complete
+>> the $file part.
+>
+> Yes.  I was a little unfair on that one; I forgot about the REV:file syntax.  
+> However, it's still not simple for a new user; I think I'd say "draw" if 
+> the "-p" weren't a requirement.
 
-This feature is different from many regular VCS like CVS and Subversion and
-confuses newbies that come from them: mainline doesn't make sense too much,
-'git log' shows many logs from other branches. In git, a branch is almost a
-tag, you can't get the *track* of a branch(It's a pity reflog is only for
-local purpose). I am used to one-trunk-and-more-side-branches way, every
-branches are isolated clearly, git makes me very confused at the beginning.
+I would say pretending as if cat-file is a Porcelain is the
+unfair part.
 
+> $ git-ls-tree v1.0.0
+> 100644 blob 906e98492080d2fde9467a9970fc92d7a8cfeaf8    Makefile
+>
+> I'm a newbie:  what's that number at the front?  What's a blob?  What's that 
+> great big number - I've only seen commit hashes that look like that, and that 
+> isn't one.  Definitely not friendly.
 
-Then, what bad *logical* problem will happen if a merging that is really a 
-fast forwarding creates a new commit?
+Again, mistaking ls-tree as if it was a Porcelain is the true
+cause of the newbie confusion.
 
-If we throw away all compatibility, efficiency, memory and disk consumption
-problems,
-(1) we can get the track of a branch without reflog because HEAD^1 is
-always the tip of target branch(or working branch usually) before merging.
+> It could probably be fixed by making git-ls-files capable of understanding 
+> tree-ish.
 
-(2) with the track, branch mechanism in git is possibly easier to understand,
-especially for newbies from CVS or Subversion, I really like git's light 
-weight, simple but powerful design and great efficiency, but I am really
-surprised that 'git log' shows logs from other branches and a side branch can 
-become part of main line suddenly.
+I think that's a wrong way to go about.  The primary purpose of
+ls-files is to read the index and show information around it;
+ls-tree is about reading one tree and show information around
+it.  They are both plumbing and meant to be used by scripts when
+they want to inspect the index or a tree respectively.
 
-A revision graph represents fast forwarding style merging like this:
-
-             (fast forwarding)
-  ---- a ............ * ------> master
-        \            /
-         b----------c -----> test         (three commits with three trees)
-
-can be changed to:
-
-  ---- a (tree_1) ----------- d (tree_3) ------> master
-        \                    /
-         b (tree_2) ------- c (tree_3) ----> test
-(four commits with three trees, it's normal as more than one way can reach 
-Rome :-)
-
-
-I don't think I am smarter than any people in this mailing list, in fact
-I am confused very much by GIT's branches at the beginning. There must
-be many problems I haven't realized, I am very curious about them, any
+If a Porcelain level "ls" is needed (and I am doubtful about
+usefulness of "svn list -r538" like command), that is the
+command you would want to teach about using ls-files and ls-tree
+depending on what the end users want in their workflow.
