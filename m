@@ -6,59 +6,67 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] git-clone: lose the artificial "first" fetch refspec
-Date: Sat, 16 Dec 2006 12:51:57 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612161240120.3635@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <7v4przfpir.fsf@assigned-by-dhcp.cox.net> <7vfybgjj7k.fsf@assigned-by-dhcp.cox.net>
- <7v3b7gji73.fsf@assigned-by-dhcp.cox.net> <7vvekci3ds.fsf_-_@assigned-by-dhcp.cox.net>
+Subject: Re: [PATCH] "master" should be treated no differently from any other
+     branch
+Date: Thu, 14 Dec 2006 17:14:39 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0612141710400.3635@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <200612141519.44294.andyparkins@gmail.com>
+ <Pine.LNX.4.63.0612141627090.3635@wbgn013.biozentrum.uni-wuerzburg.de>
+ <4581721B.4050102@xs4all.nl> <458174C9.2050401@xs4all.nl>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Sat, 16 Dec 2006 11:52:08 +0000 (UTC)
+NNTP-Posting-Date: Thu, 14 Dec 2006 16:14:54 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 X-Authenticated: #1490710
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7vvekci3ds.fsf_-_@assigned-by-dhcp.cox.net>
+In-Reply-To: <458174C9.2050401@xs4all.nl>
 X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34608>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34360>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GvY5F-0004Ao-Ai for gcvg-git@gmane.org; Sat, 16 Dec
- 2006 12:52:05 +0100
+ esmtp (Exim 4.50) id 1GutEN-0004om-VC for gcvg-git@gmane.org; Thu, 14 Dec
+ 2006 17:14:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753647AbWLPLwA (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 16 Dec 2006
- 06:52:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965429AbWLPLwA
- (ORCPT <rfc822;git-outgoing>); Sat, 16 Dec 2006 06:52:00 -0500
-Received: from mail.gmx.net ([213.165.64.20]:58889 "HELO mail.gmx.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S1753644AbWLPLv7
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 16 Dec 2006 06:51:59 -0500
-Received: (qmail invoked by alias); 16 Dec 2006 11:51:58 -0000
+ S932851AbWLNQOp (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
+ 11:14:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932852AbWLNQOp
+ (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 11:14:45 -0500
+Received: from mail.gmx.net ([213.165.64.20]:51104 "HELO mail.gmx.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S932851AbWLNQOo
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006 11:14:44 -0500
+Received: (qmail invoked by alias); 14 Dec 2006 16:14:39 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp045) with SMTP; 16 Dec 2006 12:51:58 +0100
-To: Junio C Hamano <junkio@cox.net>
+ [132.187.25.13] by mail.gmx.net (mp019) with SMTP; 14 Dec 2006 17:14:39 +0100
+To: Han-Wen Nienhuys <hanwen@xs4all.nl>
 Sender: git-owner@vger.kernel.org
 
 Hi,
 
-On Sat, 16 Dec 2006, Junio C Hamano wrote:
+On Thu, 14 Dec 2006, Han-Wen Nienhuys wrote:
 
->  With the recent flurry of UI updates, I think it is sane to do
->  that before v1.5.0; opinions?
+> Wouldn't it be better to mention the id of the local repository too? 
+> 
+>   Merge branch 'master' of ssh+git://git.sv.gnu.org/srv/git/lilypond into 
+>   'master' of 'hanwen@xs4all.nl'
+> 
+> this would give more information when these commit messages get pushed 
+> to someone else.
 
-Answering to all of your recent patches in this direction: I like it.
+And why not put your address and birthday in there, too?
 
-Originally, I thought that this would require more from me: I often 
-synchronize my git repository (including topic branches) between different 
-machines back and forth, via usb stick, and two different central 
-machines. I use the script I sent in this mail:
+Frankly, it does not matter. In my private git repository I see that I 
+often merged from this machine to that machine, criss-crossing often. It 
+does not buy me anything to even know _where_ I got it from.
 
-http://article.gmane.org/gmane.comp.version-control.git/6956/
+Besides, the information you are most likely looking for is the committer, 
+which is recorded anyway.
 
-However, I just realized that I will not need the script anymore, what 
-with the recent addition of wildcards to remote.<branch>.fetch. Good job!
+The single most useful information in the Merge message is the name of the 
+branch I merged, since it is more often than not a topic branch, which is 
+aptly named.
 
 Ciao,
 Dscho
