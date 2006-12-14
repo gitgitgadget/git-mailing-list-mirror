@@ -1,47 +1,72 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Ian Molton <spyro@f2s.com>
-Subject: Re: trouble with git cvsimport
-Date: Tue, 12 Dec 2006 12:33:55 +0000
-Organization: The Dragon Roost
-Message-ID: <457EA1B3.2010605@f2s.com>
-References: <457DE980.50605@f2s.com> <457E6774.20707@op5.se>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: What's in git.git (stable)
+Date: Thu, 14 Dec 2006 13:20:24 +0000
+Message-ID: <200612141320.26729.andyparkins@gmail.com>
+References: <7v4przfpir.fsf@assigned-by-dhcp.cox.net> <200612141200.42875.andyparkins@gmail.com> <20061214121048.GM1747@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Tue, 12 Dec 2006 12:34:04 +0000 (UTC)
-Cc: git@vger.kernel.org
+NNTP-Posting-Date: Thu, 14 Dec 2006 13:20:39 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 2.0a1 (X11/20061107)
-In-Reply-To: <457E6774.20707@op5.se>
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=W6GEVIhFyhFIknpwnJXT86lOanQ6Asg0p55oOAVkIZjm+WinYLnvpf0/lXh8ANulslQXpWwhsNu/i2D1FvltncMrCtvExd0+8dXlRQB7od8nvlk3w82NxgPN6UN4EKN4FYdImY2dgRTA4qUtaQz5hYASbRhNGK0H5v5LjyWhtQ8=
+User-Agent: KMail/1.9.5
+In-Reply-To: <20061214121048.GM1747@spearce.org>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34090>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34332>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gu6pc-0000sE-UV for gcvg-git@gmane.org; Tue, 12 Dec
- 2006 13:34:01 +0100
+ esmtp (Exim 4.50) id 1GuqVo-0002uU-K7 for gcvg-git@gmane.org; Thu, 14 Dec
+ 2006 14:20:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751261AbWLLMd6 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 12 Dec 2006
- 07:33:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751263AbWLLMd5
- (ORCPT <rfc822;git-outgoing>); Tue, 12 Dec 2006 07:33:57 -0500
-Received: from outmail1.freedom2surf.net ([194.106.33.237]:60767 "EHLO
- outmail.freedom2surf.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with
- ESMTP id S1751261AbWLLMd5 (ORCPT <rfc822;git@vger.kernel.org>); Tue, 12 Dec
- 2006 07:33:57 -0500
-Received: from [192.168.1.2] (i-83-67-116-184.freedom2surf.net
- [83.67.116.184]) by outmail.freedom2surf.net (Postfix) with ESMTP id
- 9C6DE52A44; Tue, 12 Dec 2006 12:33:55 +0000 (GMT)
-To: Andreas Ericsson <ae@op5.se>
+ S932704AbWLNNUd (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
+ 08:20:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932706AbWLNNUd
+ (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 08:20:33 -0500
+Received: from ug-out-1314.google.com ([66.249.92.173]:62693 "EHLO
+ ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S932704AbWLNNUc (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec
+ 2006 08:20:32 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so495936uga for
+ <git@vger.kernel.org>; Thu, 14 Dec 2006 05:20:31 -0800 (PST)
+Received: by 10.67.103.7 with SMTP id f7mr1423876ugm.1166102431306; Thu, 14
+ Dec 2006 05:20:31 -0800 (PST)
+Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
+ ESMTP id 53sm2487460ugn.2006.12.14.05.20.30; Thu, 14 Dec 2006 05:20:30 -0800
+ (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Andreas Ericsson wrote:
+On Thursday 2006 December 14 12:10, Shawn Pearce wrote:
 
-> Does linux/kernel26/.git/.git exists? I managed to get something similar 
-> once and it had me confused a loong time.
+> not predict future results"...  The size of objects in the pack
+> tends to be small up front (commits/trees) and larger in the back
+> (blobs).  The size distribution probably also gets more erratic
+> near the back as the blob sizes may not follow a nice distribution.
 
+Oh well; that pretty much settles it then.
+
+> But as you state, its easy to refine it over time, and the closer we
+> get to the end the more likely it is to be correct.  Unless its that
+> 23 MiB blob.  As it takes up about 85% of that repository's pack.
+
+I had imagined (foolishly), that most objects would be diffs, and would be 
+similarly sized.
+
+Scratch that.
+
+Andy
+-- 
+Dr Andy Parkins, M Eng (hons), MIEE
