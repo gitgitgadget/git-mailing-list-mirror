@@ -1,84 +1,88 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [RFD] making separate-remote layout easier to use
-Date: Sun, 26 Nov 2006 17:21:38 -0800
-Message-ID: <7virh1r8f1.fsf@assigned-by-dhcp.cox.net>
-References: <7v1wnr19do.fsf@assigned-by-dhcp.cox.net>
-	<20061126033433.GD29394@spearce.org>
-	<7vvel2yi2u.fsf@assigned-by-dhcp.cox.net>
-	<200611270159.14925.Josef.Weidendorfer@gmx.de>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: [PATCH] merge-recursive: add/add really is modify/modify with an empty base
+Date: Thu, 14 Dec 2006 11:31:38 +0000
+Message-ID: <b0943d9e0612140331q4c3a32e2l361fd04375f091d7@mail.gmail.com>
+References: <20061207101707.GA19139@spearce.org>
+	 <Pine.LNX.4.63.0612100056090.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <Pine.LNX.4.63.0612100114440.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <7vmz5w5tuw.fsf@assigned-by-dhcp.cox.net>
+	 <Pine.LNX.4.63.0612122347590.2807@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <7vvekgog0r.fsf@assigned-by-dhcp.cox.net>
+	 <Pine.LNX.4.63.0612130402300.2807@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <7vvekgl2z2.fsf@assigned-by-dhcp.cox.net>
+	 <b0943d9e0612131401s6cde6d0du5e3c6d2e34bfbbb2@mail.gmail.com>
+	 <Pine.LNX.4.63.0612140045430.3635@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Mon, 27 Nov 2006 01:24:27 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Thu, 14 Dec 2006 11:32:01 +0000 (UTC)
+Cc: "Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <200611270159.14925.Josef.Weidendorfer@gmx.de> (Josef
-	Weidendorfer's message of "Mon, 27 Nov 2006 01:59:14 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=e9HCzXVwTFnDu6Hyb+ssujhrNLG8LYsHoCeWnw9FQqWMS7euwL+gebR0P5BpuCkYCvknHE7fxwJt2ERWfAVyQJHFydaeoc8omfMziSSOZ4McbQvvX7SqX+m/Y+gpQ7PJOsSQOShtDu0mSayqJTeqm8ncThPml+fGog4kuTcgY8o=
+In-Reply-To: <Pine.LNX.4.63.0612140045430.3635@wbgn013.biozentrum.uni-wuerzburg.de>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32377>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GoVEO-00081S-3J for gcvg-git@gmane.org; Mon, 27 Nov
- 2006 02:24:24 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34319>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Guooh-0005z5-Fx for gcvg-git@gmane.org; Thu, 14 Dec
+ 2006 12:31:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1755681AbWK0BVk (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 26 Nov 2006
- 20:21:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755759AbWK0BVk
- (ORCPT <rfc822;git-outgoing>); Sun, 26 Nov 2006 20:21:40 -0500
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:50589 "EHLO
- fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP id S1755681AbWK0BVj
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 26 Nov 2006 20:21:39 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao08.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061127012139.SRQY18207.fed1rmmtao08.cox.net@fed1rmimpo02.cox.net>; Sun, 26
- Nov 2006 20:21:39 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id rdMn1V00P1kojtg0000000; Sun, 26 Nov 2006
- 20:21:47 -0500
-To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+ S932635AbWLNLbl (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
+ 06:31:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932640AbWLNLbl
+ (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 06:31:41 -0500
+Received: from nz-out-0506.google.com ([64.233.162.237]:4882 "EHLO
+ nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S932635AbWLNLbj (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec
+ 2006 06:31:39 -0500
+Received: by nz-out-0506.google.com with SMTP id s1so231287nze for
+ <git@vger.kernel.org>; Thu, 14 Dec 2006 03:31:38 -0800 (PST)
+Received: by 10.65.54.9 with SMTP id g9mr1382788qbk.1166095898528; Thu, 14
+ Dec 2006 03:31:38 -0800 (PST)
+Received: by 10.65.126.2 with HTTP; Thu, 14 Dec 2006 03:31:38 -0800 (PST)
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-Josef Weidendorfer <Josef.Weidendorfer@gmx.de> writes:
+On 13/12/06, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> xdl_merge(), as Git uses it, tries harder to find the true conflicts. So,
+> if the files actually differ in only one line, just this line will be
+> shown as conflict.
 
-> I am not so sure about this. IMHO, any user expects to see "pu" branch
-> cloned too after cloning git.git (at least me, and a newbie probably too).
+I gave the latest GIT a try and it works OK with StGIT.
 
-I think you are right that we can keep our sanity without
-omitting rewinding ones from the tracked set of branches.  In
-fact, remotes/origin/* hierarchy are not to be checked out
-directly anyway, even after we do the "bare SHA-1 stored in
-$GIT_DIR/HEAD" update -- that should give you a read-only
-checkout that you cannot commit on top of.  As long as we warn
-users who try to merge from these rewinding branches, there is
-no reason not to track them.
+This new merge looks much better than diff3 (or rcs merge) because it
+only shows the true conflicts.
 
-> As said, the real problem begins when the user tries to branch off her
-> own local branch from "pu". At this point, "git branch" or
-> "git checkout -b ..." should warn the user that he has to expect troubles
-> when branching off from such a branch, and only allow it with a
-> "--force" option.
+What it the relation between git-merge-recursive and "git-read-tree
+-m" (if any)? I currently still use "git-read-tree -m" for some merges
+because of the speed gain due to the --agressive option (really
+noticeable when picking a patch from an older branch). Probably
+git-merge-recursive cannot implement this since it needs to track
+deletion/additions for rename detection.
 
-That is true if you make "git branch my-pu remotes/origin/pu" to
-somehow set up the default merge source of "my-pu" branch to be
-remotes/origin/pu to encourage merging from it.
+Are there any other things to be aware if I completely replace the
+"git-read-tree + diff3" with git-merge-recursive?
 
-I am still not convinced it is a valid assumption that a branch
-often want to merge from the branch it was forked off of, and
-even less so that "git branch" and "git checkout -b" are the
-places to do that configuration.
+One nice addition to git-merge-recursive (probably only useful to
+StGIT) would be more meaningful labeling of the conflict regions,
+passed via a command line similar to the "diff3 -L" option. StGIT
+generates "patched", "current" and "ancestor" labels with diff3.
 
-But for the sake of discussion let's pretend for now that it
-were a good idea.  If we know remotes/origin/pu is expected to
-be rewound, the logic that configures "my-pu" to merge from the
-fork origin should be able to notice that situation, and refrain
-from doing the configuration, to prevent the user from issuing
-"git pull" without saying "from where", which can be done with
-your merge.stopsansdefault option in your other message.
+Yet another nice feature would be the ancestor region (which diff3
+doesn't add either but it gets added by emacs'
+ediff-merge-files-with-ancestor function if you use the interactive
+merge with StGIT).
 
+-- 
