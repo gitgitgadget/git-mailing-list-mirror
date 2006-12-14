@@ -1,79 +1,102 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Cleaning up git user-interface warts
-Date: Thu, 16 Nov 2006 16:13:44 -0800
-Message-ID: <7vmz6r2amf.fsf@assigned-by-dhcp.cox.net>
-References: <87k61yt1x2.wl%cworth@cworth.org> <455A1137.8030301@shadowen.org>
-	<87hcx1u934.wl%cworth@cworth.org>
-	<Pine.LNX.4.64.0611141518590.2591@xanadu.home>
-	<87bqn9u43s.wl%cworth@cworth.org> <ejdcg5$4fl$1@sea.gmane.org>
-	<Pine.LNX.4.64.0611141633430.2591@xanadu.home>
-	<7vbqn9y6w6.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0611142007010.2591@xanadu.home>
-	<7v3b8ltq7r.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0611142306090.2591@xanadu.home>
-	<Pine.LNX.4.64.0611150950170.3349@woody.osdl.org>
-	<455BBCE9.4050503@xs4all.nl>
-	<Pine.LNX.4.64.0611151908130.3349@woody.osdl.org>
-	<Pine.LNX.4.63.0611162353250.13772@wbgn013.biozentrum.uni-wuerzburg.de>
-	<Pine.LNX.4.64.0611161508530.3349@woody.osdl.org>
-	<455CFCBD.8040901@xs4all.nl>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] merge-recursive: add/add really is modify/modify with
+ an empty base
+Date: Thu, 14 Dec 2006 14:44:51 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0612141436170.3635@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20061207101707.GA19139@spearce.org> 
+ <Pine.LNX.4.63.0612100056090.28348@wbgn013.biozentrum.uni-wuerzburg.de> 
+ <Pine.LNX.4.63.0612100114440.28348@wbgn013.biozentrum.uni-wuerzburg.de> 
+ <7vmz5w5tuw.fsf@assigned-by-dhcp.cox.net> 
+ <Pine.LNX.4.63.0612122347590.2807@wbgn013.biozentrum.uni-wuerzburg.de> 
+ <7vvekgog0r.fsf@assigned-by-dhcp.cox.net> 
+ <Pine.LNX.4.63.0612130402300.2807@wbgn013.biozentrum.uni-wuerzburg.de> 
+ <7vvekgl2z2.fsf@assigned-by-dhcp.cox.net>  <b0943d9e0612131401s6cde6d0du5e3c6d2e34bfbbb2@mail.gmail.com>
+  <Pine.LNX.4.63.0612140045430.3635@wbgn013.biozentrum.uni-wuerzburg.de>
+ <b0943d9e0612140331q4c3a32e2l361fd04375f091d7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 17 Nov 2006 00:13:58 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Thu, 14 Dec 2006 13:44:59 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <455CFCBD.8040901@xs4all.nl> (Han-Wen Nienhuys's message of "Fri,
-	17 Nov 2006 01:05:17 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <b0943d9e0612140331q4c3a32e2l361fd04375f091d7@mail.gmail.com>
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31642>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GkrMe-0006hP-8n for gcvg-git@gmane.org; Fri, 17 Nov
- 2006 01:13:52 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34334>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GuqtM-0006AX-Ba for gcvg-git@gmane.org; Thu, 14 Dec
+ 2006 14:44:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1424797AbWKQANr (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 16 Nov 2006
- 19:13:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1424798AbWKQANr
- (ORCPT <rfc822;git-outgoing>); Thu, 16 Nov 2006 19:13:47 -0500
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:2179 "EHLO
- fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP id S1424797AbWKQANq
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 16 Nov 2006 19:13:46 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao10.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061117001345.MJNY5575.fed1rmmtao10.cox.net@fed1rmimpo02.cox.net>; Thu, 16
- Nov 2006 19:13:45 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id ncDr1V00a1kojtg0000000; Thu, 16 Nov 2006
- 19:13:52 -0500
-To: hanwen@xs4all.nl
+ S932720AbWLNNox (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
+ 08:44:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932727AbWLNNox
+ (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 08:44:53 -0500
+Received: from mail.gmx.net ([213.165.64.20]:50993 "HELO mail.gmx.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S932720AbWLNNow
+ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006 08:44:52 -0500
+Received: (qmail invoked by alias); 14 Dec 2006 13:44:51 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp045) with SMTP; 14 Dec 2006 14:44:51 +0100
+To: Catalin Marinas <catalin.marinas@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Han-Wen Nienhuys <hanwen@xs4all.nl> writes:
+Hi,
 
->  - clone but not a put-clone,
+On Thu, 14 Dec 2006, Catalin Marinas wrote:
 
-What's put-clone?  Care to explain?
+> On 13/12/06, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > xdl_merge(), as Git uses it, tries harder to find the true conflicts. So,
+> > if the files actually differ in only one line, just this line will be
+> > shown as conflict.
+> 
+> I gave the latest GIT a try and it works OK with StGIT.
 
->  - pull = merge + fetch, but no command for merge + throw
+Great!
 
-What's merge+throw?  Care to explain?
+> What it the relation between git-merge-recursive and "git-read-tree
+> -m" (if any)?
 
->  - clone for getting all branches of a repo, but no command for
->    updating all branches of a repo.  
+git-merge-recursive internally calls the equivalent of 'git-read-tree -m' 
+(it does not fork() and exec(), but rather calls the C functions 
+directly) and does nothing more if the 'git-write-tree' succeeds. At least 
+that's the theory...
 
-This one I can understand, but how would you propose to "update
-all branches", in other words what's your design for mapping
-remote branch names to local branch namespaces?
+If the git-write-tree does not succeed, it is because there are unmerged 
+entries, and only then, merge-recursive does the rename detection and the 
+file level merges.
 
-It would be nice if the design does not straightjacket different
-repository layouts different people seem to like, but I think it
-would be Ok to limit ourselves only to support the straight
-one-to-one mapping and support only separate-remote layout.
+> One nice addition to git-merge-recursive (probably only useful to
+> StGIT) would be more meaningful labeling of the conflict regions,
+> passed via a command line similar to the "diff3 -L" option. StGIT
+> generates "patched", "current" and "ancestor" labels with diff3.
+
+This is possible. However, it is not _that_ horrible to see "HEAD" and 
+some SHA1 which is obviously non-HEAD. Added to that, a quite common case 
+are the intermediate merges which make merge-recursive so powerful, and 
+they are rightly called "Temporary branch 1" and "... 2".
+
+> Yet another nice feature would be the ancestor region (which diff3
+> doesn't add either but it gets added by emacs'
+> ediff-merge-files-with-ancestor function if you use the interactive
+> merge with StGIT).
+
+Feasible, yes. But the code was written without that idea, so it would 
+involve changes in the xdmerge_t structure (add i0, chg0), recording that 
+in xdl_append_merge(), and passing also the base to 
+xdl_fill_merge_buffer().
+
+Is this really that nice? I never needed it... Besides, it can get really 
+crappy when the conflicting regions are too large.
+
+Ciao,
+Dscho
