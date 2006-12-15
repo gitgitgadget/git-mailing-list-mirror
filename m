@@ -1,152 +1,121 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH 3/3] gitweb: Hyperlink target of symbolic link in "tree" view (if possible)
-Date: Sun, 10 Dec 2006 13:25:48 +0100
-Message-ID: <11657536303381-git-send-email-jnareb@gmail.com>
-References: <7vk616ezu5.fsf@assigned-by-dhcp.cox.net>
-NNTP-Posting-Date: Sun, 10 Dec 2006 12:25:18 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, Jakub Narebski <jnareb@gmail.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH] make commit message a little more consistent and conforting
+Date: Fri, 15 Dec 2006 11:01:55 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0612151032240.18171@xanadu.home>
+References: <7v4przfpir.fsf@assigned-by-dhcp.cox.net>
+ <200612132237.10051.andyparkins@gmail.com>
+ <7vk60vbcfz.fsf@assigned-by-dhcp.cox.net>
+ <200612140959.19209.andyparkins@gmail.com>
+ <7v7iwu93rv.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0612141343200.18171@xanadu.home>
+ <Pine.LNX.4.64.0612142307160.18171@xanadu.home>
+ <20061215042459.GC27343@spearce.org> <45825E0B.5010200@op5.se>
+ <20061215150909.GE17860@spearce.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+NNTP-Posting-Date: Fri, 15 Dec 2006 16:02:19 +0000 (UTC)
+Cc: Andreas Ericsson <ae@op5.se>, Junio C Hamano <junkio@cox.net>,
+	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=c3TX8edS6YVmwYueIUUDp+MSumIW4Uyk66fKMWV3sMC5NSR8qXglAhAJ9TD61qug1jzol65SnXBQ6yzc3BJ0KYUgXDZJD8Nr8K4gAqcC5u7LuuUiHpH75x3OKWARyh1EmQkDLdkZ8uZ+K5HxbZjYJISOinVZoGb7myYNEnuZzZk=
-X-Mailer: git-send-email 1.4.4.1
-In-Reply-To: <7vk616ezu5.fsf@assigned-by-dhcp.cox.net>
+In-reply-to: <20061215150909.GE17860@spearce.org>
+X-X-Sender: nico@xanadu.home
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33883>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34525>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GtNk4-0001tZ-Gs for gcvg-git@gmane.org; Sun, 10 Dec
- 2006 13:25:16 +0100
+ esmtp (Exim 4.50) id 1GvFVn-0006fi-BD for gcvg-git@gmane.org; Fri, 15 Dec
+ 2006 17:02:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1758847AbWLJMZN (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 10 Dec 2006
- 07:25:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758849AbWLJMZN
- (ORCPT <rfc822;git-outgoing>); Sun, 10 Dec 2006 07:25:13 -0500
-Received: from ug-out-1314.google.com ([66.249.92.170]:22549 "EHLO
- ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1758847AbWLJMZL (ORCPT <rfc822;git@vger.kernel.org>); Sun, 10 Dec
- 2006 07:25:11 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so1088384uga for
- <git@vger.kernel.org>; Sun, 10 Dec 2006 04:25:10 -0800 (PST)
-Received: by 10.67.106.3 with SMTP id i3mr8209550ugm.1165753510710; Sun, 10
- Dec 2006 04:25:10 -0800 (PST)
-Received: from roke.D-201 ( [81.190.25.107]) by mx.google.com with ESMTP id
- z40sm4422473ugc.2006.12.10.04.25.10; Sun, 10 Dec 2006 04:25:10 -0800 (PST)
-Received: from roke.D-201 (localhost.localdomain [127.0.0.1]) by roke.D-201
- (8.13.4/8.13.4) with ESMTP id kBACRHFQ025893; Sun, 10 Dec 2006 13:27:18 +0100
-Received: (from jnareb@localhost) by roke.D-201 (8.13.4/8.13.4/Submit) id
- kBACRArV025891; Sun, 10 Dec 2006 13:27:10 +0100
-To: git@vger.kernel.org
+ S1752785AbWLOQCK (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 15 Dec 2006
+ 11:02:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752783AbWLOQCK
+ (ORCPT <rfc822;git-outgoing>); Fri, 15 Dec 2006 11:02:10 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:14299 "EHLO
+ relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1752785AbWLOQCJ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 15 Dec 2006
+ 11:02:09 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
+ <0JAB00GEPOJ7YOD0@VL-MH-MR002.ip.videotron.ca> for git@vger.kernel.org; Fri,
+ 15 Dec 2006 11:01:55 -0500 (EST)
+To: Shawn Pearce <spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 
-Make symbolic link target in "tree" view into hyperlink to generic
-"object" view (as we don't know if the link target is file (blob) or
-directory (tree), and if it exist at all).
+On Thu, 14 Dec 2006, Shawn Pearce wrote:
 
-Target of link is made into hyperlink when:
- * hash_base is provided (otherwise we cannot find hash
-   of link target)
- * link is relative
- * in no place link goes out of root tree (top dir)
+> Nicolas Pitre <nico@cam.org> wrote:
+> > It is nicer to let the user know when a commit succeeded all the time, 
+> > not only the first time.  Also the commit sha1 is much more useful than 
+> > the tree sha1 in this case.
+> 
+> I agree the commit sha1 is more useful than the tree sha1, but I'm
+> not really sure its useful to show the commit sha1 post commit.
 
-Full path of symlink target from the root dir is provided in the title
-attribute of hyperlink.
+It is useful, even if it is not essential.
 
-Currently symbolic link name uses ordinary file style (hidden
-hyperlink), while the hyperlink to symlink target uses default
-hyperlink style, so it is underlined while link target which is not
-made into hyperlink is not underlined.
+Since I believe it is a good thing to display _something_ by default 
+(and not only with -v as suggested -- please see the reasoning I posted 
+yesterday as to what should have some output and what shouldn't), it 
+doesn't hurt to display the commit sha1 as well.
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-Junio C Hamano wrote:
-> In other words, I think trying to be lazy is extremely important
-> while drawing a big list.
+First it has the very desirable side effect of making the user slightly 
+aware of how git identifies things.  From the first commit a new user 
+will notice that git doesn't use any incremental version number but a 
+unique identifier that has nothing to do with sequence.  It is not 
+expected that people will start _using_ the information printed, but it 
+will at least give a feel of how git works.  And it is not like if the 
+whole thing took multiple lines to be displayed.
 
-This implements "lazy" hyperlinking of symbolic link target in "tree"
-view.
+Next it _might_ be used by people.  The fact that it is there might turn 
+to be useful.  It is useful in the context of Documentation/tutorial-2.txt
+for one where the notion of objects and their relationship is explained 
+based on the least amount of steps possible.
 
- gitweb/gitweb.perl |   52 +++++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 files changed, 51 insertions(+), 1 deletions(-)
+So in short I do think there should be something shown after a 
+successful commit, and including the commit sha1 doesn't hurt.
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index a988f85..6493311 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -2008,6 +2008,48 @@ sub git_get_link_target {
- 	return $link_target;
- }
- 
-+# given link target, and the directory (basedir) the link is in,
-+# return target of link relative to top directory (top tree);
-+# return undef if it is not possible (including absolute links).
-+sub normalize_link_target {
-+	my ($link_target, $basedir, $hash_base) = @_;
-+
-+	# we can normalize symlink target only if $hash_base is provided
-+	return unless $hash_base;
-+
-+	# absolute symlinks (beginning with '/') cannot be normalized
-+	return if (substr($link_target, 0, 1) eq '/');
-+
-+	# normalize link target to path from top (root) tree (dir)
-+	my $path;
-+	if ($basedir) {
-+		$path = $basedir . '/' . $link_target;
-+	} else {
-+		# we are in top (root) tree (dir)
-+		$path = $link_target;
-+	}
-+
-+	# remove //, /./, and /../
-+	my @path_parts;
-+	foreach my $part (split('/', $path)) {
-+		# discard '.' and ''
-+		next if (!$part || $part eq '.');
-+		# handle '..'
-+		if ($part eq '..') {
-+			if (@path_parts) {
-+				pop @path_parts;
-+			} else {
-+				# link leads outside repository (outside top dir)
-+				return;
-+			}
-+		} else {
-+			push @path_parts, $part;
-+		}
-+	}
-+	$path = join('/', @path_parts);
-+
-+	return $path;
-+}
- 
- # print tree entry (row of git_tree), but without encompassing <tr> element
- sub git_print_tree_entry {
-@@ -2029,7 +2071,15 @@ sub git_print_tree_entry {
- 		if (S_ISLNK(oct $t->{'mode'})) {
- 			my $link_target = git_get_link_target($t->{'hash'});
- 			if ($link_target) {
--				print " -> " . esc_path($link_target);
-+				my $norm_target = normalize_link_target($link_target, $basedir, $hash_base);
-+				if (defined $norm_target) {
-+					print " -> " .
-+					      $cgi->a({-href => href(action=>"object", hash_base=>$hash_base,
-+					                             file_name=>$norm_target),
-+					               -title => $norm_target}, esc_path($link_target));
-+				} else {
-+					print " -> " . esc_path($link_target);
-+				}
- 			}
- 		}
- 		print "</td>\n";
--- 
-1.4.4.1
+> If you want to show something the diffstat like what git merge does
+> is better.
+> 
+> For one thing it confirms that git accepted the changes.  For another
+> it shows you *which* changes it accepted.  Plus it responds just
+> like git-merge or git-pull does.
+
+I disagree.  My patch does confirm that git accepted the change with 
+only one line.  As to which changes were accepted I think that when you 
+do the commit you certainly have a pretty good idea already of what is 
+going to be committed (you modified/added/removed files yourself, and by 
+default git-commit provides you with a summary in the text editor for 
+the commit message).
+
+On Fri, 15 Dec 2006, Shawn Pearce wrote:
+
+> Andreas Ericsson <ae@op5.se> wrote:
+> > diffstats can be huge though. I'd rather have those only with -v option.
+> 
+> But they are on by default for pull/merge, and disabled by -n.
+> 
+> They are on to tell you what you just got during the pull/merge.
+
+The pull/merge case is different.  You are most likely to not know in 
+advance what the overall changes will be.  Of course you're supposed to 
+know what you're pulling, but unlikely to know about the detail since 
+what you merge is remote to your current working tree by definition, and 
+even if you happen to be the one who did the changes in the other 
+branch/repo, it is certainly not as fresh in your mind than the changes 
+you did prior a commit.
+
+And it is true that diffstat can be quite large.  I wouldn't mind the 
+diffstat to be added to the commit message summary in the text editor 
+though.  And displaying it when -v is used makes also a lot of sense.  
+But not by default please.
+
+
