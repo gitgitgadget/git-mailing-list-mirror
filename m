@@ -1,109 +1,117 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: changing log entries
-Date: Thu, 14 Dec 2006 10:37:34 +0000
-Message-ID: <200612141037.35061.andyparkins@gmail.com>
-References: <1166051281.1808.1.camel@jcm.boston.redhat.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Using git as a general backup mechanism
+Date: Thu, 14 Dec 2006 16:33:51 -0800
+Message-ID: <7vwt4uxaj4.fsf@assigned-by-dhcp.cox.net>
+References: <787BE48C-1808-4A33-A368-5E8A3F00C787@mac.com>
+	<Pine.LNX.4.64.0612111837210.20138@iabervon.org>
+	<8900B938-1360-4A67-AB15-C9E84255107B@mac.com>
+	<200612121553.37499.andyparkins@gmail.com>
+	<457F31E6.8090701@midwinter.com>
+	<7vfybkof3s.fsf@assigned-by-dhcp.cox.net>
+	<4581DF3E.3070806@midwinter.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-15"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 14 Dec 2006 10:37:53 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Fri, 15 Dec 2006 00:34:03 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=MbqLwgRDv+inxVBoahh7+c1XtA+5vkB9GXUQWVs3yN779KXT2ZXZqOL5mMqnVXKkypXRRIHLY3Ow1jZjM8G0A5+yTpX43asbqTTV7uDHr2V/jN+leNMmnKtjGGCHw7V7RFpjKBsBogiUSvSHehIVVzks9c6lFTyJGR53/DpeR/k=
-User-Agent: KMail/1.9.5
-In-Reply-To: <1166051281.1808.1.camel@jcm.boston.redhat.com>
-Content-Disposition: inline
+In-Reply-To: <4581DF3E.3070806@midwinter.com> (Steven Grimm's message of "Thu,
+	14 Dec 2006 15:33:18 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34303>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34455>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GunyE-0007Hw-4e for gcvg-git@gmane.org; Thu, 14 Dec
- 2006 11:37:46 +0100
+ esmtp (Exim 4.50) id 1Gv11S-0000gv-KQ for gcvg-git@gmane.org; Fri, 15 Dec
+ 2006 01:33:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751919AbWLNKhm (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
- 05:37:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751917AbWLNKhl
- (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 05:37:41 -0500
-Received: from ug-out-1314.google.com ([66.249.92.172]:12963 "EHLO
- ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1751919AbWLNKhl (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec
- 2006 05:37:41 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so454048uga for
- <git@vger.kernel.org>; Thu, 14 Dec 2006 02:37:39 -0800 (PST)
-Received: by 10.66.255.7 with SMTP id c7mr1196078ugi.1166092659652; Thu, 14
- Dec 2006 02:37:39 -0800 (PST)
-Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
- ESMTP id 34sm1861030uga.2006.12.14.02.37.38; Thu, 14 Dec 2006 02:37:39 -0800
- (PST)
-To: git@vger.kernel.org
+ S1751688AbWLOAdy (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
+ 19:33:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751721AbWLOAdy
+ (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 19:33:54 -0500
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:48650 "EHLO
+ fed1rmmtao06.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1751615AbWLOAdx (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006
+ 19:33:53 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao06.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061215003352.SENP2628.fed1rmmtao06.cox.net@fed1rmimpo02.cox.net>; Thu, 14
+ Dec 2006 19:33:52 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id yoa31V00U1kojtg0000000; Thu, 14 Dec 2006
+ 19:34:04 -0500
+To: Steven Grimm <koreth@midwinter.com>
 Sender: git-owner@vger.kernel.org
 
-On Wednesday 2006 December 13 23:08, Jon Masters wrote:
+Steven Grimm <koreth@midwinter.com> writes:
 
-> Anyway, now I would like to change an existing log entry to make it a
-> bit cleaner (read: add a first line that's under 80 characters). What's
-> the best way to change an existing log entry for a commit?
+> Junio C Hamano wrote:
+>>  (2) End of week comes.  Create an empty branch 'weekly' if you
+>>      do not already have one.  Make a full tree snapshot, and
+>>      create a parentless commit for the week if the 'weekly'
+>>      branch did not exist, or make it a child of the 'weekly'
+>>      commit from the last week.  Discard 'lastweek' branch if
+>>      you have one, and rename 'daily' branch to 'lastweek'.
+>
+> That sounds like it'd work, but doesn't it imply that the history of a
+> given file in the backups is not continuous? That is, an old copy of a
+> file on the "weekly" branch doesn't have any kind of ancestor
+> relationship with the same file on the "daily" branch? While that's
+> obviously no different than the current git-less situation where
+> there's no notion of ancestry at all, it'd be neat if this backup
+> scheme could actually track long-term changes to individual files.
 
-If it's HEAD you want to change:
- git-commit --amend
+You can keep them connected by rewriting history of bounded
+number of commits.  When you start a new week, you would make
+the Monday commit a child of the tip of weekly branch that
+represents the latest weekly shapshot.  Then on Friday, the
+history would show the 5 commits during the week and behind that
+would be a sequence of commits with one-per-week granularity.
+When you rotate the week's daily log out and the commit for
+Monday is based on the weekly history you are going to toss out,
+you may need to rebase that week's daily log branch.
 
-If it's not, it's a bit harder.  You could pull each commit out as a patch and 
-apply them again later after a git-reset.  However, git has a tool for 
-automating a lot of that:  git-rebase.  man git-rebase has some excellent 
-examples.
+Let's say your policy is to keep daily log for at least one week
+and enough number of end-of-week weekly logs.  Let's say it is
+week #2 right now.
 
- * -- A -- B -- C (master)
+                        Aooo... (week #2 daily)
+                       /|
+                ooooooB |  (week #1 daily)
+               /        |
+     o--------o---------C (end-of-week weekly log)
 
-Let's say you want to edit A; make a new branch at A:
+The first commit in this week's daily log (A) would have two
+parents: last commit from daily log of week #1 (B), and the
+latest commit on the end-of-week weekly log (C).  Most likely, B
+and C would have exactly the same tree.  That way, you would
+have at least 7 days of daily log; at the end of this week you
+would have close to 14 days but "keeping at least one week" is
+satisfied.
 
-$ git branch temp-edit-branch master^^
- 
- * -- A (temp-edit-branch)
-       \
-        B -- C (master)
+When starting the 3rd week, you will discard 1st week's log; you
+would need to rewrite 7 days worth of commits from week #2,
+because the first commit of week #2 should now only have one
+parent (C), and you would forget the commit on the last day of
+week #1 as its parent (B).  Which cascades through 7 commits you
+made during week #2.  You are not changing any trees, so this
+should be quite efficient.
 
-Edit A with git-commit --amend.  This makes a new A, A' that has the new 
-commit message:
+Then the first daily commit of 3rd week would have two parents,
+the commit at the end of week #2 daily branch (D), and a new
+commit (E) at the tip of the end-of-week log.  Again, D and E
+would have the identical trees.
 
- * -- A' (temp-edit-branch)
-  \
-   A -- B -- C (master)
-
-Then you switch to "master" and rebase master onto temp-edit-branch; you can 
-then delete temp-edit-branch
-
-$ git-checkout master
-$ git-rebase temp-edit-branch
-$ git branch -D temp-edit-branch
-
- * -- A' -- B' -- C' (master)
-  \
-   A -- B -- C
-
-Note that A-B-C are now dangling commits; a git-prune would be needed to clean 
-them out of the repository.
-
-The important thing to realise is that you can never really edit a commit.  
-The best you can do is reapply it.  In this example, the fact that B' makes 
-the same change as B is irrelevant - they are two separate commits.
-
-Note: this is only workable if you haven't pushed this branch to another 
-repository.  The other repository would retain the original A--B--C branch 
-and you will get "won't fast forward" errors if you try to push the 
-new "A'--B'--C'" branch.
-
-
-Andy
--- 
-Dr Andy Parkins, M Eng (hons), MIEE
+                                o...... (week #3 daily)
+                               /|
+                        Aooo..D |  (week #2 daily)
+                        |       |
+ (week #1 daily - gone) |       |
+                        |       |
+     o--------o---------C-------E (end-of-week weekly log)
