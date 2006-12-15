@@ -1,84 +1,79 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Cleaning up git user-interface warts
-Date: Wed, 15 Nov 2006 13:52:47 -0800
-Message-ID: <7vac2sjs28.fsf@assigned-by-dhcp.cox.net>
-References: <87k61yt1x2.wl%cworth@cworth.org>
-	<Pine.LNX.4.64.0611142306090.2591@xanadu.home>
-	<Pine.LNX.4.64.0611150950170.3349@woody.osdl.org>
-	<200611151858.51833.andyparkins@gmail.com>
-	<Pine.LNX.4.64.0611151111250.3349@woody.osdl.org>
-	<f2b55d220611151139v66fba16ax97ce6b9966b33ce7@mail.gmail.com>
-	<Pine.LNX.4.64.0611151203450.3349@woody.osdl.org>
-	<Pine.LNX.4.64.0611151516360.2591@xanadu.home>
-	<Pine.LNX.4.64.0611151226590.3349@woody.osdl.org>
-	<87velgs9hx.wl%cworth@cworth.org>
-	<7virhgjt25.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0611151638550.2591@xanadu.home>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: svn versus git
+Date: Fri, 15 Dec 2006 12:08:54 +0000
+Message-ID: <200612151208.56286.andyparkins@gmail.com>
+References: <200612132200.41420.andyparkins@gmail.com> <200612140908.36952.andyparkins@gmail.com> <elu0n5$u0i$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 15 Nov 2006 21:53:14 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Fri, 15 Dec 2006 12:09:15 +0000 (UTC)
+Cc: Jakub Narebski <jnareb@gmail.com>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <Pine.LNX.4.64.0611151638550.2591@xanadu.home> (Nicolas Pitre's
-	message of "Wed, 15 Nov 2006 16:40:03 -0500 (EST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=C15g0QTHVqm/AjdKZPhi1tU0ldxk3ejkRSxNiqkFb1SH7hZ86gh3IEfiJiue9P8UQ/BxsAIcNVglPX47hdZVAuxzQcgRaYbHdkikb3fmrIt2WBPEzBGHt/xnbyjhraUP/3VPkQowA8eiFzlo7gslLy73Ahuq09qbS+lUxScw9vs=
+User-Agent: KMail/1.9.5
+In-Reply-To: <elu0n5$u0i$1@sea.gmane.org>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31509>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GkSgv-0000o6-US for gcvg-git@gmane.org; Wed, 15 Nov
- 2006 22:53:10 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34498>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GvBsE-0007hd-HH for gcvg-git@gmane.org; Fri, 15 Dec
+ 2006 13:09:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1161774AbWKOVxG (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
- 16:53:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161775AbWKOVxG
- (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 16:53:06 -0500
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:49050 "EHLO
- fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP id S1161774AbWKOVxD
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 16:53:03 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao09.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061115215302.NYZK18767.fed1rmmtao09.cox.net@fed1rmimpo02.cox.net>; Wed, 15
- Nov 2006 16:53:02 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id n9t81V00g1kojtg0000000; Wed, 15 Nov 2006
- 16:53:09 -0500
-To: Nicolas Pitre <nico@cam.org>
+ S1752032AbWLOMJH (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 15 Dec 2006
+ 07:09:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752034AbWLOMJG
+ (ORCPT <rfc822;git-outgoing>); Fri, 15 Dec 2006 07:09:06 -0500
+Received: from ug-out-1314.google.com ([66.249.92.172]:6145 "EHLO
+ ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1752032AbWLOMJE (ORCPT <rfc822;git@vger.kernel.org>); Fri, 15 Dec
+ 2006 07:09:04 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so796630uga for
+ <git@vger.kernel.org>; Fri, 15 Dec 2006 04:09:02 -0800 (PST)
+Received: by 10.67.92.1 with SMTP id u1mr1054196ugl.1166184542215; Fri, 15
+ Dec 2006 04:09:02 -0800 (PST)
+Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
+ ESMTP id 30sm4142275ugf.2006.12.15.04.09.01; Fri, 15 Dec 2006 04:09:01 -0800
+ (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Nicolas Pitre <nico@cam.org> writes:
+On Friday 2006 December 15 11:27, Jakub Narebski wrote:
 
-> On Wed, 15 Nov 2006, Junio C Hamano wrote:
+> > $ git-ls-tree v1.0.0
+> > 100644 blob 906e98492080d2fde9467a9970fc92d7a8cfeaf8    Makefile
+> >
+> > I'm a newbie:  what's that number at the front?  What's a blob?  What's
+> > that great big number - I've only seen commit hashes that look like that,
+> > and that isn't one.  Definitely not friendly.
 >
->> I am wondering if that could be "git merge <committish>..."
->> instead.  I do not care too much about the ... part (i.e. an
->> Octopus), but I often find myself doing:
->> 
->> 	git checkout next
->>         git merge "Merge early part of branch 'foo'" HEAD foo~3
->> 
->> when earlier part of "foo" topic are worthy to be in 'next' but
->> not the later ones.
->
-> Indeed !
+> The number in front is octal mode of a file or directory. "blob"
+> is a file (or symbolic link), "tree" is a directory, all of this
+> can be found in git(7).
 
-Indeed, what?
+Sorry, when I said "I'm a newbie", I meant "pretend I'm a newbie" :-)
 
-That means that updated "git merge" (not the current one) would
-not be able to assume it's parameter is a branch name, and still
-has to come up with the merge message "Merge <branch>".
+My point was that this is all too confusing for a newbie; the fact that you 
+had to descend to talk about SHA-1 and blob hashes, really serves to 
+strengthen my point.  What does a non-developer care about hashes, blobs, 
+trees, commits, or objects?
 
-Merging only within the local branch namespace already has the
-problem you need to solve to come up with a nicely formatted
-"Merge <branch> of <remote repository>" some way.  I am not
-saying that this is unsolvable (you can look at remotes/ files
-to see what remote tracking branch the branch is about), but
-something you need to keep in mind when implementing the
-improved "git merge".
+In this case however, I withdrew my complaint because it's argued that 
+git-ls-files is not the right tool for this purpose anyway.
+
+
+Andy
+-- 
+Dr Andy Parkins, M Eng (hons), MIEE
