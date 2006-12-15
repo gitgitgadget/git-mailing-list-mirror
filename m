@@ -4,146 +4,66 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Petr Baudis <pasky@suse.cz>
-Subject: [PATCH] Make git-clone --use-separate-remote the default
-Date: Thu, 23 Nov 2006 23:58:35 +0100
-Message-ID: <20061123225835.30071.99265.stgit@machine.or.cz>
-Content-Type: text/plain; charset=utf-8; format=fixed
-Content-Transfer-Encoding: 8bit
-NNTP-Posting-Date: Thu, 23 Nov 2006 22:58:57 +0000 (UTC)
-Cc: <git@vger.kernel.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git-fetch fails with error code 128
+Date: Thu, 14 Dec 2006 16:02:23 -0800
+Message-ID: <7vfybiyqk0.fsf@assigned-by-dhcp.cox.net>
+References: <200612142308.45376.andyparkins@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Fri, 15 Dec 2006 00:02:32 +0000 (UTC)
+Cc: git@vger.kernel.org, Nicolas Pitre <nico@cam.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: StGIT/0.11
+In-Reply-To: <200612142308.45376.andyparkins@gmail.com> (Andy Parkins's
+	message of "Thu, 14 Dec 2006 23:08:43 +0000")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32166>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GnNWn-0006w4-BI for gcvg-git@gmane.org; Thu, 23 Nov
- 2006 23:58:45 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34445>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gv0Wz-0005lO-RE for gcvg-git@gmane.org; Fri, 15 Dec
+ 2006 01:02:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S934217AbWKWW6i (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 23 Nov 2006
- 17:58:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934241AbWKWW6i
- (ORCPT <rfc822;git-outgoing>); Thu, 23 Nov 2006 17:58:38 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:61834 "EHLO machine.or.cz") by
- vger.kernel.org with ESMTP id S934217AbWKWW6h (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 23 Nov 2006 17:58:37 -0500
-Received: (qmail 30081 invoked from network); 23 Nov 2006 23:58:36 +0100
-Received: from localhost (HELO machine.or.cz) (xpasky@127.0.0.1) by localhost
- with SMTP; 23 Nov 2006 23:58:36 +0100
-To: Junio C Hamano <junkio@cox.net>
+ S1752022AbWLOAC0 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
+ 19:02:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752040AbWLOAC0
+ (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 19:02:26 -0500
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:32883 "EHLO
+ fed1rmmtao11.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1752022AbWLOACZ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006
+ 19:02:25 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao11.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061215000224.GKKF25875.fed1rmmtao11.cox.net@fed1rmimpo02.cox.net>; Thu, 14
+ Dec 2006 19:02:24 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id yo2b1V0191kojtg0000000; Thu, 14 Dec 2006
+ 19:02:36 -0500
+To: Andy Parkins <andyparkins@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-and --use-immingled-remote can be used to get the original behaviour;
-it is also implied by --bare.
+Andy Parkins <andyparkins@gmail.com> writes:
 
-We get confused, frustrated and data-losing users *daily* on #git now
-because git-clone still produces the crippled repositories having the
-remote and local heads freely mixed together.
+> $ git fetch
+> remote: Generating pack...
+> remote: Done counting 189146 objects.
+> remote: Result has 186566 objects.
+> remote: Deltifying 186566 objects.
+> remote:  100% (186566/186566) done
+> Unpacking 186566 objects
+> fatal: failed to apply delta
+> fatal: unpack-objects died with error code 128
+> Fetch failure: /home/andyp/projects/temp/.git
+>
+> What does that mean?  I ran fsck --full on the source repository, but it's 
+> made no difference.
 
-Signed-off-by: Petr Baudis <pasky@suse.cz>
----
+Andy, which version of git do you run (I presume they are the
+same version, as you are doing the local fetching), and which
+version of git was the "slightly out of date" repository
+prepared with?
 
- Documentation/git-clone.txt |   20 ++++++++++++++------
- git-clone.sh                |   14 +++++++-------
- 2 files changed, 21 insertions(+), 13 deletions(-)
+I think this is the second time I've seen a report of unpacker
+barfing on the mailing list.  Nico, anything rings a bell?
 
-diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-index 8606047..b1ad79f 100644
---- a/Documentation/git-clone.txt
-+++ b/Documentation/git-clone.txt
-@@ -11,7 +11,8 @@ SYNOPSIS
- [verse]
- 'git-clone' [--template=<template_directory>] [-l [-s]] [-q] [-n] [--bare]
- 	  [-o <name>] [-u <upload-pack>] [--reference <repository>]
--	  [--use-separate-remote] <repository> [<directory>]
-+	  [--use-separate-remote | --use-immingled-remote] <repository>
-+	  [<directory>]
- 
- DESCRIPTION
- -----------
-@@ -71,9 +72,10 @@ OPTIONS
- 	Make a 'bare' GIT repository.  That is, instead of
- 	creating `<directory>` and placing the administrative
- 	files in `<directory>/.git`, make the `<directory>`
--	itself the `$GIT_DIR`. This implies `-n` option.  When
--	this option is used, neither the `origin` branch nor the
--	default `remotes/origin` file is created.
-+	itself the `$GIT_DIR`. This implies the `-n` and
-+	`--use-immingled-remote' option.  When this option is used,
-+	neither the `origin` branch nor the default `remotes/origin`
-+	file is created.
- 
- --origin <name>::
- -o <name>::
-@@ -97,8 +99,14 @@ OPTIONS
- 
- --use-separate-remote::
- 	Save remotes heads under `$GIT_DIR/remotes/origin/` instead
--	of `$GIT_DIR/refs/heads/`.  Only the master branch is saved
--	in the latter.
-+	of `$GIT_DIR/refs/heads/`.  Only the local master branch is
-+	saved in the latter. This is the default.
-+
-+--use-immingled-remote::
-+	Save remotes heads in the same namespace as the local heads,
-+	`$GIT_DIR/refs/heads/'.  In regular repositories, this is
-+	a legacy setup git-clone created by default in older Git
-+	versions.  It is also still implied by `--bare'.
- 
- <repository>::
- 	The (possibly remote) repository to clone from.  It can
-diff --git a/git-clone.sh b/git-clone.sh
-index 3f006d1..9ed4135 100755
---- a/git-clone.sh
-+++ b/git-clone.sh
-@@ -14,7 +14,7 @@ die() {
- }
- 
- usage() {
--	die "Usage: $0 [--template=<template_directory>] [--use-separate-remote] [--reference <reference-repo>] [--bare] [-l [-s]] [-q] [-u <upload-pack>] [--origin <name>] [-n] <repo> [<dir>]"
-+	die "Usage: $0 [--template=<template_directory>] [--use-immingled-remote] [--reference <reference-repo>] [--bare] [-l [-s]] [-q] [-u <upload-pack>] [--origin <name>] [-n] <repo> [<dir>]"
- }
- 
- get_repo_base() {
-@@ -115,7 +115,7 @@ bare=
- reference=
- origin=
- origin_override=
--use_separate_remote=
-+use_separate_remote=t
- while
- 	case "$#,$1" in
- 	0,*) break ;;
-@@ -134,7 +134,10 @@ while
- 	  template="$1" ;;
- 	*,-q|*,--quiet) quiet=-q ;;
- 	*,--use-separate-remote)
-+		# default
- 		use_separate_remote=t ;;
-+	*,--use-immingled-remote)
-+		use_separate_remote= ;;
- 	1,--reference) usage ;;
- 	*,--reference)
- 		shift; reference="$1" ;;
-@@ -169,18 +172,15 @@ repo="$1"
- test -n "$repo" ||
-     die 'you must specify a repository to clone.'
- 
--# --bare implies --no-checkout
-+# --bare implies --no-checkout and --use-immingled-remote
- if test yes = "$bare"
- then
- 	if test yes = "$origin_override"
- 	then
- 		die '--bare and --origin $origin options are incompatible.'
- 	fi
--	if test t = "$use_separate_remote"
--	then
--		die '--bare and --use-separate-remote options are incompatible.'
--	fi
- 	no_checkout=yes
-+	use_separate_remote=
- fi
- 
