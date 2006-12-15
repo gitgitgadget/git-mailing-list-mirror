@@ -1,81 +1,64 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] Adjust t5510 to put remotes in config
-Date: Sun, 17 Dec 2006 15:46:02 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612171545390.3635@wbgn013.biozentrum.uni-wuerzburg.de>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Sun, 17 Dec 2006 14:46:14 +0000 (UTC)
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: Re: [PATCH] Add --add option to git-repo-config
+Date: Fri, 15 Dec 2006 06:44:42 -0500
+Message-ID: <A2C282DE-30E3-401C-AE46-777F3DDDFA86@silverinsanity.com>
+References: <75CF19E7-7953-4C0A-B4CE-E9BB6822E062@silverinsanity.com> <eltno8$vos$1@sea.gmane.org>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Fri, 15 Dec 2006 11:45:18 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-X-Y-GMX-Trusted: 0
+In-Reply-To: <eltno8$vos$1@sea.gmane.org>
+X-Mailer: Apple Mail (2.752.3)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34691>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34497>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GvxHI-0003en-1a for gcvg-git@gmane.org; Sun, 17 Dec
- 2006 15:46:12 +0100
+ esmtp (Exim 4.50) id 1GvBV3-0004n7-3U for gcvg-git@gmane.org; Fri, 15 Dec
+ 2006 12:45:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752731AbWLQOqH (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 17 Dec 2006
- 09:46:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752732AbWLQOqH
- (ORCPT <rfc822;git-outgoing>); Sun, 17 Dec 2006 09:46:07 -0500
-Received: from mail.gmx.net ([213.165.64.20]:33184 "HELO mail.gmx.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S1752731AbWLQOqG
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 17 Dec 2006 09:46:06 -0500
-Received: (qmail invoked by alias); 17 Dec 2006 14:46:02 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp043) with SMTP; 17 Dec 2006 15:46:02 +0100
-To: git@vger.kernel.org, junkio@cox.net
+ S1751992AbWLOLoq (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 15 Dec 2006
+ 06:44:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751989AbWLOLoq
+ (ORCPT <rfc822;git-outgoing>); Fri, 15 Dec 2006 06:44:46 -0500
+Received: from vs072.rosehosting.com ([216.114.78.72]:41491 "EHLO
+ silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
+ S1751992AbWLOLop (ORCPT <rfc822;git@vger.kernel.org>); Fri, 15 Dec 2006
+ 06:44:45 -0500
+Received: from [IPv6???1] (localhost [127.0.0.1]) (using TLSv1 with cipher
+ AES128-SHA (128/128 bits)) (No client certificate requested) by
+ silverinsanity.com (Postfix) with ESMTP id 8DBF81FFC02B; Fri, 15 Dec 2006
+ 11:44:44 +0000 (UTC)
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
 
-Since .git/remotes/ is no longer created by default, t5510 failed.
-While at it, convert the tests to use the config way of specifying
-remotes instead of creating a file in .git/remotes/.
+On Dec 15, 2006, at 3:54 AM, Jakub Narebski wrote:
 
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
----
- t/t5510-fetch.sh |   14 +++++---------
- 1 files changed, 5 insertions(+), 9 deletions(-)
+> Brian Gernhardt wrote:
+>
+>>   'git-repo-config' [--global] [type] name [value [value_regex]]
+>> +'git-repo-config' [--global] [type] --add name value
+>
+> In few places it seems that original has one space at beginning of  
+> line,
+> and added value lacks this space.
+>
+> Otherwise, very nice patch. Thanks!
 
-diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-index a11ab0a..6229433 100755
---- a/t/t5510-fetch.sh
-+++ b/t/t5510-fetch.sh
-@@ -23,20 +23,16 @@ test_expect_success "clone and setup child repos" '
- 	git clone . two &&
- 	cd two &&
- 	git repo-config branch.master.remote one &&
--	{
--		echo "URL: ../one/.git/"
--		echo "Pull: refs/heads/master:refs/heads/one"
--	} >.git/remotes/one
-+	git repo-config remote.one.url ../one/.git/ &&
-+	git repo-config remote.one.fetch refs/heads/master:refs/heads/one &&
- 	cd .. &&
- 	git clone . three &&
- 	cd three &&
- 	git repo-config branch.master.remote two &&
- 	git repo-config branch.master.merge refs/heads/one &&
--	{
--		echo "URL: ../two/.git/"
--		echo "Pull: refs/heads/master:refs/heads/two"
--		echo "Pull: refs/heads/one:refs/heads/one"
--	} >.git/remotes/two
-+	git repo-config remote.two.url ../two/.git/ &&
-+	git repo-config remote.two.fetch refs/heads/master:refs/heads/two &&
-+	git repo-config --add remote.two.fetch refs/heads/one:refs/heads/one
- '
- 
- test_expect_success "fetch test" '
--- 
-1.4.4.2.ga4be2-dirty
+None of the originals have spaces at the beginning of the lines in my  
+repo.  I think that's an artifact of Mail.app mangling whitespace at  
+the beginning of the line when copy/pasting patches.  I thought it  
+only happened in a couple places and tried to fix it by hand.   
+Apparently that didn't work, and I need to install mutt or something  
+to send things from the command line.  In the meantime, I can re-send  
+the patch as an attachment, if that'll help.
+
