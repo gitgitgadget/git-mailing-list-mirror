@@ -1,76 +1,70 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,MSGID_FROM_MTA_HEADER,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
-From: Sean <seanlkml@sympatico.ca>
-Subject: Re: git crash when cg-fetch:ing dash
-Date: Thu, 23 Nov 2006 11:18:20 -0500
-Message-ID: <BAYC1-PASMTP0184DDB7F3619F6158FB18AEE20@CEZ.ICE>
-References: <45656B3C.4090601@lsrfire.ath.cx>
-	<200611231554.kANFsv9h005228@laptop13.inf.utfsm.cl>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: git-fetch fails with error code 128
+Date: Fri, 15 Dec 2006 17:13:35 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0612151706150.18171@xanadu.home>
+References: <200612142308.45376.andyparkins@gmail.com>
+ <7vfybiyqk0.fsf@assigned-by-dhcp.cox.net>
+ <200612150946.14439.andyparkins@gmail.com>
+ <7vy7p8omdh.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Thu, 23 Nov 2006 16:18:53 +0000 (UTC)
-Cc: =?ISO-8859-1?B?UmVu6Q==?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
-	git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+NNTP-Posting-Date: Fri, 15 Dec 2006 22:13:45 +0000 (UTC)
+Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Originating-IP: [65.93.43.81]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Original-Message-Id: <20061123111820.50a6488a.seanlkml@sympatico.ca>
-In-Reply-To: <200611231554.kANFsv9h005228@laptop13.inf.utfsm.cl>
-X-Mailer: Sylpheed version 2.2.10 (GTK+ 2.10.4; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 23 Nov 2006 16:18:22.0403 (UTC) FILETIME=[FEEF9930:01C70F1A]
+In-reply-to: <7vy7p8omdh.fsf@assigned-by-dhcp.cox.net>
+X-X-Sender: nico@xanadu.home
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GnHHO-0000oH-Fb for gcvg-git@gmane.org; Thu, 23 Nov
- 2006 17:18:27 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34566>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GvLJD-0000OJ-Hv for gcvg-git@gmane.org; Fri, 15 Dec
+ 2006 23:13:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1755887AbWKWQSX convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Thu, 23 Nov 2006 11:18:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755970AbWKWQSX
- (ORCPT <rfc822;git-outgoing>); Thu, 23 Nov 2006 11:18:23 -0500
-Received: from bayc1-pasmtp01.bayc1.hotmail.com ([65.54.191.161]:30725 "EHLO
- bayc1-pasmtp01.bayc1.hotmail.com") by vger.kernel.org with ESMTP id
- S1755887AbWKWQSW convert rfc822-to-8bit (ORCPT <rfc822;git@vger.kernel.org>);
- Thu, 23 Nov 2006 11:18:22 -0500
-Received: from linux1.attic.local ([65.93.43.81]) by
- bayc1-pasmtp01.bayc1.hotmail.com over TLS secured channel with Microsoft
- SMTPSVC(6.0.3790.1830); Thu, 23 Nov 2006 08:18:22 -0800
-Received: from guru.attic.local ([10.10.10.28]) by linux1.attic.local with
- esmtp (Exim 4.43) id 1GnGLD-0003DH-HK; Thu, 23 Nov 2006 10:18:19 -0500
-To: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
+ S964866AbWLOWNh (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 15 Dec 2006
+ 17:13:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965187AbWLOWNg
+ (ORCPT <rfc822;git-outgoing>); Fri, 15 Dec 2006 17:13:36 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:22830 "EHLO
+ relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S964866AbWLOWNg (ORCPT <rfc822;git@vger.kernel.org>); Fri, 15 Dec 2006
+ 17:13:36 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
+ <0JAC00M065QNVM40@VL-MO-MR002.ip.videotron.ca> for git@vger.kernel.org; Fri,
+ 15 Dec 2006 17:13:35 -0500 (EST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-On Thu, 23 Nov 2006 12:54:57 -0300
-"Horst H. von Brand" <vonbrand@inf.utfsm.cl> wrote:
+On Fri, 15 Dec 2006, Junio C Hamano wrote:
 
-> Ren=E9 Scharfe <rene.scharfe@lsrfire.ath.cx> wrote:
-> > Horst H. von Brand schrieb:
-> > > I did:
-> > >   git clone http://gondor.apana.org.au/~herbert/dash/dash.git
-> > > and got:
-> > >   error: Unable to start request
-> > >   error: Could not interpret heads/master as something to pull
-> >=20
-> > It works for me with both the version of git that came with Ubuntu =
-6.10
-> > (1.4.1) and a self-compiled git 1.4.4.g5942. :-?
->=20
-> Here it's git-1.4.4 (self-built from Junio's SRPM, on Fedora rawhide =
-i686).
+> Andy Parkins <andyparkins@gmail.com> writes:
+> 
+> > I hadn't realised it was quite a serious as these responses
+> > are making it sound.  I'll gather more precise data upon my
+> > return home.
+> > ...
+> > Clearly it is version-specific.  I'll do a bit of bisection
+> > later and see if I can nail the problem down.
+> 
+> Thanks --- very much appreciated.  When it comes to
+> inter-repository object transfer, we take compatibility very
+> seriously.
 
-Works fine here with 1.4.3.3.g869c.
+I really doubt it is a compatibility problem.  The provided error 
+message may only result from the fact that patch_delta() has returned 
+NULL.
 
-Horst, this is the second recent example of something not working in yo=
-ur
-environment that works for others.  Is it possible you have an old stra=
-y
-version of git installed in your ~/bin or something?  By the way, did y=
-ou
-ever resolve that other issue?
+And since patch-delta is really simple, it doesn't have many reasons for 
+returning NULL: either the object store on either the remote or local 
+side is corrupted in which case a git-fsck-objects --full should catch 
+that, or the system ran out of memory.
+
 
