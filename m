@@ -1,76 +1,72 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: GIT - releases workflow
-Date: Wed, 13 Dec 2006 14:13:47 +0100
-Message-ID: <457FFC8B.5010501@op5.se>
-References: <89b129c60612121444t18ba94ecv57eea4c72be1663a@mail.gmail.com>	 <Pine.LNX.4.63.0612122353320.2807@wbgn013.biozentrum.uni-wuerzburg.de>	 <1166001019.19098.4.camel@localhost.localdomain>	 <89b129c60612130434q18c69c7bxd96b7db0c423d8ea@mail.gmail.com> <89b129c60612130439m452b315x2278456396a248a5@mail.gmail.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH] Stop telling users we are 'defaulting to local storage
+ area'.
+Date: Thu, 14 Dec 2006 21:18:37 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0612142059301.18171@xanadu.home>
+References: <20061214230902.GA26506@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 13 Dec 2006 13:14:01 +0000 (UTC)
-Cc: Matthias Kestenholz <lists@spinlock.ch>, git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+NNTP-Posting-Date: Fri, 15 Dec 2006 02:18:44 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
+	Andy Parkins <andyparkins@gmail.com>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
-In-Reply-To: <89b129c60612130439m452b315x2278456396a248a5@mail.gmail.com>
+In-reply-to: <20061214230902.GA26506@spearce.org>
+X-X-Sender: nico@xanadu.home
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34218>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34460>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GuTvl-00016Q-4K for gcvg-git@gmane.org; Wed, 13 Dec
- 2006 14:13:53 +0100
+ esmtp (Exim 4.50) id 1Gv2eo-0002Zc-Uj for gcvg-git@gmane.org; Fri, 15 Dec
+ 2006 03:18:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S964947AbWLMNNu (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 13 Dec 2006
- 08:13:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964959AbWLMNNu
- (ORCPT <rfc822;git-outgoing>); Wed, 13 Dec 2006 08:13:50 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:44505 "EHLO
- smtp-gw1.op5.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
- S964947AbWLMNNt (ORCPT <rfc822;git@vger.kernel.org>); Wed, 13 Dec 2006
- 08:13:49 -0500
-Received: from [192.168.1.20] (unknown [213.88.215.14]) by smtp-gw1.op5.se
- (Postfix) with ESMTP id CE8496BCBF; Wed, 13 Dec 2006 14:13:47 +0100 (CET)
-To: Sean Kelley <sean.v.kelley@gmail.com>
+ S964997AbWLOCSj (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
+ 21:18:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965007AbWLOCSj
+ (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 21:18:39 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:44916 "EHLO
+ relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S964997AbWLOCSi (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006
+ 21:18:38 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
+ <0JAA00D7MMF1SQA0@VL-MO-MR003.ip.videotron.ca> for git@vger.kernel.org; Thu,
+ 14 Dec 2006 21:18:37 -0500 (EST)
+To: "Shawn O. Pearce" <spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 
-Sean Kelley wrote:
-> Hi,
-> 
-> On 12/13/06, Sean Kelley <sean.v.kelley@gmail.com> wrote:
->> Hi,
->>
->> On 12/13/06, Matthias Kestenholz <lists@spinlock.ch> wrote:
->> >
->> How do I push that tag that I created to the maint/v0.1 branch on the
->> remote repository?
-> 
-> Never mind, I answered my own question.  Sorry for asking without
-> doing my research first.
-> 
->   git push --tags origin
-> 
+On Thu, 14 Dec 2006, Shawn O. Pearce wrote:
 
-Sort of, but not quite. This will push *all* your tags to wherever 
-origin points to. If you, like me, use un-annotated tags to remember a 
-particular snapshot you will then push a number of tags named "foo", 
-"fnurg", "sdf" and "werwer" to the mothership repo.
+[...]
+> It also breaks from our normal behavior of not printing
+> anything if the command was successful.
 
-	git push origin v0.1
+Before everybody starts believing  everybody agrees with this I'll have 
+to throw a tile in the pond.
 
-works marvellously though.
+I really don't think this is a good rule.
 
-Btw, this behaviour of mine, coupled with the company policy of only 
-allowing annotated tags signed by the project maintainer as 
-release-tags, lead to the creation of the update-hook I believe is still 
-shipped as the default update-hook template with the git repo. It 
-disallows un-annotated tags completely and should be used on the 
-mothership repo.
+NOte that I'm not against commands that are silent by default.  I really 
+think that git-add should remain silent on success by default when 
+successful.
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
+But the rule of thumb should be about the importance of the action 
+performed by the command.  git-add is a less important command than 
+git-init-db or git-commit _conceptually_.  You can do multiple git-add 
+in whatever order, even repeatedly, and it won't change the outcome.  
+It is "conceptually lightweight".  But git-init-db is really important.  
+Without it you just can't do anything. It should give the user the 
+impression that something did actually happen, especially since this is 
+the git comand any new git user is most likely to use first.  Saying 
+back "git repository initialized" tells the user "OK you can start now".  
+Saying nothing might just leave the user wondering if everything is 
+actually fine.
+
+
