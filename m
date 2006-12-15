@@ -4,97 +4,77 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Whitcroft <apw@shadowen.org>
-Subject: [PATCH] document the <tree ish> <file> blob reference syntax
-Date: Wed, 25 Oct 2006 11:42:31 +0100
-Message-ID: <38fafea491402334df335c486270ebe9@pinky>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: Avoiding uninteresting merges in Cairo
+Date: Fri, 15 Dec 2006 11:03:03 -0500
+Message-ID: <20061215160303.GG17860@spearce.org>
+References: <20061215020629.GK26202@spearce.org> <eluasq$v7q$3@sea.gmane.org> <20061215150130.GB17860@spearce.org> <200612151657.06909.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 25 Oct 2006 10:43:21 +0000 (UTC)
+NNTP-Posting-Date: Fri, 15 Dec 2006 16:03:20 +0000 (UTC)
+Cc: Carl Worth <cworth@cworth.org>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <200612151657.06909.jnareb@gmail.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30048>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GcgE5-0001gd-L7 for gcvg-git@gmane.org; Wed, 25 Oct
- 2006 12:43:13 +0200
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34527>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GvFWn-0006nZ-9y for gcvg-git@gmane.org; Fri, 15 Dec
+ 2006 17:03:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1423245AbWJYKnK (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 25 Oct 2006
- 06:43:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423247AbWJYKnK
- (ORCPT <rfc822;git-outgoing>); Wed, 25 Oct 2006 06:43:10 -0400
-Received: from 85-210-250-36.dsl.pipex.com ([85.210.250.36]:30592 "EHLO
- localhost.localdomain") by vger.kernel.org with ESMTP id S1423245AbWJYKnI
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 25 Oct 2006 06:43:08 -0400
-Received: from apw by localhost.localdomain with local (Exim 4.63)
- (envelope-from <apw@shadowen.org>) id 1GcgDP-0003Z0-He; Wed, 25 Oct 2006
- 11:42:31 +0100
-To: git@vger.kernel.org
+ S1752790AbWLOQDJ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 15 Dec 2006
+ 11:03:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752789AbWLOQDJ
+ (ORCPT <rfc822;git-outgoing>); Fri, 15 Dec 2006 11:03:09 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:51754 "EHLO
+ corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1752792AbWLOQDH (ORCPT <rfc822;git@vger.kernel.org>); Fri, 15 Dec 2006
+ 11:03:07 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1GvFWV-00024F-Qt; Fri, 15 Dec 2006 11:02:59 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 932C520FB65; Fri, 15 Dec 2006 11:03:03 -0500 (EST)
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-It is possible to specify a specific file within a tree-ish
-symbolically.  For example you can find the contents of
-a specific file in a specific commit as below:
+Jakub Narebski <jnareb@gmail.com> wrote:
+> Do you mean "commit" view or "commitdiff" view in gitweb for merges
+> is confusing?
 
-	git cat-file -p v1.2.4:git-prune.sh
+The commit view was what was confusing me.
+ 
+> If it is "commit" view, it is fairly easy to remove difftree/whatchanged
+> output below commit message for merges. However while git-show nor 
+> git-diff-tree doesn't show diff for merge messages, the diftree output
+> in "commit" view might be taken as 'damages'; git diff --summary always
+> takes summary of diff against first parent.
 
-Document this syntax in the Symbolic Identifiers section
-of the main git documentation and reference it from
-git-cat-file's documentation.
+I can see that, but it depends on what the current branch was when
+you do the merge.  In the cairo case I was looking at yesterday the
+"damages" from the merge were actually what was already considered to
+be in the mainline as part of the project due to committer pulling
+the remote master into his own master before pushing.
 
-Signed-off-by: Andy Whitcroft <apw@shadowen.org>
----
-diff --git a/Documentation/git-cat-file.txt b/Documentation/git-cat-file.txt
-index 5e9cbf8..9f2138d 100644
---- a/Documentation/git-cat-file.txt
-+++ b/Documentation/git-cat-file.txt
-@@ -19,7 +19,9 @@ or '-s' is used to find the object size.
- OPTIONS
- -------
- <object>::
--	The sha1 identifier of the object.
-+	The sha1 identifier of the object or a symbolic object
-+	reference.  See the Symbolic Identifiers section of the
-+	main git manual page.
- 
- -t::
- 	Instead of the content, show the object type identified by
-@@ -58,6 +60,18 @@ Otherwise the raw (though uncompressed) 
- be returned.
- 
- 
-+EXAMPLES
-+--------
-+git cat-file -p c5a5d29aaacf753b70e715169cbb7f74f0193e4a::
-+	Pretty print the object directly using an sha1, perhaps
-+	from a git ls-tree output.
-+
-+git cat-file -p v1.2.4:git-prune.sh::
-+	Output the file git-prune.sh from the branch or tag v1.2.4.
-+	Note that where the name is ambigious a heads/ or tags/
-+	prefix may be used to disambiguate the name.
-+
-+
- Author
- ------
- Written by Linus Torvalds <torvalds@osdl.org>
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index 7074e32..e9f99e2 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -565,6 +565,13 @@ HEAD::
- 	a valid head 'name'
- 	(i.e. the contents of `$GIT_DIR/refs/heads/<head>`).
- 
-+Some commands will also accept the following extended syntax:
-+
-+<tree-ish>:<file>::
-+	indicating a specific blob for that file within the tree
-+	object specified, which may also be symbolic.  For example
-+	'v1.2.4:git-prune.sh'.
-+
- 
- File/Directory Structure
+Given that the "push; whoops; pull; push" pattern is so common to
+Git I think it is sort of misleading to show a merge like this;
+lots of activity may have been pulled in from the central branch
+during that pull.
+
+iirc git whatchanged for a merge shows only files which cannot be
+found in any of the parents; these the files which the merge commit
+itself contributed directly.  If that set is empty then the commit
+just isn't shown by git whatchanged.
+
+-- 
