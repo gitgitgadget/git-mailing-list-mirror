@@ -1,50 +1,74 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: fetching packs and storing them as packs
-Date: Fri, 27 Oct 2006 10:48:39 -0400
-Message-ID: <20061027144839.GB32451@fieldses.org>
-References: <Pine.LNX.4.64.0610252333540.12418@xanadu.home> <4540CA0C.6030300@tromer.org> <Pine.LNX.4.64.0610261105200.12418@xanadu.home> <45413209.2000905@tromer.org> <Pine.LNX.4.64.0610262038320.11384@xanadu.home> <20061027014229.GA28407@spearce.org> <45417205.6020805@tromer.org> <20061027030054.GB28407@spearce.org> <Pine.LNX.4.64.0610271022240.11384@xanadu.home> <20061027143854.GC20017@pasky.or.cz>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: What's in git.git (stable)
+Date: Fri, 15 Dec 2006 11:53:25 +0100
+Organization: At home
+Message-ID: <eltumg$n03$1@sea.gmane.org>
+References: <junkio@cox.net> <200612142352.kBENq8Ie002603@laptop13.inf.utfsm.cl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 27 Oct 2006 14:52:50 +0000 (UTC)
-Cc: Nicolas Pitre <nico@cam.org>, Shawn Pearce <spearce@spearce.org>,
-	Eran Tromer <git2eran@tromer.org>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+Content-Transfer-Encoding: 7Bit
+NNTP-Posting-Date: Fri, 15 Dec 2006 10:55:18 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <20061027143854.GC20017@pasky.or.cz>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 24
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-25-107.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30331>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GdT15-0003oY-Jy for gcvg-git@gmane.org; Fri, 27 Oct
- 2006 16:49:05 +0200
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34493>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GvAih-0007S3-KY for gcvg-git@gmane.org; Fri, 15 Dec
+ 2006 11:55:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752233AbWJ0OtA (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 27 Oct 2006
- 10:49:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752234AbWJ0OtA
- (ORCPT <rfc822;git-outgoing>); Fri, 27 Oct 2006 10:49:00 -0400
-Received: from mail.fieldses.org ([66.93.2.214]:56030 "EHLO
- pickle.fieldses.org") by vger.kernel.org with ESMTP id S1752232AbWJ0Os7
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 27 Oct 2006 10:48:59 -0400
-Received: from bfields by pickle.fieldses.org with local (Exim 4.63)
- (envelope-from <bfields@fieldses.org>) id 1GdT0h-0000ZN-FO; Fri, 27 Oct 2006
- 10:48:39 -0400
-To: Petr Baudis <pasky@suse.cz>
+ S1751486AbWLOKzF (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 15 Dec 2006
+ 05:55:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751487AbWLOKzE
+ (ORCPT <rfc822;git-outgoing>); Fri, 15 Dec 2006 05:55:04 -0500
+Received: from main.gmane.org ([80.91.229.2]:58701 "EHLO ciao.gmane.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1751486AbWLOKzC
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 15 Dec 2006 05:55:02 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1GvAhJ-0003gv-6N for git@vger.kernel.org; Fri, 15 Dec 2006 11:53:49 +0100
+Received: from host-81-190-25-107.torun.mm.pl ([81.190.25.107]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Fri, 15 Dec 2006 11:53:49 +0100
+Received: from jnareb by host-81-190-25-107.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Fri, 15 Dec 2006
+ 11:53:49 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On Fri, Oct 27, 2006 at 04:38:54PM +0200, Petr Baudis wrote:
-> I don't really like this that much. Big projects can have 10 commits per
-> hour on average, and they also take potentially long time to repack, so
-> you might get to never really repack them.
+Horst H. von Brand wrote:
 
-An average of 10 per minute doesn't mean there aren't frequent long idle
-times.  That commit traffic is probably extremely bursty, right?
+>> Perhaps under "[user] expert" control.
+> 
+> Nope. You'd be surprised what kind of people consider themselves
+> "experts"... I'd prefer adding -v/--verbose flags to all commands (if
+> nothing else, for symmetry's sake), have a '[default] --verbose' controlling
+> this across the board (perhaps also '[default "command"] --verbose'), with
+> '[default]' setting default switches.
+
+Nice idea... but configuration variables have to have name.
+So it would be 
+
+  $ git repo-config defaults.command --verbose
+
+resulting in
+
+  [defaults]
+        command = --verbose
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
 
