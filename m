@@ -1,84 +1,155 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: Mozilla, git and Windows
-Date: Tue, 28 Nov 2006 13:30:08 +1300
-Message-ID: <456B8310.5020102@vilain.net>
-References: <9e4733910611270728p36e58e08w6cc7a2989b7843ce@mail.gmail.com>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD,
+	UNPARSEABLE_RELAY shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: [PATCH] Add --add option to git-repo-config
+Date: Fri, 15 Dec 2006 07:39:04 -0500
+Message-ID: <20061215123904.GA21322@162.242.249.10.in-addr.arpa>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Tue, 28 Nov 2006 00:30:38 +0000 (UTC)
-Cc: Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Fri, 15 Dec 2006 12:39:18 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.2 (X11/20060521)
-In-Reply-To: <9e4733910611270728p36e58e08w6cc7a2989b7843ce@mail.gmail.com>
-X-Enigmail-Version: 0.94.0.0
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.1i
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32470>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Goqrg-0004ZV-M4 for gcvg-git@gmane.org; Tue, 28 Nov
- 2006 01:30:25 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34500>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GvCLL-0003Fb-47 for gcvg-git@gmane.org; Fri, 15 Dec
+ 2006 13:39:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S934432AbWK1AaV (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 27 Nov 2006
- 19:30:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934440AbWK1AaV
- (ORCPT <rfc822;git-outgoing>); Mon, 27 Nov 2006 19:30:21 -0500
-Received: from watts.utsl.gen.nz ([202.78.240.73]:56448 "EHLO
- magnus.utsl.gen.nz") by vger.kernel.org with ESMTP id S934432AbWK1AaU (ORCPT
- <rfc822;git@vger.kernel.org>); Mon, 27 Nov 2006 19:30:20 -0500
-Received: by magnus.utsl.gen.nz (Postfix, from userid 65534) id E03D91398CD;
- Tue, 28 Nov 2006 13:30:17 +1300 (NZDT)
-Received: from [192.168.2.22] (leibniz.catalyst.net.nz [202.78.240.7]) (using
- TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate
- requested) by magnus.utsl.gen.nz (Postfix) with ESMTP id DB2AE1398CB; Tue, 28
- Nov 2006 13:30:10 +1300 (NZDT)
-To: Jon Smirl <jonsmirl@gmail.com>
+ S1752053AbWLOMjJ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 15 Dec 2006
+ 07:39:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752076AbWLOMjJ
+ (ORCPT <rfc822;git-outgoing>); Fri, 15 Dec 2006 07:39:09 -0500
+Received: from vs072.rosehosting.com ([216.114.78.72]:47204 "EHLO
+ silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
+ S1752053AbWLOMjI (ORCPT <rfc822;git@vger.kernel.org>); Fri, 15 Dec 2006
+ 07:39:08 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1]) by
+ silverinsanity.com (Postfix) with ESMTP id 0D7CF1FFC02B for
+ <git@vger.kernel.org>; Fri, 15 Dec 2006 12:39:05 +0000 (UTC)
+Received: from Mutt by mutt-smtp-wrapper.pl 1.2 
+ (www.zdo.com/articles/mutt-smtp-wrapper.shtml)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Jon Smirl wrote:
-> In the other thread we are discussing the conversion of Mozilla CVS to
-> git format. This is something that has to be done but it is not the
-> only issue. Without a native Windows port they won't even consider
-> using git. There is also the risk that the features needed by Mozilla
-> will be completed after they choose to use a different SCM.
->
-> Even if we implement all of the needed features git still needs to win
-> the competition against the other possible choices. The last I heard
-> the leading candiate is SVN/SVK.
+For multivars, the "git-repo-config name value ^$" is useful but
+nonintuitive and troublesome to do repeatedly (since the value is not
+at the end of the command line).  This commit simply adds an --add
+option that adds a new value to a multivar.  Particularly useful for
+tracking a new branch on a remote:
 
-Jon,
+git-repo-config --add remote.origin.fetch +next:origin/next
 
-When I met clkao in August to discuss the possibility of using git as a
-depot for SVK, he seemed very open to the idea, and we worked on an
-initial plan for this.  This should eventually allow svk to be used as a
-porcelain, which might make it more palatable to the Windows crowd.
+Includes documentation and test.
 
-However that doesn't solve the Windows porting issue - it would still
-need to access the repository.
+Signed-off-by: Brian Gernhardt <benji@silverinsanity.com>
+---
 
-I've been working on and off on an abstraction to git, in Moose (perl 6
-objects on perl 5) - what's working so far is making core objects, and
-producing correct checksums.
+This is unchanged from my last patch, but not mangled by OS X's
+clipboard or Mail.app.
 
-You can see this early implementation at
-http://utsl.gen.nz/gitweb/?p=VCS-Git
+ Documentation/git-repo-config.txt |   14 +++++++++++++-
+ builtin-repo-config.c             |    6 ++++--
+ t/t1300-repo-config.sh            |   10 ++++++++++
+ 3 files changed, 27 insertions(+), 3 deletions(-)
 
-What I've found is that I need a good abstraction of UNIX pipelines that
-is as portable as Perl, so that I can prototype the code basing it on
-setting up command pipelines on UNIX, and have it gracefully degrade to
-either using temporary files on Windows, or threading if portions are
-re-implemented using Perl (or a ported libgit).  I am currently working
-on this and hope to have a release by the end of the week, though I will
-not have tested the Windows portability by then.
-
-I would love it if anyone interested in the project would like to help
-me complete the OO-based API, provide tests, documentation, or any kind
-of feedback really.
-
+diff --git a/Documentation/git-repo-config.txt b/Documentation/git-repo-config.txt
+index 5bede9a..b379ec5 100644
+--- a/Documentation/git-repo-config.txt
++++ b/Documentation/git-repo-config.txt
+@@ -10,6 +10,7 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git-repo-config' [--global] [type] name [value [value_regex]]
++'git-repo-config' [--global] [type] --add name value
+ 'git-repo-config' [--global] [type] --replace-all name [value [value_regex]]
+ 'git-repo-config' [--global] [type] --get name [value_regex]
+ 'git-repo-config' [--global] [type] --get-all name [value_regex]
+@@ -23,7 +24,8 @@ You can query/set/replace/unset options with this command. The name is
+ actually the section and the key separated by a dot, and the value will be
+ escaped.
+ 
+-If you want to set/unset an option which can occur on multiple
++Multiple lines can be added to an option by using the '--add' option.
++If you want to update or unset an option which can occur on multiple
+ lines, a POSIX regexp `value_regex` needs to be given.  Only the
+ existing values that match the regexp are updated or unset.  If
+ you want to handle the lines that do *not* match the regex, just
+@@ -53,6 +55,10 @@ OPTIONS
+ 	Default behavior is to replace at most one line. This replaces
+ 	all lines matching the key (and optionally the value_regex).
+ 
++--add::
++	Adds a new line to the option without altering any existing
++	values.  This is the same as providing '^$' as the value_regex.
++
+ --get::
+ 	Get the value for a given key (optionally filtered by a regex
+ 	matching the value). Returns error code 1 if the key was not
+@@ -194,6 +200,12 @@ To actually match only values with an exclamation mark, you have to
+ % git repo-config section.key value '[!]'
+ ------------
+ 
++To add a new proxy, without altering any of the existing ones, use
++
++------------
++% git repo-config core.gitproxy '"proxy" for example.com'
++------------
++
+ 
+ include::config.txt[]
+ 
+diff --git a/builtin-repo-config.c b/builtin-repo-config.c
+index 7b6e572..64fbdb7 100644
+--- a/builtin-repo-config.c
++++ b/builtin-repo-config.c
+@@ -3,7 +3,7 @@
+ #include <regex.h>
+ 
+ static const char git_config_set_usage[] =
+-"git-repo-config [ --global ] [ --bool | --int ] [--get | --get-all | --get-regexp | --replace-all | --unset | --unset-all] name [value [value_regex]] | --list";
++"git-repo-config [ --global ] [ --bool | --int ] [--get | --get-all | --get-regexp | --replace-all | --add | --unset | --unset-all] name [value [value_regex]] | --list";
+ 
+ static char *key;
+ static regex_t *key_regexp;
+@@ -190,7 +190,9 @@ int cmd_repo_config(int argc, const char **argv, const char *prefix)
+ 			use_key_regexp = 1;
+ 			do_all = 1;
+ 			return get_value(argv[2], argv[3]);
+-		} else if (!strcmp(argv[1], "--replace-all"))
++		} else if (!strcmp(argv[1], "--add"))
++			return git_config_set_multivar(argv[2], argv[3], "^$", 0);
++		else if (!strcmp(argv[1], "--replace-all"))
+ 
+ 			return git_config_set_multivar(argv[2], argv[3], NULL, 1);
+ 		else
+diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
+index 0de2497..16cd642 100755
+--- a/t/t1300-repo-config.sh
++++ b/t/t1300-repo-config.sh
+@@ -265,6 +265,16 @@ EOF
+ test_expect_success '--get-regexp' \
+ 	'git-repo-config --get-regexp in > output && cmp output expect'
+ 
++git-repo-config --add nextsection.nonewline "wow4 for you"
++
++cat > expect << EOF
++wow2 for me
++wow4 for you
++EOF
++
++test_expect_success '--add' \
++	'git-repo-config --get-all nextsection.nonewline > output && cmp output expect'
++
+ cat > .git/config << EOF
+ [novalue]
+ 	variable
+-- 
+1.4.4.1.GIT
