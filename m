@@ -4,113 +4,83 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: Cleaning up git user-interface warts
-Date: Thu, 16 Nov 2006 04:53:38 +0100
-Message-ID: <20061116035338.GS7201@pasky.or.cz>
-References: <87k61yt1x2.wl%cworth@cworth.org> <7virhhy76h.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611142048350.2591@xanadu.home> <200611150917.23756.andyparkins@gmail.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: What's in git.git (stable)
+Date: Thu, 14 Dec 2006 23:07:03 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0612141343200.18171@xanadu.home>
+References: <7v4przfpir.fsf@assigned-by-dhcp.cox.net>
+ <200612132237.10051.andyparkins@gmail.com>
+ <7vk60vbcfz.fsf@assigned-by-dhcp.cox.net>
+ <200612140959.19209.andyparkins@gmail.com>
+ <7v7iwu93rv.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 16 Nov 2006 03:53:49 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+NNTP-Posting-Date: Fri, 15 Dec 2006 04:07:19 +0000 (UTC)
+Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <200611150917.23756.andyparkins@gmail.com>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-reply-to: <7v7iwu93rv.fsf@assigned-by-dhcp.cox.net>
+X-X-Sender: nico@xanadu.home
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31555>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GkYJs-0007YT-M5 for gcvg-git@gmane.org; Thu, 16 Nov
- 2006 04:53:45 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34469>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gv4Lr-0002lI-Ae for gcvg-git@gmane.org; Fri, 15 Dec
+ 2006 05:07:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1031102AbWKPDxl (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
- 22:53:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031103AbWKPDxl
- (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 22:53:41 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:5272 "EHLO machine.or.cz") by
- vger.kernel.org with ESMTP id S1031102AbWKPDxk (ORCPT
- <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 22:53:40 -0500
-Received: (qmail 12429 invoked by uid 2001); 16 Nov 2006 04:53:38 +0100
-To: Andy Parkins <andyparkins@gmail.com>
+ S932559AbWLOEHG (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
+ 23:07:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932263AbWLOEHG
+ (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 23:07:06 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:23537 "EHLO
+ relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S932648AbWLOEHF (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006
+ 23:07:05 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
+ <0JAA00MLMRFR8UE0@VL-MH-MR002.ip.videotron.ca> for git@vger.kernel.org; Thu,
+ 14 Dec 2006 23:07:03 -0500 (EST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-On Wed, Nov 15, 2006 at 10:17:22AM CET, Andy Parkins wrote:
-> On Wednesday 2006 November 15 04:32, Nicolas Pitre wrote:
-> 
-> > 3) remote branch handling should become more straight forward.
-> 
-> I was completely confused by this origin/master/clone stuff when I started 
-> with git.  In hindsight, now I understand git a bit more, this is what I 
-> would have liked:
-> 
->  * Don't use the name "origin" twice.  In fact, don't use it at all.  In a 
-> distributed system there is no such thing as a true origin.
-> 
->  * .git/remotes/origin should be ".git/remotes/default".   "origin" is only 
-> special because it is the default to push and pull - it's very nice to have a 
-> default, but it should therefore be /called/ "default".
+On Thu, 14 Dec 2006, Junio C Hamano wrote:
 
-  But "default" is way too generic a name, it's much more confusing I
-think. As the one guilty of inventing master and origin, I agree that
-they are somewhat silly, but if I would have to pick which one to
-replace with something "better", I'd much rather pick master.
-
-  Yes, Git can operate in a completely distributed manner. People do use
-it as it. And there are also people that have no origin branch in their
-repository. But the vast (overwhelming!) majority of people _does_ work
-in some kind of hierarchical setup, and for them origin does have a
-meaning. And origin URL can even change over time!
-
->  * git-clone should really just be a small wrapper around
->     - git-init-db
->     - create .git/remotes/default
->     - maybe create specific .git/config
->     - git-fetch default
->    If git-clone does anything that can't be done with settings in the config 
-> and the remotes/default file then it's wrong.  The reason I say this is that 
-> as soon as git-clone has special capabilities (like --shared, --local 
-> and --reference) then you are prevented from doing magic with existing 
-> repositories.  For example; how do you create a repository that contains 
-> branches from two other local repositories that have the objects hard linked?
-
-  Here I think that modulo the lack of remotes support (which is not a
-fundamental thing here), the general setup of how Cogito does stuff is
-much more saner than the current Git mess. It does basically exactly
-what you've said above, and even the fetching itself is IMHO written
-much more cleanly than in Git. In an ideal world, Git would just take
-Cogito's code here. :-)
-
-> While I'm writing wishes, I'd like to jump on Junio's integration with other 
-> fetch-backends wish.  I use git-svn, and it would be fantastic if I could 
-> replace:
+> Andy Parkins <andyparkins@gmail.com> writes:
 > 
-> git-svn init --id upstream/trunk svn://host/path/trunk
-> git-svn fetch --id upstream/trunk
-> git-svn init --id upstream/stable svn://host/path/branches/stable
-> git-svn fetch --id upstream/stable
+> > $ git commit
+> > Revision XXXXXXXXXXXXXXXXXX successfully added.
+> >
+> > I'd actually argue that git-commit is a particular problem because it's too 
+> > fast.  You quit editing your commit message and bang, you're back at the 
+> > command line.  Then you run git-log to make sure it really was committed.
 > 
-> With a .git/remotes/svn
->  SVN-URL: svn://host/path
->  Pull: trunk:refs/remotes/upstream/trunk
->  Pull: branches/stable:refs/remotes/upstream/stable
-> and
->  git fetch svn
-> 
-> Obviously, the syntax is just made up; but you get the idea.  Even better, 
-> would be if it could cope with my "*" syntax suggested above:
->  SVN-URL: svn://host/path
->  Pull: trunk:refs/remotes/upstream/trunk
->  Pull: branches/*:refs/remotes/upstream/*
+> You keep repeating that you want to know the object name of the
+> newly created commit.  I would very strongly agree with you that
+> it would be a fatal UI bug of git-commit if that information
+> were vital for the end user after making each commit.
 
-  It shouldn't be hard to do at all. Have the porcelain call "protocol
-drivers" based on protocol in some generic way, like
-/usr/lib/git/protocol/$proto.
+I think this is not the point.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-#!/bin/perl -sp0777i<X+d*lMLa^*lN%0]dsXx++lMlN/dsM0<j]dsj
-$/=unpack('H*',$_);$_=`echo 16dio\U$k"SK$/SM$n\EsN0p[lN*1
+Of course the name of the newly created commit isn't _that_ important.
+
+But so is the "Committing initial tree 5220388..." message.
+
+And in the commit case, you are left with a blank screen and just a 
+shell prompt after you quit the text editor for the log message, which 
+is a bit worrisome.  My initial reflex is not to think "ah it just did 
+what I asked it" but rather "hmmm has it just crashed on me?"
+
+Having a single line of feedback when a commit has completed would not 
+be overly verbose and remove that impression of committing into a 
+void I'd think.
+
+Note that, as I said in another thread, I'm really not advocating for 
+git-add to do the same.  The git-add is a relatively simple and 
+lightweight operation that has not the same impact as a commit has 
+_conceptually_.  It doesn't clear the screen for one thing so just 
+returning to the shell prompt (unless -v is used) is plenty sufficient.
+
+I'm following up with a patch to implement what I think should be done.
+
+
