@@ -5,107 +5,64 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH]  Make logAllRefUpdates true by default
-Date: Sun, 26 Nov 2006 12:12:59 -0800
-Message-ID: <7vhcwmt19w.fsf@assigned-by-dhcp.cox.net>
-References: <11645554033331-git-send-email-wildfire@progsoc.org>
+Subject: Re: git fetch slow as molasses due to tag downloading
+Date: Fri, 15 Dec 2006 13:55:13 -0800
+Message-ID: <7vtzzwn7su.fsf@assigned-by-dhcp.cox.net>
+References: <elrr8j$a02$1@sea.gmane.org>
+	<Pine.LNX.4.63.0612141701440.3635@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sun, 26 Nov 2006 20:13:17 +0000 (UTC)
+NNTP-Posting-Date: Fri, 15 Dec 2006 21:56:19 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32365>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GoQNA-00075W-4z for gcvg-git@gmane.org; Sun, 26 Nov
- 2006 21:13:08 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34561>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GvL2P-0006er-G4 for gcvg-git@gmane.org; Fri, 15 Dec
+ 2006 22:56:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1757954AbWKZUND (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 26 Nov 2006
- 15:13:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757955AbWKZUND
- (ORCPT <rfc822;git-outgoing>); Sun, 26 Nov 2006 15:13:03 -0500
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:9445 "EHLO
- fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP id S1757954AbWKZUNB
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 26 Nov 2006 15:13:01 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao02.cox.net
+ S965191AbWLOVzX (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 15 Dec 2006
+ 16:55:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965199AbWLOVzW
+ (ORCPT <rfc822;git-outgoing>); Fri, 15 Dec 2006 16:55:22 -0500
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:38542 "EHLO
+ fed1rmmtao09.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S965195AbWLOVzP (ORCPT <rfc822;git@vger.kernel.org>); Fri, 15 Dec 2006
+ 16:55:15 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao09.cox.net
  (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061126201300.HCMG97.fed1rmmtao02.cox.net@fed1rmimpo02.cox.net>; Sun, 26
- Nov 2006 15:13:00 -0500
+ <20061215215514.IBZC18767.fed1rmmtao09.cox.net@fed1rmimpo02.cox.net>; Fri, 15
+ Dec 2006 16:55:14 -0500
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id rYD81V01L1kojtg0000000; Sun, 26 Nov 2006
- 15:13:09 -0500
-To: Anand Kumria <wildfire@progsoc.org>
+ fed1rmimpo02.cox.net with bizsmtp id z9vS1V0061kojtg0000000; Fri, 15 Dec 2006
+ 16:55:26 -0500
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-I do not think I can take this patch in its current form.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Although I think majority of users would find it convenient to
-have ref-log enabled by default on repositories to be developed
-in, it does not make sense to enable ref-log by default for bare
-repositories that is used as a distribution point.  So at least
-this needs an option to disable it (if you make it the default),
-or enable it.
+> IMHO this should be solved as a filter: "git-show-ref --stdin 
+> --show-invalid". Thus, git does not have to traverse _every_ ref for 
+> _every_ incoming tag.
 
-        Side note.  A ref-log at a distribution point _could_ be
-        used for somebody to say "Hey, I pushed that fix three
-        days ago -- why are you complaining about the breakage
-        I've already fixed before checking the public tip?", but
-        that is a manifestation of lack of communication among
-        people and a SCM is not about solving that problem.
+That sounds like a too specialized hack to me.  We should first
+speed up the general "--verify $ref" case; as you corrected me
+earlier it still has a useless loop.
 
-But having to add an option tends to drive people nuts.  We
-already have --shared and --template, so adding --with-reflog
-would be "just one more option" that we may not have to worry
-too much about, but we would have to revisit this as we gain
-more experience using git and more best-current-practices are
-learned.  I wonder if we can infer if a particular invocation of
-init-db is to prepare a repository to be developed in without
-being told with a command line option.  If we can do so, then we
-can do the configuratio setting with --with-reflog=[yes|no|guess]
-option (and lack of --with-reflog means "guess").
+If it is still too slow (which I suspect it could be the case,
+with fork+exec overhead), we should _also_ pursue the filter
+approach, but even then I think "filter out the valid ones" is a
+specialized hack, if you mean "show only the invalid one's
+names" by --show-invalid.
 
-There are three use cases that init-db is run directly from the
-command line, and I think you want different behaviours.
+It would make sense to do
 
- (1) you have a directory, perhaps already with many files
-     there, because you are doing an initial import to prepare a
-     repository to work in.  You obviously want a ref-log there,
-     and you want --shared=no.  You do not care about
-     denyNonFastForwards because you are not likely to be
-     pushing into it.
+        $ git show-ref --show-invalid v1.0.0 v2.6.18
+        f665776185ad074b236c00751d666da7d1977dbe refs/tags/v1.0.0
+        - refs/tags/v2.6.18
 
- (2) you are preparing a public distribution point for _your_
-     own tree.  You do not want a ref-log, you want --shared=no,
-     and you _might_ want denyNonFastForwards.
-
- (3) you are preparing a public shared repository for project
-     members to use to synchronize, CVS-style.  You do not want
-     a ref-log, you do want --shared=group, and and you want
-     denyNonFastForwards.
-
-Another case that init-db is run indirectly is via git-clone and
-via foreign SCM importers.  I think enabling ref-log during
-non-bare clone, for example, should behave similarly to (1)
-because the resulting repository is clearly meant to be used
-with a working tree in which to develop.  A bare clone is either
-(2) or (3) but you do not have to decide what to do with ref-log
-(i.e. "don't").  But in these "indirect" cases, the command that
-drives init-db can explicitly tell init-db what it is doing, and
-we would need to have both --with-reflog and --without-reflog
-options so that the command can tell what it wants from init-db
-explicitly without having init-db guess.
-
-If you can come up with a reliable way to tell (1)..(3) then we
-can make init-db to do the right thing without an end user to
-tell what should happen --with-reflog or --without-reflog; and
-they do not even have to say --shared anymore as an added bonus.
-
-Having thought about all the above, I think the event to create
-distribution/synchronization point repositories are rare enough
-and the simplest and cleanest way might be to make it default
-and add a --without-reflog option to the command, and forget
-about the guessing.
+(and its equivalent to take refs from --stdin) though.
 
