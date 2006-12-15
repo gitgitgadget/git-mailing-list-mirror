@@ -4,65 +4,59 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: filemode=false somewhat broken
-Date: Sat, 25 Nov 2006 01:10:34 -0500
-Message-ID: <20061125061034.GA4528@spearce.org>
-References: <17764.44236.473000.729015@lapjr.intranet.kiel.bmiag.de> <7vodqzp0mh.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git-fetching from a big repository is slow
+Date: Thu, 14 Dec 2006 16:38:50 -0800
+Message-ID: <7vslfixaat.fsf@assigned-by-dhcp.cox.net>
+References: <200612141340.43925.andyparkins@gmail.com>
+	<200612141518.05770.andyparkins@gmail.com>
+	<458171B7.1020702@xs4all.nl>
+	<200612141620.17782.andyparkins@gmail.com>
+	<Pine.LNX.4.63.0612141732410.3635@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7v8xha2osd.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0612150015330.3635@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sat, 25 Nov 2006 06:10:54 +0000 (UTC)
-Cc: Juergen Ruehle <j.ruehle@bmiag.de>, git@vger.kernel.org
+NNTP-Posting-Date: Fri, 15 Dec 2006 00:39:04 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <7vodqzp0mh.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+In-Reply-To: <Pine.LNX.4.63.0612150015330.3635@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Fri, 15 Dec 2006 00:26:24 +0100
+	(CET)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32255>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GnqkQ-0003tb-RR for gcvg-git@gmane.org; Sat, 25 Nov
- 2006 07:10:47 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34456>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gv16F-0001Gp-KS for gcvg-git@gmane.org; Fri, 15 Dec
+ 2006 01:38:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1757843AbWKYGKn (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 25 Nov 2006
- 01:10:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757844AbWKYGKn
- (ORCPT <rfc822;git-outgoing>); Sat, 25 Nov 2006 01:10:43 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:62631 "EHLO
- corvette.plexpod.net") by vger.kernel.org with ESMTP id S1757843AbWKYGKm
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 25 Nov 2006 01:10:42 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1GnqkH-0000sw-4t; Sat, 25 Nov 2006 01:10:37 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- D72D320FB09; Sat, 25 Nov 2006 01:10:34 -0500 (EST)
-To: Junio C Hamano <junkio@cox.net>
+ S1751740AbWLOAiw (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
+ 19:38:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751743AbWLOAiw
+ (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 19:38:52 -0500
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:49889 "EHLO
+ fed1rmmtao02.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1751740AbWLOAiv (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006
+ 19:38:51 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao02.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061215003850.RCYY97.fed1rmmtao02.cox.net@fed1rmimpo02.cox.net>; Thu, 14
+ Dec 2006 19:38:50 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id yof21V0081kojtg0000000; Thu, 14 Dec 2006
+ 19:39:02 -0500
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano <junkio@cox.net> wrote:
-> Juergen Ruehle <j.ruehle@bmiag.de> writes:
-> 
-> > Commit fd28b34afd9bbd58297a25edced3f504c9a5487a tried to ignore the
-> > executable bit if filemode=false, but instead forced all files to be
-> > regular with 644 permission bits nuking symlink support.
-> 
-> Thanks for noticing.  Yes, that change is _seriously_ broken.  I
-> should really raise the bar for patch acceptance.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Whoops.
+> If I read builtin-show-ref.c correctly, it _always_ calls 
+> for_each_ref(show_ref, NULL);
 
-I don't work with symlinks so I never noticed the breakage myself.
-Clearly the test cases that I created in fd28b3 should also have
-included symlinks, but they did not...  and we see this breakage
-occur.
-
--- 
+Ok, that settles it.  If there is a reason to have --verify, we
+should really special case it.  There is no point in looping,
+because verify does not do the tail match (which could cause
+ambiguity) and its answer should be either "yes it is there" or
+"no there is no such ref".
