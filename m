@@ -1,96 +1,94 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Hyphens and hiding core commands
-Date: Mon, 27 Nov 2006 15:59:17 -0800
-Message-ID: <7vodqse90q.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0611271622260.9647@xanadu.home>
-	<7vmz6cfsuw.fsf@assigned-by-dhcp.cox.net>
-	<87bqmswm1e.wl%cworth@cworth.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Avoiding uninteresting merges in Cairo
+Date: Fri, 15 Dec 2006 16:57:05 +0100
+Message-ID: <200612151657.06909.jnareb@gmail.com>
+References: <20061215020629.GK26202@spearce.org> <eluasq$v7q$3@sea.gmane.org> <20061215150130.GB17860@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Mon, 27 Nov 2006 23:59:35 +0000 (UTC)
-Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Fri, 15 Dec 2006 15:54:53 +0000 (UTC)
+Cc: Carl Worth <cworth@cworth.org>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <87bqmswm1e.wl%cworth@cworth.org> (Carl Worth's message of "Mon,
-	27 Nov 2006 14:40:45 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=R6SpF6ldyfrY6tIeq7KlY8w4ol2rZvtz+zcobwt45N5BGnCLOz7aHEiylvWeSy/RrryVwystj2/guqAjxJuaUE0eS7QZuiuGAKYTW9kMrq0Zh1g9C4MbnJgnejA2Yj+Kfm2UWac5pmq/UTiy4TbasvhtcnTSAte2raAORhZjId8=
+User-Agent: KMail/1.9.3
+In-Reply-To: <20061215150130.GB17860@spearce.org>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32464>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GoqNm-00067e-3N for gcvg-git@gmane.org; Tue, 28 Nov
- 2006 00:59:30 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34524>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GvFOY-0005Rx-QU for gcvg-git@gmane.org; Fri, 15 Dec
+ 2006 16:54:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1758627AbWK0X7U (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 27 Nov 2006
- 18:59:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758628AbWK0X7T
- (ORCPT <rfc822;git-outgoing>); Mon, 27 Nov 2006 18:59:19 -0500
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:48347 "EHLO
- fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP id S1758627AbWK0X7T
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 27 Nov 2006 18:59:19 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao07.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061127235918.TFYC27894.fed1rmmtao07.cox.net@fed1rmimpo01.cox.net>; Mon, 27
- Nov 2006 18:59:18 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id rzym1V00n1kojtg0000000; Mon, 27 Nov 2006
- 18:58:47 -0500
-To: Carl Worth <cworth@cworth.org>
+ S1752766AbWLOPyp (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 15 Dec 2006
+ 10:54:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752769AbWLOPyp
+ (ORCPT <rfc822;git-outgoing>); Fri, 15 Dec 2006 10:54:45 -0500
+Received: from ug-out-1314.google.com ([66.249.92.170]:37329 "EHLO
+ ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1752766AbWLOPyo (ORCPT <rfc822;git@vger.kernel.org>); Fri, 15 Dec
+ 2006 10:54:44 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so844428uga for
+ <git@vger.kernel.org>; Fri, 15 Dec 2006 07:54:43 -0800 (PST)
+Received: by 10.67.121.15 with SMTP id y15mr162850ugm.1166198079207; Fri, 15
+ Dec 2006 07:54:39 -0800 (PST)
+Received: from host-81-190-25-107.torun.mm.pl ( [81.190.25.107]) by
+ mx.google.com with ESMTP id e1sm4459298ugf.2006.12.15.07.54.38; Fri, 15 Dec
+ 2006 07:54:39 -0800 (PST)
+To: Shawn Pearce <spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 
-Carl Worth <cworth@cworth.org> writes:
+Shawn Pearce wrote:
+> Jakub Narebski <jnareb@gmail.com> wrote:
+>> Carl Worth wrote:
+>> 
+>>> On Thu, 14 Dec 2006 22:25:30 -0500, Shawn Pearce wrote:
+>> 
+>>>>  * gitweb made it appear as though a whole lot of Carl's recent
+>>>>    work was somehow undone in the merge.
+>>> 
+>>> That looks like a simple gitweb bug. None of the other tools, (gitk,
+>>> git log -p), consider a trivial merge commit like this as having
+>>> anything interesting in it worth displaying.
+>> 
+>> It's not a bug, it is rather lack of feature (or misfeature).
+> 
+> Its a bug.
+> 
+> I'm not a gitweb user (meaning I almost never look at something
+> in gitweb).  But I'm clearly also not a Git newbie.  ;-)
+> 
+> I could not fathom why that merge commit was being displayed that
+> way in gitweb.  I had to clone the cairo project just so I could
+> actually look at the commit with log/show/whatchanged/diff-tree,
+> because I couldn't believe what I was seeing from gitweb.
 
-> There's another rule-of-thumb I would like to propose that's a bit
-> harder to state, but I think is just as important (if not more):
->
-> 	For introductory documentation it should never make sense to
-> 	introduce a command with specific command-line options before
-> 	the same command without options.
+Do you mean "commit" view or "commitdiff" view in gitweb for merges
+is confusing?
 
-I tend to disagree.  "This is the easiest way to use, even for
-beginners" and "this way should be the default for all levels of
-users" are quite different.
+If it is "commit" view, it is fairly easy to remove difftree/whatchanged
+output below commit message for merges. However while git-show nor 
+git-diff-tree doesn't show diff for merge messages, the diftree output
+in "commit" view might be taken as 'damages'; git diff --summary always
+takes summary of diff against first parent.
 
-> As examples, both "commit -a" and "cat-file -p" fail that test and
-> both appear in the git tutorial here:
->
-> 	http://www.kernel.org/pub/software/scm/git/docs/tutorial.html
->
-> My proposals to fix those two are:
+If it is "commitdiff" view... well, I plan on adding combined diff 
+output to commitdiff, but I need raw (whatchanged) output with the
+same files which would be shown in git-diff --cc for merges (compact
+combined diff output). Otherwise I'd have to use combined (-c) output
+in gitweb, rather than more terse --cc output.
 
-Creating a "git cat" and promote that in the Tutorial makes a
-lot of sense, but then that can easily be done with aliases ;-).
-cat-file is plumbing.  We did not even have '-p' and you needed
-to _know_ the type of stuff you are feeding and we had '-t' to
-help you do so.  '-p' was done as a quick hack because showing
-the representation of any object in semi human readable way was
-not all that important but occasionally people found it useful,
-and it just was an easy thing to do inside cat-file.  Nobody
-bothered to do a real Porcelain called "git cat" for that
-purpose, so far, but that is probably what should have been.  On
-the other hand, if "cat-file -p" needs to be used often, I think
-there is something ELSE that is wrong.
-
-I do not think defaulting to "commit -a" is a fix; rather, it
-feels exactly what Linus was talking about when he said about
-"second system syndrome".
-
-I would not mind if you created "commit-easy" (just like curl
-library has curl_x_easy), but the current way the command works
-is more useful once you grok the index.  Being able to work in a
-slightly dirty tree and commit only the necessary things, and
-being able to do so even for a merge commit, is damn convenient.
-
-Because there is a learning curve involved, an easier way to use
-git without worrying about the index was added in the form of
-'-a' for beginners.  People who use index regularly should not
-be forced to spend extra keystrokes for the rest of their lives
-only because you want to lose '-a' from the tutorial document.
-The tool should be designed for regular users, not for the first
-few pages of the tutorial.
+-- 
+Jakub Narebski
