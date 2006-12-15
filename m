@@ -1,110 +1,87 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: GIT - releases workflow
-Date: Wed, 13 Dec 2006 05:56:14 -0500
-Message-ID: <20061213105614.GB9484@spearce.org>
-References: <89b129c60612121444t18ba94ecv57eea4c72be1663a@mail.gmail.com> <Pine.LNX.4.63.0612122353320.2807@wbgn013.biozentrum.uni-wuerzburg.de> <1166001019.19098.4.camel@localhost.localdomain> <Pine.LNX.4.63.0612131133160.3635@wbgn013.biozentrum.uni-wuerzburg.de>
+From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
+Subject: Re: [PATCH] git-show: grok blobs, trees and tags, too
+Date: Fri, 15 Dec 2006 10:18:58 +0100
+Message-ID: <8aa486160612150118y44744533t16af6d3086ac6b21@mail.gmail.com>
+References: <Pine.LNX.4.63.0612141129320.3635@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 13 Dec 2006 10:56:30 +0000 (UTC)
-Cc: Matthias Kestenholz <lists@spinlock.ch>,
-	Sean Kelley <sean.v.kelley@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Fri, 15 Dec 2006 09:19:12 +0000 (UTC)
+Cc: git@vger.kernel.org, junkio@cox.net
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Dd9uckGWoZkrcw9ASR0+XicG4kYlbPMwJu+dKsRncV3W+ilRAQbq5Wt+i3lX5HdJBKbm5PXql6WVboX9H7+zZjjb2463eFgZ1HvXFsQDRk6XB9NQymXd7zwUfYgX03o4o6PrCUlGmvjWHZkMvTWLukVcWghSd2l5QhPJoOLVnYo=
+In-Reply-To: <Pine.LNX.4.63.0612141129320.3635@wbgn013.biozentrum.uni-wuerzburg.de>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0612131133160.3635@wbgn013.biozentrum.uni-wuerzburg.de>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34207>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34483>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GuRmk-0000a2-6Q for gcvg-git@gmane.org; Wed, 13 Dec
- 2006 11:56:26 +0100
+ esmtp (Exim 4.50) id 1Gv9Dg-0004Sj-1h for gcvg-git@gmane.org; Fri, 15 Dec
+ 2006 10:19:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932288AbWLMK4U (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 13 Dec 2006
- 05:56:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932447AbWLMK4U
- (ORCPT <rfc822;git-outgoing>); Wed, 13 Dec 2006 05:56:20 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:59617 "EHLO
- corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S932288AbWLMK4U (ORCPT <rfc822;git@vger.kernel.org>); Wed, 13 Dec 2006
- 05:56:20 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1GuRmX-0007vu-AF; Wed, 13 Dec 2006 05:56:13 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- 64E6620FB6E; Wed, 13 Dec 2006 05:56:14 -0500 (EST)
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+ S1751346AbWLOJTA (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 15 Dec 2006
+ 04:19:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751354AbWLOJS7
+ (ORCPT <rfc822;git-outgoing>); Fri, 15 Dec 2006 04:18:59 -0500
+Received: from wx-out-0506.google.com ([66.249.82.232]:45325 "EHLO
+ wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1751346AbWLOJS6 (ORCPT <rfc822;git@vger.kernel.org>); Fri, 15 Dec
+ 2006 04:18:58 -0500
+Received: by wx-out-0506.google.com with SMTP id h27so642749wxd for
+ <git@vger.kernel.org>; Fri, 15 Dec 2006 01:18:58 -0800 (PST)
+Received: by 10.70.50.18 with SMTP id x18mr616385wxx.1166174338373; Fri, 15
+ Dec 2006 01:18:58 -0800 (PST)
+Received: by 10.70.46.19 with HTTP; Fri, 15 Dec 2006 01:18:58 -0800 (PST)
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > > On Tue, 12 Dec 2006, Sean Kelley wrote:
-> > > 
-> > > > I was wondering if anyone could share ideas on how best to use GIT to 
-> > > > handle releases for those working with a remote GIT repository?  Do you 
-> > > > create a branch and push it to the remote?  Thus you have a new branch 
-> > > > referencing the particular release?
-> 
-> BTW, if the maintenance releases are sparse and long between, you can 
-> actually create the branch from the tag, fix, and tag with the new version 
-> number. No need to start the branches early.
+On 12/14/06, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+>
+> Since git-show is pure Porcelain, it is the ideal candidate to
+> pretty print other things than commits, too.
 
-Indeed.
+I think "git show ${tag}" should be more like "git show ${commit}",
+that is, with the tagger and date information and the indent, as:
 
-I actually have a fancy (==~800 poorly written lines) Perl script that:
+$ git show v1.4.4.2
+tag v1.4.4.2
+Tagger: Junio C Hamano <junkio@cox.net>
+Date: ${Date}
 
- * Creates a "build" git repository using objects/info/alternates.
-   The user can reuse an existing directory if they have one.
-   (Obviously reusing an existing directory is faster, less files
-   to setup in the working directory.)
+    GIT 1.4.4.2
+    -----BEGIN PGP SIGNATURE-----
+    Version: GnuPG v1.4.5 (GNU/Linux)
 
- * Offers the user a menu of top 10 most recent tags to choose as
-   a base version.  Tags are displayed first sorted by which tag
-   is considered to be in which runtime environment (QA testing,
-   end user testing, production release), then by tag date for
-   those tags not in any specific environment.
+    iD8DBQBFdx8+wMbZpPMRm5oRAsOXAJsGY8DIYey1TZlEXIGq5+8MNgEl1QCfQC0f
+    c5SmdLmAm2KPsCf+bCuoK+k=
+    =oDuA
+    -----END PGP SIGNATURE-----
+commit 49ed2bc4660c7cd0592cf21cc514080574d06320
+...
 
- * Offers the user a menu of branches in a pre-configured namespace
-   (e.g. refs/heads/ready) which have commits not yet merged into
-   the selected base.  Users can attempt to pull as many branches
-   as they like, the script merges each in turn until none remain
-   or the user says "build!".
+>
+> +EXAMPLES
+> +--------
+> +
+> +git show v1.0.0::
+> +       Shows the tag `v1.0.0`.
 
- * Increments the last component of the 'version number' of the tag
-   and makes an annotated tag object in the local build repository.
+and the commit (or object) it references.
 
- * Runs the project's configured build command (from repo-config
-   taken from builder.command variable).
+I would add:
 
- * If builder.command is successful pushes the tag back to the origin
-   repository; if builder.command fails pushes the HEAD revision
-   up as a branch (e.g. refs/heads/failed/foo) so that someone more
-   skilled in the art of failed builds can look into the matter.
+git show v1.0.0^{}::
+      Shows only the commit referenced by the tag `v1.0.0`.
 
-The script is really meant for QA people to take in topic branches
-from developers and apply them to a specific version, test that new
-version, then ship that new version.  Some of the QA people I work
-with aren't developers and have a somewhat difficult time making
-a build from source; this script makes it a pretty simple process.
 
-The version number incrementor is smart; its based off commit
-lineage.  It can automatically create a "2.0.1" tag when "2.1"
-has already been made but "2.0.1" is a bugfix of "2" or "2.0".
-
-I should clean it up some and post it, just in case others may
-be interested.  I'll try to do that this weekend.
-
--- 
