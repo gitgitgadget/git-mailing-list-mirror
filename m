@@ -1,92 +1,83 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: fetching packs and storing them as packs
-Date: Sun, 29 Oct 2006 00:38:19 -0400
-Message-ID: <20061029043818.GA3650@spearce.org>
-References: <Pine.LNX.4.64.0610271310450.3849@g5.osdl.org> <7v3b99e87c.fsf@assigned-by-dhcp.cox.net> <20061028034206.GA14044@spearce.org> <Pine.LNX.4.64.0610272109500.3849@g5.osdl.org> <7vwt6l9etn.fsf@assigned-by-dhcp.cox.net> <20061028072146.GB14607@spearce.org> <20061028084001.GC14607@spearce.org> <7vfyd88d6s.fsf@assigned-by-dhcp.cox.net> <20061029035025.GC3435@spearce.org> <7vejsr68y9.fsf@assigned-by-dhcp.cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: svn versus git
+Date: Fri, 15 Dec 2006 13:56:41 +0100
+Organization: At home
+Message-ID: <elu5tk$g4c$1@sea.gmane.org>
+References: <200612132200.41420.andyparkins@gmail.com> <200612142000.54409.arekm@maven.pl> <Pine.LNX.4.63.0612150009230.3635@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sun, 29 Oct 2006 04:38:42 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Transfer-Encoding: 7Bit
+NNTP-Posting-Date: Fri, 15 Dec 2006 12:55:29 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <7vejsr68y9.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 33
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-25-107.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30413>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Ge2RM-0000GR-3l for gcvg-git@gmane.org; Sun, 29 Oct
- 2006 05:38:33 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34502>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GvCb0-0005AN-82 for gcvg-git@gmane.org; Fri, 15 Dec
+ 2006 13:55:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S964990AbWJ2EiX (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 29 Oct 2006
- 00:38:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965000AbWJ2EiX
- (ORCPT <rfc822;git-outgoing>); Sun, 29 Oct 2006 00:38:23 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:56793 "EHLO
- corvette.plexpod.net") by vger.kernel.org with ESMTP id S964990AbWJ2EiW
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 29 Oct 2006 00:38:22 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1Ge2RU-00026a-AZ; Sun, 29 Oct 2006 00:38:40 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- 5467020E45B; Sun, 29 Oct 2006 00:38:19 -0400 (EDT)
-To: Junio C Hamano <junkio@cox.net>
+ S1752093AbWLOMzR (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 15 Dec 2006
+ 07:55:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752090AbWLOMzR
+ (ORCPT <rfc822;git-outgoing>); Fri, 15 Dec 2006 07:55:17 -0500
+Received: from main.gmane.org ([80.91.229.2]:53092 "EHLO ciao.gmane.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1752085AbWLOMzP
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 15 Dec 2006 07:55:15 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1GvCaO-0000dY-21 for git@vger.kernel.org; Fri, 15 Dec 2006 13:54:48 +0100
+Received: from host-81-190-25-107.torun.mm.pl ([81.190.25.107]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Fri, 15 Dec 2006 13:54:48 +0100
+Received: from jnareb by host-81-190-25-107.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Fri, 15 Dec 2006
+ 13:54:48 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano <junkio@cox.net> wrote:
-> Shawn Pearce <spearce@spearce.org> writes:
+Johannes Schindelin wrote:
+
+> On Thu, 14 Dec 2006, Arkadiusz Miskiewicz wrote:
 > 
-> > The issue is --unpacked= uses the path of the pack name, which
-> > includes $GIT_OBJECT_DIRECTORY, whatever that may be.  This makes it
-> > impossible for the shell script to hand through a proper --unpacked=
-> > line for the active packs without including $GIT_OBJECT_DIRECTORY
-> > as part of the option.
+>> ps. I'm blind or there is no documentation about what utilities are 
+>> needed to get git fully working? (like sed, coreutils, grep, rcs package 
+>> (merge tool afaik needed)...).
 > 
-> Yeah, I realize that; you need to know how to build shell script
-> that is properly shell quoted to be eval'ed, which is not hard
-> but is not usually done and is cumbersome.
+> Open the file "INSTALL".
 
-Too much work.  :-)
+Which doesn't mention 'sed' for example. 
 
-> I would suspect it is probably easier to just say --unpacked
-> (without packname) means "unpacked objects, and objects in packs
-> that do not have corresponding .keep".  However, that would be a
-> change in semantics for --unpacked (without packname), which is
-> not nice.
-> 
-> So how about pack-X{40}.volatile that marks an eligible one for
-> repacking?
 
-Then anyone who has an existing pack would need to create that
-file first as soon as they got this newer version of Git... not
-very upgrade friendly if you ask me.
- 
-> Then we can make "pack-objects --unpacked" to pretend the ones
-> with corresponding .volatile as if the objects in them are
-> loose, without breaking backward compatibility.
+I have checked only commands in POSIX shell script; this list does not
+include tests in t/ directory, which uses multitude of other tools.
 
-Currently I'm changing --unpacked= to match without needing quoting.
-I'm allowing it to match an exact pack name or if it starts with
-"pack-" and matches the last 50 ("pack-X{40}.pack") of the pack name.
+Git has built-in grep since at least v1.4.0, but 'grep' is used in
+generate-cmdlist.sh, git-commit.sh, git-instaweb.sh, git-quiltimport.sh and
+git-tag.sh. 
 
-I figure this should work fine as probably anyone who has a pack
-name that matches 50 characters and starts with "pack-" is using a
-pack file name which has the SHA1 of the object list contained in
-it and is thus probably unique.
- 
+'cut' is used only in git-instaweb.sh; other commands do without it.
+'sort' is used in check-builtins.sh, generate-cmdlist.sh, git-ls-remote.sh,
+git-tag.sh. Both tools are from coreutils package. And git uses other tools
+from coreutils too: uniq, printf, tail,...
+
+Git has built-in diff since at least v1.4.0, but diff is used in
+git-merge-one-file.sh
+
 -- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
+
