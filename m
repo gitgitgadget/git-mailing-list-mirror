@@ -1,88 +1,93 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: filesystem encodings and gitweb tests, was Re: Moving a directory
- into another fails
-Date: Tue, 5 Dec 2006 15:11:32 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612051507170.28348@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <9e4733910607260800v618edf0em7b0f5c3332bf8fc5@mail.gmail.com>
- <Pine.LNX.4.64.0612041317480.3476@woody.osdl.org>
- <Pine.LNX.4.63.0612050831550.28348@wbgn013.biozentrum.uni-wuerzburg.de>
- <200612051036.13645.jnareb@gmail.com>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH 1/2] Suggest use of 'git add' when 'nothing to commit'
+ gets shown.
+Date: Fri, 15 Dec 2006 10:11:48 +0100
+Message-ID: <458266D4.5050301@op5.se>
+References: <20061215001350.GA26755@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Tue, 5 Dec 2006 14:11:46 +0000 (UTC)
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Fri, 15 Dec 2006 09:12:08 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
+	Andy Parkins <andyparkins@gmail.com>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <200612051036.13645.jnareb@gmail.com>
-X-Y-GMX-Trusted: 0
+User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
+In-Reply-To: <20061215001350.GA26755@spearce.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33342>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34482>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Grb1J-0003iF-6N for gcvg-git@gmane.org; Tue, 05 Dec
- 2006 15:11:41 +0100
+ esmtp (Exim 4.50) id 1Gv96p-0003kt-2z for gcvg-git@gmane.org; Fri, 15 Dec
+ 2006 10:12:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1760053AbWLEOLf (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 5 Dec 2006
- 09:11:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760042AbWLEOLf
- (ORCPT <rfc822;git-outgoing>); Tue, 5 Dec 2006 09:11:35 -0500
-Received: from mail.gmx.net ([213.165.64.20]:33539 "HELO mail.gmx.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S1760030AbWLEOLe
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 5 Dec 2006 09:11:34 -0500
-Received: (qmail invoked by alias); 05 Dec 2006 14:11:32 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp045) with SMTP; 05 Dec 2006 15:11:32 +0100
-To: Jakub Narebski <jnareb@gmail.com>
+ S1751327AbWLOJLv (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 15 Dec 2006
+ 04:11:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751346AbWLOJLv
+ (ORCPT <rfc822;git-outgoing>); Fri, 15 Dec 2006 04:11:51 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:48651 "EHLO
+ smtp-gw1.op5.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
+ S1751327AbWLOJLu (ORCPT <rfc822;git@vger.kernel.org>); Fri, 15 Dec 2006
+ 04:11:50 -0500
+Received: from [192.168.1.20] (unknown [213.88.215.14]) by smtp-gw1.op5.se
+ (Postfix) with ESMTP id 1043C6BCBC; Fri, 15 Dec 2006 10:11:49 +0100 (CET)
+To: "Shawn O. Pearce" <spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 
-Hi,
+Shawn O. Pearce wrote:
+>  else
+>  	if [ -z "$(git-ls-files)" ]; then
+> -		echo >&2 Nothing to commit
+> +		echo >&2 "Nothing to commit (use \"git add\" include for commit)"
 
-On Tue, 5 Dec 2006, Jakub Narebski wrote:
+s/git add include/git add to include/
 
-> Johannes Schindelin wrote:
-> 
-> > On Mon, 4 Dec 2006, Linus Torvalds wrote:
-> > 
-> >> 	[core]
-> >> 		escapefilenames = true
-> > 
-> > I think this goes too far. The problem _only_ showed up with a made-up 
-> > test case for gitweb. Let's bite the apple when we _have_ to (which I 
-> > doubt will happen, because for the most part, developers understand that 
-> > spaces and umlauts have _no_ place in filenames, basically since UNIX was 
-> > invented by stupid US Americans who did not know anything about nice 
-> > filenames, let alone other languages than English and C).
-> 
-> No, the problem showed with stupid HFS+ which uses different encoding
-> for creating file, and different for readdir.
+>  		exit 1
+>  	fi
+>  	PARENTS=""
+> diff --git a/wt-status.c b/wt-status.c
+> index 6e9414d..f9ed54f 100644
+> --- a/wt-status.c
+> +++ b/wt-status.c
+> @@ -163,7 +163,7 @@ static void wt_status_print_changed_cb(struct diff_queue_struct *q,
+>  	int i;
+>  	if (q->nr)
+>  		wt_status_print_header("Changed but not updated",
+> -				"use git-add on files to include for commit");
+> +				"use \"git add\" on files to include for commit");
 
-This is just one of the problems. I described another problem in this 
-thread, namely a repo on a usb stick being accessed from different hosts.
+Here it's "on files", whereas in other threads people have stated that 
+git add adds content, so perhaps
 
-> Perhaps we should remove gitweb/test directory, and move testing gitweb 
-> to proper place, t/ directory.
+use \"git add file1 file2\" to include for commit
 
-If you do that, please make sure that these tests can be disabled (a la 
-svn tests), so that people not being interested in gitweb, or lacking the 
-programs to test it, do not have to suffer.
+which also gives a nice "simplest-possible-usage" message.
 
-> By the way, would it be correct to use external tools (if they exist),
-> namely HTMLtidy in gitweb output test to-be-written?
 
-(Yes, they exist. HTMLtidy for example ;-)
+>  		if (!shown_header) {
+>  			wt_status_print_header("Untracked files",
+> -				"use \"git add\" to add to commit");
+> +				"use \"git add\" on files to include for commit");
 
-IMHO if such a tool is common enough, you should use it. If anybody steps 
-forward providing automated HTTP tests, I will not complain, and certainly 
-not about testing with things like HTMLtidy.
+Same here.
 
-Ciao,
-Dscho
+
+>  	if (!s->commitable)
+> -		printf("%s\n", s->amend ? "# No changes" : "nothing to commit");
+> +		printf("%s (use \"git add\" include for commit)\n",
+> +			s->amend ? "# No changes" : "Nothing to commit");
+>  }
+
+This is same as first one (missing "to " before "include").
+
+It would probably be nice to use one and the same message everywhere though.
+
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
