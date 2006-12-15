@@ -4,100 +4,172 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 0/2] Making "git commit" to mean "git commit -a".
-Date: Thu, 30 Nov 2006 15:02:52 -0800
-Message-ID: <7vlklsfsgz.fsf@assigned-by-dhcp.cox.net>
-References: <7virgzuf38.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0611282322320.9647@xanadu.home>
-	<7vr6vmsnly.fsf@assigned-by-dhcp.cox.net>
-	<87ejrlvn7r.wl%cworth@cworth.org>
-	<7vodqpn3t4.fsf@assigned-by-dhcp.cox.net>
-	<7vk61dn2yj.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0611300310520.30004@wbgn013.biozentrum.uni-wuerzburg.de>
-	<Pine.LNX.4.64.0611291859070.3513@woody.osdl.org>
-	<456EBBE7.8030404@op5.se>
-	<Pine.LNX.4.64.0611300749560.3513@woody.osdl.org>
-	<20061130164046.GB17715@thunk.org>
-	<Pine.LNX.4.64.0611300903080.3513@woody.osdl.org>
-	<Pine.LNX.4.64.0611301229290.9647@xanadu.home>
-	<87irgwu6e6.wl%cworth@cworth.org> <87hcwgu5t1.wl%cworth@cworth.org>
-	<Pine.LNX.4.64.0611301132350.3513@woody.osdl.org>
-	<Pine.LNX.4.64.0611301521320.9647@xanadu.home>
-	<7vhcwgiqer.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0611301624430.9647@xanadu.home>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [PATCH 2/2] Align section headers of 'git status' to new 'git add'.
+Date: Thu, 14 Dec 2006 19:13:55 -0500
+Message-ID: <20061215001355.GB26755@spearce.org>
+References: <2d2d4a64dab54a6d156b599afd69d7607fb228f6.1166141607.git.spearce@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 30 Nov 2006 23:04:04 +0000 (UTC)
-Cc: Linus Torvalds <torvalds@osdl.org>, Carl Worth <cworth@cworth.org>,
-	Theodore Tso <tytso@mit.edu>, Andreas Ericsson <ae@op5.se>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
+NNTP-Posting-Date: Fri, 15 Dec 2006 00:14:16 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <Pine.LNX.4.64.0611301624430.9647@xanadu.home> (Nicolas Pitre's
-	message of "Thu, 30 Nov 2006 17:21:00 -0500 (EST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Content-Disposition: inline
+In-Reply-To: <2d2d4a64dab54a6d156b599afd69d7607fb228f6.1166141607.git.spearce@spearce.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32830>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gpuwa-0003zk-6F for gcvg-git@gmane.org; Fri, 01 Dec
- 2006 00:03:52 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34448>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gv0iI-00072C-9f for gcvg-git@gmane.org; Fri, 15 Dec
+ 2006 01:14:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S967949AbWK3XC7 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
- 18:02:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967961AbWK3XC6
- (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 18:02:58 -0500
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:5615 "EHLO
- fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP id S967960AbWK3XCx
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 18:02:53 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao04.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061130230253.HAHL7494.fed1rmmtao04.cox.net@fed1rmimpo02.cox.net>; Thu, 30
- Nov 2006 18:02:53 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id tB311V00e1kojtg0000000; Thu, 30 Nov 2006
- 18:03:02 -0500
-To: Nicolas Pitre <nico@cam.org>
+ S1752059AbWLOAN7 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
+ 19:13:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752053AbWLOAN7
+ (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 19:13:59 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:44243 "EHLO
+ corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1752055AbWLOAN6 (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006
+ 19:13:58 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1Gv0hu-0007JB-7U; Thu, 14 Dec 2006 19:13:46 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 1C54720FB65; Thu, 14 Dec 2006 19:13:55 -0500 (EST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Nicolas Pitre <nico@cam.org> writes:
+Now that 'git add' is considered a first-class UI for 'update-index'
+and that the git add documentation states "Even modified files must
+be added to the set of changes about to be committed" we should
+make the output of 'git status' align with that documentation and
+common usage.
 
-> Wonderful! We might be converging to something then.
+So now we see a status output such as:
 
-Yup.  And it appears that we even agree that "intent to add" is
-a bad idea ;-).
+  # Added but not yet committed:
+  #   (will commit)
+  #
+  #       new file: x
+  #
+  # Changed but not added:
+  #   (use "git add" on files to include for commit)
+  #
+  #       modified:   x
+  #
+  # Untracked files:
+  #   (use "git add" on files to include for commit)
+  #
+  #       y
 
->   Here's a twist.  If you do "git commit <file1> <file2> ..." then 
->   only the  changes belonging to those explicitly specified files will 
->   be committed, entirely bypassing the current "added" changes.  Those
->   "added" changes will still remain available for a subsequent commit.
->
->   There is a twist about that twist: if you do "git commit -i <file>..." 
->   then the commit will consider changes to those specified files 
->   _including_ all "added" changes so far.
+which just reads better in the context of using 'git add' to
+manipulate a commit (and not a checkin, whatever the heck that is).
 
-I sense that you are inviting me to argue for reverting the
-other "git commit" braindead which is spelled "--only" (and
-worse yet, it is the default).  I am very tempted.
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ Documentation/git-runstatus.txt |    6 +++---
+ Documentation/git-status.txt    |    6 +++---
+ Documentation/tutorial-2.txt    |   10 +++++-----
+ wt-status.c                     |    4 ++--
+ 4 files changed, 13 insertions(+), 13 deletions(-)
 
->   But for instance it is best to only remember "git add" + "git 
->   commit" and/or "git commit -a".
->
-> Doesn't it sounds nice?  The index is being introduced up front without 
-> even mentioning it, and I think the above should be fairly palatable to 
-> newbies as well.  Would only lack some enhancements to the commit 
-> template and the "nothing to commit" message so the user is cued about 
-> the fact that "current changeset is empty -- don't forget to 'git add' 
-> modified files, or use 'git commit -a'".
->
-> What do you think?
-
-Other than these "twists", I think it makes sense, and that is
-what I think.
-
-But making sense to me does not necessarily validate that a
-tutorial document is great for its intended audience, since I
-lost git virginity long time ago.  I can only endorse that the
-description is technically accurate.
+diff --git a/Documentation/git-runstatus.txt b/Documentation/git-runstatus.txt
+index 89d7b92..e76ef05 100644
+--- a/Documentation/git-runstatus.txt
++++ b/Documentation/git-runstatus.txt
+@@ -16,9 +16,9 @@ DESCRIPTION
+ Examines paths in the working tree that has changes unrecorded
+ to the index file, and changes between the index file and the
+ current HEAD commit.  The former paths are what you _could_
+-commit by running 'git-update-index' before running 'git
+-commit', and the latter paths are what you _would_ commit by
+-running 'git commit'.
++commit by running 'git-add' before running 'git commit', and
++the latter paths are what you _would_ commit by running
++'git commit'.
+ 
+ If there is no path that is different between the index file and
+ the current HEAD commit, the command exits with non-zero status.
+diff --git a/Documentation/git-status.txt b/Documentation/git-status.txt
+index ce7857e..0dd9136 100644
+--- a/Documentation/git-status.txt
++++ b/Documentation/git-status.txt
+@@ -15,9 +15,9 @@ DESCRIPTION
+ Examines paths in the working tree that has changes unrecorded
+ to the index file, and changes between the index file and the
+ current HEAD commit.  The former paths are what you _could_
+-commit by running 'git-update-index' before running 'git
+-commit', and the latter paths are what you _would_ commit by
+-running 'git commit'.
++commit by running 'git-add' before running 'git commit', and
++the latter paths are what you _would_ commit by running
++'git commit'.
+ 
+ If there is no path that is different between the index file and
+ the current HEAD commit, the command exits with non-zero
+diff --git a/Documentation/tutorial-2.txt b/Documentation/tutorial-2.txt
+index f7f2e1c..918a562 100644
+--- a/Documentation/tutorial-2.txt
++++ b/Documentation/tutorial-2.txt
+@@ -341,23 +341,23 @@ situation:
+ ------------------------------------------------
+ $ git status
+ #
+-# Updated but not checked in:
++# Added but not yet committed:
+ #   (will commit)
+ #
+ #       new file: closing.txt
+ #
+ #
+-# Changed but not updated:
+-#   (use git-update-index to mark for commit)
++# Changed but not added:
++#   (use "git add" on files to include for commit)
+ #
+ #       modified: file.txt
+ #
+ ------------------------------------------------
+ 
+ Since the current state of closing.txt is cached in the index file,
+-it is listed as "updated but not checked in".  Since file.txt has
++it is listed as "added but not yet committed".  Since file.txt has
+ changes in the working directory that aren't reflected in the index,
+-it is marked "changed but not updated".  At this point, running "git
++it is marked "changed but not added".  At this point, running "git
+ commit" would create a commit that added closing.txt (with its new
+ contents), but that didn't modify file.txt.
+ 
+diff --git a/wt-status.c b/wt-status.c
+index f9ed54f..8cc4d5d 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -162,7 +162,7 @@ static void wt_status_print_changed_cb(struct diff_queue_struct *q,
+ {
+ 	int i;
+ 	if (q->nr)
+-		wt_status_print_header("Changed but not updated",
++		wt_status_print_header("Changed but not added",
+ 				"use \"git add\" on files to include for commit");
+ 	for (i = 0; i < q->nr; i++)
+ 		wt_status_print_filepair(WT_STATUS_CHANGED, q->queue[i]);
+@@ -178,7 +178,7 @@ void wt_status_print_initial(struct wt_status *s)
+ 	read_cache();
+ 	if (active_nr) {
+ 		s->commitable = 1;
+-		wt_status_print_header("Updated but not checked in",
++		wt_status_print_header("Added but not yet committed",
+ 				"will commit");
+ 	}
+ 	for (i = 0; i < active_nr; i++) {
+-- 
