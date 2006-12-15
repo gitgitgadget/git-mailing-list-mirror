@@ -1,76 +1,61 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Troy Telford" <ttelford.groups@gmail.com>
-Subject: Re: git-svn bug?
-Date: Wed, 15 Nov 2006 15:55:21 -0700
-Message-ID: <op.ti2xykijzidtg1@rygel.lnxi.com>
-References: <op.ti2svo0ozidtg1@rygel.lnxi.com> <7vejs4jshp.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain; format=flowed; delsp=yes; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 15 Nov 2006 22:56:43 +0000 (UTC)
-Cc: git@vger.kernel.org, "Eric Wong" <normalperson@yhbt.net>
+From: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
+Subject: Re: svn versus git
+Date: Thu, 14 Dec 2006 21:58:33 -0300
+Message-ID: <200612150058.kBF0wX23005507@laptop13.inf.utfsm.cl>
+References: <arekm@maven.pl>
+NNTP-Posting-Date: Fri, 15 Dec 2006 00:59:29 +0000 (UTC)
+Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:date:to:subject:from:cc:content-type:mime-version:references:content-transfer-encoding:message-id:in-reply-to:user-agent;
-        b=QyColwk5HEpZNa/znvy2rY+48Nt2p7w/kz6ziv0csTQEQKue96mq6kxb59E6WdECmERm4NANGm1RX7kxpF5GUCp6psHF23nM5OHXZ4lbJnfFhGY2GnLVIXreaQjavsQQyq4H3CJxcZwAJLK+Z1H+2n+JBSGCQa0zmnilzasZPoc=
-In-Reply-To: <7vejs4jshp.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Opera Mail/9.10 (Linux)
+In-Reply-To: Message from Arkadiusz Miskiewicz <arekm@maven.pl> 
+   of "Thu, 14 Dec 2006 20:00:54 BST." <200612142000.54409.arekm@maven.pl> 
+X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.5  (beta27)
+X-Greylist: Delayed for 00:00:01 by milter-greylist-2.0.2 (inti.inf.utfsm.cl [200.1.19.1]); Thu, 14 Dec 2006 21:58:50 -0300 (CLST)
+X-Virus-Scanned: ClamAV version 0.88.5, clamav-milter version 0.88.5 on inti.inf.utfsm.cl
+X-Virus-Status: Clean
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31523>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GkTg8-000317-Ay for gcvg-git@gmane.org; Wed, 15 Nov
- 2006 23:56:25 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34458>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gv1Q5-0003E5-Tf for gcvg-git@gmane.org; Fri, 15 Dec
+ 2006 01:59:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1162031AbWKOWzi (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
- 17:55:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1162032AbWKOWzi
- (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 17:55:38 -0500
-Received: from ug-out-1314.google.com ([66.249.92.172]:4659 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1162031AbWKOWzh
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 17:55:37 -0500
-Received: by ug-out-1314.google.com with SMTP id m3so291162ugc for
- <git@vger.kernel.org>; Wed, 15 Nov 2006 14:55:35 -0800 (PST)
-Received: by 10.78.201.15 with SMTP id y15mr19092huf.1163631335258; Wed, 15
- Nov 2006 14:55:35 -0800 (PST)
-Received: from rygel.lnxi.com ( [63.145.151.2]) by mx.google.com with ESMTP
- id 11sm1392952hug.2006.11.15.14.55.33; Wed, 15 Nov 2006 14:55:35 -0800 (PST)
-To: "Junio C Hamano" <junkio@cox.net>
+ S932675AbWLOA7K (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
+ 19:59:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932636AbWLOA7J
+ (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 19:59:09 -0500
+Received: from inti.inf.utfsm.cl ([200.1.21.155]:35825 "EHLO
+ inti.inf.utfsm.cl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
+ S932681AbWLOA7I (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006
+ 19:59:08 -0500
+Received: from laptop13.inf.utfsm.cl (pc-173-245-83-200.cm.vtr.net
+ [200.83.245.173]) by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id
+ kBF0wlnO005321 (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256
+ verify=NO); Thu, 14 Dec 2006 21:58:50 -0300
+Received: from laptop13.inf.utfsm.cl (laptop13.inf.utfsm.cl [127.0.0.1]) by
+ laptop13.inf.utfsm.cl (8.13.8/8.13.8) with ESMTP id kBF0wX23005507; Thu, 14
+ Dec 2006 21:58:34 -0300
+To: Arkadiusz Miskiewicz <arekm@maven.pl>
 Sender: git-owner@vger.kernel.org
 
-On Wed, 15 Nov 2006 14:43:30 -0700, Junio C Hamano <junkio@cox.net> wrote:
+Arkadiusz Miskiewicz <arekm@maven.pl> wrote:
 
-> "Troy Telford" <ttelford.groups@gmail.com> writes:
->
->> (using git 1.4.4, svn 1.3.1 on a SLES 10 box)
->> fatal: Not a valid object name  
->> 92e2e0c50bbbacb0a3426b2c0f8b3e043eb4830a~1
->> 32768 at /usr/lib/perl5/5.8.8/Memoize.pm line 269
->> ...
->> I couldn't find an object named
->> "92e2e0c50bbbacb0a3426b2c0f8b3e043eb4830a~1" in .git/
->
-> Troy, do you have object 92e2e0c5?  Is it a root commit (i.e. a
-> commit that does not have a parent)?
+[...]
 
-I'll have to admit I'm stabbing in the dark on how to get the correct  
-answer this, but here goes:
+> ps. I'm blind or there is no documentation about what utilities are needed to 
+> get git fully working? (like sed, coreutils, grep, rcs package (merge tool 
+> afaik needed)...). 
 
-* `git cat-file -t 92e2e0...` returns 'commit'
-* 'git cat-file -p 92e2e0...` returns: (minus the header/footer asterisks)
-*********************************************
-tree 4b825dc642cb6eb9a060e54bf8d69288fbee4904
-author unknown <unknown> 961088898 +0000
-committer unknown <unknown> 961088898 +0000
-
-New repository initialized by cvs2svn.
-*********************************************
+Look at the .spec (or .spec.in) file, they record what the running git
+needs.
 -- 
+Dr. Horst H. von Brand                   User #22616 counter.li.org
+Departamento de Informatica                    Fono: +56 32 2654431
+Universidad Tecnica Federico Santa Maria             +56 32 2654239
+Casilla 110-V, Valparaiso, Chile               Fax:  +56 32 2797513
