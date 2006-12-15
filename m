@@ -1,88 +1,56 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 1/3] make =?iso-8859-1?Q?index-p=E2ck?= able to complete
- thin packs
-Date: Fri, 27 Oct 2006 15:28:55 -0700
-Message-ID: <7vmz7hcs0o.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0610252323100.12418@xanadu.home>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: What's in git.git (stable)
+Date: Fri, 15 Dec 2006 10:30:43 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0612151029080.18171@xanadu.home>
+References: <7v4przfpir.fsf@assigned-by-dhcp.cox.net>
+ <200612140959.19209.andyparkins@gmail.com>
+ <7v7iwu93rv.fsf@assigned-by-dhcp.cox.net>
+ <200612141136.59041.andyparkins@gmail.com> <eluemi$gc0$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 27 Oct 2006 22:29:03 +0000 (UTC)
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+NNTP-Posting-Date: Fri, 15 Dec 2006 15:30:56 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+In-reply-to: <eluemi$gc0$1@sea.gmane.org>
+X-X-Sender: nico@xanadu.home
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30351>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GdaCB-0006v2-Rr for gcvg-git@gmane.org; Sat, 28 Oct
- 2006 00:29:00 +0200
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34517>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GvF1L-0001tx-IG for gcvg-git@gmane.org; Fri, 15 Dec
+ 2006 16:30:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1750820AbWJ0W25 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 27 Oct 2006
- 18:28:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750826AbWJ0W25
- (ORCPT <rfc822;git-outgoing>); Fri, 27 Oct 2006 18:28:57 -0400
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:55454 "EHLO
- fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP id S1750820AbWJ0W24
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 27 Oct 2006 18:28:56 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao02.cox.net
- (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
- <20061027222855.NNMN12581.fed1rmmtao02.cox.net@fed1rmimpo01.cox.net>; Fri, 27
- Oct 2006 18:28:55 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id faUd1V00j1kojtg0000000 Fri, 27 Oct 2006
- 18:28:38 -0400
-To: Nicolas Pitre <nico@cam.org>
+ S1751925AbWLOPap (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 15 Dec 2006
+ 10:30:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752738AbWLOPap
+ (ORCPT <rfc822;git-outgoing>); Fri, 15 Dec 2006 10:30:45 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:11130 "EHLO
+ relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1751925AbWLOPao (ORCPT <rfc822;git@vger.kernel.org>); Fri, 15 Dec 2006
+ 10:30:44 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
+ <0JAB00CHVN37XOH0@VL-MO-MR002.ip.videotron.ca> for git@vger.kernel.org; Fri,
+ 15 Dec 2006 10:30:43 -0500 (EST)
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Nicolas Pitre <nico@cam.org> writes:
+On Fri, 15 Dec 2006, Jakub Narebski wrote:
 
-> +static void fix_unresolved_deltas(int nr_unresolved)
-> +{
-> +	struct delta_entry **sorted_by_pos;
-> +	int i, n = 0;
-> +
-> +	/*
-> +	 * Since many unresolved deltas may well be themselves base objects
-> +	 * for more unresolved deltas, we really want to include the
-> +	 * smallest number of base objects that would cover as much delta
-> +	 * as possible by picking the
-> +	 * trunc deltas first, allowing for other deltas to resolve without
-> +	 * additional base objects.  Since most base objects are to be found
-> +	 * before deltas depending on them, a good heuristic is to start
-> +	 * resolving deltas in the same order as their position in the pack.
-> +	 */
-> +	sorted_by_pos = xmalloc(nr_unresolved * sizeof(*sorted_by_pos));
->  	for (i = 0; i < nr_deltas; i++) {
-> -		if (deltas[i].obj->real_type == OBJ_REF_DELTA ||
-> -		    deltas[i].obj->real_type == OBJ_OFS_DELTA)
-> -			die("pack has unresolved deltas");
-> +		if (objects[deltas[i].obj_no].real_type != OBJ_REF_DELTA)
-> +			continue;
-> +		sorted_by_pos[n++] = &deltas[i];
->  	}
->
-> +	qsort(sorted_by_pos, n, sizeof(*sorted_by_pos), delta_pos_compare);
-> +
-> +	for (i = 0; i < n; i++) {
-> +		struct delta_entry *d = sorted_by_pos[i];
-> +		void *data;
-> +		unsigned long size;
-> +		char type[10];
-> +		enum object_type obj_type;
-> +		int j, first, last;
-> +
-> +		if (objects[d->obj_no].real_type != OBJ_REF_DELTA)
-> +			continue;
+> It would be nice to have some generic place in git config to specify
+> default options to git commands (at least for interactive shell). It
+> cannot be done using aliases. Perhaps defaults.<command> config variable?
 
-Just for the sake of my own sanity checking,...
+I would say the alias facility has to be fixed then.
 
-Is it because base objects of OFS_DELTA _must_ exist in the same
-pack (even when --thin) that we do not have to worry about them
-in this function?
+In bash you can alias "ls" to "ls -l" and it just works.
+
+
