@@ -1,66 +1,69 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Lars Hjemli" <lh@elementstorage.no>
-Subject: Re: kernel.org mirroring (Re: [GIT PULL] MMC update)
-Date: Fri, 8 Dec 2006 20:59:47 +0100
-Message-ID: <8c5c35580612081159r325bfe1dsa764da050d63606b@mail.gmail.com>
-References: <Pine.LNX.4.64.0612020835110.3476@woody.osdl.org>
-	 <457868AA.2030605@zytor.com> <20061207193012.GA84678@dspnet.fr.eu.org>
-	 <4578722E.9030402@zytor.com> <4579611F.5010303@dawes.za.net>
-	 <45798FE2.9040502@zytor.com>
-	 <Pine.LNX.4.64.0612080830380.3516@woody.osdl.org>
-	 <457995F8.1080405@zytor.com>
-	 <8c5c35580612081149y2042c62j55b1b7b3f23da6ad@mail.gmail.com>
-	 <4579C234.5080709@zytor.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] git-show: grok blobs, trees and tags, too
+Date: Fri, 15 Dec 2006 09:50:36 +0100
+Organization: At home
+Message-ID: <eltng7$te5$2@sea.gmane.org>
+References: <Pine.LNX.4.63.0612141129320.3635@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Fri, 8 Dec 2006 20:00:02 +0000 (UTC)
-Cc: "Linus Torvalds" <torvalds@osdl.org>,
-	"Git Mailing List" <git@vger.kernel.org>
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Fri, 15 Dec 2006 08:50:27 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=XJe1rjoEXJsSKMioST1bfpC1oEQ30FA0fbLmOCzqpE2vLa7z5XqkVzDxHZBHqzKPzofwcYkLQa6MgDnj6pVgi2js0NlEHF/kcL8or4N3xQ/7xs1flpfz9hSxM790KQ1C2Eiwgo8YLl5nN/5+jY0ZPyW9aQ2wXPYmzwujQeMJ8RU=
-In-Reply-To: <4579C234.5080709@zytor.com>
-Content-Disposition: inline
-X-Google-Sender-Auth: ae5847c69a63bb17
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 18
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-25-107.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33732>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34478>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gslsv-0004JE-4V for gcvg-git@gmane.org; Fri, 08 Dec
- 2006 20:59:53 +0100
+ esmtp (Exim 4.50) id 1Gv8lh-0001Ig-Qp for gcvg-git@gmane.org; Fri, 15 Dec
+ 2006 09:50:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1426183AbWLHT7t (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
- 14:59:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1426182AbWLHT7t
- (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 14:59:49 -0500
-Received: from nf-out-0910.google.com ([64.233.182.187]:30290 "EHLO
- nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1426183AbWLHT7t (ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Dec
- 2006 14:59:49 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so1223409nfa for
- <git@vger.kernel.org>; Fri, 08 Dec 2006 11:59:47 -0800 (PST)
-Received: by 10.82.172.15 with SMTP id u15mr589728bue.1165607987406; Fri, 08
- Dec 2006 11:59:47 -0800 (PST)
-Received: by 10.82.158.7 with HTTP; Fri, 8 Dec 2006 11:59:47 -0800 (PST)
-To: "H. Peter Anvin" <hpa@zytor.com>
+ S1751298AbWLOIuK convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Fri, 15 Dec 2006 03:50:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751315AbWLOIuK
+ (ORCPT <rfc822;git-outgoing>); Fri, 15 Dec 2006 03:50:10 -0500
+Received: from main.gmane.org ([80.91.229.2]:40898 "EHLO ciao.gmane.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1751298AbWLOIuI
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 15 Dec 2006 03:50:08 -0500
+Received: from root by ciao.gmane.org with local (Exim 4.43) id
+ 1Gv8lW-0003Gx-3z for git@vger.kernel.org; Fri, 15 Dec 2006 09:50:02 +0100
+Received: from host-81-190-25-107.torun.mm.pl ([81.190.25.107]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Fri, 15 Dec 2006 09:50:02 +0100
+Received: from jnareb by host-81-190-25-107.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Fri, 15 Dec 2006
+ 09:50:02 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On 12/8/06, H. Peter Anvin <hpa@zytor.com> wrote:
-> Trust me, perl, or CGI, is not the problem.  It's all about I/O traffic
-> generated by git.
+Johannes Schindelin wrote:
 
-Yes, I understand. That's why I've been thinking about internal
-caching of pages.
+> +For tags, it shows the tag message and the referenced objects.
+[...]
+> +EXAMPLES
+> +--------
+> +
+> +git show v1.0.0::
+> +=A0=A0=A0=A0=A0=A0=A0Shows the tag `v1.0.0`.
 
-It's just a kick doing it in C, playing around with the git internals :-)
+This changes semantic. Before this patch "git show v1.0.0" showed
+_commit_, not a tag. Well, you can get commit using "git show v1.0.0^{}=
+"...
 
--- 
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
+
