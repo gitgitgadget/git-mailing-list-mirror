@@ -1,78 +1,89 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Cleaning up git user-interface warts
-Date: Fri, 17 Nov 2006 14:45:46 +0100
-Organization: At home
-Message-ID: <ejkebm$4a2$1@sea.gmane.org>
-References: <Pine.LNX.4.64.0611141518590.2591@xanadu.home> <87bqn9u43s.wl%cworth@cworth.org> <ejdcg5$4fl$1@sea.gmane.org> <Pine.LNX.4.64.0611141633430.2591@xanadu.home> <7vbqn9y6w6.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611142007010.2591@xanadu.home> <7v3b8ltq7r.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611142306090.2591@xanadu.home> <Pine.LNX.4.64.0611150950170.3349@woody.osdl.org> <Pine.LNX.4.64.0611151315291.2591@xanadu.home> <20061115184914.GA24122@spearce.org> <455B64F7.9040506@gmx.net> <7vejs4l9wy.fsf@assigned-by-dhcp.cox.net> <455C0033.2020309@gmx.net> <7v1wo3d6g4.fsf@assigned-by-dhcp.cox.net>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [PATCH] Stop telling users we are 'defaulting to local storage area'.
+Date: Thu, 14 Dec 2006 21:25:43 -0500
+Message-ID: <20061215022543.GL26202@spearce.org>
+References: <20061214230902.GA26506@spearce.org> <Pine.LNX.4.64.0612142059301.18171@xanadu.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-NNTP-Posting-Date: Fri, 17 Nov 2006 13:45:08 +0000 (UTC)
+NNTP-Posting-Date: Fri, 15 Dec 2006 02:25:54 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
+	Andy Parkins <andyparkins@gmail.com>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 28
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0612142059301.18171@xanadu.home>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31698>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gl41f-00023b-SC for gcvg-git@gmane.org; Fri, 17 Nov
- 2006 14:45:04 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34462>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gv2lj-00036k-NM for gcvg-git@gmane.org; Fri, 15 Dec
+ 2006 03:25:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1424383AbWKQNoy (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 17 Nov 2006
- 08:44:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1424409AbWKQNox
- (ORCPT <rfc822;git-outgoing>); Fri, 17 Nov 2006 08:44:53 -0500
-Received: from main.gmane.org ([80.91.229.2]:23693 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S1424383AbWKQNow (ORCPT
- <rfc822;git@vger.kernel.org>); Fri, 17 Nov 2006 08:44:52 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1Gl41I-00020G-73 for git@vger.kernel.org; Fri, 17 Nov 2006 14:44:40 +0100
-Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Fri, 17 Nov 2006 14:44:40 +0100
-Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Fri, 17 Nov 2006
- 14:44:40 +0100
-To: git@vger.kernel.org
+ S965038AbWLOCZt (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
+ 21:25:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965042AbWLOCZt
+ (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 21:25:49 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:49579 "EHLO
+ corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S965038AbWLOCZs (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006
+ 21:25:48 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1Gv2lR-0007uN-Ap; Thu, 14 Dec 2006 21:25:33 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 3F97620FB65; Thu, 14 Dec 2006 21:25:43 -0500 (EST)
+To: Nicolas Pitre <nico@cam.org>
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano wrote:
+Nicolas Pitre <nico@cam.org> wrote:
+> On Thu, 14 Dec 2006, Shawn O. Pearce wrote:
+> > It also breaks from our normal behavior of not printing
+> > anything if the command was successful.
 
-> Marko Macek <marko.macek@gmx.net> writes:
+> I really don't think this is a good rule.
 > 
->>>> BTW, currently there's a minor bug: git-diff HEAD doesn't work before
->>>> you make the first commit. Perhaps this should be special cased.
->>>
->>> That's only a _bug_ in your implementation of the synonym for
->>> "svn diff" which blindly used "git diff HEAD".
->>
->> My "implementation" is taken from git-diff man page. It seems obvious
->> that the situation before the first commit is just a special case if
->> we consider git-diff to be Porcelain (which I do).
+> NOte that I'm not against commands that are silent by default.  I really 
+> think that git-add should remain silent on success by default when 
+> successful.
 > 
-> Yes, "git diff" is a Porcelain.  No question about it.
-> 
-> I do not consider the current behaviour of "git diff HEAD" that
-> complains instead of giving runs of "foo is a new file and no
-> diff is available for it" a bug; you asked for diff from some
-> commit but the commit you gave was bogus (does not exist yet).
+> But the rule of thumb should be about the importance of the action 
+> performed by the command.
+> But git-init-db is really important.  
 
-git diff --root HEAD, perhaps?
+A very reasonable argument, butchered for my evil quoting needs.  :-)
+
+If we want to keep letting git-init-db output something, then
+the output should be a lot more meaningful to the average English
+speaking new Git user than "defaulting to local storage area".
+
+E.g.:
+
+  $ git init-db
+  Initialized empty Git repository in .git/
+
+would probably make a lot more sense to new and expert users alike.
+I'm fine with the above form, I just think that the message we have
+now could benefit from being sent to the land from which there is
+no return, or be rewritten...
+
+BTW, I almost also submitted a patch to remove the "Committing
+initial tree ..." message in git-commit-tree, but thought twice about
+it as committing an initial tree is sort of an important difference
+from normal activity that we should highlight it somehow...
 
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
-
