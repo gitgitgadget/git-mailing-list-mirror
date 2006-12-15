@@ -4,66 +4,63 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 2/3] git-svn: documentation updates
-Date: Sat, 02 Dec 2006 17:52:48 -0800
-Message-ID: <7vd571yccv.fsf@assigned-by-dhcp.cox.net>
-References: <1164768702941-git-send-email-normalperson@yhbt.net>
-	<11647687042130-git-send-email-normalperson@yhbt.net>
-	<456D36CE.1060300@midwinter.com> <20061129085419.GB4486@hand.yhbt.net>
-	<loom.20061129T133305-813@post.gmane.org>
-	<20061203013955.GD1369@localdomain>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: What's in git.git (stable)
+Date: Fri, 15 Dec 2006 16:48:30 +0100
+Message-ID: <4582C3CE.3000902@op5.se>
+References: <7v4przfpir.fsf@assigned-by-dhcp.cox.net> <200612140959.19209.andyparkins@gmail.com> <7v7iwu93rv.fsf@assigned-by-dhcp.cox.net> <200612141136.59041.andyparkins@gmail.com> <eluemi$gc0$1@sea.gmane.org> <Pine.LNX.4.64.0612151029080.18171@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sun, 3 Dec 2006 01:53:20 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Fri, 15 Dec 2006 15:48:48 +0000 (UTC)
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061203013955.GD1369@localdomain> (Eric Wong's message of "Sat,
-	2 Dec 2006 17:39:55 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
+In-Reply-To: <Pine.LNX.4.64.0612151029080.18171@xanadu.home>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33081>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GqgXc-0006lI-2b for gcvg-git@gmane.org; Sun, 03 Dec
- 2006 02:53:16 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34522>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GvFId-0004b9-4j for gcvg-git@gmane.org; Fri, 15 Dec
+ 2006 16:48:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1424736AbWLCBxN (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 2 Dec 2006
- 20:53:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759487AbWLCBxN
- (ORCPT <rfc822;git-outgoing>); Sat, 2 Dec 2006 20:53:13 -0500
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:37363 "EHLO
- fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP id S1759485AbWLCBxM
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 2 Dec 2006 20:53:12 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao02.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061203015249.UZCK97.fed1rmmtao02.cox.net@fed1rmimpo02.cox.net>; Sat, 2 Dec
- 2006 20:52:49 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id u1sy1V00i1kojtg0000000; Sat, 02 Dec 2006
- 20:52:59 -0500
-To: Eric Wong <normalperson@yhbt.net>
+ S1752755AbWLOPsc (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 15 Dec 2006
+ 10:48:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752756AbWLOPsc
+ (ORCPT <rfc822;git-outgoing>); Fri, 15 Dec 2006 10:48:32 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:55280 "EHLO
+ smtp-gw1.op5.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
+ S1752755AbWLOPsb (ORCPT <rfc822;git@vger.kernel.org>); Fri, 15 Dec 2006
+ 10:48:31 -0500
+Received: from [192.168.1.20] (unknown [213.88.215.14]) by smtp-gw1.op5.se
+ (Postfix) with ESMTP id 706426BCC7; Fri, 15 Dec 2006 16:48:30 +0100 (CET)
+To: Nicolas Pitre <nico@cam.org>
 Sender: git-owner@vger.kernel.org
 
-Eric Wong <normalperson@yhbt.net> writes:
+Nicolas Pitre wrote:
+> On Fri, 15 Dec 2006, Jakub Narebski wrote:
+> 
+>> It would be nice to have some generic place in git config to specify
+>> default options to git commands (at least for interactive shell). It
+>> cannot be done using aliases. Perhaps defaults.<command> config variable?
+> 
+> I would say the alias facility has to be fixed then.
+> 
+> In bash you can alias "ls" to "ls -l" and it just works.
+> 
 
-> Both push and pull are git/bk/hg(?)-specific terms; most SVN users are
-> not accustomed to them.  Using 'pull' with git-svn has already been
-> discouraged for a while (since the introduction of dcommit); and
-> having a 'push' without a 'pull' would be very confusing.
+I think this is because git scripts that need a certain git command to 
+work a certain way don't want some alias to kick in and destroy things 
+for them. Shell-scripts would have the same problem if you alias "awk" 
+to "grep" f.e., which is why prudent shell-scripters use the "unalias 
+-a" thing.
 
-I am not sure how 'push' side should be integrated, but I wish
-people could simply update a branch that is managed by foreign
-SCM interfaces such as git-svn and git-cvsimport with 'git fetch'
-by saying that the remote URL points at a non-git "repository"
-in remotes/ (or corresponding config).
+Anyways, this should be largely solvable by inventing a "--no-aliases" 
+switch to the git wrapper, or by the scripts calling the programs they 
+need directly which, afaik, bypasses the alias logic. If it doesn't, it 
+should.
 
-git-cvsimport builds the git objects from the changeset without
-using the working tree, and it would be very natural and simple
-to integrate it into 'git fetch', pretending as if it is just a
-funny transport.
-
-If the interface uses the working tree to update the state from
-foreign SCM, then integrating with git-fetch would be
-inpractical.  I guess git-svn works that way?
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
