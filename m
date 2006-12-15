@@ -1,80 +1,66 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Peter Baumann <Peter.B.Baumann@stud.informatik.uni-erlangen.de>
-Subject: Re: git-show --stat on first commit
-Date: Tue, 21 Nov 2006 18:11:19 +0100
-Message-ID: <slrnem6cpn.6vh.Peter.B.Baumann@xp.machine.xx>
-References: <200611211341.48862.andyparkins@gmail.com> <8aa486160611210609h1c2d229ekf0b5e8aeb4f21f11@mail.gmail.com> <slrnem694k.4lm.Peter.B.Baumann@xp.machine.xx> <Pine.LNX.4.64.0611210820100.3338@woody.osdl.org>
-NNTP-Posting-Date: Tue, 21 Nov 2006 17:12:05 +0000 (UTC)
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [DRAFT 2] Branching and merging with git
+Date: Fri, 15 Dec 2006 22:38:05 +0100
+Organization: At home
+Message-ID: <elv4f5$kcj$1@sea.gmane.org>
+References: <7vslghftix.fsf@assigned-by-dhcp.cox.net> <20061120235136.4841.qmail@science.horizon.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+NNTP-Posting-Date: Fri, 15 Dec 2006 21:36:14 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 36
+Original-Lines: 16
 Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: mason.hofmann.stw.uni-erlangen.de
-User-Agent: slrn/0.9.8.0 (Linux)
+X-Gmane-NNTP-Posting-Host: host-81-190-25-107.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32006>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GmZ9q-0008Dk-3n for gcvg-git@gmane.org; Tue, 21 Nov
- 2006 18:11:44 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34553>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GvKiy-00042e-6e for gcvg-git@gmane.org; Fri, 15 Dec
+ 2006 22:36:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1031182AbWKURLg (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 21 Nov 2006
- 12:11:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031225AbWKURLf
- (ORCPT <rfc822;git-outgoing>); Tue, 21 Nov 2006 12:11:35 -0500
-Received: from main.gmane.org ([80.91.229.2]:24545 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S1031182AbWKURLe (ORCPT
- <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2006 12:11:34 -0500
+ S1753444AbWLOVgJ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 15 Dec 2006
+ 16:36:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753445AbWLOVgI
+ (ORCPT <rfc822;git-outgoing>); Fri, 15 Dec 2006 16:36:08 -0500
+Received: from main.gmane.org ([80.91.229.2]:47868 "EHLO ciao.gmane.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1753444AbWLOVgH
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 15 Dec 2006 16:36:07 -0500
 Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1GmZ9h-0008Bj-NN for git@vger.kernel.org; Tue, 21 Nov 2006 18:11:33 +0100
-Received: from mason.hofmann.stw.uni-erlangen.de ([131.188.24.36]) by
+ 1GvKic-0006G7-5Z for git@vger.kernel.org; Fri, 15 Dec 2006 22:35:50 +0100
+Received: from host-81-190-25-107.torun.mm.pl ([81.190.25.107]) by
  main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Tue, 21 Nov 2006 18:11:33 +0100
-Received: from Peter.B.Baumann by mason.hofmann.stw.uni-erlangen.de with
- local (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>;
- Tue, 21 Nov 2006 18:11:33 +0100
+ <git@vger.kernel.org>; Fri, 15 Dec 2006 22:35:50 +0100
+Received: from jnareb by host-81-190-25-107.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Fri, 15 Dec 2006
+ 22:35:50 +0100
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On 2006-11-21, Linus Torvalds <torvalds@osdl.org> wrote:
->
->
-> On Tue, 21 Nov 2006, Peter Baumann wrote:
->> 
->> Why not make --root the default? I also stumbled over this behaviour and
->> even asked on this list.
->
-> I suspect we should make the thing a config option, and default it to 
-> "on".
->
-That would be great.
+linux@horizon.com wrote:
 
-> I personally do _not_ want to see the root commit, because for the kernel, 
-> it's a honking huge import that does not make sense as a "diff". It's not 
-> really a diff against anything, after all - it's an import.
->
-> That's really the reason why git defaults to not showing the root diff at 
-> all: exactly because for the kernel, the initial commit was state that 
-> "just came to be", and I found it both illogical and annoying to see it as 
-> a diff, since that commit really was a "black hole" where previous history 
-> just disappeared.
->
-> But if you have the _full_ history with a new project, "--root" by default 
-> probably makes tons of sense.
->
+> I tried to incorporate all the suggestions.  There are still a few things
+> I have to research, and now I'm worried it's getting too long.  Sigh.
 
-I am aware of the import problem, especially from the kernel history.
+Tutorials can (and usually are) be long, don't worry.
+ 
 
-And I think handling this behaviour as a config option is the right thing,
-because most of the time if someone imports a project into git he
-will import the whole history, especially if he is using one of the
-cvs/svn importers. A "halfway import" as seen in the kernel repo is a
-special case and it is unlikely seen again.
+Could you resend this as patch creating Documentation/tutorial-3.txt
+This way it would be in the repository, and people would be able to correct
+this (I guess that it at first would appear in 'next' branch)...
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
 
-Peter
