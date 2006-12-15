@@ -2,79 +2,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git and bzr
-Date: Wed, 29 Nov 2006 11:49:19 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0611291145510.30004@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <45357CC3.4040507@utoronto.ca> <87slhcz8zh.wl%cworth@cworth.org>
- <a7e835d40610260152k658aeaf0hb900cb63870c04e4@mail.gmail.com>
- <7vu01ro20b.fsf@assigned-by-dhcp.cox.net> <a7e835d40610260257r5f05ea4gc934f1c1cc267977@mail.gmail.com>
- <20061026101038.GA13310@coredump.intra.peff.net> <877iyne4dm.fsf@alplog.fr>
- <Pine.LNX.4.64.0610260753090.3962@g5.osdl.org> <456B7C6A.80104@webdrake.net>
- <845b6e870611280410j58bdcd99nc05d0f67489293e4@mail.gmail.com>
- <ekhaeg$etk$1@sea.gmane.org> <Pine.LNX.4.63.0611281433270.30004@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0611280754050.30076@woody.osdl.org> <456C7592.6020700@ableton.com>
- <ekhtnt$rkk$1@sea.gmane.org> <456C9DFF.1040407@onlinehome.de>
- <456CA981.4010808@onlinehome.de> <Pine.LNX.4.64.0611281346490.4244@woody.osdl.org>
- <456CB197.2030201@onlinehome.de> <Pine.LNX.4.64.0611281413310.4244@woody.osdl.org>
- <Pine.LNX.4.64.0611281432300.4244@woody.osdl.org> <456CBCD5.3050505@onlinehome.de>
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [PATCH 1/2] Suggest use of 'git add' when 'nothing to commit' gets shown.
+Date: Thu, 14 Dec 2006 19:13:50 -0500
+Message-ID: <20061215001350.GA26755@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Wed, 29 Nov 2006 10:49:49 +0000 (UTC)
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Jakub Narebski <jnareb@gmail.com>,
-	bazaar-ng@lists.canonical.com, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Fri, 15 Dec 2006 00:14:04 +0000 (UTC)
+Cc: git@vger.kernel.org, Andy Parkins <andyparkins@gmail.com>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <456CBCD5.3050505@onlinehome.de>
-X-Y-GMX-Trusted: 0
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32630>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GpN0H-0001rc-7r for gcvg-git@gmane.org; Wed, 29 Nov
- 2006 11:49:25 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34447>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gv0i7-00070O-Ex for gcvg-git@gmane.org; Fri, 15 Dec
+ 2006 01:13:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S966882AbWK2KtW (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 29 Nov 2006
- 05:49:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S967012AbWK2KtW
- (ORCPT <rfc822;git-outgoing>); Wed, 29 Nov 2006 05:49:22 -0500
-Received: from mail.gmx.net ([213.165.64.20]:30414 "HELO mail.gmx.net") by
- vger.kernel.org with SMTP id S966882AbWK2KtV (ORCPT
- <rfc822;git@vger.kernel.org>); Wed, 29 Nov 2006 05:49:21 -0500
-Received: (qmail invoked by alias); 29 Nov 2006 10:49:19 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp042) with SMTP; 29 Nov 2006 11:49:19 +0100
-To: Nicholas Allen <nick.allen@onlinehome.de>
+ S1752052AbWLOANz (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
+ 19:13:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752053AbWLOANz
+ (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 19:13:55 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:44235 "EHLO
+ corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1752052AbWLOANy (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006
+ 19:13:54 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1Gv0hp-0007II-QE; Thu, 14 Dec 2006 19:13:41 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 698A220FB65; Thu, 14 Dec 2006 19:13:50 -0500 (EST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Hi,
+If a user modifies files and runs 'git commit' (without the very
+useful -a option) and they have not yet updated the index they
+are probably coming from another SCM-like tool which would perform
+the same as 'git commit -a' in this case.  Showing the user their
+current status and a final line of "nothing to commit" is not very
+reassuring, as the user might believe that Git did not recognize
+their files were modified.
 
-On Tue, 28 Nov 2006, Nicholas Allen wrote:
+Instead we can suggest as part of the 'nothing to commit' message
+that the user invoke 'git add' to add files to their next commit.
 
-> [Linus wrote...]
-> > 
-> > So the tools are certainly there. "git status" just isn't necessarily the 
-> > best one (or the best that it could be, for that matter)..
-> 
-> I guess I hit a limitation in the output of status as opposed to a
-> limitation in what git can do ;-)
+Suggested by Andy Parkins in his Git 'niggles' list
+(<200612132237.10051.andyparkins@gmail.com>).
 
-I think it is something different altogether: you learnt how to use CVS, 
-and you learnt how to use bzr, and you are now biased towards using the 
-same names for the same operations in git.
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ git-commit.sh |    2 +-
+ wt-status.c   |    7 ++++---
+ 2 files changed, 5 insertions(+), 4 deletions(-)
 
-I actually use git-status quite often, just before committing, to know 
-what I changed. But I will probable retrain my mind to use "git diff" or 
-even "git diff --stat", because it is more informative.
-
-As for your scenario: There really should be a "what to do when my merge 
-screwed up?" document.
-
-Ciao,
-Dscho
+diff --git a/git-commit.sh b/git-commit.sh
+index 05828bb..fb69e11 100755
+--- a/git-commit.sh
++++ b/git-commit.sh
+@@ -515,7 +515,7 @@ then
+ 	current="$(git-rev-parse --verify HEAD)"
+ else
+ 	if [ -z "$(git-ls-files)" ]; then
+-		echo >&2 Nothing to commit
++		echo >&2 "Nothing to commit (use \"git add\" include for commit)"
+ 		exit 1
+ 	fi
+ 	PARENTS=""
+diff --git a/wt-status.c b/wt-status.c
+index 6e9414d..f9ed54f 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -163,7 +163,7 @@ static void wt_status_print_changed_cb(struct diff_queue_struct *q,
+ 	int i;
+ 	if (q->nr)
+ 		wt_status_print_header("Changed but not updated",
+-				"use git-add on files to include for commit");
++				"use \"git add\" on files to include for commit");
+ 	for (i = 0; i < q->nr; i++)
+ 		wt_status_print_filepair(WT_STATUS_CHANGED, q->queue[i]);
+ 	if (q->nr)
+@@ -250,7 +250,7 @@ static void wt_status_print_untracked(const struct wt_status *s)
+ 		}
+ 		if (!shown_header) {
+ 			wt_status_print_header("Untracked files",
+-				"use \"git add\" to add to commit");
++				"use \"git add\" on files to include for commit");
+ 			shown_header = 1;
+ 		}
+ 		color_printf(color(WT_STATUS_HEADER), "#\t");
+@@ -292,7 +292,8 @@ void wt_status_print(struct wt_status *s)
+ 	if (s->verbose && !s->is_initial)
+ 		wt_status_print_verbose(s);
+ 	if (!s->commitable)
+-		printf("%s\n", s->amend ? "# No changes" : "nothing to commit");
++		printf("%s (use \"git add\" include for commit)\n",
++			s->amend ? "# No changes" : "Nothing to commit");
+ }
+ 
+ int git_status_config(const char *k, const char *v)
+-- 
+1.4.4.2.g72f5
