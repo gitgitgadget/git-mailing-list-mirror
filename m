@@ -4,77 +4,84 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Han-Wen Nienhuys <hanwen@xs4all.nl>
-Subject: bug: git-sh-setup should not be in $PATH
-Date: Wed, 06 Dec 2006 13:14:27 +0100
-Message-ID: <el6c6o$oa7$1@sea.gmane.org>
-Reply-To: hanwen@xs4all.nl
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [RFC] A unique way to express "all" (vs "add vs "update") ?
+Date: Fri, 15 Dec 2006 13:55:13 -0800
+Message-ID: <7vzm9on7su.fsf@assigned-by-dhcp.cox.net>
+References: <elu1cn$k3$1@sea.gmane.org> <4582906A.7020204@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 6 Dec 2006 12:14:35 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Fri, 15 Dec 2006 21:56:23 +0000 (UTC)
+Cc: git@vger.kernel.org, t2a2e9z8ncbs9qg@brefemail.com
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 33
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: muurbloem.xs4all.nl
-User-Agent: Thunderbird 1.5.0.8 (X11/20061107)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33437>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34565>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GrvfV-00085I-Pe for gcvg-git@gmane.org; Wed, 06 Dec
- 2006 13:14:34 +0100
+ esmtp (Exim 4.50) id 1GvL2Q-0006er-H8 for gcvg-git@gmane.org; Fri, 15 Dec
+ 2006 22:56:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1760534AbWLFMOa (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
- 07:14:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760543AbWLFMOa
- (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 07:14:30 -0500
-Received: from main.gmane.org ([80.91.229.2]:46447 "EHLO ciao.gmane.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1760534AbWLFMOa
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec 2006 07:14:30 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1GrvfQ-00048T-9M for git@vger.kernel.org; Wed, 06 Dec 2006 13:14:28 +0100
-Received: from muurbloem.xs4all.nl ([213.84.26.127]) by main.gmane.org with
- esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>;
- Wed, 06 Dec 2006 13:14:28 +0100
-Received: from hanwen by muurbloem.xs4all.nl with local (Gmexim 0.1 (Debian))
- id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Wed, 06 Dec 2006 13:14:28
- +0100
-To: git@vger.kernel.org
+ S965213AbWLOVze (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 15 Dec 2006
+ 16:55:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965203AbWLOVze
+ (ORCPT <rfc822;git-outgoing>); Fri, 15 Dec 2006 16:55:34 -0500
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:48992 "EHLO
+ fed1rmmtao01.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S965205AbWLOVzQ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 15 Dec 2006
+ 16:55:16 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao01.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061215215514.CKSK9173.fed1rmmtao01.cox.net@fed1rmimpo02.cox.net>; Fri, 15
+ Dec 2006 16:55:14 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id z9vR1V00C1kojtg0000000; Fri, 15 Dec 2006
+ 16:55:25 -0500
+To: Andreas Ericsson <ae@op5.se>
 Sender: git-owner@vger.kernel.org
 
+Andreas Ericsson <ae@op5.se> writes:
 
-Hello,
+> Jerome Lovy wrote:
+> ...
+> But this isn't "commit" at all. It's "git add".
+>
+>>     (This would allow the typical usage "git commit -u ." which is
+>>     barely longer than the current "git commit -a")
+>>
+>> For interface completeness, "git commit -u|--update <files>" could also
+>> exist but would probably be of no use.
+>>
+>> To sum up, "all" would be consistently expressed with the <dir> syntax.
+>> "git commit -a" would not mean "--all" anymore. Lastly, a distinction
+>> would be made between "--add" and "--update":
+>> - "git commit -add" would have the same semantics as "git add"
+>
+> This is bollocks. git commit should commit things. We'll be in some
+> serious trouble if "git commit -a" stops working the way it has and
+> starts just adding things to index.
 
-I often install tools locally so I can run SVN/CVS/etc versions 
-in my own account. To do this, I install into
+I agree everything you said in your response to Jerome, except
+for one thing.
 
-  $HOME/usr/pkg/PACKAGE
+We might want to allow:
 
-and a script that generates scripts in $HOME/usr/bin/ (which is in my $PATH)
-like
+	$ git commit untracked.c tracked.c
 
- #!/bin/sh
+to internally 'git add' untracked files while making the commit.
 
- exec /home/lilydev/usr/pkg/git/bin/git-prune "$@"
- # generated: update-pkgs 
+Currently you would get:
 
+	$ git commit untracked.c tracked.c
+        error: pathspec 'untracked.c' did not match any file(s) known to git.
+        Did you forget to 'git add'?
 
-this breaks with git-sh-setup; all sh scripts are broken with this
-setup.
+which is usable, safe, and helpful, so changing it to
+automatically including it would not help the end user that
+much and one could argue that it removes the safety which is a
+bad idea.
 
-git-sh-setup isn't a 'normal' binary, in that it should be called by
-bash only and not run in a subshell. Therefore I propose that it
-
-- be installed in <prefix>/share/git/
-
-- be invoked with an explicit path, i.e.
-
-  . <prefix>/share/git/
+So, let's not do this; sorry for the noise.
 
 
-
---
- Han-Wen Nienhuys - hanwen@xs4all.nl - http://www.xs4all.nl/~hanwen
