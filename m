@@ -2,82 +2,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: problem in unpack-trees.c
-Date: Mon, 04 Dec 2006 02:00:32 -0800
-Message-ID: <7vhcwcq8u7.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0612022125530.1867@scrub.home>
-	<7vodqkq956.fsf@assigned-by-dhcp.cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: git fetch slow as molasses due to tag downloading
+Date: Fri, 15 Dec 2006 10:58:54 +0100
+Organization: At home
+Message-ID: <eltrg8$b4q$2@sea.gmane.org>
+References: <elrr8j$a02$1@sea.gmane.org> <Pine.LNX.4.63.0612141701440.3635@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Mon, 4 Dec 2006 10:00:40 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Transfer-Encoding: 7Bit
+NNTP-Posting-Date: Fri, 15 Dec 2006 10:00:25 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <7vodqkq956.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Mon, 04 Dec 2006 01:53:57 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 12
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-25-107.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33179>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34486>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GrAcm-0004Tw-KY for gcvg-git@gmane.org; Mon, 04 Dec
- 2006 11:00:36 +0100
+ esmtp (Exim 4.50) id 1Gv9ra-0000pe-Fw for gcvg-git@gmane.org; Fri, 15 Dec
+ 2006 11:00:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S934423AbWLDKAe (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
- 05:00:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935285AbWLDKAe
- (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 05:00:34 -0500
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:41465 "EHLO
- fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP id S934423AbWLDKAd
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006 05:00:33 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao09.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061204100032.KXRN18767.fed1rmmtao09.cox.net@fed1rmimpo01.cox.net>; Mon, 4
- Dec 2006 05:00:32 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id uZzx1V00Q1kojtg0000000; Mon, 04 Dec 2006
- 04:59:58 -0500
-To: Roman Zippel <zippel@linux-m68k.org>
+ S1751401AbWLOKAL (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 15 Dec 2006
+ 05:00:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751417AbWLOKAL
+ (ORCPT <rfc822;git-outgoing>); Fri, 15 Dec 2006 05:00:11 -0500
+Received: from main.gmane.org ([80.91.229.2]:54081 "EHLO ciao.gmane.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1751401AbWLOKAJ
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 15 Dec 2006 05:00:09 -0500
+Received: from root by ciao.gmane.org with local (Exim 4.43) id
+ 1Gv9rG-00005i-5z for git@vger.kernel.org; Fri, 15 Dec 2006 11:00:02 +0100
+Received: from host-81-190-25-107.torun.mm.pl ([81.190.25.107]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Fri, 15 Dec 2006 11:00:02 +0100
+Received: from jnareb by host-81-190-25-107.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Fri, 15 Dec 2006
+ 11:00:02 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano <junkio@cox.net> writes:
+Johannes Schindelin wrote:
 
-> If the alignment requirement of the platform is smaller, we may
-> be overstepping the struct when we access its name[] member.
+> IMHO this should be solved as a filter: "git-show-ref --stdin 
+> --show-invalid". Thus, git does not have to traverse _every_ ref for 
+> _every_ incoming tag.
 
-Would this help?
+Can you make it so? TIA.
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
 
-I do not think we need a separate identity for df_conflict_entry
-per invocation of unpack_trees(), so this allocates one such
-entry with NUL name at the first call to the function and reuses
-it from the variable.
-
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 7cfd628..47aa804 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -370,7 +370,7 @@ int unpack_trees(struct object_list *trees, struct unpack_trees_options *o)
- 	int i;
- 	struct object_list *posn = trees;
- 	struct tree_entry_list df_conflict_list;
--	struct cache_entry df_conflict_entry;
-+	static struct cache_entry *dfc;
- 
- 	memset(&df_conflict_list, 0, sizeof(df_conflict_list));
- 	df_conflict_list.next = &df_conflict_list;
-@@ -381,8 +381,10 @@ int unpack_trees(struct object_list *trees, struct unpack_trees_options *o)
- 	state.refresh_cache = 1;
- 
- 	o->merge_size = len;
--	memset(&df_conflict_entry, 0, sizeof(df_conflict_entry));
--	o->df_conflict_entry = &df_conflict_entry;
-+
-+	if (!dfc)
-+		dfc = xcalloc(1, sizeof(struct cache_entry) + 1);
-+	o->df_conflict_entry = dfc;
- 
- 	if (len) {
- 		posns = xmalloc(len * sizeof(struct tree_entry_list *));
