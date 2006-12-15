@@ -2,89 +2,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Make cvsexportcommit work with filenames with spaces and non-ascii characters.
-Date: Sun, 10 Dec 2006 13:27:43 -0800
-Message-ID: <7vlklf4f1s.fsf@assigned-by-dhcp.cox.net>
-References: <20061209232919.31863.58547.stgit@lathund.dewire.com>
-	<7v3b7o8s5j.fsf@assigned-by-dhcp.cox.net>
-	<200612101639.22397.robin.rosenberg@dewire.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] Stop telling users we are 'defaulting to local storage area'.
+Date: Fri, 15 Dec 2006 15:10:08 +0100
+Organization: At home
+Message-ID: <elua7a$v7q$1@sea.gmane.org>
+References: <20061214230902.GA26506@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sun, 10 Dec 2006 21:28:02 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Transfer-Encoding: 7Bit
+NNTP-Posting-Date: Fri, 15 Dec 2006 14:08:09 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <200612101639.22397.robin.rosenberg@dewire.com> (Robin
-	Rosenberg's message of "Sun, 10 Dec 2006 16:39:21 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 35
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-25-107.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33930>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34503>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GtWD6-0004dE-Fp for gcvg-git@gmane.org; Sun, 10 Dec
- 2006 22:27:48 +0100
+ esmtp (Exim 4.50) id 1GvDjF-0006ft-MM for gcvg-git@gmane.org; Fri, 15 Dec
+ 2006 15:08:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S933059AbWLJV1p (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 10 Dec 2006
- 16:27:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933073AbWLJV1p
- (ORCPT <rfc822;git-outgoing>); Sun, 10 Dec 2006 16:27:45 -0500
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:32880 "EHLO
- fed1rmmtao12.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S933059AbWLJV1p (ORCPT <rfc822;git@vger.kernel.org>); Sun, 10 Dec 2006
- 16:27:45 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao12.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061210212744.GQOP4226.fed1rmmtao12.cox.net@fed1rmimpo01.cox.net>; Sun, 10
- Dec 2006 16:27:44 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id x9T61V00N1kojtg0000000; Sun, 10 Dec 2006
- 16:27:07 -0500
-To: Robin Rosenberg <robin.rosenberg@dewire.com>
+ S1752175AbWLOOHz (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 15 Dec 2006
+ 09:07:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752145AbWLOOHz
+ (ORCPT <rfc822;git-outgoing>); Fri, 15 Dec 2006 09:07:55 -0500
+Received: from main.gmane.org ([80.91.229.2]:60854 "EHLO ciao.gmane.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1752175AbWLOOHy
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 15 Dec 2006 09:07:54 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1GvDj3-0001lU-C7 for git@vger.kernel.org; Fri, 15 Dec 2006 15:07:49 +0100
+Received: from host-81-190-25-107.torun.mm.pl ([81.190.25.107]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Fri, 15 Dec 2006 15:07:49 +0100
+Received: from jnareb by host-81-190-25-107.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Fri, 15 Dec 2006
+ 15:07:49 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Robin Rosenberg <robin.rosenberg@dewire.com> writes:
+Shawn O. Pearce wrote:
 
->> Well, have you tried this?
->>
->> 	git diff-tree -p --binary fe142b3a | git apply --summary --numstat
-> of course not. I didn't understand it. Why can't it tell me about removed
-> binary files, so I could remove the git-diff-tree invocation to find out about 
-> added/removed files?
+> Back in the old days of Git when people messed around with their
+> GIT_DIR environment variable more often it was nice to know whether
+> or not git-init-db created a .git directory or used GIT_DIR.
+> 
+> But now that we are making excuses in the documentation about why
+> this message gets printed by git-init-db we should just remove it
+> entirely.  It doesn't really help the user to understand what just
+> happened.  It also breaks from our normal behavior of not printing
+> anything if the command was successful.
+> 
+> Suggested by Andy Parkins in his Git 'niggles' list
+> (<200612132237.10051.andyparkins@gmail.com>).
 
-Maybe I am missing something.  It tells you about added or
-removed files (either binary or non-binary).
+Perhaps we should print something _if_ GIT_DIR is set, then?
 
-I'd prepare a pair of practice patch files.  "forward" has
-creation, "reverse" has addition.
+>        * Set up the default .git directory contents
+>        */
+>       git_dir = getenv(GIT_DIR_ENVIRONMENT);
+> -     if (!git_dir) {
+> +     if (!git_dir)
+>               git_dir = DEFAULT_GIT_DIR_ENVIRONMENT;
+> -             fprintf(stderr, "defaulting to local storage area\n");
+> -     }
+>       safe_create_dir(git_dir, 0);
+>  
 
-$ git diff-tree    -p --binary fe142b3a >forward.patch
-$ git diff-tree -R -p --binary fe142b3a >reverse.patch
+I'd rather leave block, even if it consist now of single statement.
 
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
 
-$ git apply --summary --numstat forward.patch
-50      20      git-cvsexportcommit.perl
-145     0       t/t9200-git-cvsexportcommit.sh
--       -       t/test9200a.png
--       -       t/test9200b.png
- create mode 100755 t/t9200-git-cvsexportcommit.sh
- create mode 100644 t/test9200a.png
- create mode 100644 t/test9200b.png
-
-$ git apply --summary --numstat reverse.patch
-20      50      git-cvsexportcommit.perl
-0       145     t/t9200-git-cvsexportcommit.sh
--       -       t/test9200a.png
--       -       t/test9200b.png
- delete mode 100755 t/t9200-git-cvsexportcommit.sh
- delete mode 100644 t/test9200a.png
- delete mode 100644 t/test9200b.png
-
-> This fuzz gives some, but not much slack. Reverting the option could be a 
-> good idea.
->
-> Update follows.
-
-Ok.
