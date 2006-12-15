@@ -1,148 +1,70 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Cleaning up git user-interface warts
-Date: Thu, 16 Nov 2006 11:47:22 -0800
-Message-ID: <7virhf8985.fsf@assigned-by-dhcp.cox.net>
-References: <87k61yt1x2.wl%cworth@cworth.org> <455A1137.8030301@shadowen.org>
-	<87hcx1u934.wl%cworth@cworth.org>
-	<Pine.LNX.4.64.0611141518590.2591@xanadu.home>
-	<87bqn9u43s.wl%cworth@cworth.org> <ejdcg5$4fl$1@sea.gmane.org>
-	<Pine.LNX.4.64.0611141633430.2591@xanadu.home>
-	<7vbqn9y6w6.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0611142007010.2591@xanadu.home>
-	<7v3b8ltq7r.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0611142306090.2591@xanadu.home>
-	<Pine.LNX.4.64.0611150950170.3349@woody.osdl.org>
-	<455BBCE9.4050503@xs4all.nl>
-	<Pine.LNX.4.64.0611151908130.3349@woody.osdl.org>
-	<455C412D.1030408@xs4all.nl>
-	<Pine.LNX.4.64.0611160814560.3349@woody.osdl.org>
-	<455C94FA.3050903@xs4all.nl>
-	<Pine.LNX.4.64.0611160904010.3349@woody.osdl.org>
-	<Pine.LNX.4.64.0611160932340.3349@woody.osdl.org>
-	<Pine.LNX.4.64.0611161027020.3349@woody.osdl.org>
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_ADSP_NXDOMAIN,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD,
+	UNPARSEABLE_RELAY shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
+From: Pazu <pazu@pazu.com.br>
+Subject: Re: git-fetching from a big repository is slow
+Date: Fri, 15 Dec 2006 21:49:13 +0000 (UTC)
+Message-ID: <loom.20061215T223909-156@post.gmane.org>
+References: <20061214194636.GO1747@spearce.org> <200612142212.kBEMCVeu032626@laptop13.inf.utfsm.cl> <20061214223813.GC26202@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 16 Nov 2006 19:47:38 +0000 (UTC)
-Cc: Han-Wen Nienhuys <hanwen@xs4all.nl>, git@vger.kernel.org
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Fri, 15 Dec 2006 21:49:36 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <Pine.LNX.4.64.0611161027020.3349@woody.osdl.org> (Linus
-	Torvalds's message of "Thu, 16 Nov 2006 10:28:35 -0800 (PST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 16
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 201.37.99.93 (Mozilla/5.0 (Macintosh; U; Intel Mac OS X; en-GB; rv:1.8.1) Gecko/20061010 Firefox/2.0)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31621>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GknCq-00078B-Nz for gcvg-git@gmane.org; Thu, 16 Nov
- 2006 20:47:29 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34556>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GvKvq-0005l0-C0 for gcvg-git@gmane.org; Fri, 15 Dec
+ 2006 22:49:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1424417AbWKPTrY (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 16 Nov 2006
- 14:47:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1424433AbWKPTrY
- (ORCPT <rfc822;git-outgoing>); Thu, 16 Nov 2006 14:47:24 -0500
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:12271 "EHLO
- fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP id S1424417AbWKPTrY
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 16 Nov 2006 14:47:24 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao03.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061116194723.IKH4817.fed1rmmtao03.cox.net@fed1rmimpo02.cox.net>; Thu, 16
- Nov 2006 14:47:23 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id nXnV1V00P1kojtg0000000; Thu, 16 Nov 2006
- 14:47:30 -0500
-To: Linus Torvalds <torvalds@osdl.org>
+ S965160AbWLOVt0 convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Fri, 15 Dec 2006 16:49:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965163AbWLOVt0
+ (ORCPT <rfc822;git-outgoing>); Fri, 15 Dec 2006 16:49:26 -0500
+Received: from main.gmane.org ([80.91.229.2]:46805 "EHLO ciao.gmane.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S965160AbWLOVtZ
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 15 Dec 2006 16:49:25 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1GvKvh-0001V1-1w for git@vger.kernel.org; Fri, 15 Dec 2006 22:49:21 +0100
+Received: from C925635D.poa.virtua.com.br ([C925635D.poa.virtua.com.br]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Fri, 15 Dec 2006 22:49:21 +0100
+Received: from pazu by C925635D.poa.virtua.com.br with local (Gmexim 0.1
+ (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Fri, 15 Dec 2006
+ 22:49:21 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Linus Torvalds <torvalds@osdl.org> writes:
+Shawn Pearce <spearce <at> spearce.org> writes:
 
-> On Thu, 16 Nov 2006, Linus Torvalds wrote:
->> @@ -95,6 +100,12 @@ case "$merge_head" in
->>  	;;
->>  esac
->>  
->> +if test -z "$orig_head"
->> +then
->> +	git-update-ref -m "initial pull" HEAD $merge_head "" || exit 1
->> +	exit
->> +fi
->> +
->
-> So this is the place that probably wants a "git-checkout" before the 
-> exit, otherwise you'd (illogically) have to do it by hand for that 
-> particular case.
->
-> Of course, we should _not_ do it if the "--bare" flag has been set, so you 
-> migth want to tweak the exact logic here.
+> identical class file given the same input.  I've seen times where
+> it doesn't thanks to the automatic serialVersionUID field being
+> somewhat randomly generated.
 
-As you said, pull inherently involve a merge which implies the
-existence of associated working tree, so I do not think there is
-any room for --bare to get in the picture.  We already do the
-checkout when we recover from a fetch that is used incorrectly
-and updated the current branch head underneath us.
+Probably offline, but=E2=80=A6 serialVersionUID isn't randomly generate=
+d. It's
+calculated using the types of fields in the class, recursively. The act=
+ual
+algorithm is quite arbitrary, but not random. The automatically generat=
+ed
+serialVersionUID should change only if you add/remove class fields (eit=
+her on
+the class itself, or to the class of nested objects).
 
-To give the list a summary of the discussion so far, here is a
-consolidated patch.
+*sigh* Java chases me. 8+ hours of java work everyday, and when I final=
+ly get
+home=E2=80=A6 there it is, looking at me again. *sob*
 
--- >8 --
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: git-pull: allow pulling into an empty repository
-
-We used to complain that we cannot merge anything we fetched
-with a local branch that does not exist yet.  Just treat the
-case as a natural extension of fast forwarding and make the
-local branch'es tip point at the same commit we just fetched.
-After all an empty repository without an initial commit is an
-ancestor of any commit.
-
-Signed-off-by: Junio C Hamano <junkio@cox.net>
-
----
-diff --git a/git-pull.sh b/git-pull.sh
-index ed04e7d..e23beb6 100755
---- a/git-pull.sh
-+++ b/git-pull.sh
-@@ -44,10 +44,10 @@ do
- 	shift
- done
- 
--orig_head=$(git-rev-parse --verify HEAD) || die "Pulling into a black hole?"
-+orig_head=$(git-rev-parse --verify HEAD 2>/dev/null)
- git-fetch --update-head-ok --reflog-action=pull "$@" || exit 1
- 
--curr_head=$(git-rev-parse --verify HEAD)
-+curr_head=$(git-rev-parse --verify HEAD 2>/dev/null)
- if test "$curr_head" != "$orig_head"
- then
- 	# The fetch involved updating the current branch.
-@@ -80,6 +80,11 @@ case "$merge_head" in
- 	exit 0
- 	;;
- ?*' '?*)
-+	if test -z "$orig_head"
-+	then
-+		echo >&2 "Cannot merge multiple branches into empty head"
-+		exit 1
-+	fi
- 	var=`git-repo-config --get pull.octopus`
- 	if test -n "$var"
- 	then
-@@ -95,6 +100,13 @@ case "$merge_head" in
- 	;;
- esac
- 
-+if test -z "$orig_head"
-+then
-+	git-update-ref -m "initial pull" HEAD $merge_head "" &&
-+	git-read-tree --reset -u HEAD || exit 1
-+	exit
-+fi
-+
- case "$strategy_args" in
- '')
- 	strategy_args=$strategy_default_args
+-- Pazu
