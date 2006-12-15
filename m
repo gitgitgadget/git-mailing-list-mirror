@@ -2,70 +2,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Han-Wen Nienhuys <hanwen@xs4all.nl>
-Subject: git UI nit
-Date: Wed, 06 Dec 2006 15:22:32 +0100
-Message-ID: <el6jmt$mej$1@sea.gmane.org>
-Reply-To: hanwen@xs4all.nl
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] git-show: grok blobs, trees and tags, too
+Date: Fri, 15 Dec 2006 11:22:49 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0612151122080.3635@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0612141129320.3635@wbgn013.biozentrum.uni-wuerzburg.de>
+ <8aa486160612150118y44744533t16af6d3086ac6b21@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 6 Dec 2006 14:22:58 +0000 (UTC)
+Content-Type: MULTIPART/MIXED; BOUNDARY="-1148973799-73354504-1166178169=:3635"
+NNTP-Posting-Date: Fri, 15 Dec 2006 10:22:58 +0000 (UTC)
+Cc: git@vger.kernel.org, junkio@cox.net
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 24
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: muurbloem.xs4all.nl
-User-Agent: Thunderbird 1.5.0.8 (X11/20061107)
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <8aa486160612150118y44744533t16af6d3086ac6b21@mail.gmail.com>
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33459>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34490>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Grxfj-0000sM-Gr for gcvg-git@gmane.org; Wed, 06 Dec
- 2006 15:22:55 +0100
+ esmtp (Exim 4.50) id 1GvADO-0003Tr-DO for gcvg-git@gmane.org; Fri, 15 Dec
+ 2006 11:22:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1760637AbWLFOWx (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
- 09:22:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760639AbWLFOWw
- (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 09:22:52 -0500
-Received: from main.gmane.org ([80.91.229.2]:45617 "EHLO ciao.gmane.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1760637AbWLFOWw
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec 2006 09:22:52 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1Grxfa-0007A7-AW for git@vger.kernel.org; Wed, 06 Dec 2006 15:22:46 +0100
-Received: from muurbloem.xs4all.nl ([213.84.26.127]) by main.gmane.org with
- esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>;
- Wed, 06 Dec 2006 15:22:46 +0100
-Received: from hanwen by muurbloem.xs4all.nl with local (Gmexim 0.1 (Debian))
- id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Wed, 06 Dec 2006 15:22:46
- +0100
-To: git@vger.kernel.org
+ S1751759AbWLOKWv (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 15 Dec 2006
+ 05:22:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751760AbWLOKWv
+ (ORCPT <rfc822;git-outgoing>); Fri, 15 Dec 2006 05:22:51 -0500
+Received: from mail.gmx.net ([213.165.64.20]:52462 "HELO mail.gmx.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S1751759AbWLOKWv
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 15 Dec 2006 05:22:51 -0500
+Received: (qmail invoked by alias); 15 Dec 2006 10:22:49 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp036) with SMTP; 15 Dec 2006 11:22:49 +0100
+To: =?ISO-8859-1?Q?Santi_B=E9jar?= <sbejar@gmail.com>
 Sender: git-owner@vger.kernel.org
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-When merging changes into a dirty working copy, one may get 
+---1148973799-73354504-1166178169=:3635
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Content-Transfer-Encoding: 8BIT
 
-..
-Updating 62a005d..7bbd698
-Makefile: needs update
-README: needs update
-config.mak.in: needs update
-configure.ac: needs update
-fatal: Entry 'Makefile' not uptodate. Cannot merge.
-..
+Hi,
 
+On Fri, 15 Dec 2006, Santi Béjar wrote:
 
-This is bad error message; "uptodate" suggests that Makefile is too old. 
-The problem is the reverse.  The Makefile has been
-edited and hence it is 'newer'.  
+> On 12/14/06, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > 
+> > Since git-show is pure Porcelain, it is the ideal candidate to
+> > pretty print other things than commits, too.
+> 
+> I think "git show ${tag}" should be more like "git show ${commit}",
+> that is, with the tagger and date information and the indent, as:
+> 
+> $ git show v1.4.4.2
+> tag v1.4.4.2
+> Tagger: Junio C Hamano <junkio@cox.net>
+> Date: ${Date}
+> 
+>    GIT 1.4.4.2
+>    -----BEGIN PGP SIGNATURE-----
+>    Version: GnuPG v1.4.5 (GNU/Linux)
+> 
+>    iD8DBQBFdx8+wMbZpPMRm5oRAsOXAJsGY8DIYey1TZlEXIGq5+8MNgEl1QCfQC0f
+>    c5SmdLmAm2KPsCf+bCuoK+k=
+>    =oDuA
+>    -----END PGP SIGNATURE-----
+> commit 49ed2bc4660c7cd0592cf21cc514080574d06320
+> ...
 
-This message should say 
+Okay. You code it?
 
- Entry 'Makefile' is dirty. 
- Revert or commit changes before merging
+> > +EXAMPLES
+> > +--------
+> > +
+> > +git show v1.0.0::
+> > +       Shows the tag `v1.0.0`.
+> 
+> and the commit (or object) it references.
+> 
+> I would add:
+> 
+> git show v1.0.0^{}::
+>      Shows only the commit referenced by the tag `v1.0.0`.
 
--- 
- Han-Wen Nienhuys - hanwen@xs4all.nl - http://www.xs4all.nl/~hanwen
+Okay. You provide a patch?
+
+Ciao,
+Dscho
+
