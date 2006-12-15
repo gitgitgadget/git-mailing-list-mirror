@@ -4,70 +4,69 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: linux@horizon.com
-Subject: Re: Question on multi-level git repository heiarchy.
-Date: 27 Oct 2006 15:26:37 -0400
-Message-ID: <20061027192637.8885.qmail@science.horizon.com>
-NNTP-Posting-Date: Fri, 27 Oct 2006 19:48:03 +0000 (UTC)
-Cc: git@vger.kernel.org
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [PATCH] make commit message a little more consistent and conforting
+Date: Thu, 14 Dec 2006 23:24:59 -0500
+Message-ID: <20061215042459.GC27343@spearce.org>
+References: <7v4przfpir.fsf@assigned-by-dhcp.cox.net> <200612132237.10051.andyparkins@gmail.com> <7vk60vbcfz.fsf@assigned-by-dhcp.cox.net> <200612140959.19209.andyparkins@gmail.com> <7v7iwu93rv.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0612141343200.18171@xanadu.home> <Pine.LNX.4.64.0612142307160.18171@xanadu.home>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Fri, 15 Dec 2006 04:25:24 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>,
+	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0612142307160.18171@xanadu.home>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30342>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GdXLx-000428-U9 for gcvg-git@gmane.org; Fri, 27 Oct
- 2006 21:26:54 +0200
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34471>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gv4dN-00046x-EY for gcvg-git@gmane.org; Fri, 15 Dec
+ 2006 05:25:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1750916AbWJ0T0n (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 27 Oct 2006
- 15:26:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752427AbWJ0T0n
- (ORCPT <rfc822;git-outgoing>); Fri, 27 Oct 2006 15:26:43 -0400
-Received: from science.horizon.com ([192.35.100.1]:43064 "HELO
- science.horizon.com") by vger.kernel.org with SMTP id S1750916AbWJ0T0m (ORCPT
- <rfc822;git@vger.kernel.org>); Fri, 27 Oct 2006 15:26:42 -0400
-Received: (qmail 8886 invoked by uid 1000); 27 Oct 2006 15:26:37 -0400
-To: greearb@candelatech.com
+ S932178AbWLOEZI (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
+ 23:25:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932592AbWLOEZI
+ (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 23:25:08 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:53771 "EHLO
+ corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S932178AbWLOEZG (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006
+ 23:25:06 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1Gv4cr-0001xL-L0; Thu, 14 Dec 2006 23:24:49 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 77FF920FB65; Thu, 14 Dec 2006 23:25:00 -0500 (EST)
+To: Nicolas Pitre <nico@cam.org>
 Sender: git-owner@vger.kernel.org
 
-The thing to learn is that the operation you are trying to perform
-is called "fetch", not "pull".  Pull = fetch + merge.
+Nicolas Pitre <nico@cam.org> wrote:
+> It is nicer to let the user know when a commit succeeded all the time, 
+> not only the first time.  Also the commit sha1 is much more useful than 
+> the tree sha1 in this case.
 
-In fact, the "fetch" part of "git pull" is optional, so it's
-best to think of "git pull" as the fundamental *merge* operation.
-("git merge" is a helper that you probably don't want to use directly.)
+I agree the commit sha1 is more useful than the tree sha1, but I'm
+not really sure its useful to show the commit sha1 post commit.
+If you want to show something the diffstat like what git merge does
+is better.
 
-There's a valid argument that this is not good terminology (especially
-because "push" is the opposite of "fetch"!), but without getting
-into that discussion, there are two ways to do a merge:
+For one thing it confirms that git accepted the changes.  For another
+it shows you *which* changes it accepted.  Plus it responds just
+like git-merge or git-pull does.
 
-- The small-steps way.
-  git fetch remote
-  git pull . remoteorigin
+Of course the meaning of the diffstat is entirely different in both
+cases; in the commit case its what has been recorded while in the
+merge case its not only what has been recorded into your current
+branch history but also what has been done to your working directory.
 
-- The bold, all-at-once way
-  git pull remote remoteorigin
-
-The former acutally gives a local name to the remote branch,
-then merges it in in a second step.
-
-The latter is what folks like Linus do who aren't carefully following
-remote development, but just want to merge it in.  It's better for
-one-off access to remote development, because it doesn't clutter your
-reporistory with a remote branch name that you're not going to use again.
-
-Generally, I always do the former, and I recommend you do too, until
-you're comfortable with making such big leaps.
-
-Just remember:
-1) "git fetch" copies from the remote repository to the local one.
-   This doesn't change anything locally except for branch heads that
-   it's supposed to.  And even there, it's careful.
-   In particular, "git fetch" will refuse to modify the current HEAD.
-
-2) "git pull" actually does a merge.  This *does* change the current
-   HEAD.  It creates a new commit on the HEAD branch unless:
-   - HEAD is already up to date, or
-   - HEAD can be fast-forwarded, or
-   - The merge fails.
-
+-- 
