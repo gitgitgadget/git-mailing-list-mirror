@@ -1,81 +1,78 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
-Subject: Re: Patch to tutorial.txt
-Date: Mon, 20 Nov 2006 10:34:42 +0100
-Message-ID: <4d8e3fd30611200134u33ee3a83mfce7c4da89d630d4@mail.gmail.com>
-References: <4d8e3fd30611191444r710f23e5uc488d35aa4abaf06@mail.gmail.com>
-	 <200611200949.32722.jnareb@gmail.com>
-	 <4d8e3fd30611200110y224b5b8dpf974d30d738455c9@mail.gmail.com>
-	 <200611201025.11048.jnareb@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: What's in git.git (stable)
+Date: Fri, 15 Dec 2006 15:39:53 +0100
+Organization: At home
+Message-ID: <elubv2$6ag$1@sea.gmane.org>
+References: <7v4przfpir.fsf@assigned-by-dhcp.cox.net>	<200612132237.10051.andyparkins@gmail.com> <7vk60vbcfz.fsf@assigned-by-dhcp.cox.net> <45810B49.2000706@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Mon, 20 Nov 2006 09:34:57 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+NNTP-Posting-Date: Fri, 15 Dec 2006 14:37:50 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Dw9qoP4N3YUfhzG2UJtAJe+Vmz00GmU/Zora2taMb8RKhGm9L41Xji/KzXITbqJzCZq205pixYzIy85z0PVrpL7ysteuXhWBiNfeOXF/eqeRhTqiYppb+OPV7OvfqulRpA4tSHLGfSR72uetK/PleijR7jtSAHm2UoYJXZ9aw+E=
-In-Reply-To: <200611201025.11048.jnareb@gmail.com>
-Content-Disposition: inline
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 28
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-25-107.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31889>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gm5YC-0007GT-9D for gcvg-git@gmane.org; Mon, 20 Nov
- 2006 10:34:52 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34507>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GvEC0-0002LQ-5D for gcvg-git@gmane.org; Fri, 15 Dec
+ 2006 15:37:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S933064AbWKTJep convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Mon, 20 Nov 2006 04:34:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933359AbWKTJep
- (ORCPT <rfc822;git-outgoing>); Mon, 20 Nov 2006 04:34:45 -0500
-Received: from ug-out-1314.google.com ([66.249.92.173]:13149 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S933064AbWKTJeo
- convert rfc822-to-8bit (ORCPT <rfc822;git@vger.kernel.org>); Mon, 20 Nov 2006
- 04:34:44 -0500
-Received: by ug-out-1314.google.com with SMTP id m3so1125734ugc for
- <git@vger.kernel.org>; Mon, 20 Nov 2006 01:34:43 -0800 (PST)
-Received: by 10.78.75.15 with SMTP id x15mr4956165hua.1164015282690; Mon, 20
- Nov 2006 01:34:42 -0800 (PST)
-Received: by 10.78.165.3 with HTTP; Mon, 20 Nov 2006 01:34:42 -0800 (PST)
-To: "Jakub Narebski" <jnareb@gmail.com>
+ S1752663AbWLOOhl (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 15 Dec 2006
+ 09:37:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752664AbWLOOhl
+ (ORCPT <rfc822;git-outgoing>); Fri, 15 Dec 2006 09:37:41 -0500
+Received: from main.gmane.org ([80.91.229.2]:59763 "EHLO ciao.gmane.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1752663AbWLOOhk
+ (ORCPT <rfc822;git@vger.kernel.org>); Fri, 15 Dec 2006 09:37:40 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1GvEBp-0007iN-8s for git@vger.kernel.org; Fri, 15 Dec 2006 15:37:33 +0100
+Received: from host-81-190-25-107.torun.mm.pl ([81.190.25.107]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Fri, 15 Dec 2006 15:37:33 +0100
+Received: from jnareb by host-81-190-25-107.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Fri, 15 Dec 2006
+ 15:37:33 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On 11/20/06, Jakub Narebski <jnareb@gmail.com> wrote:
-> Paolo Ciarrocchi wrote:
-> > On 11/20/06, Jakub Narebski <jnareb@gmail.com> wrote:
-> >
-> >> followed by empty line, then signoff line, for example
-> >>
-> >>   Signed-off-by: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
-> >
-> > Ok, but the Signed/off-by part should handled by the -s option in
-> > git-format-patch.
->
-> Signed-off-by _can_ be added by -s option in git-format-patch, but
-> I think it is usually better to have it added in the commit, by the -=
-s
-> option to git-commit.
+Andreas Ericsson wrote:
+> Junio C Hamano wrote:
+>> Andy Parkins <andyparkins@gmail.com> writes:
+>> 
+>>>  * git-add has no output, whether it works or not
+>> 
+>> "git add no-such-file" complains, and I think that is adequate.
+>> Now with Nico's 'add means adding contents, not path' change is
+>> in, we _might_ want to differentiate adding a path that was
+>> untracked before and updating the contents, but I think this
+>> again falls into "doing exactly as told" category.
+>> 
+> 
+> Well, it should really let the user know if it fails. I for one would 
+> like to know that. I wasn't aware of the fact that it was silent even in 
+> those situations (perhaps because I've never run across it).
+> 
+> The errors that need to be reported are, afaics:
+> Content in 'path/to/file' is ignored according to path/to/.gitignore.
 
-Oh, I wan not aware of that as well. Maybe it's worth to be mentioned
-in the tutorial.
+This is not an error, just a warning. Sometimes user want's to add a file
+which is otherwise ignored (e.g. due to glob), sometimes user adds ignored
+file by mistake.
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
 
-I'll properly redo the patch later today or tomorrow.
-
-Thanks!
-Ciao,
---=20
-Paolo
-http://docs.google.com/View?docid=3Ddhbdhs7d_4hsxqc8
-http://www.linkedin.com/pub/0/132/9a3
-Non credo nelle otto del mattino. Per=F2 esistono. Le otto del mattino
-sono l'incontrovertibile prova della presenza del male nel mondo.
