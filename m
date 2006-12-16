@@ -1,71 +1,62 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jeff Garzik <jeff@garzik.org>
-Subject: Re: kernel.org mirroring (Re: [GIT PULL] MMC update)
-Date: Fri, 08 Dec 2006 11:54:32 -0500
-Message-ID: <457998C8.3050601@garzik.org>
-References: <Pine.LNX.4.64.0612020835110.3476@woody.osdl.org> <45744FA3.7020908@zytor.com> <Pine.LNX.4.64.0612061847190.3615@woody.osdl.org> <45778AA3.7080709@zytor.com> <Pine.LNX.4.64.0612061940170.3615@woody.osdl.org> <4577A84C.3010601@zytor.com> <Pine.LNX.4.64.0612070953290.3615@woody.osdl.org> <45785697.1060001@zytor.com> <Pine.LNX.4.64.0612071052560.3615@woody.osdl.org> <457868AA.2030605@zytor.com> <20061207193012.GA84678@dspnet.fr.eu.org> <4578722E.9030402@zytor.com> <4579611F.5010303@dawes.za.net> <45798FE2.9040502@zytor.com> <Pine.LNX.4.64.0612080830380.3516@woody.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] make commit message a little more consistent and conforting
+Date: Fri, 15 Dec 2006 22:18:41 -0800
+Message-ID: <7vk60sl5xa.fsf@assigned-by-dhcp.cox.net>
+References: <7v4przfpir.fsf@assigned-by-dhcp.cox.net>
+	<200612132237.10051.andyparkins@gmail.com>
+	<7vk60vbcfz.fsf@assigned-by-dhcp.cox.net>
+	<200612140959.19209.andyparkins@gmail.com>
+	<7v7iwu93rv.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0612141343200.18171@xanadu.home>
+	<Pine.LNX.4.64.0612142307160.18171@xanadu.home>
+	<20061215042459.GC27343@spearce.org> <45825E0B.5010200@op5.se>
+	<20061215150909.GE17860@spearce.org>
+	<Pine.LNX.4.64.0612151032240.18171@xanadu.home>
+	<7vvekdvxeo.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0612151317380.18171@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Fri, 8 Dec 2006 16:55:11 +0000 (UTC)
-Cc: "H. Peter Anvin" <hpa@zytor.com>,
-	Rogan Dawes <discard@dawes.za.net>,
-	Kernel Org Admin <ftpadmin@kernel.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jakub Narebski <jnareb@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Sat, 16 Dec 2006 06:18:59 +0000 (UTC)
+Cc: Shawn Pearce <spearce@spearce.org>, Andreas Ericsson <ae@op5.se>,
+	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.8 (X11/20061107)
-In-Reply-To: <Pine.LNX.4.64.0612080830380.3516@woody.osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0612151317380.18171@xanadu.home> (Nicolas Pitre's
+	message of "Fri, 15 Dec 2006 15:13:41 -0500 (EST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33705>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34591>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gsizv-0002Au-Ic for gcvg-git@gmane.org; Fri, 08 Dec
- 2006 17:54:55 +0100
+ esmtp (Exim 4.50) id 1GvSsm-0006Ar-VV for gcvg-git@gmane.org; Sat, 16 Dec
+ 2006 07:18:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1425630AbWLHQyw (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
- 11:54:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1425623AbWLHQyw
- (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 11:54:52 -0500
-Received: from srv5.dvmed.net ([207.36.208.214]:52310 "EHLO mail.dvmed.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1425630AbWLHQyv
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Dec 2006 11:54:51 -0500
-Received: from cpe-065-190-194-075.nc.res.rr.com ([65.190.194.75]
- helo=[10.10.10.10]) by mail.dvmed.net with esmtpsa (Exim 4.63 #1 (Red Hat
- Linux)) id 1GsizZ-00070z-LS; Fri, 08 Dec 2006 16:54:34 +0000
-To: Linus Torvalds <torvalds@osdl.org>
+ S1030635AbWLPGSn (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 16 Dec 2006
+ 01:18:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030637AbWLPGSn
+ (ORCPT <rfc822;git-outgoing>); Sat, 16 Dec 2006 01:18:43 -0500
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:45613 "EHLO
+ fed1rmmtao07.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1030635AbWLPGSm (ORCPT <rfc822;git@vger.kernel.org>); Sat, 16 Dec 2006
+ 01:18:42 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao07.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061216061842.PXJQ22053.fed1rmmtao07.cox.net@fed1rmimpo01.cox.net>; Sat, 16
+ Dec 2006 01:18:42 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id zJJ21V0031kojtg0000000; Sat, 16 Dec 2006
+ 01:18:03 -0500
+To: Nicolas Pitre <nico@cam.org>
 Sender: git-owner@vger.kernel.org
 
-Linus Torvalds wrote:
-> I could write a simple C caching thing that just hashes the CGI arguments 
-> and uses a hash to create a cache (and proper lock-files etc to serialize 
-> access to a particular cache object while it's being created) fairly 
-> easily, but I'm pretty sure people would much prefer a mod_perl thing just 
-> to avoid the fork/exec overhead with Apache (I think mod_perl allows 
-> Apache to run perl scripts without it), and that means I'm not the right 
-> person any more.
-> 
-> Not that I'm the right person anyway, since I don't have a web server set 
-> up on my machine to even test with ;)
-> 	
-> 		Linus
-> 
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
+Nicolas Pitre <nico@cam.org> writes:
 
-This is quite nice and easy, if memory-only caching works for the 
-situation:  http://www.danga.com/memcached/
+> What about this (on top of my previous patch):
 
-There are APIs for C, Perl, and plenty of other languages.
-
-	Jeff
-
+Looks good.
