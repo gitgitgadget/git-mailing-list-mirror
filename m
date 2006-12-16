@@ -1,74 +1,62 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Only warn about missing branch.<n>.merge in pull.
-Date: Tue, 19 Dec 2006 11:30:32 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612191128500.19693@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20061218091206.GA11284@spearce.org> <7virg9xcvw.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0612182135360.19693@wbgn013.biozentrum.uni-wuerzburg.de>
- <200612190159.58658.Josef.Weidendorfer@gmx.de>
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC/PATCH (take 3)] gitweb: Add some mod_perl specific support
+Date: Sat, 16 Dec 2006 21:03:17 +0100
+Message-ID: <200612162103.18695.jnareb@gmail.com>
+References: <11662174851575-git-send-email-jnareb@gmail.com> <11662855752162-git-send-email-jnareb@gmail.com> <7virgbei6z.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Tue, 19 Dec 2006 10:31:06 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Sat, 16 Dec 2006 20:03:36 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <200612190159.58658.Josef.Weidendorfer@gmx.de>
-X-Y-GMX-Trusted: 0
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=Oz3HDJbZiXcvc/94BevgCqszMXsA1dOJat3MLv6T5BTyf62xHouqArZMm/GLy/Y6veLz1rkc3o9MQEc2UPtlv7KUOzqi+tELiStlqoUOwjMvZEjNuPAJYJt+CEN7ya7EY0ZlnQKfj+pe8HNkdRQoo4bgVIznMbUrA8qODdP4bAE=
+User-Agent: KMail/1.9.3
+In-Reply-To: <7virgbei6z.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34815>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GwcF5-00010v-Su for gcvg-git@gmane.org; Tue, 19 Dec
- 2006 11:30:40 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34638>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gvfkq-00085b-NO for gcvg-git@gmane.org; Sat, 16 Dec
+ 2006 21:03:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932759AbWLSKaf (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
- 05:30:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932761AbWLSKaf
- (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 05:30:35 -0500
-Received: from mail.gmx.net ([213.165.64.20]:49284 "HELO mail.gmx.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S932759AbWLSKae
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec 2006 05:30:34 -0500
-Received: (qmail invoked by alias); 19 Dec 2006 10:30:33 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp014) with SMTP; 19 Dec 2006 11:30:33 +0100
-To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+ S1161449AbWLPUD3 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 16 Dec 2006
+ 15:03:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161450AbWLPUD3
+ (ORCPT <rfc822;git-outgoing>); Sat, 16 Dec 2006 15:03:29 -0500
+Received: from ug-out-1314.google.com ([66.249.92.170]:27147 "EHLO
+ ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1161449AbWLPUD2 (ORCPT <rfc822;git@vger.kernel.org>); Sat, 16 Dec
+ 2006 15:03:28 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so1148994uga for
+ <git@vger.kernel.org>; Sat, 16 Dec 2006 12:03:26 -0800 (PST)
+Received: by 10.67.97.7 with SMTP id z7mr2197799ugl.1166299406668; Sat, 16
+ Dec 2006 12:03:26 -0800 (PST)
+Received: from host-81-190-25-107.torun.mm.pl ( [81.190.25.107]) by
+ mx.google.com with ESMTP id s1sm5389143uge.2006.12.16.12.03.22; Sat, 16 Dec
+ 2006 12:03:26 -0800 (PST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Hi,
+Junio C Hamano wrote:
+> I have your (take 2) merged already last night in my tree but
+> haven't pushed the result out.  Does this replace it?
 
-On Tue, 19 Dec 2006, Josef Weidendorfer wrote:
+Yes, that replaces it. I'm very sorry for the confusion.
 
-> On Monday 18 December 2006 21:43, Johannes Schindelin wrote:
->
-> > However, I would actually reuse our versatile (often hated?) config  
-> > handling:
-> > 
-> > [branch "xyz"]
-> > 	remote = blabla # this is the default remote
-> > 	merge = master # this is the default branch for the default remote
-> > 	merge = pu for remote second # merge 'pu' if pulling from second
-> 
-> Looks a little bit confusing, but is fine with me.
-
-Granted. Suggestions?
-
-> I even would remove the need for the word "remote" in the second merge 
-> line.
-
-No. In Git, a line like
-
-	blabla
-
-would turn into a boolean named "blabla" being true.
-
-Ciao,
-Dscho
+I have noticed that I would need to add "use Apache2::RequestRec"
+or it's mod_perl 1.0 equivalent before I can use $r->path_info().
+-- 
+Jakub Narebski
