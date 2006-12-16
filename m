@@ -1,103 +1,70 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH 4/10] Add current branch in PS1 support to git-completion.bash.
-Date: Mon, 27 Nov 2006 03:41:28 -0500
-Message-ID: <20061127084128.GD19745@spearce.org>
-References: <de7beb117fb963e68e1085b773593be326ffd495.1164616814.git.spearce@spearce.org>
+From: "Torgil Svensson" <torgil.svensson@gmail.com>
+Subject: Re: [RFC] Submodules in GIT
+Date: Sat, 16 Dec 2006 09:50:29 +0100
+Message-ID: <e7bda7770612160050j526c2b86gbabeae13f2ff114a@mail.gmail.com>
+References: <20061130170625.GH18810@admingilde.org>
+	 <200612150007.44331.Josef.Weidendorfer@gmx.de>
+	 <e7bda7770612150943j71a7362bmb509cea3b7756003@mail.gmail.com>
+	 <200612152242.50472.Josef.Weidendorfer@gmx.de>
+	 <e7bda7770612151543o39c9d233q91ea643a134196d3@mail.gmail.com>
+	 <e7bda7770612151713k418434e6gd8d565e49a766477@mail.gmail.com>
+	 <Pine.LNX.4.64.0612151747470.3849@woody.osdl.org>
+	 <Pine.LNX.4.64.0612151809510.3557@woody.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Mon, 27 Nov 2006 08:41:38 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Sat, 16 Dec 2006 08:50:38 +0000 (UTC)
+Cc: "Josef Weidendorfer" <Josef.Weidendorfer@gmx.de>,
+	"R. Steve McKown" <rsmckown@yahoo.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=DjrVv2HtnF9Pv1b/JljK6mPk/O2oO1JJ9MpTXtkvaJfmVPrc2j6JbBttKB/6pNvwCQi6mH/aiwmtMHJV5//p6DQeEfNCriWgmxniQtsNu8kT27VLo7fGnOluo2fVola491Wx10TATNy8oZi1am6UpFVg5vy/90ATMpaHi/fFD8A=
+In-Reply-To: <Pine.LNX.4.64.0612151809510.3557@woody.osdl.org>
 Content-Disposition: inline
-In-Reply-To: <de7beb117fb963e68e1085b773593be326ffd495.1164616814.git.spearce@spearce.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32394>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Goc3T-0007Zo-76 for gcvg-git@gmane.org; Mon, 27 Nov
- 2006 09:41:35 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34595>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GvVFa-00079n-PS for gcvg-git@gmane.org; Sat, 16 Dec
+ 2006 09:50:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1757418AbWK0Ilc (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 27 Nov 2006
- 03:41:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757419AbWK0Ilc
- (ORCPT <rfc822;git-outgoing>); Mon, 27 Nov 2006 03:41:32 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:908 "EHLO
- corvette.plexpod.net") by vger.kernel.org with ESMTP id S1757418AbWK0Ilb
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 27 Nov 2006 03:41:31 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1Goc3M-0004S9-0j; Mon, 27 Nov 2006 03:41:28 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- 7FA9A20FB7F; Mon, 27 Nov 2006 03:41:28 -0500 (EST)
-To: Junio C Hamano <junkio@cox.net>
+ S1030799AbWLPIub (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 16 Dec 2006
+ 03:50:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030802AbWLPIub
+ (ORCPT <rfc822;git-outgoing>); Sat, 16 Dec 2006 03:50:31 -0500
+Received: from nf-out-0910.google.com ([64.233.182.187]:49390 "EHLO
+ nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1030799AbWLPIua (ORCPT <rfc822;git@vger.kernel.org>); Sat, 16 Dec
+ 2006 03:50:30 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so1363091nfa for
+ <git@vger.kernel.org>; Sat, 16 Dec 2006 00:50:29 -0800 (PST)
+Received: by 10.49.64.18 with SMTP id r18mr1320381nfk.1166259029512; Sat, 16
+ Dec 2006 00:50:29 -0800 (PST)
+Received: by 10.49.28.8 with HTTP; Sat, 16 Dec 2006 00:50:29 -0800 (PST)
+To: "Linus Torvalds" <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 
-Many users want to display the current branch name of the current git
-repository as part of their PS1 prompt, much as their PS1 prompt might
-also display the current working directory name.
+On 12/16/06, Linus Torvalds <torvalds@osdl.org> wrote:
 
-We don't force our own PS1 onto the user.  Instead we let them craft
-their own PS1 string and offer them the function __git_ps1 which they
-can invoke to obtain either "" (when not in a git repository) or
-"(%s)" where %s is the name of the current branch, as read from HEAD,
-with the leading refs/heads/ removed.
+> Side note: that's not to say that I would really see why you'd want to
+> have both the tree and the commit SHA1's, and why you seemingly think that
+> the links don't need a filename. Hmm?
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- contrib/completion/git-completion.bash |   19 +++++++++++++++++++
- 1 files changed, 19 insertions(+), 0 deletions(-)
+I really want that file-name back - we can call it a mind short-circuit.
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 1dfb592..a740d05 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -18,12 +18,31 @@
- #    2) Added the following line to your .bashrc:
- #        source ~/.git-completion.sh
- #
-+#    3) Consider changing your PS1 to also show the current branch:
-+#        PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
-+#
-+#       The argument to __git_ps1 will be displayed only if you
-+#       are currently in a git repository.  The %s token will be
-+#       the name of the current branch.
-+#
- 
- __gitdir ()
- {
- 	echo "${__git_dir:-$(git rev-parse --git-dir 2>/dev/null)}"
- }
- 
-+__git_ps1 ()
-+{
-+	local b="$(git symbolic-ref HEAD 2>/dev/null)"
-+	if [ -n "$b" ]; then
-+		if [ -n "$1" ]; then
-+			printf "$1" "${b##refs/heads/}"
-+		else
-+			printf " (%s)" "${b##refs/heads/}"
-+		fi
-+	fi
-+}
-+
- __git_refs ()
- {
- 	local cmd i is_hash=y dir="${1:-$(__gitdir)}"
--- 
-1.4.4.1.ge3fb
+> If you require the tree objects to be in the database, you might as well
+> require that the commit object be there. But you could make rules that say
+> that subprojects don't need the whole commit history, for example (which
+> is just a shallow clone in the subproject).
+
+You have a very good point here, this would give us the history of the
