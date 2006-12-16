@@ -1,96 +1,127 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] revision traversal: Add --refs=<pattern> option
-Date: Mon, 27 Nov 2006 15:59:33 -0800
-Message-ID: <7vhcwke90a.fsf@assigned-by-dhcp.cox.net>
-References: <7vzmadl5b0.fsf@assigned-by-dhcp.cox.net>
-	<11646401513369-git-send-email-vsu@altlinux.ru>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [PATCH 1/2] Suggest use of "git add file1 file2" when there is nothing to commit.
+Date: Fri, 15 Dec 2006 21:53:09 -0500
+Message-ID: <20061216025309.GA19955@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 28 Nov 2006 00:00:25 +0000 (UTC)
+NNTP-Posting-Date: Sat, 16 Dec 2006 02:53:24 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32465>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GoqOP-0006IC-42 for gcvg-git@gmane.org; Tue, 28 Nov
- 2006 01:00:09 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34587>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GvPfw-0001XS-1x for gcvg-git@gmane.org; Sat, 16 Dec
+ 2006 03:53:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1758629AbWK0X7f (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 27 Nov 2006
- 18:59:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758630AbWK0X7f
- (ORCPT <rfc822;git-outgoing>); Mon, 27 Nov 2006 18:59:35 -0500
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:53163 "EHLO
- fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP id S1758629AbWK0X7e
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 27 Nov 2006 18:59:34 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao08.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061127235934.KREA18207.fed1rmmtao08.cox.net@fed1rmimpo01.cox.net>; Mon, 27
- Nov 2006 18:59:34 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id rzz11V00q1kojtg0000000; Mon, 27 Nov 2006
- 18:59:02 -0500
-To: Sergey Vlasov <vsu@altlinux.ru>
+ S1750866AbWLPCxO (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 15 Dec 2006
+ 21:53:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753319AbWLPCxO
+ (ORCPT <rfc822;git-outgoing>); Fri, 15 Dec 2006 21:53:14 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:56318 "EHLO
+ corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1750866AbWLPCxO (ORCPT <rfc822;git@vger.kernel.org>); Fri, 15 Dec 2006
+ 21:53:14 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1GvPfY-0008Gb-Pr; Fri, 15 Dec 2006 21:53:00 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 3EF0A20FB65; Fri, 15 Dec 2006 21:53:10 -0500 (EST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Sergey Vlasov <vsu@altlinux.ru> writes:
+If a user modifies files and runs 'git commit' (without the very
+useful -a option) and they have not yet updated the index they
+are probably coming from another SCM-like tool which would perform
+the same as 'git commit -a' in this case.  Showing the user their
+current status and a final line of "nothing to commit" is not very
+reassuring, as the user might believe that Git did not recognize
+their files were modified.
 
-> Add the --refs=<pattern> option, which can be used to select a
-> subset of refs matching the specified glob pattern.
->
-> Signed-off-by: Sergey Vlasov <vsu@altlinux.ru>
-> ---
->
->  If --all-branches is too specific for the mentioned use case,
->  what about adding a more general glob pattern match?
+Instead we can suggest as part of the 'nothing to commit' message
+that the user invoke 'git add' to add files to their next commit.
 
-Traditionally any new option to rev-list must be accompanied
-with a matching change to rev-parse.  I do not know offhand how
-strictly we should adhere to this rule these days; it depends on
-how people's script use rev-list.
+Suggested by Andy Parkins' Git 'niggles' list
+(<200612132237.10051.andyparkins@gmail.com>).
 
-Before revision.c "revision walking library" was done, many
-Porcelain-ish commands were implemented as a pipeline that plugs
-rev-list output to diff-tree.  These shell scripts took
-parameters from the command line, and rev-parse was used to
-separate parameters (both "flags" that begin with a dash and
-"non-flags" that don't) that should be given to rev-list and the
-other parameters (meant to be used by the shell script itself
-but often are given straight to the downstream diff-tree).  The
-rev-parse command has even the --sq option to facilitate this
-usage:
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ git-commit.sh |    2 +-
+ wt-status.c   |   11 ++++++-----
+ 2 files changed, 7 insertions(+), 6 deletions(-)
 
-	rev_opts=`git rev-parse --sq --default=HEAD --revs "$@"`
-	diff_opts=`git rev-parse --sq --no-revs "$@"`
-        eval "git-rev-list $rev_opts" |
-        eval "git-diff-tree --stdin $diff_opts"
-
-so that it can even pass -S'I want to find this string' to diff-tree
-without worrying about spaces.
-
-I personally feel that part of rev-parse outlived its usefulness
-(--flags, --no-flags, --revs-only, and --no-revs).  It was a
-useful hack, and served us well, but it was a hack.
-
-In that sense it probably is Ok to leave it unmaintained, but it
-might be a good idea to plan deprecating it, given that we have
-been talking about UI warts.  If there are pipelines that can be
-easily formed (with the help of rev-parse "parameter sifter"),
-but whose functionality cannot be easily emulated with the
-current crop of Porcelain-ish, we should work on polishing the
-Porcelain-ish to make the pipelines unnecessary.
-
-The remaining parts of rev-parse (the most important of which is
-the --verify option) should probably stay.  The original
-question of "list all the branches" can be done with:
-
-	git rev-parse --symbolic --branches
-
+diff --git a/git-commit.sh b/git-commit.sh
+index 05828bb..2672def 100755
+--- a/git-commit.sh
++++ b/git-commit.sh
+@@ -515,7 +515,7 @@ then
+ 	current="$(git-rev-parse --verify HEAD)"
+ else
+ 	if [ -z "$(git-ls-files)" ]; then
+-		echo >&2 Nothing to commit
++		echo >&2 'nothing to commit (use "git add file1 file2" to include for commit)'
+ 		exit 1
+ 	fi
+ 	PARENTS=""
+diff --git a/wt-status.c b/wt-status.c
+index 6e9414d..2173d4f 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -15,6 +15,7 @@ static char wt_status_colors[][COLOR_MAXLEN] = {
+ 	"\033[31m", /* WT_STATUS_CHANGED: red */
+ 	"\033[31m", /* WT_STATUS_UNTRACKED: red */
+ };
++static const char* use_add_msg = "use \"git add file1 file2\" to include for commit";
+ 
+ static int parse_status_slot(const char *var, int offset)
+ {
+@@ -162,8 +163,7 @@ static void wt_status_print_changed_cb(struct diff_queue_struct *q,
+ {
+ 	int i;
+ 	if (q->nr)
+-		wt_status_print_header("Changed but not updated",
+-				"use git-add on files to include for commit");
++		wt_status_print_header("Changed but not updated", use_add_msg);
+ 	for (i = 0; i < q->nr; i++)
+ 		wt_status_print_filepair(WT_STATUS_CHANGED, q->queue[i]);
+ 	if (q->nr)
+@@ -249,8 +249,7 @@ static void wt_status_print_untracked(const struct wt_status *s)
+ 				continue;
+ 		}
+ 		if (!shown_header) {
+-			wt_status_print_header("Untracked files",
+-				"use \"git add\" to add to commit");
++			wt_status_print_header("Untracked files", use_add_msg);
+ 			shown_header = 1;
+ 		}
+ 		color_printf(color(WT_STATUS_HEADER), "#\t");
+@@ -292,7 +291,9 @@ void wt_status_print(struct wt_status *s)
+ 	if (s->verbose && !s->is_initial)
+ 		wt_status_print_verbose(s);
+ 	if (!s->commitable)
+-		printf("%s\n", s->amend ? "# No changes" : "nothing to commit");
++		printf("%s (%s)\n",
++			s->amend ? "# No changes" : "nothing to commit",
++			use_add_msg);
+ }
+ 
+ int git_status_config(const char *k, const char *v)
+-- 
+1.4.4.2.g053a
