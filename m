@@ -1,82 +1,74 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: cloning the kernel - why long time in "Resolving 313037 deltas"
-Date: Tue, 19 Dec 2006 12:02:07 +1300
-Message-ID: <46a038f90612181502y3e2a41cds7f16113ad0270f31@mail.gmail.com>
-References: <86y7p57y05.fsf@blue.stonehenge.com>
-	 <Pine.LNX.4.64.0612181251020.3479@woody.osdl.org>
-	 <86r6uw9azn.fsf@blue.stonehenge.com>
-	 <Pine.LNX.4.64.0612181625140.18171@xanadu.home>
-	 <86hcvs984c.fsf@blue.stonehenge.com>
-	 <Pine.LNX.4.64.0612181414200.3479@woody.osdl.org>
-	 <8664c896xv.fsf@blue.stonehenge.com>
+From: Martin Waitz <tali@admingilde.org>
+Subject: Re: Subprojects tasks
+Date: Sun, 17 Dec 2006 00:01:08 +0100
+Message-ID: <20061216230108.GE12411@admingilde.org>
+References: <7vzm9nelob.fsf@assigned-by-dhcp.cox.net> <em1erl$pne$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Mon, 18 Dec 2006 23:03:09 +0000 (UTC)
-Cc: "Linus Torvalds" <torvalds@osdl.org>,
-	"Nicolas Pitre" <nico@cam.org>, git@vger.kernel.org
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="IMjqdzrDRly81ofr"
+NNTP-Posting-Date: Sat, 16 Dec 2006 23:01:24 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=ooBntUNqJ7/EPtt/JTSyMavEaxa7vxPR3Oa0j4PQZGdhRPSxr9HkAQECQpiulQqPneytjxguROhToj+bEJBZAmohuQKnvPDrwNAqpsJAHvIN3JnI3SDJbE7+kH7HxEk59SdPbFjEEtYtjuvd087bkjak0UcMvoNRqEbZh9opLMQ=
-In-Reply-To: <8664c896xv.fsf@blue.stonehenge.com>
 Content-Disposition: inline
+In-Reply-To: <em1erl$pne$1@sea.gmane.org>
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
+User-Agent: Mutt/1.5.9i
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34756>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GwRUs-0006W5-Dv for gcvg-git@gmane.org; Tue, 19 Dec
- 2006 00:02:14 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34652>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GviWv-0007SY-Q6 for gcvg-git@gmane.org; Sun, 17 Dec
+ 2006 00:01:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1754663AbWLRXCL (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 18 Dec 2006
- 18:02:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754717AbWLRXCK
- (ORCPT <rfc822;git-outgoing>); Mon, 18 Dec 2006 18:02:10 -0500
-Received: from nf-out-0910.google.com ([64.233.182.190]:7371 "EHLO
- nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1754663AbWLRXCJ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 18 Dec
- 2006 18:02:09 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so2081838nfa for
- <git@vger.kernel.org>; Mon, 18 Dec 2006 15:02:08 -0800 (PST)
-Received: by 10.49.43.2 with SMTP id v2mr4590144nfj.1166482928153; Mon, 18
- Dec 2006 15:02:08 -0800 (PST)
-Received: by 10.49.60.1 with HTTP; Mon, 18 Dec 2006 15:02:07 -0800 (PST)
-To: "Randal L. Schwartz" <merlyn@stonehenge.com>
+ S932645AbWLPXBL (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 16 Dec 2006
+ 18:01:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932646AbWLPXBK
+ (ORCPT <rfc822;git-outgoing>); Sat, 16 Dec 2006 18:01:10 -0500
+Received: from mail.admingilde.org ([213.95.32.147]:56907 "EHLO
+ mail.admingilde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S932645AbWLPXBJ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 16 Dec 2006
+ 18:01:09 -0500
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1) id
+ 1GviWi-0005N8-Ba; Sun, 17 Dec 2006 00:01:08 +0100
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-On 18 Dec 2006 14:26:36 -0800, Randal L. Schwartz <merlyn@stonehenge.com> wrote:
 
-> Linus> You're running this under OS X, aren't you? It's a pig of an OS, but
-> Linus> "almost one hour" vs "25 seconds" is still unreasonable.
->
-> I agree!
+--IMjqdzrDRly81ofr
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Me too -- but entirely possible. Disk IO is specially painful on OSX.
-Stat calls are horrid. Using Arch (which abused stat calls to no end)
-many ops would take 50x-100x longer on OSX than on Linux. A large
-unpacked repo with git is a real pain -- and packing it can take
-hours.
+hoi :)
 
-Once you are packed it's sweet, but large repos are a pain to deal
-with. You won't impress anyone with performance over a linux kernel
-repo -- starting up gitk can take a long time. Stat-heavy stuff like
-git-diff is noticeably slower under OSX.
+On Sat, Dec 16, 2006 at 07:45:11PM +0100, Jakub Narebski wrote:
+> Or .gitlink file, if we decide to implement it (as lightweight checkout a=
+nd
+> support for submodules which one can easily move/rename).
 
-Have you got a linux partition you can boot into to get comparative timings?
+I still don't get the advantage of a .gitlink file over an ordinary
+repository with alternates or a symlink.
 
-[This is part of the reason I am migrating my OSX machine to Linux
-fulltime, now that it seems that mergedfb+randr will let me switch to
-dual monitors "hot".]
+--=20
+Martin Waitz
 
-cheers,
+--IMjqdzrDRly81ofr
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFFhHq0j/Eaxd/oD7IRAuz2AJwIoJplSGcNQok4aqyq6XenGelaegCdH5kf
+UtBoZ5B1qOnbW2TqBaVUC9M=
+=bNxH
+-----END PGP SIGNATURE-----
 
