@@ -1,63 +1,107 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: [PATCH] git-clone documentation didn't mention --origin as equivalent of -o
-Date: Thu, 2 Nov 2006 12:11:56 +0100
-Message-ID: <200611021111.57283.andyparkins@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: What's cooking in git.git (topics)
+Date: Sun, 17 Dec 2006 00:29:25 +0100
+Organization: At home
+Message-ID: <em1vgj$bc3$1@sea.gmane.org>
+References: <7vodq3a136.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 2 Nov 2006 11:12:12 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+NNTP-Posting-Date: Sat, 16 Dec 2006 23:29:52 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-TUID: df6c4641292fcfbc
-X-UID: 145
-X-Length: 911
-Content-Disposition: inline
-X-OriginalArrivalTime: 02 Nov 2006 11:13:04.0155 (UTC) FILETIME=[DDBC06B0:01C6FE6F]
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 57
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-25-107.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30724>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GfaUQ-00047c-VJ for gcvg-git@gmane.org; Thu, 02 Nov
- 2006 12:12:07 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34657>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GviyU-0001eW-31 for gcvg-git@gmane.org; Sun, 17 Dec
+ 2006 00:29:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752845AbWKBLMD (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 2 Nov 2006
- 06:12:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752847AbWKBLMB
- (ORCPT <rfc822;git-outgoing>); Thu, 2 Nov 2006 06:12:01 -0500
-Received: from mail.360visiontechnology.com ([194.70.53.226]:14182 "EHLO
- 369run02s.360vision.com") by vger.kernel.org with ESMTP id S1752845AbWKBLMA
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 2 Nov 2006 06:12:00 -0500
-Received: from dvr.360vision.com ([192.189.1.24]) by 369run02s.360vision.com
- with Microsoft SMTPSVC(5.0.2195.6713); Thu, 2 Nov 2006 11:13:04 +0000
-Received: from localhost ([127.0.0.1]) by dvr.360vision.com with esmtp (Exim
- 3.36 #1 (Debian)) id 1GfaUJ-0003wf-00 for <git@vger.kernel.org>; Thu, 02 Nov
- 2006 11:11:59 +0000
+ S1422809AbWLPX3k (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 16 Dec 2006
+ 18:29:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422811AbWLPX3k
+ (ORCPT <rfc822;git-outgoing>); Sat, 16 Dec 2006 18:29:40 -0500
+Received: from main.gmane.org ([80.91.229.2]:48020 "EHLO ciao.gmane.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1422809AbWLPX3k
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 16 Dec 2006 18:29:40 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1Gviy9-0004gj-UK for git@vger.kernel.org; Sun, 17 Dec 2006 00:29:29 +0100
+Received: from host-81-190-25-107.torun.mm.pl ([81.190.25.107]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Sun, 17 Dec 2006 00:29:29 +0100
+Received: from jnareb by host-81-190-25-107.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Sun, 17 Dec 2006
+ 00:29:29 +0100
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
+Junio C Hamano wrote:
 
-Signed-off-by: Andy Parkins <andyparkins@gmail.com>
----
- Documentation/git-clone.txt |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+> Things that I feel should be done need to be done to complete
+> v1.5.0 are:
+[...]
+>  - now reflog is enabled by default for user repositories, I
+>    have two worries about its effect, fortunately can be killed
+>    with a single stone.
+> 
+>    * the reflog grows unbounded;
+> 
+>    * revisions recorded in the reflog can be pruned out,
+>      rendering some entries in reflog useless.
+> 
+>    I am thinking about teaching fsck-objects and prune to keep
+>    revisions recorded in the reflog; we would need an end-user
+>    way to prune older reflog entries and I would appreciate
+>    somebody codes it up, but even without it, people can always
+>    use "vi" or "ed" on reflog files ;-).
 
-diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-index f973c64..e22a036 100644
---- a/Documentation/git-clone.txt
-+++ b/Documentation/git-clone.txt
-@@ -75,6 +75,7 @@ OPTIONS
- 	this option is used, neither the `origin` branch nor the
- 	default `remotes/origin` file is created.
+I'd rather not have prune keep revisions recorded in reflog. Reflog
+keeps also amended commits, and blobs from incrementally staged
+commits. Or perhaps make it an configuration option, default to
+true for new users (or have an option to git-prune to ignore reflog).
+
+As of "reflog grows unbounded"... perhaps we should encourage to use
+logrotate for that (well, perhaps git-prune and porcelains which deal
+with reflog should be able to uncompress reflog if needed).
+
+>  - 'git-svn' users should speak out about two issues:
+> 
+>    * use of svn command line client as the backend is being
+>      removed;
+> 
+>    * 'git-svn commit' command is being renamed to avoid
+>      confusion, and potentially 'dcommit' will be renamed to 
+>      'commit'.
+> 
+>    Please discuss these with Eric.
+
+What about remote.<repo>.url = svn://ser.ver/repo/ idea?
  
-+--origin::
- -o <name>::
- 	Instead of using the branch name 'origin' to keep track
- 	of the upstream repository, use <name> instead.  Note
+> ** jc/reflog (Thu Dec 14 15:58:56 2006 -0800) 1 commit
+>  - Teach show-branch how to show ref-log data.
+> 
+> A strawman to make reflog data a bit more browsable; it would be
+> useful while recovering from a mistake you made recently.  Not
+> essential and can wait or be dropped if people do not find it
+> useful.
+
+Looks useful.
+
 -- 
-1.4.3.2
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
+
