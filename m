@@ -1,56 +1,64 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Mitchell Blank Jr <mitch@sfgoth.com>
-Subject: Re: [ANNOUNCE] gitfs pre-release 0.04
-Date: Mon, 4 Dec 2006 12:03:49 -0800
-Message-ID: <20061204200349.GX47959@gaz.sfgoth.com>
-References: <20061204194011.GW47959@gaz.sfgoth.com> <el1tg0$n07$1@sea.gmane.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Subprojects tasks
+Date: Sat, 16 Dec 2006 19:45:11 +0100
+Organization: At home
+Message-ID: <em1erl$pne$1@sea.gmane.org>
+References: <7vzm9nelob.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Mon, 4 Dec 2006 19:48:10 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Sat, 16 Dec 2006 18:45:37 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <el1tg0$n07$1@sea.gmane.org>
-User-Agent: Mutt/1.4.2.1i
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-1.2.2 (gaz.sfgoth.com [127.0.0.1]); Mon, 04 Dec 2006 12:03:50 -0800 (PST)
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 13
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-25-107.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33230>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34634>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GrJnB-0001Qe-E4 for gcvg-git@gmane.org; Mon, 04 Dec
- 2006 20:47:57 +0100
+ esmtp (Exim 4.50) id 1GveXO-0000VD-73 for gcvg-git@gmane.org; Sat, 16 Dec
+ 2006 19:45:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S937341AbWLDTp5 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
- 14:45:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937335AbWLDTp5
- (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 14:45:57 -0500
-Received: from gaz.sfgoth.com ([69.36.241.230]:52130 "EHLO gaz.sfgoth.com"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S937348AbWLDTpo
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006 14:45:44 -0500
-Received: from gaz.sfgoth.com (localhost.sfgoth.com [127.0.0.1]) by
- gaz.sfgoth.com (8.12.10/8.12.10) with ESMTP id kB4K3otV099964; Mon, 4 Dec
- 2006 12:03:50 -0800 (PST) (envelope-from mitch@gaz.sfgoth.com)
-Received: (from mitch@localhost) by gaz.sfgoth.com (8.12.10/8.12.6/Submit) id
- kB4K3oee099963; Mon, 4 Dec 2006 12:03:50 -0800 (PST) (envelope-from mitch)
-To: Jakub Narebski <jnareb@gmail.com>
+ S1161360AbWLPSpY convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Sat, 16 Dec 2006 13:45:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161357AbWLPSpX
+ (ORCPT <rfc822;git-outgoing>); Sat, 16 Dec 2006 13:45:23 -0500
+Received: from main.gmane.org ([80.91.229.2]:32832 "EHLO ciao.gmane.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1161361AbWLPSpV
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 16 Dec 2006 13:45:21 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1GveXA-0004Mf-9c for git@vger.kernel.org; Sat, 16 Dec 2006 19:45:20 +0100
+Received: from host-81-190-25-107.torun.mm.pl ([81.190.25.107]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Sat, 16 Dec 2006 19:45:20 +0100
+Received: from jnareb by host-81-190-25-107.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Sat, 16 Dec 2006
+ 19:45:20 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Jakub Narebski wrote:
-> Not true. Symlink HEAD still works, and we have even core.preferSymlinkRefs
-> configuration variable.
+Junio C Hamano wrote:
 
-Yes, but it has to be a symlink pointing into "refs/", not just a regular
-file holding a hash value.  Which is fine for most purposes but sort of a
-pain for me.
+> =A0(1) Look at the directory the "link" is at, and find .git/
+> =A0 =A0 =A0subdirectory (that is the $GIT_DIR for the subproject) and
+> =A0 =A0 =A0its .git/HEAD;
 
-I'll probably have it be a symlink to "refs/gitfs-dynamic" or something and
-then have "refs" be populated with that synthetic file and symlinks to
-any of the normal contents of the refs directory.  Not too bad, but will
-take a little bit of code.
+Or .gitlink file, if we decide to implement it (as lightweight checkout=
+ and
+support for submodules which one can easily move/rename).
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
 
