@@ -1,110 +1,231 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
-Subject: Re: git-show --stat on first commit
-Date: Tue, 21 Nov 2006 15:14:04 -0300
-Message-ID: <200611211814.kALIE4EQ009257@laptop13.inf.utfsm.cl>
-References: <jnareb@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: What's cooking in git.git (topics)
+Date: Sat, 16 Dec 2006 15:10:53 -0800
+Message-ID: <7vodq3a136.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Tue, 21 Nov 2006 18:14:30 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Sat, 16 Dec 2006 23:11:48 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Warning: Original message contained 8-bit characters, however during
-	   the SMTP transport session the receiving system did not announce
-	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
-	   message does not have MIME headers (RFC 2045-2049) to enable
-	   encoding change, we had very little choice.
-X-Warning: We ASSUME it is less harmful to add the MIME headers, and
-	   convert the text to Quoted-Printable, than not to do so,
-	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
-X-Warning: We don't know what character set the user used, thus we had to
-	   write these MIME-headers with our local system default value.
-In-Reply-To: Message from Jakub Narebski <jnareb@gmail.com> 
-   of "Tue, 21 Nov 2006 17:18:15 BST." <ejv8pc$cig$1@sea.gmane.org> 
-X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.5  (beta27)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-2.0.2 (inti.inf.utfsm.cl [200.1.19.1]); Tue, 21 Nov 2006 15:14:04 -0300 (CLST)
-X-Virus-Scanned: ClamAV version 0.88.5, clamav-milter version 0.88.5 on inti.inf.utfsm.cl
-X-Virus-Status: Clean
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32011>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gma8L-0006BC-Ve for gcvg-git@gmane.org; Tue, 21 Nov
- 2006 19:14:14 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34653>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gvih0-0008Q9-Cz for gcvg-git@gmane.org; Sun, 17 Dec
+ 2006 00:11:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1031256AbWKUSOK (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 21 Nov 2006
- 13:14:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031257AbWKUSOK
- (ORCPT <rfc822;git-outgoing>); Tue, 21 Nov 2006 13:14:10 -0500
-Received: from inti.inf.utfsm.cl ([200.1.21.155]:10208 "EHLO
- inti.inf.utfsm.cl") by vger.kernel.org with ESMTP id S1031256AbWKUSOJ (ORCPT
- <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2006 13:14:09 -0500
-Received: from laptop13.inf.utfsm.cl (laptop13.inf.utfsm.cl [200.1.19.201])
- by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id kALIE4ZJ032132
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO); Tue, 21
- Nov 2006 15:14:04 -0300
-Received: from laptop13.inf.utfsm.cl (laptop13.inf.utfsm.cl [127.0.0.1]) by
- laptop13.inf.utfsm.cl (8.13.8/8.13.8) with ESMTP id kALIE4EQ009257; Tue, 21
- Nov 2006 15:14:04 -0300
-To: Jakub Narebski <jnareb@gmail.com>
+ S1422768AbWLPXK4 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 16 Dec 2006
+ 18:10:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422712AbWLPXK4
+ (ORCPT <rfc822;git-outgoing>); Sat, 16 Dec 2006 18:10:56 -0500
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:59406 "EHLO
+ fed1rmmtao02.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1422768AbWLPXKz (ORCPT <rfc822;git@vger.kernel.org>); Sat, 16 Dec 2006
+ 18:10:55 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao02.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061216231054.QFQO97.fed1rmmtao02.cox.net@fed1rmimpo02.cox.net>; Sat, 16
+ Dec 2006 18:10:54 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id zbB51V00x1kojtg0000000; Sat, 16 Dec 2006
+ 18:11:06 -0500
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Jakub Narebski <jnareb@gmail.com> wrote:
-> Peter Baumann wrote:
-> > On 2006-11-21, Santi B=C3=A9jar <sbejar@gmail.com> wrote:
-> >> On 11/21/06, Andy Parkins <andyparkins@gmail.com> wrote:
+Things that I feel should be done need to be done to complete
+v1.5.0 are:
 
-[...]
+ - 'git-rm' needs to be fixed up as Linus outlined; remove
+   working tree file and index entry but have a sanity check to
+   make sure the working tree file match the index and HEAD.
 
-> >> In general the initial commit diff (or stat) is hidden, but perhap=
-s it
-> >> make sense to show it in "git show", you asked fo this specificall=
-y.
+ - tutorials and other Porcelain documentation pages need to be
+   updated to match the updated 'git-add' and 'git-rm' (to be
+   updated), and their description should be made much less
+   about implementation; they should talk in terms of end-user
+   workflows.
 
-> > Why not make --root the default? I also stumbled over this behaviou=
-r and
-> > even asked on this list.
+   We need a full sweep on Porcelain-ish documentation.
 
-> > In my opinion this will help new users which are supprised that the=
-y
-> > can't get the diff of the inital commit (which is totaly non-intuit=
-iv
-> > behavior).
+ - now reflog is enabled by default for user repositories, I
+   have two worries about its effect, fortunately can be killed
+   with a single stone.
 
-> > And one less "wart" to clean, which another thread is all about. :-=
-)
+   * the reflog grows unbounded;
 
-Count me in! A freshly created repo should be just empty, not some stra=
-nge
-construction that isn't a real repo. The empty set /is/ real useful, yo=
-u
-know. Even if it is just for symmetry.
+   * revisions recorded in the reflog can be pruned out,
+     rendering some entries in reflog useless.
 
-> Because for projects imported into git first commit diff is huge,
-> and not very interesting.
+   I am thinking about teaching fsck-objects and prune to keep
+   revisions recorded in the reflog; we would need an end-user
+   way to prune older reflog entries and I would appreciate
+   somebody codes it up, but even without it, people can always
+   use "vi" or "ed" on reflog files ;-).
 
-That isn't your call to make. Sure, if I just untarred something large =
-and
-gitified it, I /know/ the diff to "before" is huge, and not really
-informative, and I'll abstain from asking for it. But if I just started=
- a
-project with a half dozen files, I'd like to see what came before, or l=
-ook
-at the difference to "5 commits back" (which just happens to be every
-change, as there are 4 commits in all).
+ - 'git-add' might want to do 'update-index --replace'; probably
+   needs a sanity-checking discussion before implementing it.
 
-The main focus here is on large(ish) projects with a lot of history, bu=
-t if
-you want to be able to get some mindshare you will have to look at the
-other end, projects just getting off the ground.
---=20
-Dr. Horst H. von Brand                   User #22616 counter.li.org
-Departamento de Informatica                    Fono: +56 32 2654431
-Universidad Tecnica Federico Santa Maria             +56 32 2654239
+ - 'git-svn' users should speak out about two issues:
+
+   * use of svn command line client as the backend is being
+     removed;
+
+   * 'git-svn commit' command is being renamed to avoid
+     confusion, and potentially 'dcommit' will be renamed to 
+     'commit'.
+
+   Please discuss these with Eric.
+
+ - we might want to address the issue that 'git-status' output
+   does not make it easy to tell mode changes from content
+   changes.  Personally I do not like cryptic "M+" output format
+   proposed by Lars and find the current output more readable.
+
+----------------------------------------------------------------
+As usual, '+' are both in 'next' and 'pu', '-' are in 'pu' only.
+
+*  jn/web (Sat Dec 16 17:12:55 2006 +0100) 9 commits
+ - gitweb: Add some mod_perl specific support
+ + gitweb: Add "next" link to commit view
+ + gitweb: Add title attribute to ref marker with full ref name
+ + gitweb: Do not show difftree for merges in "commit" view
+ + gitweb: SHA-1 in commit log message links to "object" view
+ + gitweb: Hyperlink target of symbolic link in "tree" view (if
+   possible)
+ + gitweb: Add generic git_object subroutine to display object of any
+   type
+ + gitweb: Show target of symbolic link in "tree" view
+ + gitweb: Don't use Content-Encoding: header in git_snapshot
+
+All except the tip (mod_perl) looked good and should be in
+v1.5.0; I haven't formed an opinion on mod_perl change yet.
+
+*  js/branch-config (Sat Dec 16 15:15:02 2006 +0100) 2 commits
+ + git-branch: rename config vars branch.<branch>.*, too
+ + add a function to rename sections in the config
+
+This moves branch.$foo.* variables to branch.$bar.* when $foo
+branch is renamed to $bar.  Because we already have branch -m
+(stands for "mv"), this series is a must-have in v1.5.0.
+
+*  jc/clone (Sat Dec 16 01:53:10 2006 -0800) 4 commits
+ + git-clone: lose the traditional 'no-separate-remote' layout
+ + git-clone: lose the artificial "first" fetch refspec
+ + git-pull: refuse default merge without branch.*.merge
+ + git-clone: use wildcard specification for tracking branches
+
+Fixes the workflow wart and removes the traditional layout that
+maps remote 'master' to refs/heads/origin.  Also 'git pull' and
+'git pull origin' would not merge the ref on the first Pull:
+line (nor remote.*.fetch item) anymore.  You either have to give
+an explicit command line parameter or branch.$currbranch.merge
+item.  With blessing from Linus, this will be in v1.5.0.
+
+*  ew/svn-pm (Fri Dec 15 23:58:08 2006 -0800) 3 commits
+ + git-svn: rename 'commit' command to 'set-tree'
+ + git-svn: remove support for the svn command-line client
+ + git-svn: convert to using Git.pm
+
+It is in 'next' because I agree it is in the right direction in
+the longer term, but not in 'master' because this might be
+controvertial for shorter term.  The users should decide.
+
+** jc/reflog (Thu Dec 14 15:58:56 2006 -0800) 1 commit
+ - Teach show-branch how to show ref-log data.
+
+A strawman to make reflog data a bit more browsable; it would be
+useful while recovering from a mistake you made recently.  Not
+essential and can wait or be dropped if people do not find it
+useful.
+
+** jc/git-add--interactive (Mon Dec 11 17:09:26 2006 -0800) 2 commits
+ - git-add --interactive: hunk splitting
+ - git-add --interactive
+
+I've thought about further allowing to edit the patches in the
+'patch' subcommand, but the more I think about it, the less it
+makes sense from the workflow point of view.  Will be the topic
+for a separate message.
+
+** sv/git-svn (Tue Dec 5 16:17:38 2006 +1100) 5 commits
+ . git-svn: re-map repository URLs and UUIDs on SVK mirror paths
+ . git-svn: collect revision properties when fetching
+ . git-svn: collect SVK source URL on mirror paths
+ . git-svn: let libsvn_ls_fullurl return properties too
+ . git-svn: make test for SVK mirror path import
+
+Still held but dropped from 'pu' for now (depends on "sub sys"
+that was removed from git-svn).
+
+** jc/explain (Mon Dec 4 19:35:04 2006 -0800) 1 commit
+ - git-explain
+
+Backburnered.
+
+*  jc/blame-boundary (Fri Dec 1 20:45:45 2006 -0800) 1 commit
+ + git-blame: show lines attributed to boundary commits differently.
+
+Will merge.
+
+*  jc/3way (Wed Nov 29 18:53:13 2006 -0800) 1 commit
+ + git-merge: preserve and merge local changes when doing fast
+   forward
+
+Will merge, if only to see what breaks.
+
+*  js/shallow (Fri Nov 24 16:00:13 2006 +0100) 15 commits
+ + fetch-pack: Do not fetch tags for shallow clones.
+ + get_shallow_commits: Avoid memory leak if a commit has been
+   reached already.
+ + git-fetch: Reset shallow_depth before auto-following tags.
+ + upload-pack: Check for NOT_SHALLOW flag before sending a shallow
+   to the client.
+ + fetch-pack: Properly remove the shallow file when it becomes
+   empty.
+ + shallow clone: unparse and reparse an unshallowed commit
+ + Why didn't we mark want_obj as ~UNINTERESTING in the old code?
+ + Why does it mean we do not have to register shallow if we have
+   one?
+ + We should make sure that the protocol is still extensible.
+ + add tests for shallow stuff
+ + Shallow clone: do not ignore shallowness when following tags
+ + allow deepening of a shallow repository
+ + allow cloning a repository "shallowly"
+ + support fetching into a shallow repository
+ + upload-pack: no longer call rev-list
+
+Undecided but not likely to be in v1.5.0.  Needs more real
+project testing.
+
+** jc/web (Wed Nov 8 14:54:09 2006 -0800) 1 commit
+ - gitweb: steal loadavg throttle from kernel.org
+
+Undecided.
+
+** jc/pickaxe (Sun Nov 5 11:52:43 2006 -0800) 1 commit
+ - blame: --show-stats for easier optimization work.
+
+Developer only.
+
+** jc/leftright (Sun Oct 22 17:32:47 2006 -0700) 1 commit
+ - rev-list --left-right
+
+Backburnered.
+
+** jc/diff (Mon Sep 25 23:03:34 2006 -0700) 1 commit
+ - para-walk: walk n trees, index and working tree in parallel
+
+Backburnered.
+
+*  jc/diff-apply-patch (Fri Sep 22 16:17:58 2006 -0700) 1 commit
+ + git-diff/git-apply: make diff output a bit friendlier to GNU patch
+   (part 2)
+
+Not in v1.5.0.
