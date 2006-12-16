@@ -1,100 +1,65 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Alexandre Julliard <julliard@winehq.org>
-Subject: [PATCH] pack-refs: Store the full name of the ref even when packing only tags.
-Date: Thu, 02 Nov 2006 12:13:32 +0100
-Message-ID: <871wom5cf7.fsf@wine.dyndns.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [RFC/PATCH 2/2] git-svn: rename 'commit' command to 'set-tree'
+Date: Sat, 16 Dec 2006 05:26:03 -0800
+Message-ID: <7vbqm4ezv8.fsf@assigned-by-dhcp.cox.net>
+References: <m28xh8amxa.fsf@ziti.local>
+	<11662558902535-git-send-email-normalperson@yhbt.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 2 Nov 2006 11:13:43 +0000 (UTC)
+NNTP-Posting-Date: Sat, 16 Dec 2006 13:26:13 +0000 (UTC)
+Cc: git@vger.kernel.org, seth@hand.yhbt.net
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.90 (gnu/linux)
+In-Reply-To: <11662558902535-git-send-email-normalperson@yhbt.net> (Eric
+	Wong's message of "Fri, 15 Dec 2006 23:58:08 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30730>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GfaVv-0004Pc-T1 for gcvg-git@gmane.org; Thu, 02 Nov
- 2006 12:13:40 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34613>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GvZYK-0003Zv-Gc for gcvg-git@gmane.org; Sat, 16 Dec
+ 2006 14:26:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752851AbWKBLNg (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 2 Nov 2006
- 06:13:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752852AbWKBLNg
- (ORCPT <rfc822;git-outgoing>); Thu, 2 Nov 2006 06:13:36 -0500
-Received: from mail.codeweavers.com ([216.251.189.131]:26817 "EHLO
- mail.codeweavers.com") by vger.kernel.org with ESMTP id S1752851AbWKBLNg
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 2 Nov 2006 06:13:36 -0500
-Received: from adsl-84-226-62-15.adslplus.ch ([84.226.62.15]
- helo=wine.dyndns.org) by mail.codeweavers.com with esmtpsa
- (TLS-1.0:DHE_RSA_AES_256_CBC_SHA:32) (Exim 4.50) id 1GfaVr-0005Qf-8r for
- git@vger.kernel.org; Thu, 02 Nov 2006 05:13:35 -0600
-Received: by wine.dyndns.org (Postfix, from userid 1000) id B1BAE109EB7; Thu,
-  2 Nov 2006 12:13:32 +0100 (CET)
-To: git@vger.kernel.org
+ S1751673AbWLPN0H (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 16 Dec 2006
+ 08:26:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753688AbWLPN0H
+ (ORCPT <rfc822;git-outgoing>); Sat, 16 Dec 2006 08:26:07 -0500
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:37835 "EHLO
+ fed1rmmtao04.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1751673AbWLPN0G (ORCPT <rfc822;git@vger.kernel.org>); Sat, 16 Dec 2006
+ 08:26:06 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao04.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061216132604.SNQE7494.fed1rmmtao04.cox.net@fed1rmimpo01.cox.net>; Sat, 16
+ Dec 2006 08:26:04 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id zRRQ1V0031kojtg0000000; Sat, 16 Dec 2006
+ 08:25:24 -0500
+To: Eric Wong <normalperson@yhbt.net>
 Sender: git-owner@vger.kernel.org
 
-Using for_each_tag_ref() to enumerate tags is wrong since it removes
-the refs/tags/ prefix, we need to always use for_each_ref() and filter
-out non-tag references in the callback.
+Eric Wong <normalperson@yhbt.net> writes:
 
-Signed-off-by: Alexandre Julliard <julliard@winehq.org>
----
- builtin-pack-refs.c |    8 +++++---
- 1 files changed, 5 insertions(+), 3 deletions(-)
+> 'set-tree' probably accurately describes what the command
+> formerly known as 'commit' does.
+>
+> I'm not entirely sure that 'dcommit' should be renamed to 'commit'
+> just yet...  Perhaps 'push' or 'push-changes'?
 
-diff --git a/builtin-pack-refs.c b/builtin-pack-refs.c
-index 1087657..042d271 100644
---- a/builtin-pack-refs.c
-+++ b/builtin-pack-refs.c
-@@ -12,6 +12,7 @@ struct ref_to_prune {
- 
- struct pack_refs_cb_data {
- 	int prune;
-+	int all;
- 	struct ref_to_prune *ref_to_prune;
- 	FILE *refs_file;
- };
-@@ -29,6 +30,8 @@ static int handle_one_ref(const char *pa
- {
- 	struct pack_refs_cb_data *cb = cb_data;
- 
-+	if (!cb->all && strncmp(path, "refs/tags/", 10))
-+		return 0;
- 	/* Do not pack the symbolic refs */
- 	if (!(flags & REF_ISSYMREF))
- 		fprintf(cb->refs_file, "%s %s\n", sha1_to_hex(sha1), path);
-@@ -68,7 +71,6 @@ int cmd_pack_refs(int argc, const char *
- {
- 	int fd, i;
- 	struct pack_refs_cb_data cbdata;
--	int (*iterate_ref)(each_ref_fn, void *) = for_each_tag_ref;
- 
- 	memset(&cbdata, 0, sizeof(cbdata));
- 
-@@ -79,7 +81,7 @@ int cmd_pack_refs(int argc, const char *
- 			continue;
- 		}
- 		if (!strcmp(arg, "--all")) {
--			iterate_ref = for_each_ref;
-+			cbdata.all = 1;
- 			continue;
- 		}
- 		/* perhaps other parameters later... */
-@@ -93,7 +95,7 @@ int cmd_pack_refs(int argc, const char *
- 	if (!cbdata.refs_file)
- 		die("unable to create ref-pack file structure (%s)",
- 		    strerror(errno));
--	iterate_ref(handle_one_ref, &cbdata);
-+	for_each_ref(handle_one_ref, &cbdata);
- 	fflush(cbdata.refs_file);
- 	fsync(fd);
- 	fclose(cbdata.refs_file);
--- 
-1.4.3.3.gac1f
+I think Pasky did such a three-way rename to avoid breaking
+people's fingers.  I thought it was a reasonable transition
+strategy, but some people might say its only effect was to break
+people's fingers not just once but twice, so Pasky himself
+and/or Cogito users may have some input on this.
 
--- 
-Alexandre Julliard
+We are talking about major UI change between 1.4 series and
+v1.5.0 on the core Porcelain-ish side, so if you feel confident
+that things would settle down in a month or so in the git-svn
+front, it may be a good idea to roll sweeping changes into the
+same timeframe.
