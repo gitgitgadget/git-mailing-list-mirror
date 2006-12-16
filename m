@@ -1,75 +1,66 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: EGIT unpackedreadr problem
-Date: Sat, 2 Dec 2006 21:25:13 -0500
-Message-ID: <20061203022513.GB26668@spearce.org>
-References: <200612030200.13857.robin.rosenberg@dewire.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [RFC/PATCH] Change "refs/" references to symbolic constants
+Date: Sat, 16 Dec 2006 13:44:31 -0800
+Message-ID: <7vslffcy80.fsf@assigned-by-dhcp.cox.net>
+References: <200612141644.06167.andyparkins@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sun, 3 Dec 2006 02:25:32 +0000 (UTC)
+NNTP-Posting-Date: Sat, 16 Dec 2006 21:44:50 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <200612030200.13857.robin.rosenberg@dewire.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+In-Reply-To: <200612141644.06167.andyparkins@gmail.com> (Andy Parkins's
+	message of "Thu, 14 Dec 2006 16:44:05 +0000")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33085>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gqh2f-0001bo-M7 for gcvg-git@gmane.org; Sun, 03 Dec
- 2006 03:25:22 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34644>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GvhKn-0000I5-SR for gcvg-git@gmane.org; Sat, 16 Dec
+ 2006 22:44:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1424725AbWLCCZS (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 2 Dec 2006
- 21:25:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759615AbWLCCZS
- (ORCPT <rfc822;git-outgoing>); Sat, 2 Dec 2006 21:25:18 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:57240 "EHLO
- corvette.plexpod.net") by vger.kernel.org with ESMTP id S1759614AbWLCCZR
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 2 Dec 2006 21:25:17 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1Gqh2O-0005lt-Px; Sat, 02 Dec 2006 21:25:04 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- 3C38620FB7F; Sat,  2 Dec 2006 21:25:14 -0500 (EST)
-To: Robin Rosenberg <robin.rosenberg@dewire.com>
+ S1753819AbWLPVog (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 16 Dec 2006
+ 16:44:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753821AbWLPVog
+ (ORCPT <rfc822;git-outgoing>); Sat, 16 Dec 2006 16:44:36 -0500
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:38939 "EHLO
+ fed1rmmtao01.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1753819AbWLPVof (ORCPT <rfc822;git@vger.kernel.org>); Sat, 16 Dec 2006
+ 16:44:35 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao01.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061216214432.JRQT9173.fed1rmmtao01.cox.net@fed1rmimpo02.cox.net>; Sat, 16
+ Dec 2006 16:44:32 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id zZkk1V0051kojtg0000000; Sat, 16 Dec 2006
+ 16:44:44 -0500
+To: Andy Parkins <andyparkins@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Robin Rosenberg <robin.rosenberg@dewire.com> wrote:
-> Subject: [PATCH] Utility to show a log.
+Andy Parkins <andyparkins@gmail.com> writes:
 
-Thanks.  This is somewhat handy so I've applied the utility program.
+> Changed repeated use of the same constants for the ref paths to be
+> symbolic constants.
 
-Like your other patch to Commit class this one had some whitespace
-issues.  In the future could you apply the Eclipse formatter (using
-the Java Conventions style) to the source before genererating a diff?
- 
-> Not sure what's going on. The  UnpackedReader "looks" like it does
-> the equivalent of what it did before,but apparently it isn't. 
+This is not rejected nor forgotten but has not been applied yet,
+and may not be immediately.
 
-Yea...  I broke the legacy header parsing in 42691339.
-The breakage actually showed up in one of the unit tests
-(test009_CreateCommitOldFormat) but I didn't notice it before
-pushing the changes out as I failed to run the entire unit test
-suite first.  Whoops.
+I would love to have this; it would reduce mistakes (spelling
+"refs/head/" would silently compile fine and result in a broken
+command, while spelling PATH_REFS_HEAD would be caught by the
+compiler).
 
-I found it and fixed it in f70704f9.  The issue was we were copying
-the remaining data from the Inflater ontop of the data we had
-already decompressed out for the header; this meant that we lost the
-leading bytes of each object.  I just neglated to push the fix out.
-Double whoops.
+A sad thing is this needs to be done when things are relatively
+quiescent.
 
--- 
+So I would apply this before v1.5.0 (or a replacement, if you
+have updates), but it might have to wait a bit until I I can say
+"ok, no big patches to C part is pending right now and it is a
+good time to do this clean-up".
+
