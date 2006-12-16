@@ -1,92 +1,84 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: fork0@t-online.de (Alex Riesen)
-Subject: Re: should git download missing objects?
-Date: Mon, 13 Nov 2006 23:52:39 +0100
-Message-ID: <20061113225239.GA9411@steel.home>
-References: <ej7fgp$8ca$1@sea.gmane.org> <7vwt60bggs.fsf@assigned-by-dhcp.cox.net> <20061113194532.GA4547@steel.home> <7virhj6rj7.fsf@assigned-by-dhcp.cox.net>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Avoid accessing a slow working copy during diffcore operations.
+Date: Fri, 15 Dec 2006 22:03:21 -0800
+Message-ID: <7vpsakl6mu.fsf@assigned-by-dhcp.cox.net>
+References: <20061214111557.GA24297@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Mon, 13 Nov 2006 22:53:39 +0000 (UTC)
-Cc: git@vger.kernel.org
+NNTP-Posting-Date: Sat, 16 Dec 2006 06:03:31 +0000 (UTC)
+Cc: git@vger.kernel.org, Alex Riesen <raa.lkml@gmail.com>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <7virhj6rj7.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
-X-ID: Vge+0BZHZebWRHNK5Ig0tea+ZCztShLVKrIcnbNQfXutA47CqveLQz
-X-TOI-MSGID: 76a11ad5-12ba-42d4-b0f9-2d7c1504cf19
+In-Reply-To: <20061214111557.GA24297@spearce.org> (Shawn O. Pearce's message
+	of "Thu, 14 Dec 2006 06:15:57 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31328>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gjkfr-0006dt-AS for gcvg-git@gmane.org; Mon, 13 Nov
- 2006 23:53:07 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34590>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GvSds-0005BT-EN for gcvg-git@gmane.org; Sat, 16 Dec
+ 2006 07:03:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S933121AbWKMWxD (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 13 Nov 2006
- 17:53:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933122AbWKMWxD
- (ORCPT <rfc822;git-outgoing>); Mon, 13 Nov 2006 17:53:03 -0500
-Received: from mailout08.sul.t-online.com ([194.25.134.20]:8685 "EHLO
- mailout08.sul.t-online.com") by vger.kernel.org with ESMTP id S933121AbWKMWxB
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 13 Nov 2006 17:53:01 -0500
-Received: from fwd27.aul.t-online.de  by mailout08.sul.t-online.com with smtp
-  id 1Gjkff-0005g4-00; Mon, 13 Nov 2006 23:52:55 +0100
-Received: from tigra.home
- (Vge+0BZHZebWRHNK5Ig0tea+ZCztShLVKrIcnbNQfXutA47CqveLQz@[84.163.84.190]) by
- fwd27.sul.t-online.de with esmtp id 1GjkfR-1Vdyd60; Mon, 13 Nov 2006 23:52:41
- +0100
-Received: from steel.home (steel.home [192.168.1.2]) by tigra.home (Postfix)
- with ESMTP id EAE1B277AF; Mon, 13 Nov 2006 23:52:40 +0100 (CET)
-Received: from raa by steel.home with local (Exim 4.42 #1 (Debian)) id
- 1GjkfP-0002TI-TF; Mon, 13 Nov 2006 23:52:39 +0100
-To: Junio C Hamano <junkio@cox.net>
+ S965331AbWLPGDZ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 16 Dec 2006
+ 01:03:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965338AbWLPGDZ
+ (ORCPT <rfc822;git-outgoing>); Sat, 16 Dec 2006 01:03:25 -0500
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:35806 "EHLO
+ fed1rmmtao12.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S965331AbWLPGDY (ORCPT <rfc822;git@vger.kernel.org>); Sat, 16 Dec 2006
+ 01:03:24 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao12.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061216060322.ECZM4226.fed1rmmtao12.cox.net@fed1rmimpo01.cox.net>; Sat, 16
+ Dec 2006 01:03:22 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id zJ2i1V0041kojtg0000000; Sat, 16 Dec 2006
+ 01:02:42 -0500
+To: "Shawn O. Pearce" <spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano, Mon, Nov 13, 2006 21:05:48 +0100:
-> > Junio C Hamano, Sun, Nov 12, 2006 20:41:23 +0100:
-> >> Since this is not everyday anyway, a far easier way would be to
-> >> clone-pack from the upstream into a new repository, take the
-> >> pack you downloaded from that new repository and mv it into your
-> >> corrupt repository.  You can run fsck-objects to see if you got
-> >> back everything you lost earlier.
-> >
-> > I get into such a situation annoyingly often, by using
-> > "git clone -l -s from to" and doing some "cleanup" in the
-> > origin repository. For example, it happens that I remove a tag,
-> > or a branch, and do a repack or prune afterwards. The related
-> > repositories, which had "accidentally" referenced the pruned
-> > objects become "corrupt", as you put it.
-> >
-> > At the moment, if I run into the situation, I copy packs/objects from
-> > all repos I have (objects/info/alternates are useful here too), run a
-> > fsck-objects/repack and hope nothing is lost. It works, as I almost
-> > always have "accidental" backups somewhere, but is kind of annoying to
-> > setup. A tool to do this job more effectively will be very handy (at
-> > least, it wont have to copy gigabytes of data over switched windows
-> > network. Not often, I hope. Not _so_ many gigabytes, possibly).
-> 
-> I suspect it is a different issue.  Maybe you would need reverse
-> links from the origin directory to .git/refs/ directroy of
-> repositories that borrow from it to prevent pruning.  No amount
-> of butchering fetch-pack to look behind incomplete refs that lie
-> and claim they are complete would solve your problem if you do
-> not have any "accidental backups".
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-It's is not about preventing this from happening. It is about
-recovering from user error (which I plainly did). The discussion about
-"git fetch --recover" sound very much like what would helped in that
-situation. I'll just try not doing it next time, but if I do, it'd be
-nice to have a tool to help me recover from it. Not prevent, not
-seeing it possible, just help.
+> If Git is compiled with NO_FAST_WORKING_DIRECTORY set then we will
+> avoid looking at the working directory when the blob in question
+> is available within a packfile and the caller doesn't need the data
+> unpacked into a temporary file.
 
-Anyway, it's kind of too late for that repositories. And not very
-convenient to work with: the branches in the slave repos come and go
-often, they pull from each other and push into central (aka origin)
-repo. Maintain the borrowed refs in sync would be nightmare (as is: "I
-promise to forget doing it").
+I'd take the patch as is, but...
+
+> -static int work_tree_matches(const char *name, const unsigned char *sha1)
+> +static int work_tree_matches(const char *name, const unsigned char *sha1, int want_file)
+
+this feels wrong.  It is not about "work tree matches" anymore.
+reuse_worktree_copy(), perhaps.
+
+> @@ -1193,6 +1193,20 @@ static int work_tree_matches(const char *name, const unsigned char *sha1)
+>  	if (!active_cache)
+>  		return 0;
+>  
+> +#ifdef NO_FAST_WORKING_DIRECTORY
+> +	/* We want to avoid the working directory if our caller
+> +	 * doesn't need the data in a normal file, this system
+> +	 * is rather slow with its stat/open/mmap/close syscalls,
+> +	 * and the object is contained in a pack file.  The pack
+> +	 * is probably already open and will be faster to obtain
+> +	 * the data through than the working directory.  Loose
+> +	 * objects however would tend to be slower as they need
+> +	 * to be individually opened and inflated.
+> +	 */
+> +	if (!want_file && has_sha1_pack(sha1, NULL))
+> +		return 0;
+> +#endif
+> +
+
+Also I'd prefer doing this without #ifdef;
+
+        if (defined(NO_FAST_WORKING_DIRECTORY) &&
+        	!want_file && has_sha1_pack(sha1, NULL))
+		return 0;
