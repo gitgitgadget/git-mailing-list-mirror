@@ -2,75 +2,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Getting new branches from remote repo.
-Date: Sun, 12 Nov 2006 20:49:33 -0800
-Message-ID: <7v8xigar36.fsf@assigned-by-dhcp.cox.net>
-References: <6e1787fe0611122033p49671e13xf5b7f95beeba8b06@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: git-add fails after file type change
+Date: Sat, 16 Dec 2006 19:31:29 +0100
+Organization: At home
+Message-ID: <em1e1v$lse$1@sea.gmane.org>
+References: <458437E0.1050501@midwinter.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Mon, 13 Nov 2006 04:49:55 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Transfer-Encoding: 7Bit
+NNTP-Posting-Date: Sat, 16 Dec 2006 18:32:03 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <6e1787fe0611122033p49671e13xf5b7f95beeba8b06@mail.gmail.com>
-	(Alexander Litvinov's message of "Mon, 13 Nov 2006 10:33:52 +0600")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 42
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-25-107.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31288>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GjTlX-0006KM-6C for gcvg-git@gmane.org; Mon, 13 Nov
- 2006 05:49:51 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34630>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GveKB-0007We-49 for gcvg-git@gmane.org; Sat, 16 Dec
+ 2006 19:31:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753891AbWKMEtk (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 12 Nov 2006
- 23:49:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753918AbWKMEtk
- (ORCPT <rfc822;git-outgoing>); Sun, 12 Nov 2006 23:49:40 -0500
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:58270 "EHLO
- fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP id S1753891AbWKMEtj
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 12 Nov 2006 23:49:39 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao02.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061113044939.SMFN97.fed1rmmtao02.cox.net@fed1rmimpo01.cox.net>; Sun, 12
- Nov 2006 23:49:39 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id m4pD1V00Q1kojtg0000000; Sun, 12 Nov 2006
- 23:49:13 -0500
-To: "Alexander Litvinov" <litvinov2004@gmail.com>
+ S1751171AbWLPSbv (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 16 Dec 2006
+ 13:31:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751755AbWLPSbv
+ (ORCPT <rfc822;git-outgoing>); Sat, 16 Dec 2006 13:31:51 -0500
+Received: from main.gmane.org ([80.91.229.2]:46110 "EHLO ciao.gmane.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1751171AbWLPSbu
+ (ORCPT <rfc822;git@vger.kernel.org>); Sat, 16 Dec 2006 13:31:50 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1GveK0-0002Uq-DS for git@vger.kernel.org; Sat, 16 Dec 2006 19:31:44 +0100
+Received: from host-81-190-25-107.torun.mm.pl ([81.190.25.107]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Sat, 16 Dec 2006 19:31:44 +0100
+Received: from jnareb by host-81-190-25-107.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Sat, 16 Dec 2006
+ 19:31:44 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-"Alexander Litvinov" <litvinov2004@gmail.com> writes:
+Steven Grimm wrote:
 
-> I have a trouble I don't know how to solve. When I am cloning remote
-> repo I automatically get all it's branches stored at my repo (they are
-> listed at .git/remotes/origin). When someone adds new branch(es) to
-> remote repo git pull (git fetch) does not automatically add them to my
-> repo. I have a tool to list all remote branches (git ls-remote --heads
-> origin) but I can't find how to add interesting (or all) branches to
-> by repo.
+> In the course of experimenting with using git for my snapshot backups, I 
+> ran into what looks like a bug in git-add: it croaks when it tries to 
+> add a file whose type has changed, specifically when a directory gets 
+> moved and a symbolic link is put in the old location pointing to the new 
+> one. Here's a simple test case:
+> 
+> $ git init-db
+> defaulting to local storage area
+> $ mkdir dir
+> $ echo foo > dir/file
+> $ git add .
+> $ git commit -m "initial commit" -a
+> Committing initial tree f4bc9c50d08b041f5e096fa68e243c34170f1cd8
+>  create mode 100644 dir/file
+> $ mv dir dir.real
+> $ ln -s dir.real dir
+> $ git add .
+> fatal: unable to add dir to index
 
-After finding out $that_new_branch's name, add either
+Works if you use "git mv dir dir.real".
 
-	Pull: refs/heads/$that_new_branch:refs/heads/$that_new_branch
+$ git init-db
+defaulting to local storage area
+$ mkdir dir
+$ echo foo > dir/file
+$ git add .
+$ git commit -m "initial commit" -a
+Committing initial tree f4bc9c50d08b041f5e096fa68e243c34170f1cd8
+$ git mv dir dir.real
+$ ln -s dir.real dir
+$ git add .
+$ git commit -m "second commit" -a
+$ git ls-tree HEAD
+120000 blob e05f72eddb14362b836c3612c13d441b097a065a    dir
+040000 tree 4a1c03029e7407c0afe9fc0320b3258e188b115e    dir.real
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
 
-or if you are in "separate remote" school, then perhaps
-
-	Pull: refs/heads/$that_new_branch:refs/remotes/origin/$that_new_branch
-
-to .git/remotes/origin and running git fetch would give you what
-you want, I think.
-
-> By the way, how can I clone remote repo created by cloning another
-> repo using git clone --use-separate-remotes ? Even git ls-remote
-> --heads origin does not show all branches taken from that another
-> repo.
-
-Well, the point of "separate remote" is not to pollute local
-heads/ namespace with refs that merely track remote repository,
-so if you say "ls-remote --heads" you would not see them.  They
-are not "heads" in that repository.
-
-You would still see them if you say "ls-remote" without --heads.
