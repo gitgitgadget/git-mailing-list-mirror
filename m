@@ -1,113 +1,66 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [PATCH 1/1] Bypass expensive content comparsion during rename detection.
-Date: Thu, 14 Dec 2006 06:50:54 -0500
-Message-ID: <20061214115054.GJ1747@spearce.org>
-References: <20061214100746.GA31191@spearce.org> <Pine.LNX.4.63.0612141151220.3635@wbgn013.biozentrum.uni-wuerzburg.de> <20061214110858.GE1747@spearce.org> <Pine.LNX.4.63.0612141214440.3635@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: git-fetch fails with error code 128
+Date: Sat, 16 Dec 2006 13:29:56 +0000
+Message-ID: <200612161329.57605.andyparkins@gmail.com>
+References: <200612142308.45376.andyparkins@gmail.com> <7vy7p8omdh.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0612151706150.18171@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 14 Dec 2006 11:51:08 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Sat, 16 Dec 2006 13:32:55 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=Rx7r0TheCEciKN/T85iUTN6bn62yjwmE78R8+A5JcFtBXHHpKy0ZkHzcSMcbO2d40SKmW8OWCIQZgR2l1w7RdB10dlymimJNH+I2NRdz/56sgcG4Rkqgqk9QfN6WckiqkX9+5YzZeix636pXGsX4DANI7ld5s/2DU3qYXvpscEM=
+User-Agent: KMail/1.9.5
+In-Reply-To: <Pine.LNX.4.64.0612151706150.18171@xanadu.home>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0612141214440.3635@wbgn013.biozentrum.uni-wuerzburg.de>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34323>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34615>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gup79-0008LX-8v for gcvg-git@gmane.org; Thu, 14 Dec
- 2006 12:51:03 +0100
+ esmtp (Exim 4.50) id 1GvZei-000490-6y for gcvg-git@gmane.org; Sat, 16 Dec
+ 2006 14:32:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932636AbWLNLvA (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
- 06:51:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932642AbWLNLu7
- (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 06:50:59 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:36902 "EHLO
- corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S932636AbWLNLu7 (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006
- 06:50:59 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1Gup6y-0000RR-BI; Thu, 14 Dec 2006 06:50:52 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- 6444A20FB65; Thu, 14 Dec 2006 06:50:54 -0500 (EST)
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+ S1753668AbWLPNcp (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 16 Dec 2006
+ 08:32:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753700AbWLPNcp
+ (ORCPT <rfc822;git-outgoing>); Sat, 16 Dec 2006 08:32:45 -0500
+Received: from ug-out-1314.google.com ([66.249.92.170]:34857 "EHLO
+ ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1753668AbWLPNco (ORCPT <rfc822;git@vger.kernel.org>); Sat, 16 Dec
+ 2006 08:32:44 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so1084601uga for
+ <git@vger.kernel.org>; Sat, 16 Dec 2006 05:32:43 -0800 (PST)
+Received: by 10.66.244.11 with SMTP id r11mr1710100ugh.1166275963377; Sat, 16
+ Dec 2006 05:32:43 -0800 (PST)
+Received: from grissom.internal.parkins.org.uk ( [84.201.153.164]) by
+ mx.google.com with ESMTP id u6sm5992953uge.2006.12.16.05.32.42; Sat, 16 Dec
+ 2006 05:32:42 -0800 (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> Hi,
-> 
-> On Thu, 14 Dec 2006, Shawn Pearce wrote:
-> 
-> > My first version of the patch had the hash comparsion right after we 
-> > called diff_populate_filespec to get the size data.  But then I realized 
-> > that very often the sizes will be different and the src->size != 
-> > dst->size comparsion will tend to be true most of the time, thus saving 
-> > us a (relatively) expensive hash comparsion, which we know must fail 
-> > anyway if the sizes differed.
-> 
-> Ah! I misunderstood. Since the call to diff_populate_filespec was not 
-> visible in the hunk, I erroneously assumed that you meant to _check_ the 
-> sizes before checking the hashes.
-> 
-> But your explanation makes lots of sense to me. May I request a short 
-> comment above the new code, like "let diff_populate_filespec() do its 
-> thing since we need the filesize later on anyway, and having that, do the 
-> cheaper filesize check before the more expensive hashcmp()"?
+On Friday 2006, December 15 22:13, Nicolas Pitre wrote:
 
--- 8> --
-Bypass expensive content comparsion during rename detection.
+> And since patch-delta is really simple, it doesn't have many reasons for
+> returning NULL: either the object store on either the remote or local
+> side is corrupted in which case a git-fsck-objects --full should catch
+> that, or the system ran out of memory.
 
-When comparing file contents during the second loop through a rename
-detection attempt we can skip the expensive byte-by-byte comparsion
-if both source and destination files have valid SHA1 values.  This
-improves performance by avoiding either an expensive open/mmap to
-read the working tree copy, or an expensive inflate of a blob object.
+It's not conclusive, but the system its failing on has more memory than the 
+system it is working on.
 
-Unfortunately we still have to at least initialize the sizes of the
-source and destination files even if the SHA1 values don't match.
-Failing to initialize the sizes causes a number of test cases to fail
-and start reporting different copy/rename behavior than was expected.
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- diffcore-rename.c |    9 +++++++++
- 1 files changed, 9 insertions(+), 0 deletions(-)
+Andy
 
-diff --git a/diffcore-rename.c b/diffcore-rename.c
-index 57a74b6..f7748ce 100644
---- a/diffcore-rename.c
-+++ b/diffcore-rename.c
-@@ -109,6 +109,15 @@ static int is_exact_match(struct diff_filespec *src,
- 		return 0;
- 	if (src->size != dst->size)
- 		return 0;
-+	/* Although we can avoid a byte-by-byte comparsion by checking
-+	 * hashes we needed to allow diff_populate_filespec to fill in
-+	 * the size members, as we need that later on to correctly do
-+	 * rename and copy detection.  Not filling in size before we
-+	 * return back when contents_too is true causes all sorts of
-+	 * havoc (been there, done that, lets not try it again).
-+	 */
-+	if (src->sha1_valid && dst->sha1_valid)
-+	    return !hashcmp(src->sha1, dst->sha1);
- 	if (diff_populate_filespec(src, 0) || diff_populate_filespec(dst, 0))
- 		return 0;
- 	if (src->size == dst->size &&
 -- 
-1.4.4.2.g72f5
+Dr Andrew Parkins, M Eng (Hons), AMIEE
