@@ -1,80 +1,72 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH 0/2] Making "git commit" to mean "git commit -a".
-Date: Thu, 30 Nov 2006 17:37:25 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0611301736340.9647@xanadu.home>
-References: <7virgzuf38.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0611282322320.9647@xanadu.home>
- <7vr6vmsnly.fsf@assigned-by-dhcp.cox.net> <87ejrlvn7r.wl%cworth@cworth.org>
- <7vodqpn3t4.fsf@assigned-by-dhcp.cox.net>
- <7vk61dn2yj.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0611300310520.30004@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0611291859070.3513@woody.osdl.org> <456EBBE7.8030404@op5.se>
- <Pine.LNX.4.64.0611300749560.3513@woody.osdl.org>
- <20061130164046.GB17715@thunk.org>
- <Pine.LNX.4.64.0611300903080.3513@woody.osdl.org>
- <Pine.LNX.4.64.0611301229290.9647@xanadu.home>
- <87irgwu6e6.wl%cworth@cworth.org> <87hcwgu5t1.wl%cworth@cworth.org>
- <Pine.LNX.4.64.0611301132350.3513@woody.osdl.org>
- <Pine.LNX.4.64.0611301521320.9647@xanadu.home>
- <Pine.LNX.4.64.0611301253380.3513@woody.osdl.org> <eknhjr$nce$1@sea.gmane.org>
- <878xhsty3t.wl%cworth@cworth.org>
- <Pine.LNX.4.63.0611302324370.30004@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: git-fetching from a big repository is slow
+Date: Sat, 16 Dec 2006 14:32:59 +0100
+Organization: Dewire
+Message-ID: <200612161433.00030.robin.rosenberg.lists@dewire.com>
+References: <20061214194636.GO1747@spearce.org> <20061214223813.GC26202@spearce.org> <loom.20061215T223909-156@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-NNTP-Posting-Date: Thu, 30 Nov 2006 22:37:32 +0000 (UTC)
-Cc: Carl Worth <cworth@cworth.org>, Jakub Narebski <jnareb@gmail.com>,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Sat, 16 Dec 2006 13:30:22 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-reply-to: <Pine.LNX.4.63.0611302324370.30004@wbgn013.biozentrum.uni-wuerzburg.de>
-X-X-Sender: nico@xanadu.home
+User-Agent: KMail/1.9.4
+In-Reply-To: <loom.20061215T223909-156@post.gmane.org>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new at dewire.com
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32820>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GpuX3-0007cK-Nl for gcvg-git@gmane.org; Thu, 30 Nov
- 2006 23:37:30 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34614>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GvZcG-0003w5-ER for gcvg-git@gmane.org; Sat, 16 Dec
+ 2006 14:30:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1031588AbWK3Wh1 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
- 17:37:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031590AbWK3Wh1
- (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 17:37:27 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:247 "EHLO
- relais.videotron.ca") by vger.kernel.org with ESMTP id S1031588AbWK3Wh0
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 17:37:26 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
- <0J9K006E7EUD4Q90@VL-MO-MR002.ip.videotron.ca> for git@vger.kernel.org; Thu,
- 30 Nov 2006 17:37:25 -0500 (EST)
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+ S1751735AbWLPNaM convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Sat, 16 Dec 2006 08:30:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751967AbWLPNaM
+ (ORCPT <rfc822;git-outgoing>); Sat, 16 Dec 2006 08:30:12 -0500
+Received: from [83.140.172.130] ([83.140.172.130]:12483 "EHLO
+ torino.dewire.com" rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with
+ ESMTP id S1751735AbWLPNaL convert rfc822-to-8bit (ORCPT
+ <rfc822;git@vger.kernel.org>); Sat, 16 Dec 2006 08:30:11 -0500
+Received: from localhost (localhost [127.0.0.1]) by torino.dewire.com
+ (Postfix) with ESMTP id 36FDE802658; Sat, 16 Dec 2006 14:26:11 +0100 (CET)
+Received: from torino.dewire.com ([127.0.0.1]) by localhost (torino
+ [127.0.0.1]) (amavisd-new, port 10024) with ESMTP id 17827-09; Sat, 16 Dec
+ 2006 14:26:10 +0100 (CET)
+Received: from [10.9.0.3] (unknown [10.9.0.3]) by torino.dewire.com (Postfix)
+ with ESMTP id DDC9B80019B; Sat, 16 Dec 2006 14:26:08 +0100 (CET)
+To: Pazu <pazu@pazu.com.br>
 Sender: git-owner@vger.kernel.org
 
-On Thu, 30 Nov 2006, Johannes Schindelin wrote:
+fredag 15 december 2006 22:49 skrev Pazu:
+> Shawn Pearce <spearce <at> spearce.org> writes:
+> > identical class file given the same input.  I've seen times where
+> > it doesn't thanks to the automatic serialVersionUID field being
+> > somewhat randomly generated.
+>
+> Probably offline, but=E2=80=A6 serialVersionUID isn't randomly genera=
+ted. It's
+> calculated using the types of fields in the class, recursively. The a=
+ctual
+> algorithm is quite arbitrary, but not random. The automatically gener=
+ated
+> serialVersionUID should change only if you add/remove class fields (e=
+ither
+> on the class itself, or to the class of nested objects).
 
-> Hi,
-> 
-> On Thu, 30 Nov 2006, Carl Worth wrote:
-> 
-> > It might even make sense to invent one more name for the case where
-> > the user wants to inform git that a file has been edited and that git
-> > should accept the new contents. It's the sort of "note that file is
-> > edited" operation that could be recommended to the user with "add; fix
-> > typo; commit" confusion.
-> 
-> I suggest "commit". How about this: after editing the file, you tell git 
-> that you finished editing it by doing
-> 
-> 	git commit the-edited-file.txt
-> 
-> Hmmm?
-
-Sure.  ;-)
-
+Different java compilers (e.g. SUN's javac and Eclipse) generate slipgh=
+tly=20
+different code for some cases, including somee synthetic member fields.=
+ that=20
+get involved in the UID calculation. Neither compiler is wrong. The jav=
+a=20
+specifications don't cover all cases.
 
