@@ -1,87 +1,74 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: [PATCH] Make git-commit cleverer - have it figure out whether it needs -a automatically
-Date: Thu, 30 Nov 2006 13:24:04 +0000
-Message-ID: <200611301324.04993.andyparkins@gmail.com>
-References: <ekmlar$ask$2@sea.gmane.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: What's in git.git (stable)
+Date: Fri, 15 Dec 2006 16:30:42 -0800
+Message-ID: <7v4prwn0lp.fsf@assigned-by-dhcp.cox.net>
+References: <7v4przfpir.fsf@assigned-by-dhcp.cox.net>
+	<eluhk3$pv7$1@sea.gmane.org> <7vhcvwomde.fsf@assigned-by-dhcp.cox.net>
+	<200612152348.17997.jnareb@gmail.com>
+	<Pine.LNX.4.63.0612160023340.3635@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7vac1on2oh.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0612160113090.3635@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 30 Nov 2006 13:24:22 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Sat, 16 Dec 2006 00:30:54 +0000 (UTC)
+Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <ekmlar$ask$2@sea.gmane.org>
-X-TUID: 1162e3952db52cf9
-X-UID: 178
-X-Length: 1704
-Content-Disposition: inline
-X-OriginalArrivalTime: 30 Nov 2006 13:25:48.0211 (UTC) FILETIME=[0C3F8830:01C71483]
+In-Reply-To: <Pine.LNX.4.63.0612160113090.3635@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Sat, 16 Dec 2006 01:14:02 +0100
+	(CET)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32742>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gpltg-0001uJ-66 for gcvg-git@gmane.org; Thu, 30 Nov
- 2006 14:24:16 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34580>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GvNRx-0007cH-GZ for gcvg-git@gmane.org; Sat, 16 Dec
+ 2006 01:30:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S936364AbWK3NYK (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 30 Nov 2006
- 08:24:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936392AbWK3NYK
- (ORCPT <rfc822;git-outgoing>); Thu, 30 Nov 2006 08:24:10 -0500
-Received: from mail.360visiontechnology.com ([194.70.53.226]:35548 "EHLO
- 369run02s.360vision.com") by vger.kernel.org with ESMTP id S936364AbWK3NYI
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 30 Nov 2006 08:24:08 -0500
-Received: from dvr.360vision.com ([192.189.1.24]) by 369run02s.360vision.com
- with Microsoft SMTPSVC(5.0.2195.6713); Thu, 30 Nov 2006 13:25:48 +0000
-Received: from localhost ([127.0.0.1]) by dvr.360vision.com with esmtp (Exim
- 3.36 #1 (Debian)) id 1GpltW-00054J-00 for <git@vger.kernel.org>; Thu, 30 Nov
- 2006 13:24:06 +0000
-To: git@vger.kernel.org
+ S1030485AbWLPAao (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 15 Dec 2006
+ 19:30:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030486AbWLPAao
+ (ORCPT <rfc822;git-outgoing>); Fri, 15 Dec 2006 19:30:44 -0500
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:46079 "EHLO
+ fed1rmmtao09.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1030485AbWLPAan (ORCPT <rfc822;git@vger.kernel.org>); Fri, 15 Dec 2006
+ 19:30:43 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao09.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061216003042.NZAU18767.fed1rmmtao09.cox.net@fed1rmimpo02.cox.net>; Fri, 15
+ Dec 2006 19:30:42 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id zCWu1V00A1kojtg0000000; Fri, 15 Dec 2006
+ 19:30:54 -0500
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-Raimund Bauer offered this suggestion (paraphrased):
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-"Maybe we could do git-commit -a  _only_ if the index matches HEAD, and
-otherwise keep current behavior?  So people who don't care about the
-index won't get tripped up, and when you do have a dirty index, you get
-told about it?"
+>> FWIW, I also read the list traffic through gmane news gateway.
+>
+> So, how do you tackle the problem Jakub evidently has, namely to reply to 
+> all the people who your reply refers to?
 
-Johannes Schindelin pointed out that this isn't the right thing to do for
-an --amend, so that is checked for.
+I do not "tackle".
 
-Additionally, it's probably not the right thing to do if any files are
-specified with "--only" or "--include", so they turn this behaviour off
-as well.
+I just tell Gnus to follow-up, which does not always do the
+right thing [*1*], and I just try to be careful and fix up To:
+and Cc: fields by hand as necessary.  The time spent on that on
+my part is _worth_ spending than inconveniencing others.
 
-I've also output a message as suggested by Andreas Ericsson.
+It's just a common courtesy, not "tackling".
 
-Signed-off-by: Andy Parkins <andyparkins@gmail.com>
----
- git-commit.sh |    8 ++++++++
- 1 files changed, 8 insertions(+), 0 deletions(-)
 
-diff --git a/git-commit.sh b/git-commit.sh
-index 81c3a0c..fabfeae 100755
---- a/git-commit.sh
-+++ b/git-commit.sh
-@@ -265,6 +265,14 @@ $1"
- done
- case "$edit_flag" in t) no_edit= ;; esac
- 
-+# Clever commit - if this commit would do nothing, then make it an "all"
-+# commit
-+if [ -z "$(git-diff-index --cached --name-only HEAD)" \
-+	-a -z "$amend" -a -z "$only" -a -z "$also" ]; then
-+	echo "Nothing to commit but changes in working tree. Assuming 'git commit -a'"
-+	all=t
-+fi
-+
- ################################################################
- # Sanity check options
- 
--- 
-1.4.4.1.g3ece-dirty
+[Footnote]
+
+*1* ... most likely because I haven't configured it to do the
+right thing, and/or the sender or the gateway puts a wrong
+Reply-To: or Mail-Followup-To: header and it ends up honoring
+them.
