@@ -1,97 +1,60 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [RFC] Submodules in GIT
-Date: Mon, 4 Dec 2006 21:33:12 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0612042053080.20138@iabervon.org>
-References: <20061130170625.GH18810@admingilde.org> <457061A7.2000102@b-i-t.de>
-  <Pine.LNX.4.64.0612011134080.3695@woody.osdl.org> 
- <200612012306.41410.Josef.Weidendorfer@gmx.de>  <Pine.LNX.4.64.0612011423100.3695@woody.osdl.org>
-  <4570AF8F.1000801@stephan-feder.de>  <Pine.LNX.4.64.0612011505190.3695@woody.osdl.org>
-  <4570BFA4.8070903@stephan-feder.de> <e7bda7770612021057mc9f3eb9q7fc047dd1b5c235f@mail.gmail.com>
- <Pine.LNX.4.64.0612021114270.3476@woody.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git-add fails after file type change
+Date: Sat, 16 Dec 2006 11:23:52 -0800
+Message-ID: <7vmz5nejav.fsf@assigned-by-dhcp.cox.net>
+References: <458437E0.1050501@midwinter.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Tue, 5 Dec 2006 02:33:21 +0000 (UTC)
-Cc: Torgil Svensson <torgil.svensson@gmail.com>,
-	sf-gmane@stephan-feder.de, sf <sf@b-i-t.de>, git@vger.kernel.org,
-	Martin Waitz <tali@admingilde.org>
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Sat, 16 Dec 2006 19:24:16 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <Pine.LNX.4.64.0612021114270.3476@woody.osdl.org>
+In-Reply-To: <458437E0.1050501@midwinter.com> (Steven Grimm's message of "Sat,
+	16 Dec 2006 10:16:00 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33286>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34635>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GrQ7S-0004NM-AN for gcvg-git@gmane.org; Tue, 05 Dec
- 2006 03:33:18 +0100
+ esmtp (Exim 4.50) id 1Gvf8k-0004Vr-Qg for gcvg-git@gmane.org; Sat, 16 Dec
+ 2006 20:24:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S968033AbWLECdP (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
- 21:33:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937277AbWLECdP
- (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 21:33:15 -0500
-Received: from iabervon.org ([66.92.72.58]:4087 "EHLO iabervon.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S937212AbWLECdO
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006 21:33:14 -0500
-Received: (qmail 8607 invoked by uid 1000); 4 Dec 2006 21:33:12 -0500
-Received: from localhost (sendmail-bs@127.0.0.1) by localhost with SMTP; 4
- Dec 2006 21:33:12 -0500
-To: Linus Torvalds <torvalds@osdl.org>
+ S1161406AbWLPTXy (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 16 Dec 2006
+ 14:23:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161407AbWLPTXy
+ (ORCPT <rfc822;git-outgoing>); Sat, 16 Dec 2006 14:23:54 -0500
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:46773 "EHLO
+ fed1rmmtao10.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1161406AbWLPTXx (ORCPT <rfc822;git@vger.kernel.org>); Sat, 16 Dec 2006
+ 14:23:53 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao10.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061216192352.YMQK20715.fed1rmmtao10.cox.net@fed1rmimpo02.cox.net>; Sat, 16
+ Dec 2006 14:23:52 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id zXQ41V00a1kojtg0000000; Sat, 16 Dec 2006
+ 14:24:05 -0500
+To: Steven Grimm <koreth@midwinter.com>
 Sender: git-owner@vger.kernel.org
 
-On Sat, 2 Dec 2006, Linus Torvalds wrote:
+Steven Grimm <koreth@midwinter.com> writes:
 
-> So that's where I come from. And maybe I'm totally wrong. I'd like to hear 
-> what people who actually _use_ submodules think.
+> $ mkdir dir
+> $ echo foo > dir/file
+> $ git add .
+> ...
+> Committing initial tree f4bc9c50d08b041f5e096fa68e243c34170f1cd8
+> create mode 100644 dir/file
+> $ mv dir dir.real
+> $ ln -s dir.real dir
+> $ git add .
+> fatal: unable to add dir to index
 
-I think you'd rather hear from people who _would_ use submodules; I've 
-worked on a number of projects that would have benefitted from that 
-general functionality, but nobody trusted the implementation enough to 
-actually use it.
-
-At my work, we're doing a bunch of stuff with microcontrollers. We've got 
-about a dozen different boards with microcontrollers, and each of them has 
-different firmware. We also have a bunch of code that can go on any of the 
-boards.
-
-The way things are organized currently is that each board has its own 
-project, and there's a "common-micro" project with the common code. This 
-sort of works, but it means that when you change things in common-micro, 
-you never know what effect this will have on boards other than the one 
-you're actually working on. What I'd like to have is that each project has 
-a "common-micro" subdirectory, and changes to each of these can be merged 
-into each other, but that doesn't happen automaticly, and each board's 
-revisions include the common-micro revision they were created with.
-
-A few notes: 
-
-I'd never work on common-micro in isolation. Nothing in there even 
-compiles by itself, because the compiler needs to know the target 
-microcontroller type, which depends on the board it's for. It only makes 
-sense to prepare a new revision of "common-micro" in the context of some 
-particular board, at least if you want to test it at all.
-
-I'd sometimes want to include temporary hacks in the common-micro for a 
-particular board, when things are late and I need to change some library 
-behavior in a way that I know works for the board I'm working on, but I 
-don't have time to think about all of the other boards (each of which is 
-special in some way).
-
-I'd often make some change that I know improves the cleanliness of 
-common-micro, but which requires changes to every board to compensate. I 
-don't want to make all of the changes at once; I'll update each board 
-appropriately the next time I work on it. But, of course, until I update 
-each board, that board needs to keep using the version of common-micro 
-without the changes.
-
-I don't want to have repository states where stuff doesn't work, which 
-means I can't do it as one big tree; I need to be able to make a commit 
-with board1 and a common-micro change without having a version of board2 
-that would use the changed common-micro, because I haven't come up with a 
-board2 version that works with it yet.
-
-	-Daniel
+You didn't tell the index to remove dir/file.  You cannot have
+dir and dir/file at the same time.
