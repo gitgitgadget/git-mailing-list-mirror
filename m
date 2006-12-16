@@ -1,86 +1,109 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: StGit metadata grabbing with git clone
-Date: Thu, 23 Nov 2006 00:56:14 +0100
-Organization: Dewire
-Message-ID: <200611230056.15795.robin.rosenberg.lists@dewire.com>
-References: <87ac2jwutu.fsf@neumann.lab.ossystems.com.br> <200611222129.24369.robin.rosenberg.lists@dewire.com> <20061122213800.GM7201@pasky.or.cz>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 22 Nov 2006 23:54:42 +0000 (UTC)
-Cc: Otavio Salvador <otavio@debian.org>, git@vger.kernel.org
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [RFC/PATCH (take 3)] gitweb: Add some mod_perl specific support
+Date: Sat, 16 Dec 2006 17:12:55 +0100
+Message-ID: <11662855752162-git-send-email-jnareb@gmail.com>
+References: <11662174851575-git-send-email-jnareb@gmail.com>
+NNTP-Posting-Date: Sat, 16 Dec 2006 16:13:19 +0000 (UTC)
+Cc: Jakub Narebski <jnareb@gmail.com>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: KMail/1.9.4
-In-Reply-To: <20061122213800.GM7201@pasky.or.cz>
-Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new at dewire.com
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=JSzke7rXr7S6psBm3pWABtdKSHfcB9KAn+4uLOCzYw6jRGJ9s0O5AYqzzHA0LBEtg6Qu2H+VjUntzbcz/5u7igt80xUcginrereUBfZnTcuTbFBbk/mje7gljSHhMMlRwih8wwSAi+m1Lg4GhEpDpRIDz/KasPMANrBqO0ZoMYk=
+X-Mailer: git-send-email 1.4.4.1
+In-Reply-To: <11662174851575-git-send-email-jnareb@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32111>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gn1v9-0001hT-Ai for gcvg-git@gmane.org; Thu, 23 Nov
- 2006 00:54:27 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34623>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gvc9y-000298-Hl for gcvg-git@gmane.org; Sat, 16 Dec
+ 2006 17:13:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1757192AbWKVXyY (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 22 Nov 2006
- 18:54:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757193AbWKVXyY
- (ORCPT <rfc822;git-outgoing>); Wed, 22 Nov 2006 18:54:24 -0500
-Received: from [83.140.172.130] ([83.140.172.130]:11882 "EHLO
- torino.dewire.com") by vger.kernel.org with ESMTP id S1757192AbWKVXyX (ORCPT
- <rfc822;git@vger.kernel.org>); Wed, 22 Nov 2006 18:54:23 -0500
-Received: from localhost (localhost [127.0.0.1]) by torino.dewire.com
- (Postfix) with ESMTP id 9F348800784; Thu, 23 Nov 2006 00:50:44 +0100 (CET)
-Received: from torino.dewire.com ([127.0.0.1]) by localhost (torino
- [127.0.0.1]) (amavisd-new, port 10024) with ESMTP id 11952-02; Thu, 23 Nov
- 2006 00:50:44 +0100 (CET)
-Received: from [10.9.0.2] (unknown [10.9.0.2]) by torino.dewire.com (Postfix)
- with ESMTP id 3C0228003E1; Thu, 23 Nov 2006 00:50:42 +0100 (CET)
-To: Petr Baudis <pasky@suse.cz>
+ S1161086AbWLPQNL (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 16 Dec 2006
+ 11:13:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161130AbWLPQNL
+ (ORCPT <rfc822;git-outgoing>); Sat, 16 Dec 2006 11:13:11 -0500
+Received: from ug-out-1314.google.com ([66.249.92.172]:62937 "EHLO
+ ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1161086AbWLPQNK (ORCPT <rfc822;git@vger.kernel.org>); Sat, 16 Dec
+ 2006 11:13:10 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so1112192uga for
+ <git@vger.kernel.org>; Sat, 16 Dec 2006 08:13:08 -0800 (PST)
+Received: by 10.67.121.15 with SMTP id y15mr2066062ugm.1166285588674; Sat, 16
+ Dec 2006 08:13:08 -0800 (PST)
+Received: from roke.D-201 ( [81.190.25.107]) by mx.google.com with ESMTP id
+ u1sm6198351uge.2006.12.16.08.13.06; Sat, 16 Dec 2006 08:13:08 -0800 (PST)
+Received: from roke.D-201 (localhost.localdomain [127.0.0.1]) by roke.D-201
+ (8.13.4/8.13.4) with ESMTP id kBGGCvvU025975; Sat, 16 Dec 2006 17:12:59 +0100
+Received: (from jnareb@localhost) by roke.D-201 (8.13.4/8.13.4/Submit) id
+ kBGGCtcq025974; Sat, 16 Dec 2006 17:12:55 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-onsdag 22 november 2006 22:38 skrev Petr Baudis:
-> On Wed, Nov 22, 2006 at 09:29:24PM CET, Robin Rosenberg wrote:
-> > onsdag 22 november 2006 13:05 skrev Otavio Salvador:
-> > > Hello,
-> > >
-> > > I'm a happy user of stgit together with git to maintain a patch queue
-> > > while I or the company team is working on patches that will be send
-> > > for merging. Both works great but we're having troubles when we try to
-> > > clone a stgit repository.
-> > >
-> > > When I clone the repository it grab the source but it loses the
-> > > metadata. I would like to grab those too. Does anybody has a solution
-> > > or a trick how I can do that?
-> >
-> > You can copy the repo using rsync or scp instead of git-clone or use stg
-> > uncommit after the regular clone.
->
-> How do you sync them then?
+Add $r variable which holds Apache2::RequestRec if script is run under
+mod_perl (if $ENV{MOD_PERL} is defined). It is used as argument to
+constructor of CGI object (needs CGI module version at least 2.93).
+It is needed for further mod_perl support, for example adding
+headers using Apache2::RequestRec methods instead of making Apache
+to have to parse headers (to add it's own HTTP headers like Server:
+header).
 
-1) Don't. You're supposed to share stgit patches via email.
+Following advice from CGI(3pm) man page, precompile all CGI routines
+for mod_perl.
 
-2) Want to mess try anyway?
+All this makes gitweb slightly faster under mod_perl (436 +/-  23.9 ms
+for summary of git.git before, 429 +/- 12.0 ms after, according to
+'ab -n 10 -k "http://localhost/perl/gitweb/gitweb.cgi?p=git.git"').
 
-At first I was thinking NO!,  but then again, it might be "interesting" to try 
-it. 
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+The idea is to have gitweb run under CGI and under mod_perl 1.0 and 2.0
+without modifications, but making use of mod_perl features which make script
+faster, like for example adding headers via mod_perl API and not via parsing
+headers by Apache.  In the future the plan is to be able to run gitweb under
+not only current ModPerl::Registry (or Apache::Registry in mod_perl 1.0) but
+also as a mod_perl handler, and as a FastCGI script using CGI::Fast.
 
-You can publish the state of a branch using git push. This will look like the 
-pu branch in the official Git repo, i.e. a branch whose list of commits get 
-changed completely, rather than being appended to. This could be considered 
-sane, ie. you publish the current state of your work.
+Current portion of mod_perl cpecific additions is mod_perl version agnostic,
+and avoids loading any mod_perl Perl modules.
 
-You can also pull from a stgitted branch. Still sane, if you wan't to look at 
-somebody else's work.
+I'd like to have it (and further mod_perl patches) reviewed by someone
+better versed in mod_perl.
 
-I mentioned uncommit. I'm not sure that was a wise suggestion. If you wan't to 
-push and pull changes. don't uncommit incomming changes and don't pretend to 
-work on the same patch and you'll probably be just fine. .....  
+ gitweb/gitweb.perl |    9 ++++++++-
+ 1 files changed, 8 insertions(+), 1 deletions(-)
 
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 902c514..f834c64 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -18,11 +18,18 @@ use File::Find qw();
+ use File::Basename qw(basename);
+ binmode STDOUT, ':utf8';
+ 
+-our $cgi = new CGI;
++# mod_perl request
++my $r;
++$r = shift @_ if $ENV{MOD_PERL};
++
++our $cgi = new CGI($r);
+ our $version = "++GIT_VERSION++";
+ our $my_url = $cgi->url();
+ our $my_uri = $cgi->url(-absolute => 1);
+ 
++# speeding up mod_perl and FastCGI (later)
++$cgi->compile() if $r;
++
+ # core git executable to use
+ # this can just be "git" if your webserver has a sensible PATH
+ our $GIT = "++GIT_BINDIR++/git";
+-- 
+1.4.4.1
