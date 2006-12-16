@@ -1,68 +1,111 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] git-merge: make it usable as the first class UI
-Date: Mon, 20 Nov 2006 11:52:30 -0800
-Message-ID: <7vr6vx28w1.fsf@assigned-by-dhcp.cox.net>
-References: <junkio@cox.net>
-	<200611201700.kAKH0msM012002@laptop13.inf.utfsm.cl>
+From: "Torgil Svensson" <torgil.svensson@gmail.com>
+Subject: Re: [RFC] Submodules in GIT
+Date: Sat, 16 Dec 2006 09:40:53 +0100
+Message-ID: <e7bda7770612160040v1a769153p909a8cd40e5ea991@mail.gmail.com>
+References: <20061130170625.GH18810@admingilde.org>
+	 <200612150007.44331.Josef.Weidendorfer@gmx.de>
+	 <e7bda7770612150943j71a7362bmb509cea3b7756003@mail.gmail.com>
+	 <200612152242.50472.Josef.Weidendorfer@gmx.de>
+	 <e7bda7770612151543o39c9d233q91ea643a134196d3@mail.gmail.com>
+	 <e7bda7770612151713k418434e6gd8d565e49a766477@mail.gmail.com>
+	 <e7bda7770612151720w2e65fe83s9942e1ec1f7092a2@mail.gmail.com>
+	 <elviac$63t$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Mon, 20 Nov 2006 19:53:00 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Sat, 16 Dec 2006 08:41:11 +0000 (UTC)
+Cc: "Josef Weidendorfer" <Josef.Weidendorfer@gmx.de>,
+	"R. Steve McKown" <rsmckown@yahoo.com>, git@vger.kernel.org,
+	"Linus Torvalds" <torvalds@osdl.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <200611201700.kAKH0msM012002@laptop13.inf.utfsm.cl> (Horst H. von
-	Brand's message of "Mon, 20 Nov 2006 14:00:48 -0300")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=ULJC7tHS27Hfd/U7qOuPnQvEnIBOU0WiZi2+vraT/ixNrjEYVslaACF4wnzEtuynIzZULn3dlVHVZmiteSxEAsBXl9lOwAIgNBw3Q9mrsXoRMDp+vylawf5QvTbafVF76lzuPHoN4gp2/Le6MF4v/3b0AKY3frSovrdZhn7IWos=
+In-Reply-To: <elviac$63t$1@sea.gmane.org>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31933>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GmFC2-0000y4-6H for gcvg-git@gmane.org; Mon, 20 Nov
- 2006 20:52:38 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34594>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GvV6M-0006WQ-SA for gcvg-git@gmane.org; Sat, 16 Dec
+ 2006 09:41:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S966594AbWKTTwc (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 20 Nov 2006
- 14:52:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966596AbWKTTwc
- (ORCPT <rfc822;git-outgoing>); Mon, 20 Nov 2006 14:52:32 -0500
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:36569 "EHLO
- fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP id S966594AbWKTTwc
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 20 Nov 2006 14:52:32 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao02.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061120195231.EPUO97.fed1rmmtao02.cox.net@fed1rmimpo01.cox.net>; Mon, 20
- Nov 2006 14:52:31 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id p7s21V00H1kojtg0000000; Mon, 20 Nov 2006
- 14:52:02 -0500
-To: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
+ S1030793AbWLPIk4 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 16 Dec 2006
+ 03:40:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030792AbWLPIk4
+ (ORCPT <rfc822;git-outgoing>); Sat, 16 Dec 2006 03:40:56 -0500
+Received: from nf-out-0910.google.com ([64.233.182.188]:42222 "EHLO
+ nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1030791AbWLPIkz (ORCPT <rfc822;git@vger.kernel.org>); Sat, 16 Dec
+ 2006 03:40:55 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so1361527nfa for
+ <git@vger.kernel.org>; Sat, 16 Dec 2006 00:40:54 -0800 (PST)
+Received: by 10.49.55.18 with SMTP id h18mr1159548nfk.1166258453299; Sat, 16
+ Dec 2006 00:40:53 -0800 (PST)
+Received: by 10.49.28.8 with HTTP; Sat, 16 Dec 2006 00:40:53 -0800 (PST)
+To: "Jakub Narebski" <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-"Horst H. von Brand" <vonbrand@inf.utfsm.cl> writes:
-
->> Most notably, $commit above can be any committish, so you can
->> say for example:
->> 
->> 	git merge js/shortlog~2
->> 
->> to merge early part of a topic branch without merging the rest
->> of it.
+On 12/16/06, Jakub Narebski <jnareb@gmail.com> wrote:
+> > 100644 blob <sha1 of blob>  >
+> >>
+> >
+> > Sorry, I was sloppy and forgot the names:
+> >
+> > 100644 blob <sha1 of blob>    README
+> > 100644 blob <sha1 of blob>    REPORTING-BUGS
+> > 100644 link <sha1 of blob>     <sha1 of commit>   AUTHORS
+> > 040000 tree <sha1 of tree>    arch
+> > 040000 tree <sha1 of tree>    block
+> > 040000 link <sha1 of tree>     <sha1 of commit>   misc
+> >
+> > Now it doesn't looks like trees/blobs anymore so maybe a link object
+> > is handy:
+> >  README
+> > 100644 blob <sha1 of blob>    REPORTING-BUGS
+> > 100644 link <sha1 of link>      AUTHORS
+> > 040000 tree <sha1 of tree>    arch
+> > 040000 tree <sha1 of tree>    block
+> > 040000 link <sha1 of link>     misc
+> >
+> > link-object:
+> > <sha1 of commit>
+> > <sha1 of tree/blob>
 >
-> "Early part", i.e., branch js/shortlog up to js/shortlog~2 or just that one
-> commit?
-
-"Early part up to that commit" -- this is not a cherry pick.
-
->> A custom merge message can be given with the new --message=<msg>
->> parameter.  The message is prepended in front of the usual
->> "Merge ..." message autogenerated with fmt-merge-message.
+> What do you need <sha1 of tree/blob> for in link-object? Wouldn't you
+> use usually the sha1 of top tree of a commit, which is uniquely defined
+> by commit object, so you need only <ahs1 of commit>?
 >
-> Why not -m too (consistency!)?
 
-That form also is accepted, I think.
+1. "Sparse" repository's - In my example, I want to cherry-pick
+header-files or binary-files from different projects without fetching
+all, potentially huge, submodules in their entirety. Imaging having X,
+kernel, gcc, gtk and libc6 as sub-projects and you really only care
+about some header files.
+
+2. Super-module directory-hierarchy independent from submodules.
+Super-project want to have the header-files and binaries it's own way.
+This also gives version controlled file-collections, the "release
+case" in my example - collecting different binaries and header-files
+from different submodules together in a new directory-structure, add
+some documentation and configuration files and get the whole thing
+under strong version-control down to the beginning of time for each
+little component.
+
+3. Super-module development independent of submodules - If we have the
+tree/blob-object with all it contents in the database many
+git-operations can act as the link (commit) wasn't there since we have
+access to all relevant data to work with. This makes it easy to clone
+the super-project and work on it seamlessly without having to care
+about submodules or mapping up submodule repository's (unless you want
+to modify the links or the data underneath it of course).
 
