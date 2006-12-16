@@ -1,53 +1,70 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: [PATCH] Documentation tutorial.txt: Teach the reader about git commit -a -s
-Date: Mon, 20 Nov 2006 17:52:20 -0500
-Message-ID: <20061120225220.GG12285@fieldses.org>
-References: <4d8e3fd30611201430l6135814yc89f4abdb9044340@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: spurious .sp in manpages
+Date: Sat, 16 Dec 2006 04:08:28 -0800
+Message-ID: <7v1wn0hwlf.fsf@assigned-by-dhcp.cox.net>
+References: <20061216095242.GC13144@socrates.priv>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Mon, 20 Nov 2006 22:53:06 +0000 (UTC)
-Cc: Git Mailing List <git@vger.kernel.org>
+NNTP-Posting-Date: Sat, 16 Dec 2006 12:08:35 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <4d8e3fd30611201430l6135814yc89f4abdb9044340@mail.gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <20061216095242.GC13144@socrates.priv> (Tom Prince's message of
+	"Sat, 16 Dec 2006 02:52:42 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31950>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GmI01-0002Nd-4p for gcvg-git@gmane.org; Mon, 20 Nov
- 2006 23:52:26 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34610>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GvYLA-0005XV-W5 for gcvg-git@gmane.org; Sat, 16 Dec
+ 2006 13:08:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S966669AbWKTWwW (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 20 Nov 2006
- 17:52:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966450AbWKTWwV
- (ORCPT <rfc822;git-outgoing>); Mon, 20 Nov 2006 17:52:21 -0500
-Received: from mail.fieldses.org ([66.93.2.214]:45767 "EHLO
- pickle.fieldses.org") by vger.kernel.org with ESMTP id S966671AbWKTWwV (ORCPT
- <rfc822;git@vger.kernel.org>); Mon, 20 Nov 2006 17:52:21 -0500
-Received: from bfields by pickle.fieldses.org with local (Exim 4.63)
- (envelope-from <bfields@fieldses.org>) id 1GmHzw-0006OP-2l; Mon, 20 Nov 2006
- 17:52:20 -0500
-To: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
+ S1030885AbWLPMI3 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 16 Dec 2006
+ 07:08:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030887AbWLPMI3
+ (ORCPT <rfc822;git-outgoing>); Sat, 16 Dec 2006 07:08:29 -0500
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:58327 "EHLO
+ fed1rmmtao10.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1030885AbWLPMI3 (ORCPT <rfc822;git@vger.kernel.org>); Sat, 16 Dec 2006
+ 07:08:29 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao10.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061216120828.PRZK20715.fed1rmmtao10.cox.net@fed1rmimpo01.cox.net>; Sat, 16
+ Dec 2006 07:08:28 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id zQ7o1V00D1kojtg0000000; Sat, 16 Dec 2006
+ 07:07:49 -0500
+To: Tom Prince <tom.prince@ualberta.net>
 Sender: git-owner@vger.kernel.org
 
-On Mon, Nov 20, 2006 at 11:30:56PM +0100, Paolo Ciarrocchi wrote:
-> I think it's important to mention, in the collaboration section,
-> that is possible to use the -s option to add the Signed-off-by
-> line
-> 
-> Signed-off-by: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
+Tom Prince <tom.prince@ualberta.net> writes:
 
-The -s option is easy to learn later, and isn't really necessary for
-basic project management; I'd rather leave it out of the first tutorial.
+> On Wed, Dec 13, 2006 at 12:58:28AM -0800, Junio C Hamano wrote:
+>> This is just a random hack to work around problems people seem
+>> to be seeing in manpage backend of xmlto (it appears we are
+>> getting ".sp" at the end of line without line break).
+>> 
+>> Could people test this out?
+>> 
+>
+> This fixes the files available in the man branch of git.git.
 
-(In fact, the best place for it may be in SubmittingPatches or
-equivalent for the particular project.)
+Thanks.
 
+> P.S. I have this fragment in config.mak to install the manpages without
+> asciidoc. 
+>
+> man:
+> 	git-archive --format=tar --prefix=${prefix}/man/ man | tar xP
+> install: man
+>
+> .PHONY: man
+
+It's tempting to take it, but that is chicken and egg for me
+;-).
