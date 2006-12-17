@@ -1,74 +1,73 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: merlyn@stonehenge.com (Randal L. Schwartz)
-Subject: Re: git-pull from git.git - no remote ref for pu or next?
-Date: 12 Dec 2006 08:47:08 -0800
-Message-ID: <86y7pd6oz7.fsf@blue.stonehenge.com>
-References: <863b7l83o9.fsf@blue.stonehenge.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] git-diff: don't add trailing blanks (i.e., do what GNU diff -u now does)
+Date: Sun, 17 Dec 2006 21:54:41 +0100
+Organization: At home
+Message-ID: <em4all$b2c$1@sea.gmane.org>
+References: <87y7p6nwsh.fsf@rho.meyering.net> <Pine.LNX.4.64.0612171200290.3479@woody.osdl.org> <7vtzzu5lp1.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 12 Dec 2006 16:47:51 +0000 (UTC)
+Content-Transfer-Encoding: 7Bit
+NNTP-Posting-Date: Sun, 17 Dec 2006 20:52:21 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-x-mayan-date: Long count = 12.19.13.15.19; tzolkin = 13 Cauac; haab = 12 Mac
-In-Reply-To: <863b7l83o9.fsf@blue.stonehenge.com>
-Original-Lines: 29
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 23
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-25-107.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34110>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34708>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GuAnB-0008Sw-Td for gcvg-git@gmane.org; Tue, 12 Dec
- 2006 17:47:46 +0100
+ esmtp (Exim 4.50) id 1Gw2zb-0004g3-Cs for gcvg-git@gmane.org; Sun, 17 Dec
+ 2006 21:52:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932209AbWLLQrK (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 12 Dec 2006
- 11:47:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751513AbWLLQrK
- (ORCPT <rfc822;git-outgoing>); Tue, 12 Dec 2006 11:47:10 -0500
-Received: from blue.stonehenge.com ([209.223.236.162]:33361 "EHLO
- blue.stonehenge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1751487AbWLLQrJ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 12 Dec 2006
- 11:47:09 -0500
-Received: from localhost (localhost [127.0.0.1]) by blue.stonehenge.com
- (Postfix) with ESMTP id C4E528F5F1 for <git@vger.kernel.org>; Tue, 12 Dec
- 2006 08:47:08 -0800 (PST)
-Received: from blue.stonehenge.com ([127.0.0.1]) by localhost
- (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024) with LMTP id
- 08478-01-79 for <git@vger.kernel.org>; Tue, 12 Dec 2006 08:47:08 -0800 (PST)
-Received: by blue.stonehenge.com (Postfix, from userid 1001) id 2490F8F613;
- Tue, 12 Dec 2006 08:47:08 -0800 (PST)
+ S1751822AbWLQUwQ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 17 Dec 2006
+ 15:52:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751834AbWLQUwQ
+ (ORCPT <rfc822;git-outgoing>); Sun, 17 Dec 2006 15:52:16 -0500
+Received: from main.gmane.org ([80.91.229.2]:44187 "EHLO ciao.gmane.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1751822AbWLQUwQ
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 17 Dec 2006 15:52:16 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1Gw2zV-0004Hs-7S for git@vger.kernel.org; Sun, 17 Dec 2006 21:52:13 +0100
+Received: from host-81-190-25-107.torun.mm.pl ([81.190.25.107]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Sun, 17 Dec 2006 21:52:13 +0100
+Received: from jnareb by host-81-190-25-107.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Sun, 17 Dec 2006
+ 21:52:13 +0100
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
->>>>> "Randal" == Randal L Schwartz <merlyn@stonehenge.com> writes:
+Junio C Hamano wrote:
 
-Randal> I just got this on this morning's git-fetch:
+> Linus Torvalds <torvalds@osdl.org> writes:
+> 
+>> On Sun, 17 Dec 2006, Jim Meyering wrote:
+>>>
+>>> You may recall that GNU diff -u changed recently so that it no
+>>> longer outputs any trailing space unless the input data has it.
+>>
+>> I still consider that to be a bug in GNU "diff -u".
+>>
+>> We work around that bug when applying patches, but I don't think we should 
+>> replicate it.
+> 
+> Me neither.
 
-Randal>     error: no such remote ref refs/heads/pu
-Randal>     error: no such remote ref refs/heads/next
-Randal>     Fetch failure: git://git.kernel.org/pub/scm/git/git.git
-
-Randal> Here's my remotes/origin:
-
-Randal>     URL: git://git.kernel.org/pub/scm/git/git.git
-Randal>     Pull: master:origin
-Randal>     Pull: man:man
-Randal>     Pull: html:html
-Randal>     Pull: +pu:pu
-Randal>     Pull: +next:next
-
-And then it mysteriously fixed itself a few minutes later.
-Is there some sort of publishing failure, or intermittent race condition?
-
-Or is this something unique to git.git?
-
-Or just bad electron spin or something?
+Perhaps with --gnu-diff-compatibility then? 
 
 -- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
+
