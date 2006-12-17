@@ -1,87 +1,190 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 4/n] gitweb: Secure against commit-ish/tree-ish with the same name as path
-Date: Thu, 2 Nov 2006 09:49:33 +0100
-Message-ID: <200611020949.34276.jnareb@gmail.com>
-References: <200610301953.01875.jnareb@gmail.com> <200611010140.56834.jnareb@gmail.com> <7vac3awtj4.fsf@assigned-by-dhcp.cox.net>
+From: Martin Waitz <tali@admingilde.org>
+Subject: Re: Subprojects tasks
+Date: Sun, 17 Dec 2006 14:48:48 +0100
+Message-ID: <20061217134848.GH12411@admingilde.org>
+References: <7vzm9nelob.fsf@assigned-by-dhcp.cox.net> <200612170101.09615.Josef.Weidendorfer@gmx.de> <20061217114546.GG12411@admingilde.org> <200612171401.10585.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Thu, 2 Nov 2006 08:49:21 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="64j1qyTOoGvYcHb1"
+NNTP-Posting-Date: Sun, 17 Dec 2006 13:48:59 +0000 (UTC)
+Cc: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>,
+	git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=EQtGE37bsZYiyuv/CcR6nJKke7gdqyeUHE7bkAjFS9j2s4nkB2DbI3rL/UNQOJdNUyUrpXDKs6uJJSRksfqaS2s2A938ionjEvq+RTJjR09NuIjtXU2eIyHhaHUlxw+fMbww4nFvu6EWcAwAO/zQMM9zRFQ7iFzkBbG9LF3rW7I=
-User-Agent: KMail/1.9.3
-In-Reply-To: <7vac3awtj4.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
+In-Reply-To: <200612171401.10585.jnareb@gmail.com>
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
+User-Agent: Mutt/1.5.9i
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30692>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GfYGF-0001Ve-Nj for gcvg-git@gmane.org; Thu, 02 Nov
- 2006 09:49:20 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34688>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GvwNp-0004pU-Vb for gcvg-git@gmane.org; Sun, 17 Dec
+ 2006 14:48:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752742AbWKBItQ convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Thu, 2 Nov 2006 03:49:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752743AbWKBItQ
- (ORCPT <rfc822;git-outgoing>); Thu, 2 Nov 2006 03:49:16 -0500
-Received: from ug-out-1314.google.com ([66.249.92.175]:32035 "EHLO
- ug-out-1314.google.com") by vger.kernel.org with ESMTP id S1752742AbWKBItP
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 2 Nov 2006 03:49:15 -0500
-Received: by ug-out-1314.google.com with SMTP id m3so66059ugc for
- <git@vger.kernel.org>; Thu, 02 Nov 2006 00:49:14 -0800 (PST)
-Received: by 10.67.22.2 with SMTP id z2mr231207ugi.1162457354400; Thu, 02 Nov
- 2006 00:49:14 -0800 (PST)
-Received: from host-81-190-18-116.torun.mm.pl ( [81.190.18.116]) by
- mx.google.com with ESMTP id 20sm1650428uga.2006.11.02.00.49.14; Thu, 02 Nov
- 2006 00:49:14 -0800 (PST)
-To: Junio C Hamano <junkio@cox.net>
+ S1752619AbWLQNsu (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 17 Dec 2006
+ 08:48:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752620AbWLQNsu
+ (ORCPT <rfc822;git-outgoing>); Sun, 17 Dec 2006 08:48:50 -0500
+Received: from mail.admingilde.org ([213.95.32.147]:33551 "EHLO
+ mail.admingilde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1752619AbWLQNsu (ORCPT <rfc822;git@vger.kernel.org>); Sun, 17 Dec 2006
+ 08:48:50 -0500
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1) id
+ 1GvwNk-0004WT-De; Sun, 17 Dec 2006 14:48:48 +0100
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano wrote:
 
-> I'll be pushing out a "master" update
-> sometime today, and do not expect to be able to get to your "n
-> turned out to be ten" series, so it might be worthwhile to
-> reroll the remaining bits that you still care about on top of
-> what I push out tonight to make sure we are on the same page.
+--64j1qyTOoGvYcHb1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I'll wait a while if there are any comments (for example on formatting
-used), and resend cleaned-up series.
+hoi :)
 
-> Preferably:
->
-> =A0- you should avoid making a series out of more-or-less
-> =A0 =A0unrelated things;
+On Sun, Dec 17, 2006 at 02:01:09PM +0100, Jakub Narebski wrote:
+> Well, in the .gitlink proposal you could specify GIT_DIR for checkout,
+> or separately: GIT_OBJECT_DIRECTORY, GIT_INDEX_FILE, GIT_REFS_DIRECTORY
+> (does not exist yet), GIT_HEAD_FILE (does not exist yet, and I suppose
+> it wouldn't be easy to implement it). By the way, that's why I'm for
+> .gitlink name for the file, not .git -- this way .gitlink can "shadow"
+> what's in .git, for example specifying in a smart way where to search
+> (where to find) object database, but HEAD and index would be stored
+> together with the checked out directory in .git
 
-Well, truly unrelated were adding "--" to secure against ref with
-the same name as path in the repository (but it was discovered
-during testing the series) and replacing ' ' with '&nbsp;' in blob
-and diff body for non-CSS aware browsers.
+What about .git/link or something?
+(Obviously without the capability to change GIT_DIR)
 
-Better quoting and unquoting was needed for better commitdiff view.
-Ah, well, perhaps it is unrelated.
+> By the way, I'm rather partial to supermodule following HEAD in submodule,
+> not specified branch. First, I think it is easier from implementation
+> point of view: you don't have to remember which branch supermodule should
+> take submodule commits from; and this cannot be fixed branch name like
+> 'master'. For example 'maint' branch of supermodule could track 'maint'
+> branch of submodule, 'master' branch of supermodule track 'master'
+> branch of submodule, 'next' branch of supermodule tranck 'master' (!)
+> branch of submodule, 'pu' branch of supermodule track 'next' (!) branch
+> of submodule.=20
 
-Securing against filenames with LF for example has sense only if
-there can be filenames with LF, and earlier gitweb unquoted it halfway
-leaving '\n' instead of LF.
+The version tracked by the supermodule is completely independent from
+any branches you define in your submodule.
+It is of course possible to use different versions of your submodule in
+different branches of your supermodule.  But the supermodule does not
+know the name of these branches.
 
-> =A0- if you are doing related things in one series, do not send
-> =A0 =A0half-baked early parts out until you are finished and are
-> =A0 =A0confident with it.
+In the setup you described a git-checkout in the supermodule would have
+to switch to a different branch in the submodule, depending on the
+branchname which would have to be stored in the supermodule.
+This a lot more complex.
 
-I've send series early to get some comments, but I see while I got
-some comments on "take 1" and "take 2" on _single_ "new commitdiff"
-RFC patch, I got comments only about half-baked '&iquot;' idea.
+Your scenario can also be solved in this way:
+
+	cd supermodule
+	(cd sub && git-reset --hard origin/master)
+	git add sub && git commit -m "track master of sub"
+	git checkout next
+	(cd sub && git-reset --hard origin/master)
+	git add sub && git commit -m "track master of sub"
+	git checkout pu
+	(cd sub && git-reset --hard origin/next)
+	git add sub && git commit -m "track next of sub"
+	git checkout maint
+	(cd sub && git-reset --hard origin/maint)
+	git add sub && git commit -m "track maint of sub"
+
+You only store a link to the commit of the current submodule version,
+just like a normal ref.  The reference stored in the supermodule really
+is equivalent to a normal ref, just that it is stored and updated
+slightly different to a normal one.
+
+So whenever you checkout a different version of the supermodule, the
+submodule ref automatically gets the correct version.  In the example
+above, when you checkout supermodules pu, your submodules branch will be
+reset to its origin/next (to be more precise: to the commit which was at
+the tip of origin/next at the time it was stored in the supermodule).
+
+The fact that the reference to the current submodule commit does not
+only exist in the supermodule tree but also as a physical ref in the
+submodule is very similiar to normal files: you have one version stored
+in the object database, one in the index and one as a real file in the
+working directory (and this working file is the equivalent of the
+submodule ref which is stored in submodule/.git/refs/whatever)
+
+The reference in the submodule is just a way to be able to work on
+the submodule.  Because well, refs are the kind of thing that is changed
+by a commit.  And these submodule commits are exactly the kind of work
+you want to store in the supermodule.  So the equivalent to a working
+file is not the HEAD of the submodule, but the ref which gets all
+changes which are intended for the supermodule.
+
+The fact that the submodule repository still supports other branches has
+nothing to do with submodule support.  These branches are totally
+independent from the supermodule.
+
+> Second, if you want to do some independent work on the module not related
+> to work on submodule you should really clone (clone -l -s) submodule
+> and work in separate checkout;
+
+Yes.
+But I really like the possibility to switch one module to a branch which
+is not tracked by the parent, because it perhaps contains some debugging
+code which is needed to debug some other submodule.  You can't move it
+out because you need the common build infrastructure but you don't want
+to branch the entire toplevel project because you don't want your
+debugging changes to ever become visible at that level.
+
+So by switching to a different branch you can effectivly say: this is
+temporary, not meant for the superproject.
+If you change your mind later you can always merge the submodule branch
+back to master.
+
+> the complaint that with tracking HEAD you can check-in wrong version
+> of submodule to supermodule commit doesn't hold, because you still
+> would have problem that _tree_ of supermodule would have wrong version
+> of submodule.
+
+Sorry, I don't understand you here.
+
+> And moving to using single defined branch of submodule brings
+> multitude of other problems: for example you might usually track
+> 'master' version of submodule, but for a short time need to track
+> 'next' branch because it has functionality you need; and another time
+> you need to move to 'maint' branch or even your own branch because
+> 'master' version breaks something in supermodule.
+
+That is no problem.
+The supermodule can track whatever _version_ it wants.  You can set
+it to any version which is available in the repository, including all
+those well known external branches.
+But the supermodule itself does not know (and should not know) about
+"maint" / "next" / whatever branch names in the submodule.
+
+> Hmmm... I wonder how planned allowing to checking out tags, non-head
+> branches (e.g. tracking/remote branches) and arbitrary commits but
+> forbidding committing when HEAD is not a refs/heads/ branch would
+> affect submodules / subprojects...
+
+It only affects submodules if you really track HEAD directly.
+
 --=20
-Jakub Narebski
+Martin Waitz
+
+--64j1qyTOoGvYcHb1
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFFhUrAj/Eaxd/oD7IRAiuJAJ9pEfM2CFzQzwP1QLUr/4OMOd0oCwCfZ5Xs
+SRNejnVoBusAHAq43lng32o=
+=59pj
+-----END PGP SIGNATURE-----
+
