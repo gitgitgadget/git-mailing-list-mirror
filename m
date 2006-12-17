@@ -1,76 +1,99 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Clemens Koller <clemens.koller@anagramm.de>
-Subject: Re: Bugreport: core-tutorial example outdated?
-Date: Wed, 25 Oct 2006 21:08:22 +0200
-Message-ID: <453FB626.7020702@anagramm.de>
-References: <453F9BA5.3020104@anagramm.de> <Pine.LNX.4.63.0610251923020.3286@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Subprojects tasks
+Date: Sun, 17 Dec 2006 15:29:02 +0100
+Message-ID: <200612171529.03165.jnareb@gmail.com>
+References: <7vzm9nelob.fsf@assigned-by-dhcp.cox.net> <200612171401.10585.jnareb@gmail.com> <20061217134848.GH12411@admingilde.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain;
+  charset="iso-8859-2"
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 25 Oct 2006 19:08:37 +0000 (UTC)
-Cc: git@vger.kernel.org
+NNTP-Posting-Date: Sun, 17 Dec 2006 14:26:55 +0000 (UTC)
+Cc: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>,
+	git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Mozilla Thunderbird 1.0.2 (Windows/20050317)
-X-Accept-Language: en-us, en
-In-Reply-To: <Pine.LNX.4.63.0610251923020.3286@wbgn013.biozentrum.uni-wuerzburg.de>
-X-Provags-ID: kundenserver.de abuse@kundenserver.de login:224ad0fd4f2efe95e6ec4f0a3ca8a73c
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=ZNmCbZa9T+Ft2QVRBmCci3VJNnvYG9ewfZklWU7v5EgbgmQWftyGD9xRDbK3CKFszmkNEPvHfHdlWkUG9po16LyZnc/RtTjbb0z90UZo6DA8PTIODs/K6+y5Qqjd/uoPvCIJwnPfEGnVLSBa1DwQvQPHbGY5hEBu/zzH9L6N8VI=
+User-Agent: KMail/1.9.3
+In-Reply-To: <20061217134848.GH12411@admingilde.org>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30093>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gco71-0003FL-34 for gcvg-git@gmane.org; Wed, 25 Oct
- 2006 21:08:27 +0200
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34689>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GvwyT-0001KR-Gl for gcvg-git@gmane.org; Sun, 17 Dec
+ 2006 15:26:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1161371AbWJYTIX (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 25 Oct 2006
- 15:08:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161374AbWJYTIX
- (ORCPT <rfc822;git-outgoing>); Wed, 25 Oct 2006 15:08:23 -0400
-Received: from moutng.kundenserver.de ([212.227.126.177]:41715 "EHLO
- moutng.kundenserver.de") by vger.kernel.org with ESMTP id S1161371AbWJYTIW
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 25 Oct 2006 15:08:22 -0400
-Received: from [84.154.119.220] (helo=[192.168.1.10]) by
- mrelayeu.kundenserver.de (node=mrelayeu4) with ESMTP (Nemesis), id
- 0ML21M-1Gco6u3iA3-0006wJ; Wed, 25 Oct 2006 21:08:21 +0200
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+ S1752699AbWLQO0d (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 17 Dec 2006
+ 09:26:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752701AbWLQO0d
+ (ORCPT <rfc822;git-outgoing>); Sun, 17 Dec 2006 09:26:33 -0500
+Received: from ug-out-1314.google.com ([66.249.92.175]:27946 "EHLO
+ ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1752699AbWLQO0c (ORCPT <rfc822;git@vger.kernel.org>); Sun, 17 Dec
+ 2006 09:26:32 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so1269401uga for
+ <git@vger.kernel.org>; Sun, 17 Dec 2006 06:26:31 -0800 (PST)
+Received: by 10.67.20.3 with SMTP id x3mr4789422ugi.1166365591293; Sun, 17
+ Dec 2006 06:26:31 -0800 (PST)
+Received: from host-81-190-25-107.torun.mm.pl ( [81.190.25.107]) by
+ mx.google.com with ESMTP id u6sm7631215uge.2006.12.17.06.26.30; Sun, 17 Dec
+ 2006 06:26:31 -0800 (PST)
+To: Martin Waitz <tali@admingilde.org>
 Sender: git-owner@vger.kernel.org
 
-Hello, Dscho!
+Martin Waitz wrote:
+> On Sun, Dec 17, 2006 at 02:01:09PM +0100, Jakub Narebski wrote:
 
->>I just studied
->>http://www.kernel.org/pub/software/scm/git/docs/core-tutorial.html
+>> Well, in the .gitlink proposal you could specify GIT_DIR for checkout,
+>> or separately: GIT_OBJECT_DIRECTORY, GIT_INDEX_FILE, GIT_REFS_DIRECTORY
+>> (does not exist yet), GIT_HEAD_FILE (does not exist yet, and I suppose
+>> it wouldn't be easy to implement it). By the way, that's why I'm for
+>> .gitlink name for the file, not .git -- this way .gitlink can "shadow"
+>> what's in .git, for example specifying in a smart way where to search
+>> (where to find) object database, but HEAD and index would be stored
+>> together with the checked out directory in .git
 > 
-> Did you actually add a file with the content "Hello World\n"? If not, you 
-> should not be surprised.
+> What about .git/link or something?
+> (Obviously without the capability to change GIT_DIR)
 
-Argh... yes, I even adopted my numbers to my case, but I just didn't
-include the /55/... 2 letter folder name in the /55/7db03de997 object names... :-(
+Well, the .gitlink proposal at it is now (by Josef) serves both as a way
+to implement lightweight checkout (i.e. having additional working dir to
+some repository, or having working dir separate from bare repository),
+and as a way to have "smart" submodules (which you can move and rename)
+in submodules/subproject support.
 
-$ ls .git/objects/??/*
-.git/objects/55/7db03de997c86a4a028e1ebd3a1ceb225be238
-.git/objects/f2/4c74a2e500f5ee1332c86b94199f52b1d1d962
-$ git-cat-file -t 7db03de997           <- wrong!
-fatal: Not a valid object name 7db03de997
-$ git-cat-file -t 557db03de            <- correct!
-blob
+Besides, I'd rather either use config file for this (core.link or
+core.git_dir), or use .git/GIT_DIR.
+ 
+>> By the way, I'm rather partial to supermodule following HEAD in submodule,
+>> not specified branch. First, I think it is easier from implementation
+>> point of view: you don't have to remember which branch supermodule should
+>> take submodule commits from; and this cannot be fixed branch name like
+>> 'master'. 
+[...]
+> In the setup you described a git-checkout in the supermodule would have
+> to switch to a different branch in the submodule, depending on the
+> branchname which would have to be stored in the supermodule.
+> This a lot more complex.
 
-Jup, those little details... once you don't stick to any tags.
-Fine! Thanks! The tutorial, too!
+O.K. Now I understand why you prefer specified branch to HEAD.
+I have forgot that checkout must update submodule ref, and if we track HEAD
+we would have to remember the branch it pointed to.
 
-Best greets,
+By the way, should this ref be in submodule, or in supermodule, e.g. in
+refs/modules/<name>/HEAD? And there is a problam _what_ branch should
+be that.
 
-Clemens Koller
-_______________________________
-R&D Imaging Devices
-Anagramm GmbH
-Rupert-Mayer-Str. 45/1
-81379 Muenchen
-Germany
-
-http://www.anagramm.de
-Phone: +49-89-741518-50
+Both approaches have advantages and disadvantages...
+-- 
+Jakub Narebski
