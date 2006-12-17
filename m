@@ -1,88 +1,77 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: git blame [was: git and bzr]
-Date: Wed, 29 Nov 2006 08:39:23 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0611290830010.3395@woody.osdl.org>
-References: <45357CC3.4040507@utoronto.ca> <20061021130111.GL75501@over-yonder.net>
- <453F2FF8.2080903@op5.se> <200610251146.06116.jnareb@gmail.com>
- <a7e835d40610250308v5d577482m139742e7fe1db185@mail.gmail.com>
- <87slhcz8zh.wl%cworth@cworth.org> <a7e835d40610260152k658aeaf0hb900cb63870c04e4@mail.gmail.com>
- <7vu01ro20b.fsf@assigned-by-dhcp.cox.net> <a7e835d40610260257r5f05ea4gc934f1c1cc267977@mail.gmail.com>
- <20061026101038.GA13310@coredump.intra.peff.net> <877iyne4dm.fsf@alplog.fr>
- <Pine.LNX.4.64.0610260753090.3962@g5.osdl.org> <456B7C6A.80104@webdrake.net>
- <Pine.LNX.4.64.0611271834090.30076@woody.osdl.org> <456CEF31.8080600@webdrake.net>
- <Pine.LNX.4.64.0611281906520.3395@woody.osdl.org> <456D7A76.3080605@webdrake.net>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: Can git be tweaked to work cross-platform, on FAT32?
+Date: Sun, 17 Dec 2006 23:21:04 +1300
+Message-ID: <46a038f90612170221u4c3b5c2asef378d3d4e159ba7@mail.gmail.com>
+References: <0MKwpI-1GuWVF2znk-0006fC@mrelayeu.kundenserver.de>
+	 <46a038f90612132155rc987a9cs6a4fa33dd4c882c6@mail.gmail.com>
+	 <0ML25U-1GvWC81sjR-0001UB@mrelayeu.kundenserver.de>
+	 <Pine.LNX.4.63.0612161227510.3635@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Wed, 29 Nov 2006 16:40:28 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Sun, 17 Dec 2006 10:21:17 +0000 (UTC)
+Cc: "Florian v. Savigny" <lorian@fsavigny.de>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <456D7A76.3080605@webdrake.net>
-X-MIMEDefang-Filter: osdl$Revision: 1.161 $
-X-Scanned-By: MIMEDefang 2.36
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=NY9Y4s6oi2wAoerNmvVrTw0Q9IvmeT0262EfMriw/Ba/6VAhnacJxO+gsSShEepAS0rHeiMRCQ9WXP5hxk5FCl/7PgHbzk2fs9oxjz535P1ZwVPkNLCU+PW3uOIRRwuXKV6bcNVfUHMQpKJ+4JeLGqyIHRWDaL/rpAynjBfYleg=
+In-Reply-To: <Pine.LNX.4.63.0612161227510.3635@wbgn013.biozentrum.uni-wuerzburg.de>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32651>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GpST4-000294-Np for gcvg-git@gmane.org; Wed, 29 Nov
- 2006 17:39:31 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34683>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gvt8p-0003ry-Ql for gcvg-git@gmane.org; Sun, 17 Dec
+ 2006 11:21:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S967457AbWK2Qj1 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 29 Nov 2006
- 11:39:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935852AbWK2Qj1
- (ORCPT <rfc822;git-outgoing>); Wed, 29 Nov 2006 11:39:27 -0500
-Received: from smtp.osdl.org ([65.172.181.25]:30091 "EHLO smtp.osdl.org") by
- vger.kernel.org with ESMTP id S935847AbWK2Qj1 (ORCPT
- <rfc822;git@vger.kernel.org>); Wed, 29 Nov 2006 11:39:27 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
- smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kATGdOix007726
- (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Wed, 29
- Nov 2006 08:39:25 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
- shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kATGdNLD000800; Wed, 29 Nov
- 2006 08:39:24 -0800
-To: Joseph Wakeling <joseph.wakeling@webdrake.net>
+ S1752362AbWLQKVH (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 17 Dec 2006
+ 05:21:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752364AbWLQKVH
+ (ORCPT <rfc822;git-outgoing>); Sun, 17 Dec 2006 05:21:07 -0500
+Received: from nf-out-0910.google.com ([64.233.182.189]:28752 "EHLO
+ nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1752363AbWLQKVG (ORCPT <rfc822;git@vger.kernel.org>); Sun, 17 Dec
+ 2006 05:21:06 -0500
+Received: by nf-out-0910.google.com with SMTP id k26so1639750nfc for
+ <git@vger.kernel.org>; Sun, 17 Dec 2006 02:21:04 -0800 (PST)
+Received: by 10.49.90.18 with SMTP id s18mr3031242nfl.1166350864604; Sun, 17
+ Dec 2006 02:21:04 -0800 (PST)
+Received: by 10.49.60.1 with HTTP; Sun, 17 Dec 2006 02:21:04 -0800 (PST)
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-
-
-On Wed, 29 Nov 2006, Joseph Wakeling wrote:
+On 12/17/06, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > 3. ad Johannes: This does sound quite simple and straightforward. If I
+> >    got it right, it would involve having one repository on a, say,
+> >    ext2 partition to work with under Linux, and one on a FAT32
+> >    partition to work with under Windows, and syncing the two after
+> >    booting (fetching from FAT32) and before shutting down (pushing to
+> >    FAT32) Linux.
 >
-> Linus Torvalds wrote:
-> > Now, with small changes, "git blame -C" will just ignore copies entirely, 
-> 
-> Obvious when I think about it, otherwise every 'int i;' in the kernel
-> would have a huge blame list ... :-O
+> This is how I'd do it.
 
-Indeed. We didn't do that heuristic originally, and the most common 
-sequence that was "blamed" on being copied from somewhere else was 
-something like the string
+And I concur - I had only introduced Samba to the conversation because
+I thought you were talking about several computers. If you are
+dual-booting on one machine, I'd do as above.
 
-	"<tab><tab><tab>}<nl><tab><tab>}<nl><tab>}<nl>"
+Note that under windows you can use ext2 -- haven't used it, and don't
+know how cygwin behaves with it, but it may be *just* what you need to
+avoid case sensitivity problems and have symlink support.
 
-which is obviously very common in C, especially when you have coding 
-conventions and people follow them ;)
+    http://sourceforge.net/projects/ext2fsd
 
-> > them in the second commit (but if I instead create the second file in the 
-> > second commit, and do the movement in the third commit, git blame -C works 
-> > again ;).
-> 
-> Actually my setup was like the latter situation you describe, so blame
-> was probably working fine and just ignoring the small change.  But
-> serendipity is a wonderful thing. :-)
+    http://www.fs-driver.org/
 
-Yeah. As it turns out, the bug was really that "git blame" ended up just 
-not showing the filenames (that it had followed correctly), because it had 
-decided (incorrectly) that they weren't interesting because it all came 
-from the same commit, and it had already shown that commit (just not that 
-_file_ in that commit).
+cheers,
 
-So it's fixed now, and probably would never trigger except for the stupid 
-special case that was "let's just show an example of this" ;)
+
 
