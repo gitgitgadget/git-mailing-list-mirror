@@ -1,190 +1,62 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH] Remove uncontested renamed files during merge.
-Date: Wed, 13 Dec 2006 04:55:40 -0500
-Message-ID: <20061213095540.GA25001@spearce.org>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: Re: [BUG] making docs blows up in b1bfcae438ad:git-merge-file.txt
+Date: 17 Dec 2006 10:20:33 -0800
+Message-ID: <86ac1mcrke.fsf@blue.stonehenge.com>
+References: <86y7p7cssx.fsf@blue.stonehenge.com> <4584857D.703@gmail.com>
+	<20061216234717.15ECE8F5A8@blue.stonehenge.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 13 Dec 2006 09:56:09 +0000 (UTC)
-Cc: git@vger.kernel.org
+NNTP-Posting-Date: Sun, 17 Dec 2006 18:20:47 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Greylist: delayed 8343 seconds by postgrey-1.27 at vger.kernel.org; Wed, 13 Dec 2006 04:55:46 EST
-Content-Disposition: inline
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+x-mayan-date: Long count = 12.19.13.16.4; tzolkin = 5 Kan; haab = 17 Mac
+In-Reply-To: <20061216234717.15ECE8F5A8@blue.stonehenge.com>
+Original-Lines: 16
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34197>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34697>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GuQqJ-0000ln-Jx for gcvg-git@gmane.org; Wed, 13 Dec
- 2006 10:56:03 +0100
+ esmtp (Exim 4.50) id 1Gw0cn-0002Rp-RB for gcvg-git@gmane.org; Sun, 17 Dec
+ 2006 19:20:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932644AbWLMJzr (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 13 Dec 2006
- 04:55:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964784AbWLMJzr
- (ORCPT <rfc822;git-outgoing>); Wed, 13 Dec 2006 04:55:47 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:57575 "EHLO
- corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S932644AbWLMJzq (ORCPT <rfc822;git@vger.kernel.org>); Wed, 13 Dec 2006
- 04:55:46 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1GuQpw-0004Hh-2H; Wed, 13 Dec 2006 04:55:40 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- 57B1320FB6E; Wed, 13 Dec 2006 04:55:40 -0500 (EST)
-To: Junio C Hamano <junkio@cox.net>, Johannes Schindelin
- <Johannes.Schindelin@gmx.de>
+ S932303AbWLQSUe (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 17 Dec 2006
+ 13:20:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932306AbWLQSUe
+ (ORCPT <rfc822;git-outgoing>); Sun, 17 Dec 2006 13:20:34 -0500
+Received: from blue.stonehenge.com ([209.223.236.162]:8955 "EHLO
+ blue.stonehenge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S932303AbWLQSUe (ORCPT <rfc822;git@vger.kernel.org>); Sun, 17 Dec 2006
+ 13:20:34 -0500
+Received: from localhost (localhost [127.0.0.1]) by blue.stonehenge.com
+ (Postfix) with ESMTP id 8AADB8F3AC for <git@vger.kernel.org>; Sun, 17 Dec
+ 2006 10:20:33 -0800 (PST)
+Received: from blue.stonehenge.com ([127.0.0.1]) by localhost
+ (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024) with LMTP id
+ 28123-01-54 for <git@vger.kernel.org>; Sun, 17 Dec 2006 10:20:33 -0800 (PST)
+Received: by blue.stonehenge.com (Postfix, from userid 1001) id 1CE728F692;
+ Sun, 17 Dec 2006 10:20:33 -0800 (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Prior to 65ac6e9c3f47807cb603af07a6a9e1a43bc119ae we deleted a
-file from the working directory during a merge if the file existed
-in the working directory before the merge started but was renamed
-by the branch which is being merged in.  This broke in 65ac63 as
-git-merge-recursive did not actually update the working directory
-on this uncontested rename case.
+>>>>> "The" == The Answering Machine <merlyn.'s-answering.machine@stonehenge.com> writes:
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
+The> I've received your mail.
+The> Your message has been queued, and will probably be read within 48 hours.
 
- The same repository that spawned my 'Bug in merge-recursive in
- virtual commit corner case' thread discovered this feature of
- git-merge-recursive today.
+Naughty SCM sent email addressed to me personally, but added a reply-to
+of the list.
 
- I'm not sure this is the right way to fix the issue, but it does
- appear to fix the problem and passes both the existing tests and
- this new one.
+My answering machine behaved perfectly in this case, but SCM triggered it
+badly. :(
 
- merge-recursive.c        |    2 +-
- t/t6024-merge-rename2.sh |   97 ++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 98 insertions(+), 1 deletions(-)
-
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 9d53bcd..741d17f 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -873,7 +873,7 @@ static int process_renames(struct path_list *a_renames,
- 			struct diff_filespec src_other, dst_other;
- 			int try_merge, stage = a_renames == renames1 ? 3: 2;
- 
--			remove_file(1, ren1_src, 1);
-+			remove_file(1, ren1_src, 0);
- 
- 			hashcpy(src_other.sha1, ren1->src_entry->stages[stage].sha);
- 			src_other.mode = ren1->src_entry->stages[stage].mode;
-diff --git a/t/t6024-merge-rename2.sh b/t/t6024-merge-rename2.sh
-new file mode 100755
-index 0000000..69c66cf
---- /dev/null
-+++ b/t/t6024-merge-rename2.sh
-@@ -0,0 +1,97 @@
-+#!/bin/sh
-+
-+test_description='Merge-recursive merging renames'
-+. ./test-lib.sh
-+
-+test_expect_success setup \
-+'
-+cat >A <<\EOF &&
-+a aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-+b bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-+c cccccccccccccccccccccccccccccccccccccccccccccccc
-+d dddddddddddddddddddddddddddddddddddddddddddddddd
-+e eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-+f ffffffffffffffffffffffffffffffffffffffffffffffff
-+g gggggggggggggggggggggggggggggggggggggggggggggggg
-+h hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
-+i iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
-+j jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
-+k kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
-+l llllllllllllllllllllllllllllllllllllllllllllllll
-+m mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
-+n nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
-+o oooooooooooooooooooooooooooooooooooooooooooooooo
-+EOF
-+
-+cat >M <<\EOF &&
-+A AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-+B BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-+C CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
-+D DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
-+E EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-+F FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-+G GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
-+H HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
-+I IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
-+J JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ
-+K KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK
-+L LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
-+M MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
-+N NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-+O OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
-+EOF
-+
-+git add A M &&
-+git commit -m "initial has A and M" &&
-+git branch white &&
-+git branch red &&
-+
-+git checkout white &&
-+sed -e "/^g /s/.*/g : white changes a line/" <A >B &&
-+sed -e "/^G /s/.*/G : colored branch changes a line/" <M >N &&
-+rm -f A M &&
-+git update-index --add --remove A B M N &&
-+git commit -m "white renames A->B, M->N" &&
-+
-+git checkout red &&
-+echo created by red >R &&
-+git update-index --add R &&
-+git commit -m "red creates R" &&
-+
-+git checkout master'
-+
-+# This test broke in 65ac6e9c3f47807cb603af07a6a9e1a43bc119ae
-+test_expect_success 'merge white into red (A->B,M->N)' \
-+'
-+	git checkout -b red-white red &&
-+	git merge white &&
-+	git write-tree >/dev/null || {
-+		echo "BAD: merge did not complete"
-+		return 1
-+	}
-+
-+	test -f B || {
-+		echo "BAD: B does not exist in working directory"
-+		return 1
-+	}
-+	test -f N || {
-+		echo "BAD: N does not exist in working directory"
-+		return 1
-+	}
-+	test -f R || {
-+		echo "BAD: R does not exist in working directory"
-+		return 1
-+	}
-+
-+	test -f A && {
-+		echo "BAD: A still exists in working directory"
-+		return 1
-+	}
-+	test -f M && {
-+		echo "BAD: M still exists in working directory"
-+		return 1
-+	}
-+	return 0
-+'
-+
-+test_done
 -- 
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
