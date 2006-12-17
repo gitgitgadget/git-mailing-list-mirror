@@ -1,78 +1,86 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Add support to git-branch to show local and remote branches
-Date: Fri, 03 Nov 2006 04:08:53 -0800
-Message-ID: <7vhcxg91gq.fsf@assigned-by-dhcp.cox.net>
-References: <7v64dxl0bf.fsf@assigned-by-dhcp.cox.net>
-	<200611031052.16095.andyparkins@gmail.com>
+From: Yann Dirson <ydirson@altern.org>
+Subject: Re: What's cooking in git.git (topics)
+Date: Sun, 17 Dec 2006 18:35:34 +0100
+Message-ID: <20061217173534.GA16838@nan92-1-81-57-214-146.fbx.proxad.net>
+References: <7vodq3a136.fsf@assigned-by-dhcp.cox.net> <em1vgj$bc3$1@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 3 Nov 2006 12:09:10 +0000 (UTC)
+NNTP-Posting-Date: Sun, 17 Dec 2006 18:36:22 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <200611031052.16095.andyparkins@gmail.com> (Andy Parkins's
-	message of "Fri, 3 Nov 2006 10:52:15 +0000")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Greylist: delayed 3475 seconds by postgrey-1.27 at vger.kernel.org; Sun, 17 Dec 2006 13:36:15 EST
+Content-Disposition: inline
+In-Reply-To: <em1vgj$bc3$1@sea.gmane.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30837>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gfxr0-00007V-Dt for gcvg-git@gmane.org; Fri, 03 Nov
- 2006 13:08:58 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34698>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gw0rz-00041Y-UX for gcvg-git@gmane.org; Sun, 17 Dec
+ 2006 19:36:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751151AbWKCMIz (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 3 Nov 2006
- 07:08:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752153AbWKCMIy
- (ORCPT <rfc822;git-outgoing>); Fri, 3 Nov 2006 07:08:54 -0500
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:61075 "EHLO
- fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP id S1751151AbWKCMIy
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 3 Nov 2006 07:08:54 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao07.cox.net
- (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
- <20061103120853.ECHE13632.fed1rmmtao07.cox.net@fed1rmimpo02.cox.net>; Fri, 3
- Nov 2006 07:08:53 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id iC8y1V00Q1kojtg0000000 Fri, 03 Nov 2006
- 07:08:58 -0500
-To: Andy Parkins <andyparkins@gmail.com>
+ S932358AbWLQSgQ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 17 Dec 2006
+ 13:36:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932365AbWLQSgQ
+ (ORCPT <rfc822;git-outgoing>); Sun, 17 Dec 2006 13:36:16 -0500
+Received: from postfix1-g20.free.fr ([212.27.60.42]:37968 "EHLO
+ postfix1-g20.free.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S932358AbWLQSgQ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 17 Dec 2006
+ 13:36:16 -0500
+Received: from smtp1-g19.free.fr (smtp1-g19.free.fr [212.27.42.27]) by
+ postfix1-g20.free.fr (Postfix) with ESMTP id EAACC5B6E18 for
+ <git@vger.kernel.org>; Sun, 17 Dec 2006 18:36:42 +0100 (CET)
+Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net
+ [81.57.214.146]) by smtp1-g19.free.fr (Postfix) with ESMTP id ABE519B5D9;
+ Sun, 17 Dec 2006 18:35:38 +0100 (CET)
+Received: by gandelf.nowhere.earth (Postfix, from userid 1000) id B7D371F092;
+ Sun, 17 Dec 2006 18:35:34 +0100 (CET)
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Andy Parkins <andyparkins@gmail.com> writes:
+On Sun, Dec 17, 2006 at 12:29:25AM +0100, Jakub Narebski wrote:
+> >    I am thinking about teaching fsck-objects and prune to keep
+> >    revisions recorded in the reflog; we would need an end-user
+> >    way to prune older reflog entries and I would appreciate
+> >    somebody codes it up, but even without it, people can always
+> >    use "vi" or "ed" on reflog files ;-).
+> 
+> I'd rather not have prune keep revisions recorded in reflog. Reflog
+> keeps also amended commits, and blobs from incrementally staged
+> commits. Or perhaps make it an configuration option, default to
+> true for new users (or have an option to git-prune to ignore reflog).
 
-> Instead of storing a list of refnames in append_ref, a list of
-> structures is created.  Each of these stores the refname and a
-> symbolic constant representing its type.
->
-> The creation of the list is filtered based on a command line
-> switch; no switch means "local branches only", "-r" means
-> "remote branches only" (as they always did); but now "-a"
-> means "local branches or remote branches".
->
-> As a side effect, the list is now not global, but allocated in
-> print_ref_list() where it used.
->
-> Also a memory leak is plugged, the memory allocated during the
-> list creation was never freed.  This is now done in the new
-> function, tidy_ref_list()
+I think that is quite near to other issues: we already have other pieces
+of information that we would like to sometimes have ignored and
+sometimes not, when running fsck-objects/prune.  Namely, revisions
+hidden by grafts, as already discussed on this list.
 
-I would not call that a "leak" given that print_ref_list() is
-the last thing to be called before the command exits.  I'd
-rather not to spend cycles calling free().
+An idea I had to handle that case, and which could be useful with the
+current problem, as well as others, like dealing with stgit's patch
+logging, would be to define "reachable commits" using a modular
+architecture.  That way we would be able to select what we want
+fsck-object/prune to consider reachable, in objects reachable from:
 
-> +static int tidy_ref_list( struct ref_list *ref_list )
+- raw "parents" field of commit objects
+- the latter as modified by info/grafts
+- reflogs
+- stgit patchlogs
 
-Style.  No spaces before or after parameter list.
+The set of rules to consider could be declared in repo-config, thus
+stgit would be able to declare that its patchlogs should not be ignored,
+and people wishing to prune commits hidden by grafts in one repo could
+just remove the "raw-parents" rule from their repo's config.
 
-I see you already parse "refs/tags" prefix. "git branch" would
-not print tags, but that part might be useful when we want to
-redo git-tag in C.
+Obviously, mentionning stgit-specific rules here immediately suggests a
+plugin-based architecture.
 
-Other than that, I think it is equivalent to what I have in "pu"
-right now.
+Does that make any sense ?
 
+-- 
