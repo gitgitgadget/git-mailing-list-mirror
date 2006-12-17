@@ -4,75 +4,67 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: WARNING: THIS PATCH CAN BREAK YOUR REPO, was Re: [PATCH 2/3] Only repack active packs by skipping over kept packs.
-Date: Mon, 30 Oct 2006 14:23:39 -0500
-Message-ID: <20061030192339.GA5504@spearce.org>
-References: <20061029093754.GD3847@spearce.org> <Pine.LNX.4.64.0610301332440.11384@xanadu.home>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] revision: introduce ref@{N..M} syntax.
+Date: Sun, 17 Dec 2006 11:38:56 -0800
+Message-ID: <7vy7p65n3j.fsf@assigned-by-dhcp.cox.net>
+References: <7vodq3a136.fsf@assigned-by-dhcp.cox.net>
+	<3C540990-B78E-405B-ACFF-F558DB776C85@silverinsanity.com>
+	<7vbqm36mv6.fsf_-_@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0612171009550.3479@woody.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Mon, 30 Oct 2006 19:35:01 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+NNTP-Posting-Date: Sun, 17 Dec 2006 19:39:04 +0000 (UTC)
+Cc: Brian Gernhardt <benji@silverinsanity.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0610301332440.11384@xanadu.home>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+In-Reply-To: <Pine.LNX.4.64.0612171009550.3479@woody.osdl.org> (Linus
+	Torvalds's message of "Sun, 17 Dec 2006 10:14:12 -0800 (PST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30514>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gecjm-0001eu-KQ for gcvg-git@gmane.org; Mon, 30 Oct
- 2006 20:23:59 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34701>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gw1qf-00072T-P8 for gcvg-git@gmane.org; Sun, 17 Dec
+ 2006 20:39:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1161311AbWJ3TXy (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 30 Oct 2006
- 14:23:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161261AbWJ3TXy
- (ORCPT <rfc822;git-outgoing>); Mon, 30 Oct 2006 14:23:54 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:32468 "EHLO
- corvette.plexpod.net") by vger.kernel.org with ESMTP id S1161311AbWJ3TXx
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 30 Oct 2006 14:23:53 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1GecjO-0008Gq-Cm; Mon, 30 Oct 2006 14:23:34 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- DF51420FB0C; Mon, 30 Oct 2006 14:23:39 -0500 (EST)
-To: Nicolas Pitre <nico@cam.org>
+ S1750956AbWLQTi7 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 17 Dec 2006
+ 14:38:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750949AbWLQTi7
+ (ORCPT <rfc822;git-outgoing>); Sun, 17 Dec 2006 14:38:59 -0500
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:52419 "EHLO
+ fed1rmmtao02.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1750956AbWLQTi6 (ORCPT <rfc822;git@vger.kernel.org>); Sun, 17 Dec 2006
+ 14:38:58 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao02.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061217193857.JXAA97.fed1rmmtao02.cox.net@fed1rmimpo02.cox.net>; Sun, 17
+ Dec 2006 14:38:57 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id zvf91V00l1kojtg0000000; Sun, 17 Dec 2006
+ 14:39:09 -0500
+To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 
-Nicolas Pitre <nico@cam.org> wrote:
-> On Sun, 29 Oct 2006, Shawn Pearce wrote:
-> 
-> > During `git repack -a -d` only repack objects which are loose or
-> > which reside in an active (a non-kept) pack.  This allows the user
-> > to keep large packs as-is without continuous repacking and can be
-> > very helpful on large repositories.
-> 
-> Something is really broken here.
+Linus Torvalds <torvalds@osdl.org> writes:
 
-Holy cow.  Since this is now in 'next', 'next' is now seriously
-broken if you have a .keep file.
+> Well, logically, if you do that, then you should also allow
+>
+> 	git log master@{one.week.ago..yesterday}
+>
+> as a reflog expression.
+> ...
+> PS. Yeah, I'm only half serious. I like our revision parsing, and the 
+> above _would_ actually be consistent with the "master@{1..3}" kind of 
+> specification, but at the same time, it's also obviously more complex, and 
+> maybe it's not THAT usable.
+>
+> But I think the "master@{date..date}" syntax would actually fall out 
+> automatically if you did the {x..y} parsing at a higher level and didn't 
+> force "x" and "y" to be digits only.
 
-> So... what is the --unpacked=<pack>.pack switch supposed to mean?  It is 
-> not documented anywhere and it certainly doesn't produce the expected 
-> result with a repack.
+Syntax, yes, usage of it in "git show" yes,
 
-Junio introduced --unpacked=<pack>.pack a while ago for this
-application.  What it does is skip an object unless its a loose
-object file or it is in the named pack.  The idea being that
-pack-objects would only consider object files which are loose or
-ready to be repacked.
+But giving it to "git log" would not work as a naive user would
+expect, which your example suggested ;-).
 
-In your example above we should have copied all objects from your
-first pack into the new pack during the final destructive repack,
-but we didn't.  I don't know why.
-
--- 
