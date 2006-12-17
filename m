@@ -4,96 +4,78 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: win2k/cygwin cannot handle even moderately sized packs
-Date: Wed, 8 Nov 2006 00:19:14 -0500
-Message-ID: <20061108051914.GB28498@spearce.org>
-References: <45507965.3010806@peralex.com> <81b0412b0611070555u1833cc8ci1d37d45782562df8@mail.gmail.com> <eiq9vm$l7c$1@sea.gmane.org> <81b0412b0611070928l7be83e08kbfc9657937fe7c92@mail.gmail.com> <20061107174859.GB26591@spearce.org> <81b0412b0611071013j51254a40s749fb6cba65e6873@mail.gmail.com> <20061107181808.GC26591@spearce.org> <20061107182636.GD26591@spearce.org> <20061107185648.GE26591@spearce.org> <20061107231130.GA5141@steel.home>
+From: Martin Waitz <tali@admingilde.org>
+Subject: Re: Subprojects tasks
+Date: Sun, 17 Dec 2006 12:45:46 +0100
+Message-ID: <20061217114546.GG12411@admingilde.org>
+References: <7vzm9nelob.fsf@assigned-by-dhcp.cox.net> <20061216230108.GE12411@admingilde.org> <200612170015.24162.jnareb@gmail.com> <200612170101.09615.Josef.Weidendorfer@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 8 Nov 2006 05:19:26 +0000 (UTC)
-Cc: Jakub Narebski <jnareb@gmail.com>, Junio C Hamano <junkio@cox.net>,
-	git@vger.kernel.org
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="6v9BRtpmy+umdQlo"
+NNTP-Posting-Date: Sun, 17 Dec 2006 11:46:20 +0000 (UTC)
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Content-Disposition: inline
-In-Reply-To: <20061107231130.GA5141@steel.home>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+In-Reply-To: <200612170101.09615.Josef.Weidendorfer@gmx.de>
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
+User-Agent: Mutt/1.5.9i
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31115>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GhfqN-0001HP-GR for gcvg-git@gmane.org; Wed, 08 Nov
- 2006 06:19:23 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34686>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GvuTC-0002c4-Sy for gcvg-git@gmane.org; Sun, 17 Dec
+ 2006 12:46:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1754287AbWKHFTU (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 8 Nov 2006
- 00:19:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754288AbWKHFTU
- (ORCPT <rfc822;git-outgoing>); Wed, 8 Nov 2006 00:19:20 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:53439 "EHLO
- corvette.plexpod.net") by vger.kernel.org with ESMTP id S1754285AbWKHFTT
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 8 Nov 2006 00:19:19 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1GhfqH-00077K-En; Wed, 08 Nov 2006 00:19:17 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- 37F5420E487; Wed,  8 Nov 2006 00:19:15 -0500 (EST)
-To: Alex Riesen <raa.lkml@gmail.com>
+ S1752478AbWLQLps (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 17 Dec 2006
+ 06:45:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752480AbWLQLps
+ (ORCPT <rfc822;git-outgoing>); Sun, 17 Dec 2006 06:45:48 -0500
+Received: from mail.admingilde.org ([213.95.32.147]:39264 "EHLO
+ mail.admingilde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1752478AbWLQLpr (ORCPT <rfc822;git@vger.kernel.org>); Sun, 17 Dec 2006
+ 06:45:47 -0500
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1) id
+ 1GvuSg-0003Hd-FN; Sun, 17 Dec 2006 12:45:46 +0100
+To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-Alex Riesen <fork0@t-online.de> wrote:
-> I couldn't help noticing that the interface to the packs data is
-> a bit complex:
-> 
->     unsigned char *use_pack(struct packed_git *p,
-> 			    struct pack_window **window,
-> 			    unsigned long offset,
-> 			    unsigned int *left);
->     void unuse_pack(struct pack_window **w);
-> 
-> Or am I missing something very obvious, and something like this
-> is just not feasible for some reasons?
 
-The use counter.  Every time someone asks for a pointer into the
-pack they need to lock that window into memory to prevent us from
-garbage collecting it by unmapping it to make room for another
-window that the application needs.
- 
-> I was almost about to move your code into unpack_object_header_gently,
-> but ... The header isn't that big, is it? It is variable in the pack,
-> but the implementation of the parser is at the moment restricted by
-> the type we use for object size (unsigned long for the particular
-> platform). For example:
+--6v9BRtpmy+umdQlo
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-All true.  However what happens when the header spans two windows?
-Lets say I have the first 4 MiB mapped and the next 4 MiB mapped in
-a different window; these are not necessarily at the same locations
-within memory.  Now if an object header is split over these two
-then some bytes are at the end of the first window and the rest
-are at the start of the next window.
+hoi :)
 
-I can't just say "make sure we have at least X bytes available
-before starting to decode the header, as to do that in this case
-we'd have to unmap BOTH windows and remap a new one which keeps
-that very small header fully contiguous in memory.  That's thrashing
-the VM page tables for really no benefit.
- 
-> (BTW, current unpack_object_header_gently does not use it's len
-> argument to check if there actually is enough data to hold at least
-> minimal header. Is the size of mapped data checked for correctness
-> somewhere before?)
+On Sun, Dec 17, 2006 at 01:01:09AM +0100, Josef Weidendorfer wrote:
+> IMHO it simply is added flexibility to allow a checkout to be separate fr=
+om
+> the .git/ directory, same as explicitly setting $GIT_DIR would do.
+> So this .gitlink file is on the one hand one kind of convenience for users
+> which want to keep their repository separate, yet do not want to specify
+> $GIT_DIR all the time in front of git commands.
+> The .gitlink file simply makes the linkage to the separate repository
+> persistent.
 
-Yes.  Somewhere.  I think we make sure there's at least 20 bytes
-in the pack remaining before we start to decode a header.  We must
-have at least 20 as that's the trailing SHA1 checksum of the entire
-pack. :-)
+I can see the reason for wanting to use another object database,
+but HEAD and index should always be stored together with the
+checked out directory.  So perhaps we just need some smart way to
+search for the object database, but keep the .git directory.
 
--- 
+--=20
+Martin Waitz
+
+--6v9BRtpmy+umdQlo
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFFhS3qj/Eaxd/oD7IRAkDRAJ0TnZIIzLL6nhKiBeDelH/Ge0dISwCeJyD/
+1Qsmyv8qbg+NuIRf8nGjCbk=
+=xc1c
+-----END PGP SIGNATURE-----
+
