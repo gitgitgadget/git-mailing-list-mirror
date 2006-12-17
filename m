@@ -1,65 +1,62 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Han-Wen Nienhuys <hanwen@xs4all.nl>
-Subject: Re: git-fetching from a big repository is slow
-Date: Thu, 14 Dec 2006 16:45:59 +0100
-Message-ID: <458171B7.1020702@xs4all.nl>
-References: <200612141340.43925.andyparkins@gmail.com> <4581573E.40803@op5.se> <200612141518.05770.andyparkins@gmail.com>
-Reply-To: hanwen@xs4all.nl
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: What's cooking in git.git (topics)
+Date: Sun, 17 Dec 2006 23:41:25 +0000
+Message-ID: <200612172341.27709.andyparkins@gmail.com>
+References: <7vodq3a136.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 14 Dec 2006 15:46:15 +0000 (UTC)
+NNTP-Posting-Date: Sun, 17 Dec 2006 23:44:25 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 16
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: muurbloem.xs4all.nl
-User-Agent: Thunderbird 1.5.0.8 (X11/20061107)
-In-Reply-To: <200612141518.05770.andyparkins@gmail.com>
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=i54iKhHg1fDWitw/HPJYFs4QOMQZdITTf+2vNfbd3/QSDrlrvfqZshbuucW1G9rn/XYaAyNUlinB/3Y8N7uu5zN+1/QsENsAHwH0P43ZueMIU+RqvHpL61HymM7jSdCL+vrwtgMvDAtWo543sv2hJpbx7X0N8KVfhFTP2mupwhs=
+User-Agent: KMail/1.9.5
+In-Reply-To: <7vodq3a136.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34353>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34714>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gusmj-0008G9-Hf for gcvg-git@gmane.org; Thu, 14 Dec
- 2006 16:46:13 +0100
+ esmtp (Exim 4.50) id 1Gw5g2-0005VR-3W for gcvg-git@gmane.org; Mon, 18 Dec
+ 2006 00:44:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932815AbWLNPqH (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
- 10:46:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932817AbWLNPqG
- (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 10:46:06 -0500
-Received: from main.gmane.org ([80.91.229.2]:46583 "EHLO ciao.gmane.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S932815AbWLNPqF
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006 10:46:05 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1GusmY-0003rC-Nr for git@vger.kernel.org; Thu, 14 Dec 2006 16:46:02 +0100
-Received: from muurbloem.xs4all.nl ([213.84.26.127]) by main.gmane.org with
- esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>;
- Thu, 14 Dec 2006 16:46:02 +0100
-Received: from hanwen by muurbloem.xs4all.nl with local (Gmexim 0.1 (Debian))
- id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Thu, 14 Dec 2006 16:46:02
- +0100
+ S1753240AbWLQXoP (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 17 Dec 2006
+ 18:44:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753245AbWLQXoP
+ (ORCPT <rfc822;git-outgoing>); Sun, 17 Dec 2006 18:44:15 -0500
+Received: from ug-out-1314.google.com ([66.249.92.173]:7821 "EHLO
+ ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1753240AbWLQXoO (ORCPT <rfc822;git@vger.kernel.org>); Sun, 17 Dec
+ 2006 18:44:14 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so1353048uga for
+ <git@vger.kernel.org>; Sun, 17 Dec 2006 15:44:13 -0800 (PST)
+Received: by 10.66.232.11 with SMTP id e11mr5294887ugh.1166399053192; Sun, 17
+ Dec 2006 15:44:13 -0800 (PST)
+Received: from grissom.internal.parkins.org.uk ( [84.201.153.164]) by
+ mx.google.com with ESMTP id k28sm8240554ugd.2006.12.17.15.44.12; Sun, 17 Dec
+ 2006 15:44:12 -0800 (PST)
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Andy Parkins escreveu:
-> On Thursday 2006 December 14 13:53, Andreas Ericsson wrote:
-> 
->> This seems to happen if your repository consists of many large binary
->> files, especially many large binary files of several versions that do
->> not deltify well against each other. Perhaps it's worth adding gzip
-> 
-> It's actually just every released patch to the linux kernel ever issued.  
-> Almost entirely ASCII and every revision (save the first) created by patching 
-> the previous.
+On Saturday 2006, December 16 23:10, Junio C Hamano wrote:
 
-I just noticed that git-fetch now runs git-show-ref --verify on every
-tag it encounters. This seems to slow down fetch over here.
+>    * revisions recorded in the reflog can be pruned out,
+>      rendering some entries in reflog useless.
 
+Can I suggest that it should be fine to prune reflog entries but that the act 
+of pruning be a log entry itself?
+
+Andy
 -- 
- Han-Wen Nienhuys - hanwen@xs4all.nl - http://www.xs4all.nl/~hanwen
+Dr Andrew Parkins, M Eng (Hons), AMIEE
