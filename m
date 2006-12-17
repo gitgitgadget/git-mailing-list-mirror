@@ -1,64 +1,66 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: kernel.org mirroring (Re: [GIT PULL] MMC update)
-Date: Thu, 07 Dec 2006 11:16:58 -0800
-Message-ID: <457868AA.2030605@zytor.com>
-References: <45708A56.3040508@drzeus.cx> <Pine.LNX.4.64.0612011639240.3695@woody.osdl.org> <457151A0.8090203@drzeus.cx> <Pine.LNX.4.64.0612020835110.3476@woody.osdl.org> <45744FA3.7020908@zytor.com> <Pine.LNX.4.64.0612061847190.3615@woody.osdl.org> <45778AA3.7080709@zytor.com> <Pine.LNX.4.64.0612061940170.3615@woody.osdl.org> <4577A84C.3010601@zytor.com> <Pine.LNX.4.64.0612070953290.3615@woody.osdl.org> <45785697.1060001@zytor.com> <Pine.LNX.4.64.0612071052560.3615@woody.osdl.org>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Can git be tweaked to work cross-platform, on FAT32?
+Date: Sun, 17 Dec 2006 15:54:21 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0612171550510.3635@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <0MKwpI-1GuWVF2znk-0006fC@mrelayeu.kundenserver.de> 
+ <46a038f90612132155rc987a9cs6a4fa33dd4c882c6@mail.gmail.com> 
+ <0ML25U-1GvWC81sjR-0001UB@mrelayeu.kundenserver.de> 
+ <Pine.LNX.4.63.0612161227510.3635@wbgn013.biozentrum.uni-wuerzburg.de> 
+ <46a038f90612170221u4c3b5c2asef378d3d4e159ba7@mail.gmail.com>
+ <906f26060612170633h50e3e974h3b84f1829e546278@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 7 Dec 2006 19:17:37 +0000 (UTC)
-Cc: Kernel Org Admin <ftpadmin@kernel.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jakub Narebski <jnareb@gmail.com>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Sun, 17 Dec 2006 14:54:33 +0000 (UTC)
+Cc: Martin Langhoff <martin.langhoff@gmail.com>,
+	"Florian v. Savigny" <lorian@fsavigny.de>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.8 (X11/20061107)
-In-Reply-To: <Pine.LNX.4.64.0612071052560.3615@woody.osdl.org>
-X-Virus-Scanned: ClamAV 0.88.6/2301/Thu Dec  7 07:20:18 2006 on terminus.zytor.com
-X-Virus-Status: Clean
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <906f26060612170633h50e3e974h3b84f1829e546278@mail.gmail.com>
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33606>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34694>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GsOkQ-0004UJ-JF for gcvg-git@gmane.org; Thu, 07 Dec
- 2006 20:17:34 +0100
+ esmtp (Exim 4.50) id 1GvxPG-0004ZN-At for gcvg-git@gmane.org; Sun, 17 Dec
+ 2006 15:54:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1163224AbWLGTRS (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
- 14:17:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1163223AbWLGTRS
- (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 14:17:18 -0500
-Received: from terminus.zytor.com ([192.83.249.54]:58623 "EHLO
- terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
- S1163222AbWLGTRR (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec 2006
- 14:17:17 -0500
-Received: from [10.0.6.0] (yardgnome.c2micro.com [69.104.58.50])
- (authenticated bits=0) by terminus.zytor.com (8.13.8/8.13.7) with ESMTP id
- kB7JH17p022302 (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256
- verify=NO); Thu, 7 Dec 2006 11:17:01 -0800
-To: Linus Torvalds <torvalds@osdl.org>
+ S1752753AbWLQOyX (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 17 Dec 2006
+ 09:54:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752752AbWLQOyX
+ (ORCPT <rfc822;git-outgoing>); Sun, 17 Dec 2006 09:54:23 -0500
+Received: from mail.gmx.net ([213.165.64.20]:32951 "HELO mail.gmx.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S1752751AbWLQOyW
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 17 Dec 2006 09:54:22 -0500
+Received: (qmail invoked by alias); 17 Dec 2006 14:54:21 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp042) with SMTP; 17 Dec 2006 15:54:21 +0100
+To: Stefano Spinucci <virgo977virgo@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Linus Torvalds wrote:
-> 
-> On Thu, 7 Dec 2006, H. Peter Anvin wrote:
->> That all being said, the lack of intrinsic caching in gitweb continues to be a
->> major problem for us.  Under high load, it makes all the problems worse.
-> 
-> I really don't see what gitweb could do that would be somehow better than 
-> apache doing the caching in front of it.. Is there some apache reason why 
-> that isn't sufficient (ie limitations on its cache size or timeouts?)
-> 
+Hi,
 
-What it could do better is it could prevent multiple identical queries 
-from being launched in parallel.  That's the real problem we see; under 
-high load, Apache times out so the git query never gets into the cache; 
-but in the meantime, the common queries might easily have been launched 
-20 times in parallel.  Unfortunately, the most common queries are also 
-extremely expensive.
+On Sun, 17 Dec 2006, Stefano Spinucci wrote:
 
+> I just tried to use git writing to my FAT32 formatted usb stick.
+> 
+> On windows XP, I compiled git with and without NO_D_TYPE_IN_DIRENT, but 
+> after the following actions I always got the error "fatal: Unable to 
+> write new index file" or "fatal: unable to create '.git/index': File 
+> exists":
+
+Come to think of it, I probably never tried to actually _commit_ on 
+FAT32... Sorry.
+
+I will not be able to test this scenario until Tuesday, though. Sorry 
+again!
+
+Ciao,
