@@ -1,70 +1,62 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: What's in git.git (stable)
-Date: Fri, 15 Dec 2006 15:45:50 -0800
-Message-ID: <7vac1on2oh.fsf@assigned-by-dhcp.cox.net>
-References: <7v4przfpir.fsf@assigned-by-dhcp.cox.net>
-	<eluhk3$pv7$1@sea.gmane.org> <7vhcvwomde.fsf@assigned-by-dhcp.cox.net>
-	<200612152348.17997.jnareb@gmail.com>
-	<Pine.LNX.4.63.0612160023340.3635@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Sven Verdoolaege <skimo@kotnet.org>
+Subject: Re: http git and curl 7.16.0
+Date: Sun, 17 Dec 2006 12:32:35 +0100
+Message-ID: <20061217113235.GJ25274MdfPADPa@greensroom.kotnet.org>
+References: <20061118080708.428cbff6@athlon>
+Reply-To: skimo@liacs.nl
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 15 Dec 2006 23:45:59 +0000 (UTC)
-Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
+Content-Transfer-Encoding: 7BIT
+NNTP-Posting-Date: Sun, 17 Dec 2006 11:33:11 +0000 (UTC)
+Cc: Git List <git@vger.kernel.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <Pine.LNX.4.63.0612160023340.3635@wbgn013.biozentrum.uni-wuerzburg.de>
-	(Johannes Schindelin's message of "Sat, 16 Dec 2006 00:25:31 +0100
-	(CET)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+In-reply-to: <20061118080708.428cbff6@athlon>
+Content-disposition: inline
+User-Agent: Mutt/1.5.10i
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34577>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34685>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GvMkV-0003HM-RI for gcvg-git@gmane.org; Sat, 16 Dec
- 2006 00:45:56 +0100
+ esmtp (Exim 4.50) id 1GvuGM-0001b0-1N for gcvg-git@gmane.org; Sun, 17 Dec
+ 2006 12:33:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S965292AbWLOXpx (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 15 Dec 2006
- 18:45:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965296AbWLOXpx
- (ORCPT <rfc822;git-outgoing>); Fri, 15 Dec 2006 18:45:53 -0500
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:45231 "EHLO
- fed1rmmtao11.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S965292AbWLOXpw (ORCPT <rfc822;git@vger.kernel.org>); Fri, 15 Dec 2006
- 18:45:52 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao11.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061215234551.ZAUQ25875.fed1rmmtao11.cox.net@fed1rmimpo02.cox.net>; Fri, 15
- Dec 2006 18:45:51 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id zBm31V0011kojtg0000000; Fri, 15 Dec 2006
- 18:46:03 -0500
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+ S1752463AbWLQLc7 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 17 Dec 2006
+ 06:32:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752467AbWLQLc7
+ (ORCPT <rfc822;git-outgoing>); Sun, 17 Dec 2006 06:32:59 -0500
+Received: from smtp15.wxs.nl ([195.121.247.6]:39849 "EHLO smtp15.wxs.nl"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1752463AbWLQLc6
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 17 Dec 2006 06:32:58 -0500
+Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl
+ [84.81.90.170]) by smtp15.wxs.nl (iPlanet Messaging Server 5.2 Patch 2 (built
+ Jul 14 2004)) with SMTP id <0JAF00N291EB2F@smtp15.wxs.nl> for
+ git@vger.kernel.org; Sun, 17 Dec 2006 12:32:36 +0100 (CET)
+Received: (qmail 8981 invoked by uid 500); Sun, 17 Dec 2006 11:32:35 +0000
+To: George Sherwood <pilot@beernabeer.com>
 Sender: git-owner@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Sat, Nov 18, 2006 at 08:07:08AM +0400, George Sherwood wrote:
+> I seem to be having a problem doing an http checkout with git built
+> with curl 7.16.0 enabled.  If I build against curl 7.16.0 and try a
+> clone, I get:
+> 
+> git clone http://dmlb2000.homelinux.org/~dmlb2000/git-repos/local/castfs.git
+> error: Unable to start request error: Could not interpret heads/master
+> as something to pull
+> 
+> If I rebuild git against curl 7.15.5 then I get:
+[..]
+> and the checkout finishes.
+> 
+> Has any one else seen this?
 
-> On Fri, 15 Dec 2006, Jakub Narebski wrote:
->
->> Junio C Hamano wrote:
->>
->> > (Jakub, please do not drop people from cc: list; you were asked
->> > more than once).
->> 
->> The problem is that I'm not subscribed to git mailing list;
->
-> So subscribe. I am sure I lost quite some of your responses to my emails, 
-> _just_ because you happen to kill me from the Cc: list.
->
-> IOW if you expect answers, _please_ adher to net standards.
+FWIW, I've seen the same with curl 7.16.0 on a Solaris 9 machine.
+It worked fine with curl 7.15.0.
 
-FWIW, I also read the list traffic through gmane news gateway.
-
-I am subscribed and my mail filter drops the mails from the list
-into a dedicated mailbox, but that is purely for my own backup
-and I usually do not look at it otherwise.
