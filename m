@@ -1,98 +1,77 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: [PATCH] Seek back to current filepos when mmap()ing with NO_MMAP
-Date: Wed, 15 Nov 2006 20:06:01 +0100
-Message-ID: <81b0412b0611151106k45ee03ekd8a3a04173f618c3@mail.gmail.com>
-References: <Pine.LNX.4.63.0611151727000.13772@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] git-add: remove conflicting entry when adding.
+Date: Sun, 17 Dec 2006 01:11:54 -0800
+Message-ID: <7v3b7e7up1.fsf_-_@assigned-by-dhcp.cox.net>
+References: <458437E0.1050501@midwinter.com> <45843C5A.8020501@gmail.com>
+	<45848CF8.4000704@midwinter.com>
+	<7vvekb73jh.fsf@assigned-by-dhcp.cox.net>
+	<7vk60r7139.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; 
-	boundary="----=_Part_48394_25111807.1163617561981"
-NNTP-Posting-Date: Wed, 15 Nov 2006 19:06:51 +0000 (UTC)
-Cc: junkio@cox.net, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Sun, 17 Dec 2006 09:12:09 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:references;
-        b=EnUwC95dmaWD+iPZmSHYNhXW2KLqxxi6MEkrrPcu5S0HIq0LrkkJtZtnQTbzaI9af22MMJtMr87Rr9RH4jKYub2S552ZpOiHf+OPj2VU8Fp0jdEIbZd0gxDZmHygmvyqpBWArRfr69Afm3Csd0zlVch6KUx5U8gQRmyGZx7DquQ=
-In-Reply-To: <Pine.LNX.4.63.0611151727000.13772@wbgn013.biozentrum.uni-wuerzburg.de>
+In-Reply-To: <7vk60r7139.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Sat, 16 Dec 2006 17:39:06 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31470>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GkQ5f-0005ll-JF for gcvg-git@gmane.org; Wed, 15 Nov
- 2006 20:06:32 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34680>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gvs3w-0007F5-RL for gcvg-git@gmane.org; Sun, 17 Dec
+ 2006 10:12:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1030898AbWKOTGH (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
- 14:06:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030896AbWKOTGH
- (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 14:06:07 -0500
-Received: from wr-out-0506.google.com ([64.233.184.227]:6295 "EHLO
- wr-out-0506.google.com") by vger.kernel.org with ESMTP id S1030898AbWKOTGD
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 14:06:03 -0500
-Received: by wr-out-0506.google.com with SMTP id i22so146840wra for
- <git@vger.kernel.org>; Wed, 15 Nov 2006 11:06:03 -0800 (PST)
-Received: by 10.78.138.6 with SMTP id l6mr542044hud.1163617562164; Wed, 15
- Nov 2006 11:06:02 -0800 (PST)
-Received: by 10.78.135.19 with HTTP; Wed, 15 Nov 2006 11:06:01 -0800 (PST)
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+ S1752278AbWLQJL4 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 17 Dec 2006
+ 04:11:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752280AbWLQJL4
+ (ORCPT <rfc822;git-outgoing>); Sun, 17 Dec 2006 04:11:56 -0500
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:40401 "EHLO
+ fed1rmmtao08.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1752278AbWLQJLz (ORCPT <rfc822;git@vger.kernel.org>); Sun, 17 Dec 2006
+ 04:11:55 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao08.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061217091154.YZPN16632.fed1rmmtao08.cox.net@fed1rmimpo02.cox.net>; Sun, 17
+ Dec 2006 04:11:54 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id zlC61V00Q1kojtg0000000; Sun, 17 Dec 2006
+ 04:12:06 -0500
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-------=_Part_48394_25111807.1163617561981
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
+When replacing an existing file A with a directory A that has a
+file A/B in it in the index, 'git add' did not succeed because
+it forgot to pass the allow-replace flag to add_cache_entry().
 
-On 11/15/06, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
->
-> "git-index-pack --fix-thin" relies on mmap() not changing the current
-> file position (otherwise the pack will be corrupted when writing the
-> final SHA1). Meet that expectation.
->
+It might be safer to leave this as an error and require the user
+to explicitly remove the existing A first before adding A/B
+since it is an unusual case, but doing that automatically is
+much easier to use.
 
-Thanks! I was wondering for some considerable time why the
-hell t5500-fetch-pack fails.
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
+ read-cache.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-BTW, I extended error handling in that mmap.  Dunno why.
+diff --git a/read-cache.c b/read-cache.c
+index e856a2e..b8d83cc 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -358,7 +358,7 @@ int add_file_to_index(const char *path, int verbose)
+ 
+ 	if (index_path(ce->sha1, path, &st, 1))
+ 		die("unable to index file %s", path);
+-	if (add_cache_entry(ce, ADD_CACHE_OK_TO_ADD))
++	if (add_cache_entry(ce, ADD_CACHE_OK_TO_ADD|ADD_CACHE_OK_TO_REPLACE))
+ 		die("unable to add %s to index",path);
+ 	if (verbose)
+ 		printf("add '%s'\n", path);
+-- 
+1.4.4.2.g83c5
 
-Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
-
-------=_Part_48394_25111807.1163617561981
-Content-Type: text/x-diff; name="lseek-compatmmap.patch"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="lseek-compatmmap.patch"
-X-Attachment-Id: file0
-
-Y29tbWl0IDQwZWQwNjQ0Y2E4ZDI1MGY3MTZmNDlhNWMzZTAyN2FhMmMxZDMxNjcKQXV0aG9yOiBB
-bGV4IFJpZXNlbiA8cmFhLmxrbWxAZ21haWwuY29tPgpEYXRlOiAgIFdlZCBOb3YgMTUgMTk6NTU6
-MDYgMjAwNiArMDEwMAoKICAgIFNlZWsgYmFjayB0byBjdXJyZW50IGZpbGVwb3Mgd2hlbiBtbWFw
-KClpbmcgd2l0aCBOT19NTUFQLCBlaCBpbXByb3ZlZAogICAgCiAgICAiZ2l0LWluZGV4LXBhY2sg
-LS1maXgtdGhpbiIgcmVsaWVzIG9uIG1tYXAoKSBub3QgY2hhbmdpbmcgdGhlIGN1cnJlbnQKICAg
-IGZpbGUgcG9zaXRpb24gKG90aGVyd2lzZSB0aGUgcGFjayB3aWxsIGJlIGNvcnJ1cHRlZCB3aGVu
-IHdyaXRpbmcgdGhlCiAgICBmaW5hbCBTSEExKS4gTWVldCB0aGF0IGV4cGVjdGF0aW9uLgogICAg
-CiAgICBTaWduZWQtb2ZmLWJ5OiBKb2hhbm5lcyBTY2hpbmRlbGluIDxKb2hhbm5lcy5TY2hpbmRl
-bGluQGdteC5kZT4KICAgIFNpZ25lZC1vZmYtYnk6IEFsZXggUmllc2VuIDxyYWEubGttbEBnbWFp
-bC5jb20+CgpkaWZmIC0tZ2l0IGEvY29tcGF0L21tYXAuYyBiL2NvbXBhdC9tbWFwLmMKaW5kZXgg
-NTVjYjEyMC4uYzZkNWNmZSAxMDA2NDQKLS0tIGEvY29tcGF0L21tYXAuYworKysgYi9jb21wYXQv
-bW1hcC5jCkBAIC02LDcgKzYsOCBAQAogCiB2b2lkICpnaXRmYWtlbW1hcCh2b2lkICpzdGFydCwg
-c2l6ZV90IGxlbmd0aCwgaW50IHByb3QgLCBpbnQgZmxhZ3MsIGludCBmZCwgb2ZmX3Qgb2Zmc2V0
-KQogewotCWludCBuID0gMDsKKwlpbnQgbiA9IDAsIGVyciA9IDA7CisJb2ZmX3QgY3VycmVudF9v
-ZmZzZXQgPSBsc2VlayhmZCwgMCwgU0VFS19DVVIpOwogCiAJaWYgKHN0YXJ0ICE9IE5VTEwgfHwg
-IShmbGFncyAmIE1BUF9QUklWQVRFKSkKIAkJZGllKCJJbnZhbGlkIHVzYWdlIG9mIGdpdGZha2Vt
-bWFwLiIpOwpAQCAtMTgsOCArMTksOCBAQCB2b2lkICpnaXRmYWtlbW1hcCh2b2lkICpzdGFydCwg
-c2l6ZV90IGxlCiAKIAlzdGFydCA9IHhtYWxsb2MobGVuZ3RoKTsKIAlpZiAoc3RhcnQgPT0gTlVM
-TCkgewotCQllcnJubyA9IEVOT01FTTsKLQkJcmV0dXJuIE1BUF9GQUlMRUQ7CisJCWVyciA9IEVO
-T01FTTsKKwkJZ290byB1bnNlZWs7CiAJfQogCiAJd2hpbGUgKG4gPCBsZW5ndGgpIHsKQEAgLTMx
-LDE0ICszMiwyMiBAQCB2b2lkICpnaXRmYWtlbW1hcCh2b2lkICpzdGFydCwgc2l6ZV90IGxlCiAJ
-CX0KIAogCQlpZiAoY291bnQgPCAwKSB7Ci0JCQlmcmVlKHN0YXJ0KTsKLQkJCWVycm5vID0gRUFD
-Q0VTOwotCQkJcmV0dXJuIE1BUF9GQUlMRUQ7CisJCQllcnIgPSBFQUNDRVM7CisJCQlnb3RvIHVu
-c2VlazsKIAkJfQogCiAJCW4gKz0gY291bnQ7CiAJfQogCit1bnNlZWs6CisJaWYgKGN1cnJlbnRf
-b2Zmc2V0ICE9IGxzZWVrKGZkLCBjdXJyZW50X29mZnNldCwgU0VFS19TRVQpKQorCQllcnIgPSBF
-SU5WQUw7CisKKwlpZiAoZXJyKSB7CisJCWZyZWUoc3RhcnQpOworCQlzdGFydCA9IE1BUF9GQUlM
-RUQ7CisJCWVycm5vID0gZXJyOworCX0KIAlyZXR1cm4gc3RhcnQ7CiB9CiAK
