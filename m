@@ -4,74 +4,103 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH 3/3] mimic unpack-objects when --stdin is used with
- index-pack
-Date: Thu, 26 Oct 2006 09:46:18 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0610260940020.12418@xanadu.home>
-References: <Pine.LNX.4.64.0610252330320.12418@xanadu.home>
- <7vmz7jqzoo.fsf@assigned-by-dhcp.cox.net>
+From: Alan Chandler <alan@chandlerfamily.org.uk>
+Subject: Re: Subprojects tasks
+Date: Sun, 17 Dec 2006 08:48:10 +0000
+Message-ID: <200612170848.10092.alan@chandlerfamily.org.uk>
+References: <7vzm9nelob.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-NNTP-Posting-Date: Thu, 26 Oct 2006 13:46:37 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Sun, 17 Dec 2006 09:17:38 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, Martin Waitz <tali@admingilde.org>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-reply-to: <7vmz7jqzoo.fsf@assigned-by-dhcp.cox.net>
-X-X-Sender: nico@xanadu.home
+X-Greylist: delayed 1752 seconds by postgrey-1.27 at vger.kernel.org; Sun, 17 Dec 2006 04:17:25 EST
+User-Agent: KMail/1.9.5
+In-Reply-To: <7vzm9nelob.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30218>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gd5Yt-0003G7-EY for gcvg-git@gmane.org; Thu, 26 Oct
- 2006 15:46:23 +0200
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34681>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gvs9B-0007YS-Qs for gcvg-git@gmane.org; Sun, 17 Dec
+ 2006 10:17:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1161369AbWJZNqU (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006
- 09:46:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161370AbWJZNqU
- (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 09:46:20 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:12257 "EHLO
- relais.videotron.ca") by vger.kernel.org with ESMTP id S1161369AbWJZNqT
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 09:46:19 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
- <0J7Q00L4PWX6ER90@VL-MH-MR002.ip.videotron.ca> for git@vger.kernel.org; Thu,
- 26 Oct 2006 09:46:18 -0400 (EDT)
-To: Junio C Hamano <junkio@cox.net>
+ S1752288AbWLQJR0 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 17 Dec 2006
+ 04:17:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752289AbWLQJR0
+ (ORCPT <rfc822;git-outgoing>); Sun, 17 Dec 2006 04:17:26 -0500
+Received: from 82-44-22-127.cable.ubr06.croy.blueyonder.co.uk
+ ([82.44.22.127]:40613 "EHLO home.chandlerfamily.org.uk"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1752288AbWLQJRZ
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 17 Dec 2006 04:17:25 -0500
+Received: from kanger.home ([192.168.0.21]) by home.chandlerfamily.org.uk
+ with esmtp (Exim 4.63) (envelope-from <alan@chandlerfamily.org.uk>) id
+ 1Gvrgq-0006BZ-4D; Sun, 17 Dec 2006 08:48:12 +0000
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On Thu, 26 Oct 2006, Junio C Hamano wrote:
+On Saturday 16 December 2006 18:32, Junio C Hamano wrote:
+> Because I am primarily a plumber, I was thinking about the
+> changes that need to be done at the plumbing level.  I only
+> looked at the prototype when it was announced, and I do not know
+> the progress you made since then.  Could you tell us the current
+> status?
+>
+> I am assuming that the overall design is based on what Linus
+> proposed long time ago with his "gitlink" object.  That is,
+>
+>  * the index and the tree object for the superproject has a
+>    "link" object that tells there is a directory and the
+>    corresponding commit object name from the subproject.  Unlike
+>    my previous "bind commit" based prototype, index does not
+>    have any blobs nor trees from the subproject.
+>
+>  * the subproject is on its own, and can exist unaware of the
+>    existence of its superproject (there is no back-link at the
+>    object layer).
 
-> Nicolas Pitre <nico@cam.org> writes:
-> 
-> > It appears that git-unpack-objects writes the last part of the input
-> > buffer to stdout after the pack has been parsed.  This looks a bit
-> > suspicious since the last fill() might have filled the buffer up to
-> > the 4096 byte limit and more data might still be pending on stdin,
-> > but since this is about being a drop-in replacement for unpack-objects
-> > let's simply duplicate the same behavior for now.
-> 
-> This seems to break t5300 when applied on top of everything
-> else.  The other two numbered patches are Ok.
+I have been following the submodules (subprojects - is there any 
+difference?) discussion from afar, getting lost quite frequently in 
+what is actually being discussed and why.  I don't think the idea I 
+express below has been mentioned, but apologies if it has.
 
-Yeah.... actually the problem appeared to me in my sleep! (Worrisome 
-isn't it?)
+One element I felt has been missing is a vigorous discussion of what 
+submodules are for and what are their use cases.  The "submodule is on 
+its own" issue seems to have crept into the discussion - but there was 
+one use case that was discussed, where some actually help by the 
+submodule could be useful.
 
-So you just need to amend this patch with:
+The use case was when the supermodule wanted to make use of the header 
+files of the submodule because it was using the submodule as a library.
 
-diff --git a/index-pack.c b/index-pack.c
-index 7f7dc5d..5c747a6 100644
---- a/index-pack.c
-+++ b/index-pack.c
-@@ -461,7 +461,7 @@ static void parse_pack_objects(unsigned
- 	/* If input_fd is a file, we should have reached its end now. */
- 	if (fstat(input_fd, &st))
- 		die("cannot fstat packfile: %s", strerror(errno));
--	if (S_ISREG(st.st_mode) && st.st_size != consumed_bytes + 20)
-+	if (S_ISREG(st.st_mode) && st.st_size != consumed_bytes)
- 		die("pack has junk at the end");
- 
- 	if (!nr_deltas)
+This did make me wonder if the submodule should not export some form 
+of "approved" set of content (or files - and I do think care is needed 
+here as to which it is when we think about renames) which is both
+
+a) a subset of the full tree that is stored at commit time, and
+b) does itself have a commit history 
+
+(I am clearly thinking that would be the standard "include" files, but 
+not the actual source of the library - (but it might include the 
+library it self as a prebuilt binary library?)
+
+This does suggest it is a tree object stored in the repository - and 
+that it is linked in time via a set of commit objects - I'll call them 
+the "export commits".  I am not sure whether a new commit should be 
+made everytime there is any change (via a normal commit) to this 
+content, or (and I slightly favour this) there is a new commit made 
+which is somewhat akin to a tag when the project wants to release a new 
+version of its interface. 
+
+Supermodules, which then made use of that library would, the do some 
+form of shallow clone, shallow in the sense that it only pulled in the 
+exported commit content and also (possibly) shallow in the sense that 
+it does not need to go back in time to get old versions of the exported 
+commit.
 
 
+-- 
+Alan Chandler
