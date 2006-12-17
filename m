@@ -1,68 +1,77 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-1.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,LIST_MIRROR_BCC,MSGID_FROM_MTA_HEADER,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
-From: andyparkins@gmail.com
-Subject: (unknown)
-Date: Wed, 25 Oct 2006 15:50:05 +0100
-Message-ID: <E1Gck4z-0003JK-00@dvr.360vision.com>
-NNTP-Posting-Date: Wed, 25 Oct 2006 14:50:31 +0000 (UTC)
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Quy Tonthat <qtonthat@gmail.com>
+Subject: [PATCH] Documentation: new option -P for git-svnimport
+Date: Mon, 18 Dec 2006 01:50:12 +1100
+Message-ID: <45855924.1050003@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Sun, 17 Dec 2006 14:50:38 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-OriginalArrivalTime: 25 Oct 2006 14:53:05.0223 (UTC) FILETIME=[46E12570:01C6F845]
+User-Agent: Thunderbird 1.5.0.8 (X11/20061107)
+X-Enigmail-Version: 0.94.1.1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30062>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gck56-0006dR-J0 for gcvg-git@gmane.org; Wed, 25 Oct
- 2006 16:50:12 +0200
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34693>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GvxLX-00047y-OV for gcvg-git@gmane.org; Sun, 17 Dec
+ 2006 15:50:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932432AbWJYOuI (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 25 Oct 2006
- 10:50:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932439AbWJYOuI
- (ORCPT <rfc822;git-outgoing>); Wed, 25 Oct 2006 10:50:08 -0400
-Received: from mail.360visiontechnology.com ([194.70.53.226]:50455 "EHLO
- 369run02s.360vision.com") by vger.kernel.org with ESMTP id S932432AbWJYOuH
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 25 Oct 2006 10:50:07 -0400
-Received: from dvr.360vision.com ([192.189.1.24]) by 369run02s.360vision.com
- with Microsoft SMTPSVC(5.0.2195.6713); Wed, 25 Oct 2006 15:53:05 +0100
-Received: from localhost ([127.0.0.1]) by dvr.360vision.com with esmtp (Exim
- 3.36 #1 (Debian)) id 1Gck4z-0003JK-00 for <git@vger.kernel.org>; Wed, 25 Oct
- 2006 15:50:05 +0100
-To: unlisted-recipients:; (no To-header on input)
+ S1752744AbWLQOud (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 17 Dec 2006
+ 09:50:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752745AbWLQOud
+ (ORCPT <rfc822;git-outgoing>); Sun, 17 Dec 2006 09:50:33 -0500
+Received: from pecan-mail.exetel.com.au ([220.233.0.8]:60893 "EHLO
+ pecan.exetel.com.au" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+ id S1752744AbWLQOuc (ORCPT <rfc822;git@vger.kernel.org>); Sun, 17 Dec 2006
+ 09:50:32 -0500
+Received: from 95.69.233.220.exetel.com.au ([220.233.69.95]
+ helo=[192.168.64.35]) by pecan.exetel.com.au with esmtp (Exim 4.63)
+ (envelope-from <qtonthat@gmail.com>) id 1GvxLR-00027l-SE for
+ git@vger.kernel.org; Mon, 18 Dec 2006 01:50:30 +1100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-From f52af4e576cb1ad688c72f6cc1443443b7d12b69 Mon Sep 17 00:00:00 2001
-From: Andy Parkins <andyparkins@gmail.com>
-Date: Wed, 25 Oct 2006 15:50:03 +0100
-Subject: [PATCH] git-clone documentation didn't mention --origin as equivalent of -o
-To: git@vger.kernel.org
-X-Length: 979
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
-Message-Id: <200610251550.04024.andyparkins@gmail.com>
+Documentation: new option -P for git-svnimport.
 
-Signed-off-by: Andy Parkins <andyparkins@gmail.com>
+Signed-off-by: Quy Tonthat <qtonthat@gmail.com>
 ---
- Documentation/git-clone.txt |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
-X-TUID: 4aebd5773bc8eef9
+ Documentation/git-svnimport.txt |    9 +++++++++
+ 1 files changed, 9 insertions(+), 0 deletions(-)
 
-diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-index f973c64..e22a036 100644
---- a/Documentation/git-clone.txt
-+++ b/Documentation/git-clone.txt
-@@ -75,6 +75,7 @@ OPTIONS
- 	this option is used, neither the `origin` branch nor the
- 	default `remotes/origin` file is created.
+diff --git a/Documentation/git-svnimport.txt b/Documentation/git-svnimport.txt
+index b1b87c2..df604e1 100644
+--- a/Documentation/git-svnimport.txt
++++ b/Documentation/git-svnimport.txt
+@@ -15,6 +15,7 @@ SYNOPSIS
+ 		[ -b branch_subdir ] [ -T trunk_subdir ] [ -t tag_subdir ]
+ 		[ -s start_chg ] [ -m ] [ -r ] [ -M regex ]
+ 		[ -I <ignorefile_name> ] [ -A <author_file> ]
++		[ -P <path_from_trunk> ]
+ 		<SVN_repository_URL> [ <path> ]
  
-+--origin::
- -o <name>::
- 	Instead of using the branch name 'origin' to keep track
- 	of the upstream repository, use <name> instead.  Note
+ 
+@@ -107,6 +108,14 @@ repository without -A.
+ 	Formerly, this option controlled how many revisions to pull,
+ 	due to SVN memory leaks. (These have been worked around.)
+ 
++-P <path_from_trunk>::
++	Partial import of the SVN tree.
++
++	By default, the whole tree on the SVN trunk (/trunk) is imported.
++	'-P my/proj' will import starting only from '/trunk/my/proj'.
++	This option is useful when you want to import one project from a
++	svn repo which hosts multiple projects under the same trunk.
++
+ -v::
+ 	Verbosity: let 'svnimport' report what it is doing.
+ 
 -- 
-1.4.2.3
+1.4.4.1.GIT
