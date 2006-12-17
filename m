@@ -1,98 +1,138 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: [PATCH] merge-recursive: add/add really is modify/modify with an empty base
-Date: Wed, 13 Dec 2006 22:01:21 +0000
-Message-ID: <b0943d9e0612131401s6cde6d0du5e3c6d2e34bfbbb2@mail.gmail.com>
-References: <20061207101707.GA19139@spearce.org>
-	 <Pine.LNX.4.63.0612100056090.28348@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <Pine.LNX.4.63.0612100114440.28348@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <7vmz5w5tuw.fsf@assigned-by-dhcp.cox.net>
-	 <Pine.LNX.4.63.0612122347590.2807@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <7vvekgog0r.fsf@assigned-by-dhcp.cox.net>
-	 <Pine.LNX.4.63.0612130402300.2807@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <7vvekgl2z2.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] git-fetch: Avoid reading packed refs over and over again
+Date: Sun, 17 Dec 2006 20:52:34 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0612172048331.3635@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 13 Dec 2006 22:01:31 +0000 (UTC)
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Sun, 17 Dec 2006 19:52:43 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=MtUiSbdTdMRmF81QiWIjQjaRXAefCrdkCi5MzqdwIXMroD2LIGDrehgxK0LeRqUXjmzDPih9xAZ9sKbgLUbX1wF7/rOwkV2WPhruvNf2h4zd3XR7YHIQNA1qtY2Lgw4Z07elMcAbo6GGbDFlXm/sSdaMHnvq/neJ1E5e6XJRdzs=
-In-Reply-To: <7vvekgl2z2.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34235>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34703>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GucAJ-00050e-3K for gcvg-git@gmane.org; Wed, 13 Dec
- 2006 23:01:27 +0100
+ esmtp (Exim 4.50) id 1Gw23u-0001Yo-Ab for gcvg-git@gmane.org; Sun, 17 Dec
+ 2006 20:52:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751225AbWLMWBX (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 13 Dec 2006
- 17:01:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751607AbWLMWBX
- (ORCPT <rfc822;git-outgoing>); Wed, 13 Dec 2006 17:01:23 -0500
-Received: from nz-out-0506.google.com ([64.233.162.229]:29074 "EHLO
- nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1751225AbWLMWBW (ORCPT <rfc822;git@vger.kernel.org>); Wed, 13 Dec
- 2006 17:01:22 -0500
-Received: by nz-out-0506.google.com with SMTP id s1so160680nze for
- <git@vger.kernel.org>; Wed, 13 Dec 2006 14:01:21 -0800 (PST)
-Received: by 10.65.59.20 with SMTP id m20mr179311qbk.1166047281381; Wed, 13
- Dec 2006 14:01:21 -0800 (PST)
-Received: by 10.65.126.2 with HTTP; Wed, 13 Dec 2006 14:01:21 -0800 (PST)
-To: "Junio C Hamano" <junkio@cox.net>
+ S1750997AbWLQTwh (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 17 Dec 2006
+ 14:52:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750998AbWLQTwh
+ (ORCPT <rfc822;git-outgoing>); Sun, 17 Dec 2006 14:52:37 -0500
+Received: from mail.gmx.net ([213.165.64.20]:47753 "HELO mail.gmx.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S1750994AbWLQTwg
+ (ORCPT <rfc822;git@vger.kernel.org>); Sun, 17 Dec 2006 14:52:36 -0500
+Received: (qmail invoked by alias); 17 Dec 2006 19:52:35 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp034) with SMTP; 17 Dec 2006 20:52:35 +0100
+To: git@vger.kernel.org, junkio@cox.net
 Sender: git-owner@vger.kernel.org
 
-On 13/12/06, Junio C Hamano <junkio@cox.net> wrote:
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->
-> > Unify the handling for cases C (add/add) and D (modify/modify).
-> >
-> >       On Tue, 12 Dec 2006, Junio C Hamano wrote:
-> >
-> >       > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> >       >
-> >       > > How about this: if there is an add/add conflict, we treat it
-> >       > > as if there _was_ an empty file, and we let the shiny new
-> >       > > xdl_merge() find the _true_ conflicts, _instead of_ removing
-> >       > > the file from the index, adding both files with different
-> >       > > "~blabla" markers appended to their file names to the working
-> >       > > directory.
 
-What is this new xdl_merge()? Is it a better replacement for diff3? In
-this situation diff3 would actually show two confict parts, each of
-them being the full file, with an empty ancestor.
+When checking which tags to fetch, the old code used to call
+git-show-ref --verify for _each_ remote tag. Since reading even
+packed refs is not a cheap operation when there are a lot of
+local refs, the code became quite slow.
 
-> This fixes the behaviour in "both branches add the path
-> differently" case.  Previously merge-recursive did not create
-> the working tree file, but now it does just like merge-resolve.
->
-> Although I would feel very happy about this change, Catalin
-> might want to be informed about potential interaction this
-> change might have with his commit 8d41555 in StGIT.
+This fixes it by teaching git-show-ref to filter out valid
+(i.e. locally stored) refs from stdin, when passing the parameter
+--filter-invalid to git-show-ref, and feeding it lines in the
+form 'sha1 refname'.
 
-I don't think it affects StGIT. Previously, "git-read-tree -m" left a
-file in the tree in this conflict situation. When I switched to
-git-merge-recursive (to handle renames better), I noticed that the
-file was no longer there and my merge algorithm failed. It now checks
-whether the file is missing and it generates one.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+	Since this option is purely for use in git-fetch, I did not even
+	bother documenting it.
 
-The way StGIT handle any conflicts is not to leave the index in a
-state with multiple stages per file. When I push a patch that is
-causing an add/add situation, I want a version of the file to be added
-to the index (usually the one already in the tree, not in the patch
-being pushed) so that a "stg status" won't show like the patch is
-removing that file.
+	This patch would have been so much cleaner if git-fetch was written
+	in C... But since it accumulated so many functions by now, I see
+	not much chance for that (at least in the near future).
 
+	In very unscientific tests, a single read_packed_refs() in the 
+	lilypond repo took 0.1 seconds. Yep, that's 1/10th second. So, the 
+	while loop in git-fetch took more than 10 seconds for 107 tags.
+
+ builtin-show-ref.c |   28 +++++++++++++++++++++++++++-
+ git-fetch.sh       |    2 +-
+ 2 files changed, 28 insertions(+), 2 deletions(-)
+
+diff --git a/builtin-show-ref.c b/builtin-show-ref.c
+index f6929d9..c0b55c1 100644
+--- a/builtin-show-ref.c
++++ b/builtin-show-ref.c
+@@ -2,8 +2,9 @@
+ #include "refs.h"
+ #include "object.h"
+ #include "tag.h"
++#include "path-list.h"
+ 
+-static const char show_ref_usage[] = "git show-ref [-q|--quiet] [--verify] [-h|--head] [-d|--dereference] [-s|--hash[=<length>]] [--abbrev[=<length>]] [--tags] [--heads] [--] [pattern*]";
++static const char show_ref_usage[] = "git show-ref [-q|--quiet] [--verify] [-h|--head] [-d|--dereference] [-s|--hash[=<length>]] [--abbrev[=<length>]] [--tags] [--heads] [--] [pattern*] | --filter-invalid < ref-list";
+ 
+ static int deref_tags = 0, show_head = 0, tags_only = 0, heads_only = 0,
+ 	found_match = 0, verify = 0, quiet = 0, hash_only = 0, abbrev = 0;
+@@ -86,6 +87,29 @@ match:
+ 	return 0;
+ }
+ 
++static int add_valid(const char *refname, const unsigned char *sha1, int flag, void *cbdata)
++{
++	struct path_list *list = (struct path_list *)cbdata;
++	path_list_insert(refname, list);
++	return 0;
++}
++
++static int filter_invalid()
++{
++	static struct path_list valid_refs = { NULL, 0, 0, 0 };
++	char buf[1024];
++
++	for_each_ref(add_valid, &valid_refs);
++	while (fgets(buf, sizeof(buf), stdin)) {
++		int len = strlen(buf);
++		if (len > 0 && buf[len - 1] == '\n')
++			buf[--len] = '\0';
++		if (len < 41 || !path_list_has_path(&valid_refs, buf + 41))
++			printf("%s\n", buf);
++	}
++	return 0;
++}
++
+ int cmd_show_ref(int argc, const char **argv, const char *prefix)
+ {
+ 	int i;
+@@ -153,6 +177,8 @@ int cmd_show_ref(int argc, const char **argv, const char *prefix)
+ 			heads_only = 1;
+ 			continue;
+ 		}
++		if (!strcmp(arg, "--filter-invalid"))
++			return filter_invalid();
+ 		usage(show_ref_usage);
+ 	}
+ 	if (verify) {
+diff --git a/git-fetch.sh b/git-fetch.sh
+index 3feba32..d1c00db 100755
+--- a/git-fetch.sh
++++ b/git-fetch.sh
+@@ -474,9 +474,9 @@ case "$no_tags$tags" in
+ 		echo "$ls_remote_result" |
+ 		sed -n	-e 's|^\('"$_x40"'\)	\(refs/tags/.*\)^{}$|\1 \2|p' \
+ 			-e 's|^\('"$_x40"'\)	\(refs/tags/.*\)$|\1 \2|p' |
++		git-show-ref --filter-invalid |
+ 		while read sha1 name
+ 		do
+-			git-show-ref --verify --quiet -- "$name" && continue
+ 			git-check-ref-format "$name" || {
+ 				echo >&2 "warning: tag ${name} ignored"
+ 				continue
 -- 
+1.4.4.1.g3c2a-dirty
