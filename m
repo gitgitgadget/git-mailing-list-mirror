@@ -1,108 +1,119 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Wink Saville <wink@saville.com>
-Subject: Re: Resolving conflicts
-Date: Thu, 30 Nov 2006 23:52:04 -0800
-Message-ID: <456FDF24.1070001@saville.com>
-References: <456FD461.4080002@saville.com> <Pine.LNX.4.64.0611302330000.3695@woody.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH 2/2] Make left-right automatic.
+Date: Sat, 16 Dec 2006 16:12:55 -0800
+Message-ID: <7vlkl78jnc.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Fri, 1 Dec 2006 07:52:24 +0000 (UTC)
-Cc: git <git@vger.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Sun, 17 Dec 2006 00:13:05 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.8 (Windows/20061025)
-In-Reply-To: <Pine.LNX.4.64.0611302330000.3695@woody.osdl.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32862>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gq3C2-0000fb-0t for gcvg-git@gmane.org; Fri, 01 Dec
- 2006 08:52:22 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34663>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GvjeG-0005Fm-Pj for gcvg-git@gmane.org; Sun, 17 Dec
+ 2006 01:13:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S935687AbWLAHwB (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
- 02:52:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935979AbWLAHwA
- (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 02:52:00 -0500
-Received: from 70-91-206-233-BusName-SFBA.hfc.comcastbusiness.net
- ([70.91.206.233]:57472 "EHLO saville.com") by vger.kernel.org with ESMTP id
- S935687AbWLAHv7 (ORCPT <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006
- 02:51:59 -0500
-Received: from [192.168.0.52] (unknown [192.168.0.52]) by saville.com
- (Postfix) with ESMTP id A321357A6F; Thu, 30 Nov 2006 23:48:02 -0800 (PST)
-To: Linus Torvalds <torvalds@osdl.org>
+ S1422910AbWLQAM5 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 16 Dec 2006
+ 19:12:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422914AbWLQAM5
+ (ORCPT <rfc822;git-outgoing>); Sat, 16 Dec 2006 19:12:57 -0500
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:33098 "EHLO
+ fed1rmmtao04.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1422910AbWLQAM5 (ORCPT <rfc822;git@vger.kernel.org>); Sat, 16 Dec 2006
+ 19:12:57 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao04.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061217001256.JHSD7494.fed1rmmtao04.cox.net@fed1rmimpo02.cox.net>; Sat, 16
+ Dec 2006 19:12:56 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id zcD81V0081kojtg0000000; Sat, 16 Dec 2006
+ 19:13:08 -0500
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Linus Torvalds wrote:
-> 
-> On Thu, 30 Nov 2006, Wink Saville wrote:
->> I then searched the net for how to resolve conflicts, seems you
->> should start by doing a git-diff, so I did and I get this:
->>
->>   diff --cc kernel/fork.c
->>   index d74b4a5,8cdd3e7..0000000
->>   --- a/kernel/fork.c
->>   +++ b/kernel/fork.c
->>   diff --cc kernel/spinlock.c
->>   index f4d1718,2c6c2bf..0000000
->>   --- a/kernel/spinlock.c
->>   +++ b/kernel/spinlock.c
-> 
-> Hmm. That doesn't look like a conflict. If it had a real conflict, I'd 
-> have expected to see it mentioned in that diff..
-> 
-> This may be a stupid question, but if you haven't actually ever needed to 
-> do any file-level merges before, this may be the first time you've 
-> actually had the external 3-way "merge" program called, and that's one of 
-> the few things that git still depends on _external_ programs for. And if 
-> that program is broken or missing, you'd get bubkis.
-> 
-> (This is hopefully getting fixed, and we'll have one less external 
-> dependency to worry about, but it's the only thing that springs to mind)
-> 
-> That's especially true since the merge-head your log shows wasn't even all 
-> that long ago: there's just 80 commits since that common merge base, and 
-> only two of them even change those two files, and only in rather simple 
-> ways at that.
-> 
-> So my guess is that there wasn't actually a conflict at all, but the 
-> "merge" program (usually in /usr/bin/merge) returned an error for some 
-> reason. What does "which merge" and "rpm -qf /usr/bin/merge" say?
-> 
-> But you can also do "git diff --ours" (or "git diff --their") to get a 
-> simple two-way diff of the end result of the merge to what you were 
-> looking at.
-> 
-> 		Linus
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
+When using symmetric differences, I think the user almost always
+would want to know which side of the symmetry each commit came
+from.  So this removes --left-right option from the command
+line, and turns it on automatically when a symmetric difference
+is used ("git log --merge" counts as a symmetric difference
+between HEAD and MERGE_HEAD).
 
-Earlier had a problem with git wanting merge but didn't have it and
-couldn't figure out which package it was in Ubuntu:( So I symlinked merge
-to kdiff3 which worked at the time:
+Just in case, a new option --no-left-right is provided to defeat
+this, but I do not know if it would be useful.
 
-wink@winkc2d1:~/linux/linux-2.6$ ls -al /usr/bin/merge
-lrwxrwxrwx 1 root root 6 2006-11-17 19:24 /usr/bin/merge -> kdiff3
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
 
-But doesn't/didn't work this time.
+ * I think this would make life easier for merge-heavy people.
+   I'd push this out on 'next' soonish.
 
-I tried "git diff --ours"
+ revision.c |   13 ++++++++++---
+ revision.h |    1 +
+ 2 files changed, 11 insertions(+), 3 deletions(-)
 
-wink@winkc2d1:~/linux/linux-2.6$ git diff --ours
-* Unmerged path kernel/fork.c
-diff --git a/kernel/fork.c b/kernel/fork.c
-* Unmerged path kernel/spinlock.c
-diff --git a/kernel/spinlock.c b/kernel/spinlock.c
-wink@winkc2d1:~/linux/linux-2.6$
+diff --git a/revision.c b/revision.c
+index d84f46e..56819f8 100644
+--- a/revision.c
++++ b/revision.c
+@@ -853,8 +853,8 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, const ch
+ 				revs->boundary = 1;
+ 				continue;
+ 			}
+-			if (!strcmp(arg, "--left-right")) {
+-				revs->left_right = 1;
++			if (!strcmp(arg, "--no-left-right")) {
++				revs->no_left_right = 1;
+ 				continue;
+ 			}
+ 			if (!strcmp(arg, "--objects")) {
+@@ -1055,13 +1055,18 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, const ch
+ void prepare_revision_walk(struct rev_info *revs)
+ {
+ 	int nr = revs->pending.nr;
++	int has_symmetric = 0;
+ 	struct object_array_entry *list = revs->pending.objects;
+ 
+ 	revs->pending.nr = 0;
+ 	revs->pending.alloc = 0;
+ 	revs->pending.objects = NULL;
+ 	while (--nr >= 0) {
+-		struct commit *commit = handle_commit(revs, list->item, list->name);
++		struct commit *commit;
++
++		if (list->item->flags & SYMMETRIC_LEFT)
++			has_symmetric = 1;
++		commit = handle_commit(revs, list->item, list->name);
+ 		if (commit) {
+ 			if (!(commit->object.flags & SEEN)) {
+ 				commit->object.flags |= SEEN;
+@@ -1073,6 +1078,8 @@ void prepare_revision_walk(struct rev_info *revs)
+ 
+ 	if (revs->no_walk)
+ 		return;
++	if (!revs->no_left_right && has_symmetric)
++		revs->left_right = 1;
+ 	if (revs->limited)
+ 		limit_list(revs);
+ 	if (revs->topo_order)
+diff --git a/revision.h b/revision.h
+index 4585463..b2ab814 100644
+--- a/revision.h
++++ b/revision.h
+@@ -41,6 +41,7 @@ struct rev_info {
+ 			limited:1,
+ 			unpacked:1, /* see also ignore_packed below */
+ 			boundary:1,
++			no_left_right:1,
+ 			left_right:1,
+ 			parents:1;
+ 
+-- 
+1.4.4.2.g83c5
 
-Wink
-
-Not too helpful:(
