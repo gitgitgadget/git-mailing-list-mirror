@@ -1,77 +1,83 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,MSGID_FROM_MTA_HEADER,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
-From: Sean <seanlkml@sympatico.ca>
-Subject: Re: git: how to produce context diffs?
-Date: Mon, 27 Nov 2006 10:38:04 -0500
-Message-ID: <BAYC1-PASMTP10B822EE809E075EFFD879AEE60@CEZ.ICE>
-References: <200611271516.30425.bruno@clisp.org>
-	<ekesgt$6jq$1@sea.gmane.org>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] Small optimizations to gitweb
+Date: Tue, 19 Dec 2006 00:17:03 +0100
+Organization: At home
+Message-ID: <em77cg$obn$1@sea.gmane.org>
+References: <20061218224327.GG16029@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=iso-8859-2
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Mon, 27 Nov 2006 15:38:38 +0000 (UTC)
-Cc: Jakub Narebski <jnareb@gmail.com>
+NNTP-Posting-Date: Mon, 18 Dec 2006 23:25:51 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Originating-IP: [65.93.43.74]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Original-Message-Id: <20061127103804.4a543ddc.seanlkml@sympatico.ca>
-In-Reply-To: <ekesgt$6jq$1@sea.gmane.org>
-X-Mailer: Sylpheed version 2.2.10 (GTK+ 2.10.4; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 27 Nov 2006 15:42:11.0781 (UTC) FILETIME=[9ACBF750:01C7123A]
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 29
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-25-107.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34759>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GoiYe-0001Ag-3M for gcvg-git@gmane.org; Mon, 27 Nov
- 2006 16:38:12 +0100
+ esmtp (Exim 4.43) id 1GwRoi-0003gc-3a for gcvg-git@gmane.org; Tue, 19 Dec
+ 2006 00:22:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1758300AbWK0PiI convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Mon, 27 Nov 2006 10:38:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758304AbWK0PiI
- (ORCPT <rfc822;git-outgoing>); Mon, 27 Nov 2006 10:38:08 -0500
-Received: from bayc1-pasmtp10.bayc1.hotmail.com ([65.54.191.170]:17213 "EHLO
- BAYC1-PASMTP10.bayc1.hotmail.com") by vger.kernel.org with ESMTP id
- S1758300AbWK0PiG convert rfc822-to-8bit (ORCPT <rfc822;git@vger.kernel.org>);
- Mon, 27 Nov 2006 10:38:06 -0500
-Received: from linux1.attic.local ([65.93.43.74]) by
- BAYC1-PASMTP10.bayc1.hotmail.com over TLS secured channel with Microsoft
- SMTPSVC(6.0.3790.1830); Mon, 27 Nov 2006 07:42:11 -0800
-Received: from guru.attic.local ([10.10.10.28]) by linux1.attic.local with
- esmtp (Exim 4.43) id 1GohcQ-0006hY-VJ; Mon, 27 Nov 2006 09:38:02 -0500
+ S1754752AbWLRXWl convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Mon, 18 Dec 2006 18:22:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754755AbWLRXWl
+ (ORCPT <rfc822;git-outgoing>); Mon, 18 Dec 2006 18:22:41 -0500
+Received: from main.gmane.org ([80.91.229.2]:56201 "EHLO ciao.gmane.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1754752AbWLRXWk
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 18 Dec 2006 18:22:40 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1GwRjp-00027n-Jw for git@vger.kernel.org; Tue, 19 Dec 2006 00:17:41 +0100
+Received: from host-81-190-25-107.torun.mm.pl ([81.190.25.107]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Tue, 19 Dec 2006 00:17:41 +0100
+Received: from jnareb by host-81-190-25-107.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Tue, 19 Dec 2006
+ 00:17:41 +0100
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On Mon, 27 Nov 2006 15:27:20 +0100
-Jakub Narebski <jnareb@gmail.com> wrote:
+Robert Fitzsimons wrote:
 
-> Bruno Haible wrote:
->=20
-> > Is this a bug in git-diff? The git-diff-files.html says:
-> >=20
-> > =A0 " When the environment variable GIT_EXTERNAL_DIFF is not set ..=
-=2E
-> > =A0 =A0 For example, if you prefer context diff:
-> > =A0 =A0 GIT_DIFF_OPTS=3D-c git-diff-index -p HEAD =A0"
-> >=20
-> > This doesn't work for me with git-1.4.4:
->=20
-> Yes, the bug in documentation, I think. There is an option '-c' to gi=
-t-diff,
-> but it means "combined diff" (for merges), not "context diff".
+> Limit some of the git_cmd's so they only return the number of lines
+> that will be processed.=20
+[...]
+> @@ -2876,8 +2879,8 @@ sub git_summary {
+> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0}
+> =A0=A0=A0=A0=A0=A0=A0=A0}
+> =A0
+> -=A0=A0=A0=A0=A0=A0=A0open my $fd, "-|", git_cmd(), "rev-list", "--ma=
+x-count=3D17",
+> -=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0git_get_head_hash($proj=
+ect), "--"
+> +=A0=A0=A0=A0=A0=A0=A0open my $fd, "-|", git_cmd(), "rev-list", "--ma=
+x-count=3D16",
+> +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0$head, "--"
+> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0or die_error(undef, "=
+Open git-rev-list failed");
+> =A0=A0=A0=A0=A0=A0=A0=A0my @revlist =3D map { chomp; $_ } <$fd>;
+> =A0=A0=A0=A0=A0=A0=A0=A0close $fd;
 
-Indeed.  That documentation predates built-in diff completely.
+Actually, that is needed to implement checking if we have more than
+the number of commits to show to add '...' at the end only if there
+are some commits which we don't show. The same for heads and tags.
+(On my short TODO list, but feel free to do it yourself, if you want).
 
-It appears the only valid options now are "-u XX" and "--unified=3DXX".
-These options are never passed to diff, but rather used to control
-the internal diff.  Strangely, it appears that gitk is even passing
-incorrect parameters via GIT_DIFF_OPTS.
+So ack without the last chunk.
 
-Unless i've really missed something, the above documentation should be
-reworked to remove mention of running diff altogether, and should menti=
-on
-that the GIT_DIFF_OPTS only has two valid settings.
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
 
