@@ -2,63 +2,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Marko Macek <marko.macek@gmx.net>
-Subject: Re: [DRAFT] Branching and merging with git
-Date: Fri, 17 Nov 2006 17:25:25 +0100
-Message-ID: <455DE275.8020000@gmx.net>
-References: <20061116221701.4499.qmail@science.horizon.com>	 <20061117153246.GA20065@thunk.org>	 <BAYC1-PASMTP07C8A8D8E5E78173953CA9AEE80@CEZ.ICE> <fcaeb9bf0611170819j57cda9e1ia4ecd4cd13956447@mail.gmail.com>
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] git-parse-remote: fix ambiguous shell bug in expand_refs_wildcard
+Date: Mon, 18 Dec 2006 17:45:05 -0500
+Message-ID: <20061218224505.GB13034@coredump.intra.peff.net>
+References: <20061218080941.GA3857@coredump.intra.peff.net> <7v4prtx9hu.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Fri, 17 Nov 2006 16:29:50 +0000 (UTC)
-Cc: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Mon, 18 Dec 2006 22:45:47 +0000 (UTC)
+Cc: Herbert Xu <herbert@gondor.apana.org.au>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #420190
-User-Agent: Thunderbird 1.5.0.7 (X11/20060909)
-Original-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <fcaeb9bf0611170819j57cda9e1ia4ecd4cd13956447@mail.gmail.com>
-X-Y-GMX-Trusted: 0
+Content-Disposition: inline
+In-Reply-To: <7v4prtx9hu.fsf@assigned-by-dhcp.cox.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31704>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34751>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gl6aO-0001Bf-7z for gcvg-git@gmane.org; Fri, 17 Nov
- 2006 17:29:04 +0100
+ esmtp (Exim 4.43) id 1GwREj-0002eC-QC for gcvg-git@gmane.org; Mon, 18 Dec
+ 2006 23:45:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S933710AbWKQQ2s (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 17 Nov 2006
- 11:28:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933709AbWKQQ2r
- (ORCPT <rfc822;git-outgoing>); Fri, 17 Nov 2006 11:28:47 -0500
-Received: from mail.gmx.net ([213.165.64.20]:25257 "HELO mail.gmx.net") by
- vger.kernel.org with SMTP id S933708AbWKQQ2q (ORCPT
- <rfc822;git@vger.kernel.org>); Fri, 17 Nov 2006 11:28:46 -0500
-Received: (qmail invoked by alias); 17 Nov 2006 16:28:45 -0000
-Received: from BSN-77-114-200.dial-up.dsl.siol.net (EHLO [192.168.2.7])
- [193.77.114.200] by mail.gmx.net (mp037) with SMTP; 17 Nov 2006 17:28:45
- +0100
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+ S1754718AbWLRWpK (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 18 Dec 2006
+ 17:45:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754721AbWLRWpK
+ (ORCPT <rfc822;git-outgoing>); Mon, 18 Dec 2006 17:45:10 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:38052
+ "HELO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id
+ S1754718AbWLRWpI (ORCPT <rfc822;git@vger.kernel.org>); Mon, 18 Dec 2006
+ 17:45:08 -0500
+Received: (qmail 14323 invoked from network); 18 Dec 2006 17:45:06 -0500
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2) by
+ 66-23-211-5.clients.speedfactory.net with SMTP; 18 Dec 2006 17:45:06 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 18 Dec
+ 2006 17:45:05 -0500
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Nguyen Thai Ngoc Duy wrote:
-> On 11/17/06, Sean <seanlkml@sympatico.ca> wrote:
->> It would be nice to post this information on the Git website and not
->> have it overshadowed by Cogito examples with paragraphs explaining how
->> Cogito makes things easier.  The current website distracts users away
->> from learning Git or ever reading about this kind of information.
->> Maybe we can pass a hat around for some funds for a separate Cogito
->> website. ;o)
+On Mon, Dec 18, 2006 at 11:57:33AM -0800, Junio C Hamano wrote:
+
+> Sounds like a dash bug, if my reading of 2.6.2 Parameter
+> Expansion is correct:
 > 
-> Or.. find a way to merge cogito back to git :-)
-> /me runs into a nearest bush.
+>     http://www.opengroup.org/onlinepubs/000095399/utilities/xcu_chap02.html
 
-I agree, this would certainly be the best solution. But it would imply
-hiding the 'index' by default which would probably an incompatible change.
+Interestingly, this works in dash:
 
-The alternative would be to explain that git is a low level tool suitable 
-mostly for integrators like Linus (that, and that Cogito and/or StGit should 
-be used by developers/contributors).
+$ foo=bar}
+$ echo ${foo%'}'}
+bar
+
+but doing it inside an interpolated string doesn't:
+
+$ foo=bar}
+$ echo "${foo%'}'}"
+bar}'}
+
+> This would be another way to work it around.  Both dash and bash
+> say 'foo':
+> 
+>         $ suf='^{}'
+>         $ name='foo^{}'
+>         $ echo "${name%$suf}"
+>         foo
+> 
+> I think this might be easier to read than using "^{\}".
+
+That seems reasonable to me.
 
