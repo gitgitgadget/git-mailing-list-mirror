@@ -1,72 +1,97 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: stgit: No patches to pop
-Date: Mon, 11 Dec 2006 17:20:34 +0100
-Organization: At home
-Message-ID: <elk0c3$ovu$1@sea.gmane.org>
-References: <7ac1e90c0612110632x56a2917cu4db33e47923f34c2@mail.gmail.com> <tnxpsaqwgxl.fsf@arm.com>
+From: Robert Fitzsimons <robfitz@273k.net>
+Subject: [PATCH] Small optimizations to gitweb
+Date: Mon, 18 Dec 2006 22:43:27 +0000
+Message-ID: <20061218224327.GG16029@localhost>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-NNTP-Posting-Date: Mon, 11 Dec 2006 16:18:39 +0000 (UTC)
+NNTP-Posting-Date: Mon, 18 Dec 2006 23:07:34 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 22
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-25-107.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+X-Greylist: delayed 1287 seconds by postgrey-1.27 at vger.kernel.org; Mon, 18 Dec 2006 18:05:00 EST
+Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-blacknight-igraine-MailScanner-Information: Please contact the ISP for more information
+X-blacknight-igraine-MailScanner: Found to be clean
+X-blacknight-igraine-MailScanner-SpamCheck: not spam,
+	SpamAssassin (not cached, score=-2, required 7, autolearn=disabled,
+	RCVD_IN_NERDS_IE -2.00)
+X-MailScanner-From: robfitz@273k.net
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34012>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GtnrM-00033r-U5 for gcvg-git@gmane.org; Mon, 11 Dec
- 2006 17:18:33 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34757>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GwRXc-0007Ev-W7 for gcvg-git@gmane.org; Tue, 19 Dec
+ 2006 00:05:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S936981AbWLKQS2 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 11 Dec 2006
- 11:18:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937016AbWLKQS2
- (ORCPT <rfc822;git-outgoing>); Mon, 11 Dec 2006 11:18:28 -0500
-Received: from main.gmane.org ([80.91.229.2]:52875 "EHLO ciao.gmane.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S936981AbWLKQS1
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 11 Dec 2006 11:18:27 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1Gtnr7-00022T-F1 for git@vger.kernel.org; Mon, 11 Dec 2006 17:18:17 +0100
-Received: from host-81-190-25-107.torun.mm.pl ([81.190.25.107]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Mon, 11 Dec 2006 17:18:17 +0100
-Received: from jnareb by host-81-190-25-107.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Mon, 11 Dec 2006
- 17:18:17 +0100
+ S1754727AbWLRXFB (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 18 Dec 2006
+ 18:05:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754728AbWLRXFB
+ (ORCPT <rfc822;git-outgoing>); Mon, 18 Dec 2006 18:05:01 -0500
+Received: from igraine.blacknight.ie ([81.17.252.25]:55023 "EHLO
+ igraine.blacknight.ie" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1754727AbWLRXFA (ORCPT <rfc822;git@vger.kernel.org>); Mon, 18 Dec 2006
+ 18:05:00 -0500
+Received: from [212.2.165.238] (helo=localhost) by igraine.blacknight.ie with
+ esmtp (Exim 4.60) (envelope-from <robfitz@273k.net>) id 1GwRCP-0003qh-GS for
+ git@vger.kernel.org; Mon, 18 Dec 2006 22:43:09 +0000
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Catalin Marinas wrote:
+Limit some of the git_cmd's so they only return the number of lines
+that will be processed.  Don't recompute head hash or have_snapshot
+values.
 
->> I also get things like:
->>
->> % stg pop second
->> popping patch "third"... done
->> Now at patch "second"
-> 
-> In version 0.11, the "pop" command is equivalent to "goto". I changed
-> this in the latest version (in the StGIT repository) so that "pop
-> <patch>" tries to only extract that patch from the stack by popping
-> all the patches to the given one and pushing them back without the one
-> you specified. It also supports patch ranges (i.e. patch1..patch4).
+Signed-off-by: Robert Fitzsimons <robfitz@273k.net>
+---
+ gitweb/gitweb.perl |    9 ++++++---
+ 1 files changed, 6 insertions(+), 3 deletions(-)
 
-That is kind of strange. Pop should work like pop does, for example
-the one in Perl or Python, removing n elements from the stack of applied
-patches. Not work as "float <patch>"...
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 5ea3fda..1990f15 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -1141,6 +1141,7 @@ sub git_get_last_activity {
+ 	open($fd, "-|", git_cmd(), 'for-each-ref',
+ 	     '--format=%(refname) %(committer)',
+ 	     '--sort=-committerdate',
++	     '--count=1',
+ 	     'refs/heads') or return;
+ 	my $most_recent = <$fd>;
+ 	close $fd or return;
+@@ -2559,6 +2560,8 @@ sub git_shortlog_body {
+ 	# uses global variable $project
+ 	my ($revlist, $from, $to, $refs, $extra) = @_;
+ 
++	my $have_snapshot = gitweb_have_snapshot();
++
+ 	$from = 0 unless defined $from;
+ 	$to = $#{$revlist} if (!defined $to || $#{$revlist} < $to);
+ 
+@@ -2586,7 +2589,7 @@ sub git_shortlog_body {
+ 		      $cgi->a({-href => href(action=>"commit", hash=>$commit)}, "commit") . " | " .
+ 		      $cgi->a({-href => href(action=>"commitdiff", hash=>$commit)}, "commitdiff") . " | " .
+ 		      $cgi->a({-href => href(action=>"tree", hash=>$commit, hash_base=>$commit)}, "tree");
+-		if (gitweb_have_snapshot()) {
++		if ($have_snapshot) {
+ 			print " | " . $cgi->a({-href => href(action=>"snapshot", hash=>$commit)}, "snapshot");
+ 		}
+ 		print "</td>\n" .
+@@ -2876,8 +2879,8 @@ sub git_summary {
+ 		}
+ 	}
+ 
+-	open my $fd, "-|", git_cmd(), "rev-list", "--max-count=17",
+-		git_get_head_hash($project), "--"
++	open my $fd, "-|", git_cmd(), "rev-list", "--max-count=16",
++		$head, "--"
+ 		or die_error(undef, "Open git-rev-list failed");
+ 	my @revlist = map { chomp; $_ } <$fd>;
+ 	close $fd;
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
-
+1.4.4.2.gee60-dirty
