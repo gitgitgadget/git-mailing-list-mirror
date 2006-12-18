@@ -2,71 +2,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [PATCH 1/2] Allow users to require source branch on git-checkout -b.
-Date: Thu, 7 Dec 2006 14:57:15 -0500
-Message-ID: <20061207195715.GG12143@spearce.org>
-References: <20061207100152.GA12966@spearce.org> <7vlkljsd1k.fsf@assigned-by-dhcp.cox.net>
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Adjust t5510 to put remotes in config
+Date: Mon, 18 Dec 2006 23:28:33 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0612182325550.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0612171545390.3635@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7v7iwox59i.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 7 Dec 2006 19:57:24 +0000 (UTC)
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Mon, 18 Dec 2006 22:28:57 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <7vlkljsd1k.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <7v7iwox59i.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33620>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GsPMw-0002PC-MA for gcvg-git@gmane.org; Thu, 07 Dec
- 2006 20:57:23 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34748>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GwQyN-0006it-1k for gcvg-git@gmane.org; Mon, 18 Dec
+ 2006 23:28:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S938016AbWLGT5T (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
- 14:57:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S938018AbWLGT5T
- (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 14:57:19 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:36300 "EHLO
- corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S938016AbWLGT5S (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec 2006
- 14:57:18 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1GsPMj-00025h-Vr; Thu, 07 Dec 2006 14:57:10 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- 92FEA20FB6E; Thu,  7 Dec 2006 14:57:15 -0500 (EST)
+ S1754700AbWLRW2g (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 18 Dec 2006
+ 17:28:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754701AbWLRW2g
+ (ORCPT <rfc822;git-outgoing>); Mon, 18 Dec 2006 17:28:36 -0500
+Received: from mail.gmx.net ([213.165.64.20]:38181 "HELO mail.gmx.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S1754700AbWLRW2f
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 18 Dec 2006 17:28:35 -0500
+Received: (qmail invoked by alias); 18 Dec 2006 22:28:34 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp032) with SMTP; 18 Dec 2006 23:28:34 +0100
 To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano <junkio@cox.net> wrote:
-> "Shawn O. Pearce" <spearce@spearce.org> writes:
-> > This introduces a new config option: checkout.requireSourceBranch,
+Hi,
+
+On Mon, 18 Dec 2006, Junio C Hamano wrote:
+
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> You could turn it around and make it a per-branch configuration,
-> like:
+> > Since .git/remotes/ is no longer created by default, t5510 failed.
 > 
-> 	[branch "main"]
->         	allowbranchbydefault = true
+> Does not reproduce for me.
 
-Are you suggesting that we change "git-checkout -b" to by default
-require the source branch, but the user can restore the original
-behavior by setting the above per-branch configuration option?
+I just checked out a fresh copy of 'next'. It still fails. The culprit is 
+61dde8f91672ab362f3cfd3af8d6d09d448d4ffe, which removes the line
 
-I'm OK with that version too.  Most of these users want to be
-required to enter the source branch, and their topic branches (which
-are always their current branches btw) are so transient they won't
-bother with a per-branch setting.  So they get what they want:
-the tool reminding them to select their source revision.
+		mkdir -p "$GIT_DIR/remotes" &&
 
--- 
+which is line 372 in the parent of that commit.
+
+> > While at it, convert the tests to use the config way of specifying
+> > remotes instead of creating a file in .git/remotes/.
+> 
+> I think adding tests to use config is good, but I'd rather see
+> the test scripts to test not _only_ config but both.
+
+Okay. How about fixing the first hunk as proposed, and the second by 
+'mkdir .git/remotes'?
+
+Ciao,
+Dscho
