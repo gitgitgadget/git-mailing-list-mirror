@@ -1,72 +1,63 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Make "git checkout <branch> <path>" work when <path> is a directory.
-Date: Fri, 17 Nov 2006 00:15:30 -0800
-Message-ID: <7vd57mtrod.fsf@assigned-by-dhcp.cox.net>
-References: <f2b55d220611162149m719079f3ubdaeac43fe9798cb@mail.gmail.com>
-	<7vlkmavcai.fsf@assigned-by-dhcp.cox.net>
-	<f2b55d220611162218t3a752829hf922613c17fe326d@mail.gmail.com>
+From: "Francis Moreau" <francis.moro@gmail.com>
+Subject: Can't fetch 2.6.20-rc1 tag...
+Date: Mon, 18 Dec 2006 12:56:09 +0100
+Message-ID: <38b2ab8a0612180356t5c04f5bn29d7be3d0aa40764@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 17 Nov 2006 08:15:38 +0000 (UTC)
-Cc: "Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Mon, 18 Dec 2006 11:56:27 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=NFgO9p4P7mGIxkxrwV5LVvm/nMQ5ppW2ly7e/WX9htYDYAB0ZgTa+vtBaxOMfYbegpMglBteLHm4insJ71nxabu0Tz/6IdRi/Rty0vHVCJahKmn+FJvh4GtWCeMZx49Wx4lkQUJTuhO+e0OU8qADOidxfGuJqWxj9by4XMQ+NH0=
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31673>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gkysq-0001zx-8S for gcvg-git@gmane.org; Fri, 17 Nov
- 2006 09:15:36 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34739>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GwH6S-0005za-CE for gcvg-git@gmane.org; Mon, 18 Dec
+ 2006 12:56:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1755541AbWKQIPc (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 17 Nov 2006
- 03:15:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755542AbWKQIPc
- (ORCPT <rfc822;git-outgoing>); Fri, 17 Nov 2006 03:15:32 -0500
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:28643 "EHLO
- fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP id S1755541AbWKQIPb
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 17 Nov 2006 03:15:31 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao06.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061117081531.KMNA5465.fed1rmmtao06.cox.net@fed1rmimpo02.cox.net>; Fri, 17
- Nov 2006 03:15:31 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id nkFd1V00B1kojtg0000000; Fri, 17 Nov 2006
- 03:15:37 -0500
-To: "Michael K. Edwards" <medwards.linux@gmail.com>
+ S1753892AbWLRL4M (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 18 Dec 2006
+ 06:56:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753893AbWLRL4M
+ (ORCPT <rfc822;git-outgoing>); Mon, 18 Dec 2006 06:56:12 -0500
+Received: from wx-out-0506.google.com ([66.249.82.233]:45073 "EHLO
+ wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1753892AbWLRL4K (ORCPT <rfc822;git@vger.kernel.org>); Mon, 18 Dec
+ 2006 06:56:10 -0500
+Received: by wx-out-0506.google.com with SMTP id h27so1360576wxd for
+ <git@vger.kernel.org>; Mon, 18 Dec 2006 03:56:10 -0800 (PST)
+Received: by 10.90.105.19 with SMTP id d19mr1949734agc.1166442969868; Mon, 18
+ Dec 2006 03:56:09 -0800 (PST)
+Received: by 10.90.106.16 with HTTP; Mon, 18 Dec 2006 03:56:09 -0800 (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-"Michael K. Edwards" <medwards.linux@gmail.com> writes:
+Hi
 
-> Ah.  Missed that patch, which is indeed a superset of mine.  Looks
-> like you committed it on branch "next"; is that a personal
-> experimental branch, or the integration branch against which patches
-> should be generated?
+I've got this problem when issuing the following command in a kernel repo:
 
-Actually it is not pushed out anywhere yet but will appear on
-both 'maint' and 'master' along with other post 1.4.4 fixes and
-will be contained in the 1.4.4.1 maintenance release.
+    $ git branch
+    * master
+    origin
+    $ git pull -tags
+    fatal: unexpected EOF
+    Fetch failure:
+git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
 
-The role of each branch at my public repository is desribed in
-this message:
+My git version is '1.4.4.2'
 
-	Message-ID: <7vk62qhy4k.fsf@assigned-by-dhcp.cox.net>
-	http://article.gmane.org/gmane.comp.version-control.git/29951
+Can anybody tell me what I'm doing wrong ?
 
-In general, if your changes and fixes are applicable in
-isolation to "master", it is most appropriate to send patches
-against "master".  If you are following up a topic that is
-cooking in "next" (or "pu"), then basing your patch on "master"
-is obviously a bad idea and a patch that applies on "next" (or
-"pu") would be more appropriate.  If you can make the patch
-against the tip of the specific topic that would be even better
-but it generally is more work for you, so I usually do not ask
-that to contributors.
-
-
+thanks
+-- 
