@@ -1,85 +1,87 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 1/2] Allow users to require source branch on git-checkout -b.
-Date: Thu, 07 Dec 2006 11:48:07 -0800
-Message-ID: <7vlkljsd1k.fsf@assigned-by-dhcp.cox.net>
-References: <20061207100152.GA12966@spearce.org>
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: David Tweed <tweed314@yahoo.co.uk>
+Subject: clarification on "racy-git" & very fast change+commit
+Date: Mon, 18 Dec 2006 15:30:34 +0000 (GMT)
+Message-ID: <20061218153034.41722.qmail@web86906.mail.ukl.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 7 Dec 2006 19:48:16 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Tue, 19 Dec 2006 00:16:48 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061207100152.GA12966@spearce.org> (Shawn O. Pearce's message
-	of "Thu, 7 Dec 2006 05:01:52 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.co.uk;
+  h=Message-ID:Received:Date:From:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=RnZoR9cAnKsSXYLHfCnzTSpZWSBS2Uuwf5A6N+BAPQwiQzKfSjoyW7AYqehZEm8T4MWex0WNyqtj6Lt+Aa+EBz6OVidykq9U3als3zbozF6J38kIvHHxA15rnY2kcjeMw/1xmLCEfL203UFS9YQBoUArGPVmQ3JIjChBqEIeF5Y=  ;
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33619>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GsPE6-0000wW-0M for gcvg-git@gmane.org; Thu, 07 Dec
- 2006 20:48:14 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34772>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GwKSZ-0001cc-57 for gcvg-git@gmane.org; Mon, 18 Dec
+ 2006 16:31:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1163245AbWLGTsK (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
- 14:48:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1163241AbWLGTsK
- (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 14:48:10 -0500
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:46122 "EHLO
- fed1rmmtao07.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1163245AbWLGTsJ (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec 2006
- 14:48:09 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao07.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061207194808.KYSR22053.fed1rmmtao07.cox.net@fed1rmimpo02.cox.net>; Thu, 7
- Dec 2006 14:48:08 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id vvoJ1V00c1kojtg0000000; Thu, 07 Dec 2006
- 14:48:19 -0500
-To: "Shawn O. Pearce" <spearce@spearce.org>
+ S1754146AbWLRPah convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Mon, 18 Dec 2006 10:30:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754151AbWLRPah
+ (ORCPT <rfc822;git-outgoing>); Mon, 18 Dec 2006 10:30:37 -0500
+Received: from web86906.mail.ukl.yahoo.com ([217.12.13.58]:38892 "HELO
+ web86906.mail.ukl.yahoo.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ SMTP id S1754146AbWLRPah convert rfc822-to-8bit (ORCPT
+ <rfc822;git@vger.kernel.org>); Mon, 18 Dec 2006 10:30:37 -0500
+Received: (qmail 41725 invoked by uid 60001); 18 Dec 2006 15:30:34 -0000
+Received: from [134.225.1.161] by web86906.mail.ukl.yahoo.com via HTTP; Mon,
+ 18 Dec 2006 15:30:34 GMT
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
+Hi, I'm getting prepared to do a trial migration my "selected files chr=
+onological database"
+(think plan9's venti but not on every single file) to git and I'd just =
+like to check something.
 
-> I have recently observed a rather large number of users who forget
-> to specify the base revision when they start a new branch with
-> git-checkout -b.  Many of these users are shocked many hours and
-> commits later when their prior branch is now also part of the new
-> branch.  Nasty words about Git usually follow the discovery.
->
-> This introduces a new config option: checkout.requireSourceBranch,
+I'm still don't understand lots of stuff about git but I've read "racy-=
+git.txt" in
+Documentation for git-1.4.4.2. It appears to be saying that there used =
+to be a race (involving
+1-second timestamp limitations of filesystems) but now
+things are done with a slow path fallback for would-race situations so =
+that there is no race in
+any operations any more? If the race is there, the file suggests it isn=
+'t a problem
+for commiting?
 
-I'm not sure about this.
+I'm just checking because the way I'm planning to migrate is by using a=
+ script to
+loop, checking out each snapshot from my existing backup system and com=
+mit it into git. I've got
+quite a fast PC with a reasonable amount of memory but using ext3 as fi=
+lesystem (which
+still has 1 second timestamp resolution AIUI),
+so it seems entirely plausible that I could get checkouts which alter o=
+nly a few files
+taking much, much less than a second. I don't know if any of them also =
+happen to
+have the same filesize, if they do this pattern seems more likely to me=
+et the condtions of the
+"race" than natural, normal git usage, so I want to see if I need to th=
+ink about this dealing
+with this issue. My understanding from racy-git.txt is that I don't.
 
-Often after you started to code something while on 'master' you
-realize that work is not trivial and needs its own branch and
-then "checkout -b" without having to say 'master' (or HEAD) is
-very handy.
+Many thanks for any insight,
 
-I think requring an explicit fork-point when you are _not_ on
-'master' might be a better behaviour.
+cheers, dave tweed
 
-In other words, you allow "checkout -b" (and "branch") to
-default to HEAD only while on the branches marked in your
-configuration file:
 
-Then:
 
-	[branch]
-        	allowbranchbydefault = main
-        	allowbranchbydefault = test
 
-can be used to say "while on 'main' and 'test' branch, 'git
-checkout -b' and 'git branch' without branch point defaults to
-the current branch".
 
-You could turn it around and make it a per-branch configuration,
-like:
-
-	[branch "main"]
-        	allowbranchbydefault = true
-
+	=09
+___________________________________________________________=20
+Try the all-new Yahoo! Mail. "The New Version is radically easier to us=
+e" =96 The Wall Street Journal=20
