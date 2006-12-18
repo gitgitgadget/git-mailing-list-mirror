@@ -1,71 +1,72 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Re: Moving a directory into another fails
-Date: Mon, 04 Dec 2006 20:10:12 +0100
-Organization: At home
-Message-ID: <el1rmm$bca$2@sea.gmane.org>
-References: <9e4733910607260800v618edf0em7b0f5c3332bf8fc5@mail.gmail.com> <20060726223459.GA30601@vsectoor.geht-ab-wie-schnitzel.de> <9e4733910607261603m6772602cr333d8c58f555edaa@mail.gmail.com> <20060728014350.GI13776@pasky.or.cz> <f3d7535d0612041019q4bda01a1k9938b056d51f8a78@mail.gmail.com> <el1qtr$bca$1@sea.gmane.org> <Pine.LNX.4.63.0612042001320.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Quy Tonthat <qtonthat@gmail.com>
+Subject: Re: [PATCH] git-branch: deleting remote branches in new layout
+Date: Mon, 18 Dec 2006 21:02:05 +1100
+Message-ID: <4586671D.5020305@gmail.com>
+References: <45863044.4040406@gmail.com>	<7vbqm13cm0.fsf@assigned-by-dhcp.cox.net> <7vodq11w49.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-NNTP-Posting-Date: Mon, 4 Dec 2006 19:08:53 +0000 (UTC)
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Mon, 18 Dec 2006 10:02:28 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 21
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-24-209.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+User-Agent: Thunderbird 1.5.0.8 (X11/20061107)
+In-Reply-To: <7vodq11w49.fsf@assigned-by-dhcp.cox.net>
+X-Enigmail-Version: 0.94.1.1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33220>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34735>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GrJBI-0002nq-V4 for gcvg-git@gmane.org; Mon, 04 Dec
- 2006 20:08:49 +0100
+ esmtp (Exim 4.50) id 1GwFK2-0003CB-4Z for gcvg-git@gmane.org; Mon, 18 Dec
+ 2006 11:02:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S937298AbWLDTIq (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
- 14:08:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937301AbWLDTIq
- (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 14:08:46 -0500
-Received: from main.gmane.org ([80.91.229.2]:51277 "EHLO ciao.gmane.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S937298AbWLDTIp
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006 14:08:45 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1GrJAw-0000cX-7G for git@vger.kernel.org; Mon, 04 Dec 2006 20:08:26 +0100
-Received: from host-81-190-24-209.torun.mm.pl ([81.190.24.209]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Mon, 04 Dec 2006 20:08:26 +0100
-Received: from jnareb by host-81-190-24-209.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Mon, 04 Dec 2006
- 20:08:26 +0100
-To: git@vger.kernel.org
+ S1753701AbWLRKCK (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 18 Dec 2006
+ 05:02:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753704AbWLRKCK
+ (ORCPT <rfc822;git-outgoing>); Mon, 18 Dec 2006 05:02:10 -0500
+Received: from pecan-mail.exetel.com.au ([220.233.0.8]:33218 "EHLO
+ pecan.exetel.com.au" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+ id S1753701AbWLRKCJ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 18 Dec 2006
+ 05:02:09 -0500
+Received: from 95.69.233.220.exetel.com.au ([220.233.69.95]
+ helo=[192.168.64.35]) by pecan.exetel.com.au with esmtp (Exim 4.63)
+ (envelope-from <qtonthat@gmail.com>) id 1GwFJv-0002Jt-Am; Mon, 18 Dec 2006
+ 21:02:07 +1100
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Johannes Schindelin wrote:
-
-> On Mon, 4 Dec 2006, Jakub Narebski wrote:
+Junio C Hamano wrote:
+> How about this instead?
 > 
->> [...] git should acquire core.filesystemEncoding configuration variable 
->> which would encode from filesystem encoding used in working directory 
->> and perhaps index to UTF-8 encoding used in repository (in tree objects) 
->> and perhaps index.
+> Because -r already means "remote" when listing, you can say:
 > 
-> So, you want to pull in all thinkable encodings? Of course, you could rely 
-> on libiconv, adding yet another dependency to git. (Yes, I know, mailinfo 
-> uses it already. But I never use mailinfo, so I do not need libiconv.)
+> 	$ git branch -d -r origin/todo origin/html origin/man
+> 
+> I just twisted it not to do fast-forward check with the current
+> branch, because remote tracking branches are more like tags than
+> branches, and when you are removing them, most likely that is
+> not because you are "done with" them (for a local branch, it
+> usually means "you merged it up") but because you are not even
+> interested in them.
 
-A conditional dependency. If you don't have libiconv, this feature wouldn't
-be available.
+It sure is much more unambiguous that way.
 
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Users won't be able to mix "local" and "remote" on one command
+line as they were with the old layout. But that's OK for such an
+infrequently used command.
 
+>  		if (!resolve_ref(name, sha1, 1, NULL))
+> -			die("Branch '%s' not found.", argv[i]);
+> +			die("%sbranch '%s' not found.", remote, argv[i]);
+
+This should not be a fatal error. We should only give warning
+and move on to the next item. The way "rm" does.
+
+Quy
