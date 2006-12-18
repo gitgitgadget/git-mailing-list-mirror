@@ -1,82 +1,62 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Cleaning up git user-interface warts
-Date: Tue, 14 Nov 2006 14:50:14 -0800
-Message-ID: <7virhhy76h.fsf@assigned-by-dhcp.cox.net>
-References: <87k61yt1x2.wl%cworth@cworth.org> <455A1137.8030301@shadowen.org>
-	<87hcx1u934.wl%cworth@cworth.org>
-	<Pine.LNX.4.64.0611141518590.2591@xanadu.home>
-	<87bqn9u43s.wl%cworth@cworth.org>
-	<7vr6w5y7to.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, score=-2.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,MSGID_FROM_MTA_HEADER,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+From: Sean <seanlkml@sympatico.ca>
+Subject: Re: Can't fetch 2.6.20-rc1 tag...
+Date: Mon, 18 Dec 2006 07:29:45 -0500
+Message-ID: <BAYC1-PASMTP1091AB27E446DFAD251A6DAEC90@CEZ.ICE>
+References: <38b2ab8a0612180356t5c04f5bn29d7be3d0aa40764@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 14 Nov 2006 22:50:27 +0000 (UTC)
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Mon, 18 Dec 2006 23:56:21 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <7vr6w5y7to.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Tue, 14 Nov 2006 14:36:19 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Greylist: delayed 1147 seconds by postgrey-1.27 at vger.kernel.org; Mon, 18 Dec 2006 07:48:55 EST
+X-Originating-IP: [65.93.43.74]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Original-Message-Id: <20061218072945.53eda885.seanlkml@sympatico.ca>
+In-Reply-To: <38b2ab8a0612180356t5c04f5bn29d7be3d0aa40764@mail.gmail.com>
+X-Mailer: Sylpheed version 2.2.10 (GTK+ 2.10.4; i386-redhat-linux-gnu)
+X-OriginalArrivalTime: 18 Dec 2006 12:34:08.0296 (UTC) FILETIME=[CFFD8A80:01C722A0]
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31389>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gk76j-0003Ha-Lq for gcvg-git@gmane.org; Tue, 14 Nov
- 2006 23:50:22 +0100
+ esmtp (Exim 4.43) id 1GwHvd-0001q6-Jv for gcvg-git@gmane.org; Mon, 18 Dec
+ 2006 13:49:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S966426AbWKNWuS (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 14 Nov 2006
- 17:50:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966427AbWKNWuR
- (ORCPT <rfc822;git-outgoing>); Tue, 14 Nov 2006 17:50:17 -0500
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:65213 "EHLO
- fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP id S966426AbWKNWuQ
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 14 Nov 2006 17:50:16 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao01.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061114225015.QAYO9173.fed1rmmtao01.cox.net@fed1rmimpo02.cox.net>; Tue, 14
- Nov 2006 17:50:15 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id mmqM1V00L1kojtg0000000; Tue, 14 Nov 2006
- 17:50:21 -0500
-To: git@vger.kernel.org, Andy Whitcroft <apw@shadowen.org>, Nicolas Pitre
- <nico@cam.org>, Carl Worth <cworth@cworth.org>
+ S1753947AbWLRMs4 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 18 Dec 2006
+ 07:48:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753944AbWLRMs4
+ (ORCPT <rfc822;git-outgoing>); Mon, 18 Dec 2006 07:48:56 -0500
+Received: from bayc1-pasmtp10.bayc1.hotmail.com ([65.54.191.170]:6028 "EHLO
+ BAYC1-PASMTP10.bayc1.hotmail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+ with ESMTP id S1753947AbWLRMsz (ORCPT <rfc822;git@vger.kernel.org>); Mon, 18
+ Dec 2006 07:48:55 -0500
+Received: from linux1.attic.local ([65.93.43.74]) by
+ BAYC1-PASMTP10.bayc1.hotmail.com over TLS secured channel with Microsoft
+ SMTPSVC(6.0.3790.1830); Mon, 18 Dec 2006 04:34:08 -0800
+Received: from guru.attic.local ([10.10.10.28]) by linux1.attic.local with
+ esmtp (Exim 4.43) id 1GwGgi-00070I-7n; Mon, 18 Dec 2006 06:29:44 -0500
+To: "Francis Moreau" <francis.moro@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano <junkio@cox.net> writes:
+On Mon, 18 Dec 2006 12:56:09 +0100
+"Francis Moreau" <francis.moro@gmail.com> wrote:
 
->  - I think it would be sensible to make remote tracking branches
->    less visible.  For example:
->...
->  - "git merge" to merge another branch into the current would
->    make sense.  "git pull . remotes/origin/next" is showing too
->    much implementation detail.  It should just be:
->
-> 	git merge origin#next
+>     fatal: unexpected EOF
+>     Fetch failure:
+> git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
+> 
+> My git version is '1.4.4.2'
+> 
+> Can anybody tell me what I'm doing wrong ?
 
-This and other examples in "making remote tracking branches less
-visible" are hard to read because I used the word "origin" in
-two different sense.  So here is a needed clarification.
-
-If you have remotes/upstream that says:
-
-	URL: git://git.xz/repo.git
-        Pull: refs/heads/master:remotes/origin/master
-        Pull: refs/heads/next:remotes/origin/next
-
-Then, currently the users need to say:
-
-	git diff remotes/origin/master
-        git merge remotes/origin/next
-
-By "making tracking branches less visible", what I mean is to
-let the users say this instead:
-
-	git diff upstream
-        git merge upstream#next
-
-
+You're not doing anything wrong.  There is a problem on one of the
+kernel.org mirrors, it seems to have been that way for a few days.
+If you use "204.152.191.37" instead of git.kernel.org it should work.
 
