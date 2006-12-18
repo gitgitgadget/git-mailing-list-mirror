@@ -1,154 +1,83 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: reexporting git repository via git-daemon
-Date: Sun, 10 Dec 2006 18:35:24 +0100
-Organization: At home
-Message-ID: <elhgcf$m4r$1@sea.gmane.org>
-References: <200612082212.09682.arekm@maven.pl>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: What's cooking in git.git (topics)
+Date: Mon, 18 Dec 2006 04:33:40 -0500
+Message-ID: <20061218093339.GB9727@spearce.org>
+References: <7vodq3a136.fsf@assigned-by-dhcp.cox.net> <200612172341.27709.andyparkins@gmail.com> <7vac1l1v8e.fsf@assigned-by-dhcp.cox.net> <200612180917.46214.andyparkins@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-NNTP-Posting-Date: Sun, 10 Dec 2006 17:33:36 +0000 (UTC)
+NNTP-Posting-Date: Mon, 18 Dec 2006 09:33:59 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 104
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-25-107.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+Content-Disposition: inline
+In-Reply-To: <200612180917.46214.andyparkins@gmail.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33906>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34732>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GtSYL-0005HV-17 for gcvg-git@gmane.org; Sun, 10 Dec
- 2006 18:33:29 +0100
+ esmtp (Exim 4.50) id 1GwEsZ-0006op-QZ for gcvg-git@gmane.org; Mon, 18 Dec
+ 2006 10:33:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1762277AbWLJRd0 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 10 Dec 2006
- 12:33:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762267AbWLJRd0
- (ORCPT <rfc822;git-outgoing>); Sun, 10 Dec 2006 12:33:26 -0500
-Received: from main.gmane.org ([80.91.229.2]:42889 "EHLO ciao.gmane.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1762277AbWLJRdZ
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 10 Dec 2006 12:33:25 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1GtSY3-0000zm-Lm for git@vger.kernel.org; Sun, 10 Dec 2006 18:33:11 +0100
-Received: from host-81-190-25-107.torun.mm.pl ([81.190.25.107]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Sun, 10 Dec 2006 18:33:11 +0100
-Received: from jnareb by host-81-190-25-107.torun.mm.pl with local (Gmexim
- 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Sun, 10 Dec 2006
- 18:33:11 +0100
-To: git@vger.kernel.org
+ S1753629AbWLRJds (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 18 Dec 2006
+ 04:33:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753628AbWLRJds
+ (ORCPT <rfc822;git-outgoing>); Mon, 18 Dec 2006 04:33:48 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:56878 "EHLO
+ corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1753629AbWLRJdr (ORCPT <rfc822;git@vger.kernel.org>); Mon, 18 Dec 2006
+ 04:33:47 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1GwEsS-0004Hd-AB; Mon, 18 Dec 2006 04:33:44 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 596FD20FB65; Mon, 18 Dec 2006 04:33:41 -0500 (EST)
+To: Andy Parkins <andyparkins@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Arkadiusz Miskiewicz wrote:
-
-> I have weird problem wit git (1.4.4.2).
-
-I have tried to reproduce this error, but no luck.
- 
-> $ git --bare clone git://git.kernel.org/pub/scm/git/git.git
-> fetches everything correctly;
-
-It should be "git clone --bare git://git.kernel.org/pub/scm/git/git.git"
-or "git clone --bare git://git.kernel.org/pub/scm/git/git.git git.git"
-Git doesn't need GIT_DIR for clone.
-
-> $ cd /tmp
-> $ git clone /gitroot/home/gitrepo/git
+Andy Parkins <andyparkins@gmail.com> wrote:
+> I'm daft.  I've realised, pruning doesn't remove the ref, it removes one of 
+> the hashes in the reflog.  I withdraw my comment.
 > 
-> also correctly fetched. The problem begins with exporting that cloned repo 
-> once again via git-daemon:
-
-I didn't do this second cloning, but it should not matter I think.
-
-> $ git clone git://git.my-server/git
-> fatal: unexpected EOF
-> fetch-pack from 'git://git.my-server/git' failed.
-
-True, the error messages of git-clone are bit cryptic and doesn't
-give us much information. Does there exist such repository? Perhaps
-it is not exported? Were there any error?
-
-> strace on git-daemon side:
-> [...]
-> 18241 lstat("refs/tags/v1.4.1-rc2", {st_mode=S_IFREG|0644, st_size=41, ...}) = 
-> 0
-> 18241 open("refs/tags/v1.4.1-rc2", O_RDONLY) = 7
-> 18241 read(7, "33c9db007159db11c1ad5fa7101ea95853740acf\n", 255) = 41
-> 18241 close(7)                          = 0
-> 18241 write(1, "004233c9db007159db11c1ad5fa7101ea95853740acf 
-> refs/tags/v1.4.1-rc2\n", 66) = 66
-> 18241 write(1, "0045abc02670169cee9541793a86324a014272ca8ed5 
-> refs/tags/v1.4.1-rc2^{}\n", 69) = 69
-> 18241 stat("refs/tags/v1.4.1.1", {st_mode=S_IFREG|0644, st_size=41, ...}) = 0
-> 18241 lstat("refs/tags/v1.4.1.1", {st_mode=S_IFREG|0644, st_size=41, ...}) = 0
-> 18241 open("refs/tags/v1.4.1.1", O_RDONLY) = 7
-> 18241 read(7, "8419a453dc088b25b63ab1746d3d7e679caf686d\n", 255) = 41
-> 18241 close(7)  
-> 18241 write(1, "00408419a453dc088b25b63ab1746d3d7e679caf686d 
-> refs/tags/v1.4.1.1\n", 64) = 64
-> 18241 write(2, "fatal: ", 7)            = 7
-> 18241 write(2, "corrupted pack 
-> file ./objects/pack/pack-0bb22295a585ac173504a2f8dfb3e31e074a8715.pack", 85) 
-> = 85
-> 18241 write(2, "\n", 1)   
+> I'd imagined it' as the opposite of a creation.
 > 
-> 100% repeatable at this moment. Any ideas?
+> 000000 abcdef  branch created
+> abcdef 000000  branch deleted
 
-WORKSFORME
+Except that branch deletion also deletes the reflog.  So yes, we
+could log it as you show above, but right after we appended it to
+the log we'd delete the log anyway.  :-)
 
-$ git --version
-git version 1.4.4.1
+The immediate log deletion is necessary to support something like:
 
-$ git clone --bare git://git.kernel.org/pub/scm/git/git.git
-remote: Generating pack...
-remote: Done counting 33587 objects.
-remote: Deltifying 33587 objects.
-remote:  100% (33587/33587) done
-Indexing 33587 objects.
-remote: Total 33587, written 33587 (delta 23205), reused 33325 (delta 23034)
- 100% (33587/33587) done
-Resolving 23205 deltas.
- 100% (23205/23205) done
+	git branch foo
+	git branch -d foo
+	git branch foo/bar
 
-By the way, I wonder why git-clone names bare repository 'git',
-and not 'git.git' as, I think, it should?
+as foo switches from being a file to a directory, which means that
+.git/logs/refs/heads/foo also needs to switch from being a file to
+being a directory.
 
-$ git-daemon --verbose --export-all --base-path=<pwd>
-[31823] Connection from 127.0.0.1:46736
-[31823] Extended attributes (16 bytes) exist <host=localhost>
-[31823] Request upload-pack for '/git.git'
-[31823] Disconnected
 
-The above is generated when I was cloning locally, i.e. when I run the
-following command:
+The only way to fix the above situation is to make the reflog a
+single log for the entire repository, rather than one log per ref.
+This may cause locking problems for us as we need to lock not only
+the ref but also the repository-wide reflog lock.  Note that right
+now the reflog is also protected by the ref lock itself, killing
+two birds with one stone.  :-)
 
-$ git clone git://localhost/git.git
-remote: Generating pack...
-remote: Done counting 33587 objects.
-remote: Deltifying 33587 objects.
-remote:  100% (33587/33587) done
-Indexing 33587 objects.
-remote: Total 33587, written 33587 (delta 23205), reused 33587 (delta 23205)
- 100% (33587/33587) done
-Resolving 23205 deltas.
- 100% (23205/23205) done
-Checking files out...
- 100% (743/743) done
-
-which went without any problem.
-
-P.S. Please reply also to git mailing list
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
-
