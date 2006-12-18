@@ -2,118 +2,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [RFD] making separate-remote layout easier to use
-Date: Sat, 25 Nov 2006 21:11:15 -0800
-Message-ID: <7vk61iyeq4.fsf@assigned-by-dhcp.cox.net>
-References: <7v1wnr19do.fsf@assigned-by-dhcp.cox.net>
-	<ekafpm$fs7$1@sea.gmane.org> <20061126033433.GD29394@spearce.org>
-	<7vvel2yi2u.fsf@assigned-by-dhcp.cox.net>
-	<20061126042311.GB30001@spearce.org>
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Can git be tweaked to work cross-platform, on FAT32?
+Date: Mon, 18 Dec 2006 14:38:18 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0612181435100.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <0MKwpI-1GuWVF2znk-0006fC@mrelayeu.kundenserver.de> 
+ <46a038f90612132155rc987a9cs6a4fa33dd4c882c6@mail.gmail.com> 
+ <0ML25U-1GvWC81sjR-0001UB@mrelayeu.kundenserver.de> 
+ <Pine.LNX.4.63.0612161227510.3635@wbgn013.biozentrum.uni-wuerzburg.de> 
+ <46a038f90612170221u4c3b5c2asef378d3d4e159ba7@mail.gmail.com> 
+ <906f26060612170633h50e3e974h3b84f1829e546278@mail.gmail.com> 
+ <17797.35177.550000.996862@lapjr.intranet.kiel.bmiag.de> 
+ <Pine.LNX.4.63.0612172027400.3635@wbgn013.biozentrum.uni-wuerzburg.de>
+ <906f26060612171736pab766b7t15a36d4d3fc7e85f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sun, 26 Nov 2006 05:11:30 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Mon, 18 Dec 2006 23:41:05 +0000 (UTC)
+Cc: Juergen Ruehle <j.ruehle@bmiag.de>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	"Florian v. Savigny" <lorian@fsavigny.de>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061126042311.GB30001@spearce.org> (Shawn Pearce's message of
-	"Sat, 25 Nov 2006 23:23:11 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <906f26060612171736pab766b7t15a36d4d3fc7e85f@mail.gmail.com>
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32329>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34766>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GoCIZ-0000ha-0g for gcvg-git@gmane.org; Sun, 26 Nov
- 2006 06:11:27 +0100
+ esmtp (Exim 4.43) id 1GwIhY-0005Vv-0x for gcvg-git@gmane.org; Mon, 18 Dec
+ 2006 14:38:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S967295AbWKZFLR (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 26 Nov 2006
- 00:11:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935239AbWKZFLR
- (ORCPT <rfc822;git-outgoing>); Sun, 26 Nov 2006 00:11:17 -0500
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:21409 "EHLO
- fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP id S935238AbWKZFLQ
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 26 Nov 2006 00:11:16 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao06.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061126051116.LPSR5465.fed1rmmtao06.cox.net@fed1rmimpo01.cox.net>; Sun, 26
- Nov 2006 00:11:16 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id rHAl1V0041kojtg0000000; Sun, 26 Nov 2006
- 00:10:45 -0500
-To: Shawn Pearce <spearce@spearce.org>
+ S1754006AbWLRNiV (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 18 Dec 2006
+ 08:38:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754007AbWLRNiV
+ (ORCPT <rfc822;git-outgoing>); Mon, 18 Dec 2006 08:38:21 -0500
+Received: from mail.gmx.net ([213.165.64.20]:43778 "HELO mail.gmx.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S1754006AbWLRNiU
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 18 Dec 2006 08:38:20 -0500
+Received: (qmail invoked by alias); 18 Dec 2006 13:38:18 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp030) with SMTP; 18 Dec 2006 14:38:18 +0100
+To: Stefano Spinucci <virgo977virgo@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Shawn Pearce <spearce@spearce.org> writes:
+Hi,
 
-> So now we're at a point of:
->
->  * how do we get this branch information from the remote?
->  * how does the remote store this branch information?
->
-> I'm leaning towards the repo config for the latter, with say:
->
-> 	[branch "pu"]
-> 		rewinds = true
-> 		description = This branch contains some proposed updates to git.\n\
-> 	It rewinds often, as different updates are proposed or merged into 'next'.
->
-> but looking at that think its rather horrible looking.  :-)
->
-> However for the former it may be useful if the client can download
-> the repo config from the remote repository, such as to fetch
-> the branch description data.
+On Mon, 18 Dec 2006, Stefano Spinucci wrote:
 
-For the former, I was hoping that we could do a new action
-against remote repository that is "get remote information". Just
-like we have "ls-remote" as a protocol neutral front-end to get
-what git native protocol would give "peek-remote", git native
-protocol would have get-repository-info action to transfer this
-information, and http and dumb transports do a file download
-from a known file, just like they download files prepared with
-update-server-info.  Most likely, that get-repository-info is
-just a glorified single file transfer and nothing more.
+> On 12/17/06, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > ...
+> > I am sure that there are more problems with it. BTW the problem stems from
+> > Windows having _no_ equivalent to fork().
+> > ...
+> 
+> if you are sure that there are more problems with using MMAP, shouldn't 
+> NO_MMAP be commented better in the Makefile and in INSTALL, pointing out 
+> to use it always on cygwin ???
 
-As an implementation detail, I think it is one possibility to
-store this information in the config of the repository being
-cloned from.  We should be able to use repo-config to
-parse that file in config-like syntax to extract what we would
-want, so we do not have to come up with a new syntax nor a new
-parser, which is a big plus.
+I argued for that a long time ago, but there were a couple "works-for-me"s 
+and I just shut up.
 
-	Side note: repo-config, especially the updating side of
-	it, is one of the programs I find the most brittle in
-	the whole system, and it always makes me hesitate when
-	somebody proposes to use config file in any important
-	way read-write for this reason.  But this "reading out
-	per-branch information from the file" is read-only so I
-	would not worry too much about it.
+It could also be the case that for most operations, git became safe over 
+time. For example, my biggest problem was the fork()ed diff in git-log, 
+which was substituted by a non-forking inbuilt diff.
 
-Strictly speaking, however, the config file is a wrong place to
-store it.  For one thing it has core.sharedrepository and
-receive.denynonfastforwards that are true configuration to
-control the behaviour of git _at_ _the_ _repository_ the
-configuration is at.  The new "branch property" are primarily to
-help the other end, and the "filtering rewinding ones" we want
-at the clone/fetch side wants that information only and not
-interested in the true configuration information at that
-repository.
+> should I write to the cygwin-apps list asking for a different 
+> compilation (with NO_MMAP), or for the majority of the users the 
+> standard compilation is a better choice ???
 
-So my preference is:
+Given that most Windows setups nowadays run on NTFS, I doubt that this is 
+necessary. I use NO_MMAP myself on Windows, just in case, though.
 
- * store it in a fixed filename under $GIT_DIR/$something, in a
-   format that is similar to the true config file.
-
- * Dumb transports would just do a file transfer, and we add a
-   new command (like "upload-pack", "upload-archive") for git
-   native transport to read that file.  We might want to have a
-   protocol neutral wrapper (just like "ls-remote").
-
- * Cloners and fetchers would do the file transfer and use
-   repo-config to read from that transferred file to find out
-   which are rewinding branches.
-
-
-
-
+Ciao,
+Dscho
