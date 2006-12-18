@@ -1,63 +1,79 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
-	DATE_IN_PAST_12_24,HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
-From: Sam Vilain <sam@vilain.net>
-Subject: [PATCH 3/4] git-svn: collect revision properties when fetching
-Date: Mon, 4 Dec 2006 20:40:39 +1100
-Message-ID: <20061204235724.61843139B0D@magnus.utsl.gen.nz>
-NNTP-Posting-Date: Mon, 4 Dec 2006 23:57:36 +0000 (UTC)
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Martin Waitz <tali@admingilde.org>
+Subject: Re: Subprojects tasks
+Date: Mon, 18 Dec 2006 08:45:56 +0100
+Message-ID: <20061218074556.GK12411@admingilde.org>
+References: <7vzm9nelob.fsf@assigned-by-dhcp.cox.net> <200612171529.03165.jnareb@gmail.com> <20061217195417.GI12411@admingilde.org> <200612180027.25308.Josef.Weidendorfer@gmx.de>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="BEa57a89OpeoUzGD"
+NNTP-Posting-Date: Mon, 18 Dec 2006 07:46:02 +0000 (UTC)
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <junkio@cox.net>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+Content-Disposition: inline
+In-Reply-To: <200612180027.25308.Josef.Weidendorfer@gmx.de>
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
+User-Agent: Mutt/1.5.9i
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33269>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34723>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GrNgg-0005UP-NJ for gcvg-git@gmane.org; Tue, 05 Dec
- 2006 00:57:31 +0100
+ esmtp (Exim 4.50) id 1GwDCC-00089q-Uf for gcvg-git@gmane.org; Mon, 18 Dec
+ 2006 08:46:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S936091AbWLDX51 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
- 18:57:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937175AbWLDX51
- (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 18:57:27 -0500
-Received: from watts.utsl.gen.nz ([202.78.240.73]:60225 "EHLO
- magnus.utsl.gen.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
- S936091AbWLDX5Z (ORCPT <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006
- 18:57:25 -0500
-Received: by magnus.utsl.gen.nz (Postfix, from userid 1003) id 61843139B0D;
- Tue,  5 Dec 2006 12:57:24 +1300 (NZDT)
-To: git@vger.kernel.org
+ S1753470AbWLRHp6 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 18 Dec 2006
+ 02:45:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753471AbWLRHp6
+ (ORCPT <rfc822;git-outgoing>); Mon, 18 Dec 2006 02:45:58 -0500
+Received: from mail.admingilde.org ([213.95.32.147]:43627 "EHLO
+ mail.admingilde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1753470AbWLRHp5 (ORCPT <rfc822;git@vger.kernel.org>); Mon, 18 Dec 2006
+ 02:45:57 -0500
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1) id
+ 1GwDC9-0004Wd-0g; Mon, 18 Dec 2006 08:45:57 +0100
+To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-Perhaps there is information in the "revision properties" (unversioned
-metadata associated with commits) that will affect the way that we
-save the revision.  Collect them.
----
- git-svn.perl |    4 ++++
- 1 files changed, 4 insertions(+), 0 deletions(-)
 
-diff --git a/git-svn.perl b/git-svn.perl
-index c5f82be..74b04d0 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -441,12 +441,16 @@ sub fetch_lib {
- 					if ($last_commit) {
- 						$log_msg = libsvn_fetch(
- 							$last_commit, @_);
-+						$log_msg->{revprops}
-+						    = $SVN->rev_proplist($log_msg->{revision});
- 						$last_commit = git_commit(
- 							$log_msg,
- 							$last_commit,
- 							@parents);
- 					} else {
- 						$log_msg = libsvn_new_tree(@_);
-+						$log_msg->{revprops}
-+						    = $SVN->rev_proplist($log_msg->{revision});
- 						$last_commit = git_commit(
- 							$log_msg, @parents);
- 					}
--- 
-1.4.4.1.ge918e-dirty
+--BEa57a89OpeoUzGD
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Mon, Dec 18, 2006 at 12:27:25AM +0100, Josef Weidendorfer wrote:
+> On Sunday 17 December 2006 20:54, Martin Waitz wrote:
+> > I added a symlink .git/refs/module/<submodule> -> <submodule>/.git/refs,
+> > so that the submodule branch is also available as
+> > refs/module/<submodule>/heads/master in the supermodule.
+>=20
+> Ah.
+> What is "<submodule>" in your implementation?
+> Is this some encoding of the path where the submodule currently lives
+> in the supermodule, or are you giving the submodules unique names
+> in the context of the supermodule?
+
+At the moment, it's just the path inside the parent.
+
+--=20
+Martin Waitz
+
+--BEa57a89OpeoUzGD
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFFhkc0j/Eaxd/oD7IRAtoCAJ9qIsU+7T9kJPfbpW6JKOYTElDDRQCffQN9
++iD3LYsdGI6udolAe/6pXHE=
+=0GdE
+-----END PGP SIGNATURE-----
+
