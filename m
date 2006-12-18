@@ -4,74 +4,73 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: kernel.org mirroring (Re: [GIT PULL] MMC update)
-Date: Fri, 8 Dec 2006 08:35:22 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0612080830380.3516@woody.osdl.org>
-References: <Pine.LNX.4.64.0612020835110.3476@woody.osdl.org>
- <45744FA3.7020908@zytor.com> <Pine.LNX.4.64.0612061847190.3615@woody.osdl.org>
- <45778AA3.7080709@zytor.com> <Pine.LNX.4.64.0612061940170.3615@woody.osdl.org>
- <4577A84C.3010601@zytor.com> <Pine.LNX.4.64.0612070953290.3615@woody.osdl.org>
- <45785697.1060001@zytor.com> <Pine.LNX.4.64.0612071052560.3615@woody.osdl.org>
- <457868AA.2030605@zytor.com> <20061207193012.GA84678@dspnet.fr.eu.org>
- <4578722E.9030402@zytor.com> <4579611F.5010303@dawes.za.net>
- <45798FE2.9040502@zytor.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] git-branch: deleting remote branches in new layout
+Date: Sun, 17 Dec 2006 23:08:23 -0800
+Message-ID: <7vbqm13cm0.fsf@assigned-by-dhcp.cox.net>
+References: <45863044.4040406@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Fri, 8 Dec 2006 16:36:55 +0000 (UTC)
-Cc: Rogan Dawes <discard@dawes.za.net>,
-	Kernel Org Admin <ftpadmin@kernel.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jakub Narebski <jnareb@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Mon, 18 Dec 2006 07:08:47 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <45798FE2.9040502@zytor.com>
-X-MIMEDefang-Filter: osdl$Revision: 1.162 $
-X-Scanned-By: MIMEDefang 2.36
+In-Reply-To: <45863044.4040406@gmail.com> (Quy Tonthat's message of "Mon, 18
+	Dec 2006 17:08:04 +1100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33703>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34718>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GsiiK-0007gx-F6 for gcvg-git@gmane.org; Fri, 08 Dec
- 2006 17:36:44 +0100
+ esmtp (Exim 4.50) id 1GwCc4-0003z8-H0 for gcvg-git@gmane.org; Mon, 18 Dec
+ 2006 08:08:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1760769AbWLHQgl (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
- 11:36:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760770AbWLHQgl
- (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 11:36:41 -0500
-Received: from smtp.osdl.org ([65.172.181.25]:59921 "EHLO smtp.osdl.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1760769AbWLHQgk
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Dec 2006 11:36:40 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
- smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kB8GZNID014454
- (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Fri, 8
- Dec 2006 08:35:24 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
- shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kB8GZMru026849; Fri, 8 Dec
- 2006 08:35:23 -0800
-To: "H. Peter Anvin" <hpa@zytor.com>
+ S1753414AbWLRHIZ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 18 Dec 2006
+ 02:08:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753415AbWLRHIZ
+ (ORCPT <rfc822;git-outgoing>); Mon, 18 Dec 2006 02:08:25 -0500
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:60041 "EHLO
+ fed1rmmtao09.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1753414AbWLRHIZ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 18 Dec 2006
+ 02:08:25 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao09.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061218070824.CLKE18767.fed1rmmtao09.cox.net@fed1rmimpo02.cox.net>; Mon, 18
+ Dec 2006 02:08:24 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id 078c1W0021kojtg0000000; Mon, 18 Dec 2006
+ 02:08:36 -0500
+To: Quy Tonthat <qtonthat@gmail.com>
 Sender: git-owner@vger.kernel.org
 
+Quy Tonthat <qtonthat@gmail.com> writes:
 
+> Now that remote branches are in refs/remotes/, branch -D needs to know
+> where to find them.
+>
+> Signed-off-by: Quy Tonthat <qtonthat@gmail.com>
 
-On Fri, 8 Dec 2006, H. Peter Anvin wrote:
-> 
-> This goes back to the "gitweb needs native caching" again.
+I recognize that giving end users a way to remove a "remote
+tracking branch" might be a worthy goal ("update-ref -d" _could_
+be used, but "branch -D" feels more natural).
 
-It should be fairly easy to add a caching layer, but I wouldn't do it 
-inside gitweb itself - it gets too mixed up. It would be better to have 
-it as a separate front-end, that just calls gitweb for anything it doesn't 
-find in the cache.
+> +	char ** s;
+> +	static char * branches_dir[] = {"refs/heads", "refs/remotes", NULL};
 
-I could write a simple C caching thing that just hashes the CGI arguments 
-and uses a hash to create a cache (and proper lock-files etc to serialize 
-access to a particular cache object while it's being created) fairly 
-easily, but I'm pretty sure people would much prefer a mod_perl thing just 
-to avoid the fork/exec overhead with Apache (I think mod_perl allows 
-Apache to run perl scripts without it), and that means I'm not the right 
-person any more.
+But I do not like these two entries in branches_dir[].
 
-Not that I'm the right person anyway, since I don't have a web server set 
-up on my machine to even test with ;)
-	
-		Linus
+(style: lose SP after '*' in these two lines, by the way).
+
+If you had refs/heads/$X and refs/remotes/$X, I do not think
+this code allows you to disambiguate.  You cannot remove
+"remote" one without first removing the local one, can you?
+
+> +		for (s = branches_dir; *s != NULL; s++) {
+> +			name = xstrdup(mkpath("%s/%s", *s, argv[i]));
+> +			if (resolve_ref(name, sha1, 1, NULL))
+> +				break;
+> +		}
+> +		if (*s == NULL)
+>  			die("Branch '%s' not found.", argv[i]);
+
+(style: we seem to prefer "if (!*s)").
