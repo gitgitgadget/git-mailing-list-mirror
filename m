@@ -1,81 +1,91 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: [RFC] Submodules in GIT
-Date: Fri, 1 Dec 2006 16:00:46 +0100
-Message-ID: <20061201150045.GZ18810@admingilde.org>
-References: <20061130170625.GH18810@admingilde.org> <200612010902.51264.andyparkins@gmail.com> <20061201110032.GL18810@admingilde.org> <45701B8D.1030508@b-i-t.de> <20061201121234.GQ18810@admingilde.org> <4570289D.9050802@b-i-t.de> <20061201133558.GU18810@admingilde.org> <45703174.8000609@op5.se> <20061201134610.GW18810@admingilde.org> <457041AD.4010601@op5.se>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Small optimizations to gitweb
+Date: Mon, 18 Dec 2006 15:45:41 -0800
+Message-ID: <7vbqm0vkd6.fsf@assigned-by-dhcp.cox.net>
+References: <20061218224327.GG16029@localhost> <em77cg$obn$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="q5iovQLtJQXc0+Hs"
-NNTP-Posting-Date: Fri, 1 Dec 2006 15:01:13 +0000 (UTC)
-Cc: sf <sf@b-i-t.de>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Mon, 18 Dec 2006 23:58:20 +0000 (UTC)
+Cc: git@vger.kernel.org, Robert Fitzsimons <robfitz@273k.net>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <457041AD.4010601@op5.se>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <em77cg$obn$1@sea.gmane.org> (Jakub Narebski's message of "Tue,
+	19 Dec 2006 00:17:03 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32931>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34770>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gq9sg-0003aF-Gk for gcvg-git@gmane.org; Fri, 01 Dec
- 2006 16:00:50 +0100
+ esmtp (Exim 4.43) id 1GwSB0-0002AV-Nw for gcvg-git@gmane.org; Tue, 19 Dec
+ 2006 00:45:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1759299AbWLAPAr (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
- 10:00:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759285AbWLAPAr
- (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 10:00:47 -0500
-Received: from agent.admingilde.org ([213.95.21.5]:34256 "EHLO
- mail.admingilde.org") by vger.kernel.org with ESMTP id S1759299AbWLAPAq
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 10:00:46 -0500
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1) id
- 1Gq9sc-0006sX-2s; Fri, 01 Dec 2006 16:00:46 +0100
-To: Andreas Ericsson <ae@op5.se>
+ S932196AbWLRXpn (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 18 Dec 2006
+ 18:45:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932222AbWLRXpn
+ (ORCPT <rfc822;git-outgoing>); Mon, 18 Dec 2006 18:45:43 -0500
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:46013 "EHLO
+ fed1rmmtao12.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S932196AbWLRXpn (ORCPT <rfc822;git@vger.kernel.org>); Mon, 18 Dec 2006
+ 18:45:43 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao12.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061218234542.LPYX4226.fed1rmmtao12.cox.net@fed1rmimpo01.cox.net>; Mon, 18
+ Dec 2006 18:45:42 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id 0Pl11W00K1kojtg0000000; Mon, 18 Dec 2006
+ 18:45:01 -0500
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
+Jakub Narebski <jnareb@gmail.com> writes:
 
---q5iovQLtJQXc0+Hs
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Actually, that is needed to implement checking if we have more than
+> the number of commits to show to add '...' at the end only if there
+> are some commits which we don't show.
 
-hoi :)
+The counting code in git_*_body is seriously unusual to tempt
+anybody who reviews the code to reduce that 17 to 16.
 
-On Fri, Dec 01, 2006 at 03:52:29PM +0100, Andreas Ericsson wrote:
-> >Remember: if you git-pull in the supermodule, you want to update the
-> >whole thing, including all submodules.
-> >
->=20
-> Only if the new commits I pull into the supermodule DAG has commits=20
-> which includes a new shapshot of the submodule, otherwise it wouldn't be=
-=20
-> necessary.
+The caller says:
 
-Of course.
+	git_shortlog_body(\@revlist, 0, 15, $refs,
+	                  $cgi->a({-href => href(action=>"shortlog")}, "..."));
 
-But if the supermodule contains changes to the submodule, you still
-have to change the submodule.  And this implies changing the submodule
-HEAD or some branch.
+If it counts up, especially if it counts from zero, the loop
+would usually say:
 
---=20
-Martin Waitz
+	for (i = bottom; i < end; i++)
 
---q5iovQLtJQXc0+Hs
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
+and anybody who reads that caller would expect it to show 15
+lines of output.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
+But the actual code does this instead:
 
-iD8DBQFFcEOdj/Eaxd/oD7IRAjqjAJ9viCE8E9wRZrYePKZVX9uQe0IMdACeJ3Hd
-gufJ4yRrIL+yPyXcTxsQbLE=
-=Y8NO
------END PGP SIGNATURE-----
+    sub git_shortlog_body {
+            # uses global variable $project
+            my ($revlist, $from, $to, $refs, $extra) = @_;
+
+            $from = 0 unless defined $from;
+            $to = $#{$revlist} if (!defined $to || $#{$revlist} < $to);
+            ...
+            for (my $i = $from; $i <= $to; $i++) {
+                    ... draw each item ...
+            }
+            if (defined $extra) {
+                    print "<tr>\n" .
+                          "<td colspan=\"4\">$extra</td>\n" .
+                          "</tr>\n";
+            }
+    }
+
+By the way, I wonder how that $extra is omitted when $revlist is
+longer than $to; it should be a trivial fix but it seems to me
+that it is always spitted out with the current code.
+
 
