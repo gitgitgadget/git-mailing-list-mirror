@@ -1,85 +1,77 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Erik Mouw <erik@harddisk-recovery.com>
-Subject: Re: sizeof(struct ...)
-Date: Thu, 23 Nov 2006 16:54:31 +0100
-Organization: Harddisk-recovery.com
-Message-ID: <20061123155431.GD6581@harddisk-recovery.com>
-References: <20061123101609.1711.qmail@8b73034525b1a6.315fe32.mid.smarden.org> <45659781.5050005@lsrfire.ath.cx> <4565A46C.6090805@lsrfire.ath.cx> <4565A866.8020201@shadowen.org> <4565C205.8050300@lsrfire.ath.cx>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: Re: cloning the kernel - why long time in "Resolving 313037 deltas"
+Date: 18 Dec 2006 14:26:36 -0800
+Message-ID: <8664c896xv.fsf@blue.stonehenge.com>
+References: <86y7p57y05.fsf@blue.stonehenge.com>
+	<Pine.LNX.4.64.0612181251020.3479@woody.osdl.org>
+	<86r6uw9azn.fsf@blue.stonehenge.com>
+	<Pine.LNX.4.64.0612181625140.18171@xanadu.home>
+	<86hcvs984c.fsf@blue.stonehenge.com>
+	<Pine.LNX.4.64.0612181414200.3479@woody.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 23 Nov 2006 15:55:02 +0000 (UTC)
-Cc: Andy Whitcroft <apw@shadowen.org>, Gerrit Pape <pape@smarden.org>,
-	git@vger.kernel.org
+NNTP-Posting-Date: Mon, 18 Dec 2006 22:26:54 +0000 (UTC)
+Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <4565C205.8050300@lsrfire.ath.cx>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+x-mayan-date: Long count = 12.19.13.16.5; tzolkin = 6 Chicchan; haab = 18 Mac
+In-Reply-To: <Pine.LNX.4.64.0612181414200.3479@woody.osdl.org>
+Original-Lines: 27
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32143>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34747>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GnGuM-0004RP-DB for gcvg-git@gmane.org; Thu, 23 Nov
- 2006 16:54:38 +0100
+ esmtp (Exim 4.43) id 1GwQwS-0006Eg-HY for gcvg-git@gmane.org; Mon, 18 Dec
+ 2006 23:26:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1755123AbWKWPyd (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 23 Nov 2006
- 10:54:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756350AbWKWPyd
- (ORCPT <rfc822;git-outgoing>); Thu, 23 Nov 2006 10:54:33 -0500
-Received: from dtp.xs4all.nl ([80.126.206.180]:23689 "HELO
- abra2.bitwizard.nl") by vger.kernel.org with SMTP id S1755123AbWKWPyc (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 23 Nov 2006 10:54:32 -0500
-Received: (qmail 30562 invoked from network); 23 Nov 2006 16:54:31 +0100
-Received: from unknown (HELO zurix.bitwizard.nl) (192.168.234.26) by
- abra2.bitwizard.nl with SMTP; 23 Nov 2006 16:54:31 +0100
-Received: from erik by zurix.bitwizard.nl with local (Exim 3.36 #1 (Debian))
- id 1GnGuF-0002Cg-00; Thu, 23 Nov 2006 16:54:31 +0100
-To: Ren? Scharfe <rene.scharfe@lsrfire.ath.cx>
+ S1754693AbWLRW0h (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 18 Dec 2006
+ 17:26:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754694AbWLRW0h
+ (ORCPT <rfc822;git-outgoing>); Mon, 18 Dec 2006 17:26:37 -0500
+Received: from blue.stonehenge.com ([209.223.236.162]:37162 "EHLO
+ blue.stonehenge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1754693AbWLRW0h (ORCPT <rfc822;git@vger.kernel.org>); Mon, 18 Dec 2006
+ 17:26:37 -0500
+Received: from localhost (localhost [127.0.0.1]) by blue.stonehenge.com
+ (Postfix) with ESMTP id 97CEA8F563; Mon, 18 Dec 2006 14:26:36 -0800 (PST)
+Received: from blue.stonehenge.com ([127.0.0.1]) by localhost
+ (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024) with LMTP id
+ 17075-01-20; Mon, 18 Dec 2006 14:26:36 -0800 (PST)
+Received: by blue.stonehenge.com (Postfix, from userid 1001) id 1BEF78F5BC;
+ Mon, 18 Dec 2006 14:26:36 -0800 (PST)
+To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 
-On Thu, Nov 23, 2006 at 04:45:09PM +0100, Ren? Scharfe wrote:
-> Andy Whitcroft schrieb:
-> > You see packing attributes applied to similar things in the kernel.
-> > Perhaps they are relevant here?
-> > Is there not some kind of attribute thing we can apply to this structure
-> > to prevent the padding?  You see that in the kernel from time to time.
-> > 
-> > struct foo {
-> > } __attribute__((packed));
-> 
-> Yes, that would be nice, but unfortunately __attribute__ is no standard
-> C.
+>>>>> "Linus" == Linus Torvalds <torvalds@osdl.org> writes:
 
-There is no standard C way to pack structures. Some compilers use
-#pragma's, gcc uses __attribute__((packed)).
+>> So that *was* a local delay.
 
->  Is there really a compiler that inserts padding between arrays of
-> unsigned chars?
+Linus> Ok, interesting. Two questions:
 
-Yes, that compiler is called "gcc".
+Linus>  - what does "top" say (is it CPU-bound? Is it perhaps blowing out your 
+Linus>    disk cache? Is it swapping?)
 
-#include <stdio.h>
+Not swapping, but CPU bound.
 
-struct foo {
-        unsigned char a[3];
-        unsigned char b[3];
-};
+Linus>  - do you have "oprofile" (or even just pgprof) to see where the *hell* 
+Linus>    that time is spent, if it's actually CPU?
 
-int main(void)
-{
-        printf("%d\n", sizeof(struct foo));
-        return 0;
-}
+I'm a "bear of very little brane" regarding code development on OSX.  I
+can ask around to see if there's someway to profile this.
 
-On i386 that prints 6, on ARM it prints 8.
+Linus> You're running this under OS X, aren't you? It's a pig of an OS, but 
+Linus> "almost one hour" vs "25 seconds" is still unreasonable.
 
-
-Erik
+I agree!
 
 -- 
-+-- Erik Mouw -- www.harddisk-recovery.com -- +31 70 370 12 90 --
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
