@@ -1,60 +1,71 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: David Lang <dlang@digitalinsight.com>
-Subject: Re: What's in git.git
-Date: Tue, 7 Nov 2006 20:13:10 -0800 (PST)
-Message-ID: <Pine.LNX.4.63.0611072009220.2601@qynat.qvtvafvgr.pbz>
-References: <7v8ximwrm3.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Adjust t5510 to put remotes in config
+Date: Mon, 18 Dec 2006 14:42:03 -0800
+Message-ID: <7vvek8vnb8.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.63.0612171545390.3635@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7v7iwox59i.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0612182325550.19693@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-NNTP-Posting-Date: Wed, 8 Nov 2006 04:18:41 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Mon, 18 Dec 2006 22:42:14 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-X-Sender: dlang@dlang.diginsite.com
-In-Reply-To: <7v8ximwrm3.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <Pine.LNX.4.63.0612182325550.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Mon, 18 Dec 2006 23:28:33 +0100
+	(CET)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31113>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34749>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GhetY-0008Cl-KN for gcvg-git@gmane.org; Wed, 08 Nov
- 2006 05:18:37 +0100
+ esmtp (Exim 4.43) id 1GwRBQ-0001rM-Vv for gcvg-git@gmane.org; Mon, 18 Dec
+ 2006 23:42:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1754196AbWKHESV (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 7 Nov 2006
- 23:18:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754178AbWKHESV
- (ORCPT <rfc822;git-outgoing>); Tue, 7 Nov 2006 23:18:21 -0500
-Received: from warden-p.diginsite.com ([208.29.163.248]:29438 "HELO
- warden.diginsite.com") by vger.kernel.org with SMTP id S1754196AbWKHESU
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 7 Nov 2006 23:18:20 -0500
-Received: from wlvims02.diginsite.com by warden.diginsite.com via smtpd (for
- vger.kernel.org [209.132.176.167]) with SMTP; Tue, 7 Nov 2006 20:18:20 -0800
-Received: from dlang.diginsite.com ([10.201.10.67]) by
- wlvims02.corp.ad.diginsite.com with InterScan Message Security Suite; Tue, 07
- Nov 2006 20:18:14 -0800
-To: Junio C Hamano <junkio@cox.net>
+ S1754663AbWLRWmG (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 18 Dec 2006
+ 17:42:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754668AbWLRWmF
+ (ORCPT <rfc822;git-outgoing>); Mon, 18 Dec 2006 17:42:05 -0500
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:61018 "EHLO
+ fed1rmmtao09.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1754663AbWLRWmE (ORCPT <rfc822;git@vger.kernel.org>); Mon, 18 Dec 2006
+ 17:42:04 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao09.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061218224204.BHYG18767.fed1rmmtao09.cox.net@fed1rmimpo01.cox.net>; Mon, 18
+ Dec 2006 17:42:04 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id 0NhN1W01M1kojtg0000000; Mon, 18 Dec 2006
+ 17:41:23 -0500
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On Tue, 7 Nov 2006, Junio C Hamano wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> [pu]
+> Hi,
 >
->  Johannes's shallow clone work now should rebase cleanly on top
->  of 'master' although I haven't done so yet.  As he said
->  himself the series is waiting for people who have needs for
->  such a feature to raise hands.
+> On Mon, 18 Dec 2006, Junio C Hamano wrote:
+>
+>> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>> 
+>> > Since .git/remotes/ is no longer created by default, t5510 failed.
+>> 
+>> Does not reproduce for me.
+>
+> I just checked out a fresh copy of 'next'. It still fails. The culprit is 
+> 61dde8f91672ab362f3cfd3af8d6d09d448d4ffe, which removes the line
+>
+> 		mkdir -p "$GIT_DIR/remotes" &&
+>
+> which is line 372 in the parent of that commit.
 
-I haven't been watching this recently, but if this is what I understand it to be 
-(the ability to get a partial repository from upstream and work normally from 
-there with the result of data-mineing tools sometimes reporting 'that's part of 
-the truncated history' if they hit the cutoff) consider my hand raised.
+Hmmmmm.
 
-there are a number of cases where I would be interested in following a project 
-as it moves forwards, but do not have the need to have the full history (even 
-with the good compression that a git pack provides, it's still a significant 
-amount of disk space and download time for large projects)
-
+But git-clone runs git-init-db and we ship an empty remotes
+directory still as part of the templates.  Why would removal of
+that line matter?
