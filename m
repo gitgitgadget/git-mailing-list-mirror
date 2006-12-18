@@ -1,71 +1,105 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: [PATCH] Store peeled refs in packed-refs (take 2).
-Date: Sat, 25 Nov 2006 09:09:25 +0100
-Message-ID: <e5bfff550611250009x70a16c66h8077a2dccc1273e7@mail.gmail.com>
-References: <7vac2kvsos.fsf@assigned-by-dhcp.cox.net>
-	 <e5bfff550611220425x5cf9e33ds7b7b98229c6b408a@mail.gmail.com>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: Re: Subprojects tasks
+Date: Mon, 18 Dec 2006 11:30:18 +0100
+Message-ID: <200612181130.18652.Josef.Weidendorfer@gmx.de>
+References: <7vzm9nelob.fsf@assigned-by-dhcp.cox.net> <200612180023.45815.Josef.Weidendorfer@gmx.de> <20061218074441.GJ12411@admingilde.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain;
+  charset="utf-8"
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sat, 25 Nov 2006 08:09:46 +0000 (UTC)
-Cc: git@vger.kernel.org
+NNTP-Posting-Date: Mon, 18 Dec 2006 10:30:44 +0000 (UTC)
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <junkio@cox.net>
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=K9SAoO0ehjRrapSNsYtIJXXLlApVcExcOouTZ91UzQvE3YAS30MYIqreMSipd7k56KZxGNFXGR2hkQhHUGPDI4gnAzmUD5UIQU8IOatgzSI1woCVKjbUW3I5+jXeun3Z5OTO6+54tiOLBXA2ai1Fg9CS0+aHQEFMI+bwrpbDUR8=
-In-Reply-To: <e5bfff550611220425x5cf9e33ds7b7b98229c6b408a@mail.gmail.com>
+User-Agent: KMail/1.9.5
+In-Reply-To: <20061218074441.GJ12411@admingilde.org>
 Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay2.informatik.tu-muenchen.de
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32264>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GnsbR-0006pH-FQ for gcvg-git@gmane.org; Sat, 25 Nov
- 2006 09:09:37 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34736>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GwFlU-0007sT-0Q for gcvg-git@gmane.org; Mon, 18 Dec
+ 2006 11:30:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1757883AbWKYIJ1 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 25 Nov 2006
- 03:09:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757887AbWKYIJ0
- (ORCPT <rfc822;git-outgoing>); Sat, 25 Nov 2006 03:09:26 -0500
-Received: from py-out-1112.google.com ([64.233.166.182]:62509 "EHLO
- py-out-1112.google.com") by vger.kernel.org with ESMTP id S1757883AbWKYIJ0
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 25 Nov 2006 03:09:26 -0500
-Received: by py-out-1112.google.com with SMTP id a29so656298pyi for
- <git@vger.kernel.org>; Sat, 25 Nov 2006 00:09:25 -0800 (PST)
-Received: by 10.35.115.18 with SMTP id s18mr7768437pym.1164442165498; Sat, 25
- Nov 2006 00:09:25 -0800 (PST)
-Received: by 10.35.42.4 with HTTP; Sat, 25 Nov 2006 00:09:25 -0800 (PST)
-To: "Junio C Hamano" <junkio@cox.net>
+ S1753741AbWLRKad (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 18 Dec 2006
+ 05:30:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753744AbWLRKac
+ (ORCPT <rfc822;git-outgoing>); Mon, 18 Dec 2006 05:30:32 -0500
+Received: from mailout1.informatik.tu-muenchen.de ([131.159.0.18]:45339 "EHLO
+ mailout1.informatik.tu-muenchen.de" rhost-flags-OK-OK-OK-OK) by
+ vger.kernel.org with ESMTP id S1753741AbWLRKac (ORCPT
+ <rfc822;git@vger.kernel.org>); Mon, 18 Dec 2006 05:30:32 -0500
+Received: from dhcp-2s-25.lrr.in.tum.de (dhcp-2s-25.lrr.in.tum.de
+ [131.159.35.25]) by mail.in.tum.de (Postfix) with ESMTP id 7CB2B2875; Mon, 18
+ Dec 2006 11:30:30 +0100 (MET)
+To: Martin Waitz <tali@admingilde.org>
 Sender: git-owner@vger.kernel.org
 
-On 11/22/06, Marco Costalba <mcostalba@gmail.com> wrote:
-> On 11/22/06, Junio C Hamano <junkio@cox.net> wrote:
-> > there is only one such extension defined, "peeled".  This stores
-> > the "peeled tag" on a line that immediately follows a line for a
-> > tag object itself in the format "^<sha-1>".
-> >
->
-> Thanks, I will try to do some performance tests this week end.
->
+On Monday 18 December 2006 08:44, Martin Waitz wrote:
+> On Mon, Dec 18, 2006 at 12:23:45AM +0100, Josef Weidendorfer wrote:
+> > I see that you always use "refs/heads/master" in the submodule.
+> > What happens if you do development in the submodule, create a new commit
+> > there, and want to switch supermodule branch afterwards?
+> > Wouldn't you lose your new work, as "refs/heads/master" has to be reset
+> > to another commit when you switch the supermodule branch?
+> 
+> It should behave the same as for files:
+> Refuse to update the working directory if files (or the submodule here)
+> are dirty.  I guess this is not yet handled correctly by my prototype,
+> but it should not be hard to do.
 
-Cold cache tests with "git show-ref -d" on packed refs (after
-"git-pack-refs --prune")
-
-Before patch:
-
-- git tree 2374ms
-- linux tree 2225ms
+Ah, I see.
+Yes, this is consistent with other dirty files.
 
 
+> > IMHO it would be nice to have refs in the submodule matching all the
+> > branches/tags of the supermodule.
+> > Meaning: "this is the commit which is used by branch/tag XYZ in the
+> > supermodule". This can be valuable information, and a "gitk --all" in
+> > the submodule would show you all the uses of your subproject in the
+> > scope of the given superproject.
+> 
+> I like the idea.  Perhaps make them available similiar to the remotes
+> information in refs/tracked/{heads,tags} or something.
 
-After patch:
+Yes.
+However, you want to do development on these branches. And
+"refs/tracked/..." is read-only. However, taking the whole local
+refs namespace is not good, as you perhaps want branches independent
+of the supermodule, which could give name conflicts.
+What about using "refs/{heads,tags}/supermodule/..."? This could
+be a compromise.
 
-- git tree 1108ms
+> > When switching branches in the supermodule, it simply would switch
+> > to the same name in submodules.
+> 
+> Nice idea, but I don't yet know how it really works out.
+> It may be confusing to the user if he manually switches the branch in
+> the submodule to another branch of the supermodule.  Then he really is
+> using one tracked branch, but not the currently tracked branch.
+
+But you already have the same problem with your current approach, don't
+you?
+
+Actually, the most expected thing for the user really would be to use
+HEAD in supermodule commits. Every other behavior can get confusing for
+the user: (S)He simply expects the state of the checkout to be committed.
+Any branch switching in submodules should be temporary.
+
+Actually, you can be on a temporary branch in a submodule and still switch
+branches in the supermodule. It is the same as with dirty files: The
+modifications can be carried over to other branches and back, as long as
+there are no conflicts. 
+
+However, I think it is important to check that you are back on the
+right branch when committing. With warning or even error.
+
