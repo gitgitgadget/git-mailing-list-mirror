@@ -1,71 +1,66 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH 0/2] Making "git commit" to mean "git commit -a".
-Date: Tue, 28 Nov 2006 23:33:59 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0611282322320.9647@xanadu.home>
-References: <Pine.LNX.4.64.0611271622260.9647@xanadu.home>
- <7vmz6cfsuw.fsf@assigned-by-dhcp.cox.net> <87bqmswm1e.wl%cworth@cworth.org>
- <7vodqse90q.fsf@assigned-by-dhcp.cox.net> <87ac2cwha4.wl%cworth@cworth.org>
- <7vy7pwcsgp.fsf@assigned-by-dhcp.cox.net> <878xhwwdyj.wl%cworth@cworth.org>
- <7vk61gcnzl.fsf@assigned-by-dhcp.cox.net>
- <7vd5786opj.fsf@assigned-by-dhcp.cox.net> <871wnnwi3k.wl%cworth@cworth.org>
- <7virgzuf38.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Adjust t5510 to put remotes in config
+Date: Mon, 18 Dec 2006 14:58:15 -0800
+Message-ID: <7vr6uwvmk8.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.63.0612171545390.3635@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7v7iwox59i.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0612182325550.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7vvek8vnb8.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0612182346500.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+	<Pine.LNX.4.63.0612182349070.19693@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-NNTP-Posting-Date: Wed, 29 Nov 2006 04:34:17 +0000 (UTC)
-Cc: Carl Worth <cworth@cworth.org>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Mon, 18 Dec 2006 22:59:03 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-reply-to: <7virgzuf38.fsf@assigned-by-dhcp.cox.net>
-X-X-Sender: nico@xanadu.home
+In-Reply-To: <Pine.LNX.4.63.0612182349070.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Mon, 18 Dec 2006 23:49:40 +0100
+	(CET)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32615>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34755>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GpH92-0002Rp-U9 for gcvg-git@gmane.org; Wed, 29 Nov
- 2006 05:34:06 +0100
+ esmtp (Exim 4.43) id 1GwRR6-0005XL-Ls for gcvg-git@gmane.org; Mon, 18 Dec
+ 2006 23:58:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1758775AbWK2EeA (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 28 Nov 2006
- 23:34:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758777AbWK2EeA
- (ORCPT <rfc822;git-outgoing>); Tue, 28 Nov 2006 23:34:00 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:49550 "EHLO
- relais.videotron.ca") by vger.kernel.org with ESMTP id S1758775AbWK2EeA
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 28 Nov 2006 23:34:00 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
- <0J9H0083C60NPBN0@VL-MH-MR001.ip.videotron.ca> for git@vger.kernel.org; Tue,
- 28 Nov 2006 23:33:59 -0500 (EST)
-To: Junio C Hamano <junkio@cox.net>
+ S1754735AbWLRW6R (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 18 Dec 2006
+ 17:58:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754733AbWLRW6R
+ (ORCPT <rfc822;git-outgoing>); Mon, 18 Dec 2006 17:58:17 -0500
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:63637 "EHLO
+ fed1rmmtao02.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1754735AbWLRW6Q (ORCPT <rfc822;git@vger.kernel.org>); Mon, 18 Dec 2006
+ 17:58:16 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao02.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061218225815.BBWL97.fed1rmmtao02.cox.net@fed1rmimpo01.cox.net>; Mon, 18
+ Dec 2006 17:58:15 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id 0Nxa1W00i1kojtg0000000; Mon, 18 Dec 2006
+ 17:57:35 -0500
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-On Tue, 28 Nov 2006, Junio C Hamano wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> What you do _not_ have to worry about all the time is the local
-> changes you do not want to go in your next commit but still want
-> to keep in your working tree.
+> On Mon, 18 Dec 2006, Johannes Schindelin wrote:
+>
+>> I don't install templates. Ever. I want to be sure that nothing slips in 
+>> by mistake, and so I install hooks manually.
+>
+> Side note: prior to installing the tests would fail anyway, no?
 
-This argument has its converse.  What you should _not_ have to worry 
-about all the time is whether your index really includes all the changes 
-you want included in your next commit.
+They shouldn't.  At least the intent was to make the tests read
+from $SRCDIR/templates/blt/ as the source of templates.
 
-And whether wanting to leave local changes in the working directory 
-without commiting them actually happen more often than wanting to commit 
-every changes is arguable.
-
-What should be pretty consensual though, is the fact that having 
-experienced GIT users add an alias for "commit" actually becoming "comit 
--i" to preserve the current behavior is much easier than asking new GIT 
-users do the same but with "commit -a".
-
-So in that context I think having commit without arguments meaning 
-commit -a is a pretty sensible default.  And I don't think it has any 
-influence on the "learning about the index" issue.
-
+But maybe you spotted a bug in t/test-lib.sh; I don't know
+without digging.
 
