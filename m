@@ -1,81 +1,63 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Nicolas Pitre <nico@cam.org>
-Subject: fetching packs and storing them as packs
-Date: Wed, 25 Oct 2006 23:44:12 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0610252333540.12418@xanadu.home>
+From: Steven Grimm <koreth@midwinter.com>
+Subject: git-svn: follow parent after the fact?
+Date: Mon, 18 Dec 2006 17:14:50 -0800
+Message-ID: <45873D0A.1040804@midwinter.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-NNTP-Posting-Date: Thu, 26 Oct 2006 03:44:49 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Tue, 19 Dec 2006 01:16:13 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-X-Sender: nico@xanadu.home
+Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=200606; d=midwinter.com;
+  b=osEB0vYNJLWeXJ/1XTd7+on+c5/psjk88MMKDzMRVEzUcsxcno4ka4lpkq4hDkD2  ;
+User-Agent: Mail/News 1.5.0.2 (Macintosh/20060324)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30137>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34780>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GcwAT-0007pm-TM for gcvg-git@gmane.org; Thu, 26 Oct
- 2006 05:44:35 +0200
+ esmtp (Exim 4.43) id 1GwTZB-0007sk-Jn for gcvg-git@gmane.org; Tue, 19 Dec
+ 2006 02:14:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1422900AbWJZDo2 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 25 Oct 2006
- 23:44:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422901AbWJZDo2
- (ORCPT <rfc822;git-outgoing>); Wed, 25 Oct 2006 23:44:28 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:11559 "EHLO
- relais.videotron.ca") by vger.kernel.org with ESMTP id S1422900AbWJZDo1
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 25 Oct 2006 23:44:27 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
- <0J7Q00LCC51O7990@VL-MO-MR003.ip.videotron.ca> for git@vger.kernel.org; Wed,
- 25 Oct 2006 23:44:13 -0400 (EDT)
+ S932598AbWLSBOk (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 18 Dec 2006
+ 20:14:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932600AbWLSBOk
+ (ORCPT <rfc822;git-outgoing>); Mon, 18 Dec 2006 20:14:40 -0500
+Received: from tater.midwinter.com ([216.32.86.90]:54976 "HELO midwinter.com"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S932598AbWLSBOk
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 18 Dec 2006 20:14:40 -0500
+Received: (qmail 20400 invoked from network); 19 Dec 2006 01:14:38 -0000
+Received: from localhost (HELO ?127.0.0.1?) (koreth@127.0.0.1) by localhost
+ with SMTP; 19 Dec 2006 01:14:38 -0000
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-With the last few patches I just posted it is now possible to receive 
-(fetch) packs, validate them on the fly, complete them if they are thin 
-packs, and store them directly without exploding them into loose 
-objects.
+One of the other git users here just noticed that his git-svn clone of a 
+particular svn repo has an inconsistent set of files compared to the svn 
+client. Turns out the repo has had its trunk moved around in the past. A 
+fresh clone with --follow-parent (which he didn't use) produces the 
+correct results.
 
-There are advantages and inconvenients to both methods, so I think this 
-should become a configuration option and/or even a command line argument 
-to git-fetch. I think there are many more advantages to keeping packs 
-packed hence I think using index-pack should become the default.
+Obviously he can blow away his current repo and make a new one, but it'd 
+be nicer if he could preserve his local change history. Is there any way 
+to retroactively apply the additional changes --follow-parent would have 
+applied if it had been used on the initial fetch?
 
-But I'm a bit tired to play with it and the final integration is for 
-someone else to do.  I've tested it lightly using the extremely crude 
-patch below to hook it in the fetch process.
+It would be better, IMO, if you didn't have to figure out whether or not 
+a given remote svn repository has had branch renames in the past in 
+order to figure out if you need to provide an extra option to git-svn 
+fetch. Maybe --follow-parent should be the default behavior and there 
+should be an option to turn it off? Or is there a good reason to not 
+want that behavior most of the time? My assumption is that it's not the 
+default simply because it's a recent addition.
 
-Have fun!
+By the way, I'm completely in favor of renaming commit to set-tree. +1 
+for that change.
 
-diff --git a/fetch-clone.c b/fetch-clone.c
-index 76b99af..28796c3 100644
---- a/fetch-clone.c
-+++ b/fetch-clone.c
-@@ -142,7 +142,8 @@ int receive_unpack_pack(int xd[2], const
- 		dup2(fd[0], 0);
- 		close(fd[0]);
- 		close(fd[1]);
--		execl_git_cmd("unpack-objects", quiet ? "-q" : NULL, NULL);
-+		execl_git_cmd("index-pack", "--stdin", "--fix-thin",
-+			      quiet ? NULL : "-v", NULL);
- 		die("git-unpack-objects exec failed");
- 	}
- 	close(fd[0]);
-diff --git a/receive-pack.c b/receive-pack.c
-index 1fcf3a9..7f6dc49 100644
---- a/receive-pack.c
-+++ b/receive-pack.c
-@@ -7,7 +7,7 @@
- 
- static const char receive_pack_usage[] = "git-receive-pack <git-dir>";
- 
--static const char *unpacker[] = { "unpack-objects", NULL };
-+static const char *unpacker[] = { "index-pack", "-v", "--stdin", "--fix-thin", NULL };
- 
- static int report_status;
