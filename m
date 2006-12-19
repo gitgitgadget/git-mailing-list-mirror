@@ -1,108 +1,87 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Han-Wen Nienhuys <hanwen@xs4all.nl>
-Subject: [PATCH] sanitize --abbrev option for describe
-Date: Thu, 02 Nov 2006 02:15:30 +0100
-Message-ID: <eibgqu$rsh$1@sea.gmane.org>
-Reply-To: hanwen@xs4all.nl
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: Re: [PATCH] Only warn about missing branch.<n>.merge in pull.
+Date: Tue, 19 Dec 2006 01:59:58 +0100
+Message-ID: <200612190159.58658.Josef.Weidendorfer@gmx.de>
+References: <20061218091206.GA11284@spearce.org> <7virg9xcvw.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0612182135360.19693@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------050209050802000609000207"
-NNTP-Posting-Date: Thu, 2 Nov 2006 01:15:51 +0000 (UTC)
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Tue, 19 Dec 2006 01:00:31 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 61
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: muurbloem.xs4all.nl
-User-Agent: Thunderbird 1.5.0.7 (X11/20061008)
+User-Agent: KMail/1.9.5
+In-Reply-To: <Pine.LNX.4.63.0612182135360.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay2.informatik.tu-muenchen.de
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30678>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34777>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GfRBB-0007Q2-Mw for gcvg-git@gmane.org; Thu, 02 Nov
- 2006 02:15:38 +0100
+ esmtp (Exim 4.43) id 1GwTL9-0005hk-1G for gcvg-git@gmane.org; Tue, 19 Dec
+ 2006 02:00:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1423093AbWKBBPe (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 1 Nov 2006
- 20:15:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423096AbWKBBPe
- (ORCPT <rfc822;git-outgoing>); Wed, 1 Nov 2006 20:15:34 -0500
-Received: from main.gmane.org ([80.91.229.2]:29928 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S1423093AbWKBBPe (ORCPT
- <rfc822;git@vger.kernel.org>); Wed, 1 Nov 2006 20:15:34 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43) id
- 1GfRAz-0007OJ-BD for git@vger.kernel.org; Thu, 02 Nov 2006 02:15:25 +0100
-Received: from muurbloem.xs4all.nl ([213.84.26.127]) by main.gmane.org with
- esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>;
- Thu, 02 Nov 2006 02:15:25 +0100
-Received: from hanwen by muurbloem.xs4all.nl with local (Gmexim 0.1 (Debian))
- id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Thu, 02 Nov 2006 02:15:25
- +0100
-To: git@vger.kernel.org
+ S932575AbWLSBAP (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 18 Dec 2006
+ 20:00:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932573AbWLSBAO
+ (ORCPT <rfc822;git-outgoing>); Mon, 18 Dec 2006 20:00:14 -0500
+Received: from mailout1.informatik.tu-muenchen.de ([131.159.0.18]:52462 "EHLO
+ mailout1.informatik.tu-muenchen.de" rhost-flags-OK-OK-OK-OK) by
+ vger.kernel.org with ESMTP id S932575AbWLSBAN (ORCPT
+ <rfc822;git@vger.kernel.org>); Mon, 18 Dec 2006 20:00:13 -0500
+Received: from dhcp-3s-52.lrr.in.tum.de (dhcp-3s-52.lrr.in.tum.de
+ [131.159.35.52]) by mail.in.tum.de (Postfix) with ESMTP id E02B92819; Tue, 19
+ Dec 2006 02:00:11 +0100 (MET)
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-This is a multi-part message in MIME format.
---------------050209050802000609000207
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+On Monday 18 December 2006 21:43, Johannes Schindelin wrote:
+> Hi,
+> 
+> On Mon, 18 Dec 2006, Junio C Hamano wrote:
+> 
+> > 	$ git pull second
+> > ...
+> >  (3) branch.$current.merge was a mistake.  It should have been
+> >      branch.$current.merge.$remote.  In other words, the
+> >      configuration should have been about the current branch and
+> >      the remote repository pair.
+> > 
+> >  (4) the current configuration mechanism is fine, but the code
+> >      is not.  We should forbid "the first branch listed" rule
+> >      from being applied for "git pull second", and require the
+> >      users to explicitly say which branch(es) to merge.
 
+> I fetch/merge criss-crossed over my machines, so this affects me. Until 
+> the recent changes, I _always_ fetched/merged with explicit remote and 
+> branch. This keeps me unconfused about what I actually do.
+> 
+> With the options you list, I'd say (3) with (4) as a fallback is the way 
+> to go.
 
-Hi,
+I agree.
+Despite of this, I just sent out the quick fix.
 
-the --abbrev option doesn't allow a 40 digit SHA1 output.
+> However, I would actually reuse our versatile (often hated?) config  
+> handling:
+> 
+> [branch "xyz"]
+> 	remote = blabla # this is the default remote
+> 	merge = master # this is the default branch for the default remote
+> 	merge = pu for remote second # merge 'pu' if pulling from second
 
-The following patch fixes this, and uses a IMHO more logical way to 
-compute the abbrev parameter, so --abbrev=52 will still yield a 40 digit 
-SHA1.
+Looks a little bit confusing, but is fine with me.
+I even would remove the need for the word "remote" in the second merge line.
+Anybody using this has to look it up in the documentation, anyway.
+Because these options are not really self-describing.
 
-
--- 
-  Han-Wen Nienhuys - hanwen@xs4all.nl - http://www.xs4all.nl/~hanwen
-
---------------050209050802000609000207
-Content-Type: text/plain;
- name="ps"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline;
- filename="ps"
-
-commit 62ab49fb3a050cb2a4c96fa0ab8064742544369b
-Author: Han-Wen Nienhuys <hanwen@lilypond.org>
-Date:   Thu Nov 2 02:12:11 2006 +0100
-
-    use constant variable for storing "--abbrev=".  Use 40 and
-    MINIMUM_ABBREV as bounds for --abbrev= argument.
-
-diff --git a/describe.c b/describe.c
-index ab192f8..973520c 100644
---- a/describe.c
-+++ b/describe.c
-@@ -141,6 +141,7 @@ static void describe(const char *arg, in
- 
- int main(int argc, char **argv)
- {
-+	char const *abbrev_option = "--abbrev=";
- 	int i;
- 
- 	for (i = 1; i < argc; i++) {
-@@ -152,10 +153,10 @@ int main(int argc, char **argv)
- 			all = 1;
- 		else if (!strcmp(arg, "--tags"))
- 			tags = 1;
--		else if (!strncmp(arg, "--abbrev=", 9)) {
--			abbrev = strtoul(arg + 9, NULL, 10);
--			if (abbrev < MINIMUM_ABBREV || 40 < abbrev)
--				abbrev = DEFAULT_ABBREV;
-+		else if (!strncmp(arg, abbrev_option, strlen (abbrev_option))) {
-+			abbrev = strtoul(arg + strlen (abbrev_option), NULL, 10);
-+			abbrev = MAX(MINIMUM_ABBREV, abbrev);
-+			abbrev = MIN(40, abbrev);
- 		}
- 		else
- 			usage(describe_usage);
-
---------------050209050802000609000207--
+Josef
