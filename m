@@ -1,101 +1,172 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: kernel.org mirroring (Re: [GIT PULL] MMC update)
-Date: Sun, 10 Dec 2006 17:07:22 +1300
-Message-ID: <46a038f90612092007w4637637aya1a01ec18ff16f6f@mail.gmail.com>
-References: <Pine.LNX.4.64.0612020835110.3476@woody.osdl.org>
-	 <200612091251.16460.jnareb@gmail.com> <457AAF31.2050002@garzik.org>
-	 <200612091437.01183.jnareb@gmail.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: [PATCH] index-pack usage of mmap() is unacceptably slower on many OSes
+ other than Linux
+Date: Tue, 19 Dec 2006 10:53:08 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0612191027270.18171@xanadu.home>
+References: <86y7p57y05.fsf@blue.stonehenge.com>
+ <Pine.LNX.4.64.0612181251020.3479@woody.osdl.org>
+ <86r6uw9azn.fsf@blue.stonehenge.com>
+ <Pine.LNX.4.64.0612181625140.18171@xanadu.home>
+ <86hcvs984c.fsf@blue.stonehenge.com>
+ <Pine.LNX.4.64.0612181414200.3479@woody.osdl.org>
+ <8664c896xv.fsf@blue.stonehenge.com>
+ <Pine.LNX.4.64.0612181511260.3479@woody.osdl.org>
+ <Pine.LNX.4.64.0612181906450.18171@xanadu.home>
+ <20061219051108.GA29405@thunk.org>
+ <Pine.LNX.4.64.0612182234260.3479@woody.osdl.org>
+ <Pine.LNX.4.63.0612190930460.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7v1wmwtfmk.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sun, 10 Dec 2006 04:07:37 +0000 (UTC)
-Cc: "Jeff Garzik" <jeff@garzik.org>,
-	"Git Mailing List" <git@vger.kernel.org>,
-	"Linus Torvalds" <torvalds@osdl.org>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	"Rogan Dawes" <discard@dawes.za.net>,
-	"Kernel Org Admin" <ftpadmin@kernel.org>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+NNTP-Posting-Date: Tue, 19 Dec 2006 15:53:18 +0000 (UTC)
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	"Randal L. Schwartz" <merlyn@stonehenge.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=kApUaLjyRJZoo4tM08YVQgAboklgBB7qyjH7EHM+81FUF8WehwlonHlGkHsK6XfxinL9Bg4PuZBa3viK36FUnN4AObUU+YC1H03mUoKCVOaF0tNl3iDTwNUz73W4AgmNNY+WM7u7YGdQu5lNJFfO2saUQG5cHj8f016ZIa12gyo=
-In-Reply-To: <200612091437.01183.jnareb@gmail.com>
-Content-Disposition: inline
+In-reply-to: <7v1wmwtfmk.fsf@assigned-by-dhcp.cox.net>
+X-X-Sender: nico@xanadu.home
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33867>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34832>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GtFyQ-0002t1-Je for gcvg-git@gmane.org; Sun, 10 Dec
- 2006 05:07:34 +0100
+ esmtp (Exim 4.50) id 1GwhHF-0001E9-Uo for gcvg-git@gmane.org; Tue, 19 Dec
+ 2006 16:53:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1759967AbWLJEHY (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 9 Dec 2006
- 23:07:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759968AbWLJEHY
- (ORCPT <rfc822;git-outgoing>); Sat, 9 Dec 2006 23:07:24 -0500
-Received: from nf-out-0910.google.com ([64.233.182.186]:1163 "EHLO
- nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1759967AbWLJEHX (ORCPT <rfc822;git@vger.kernel.org>); Sat, 9 Dec
- 2006 23:07:23 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so1591361nfa for
- <git@vger.kernel.org>; Sat, 09 Dec 2006 20:07:22 -0800 (PST)
-Received: by 10.48.4.17 with SMTP id 17mr2555068nfd.1165723642265; Sat, 09
- Dec 2006 20:07:22 -0800 (PST)
-Received: by 10.49.60.1 with HTTP; Sat, 9 Dec 2006 20:07:22 -0800 (PST)
-To: "Jakub Narebski" <jnareb@gmail.com>
+ S1753064AbWLSPxK (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
+ 10:53:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753153AbWLSPxK
+ (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 10:53:10 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:51196 "EHLO
+ relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1753051AbWLSPxJ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec 2006
+ 10:53:09 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
+ <0JAJ00FV62SKQGQ0@VL-MH-MR002.ip.videotron.ca> for git@vger.kernel.org; Tue,
+ 19 Dec 2006 10:53:08 -0500 (EST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-On 12/10/06, Jakub Narebski <jnareb@gmail.com> wrote:
-> Jeff Garzik wrote:
-> > Jakub Narebski wrote:
->
-> >> In addition to setting either Expires: header or Cache-Control: max-age
-> >> gitweb should also set Last-Modified: and ETag headers, and also
-> >> probably respond to If-Modified-Since: and If-None-Match: requests.
-> >>
-> >> Would be worth implementing this?
+It was reported by Randal L. Schwartz <merlyn@stonehenge.com> that 
+indexing the Linux repository ~150MB pack takes about an hour on OS x 
+while it's a minute on Linux.  It seems that the OS X mmap() 
+implementation is more than 2 orders of magnitude slower than the Linux 
+one.
+
+Linus proposed a patch replacing mmap() with pread() bringing index-pack 
+performance on OS X in line with the Linux one.  The performances on 
+Linux also improved by a small margin.
+
+Signed-off-by: Nicolas Pitre <nico@cam.org>
+
+---
+
+OK looks like this has been sorted out while I was away.  Good!
+
+On Tue, 19 Dec 2006, Junio C Hamano wrote:
+
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > Hi,
 > >
-> > IMO yes, since most major browsers, caches, and spiders support these
-> > headers.
->
-> Sending Last-Modified: should be easy; sending ETag needs some consensus
-> on the contents: mainly about validation. Responding to If-Modified-Since:
-> and If-None-Match: should cut at least _some_ of the page generating time.
-> If ETag can be calculated on URL alone, then we can cut If-None-Match:
-> just at beginning of script.
+> > in a very unscientific test, without your patch local cloning of the 
+> > LilyPond repo takes 1m33s (user), and with your patch (pread() instead of 
+> > mmap()) it takes 1m13s (user). The real times are somewhat bogus, but 
+> > still in favour of pread(), but only by 8 seconds instead of 20.
+> >
+> > This is on Linux 2.4.32.
+> 
+> Interesting.  Anybody have numbers from 2.6?
 
-Indeed. Let me add myself to the pileup agreeing that a combination of
-setting Last-Modified and checking for If-Modified-Since for
-ref-centric pages (log, shortlog, RSS, and summary) is the smartest
-scheme. I got locked into thinking ETags.
+My 37 seconds of yesterday dropped to 32.
 
-> > That would be a good start, and suffice for many cases.  If the CGI can
-> > simply stat(2) files rather than executing git-* programs, that would
-> > increase efficiency quite a bit.
->
-> As I said, I'm not talking (at least now) about saving generated HTML
-> output. This I think is better solved in caching engine like Squid can
-> be. Although even here some git specific can be of help: we can invalidate
-> cache on push, and we know that some results doesn't ever change (well,
-> with exception of changing output of gitweb).
+This is Linus's patch plus a few cosmetic changes.
 
-Indeed - gitweb should not be saving HTML around bit giving the best
-possible hints to squid and friends. And improving our ability to
-short-cut and send a 304 - Not Modified.
-
-> What can be _easily_ done:
-
-Great plan. :-)
-
-
-cheers,
-
-
+diff --git a/index-pack.c b/index-pack.c
+index 6d6c92b..e08a687 100644
+--- a/index-pack.c
++++ b/index-pack.c
+@@ -1,3 +1,8 @@
++#define _XOPEN_SOURCE 500
++#include <unistd.h>
++#include <sys/time.h>
++#include <signal.h>
++
+ #include "cache.h"
+ #include "delta.h"
+ #include "pack.h"
+@@ -6,8 +11,6 @@
+ #include "commit.h"
+ #include "tag.h"
+ #include "tree.h"
+-#include <sys/time.h>
+-#include <signal.h>
+ 
+ static const char index_pack_usage[] =
+ "git-index-pack [-v] [-o <index-file>] [{ ---keep | --keep=<msg> }] { <pack-file> | --stdin [--fix-thin] [<pack-file>] }";
+@@ -87,7 +90,7 @@ static unsigned display_progress(unsigned n, unsigned total, unsigned last_pc)
+ static unsigned char input_buffer[4096];
+ static unsigned long input_offset, input_len, consumed_bytes;
+ static SHA_CTX input_ctx;
+-static int input_fd, output_fd, mmap_fd;
++static int input_fd, output_fd, pack_fd;
+ 
+ /* Discard current buffer used content. */
+ static void flush(void)
+@@ -148,14 +151,14 @@ static const char *open_pack_file(const char *pack_name)
+ 			output_fd = open(pack_name, O_CREAT|O_EXCL|O_RDWR, 0600);
+ 		if (output_fd < 0)
+ 			die("unable to create %s: %s\n", pack_name, strerror(errno));
+-		mmap_fd = output_fd;
++		pack_fd = output_fd;
+ 	} else {
+ 		input_fd = open(pack_name, O_RDONLY);
+ 		if (input_fd < 0)
+ 			die("cannot open packfile '%s': %s",
+ 			    pack_name, strerror(errno));
+ 		output_fd = -1;
+-		mmap_fd = input_fd;
++		pack_fd = input_fd;
+ 	}
+ 	SHA1_Init(&input_ctx);
+ 	return pack_name;
+@@ -279,27 +282,25 @@ static void *get_data_from_pack(struct object_entry *obj)
+ {
+ 	unsigned long from = obj[0].offset + obj[0].hdr_size;
+ 	unsigned long len = obj[1].offset - from;
+-	unsigned pg_offset = from % getpagesize();
+-	unsigned char *map, *data;
++	unsigned char *src, *data;
+ 	z_stream stream;
+ 	int st;
+ 
+-	map = mmap(NULL, len + pg_offset, PROT_READ, MAP_PRIVATE,
+-		   mmap_fd, from - pg_offset);
+-	if (map == MAP_FAILED)
+-		die("cannot mmap pack file: %s", strerror(errno));
++	src = xmalloc(len);
++	if (pread(pack_fd, src, len, from) != len)
++		die("cannot pread pack file: %s", strerror(errno));
+ 	data = xmalloc(obj->size);
+ 	memset(&stream, 0, sizeof(stream));
+ 	stream.next_out = data;
+ 	stream.avail_out = obj->size;
+-	stream.next_in = map + pg_offset;
++	stream.next_in = src;
+ 	stream.avail_in = len;
+ 	inflateInit(&stream);
+ 	while ((st = inflate(&stream, Z_FINISH)) == Z_OK);
+ 	inflateEnd(&stream);
+ 	if (st != Z_STREAM_END || stream.total_out != obj->size)
+ 		die("serious inflate inconsistency");
+-	munmap(map, len + pg_offset);
++	free(src);
+ 	return data;
+ }
