@@ -2,78 +2,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: Some tips for doing a CVS importer
-Date: Tue, 21 Nov 2006 15:15:05 -0500
-Message-ID: <20061121201505.GC22461@spearce.org>
-References: <9e4733910611201349s4d08b984g772c64982f148bfa@mail.gmail.com> <46a038f90611201503m6a63ec8ct347026c635190108@mail.gmail.com> <9e4733910611201537h30b6c9f4oee9d8df75284c284@mail.gmail.com> <46a038f90611201629o39f11f42ye07b86159360b66e@mail.gmail.com> <87vel9y5x6.wl%cworth@cworth.org> <9e4733910611201740i348302e6r84c3c27dc27e5954@mail.gmail.com> <20061121063934.GA3332@spearce.org> <20061121200341.GH7201@pasky.or.cz>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: branch rebase and push
+Date: Tue, 19 Dec 2006 10:57:35 +0100
+Organization: At home
+Message-ID: <em8cti$nff$1@sea.gmane.org>
+References: <45875EFC.5090408@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 21 Nov 2006 20:16:20 +0000 (UTC)
-Cc: Jon Smirl <jonsmirl@gmail.com>, Carl Worth <cworth@cworth.org>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
+Content-Transfer-Encoding: 7Bit
+NNTP-Posting-Date: Tue, 19 Dec 2006 09:55:47 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <20061121200341.GH7201@pasky.or.cz>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 37
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-25-107.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32034>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34807>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gmc1X-0000iv-3B for gcvg-git@gmane.org; Tue, 21 Nov
- 2006 21:15:24 +0100
+ esmtp (Exim 4.43) id 1Gwbh5-0001wx-VE for gcvg-git@gmane.org; Tue, 19 Dec
+ 2006 10:55:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1031376AbWKUUPO (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 21 Nov 2006
- 15:15:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934402AbWKUUPO
- (ORCPT <rfc822;git-outgoing>); Tue, 21 Nov 2006 15:15:14 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:16620 "EHLO
- corvette.plexpod.net") by vger.kernel.org with ESMTP id S934171AbWKUUPM
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2006 15:15:12 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
- helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
- id 1Gmc1D-0008D6-5D; Tue, 21 Nov 2006 15:14:59 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
- 7D33020FB09; Tue, 21 Nov 2006 15:15:05 -0500 (EST)
-To: Petr Baudis <pasky@suse.cz>
+ S932734AbWLSJz3 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
+ 04:55:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932740AbWLSJz3
+ (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 04:55:29 -0500
+Received: from main.gmane.org ([80.91.229.2]:59133 "EHLO ciao.gmane.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S932734AbWLSJz2
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec 2006 04:55:28 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1Gwbgo-0001ud-Sw for git@vger.kernel.org; Tue, 19 Dec 2006 10:55:15 +0100
+Received: from host-81-190-25-107.torun.mm.pl ([81.190.25.107]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Tue, 19 Dec 2006 10:55:14 +0100
+Received: from jnareb by host-81-190-25-107.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Tue, 19 Dec 2006
+ 10:55:14 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Petr Baudis <pasky@suse.cz> wrote:
-> On Tue, Nov 21, 2006 at 07:39:35AM CET, Shawn Pearce wrote:
-> > I think there's a number of issues that are keeping people from
-> > switching to Git and are instead causing them to choose SVN, hg
-> > or Monotone:
-> > 
-> >   - No GUI.
+SungHyun Nam wrote:
+
+> Can I push a branch after rebase?
+> I got a error message:
+>    error: remote 'refs/heads/br' is not a strict subset of local ref
+>    'refs/heads/br'. maybe you are not up-to-date and need to pull first?
 > 
-> It has been my impression that Git's situation is far better than in
-> case of the other systems (except SVN: TortoiseSVN and RapidSVN). Is
-> that not so?
+> It worked fine if I did:
+>   $ git checkout -b br
+>   $ git pull . master
+>   $ git checkout master
+>   $ git pull
+>   $ git push
+> 
+> But I got above error message if I did:
+>   $ git checkout br
+>   $ git rebase master
+>   $ git checkout master
+>   $ git pull
+>   $ git push
 
-Hmm.
+The problem you have is with _push_, not branch, I think.
 
-hg has a browser (hgk).  Its a direct port of gitk.  I don't see
-a GUI otherwise, such as qgit or git-gui.  They do however have a
-Windows installer.
+Does repository you pull from has rebased branch 'br'? If yes, is it
+pulled with + in pull/fetch line? Perhaps (but read documentation first,
+please) "git push --force" is what you want, provided that other side
+doesn't forbid non fast-forward pushes.
 
-Monotone has mtsh and guitone.  Neither appear to be as far along
-as say qgit or even git-gui, which isn't that far along at all.
-
-So I guess you are right.  Git's situation is better than that
-of hg or Monotone.  Now if only I can finish everything I want
-to put into git-gui, and get it included as part of the core Git
-distribution.  :)
+Bu you usually don't rebase published branch (don't change history
+of published branch). Equivalently, you don't publish rebased branch
+until it is ready (or merged in ;-).
 
 -- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
+
