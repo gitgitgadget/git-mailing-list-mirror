@@ -1,51 +1,54 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] git-parse-remote: fix ambiguous shell bug in expand_refs_wildcard
-Date: Mon, 18 Dec 2006 03:16:27 -0500
-Message-ID: <20061218081627.GB3857@coredump.intra.peff.net>
-References: <20061218080941.GA3857@coredump.intra.peff.net>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Change in git-svn dcommit semantics?
+Date: Wed, 20 Dec 2006 00:57:15 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0612200053550.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <m2mz5jegka.fsf@ziti.local> <94FF72E0-F8BD-4773-803E-F179754BF0ED@silverinsanity.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Mon, 18 Dec 2006 08:16:34 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Tue, 19 Dec 2006 23:57:33 +0000 (UTC)
+Cc: Seth Falcon <sethfalcon@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <20061218080941.GA3857@coredump.intra.peff.net>
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <94FF72E0-F8BD-4773-803E-F179754BF0ED@silverinsanity.com>
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34728>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34866>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GwDfk-0003T5-FT for gcvg-git@gmane.org; Mon, 18 Dec
- 2006 09:16:32 +0100
+ esmtp (Exim 4.50) id 1Gwopl-0005VC-No for gcvg-git@gmane.org; Wed, 20 Dec
+ 2006 00:57:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753499AbWLRIQ3 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 18 Dec 2006
- 03:16:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753501AbWLRIQ3
- (ORCPT <rfc822;git-outgoing>); Mon, 18 Dec 2006 03:16:29 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:53470
- "HELO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id
- S1753499AbWLRIQ3 (ORCPT <rfc822;git@vger.kernel.org>); Mon, 18 Dec 2006
- 03:16:29 -0500
-Received: (qmail 26866 invoked from network); 18 Dec 2006 03:16:27 -0500
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2) by
- 66-23-211-5.clients.speedfactory.net with SMTP; 18 Dec 2006 03:16:27 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 18 Dec
- 2006 03:16:27 -0500
-To: Junio C Hamano <junkio@cox.net>
+ S1752877AbWLSX5S (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
+ 18:57:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752903AbWLSX5S
+ (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 18:57:18 -0500
+Received: from mail.gmx.net ([213.165.64.20]:46362 "HELO mail.gmx.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S1752874AbWLSX5S
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec 2006 18:57:18 -0500
+Received: (qmail invoked by alias); 19 Dec 2006 23:57:16 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp018) with SMTP; 20 Dec 2006 00:57:16 +0100
+To: Brian Gernhardt <benji@silverinsanity.com>
 Sender: git-owner@vger.kernel.org
 
-On Mon, Dec 18, 2006 at 03:09:41AM -0500, Jeff King wrote:
+Hi,
 
-> -				if test "z$name" != "z${name%'^{}'}" ||
-> +				if test "z$name" != "z${name%'^{\}'}" ||
+On Tue, 19 Dec 2006, Brian Gernhardt wrote:
 
-Urgh, sorry, this is wrong. It should be:
-  ${name%^{\}}
-IOW, the \ replaces the quote, not in addition to.
+> Mine also has a few variables like "COLLISION_CHECK=paranoid" and my own 
+> prefix.
 
+Just to wake sleeping tigers: have you done a "grep COLLISION_CHECK *" 
+recently (where recently means any date after May 3rd, 2005)?
+
+Ciao,
+Dscho
