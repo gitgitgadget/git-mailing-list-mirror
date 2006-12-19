@@ -2,107 +2,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-add fails after file type change
-Date: Sat, 16 Dec 2006 16:46:10 -0800
-Message-ID: <7vvekb73jh.fsf@assigned-by-dhcp.cox.net>
-References: <458437E0.1050501@midwinter.com> <45843C5A.8020501@gmail.com>
-	<45848CF8.4000704@midwinter.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: StGit repo & gitweb, was Re: [PATCH] merge-recursive: add/add really  is modify/modify with an empty base
+Date: Tue, 19 Dec 2006 20:39:25 +0100
+Organization: At home
+Message-ID: <em9f0e$iti$1@sea.gmane.org>
+References: <20061207101707.GA19139@spearce.org> <Pine.LNX.4.63.0612100056090.28348@wbgn013.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.63.0612100114440.28348@wbgn013.biozentrum.uni-wuerzburg.de> <7vmz5w5tuw.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0612122347590.2807@wbgn013.biozentrum.uni-wuerzburg.de> <7vvekgog0r.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0612130402300.2807@wbgn013.biozentrum.uni-wuerzburg.de> <7vvekgl2z2.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0612131232270.3635@wbgn013.biozentrum.uni-wuerzburg.de> <20061219185015.GK9399@pasky.or.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sun, 17 Dec 2006 00:46:33 +0000 (UTC)
+Content-Transfer-Encoding: 7Bit
+NNTP-Posting-Date: Tue, 19 Dec 2006 19:37:40 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <45848CF8.4000704@midwinter.com> (Steven Grimm's message of "Sat,
-	16 Dec 2006 16:19:04 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 21
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-25-107.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34672>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34844>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GvkAg-0007nu-7j for gcvg-git@gmane.org; Sun, 17 Dec
- 2006 01:46:30 +0100
+ esmtp (Exim 4.50) id 1GwkmH-0005jz-CZ for gcvg-git@gmane.org; Tue, 19 Dec
+ 2006 20:37:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751503AbWLQAqT (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 16 Dec 2006
- 19:46:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751511AbWLQAqT
- (ORCPT <rfc822;git-outgoing>); Sat, 16 Dec 2006 19:46:19 -0500
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:40831 "EHLO
- fed1rmmtao04.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1751503AbWLQAqT (ORCPT <rfc822;git@vger.kernel.org>); Sat, 16 Dec 2006
- 19:46:19 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao04.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061217004610.KEBF7494.fed1rmmtao04.cox.net@fed1rmimpo02.cox.net>; Sat, 16
- Dec 2006 19:46:10 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id zcmN1V00n1kojtg0000000; Sat, 16 Dec 2006
- 19:46:22 -0500
+ S932918AbWLSTh0 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
+ 14:37:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932919AbWLSTh0
+ (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 14:37:26 -0500
+Received: from main.gmane.org ([80.91.229.2]:39513 "EHLO ciao.gmane.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S932918AbWLSThZ
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec 2006 14:37:25 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1Gwkly-0002o9-9i for git@vger.kernel.org; Tue, 19 Dec 2006 20:37:11 +0100
+Received: from host-81-190-25-107.torun.mm.pl ([81.190.25.107]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Tue, 19 Dec 2006 20:37:10 +0100
+Received: from jnareb by host-81-190-25-107.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Tue, 19 Dec 2006
+ 20:37:10 +0100
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Steven Grimm <koreth@midwinter.com> writes:
+Petr Baudis wrote:
 
-> A Large Angry SCM wrote:
->> Did you try "git-update-index --replace dir"?
->
-> Turns out that doesn't work. It gives me the same error I get without
-> the --replace option:
->
-> error: dir: cannot add to the index - missing --add option?
-> fatal: Unable to process file dir
+> On Wed, Dec 13, 2006 at 12:46:56PM CET, Johannes Schindelin wrote:
+>> Not that it matters: repo.or.cz has a nice mirror. Pasky, how powerful is 
+>> that machine? I am a happy user of the gitweb interface on that box...
+> 
+> See http://repo.or.cz/about.html - two-processor P3 800MHz with 2G RAM,
+> and it does quite some work besides doing repo.or.cz as well - there are
+> no load problems so far, though. The gitweb load in particular is pretty
+> low, though - I think it's about 350 requests per day; the periodical
+> mirroring is far more intensive, but the intervals for this could be
+> reduced greatly if that would become a problem.
 
-"update-index --replace --add" would be the way.
+Do you do "git repack -a -d" (and "git prune-packed"), or do you use
+some kept packs?
 
-        $ git ls-files -s
-        100644 fa457baf8abbf5dd3bb4cbfab0c5a4cf0523d7f8 0	1/2
-        100644 00750edc07d6415dcc07ae0351e9397b0222b7ba 0	3
-        $ ls -F
-        ./  ../  1/  3	.git/
-
-There is file 1/2 in directory 1.
-
-        $ mv 1 tmp ; mv 3 1 ; mv tmp 3
-        $ ls -F
-        ./  ../  1  3/	.git/
-
-I just swapped them.
-
-        $ git update-index --replace --add 1
-        $ git ls-files -s
-        100644 00750edc07d6415dcc07ae0351e9397b0222b7ba 0	1
-        100644 00750edc07d6415dcc07ae0351e9397b0222b7ba 0	3
-
-You are allowing update-index to 'add' things so you would need
-to say --add regardless of --replace (--replace is only to allow
-removal of conflicting entries while adding).  In the hindsight,
-we could have implied --add with --replace, but that is the way
-it is, and update-index is not a Porcelain so there is not much
-point fixing it now.
-
-But I think you helped me to spot a bug ;-).
-
-        $ git update-index --replace --add 3/2
-        $ git ls-files -s
-        100644 00750edc07d6415dcc07ae0351e9397b0222b7ba 0	1
-	100644 00750edc07d6415dcc07ae0351e9397b0222b7ba 0	3
-        100644 fa457baf8abbf5dd3bb4cbfab0c5a4cf0523d7f8 0	3/2
-
-The entry '3' should have been removed when we did --replace.
-This index cannot be written out as a tree:
-
-	$ git write-tree
-        You have both 3 and 3/2
-        fatal: git-write-tree: error building trees
-
-Currently we need to remove '3' by hand X-<.
-
-        $ git update-index --remove 3
-        $ git ls-files -s
-        100644 00750edc07d6415dcc07ae0351e9397b0222b7ba 0	1
-        100644 fa457baf8abbf5dd3bb4cbfab0c5a4cf0523d7f8 0	3/2
-        $ git write-tree
-        77be0dd800d74913a90662e35215ee648815fc17
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
 
