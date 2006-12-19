@@ -1,64 +1,56 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: git-show --stat on first commit
-Date: Tue, 21 Nov 2006 19:48:17 +0100
-Message-ID: <20061121184817.GE7201@pasky.or.cz>
-References: <200611211341.48862.andyparkins@gmail.com> <ejvfng$cj6$1@sea.gmane.org> <20061121182135.GD7201@pasky.or.cz> <200611211839.58709.andyparkins@gmail.com>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] gitk: pass --no-left-right to rev-list
+Date: Tue, 19 Dec 2006 11:47:41 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0612191147160.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20061219100534.GA9206@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 21 Nov 2006 18:48:40 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Tue, 19 Dec 2006 10:48:15 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, Paul Mackerras <paulus@samba.org>,
+	git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <200611211839.58709.andyparkins@gmail.com>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <20061219100534.GA9206@coredump.intra.peff.net>
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32020>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34820>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GmafP-0004Ss-Uh for gcvg-git@gmane.org; Tue, 21 Nov
- 2006 19:48:25 +0100
+ esmtp (Exim 4.43) id 1GwcVh-0004t9-Bf for gcvg-git@gmane.org; Tue, 19 Dec
+ 2006 11:47:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1031305AbWKUSsU (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 21 Nov 2006
- 13:48:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031306AbWKUSsU
- (ORCPT <rfc822;git-outgoing>); Tue, 21 Nov 2006 13:48:20 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:34280 "EHLO machine.or.cz") by
- vger.kernel.org with ESMTP id S1031305AbWKUSsT (ORCPT
- <rfc822;git@vger.kernel.org>); Tue, 21 Nov 2006 13:48:19 -0500
-Received: (qmail 4488 invoked by uid 2001); 21 Nov 2006 19:48:17 +0100
-To: Andy Parkins <andyparkins@gmail.com>
+ S932740AbWLSKrq (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
+ 05:47:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932763AbWLSKrq
+ (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 05:47:46 -0500
+Received: from mail.gmx.net ([213.165.64.20]:56907 "HELO mail.gmx.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S932740AbWLSKrp
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec 2006 05:47:45 -0500
+Received: (qmail invoked by alias); 19 Dec 2006 10:47:44 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp003) with SMTP; 19 Dec 2006 11:47:44 +0100
+To: Jeff King <peff@peff.net>
 Sender: git-owner@vger.kernel.org
 
-On Tue, Nov 21, 2006 at 07:39:56PM CET, Andy Parkins wrote:
-> On Tuesday 2006, November 21 18:21, Petr Baudis wrote:
-> 
-> > (The answer is usually "create the branch in a separate repo and then
-> > fetch it to the original one". But it feels a bit kludgy given the
-> > otherwise seamless support for unrelated branches. (Not that I ever was
-> > a big fan of unrelated long-lived branches in general.))
-> 
-> Just as kludgy, but I did this today by writing the name of the new branch 
-> in .git/HEAD then doing
-> 
-> for file in $(git-ls-files); do git-update-index --force-remove $file; done
-> 
-> Before creating the new files and "git-commit"ing.
+Hi,
 
-Ok, this approach looks actually reasonable (contrary to the frequently
-suggested rm approach, which is rather dangerous).
+On Tue, 19 Dec 2006, Jeff King wrote:
 
-Perhaps git checkout --empty could do this?
+> I think there are three fixes:
+>   1. this patch (avoid using left-right)
+>   2. gitk can detect and parse the new format
+>   3. revert automatic use of left-right
+> The third makes the most sense to me.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-The meaning of Stonehenge in Traflamadorian, when viewed from above, is:
-"Replacement part being rushed with all possible speed."
+IMHO 2. is the way to go.
+
+Ciao,
