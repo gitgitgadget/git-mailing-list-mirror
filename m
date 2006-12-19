@@ -2,55 +2,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [PATCH 1/3] Ask git for author and committer name
-Date: Sun, 12 Nov 2006 00:35:38 +0100
-Message-ID: <20061111233538.GC20192@diana.vm.bytemark.co.uk>
-References: <20061111232322.17760.26214.stgit@localhost> <20061111233046.17760.62871.stgit@localhost>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC] Possible optimization for gitweb
+Date: Tue, 19 Dec 2006 23:22:25 +0100
+Organization: At home
+Message-ID: <em9oi5$72t$1@sea.gmane.org>
+References: <20061219205422.GA17864@localhost> <7v1wmvpmef.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Sat, 11 Nov 2006 23:35:52 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+NNTP-Posting-Date: Tue, 19 Dec 2006 22:20:22 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <20061111233046.17760.62871.stgit@localhost>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 33
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-25-107.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31252>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gj2Nz-0007NG-Iv for gcvg-git@gmane.org; Sun, 12 Nov
- 2006 00:35:43 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34860>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GwnJi-0003iW-58 for gcvg-git@gmane.org; Tue, 19 Dec
+ 2006 23:20:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1947328AbWKKXfk convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Sat, 11 Nov 2006 18:35:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1947330AbWKKXfk
- (ORCPT <rfc822;git-outgoing>); Sat, 11 Nov 2006 18:35:40 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:65038 "EHLO
- diana.vm.bytemark.co.uk") by vger.kernel.org with ESMTP id S1947328AbWKKXfk
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 11 Nov 2006 18:35:40 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1
- (Debian)) id 1Gj2Nu-0005RK-00; Sat, 11 Nov 2006 23:35:38 +0000
-To: Catalin Marinas <catalin.marinas@gmail.com>
+ S933045AbWLSWUG (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
+ 17:20:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933047AbWLSWUG
+ (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 17:20:06 -0500
+Received: from main.gmane.org ([80.91.229.2]:37039 "EHLO ciao.gmane.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S933045AbWLSWUE
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec 2006 17:20:04 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1GwnJT-0000cX-1y for git@vger.kernel.org; Tue, 19 Dec 2006 23:19:55 +0100
+Received: from host-81-190-25-107.torun.mm.pl ([81.190.25.107]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Tue, 19 Dec 2006 23:19:55 +0100
+Received: from jnareb by host-81-190-25-107.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Tue, 19 Dec 2006
+ 23:19:55 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On 2006-11-12 00:30:46 +0100, Karl Hasselstr=F6m wrote:
+[Please Cc: git@vger.kernel.org]
 
->   1. Use the value specified on the command line, if any.
->
->   1. Otherwise, use the value from stgitrc, if available.
->
->   2. Otherwise, ask git for the value. git will produce the value
->      from on of its config files, from environment variables, or
->      make it up. It might be asking the spirits of the dead for all
->      we care.
+Junio C Hamano wrote:
 
-Oops. Feel free to renumber these points as you see fit. :-)
+> Robert Fitzsimons <robfitz@273k.net> writes:
+> 
+>> The new workflows I'm proposing would be:
+>>      get/parse ~100 commit's using rev-list
+>>      foreach commit
+>>              output commit
+> 
+> Absolutely.
+> 
+> And Ok on rev-list part, but perhaps --skip would be more
+> appropriate name.
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
+The only problem that you can't use --parents with "history" view, because
+together with --full-history it shows also all merges (--full-history
+without --parents doesn't show merges which does not affect given file or
+directory; the sequence in which --parents and --full-history are taken is
+a bit strange to me). So you have to keep current parse_commit (or extend
+it), and if I remember correctly you do that. 
+
+I'm also for --skip (not --start-count), although... --start-count with
+--max-count seems more natural; one place it can be confusing is that we
+count skipped commits or not? I.e. we use --start-count=10 --max-count=20
+to get second 10 of commits, or --skip=10 --max-count=10 to get second 10
+of commits?
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
+
