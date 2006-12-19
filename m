@@ -4,95 +4,78 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Steven Grimm <koreth@midwinter.com>
-Subject: Re: Using git as a general backup mechanism
-Date: Thu, 14 Dec 2006 15:33:18 -0800
-Message-ID: <4581DF3E.3070806@midwinter.com>
-References: <787BE48C-1808-4A33-A368-5E8A3F00C787@mac.com>	<Pine.LNX.4.64.0612111837210.20138@iabervon.org>	<8900B938-1360-4A67-AB15-C9E84255107B@mac.com>	<200612121553.37499.andyparkins@gmail.com>	<457F31E6.8090701@midwinter.com> <7vfybkof3s.fsf@assigned-by-dhcp.cox.net>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: cloning the kernel - why long time in "Resolving 313037 deltas"
+Date: Tue, 19 Dec 2006 02:26:07 -0500
+Message-ID: <20061219072607.GD2511@spearce.org>
+References: <86r6uw9azn.fsf@blue.stonehenge.com> <Pine.LNX.4.64.0612181625140.18171@xanadu.home> <86hcvs984c.fsf@blue.stonehenge.com> <Pine.LNX.4.64.0612181414200.3479@woody.osdl.org> <8664c896xv.fsf@blue.stonehenge.com> <Pine.LNX.4.64.0612181511260.3479@woody.osdl.org> <Pine.LNX.4.64.0612181906450.18171@xanadu.home> <20061219051108.GA29405@thunk.org> <20061219063930.GA2511@spearce.org> <Pine.LNX.4.64.0612182248420.3479@woody.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 14 Dec 2006 23:40:01 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Tue, 19 Dec 2006 07:26:32 +0000 (UTC)
+Cc: Theodore Tso <tytso@mit.edu>, Nicolas Pitre <nico@cam.org>,
+	"Randal L. Schwartz" <merlyn@stonehenge.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Greylist: delayed 402 seconds by postgrey-1.27 at vger.kernel.org; Thu, 14 Dec 2006 18:39:50 EST
-User-Agent: Thunderbird 1.5.0.8 (Macintosh/20061025)
-In-Reply-To: <7vfybkof3s.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0612182248420.3479@woody.osdl.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34439>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gv0B8-0002kA-Jj for gcvg-git@gmane.org; Fri, 15 Dec
- 2006 00:39:54 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34792>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GwZMo-00013O-Bg for gcvg-git@gmane.org; Tue, 19 Dec
+ 2006 08:26:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751981AbWLNXjv (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
- 18:39:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751986AbWLNXjv
- (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 18:39:51 -0500
-Received: from tater.midwinter.com ([216.32.86.90]:57286 "HELO midwinter.com"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S1751981AbWLNXju
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2006 18:39:50 -0500
-Received: (qmail 9697 invoked from network); 14 Dec 2006 23:33:08 -0000
-Received: from c-76-21-17-123.hsd1.ca.comcast.net (HELO ?192.168.0.128?)
- (koreth@76.21.17.123) by tater.midwinter.com with SMTP; 14 Dec 2006 23:33:08
- -0000
-To: Junio C Hamano <junkio@cox.net>
+ S932093AbWLSH0R (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
+ 02:26:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932071AbWLSH0R
+ (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 02:26:17 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:56062 "EHLO
+ corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S932093AbWLSH0Q (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec 2006
+ 02:26:16 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1GwZMY-0003PC-PD; Tue, 19 Dec 2006 02:26:10 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 34D1120FB65; Tue, 19 Dec 2006 02:26:08 -0500 (EST)
+To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano wrote:
->  (2) End of week comes.  Create an empty branch 'weekly' if you
->      do not already have one.  Make a full tree snapshot, and
->      create a parentless commit for the week if the 'weekly'
->      branch did not exist, or make it a child of the 'weekly'
->      commit from the last week.  Discard 'lastweek' branch if
->      you have one, and rename 'daily' branch to 'lastweek'.
+Linus Torvalds <torvalds@osdl.org> wrote:
+> 
+> 
+> On Tue, 19 Dec 2006, Shawn Pearce wrote:
+> > 
+> > Why isn't git-index-pack doing the same?  Is there some hidden glitch
+> > in some OS somewhere that has a problem with overmapping a file and
+> > appending into it via write()?  I've done that on Mac OS X, Linux,
+> > BSDi, Solaris...  never had a problem.
+> 
+> It works on modern systems, but at least old HPUX versions had 
+> non-coherent mmap() and write(), and POSIX does not guarantee it. And if 
+> you ever want to port to Windows, I don't think you should do it.
+> 
+> Anyway, try the pread() version first, see if that fixes the OS X problem.
 
-That sounds like it'd work, but doesn't it imply that the history of a 
-given file in the backups is not continuous? That is, an old copy of a 
-file on the "weekly" branch doesn't have any kind of ancestor 
-relationship with the same file on the "daily" branch? While that's 
-obviously no different than the current git-less situation where there's 
-no notion of ancestry at all, it'd be neat if this backup scheme could 
-actually track long-term changes to individual files.
+I'll give your pread() version a shot.
 
-I wonder if rebasing can get me what I want. Something like:
+But right now I'm in the middle of cloning your linux-2.6 git
+repository.
 
-(1) Make a new branch from the latest daily. Commit a full tree
-    snapshot to the new branch. (Each branch has exactly one commit.)
+It is done downloading the pack and my system is pegged at 100%
+CPU while resolving deltas.
 
-(2) To expire a daily backup, rebase the second-oldest daily branch,
-    which will initially be a child of the oldest daily branch, under
-    the latest weekly branch instead. Delete the oldest daily branch.
-    I believe the right commands here would be:
+ActivityMonitor is showing that I'm spending 94% CPU in the kernel,
+which is just insane.  Clearly Mac OS X's kernel cannot gracefully
+handle what git-index-pack is currently doing.
 
-    git-rebase -s recursive -s ours --onto latest-weekly \
-               oldest-daily second-oldest-daily
-    git-branch -D oldest-daily
-
-    (Not sure about the double "-s", but I want it to detect renames
-    where possible and never flag any conflicts.)
-
-(3) At the end of the week, instead of expiring the oldest daily
-    branch, rename it to indicate that it's now a weekly snapshot.
-    (That will implicitly do the first part of step 2, since the
-    next daily branch in line will already be a descendant of the
-    newly renamed branch.)
-
-    Repeat step 2, rebasing against the latest monthly branch,
-    to expire the oldest weekly.
-
-(4) To expire an old monthly, rebase the second-oldest monthly branch
-    under the initial empty revision, then delete the oldest monthly.
-    This is basically step 2 again, but rebasing under a fixed starting
-    point.
-
-(5) Run git-prune to expire the objects in the deleted branches, then
-    git-repack -a -d to delta-compress everything.
-
-That's a bit convoluted, admittedly, and probably a perversion of 
-everything pure about the branch system, but would it work? The big 
-thing I'm not sure about here is whether, after doing my rebase and 
-delete in step 2, the objects from the oldest daily will actually be 
-removed by git-prune. They should be unreachable at that point, I think.
-
+-- 
