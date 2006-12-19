@@ -1,58 +1,111 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Aneesh Kumar" <aneesh.kumar@gmail.com>
-Subject: Fwd: git pull and merging.
-Date: Wed, 6 Dec 2006 16:18:52 +0530
-Message-ID: <cc723f590612060248jb151a75y9e9ea316f1c6086f@mail.gmail.com>
-References: <cc723f590612052051r62111c4cgfd7ee893cb00f84a@mail.gmail.com>
-	 <7vodqhaa7o.fsf@assigned-by-dhcp.cox.net>
-	 <cc723f590612052121u1f6e3c9lc7329f40ee1c9e5a@mail.gmail.com>
-	 <Pine.LNX.4.63.0612061019350.28348@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <cc723f590612060205p1fd26cd7u3c7efc723b0177de@mail.gmail.com>
-	 <el65rh$tfj$3@sea.gmane.org>
-	 <cc723f590612060236k7839942el8d048eedfdee3682@mail.gmail.com>
-	 <cc723f590612060248y6f730a54l3a2aadfa6500d36d@mail.gmail.com>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [PATCH] Only warn about missing branch.<n>.merge in pull.
+Date: Tue, 19 Dec 2006 01:54:07 -0500
+Message-ID: <20061219065407.GB2511@spearce.org>
+References: <7virg9xcvw.fsf@assigned-by-dhcp.cox.net> <20061218202803.GB28925@mellanox.co.il>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 6 Dec 2006 10:49:05 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Tue, 19 Dec 2006 06:54:23 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=DGU9WYI4ZFYltyo9LxnD4379Df4nQC/fWuqstriqWHpDUHpYIJE/EYteDEPDKiQu46JwGLdatjK0gBcfyakefMNy63oJ0qMgtVGlsyzYzpjnVvEt9nAs1eP7rSpG03jaKSeh7JpfY0NzrNqfEW89PsXDG6wIDtj76YM0bBGh84g=
-In-Reply-To: <cc723f590612060248y6f730a54l3a2aadfa6500d36d@mail.gmail.com>
 Content-Disposition: inline
+In-Reply-To: <20061218202803.GB28925@mellanox.co.il>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33433>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GruKl-0005Qe-8J for gcvg-git@gmane.org; Wed, 06 Dec
- 2006 11:49:03 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34791>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GwYrh-0005g4-MO for gcvg-git@gmane.org; Tue, 19 Dec
+ 2006 07:54:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1760478AbWLFKsz (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
- 05:48:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760479AbWLFKsz
- (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 05:48:55 -0500
-Received: from nf-out-0910.google.com ([64.233.182.187]:32001 "EHLO
- nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1760480AbWLFKsy (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec
- 2006 05:48:54 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so518080nfa for
- <git@vger.kernel.org>; Wed, 06 Dec 2006 02:48:53 -0800 (PST)
-Received: by 10.48.216.8 with SMTP id o8mr1978517nfg.1165402132762; Wed, 06
- Dec 2006 02:48:52 -0800 (PST)
-Received: by 10.48.210.15 with HTTP; Wed, 6 Dec 2006 02:48:52 -0800 (PST)
-To: "Git Mailing List" <git@vger.kernel.org>
+ S1752963AbWLSGyO (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
+ 01:54:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753027AbWLSGyO
+ (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 01:54:14 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:55062 "EHLO
+ corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1752963AbWLSGyN (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec 2006
+ 01:54:13 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173]
+ helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.52)
+ id 1GwYrY-0001dv-JG; Tue, 19 Dec 2006 01:54:08 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000) id
+ 9753120FB65; Tue, 19 Dec 2006 01:54:07 -0500 (EST)
+To: "Michael S. Tsirkin" <mst@mellanox.co.il>
 Sender: git-owner@vger.kernel.org
 
-After printing some debug echo i got this one which seems to be working for me
+"Michael S. Tsirkin" <mst@mellanox.co.il> wrote:
+> > Quoting r. Junio C Hamano <junkio@cox.net>:
+> > I can see a few possibilities:
+> > 
+> >  (1) people do not interact with multiple remote repositories
+> >      regularly, so this is not a problem in practice.
+> > 
+> >  (2) people do, but "the first branch listed" rule is good
+> >      enough in practice.  Because they would always say "git
+> >      pull second which-branch" instead if they want something
+> >      different, this is a non-issue.
+> > 
+> >  (3) branch.$current.merge was a mistake.  It should have been
+> >      branch.$current.merge.$remote.  In other words, the
+> >      configuration should have been about the current branch and
+> >      the remote repository pair.
+> > 
+> >  (4) the current configuration mechanism is fine, but the code
+> >      is not.  We should forbid "the first branch listed" rule
+> >      from being applied for "git pull second", and require the
+> >      users to explicitly say which branch(es) to merge.
+> > 
+> > I am inclined to say that (1) is possible, (2) is implausible
+> > (otherwise we would not have done 62b339a5 for the same reason),
+> > (3) is confused, and probably (4) is what we need.
+> 
+> As a person who tracks multiple remotes in one repository,
+> I would say (4) best matches what I do.
+> 
+> So I currently always do git fetch <remote> to download changes,
+> and always use git pull . <branch> to merge a specific branch.
 
-[branch "devel"]
-        remote = origin
+Agreed; #4 best matches what I (and those I work with on that ugly
+repository of mine) do.
+
+My git.git repository currently just fetches all of Junio's branches
+right into my local refs/heads.  I fetch every day or so, but never
+merge from next into any branch.  Though I create branches off next,
+master, or some select commit based on whatever topic I'm hacking.
+
+In my other repositories I tend to fetch before merging, for a
+number of reasons:
+
+ a) Its distributed backup; if I fetch the branch that's one more copy.
+
+ b) I can easily view a branch's recent changes, but not affect my
+    own topics until I'm ready to take them in.  People often ask
+	me to look at their changes, or wonder why something is suddenly
+	acting odd - looking at the commits in gitk usually tells me
+	quite quickly who did what.  :-)
+
+ c) I can easily start a new topic off any recent change.
+
+ d) I can easily merge topics once they are local and reviewed.
+
+a,b,d are not quite as necessary in an email-patch based group such
+as git itself, as the mailing list offers most of the reasons I
+fetch first.  b and c are just convience there.
+
+-- 
