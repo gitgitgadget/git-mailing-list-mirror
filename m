@@ -1,64 +1,80 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: fork0@t-online.de (Alex Riesen)
-Subject: Re: cygwin, 44k files: how to commit only index?
-Date: Fri, 8 Dec 2006 06:27:05 +0100
-Message-ID: <20061208052705.GA4318@steel.home>
-References: <81b0412b0612070627r3ff0b394s124d95fbf8084f16@mail.gmail.com> <7vd56vtt2g.fsf@assigned-by-dhcp.cox.net> <20061207221503.GA4990@steel.home> <7vr6vbqqzh.fsf@assigned-by-dhcp.cox.net>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: git-svn: follow parent after the fact?
+Date: Mon, 18 Dec 2006 23:47:45 -0800
+Message-ID: <20061219074745.GA31338@localdomain>
+References: <45873D0A.1040804@midwinter.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 8 Dec 2006 05:27:35 +0000 (UTC)
+NNTP-Posting-Date: Tue, 19 Dec 2006 07:48:00 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Content-Disposition: inline
-In-Reply-To: <7vr6vbqqzh.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <45873D0A.1040804@midwinter.com>
 User-Agent: Mutt/1.5.13 (2006-08-11)
-X-ID: JrMZN0ZdweC8oY-t1jPh+pSGq+kgtunqfVIf0y-BbwAmSTbcZj-JkK
-X-TOI-MSGID: f1093203-989a-4a0e-a37a-81b3f3b85e11
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33657>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GsYGe-00068n-2r for gcvg-git@gmane.org; Fri, 08 Dec
- 2006 06:27:28 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34793>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GwZhX-0005NS-5I for gcvg-git@gmane.org; Tue, 19 Dec
+ 2006 08:47:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1424630AbWLHF1R (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
- 00:27:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1424631AbWLHF1R
- (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 00:27:17 -0500
-Received: from mailout10.sul.t-online.com ([194.25.134.21]:60381 "EHLO
- mailout10.sul.t-online.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1424630AbWLHF1Q (ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Dec
- 2006 00:27:16 -0500
-Received: from fwd30.aul.t-online.de  by mailout10.sul.t-online.com with smtp
-  id 1GsYGO-0007ku-01; Fri, 08 Dec 2006 06:27:12 +0100
-Received: from tigra.home
- (JrMZN0ZdweC8oY-t1jPh+pSGq+kgtunqfVIf0y-BbwAmSTbcZj-JkK@[84.163.120.110]) by
- fwd30.sul.t-online.de with esmtp id 1GsYGI-1dT2u00; Fri, 8 Dec 2006 06:27:06
- +0100
-Received: from steel.home (steel.home [192.168.1.2]) by tigra.home (Postfix)
- with ESMTP id F12C7277AF; Fri,  8 Dec 2006 06:27:05 +0100 (CET)
-Received: from raa by steel.home with local (Exim 4.42 #1 (Debian)) id
- 1GsYGH-0001BF-Rl; Fri, 08 Dec 2006 06:27:05 +0100
-To: Junio C Hamano <junkio@cox.net>
+ S932622AbWLSHrs (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
+ 02:47:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932626AbWLSHrs
+ (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 02:47:48 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:33138 "EHLO hand.yhbt.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S932622AbWLSHrr
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec 2006 02:47:47 -0500
+Received: from hand.yhbt.net (localhost [127.0.0.1]) by hand.yhbt.net
+ (Postfix) with SMTP id E26927DC02A; Mon, 18 Dec 2006 23:47:45 -0800 (PST)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Mon, 18 Dec 2006
+ 23:47:45 -0800
+To: Steven Grimm <koreth@midwinter.com>
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano, Thu, Dec 07, 2006 23:29:54 +0100:
-> > But aside from me trying ignoreState, can anyone help me with that
-> > question regarding checking if the index is any different from HEAD?
-> 
-> Comparing index and HEAD should be cheap on a system with slow
-> lstat(), I think, as "git-diff-index --cached HEAD" should just
-> ignore the working tree altogether.  Is that what you want?
-> 
+Steven Grimm <koreth@midwinter.com> wrote:
+> One of the other git users here just noticed that his git-svn clone of a 
+> particular svn repo has an inconsistent set of files compared to the svn 
+> client. Turns out the repo has had its trunk moved around in the past. A 
+> fresh clone with --follow-parent (which he didn't use) produces the 
+> correct results.
 
-yes, except that it'll compare the whole trees. Could I make it stop
-at first mismatch? "-q|--quiet" for git-diff-index perhaps?
-It's just not only stat, but also, open, read, mmap (yes, I try to use
-it for packs) and close are really slow here as well.
+The final set of files at the latest (svn) revision was inconsistent?
+That should never happen...  If so, I'd very much like to look into this.
+
+> Obviously he can blow away his current repo and make a new one, but it'd 
+> be nicer if he could preserve his local change history. Is there any way 
+> to retroactively apply the additional changes --follow-parent would have 
+> applied if it had been used on the initial fetch?
+
+git-svn graft-branches can probably work (if he imported the parent
+separately).
+
+> It would be better, IMO, if you didn't have to figure out whether or not 
+> a given remote svn repository has had branch renames in the past in 
+> order to figure out if you need to provide an extra option to git-svn 
+> fetch. Maybe --follow-parent should be the default behavior and there 
+> should be an option to turn it off? Or is there a good reason to not 
+> want that behavior most of the time? My assumption is that it's not the 
+> default simply because it's a recent addition.
+
+It may behave unpredictably on some poorly organized repositories.  I
+haven't quite debugged this problem fully as the current code to handle
+multiple repositories is a hacked-on mess.
+
+I'm currently refactoring git-svn to work better on multi-remote
+operations and --follow-parent should be easier to debug as a result.
+
+> By the way, I'm completely in favor of renaming commit to set-tree. +1 
+> for that change.
+
+Noted, thanks for the input.
+
+-- 
