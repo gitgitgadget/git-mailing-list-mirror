@@ -1,95 +1,80 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: What's in git.git (stable)
-Date: Thu, 14 Dec 2006 12:00:41 +0000
-Message-ID: <200612141200.42875.andyparkins@gmail.com>
-References: <7v4przfpir.fsf@assigned-by-dhcp.cox.net> <200612141123.02346.andyparkins@gmail.com> <Pine.LNX.4.63.0612141224330.3635@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Thomas Bleher <bleher@informatik.uni-muenchen.de>
+Subject: Bug: git-svn fails on Mediawiki SVN repo r2992
+Date: Wed, 20 Dec 2006 00:53:13 +0100
+Message-ID: <20061219235312.GB12756@thorium2.jmh.mhn.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 14 Dec 2006 12:00:59 +0000 (UTC)
+Content-Type: text/plain; charset=utf-8
+NNTP-Posting-Date: Wed, 20 Dec 2006 00:06:08 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=fPcBT8QxwSdYbjh2tdwUO3WWrJ55wHfEpGAlm74MeCJKEuMb42sSMnrV12MlHDrdsBw9uEhEf6npz0PsNOHNHPXNnxBzjEUA36uCmaiCaxjHa1RaK4l3LW82IyYBu/BxtzjpD9AMlpo3584mAGCWOwEXU000V9I+Vwwd4py9MgE=
-User-Agent: KMail/1.9.5
-In-Reply-To: <Pine.LNX.4.63.0612141224330.3635@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Greylist: delayed 900 seconds by postgrey-1.27 at vger.kernel.org; Tue, 19 Dec 2006 19:05:55 EST
+Mail-Followup-To: git@vger.kernel.org, bleher@informatik.uni-muenchen.de
 Content-Disposition: inline
+X-Accept-Language: de, en
+X-Operating-System: Linux 2.6.17-10-generic i686
+User-Agent: Mutt/1.5.12-2006-07-14
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34326>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34868>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GupGh-000102-76 for gcvg-git@gmane.org; Thu, 14 Dec
- 2006 13:00:55 +0100
+ esmtp (Exim 4.50) id 1Gwoy7-0006yh-TP for gcvg-git@gmane.org; Wed, 20 Dec
+ 2006 01:06:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932679AbWLNMAw (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
- 07:00:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932676AbWLNMAw
- (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 07:00:52 -0500
-Received: from ug-out-1314.google.com ([66.249.92.173]:7010 "EHLO
- ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S932679AbWLNMAv (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec
- 2006 07:00:51 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so474727uga for
- <git@vger.kernel.org>; Thu, 14 Dec 2006 04:00:50 -0800 (PST)
-Received: by 10.66.244.10 with SMTP id r10mr1273876ugh.1166097650104; Thu, 14
- Dec 2006 04:00:50 -0800 (PST)
-Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
- ESMTP id q1sm2386915uge.2006.12.14.04.00.49; Thu, 14 Dec 2006 04:00:49 -0800
- (PST)
+ S932661AbWLTAF5 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
+ 19:05:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932665AbWLTAF5
+ (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 19:05:57 -0500
+Received: from mailrelay1.lrz-muenchen.de ([129.187.254.106]:60486 "EHLO
+ mailrelay1.lrz-muenchen.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S932661AbWLTAF4 (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec
+ 2006 19:05:56 -0500
+Received: from cobalt.jmh.mhn.de ([192.168.10.2] [192.168.10.2]) by
+ mailout.lrz-muenchen.de for git@vger.kernel.org; Wed, 20 Dec 2006 00:50:53
+ +0100
+Received: (qmail 26204 invoked from network); 19 Dec 2006 23:50:53 -0000
+Received: from thorium2.jmh.mhn.de (HELO localhost.localdomain)
+ (10.151.1.138) by cobalt.jmh.mhn.de with SMTP; 19 Dec 2006 23:50:53 -0000
+Received: by localhost.localdomain (Postfix, from userid 1000) id 72E0C926DC;
+ Wed, 20 Dec 2006 00:53:13 +0100 (CET)
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On Thursday 2006 December 14 11:27, Johannes Schindelin wrote:
+There is some problem between git-svn (v1.4.4.1.gad0c3) and MediaWiki
+SVN when cloning their repo.
 
-> And now you know one of the reasons we have no true progress bar.
->
-> Another reason is that it would be relatively expensive to calculate,
-> since the total _size_ is not known beforehand (remember, the pack is
-> calculated on the fly).
+I just did
+$ git-svn init http://svn.wikimedia.org/svnroot/mediawiki/trunk/phase3
+$ git-svn fetch -r 2991:3122
+and git-svn went into an endless loop, repeatedly downloading and adding
+the same files from r2992 over and over again.
 
-Hmmm; just thinking out loud now... I used to calculate ETA's for simulations 
-I ran that had similar problems - i.e. you don't know how long it takes until 
-its done (it was with genetic programming function trees, and of course you 
-don't know what operations will be in the next generations tree, so you can't 
-estimate a time).  I just showed "something" by doing a standard: how long 
-did n/N take therefore N will take... then I plotted the error in the ETA 
-after the simulation completed.  Interestingly it was always a -exp(-x) 
-shape.  In other words it got more accurate towards the end (of course); 
-which is exactly the sort of accuracy you would want.  At the beginning you 
-just want a broad "this will take a few hours" measure.  Towards the end, you 
-want to know "there is 1m50s remaining".
+The bad revision can be viewed here:
+http://svn.wikimedia.org/viewvc/mediawiki?view=rev&revision=2992
+It adds ~1000 files (mostly small images).
+I can check out this revision just fine using the svn command line
+client.
 
-I wonder if the number of objects is a reasonable measure of progress.  Let's 
-say we're transferring 100,000 objects.  Let's also say that the average size 
-of objects is 100 bytes.  Let's finally say that the object sizes are evenly 
-distributed throughout the 100,000 objects.  This would mean that the first 
-1,000 objects are just as representative as the last 1,000 objects; or any 
-other randomly chosen 1,000 objects.  In which case, the size of the first 
-thousand objects would be approximately one hundredth the size of the total 
-transfer.  Volia: an estimate of the total size of the transfer.
+I found this problem while cloning this repo a while ago, using a
+slightly older version of git (probably 1.4.3, don't remember exactly).
+In this repo, some directories appeared in the latest revisions which
+were deleted a long time ago.
 
-Obviously this estimate would be continuously updated, and would become more 
-accurate as more objects are transferred.  The data rate would of course be 
-based on only the previous X objects rather than the total transferred to 
-take account of changing server conditions.  From these ETA could be 
-estimated.
+You can temporarily browse this repo here:
+http://misc.j-crew.de/cgi-bin/gitweb.cgi?p=mediawiki.git
+HEAD contains the dir Smarty-2.6.2, which was removed in SVN r3122.
+Strangely, my repo misses all commits between r2991 and r3822.
+You can see the gap at
+http://misc.j-crew.de/cgi-bin/gitweb.cgi?p=mediawiki.git;a=shortlog;h=49e761ba51ee0d0a698999451134acbf2e078c03
 
-Obviously the ETA is unstable, but it's only for giving users an idea of how 
-long is left; not for strict accounting.
+I didn't notice any strange errors while cloning, but I had to abort and
+restart git-svn a few times, so maybe there was some error there?
 
+Anyway, I figured I didn't need the _whole_ history, so this is nothing
+urgent, but I thought I should report it.
 
-
-
-Andy
--- 
-Dr Andy Parkins, M Eng (hons), MIEE
