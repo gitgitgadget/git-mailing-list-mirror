@@ -1,111 +1,92 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: [WISH] Store also tag dereferences in packed-refs
-Date: Sun, 19 Nov 2006 01:28:50 +0100
-Message-ID: <e5bfff550611181628o41e11652ycd17ddad5dd21225@mail.gmail.com>
-References: <e5bfff550611180115j135746a1h916e8ae029d1374d@mail.gmail.com>
-	 <7vmz6oeh2k.fsf@assigned-by-dhcp.cox.net>
-	 <20061118184345.GO7201@pasky.or.cz>
-	 <e5bfff550611181047w6712774fkccc697d312b87c7e@mail.gmail.com>
-	 <7vac2oefuz.fsf@assigned-by-dhcp.cox.net>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<zeisberg@informatik.uni-freiburg.de>
+Subject: Re: [PATCH] Fix documentation copy&paste typo
+Date: Tue, 19 Dec 2006 15:16:18 +0100
+Organization: Universitaet Freiburg, Institut f. Informatik
+Message-ID: <20061219141618.GA2539@cepheus>
+References: <11655782712452-git-send-email-zeisberg@informatik.uni-freiburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sun, 19 Nov 2006 00:29:09 +0000 (UTC)
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+NNTP-Posting-Date: Tue, 19 Dec 2006 15:00:01 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=VbU8DG12N1TdgVBYxo3lhVgSV8AIzidq580SmG24hdarxfEwLdjDRdbYVUOobq/IA5kpggIhlQybeU1yRAQlFB8WybUtCoNEkXyFWGpG/9f+8Kvx3qBr1EomDlROgnR4hy+nKfDol/7jiMKzsbR75GYLPjF0f/I9x0IQXDKDRls=
-In-Reply-To: <7vac2oefuz.fsf@assigned-by-dhcp.cox.net>
+X-Greylist: delayed 2597 seconds by postgrey-1.27 at vger.kernel.org; Tue, 19 Dec 2006 09:59:48 EST
+Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <zeisberg@informatik.uni-freiburg.de>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Content-Disposition: inline
+In-Reply-To: <11655782712452-git-send-email-zeisberg@informatik.uni-freiburg.de>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31815>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GlaYO-0004gw-FU for gcvg-git@gmane.org; Sun, 19 Nov
- 2006 01:29:00 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34830>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GwgRh-0005wi-2f for gcvg-git@gmane.org; Tue, 19 Dec
+ 2006 15:59:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1755440AbWKSA2v (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 18 Nov 2006
- 19:28:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755445AbWKSA2v
- (ORCPT <rfc822;git-outgoing>); Sat, 18 Nov 2006 19:28:51 -0500
-Received: from py-out-1112.google.com ([64.233.166.181]:21463 "EHLO
- py-out-1112.google.com") by vger.kernel.org with ESMTP id S1755440AbWKSA2v
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 18 Nov 2006 19:28:51 -0500
-Received: by py-out-1112.google.com with SMTP id a29so700686pyi for
- <git@vger.kernel.org>; Sat, 18 Nov 2006 16:28:50 -0800 (PST)
-Received: by 10.35.100.6 with SMTP id c6mr5377763pym.1163896130056; Sat, 18
- Nov 2006 16:28:50 -0800 (PST)
-Received: by 10.35.42.4 with HTTP; Sat, 18 Nov 2006 16:28:49 -0800 (PST)
-To: "Junio C Hamano" <junkio@cox.net>
+ S932822AbWLSO7t convert rfc822-to-quoted-printable (ORCPT
+ <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006 09:59:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932823AbWLSO7t
+ (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 09:59:49 -0500
+Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:40129 "EHLO
+ atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+ with ESMTP id S932822AbWLSO7s (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19
+ Dec 2006 09:59:48 -0500
+Received: from login.informatik.uni-freiburg.de ([132.230.151.6]) by
+ atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168) (Exim
+ 4.60) (envelope-from <zeisberg@informatik.uni-freiburg.de>) id
+ 1Gwfle-0003qD-QZ; Tue, 19 Dec 2006 15:16:30 +0100
+Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1]) by
+ login.informatik.uni-freiburg.de (8.13.7+Sun/8.12.11) with ESMTP id
+ kBJEGS7D014980; Tue, 19 Dec 2006 15:16:28 +0100 (MET)
+Received: (from zeisberg@localhost) by login.informatik.uni-freiburg.de
+ (8.13.7+Sun/8.12.11/Submit) id kBJEGRhs014979; Tue, 19 Dec 2006 15:16:27
+ +0100 (MET)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
->
-> A quick one that is to the point to solve "your" problem.
->
->         show-ref -d
->
+Hello Junio,
 
-I was out for dinner, just come back home.
+Uwe Kleine-K=F6nig wrote:
+> From: Uwe Zeisberger <zeisberg@informatik.uni-freiburg.de>
+>=20
+> This was introduced in 45a3b12cfd3eaa05bbb0954790d5be5b8240a7b5
+>=20
+> Signed-off-by: Uwe Kleine-K=F6nig <zeisberg@informatik.uni-freiburg.d=
+e>
+> ---
+> [...]
+you took that patch as bbee1d971dc07c29f840b439aa2a2c890a12cf9f, thanks
+for that.
 
-Some quick tests with show-ref -d instead of peek-remote:
+Somehow the '=F6' (o-umlaut) in my name was messed up.  If I do
 
-- git tree 2374ms
-- linux tree 2225ms
+	git cat-file -p bbee1d971dc07c29 | xxd | grep eine
 
-Not a big change. I reboot before each test to have a guaranteed cold cache.
+I get:
 
-Tested also with show-ref only, not useful to me, but just as a comparison.
+	0000160: 6569 6e65 2d4b 1b2c 4143 361b 2842 6e69 eine-K.,AC6.(Bni
 
-- git tree 1420ms
-- linux tree 1021ms
+That is, the '=F6' became 8 byte long.  Can you tell me what went wrong
+there?
 
-Better, but still slower then what I would expected.
+The commits by Karl Hasselstr=F6m <kha@treskal.com> (e.g. e67c66251a416=
+5)
+use UTF-8.
 
-In both case CPU load is low, processes are heavily I/O bound, so
-avoiding some fork does not save the day.
+Does there exist a (maybe project specific) convention for the encoding
+of commit logs?
 
-Please, tell me if you want me to run some kind of additional test.
+Best regards
+Uwe
 
-> I wonder how fast update-server-info is under the same condition
-> with your earlier timing.
->
-> I am not suggesting you to use update-server-info.  The reason I
-> am wondering about it are:
->
->  (1) traditionally, "peek-remote ." has been the only way to get
->      to that information, so you have every right to keep doing
->      so;
->
->  (2) however, even with presense of packed-refs, upload-pack
->      that is invoked by peek-remote needs to consult unpacked
->      refs first and then fall back to packed-refs, and only
->      using the ^{} information "cached" in packed-refs file and
->      computing ^{} itself when dealing with unpacked refs means
->      more code, which we need to assess the pros-and-cons.
->
->  (3) another inefficiency of using "peek-remote ." is that it
->      spawns another process in the "remote" repo and talks with
->      it.
->
-> So storing this information making upload-pack to reuse it when
-> it can might make things go faster for other applications but
-> first I wanted to know how much overhead is incurred in the
-> extra upload-pack process, and time update-server-info needs to
-> prepare the info in .git/info/refs would be a way to get a rough
-> estimate for that (you subtract that from "peek-remote ." time).
->
+--=20
+Uwe Kleine-Koenig
 
-It's to late to understand this part of your e-mail ;-) I will read
-better tomorrow.
-
-Thanks
