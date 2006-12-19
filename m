@@ -1,73 +1,56 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jeff Garzik <jeff@garzik.org>
-Subject: Re: Using GIT to store /etc (Or: How to make GIT store all file permission
- bits)
-Date: Sun, 10 Dec 2006 09:49:50 -0500
-Message-ID: <457C1E8E.4080407@garzik.org>
-References: <787BE48C-1808-4A33-A368-5E8A3F00C787@mac.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [RFC] Possible optimization for gitweb
+Date: Tue, 19 Dec 2006 14:10:32 -0800
+Message-ID: <7v1wmvpmef.fsf@assigned-by-dhcp.cox.net>
+References: <20061219205422.GA17864@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sun, 10 Dec 2006 14:50:02 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Tue, 19 Dec 2006 22:10:54 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.8 (X11/20061107)
-In-Reply-To: <787BE48C-1808-4A33-A368-5E8A3F00C787@mac.com>
+In-Reply-To: <20061219205422.GA17864@localhost> (Robert Fitzsimons's message
+	of "Tue, 19 Dec 2006 20:54:22 +0000")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33892>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34858>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GtQ07-0006ad-47 for gcvg-git@gmane.org; Sun, 10 Dec
- 2006 15:49:59 +0100
+ esmtp (Exim 4.50) id 1GwnAT-0001I3-3c for gcvg-git@gmane.org; Tue, 19 Dec
+ 2006 23:10:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1760814AbWLJOty (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 10 Dec 2006
- 09:49:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760812AbWLJOty
- (ORCPT <rfc822;git-outgoing>); Sun, 10 Dec 2006 09:49:54 -0500
-Received: from srv5.dvmed.net ([207.36.208.214]:38305 "EHLO mail.dvmed.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1760814AbWLJOtx
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 10 Dec 2006 09:49:53 -0500
-Received: from cpe-065-190-194-075.nc.res.rr.com ([65.190.194.75]
- helo=[10.10.10.10]) by mail.dvmed.net with esmtpsa (Exim 4.63 #1 (Red Hat
- Linux)) id 1GtPzz-0000br-Lv; Sun, 10 Dec 2006 14:49:52 +0000
-To: Kyle Moffett <mrmacman_g4@mac.com>
+ S932998AbWLSWKe (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
+ 17:10:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932966AbWLSWKe
+ (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 17:10:34 -0500
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:55576 "EHLO
+ fed1rmmtao07.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S932998AbWLSWKd (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec 2006
+ 17:10:33 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao07.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061219221033.IKPU22053.fed1rmmtao07.cox.net@fed1rmimpo01.cox.net>; Tue, 19
+ Dec 2006 17:10:33 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id 0m9r1W00d1kojtg0000000; Tue, 19 Dec 2006
+ 17:09:52 -0500
+To: Robert Fitzsimons <robfitz@273k.net>
 Sender: git-owner@vger.kernel.org
 
-Kyle Moffett wrote:
-> I've recently become somewhat interested in the idea of using GIT to 
-> store the contents of various folders in /etc.  However after a bit of 
-> playing with this, I discovered that GIT doesn't actually preserve all 
-> permission bits since that would cause problems with the more 
-> traditional software development model.  I'm curious if anyone has done 
-> this before; and if so, how they went about handling the permissions and 
-> ownership issues.
-> 
-> I spent a little time looking over how GIT stores and compares 
-> permission bits; trying to figure out if it's possible to patch in a new 
-> configuration variable or two; say "preserve_all_perms" and 
-> "preserve_owner", or maybe even "save_acls".  It looks like standard 
-> permission preservation is fairly basic; you would just need to patch a 
-> few routines which alter the permissions read in from disk or compare 
-> them with ones from the database.  On the other hand, it would appear 
-> that preserving ownership or full POSIX ACLs might be a bit of a challenge.
+Robert Fitzsimons <robfitz@273k.net> writes:
 
-It's a great idea, something I would like to do, and something I've 
-suggested before.  You could dig through the mailing list archives, if 
-you're motivated.
+> The new workflows I'm proposing would be:
+> 	get/parse ~100 commit's using rev-list
+> 	foreach commit
+> 		output commit
 
-I actively use git to version, store and distribute an exim mail 
-configuration across six servers.  So far my solution has been a 'fix 
-perms' script, or using the file perm checking capabilities of cfengine.
+Absolutely.
 
-But it would be a lot better if git natively cared about ownership and 
-permissions (presumably via an option).
-
-	Jeff
-
-
+And Ok on rev-list part, but perhaps --skip would be more
+appropriate name.
