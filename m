@@ -4,84 +4,71 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: [RFC] Submodules in GIT
-Date: Sat, 2 Dec 2006 21:43:50 +0100
-Message-ID: <20061202204350.GV18810@admingilde.org>
-References: <20061130170625.GH18810@admingilde.org> <20061201220821.GL18810@admingilde.org> <200612021004.22236.andyparkins@gmail.com> <200612021450.46005.Josef.Weidendorfer@gmx.de>
+From: Robert Fitzsimons <robfitz@273k.net>
+Subject: Re: [PATCH] gitweb: Show '...' links in "summary" view only if there are more items
+Date: Tue, 19 Dec 2006 12:41:33 +0000
+Message-ID: <20061219124133.GB16429@localhost>
+References: <20061218224327.GG16029@localhost> <200612191214.58474.jnareb@gmail.com> <20061219120854.GA16429@localhost> <200612191328.08928.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="hWA99UP51iQRyIL4"
-NNTP-Posting-Date: Sat, 2 Dec 2006 20:44:02 +0000 (UTC)
-Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Tue, 19 Dec 2006 12:42:08 +0000 (UTC)
+Cc: Robert Fitzsimons <robfitz@273k.net>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Content-Disposition: inline
-In-Reply-To: <200612021450.46005.Josef.Weidendorfer@gmx.de>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <200612191328.08928.jnareb@gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-blacknight-igraine-MailScanner-Information: Please contact the ISP for more information
+X-blacknight-igraine-MailScanner: Found to be clean
+X-blacknight-igraine-MailScanner-SpamCheck: not spam,
+	SpamAssassin (not cached, score=-2, required 7, autolearn=disabled,
+	RCVD_IN_NERDS_IE -2.00)
+X-MailScanner-From: robfitz@273k.net
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33045>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34829>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GqbiF-0001P8-58 for gcvg-git@gmane.org; Sat, 02 Dec
- 2006 21:43:55 +0100
+ esmtp (Exim 4.43) id 1GweI0-0004gm-S2 for gcvg-git@gmane.org; Tue, 19 Dec
+ 2006 13:41:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1031784AbWLBUnv (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 2 Dec 2006
- 15:43:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031785AbWLBUnv
- (ORCPT <rfc822;git-outgoing>); Sat, 2 Dec 2006 15:43:51 -0500
-Received: from agent.admingilde.org ([213.95.21.5]:34724 "EHLO
- mail.admingilde.org") by vger.kernel.org with ESMTP id S1031784AbWLBUnv
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 2 Dec 2006 15:43:51 -0500
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1) id
- 1GqbiA-0004jr-Bs; Sat, 02 Dec 2006 21:43:50 +0100
-To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+ S932818AbWLSMlq (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
+ 07:41:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932819AbWLSMlq
+ (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 07:41:46 -0500
+Received: from igraine.blacknight.ie ([81.17.252.25]:43093 "EHLO
+ igraine.blacknight.ie" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S932817AbWLSMlp (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec 2006
+ 07:41:45 -0500
+Received: from [212.2.165.238] (helo=localhost) by igraine.blacknight.ie with
+ esmtp (Exim 4.60) (envelope-from <robfitz@273k.net>) id 1GweHP-0006at-AY;
+ Tue, 19 Dec 2006 12:41:11 +0000
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 
+> Junio usually puts such comments in brackets (I don't know if it is
+> always used, i.e. if it is some 'convention'), e.g.:
+> 
+>   Also perform the same "..." link logic to the forks list.
+> 
+>   [rf: Modified patch from Jakub to to apply cleanly to master]
+> 
+> or something like that. Just a nitpick.
 
---hWA99UP51iQRyIL4
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+No problem, I tried to find the approreati convention.
 
-hoi :)
+> > -	my @taglist  = git_get_tags_list(15);
+> > -	my @headlist = git_get_heads_list(15);
+> > +	# we need to request one more than 16 (0..15) to check if those 16 are all
+> > +	my @taglist  = git_get_tags_list(16);
+> > +	my @headlist = git_get_heads_list(16);
+> 
+> It needs to be 17, not 16, otherwise we never would get "...". By default
+> we show _16_ items, from 0 to 15 inclusive, so we must get _17_ items
+> to check if there are more than 16.
 
-On Sat, Dec 02, 2006 at 02:50:45PM +0100, Josef Weidendorfer wrote:
-> On Saturday 02 December 2006 11:04, Andy Parkins wrote:
-> > > So what do you do with deleted submodules?
-> > > You wouldn't want them to still sit around in your working directory,
-> > > but you still have to preserve them.
-> >=20
-> > Now that is a tricky one.  Mind you, I think that problem exists for an=
-y=20
-> > implementation.  I haven't got a good answer for that.
->=20
-> That suggests that it is probably better to separate submodule repositori=
-es
-> from their checked out working trees. Why not put the GITDIRs of the subm=
-odules
-> in subdirectories of the supermodules GITDIR instead?
+That was a copy error on my part.  Though looking at the code
+git_get_tags_list and git_get_heads_list already adds one to the limit
+value, so if you pass in 17 they will return 18 items.
 
-Why not simply use a shared object database instead?
-
-You can still have an alternative to some standalone bare repository of
-the submodule if you do not like to store submodule objects in the
-supermodule repository.
-
---=20
-Martin Waitz
-
---hWA99UP51iQRyIL4
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFFceWGj/Eaxd/oD7IRAr9yAJ44AvADJrzop9x8qU1Rxg2V0Gfh4ACfXedl
-iEu2oEEtux4KC6nqUBxwVFc=
-=0FMe
------END PGP SIGNATURE-----
-
+Robert
