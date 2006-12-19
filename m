@@ -1,166 +1,98 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: [PATCH] Documentation: reorganize cvs-migration.txt
-Date: Thu, 7 Dec 2006 12:43:06 -0500
-Message-ID: <20061207174306.GC16858@fieldses.org>
-References: <20061206.105251.144349770.wl@gnu.org> <Pine.LNX.4.63.0612061325320.28348@wbgn013.biozentrum.uni-wuerzburg.de> <4576D92A.80307@xs4all.nl> <20061206145802.GC1714@fieldses.org> <Pine.LNX.4.63.0612061613460.28348@wbgn013.biozentrum.uni-wuerzburg.de> <20061206171950.GD1714@fieldses.org> <20061206172450.GE1714@fieldses.org> <7v7ix47wbr.fsf@assigned-by-dhcp.cox.net> <20061207041805.GC3457@fieldses.org> <Pine.LNX.4.63.0612071522080.28348@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Andy Whitcroft <apw@shadowen.org>
+Subject: Re: cloning the kernel - why long time in "Resolving 313037 deltas"
+Date: Tue, 19 Dec 2006 10:24:29 +0000
+Message-ID: <4587BDDD.5030508@shadowen.org>
+References: <86y7p57y05.fsf@blue.stonehenge.com>	<Pine.LNX.4.64.0612181251020.3479@woody.osdl.org>	<86r6uw9azn.fsf@blue.stonehenge.com>	<Pine.LNX.4.64.0612181625140.18171@xanadu.home>	<86hcvs984c.fsf@blue.stonehenge.com>	<Pine.LNX.4.64.0612181414200.3479@woody.osdl.org>	<8664c896xv.fsf@blue.stonehenge.com>	<Pine.LNX.4.64.0612181511260.3479@woody.osdl.org>	<Pine.LNX.4.64.0612181906450.18171@xanadu.home>	<20061219051108.GA29405@thunk.org>	<Pine.LNX.4.64.0612182234260.3479@woody.osdl.org>	<Pine.LNX.4.63.0612190930460.19693@wbgn013.biozentrum.uni-wuerzburg.de> <7v1wmwtfmk.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 7 Dec 2006 17:43:21 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Tue, 19 Dec 2006 10:57:58 +0000 (UTC)
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Theodore Tso <tytso@mit.edu>, Nicolas Pitre <nico@cam.org>,
+	"Randal L. Schwartz" <merlyn@stonehenge.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0612071522080.28348@wbgn013.biozentrum.uni-wuerzburg.de>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+X-Greylist: delayed 1988 seconds by postgrey-1.27 at vger.kernel.org; Tue, 19 Dec 2006 05:57:43 EST
+User-Agent: Icedove 1.5.0.8 (X11/20061116)
+In-Reply-To: <7v1wmwtfmk.fsf@assigned-by-dhcp.cox.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33600>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GsNHB-0005ek-8B for gcvg-git@gmane.org; Thu, 07 Dec
- 2006 18:43:17 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34821>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GwcfK-0006qj-Pi for gcvg-git@gmane.org; Tue, 19 Dec
+ 2006 11:57:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1162585AbWLGRnM (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 7 Dec 2006
- 12:43:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1162584AbWLGRnM
- (ORCPT <rfc822;git-outgoing>); Thu, 7 Dec 2006 12:43:12 -0500
-Received: from mail.fieldses.org ([66.93.2.214]:59941 "EHLO
- pickle.fieldses.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1162585AbWLGRnL (ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Dec 2006
- 12:43:11 -0500
-Received: from bfields by pickle.fieldses.org with local (Exim 4.63)
- (envelope-from <bfields@fieldses.org>) id 1GsNH0-0005oh-TZ; Thu, 07 Dec 2006
- 12:43:06 -0500
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+ S932782AbWLSK5o (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
+ 05:57:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932789AbWLSK5o
+ (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 05:57:44 -0500
+Received: from hellhawk.shadowen.org ([80.68.90.175]:4246 "EHLO
+ hellhawk.shadowen.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S932782AbWLSK5n (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec 2006
+ 05:57:43 -0500
+Received: from localhost ([127.0.0.1]) by hellhawk.shadowen.org with esmtp
+ (Exim 4.50) id 1Gwc8F-0002T9-9d; Tue, 19 Dec 2006 10:23:35 +0000
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-On Thu, Dec 07, 2006 at 03:28:33PM +0100, Johannes Schindelin wrote:
-> This is a laudable goal, and the order makes sense (put first that what 
-> most people are interested in).
+Junio C Hamano wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> A few comments:
+>> Hi,
+>>
+>> in a very unscientific test, without your patch local cloning of the 
+>> LilyPond repo takes 1m33s (user), and with your patch (pread() instead of 
+>> mmap()) it takes 1m13s (user). The real times are somewhat bogus, but 
+>> still in favour of pread(), but only by 8 seconds instead of 20.
+>>
+>> This is on Linux 2.4.32.
+> 
+> Interesting.  Anybody have numbers from 2.6?
 
-Thanks for the comments!  Patch, incremental against the previous one,
-appended.
+On my debian etch system:
 
-> - just skimming the patch, I found "commiting" (needs another "t"), and 
->   "-bare" (needs another "-").
+Linux version 2.6.17-2-686 (Debian 2.6.17-9) (waldi@debian.org) (gcc 
+version 4.1.2 20060901 (prerelease) (Debian 4.1.1-13)) #1 SMP Wed Sep 13 
+16:34:10 UTC 2006
 
-Got it, thanks.
+I did one run first (not included) to get things nice and warm, then 
+three runs of each.  Overall the same as reported elsewhere marginally 
+better with pread().  I guess you could say a 20-30% improvement in 
+system time which isn't to be sniffed at.
 
-> - It might make more sense to "git init-db --shared" and fetch the initial 
->   revision into it, rather than clone it and then fix.
+-apw
 
-I do like the idea of anything that gets rid of the ugly find|xargs
-chmod.  Result included below (untested).  Is that what you were
-thinking of?
+mmap():
 
->   You might also want
->   to mention that the "--shared" of -clone is different in meaning from 
->   that of -init-db (make just a footnote of it, to avoid intimidating 
->   readers).
+real    1m5.187s
+user    1m0.844s
+sys     0m2.900s
 
-I'm ignoring this for now.  We can add it later if someone says they've
-run into it.  (But honestly it's partly just laziness on my part--no
-objection if you want to make the patch.)
+real    1m6.748s
+user    1m0.868s
+sys     0m3.064s
 
-It's too bad about that option-name conflict.  It'd be nice just to be
-able to do the whole thing with one clone commandline.  And it'd also
-make sense to allow clone and init-db to share commandline options where
-it made sense.
+real    1m5.604s
+user    1m0.760s
+sys     0m3.124s
 
-> - By far the easiest method to import from cvs is to go to a checked out
->   _CVS_ working directory, and just say "git cvsimport".
 
-Neat, I didn't know about that.  Done.  I left the "-C" in there on the
-assumption they often won't want to drop the result into the CVS working
-directory.
+pread():
 
-Also did some miscellaneous cleanup.
+real    1m4.676s
+user    1m0.168s
+sys     0m2.340s
 
---b.
+real    1m3.563s
+user    0m59.796s
+sys     0m2.248s
 
-commit 48ec79a74d0daa134b677ed5458beb873aa06e9a
-Author: J. Bruce Fields <bfields@citi.umich.edu>
-Date:   Thu Dec 7 12:38:09 2006 -0500
-
-    Documentation: simpler shared repo creation, miscellaneous cleanup
-    
-    Create the shared repo with init-db --shared, fetch, and manual extraction
-    of .git directory, instead of using clone --bare.
-    
-    Suggest running git-cvsimport from cvs working directory, more convenient
-    thatn providing all the CVS information on the commandline.
-    
-    Fix a couple mispellings, add a couple manpage links.
-    
-    Thanks to Johannes Schindelin.
-    
-    Signed-off-by: J. Bruce Fields <bfields@citi.umich.edu>
-
-diff --git a/Documentation/cvs-migration.txt b/Documentation/cvs-migration.txt
-index 773fc99..4fab0d7 100644
---- a/Documentation/cvs-migration.txt
-+++ b/Documentation/cvs-migration.txt
-@@ -43,8 +43,8 @@ Pull: refs/heads/master:refs/remotes/origin/master
- ------------
- ================================
- 
--You can update the shared repository with your changes by first commiting
--your changes, and then using:
-+You can update the shared repository with your changes by first committing
-+your changes, and then using the gitlink:git-push[1] command:
- 
- ------------------------------------------------
- $ git push origin master
-@@ -76,11 +76,23 @@ possibly created from scratch or from a tarball (see the
- link:tutorial.html[tutorial]), or imported from an already existing CVS
- repository (see the next section).
- 
--If your project's working directory is /home/alice/myproject, you can
--create a shared repository at /pub/repo.git with:
-+Assume your existing repo is at /home/alice/myproject.  Create a temporary
-+empty shared repository and fetch your project into it:
- 
- ------------------------------------------------
--$ git clone -bare /home/alice/myproject /pub/repo.git
-+$ mkdir /pub/temporary
-+$ cd /pub/temporary
-+$ git init-db --shared
-+$ git fetch /home/alice/myproject master:master
-+------------------------------------------------
-+
-+Then create a "bare" repository at /pub/repo.git by just moving the contents of
-+the .git directory there.  The temporary repository can then be discarded.
-+
-+------------------------------------------------
-+$ mv .git /pub/repo.git
-+$ cd ..
-+$ rm -rf temporary
- ------------------------------------------------
- 
- Next, give every team member read/write access to this repository.  One
-@@ -107,15 +119,15 @@ Importing a CVS archive
- 
- First, install version 2.1 or higher of cvsps from
- link:http://www.cobite.com/cvsps/[http://www.cobite.com/cvsps/] and make
--sure it is in your path.  The magic command line is then
-+sure it is in your path.  Then cd to a checked out CVS working directory
-+of the project you are interested in and run gitlink:git-cvsimport[1]:
- 
- -------------------------------------------
--$ git cvsimport -v -d <cvsroot> -C <destination> <module>
-+$ git cvsimport -C <destination>
- -------------------------------------------
- 
- This puts a git archive of the named CVS module in the directory
--<destination>, which will be created if necessary.  The -v option makes
--the conversion script very chatty.
-+<destination>, which will be created if necessary.
- 
- The import checks out from CVS every revision of every file.  Reportedly
+real    1m4.066s
+user    1m0.156s
+sys     0m2.304s
