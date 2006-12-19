@@ -4,73 +4,131 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: svn versus git
-Date: Fri, 15 Dec 2006 09:52:57 +0100
-Message-ID: <45826269.1060405@op5.se>
-References: <200612132200.41420.andyparkins@gmail.com> <200612142000.54409.arekm@maven.pl> <4581CB38.8050401@op5.se> <200612142313.27741.arekm@maven.pl>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH 1/2] Move in_merge_bases() to commit.c
+Date: Tue, 19 Dec 2006 00:25:02 -0800
+Message-ID: <7vbqm0thr5.fsf@assigned-by-dhcp.cox.net>
+References: <7vodq3a136.fsf@assigned-by-dhcp.cox.net>
+	<7vr6uxzgjb.fsf@assigned-by-dhcp.cox.net>
+	<20061218140813.GA32446@spearce.org>
+	<7vy7p4u1au.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Fri, 15 Dec 2006 08:53:11 +0000 (UTC)
-Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Tue, 19 Dec 2006 08:25:34 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
-In-Reply-To: <200612142313.27741.arekm@maven.pl>
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34479>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gv8oV-0001fc-Cn for gcvg-git@gmane.org; Fri, 15 Dec
- 2006 09:53:07 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34797>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1GwaHk-0002tb-KZ for gcvg-git@gmane.org; Tue, 19 Dec
+ 2006 09:25:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751301AbWLOIxE (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 15 Dec 2006
- 03:53:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751321AbWLOIxE
- (ORCPT <rfc822;git-outgoing>); Fri, 15 Dec 2006 03:53:04 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:48417 "EHLO
- smtp-gw1.op5.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
- S1751301AbWLOIxD (ORCPT <rfc822;git@vger.kernel.org>); Fri, 15 Dec 2006
- 03:53:03 -0500
-Received: from [192.168.1.20] (unknown [213.88.215.14]) by smtp-gw1.op5.se
- (Postfix) with ESMTP id 2E7886BCC9; Fri, 15 Dec 2006 09:52:59 +0100 (CET)
-To: Arkadiusz Miskiewicz <arekm@maven.pl>
+ S932669AbWLSIZF (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
+ 03:25:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932661AbWLSIZF
+ (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 03:25:05 -0500
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:34837 "EHLO
+ fed1rmmtao10.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S932670AbWLSIZE (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec 2006
+ 03:25:04 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao10.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061219082503.JTIR20715.fed1rmmtao10.cox.net@fed1rmimpo02.cox.net>; Tue, 19
+ Dec 2006 03:25:03 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id 0YRE1W00p1kojtg0000000; Tue, 19 Dec 2006
+ 03:25:15 -0500
+To: Shawn Pearce <spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 
-Arkadiusz Miskiewicz wrote:
-> On Thursday 14 December 2006 23:07, Andreas Ericsson wrote:
-> 
->>> ps. I'm blind or there is no documentation about what utilities are
->>> needed to get git fully working? (like sed, coreutils, grep, rcs package
->>> (merge tool afaik needed)...).
->> perl and the standard coreutils, which afaik are required to be present
->> on all unix systems. 
-> That's not all. sed and grep is also used. There may be some others hidden 
-> deep in git and it would be good to have that docummented (I've hit the 
-> problem already with missing some tool when preparing chroot for git).
-> 
+This reasonably useful function was hidden inside builtin-branch.c
+---
 
-sed and grep are, along with awk, part of the tools that are required to 
-be present on all unix systems. Sorry for the confusion with coreutils 
-(the package / software project).
+ * This is used by the next one, which is why this is part of
+   the 'reflog entry and pruning' series.
 
-When you set up a chroot environment, you want to at least copy /bin, 
-/lib and /sbin to the new root and then remove whatever you *know* you 
-don't need from them. Those directories should hold all programs the 
-system needs to properly boot up.
+ builtin-branch.c |   21 +--------------------
+ commit.c         |   17 +++++++++++++++++
+ commit.h         |    1 +
+ 3 files changed, 19 insertions(+), 20 deletions(-)
 
->> We no longer require external merge tools. 
-> Starting from which version?
-> 
-
-Latest only. It was added 2006-12-06 and the dependency on external 
-merge program was removed in a commit created 2006-12-13. Junio merged 
-the merge-code into master one hour later. It is not in the maint 
-branch, so I don't know if any distributions ship git with the new 
-xdl_merge() thing. It's *very* good though. Kudos to Johannes Schindelin 
-for really making things right.
-
+diff --git a/builtin-branch.c b/builtin-branch.c
+index 560309c..12eebc0 100644
+--- a/builtin-branch.c
++++ b/builtin-branch.c
+@@ -70,25 +70,6 @@ const char *branch_get_color(enum color_branch ix)
+ 	return "";
+ }
+ 
+-static int in_merge_bases(const unsigned char *sha1,
+-			  struct commit *rev1,
+-			  struct commit *rev2)
+-{
+-	struct commit_list *bases, *b;
+-	int ret = 0;
+-
+-	bases = get_merge_bases(rev1, rev2, 1);
+-	for (b = bases; b; b = b->next) {
+-		if (!hashcmp(sha1, b->item->object.sha1)) {
+-			ret = 1;
+-			break;
+-		}
+-	}
+-
+-	free_commit_list(bases);
+-	return ret;
+-}
+-
+ static void delete_branches(int argc, const char **argv, int force)
+ {
+ 	struct commit *rev, *head_rev = head_rev;
+@@ -119,7 +100,7 @@ static void delete_branches(int argc, const char **argv, int force)
+ 		 */
+ 
+ 		if (!force &&
+-		    !in_merge_bases(sha1, rev, head_rev)) {
++		    !in_merge_bases(rev, head_rev)) {
+ 			fprintf(stderr,
+ 				"The branch '%s' is not a strict subset of your current HEAD.\n"
+ 				"If you are sure you want to delete it, run 'git branch -D %s'.\n",
+diff --git a/commit.c b/commit.c
+index a6d543e..4bddcbe 100644
+--- a/commit.c
++++ b/commit.c
+@@ -1009,3 +1009,20 @@ struct commit_list *get_merge_bases(struct commit *one,
+ 	free(rslt);
+ 	return result;
+ }
++
++int in_merge_bases(struct commit *rev1, struct commit *rev2)
++{
++	struct commit_list *bases, *b;
++	int ret = 0;
++
++	bases = get_merge_bases(rev1, rev2, 1);
++	for (b = bases; b; b = b->next) {
++		if (!hashcmp(rev1->object.sha1, b->item->object.sha1)) {
++			ret = 1;
++			break;
++		}
++	}
++
++	free_commit_list(bases);
++	return ret;
++}
+diff --git a/commit.h b/commit.h
+index fc13de9..10eea9f 100644
+--- a/commit.h
++++ b/commit.h
+@@ -107,4 +107,5 @@ int read_graft_file(const char *graft_file);
+ 
+ extern struct commit_list *get_merge_bases(struct commit *rev1, struct commit *rev2, int cleanup);
+ 
++int in_merge_bases(struct commit *rev1, struct commit *rev2);
+ #endif /* COMMIT_H */
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
+1.4.4.2.g688739
+
