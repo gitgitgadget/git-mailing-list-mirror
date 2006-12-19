@@ -1,70 +1,57 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] git-checkout: do not allow -f and -m at the same time.
-Date: Wed, 15 Nov 2006 11:06:38 -0800
-Message-ID: <7vfyckmsw1.fsf@assigned-by-dhcp.cox.net>
+From: Marco Roeland <marco.roeland@xs4all.nl>
+Subject: Re: cloning the kernel - why long time in "Resolving 313037 deltas"
+Date: Tue, 19 Dec 2006 09:40:17 +0100
+Message-ID: <20061219084017.GB30448@fiberbit.xs4all.nl>
+References: <Pine.LNX.4.64.0612181625140.18171@xanadu.home> <86hcvs984c.fsf@blue.stonehenge.com> <Pine.LNX.4.64.0612181414200.3479@woody.osdl.org> <8664c896xv.fsf@blue.stonehenge.com> <Pine.LNX.4.64.0612181511260.3479@woody.osdl.org> <Pine.LNX.4.64.0612181906450.18171@xanadu.home> <20061219051108.GA29405@thunk.org> <20061219063930.GA2511@spearce.org> <Pine.LNX.4.64.0612182248420.3479@woody.osdl.org> <20061219083242.GF2511@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 15 Nov 2006 19:07:59 +0000 (UTC)
+Content-Type: text/plain; charset=iso-8859-1
+NNTP-Posting-Date: Tue, 19 Dec 2006 08:40:35 +0000 (UTC)
+Cc: Linus Torvalds <torvalds@osdl.org>, Theodore Tso <tytso@mit.edu>,
+	Nicolas Pitre <nico@cam.org>,
+	"Randal L. Schwartz" <merlyn@stonehenge.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Content-Disposition: inline
+In-Reply-To: <20061219083242.GF2511@spearce.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31471>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34801>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GkQ6Y-00061D-2i for gcvg-git@gmane.org; Wed, 15 Nov
- 2006 20:07:28 +0100
+ esmtp (Exim 4.43) id 1GwaWW-0004lQ-8D for gcvg-git@gmane.org; Tue, 19 Dec
+ 2006 09:40:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1030899AbWKOTGu (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
- 14:06:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030900AbWKOTGu
- (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 14:06:50 -0500
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:3218 "EHLO
- fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP id S1030897AbWKOTGt
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 14:06:49 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao05.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061115190648.VKNR20330.fed1rmmtao05.cox.net@fed1rmimpo02.cox.net>; Wed, 15
- Nov 2006 14:06:48 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id n76u1V00y1kojtg0000000; Wed, 15 Nov 2006
- 14:06:55 -0500
-To: git@vger.kernel.org
+ S932674AbWLSIk3 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
+ 03:40:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932672AbWLSIk3
+ (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 03:40:29 -0500
+Received: from fiberbit.xs4all.nl ([213.84.224.214]:44059 "EHLO
+ fiberbit.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
+ S932674AbWLSIk2 (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec 2006
+ 03:40:28 -0500
+Received: from marco by fiberbit.xs4all.nl with local (Exim 4.63)
+ (envelope-from <marco.roeland@xs4all.nl>) id 1GwaWH-000864-C4; Tue, 19 Dec
+ 2006 09:40:17 +0100
+To: Shawn Pearce <spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 
-Instead of silently ignoring one over the other, complain on
-this incompatible combination.
+On Tuesday December 19th 2006 at 03:32 Shawn Pearce wrote:
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
- * Back to fixing usability issues one at a time instead of
-   throwing everything away with bathwater.
+> > Anyway, try the pread() version first, see if that fixes the OS X problem.
+> 
+> It does.  Without pread() (aka stock 'next') it takes me over an
+> hour to index a pack of linux-2.6.  With pread() its 1m6s to run
+> index-pack on the same pack file.  The indexes are (of course)
+> identically produced.
 
- git-checkout.sh |    5 +++++
- 1 files changed, 5 insertions(+), 0 deletions(-)
-
-diff --git a/git-checkout.sh b/git-checkout.sh
-index 119bca1..eb28b29 100755
---- a/git-checkout.sh
-+++ b/git-checkout.sh
-@@ -77,6 +77,11 @@ while [ "$#" != "0" ]; do
-     esac
- done
- 
-+case "$force$merge" in
-+11)
-+	die "git checkout: -f and -m are incompatible"
-+esac
-+
- # The behaviour of the command with and without explicit path
- # parameters is quite different.
- #
+I see the same here. From an (estimated) time of 37 minutes down to 52
+seconds with the pread() patch. Running the profiler (shark) on the old
+version showed that 85% of the time was spent in the Mac OS X mmap()
+system call.
 -- 
-1.4.4
-
