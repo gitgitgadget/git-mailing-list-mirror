@@ -1,66 +1,113 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [PATCH] Print progress message to stderr, not stdout
-Date: Mon, 4 Dec 2006 16:37:05 +0100
-Message-ID: <20061204153705.GA8644@diana.vm.bytemark.co.uk>
-References: <20061111121625.8988.45195.stgit@localhost> <e5bfff550612020520w3ad48a09xfdde63b9050a75cf@mail.gmail.com> <b0943d9e0612040117y6554b891yaf6eb59d0d52ebf0@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 2/2] git reflog expire
+Date: Tue, 19 Dec 2006 02:15:39 -0800
+Message-ID: <7vhcvsry2c.fsf@assigned-by-dhcp.cox.net>
+References: <7vodq3a136.fsf@assigned-by-dhcp.cox.net>
+	<7vr6uxzgjb.fsf@assigned-by-dhcp.cox.net>
+	<20061218140813.GA32446@spearce.org>
+	<7vy7p4u1au.fsf@assigned-by-dhcp.cox.net>
+	<7v64c8thr4.fsf@assigned-by-dhcp.cox.net>
+	<20061219090851.GH2511@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Mon, 4 Dec 2006 15:37:58 +0000 (UTC)
-Cc: Marco Costalba <mcostalba@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Tue, 19 Dec 2006 10:15:55 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <b0943d9e0612040117y6554b891yaf6eb59d0d52ebf0@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <20061219090851.GH2511@spearce.org> (Shawn Pearce's message of
+	"Tue, 19 Dec 2006 04:08:51 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33197>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GrFtB-0004SX-UH for gcvg-git@gmane.org; Mon, 04 Dec
- 2006 16:37:54 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34810>
+Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Gwc0e-0005tU-0S for gcvg-git@gmane.org; Tue, 19 Dec
+ 2006 11:15:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S937024AbWLDPhR convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006 10:37:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937028AbWLDPhR
- (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 10:37:17 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4543 "EHLO
- diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S937024AbWLDPhQ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 4 Dec
- 2006 10:37:16 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1
- (Debian)) id 1GrFsP-0002Gl-00; Mon, 04 Dec 2006 15:37:05 +0000
-To: Catalin Marinas <catalin.marinas@gmail.com>
+ S932757AbWLSKPl (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
+ 05:15:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932758AbWLSKPl
+ (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 05:15:41 -0500
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:51217 "EHLO
+ fed1rmmtao08.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S932757AbWLSKPk (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec 2006
+ 05:15:40 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao08.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061219101540.THFC16632.fed1rmmtao08.cox.net@fed1rmimpo02.cox.net>; Tue, 19
+ Dec 2006 05:15:40 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id 0aFs1W0011kojtg0000000; Tue, 19 Dec 2006
+ 05:15:52 -0500
+To: Shawn Pearce <spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 
-On 2006-12-04 09:17:16 +0000, Catalin Marinas wrote:
+Shawn Pearce <spearce@spearce.org> writes:
 
-> On 02/12/06, Marco Costalba <mcostalba@gmail.com> wrote:
->
-> > On 11/11/06, Karl Hasselstr=F6m <kha@treskal.com> wrote:
-> >
-> > > Printing progress messages to stdout causes them to get mixed up
-> > > with the actual output of the program. Using stderr is much
-> > > better, since the user can then redirect the two components
-> > > separately.
-> >
-> > This patch breaks qgit.
->
-> Since there are other tools relying on a clean stderr, I think I
-> would revert it and add a verbose flag and/or config option. Karl,
-> any thoughts on this (since you sent the patch)?
+> Of course that's not what the code does, because if either the
+> old or the new object is no longer in the ODB you are pruning away
+> the log entry.  I cannot however come up with a better name than
+> --expire-lost.  :-(
 
-I introduced this since I wanted to divert the output to a file, and
-the progress message had no business being written to that file. But a
-command line option to suppress progress messages would work just as
-well if that's what git does.
+How about --expire-unreachable?
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
+> I'm thinking that we may want the 'expire' subcommand to simply be
+> implied by '--expire' instead.
+
+After coding this, my conclusion is the same as yours, but
+reasoning behind it is slightly different.
+
+To have 'expire' action as a subcommand to 'git-reflog' is from
+implementor's point of view, and is a horrible organization from
+the UI standpoint.  To the end users, it may be easier to have a
+single 'git-gc' command that runs these commands with reasonable
+set of defaults:
+
+	- rerere gc
+        - reflog expire --all
+	- (possibly) repack -a -d
+        - prune
+
+If we go that route, it probably is not even necessary to
+advertise that 'expire' is a subcommand of reflog.  The users
+would not run it from the command line; it is an implementation
+detail of 'git-gc' command.
+
+> Needing a subcommand like 'git reflog show HEAD' is just a lot
+> of typing[*1*].
+
+I am very interested in seeing how 'git reflog show HEAD' would
+show the reflog entries.  I've tried showing it just like log
+family shows (it is reasonably easy; you build the list of revs
+out of reflog entries and feed them to 'git-show' machinery),
+and while it works, it is unusable for the purpose of seeing
+which ones are the lost ones (amended commits and rebased branch
+remnants).
+
+The best I came up with is still my "show-branch --reflog" so
+far.  You really need to show not just the commit title but how
+they topologically relate to the commits on the surviving
+branch, and I think having something graphical or semi-graphical
+is a must.
+
+> I would also say maybe we want to make --dry-run the default, with
+> a final message which tells the user that if they really want to
+> make it possible to throw away the commits printed above then
+> restart the expire operation.
+
+I am moderately negative on that.  Nobody does it like that;
+prune, branch -d, tag -d,...
+
+> I'd like to take a stab at the log display code for the reflog
+> command, but I'd also really like to port forward (aka rewrite)
+> that mmap window code I keep saying I'll work on, but never quite
+> seem to do...
+
+After today's pread() thing, I was also wondering about that too
+;-).
