@@ -1,93 +1,96 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jan Harkes <jaharkes@cs.cmu.edu>
-Subject: [PATCH] Continue traversal when rev-list --unpacked finds a packed commit.
-Date: Mon, 30 Oct 2006 20:37:49 -0500
-Message-ID: <20061031013749.GA19885@delft.aura.cs.cmu.edu>
-References: <20061029093754.GD3847@spearce.org> <Pine.LNX.4.64.0610301332440.11384@xanadu.home> <20061030202611.GA5775@spearce.org> <20061030205200.GA20236@delft.aura.cs.cmu.edu> <7v3b95wjmg.fsf@assigned-by-dhcp.cox.net> <20061030225500.GG3617@delft.aura.cs.cmu.edu> <7vhcxltmit.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] index-pack usage of mmap() is unacceptably slower on many OSes other than Linux
+Date: Tue, 19 Dec 2006 11:00:02 -0800
+Message-ID: <7vk60npv7x.fsf@assigned-by-dhcp.cox.net>
+References: <86y7p57y05.fsf@blue.stonehenge.com>
+	<Pine.LNX.4.64.0612181251020.3479@woody.osdl.org>
+	<86r6uw9azn.fsf@blue.stonehenge.com>
+	<Pine.LNX.4.64.0612181625140.18171@xanadu.home>
+	<86hcvs984c.fsf@blue.stonehenge.com>
+	<Pine.LNX.4.64.0612181414200.3479@woody.osdl.org>
+	<8664c896xv.fsf@blue.stonehenge.com>
+	<Pine.LNX.4.64.0612181511260.3479@woody.osdl.org>
+	<Pine.LNX.4.64.0612181906450.18171@xanadu.home>
+	<20061219051108.GA29405@thunk.org>
+	<Pine.LNX.4.64.0612182234260.3479@woody.osdl.org>
+	<Pine.LNX.4.63.0612190930460.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7v1wmwtfmk.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0612191027270.18171@xanadu.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Tue, 31 Oct 2006 01:38:12 +0000 (UTC)
-Cc: git@vger.kernel.org
+NNTP-Posting-Date: Tue, 19 Dec 2006 19:00:18 +0000 (UTC)
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	"Randal L. Schwartz" <merlyn@stonehenge.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Mail-Followup-To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <7vhcxltmit.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <Pine.LNX.4.64.0612191027270.18171@xanadu.home> (Nicolas Pitre's
+	message of "Tue, 19 Dec 2006 10:53:08 -0500 (EST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30558>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GeiZg-00025k-NJ for gcvg-git@gmane.org; Tue, 31 Oct
- 2006 02:37:58 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34840>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GwkCB-0005S1-9a for gcvg-git@gmane.org; Tue, 19 Dec
+ 2006 20:00:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1161569AbWJaBhx (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 30 Oct 2006
- 20:37:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161570AbWJaBhx
- (ORCPT <rfc822;git-outgoing>); Mon, 30 Oct 2006 20:37:53 -0500
-Received: from DELFT.AURA.CS.CMU.EDU ([128.2.206.88]:14049 "EHLO
- delft.aura.cs.cmu.edu") by vger.kernel.org with ESMTP id S1161569AbWJaBhx
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 30 Oct 2006 20:37:53 -0500
-Received: from jaharkes by delft.aura.cs.cmu.edu with local (Exim 4.63)
- (envelope-from <jaharkes@cs.cmu.edu>) id 1GeiZZ-0005BJ-4I; Mon, 30 Oct 2006
- 20:37:49 -0500
-To: Junio C Hamano <junkio@cox.net>
+ S932897AbWLSTAH (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
+ 14:00:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932903AbWLSTAG
+ (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 14:00:06 -0500
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:55537 "EHLO
+ fed1rmmtao09.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S932897AbWLSTAE (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec 2006
+ 14:00:04 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao09.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061219190003.IECT18767.fed1rmmtao09.cox.net@fed1rmimpo02.cox.net>; Tue, 19
+ Dec 2006 14:00:03 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo02.cox.net with bizsmtp id 0j0F1W00e1kojtg0000000; Tue, 19 Dec 2006
+ 14:00:16 -0500
+To: Nicolas Pitre <nico@cam.org>
 Sender: git-owner@vger.kernel.org
 
+Nicolas Pitre <nico@cam.org> writes:
 
-When getting the list of all unpacked objects by walking the commit history,
-we would stop traversal whenever we hit a packed commit. However the fact
-that we found a packed commit does not guarantee that all previous commits
-are also packed. As a result the commit walkers did not show all reachable
-unpacked objects.
+> OK looks like this has been sorted out while I was away.  Good!
+>
+> This is Linus's patch plus a few cosmetic changes.
 
-Signed-off-by: Jan Harkes <jaharkes@cs.cmu.edu>
----
- revision.c |   14 ++++++--------
- 1 files changed, 6 insertions(+), 8 deletions(-)
+Not a complaint but rather a request for free education ;-).
 
-diff --git a/revision.c b/revision.c
-index 280e92b..a69c873 100644
---- a/revision.c
-+++ b/revision.c
-@@ -418,9 +418,6 @@ static void limit_list(struct rev_info *
- 
- 		if (revs->max_age != -1 && (commit->date < revs->max_age))
- 			obj->flags |= UNINTERESTING;
--		if (revs->unpacked &&
--		    has_sha1_pack(obj->sha1, revs->ignore_packed))
--			obj->flags |= UNINTERESTING;
- 		add_parents_to_list(revs, commit, &list);
- 		if (obj->flags & UNINTERESTING) {
- 			mark_parents_uninteresting(commit);
-@@ -1149,17 +1146,18 @@ struct commit *get_revision(struct rev_i
- 		 * that we'd otherwise have done in limit_list().
- 		 */
- 		if (!revs->limited) {
--			if ((revs->unpacked &&
--			     has_sha1_pack(commit->object.sha1,
--					   revs->ignore_packed)) ||
--			    (revs->max_age != -1 &&
--			     (commit->date < revs->max_age)))
-+			if (revs->max_age != -1 &&
-+			    (commit->date < revs->max_age))
- 				continue;
- 			add_parents_to_list(revs, commit, &revs->commits);
- 		}
- 		if (commit->object.flags & SHOWN)
- 			continue;
- 
-+		if (revs->unpacked && has_sha1_pack(commit->object.sha1,
-+						    revs->ignore_packed))
-+		    continue;
-+
- 		/* We want to show boundary commits only when their
- 		 * children are shown.  When path-limiter is in effect,
- 		 * rewrite_parents() drops some commits from getting shown,
--- 
-1.4.2.4.gd5de
+> diff --git a/index-pack.c b/index-pack.c
+> index 6d6c92b..e08a687 100644
+> --- a/index-pack.c
+> +++ b/index-pack.c
+> @@ -1,3 +1,8 @@
+> +#define _XOPEN_SOURCE 500
+> +#include <unistd.h>
+> +#include <sys/time.h>
+> +#include <signal.h>
+> +
+>  #include "cache.h"
+>  #include "delta.h"
+>  #include "pack.h"
+> @@ -6,8 +11,6 @@
+>  #include "commit.h"
+>  #include "tag.h"
+>  #include "tree.h"
+> -#include <sys/time.h>
+> -#include <signal.h>
+
+Most of the rest of the sources seem to do our includes first
+and source-file specific system includes at the end.  What's the
+rationale for this change?
+
+Do we need _XOPEN_SOURCE=500 because pread() is XSI?
+
+Also nobody other than convert-objects.c has _XOPEN_SOURCE level
+specified.  If _XOPEN_SOURCE matters I wonder if we should do so
+in some central place to make it consistent across source files?
