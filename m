@@ -1,78 +1,118 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-2.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,MSGID_FROM_MTA_HEADER,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
-From: Sean <seanlkml@sympatico.ca>
-Subject: Re: Generating docu in 1.4.3.3.g01929
-Date: Sat, 28 Oct 2006 15:13:54 -0400
-Message-ID: <BAYC1-PASMTP11A0267A1CE74A17EDE925AE050@CEZ.ICE>
-References: <20061027154433.da9b29d7.seanlkml@sympatico.ca>
-	<200610272312.k9RNCo2Q002623@laptop13.inf.utfsm.cl>
-	<BAYC1-PASMTP04E0376BEE45F9A676DB03AE050@CEZ.ICE>
-	<7vr6wt9enk.fsf@assigned-by-dhcp.cox.net>
-	<BAYC1-PASMTP060BC6AED24731185AD6E5AE050@CEZ.ICE>
-	<7vmz7g8don.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] index-pack usage of mmap() is unacceptably slower on
+ many OSes other than Linux
+Date: Tue, 19 Dec 2006 11:55:19 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0612191148270.3483@woody.osdl.org>
+References: <86y7p57y05.fsf@blue.stonehenge.com> <Pine.LNX.4.64.0612181251020.3479@woody.osdl.org>
+ <86r6uw9azn.fsf@blue.stonehenge.com> <Pine.LNX.4.64.0612181625140.18171@xanadu.home>
+ <86hcvs984c.fsf@blue.stonehenge.com> <Pine.LNX.4.64.0612181414200.3479@woody.osdl.org>
+ <8664c896xv.fsf@blue.stonehenge.com> <Pine.LNX.4.64.0612181511260.3479@woody.osdl.org>
+ <Pine.LNX.4.64.0612181906450.18171@xanadu.home> <20061219051108.GA29405@thunk.org>
+ <Pine.LNX.4.64.0612182234260.3479@woody.osdl.org>
+ <Pine.LNX.4.63.0612190930460.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7v1wmwtfmk.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0612191027270.18171@xanadu.home>
+ <7vk60npv7x.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0612191409500.18171@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sat, 28 Oct 2006 19:14:22 +0000 (UTC)
-Cc: git@vger.kernel.org, "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Tue, 19 Dec 2006 19:55:48 +0000 (UTC)
+Cc: Junio C Hamano <junkio@cox.net>,
+	"Randal L. Schwartz" <merlyn@stonehenge.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Originating-IP: [65.93.43.81]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Original-Message-Id: <20061028151354.3c5b2fa7.seanlkml@sympatico.ca>
-In-Reply-To: <7vmz7g8don.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Sylpheed version 2.2.9 (GTK+ 2.10.4; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 28 Oct 2006 19:22:57.0609 (UTC) FILETIME=[79886B90:01C6FAC6]
+In-Reply-To: <Pine.LNX.4.64.0612191409500.18171@xanadu.home>
+X-MIMEDefang-Filter: osdl$Revision: 1.163 $
+X-Scanned-By: MIMEDefang 2.36
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gdtd6-00064f-Mg for gcvg-git@gmane.org; Sat, 28 Oct
- 2006 21:14:05 +0200
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34845>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gwl3q-00012Z-F8 for gcvg-git@gmane.org; Tue, 19 Dec
+ 2006 20:55:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932073AbWJ1TN5 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 28 Oct 2006
- 15:13:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932074AbWJ1TN5
- (ORCPT <rfc822;git-outgoing>); Sat, 28 Oct 2006 15:13:57 -0400
-Received: from bayc1-pasmtp11.bayc1.hotmail.com ([65.54.191.171]:40046 "EHLO
- BAYC1-PASMTP11.CEZ.ICE") by vger.kernel.org with ESMTP id S932073AbWJ1TN4
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 28 Oct 2006 15:13:56 -0400
-Received: from linux1.attic.local ([65.93.43.81]) by BAYC1-PASMTP11.CEZ.ICE
- over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830); Sat, 28 Oct
- 2006 12:22:57 -0700
-Received: from guru.attic.local ([10.10.10.28]) by linux1.attic.local with
- esmtp (Exim 4.43) id 1Gdsgs-0008R1-GR; Sat, 28 Oct 2006 14:13:54 -0400
-To: Junio C Hamano <junkio@cox.net>
+ S932910AbWLSTzf (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
+ 14:55:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932912AbWLSTzf
+ (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 14:55:35 -0500
+Received: from smtp.osdl.org ([65.172.181.25]:58634 "EHLO smtp.osdl.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S932910AbWLSTze
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec 2006 14:55:34 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
+ smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kBJJtK2J028347
+ (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Tue, 19
+ Dec 2006 11:55:20 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
+ shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kBJJtJSr008663; Tue, 19 Dec
+ 2006 11:55:19 -0800
+To: Nicolas Pitre <nico@cam.org>
 Sender: git-owner@vger.kernel.org
 
-On Sat, 28 Oct 2006 12:04:24 -0700
-Junio C Hamano <junkio@cox.net> wrote:
 
-> Horst has a non-working combination that is:
-> 
->  - tip of "master" of the day
->  - Fedora rawhide i386 (whatever that is -- sorry I am new to RPM world)
->  - asciidoc 7.0.2 3.fc6
->  - xmlto 0.0.18 13.1
-> 
-> I have a working combination:
-> 
->  - tip of "master" of the day
->  - FC6 i386 (freshly installed)
->  - asciidoc 7.0.2 3.fc6
->  - xmlto 0.0.18 13.1
-> 
-> So the difference between me and Horst that can be bisected is
-> not what are listed above.  I wonder what other things come into
-> the picture.
 
-The thing is, Horst implied everything worked before a recent pull.
-It's worth at least going back to see if that's true.  Quite likely
-that older version will no longer work anymore either, but maybe it
-will.  Of course, if an older version no longer works, there's no
-need to bisect further, something in the environment has changed.
-Either way, it'll help narrow things down a bit.
+On Tue, 19 Dec 2006, Nicolas Pitre wrote:
+> 
+> Because _XOPEN_SOURCE must be defined before including unistd.h 
+> otherwise pread is not declared and a warning is issued.
 
+May I actually suggest we handle _all_ of these issues in one central 
+place, namely "git-compat-util.h"
+
+It's nice to have just one single file that tries to hide the details of 
+all the differences between systems.
+
+Sure, that file ends up having to include a lot of standard header files 
+that some of the .c files don't actually _need_, but git compiles 
+reasonably quickly, so I don't think we need to try to optimize compile 
+speed much.
+
+It's the C++ people who tend to have sucky compile times.
+
+So how about something like the appended? And then just have the rule that 
+we try to include "cache.h" early, because that brings in ALL the really 
+basic system header files?
+
+		Linus
+
+---
+diff --git a/convert-objects.c b/convert-objects.c
+index 8812583..a630132 100644
+--- a/convert-objects.c
++++ b/convert-objects.c
+@@ -1,7 +1,3 @@
+-#define _XOPEN_SOURCE 600 /* glibc2 and AIX 5.3L need 500, OpenBSD needs 600 for S_ISLNK() */
+-#define _XOPEN_SOURCE_EXTENDED 1 /* AIX 5.3L needs this */
+-#define _GNU_SOURCE
+-#include <time.h>
+ #include "cache.h"
+ #include "blob.h"
+ #include "commit.h"
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 0272d04..e619e29 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -11,6 +11,10 @@
+ 
+ #define ARRAY_SIZE(x) (sizeof(x)/sizeof(x[0]))
+ 
++#define _XOPEN_SOURCE 600 /* glibc2 and AIX 5.3L need 500, OpenBSD needs 600 for S_ISLNK() */
++#define _XOPEN_SOURCE_EXTENDED 1 /* AIX 5.3L needs this */
++#define _GNU_SOURCE
++
+ #include <unistd.h>
+ #include <stdio.h>
+ #include <sys/stat.h>
+@@ -25,6 +29,10 @@
+ #include <netinet/in.h>
+ #include <sys/types.h>
+ #include <dirent.h>
++#include <sys/time.h>
++#include <time.h>
++#include <signal.h>
++#include <sys/wait.h>
+ 
+ /* On most systems <limits.h> would have given us this, but
