@@ -2,133 +2,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: What's in git.git
-Date: Sat, 18 Nov 2006 14:24:36 -0800
-Message-ID: <7v64dcbdgb.fsf@assigned-by-dhcp.cox.net>
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD,
+	UNPARSEABLE_RELAY shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: [PATCH] Remove COLLISION_CHECK from Makefile since it's not used.
+Date: Tue, 19 Dec 2006 22:25:13 -0500
+Message-ID: <20061220032513.GA12119@Hermes.local>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sat, 18 Nov 2006 22:24:48 +0000 (UTC)
+NNTP-Posting-Date: Wed, 20 Dec 2006 03:25:26 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-maint-at: e3d457fb59f71dd40d24c82f48625a24492907d4
-X-master-at: e3d457fb59f71dd40d24c82f48625a24492907d4
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.1i
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31803>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GlYc5-0008DA-Vd for gcvg-git@gmane.org; Sat, 18 Nov
- 2006 23:24:42 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34905>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gws52-00078a-TP for gcvg-git@gmane.org; Wed, 20 Dec
+ 2006 04:25:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753888AbWKRWYi (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 18 Nov 2006
- 17:24:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755264AbWKRWYi
- (ORCPT <rfc822;git-outgoing>); Sat, 18 Nov 2006 17:24:38 -0500
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:47492 "EHLO
- fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP id S1753888AbWKRWYh
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 18 Nov 2006 17:24:37 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao01.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061118222436.VDCV9173.fed1rmmtao01.cox.net@fed1rmimpo01.cox.net>; Sat, 18
- Nov 2006 17:24:36 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id oNQ81V00W1kojtg0000000; Sat, 18 Nov 2006
- 17:24:08 -0500
+ S964838AbWLTDZQ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
+ 22:25:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964836AbWLTDZQ
+ (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 22:25:16 -0500
+Received: from vs072.rosehosting.com ([216.114.78.72]:34772 "EHLO
+ silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
+ S964838AbWLTDZP (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec 2006
+ 22:25:15 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1]) by
+ silverinsanity.com (Postfix) with ESMTP id 596AD1FFC02B for
+ <git@vger.kernel.org>; Wed, 20 Dec 2006 03:25:14 +0000 (UTC)
+Received: from Mutt by mutt-smtp-wrapper.pl 1.2 
+ (www.zdo.com/articles/mutt-smtp-wrapper.shtml)
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Executive Summary
+It's rather misleading to have configuration options that don't do
+anything.  If someone adds collision checking they might also want to
+restore this option.
 
- - 'maint' and 'master' are the same, since we are still in
-   "v1.4.4 fix" mood right now.  A maintenance release v1.4.4.1
-   should follow soonish.
+Signed-off-by: Brian Gernhardt <benji@silverinsanity.com>
+---
 
- - 'next' has a few 'these are obviously the right things to me
-   but I want a bit of cheering-up before pushing them out, and
-   they can wait until the dust settles after early fixes to
-   v1.4.4 anyway' changes.
+ Subject: Re: Change in git-svn dcommit semantics?
 
- - 'pu' has the shallow clone WIP and a half-finished rewrite of
-   git branch in C, both by Johannes.  Both needs a bit more
-   polishing and confidence building before going into 'next',
-   and given the recent discussion of enhancing branch
-   management for pulls/pushes, it might be easier to drop the
-   latter for now.
+ On Dec 19, 2006, at 7:38 PM, Brian Gernhardt wrote:
 
-   I should also bring Shawn's piecemeal-mmap into 'pu'; I've
-   looked at his code and it mostly looked sane.
+ > On Dec 19, 2006, at 6:57 PM, Johannes Schindelin wrote:
+ > 
+ >>> Mine also has a few variables like "COLLISION_CHECK=paranoid" and my own
+ >>> prefix.
+ >> 
+ >> Just to wake sleeping tigers: have you done a "grep COLLISION_CHECK *"
+ >> recently (where recently means any date after May 3rd, 2005)?
+ > 
+ > Oh, well, that's cute.  It's a configuration option that doesn't touch any
+ > code at all...  
 
-----------------------------------------------------------------
+ Makefile     |    4 ----
+ configure.ac |    4 ----
+ 2 files changed, 0 insertions(+), 8 deletions(-)
 
-* The 'maint' branch has these fixes since v1.4.4 release.  The
-  'master' is the same as 'maint' right now.
-
-  Alexandre Julliard:
-    gitweb: Put back shortlog instead of graphiclog in the project list.
-
-  Jim Meyering:
-    Run "git repack -a -d" once more at end, if there's 1MB or more of
-    not-packed data.
-
-  Johannes Schindelin:
-    Seek back to current filepos when mmap()ing with NO_MMAP
-
-  Junio C Hamano:
-    git-checkout: do not allow -f and -m at the same time.
-    git-checkout: allow pathspec to recover lost working tree directory
-    convert-objects: set _XOPEN_SOURCE to 600
-
-  Linus Torvalds:
-    git-pull: allow pulling into an empty repository
-    "git fmt-merge-msg" SIGSEGV
-
-  Petr Baudis:
-    Fix git-for-each-refs broken for tags
-    git-apply: Documentation typo fix
-    Documentation: Define symref and update HEAD description
-
-  Rene Scharfe:
-    sparse fix: non-ANSI function declaration
-    sparse fix: Using plain integer as NULL pointer
-    git-apply: slightly clean up bitfield usage
-    Document git-runstatus
-
-* The 'next' branch, in addition, has these.
-
-  Junio C Hamano
-     upload-pack: stop the other side when they have more roots than we do.
-     apply --numstat: mark binary diffstat with - -, not 0 0
-     pack-objects: tweak "do not even attempt delta" heuristics
-
-
-* The 'pu' branch, in addition, has these.
-
-   Alexandre Julliard (1):
-      Shallow clone: do not ignore shallowness when following tags
-
-   Jakub Narebski (1):
-      gitweb: New improved formatting of chunk header in diff
-
-   Johannes Schindelin (6):
-      upload-pack: no longer call rev-list
-      support fetching into a shallow repository
-      allow cloning a repository "shallowly"
-      allow deepening of a shallow repository
-      add tests for shallow stuff
-      Build in shortlog
-
-   Junio C Hamano (11):
-      git-branch -a: show both local and remote tracking branches.
-      git-commit: show --summary after successful commit.
-      para-walk: walk n trees, index and working tree in parallel
-      git-diff/git-apply: make diff output a bit friendlier to GNU patch (part 2)
-      rev-list --left-right
-      blame: --show-stats for easier optimization work.
-      gitweb: steal loadavg throttle from kernel.org
-      We should make sure that the protocol is still extensible.
-      Why does it mean we do not have to register shallow if we have one?
-      Why didn't we mark want_obj as ~UNINTERESTING in the old code?
-      shallow clone: unparse and reparse an unshallowed commit
-
+diff --git a/Makefile b/Makefile
+index 8919dab..7651104 100644
+--- a/Makefile
++++ b/Makefile
+@@ -82,10 +82,6 @@ all:
+ # Define NO_ACCURATE_DIFF if your diff program at least sometimes misses
+ # a missing newline at the end of the file.
+ #
+-# Define COLLISION_CHECK below if you believe that SHA1's
+-# 1461501637330902918203684832716283019655932542976 hashes do not give you
+-# sufficient guarantee that no collisions between objects will ever happen.
+-#
+ # Define USE_NSEC below if you want git to care about sub-second file mtimes
+ # and ctimes. Note that you need recent glibc (at least 2.2.4) for this, and
+ # it will BREAK YOUR LOCAL DIFFS! show-diff and anything using it will likely
+diff --git a/configure.ac b/configure.ac
+index 34e3478..e153d53 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -316,10 +316,6 @@ GIT_PARSE_WITH(iconv))
+ 
+ ## --enable-FEATURE[=ARG] and --disable-FEATURE
+ #
+-# Define COLLISION_CHECK below if you believe that SHA1's
+-# 1461501637330902918203684832716283019655932542976 hashes do not give you
+-# sufficient guarantee that no collisions between objects will ever happen.
+-#
+ # Define USE_NSEC below if you want git to care about sub-second file mtimes
+ # and ctimes. Note that you need recent glibc (at least 2.2.4) for this, and
+ # it will BREAK YOUR LOCAL DIFFS! show-diff and anything using it will likely
+-- 
+1.4.4.1.GIT
