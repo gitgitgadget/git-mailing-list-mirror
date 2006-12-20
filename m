@@ -1,96 +1,65 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: Re: Problem compiling: that perl thing again
-Date: Fri, 8 Dec 2006 13:26:30 -0800 (PST)
-Message-ID: <760708.55141.qm@web31801.mail.mud.yahoo.com>
-References: <7vvekmgljm.fsf@assigned-by-dhcp.cox.net>
-Reply-To: ltuikov@yahoo.com
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-NNTP-Posting-Date: Fri, 8 Dec 2006 21:26:38 +0000 (UTC)
-Cc: git@vger.kernel.org
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: Re: Change in git-svn dcommit semantics?
+Date: Tue, 19 Dec 2006 19:38:58 -0500
+Message-ID: <C2881A17-27F7-467C-B353-189BB7DBFD1E@silverinsanity.com>
+References: <m2mz5jegka.fsf@ziti.local> <94FF72E0-F8BD-4773-803E-F179754BF0ED@silverinsanity.com> <Pine.LNX.4.63.0612200053550.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Wed, 20 Dec 2006 00:39:19 +0000 (UTC)
+Cc: Seth Falcon <sethfalcon@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=X-YMail-OSG:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
-  b=KTfu+oDSV+j8AQiTFbLhAbKyY8LLjPROLvnvjxyhq7unt70IsXN3QcBu1JK+iD76KiIzD/Bxr+Js27tyY+wCfD3vk9bqWZHSgh2DynM2w6n00by7Q2OyAaQbPmZS1AAzBOfemOVG1M5s+QxfZEV/29vksQjmE3cb4M4e10Escfg=;
-X-YMail-OSG: _bbeQHMVM1mzB7GSGoKeLBYS6.vXg8NCYnT1Snbv3HNC1hor8Xw8Lv2k6.6HkX8bQXFcn1rCsGMyBCgryvcAVGICPVzfjMNwJYIJhR5CtuHcNnU21O85zgR.qqw41OCSuUAfKNsovZ4-
-In-Reply-To: <7vvekmgljm.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <Pine.LNX.4.63.0612200053550.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Mailer: Apple Mail (2.752.3)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33746>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34873>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GsnEp-0007id-Bt for gcvg-git@gmane.org; Fri, 08 Dec
- 2006 22:26:35 +0100
+ esmtp (Exim 4.50) id 1GwpUD-0003aA-2i for gcvg-git@gmane.org; Wed, 20 Dec
+ 2006 01:39:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1947253AbWLHV0c (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 8 Dec 2006
- 16:26:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1947257AbWLHV0c
- (ORCPT <rfc822;git-outgoing>); Fri, 8 Dec 2006 16:26:32 -0500
-Received: from web31801.mail.mud.yahoo.com ([68.142.207.64]:29154 "HELO
- web31801.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- SMTP id S1947253AbWLHV0b (ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Dec
- 2006 16:26:31 -0500
-Received: (qmail 64768 invoked by uid 60001); 8 Dec 2006 21:26:30 -0000
-Received: from [64.215.88.90] by web31801.mail.mud.yahoo.com via HTTP; Fri,
- 08 Dec 2006 13:26:30 PST
-To: Junio C Hamano <junkio@cox.net>
+ S1753905AbWLTAjE (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
+ 19:39:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753273AbWLTAjD
+ (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 19:39:03 -0500
+Received: from vs072.rosehosting.com ([216.114.78.72]:57106 "EHLO
+ silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
+ S932669AbWLTAjA (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec 2006
+ 19:39:00 -0500
+Received: from [192.168.1.6] (cpe-66-67-221-135.rochester.res.rr.com
+ [66.67.221.135]) (using TLSv1 with cipher AES128-SHA (128/128 bits)) (No
+ client certificate requested) by silverinsanity.com (Postfix) with ESMTP id
+ 5AEC21FFC02B; Wed, 20 Dec 2006 00:39:00 +0000 (UTC)
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 
---- Junio C Hamano <junkio@cox.net> wrote:
-> Luben Tuikov <ltuikov@yahoo.com> writes:
-> 
-> > Over the last 2 months each time I pull, check out next and compile,
-> > I'm seeing _some_ kind of problem with compiling the perl section
-> > of git.  Sometimes git-reset --hard, or a fresh checkout, or git-clean
-> > resolve the situation.  But not this time.
-> > ...
-> > So, where is "perl.mak"?
-> 
-> This particular breakage cannot be "last two months", but there
-> was a recent breakage by commit f848718a last week on the 'master'
-> branch.
 
-Not this particular one, but others in that area (perl make).
+On Dec 19, 2006, at 6:57 PM, Johannes Schindelin wrote:
 
-> Now, I am CLUELESS about what MakeMaker does, but would this
-> help?
-> 
-> --- 
-> diff --git a/perl/Makefile b/perl/Makefile
-> index bd483b0..099beda 100644
-> --- a/perl/Makefile
-> +++ b/perl/Makefile
-> @@ -29,7 +29,7 @@ $(makfile): ../GIT-CFLAGS Makefile
->  	echo '	echo $(instdir_SQ)' >> $@
->  else
->  $(makfile): Makefile.PL ../GIT-CFLAGS
-> -	'$(PERL_PATH_SQ)' $< FIRST_MAKEFILE='$@' PREFIX='$(prefix_SQ)'
-> +	'$(PERL_PATH_SQ)' $< PREFIX='$(prefix_SQ)'
->  endif
->  
->  # this is just added comfort for calling make directly in perl dir
-> diff --git a/perl/Makefile.PL b/perl/Makefile.PL
-> index de73235..4168775 100644
-> --- a/perl/Makefile.PL
-> +++ b/perl/Makefile.PL
-> @@ -24,5 +24,6 @@ WriteMakefile(
->  	NAME            => 'Git',
->  	VERSION_FROM    => 'Git.pm',
->  	PM		=> \%pm,
-> +	MAKEFILE	=> 'perl.mak',
->  	%extra
->  );
+>> Mine also has a few variables like "COLLISION_CHECK=paranoid" and  
+>> my own
+>> prefix.
+>
+> Just to wake sleeping tigers: have you done a "grep COLLISION_CHECK *"
+> recently (where recently means any date after May 3rd, 2005)?
 
-Yes, this helps.  Please commit.
+Oh, well, that's cute.  It's a configuration option that doesn't  
+touch any code at all...  Not that I really cared about the check, I  
+just thought it was a nice paranoid thing to activate and I like a  
+certain amount of paranoia in my SCMs.  But maybe the description  
+should be removed from the Makefile then?  Or better yet, collision  
+checking could be put back in?
 
-Thanks,
-    Luben
+And is there an easier way to find these things than "git rev-list  
+HEAD | git diff-tree -r -s --stdin -SCOLLISION | xargs git show"?  I  
+cobbled that together from poking around inside gitk (which mostly  
+works in OS X, but has some issues that make me prefer the command  
+line).
+
