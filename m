@@ -2,95 +2,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Make cvsexportcommit work with filenames with spaces and non-ascii characters.
-Date: Tue, 14 Nov 2006 22:27:43 -0800
-Message-ID: <7vu011p6lc.fsf@assigned-by-dhcp.cox.net>
-References: <20061115005530.26560.18222.stgit@lathund.dewire.com>
-	<7v8xidqm1e.fsf@assigned-by-dhcp.cox.net>
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Question on rerere
+Date: Wed, 20 Dec 2006 02:40:46 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0612200240360.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0612200045490.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vk60no0ua.fsf@assigned-by-dhcp.cox.net> <7vy7p3mk1i.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 15 Nov 2006 06:27:54 +0000 (UTC)
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Wed, 20 Dec 2006 01:40:55 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <7vy7p3mk1i.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31422>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GkEFQ-0003N7-Ak for gcvg-git@gmane.org; Wed, 15 Nov
- 2006 07:27:49 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34889>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GwqRv-0003xl-Kq for gcvg-git@gmane.org; Wed, 20 Dec
+ 2006 02:40:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S966538AbWKOG1q (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
- 01:27:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966537AbWKOG1p
- (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 01:27:45 -0500
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:36063 "EHLO
- fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP id S966538AbWKOG1p
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 01:27:45 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao09.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061115062744.EYSW18767.fed1rmmtao09.cox.net@fed1rmimpo02.cox.net>; Wed, 15
- Nov 2006 01:27:44 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id muTq1V00F1kojtg0000000; Wed, 15 Nov 2006
- 01:27:51 -0500
-To: Robin Rosenberg <robin.rosenberg@dewire.com>
+ S932912AbWLTBkt (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
+ 20:40:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932935AbWLTBkt
+ (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 20:40:49 -0500
+Received: from mail.gmx.net ([213.165.64.20]:37405 "HELO mail.gmx.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S932912AbWLTBks
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec 2006 20:40:48 -0500
+Received: (qmail invoked by alias); 20 Dec 2006 01:40:46 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp046) with SMTP; 20 Dec 2006 02:40:46 +0100
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano <junkio@cox.net> writes:
+Hi,
 
-> But all of the above shows deficiency in the current set of
-> tools -- they are not helping Porcelain writers enough.  I think
-> we should enhance 'apply --numstat' to let it show binary diffs
-> differently:
->
-> 	git diff-tree -p $parent $commit >.tmpfile
->         git apply --numstat -z <.tmpfile
->
-> would currently say "0 0" for binary files (the primary benefit
-> of using "--numstat -z" here is that it would give Perl scripts
-> pathnames parsable without C dequoting).  We should somehow have
-> a way to show it differently from text files without any
-> added/deleted lines (e.g. only the mode change), and that would
-> make the life of Porcelain writers who needs to write something
-> like the above code much more pleasant.  Perhaps show "- -"
-> instead of "0 0", since there is no notion of lines in "binary
-> files differ" case?
+On Tue, 19 Dec 2006, Junio C Hamano wrote:
 
-That is, something like this...
+> Junio C Hamano <junkio@cox.net> writes:
+> 
+> > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> >
+> >> IIUC then each conflict hunk is handled _separately_ like this: the 
+> >> lexicographically smaller between the two file sections is displayed 
+> >> first, regardless if a previous hunk had a different order. Not that it 
+> >> matters most of the time, but isn't this dangerous?
+> >
+> > You are probably right.  Probably the right thing would be to
+> > use the first hunk to determine the flipping order and stick to
+> > that for the rest.
+> >
+> > Not that I've seen problems with the current behaviour, though.
+> 
+> Well, come to think of it, I think the current behaviour makes
+> more sense.
+> 
+> Suppose you start from an original file "OO".  You have two
+> branches that change it to "AO" and "BO", and another pair of
+> branches that change it to "OC" and "OD".  Let's call these
+> branches A, B, C, and D.
+> 
+> By merging A and C, you will get "AC"; you can get "AD", "BC"
+> and "BD" the same way.
+> 
+> Now suppose you are on "AC" and merged "BD".  You would get
+> "<A=B><C=D>".
+> 
+> If you were on "BD" and merged "AC" you would get "<B=A><D=C>".
+> If you were on "AD" and merged "BC" you would get "<A=B><D=C>".
+> 
+> You got the idea?
 
--- >8 --
-[PATCH] apply --numstat: mark binary diffstat with - -, not 0 0
+Yes. Thanks!
 
-We do not even know number of lines so showing it as 0 0 is
-lying.  This would also help Porcelains like cvsexportcommit.
-
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
- builtin-apply.c |    6 +++++-
- 1 files changed, 5 insertions(+), 1 deletions(-)
-
-diff --git a/builtin-apply.c b/builtin-apply.c
-index aad5526..b80ad2c 100644
---- a/builtin-apply.c
-+++ b/builtin-apply.c
-@@ -2116,7 +2116,11 @@ static void numstat_patch_list(struct pa
- 	for ( ; patch; patch = patch->next) {
- 		const char *name;
- 		name = patch->new_name ? patch->new_name : patch->old_name;
--		printf("%d\t%d\t", patch->lines_added, patch->lines_deleted);
-+		if (patch->is_binary)
-+			printf("-\t-\t");
-+		else
-+			printf("%d\t%d\t",
-+			       patch->lines_added, patch->lines_deleted);
- 		if (line_termination && quote_c_style(name, NULL, NULL, 0))
- 			quote_c_style(name, NULL, stdout, 0);
- 		else
--- 
-1.4.4.rc2.g2a54
-
+Ciao,
+Dscho
