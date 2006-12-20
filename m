@@ -4,97 +4,91 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Sergey Vlasov <vsu@altlinux.ru>
-Subject: Re: [PATCH] Introduce git-mirror, a tool for exactly mirroring
- another repository.
-Date: Wed, 1 Nov 2006 15:18:59 +0300
-Message-ID: <20061101151859.0e984d3f.vsu@altlinux.ru>
-References: <20060925044641.GB15757@spearce.org>
-	<20061031174225.3c7c1e77.vsu@altlinux.ru>
-	<7vac3covlf.fsf@assigned-by-dhcp.cox.net>
-	<ei8s19$e04$1@sea.gmane.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] add log.fulldiff config option
+Date: Wed, 20 Dec 2006 03:58:12 -0500
+Message-ID: <20061220085812.GB6895@coredump.intra.peff.net>
+References: <20061220060102.GA540@coredump.intra.peff.net> <7v8xh3j86h.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pgp-signature";
- micalg="PGP-SHA1";
- boundary="Signature=_Wed__1_Nov_2006_15_18_59_+0300_j=nXxbYLuS3lXL1v"
-NNTP-Posting-Date: Wed, 1 Nov 2006 12:19:25 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Wed, 20 Dec 2006 08:58:26 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <ei8s19$e04$1@sea.gmane.org>
-X-Mailer: Sylpheed version 2.2.9 (GTK+ 2.10.2; i586-alt-linux-gnu)
+Content-Disposition: inline
+In-Reply-To: <7v8xh3j86h.fsf@assigned-by-dhcp.cox.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30633>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GfF3r-0005sV-Ak for gcvg-git@gmane.org; Wed, 01 Nov
- 2006 13:19:16 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34911>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GwxHF-0003GR-Ha for gcvg-git@gmane.org; Wed, 20 Dec
+ 2006 09:58:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1946844AbWKAMTG (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 1 Nov 2006
- 07:19:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946819AbWKAMTG
- (ORCPT <rfc822;git-outgoing>); Wed, 1 Nov 2006 07:19:06 -0500
-Received: from mivlgu.ru ([81.18.140.87]:17625 "EHLO mail.mivlgu.ru") by
- vger.kernel.org with ESMTP id S1946844AbWKAMTE (ORCPT
- <rfc822;git@vger.kernel.org>); Wed, 1 Nov 2006 07:19:04 -0500
-Received: from center4.mivlgu.local (center4.mivlgu.local [192.168.1.4]) by
- mail.mivlgu.ru (Postfix) with SMTP id D921A804E; Wed,  1 Nov 2006 15:19:01
- +0300 (MSK)
-To: Jakub Narebski <jnareb@gmail.com>
+ S964942AbWLTI6O (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 20 Dec 2006
+ 03:58:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964941AbWLTI6O
+ (ORCPT <rfc822;git-outgoing>); Wed, 20 Dec 2006 03:58:14 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:38715
+ "HELO peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id
+ S964942AbWLTI6O (ORCPT <rfc822;git@vger.kernel.org>); Wed, 20 Dec 2006
+ 03:58:14 -0500
+Received: (qmail 23908 invoked from network); 20 Dec 2006 03:58:13 -0500
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2) by
+ 66-23-211-5.clients.speedfactory.net with SMTP; 20 Dec 2006 03:58:13 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 20 Dec
+ 2006 03:58:12 -0500
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
---Signature=_Wed__1_Nov_2006_15_18_59_+0300_j=nXxbYLuS3lXL1v
-Content-Type: text/plain; charset=US-ASCII
-Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+On Wed, Dec 20, 2006 at 12:14:14AM -0800, Junio C Hamano wrote:
 
-On Wed, 01 Nov 2006 02:08:08 +0100 Jakub Narebski wrote:
+> > Also, should this instead be diff.fulldiff?
+> 
+> Probably not.
 
-> Junio C Hamano wrote:
-> > Sergey Vlasov <vsu@altlinux.ru> writes:
-> >> BTW, I was thinking about the possibility to save removed refs under,
-> >> e.g., refs/old/`date -I`/; maybe even non-fast-forward refs could be
-> >> saved there - this will ensure that no object will ever disappear from
-> >> the mirror, no matter what is done on the master side.  Obviously, in
-> >> this case remote refs like refs/old/* should be filtered.
-> >
-> > I do not think that belongs to git-mirror.  It might be better to
-> > have that option in update-ref machinery so that you would even
-> > be protected from a `git branch -d` ran by mistake.
+Based on your explanation, I think that makes sense.
 
-I agree - this would be even better.
+> > Also also, I was going to submit a patch to document --full-diff,
+> > but I had a few questions. Should it go in diff-options? That makes some
+> > sense to me, but the parsing actually happens in setup_revisions.
+> 
+> Not at all.
 
-What name format should be used for such saved refs?  refs/old/`date -I`
-is not unique enough; probably `date --utc +%Y.%m.%d-%H.%M.%S`?  And it
-would be good if multiple refs which were deleted or modified in a
-non-fast-forward way during a single operation (like git-mirror) would
-be saved together - which may be tricky if they are saved at the lower
-level (in update-ref).
+Then where should it go? whatchanged and log have a great deal of
+overlap in terms of parsing, but they don't seem to share any
+documentation (or note the fact that git-whatchanged is basically just
+git-log -p).
 
-Adding the fast-forward check into update-ref also does not look nice,
-but this check is required for full safety.
+> > Furthermore, it seems to do the same thing as --pickaxe-all. Should we
+> > try to combine these?
+> 
+> No.
 
-> Perhaps just don't remove log when branch is deleted. I tend for example
-> to be careful when reordering commits on a branch, and use git branch -f
-> instead of deleting and recreating branch to not lose reflog.
+Thanks for the thorough explanation. I think this makes my config option
+description a little bit off, then, since it doesn't actually show all
+of the changed files for a commit in the case of pickaxe.
 
-Keeping the reflog does not help - reflog entries are not refs, and do
-not keep the referenced objects live in the repository.  Therefore old
-objects will be lost when the repository is repacked and pruned.
+What has me confused, then, is that you said this:
 
-Also, the reflog really must be deleted together with the ref itself -
-otherwise it may cause a file/directory conflict when another ref is
-created.  Of course, if the ref is renamed instead of deleting, the
-corresponding reflog may be renamed too.
+> I typically do:
+> 
+>         git log --full-diff -p -SCOLLISION
+> 
+> The --full-diff option helps because it shows the diff for other
+> files (that do not have different number of substring COLLISION
+> in the pre and postimage) in the same commit as well.
 
---Signature=_Wed__1_Nov_2006_15_18_59_+0300_j=nXxbYLuS3lXL1v
-Content-Type: application/pgp-signature
+But that isn't the case, AFAIK (e.g., the command line you mention shows
+only changes to sha1_file.c in commit aac17941, but cache.h was also
+changed). Did you mean --pickaxe-all?
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.5 (GNU/Linux)
+> Your understanding needs to be clarified on how paths are
+> filtered, and how log family and diff interacts, and probably
+> these need to be better documented.
 
-iD8DBQFFSJC1W82GfkQfsqIRAmaNAJwOUZSk5VgbHFtuBKLrXmhlFsbx1ACfe0gq
-Urr/cHYt2IktHfS4GVBI3lE=
-=XMAg
------END PGP SIGNATURE-----
+To be honest, I'm not sure when one would really _want_ the flexibility
+this provides. It might be more intuitive to git-{log,whatchanged} users
+to have a single option (config and command line) to set --full-diff and
+--pickaxe-all together. At the very least, I think I now want a
+diff.pickaxeall config option.
 
