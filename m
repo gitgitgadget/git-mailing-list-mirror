@@ -1,61 +1,98 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [PATCH] git-svnimport: support for partial imports
-Date: Thu, 26 Oct 2006 10:47:10 +0200
-Message-ID: <20061026084710.GC13780@diana.vm.bytemark.co.uk>
-References: <20061025225026.GA13031@sashak.voltaire.com>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: Re: [BUG] daemon.c blows up on OSX
+Date: 20 Dec 2006 15:25:27 -0800
+Message-ID: <86r6uuxi8o.fsf@blue.stonehenge.com>
+References: <7vmz5ib8eu.fsf@assigned-by-dhcp.cox.net>
+	<86vek6z0k2.fsf@blue.stonehenge.com>
+	<Pine.LNX.4.64.0612201412250.3576@woody.osdl.org>
+	<86irg6yzt1.fsf_-_@blue.stonehenge.com>
+	<7vr6uu6w8e.fsf@assigned-by-dhcp.cox.net>
+	<86ejquyz4v.fsf@blue.stonehenge.com>
+	<86ac1iyyla.fsf@blue.stonehenge.com>
+	<7v1wmu6ugr.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Thu, 26 Oct 2006 08:47:37 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
-	Matthias Urlichs <smurf@smurf.noris.de>
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Thu, 21 Dec 2006 01:21:35 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <20061025225026.GA13031@sashak.voltaire.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+x-mayan-date: Long count = 12.19.13.16.7; tzolkin = 8 Manik; haab = 0 Kankin
+In-Reply-To: <7v1wmu6ugr.fsf@assigned-by-dhcp.cox.net>
+Original-Lines: 46
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30154>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gd0ta-0002tF-5G for gcvg-git@gmane.org; Thu, 26 Oct
- 2006 10:47:26 +0200
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34999>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GxCco-00086R-8t for gcvg-git@gmane.org; Thu, 21 Dec
+ 2006 02:21:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751755AbWJZIrR convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006 04:47:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751757AbWJZIrR
- (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 04:47:17 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:17676 "EHLO
- diana.vm.bytemark.co.uk") by vger.kernel.org with ESMTP id S1751755AbWJZIrR
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 26 Oct 2006 04:47:17 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1
- (Debian)) id 1Gd0tK-0003di-00; Thu, 26 Oct 2006 09:47:10 +0100
-To: Sasha Khapyorsky <sashak@voltaire.com>
+ S1161122AbWLUBVT (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 20 Dec 2006
+ 20:21:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161124AbWLUBVS
+ (ORCPT <rfc822;git-outgoing>); Wed, 20 Dec 2006 20:21:18 -0500
+Received: from blue.stonehenge.com ([209.223.236.162]:32095 "EHLO
+ blue.stonehenge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1161122AbWLUBVS (ORCPT <rfc822;git@vger.kernel.org>); Wed, 20 Dec 2006
+ 20:21:18 -0500
+Received: from localhost (localhost [127.0.0.1]) by blue.stonehenge.com
+ (Postfix) with ESMTP id 5558C8CE45; Wed, 20 Dec 2006 17:21:17 -0800 (PST)
+Received: from blue.stonehenge.com ([127.0.0.1]) by localhost
+ (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024) with LMTP id
+ 15464-01-64; Wed, 20 Dec 2006 17:21:16 -0800 (PST)
+Received: by blue.stonehenge.com (Postfix, from userid 1001) id 6A3868FB4D;
+ Wed, 20 Dec 2006 15:25:27 -0800 (PST)
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-On 2006-10-26 00:50:26 +0200, Sasha Khapyorsky wrote:
+>>>>> "Junio" == Junio C Hamano <junkio@cox.net> writes:
 
-> This adds support for partial svn imports. Let's assume that SVN
-> repository layout looks like:
->
->   $trunk/path/to/our/project
->   $branches/path/to/our/project
->   $tags/path/to/our/project
->
-> , and we would like to import only tree under this specific
-> 'path/to/our/project' and not whole tree under $trunk, $branches,
-> etc.. Now we will be be able to do it by using '-P
-> path/to/our/project' option with git-svnimport.
+Junio> This unfortunately violates the "all common system headers in
+Junio> git-compat-util.h" rule, which is needed to define _XOPEN_SOURCE
+Junio> and friends before including the system header files.
 
-Isn't this already doable with "-T trunk/path/to/our/project -t
-tags/path/to/our/project -b branches/path/to/our/project"?
+Junio> And string.h, netdb.h and unistd.h are already included there,
+Junio> so there is something deeper going on on OSX.
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
+Junio> Is the declaration of strncasecmp in <string.h> on OSX
+Junio> conditional to some macro (and the same question about other
+Junio> symbols you did not get)?  We need to find out what feature
+Junio> macros are expected on that platform and define them as needed.
+
+If one of those defines _POSIX_C_SOURCE (or _ANSI_SOURCE),
+then <string.h> does *not* define "strncasecmp", because it has those
+under a comment of "Nonstandard routines".
+
+Is anything earlier defining one of these?
+
+And yes, netdb.h also has a lot of those depending on _POSIX_C_SOURCE,
+and so does unistd.h
+
+So that's your culprit.  You're defining _POSIX_C_SOURCE when you're
+not really proper _POSIX_C compliant.  Can you just remove that?
+
+And sys/cdefs.h for darwin has this:
+
+    /* Deal with various X/Open Portability Guides and Single UNIX Spec. */
+    #ifdef _XOPEN_SOURCE
+    #if _XOPEN_SOURCE - 0L >= 600L
+    #undef _POSIX_C_SOURCE
+    #define _POSIX_C_SOURCE         200112L
+    #elif _XOPEN_SOURCE - 0L >= 500L
+    #undef _POSIX_C_SOURCE
+    #define _POSIX_C_SOURCE         199506L
+    #endif
+    #endif
+
+So that's likely how _POSIX_C_SOURCE is getting defined for the rest.
+
+-- 
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
