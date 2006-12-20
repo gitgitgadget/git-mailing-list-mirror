@@ -1,56 +1,62 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jeff King <peff@peff.net>
-Subject: Re: Advice on converting to git from versioning-by-directory
-Date: Thu, 23 Nov 2006 05:07:57 -0500
-Message-ID: <20061123100757.GB32620@coredump.intra.peff.net>
-References: <200611230916.46415.andyparkins@gmail.com>
+From: Seth Falcon <sethfalcon@gmail.com>
+Subject: Re: Change in git-svn dcommit semantics?
+Date: Tue, 19 Dec 2006 19:07:30 -0800
+Message-ID: <m2vek76z9p.fsf@ziti.local>
+References: <m2mz5jegka.fsf@ziti.local>
+	<94FF72E0-F8BD-4773-803E-F179754BF0ED@silverinsanity.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 23 Nov 2006 10:08:15 +0000 (UTC)
+NNTP-Posting-Date: Wed, 20 Dec 2006 03:07:44 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <200611230916.46415.andyparkins@gmail.com>
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:to:cc:subject:references:from:date:in-reply-to:message-id:user-agent:mime-version:content-type;
+        b=odAzew1jZmy35jVK1oKuPC60OoAmnAhLiQhf7pqGvBpBs2kYtqtIhZ74ViFf6HqdGl7qXNsXSsTXSHoMwEyPqYzdtVM0/5edj9tNKEdq8vo94TOW+DfhUWA1KEXO//C+LLiIh2cY+ncFGp3AFdmvhxElOR1e7Az00O+rqSXRouY=
+In-Reply-To: <94FF72E0-F8BD-4773-803E-F179754BF0ED@silverinsanity.com> (Brian Gernhardt's message of "Tue, 19 Dec 2006 18:02:14 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (darwin)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32132>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GnBUy-0003fI-LF for gcvg-git@gmane.org; Thu, 23 Nov
- 2006 11:08:06 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34904>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gwrnu-0005F2-3f for gcvg-git@gmane.org; Wed, 20 Dec
+ 2006 04:07:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1757301AbWKWKIA (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 23 Nov 2006
- 05:08:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757322AbWKWKIA
- (ORCPT <rfc822;git-outgoing>); Thu, 23 Nov 2006 05:08:00 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:21457
- "HELO peff.net") by vger.kernel.org with SMTP id S1757301AbWKWKH7 (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 23 Nov 2006 05:07:59 -0500
-Received: (qmail 29796 invoked from network); 23 Nov 2006 05:08:04 -0500
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2) by
- 66-23-211-5.clients.speedfactory.net with SMTP; 23 Nov 2006 05:08:04 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 23 Nov
- 2006 05:07:57 -0500
-To: Andy Parkins <andyparkins@gmail.com>
+ S964799AbWLTDHf (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
+ 22:07:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964830AbWLTDHf
+ (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 22:07:35 -0500
+Received: from nz-out-0506.google.com ([64.233.162.224]:5152 "EHLO
+ nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S964799AbWLTDHe (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec
+ 2006 22:07:34 -0500
+Received: by nz-out-0506.google.com with SMTP id s1so808099nze for
+ <git@vger.kernel.org>; Tue, 19 Dec 2006 19:07:33 -0800 (PST)
+Received: by 10.65.188.4 with SMTP id q4mr8438664qbp.1166584053631; Tue, 19
+ Dec 2006 19:07:33 -0800 (PST)
+Received: from ziti.local ( [67.171.24.140]) by mx.google.com with ESMTP id
+ f14sm9399858qba.2006.12.19.19.07.32; Tue, 19 Dec 2006 19:07:33 -0800 (PST)
+To: Brian Gernhardt <benji@silverinsanity.com>
 Sender: git-owner@vger.kernel.org
 
-On Thu, Nov 23, 2006 at 09:16:44AM +0000, Andy Parkins wrote:
+Brian Gernhardt <benji@silverinsanity.com> writes:
 
-> What should I do?  I've thought of a number of things:
->  * Recreate the whole lot by hand, the repository isn't huge and I could 
-> manually apply each commit as a patch in the correct place.  It would be a 
-> bit time-consuming but would mean I'd have what I wanted
+> On Dec 19, 2006, at 4:12 PM, Seth Falcon wrote:
+>
+>> git version 1.4.4.2.gee60-dirty
+>> (the dirty is a hand edit to Makefile for prefix)
+>
+> Just FYI:  You can save Makefile variables in a "config.mak" file
+> instead of having to dirty your working tree (and dealing with
+> conflicts, etc).  For example:
 
-If I understand you correctly, you want to take four branches, each with
-data in version1/, version2/, etc, and make it look like they all had
-data in the project root throughout history. Is that right?
-
-If so, cogito's cg-admin-rewritehist can probably do what you want (I
-also posted a script a while back to do this exact thing, and I can dig
-it up if you want).
+Hey, thanks, that's much nicer :-)
 
