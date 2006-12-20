@@ -4,88 +4,144 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Johannes Sixt <johannes.sixt@telecom.at>
-Subject: Is cp -al safe with git?
-Date: Thu, 16 Nov 2006 19:47:20 +0100
-Message-ID: <ejibnp$mmq$1@sea.gmane.org>
+From: Robert Fitzsimons <robfitz@273k.net>
+Subject: [PATCH] rev-list: Document --skip and add test cases.
+Date: Wed, 20 Dec 2006 14:59:48 +0000
+Message-ID: <20061220145948.GD17864@localhost>
+References: <20061219205422.GA17864@localhost> <7v1wmvpmef.fsf@assigned-by-dhcp.cox.net> <em9oi5$72t$1@sea.gmane.org> <20061220002906.GB17864@localhost> <7vbqlznzjm.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-NNTP-Posting-Date: Thu, 16 Nov 2006 18:55:24 +0000 (UTC)
+NNTP-Posting-Date: Wed, 20 Dec 2006 15:00:13 +0000 (UTC)
+Cc: Robert Fitzsimons <robfitz@273k.net>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Injected-Via-Gmane: http://gmane.org/
-Original-Lines: 45
-Original-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: at00d01-adsl-194-118-045-019.nextranet.at
-User-Agent: KNode/0.10.2
+Content-Disposition: inline
+In-Reply-To: <7vbqlznzjm.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-blacknight-igraine-MailScanner-Information: Please contact the ISP for more information
+X-blacknight-igraine-MailScanner: Found to be clean
+X-blacknight-igraine-MailScanner-SpamCheck: not spam,
+	SpamAssassin (not cached, score=-2, required 7, autolearn=disabled,
+	RCVD_IN_NERDS_IE -2.00)
+X-MailScanner-From: robfitz@273k.net
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31617>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GkmOO-0004AT-0U for gcvg-git@gmane.org; Thu, 16 Nov
- 2006 19:55:20 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34937>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gx2vH-0000Vw-PA for gcvg-git@gmane.org; Wed, 20 Dec
+ 2006 16:00:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1424348AbWKPSzO (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 16 Nov 2006
- 13:55:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1424343AbWKPSzO
- (ORCPT <rfc822;git-outgoing>); Thu, 16 Nov 2006 13:55:14 -0500
-Received: from main.gmane.org ([80.91.229.2]:61364 "EHLO ciao.gmane.org") by
- vger.kernel.org with ESMTP id S1424354AbWKPSzM (ORCPT
- <rfc822;git@vger.kernel.org>); Thu, 16 Nov 2006 13:55:12 -0500
-Received: from root by ciao.gmane.org with local (Exim 4.43) id
- 1GkmO6-00045L-K7 for git@vger.kernel.org; Thu, 16 Nov 2006 19:55:02 +0100
-Received: from at00d01-adsl-194-118-045-019.nextranet.at ([194.118.45.19]) by
- main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Thu, 16 Nov 2006 19:55:02 +0100
-Received: from johannes.sixt by at00d01-adsl-194-118-045-019.nextranet.at
- with local (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
- <git@vger.kernel.org>; Thu, 16 Nov 2006 19:55:02 +0100
-To: git@vger.kernel.org
+ S965115AbWLTO74 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 20 Dec 2006
+ 09:59:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965120AbWLTO74
+ (ORCPT <rfc822;git-outgoing>); Wed, 20 Dec 2006 09:59:56 -0500
+Received: from igraine.blacknight.ie ([81.17.252.25]:33573 "EHLO
+ igraine.blacknight.ie" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S965115AbWLTO7z (ORCPT <rfc822;git@vger.kernel.org>); Wed, 20 Dec 2006
+ 09:59:55 -0500
+Received: from 213-202-161-139.bas503.dsl.esat.net ([213.202.161.139]
+ helo=localhost) by igraine.blacknight.ie with esmtp (Exim 4.60)
+ (envelope-from <robfitz@273k.net>) id 1Gx2uj-00039x-Kj; Wed, 20 Dec 2006
+ 14:59:25 +0000
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-For one reason or another I would like to "clone" a local repo including the
-checked-out working tree with cp -al instead of cg-clone/git-clone, i.e.
-have all files hard-linked instead of copied.
+Signed-off-by: Robert Fitzsimons <robfitz@273k.net>
+---
 
-Can the copies be worked on independently without interference (with the git
-tool set)?
+> I am having a hard time convincing myself that this is a feature
+> that is a narrow special case for rev-list and does not belong
+> to the generic revision traversal machinery.
 
-One thing I noticed is that git-reset or probably git-checkout-index breaks
-links of files that need not be changed by the reset. Example:
+Your implementation is much better then mine.  Here's some documentation
+and a set of test cases.
 
-# make 2 files, commit
-$ mkdir orig && cd orig
-$ git-init-db 
-defaulting to local storage area
-$ echo foo > a && cp a b && git-add a b && git-commit -a -m 1
-Committing initial tree 99b876dbe094cb7d3850f1abe12b4c5426bb63ea
+Robert
 
-# 2nd commit modifies only one file:
-$ echo bar > a && git-commit -a -m 2
 
-# create the copy:
-$ cd ..
-$ cp -al orig copy
-$ cd copy
+ Documentation/git-rev-list.txt |    5 ++++
+ t/t6005-rev-list-count.sh      |   51 ++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 56 insertions(+), 0 deletions(-)
 
-# working files are hard-linked:
-$ ls -l
-total 8
--rw-r--r-- 2 jsixt users 4 Nov 16 19:24 a
--rw-r--r-- 2 jsixt users 4 Nov 16 19:23 b
-
-# nuke a commit:
-$ git-reset --hard HEAD^
-$ ls -l
-total 8
--rw-r--r-- 1 jsixt users 4 Nov 16 19:24 a
--rw-r--r-- 1 jsixt users 4 Nov 16 19:24 b
-
-I'd have expected that the hard-link of b remained and only a's link were
-broken. Does it mean that git-reset writes every single file also for large
-trees like the kernel? I cannot believe this. Can someone scratch the
-tomatoes off my eyes please?
-
--- Hannes
-
+diff --git a/Documentation/git-rev-list.txt b/Documentation/git-rev-list.txt
+index ec43c0b..9e0dcf8 100644
+--- a/Documentation/git-rev-list.txt
++++ b/Documentation/git-rev-list.txt
+@@ -10,6 +10,7 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git-rev-list' [ \--max-count=number ]
++	     [ \--skip=number ]
+ 	     [ \--max-age=timestamp ]
+ 	     [ \--min-age=timestamp ]
+ 	     [ \--sparse ]
+@@ -139,6 +140,10 @@ limiting may be applied.
+ 
+ 	Limit the number of commits output.
+ 
++--skip='number'::
++
++	Skip 'number' commits before starting to show the commit output.
++
+ --since='date', --after='date'::
+ 
+ 	Show commits more recent than a specific date.
+diff --git a/t/t6005-rev-list-count.sh b/t/t6005-rev-list-count.sh
+new file mode 100755
+index 0000000..334fccf
+--- /dev/null
++++ b/t/t6005-rev-list-count.sh
+@@ -0,0 +1,51 @@
++#!/bin/sh
++
++test_description='git-rev-list --max-count and --skip test'
++
++. ./test-lib.sh
++
++test_expect_success 'setup' '
++    for n in 1 2 3 4 5 ; do \
++        echo $n > a ; \
++        git add a ; \
++        git commit -m "$n" ; \
++    done
++'
++
++test_expect_success 'no options' '
++    test $(git-rev-list HEAD | wc -l) = 5
++'
++
++test_expect_success '--max-count' '
++    test $(git-rev-list HEAD --max-count=0 | wc -l) = 0 &&
++    test $(git-rev-list HEAD --max-count=3 | wc -l) = 3 &&
++    test $(git-rev-list HEAD --max-count=5 | wc -l) = 5 &&
++    test $(git-rev-list HEAD --max-count=10 | wc -l) = 5
++'
++
++test_expect_success '--max-count all forms' '
++    test $(git-rev-list HEAD --max-count=1 | wc -l) = 1 &&
++    test $(git-rev-list HEAD -1 | wc -l) = 1 &&
++    test $(git-rev-list HEAD -n1 | wc -l) = 1 &&
++    test $(git-rev-list HEAD -n 1 | wc -l) = 1
++'
++
++test_expect_success '--skip' '
++    test $(git-rev-list HEAD --skip=0 | wc -l) = 5 &&
++    test $(git-rev-list HEAD --skip=3 | wc -l) = 2 &&
++    test $(git-rev-list HEAD --skip=5 | wc -l) = 0 &&
++    test $(git-rev-list HEAD --skip=10 | wc -l) = 0
++'
++
++test_expect_success '--skip --max-count' '
++    test $(git-rev-list HEAD --skip=0 --max-count=0 | wc -l) = 0 &&
++    test $(git-rev-list HEAD --skip=0 --max-count=10 | wc -l) = 5 &&
++    test $(git-rev-list HEAD --skip=3 --max-count=0 | wc -l) = 0 &&
++    test $(git-rev-list HEAD --skip=3 --max-count=1 | wc -l) = 1 &&
++    test $(git-rev-list HEAD --skip=3 --max-count=2 | wc -l) = 2 &&
++    test $(git-rev-list HEAD --skip=3 --max-count=10 | wc -l) = 2 &&
++    test $(git-rev-list HEAD --skip=5 --max-count=10 | wc -l) = 0 &&
++    test $(git-rev-list HEAD --skip=10 --max-count=10 | wc -l) = 0
++'
++
++test_done
+-- 
+1.4.4.2.g80fef-dirty
