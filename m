@@ -4,62 +4,64 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: fork0@t-online.de (Alex Riesen)
-Subject: Re: [PATCH] Colourise git-branch output
-Date: Sat, 4 Nov 2006 00:05:24 +0100
-Message-ID: <20061103230524.GA4429@steel.home>
-References: <200611031052.16095.andyparkins@gmail.com> <200611031206.12515.andyparkins@gmail.com> <7v3b908h88.fsf@assigned-by-dhcp.cox.net>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 2/2] git reflog expire
+Date: Tue, 19 Dec 2006 16:34:36 -0800
+Message-ID: <7vvek7o15v.fsf@assigned-by-dhcp.cox.net>
+References: <7vodq3a136.fsf@assigned-by-dhcp.cox.net>
+	<7vr6uxzgjb.fsf@assigned-by-dhcp.cox.net>
+	<20061218140813.GA32446@spearce.org>
+	<7vy7p4u1au.fsf@assigned-by-dhcp.cox.net>
+	<7v64c8thr4.fsf@assigned-by-dhcp.cox.net>
+	<20061219090851.GH2511@spearce.org>
+	<7vhcvsry2c.fsf@assigned-by-dhcp.cox.net>
+	<20061219102741.GA21324@spearce.org>
+	<Pine.LNX.4.64.0612191524180.6766@woody.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 3 Nov 2006 23:06:02 +0000 (UTC)
-Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
+NNTP-Posting-Date: Wed, 20 Dec 2006 00:34:48 +0000 (UTC)
+Cc: Shawn Pearce <spearce@spearce.org>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <7v3b908h88.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
-X-ID: Z6K114ZXwe0Pj+IsY0cEnkuKQevsw2--KfZ-oWRwktgQtMmzN0I4kj
-X-TOI-MSGID: d6ce85d8-8427-4449-b4dc-eca19fc2d375
+In-Reply-To: <Pine.LNX.4.64.0612191524180.6766@woody.osdl.org> (Linus
+	Torvalds's message of "Tue, 19 Dec 2006 15:29:54 -0800 (PST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30894>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gg86l-0006Le-1m for gcvg-git@gmane.org; Sat, 04 Nov
- 2006 00:05:55 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34871>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GwpPs-0002sk-WF for gcvg-git@gmane.org; Wed, 20 Dec
+ 2006 01:34:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932486AbWKCXFw (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 3 Nov 2006
- 18:05:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932488AbWKCXFw
- (ORCPT <rfc822;git-outgoing>); Fri, 3 Nov 2006 18:05:52 -0500
-Received: from mailout08.sul.t-online.com ([194.25.134.20]:57007 "EHLO
- mailout08.sul.t-online.com") by vger.kernel.org with ESMTP id S932486AbWKCXFv
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 3 Nov 2006 18:05:51 -0500
-Received: from fwd26.aul.t-online.de  by mailout08.sul.t-online.com with smtp
-  id 1Gg86O-0002tQ-01; Sat, 04 Nov 2006 00:05:32 +0100
-Received: from tigra.home
- (Z6K114ZXwe0Pj+IsY0cEnkuKQevsw2--KfZ-oWRwktgQtMmzN0I4kj@[84.163.78.84]) by
- fwd26.sul.t-online.de with esmtp id 1Gg86H-1eUI9Q0; Sat, 4 Nov 2006 00:05:25
- +0100
-Received: from steel.home (steel.home [192.168.1.2]) by tigra.home (Postfix)
- with ESMTP id 2D5C0277AF; Sat,  4 Nov 2006 00:05:25 +0100 (CET)
-Received: from raa by steel.home with local (Exim 4.42 #1 (Debian)) id
- 1Gg86G-0007hD-66; Sat, 04 Nov 2006 00:05:24 +0100
-To: Junio C Hamano <junkio@cox.net>
+ S1753484AbWLTAei (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
+ 19:34:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753273AbWLTAei
+ (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 19:34:38 -0500
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:45805 "EHLO
+ fed1rmmtao01.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1753484AbWLTAeh (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec 2006
+ 19:34:37 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao01.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061220003436.PIJG9173.fed1rmmtao01.cox.net@fed1rmimpo01.cox.net>; Tue, 19
+ Dec 2006 19:34:36 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id 0oZv1W00J1kojtg0000000; Tue, 19 Dec 2006
+ 19:33:55 -0500
+To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano, Fri, Nov 03, 2006 20:25:59 +0100:
-> > I wanted to have a visual indication of which branches are
-> > local and which are remote in git-branch -a output; however
-> > Junio was concerned that someone might be using the output in
-> > a script.  This patch addresses the problem by colouring the
-> > git-branch output - which in "auto" mode won't be activated.
-> 
-> Yuck.  We are getting more and more color happy.  As long as
-> this stays optional I'm Ok with it; we'll see if people find it
-> useful soon enough.
-> 
+Linus Torvalds <torvalds@osdl.org> writes:
 
-As long as the output stays stable one can always colorize it with
-an external program, using pseudo terminals, if needed. Wont work
-for the other platform though. As usual.
+> (Things that are really fast on Linux: VM manipulation, and filename path 
+> lookup. Those are both ops that Linux _really_ shines on. It may not sound 
+> like much, but when you do millions of them, it's the difference between 
+> seconds and hours).
+>
+> 		Linus
+
+... and both have been _heavily_ used in/assumed to be fast by
+git implementation.
+
+Linus, your userland programming skills are _spoiled_ by Linux
+;-).
