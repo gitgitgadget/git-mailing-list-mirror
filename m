@@ -1,82 +1,78 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
-Subject: [PATCH 1/2] Generate shorter patch names
-Date: Tue, 07 Nov 2006 07:59:26 +0100
-Message-ID: <20061107065925.10728.85759.stgit@localhost>
-References: <20061107065710.10728.85618.stgit@localhost>
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RCVD_NUMERIC_HELO,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+From: SungHyun Nam <goweol@gmail.com>
+Subject: Patch  (Re: t1300-repo-config.sh failed on CYGWIN)
+Date: Wed, 20 Dec 2006 12:22:12 +0900
+Message-ID: <emaa94$qn4$1@sea.gmane.org>
+References: <4588A1EC.7040301@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8;
-	format=fixed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Tue, 7 Nov 2006 06:59:37 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Wed, 20 Dec 2006 03:30:49 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061107065710.10728.85618.stgit@localhost>
-User-Agent: StGIT/0.11
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 29
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 218.147.190.89
+User-Agent: Thunderbird 1.5.0.8 (Windows/20061025)
+In-Reply-To: <4588A1EC.7040301@gmail.com>
+X-Enigmail-Version: 0.94.1.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31046>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GhKvl-00061P-VY for gcvg-git@gmane.org; Tue, 07 Nov
- 2006 07:59:34 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34906>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GwsAI-0007kK-By for gcvg-git@gmane.org; Wed, 20 Dec
+ 2006 04:30:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753200AbWKGG7a convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Tue, 7 Nov 2006 01:59:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753237AbWKGG7a
- (ORCPT <rfc822;git-outgoing>); Tue, 7 Nov 2006 01:59:30 -0500
-Received: from mxfep03.bredband.com ([195.54.107.76]:21995 "EHLO
- mxfep03.bredband.com") by vger.kernel.org with ESMTP id S1753200AbWKGG7a
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 7 Nov 2006 01:59:30 -0500
-Received: from ironport.bredband.com ([195.54.107.82] [195.54.107.82]) by
- mxfep03.bredband.com with ESMTP id
- <20061107065928.MWUF25623.mxfep03.bredband.com@ironport.bredband.com> for
- <git@vger.kernel.org>; Tue, 7 Nov 2006 07:59:28 +0100
-Received: from ua-83-227-180-148.cust.bredbandsbolaget.se (HELO
- yoghurt.hemma.treskal.com) ([83.227.180.148]) by ironport.bredband.com with
- ESMTP; 07 Nov 2006 07:59:28 +0100
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by
- yoghurt.hemma.treskal.com (Postfix) with ESMTP id 07A254C04D; Tue,  7 Nov
- 2006 07:59:26 +0100 (CET)
-To: Catalin Marinas <catalin.marinas@gmail.com>
+ S964836AbWLTDaR (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
+ 22:30:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964842AbWLTDaQ
+ (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 22:30:16 -0500
+Received: from main.gmane.org ([80.91.229.2]:43321 "EHLO ciao.gmane.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S964836AbWLTDaP
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec 2006 22:30:15 -0500
+Received: from root by ciao.gmane.org with local (Exim 4.43) id
+ 1Gws9a-0006b1-CF for git@vger.kernel.org; Wed, 20 Dec 2006 04:30:02 +0100
+Received: from 218.147.190.89 ([218.147.190.89]) by main.gmane.org with esmtp
+ (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Wed, 20
+ Dec 2006 04:30:02 +0100
+Received: from goweol by 218.147.190.89 with local (Gmexim 0.1 (Debian)) id
+ 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Wed, 20 Dec 2006 04:30:02 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-=46rom: Karl Hasselstr=C3=B6m <kha@treskal.com>
+SungHyun Nam wrote:
+> If I run it on CYGWIN, there's an error msg:
+>
+> * FAIL 39: rename section
+>         git-repo-config --rename-section branch.eins branch.zwei
+> * FAIL 40: rename succeeded
+>         diff -u expect .git/config
 
-Not all commits are blessed with a really short first-line summary in
-their commit messages. This means that we shouldn't blindly take the
-entire first line of the comment, since that sometimes results in
-truly spectacular patch names.
+With a patch below, the problem gone.
 
-I chose 30 characters as a reasonable value, considering that we don't
-yet have any tab-completion on patch names. There's probably not much
-point in making it configurable.
+BTW, there's a leak for 'config_filename' in
+git_config_rename_section().
 
-Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
----
+Thanks,
+namsh
 
- stgit/commands/common.py |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/stgit/commands/common.py b/stgit/commands/common.py
-index 88b1b94..0e1bb44 100644
---- a/stgit/commands/common.py
-+++ b/stgit/commands/common.py
-@@ -286,10 +286,10 @@ def name_email_date(address):
-=20
- def make_patch_name(msg):
-     """Return a string to be used as a patch name. This is generated
--    from the top line of the string passed as argument.
--    """
-+    from the first 30 characters of the top line of the string passed
-+    as argument."""
-     if not msg:
-         return None
-=20
--    subject_line =3D msg.lstrip().split('\n', 1)[0].lower()
-+    subject_line =3D msg[:30].lstrip().split('\n', 1)[0].lower()
+diff --git a/config.c b/config.c
+index 663993f..a23ac47 100644
+--- a/config.c
++++ b/config.c
+@@ -806,6 +806,7 @@ int git_config_rename_section(const char *old_name,
+const char *new_name)
+ 		}
+ 		write(out_fd, buf, strlen(buf));
+ 	}
++	fclose(config_file);
+ 	if (close(out_fd) || commit_lock_file(lock) < 0)
+ 		return error("Cannot commit config file!");
+ 	return ret;
