@@ -2,90 +2,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: bug: git-sh-setup should not be in $PATH
-Date: Wed, 6 Dec 2006 18:11:28 +0100
-Message-ID: <200612061811.29296.jnareb@gmail.com>
-References: <el6c6o$oa7$1@sea.gmane.org> <200612061752.39443.jnareb@gmail.com> <4576F65A.6010707@xs4all.nl>
+Subject: Re: [RFC/PATCH] Implement poor-man's submodule support using commit  hooks
+Date: Wed, 20 Dec 2006 15:07:56 +0100
+Organization: At home
+Message-ID: <embfus$d50$1@sea.gmane.org>
+References: <200612201309.02119.andyparkins@gmail.com> <45893AC6.910D5748@eudaptics.com> <200612201347.13805.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Wed, 6 Dec 2006 17:09:44 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+NNTP-Posting-Date: Wed, 20 Dec 2006 14:05:52 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=O5w62qO1ximu+YfnNP88M69zK/0YOVTOD2yMolw6iVA/wyiWSx83RK6pOHHf7cZ9aD63Eh43uESi4/ynh3/TKzr0lFxrIAgAi1oY25JukjxJ+ZCWpAIrr3t3KvJlIQ6FPk3kOdXIGFHcVxwp11SyKVUguA/v/E1hTKvqhtfkabQ=
-User-Agent: KMail/1.9.3
-In-Reply-To: <4576F65A.6010707@xs4all.nl>
-Content-Disposition: inline
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 20
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-25-107.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33494>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34930>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gs0H2-0003YB-I7 for gcvg-git@gmane.org; Wed, 06 Dec
- 2006 18:09:36 +0100
+ esmtp (Exim 4.50) id 1Gx24p-0006b8-HA for gcvg-git@gmane.org; Wed, 20 Dec
+ 2006 15:05:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S936480AbWLFRJd convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006 12:09:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936499AbWLFRJd
- (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 12:09:33 -0500
-Received: from nf-out-0910.google.com ([64.233.182.185]:61138 "EHLO
- nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S936483AbWLFRJc (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec
- 2006 12:09:32 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so611923nfa for
- <git@vger.kernel.org>; Wed, 06 Dec 2006 09:09:31 -0800 (PST)
-Received: by 10.49.7.10 with SMTP id k10mr2522595nfi.1165424970353; Wed, 06
- Dec 2006 09:09:30 -0800 (PST)
-Received: from host-81-190-24-209.torun.mm.pl ( [81.190.24.209]) by
- mx.google.com with ESMTP id 13sm30535671ugb.2006.12.06.09.09.29; Wed, 06 Dec
- 2006 09:09:30 -0800 (PST)
-To: Han-Wen Nienhuys <hanwen@xs4all.nl>
+ S965071AbWLTOFo (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 20 Dec 2006
+ 09:05:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965074AbWLTOFo
+ (ORCPT <rfc822;git-outgoing>); Wed, 20 Dec 2006 09:05:44 -0500
+Received: from main.gmane.org ([80.91.229.2]:56268 "EHLO ciao.gmane.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S965071AbWLTOFn
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 20 Dec 2006 09:05:43 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1Gx24P-0001X9-T8 for git@vger.kernel.org; Wed, 20 Dec 2006 15:05:21 +0100
+Received: from host-81-190-25-107.torun.mm.pl ([81.190.25.107]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Wed, 20 Dec 2006 15:05:21 +0100
+Received: from jnareb by host-81-190-25-107.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Wed, 20 Dec 2006
+ 15:05:21 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Dnia =B6roda 6. grudnia 2006 17:56, Han-Wen Nienhuys napisa=B3:
-> Jakub Narebski escreveu:
->
->> I'm still not sure if this has place in git. Is it really common to
->> support building outside source directory? If git didn't support thi=
-s,
->> so what?
->=20
-> lots of serious tools support it, as it this comes automatically
-> when using automake. Eg. emacs, gcc, make, pango, lilypond, etc etc.=20
->=20
-> It's a quite standard feature ; you should be asking why git=20
-> shouldn't support it.
+Andy Parkins wrote:
 
-Because git is not autotool'ed project. And people protested vehemently
-against adding yet another dependency. So from the whole autotools suit=
-e
-only autoconf is used, and only to generate config.mak.autogen Makefile
-configuration, which otherwise would be needed to be generated by hand.
+> On Wednesday 2006 December 20 13:29, Johannes Sixt wrote:
 
-BTW git tries to guess configuration based on uname -a result.
+>>> +       while read subdir hash
+>>
+>> Wouldn't it be better to have the order of subdir and hash swapped? That
+>> way subdir may contain blanks, and it gives nicer alignment in the file
+>> because of the constant length of the hashes.
+> 
+> Unfortunately, it is the hash that is optional.  When you create the file, you 
+> don't list the hashes, you list the subdirectories.  I suppose I could make 
+> it so you have to give "000000" or something first?
 
-There was also for a little while hand-generated configure script, but
-it got abandoned when it appeared that it is hard to be portable (and
-autoconf did the work; perhaps too hard but did, not using features
-which weren't common but now are in standard, but did), and the fact
-that it was possible to have _optional_ autoconf support.
-=20
-Add to that the fact that people said that ./configure on Cygwin is slo=
-w
-(can be slow), so they prefer _not_ to run this.
-
-
-Besides, the fact that some tools suport some feature is not the reason
-to add it. You have to look at how often is this feature _used_. For
-example you don't need it (you need only DESTDIR support) for creating
-RPMS from sources.
-
---=20
+That's the convention git uses in git-diff, reflog, etc.
+-- 
 Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
+
