@@ -1,51 +1,76 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Fix git-for-each-refs broken for tags
-Date: Fri, 17 Nov 2006 20:45:11 -0800
-Message-ID: <7v4psxfjmw.fsf@assigned-by-dhcp.cox.net>
-References: <20061118025652.2970.10571.stgit@machine.or.cz>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [PATCH] hooks/pre-commit: add example to add Signed-off-by line to message
+Date: Wed, 20 Dec 2006 15:54:51 +0000
+Message-ID: <200612201554.52553.andyparkins@gmail.com>
+References: <Pine.LNX.4.63.0611291219190.30004@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sat, 18 Nov 2006 04:45:28 +0000 (UTC)
-Cc: <git@vger.kernel.org>
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Wed, 20 Dec 2006 15:55:13 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061118025652.2970.10571.stgit@machine.or.cz> (Petr Baudis's
-	message of "Sat, 18 Nov 2006 03:56:52 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=tOfoe1ZYv9lFW+RP//ae1OEz/o8RWZn3/7vOxVBRZCeVHyS3HioTrGSLXNVjvYsYvAF9Sqh7kstNSbm9GAZjE7rhLiEzEkdzEaA6NEQNu2JjELOA30fALTl3QqqdXRW6BMV7/aCjtQJwfzbIr9BZ8FVvhzt2CCFNmdeR8/tzqfM=
+User-Agent: KMail/1.9.5
+In-Reply-To: <Pine.LNX.4.63.0611291219190.30004@wbgn013.biozentrum.uni-wuerzburg.de>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31753>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GlI4s-0003UH-CZ for gcvg-git@gmane.org; Sat, 18 Nov
- 2006 05:45:18 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34941>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gx3mY-0003sy-Bn for gcvg-git@gmane.org; Wed, 20 Dec
+ 2006 16:55:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1755975AbWKREpO (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 17 Nov 2006
- 23:45:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755983AbWKREpO
- (ORCPT <rfc822;git-outgoing>); Fri, 17 Nov 2006 23:45:14 -0500
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:38852 "EHLO
- fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP id S1755975AbWKREpM
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 17 Nov 2006 23:45:12 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao07.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061118044512.FEYV27894.fed1rmmtao07.cox.net@fed1rmimpo02.cox.net>; Fri, 17
- Nov 2006 23:45:12 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id o4lJ1V00h1kojtg0000000; Fri, 17 Nov 2006
- 23:45:19 -0500
-To: Petr Baudis <pasky@suse.cz>
+ S1754813AbWLTPy7 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 20 Dec 2006
+ 10:54:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754815AbWLTPy7
+ (ORCPT <rfc822;git-outgoing>); Wed, 20 Dec 2006 10:54:59 -0500
+Received: from ug-out-1314.google.com ([66.249.92.175]:16240 "EHLO
+ ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1754813AbWLTPy6 (ORCPT <rfc822;git@vger.kernel.org>); Wed, 20 Dec
+ 2006 10:54:58 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so2271767uga for
+ <git@vger.kernel.org>; Wed, 20 Dec 2006 07:54:57 -0800 (PST)
+Received: by 10.67.22.14 with SMTP id z14mr9557829ugi.1166630096488; Wed, 20
+ Dec 2006 07:54:56 -0800 (PST)
+Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
+ ESMTP id 53sm12745654ugn.2006.12.20.07.54.55; Wed, 20 Dec 2006 07:54:55 -0800
+ (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Thanks for noticing.
+On Wednesday 2006 November 29 11:20, Johannes Schindelin wrote:
 
-This is not like rev-list where we walk all over the map of
-ancestry graph, so it might be a simpler and better to keep
-the buffer than to keep duplicate copies of pieces.
+> +# . git-sh-setup
+> +# git var GIT_AUTHOR_IDENT | \
+> +# sed -n "s/^\(.*\) [0-9]\+ [-+][0-9]\+$/Signed-off-by: \1/p" \
+> +# > $GIT_DIR/SQUASH_MSG
+
+I've been using this; and very useful it is too.  However, I just noticed that 
+I was getting "Not a git repository" errors when I tried to commit in a 
+subdirectory.  I traced the problem to my use of this fragment.  It seems 
+that calling git-sh-setup inside the pre-commit hook was changing GIT_DIR 
+(don't know why).  When I changed this to
+
+git var GIT_AUTHOR_IDENT | \
+sed -n "s/^\(.*\) [0-9]\+ [-+][0-9]\+$/Signed-off-by: \1/p" \
+ >> $(git-rev-parse --git-dir)/SQUASH_MSG
+
+It worked correctly again.
 
 
+Andy
+
+
+-- 
+Dr Andy Parkins, M Eng (hons), MIEE
