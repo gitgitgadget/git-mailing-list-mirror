@@ -1,73 +1,61 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: [WISH] Store also tag dereferences in packed-refs
-Date: Mon, 20 Nov 2006 13:56:10 +0100
-Message-ID: <e5bfff550611200456l4bc730fcvd91c01843aeb6c64@mail.gmail.com>
-References: <e5bfff550611180115j135746a1h916e8ae029d1374d@mail.gmail.com>
-	 <e5bfff550611191107o63d89d8bp5ff4080803a0d784@mail.gmail.com>
-	 <e5bfff550611191209s63982818vd3999b543e68e8df@mail.gmail.com>
-	 <Pine.LNX.4.64.0611191219350.3692@woody.osdl.org>
-	 <7vbqn38831.fsf@assigned-by-dhcp.cox.net>
-	 <Pine.LNX.4.64.0611191310430.3692@woody.osdl.org>
-	 <ejqhvi$9kc$1@sea.gmane.org>
-	 <Pine.LNX.4.64.0611191527270.3692@woody.osdl.org>
-	 <7vr6vy7smi.fsf@assigned-by-dhcp.cox.net> <ejrt37$fg9$1@sea.gmane.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: GIT - error: no such remote ref refs/heads/TestBranch
+Date: Wed, 20 Dec 2006 15:36:51 -0800
+Message-ID: <7v1wmu5ecs.fsf@assigned-by-dhcp.cox.net>
+References: <89b129c60612191233s5a7f36f2hd409c4b9a2bbbc5c@mail.gmail.com>
+	<7v64c7pmlw.fsf@assigned-by-dhcp.cox.net>
+	<87wt4m2o99.wl%cworth@cworth.org>
+	<7vmz5i6vqb.fsf@assigned-by-dhcp.cox.net>
+	<87vek62n1k.wl%cworth@cworth.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Mon, 20 Nov 2006 12:57:03 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Wed, 20 Dec 2006 23:37:12 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=StO9HyrlUhfpP75I7ypNHIEHcW/qjmao300aM20ZTDGv+H/f0+atjeqi+dBFlg9OIhNrHPIf2HLVUclL/74JlY1bN5D6D76ZLsmgDh+IM8ijrLmAstAY3uRiVgqMl75VBHEqxpxXndaoFdi7Wu/XN3ff4F+ugbz5GZjk98s5G2c=
-In-Reply-To: <ejrt37$fg9$1@sea.gmane.org>
-Content-Disposition: inline
+In-Reply-To: <87vek62n1k.wl%cworth@cworth.org> (Carl Worth's message of "Wed,
+	20 Dec 2006 14:57:27 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31911>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gm8hd-0004Ub-A0 for gcvg-git@gmane.org; Mon, 20 Nov
- 2006 13:56:49 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34984>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GxAza-0008UC-C0 for gcvg-git@gmane.org; Thu, 21 Dec
+ 2006 00:36:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S965753AbWKTM4p (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 20 Nov 2006
- 07:56:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934155AbWKTM4p
- (ORCPT <rfc822;git-outgoing>); Mon, 20 Nov 2006 07:56:45 -0500
-Received: from py-out-1112.google.com ([64.233.166.183]:25040 "EHLO
- py-out-1112.google.com") by vger.kernel.org with ESMTP id S934154AbWKTM4o
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 20 Nov 2006 07:56:44 -0500
-Received: by py-out-1112.google.com with SMTP id a29so992696pyi for
- <git@vger.kernel.org>; Mon, 20 Nov 2006 04:56:11 -0800 (PST)
-Received: by 10.35.93.19 with SMTP id v19mr590963pyl.1164027370175; Mon, 20
- Nov 2006 04:56:10 -0800 (PST)
-Received: by 10.35.42.4 with HTTP; Mon, 20 Nov 2006 04:56:10 -0800 (PST)
-To: "Jakub Narebski" <jnareb@gmail.com>
+ S964880AbWLTXg4 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 20 Dec 2006
+ 18:36:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964931AbWLTXgz
+ (ORCPT <rfc822;git-outgoing>); Wed, 20 Dec 2006 18:36:55 -0500
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:45110 "EHLO
+ fed1rmmtao08.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S964880AbWLTXgz (ORCPT <rfc822;git@vger.kernel.org>); Wed, 20 Dec 2006
+ 18:36:55 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao08.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061220233652.ZYNP16632.fed1rmmtao08.cox.net@fed1rmimpo01.cox.net>; Wed, 20
+ Dec 2006 18:36:52 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id 1BcA1W00M1kojtg0000000; Wed, 20 Dec 2006
+ 18:36:11 -0500
+To: Carl Worth <cworth@cworth.org>
 Sender: git-owner@vger.kernel.org
 
-> >
-> > For this particular one, there is no need for version 2.
->
-> Actually, I think it is both true and untrue. True, because we need some
-> indicator that we trust packed-refs file to provide tag dereferences to
-> distinguish between the case when there are no tag objects at all, so there
-> are no tag dereferences in packed-refs, and the situation where we use
-> packed-refs generated by older git, and there are no tag dereferences in
-> packed-refs because git didn't saved it.
->
+Carl Worth <cworth@cworth.org> writes:
 
-We should be able to handle the ambiguous/malformed lines correctly
-and gracefully _always_, without 'trust' a version number to avoid to
-be prone to attacks with a malicious malformed file.
+> Anyway, yes, the description of the new stuff there looks very
+> interesting, and I'll maybe I'll start running from next a bit to see
+> how this stuff all works.
 
-Anyway document versioning it's a common and savy practice.
+Good.
 
-
+Do you have comments on recent changes (both on 'master' and
+some parts of 'next') from teachability point of view?  I think
+you are "the guilty guy" who defined the theme for v1.5.0 to be
+"usability and teachability" ;-).
