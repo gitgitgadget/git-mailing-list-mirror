@@ -1,86 +1,84 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Seth Falcon <sethfalcon@gmail.com>
-Subject: Re: [RFC] requiring Perl SVN libraries for git-svn
-Date: Fri, 15 Dec 2006 08:02:38 -0800
-Message-ID: <m2vekddu5d.fsf@ziti.local>
-References: <20061213202142.GE8179@localdomain>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Question on rerere
+Date: Tue, 19 Dec 2006 17:29:45 -0800
+Message-ID: <7vy7p3mk1i.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.63.0612200045490.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7vk60no0ua.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 15 Dec 2006 16:02:55 +0000 (UTC)
+NNTP-Posting-Date: Wed, 20 Dec 2006 01:30:04 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:to:cc:subject:references:from:date:in-reply-to:message-id:user-agent:mime-version:content-type;
-        b=d4ReZ/BYgzUyMBLHCpkyTOzHullOJkujTagu3M1pwkjl6P5sVFNP8iW8eOfMFEccwb6L32z1eXyuGTKfcJDOGIbQsRbXQ4LmS/dxLovbi+Vxf1SNX8WsLnyeWKE+7y0uH3k3yU7IA24s9r4lpbQD0C5ytx5WnEkfm2ctCSuqZ+Y=
-In-Reply-To: <20061213202142.GE8179@localdomain> (Eric Wong's message of "Wed, 13 Dec 2006 12:21:42 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (darwin)
+In-Reply-To: <7vk60no0ua.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Tue, 19 Dec 2006 16:41:33 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34526>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34886>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GvFWP-0006ko-MV for gcvg-git@gmane.org; Fri, 15 Dec
- 2006 17:02:54 +0100
+ esmtp (Exim 4.50) id 1GwqHQ-0002j6-HN for gcvg-git@gmane.org; Wed, 20 Dec
+ 2006 02:30:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752788AbWLOQCq (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 15 Dec 2006
- 11:02:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752789AbWLOQCp
- (ORCPT <rfc822;git-outgoing>); Fri, 15 Dec 2006 11:02:45 -0500
-Received: from nf-out-0910.google.com ([64.233.182.191]:63588 "EHLO
- nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1752788AbWLOQCp (ORCPT <rfc822;git@vger.kernel.org>); Fri, 15 Dec
- 2006 11:02:45 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so1173997nfa for
- <git@vger.kernel.org>; Fri, 15 Dec 2006 08:02:43 -0800 (PST)
-Received: by 10.49.91.6 with SMTP id t6mr213000nfl.1166198562797; Fri, 15 Dec
- 2006 08:02:42 -0800 (PST)
-Received: from ziti.local ( [67.171.24.140]) by mx.google.com with ESMTP id
- p43sm15474593nfa.2006.12.15.08.02.41; Fri, 15 Dec 2006 08:02:42 -0800 (PST)
-To: Eric Wong <normalperson@yhbt.net>
+ S964784AbWLTB3u (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
+ 20:29:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932904AbWLTB3s
+ (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 20:29:48 -0500
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:62168 "EHLO
+ fed1rmmtao05.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S932918AbWLTB3r (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec 2006
+ 20:29:47 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao05.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061220012946.FKTV15640.fed1rmmtao05.cox.net@fed1rmimpo01.cox.net>; Tue, 19
+ Dec 2006 20:29:46 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id 0pV41W00T1kojtg0000000; Tue, 19 Dec 2006
+ 20:29:04 -0500
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 
-Eric Wong <normalperson@yhbt.net> writes:
-> Are there any git-svn users out there who would be seriously hurt if I
-> dropped support for using the svn command-line client in git-svn?
+Junio C Hamano <junkio@cox.net> writes:
+
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 >
-> The API of the SVN:: libraries seem to be relatively stable these days
-> and are *much* faster than the command-line client.  I plan on
-> maintaining compatibility with version 1.1 of the SVN libraries for at
-> least another year; or more if it's not a big problem.
+>> IIUC then each conflict hunk is handled _separately_ like this: the 
+>> lexicographically smaller between the two file sections is displayed 
+>> first, regardless if a previous hunk had a different order. Not that it 
+>> matters most of the time, but isn't this dangerous?
+>
+> You are probably right.  Probably the right thing would be to
+> use the first hunk to determine the flipping order and stick to
+> that for the rest.
+>
+> Not that I've seen problems with the current behaviour, though.
 
-I've been using the SVN:: libraries and agree that that they work well
-(and faster).  One downside I see is that the svn command-line stuff
-will Just Work for a lot of folks, whereas obtaining or building svn's
-Perl bindings can be more of a chore [*1*].
+Well, come to think of it, I think the current behaviour makes
+more sense.
 
-OTOH, using git-svn via the svn CLI is slow and much less fun than
-with SVN::.  So I can also see an additional argument to drop so that
-people's first impression of git-svn won't be, "gaah, slow" -- because
-with the SVN:: libs, my experience has been, "yaah, much faster!" :-)
+Suppose you start from an original file "OO".  You have two
+branches that change it to "AO" and "BO", and another pair of
+branches that change it to "OC" and "OD".  Let's call these
+branches A, B, C, and D.
 
-My $0.02.
+By merging A and C, you will get "AC"; you can get "AD", "BC"
+and "BD" the same way.
 
-+ seth
+Now suppose you are on "AC" and merged "BD".  You would get
+"<A=B><C=D>".
+
+If you were on "BD" and merged "AC" you would get "<B=A><D=C>".
+If you were on "AD" and merged "BC" you would get "<A=B><D=C>".
+
+You got the idea?
 
 
-[*1*] I asked our sysadmin to install the Perl libraries on one of our
-new servers and although they seem to be installed, they are
-non-functional.  git-svn stiffles the error messages, but a simple
-script that just tries to require SVN::Core gives:
 
-    Can't load
-    '/usr/lib/perl5/site_perl/5.8.8/x86_64-linux-thread-multi/auto/SVN/_Core/_Core.so'
-    for module SVN::_Core:
-    /usr/local/src/subversion-1.4.2/subversion/libsvn_ra_dav/.libs/libsvn_ra_dav-1.so.0:
-    undefined symbol: PKCS12_SAFEBAG_free at
-    /usr/lib/perl5/5.8.8/x86_64-linux-thread-multi/DynaLoader.pm line 230.
 
-Anyone else seen this?  I guess that if you drop the svn command-line
-support, that it would then make sense to error out with more complete
+
