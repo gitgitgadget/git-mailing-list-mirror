@@ -2,114 +2,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Problem with git-apply?
-Date: Sat, 04 Nov 2006 10:33:06 -0800
-Message-ID: <7vzmb7vz8d.fsf@assigned-by-dhcp.cox.net>
-References: <20061104072349.GA19667@cubit>
-	<7v8xir4k3w.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0611040821290.25218@g5.osdl.org>
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [RFC/PATCH] Implement poor-man's submodule support using commit
+ hooks
+Date: Wed, 20 Dec 2006 17:09:44 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0612201708420.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <200612201309.02119.andyparkins@gmail.com>
+ <200612201347.13805.andyparkins@gmail.com> <458949C4.1020207@dawes.za.net>
+ <200612201440.41784.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sat, 4 Nov 2006 18:33:32 +0000 (UTC)
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Wed, 20 Dec 2006 16:09:51 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <Pine.LNX.4.64.0611040821290.25218@g5.osdl.org> (Linus Torvalds's
-	message of "Sat, 4 Nov 2006 08:27:19 -0800 (PST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <200612201440.41784.andyparkins@gmail.com>
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30932>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GgQKQ-00028j-4h for gcvg-git@gmane.org; Sat, 04 Nov
- 2006 19:33:14 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34944>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gx40r-00072q-QA for gcvg-git@gmane.org; Wed, 20 Dec
+ 2006 17:09:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S965588AbWKDSdK (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sat, 4 Nov 2006
- 13:33:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965591AbWKDSdK
- (ORCPT <rfc822;git-outgoing>); Sat, 4 Nov 2006 13:33:10 -0500
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:37797 "EHLO
- fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP id S965588AbWKDSdJ
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 4 Nov 2006 13:33:09 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao10.cox.net
- (InterMail vM.6.01.06.01 201-2131-130-101-20060113) with ESMTP id
- <20061104183307.UJKG18985.fed1rmmtao10.cox.net@fed1rmimpo01.cox.net>; Sat, 4
- Nov 2006 13:33:07 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id iiYl1V00M1kojtg0000000 Sat, 04 Nov 2006
- 13:32:46 -0500
-To: Linus Torvalds <torvalds@osdl.org>
+ S1030181AbWLTQJr (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 20 Dec 2006
+ 11:09:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030184AbWLTQJr
+ (ORCPT <rfc822;git-outgoing>); Wed, 20 Dec 2006 11:09:47 -0500
+Received: from mail.gmx.net ([213.165.64.20]:41250 "HELO mail.gmx.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S1030188AbWLTQJq
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 20 Dec 2006 11:09:46 -0500
+Received: (qmail invoked by alias); 20 Dec 2006 16:09:44 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp029) with SMTP; 20 Dec 2006 17:09:44 +0100
+To: Andy Parkins <andyparkins@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Linus Torvalds <torvalds@osdl.org> writes:
+Hi,
 
-> On Sat, 4 Nov 2006, Junio C Hamano wrote:
->> 
->> The problem appears that GNU diff _never_ uses "--- /dev/null" or "+++ 
->> /dev/null" to indicate creation or deletion of the file, but the 
->> "traditional patch parser" builtin-apply has assumed that is what the 
->> traditional diff output from day one.  Where we got that idea is mystery 
->> to me (this is Linus's code), but I suspect it is what other SCMs did.
->
-> No, the original code used to trigger a "create" diff on
->  - source was /dev/null
-> OR
->  - source had zero patches.
->
-> It used to have code like
->...
-> and I think the person who broke it was you ;)
+On Wed, 20 Dec 2006, Andy Parkins wrote:
 
-Sorry, if you followed the threads by now you know I know that.
-A few messages down there is a fix for the breakage caused by
-4be60962, which I'll have in 'maint'.
+>  Before now, I've replaced files in C by doing
+> 
+>  fd_old = open( "someexistingfile" );
+>  unlink( "someexistingfile" );
+>  fd_new = open( "someexistingfile" );
 
-I think it is a time for a 1.4.3.4; these are queued since
-we did 1.4.3.3.
+Lucky you! Obiously you are not stuck in the 10th circle called Windows.
 
-Andy Parkins (2):
-  Minor grammar fixes for git-diff-index.txt
-  git-clone documentation didn't mention --origin as equivalent of -o
-
-Christian Couder (3):
-  Remove --syslog in git-daemon inetd documentation examples.
-  Documentation: add upload-archive service to git-daemon.
-  Documentation: add git in /etc/services.
-
-Edgar Toernig (1):
-  Use memmove instead of memcpy for overlapping areas
-
-J. Bruce Fields (1):
-  Documentation: updates to "Everyday GIT"
-
-Jakub Narebski (3):
-  diff-format.txt: Combined diff format documentation supplement
-  diff-format.txt: Correct information about pathnames quoting in patch format
-  gitweb: Check git base URLs before generating URL from it
-
-Jan Harkes (1):
-  Continue traversal when rev-list --unpacked finds a packed commit.
-
-Johannes Schindelin (1):
-  link_temp_to_file: call adjust_shared_perm() only when we created the directory
-
-Junio C Hamano (9):
-  Documentation: clarify refname disambiguation rules.
-  combine-diff: a few more finishing touches.
-  combine-diff: fix hunk_comment_line logic.
-  combine-diff: honour --no-commit-id
-  Surround "#define DEBUG 0" with "#ifndef DEBUG..#endif"
-  quote.c: ensure the same quoting across platforms.
-  revision traversal: --unpacked does not limit commit list anymore.
-  link_temp_to_file: don't leave the path truncated on adjust_shared_perm failure
-  apply: handle "traditional" creation/deletion diff correctly.
-
-Nicolas Pitre (1):
-  pack-objects doesn't create random pack names
-
-Rene Scharfe (1):
-  git-cherry: document limit and add diagram
-
+Ciao,
