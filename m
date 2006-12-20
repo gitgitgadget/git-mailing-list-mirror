@@ -1,79 +1,72 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] cvs-migration document: make the need for "push" more obvious
-Date: Wed, 6 Dec 2006 13:27:40 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612061325320.28348@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <4574AC9E.3040506@gmail.com> <4574BF70.8070100@lilypond.org>
- <45760545.2010801@gmail.com> <20061206.105251.144349770.wl@gnu.org>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] revision: add --no-full-diff command line option
+Date: Wed, 20 Dec 2006 11:55:05 -0800
+Message-ID: <7vmz5ie412.fsf@assigned-by-dhcp.cox.net>
+References: <20061220060102.GA540@coredump.intra.peff.net>
+	<7v8xh3j86h.fsf@assigned-by-dhcp.cox.net>
+	<20061220084107.GA6895@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Wed, 6 Dec 2006 12:27:47 +0000 (UTC)
-Cc: gpermus@gmail.com, hanwen@lilypond.org, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Wed, 20 Dec 2006 19:55:15 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <20061206.105251.144349770.wl@gnu.org>
-X-Y-GMX-Trusted: 0
+In-Reply-To: <20061220084107.GA6895@coredump.intra.peff.net> (Jeff King's
+	message of "Wed, 20 Dec 2006 03:41:08 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33441>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34956>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GrvsH-0001K7-3S for gcvg-git@gmane.org; Wed, 06 Dec
- 2006 13:27:45 +0100
+ esmtp (Exim 4.50) id 1Gx7Wz-0005lS-Pr for gcvg-git@gmane.org; Wed, 20 Dec
+ 2006 20:55:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1760549AbWLFM1m (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 6 Dec 2006
- 07:27:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760551AbWLFM1m
- (ORCPT <rfc822;git-outgoing>); Wed, 6 Dec 2006 07:27:42 -0500
-Received: from mail.gmx.net ([213.165.64.20]:59006 "HELO mail.gmx.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S1760549AbWLFM1m
- (ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Dec 2006 07:27:42 -0500
-Received: (qmail invoked by alias); 06 Dec 2006 12:27:40 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp016) with SMTP; 06 Dec 2006 13:27:40 +0100
-To: Werner LEMBERG <wl@gnu.org>
+ S1030331AbWLTTzJ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 20 Dec 2006
+ 14:55:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030333AbWLTTzJ
+ (ORCPT <rfc822;git-outgoing>); Wed, 20 Dec 2006 14:55:09 -0500
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:65229 "EHLO
+ fed1rmmtao10.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1030331AbWLTTzI (ORCPT <rfc822;git@vger.kernel.org>); Wed, 20 Dec 2006
+ 14:55:08 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao10.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061220195505.KLII20715.fed1rmmtao10.cox.net@fed1rmimpo01.cox.net>; Wed, 20
+ Dec 2006 14:55:05 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id 17uP1W01K1kojtg0000000; Wed, 20 Dec 2006
+ 14:54:24 -0500
+To: Jeff King <peff@peff.net>
 Sender: git-owner@vger.kernel.org
 
+Jeff King <peff@peff.net> writes:
 
-It really is an important concept to grasp for people coming
-from CVS. Even if it is briefly mentioned, it is not obvious
-enough to sink in.
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> On Wed, Dec 20, 2006 at 12:14:14AM -0800, Junio C Hamano wrote:
+>
+>> > I use --full-diff all the time, so this should save some typing. I can't
+>> > think of a time when I wouldn't want it on, but if there is, we probably
+>> > need a --no-full-diff.
+>> 
+>> Absolutely.
+>
+> I took this to mean "absolutely we need --no-full-diff." :)
 
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
----
+Modulo s/\.$/, if we were to do log.fulldiff/, yes.
 
-	On Wed, 6 Dec 2006, Werner LEMBERG wrote:
-	
-	> It took me a while to realize that a git repository, as soon as 
-	> you've cloned it, is *self-contained*, and that commiting to the 
-	> repository and synchronizing with a different git repository are 
-	> two completely different things (contrary to CVS).  This should 
-	> be pronounced more in the CVS->git guide.
+> I note that --full-diff sets rev->diff = 1. The log.fulldiff config
+> option does not, and nor does --no-full-diff unset it. However, I'm not
+> sure it makes sense to set it. Doing "git-log --full-diff" outputs an
+> extra line (separating the diff from the commit log) but since we
+> haven't told it any type of diff to output, the diff is blank. And if we
+> had told it a type, then that would have turned on rev->diff. So I don't
+> see a point in setting it.
 
- Documentation/cvs-migration.txt |    5 +++++
- 1 files changed, 5 insertions(+), 0 deletions(-)
-
-diff --git a/Documentation/cvs-migration.txt b/Documentation/cvs-migration.txt
-index 6812683..8e610c7 100644
---- a/Documentation/cvs-migration.txt
-+++ b/Documentation/cvs-migration.txt
-@@ -24,6 +24,11 @@ First, note some ways that git differs from CVS:
-     single shared repository which people can synchronize with; see below
-     for details.
- 
-+  * Since every working tree contains a repository, a commit will not
-+    publish your changes; it will only create a revision. You have to
-+    "push" your changes to a public repository to make them visible
-+    to others.
-+
- Importing a CVS archive
- -----------------------
- 
--- 
+I need to think about this one.
