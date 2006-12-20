@@ -2,70 +2,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: What's in git.git
-Date: Sun, 12 Nov 2006 23:25:29 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0611122319340.13772@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <7v8ximwrm3.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0611072009220.2601@qynat.qvtvafvgr.pbz>
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: Re: [RFC/PATCH] Implement poor-man's submodule support using  commit hooks
+Date: 20 Dec 2006 07:42:05 -0800
+Message-ID: <86y7p21smq.fsf@blue.stonehenge.com>
+References: <200612201309.02119.andyparkins@gmail.com>
+	<200612201347.13805.andyparkins@gmail.com>
+	<458949C4.1020207@dawes.za.net>
+	<200612201440.41784.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Sun, 12 Nov 2006 22:25:50 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Wed, 20 Dec 2006 15:48:41 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <Pine.LNX.4.63.0611072009220.2601@qynat.qvtvafvgr.pbz>
-X-Y-GMX-Trusted: 0
+x-mayan-date: Long count = 12.19.13.16.7; tzolkin = 8 Manik; haab = 0 Kankin
+In-Reply-To: <200612201440.41784.andyparkins@gmail.com>
+Original-Lines: 21
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31283>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GjNlg-0003ew-VT for gcvg-git@gmane.org; Sun, 12 Nov
- 2006 23:25:37 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34940>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gx3gB-0002RD-Dg for gcvg-git@gmane.org; Wed, 20 Dec
+ 2006 16:48:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1753375AbWKLWZc (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 12 Nov 2006
- 17:25:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753370AbWKLWZc
- (ORCPT <rfc822;git-outgoing>); Sun, 12 Nov 2006 17:25:32 -0500
-Received: from mail.gmx.de ([213.165.64.20]:21180 "HELO mail.gmx.net") by
- vger.kernel.org with SMTP id S1753375AbWKLWZc (ORCPT
- <rfc822;git@vger.kernel.org>); Sun, 12 Nov 2006 17:25:32 -0500
-Received: (qmail invoked by alias); 12 Nov 2006 22:25:30 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
- [132.187.25.13] by mail.gmx.net (mp018) with SMTP; 12 Nov 2006 23:25:30 +0100
-To: David Lang <dlang@digitalinsight.com>
+ S964958AbWLTPsX (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 20 Dec 2006
+ 10:48:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754813AbWLTPsX
+ (ORCPT <rfc822;git-outgoing>); Wed, 20 Dec 2006 10:48:23 -0500
+Received: from blue.stonehenge.com ([209.223.236.162]:18773 "EHLO
+ blue.stonehenge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1754810AbWLTPsW (ORCPT <rfc822;git@vger.kernel.org>); Wed, 20 Dec 2006
+ 10:48:22 -0500
+Received: from localhost (localhost [127.0.0.1]) by blue.stonehenge.com
+ (Postfix) with ESMTP id 2B3918F08B; Wed, 20 Dec 2006 07:48:07 -0800 (PST)
+Received: from blue.stonehenge.com ([127.0.0.1]) by localhost
+ (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024) with LMTP id
+ 28486-01-69; Wed, 20 Dec 2006 07:47:33 -0800 (PST)
+Received: by blue.stonehenge.com (Postfix, from userid 1001) id 3521D8F9F2;
+ Wed, 20 Dec 2006 07:42:05 -0800 (PST)
+To: Andy Parkins <andyparkins@gmail.com>
 Sender: git-owner@vger.kernel.org
 
-Hi,
+>>>>> "Andy" == Andy Parkins <andyparkins@gmail.com> writes:
 
-On Tue, 7 Nov 2006, David Lang wrote:
+Andy>  fd_old = open( "someexistingfile" );
+Andy>  unlink( "someexistingfile" );
+Andy>  fd_new = open( "someexistingfile" );
 
-> On Tue, 7 Nov 2006, Junio C Hamano wrote:
-> 
-> > [pu]
-> > 
-> >  Johannes's shallow clone work now should rebase cleanly on top
-> >  of 'master' although I haven't done so yet.  As he said
-> >  himself the series is waiting for people who have needs for
-> >  such a feature to raise hands.
-> 
-> I haven't been watching this recently, but if this is what I understand it to
-> be (the ability to get a partial repository from upstream and work normally
-> from there with the result of data-mineing tools sometimes reporting 'that's
-> part of the truncated history' if they hit the cutoff) consider my hand
-> raised.
+This is dangerous if the process aborts suddenly.
 
-For now, it does not say "part of the truncated history". But yes, shallow 
-clones are partial copies of remote repositories, by making some commits 
-"shallow", i.e. grafting an empty set of parents onto them (thereby 
-pretending that these commits are root commits).
+Might be better to do this:
 
-Telling the user that a commit is shallow should not be too hard.
+mumble_command < thefile > thefile.$$
+mv thefile.$$ thefile
 
-Ciao,
-Dscho
+The second move will be atomic.  The only problem will be if the process
+aborts, which will leave stale temp files around.
+
+-- 
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
