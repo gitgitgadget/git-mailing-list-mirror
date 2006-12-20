@@ -1,94 +1,82 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: Bug: git-svn fails on Mediawiki SVN repo r2992
-Date: Tue, 19 Dec 2006 17:36:34 -0800
-Message-ID: <20061220013634.GA3901@localdomain>
-References: <20061219235312.GB12756@thorium2.jmh.mhn.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Wed, 20 Dec 2006 01:36:55 +0000 (UTC)
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: [BUG] git --git-dir dies with bus error
+Date: Wed, 20 Dec 2006 09:47:37 -0500
+Message-ID: <CF24F5E4-AE2F-48FD-A0C5-474D8BFA757F@silverinsanity.com>
+References: <200612200901.30584.andyparkins@gmail.com> <200612201008.49045.andyparkins@gmail.com> <A76C0FA3-1649-409B-B0D4-C22865622C1F@silverinsanity.com> <emb8h2$io4$1@sea.gmane.org> <45892E16.2040301@op5.se>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Wed, 20 Dec 2006 14:47:53 +0000 (UTC)
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-Content-Disposition: inline
-In-Reply-To: <20061219235312.GB12756@thorium2.jmh.mhn.de>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <45892E16.2040301@op5.se>
+X-Mailer: Apple Mail (2.752.3)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34887>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34936>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GwqNw-0003TZ-Ck for gcvg-git@gmane.org; Wed, 20 Dec
- 2006 02:36:44 +0100
+ esmtp (Exim 4.50) id 1Gx2jS-0006Wb-5Q for gcvg-git@gmane.org; Wed, 20 Dec
+ 2006 15:47:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S964770AbWLTBgi (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
- 20:36:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932943AbWLTBgi
- (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 20:36:38 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:34269 "EHLO hand.yhbt.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S932912AbWLTBgh
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec 2006 20:36:37 -0500
-Received: from hand.yhbt.net (localhost [127.0.0.1]) by hand.yhbt.net
- (Postfix) with SMTP id 98AA77DC02A; Tue, 19 Dec 2006 17:36:34 -0800 (PST)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Tue, 19 Dec 2006
- 17:36:34 -0800
-To: git@vger.kernel.org, bleher@informatik.uni-muenchen.de
+ S965113AbWLTOrl (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 20 Dec 2006
+ 09:47:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965114AbWLTOrl
+ (ORCPT <rfc822;git-outgoing>); Wed, 20 Dec 2006 09:47:41 -0500
+Received: from vs072.rosehosting.com ([216.114.78.72]:35334 "EHLO
+ silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id
+ S965113AbWLTOrl (ORCPT <rfc822;git@vger.kernel.org>); Wed, 20 Dec 2006
+ 09:47:41 -0500
+Received: from [192.168.1.6] (cpe-66-67-221-135.rochester.res.rr.com
+ [66.67.221.135]) (using TLSv1 with cipher AES128-SHA (128/128 bits)) (No
+ client certificate requested) by silverinsanity.com (Postfix) with ESMTP id
+ 04CC11FFD321; Wed, 20 Dec 2006 14:47:39 +0000 (UTC)
+To: Andreas Ericsson <ae@op5.se>
 Sender: git-owner@vger.kernel.org
 
-Thomas Bleher <bleher@informatik.uni-muenchen.de> wrote:
-> There is some problem between git-svn (v1.4.4.1.gad0c3) and MediaWiki
-> SVN when cloning their repo.
-> 
-> I just did
-> $ git-svn init http://svn.wikimedia.org/svnroot/mediawiki/trunk/phase3
-> $ git-svn fetch -r 2991:3122
-> and git-svn went into an endless loop, repeatedly downloading and adding
-> the same files from r2992 over and over again.
 
-I'm not sure that it was 'endless', just unnecesarily repeating itself.
-commit 6173c197c9a23fa8594f18fd2c856407d4af31c1 (included in 1.4.4.2)
-should have fixed your problem...
+On Dec 20, 2006, at 7:35 AM, Andreas Ericsson wrote:
 
-> The bad revision can be viewed here:
-> http://svn.wikimedia.org/viewvc/mediawiki?view=rev&revision=2992
-> It adds ~1000 files (mostly small images).
-> I can check out this revision just fine using the svn command line
-> client.
+> AFAIR, the discussions long ago went along the lines of "if no  
+> argument is passed to any of the --*-dir options, print out the  
+> current value". If "git --git-dir" doesn't print the directory name  
+> of the .git directory inside the repo you're currently in, I'd  
+> consider it a bug.
 
-The latest git-svn in git.git now bundles all the changed files into a
-delta on the server side; and is significantly faster over most network
-connections as a result.
+Consider this a bug then:
 
-> I found this problem while cloning this repo a while ago, using a
-> slightly older version of git (probably 1.4.3, don't remember exactly).
-> In this repo, some directories appeared in the latest revisions which
-> were deleted a long time ago.
-> 
-> You can temporarily browse this repo here:
-> http://misc.j-crew.de/cgi-bin/gitweb.cgi?p=mediawiki.git
-> HEAD contains the dir Smarty-2.6.2, which was removed in SVN r3122.
-> Strangely, my repo misses all commits between r2991 and r3822.
-> You can see the gap at
-> http://misc.j-crew.de/cgi-bin/gitweb.cgi?p=mediawiki.git;a=shortlog;h=49e761ba51ee0d0a698999451134acbf2e078c03
-> 
-> I didn't notice any strange errors while cloning, but I had to abort and
-> restart git-svn a few times, so maybe there was some error there?
+$ git --git-dir
+Bus error
+$ git --version
+git version 1.4.4.1.GIT
+$ git rev-parse origin/master
+8336afa563fbeff35e531396273065161181f04c
+$ gdb git
+(gdb) set args --git-dir
+(gdb) run
+Starting program: /usr/local/stow/git/src/git/git --git-dir
+Reading symbols for shared libraries ..+ done
 
-Hmm, it looks like you ran something like:
+Program received signal EXC_BAD_ACCESS, Could not access memory.
+Reason: KERN_PROTECTION_FAILURE at address: 0x00000000
+0x900332e6 in setenv ()
+(gdb) bt
+#0  0x900332e6 in setenv ()
+#1  0x00001f9e in handle_options (argv=0xbffff4a4, argc=0xbffff4a0)  
+at git.c:76
+#2  0x000022da in main (argc=1, argv=0xbffff504, envp=0xbffff50c) at  
+git.c:346
 
-	git-svn fetch -r0:2991
+My current HEAD (and installed version) just includes my "remove  
+COLLISION_CHECK" patch on top of git master.  This is on OS 10.4.8  
+with fink 0.26.  It appears to be trying to set GIT_DIR to some non- 
+set section of memory.  Bad git, bad.  I'd try to patch this myself  
+(to at least display an error instead of dying), but I'm deep in my  
+actual project code right now.
 
-and then something along the lines of:
-
-	git-svn fetch -r3822:HEAD
-
-Is that what happened?
-
-Looking at the pre-delta git-svn code, it seems that using -r with fetch
-at any time other than the initial fetch will result in botched
-history...
-
--- 
