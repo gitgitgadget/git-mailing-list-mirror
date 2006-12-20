@@ -1,61 +1,74 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: git-pull from git.git - no remote ref for pu or next?
-Date: Tue, 12 Dec 2006 13:51:43 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0612121345180.18171@xanadu.home>
-References: <863b7l83o9.fsf@blue.stonehenge.com>
- <86y7pd6oz7.fsf@blue.stonehenge.com>
- <Pine.LNX.4.64.0612120949230.3535@woody.osdl.org>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [RFC/PATCH] Implement poor-man's submodule support using commit hooks
+Date: Wed, 20 Dec 2006 14:40:40 +0000
+Message-ID: <200612201440.41784.andyparkins@gmail.com>
+References: <200612201309.02119.andyparkins@gmail.com> <200612201347.13805.andyparkins@gmail.com> <458949C4.1020207@dawes.za.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-NNTP-Posting-Date: Tue, 12 Dec 2006 18:51:54 +0000 (UTC)
-Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>, git@vger.kernel.org
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Wed, 20 Dec 2006 14:41:02 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-reply-to: <Pine.LNX.4.64.0612120949230.3535@woody.osdl.org>
-X-X-Sender: nico@xanadu.home
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=DCNVembD1Jetxy4AcdMoFbo2lQo5nBnFKc6sIOEuHWVyfLb/a0RL3BnYrqD2hREFnRjH9Ot8YA2Rk6Xd0+rDgRjL7QV6youX1te2nJLRwOwY1xu2IPIYskVrNMcYgRvsCmUNgEosOkMW3fPnccwvG8+hh+G2aVVwhE3ImNI1mvk=
+User-Agent: KMail/1.9.5
+In-Reply-To: <458949C4.1020207@dawes.za.net>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34124>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34935>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GuCjI-0004Pf-BW for gcvg-git@gmane.org; Tue, 12 Dec
- 2006 19:51:52 +0100
+ esmtp (Exim 4.50) id 1Gx2ck-00055A-Eo for gcvg-git@gmane.org; Wed, 20 Dec
+ 2006 15:40:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932332AbWLLSvt (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 12 Dec 2006
- 13:51:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932343AbWLLSvt
- (ORCPT <rfc822;git-outgoing>); Tue, 12 Dec 2006 13:51:49 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:58057 "EHLO
- relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S932332AbWLLSvs (ORCPT <rfc822;git@vger.kernel.org>); Tue, 12 Dec 2006
- 13:51:48 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005)) with ESMTP id
- <0JA600BSOCE7JL80@VL-MH-MR001.ip.videotron.ca> for git@vger.kernel.org; Tue,
- 12 Dec 2006 13:51:44 -0500 (EST)
-To: Linus Torvalds <torvalds@osdl.org>
+ S965111AbWLTOkr (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 20 Dec 2006
+ 09:40:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965113AbWLTOkr
+ (ORCPT <rfc822;git-outgoing>); Wed, 20 Dec 2006 09:40:47 -0500
+Received: from ug-out-1314.google.com ([66.249.92.174]:15818 "EHLO
+ ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S965111AbWLTOkq (ORCPT <rfc822;git@vger.kernel.org>); Wed, 20 Dec
+ 2006 09:40:46 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so2248147uga for
+ <git@vger.kernel.org>; Wed, 20 Dec 2006 06:40:45 -0800 (PST)
+Received: by 10.66.243.4 with SMTP id q4mr10685493ugh.1166625644889; Wed, 20
+ Dec 2006 06:40:44 -0800 (PST)
+Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
+ ESMTP id o24sm12827995ugd.2006.12.20.06.40.44; Wed, 20 Dec 2006 06:40:44
+ -0800 (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-On Tue, 12 Dec 2006, Linus Torvalds wrote:
+On Wednesday 2006 December 20 14:33, Rogan Dawes wrote:
 
-> If the public sites used git itself to synchronize git repositories, 
-> they'd never see anything like this (because git itself will only write 
-> the new refs after it has actually updated the data). But since the thing 
-> needs mirroring for non-git uses too, and since rsync generally _works_ 
-> apart from the slight race-condition issue, that's what it just uses.
+> It wouldn't, since the redirection overwrites the file at the same time
 
-Wouldn't it be a worthy goal to exclude git repos from the rsync 
-mirroring and use git instead?  The current arrangement doesn't put git 
-in good light for the general public not reading this mailing list wrt 
-git reliability, even if we know it is just a minor and temporary 
-annoyance.
+Of course you are correct; however it wasn't completely crazy.  Before now, 
+I've replaced files in C by doing
 
-A failure always makes you look bad regardless of its severity.
+ fd_old = open( "someexistingfile" );
+ unlink( "someexistingfile" );
+ fd_new = open( "someexistingfile" );
+
+So I was really just trying it in case bash did a similar thing internally.
+
+> as trying to read from it. A better way is to redirect to a temp file,
+> and rename it if the previous operation was successful.
+
+That's what I ended up doing; as you say it's better anyway because the error 
+conditions don't mean that the .gitmodules file ends up half written.
 
 
+Andy
+-- 
+Dr Andy Parkins, M Eng (hons), MIEE
