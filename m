@@ -4,68 +4,56 @@ X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Whitcroft <apw@shadowen.org>
-Subject: Re: [PATCH] commit: Steer new users toward "git commit -a" rather
- than update-index
-Date: Tue, 14 Nov 2006 18:55:51 +0000
-Message-ID: <455A1137.8030301@shadowen.org>
-References: <87k61yt1x2.wl%cworth@cworth.org>
+From: Johannes Sixt <J.Sixt@eudaptics.com>
+Subject: Re: [RFC/PATCH] Implement poor-man's submodule support using commit 
+ hooks
+Date: Wed, 20 Dec 2006 15:18:40 +0100
+Organization: eudaptics software gmbh
+Message-ID: <45894640.2E0768B5@eudaptics.com>
+References: <200612201309.02119.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Tue, 14 Nov 2006 18:56:23 +0000 (UTC)
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+NNTP-Posting-Date: Wed, 20 Dec 2006 14:18:59 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.7 (X11/20060927)
-In-Reply-To: <87k61yt1x2.wl%cworth@cworth.org>
-X-Enigmail-Version: 0.94.0.0
-OpenPGP: url=http://www.shadowen.org/~apw/public-key
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 9
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: cm56-163-160.liwest.at
+X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
+X-Accept-Language: en
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31361>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gk3Rx-0005K0-9G for gcvg-git@gmane.org; Tue, 14 Nov
- 2006 19:56:02 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34931>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gx2HU-0000ge-01 for gcvg-git@gmane.org; Wed, 20 Dec
+ 2006 15:18:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S966231AbWKNSz5 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 14 Nov 2006
- 13:55:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933477AbWKNSz5
- (ORCPT <rfc822;git-outgoing>); Tue, 14 Nov 2006 13:55:57 -0500
-Received: from hellhawk.shadowen.org ([80.68.90.175]:21514 "EHLO
- hellhawk.shadowen.org") by vger.kernel.org with ESMTP id S933476AbWKNSz5
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 14 Nov 2006 13:55:57 -0500
-Received: from localhost ([127.0.0.1]) by hellhawk.shadowen.org with esmtp
- (Exim 4.50) id 1Gk3RA-00027S-6n; Tue, 14 Nov 2006 18:55:12 +0000
-To: Carl Worth <cworth@cworth.org>
+ S965083AbWLTOSt (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 20 Dec 2006
+ 09:18:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965087AbWLTOSs
+ (ORCPT <rfc822;git-outgoing>); Wed, 20 Dec 2006 09:18:48 -0500
+Received: from main.gmane.org ([80.91.229.2]:34265 "EHLO ciao.gmane.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S965083AbWLTOSr
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 20 Dec 2006 09:18:47 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1Gx2HJ-00042o-Kj for git@vger.kernel.org; Wed, 20 Dec 2006 15:18:41 +0100
+Received: from cm56-163-160.liwest.at ([86.56.163.160]) by main.gmane.org
+ with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Wed, 20 Dec 2006 15:18:41 +0100
+Received: from J.Sixt by cm56-163-160.liwest.at with local (Gmexim 0.1
+ (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Wed, 20 Dec 2006
+ 15:18:41 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Carl Worth wrote:
-> As has been discussed recently, update-index isn't intended as a
-> "porcelain" command so the mention of it in the output of git-commit
-> does lead to some user confusion.
-> ---
->  wt-status.c |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
-> 
-> diff --git a/wt-status.c b/wt-status.c
-> index 7dd6857..4edabcd 100644
-> --- a/wt-status.c
-> +++ b/wt-status.c
-> @@ -126,7 +126,7 @@ static void wt_status_print_changed_cb(s
->  	int i;
->  	if (q->nr)
->  		wt_status_print_header("Changed but not updated",
-> -				"use git-update-index to mark for commit");
-> +				"use \"git commit <files>\" to commit or \"git commit -a\" for all");
->  	for (i = 0; i < q->nr; i++)
->  		wt_status_print_filepair(WT_STATUS_CHANGED, q->queue[i]);
->  	if (q->nr)
-> --
-> 1.4.3.3.gf040
+Andy Parkins wrote:
+> +               # check if the subdir is a repository
+> +               if [ ! -d "$WORKINGTOP$subdir/.git" ]; then
+> +                       echo "$subdir is not a git repository, so it can't be a submodule"
 
-Are we sure this isn't porcelain-ish?  We need to use it in merge
-conflict correction and the like?  You can't use git-commit there as a
-replacement.  I'd expect it to be 'git update-index' rather than
-'git-update-index' of course.
+You must redirect the message to >&2 otherwise it remains invisible (it
+goes into file newgitmodules).
 
+-- Hannes
