@@ -1,55 +1,53 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_ADSP_NXDOMAIN,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
-From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: git crash when cg-fetch:ing dash
-Date: Thu, 23 Nov 2006 10:34:52 +0100
-Message-ID: <45656B3C.4090601@lsrfire.ath.cx>
-References: <200611230247.kAN2lbLU006457@laptop13.inf.utfsm.cl>
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: git-merge-recursive segmentation error
+Date: Tue, 19 Dec 2006 17:10:04 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0612191709320.6766@woody.osdl.org>
+References: <693577.67723.qm@web31813.mail.mud.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Thu, 23 Nov 2006 09:35:20 +0000 (UTC)
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Wed, 20 Dec 2006 01:10:22 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.8 (Windows/20061025)
-In-Reply-To: <200611230247.kAN2lbLU006457@laptop13.inf.utfsm.cl>
+In-Reply-To: <693577.67723.qm@web31813.mail.mud.yahoo.com>
+X-MIMEDefang-Filter: osdl$Revision: 1.163 $
+X-Scanned-By: MIMEDefang 2.36
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32127>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GnAz9-0005Nt-4d for gcvg-git@gmane.org; Thu, 23 Nov
- 2006 10:35:11 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34882>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GwpyG-0008FA-Do for gcvg-git@gmane.org; Wed, 20 Dec
+ 2006 02:10:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S933386AbWKWJfG convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Thu, 23 Nov 2006 04:35:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933539AbWKWJfG
- (ORCPT <rfc822;git-outgoing>); Thu, 23 Nov 2006 04:35:06 -0500
-Received: from static-ip-217-172-187-230.inaddr.intergenia.de
- ([217.172.187.230]:16258 "EHLO neapel230.server4you.de") by vger.kernel.org
- with ESMTP id S933386AbWKWJfE (ORCPT <rfc822;git@vger.kernel.org>); Thu, 23
- Nov 2006 04:35:04 -0500
-Received: from [10.0.1.4] (p508E51A7.dip.t-dialin.net [80.142.81.167]) by
- neapel230.server4you.de (Postfix) with ESMTP id B9F6126012; Thu, 23 Nov 2006
- 10:35:03 +0100 (CET)
-To: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
+ S932818AbWLTBKJ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
+ 20:10:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932815AbWLTBKI
+ (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 20:10:08 -0500
+Received: from smtp.osdl.org ([65.172.181.25]:50847 "EHLO smtp.osdl.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S932818AbWLTBKG
+ (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec 2006 20:10:06 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
+ smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kBK1A52J012648
+ (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Tue, 19
+ Dec 2006 17:10:06 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
+ shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kBK1A4lZ015881; Tue, 19 Dec
+ 2006 17:10:05 -0800
+To: Luben Tuikov <ltuikov@yahoo.com>
 Sender: git-owner@vger.kernel.org
 
-Horst H. von Brand schrieb:
-> I did:
->=20
->   git clone http://gondor.apana.org.au/~herbert/dash/dash.git
->=20
-> and got:
->=20
->   error: Unable to start request
->   error: Could not interpret heads/master as something to pull
 
-It works for me with both the version of git that came with Ubuntu 6.10
-(1.4.1) and a self-compiled git 1.4.4.g5942. :-?
+
+On Tue, 19 Dec 2006, Luben Tuikov wrote:
+>
+> /home/luben/bin/git-merge: line 394: 12030 Segmentation fault      git-merge-$strategy $common -- "$head_arg" "$@"
+> Merge with strategy recursive failed.
+
+Can you run that by hand under gdb and get a backtrace?
 
