@@ -2,179 +2,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 2/3] merge-recursive: make empty tree a known object
-Date: Sun, 10 Dec 2006 14:28:09 -0800
-Message-ID: <7vpsar2xom.fsf@assigned-by-dhcp.cox.net>
-References: <20061207101707.GA19139@spearce.org>
-	<Pine.LNX.4.63.0612100055390.28348@wbgn013.biozentrum.uni-wuerzburg.de>
-	<Pine.LNX.4.64.0612101030390.12500@woody.osdl.org>
-	<7vpsar4fcu.fsf@assigned-by-dhcp.cox.net>
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] hooks/pre-commit: add example to add Signed-off-by line
+ to message
+Date: Wed, 20 Dec 2006 18:37:45 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0612201835570.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0611291219190.30004@wbgn013.biozentrum.uni-wuerzburg.de>
+ <200612201604.12498.andyparkins@gmail.com>
+ <Pine.LNX.4.63.0612201717490.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vmz5ifpbv.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Sun, 10 Dec 2006 22:28:34 +0000 (UTC)
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Wed, 20 Dec 2006 17:38:22 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <7vpsar4fcu.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Sun, 10 Dec 2006 13:21:05 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <7vmz5ifpbv.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34951>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GtX9b-0001zw-BN for gcvg-git@gmane.org; Sun, 10 Dec
- 2006 23:28:15 +0100
+ esmtp (Exim 4.50) id 1Gx5OO-0000jU-Di for gcvg-git@gmane.org; Wed, 20 Dec
+ 2006 18:38:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1759147AbWLJW2M (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 10 Dec 2006
- 17:28:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759268AbWLJW2M
- (ORCPT <rfc822;git-outgoing>); Sun, 10 Dec 2006 17:28:12 -0500
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:64769 "EHLO
- fed1rmmtao09.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
- id S1759147AbWLJW2L (ORCPT <rfc822;git@vger.kernel.org>); Sun, 10 Dec 2006
- 17:28:11 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao09.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061210222810.WENL18767.fed1rmmtao09.cox.net@fed1rmimpo01.cox.net>; Sun, 10
- Dec 2006 17:28:10 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo01.cox.net with bizsmtp id xATY1V00j1kojtg0000000; Sun, 10 Dec 2006
- 17:27:33 -0500
-To: Linus Torvalds <torvalds@osdl.org>
+ S1030217AbWLTRht (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 20 Dec 2006
+ 12:37:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030219AbWLTRht
+ (ORCPT <rfc822;git-outgoing>); Wed, 20 Dec 2006 12:37:49 -0500
+Received: from mail.gmx.net ([213.165.64.20]:34071 "HELO mail.gmx.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP id S1030221AbWLTRhs
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 20 Dec 2006 12:37:48 -0500
+Received: (qmail invoked by alias); 20 Dec 2006 17:37:46 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2)
+ [132.187.25.13] by mail.gmx.net (mp048) with SMTP; 20 Dec 2006 18:37:46 +0100
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano <junkio@cox.net> writes:
+Hi,
 
-> Linus Torvalds <torvalds@osdl.org> writes:
->
->> So you could make "read_sha1_file()" just have a special case for known 
->> objects at the end. If the pack entry fails, the loose file case fails, 
->> then rather than returning NULL at the end, you could have a list of known 
->> fixed objects..
->
-> That is fine by me.  We would benefit from an empty blob and an
-> empty tree.
+On Wed, 20 Dec 2006, Junio C Hamano wrote:
 
-I think this might be fragile in the presense of older
-implementation of git.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > Hi,
+> >
+> > On Wed, 20 Dec 2006, Andy Parkins wrote:
+> >
+> >> Signed-off-by: Andy Parkins <andyparkins@gmail.com>
+> >
+> > Acked-by: Johannes E. Schindelin <johannes.schindelin@gmx.de>
+> >
+> > Ciao,
+> > Dscho
+> 
+> Why SQUASH_MSG?  Doesn't it confuse git-explain when it wants to
+> detect that you are in the middle of a squash merge?
 
-A new git may operate fine without having "well known" objects
-in the repository, and would happily write result that points at
-them; an older git would find the resulting repository corrupt.
+Yes, it confuses git-explain. Which did not existed when I concocted the 
+first (broken) version of this patch. There are only two ways to give 
+commit message templates AFAICT: misusing SQUASH_MSG and misusing 
+MERGE_MSG.
 
-We somehow need to force "well known" objects to be instantiated
-in the object database when something else points at them.  I am
-not absolutely sure if keeping has_sha1_file() unaware of this
-magic is enough.
-
--- >8 --
-Implement "well known" built-in objects.
-
-Make read_sha1_file() aware of a handful "well known" objects
-and use built-in copy when they are not found in the object
-database.
-
-Note that we do not hook this into has_sha1_file(), so it is
-possible that has_sha1_file() says you do not have an empty tree
-object in your repository but read_sha1_file() successfully
-gives you an empty tree object back.
-
-Otherwise write_sha1_file() would not create "well known"
-objects in the repository, leaving the repository corrupt for
-older implementations of git.
-
----
-
-diff --git a/cache.h b/cache.h
-index f2ec5c8..7ee40e8 100644
---- a/cache.h
-+++ b/cache.h
-@@ -241,6 +241,10 @@ int adjust_shared_perm(const char *path);
- int safe_create_leading_directories(char *path);
- char *enter_repo(char *path, int strict);
- 
-+/* Well known object names */
-+extern unsigned const char EMPTY_TREE_NAME[];
-+extern unsigned const char EMPTY_BLOB_NAME[];
-+
- /* Read and unpack a sha1 file into memory, write memory to a sha1 file */
- extern int sha1_object_info(const unsigned char *, char *, unsigned long *);
- extern void * unpack_sha1_file(void *map, unsigned long mapsize, char *type, unsigned long *size);
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 32e186c..1c56fd3 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -1234,11 +1234,8 @@ static int merge(struct commit *h1,
- 	merged_common_ancestors = pop_commit(&ca);
- 	if (merged_common_ancestors == NULL) {
- 		/* if there is no common ancestor, make an empty tree */
--		struct tree *tree = xcalloc(1, sizeof(struct tree));
--
--		tree->object.parsed = 1;
--		tree->object.type = OBJ_TREE;
--		write_sha1_file(NULL, 0, tree_type, tree->object.sha1);
-+		struct tree *tree = lookup_tree(EMPTY_TREE_NAME);
-+		parse_tree(tree);
- 		merged_common_ancestors = make_virtual_commit(tree, "ancestor");
- 	}
- 
-diff --git a/sha1_file.c b/sha1_file.c
-index 63f416b..c6efe88 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -1315,11 +1315,32 @@ static void *read_packed_sha1(const unsigned char *sha1, char *type, unsigned lo
- 	return unpack_entry(&e, type, size);
- }
- 
--void * read_sha1_file(const unsigned char *sha1, char *type, unsigned long *size)
-+unsigned const char EMPTY_TREE_NAME[20] = {
-+	0x4b, 0x82, 0x5d, 0xc6, 0x42, 0xcb, 0x6e, 0xb9,	0xa0, 0x60,
-+	0xe5, 0x4b, 0xf8, 0xd6, 0x92, 0x88, 0xfb, 0xee, 0x49, 0x04,
-+};
-+
-+unsigned const char EMPTY_BLOB_NAME[20] = {
-+	0xe6, 0x9d, 0xe2, 0x9b, 0xb2, 0xd1, 0xd6, 0x43, 0x4b, 0x8b,
-+	0x29, 0xae, 0x77, 0x5a, 0xd8, 0xc2, 0xe4, 0x8c, 0x53, 0x91,
-+};
-+
-+static struct well_known_objects {
-+	char *type;
-+	unsigned const char *sha1;
-+	unsigned long size;
-+	const char *data;
-+} well_known_objects[] = {
-+	{ "tree", EMPTY_TREE_NAME, 0UL, "" },
-+	{ "blob", EMPTY_BLOB_NAME, 0UL, "" },
-+};
-+
-+void *read_sha1_file(const unsigned char *sha1, char *type, unsigned long *size)
- {
- 	unsigned long mapsize;
- 	void *map, *buf;
- 	struct pack_entry e;
-+	int i;
- 
- 	if (find_pack_entry(sha1, &e, NULL))
- 		return read_packed_sha1(sha1, type, size);
-@@ -1332,6 +1353,17 @@ void * read_sha1_file(const unsigned char *sha1, char *type, unsigned long *size
- 	reprepare_packed_git();
- 	if (find_pack_entry(sha1, &e, NULL))
- 		return read_packed_sha1(sha1, type, size);
-+
-+	/* "well known" objects */
-+	for (i = 0; i < ARRAY_SIZE(well_known_objects); i++) {
-+		if (!hashcmp(well_known_objects[i].sha1, sha1)) {
-+			*size = well_known_objects[i].size;
-+			buf = xmalloc(*size);
-+			strcpy(type, well_known_objects[i].type);
-+			memcpy(buf, well_known_objects[i].data, *size);
-+			return buf;
-+		}
-+	}
- 	return NULL;
- }
- 
+Ciao,
+Dscho
