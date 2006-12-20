@@ -1,112 +1,73 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Make git-commit cleverer - have it figure out whether it needs -a automatically
-Date: Fri, 01 Dec 2006 03:32:09 -0800
-Message-ID: <7v7ixbam2u.fsf@assigned-by-dhcp.cox.net>
-References: <200612011106.42272.andyparkins@gmail.com>
-	<7vd573amuy.fsf@assigned-by-dhcp.cox.net>
+From: Han-Wen Nienhuys <hanwen@xs4all.nl>
+Subject: UI nitpick
+Date: Wed, 20 Dec 2006 23:55:47 +0100
+Message-ID: <emcf17$esj$1@sea.gmane.org>
+Reply-To: hanwen@xs4all.nl
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Fri, 1 Dec 2006 11:32:27 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Wed, 20 Dec 2006 22:56:50 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <7vd573amuy.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Fri, 01 Dec 2006 03:15:17 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 26
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: muurbloem.xs4all.nl
+User-Agent: Thunderbird 1.5.0.8 (X11/20061107)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32899>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gq6cp-00014t-03 for gcvg-git@gmane.org; Fri, 01 Dec
- 2006 12:32:15 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34978>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GxAMf-00022C-P5 for gcvg-git@gmane.org; Wed, 20 Dec
+ 2006 23:56:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S936462AbWLALcM (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
- 06:32:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936464AbWLALcM
- (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 06:32:12 -0500
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:53500 "EHLO
- fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP id S936462AbWLALcK
- (ORCPT <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006 06:32:10 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao08.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061201113209.BOTT18207.fed1rmmtao08.cox.net@fed1rmimpo02.cox.net>; Fri, 1
- Dec 2006 06:32:09 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id tPYJ1V00h1kojtg0000000; Fri, 01 Dec 2006
- 06:32:19 -0500
-To: Andy Parkins <andyparkins@gmail.com>
+ S1160998AbWLTW4b (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 20 Dec 2006
+ 17:56:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1160999AbWLTW4b
+ (ORCPT <rfc822;git-outgoing>); Wed, 20 Dec 2006 17:56:31 -0500
+Received: from main.gmane.org ([80.91.229.2]:37628 "EHLO ciao.gmane.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1160998AbWLTW4a
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 20 Dec 2006 17:56:30 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1GxALy-0007Is-N2 for git@vger.kernel.org; Wed, 20 Dec 2006 23:56:02 +0100
+Received: from muurbloem.xs4all.nl ([213.84.26.127]) by main.gmane.org with
+ esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>;
+ Wed, 20 Dec 2006 23:56:02 +0100
+Received: from hanwen by muurbloem.xs4all.nl with local (Gmexim 0.1 (Debian))
+ id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Wed, 20 Dec 2006 23:56:02
+ +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Junio C Hamano <junkio@cox.net> writes:
 
-> I think another exception should be needed.  If the index does
-> not match the working tree, it should not default to "-a".
->
-> Otherwise,
+Hi,
 
-I think there needs a bit of explanation and additional step
-that happened here.  This by the way is not a made-up example.
-Everything, including the 20-minute away, were what happened
-when I did the latest blame fix you saw a few days ago.
+git-reset is really neat when you messed something up, but it 
+spews messages.
 
- * I am still futzing with blame from time to time, and have
-   this change almost permanently in my working tree.
+  [lilydev@haring lilypond]$ git-reset  HEAD
+  lily/accidental-engraver.cc: needs update
+  lily/lyric-combine-music-iterator.cc: needs update
 
-	$ cat P.diff
-        diff --git a/builtin-blame.c b/builtin-blame.c
-        index dc3ffea..46ce45c 100644
-        --- a/builtin-blame.c
-        +++ b/builtin-blame.c
-        @@ -38,7 +38,7 @@ static int max_digits;
-         static int max_score_digits;
+this makes me think that the reset was unsuccesful.
 
-         #ifndef DEBUG
-        -#define DEBUG 0
-        +#define DEBUG 1
-         #endif
+After a few more experiments with 
 
- * I also have the GIT-VERSION-GEN change in my working tree.
+  git-reset <stuff> HEAD^ 
 
-> I want to fix another thing in pickaxe.
->
-> 	$ edit builtin-blame.c
->
+I started noticing that the list grew longer and longer.
 
- * Of course I did tests here.
 
-> My wife calls me.  Away from desk for 20 minutes.  Later I come
-> back.
+It would be nice if git-reset printed 
 
- * And then reverted the DEBUG back to 0 in preparation for
-   "checking into the index"
+ HEAD is now <sha1> - <excerpt of commit message>
 
-	$ edit builtin-blame.c
 
-> 	$ git update-index builtin-pickaxe.c
-
- * And then I reverted it back for later futing.
-
- 	$ git apply P.diff ;# that is a permanent-temporary file.
-
->
-> I am so used to that name and did not realize that typo, and I
-> was not paying too much attention.  My wife calls me again.
-> Away from desk and back in 20 minutes.
->
-> 	$ git commit -m 'git-blame: Another fix.'
->
-> Oops.
-
- * Oops here is not just that builtin-blame.c would have been
-   committed; I'd almost never do "commit -a" in this repository,
-   because it would take that "DEBUG 1" change _and_
-   GIT-VERSION-GEN change into the commit.
-
-> So, please turn this "cleverness" off when the index does not
-> match the working tree.
+-- 
+ Han-Wen Nienhuys - hanwen@xs4all.nl - http://www.xs4all.nl/~hanwen
