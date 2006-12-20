@@ -1,62 +1,79 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Catalin Marinas <catalin.marinas@arm.com>
-Subject: Re: [PATCH 1/3] make =?iso-8859-1?q?index-p=E2ck?= able to complete thin packs
-Date: Thu, 26 Oct 2006 11:13:47 +0100
-Message-ID: <tnxac3j4c6c.fsf@arm.com>
-References: <Pine.LNX.4.64.0610252323100.12418@xanadu.home>
-	<7vr6wvr1ca.fsf@assigned-by-dhcp.cox.net> <ehppbg$phq$1@sea.gmane.org>
-	<20061026091925.GD13780@diana.vm.bytemark.co.uk>
-Reply-To: Catalin Marinas <catalin.marinas@gmail.com>
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Luben Tuikov <ltuikov@yahoo.com>
+Subject: Re: git-merge-recursive segmentation error
+Date: Tue, 19 Dec 2006 18:15:20 -0800 (PST)
+Message-ID: <929899.78332.qm@web31809.mail.mud.yahoo.com>
+References: <Pine.LNX.4.64.0612191709320.6766@woody.osdl.org>
+Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Thu, 26 Oct 2006 10:14:09 +0000 (UTC)
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+NNTP-Posting-Date: Wed, 20 Dec 2006 02:15:28 +0000 (UTC)
+Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061026091925.GD13780@diana.vm.bytemark.co.uk> (
- =?iso-8859-1?q?Karl_Hasselstr=F6m's_message_of?= "Thu, 26 Oct 2006 11:19:25
- +0200")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
-X-OriginalArrivalTime: 26 Oct 2006 10:13:48.0387 (UTC) FILETIME=[6D70A330:01C6F8E7]
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=X-YMail-OSG:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
+  b=WlXEes7dIhN6hFOQNvASkfwJjE9eKtF0bI0LLPdCvrQsepB3CxbPVbKknxILP8VSK/g+hnhj4p1JAE+Q8aCn5kLQ3J/ulWDuCqvgRrjCc9BkA/CSgn3+tK4DRONCFu2S+1WvXogWhDvE3voa2KfOp6OFWJh+UccB1bt+Ixqdx6I=;
+X-YMail-OSG: xk4gGMsVM1l5Up1hf4YbGzDE3GlEa9SQr9M.a_AHOpa19LsbaBAX5h4sztC6ZaCfqQ--
+In-Reply-To: <Pine.LNX.4.64.0612191709320.6766@woody.osdl.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/30179>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gd2FJ-0001gC-7F for gcvg-git@gmane.org; Thu, 26 Oct
- 2006 12:13:57 +0200
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34892>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1GwqzN-0007x9-5H for gcvg-git@gmane.org; Wed, 20 Dec
+ 2006 03:15:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1423135AbWJZKNy convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Thu, 26 Oct 2006 06:13:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423140AbWJZKNy
- (ORCPT <rfc822;git-outgoing>); Thu, 26 Oct 2006 06:13:54 -0400
-Received: from cam-admin0.cambridge.arm.com ([193.131.176.58]:36586 "EHLO
- cam-admin0.cambridge.arm.com") by vger.kernel.org with ESMTP id
- S1423135AbWJZKNx convert rfc822-to-8bit (ORCPT <rfc822;git@vger.kernel.org>);
- Thu, 26 Oct 2006 06:13:53 -0400
-Received: from cam-owa2.Emea.Arm.com (cam-owa2.emea.arm.com [10.1.255.63]) by
- cam-admin0.cambridge.arm.com (8.12.6/8.12.6) with ESMTP id k9QADnQb017193;
- Thu, 26 Oct 2006 11:13:49 +0100 (BST)
-Received: from localhost.localdomain ([10.1.255.211]) by
- cam-owa2.Emea.Arm.com with Microsoft SMTPSVC(6.0.3790.0); Thu, 26 Oct 2006
- 11:13:48 +0100
-To: =?iso-8859-1?q?Karl_Hasselstr=F6m?= <kha@treskal.com>
+ S964777AbWLTCPW (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
+ 21:15:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964778AbWLTCPW
+ (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 21:15:22 -0500
+Received: from web31809.mail.mud.yahoo.com ([68.142.207.72]:21267 "HELO
+ web31809.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ SMTP id S964777AbWLTCPW (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec
+ 2006 21:15:22 -0500
+Received: (qmail 78507 invoked by uid 60001); 20 Dec 2006 02:15:20 -0000
+Received: from [64.215.88.90] by web31809.mail.mud.yahoo.com via HTTP; Tue,
+ 19 Dec 2006 18:15:20 PST
+To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 
-Karl Hasselstr=F6m <kha@treskal.com> wrote:
-> On 2006-10-26 09:50:48 +0200, Jakub Narebski wrote:
->
->> That said, git-am should understand QP with coding in mail headers.
->
-> I really hope it does, since I just patched StGIT to generate such
-> headers. (Out of pure vanity -- I don't want my name mangled!)
+--- Linus Torvalds <torvalds@osdl.org> wrote:
+> Can you run that by hand under gdb and get a backtrace?
 
-It looks like it does, that's how I applied some of your patches ('stg
-import' doesn't understand them).
+Linus,
 
---=20
+Auto-merging init/Kconfig
+Auto-merging init/version.c
+
+Program received signal SIGSEGV, Segmentation fault.
+xdl_merge (orig=Variable "orig" is not available.
+) at xdiff/xmerge.c:200
+200                     t2.ptr = (char *)xe2->xdf2.recs[m->i2]->ptr;
+(gdb) bt
+#0  xdl_merge (orig=Variable "orig" is not available.
+) at xdiff/xmerge.c:200
+#1  0x000000000040322c in merge_file (o=0x7fffd4f762f0, a=0x7fffd4f76270, b=0x7fffd4f762b0,
+branch1=0x7fffd4f77976 "HEAD", 
+    branch2=0x7fffd4f7797b "cc016448b0bf0764928275d034e367753bde8162") at merge-recursive.c:667
+#2  0x0000000000404e87 in merge_trees (head=0x12e4a00, merge=0x555328, common=0x555350,
+branch1=Variable "branch1" is not available.
+) at merge-recursive.c:1074
+#3  0x0000000000405376 in merge (h1=0x5452f0, h2=0x545370, branch1=0x7fffd4f77976 "HEAD",
+branch2=0x7fffd4f7797b "cc016448b0bf0764928275d034e367753bde8162", call_depth=0, 
+    ancestor=0x5453f0, result=0x7fffd4f764e0) at merge-recursive.c:1245
+#4  0x00000000004056a5 in main (argc=Variable "argc" is not available.
+) at merge-recursive.c:1312
+
+I also ran git-bisect twice over two well known but overlapping
+good-bad regions and I get the same commit as being the culprit.
+It seems to be commit 1510fea781cb0517eeba8c378964f7bc4f9577ab.
+
+    Luben
