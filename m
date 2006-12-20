@@ -1,71 +1,74 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] revision: introduce ref@{N..M} syntax.
-Date: Sun, 17 Dec 2006 10:14:12 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0612171009550.3479@woody.osdl.org>
-References: <7vodq3a136.fsf@assigned-by-dhcp.cox.net>
- <3C540990-B78E-405B-ACFF-F558DB776C85@silverinsanity.com>
- <7vbqm36mv6.fsf_-_@assigned-by-dhcp.cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Change in git-svn dcommit semantics?
+Date: Wed, 20 Dec 2006 12:38:57 +0100
+Organization: At home
+Message-ID: <emb77h$cf2$1@sea.gmane.org>
+References: <m2mz5jegka.fsf@ziti.local> <94FF72E0-F8BD-4773-803E-F179754BF0ED@silverinsanity.com> <Pine.LNX.4.63.0612200053550.19693@wbgn013.biozentrum.uni-wuerzburg.de> <C2881A17-27F7-467C-B353-189BB7DBFD1E@silverinsanity.com> <7v3b7bnz6q.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Sun, 17 Dec 2006 18:14:29 +0000 (UTC)
-Cc: Brian Gernhardt <benji@silverinsanity.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+NNTP-Posting-Date: Wed, 20 Dec 2006 11:36:51 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <7vbqm36mv6.fsf_-_@assigned-by-dhcp.cox.net>
-X-MIMEDefang-Filter: osdl$Revision: 1.163 $
-X-Scanned-By: MIMEDefang 2.36
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 24
+Original-X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-25-107.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34696>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34916>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gw0Wk-0001jd-Uq for gcvg-git@gmane.org; Sun, 17 Dec
- 2006 19:14:23 +0100
+ esmtp (Exim 4.50) id 1Gwzkb-0004iU-DQ for gcvg-git@gmane.org; Wed, 20 Dec
+ 2006 12:36:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932282AbWLQSOU (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 17 Dec 2006
- 13:14:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932285AbWLQSOU
- (ORCPT <rfc822;git-outgoing>); Sun, 17 Dec 2006 13:14:20 -0500
-Received: from smtp.osdl.org ([65.172.181.25]:48669 "EHLO smtp.osdl.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S932282AbWLQSOT
- (ORCPT <rfc822;git@vger.kernel.org>); Sun, 17 Dec 2006 13:14:19 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
- smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kBHIEDID032085
- (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Sun, 17
- Dec 2006 10:14:14 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
- shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kBHIECni015848; Sun, 17 Dec
- 2006 10:14:13 -0800
-To: Junio C Hamano <junkio@cox.net>
+ S964994AbWLTLgm (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 20 Dec 2006
+ 06:36:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964997AbWLTLgm
+ (ORCPT <rfc822;git-outgoing>); Wed, 20 Dec 2006 06:36:42 -0500
+Received: from main.gmane.org ([80.91.229.2]:41946 "EHLO ciao.gmane.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S964994AbWLTLgl
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 20 Dec 2006 06:36:41 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43) id
+ 1GwzkH-0003aY-4f for git@vger.kernel.org; Wed, 20 Dec 2006 12:36:25 +0100
+Received: from host-81-190-25-107.torun.mm.pl ([81.190.25.107]) by
+ main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for
+ <git@vger.kernel.org>; Wed, 20 Dec 2006 12:36:25 +0100
+Received: from jnareb by host-81-190-25-107.torun.mm.pl with local (Gmexim
+ 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Wed, 20 Dec 2006
+ 12:36:25 +0100
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
+Junio C Hamano wrote:
 
+> Brian Gernhardt <benji@silverinsanity.com> writes:
+> 
+>> And is there an easier way to find these things than "git rev-list
+>> HEAD | git diff-tree -r -s --stdin -SCOLLISION | xargs git show"?  I
+>> cobbled that together from poking around inside gitk (which mostly
+>> works in OS X, but has some issues that make me prefer the command
+>> line).
+> 
+> I typically do:
+> 
+>       git log --full-diff -p -SCOLLISION
+> 
+> The --full-diff option helps because it shows the diff for other
+> files (that do not have different number of substring COLLISION
+> in the pre and postimage) in the same commit as well.
 
-On Sat, 16 Dec 2006, Junio C Hamano wrote:
->
-> This allows you to add between Nth and Mth (inclusive) reflog entries.
-> "git show master@{1} master@{2} master@{3}" is equivalent to
-> "git show master@{1..3}".
+Yet another undocumented option. Sigh...
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
 
-Well, logically, if you do that, then you should also allow
-
-	git log master@{one.week.ago..yesterday}
-
-as a reflog expression.
-
-"Because It Only Makes Sense(tm)".
-
-		Linus
-
-PS. Yeah, I'm only half serious. I like our revision parsing, and the 
-above _would_ actually be consistent with the "master@{1..3}" kind of 
-specification, but at the same time, it's also obviously more complex, and 
-maybe it's not THAT usable.
-
-But I think the "master@{date..date}" syntax would actually fall out 
-automatically if you did the {x..y} parsing at a higher level and didn't 
