@@ -1,83 +1,77 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] git-svn: error out when the SVN connection fails during a fetch
-Date: Mon, 4 Dec 2006 00:52:53 -0800
-Message-ID: <20061204085253.GA31047@soma>
-References: <20061128220605.GA1253@localdomain> <871wnget3b.fsf@mid.deneb.enyo.de>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: [PATCH] hooks/pre-commit: add example to add Signed-off-by line to message
+Date: Wed, 20 Dec 2006 16:04:12 +0000
+Message-ID: <200612201604.12498.andyparkins@gmail.com>
+References: <Pine.LNX.4.63.0611291219190.30004@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Mon, 4 Dec 2006 08:53:04 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Wed, 20 Dec 2006 16:04:37 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
+In-Reply-To: <Pine.LNX.4.63.0611291219190.30004@wbgn013.biozentrum.uni-wuerzburg.de>
+X-TUID: 3365bb1506cd63ad
+X-UID: 200
+X-Length: 1512
 Content-Disposition: inline
-In-Reply-To: <871wnget3b.fsf@mid.deneb.enyo.de>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+X-OriginalArrivalTime: 20 Dec 2006 16:06:22.0166 (UTC) FILETIME=[CACB6760:01C72450]
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33172>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34942>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gr9ZL-0006L1-UH for gcvg-git@gmane.org; Mon, 04 Dec
- 2006 09:53:00 +0100
+ esmtp (Exim 4.50) id 1Gx3ve-0005uK-Je for gcvg-git@gmane.org; Wed, 20 Dec
+ 2006 17:04:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1759714AbWLDIw5 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 4 Dec 2006
- 03:52:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759720AbWLDIw5
- (ORCPT <rfc822;git-outgoing>); Mon, 4 Dec 2006 03:52:57 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:161 "EHLO hand.yhbt.net") by
- vger.kernel.org with ESMTP id S1759695AbWLDIwz (ORCPT
- <rfc822;git@vger.kernel.org>); Mon, 4 Dec 2006 03:52:55 -0500
-Received: from hand.yhbt.net (localhost [127.0.0.1]) by hand.yhbt.net
- (Postfix) with SMTP id 234DB2DC034; Mon,  4 Dec 2006 00:52:54 -0800 (PST)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Mon,  4 Dec 2006
- 00:52:53 -0800
-To: Florian Weimer <fw@deneb.enyo.de>
+ S965144AbWLTQES (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 20 Dec 2006
+ 11:04:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030181AbWLTQER
+ (ORCPT <rfc822;git-outgoing>); Wed, 20 Dec 2006 11:04:17 -0500
+Received: from mail.360visiontechnology.com ([194.70.53.226]:33301 "EHLO
+ 369run02s.360vision.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with
+ ESMTP id S965144AbWLTQEQ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 20 Dec
+ 2006 11:04:16 -0500
+Received: from dvr.360vision.com ([192.189.1.24]) by 369run02s.360vision.com
+ with Microsoft SMTPSVC(5.0.2195.6713); Wed, 20 Dec 2006 16:06:22 +0000
+Received: from localhost ([127.0.0.1]) by dvr.360vision.com with esmtp (Exim
+ 3.36 #1 (Debian)) id 1Gx3vS-0006mW-00 for <git@vger.kernel.org>; Wed, 20 Dec
+ 2006 16:04:14 +0000
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Florian Weimer <fw@deneb.enyo.de> wrote:
-> * Eric Wong:
-> 
-> > finish_report does seem to return a useful value indicating success
-> > or failure, so we'll just set a flag when close_edit is called
-> > (it is not called on failures, nor is abort_edit) and check
-> > the flag before proceeding.
-> 
-> It seems that this needs some kind of fine-tuning.  Now that git-svn
-> uses HTTP keepalive connections, you get a HTTP request error once you
-> run into the server-side request limit.  It seems a bit excessive to
-> stop completely in this case.
+Based on Johannes Schindelin's earlier patch to perform the same
+function.
 
-Does the following patch help?
+The call to git-sh-setup was causing "Not a git repository" errors after
+the pre-commit script had run.  I removed the call and used
+$(git-rev-parse --git-dir) instead, which seems to have fixed the
+problem.
 
-From: Eric Wong <normalperson@yhbt.net>
-Date: Mon, 4 Dec 2006 00:51:16 -0800
-Subject: [PATCH] git-svn: avoid network timeouts for long-running fetches
-
-Long-running fetches run inside children to avoid memory leaks.
-When we refork, the connection in the parent can be idle for a
-long time; attempting to reuse it in the next child can result
-in timeouts.
-
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
+Signed-off-by: Andy Parkins <andyparkins@gmail.com>
 ---
- git-svn.perl |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+ templates/hooks--pre-commit |    5 +++++
+ 1 files changed, 5 insertions(+), 0 deletions(-)
 
-diff --git a/git-svn.perl b/git-svn.perl
-index d0bd0bd..747daf0 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -459,6 +459,7 @@ sub fetch_lib {
- 		$min = $max + 1;
- 		$max += $inc;
- 		$max = $head if ($max > $head);
-+		$SVN = libsvn_connect($SVN_URL);
- 	}
- 	restore_index($index);
- 	return { revision => $last_rev, commit => $last_commit };
+diff --git a/templates/hooks--pre-commit b/templates/hooks--pre-commit
+index 723a9ef..87d9ccc 100644
+--- a/templates/hooks--pre-commit
++++ b/templates/hooks--pre-commit
+@@ -7,6 +7,11 @@
+ #
+ # To enable this hook, make this file executable.
+ 
++# Uncomment the below to add a Signed-off-by line to the message.
++#git var GIT_AUTHOR_IDENT | \
++#sed -n "s/^\(.*\) [0-9]\+ [-+][0-9]\+$/Signed-off-by: \1/p" \
++# >> $(git-rev-parse --git-dir)/SQUASH_MSG
++
+ # This is slightly modified from Andrew Morton's Perfect Patch.
+ # Lines you introduce should not have trailing whitespace.
+ # Also check for an indentation that has SP before a TAB.
 -- 
+1.4.4.2.g120e3
