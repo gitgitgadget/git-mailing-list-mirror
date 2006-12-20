@@ -1,159 +1,95 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: [RFC \ WISH] Add -o option to git-rev-list
-Date: Mon, 11 Dec 2006 01:15:20 +0100
-Message-ID: <e5bfff550612101615u5f588513n499e3b88ce14a6f6@mail.gmail.com>
-References: <e5bfff550612100338ye2ca2a0u1c8f29bbc59c5431@mail.gmail.com>
-	 <Pine.LNX.4.64.0612101009040.12500@woody.osdl.org>
-	 <e5bfff550612101151r5e77ddc0w8f61f36fc1f2920e@mail.gmail.com>
-	 <Pine.LNX.4.64.0612101159530.12500@woody.osdl.org>
-	 <Pine.LNX.4.64.0612101213520.12500@woody.osdl.org>
-	 <e5bfff550612101405h507cc877k87491264d11b0aa8@mail.gmail.com>
-	 <Pine.LNX.4.64.0612101410220.12500@woody.osdl.org>
-	 <e5bfff550612101435o6bc938acmac28ad6adf0c8844@mail.gmail.com>
-	 <Pine.LNX.4.64.0612101439540.12500@woody.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] index-pack usage of mmap() is unacceptably slower on many OSes other than Linux
+Date: Wed, 20 Dec 2006 13:52:19 -0800
+Message-ID: <7v1wmu8cbw.fsf@assigned-by-dhcp.cox.net>
+References: <86y7p57y05.fsf@blue.stonehenge.com>
+	<Pine.LNX.4.64.0612181625140.18171@xanadu.home>
+	<86hcvs984c.fsf@blue.stonehenge.com>
+	<Pine.LNX.4.64.0612181414200.3479@woody.osdl.org>
+	<8664c896xv.fsf@blue.stonehenge.com>
+	<Pine.LNX.4.64.0612181511260.3479@woody.osdl.org>
+	<Pine.LNX.4.64.0612181906450.18171@xanadu.home>
+	<20061219051108.GA29405@thunk.org>
+	<Pine.LNX.4.64.0612182234260.3479@woody.osdl.org>
+	<Pine.LNX.4.63.0612190930460.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7v1wmwtfmk.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0612191027270.18171@xanadu.home>
+	<7vk60npv7x.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0612191409500.18171@xanadu.home>
+	<Pine.LNX.4.64.0612191148270.3483@woody.osdl.org>
+	<4588453A.3060904@garzik.org>
+	<7vzm9jo1df.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0612191640010.6766@woody.osdl.org>
+	<7v7iwnnzed.fsf@assigned-by-dhcp.cox.net>
+	<7vbqlye2zz.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0612201243490.3576@woody.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Mon, 11 Dec 2006 00:15:35 +0000 (UTC)
-Cc: "Git Mailing List" <git@vger.kernel.org>,
-	"Junio C Hamano" <junkio@cox.net>,
-	"Alex Riesen" <raa.lkml@gmail.com>,
-	"Shawn Pearce" <spearce@spearce.org>
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Wed, 20 Dec 2006 21:52:29 +0000 (UTC)
+Cc: Jeff Garzik <jeff@garzik.org>, Nicolas Pitre <nico@cam.org>,
+	"Randal L. Schwartz" <merlyn@stonehenge.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=ZmUZBzIoY8S2rCxQDtpcrjD3cZvsl6xKNpre1X7nvrWCHNHCItxkJapmX9wZTk+vqaPd5P4dAY4G5IFMWNbaDuh+xQ+skNNX5B3tZ/0MrTwoxHU61MWtOaPriEemvNgqLn1LovDhuRyEhcQJJwofgfhf0RlXME+sNklPyzUCUmI=
-In-Reply-To: <Pine.LNX.4.64.0612101439540.12500@woody.osdl.org>
-Content-Disposition: inline
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/33967>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34965>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GtYpJ-0004CS-4I for gcvg-git@gmane.org; Mon, 11 Dec
- 2006 01:15:25 +0100
+ esmtp (Exim 4.50) id 1Gx9MO-0004e2-PD for gcvg-git@gmane.org; Wed, 20 Dec
+ 2006 22:52:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1760455AbWLKAPW (ORCPT <rfc822;gcvg-git@m.gmane.org>); Sun, 10 Dec 2006
- 19:15:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762577AbWLKAPW
- (ORCPT <rfc822;git-outgoing>); Sun, 10 Dec 2006 19:15:22 -0500
-Received: from py-out-1112.google.com ([64.233.166.176]:17375 "EHLO
- py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1760473AbWLKAPV (ORCPT <rfc822;git@vger.kernel.org>); Sun, 10 Dec
- 2006 19:15:21 -0500
-Received: by py-out-1112.google.com with SMTP id a29so809757pyi for
- <git@vger.kernel.org>; Sun, 10 Dec 2006 16:15:21 -0800 (PST)
-Received: by 10.35.112.4 with SMTP id p4mr8463852pym.1165796120720; Sun, 10
- Dec 2006 16:15:20 -0800 (PST)
-Received: by 10.35.93.11 with HTTP; Sun, 10 Dec 2006 16:15:20 -0800 (PST)
-To: "Linus Torvalds" <torvalds@osdl.org>
+ S1030367AbWLTVwW (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 20 Dec 2006
+ 16:52:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030370AbWLTVwW
+ (ORCPT <rfc822;git-outgoing>); Wed, 20 Dec 2006 16:52:22 -0500
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:58590 "EHLO
+ fed1rmmtao02.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S1030367AbWLTVwV (ORCPT <rfc822;git@vger.kernel.org>); Wed, 20 Dec 2006
+ 16:52:21 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao02.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061220215221.XWHW97.fed1rmmtao02.cox.net@fed1rmimpo01.cox.net>; Wed, 20
+ Dec 2006 16:52:21 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id 19re1W01U1kojtg0000000; Wed, 20 Dec 2006
+ 16:51:39 -0500
+To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 
-On 12/10/06, Linus Torvalds <torvalds@osdl.org> wrote:
+Linus Torvalds <torvalds@osdl.org> writes:
+
+> On Wed, 20 Dec 2006, Junio C Hamano wrote:
+>> 
+>> I needed to fix the changes to git-compat-util.h a bit from the
+>> version I sent earlier to make OpenBSD happy (sys/types.h there
+>> did not expose u_int unless _BSD_SOURCE was set, and
+>> netinet/in.h was duplicated by mistake).
 >
-> looks about right.
+> Please don't use "u_int" in the first place. It's an abomination of a 
+> type. It should never be used.
+
+I did not want to touch imported sources in compat/, but 
+
+> The only user in git seems to have been copied from a source that is 
+> insane. It does
 >
+> 	u_int words[NS_IN6ADDRSZ / NS_INT16SZ];
+>
+> which is just insane. It actually seems to want to use "uint16_t", which 
+> at least would make sense, and be a type that has some _point_ to it.
 
-Yes it's right. Thanks!
+the above argument makes 100% sense.  Will fix.
 
-But it's still slow. Almost one second (985ms) to read the little qgit repo:
+However, on sane platforms we do not even compile that file.
+The problem I observed was that <include/netinet/tcp.h> on
+OpenBSD uses u_int wants the source code that uses that header
+file to first include <sys/types.h> to get u_int, which in turn
+requires __BSD_VISIBLE to be in effect.
 
-$ ./qgit HEAD
-Found GNU source-highlight 2.5
-count is <-1>
-count is <60169>
-count is <-1>
-count is <60505>
-count is <-1>
-count is <61462>
-count is <-1>
-count is <61911>
-count is <-1>
-count is <61392>
-count is <-1>
-count is <61880>
-count is <-1>
-count is <62009>
-count is <-1>
-count is <62549>
-count is <-1>
-count is <21354>
-count is <0>
-$
-
-As a compare the temporary file version needs a mere 105ms (1030 revs).
-
-This is the code under test:
-
-bool DataLoader::start(const QStringList& args, const QString& workDir) {
-
-	QDir::setCurrent(workDir);
-	_file = popen(args.join(" ").ascii(), "r");
-	if (!_file)
-		return false;
-
-	fcntl(fileno(_file), F_SETFL, O_NONBLOCK);
-	
-	loadTime.start();
-	guiUpdateTimer.start(10, true);
-	return true;
-}
-
-void DataLoader::on_timeout() {
-
-	if (canceling) {
-		deleteLater();
-		return;
-	}
-
-	int count;
-	for (;;) {
-
-		QByteArray* ba = new QByteArray(FILE_BLOCK_SIZE); // 64KB
-
-		// this is the ONLY deep copy involved in the whole loading
-		count = read(fileno(_file), ba->data(), ba->size());
-
-		dbg(count); // DEBUG print
-
-		if (count == 0) {
-			/* All done, no more to read */
-			delete ba;
-			break;
-		}
-		if (count < 0) {
-			delete ba;
-			if (errno == EAGAIN)
-				break;
-			if (errno == EINTR)
-				continue;
-
-                       /* Anything else is fatal - report error */
-                       dbg("Fatal error");
-                       on_cancel();
-                       deleteLater();
-                       return;
-		}
-		if (count < (int)ba->size()) // very rare
-			ba->resize(count);
-
-		loadedBytes += count;
-		fh->rowData.append(ba);
-		parseSingleBuffer(*ba);
-	}
-
-	if (count == 0) {
-		emit loaded(fh, loadedBytes, loadTime.elapsed(), true, "", "");
-		pclose(_file);
-		_file = NULL;
-		deleteLater();
-	} else
-		guiUpdateTimer.start(100, true);
+Unfortunately I think _BSD_SOURCE needs to stay for this reason.
