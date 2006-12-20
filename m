@@ -1,81 +1,62 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Joakim Tjernlund <Joakim.Tjernlund@transmode.se>
-Subject: Re: git-svn and rebase causes duplicate  log entries in svn
-Date: Wed, 15 Nov 2006 11:14:51 +0100
-Message-ID: <455AE89B.2030201@transmode.se>
-References: <00ff01c70836$ba7e3d00$1e67a8c0@Jocke> <m2zmatiqon.fsf@ziti.local>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] hooks/pre-commit: add example to add Signed-off-by line to message
+Date: Wed, 20 Dec 2006 09:29:40 -0800
+Message-ID: <7vmz5ifpbv.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.63.0611291219190.30004@wbgn013.biozentrum.uni-wuerzburg.de>
+	<200612201604.12498.andyparkins@gmail.com>
+	<Pine.LNX.4.63.0612201717490.19693@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Wed, 15 Nov 2006 10:15:19 +0000 (UTC)
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Wed, 20 Dec 2006 17:29:57 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.7 (X11/20061017)
-In-Reply-To: <m2zmatiqon.fsf@ziti.local>
+In-Reply-To: <Pine.LNX.4.63.0612201717490.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Wed, 20 Dec 2006 17:18:30 +0100
+	(CET)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31430>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GkHnN-0008FH-3C for gcvg-git@gmane.org; Wed, 15 Nov
- 2006 11:15:06 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34950>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gx5GC-0007Tg-Cv for gcvg-git@gmane.org; Wed, 20 Dec
+ 2006 18:29:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S965964AbWKOKO5 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 15 Nov 2006
- 05:14:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966111AbWKOKO5
- (ORCPT <rfc822;git-outgoing>); Wed, 15 Nov 2006 05:14:57 -0500
-Received: from [212.105.56.244] ([212.105.56.244]:16350 "EHLO
- dmz.lumentis.net") by vger.kernel.org with ESMTP id S965964AbWKOKO4 (ORCPT
- <rfc822;git@vger.kernel.org>); Wed, 15 Nov 2006 05:14:56 -0500
-Received: from [192.168.1.15] (146.175.241.83.in-addr.dgcsystems.net
- [83.241.175.146]) (authenticated bits=0) by dmz.lumentis.net (8.12.8/8.12.8)
- with ESMTP id kAFAEpTI014774 (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA
- bits=256 verify=NO); Wed, 15 Nov 2006 11:14:52 +0100
-To: Seth Falcon <sethfalcon@gmail.com>
+ S965157AbWLTR3m (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 20 Dec 2006
+ 12:29:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030213AbWLTR3l
+ (ORCPT <rfc822;git-outgoing>); Wed, 20 Dec 2006 12:29:41 -0500
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:46256 "EHLO
+ fed1rmmtao11.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+ id S965158AbWLTR3l (ORCPT <rfc822;git@vger.kernel.org>); Wed, 20 Dec 2006
+ 12:29:41 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71]) by fed1rmmtao11.cox.net
+ (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
+ <20061220172940.DZHW25875.fed1rmmtao11.cox.net@fed1rmimpo01.cox.net>; Wed, 20
+ Dec 2006 12:29:40 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
+ fed1rmimpo01.cox.net with bizsmtp id 15Uy1W00k1kojtg0000000; Wed, 20 Dec 2006
+ 12:28:59 -0500
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-Seth Falcon wrote:
-> Hi Joakim,
->
-> "Joakim Tjernlund" <joakim.tjernlund@transmode.se> writes:
->   
->> Now I want to rebase my svn branch against latest u-boot and commit
->> my rebased svn branch to svn.
->>
->> I use git-svn commit -b svn -q remotes/git-svn..svn to commit my latest
->> changes and when I do so I see my local changes once more in the svn
->> log:
->> Any way to avoid that?
->>     
->
-> I think you want to use git-svn dcommit, and not commit.  See the
-> notes in the git-svn man page.  The basic workflow
-> that I've been using is:
->
-> git-svn fetch  
-> git rebase remotes/git-svn  ## on mybranch
-> ## make commits on mybranch
-> git-svn dcommit remotes/git-svn..mybranch
->
-> This results in each commit that I made on mybranch being sent to svn
-> as a separate commit.
->
-> + seth
->   
-Thanks, but for some reson I can't make dcommit work. I just get
-git-svn dcommit  -q remotes/git-svn..svn
-Unable to extract revision information from commit
-3643783f1f2fbdec1514b5e842e97b27622ae8b8~1
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-My workflow is perhaps a little diffrent I do all dev in git and then
-commit to SVN.
-I start with creating an empty SVN tree and then do a
-   git-svn commit <commit id where my dev started from u-boot>
-then I do a
-   git-svn commit  -q remotes/git-svn..svn
-to add all my own commits.
+> Hi,
+>
+> On Wed, 20 Dec 2006, Andy Parkins wrote:
+>
+>> Signed-off-by: Andy Parkins <andyparkins@gmail.com>
+>
+> Acked-by: Johannes E. Schindelin <johannes.schindelin@gmx.de>
+>
+> Ciao,
+> Dscho
+
+Why SQUASH_MSG?  Doesn't it confuse git-explain when it wants to
+detect that you are in the middle of a squash merge?
