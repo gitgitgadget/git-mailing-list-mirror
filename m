@@ -1,71 +1,77 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Joakim Tjernlund" <joakim.tjernlund@transmode.se>
-Subject: git-svn and rebase causes duplicate  log entries in svn
-Date: Tue, 14 Nov 2006 22:49:14 +0100
-Message-ID: <00ff01c70836$ba7e3d00$1e67a8c0@Jocke>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [RFC/PATCH] Implement poor-man's submodule support using commit hooks
+Date: Wed, 20 Dec 2006 14:35:48 +0000
+Message-ID: <200612201435.49685.andyparkins@gmail.com>
+References: <200612201309.02119.andyparkins@gmail.com> <20061220133648.GQ12411@admingilde.org>
 Mime-Version: 1.0
 Content-Type: text/plain;
-	charset="us-ascii"
+  charset="iso-8859-15"
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Tue, 14 Nov 2006 21:49:43 +0000 (UTC)
+NNTP-Posting-Date: Wed, 20 Dec 2006 14:36:23 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-X-Mailer: Microsoft Office Outlook 11
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.2962
-Thread-Index: AccINrn2O63BMLgaSPm3hvXSmxtvnQ==
-X-OriginalArrivalTime: 14 Nov 2006 21:49:20.0745 (UTC) FILETIME=[BDB65D90:01C70836]
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=IKNi27FzYqgjDvyPqMrMbSTYtSfztY+lwOKm3q+u1XKc0A/7XAXYVoXrbB/Rym4PdvrBmUJ1aJOtz8G35Quo3A8E33ndbN+gzJI7g+k5Hq4Tu5PqNKreorgu92Lymi5uM68mriqeJrroBaFNoikgerWrwKiRepBmape4IEfdyak=
+User-Agent: KMail/1.9.5
+In-Reply-To: <20061220133648.GQ12411@admingilde.org>
+Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31382>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1Gk69p-0006us-V8 for gcvg-git@gmane.org; Tue, 14 Nov
- 2006 22:49:30 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34934>
+Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
+ esmtp (Exim 4.50) id 1Gx2Y3-0003wV-Nn for gcvg-git@gmane.org; Wed, 20 Dec
+ 2006 15:36:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S966381AbWKNVtZ (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 14 Nov 2006
- 16:49:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966389AbWKNVtY
- (ORCPT <rfc822;git-outgoing>); Tue, 14 Nov 2006 16:49:24 -0500
-Received: from 147.175.241.83.in-addr.dgcsystems.net ([83.241.175.147]:26686
- "EHLO tmnt04.transmode.se") by vger.kernel.org with ESMTP id S966381AbWKNVtY
- (ORCPT <rfc822;git@vger.kernel.org>); Tue, 14 Nov 2006 16:49:24 -0500
-Received: from Jocke ([84.217.89.56]) by tmnt04.transmode.se with Microsoft
- SMTPSVC(5.0.2195.6713); Tue, 14 Nov 2006 22:49:20 +0100
-To: <git@vger.kernel.org>
+ S965095AbWLTOf5 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 20 Dec 2006
+ 09:35:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965107AbWLTOf4
+ (ORCPT <rfc822;git-outgoing>); Wed, 20 Dec 2006 09:35:56 -0500
+Received: from ug-out-1314.google.com ([66.249.92.170]:8727 "EHLO
+ ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S965095AbWLTOf4 (ORCPT <rfc822;git@vger.kernel.org>); Wed, 20 Dec
+ 2006 09:35:56 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so2246540uga for
+ <git@vger.kernel.org>; Wed, 20 Dec 2006 06:35:55 -0800 (PST)
+Received: by 10.66.219.11 with SMTP id r11mr10880413ugg.1166625354729; Wed,
+ 20 Dec 2006 06:35:54 -0800 (PST)
+Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
+ ESMTP id m1sm12817957uge.2006.12.20.06.35.53; Wed, 20 Dec 2006 06:35:54 -0800
+ (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 
-I have my own u-boot tree with a local branch where I do my own development.
-This this branch(called svn) is connected to a svn repo using git-svn.
+On Wednesday 2006 December 20 13:36, Martin Waitz wrote:
 
-Now I want to rebase my svn branch against latest u-boot and commit
-my rebased svn branch to svn.
+> I started with something similiar, too.
+> You can have a look at http://git.admingilde.org/tali/git.git/module
+> which tries to implement submodules without changing the core.
 
-I use git-svn commit -b svn -q remotes/git-svn..svn to commit my latest
-changes and when I do so I see my local changes once more in the svn log:
-------------------------------------------------------------------------
-r321 | jocke | 2006-11-14 09:45:14 +0100 (Tue, 14 Nov 2006) | 2 lines
+I had a look at that; and my previous objection still applies: it blends two 
+repositories.  I'd rather they were separate.
 
-Add install of HRCW into I2C EEPROM.
+Having them separate is what makes my little hook scripts really simple; there 
+is no special initialisation script needed, and the neither the supermodule 
+nor the submodule needs special treatment; and there is no need for any 
+alternates or new object type.  If I want to forget about submodule support I 
+just delete the .gitmodules file and it's all back to normal.
 
-and here:
-------------------------------------------------------------------------
-r46 | jocke | 2006-11-13 19:09:19 +0100 (Mon, 13 Nov 2006) | 2 lines
+I don't say you're wrong in your chosen method, and I don't say I'm right.  I 
+wasn't really planning on going much further with these scripts, they 
+actually represent all that I personally want from a submodule system, I am 
+sure others would want far more sophistication.
 
-Add install of HRCW into I2C EEPROM.
 
-Any way to avoid that?
 
-Question, I found that 
-  git-svn fetch && git-rebase remotes/git-svn^2 svn
-leaves the svn branch at the tip of my latest commit in the
-svn branch which makes better sense to me then
-  git-svn fetch && git-rebase remotes/git-svn svn
-which puts svn at HEAD of remotes/git-svn.
+Andy
 
-Any reason I should not do the ...-svn^2 variant?
-
-I am using git 1.4.3.5 and subversion 1.4.0
+-- 
+Dr Andy Parkins, M Eng (hons), MIEE
