@@ -1,53 +1,98 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: Updated Kernel Hacker's guide to git
-Date: Thu, 21 Dec 2006 20:04:27 +1300
-Message-ID: <46a038f90612202304uabdffacld857cfcb90ec3e76@mail.gmail.com>
+Date: Wed, 20 Dec 2006 23:32:05 -0800
+Message-ID: <7vk60l1z7u.fsf@assigned-by-dhcp.cox.net>
 References: <4589F9B1.2020405@garzik.org> <4589FD9E.2010000@bellsouth.net>
+	<46a038f90612202304uabdffacld857cfcb90ec3e76@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Jeff Garzik" <jeff@garzik.org>
-X-From: git-owner@vger.kernel.org Thu Dec 21 08:04:34 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, "Jay Cliburn" <jacliburn@bellsouth.net>
+X-From: git-owner@vger.kernel.org Thu Dec 21 08:32:21 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GxHyh-0001jT-Jq
-	for gcvg-git@gmane.org; Thu, 21 Dec 2006 08:04:31 +0100
+	id 1GxIPV-0004eM-Ce
+	for gcvg-git@gmane.org; Thu, 21 Dec 2006 08:32:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422778AbWLUHE3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Dec 2006 02:04:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422781AbWLUHE3
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Dec 2006 02:04:29 -0500
-Received: from wx-out-0506.google.com ([66.249.82.224]:46637 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1422778AbWLUHE2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Dec 2006 02:04:28 -0500
-Received: by wx-out-0506.google.com with SMTP id i28so2335909wxd
-        for <git@vger.kernel.org>; Wed, 20 Dec 2006 23:04:27 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=kxk1ZbqdvSv5igmhnQZg+JzXGeXAWAq3CvVE4V5mblV3ghCXXNzt8c4TEDsfkpWGSchtYloGqaNYQ7WTc0Cs+7agxbyN4gzJQeqe7V5VwWGdLQKlQQUKC/1rYLklcEiqqhxFHCtbTfLvVyNJxj025xZxjseeDn9y4gbUjryoE/o=
-Received: by 10.90.52.18 with SMTP id z18mr8268890agz.1166684667926;
-        Wed, 20 Dec 2006 23:04:27 -0800 (PST)
-Received: by 10.90.96.19 with HTTP; Wed, 20 Dec 2006 23:04:27 -0800 (PST)
-To: "Jay Cliburn" <jacliburn@bellsouth.net>
-In-Reply-To: <4589FD9E.2010000@bellsouth.net>
-Content-Disposition: inline
+	id S1422788AbWLUHcK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Dec 2006 02:32:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422801AbWLUHcK
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Dec 2006 02:32:10 -0500
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:39520 "EHLO
+	fed1rmmtao10.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1422788AbWLUHcJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Dec 2006 02:32:09 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20061221073205.ELFD20715.fed1rmmtao10.cox.net@fed1rmimpo01.cox.net>;
+          Thu, 21 Dec 2006 02:32:05 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id 1KXP1W00N1kojtg0000000; Thu, 21 Dec 2006 02:31:24 -0500
+To: "Martin Langhoff" <martin.langhoff@gmail.com>
+In-Reply-To: <46a038f90612202304uabdffacld857cfcb90ec3e76@mail.gmail.com>
+	(Martin Langhoff's message of "Thu, 21 Dec 2006 20:04:27 +1300")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35021>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35022>
 
-On 12/21/06, Jay Cliburn <jacliburn@bellsouth.net> wrote:
-> $ git diff $(git merge-base master driver)..driver
+"Martin Langhoff" <martin.langhoff@gmail.com> writes:
 
-There is a nicer way to do it with 1.4.x git -- note the 3 dots:
+> On 12/21/06, Jay Cliburn <jacliburn@bellsouth.net> wrote:
+>> $ git diff $(git merge-base master driver)..driver
+>
+> There is a nicer way to do it with 1.4.x git -- note the 3 dots:
+>
+> $ git diff master...driver
 
-$ git diff master...driver
+Careful.
 
-cheers,
+I think Jay was looking at this kind of ancestry graph:
+
+         *---*---*---* driver
+        /
+ --o---o---x---x---x---x master
+
+There might be quite a few merges on either side, but the point
+is '*' are not yet 'in', and 'o' and 'x' are already in the
+'upstream (but 'x' are not in Jay's driver yet).
+
+The three dots would give both '*' and 'x'; I do not think that
+is what Jay wants.  A submitter to mainline usually wants only
+'*' commits.
+
+I've always thought that 'submission' is supposed to be done as
+a series of patches, in which case a reasonable way would be to
+do:
+
+	git format-patch -n master driver
+
+If on the other hand a single roll-up patch is desired, I think
+the most reasonable thing to do is to first merge the tip of the
+master to the tip of driver, resolve all the conflicts as
+needed, and take the diff between the 'master' and the result:
 
 
-martin
+         *---*---*---*---y driver (y is the test merge)
+        /               / 
+ --o---o---x---x---x---x master
+
+	git checkout driver
+        git merge master
+	... resolve conflicts if any, then "git commit"
+	git diff master
+
+This diff by definition should apply cleanly to the tip of
+'master' and would result in the source that contains the
+updates for the driver.
+
+When you are done, it would be advisable to do:
+
+	git reset --hard HEAD^
+
+to remove that 'y' merge, unless the merge involved a true
+conflict resolution.
