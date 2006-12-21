@@ -1,76 +1,64 @@
-From: Rocco Rutte <pdmef@gmx.net>
-Subject: [PATCH] Don't define _XOPEN_SOURCE to unbreak compilation on FreeBSD
-Date: Thu, 21 Dec 2006 10:47:28 +0000
-Message-ID: <11666980484010-git-send-email-pdmef@gmx.net>
-Cc: Rocco Rutte <pdmef@gmx.net>
-X-From: git-owner@vger.kernel.org Thu Dec 21 11:47:50 2006
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: specify charset for commits (Was: [PATCH] Fix documentation copy&paste typo)
+Date: Thu, 21 Dec 2006 11:52:12 +0100
+Organization: At home
+Message-ID: <emdorr$kt$1@sea.gmane.org>
+References: <11655782712452-git-send-email-zeisberg@informatik.uni-freiburg.de> <20061221085907.GA2244@cepheus> <Pine.LNX.4.63.0612211050450.19693@wbgn013.biozentrum.uni-wuerzburg.de> <200612211623.14236.litvinov2004@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Thu Dec 21 11:49:59 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GxLSn-0001S3-PM
-	for gcvg-git@gmane.org; Thu, 21 Dec 2006 11:47:50 +0100
+	id 1GxLUs-0001kH-9Z
+	for gcvg-git@gmane.org; Thu, 21 Dec 2006 11:49:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752313AbWLUKrq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Dec 2006 05:47:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753022AbWLUKrq
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Dec 2006 05:47:46 -0500
-Received: from mail.gmx.net ([213.165.64.20]:40013 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752313AbWLUKrp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Dec 2006 05:47:45 -0500
-Received: (qmail invoked by alias); 21 Dec 2006 10:47:44 -0000
-Received: from cable-62-117-26-66.cust.blue-cable.de (EHLO peter.daprodeges.fqdn.th-h.de) [62.117.26.66]
-  by mail.gmx.net (mp030) with SMTP; 21 Dec 2006 11:47:44 +0100
-X-Authenticated: #1642131
-Received: from robert.daprodeges.fqdn.th-h.de (robert.daprodeges.fqdn.th-h.de [192.168.0.113])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by peter.daprodeges.fqdn.th-h.de (Postfix) with ESMTP
-	id 2CA7E20F16; Thu, 21 Dec 2006 10:47:37 +0000 (UTC)
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by robert.daprodeges.fqdn.th-h.de (Postfix) with ESMTP
-	id EAEBC33FF6; Thu, 21 Dec 2006 10:47:28 +0000 (UTC)
+	id S964776AbWLUKtz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Dec 2006 05:49:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964777AbWLUKtz
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Dec 2006 05:49:55 -0500
+Received: from main.gmane.org ([80.91.229.2]:50877 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S964776AbWLUKty (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Dec 2006 05:49:54 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GxLUg-0004Ed-6m
+	for git@vger.kernel.org; Thu, 21 Dec 2006 11:49:46 +0100
+Received: from host-81-190-25-107.torun.mm.pl ([81.190.25.107])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 21 Dec 2006 11:49:46 +0100
+Received: from jnareb by host-81-190-25-107.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 21 Dec 2006 11:49:46 +0100
+X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
-X-Mailer: git-send-email 1.4.4.2.g9474f
-In-Reply-To: 7vk60lbnvj.fsf@assigned-by-dhcp.cox.net
-References: 7vk60lbnvj.fsf@assigned-by-dhcp.cox.net
-X-Y-GMX-Trusted: 0
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-25-107.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35049>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35050>
 
-FreeBSD 6 requires the __BSD_VISIBLE flag for fchmod(), IPPROTO_IPV6 and
-more which is only properly set by <sys/cdefs.h> if _POSIX_C_SOURCE
-isn't present. However, _POSIX_C_SOURCE is defined if _XOPEN_SOURCE is
-defined and >=500.
+Alexander Litvinov wrote:
 
-As a solution, simply don't define _XOPEN_SOURCE for FreeBSD and continue
-with its defaults.
+>>> What do you think about a patch that makes git-commit-tree call iconv on
+>>> its input to get it to UTF-8 (or any other charset).
+>>
+>> We had this discussion over and over again. Last time (I think) was here:
+>> http://article.gmane.org/gmane.comp.version-control.git/11710
+>> Summary: we do not want to force the use of utf8.
+> 
+> May we can add new header into commit with commit text encoding ?
 
-Signed-off-by: Rocco Rutte <pdmef@gmx.net>
----
- git-compat-util.h |    7 ++++++-
- 1 files changed, 6 insertions(+), 1 deletions(-)
-
-diff --git a/git-compat-util.h b/git-compat-util.h
-index bc296b3..27d3b89 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -11,7 +11,12 @@
- 
- #define ARRAY_SIZE(x) (sizeof(x)/sizeof(x[0]))
- 
--#define _XOPEN_SOURCE 600 /* glibc2 and AIX 5.3L need 500, OpenBSD needs 600 for S_ISLNK() */
-+#if !defined(__FreeBSD__)
-+#define _XOPEN_SOURCE 600        /* glibc2 and AIX 5.3L need 500,
-+                                  * OpenBSD needs 600 for S_ISLNK(),
-+                                  * FreeBSD 6 doesn't like it
-+                                  */
-+#endif
- #define _XOPEN_SOURCE_EXTENDED 1 /* AIX 5.3L needs this */
- #define _GNU_SOURCE
- #define _BSD_SOURCE
+I think it should be repository-wide decision. And we have
+i18n.commitEncoding configuration variable (perhaps it should be propagated
+on clone?).
 -- 
-1.4.4.2.g9474f
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
