@@ -1,62 +1,53 @@
-From: Jeff Garzik <jeff@garzik.org>
-Subject: Re: Updated Kernel Hacker's guide to git
-Date: Thu, 21 Dec 2006 06:44:38 -0500
-Message-ID: <458A73A6.4010805@garzik.org>
-References: <4589F9B1.2020405@garzik.org> <1166680407.3636.25.camel@nigel.suspend2.net>
+From: Han-Wen Nienhuys <hanwen@xs4all.nl>
+Subject: UI: git-tag should support -F as well
+Date: Thu, 21 Dec 2006 12:52:53 +0100
+Message-ID: <emdsi9$ecm$1@sea.gmane.org>
+Reply-To: hanwen@xs4all.nl
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Linux Kernel <linux-kernel@vger.kernel.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Dec 21 12:44:59 2006
+X-From: git-owner@vger.kernel.org Thu Dec 21 12:53:17 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GxMLw-0002T9-Ox
-	for gcvg-git@gmane.org; Thu, 21 Dec 2006 12:44:49 +0100
+	id 1GxMU6-0004Gr-KC
+	for gcvg-git@gmane.org; Thu, 21 Dec 2006 12:53:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964968AbWLULop (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Dec 2006 06:44:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964967AbWLULop
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Dec 2006 06:44:45 -0500
-Received: from srv5.dvmed.net ([207.36.208.214]:41757 "EHLO mail.dvmed.net"
+	id S1030187AbWLULxH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Dec 2006 06:53:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030199AbWLULxH
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Dec 2006 06:53:07 -0500
+Received: from main.gmane.org ([80.91.229.2]:57602 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S964968AbWLULoo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Dec 2006 06:44:44 -0500
-Received: from cpe-065-190-194-075.nc.res.rr.com ([65.190.194.75] helo=[10.10.10.10])
-	by mail.dvmed.net with esmtpsa (Exim 4.63 #1 (Red Hat Linux))
-	id 1GxMLp-00008G-PX; Thu, 21 Dec 2006 11:44:42 +0000
-User-Agent: Thunderbird 1.5.0.9 (X11/20061219)
-To: nigel@nigel.suspend2.net
-In-Reply-To: <1166680407.3636.25.camel@nigel.suspend2.net>
-X-Spam-Score: -4.3 (----)
-X-Spam-Report: SpamAssassin version 3.1.7 on srv5.dvmed.net summary:
-	Content analysis details:   (-4.3 points, 5.0 required)
+	id S1030187AbWLULxG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Dec 2006 06:53:06 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GxMTn-0005qX-9F
+	for git@vger.kernel.org; Thu, 21 Dec 2006 12:52:55 +0100
+Received: from muurbloem.xs4all.nl ([213.84.26.127])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 21 Dec 2006 12:52:55 +0100
+Received: from hanwen by muurbloem.xs4all.nl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 21 Dec 2006 12:52:55 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: muurbloem.xs4all.nl
+User-Agent: Thunderbird 1.5.0.8 (X11/20061107)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35057>
-
-Nigel Cunningham wrote:
-> Hi.
-> 
-> On Wed, 2006-12-20 at 22:04 -0500, Jeff Garzik wrote:
->> I refreshed my git intro/cookbook for kernel hackers, at 
->> http://linux.yyz.us/git-howto.html
->>
->> This describes most of the commands I use in day-to-day kernel hacking. 
->>   Let me know if there are glaring errors or missing key commands.
-> 
-> Thanks for the work! I'd suggest also saying how to repack and cleanup.
-
-Yes, I should mention repacking.  When you say cleanup, what 
-specifically do you mean?
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35058>
 
 
-> Could also be a good idea to go through the steps for uploading to
-> master.kernel.org or elsewhere?
+Working on a little darcs2git script, I found the following inconsistency
 
-Yes, push should be mentioned at the very least.
+git-commit supports -m and -F 
+git-tag supports only -m
 
-	Jeff
+
+-- 
+ Han-Wen Nienhuys - hanwen@xs4all.nl - http://www.xs4all.nl/~hanwen
