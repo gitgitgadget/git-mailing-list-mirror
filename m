@@ -1,62 +1,124 @@
-From: Jeff Garzik <jeff@garzik.org>
-Subject: Re: Updated Kernel Hacker's guide to git
-Date: Thu, 21 Dec 2006 15:46:36 -0500
-Message-ID: <458AF2AC.4080304@garzik.org>
-References: <4589F9B1.2020405@garzik.org> <Pine.LNX.4.60.0612212135230.5551@poirot.grange>
+From: David Tweed <tweed314@yahoo.co.uk>
+Subject: Re: git-add,& "file vanishing" -> need git-add again
+Date: Thu, 21 Dec 2006 20:47:46 +0000 (GMT)
+Message-ID: <20061221204746.21305.qmail@web86903.mail.ukl.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Linux Kernel <linux-kernel@vger.kernel.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Dec 21 21:46:51 2006
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 21 21:47:54 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GxUoO-00030u-0R
-	for gcvg-git@gmane.org; Thu, 21 Dec 2006 21:46:44 +0100
+	id 1GxUpT-0003HM-9h
+	for gcvg-git@gmane.org; Thu, 21 Dec 2006 21:47:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423086AbWLUUqk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Dec 2006 15:46:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423083AbWLUUqk
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Dec 2006 15:46:40 -0500
-Received: from srv5.dvmed.net ([207.36.208.214]:44758 "EHLO mail.dvmed.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1423078AbWLUUqj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Dec 2006 15:46:39 -0500
-Received: from cpe-065-190-194-075.nc.res.rr.com ([65.190.194.75] helo=[10.10.10.10])
-	by mail.dvmed.net with esmtpsa (Exim 4.63 #1 (Red Hat Linux))
-	id 1GxUoH-0001sj-Lq; Thu, 21 Dec 2006 20:46:38 +0000
-User-Agent: Thunderbird 1.5.0.9 (X11/20061219)
-To: Guennadi Liakhovetski <g.liakhovetski@gmx.de>
-In-Reply-To: <Pine.LNX.4.60.0612212135230.5551@poirot.grange>
-X-Spam-Score: -4.3 (----)
-X-Spam-Report: SpamAssassin version 3.1.7 on srv5.dvmed.net summary:
-	Content analysis details:   (-4.3 points, 5.0 required)
+	id S1423083AbWLUUrs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Thu, 21 Dec 2006 15:47:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423084AbWLUUrs
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Dec 2006 15:47:48 -0500
+Received: from web86903.mail.ukl.yahoo.com ([217.12.13.55]:24061 "HELO
+	web86903.mail.ukl.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1423083AbWLUUrr convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Dec 2006 15:47:47 -0500
+Received: (qmail 21307 invoked by uid 60001); 21 Dec 2006 20:47:46 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.co.uk;
+  h=Message-ID:Received:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=nv7lFQek/fIy4swrvtAOTp15ZTx1DuTc2Xvas6UV5YMlWBPDwH4VPjZn8PNtuHwlq7Ksbr0tjeoYAs1Z4vht4oeawx97P/JQqK73ucLVnu6RARlRdDx31N9/h0CgssDetig7CZ14xRCAORhWUHq+JZJLog8ctEl0paGa3vMaxXM=  ;
+Received: from [134.225.1.161] by web86903.mail.ukl.yahoo.com via HTTP; Thu, 21 Dec 2006 20:47:46 GMT
+To: Martin Langhoff <martin.langhoff@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35087>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35088>
 
-Guennadi Liakhovetski wrote:
-> On Wed, 20 Dec 2006, Jeff Garzik wrote:
-> 
->> I refreshed my git intro/cookbook for kernel hackers, at
->> http://linux.yyz.us/git-howto.html
-> 
-> Very nice, thanks! A couple of remarks from an absolute git newbie:
-> 
-> 1. I heard "git am" is supposed to supersede apply-mbox
+=46irstly, apologies for getting mail-list twice in original To: line: =
+dunno how that happened.
 
-Hey, that's pretty neat.  Glad you told me, this should improve my 
-workflow a bit.
+|On 12/22/06, David Tweed <tweed314@yahoo.co.uk> wrote:
+|> Sidenote: I'm moving the database from the old format to the new one=
+ by repeatedly unpacking
+|> the old database for snapshot X, git-add'ing any file names which ha=
+ve _never_ been in any snapshot
+|> before, git-commit -a, git-tag, then remove all the files unpacked b=
+y the
+|> old database and move onto snapshot X+1. This takes less than a seco=
+nd per snapshot.
+|
+|Not sure how large your snapshots are -- a second sounds like a long
+|time for git operations. While it is a bit more complex, you _can_
+|operate directly on the index, and the "snapshot" never needs to hit
+|the disk as such during your migration.
 
 
-> 2. What I often have problems with is - what to do if git spits at me a 
-> bunch of conflict messages after a seemingly safe pull or similar. Don't 
-> know if you want to cover those points but "git troubleshooting" would 
-> definitely be a valuable document.
+By trying to be brief I was a rather cryptic. What I was trying to say =
+was:
 
-Agreed.
 
-	Jeff
+
+Running the git commands
+
+earlier in the message in a script, I see certain files are not present=
+ from the git tree generated by
+
+a commit at a time when I know the file I'd previously git-added "reapp=
+ears" in the
+
+working directory. I'm hypothesising that this is because when the file=
+ disappears the machinery
+
+in git discards the `track this file name' information. However, I have=
+n't (and would prefer not to)
+
+dig into the git code to check that's the correct explanation. If this =
+is why the files aren't
+
+being tracked I can try to script around the issue by git-adding all th=
+e files I want tracked
+
+by the snapshot before the git-commit -a. To help anyone thinking
+
+about if the explanation is right, the working directory is repeatedly =
+being wiped and refilled from my old
+
+backup system with a second, so often all files have both creation and =
+modification times
+
+set to the current second regardless of whether the content has changed=
+=2E This is a really
+weird thing to do and might in some way be responsible for the untracke=
+d file (cf racy-git).
+
+
+
+Most of the maybe half-second overhead is coming from my script unpacki=
+ng the files with gzip
+
+from my old database; git seems more than fast enough.
+
+
+|Have a look at how the cvsimport script works for an example.
+
+
+As it's my personal db which I'll only convert once if I can just make =
+replaying work
+
+I don't need anything more complicated; I've only got 2000-odd snapshot=
+s of 2500-odd files.
+However, the temporarily disappearing file issue is one I think I'll fa=
+ce with any
+cron-based commiting strategy and so need to solve.
+
+cheers, dave tweed
+
+
+
+
+
+	=09
+___________________________________________________________=20
+Yahoo! Photos =96 NEW, now offering a quality print service from just 7=
+p a photo http://uk.photos.yahoo.com
