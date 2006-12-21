@@ -1,39 +1,38 @@
 From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: gitweb: Version independent mod_perl woes
-Date: Thu, 21 Dec 2006 18:51:28 +0100
-Message-ID: <200612211851.28807.jnareb@gmail.com>
+Date: Thu, 21 Dec 2006 19:09:35 +0100
+Message-ID: <200612211909.35615.jnareb@gmail.com>
 References: <200612211807.54668.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Thu Dec 21 18:48:55 2006
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Thu Dec 21 19:07:01 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GxS2H-0005sN-T8
-	for gcvg-git@gmane.org; Thu, 21 Dec 2006 18:48:54 +0100
+	id 1GxSJo-0000tF-GE
+	for gcvg-git@gmane.org; Thu, 21 Dec 2006 19:07:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422969AbWLURsu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Dec 2006 12:48:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422993AbWLURsu
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Dec 2006 12:48:50 -0500
-Received: from ug-out-1314.google.com ([66.249.92.168]:39283 "EHLO
+	id S1423000AbWLUSG5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Thu, 21 Dec 2006 13:06:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422999AbWLUSG5
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Dec 2006 13:06:57 -0500
+Received: from ug-out-1314.google.com ([66.249.92.173]:7006 "EHLO
 	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1422969AbWLURsu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Dec 2006 12:48:50 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so2719385uga
-        for <git@vger.kernel.org>; Thu, 21 Dec 2006 09:48:48 -0800 (PST)
+	with ESMTP id S1423000AbWLUSG4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Dec 2006 13:06:56 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so2724734uga
+        for <git@vger.kernel.org>; Thu, 21 Dec 2006 10:06:55 -0800 (PST)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
         h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=ZQtJmmVLb0QswO7UCdaFDDPv+zgjukEki8JbL4isq3Yvwiq23y5fWrSrypbEcIBDHUdPAy2/1iXx6hrsTDUqZ2JWmycbS1bLMblr8osA98atc854OuD2KsDO2F5SXVMTmHoDAKkRriLJWNggEaYhDl9G5pY8hm5eeovaXReI83s=
-Received: by 10.67.19.20 with SMTP id w20mr12410748ugi.1166723327814;
-        Thu, 21 Dec 2006 09:48:47 -0800 (PST)
+        b=HyVKcDMFd//YacxGI3dKI+wySvHXlFCKGF3RrRdqvEo9sogF0Ko2qUqqQMbD6pOAS5OQQ1zyTS+9e4Gx27ioLSUdVFC2zXh1CmH6I+1F7QapWf6BnvwmK0+8By/ql2480sZFjIIdLv1aBsAUiHOPmgP0KZnReieBqtPoa8h+a+c=
+Received: by 10.66.248.5 with SMTP id v5mr11174566ugh.1166724415161;
+        Thu, 21 Dec 2006 10:06:55 -0800 (PST)
 Received: from host-81-190-25-107.torun.mm.pl ( [81.190.25.107])
-        by mx.google.com with ESMTP id j33sm12109969ugc.2006.12.21.09.48.47;
-        Thu, 21 Dec 2006 09:48:47 -0800 (PST)
+        by mx.google.com with ESMTP id 5sm12131002ugc.2006.12.21.10.06.54;
+        Thu, 21 Dec 2006 10:06:54 -0800 (PST)
 To: git@vger.kernel.org
 User-Agent: KMail/1.9.3
 In-Reply-To: <200612211807.54668.jnareb@gmail.com>
@@ -41,34 +40,62 @@ Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35075>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35076>
 
-> Can anyone tell me what I'm doing wrong?
+Jakub Narebski wrote:
+> -- >8 --
+> # Set the constant MP_GEN to 0 if mod_perl is not available,
+> # to 1 if running under mod_perl 1.0
+> # and 2 for mod_perl 2.0
+> use constant MP_GEN =3D> $ENV{'MOD_PERL'}
+> =A0=A0=A0=A0=A0=A0=A0=A0? { ( exists $ENV{'MOD_PERL_API_VERSION'} and=
+=20
+> =A0=A0=A0=A0=A0=A0=A0=A0 =A0 =A0 =A0$ENV{'MOD_PERL_API_VERSION'} >=3D=
+ 2 ) ? 2 : 1 }
+> =A0=A0=A0=A0=A0=A0=A0=A0: 0;
 
-Ah, I forgot to add:
+Actually, the error was here. It works like expected for
 
-Apache 2.0.54 (httpd-2.0.54-10.3)
-mod_perl 2.0.1 (mod_perl-2.0.1-1.fc4)
-Perl 5.8.6 (perl-5.8.6-24)
+ use constant {
+ 	MP_GEN =3D> ($ENV{'MOD_PERL'}
+ 	           ? ( exists $ENV{'MOD_PERL_API_VERSION'} and=20
+ 	               $ENV{'MOD_PERL_API_VERSION'} >=3D 2 ) ? 2 : 1
+ 	           : 0),
+ };
 
-$Apache2::RequestRec::VERSION = 2.000001
-$Apache2::ServerRec::VERSION  = 2.000001
+> # use appropriate mod_perl modules (conditional use)
+> BEGIN {
+> =A0=A0=A0=A0=A0=A0=A0=A0if (MP_GEN =3D=3D 2) {
+> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0require Apache2::Requ=
+estRec;
+> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0require Apache2::Serv=
+erRec;
+> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0require Apache2::Resp=
+onse;
+> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0require Apache2::Cons=
+t;
+> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0import Apache2::Reque=
+stRec;
+> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0import Apache2::Serve=
+rRec;
+> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0Apache2::Const->impor=
+t(-compile =3D> qw(:common :http));
+> =A0=A0=A0=A0=A0=A0=A0=A0} elsif (MP_GEN =3D=3D 1) {
+> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0require Apache;
+> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0require Apache::Const=
+ants;
+> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0import Apache;
+> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0Apache::Constants->im=
+port(qw(:common :http));
+> =A0=A0=A0=A0=A0=A0=A0=A0}
+> }
+>=20
+> # mod_perl request
+> my $r;
+> $r =3D shift @_ if MP_GEN;
+> -- >8 --
 
--- >8 -- [fragment of httpd.conf] ---
-Alias /perl "/var/www/perl"
-<Directory "/var/www/perl">
-    SetHandler perl-script
-    PerlResponseHandler ModPerl::Registry
-    PerlOptions +ParseHeaders
-    Options Indexes FollowSymlinks +ExecCGI
-    AllowOverride None
-    Order allow,deny
-    Allow from all
-</Directory>
--- >8 --
-
-P.S. The goal is for gitweb to work with
-    PerlOptions -SetupEnv -ParseHeaders
--- 
+Sorry for the noise.
+--=20
 Jakub Narebski
 Poland
