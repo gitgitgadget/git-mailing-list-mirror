@@ -1,48 +1,64 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git 1.4.4.2 is giving the following errors...
-Date: Wed, 20 Dec 2006 21:29:05 -0800
-Message-ID: <7vwt4l24wu.fsf@assigned-by-dhcp.cox.net>
-References: <ace3f33d0612202115p3fedb169pf235c4556f2eef57@mail.gmail.com>
+From: Willy Tarreau <w@1wt.eu>
+Subject: Re: Updated Kernel Hacker's guide to git
+Date: Thu, 21 Dec 2006 06:44:45 +0100
+Message-ID: <20061221054445.GL24090@1wt.eu>
+References: <4589F9B1.2020405@garzik.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Thu Dec 21 06:29:38 2006
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git@gmane.org
+Cc: Linux Kernel <linux-kernel@vger.kernel.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1422732AbWLUFoy@vger.kernel.org Thu Dec 21 06:45:37 2006
+Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1422732AbWLUFoy@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GxGUr-0000rG-Uj
-	for gcvg-git@gmane.org; Thu, 21 Dec 2006 06:29:38 +0100
+	id 1GxGkI-00027M-9p
+	for glk-linux-kernel-3@gmane.org; Thu, 21 Dec 2006 06:45:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422719AbWLUF3J (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Dec 2006 00:29:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422731AbWLUF3J
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Dec 2006 00:29:09 -0500
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:45107 "EHLO
-	fed1rmmtao11.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1422719AbWLUF3I (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Dec 2006 00:29:08 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20061221052905.ZAF25875.fed1rmmtao11.cox.net@fed1rmimpo01.cox.net>;
-          Thu, 21 Dec 2006 00:29:05 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id 1HUP1W00J1kojtg0000000; Thu, 21 Dec 2006 00:28:24 -0500
-To: git@vger.kernel.org
-In-Reply-To: <ace3f33d0612202115p3fedb169pf235c4556f2eef57@mail.gmail.com>
-	(srinivas naga vutukuri's message of "Thu, 21 Dec 2006 10:45:44
-	+0530")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-Sender: git-owner@vger.kernel.org
+	id S1422732AbWLUFoy (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Thu, 21 Dec 2006 00:44:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422738AbWLUFoy
+	(ORCPT <rfc822;linux-kernel-outgoing>);
+	Thu, 21 Dec 2006 00:44:54 -0500
+Received: from 1wt.eu ([62.212.114.60]:1618 "EHLO 1wt.eu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1422732AbWLUFoy (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
+	Thu, 21 Dec 2006 00:44:54 -0500
+To: Jeff Garzik <jeff@garzik.org>
+Content-Disposition: inline
+In-Reply-To: <4589F9B1.2020405@garzik.org>
+User-Agent: Mutt/1.5.11
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35015>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35016>
 
-"srinivas naga vutukuri" <srinivas.vutukuri@gmail.com> writes:
+Hi Jeff !
 
->       I am new to git.
+On Wed, Dec 20, 2006 at 10:04:17PM -0500, Jeff Garzik wrote:
+> I refreshed my git intro/cookbook for kernel hackers, at 
+> http://linux.yyz.us/git-howto.html
 
-Lose the CDPATH from your environment.  It's a fine variable to
-have in your interactive shells, but it never makes sense to
-export into your environment.
+Thanks for this update, it was my most useful source of inspiration
+when I started with git.
+
+> This describes most of the commands I use in day-to-day kernel hacking. 
+>  Let me know if there are glaring errors or missing key commands.
+
+I very often use "git-format-patch -k -m" to produce individual patches
+that I delay, merge in other branches, or even in other trees with
+"git-am -k -3".  I believe it was Davem who suggested this a while ago,
+and I agree it's very convenient to maintain a patch collection (and
+sometimes to clean them up).
+
+Also, I think that for beginners, you have not insisted enough on the
+fact that they should not modify the master branch, but that they
+should immediately create their own branch before any local changes.
+
+I got caught by this when I started, and had trouble playing with the
+origin branch to try to fix my mistakes.
+
+Overall it's a good tutorial anyway.
+
+Cheers,
+Willy
