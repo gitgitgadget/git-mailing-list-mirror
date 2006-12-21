@@ -1,124 +1,68 @@
-From: David Tweed <tweed314@yahoo.co.uk>
-Subject: Re: git-add,& "file vanishing" -> need git-add again
-Date: Thu, 21 Dec 2006 20:47:46 +0000 (GMT)
-Message-ID: <20061221204746.21305.qmail@web86903.mail.ukl.yahoo.com>
+From: Nigel Cunningham <nigel@nigel.suspend2.net>
+Subject: Re: Updated Kernel Hacker's guide to git
+Date: Fri, 22 Dec 2006 08:17:58 +1100
+Message-ID: <1166735878.5906.3.camel@nigel.suspend2.net>
+References: <4589F9B1.2020405@garzik.org>
+	 <1166680407.3636.25.camel@nigel.suspend2.net> <458A73A6.4010805@garzik.org>
+Reply-To: nigel@nigel.suspend2.net
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 21 21:47:54 2006
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Linux Kernel <linux-kernel@vger.kernel.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Dec 21 22:18:10 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GxUpT-0003HM-9h
-	for gcvg-git@gmane.org; Thu, 21 Dec 2006 21:47:51 +0100
+	id 1GxVIl-0001Q0-Cp
+	for gcvg-git@gmane.org; Thu, 21 Dec 2006 22:18:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423083AbWLUUrs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 21 Dec 2006 15:47:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423084AbWLUUrs
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Dec 2006 15:47:48 -0500
-Received: from web86903.mail.ukl.yahoo.com ([217.12.13.55]:24061 "HELO
-	web86903.mail.ukl.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1423083AbWLUUrr convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Dec 2006 15:47:47 -0500
-Received: (qmail 21307 invoked by uid 60001); 21 Dec 2006 20:47:46 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.co.uk;
-  h=Message-ID:Received:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=nv7lFQek/fIy4swrvtAOTp15ZTx1DuTc2Xvas6UV5YMlWBPDwH4VPjZn8PNtuHwlq7Ksbr0tjeoYAs1Z4vht4oeawx97P/JQqK73ucLVnu6RARlRdDx31N9/h0CgssDetig7CZ14xRCAORhWUHq+JZJLog8ctEl0paGa3vMaxXM=  ;
-Received: from [134.225.1.161] by web86903.mail.ukl.yahoo.com via HTTP; Thu, 21 Dec 2006 20:47:46 GMT
-To: Martin Langhoff <martin.langhoff@gmail.com>
+	id S1423099AbWLUVSB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Dec 2006 16:18:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423110AbWLUVSB
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Dec 2006 16:18:01 -0500
+Received: from nigel.suspend2.net ([203.171.70.205]:58029 "EHLO
+	nigel.suspend2.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1423099AbWLUVSA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Dec 2006 16:18:00 -0500
+Received: from [127.0.0.1] (nigel.suspend2.net [127.0.0.1])
+	by nigel.suspend2.net (Postfix) with ESMTP id 48D8EE825D;
+	Fri, 22 Dec 2006 08:17:58 +1100 (EST)
+To: Jeff Garzik <jeff@garzik.org>
+In-Reply-To: <458A73A6.4010805@garzik.org>
+X-Mailer: Evolution 2.8.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35088>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35089>
 
-=46irstly, apologies for getting mail-list twice in original To: line: =
-dunno how that happened.
+Hi.
 
-|On 12/22/06, David Tweed <tweed314@yahoo.co.uk> wrote:
-|> Sidenote: I'm moving the database from the old format to the new one=
- by repeatedly unpacking
-|> the old database for snapshot X, git-add'ing any file names which ha=
-ve _never_ been in any snapshot
-|> before, git-commit -a, git-tag, then remove all the files unpacked b=
-y the
-|> old database and move onto snapshot X+1. This takes less than a seco=
-nd per snapshot.
-|
-|Not sure how large your snapshots are -- a second sounds like a long
-|time for git operations. While it is a bit more complex, you _can_
-|operate directly on the index, and the "snapshot" never needs to hit
-|the disk as such during your migration.
+On Thu, 2006-12-21 at 06:44 -0500, Jeff Garzik wrote:
+> Nigel Cunningham wrote:
+> > Hi.
+> > 
+> > On Wed, 2006-12-20 at 22:04 -0500, Jeff Garzik wrote:
+> >> I refreshed my git intro/cookbook for kernel hackers, at 
+> >> http://linux.yyz.us/git-howto.html
+> >>
+> >> This describes most of the commands I use in day-to-day kernel hacking. 
+> >>   Let me know if there are glaring errors or missing key commands.
+> > 
+> > Thanks for the work! I'd suggest also saying how to repack and cleanup.
+> 
+> Yes, I should mention repacking.  When you say cleanup, what 
+> specifically do you mean?
 
+Oh, I was just thinking of the related commands - prune-packed,
+count-objects, fsck-objects and so on. (I know repack does prune-packed
+when you use -d, but it might be handy to mention it anyway... or
+not :>)
 
-By trying to be brief I was a rather cryptic. What I was trying to say =
-was:
+> > Could also be a good idea to go through the steps for uploading to
+> > master.kernel.org or elsewhere?
+> 
+> Yes, push should be mentioned at the very least.
 
-
-
-Running the git commands
-
-earlier in the message in a script, I see certain files are not present=
- from the git tree generated by
-
-a commit at a time when I know the file I'd previously git-added "reapp=
-ears" in the
-
-working directory. I'm hypothesising that this is because when the file=
- disappears the machinery
-
-in git discards the `track this file name' information. However, I have=
-n't (and would prefer not to)
-
-dig into the git code to check that's the correct explanation. If this =
-is why the files aren't
-
-being tracked I can try to script around the issue by git-adding all th=
-e files I want tracked
-
-by the snapshot before the git-commit -a. To help anyone thinking
-
-about if the explanation is right, the working directory is repeatedly =
-being wiped and refilled from my old
-
-backup system with a second, so often all files have both creation and =
-modification times
-
-set to the current second regardless of whether the content has changed=
-=2E This is a really
-weird thing to do and might in some way be responsible for the untracke=
-d file (cf racy-git).
-
-
-
-Most of the maybe half-second overhead is coming from my script unpacki=
-ng the files with gzip
-
-from my old database; git seems more than fast enough.
-
-
-|Have a look at how the cvsimport script works for an example.
-
-
-As it's my personal db which I'll only convert once if I can just make =
-replaying work
-
-I don't need anything more complicated; I've only got 2000-odd snapshot=
-s of 2500-odd files.
-However, the temporarily disappearing file issue is one I think I'll fa=
-ce with any
-cron-based commiting strategy and so need to solve.
-
-cheers, dave tweed
-
-
-
-
-
-	=09
-___________________________________________________________=20
-Yahoo! Photos =96 NEW, now offering a quality print service from just 7=
-p a photo http://uk.photos.yahoo.com
+Nigel
