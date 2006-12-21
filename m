@@ -1,62 +1,58 @@
-From: Sean <seanlkml@sympatico.ca>
-Subject: Re: confusion over the new branch and merge config
-Date: Thu, 21 Dec 2006 18:21:02 -0500
-Message-ID: <20061221182102.906ad046.seanlkml@sympatico.ca>
-References: <Pine.LNX.4.64.0612211555210.18171@xanadu.home>
-	<7vd56cam66.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: Re: t5000-tar-tree.sh failing
+Date: Thu, 21 Dec 2006 18:37:52 -0500
+Message-ID: <D8B2508E-D9EE-43F8-BAEE-BE7E5B446132@silverinsanity.com>
+References: <20061221133746.GA13751@cepheus> <Pine.LNX.4.63.0612211458360.19693@wbgn013.biozentrum.uni-wuerzburg.de> <9A725DAA-FAA8-4779-A73D-ED117CC068C1@silverinsanity.com> <20061221185948.GA27072@informatik.uni-freiburg.de>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 22 00:21:12 2006
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 22 00:38:03 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GxXDq-0006ZV-Jr
-	for gcvg-git@gmane.org; Fri, 22 Dec 2006 00:21:10 +0100
+	id 1GxXU8-0000mF-J8
+	for gcvg-git@gmane.org; Fri, 22 Dec 2006 00:38:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423128AbWLUXVH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Dec 2006 18:21:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423125AbWLUXVG
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Dec 2006 18:21:06 -0500
-Received: from bayc1-pasmtp05.bayc1.hotmail.com ([65.54.191.165]:15764 "EHLO
-	BAYC1-PASMTP05.CEZ.ICE" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1423129AbWLUXVF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Dec 2006 18:21:05 -0500
-X-Originating-IP: [65.93.43.74]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([65.93.43.74]) by BAYC1-PASMTP05.CEZ.ICE over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
-	 Thu, 21 Dec 2006 15:21:03 -0800
-Received: from guru.attic.local ([10.10.10.28])
-	by linux1.attic.local with esmtp (Exim 4.43)
-	id 1GxWHb-0007j8-Sr; Thu, 21 Dec 2006 17:20:59 -0500
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vd56cam66.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Sylpheed version 2.2.10 (GTK+ 2.10.4; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 21 Dec 2006 23:21:03.0880 (UTC) FILETIME=[AF1EE080:01C72556]
+	id S1423130AbWLUXh6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Dec 2006 18:37:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423131AbWLUXh5
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Dec 2006 18:37:57 -0500
+Received: from vs072.rosehosting.com ([216.114.78.72]:36180 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1423130AbWLUXh5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Dec 2006 18:37:57 -0500
+Received: from [192.168.1.2] (cpe-66-67-221-135.rochester.res.rr.com [66.67.221.135])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTP id A51521FFC02B;
+	Thu, 21 Dec 2006 23:37:55 +0000 (UTC)
+In-Reply-To: <20061221185948.GA27072@informatik.uni-freiburg.de>
+To: Uwe Kleine-Koenig <zeisberg@informatik.uni-freiburg.de>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35092>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35093>
 
-On Thu, 21 Dec 2006 15:01:21 -0800
-Junio C Hamano <junkio@cox.net> wrote:
 
-> No, the message says "any REMOTE branch" -- refs/heads/next is
-> what it is called at the remote, and that is how the value is
-> expected to be spelled; I think somebody added an example to
-> config.txt recently to stress this.  The above error messasge
-> obviously was not clear enough.  Rewording appreciated.
+On Dec 21, 2006, at 1:59 PM, Uwe Kleine-Koenig wrote:
 
-This seems inconsistent and confusing.  When working with the
-local repository, git-branch doesn't list that as "refs/heads/next"
-it just lists "next".  Why all of a sudden when trying to fetch
-it from a remote repo must a user know about "refs/heads"?
+> I'm not sure if (in this case) a missing unzip should be as silent as
+> you suggest.  The danger is, that s.o. makes a change, runs `make  
+> test`
+> and is then conviced that nothing broke.  So I think that the test
+> should fail, but with a more descriptive error than it is now.
+>
+> The downside is, you need unzip, svn, what ever more to run the test
+> suite.
 
-This seems like an internal detail slipping into the user interface.
-But maybe i'm wrong, when would it ever be anything other than
-"refs/heads/<branch>"?  If it's _always_ "refs/heads", couldn't that
-prefix just be assumed if not provided by the user?
+I was attempting to say that if we're skipping tests we should say  
+so, and not just drop them silently like the code that Johannes  
+posted.  Really, I guess the ideal would be for there to be a test  
+harness that would run all the tests and report skips and errors in a  
+report at the end rather than in the middle.
 
-Sean
+~~ Brian
