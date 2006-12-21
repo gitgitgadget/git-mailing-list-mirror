@@ -1,101 +1,66 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: gitweb: Version independent mod_perl woes
-Date: Thu, 21 Dec 2006 19:09:35 +0100
-Message-ID: <200612211909.35615.jnareb@gmail.com>
-References: <200612211807.54668.jnareb@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: specify charset for commits
+Date: Thu, 21 Dec 2006 10:19:37 -0800
+Message-ID: <7vejqtaz7q.fsf@assigned-by-dhcp.cox.net>
+References: <11655782712452-git-send-email-zeisberg@informatik.uni-freiburg.de>
+	<20061221085907.GA2244@cepheus>
+	<Pine.LNX.4.63.0612211050450.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+	<200612211623.14236.litvinov2004@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Thu Dec 21 19:07:01 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<zeisberg@informatik.uni-freiburg.de>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 21 19:19:48 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GxSJo-0000tF-GE
-	for gcvg-git@gmane.org; Thu, 21 Dec 2006 19:07:00 +0100
+	id 1GxSW6-0003Fu-OY
+	for gcvg-git@gmane.org; Thu, 21 Dec 2006 19:19:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423000AbWLUSG5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 21 Dec 2006 13:06:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422999AbWLUSG5
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Dec 2006 13:06:57 -0500
-Received: from ug-out-1314.google.com ([66.249.92.173]:7006 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1423000AbWLUSG4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Dec 2006 13:06:56 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so2724734uga
-        for <git@vger.kernel.org>; Thu, 21 Dec 2006 10:06:55 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=HyVKcDMFd//YacxGI3dKI+wySvHXlFCKGF3RrRdqvEo9sogF0Ko2qUqqQMbD6pOAS5OQQ1zyTS+9e4Gx27ioLSUdVFC2zXh1CmH6I+1F7QapWf6BnvwmK0+8By/ql2480sZFjIIdLv1aBsAUiHOPmgP0KZnReieBqtPoa8h+a+c=
-Received: by 10.66.248.5 with SMTP id v5mr11174566ugh.1166724415161;
-        Thu, 21 Dec 2006 10:06:55 -0800 (PST)
-Received: from host-81-190-25-107.torun.mm.pl ( [81.190.25.107])
-        by mx.google.com with ESMTP id 5sm12131002ugc.2006.12.21.10.06.54;
-        Thu, 21 Dec 2006 10:06:54 -0800 (PST)
-To: git@vger.kernel.org
-User-Agent: KMail/1.9.3
-In-Reply-To: <200612211807.54668.jnareb@gmail.com>
-Content-Disposition: inline
+	id S1422999AbWLUSTj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Dec 2006 13:19:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423003AbWLUSTj
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Dec 2006 13:19:39 -0500
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:53387 "EHLO
+	fed1rmmtao08.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1422999AbWLUSTi (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Dec 2006 13:19:38 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20061221181938.XUDV16632.fed1rmmtao08.cox.net@fed1rmimpo01.cox.net>;
+          Thu, 21 Dec 2006 13:19:38 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id 1WJv1W00N1kojtg0000000; Thu, 21 Dec 2006 13:18:56 -0500
+To: Alexander Litvinov <litvinov2004@gmail.com>
+In-Reply-To: <200612211623.14236.litvinov2004@gmail.com> (Alexander Litvinov's
+	message of "Thu, 21 Dec 2006 16:23:13 +0600")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35076>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35077>
 
-Jakub Narebski wrote:
-> -- >8 --
-> # Set the constant MP_GEN to 0 if mod_perl is not available,
-> # to 1 if running under mod_perl 1.0
-> # and 2 for mod_perl 2.0
-> use constant MP_GEN =3D> $ENV{'MOD_PERL'}
-> =A0=A0=A0=A0=A0=A0=A0=A0? { ( exists $ENV{'MOD_PERL_API_VERSION'} and=
-=20
-> =A0=A0=A0=A0=A0=A0=A0=A0 =A0 =A0 =A0$ENV{'MOD_PERL_API_VERSION'} >=3D=
- 2 ) ? 2 : 1 }
-> =A0=A0=A0=A0=A0=A0=A0=A0: 0;
+Alexander Litvinov <litvinov2004@gmail.com> writes:
 
-Actually, the error was here. It works like expected for
+> May we can add new header into commit with commit text encoding ?
 
- use constant {
- 	MP_GEN =3D> ($ENV{'MOD_PERL'}
- 	           ? ( exists $ENV{'MOD_PERL_API_VERSION'} and=20
- 	               $ENV{'MOD_PERL_API_VERSION'} >=3D 2 ) ? 2 : 1
- 	           : 0),
- };
+I do not think we want to change the commit header, nor we would
+want to re-encode, but I can see two possible improvements:
 
-> # use appropriate mod_perl modules (conditional use)
-> BEGIN {
-> =A0=A0=A0=A0=A0=A0=A0=A0if (MP_GEN =3D=3D 2) {
-> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0require Apache2::Requ=
-estRec;
-> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0require Apache2::Serv=
-erRec;
-> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0require Apache2::Resp=
-onse;
-> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0require Apache2::Cons=
-t;
-> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0import Apache2::Reque=
-stRec;
-> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0import Apache2::Serve=
-rRec;
-> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0Apache2::Const->impor=
-t(-compile =3D> qw(:common :http));
-> =A0=A0=A0=A0=A0=A0=A0=A0} elsif (MP_GEN =3D=3D 1) {
-> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0require Apache;
-> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0require Apache::Const=
-ants;
-> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0import Apache;
-> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0Apache::Constants->im=
-port(qw(:common :http));
-> =A0=A0=A0=A0=A0=A0=A0=A0}
-> }
->=20
-> # mod_perl request
-> my $r;
-> $r =3D shift @_ if MP_GEN;
-> -- >8 --
+ (1) git-am should default to -u; this was suggested on the list
+     long time ago, but is an incompatible change.  v1.5.0 we
+     can afford to be incompatible to make it more usable and
+     safer.
 
-Sorry for the noise.
---=20
-Jakub Narebski
-Poland
+ (2) update commit-tree to reject non utf-8 log messages and
+     author/committer names when i18n.commitEncoding is _NOT_
+     set, or set to utf-8.
+
+     Maybe later we can use encoding validation routines for
+     other encodings by checking i18n.commitEncoding, but at the
+     minimum the above would be safe enough for recommended UTF-8
+     only cases.
