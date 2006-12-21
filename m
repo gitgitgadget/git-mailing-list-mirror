@@ -1,83 +1,69 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Using GIT to store /etc (Or: How to make GIT store all file
- permission bits)
-Date: Mon, 11 Dec 2006 22:45:25 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0612111837210.20138@iabervon.org>
-References: <787BE48C-1808-4A33-A368-5E8A3F00C787@mac.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: git-svn throwing assertion on old svn tracking branch
+Date: Wed, 20 Dec 2006 17:05:20 -0800
+Message-ID: <20061221010520.GB3901@localdomain>
+References: <20061220235551.GA2974@hermes.lan.home.vilz.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-NNTP-Posting-Date: Tue, 12 Dec 2006 03:45:35 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+NNTP-Posting-Date: Thu, 21 Dec 2006 01:05:29 +0000 (UTC)
 Cc: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <787BE48C-1808-4A33-A368-5E8A3F00C787@mac.com>
+Content-Disposition: inline
+In-Reply-To: <20061220235551.GA2974@hermes.lan.home.vilz.de>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34058>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34995>
 Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GtyaA-0003Qa-6i for gcvg-git@gmane.org; Tue, 12 Dec
- 2006 04:45:30 +0100
+ esmtp (Exim 4.50) id 1GxCNB-0005re-KG for gcvg-git@gmane.org; Thu, 21 Dec
+ 2006 02:05:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1751069AbWLLDp1 (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 11 Dec 2006
- 22:45:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751071AbWLLDp1
- (ORCPT <rfc822;git-outgoing>); Mon, 11 Dec 2006 22:45:27 -0500
-Received: from iabervon.org ([66.92.72.58]:3792 "EHLO iabervon.org"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1751069AbWLLDp1
- (ORCPT <rfc822;git@vger.kernel.org>); Mon, 11 Dec 2006 22:45:27 -0500
-Received: (qmail 13481 invoked by uid 1000); 11 Dec 2006 22:45:25 -0500
-Received: from localhost (sendmail-bs@127.0.0.1) by localhost with SMTP; 11
- Dec 2006 22:45:25 -0500
-To: Kyle Moffett <mrmacman_g4@mac.com>
+ S1161103AbWLUBFX (ORCPT <rfc822;gcvg-git@m.gmane.org>); Wed, 20 Dec 2006
+ 20:05:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161104AbWLUBFX
+ (ORCPT <rfc822;git-outgoing>); Wed, 20 Dec 2006 20:05:23 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:35508 "EHLO hand.yhbt.net"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1161103AbWLUBFW
+ (ORCPT <rfc822;git@vger.kernel.org>); Wed, 20 Dec 2006 20:05:22 -0500
+Received: from hand.yhbt.net (localhost [127.0.0.1]) by hand.yhbt.net
+ (Postfix) with SMTP id 999D62DC034; Wed, 20 Dec 2006 17:05:20 -0800 (PST)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Wed, 20 Dec 2006
+ 17:05:20 -0800
+To: Nicolas Vilz <niv@iaglans.de>
 Sender: git-owner@vger.kernel.org
 
-On Sun, 10 Dec 2006, Kyle Moffett wrote:
-
-> I've recently become somewhat interested in the idea of using GIT to store the
-> contents of various folders in /etc.  However after a bit of playing with
-> this, I discovered that GIT doesn't actually preserve all permission bits
-> since that would cause problems with the more traditional software development
-> model.  I'm curious if anyone has done this before; and if so, how they went
-> about handling the permissions and ownership issues.
+Nicolas Vilz <niv@iaglans.de> wrote:
+> hello guys,
 > 
-> I spent a little time looking over how GIT stores and compares permission
-> bits; trying to figure out if it's possible to patch in a new configuration
-> variable or two; say "preserve_all_perms" and "preserve_owner", or maybe even
-> "save_acls".  It looks like standard permission preservation is fairly basic;
-> you would just need to patch a few routines which alter the permissions read
-> in from disk or compare them with ones from the database.  On the other hand,
-> it would appear that preserving ownership or full POSIX ACLs might be a bit of
-> a challenge.
+> it has been a while, i tried git in conjunction with svn... i got a nice
+> history, when working with it. This Work is now a year old.
+> 
+> Now I wanted to get on working and got following error message while
+> fetching from one specific svn tracking branch:
+> 
+> $ git-svn fetch -i svn_master
+> perl: subversion/libsvn_subr/path.c:343: svn_path_remove_component: 
+> Assertion `is_canonical(path->data, path->len)' failed.
+> Aborted
 
-The first thing you'd want to do is correct the fact that the index 
-doesn't keep full permissions. We decided long ago that we don't want to 
-track more than 0100, but we're discarding the rest between the filesystem 
-and the index, rather than between the index and the tree. (This is weird 
-of us, since we keep gid and uid in the index, as changedness heuristics, 
-but don't keep permissions; of course, we'd have to apply umask to the 
-index when we check it out to sync what we expect to be there with what 
-has actually been created.)
+I don't recall seeing that error before.
 
-I think that would be the only change needed to the index and 
-index/working directory connection, although it might be necessary to 
-support longer values for uid/gid/etc, since they'd be important data now.
+Are you using the command-line client or the perl SVN libraries?  If
+you're using the command-line client, you may want to try:
+rm -rf .git/svn/svn_master/tree && git-svn rebuild -i svn_master
 
-Note that git only stores content, not incidental information. But a lot 
-of information which is incidental in a source tree is content in /etc. 
-This implies that /etc and working/linux-2.6 are fundamentally different 
-sorts of things, because different aspects of them are content.
+> I checked the svn working copy, it is uptodate now (although i had to
+> search for it, i havent been using this repository for one year...)
 
-I'd suggest a new object type for a directory with permissions, ACLs, and 
-so forth. It should probably use symbolic owner and group, too. My guess 
-is that you'll want to use "commit"s, the new object type, and "blob"s. 
-Everything that uses trees would need to have a version that uses the new 
-type. But I think that you generally want different behavior anyway, so 
-that's not a major issue.
+Does the directory you're tracking the the repository still
+exist?  If it disappeared, git-svn could have some issues with it
+(regardless of command-line or SVN libraries).
 
-	-Daniel
+-- 
