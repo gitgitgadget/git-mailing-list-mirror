@@ -1,69 +1,58 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] hooks/pre-commit: add example to add Signed-off-by line
- to message
-Date: Thu, 21 Dec 2006 09:26:49 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612210925400.19693@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0611291219190.30004@wbgn013.biozentrum.uni-wuerzburg.de>
- <200612201604.12498.andyparkins@gmail.com>
- <Pine.LNX.4.63.0612201717490.19693@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vmz5ifpbv.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0612201835570.19693@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vejqufonm.fsf@assigned-by-dhcp.cox.net>
+From: Sean <seanlkml@sympatico.ca>
+Subject: Re: [PATCH] Attempt to make git-checkout man page a bit more clear.
+Date: Thu, 21 Dec 2006 03:31:00 -0500
+Message-ID: <BAYC1-PASMTP071BBC53B5CE7917CE8DE1AECE0@CEZ.ICE>
+References: <20061221015350.245cc964.seanlkml@sympatico.ca>
+	<7vbqlx1yht.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 21 09:27:03 2006
+X-From: git-owner@vger.kernel.org Thu Dec 21 09:31:13 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GxJGR-0004Ix-DQ
-	for gcvg-git@gmane.org; Thu, 21 Dec 2006 09:26:55 +0100
+	id 1GxJKV-0004qQ-Md
+	for gcvg-git@gmane.org; Thu, 21 Dec 2006 09:31:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422832AbWLUI0x (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Dec 2006 03:26:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422857AbWLUI0w
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Dec 2006 03:26:52 -0500
-Received: from mail.gmx.net ([213.165.64.20]:46231 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1422832AbWLUI0v (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Dec 2006 03:26:51 -0500
-Received: (qmail invoked by alias); 21 Dec 2006 08:26:49 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp047) with SMTP; 21 Dec 2006 09:26:49 +0100
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+	id S1422855AbWLUIbE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Dec 2006 03:31:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422859AbWLUIbE
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Dec 2006 03:31:04 -0500
+Received: from bayc1-pasmtp07.bayc1.hotmail.com ([65.54.191.167]:39689 "EHLO
+	BAYC1-PASMTP07.BAYC1.HOTMAIL.COM" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1422855AbWLUIbD (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 21 Dec 2006 03:31:03 -0500
+X-Originating-IP: [65.93.43.74]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Received: from linux1.attic.local ([65.93.43.74]) by BAYC1-PASMTP07.BAYC1.HOTMAIL.COM over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
+	 Thu, 21 Dec 2006 00:37:54 -0800
+Received: from guru.attic.local ([10.10.10.28])
+	by linux1.attic.local with esmtp (Exim 4.43)
+	id 1GxIOI-0005uA-MF; Thu, 21 Dec 2006 02:30:58 -0500
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vejqufonm.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+Message-Id: <20061221033100.b244573d.seanlkml@sympatico.ca>
+In-Reply-To: <7vbqlx1yht.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Sylpheed version 2.2.10 (GTK+ 2.10.4; i386-redhat-linux-gnu)
+X-OriginalArrivalTime: 21 Dec 2006 08:37:54.0500 (UTC) FILETIME=[4EFD2840:01C724DB]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35025>
 
-Hi,
+On Wed, 20 Dec 2006 23:47:42 -0800
+Junio C Hamano <junkio@cox.net> wrote:
 
-On Wed, 20 Dec 2006, Junio C Hamano wrote:
-
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> The 'restore from arbitrary tree-ish' form does not take -m as
+> far as I know.
 > 
-> >> Why SQUASH_MSG?  Doesn't it confuse git-explain when it wants to
-> >> detect that you are in the middle of a squash merge?
-> >
-> > Yes, it confuses git-explain. Which did not existed when I concocted the 
-> > first (broken) version of this patch. There are only two ways to give 
-> > commit message templates AFAICT: misusing SQUASH_MSG and misusing 
-> > MERGE_MSG.
-> 
-> I wonder...
-> 
-> # An example hook script to check the commit log message.
-> # Called by git-commit with one argument, the name of the file
-> # that has the commit message.  The hook should exit with non-zero
-> # status after issuing an appropriate message if it wants to stop the
-> # commit.  The hook is allowed to edit the commit message file.
+> Although it might be interesting to do a single-file three-way
+> merge, I do not think the command is _checkout_ anymore once it
+> starts doing that.
 
-Yes, I missed that.
+Yeah, I should have caught that.  As well, your explanation makes me
+wonder if it makes sense to change <branch> in the third form to
+<tree-ish> ?  Would you like an updated patch or will you just make
+the touch up(s) yourself?
 
-Ciao,
-Dscho
+Sean
