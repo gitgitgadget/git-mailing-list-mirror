@@ -1,101 +1,74 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/3] Add a test for git-rerere
-Date: Thu, 21 Dec 2006 09:34:07 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612210927150.19693@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0612201737190.19693@wbgn013.biozentrum.uni-wuerzburg.de>
- <7v4prqfm6c.fsf@assigned-by-dhcp.cox.net>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [RFC/PATCH] Implement poor-man's submodule support in pre-commit hook
+Date: Thu, 21 Dec 2006 08:39:34 +0000
+Message-ID: <200612210839.35980.andyparkins@gmail.com>
+References: <200612200901.30584.andyparkins@gmail.com> <7vslfae4uv.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 21 09:34:16 2006
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Thu Dec 21 09:39:48 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GxJNW-0005G1-14
-	for gcvg-git@gmane.org; Thu, 21 Dec 2006 09:34:14 +0100
+	id 1GxJSt-000686-FX
+	for gcvg-git@gmane.org; Thu, 21 Dec 2006 09:39:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422799AbWLUIeK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Dec 2006 03:34:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422806AbWLUIeK
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Dec 2006 03:34:10 -0500
-Received: from mail.gmx.net ([213.165.64.20]:39356 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1422799AbWLUIeJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Dec 2006 03:34:09 -0500
-Received: (qmail invoked by alias); 21 Dec 2006 08:34:07 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp010) with SMTP; 21 Dec 2006 09:34:07 +0100
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v4prqfm6c.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S1422861AbWLUIjn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Dec 2006 03:39:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422833AbWLUIjn
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Dec 2006 03:39:43 -0500
+Received: from ug-out-1314.google.com ([66.249.92.169]:24997 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1422861AbWLUIjm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Dec 2006 03:39:42 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so2546628uga
+        for <git@vger.kernel.org>; Thu, 21 Dec 2006 00:39:41 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=ZK9tEl2W46wWfvf5QfbpiKXZucWHGCgkxWSU4Vt/8jX94dukH+tVBLl7FIeUlgg544sNrUaohK3T1IVLuRVkX3ugATRR4PTUT4y5yaLBjcQ1skHTYmspn3u1hSIPlMw2qZXkFvCB318bZoN9sUfOhsEQO1RGJ/OHPxppTr+7f+o=
+Received: by 10.66.221.6 with SMTP id t6mr10468310ugg.1166690380943;
+        Thu, 21 Dec 2006 00:39:40 -0800 (PST)
+Received: from dvr.360vision.com ( [194.70.53.227])
+        by mx.google.com with ESMTP id e23sm13753632ugd.2006.12.21.00.39.40;
+        Thu, 21 Dec 2006 00:39:40 -0800 (PST)
+To: git@vger.kernel.org
+User-Agent: KMail/1.9.5
+In-Reply-To: <7vslfae4uv.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35027>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35028>
 
-Hi,
+On Wednesday 2006 December 20 19:37, Junio C Hamano wrote:
 
-On Wed, 20 Dec 2006, Junio C Hamano wrote:
+> I do not think these are insurmountable.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > +sha1=4f58849a60b4f969a2848966b6d02893b783e8fb
-> > +rr=.git/rr-cache/$sha1
-> > +test_expect_success 'recorded preimage' "grep ======= $rr/preimage"
-> > +
-> > +test_expect_success 'no postimage or thisimage yet' \
-> > +	"test ! -f $rr/postimage -a ! -f $rr/thisimage"
-> 
-> I am worried that this test specifies the behaviour a bit too
-> precisely.  It is not t0000 basic where we want bit-for-bit
-> match with the expected result.  Wouldn't this test break when
-> you further improve xdl_merge, for example?
+Me either.  I wasn't really sure how warmly these patches would be received, 
+so thought some small patches that make the feature highly might be more 
+palatable.  I actually don't think that the hook templates is the right place 
+for this work; submodule support is not something you would customise 
+per-repository, and so the hook scripts are manifestly the wrong place for 
+this.
 
-In this case, I doubt that xdl_merge() can do _anything_. The example is 
-set up so it _must_ fail with any sane merge algorithm.
+> As you fix them and enhance the support, I suspect you would
+> want a separate command to manage .gitmodule file and submodules
+> referenced by it.  I think it would be better to keep the patch
+> to the template to the minimum (for example, run "git submodule
+> update" if there is .gitmodules file at the toplevel), and
+> implement the body of the processing in "git-submodule.sh", or
+> something like that.
 
-And I very much wanted the behaviour put down very precisely, so that I 
-catch any bugs in builtin-rerere. In fact, as I went, I wrote the test 
-with the original rerere, and then whipped the builtin until it conformed.
+That's an interesting idea.  I was thinking that git-commit itself would have 
+been the final target; but I certainly don't have any problem with a separate 
+command.
 
-Since anyone modifying rerere's behaviour can modify this test to catch 
-that behaviour, too, I am not so worried.
- 
-> > +rm $rr/postimage
-> > +echo -ne "$sha1\ta1\0" > .git/rr-cache/MERGE_RR
-> 
-> Hmmmmmm.  I've stayed away from "echo -e" so far...
 
-Rather do it with tr? Like this:
-
-	echo -n "$sha1	a1X" | tr X '\0' > .git/rr-cache/MERGE_RR
-
-> > +sha2=4000000000000000000000000000000000000000
-> > +rr2=.git/rr-cache/$sha2
-> > +mkdir $rr2
-> > +echo Hello > $rr2/preimage
-> 
-> Collisions are not so likely and perhaps we do not care.
-
-Both. If collisions were likely, we both would know by now _and_ would be 
-in serious trouble. And we do not care, since there cannot be any other 
-directory in rr-cache, apart from $sha1/.
-
-> > +case "$(date -d @11111111 +%s 2>/dev/null)" in
-> > +[1-9]*)
-> > +	# it is a recent GNU date. good.
-> > +	now=$(date +%s)
-> > +	let almost_15_days_ago=$now+60-15*86400
-> > +	let just_over_15_days_ago=$now-1-15*86400
-> > +	let almost_60_days_ago=$now+60-60*86400
-> > +	let just_over_60_days_ago=$now-1-60*86400
-> 
-> Hmmmmm.  I've stayed away from "let" so far as well...
-
-Is $((1+2)) portable enough? I always thought this is a bashism...
-
-Ciao,
-Dscho
+Andy
+-- 
+Dr Andy Parkins, M Eng (hons), MIEE
+andyparkins@gmail.com
