@@ -1,57 +1,81 @@
-From: Francois Romieu <romieu@fr.zoreil.com>
-Subject: Re: Updated Kernel Hacker's guide to git
-Date: Thu, 21 Dec 2006 14:53:49 +0100
-Message-ID: <20061221135349.GB25184@electric-eye.fr.zoreil.com>
-References: <4589F9B1.2020405@garzik.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: t5000-tar-tree.sh failing
+Date: Thu, 21 Dec 2006 15:00:25 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0612211458360.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20061221133746.GA13751@cepheus>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linux Kernel <linux-kernel@vger.kernel.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1422946AbWLUNy3@vger.kernel.org Thu Dec 21 14:55:23 2006
-Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1422946AbWLUNy3@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@gmane.org
+Content-Type: MULTIPART/MIXED; BOUNDARY="-1148973799-2107858282-1166709625=:19693"
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 21 15:00:41 2006
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GxOOC-0001N7-Bz
-	for glk-linux-kernel-3@gmane.org; Thu, 21 Dec 2006 14:55:16 +0100
+	id 1GxOTH-0002If-Uw
+	for gcvg-git@gmane.org; Thu, 21 Dec 2006 15:00:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422946AbWLUNy3 (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Thu, 21 Dec 2006 08:54:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422947AbWLUNy3
-	(ORCPT <rfc822;linux-kernel-outgoing>);
-	Thu, 21 Dec 2006 08:54:29 -0500
-Received: from electric-eye.fr.zoreil.com ([213.41.134.224]:42859 "EHLO
-	fr.zoreil.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1422946AbWLUNy2 (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
-	Thu, 21 Dec 2006 08:54:28 -0500
-Received: from electric-eye.fr.zoreil.com (localhost.localdomain [127.0.0.1])
-	by fr.zoreil.com (8.13.4/8.12.1) with ESMTP id kBLDrnBn028318;
-	Thu, 21 Dec 2006 14:53:49 +0100
-Received: (from romieu@localhost)
-	by electric-eye.fr.zoreil.com (8.13.4/8.12.1) id kBLDrn8Z028317;
-	Thu, 21 Dec 2006 14:53:49 +0100
-To: Jeff Garzik <jeff@garzik.org>
-Content-Disposition: inline
-In-Reply-To: <4589F9B1.2020405@garzik.org>
-User-Agent: Mutt/1.4.2.1i
-X-Organisation: Land of Sunshine Inc.
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1422881AbWLUOA2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Dec 2006 09:00:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422949AbWLUOA2
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Dec 2006 09:00:28 -0500
+Received: from mail.gmx.net ([213.165.64.20]:54607 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1422881AbWLUOA2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Dec 2006 09:00:28 -0500
+Received: (qmail invoked by alias); 21 Dec 2006 14:00:25 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp047) with SMTP; 21 Dec 2006 15:00:25 +0100
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<zeisberg@informatik.uni-freiburg.de>
+In-Reply-To: <20061221133746.GA13751@cepheus>
+X-Y-GMX-Trusted: 0
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35067>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35068>
 
-Jeff Garzik <jeff@garzik.org> :
-> I refreshed my git intro/cookbook for kernel hackers, at 
-> http://linux.yyz.us/git-howto.html
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+---1148973799-2107858282-1166709625=:19693
+Content-Type: TEXT/PLAIN; charset=iso-8859-1
+Content-Transfer-Encoding: 8BIT
+
+Hi,
+
+On Thu, 21 Dec 2006, Uwe Kleine-König wrote:
+
+> [...]
+> 	* FAIL 14: extract ZIP archive
+> 		(mkdir d && cd d && $UNZIP ../d.zip)
+> [...]
+>
+> I think the problem is:
 > 
-> This describes most of the commands I use in day-to-day kernel hacking. 
->  Let me know if there are glaring errors or missing key commands.
+> 	zeisberg@cepheus:~/gsrc/git$ unzip
+> 	bash: unzip: command not found
 
-o 'git whatchanged shnortz' can probably be replaced with
-  'git log -- schnortz' so there is one command less to remember.
+Yep. That's the problem.
 
-o "Display changes since last git-update-index:"
-  Fine but you have not told the reader what git-update-index is.
+> Probably the subversion tests suffer the same (for svn instead of 
+> unzip).
+> 
+> Do we want the tests to depend on all that or would it be sensible to
+> output a warning that a program is missing?
 
--- 
-Ueimor
+Why not enclose the tests in a
+
+	if unzip -h >/dev/null 2>/dev/null; then
+
+		# all these tests
+
+	fi
+
+Hmm?
+
+Ciao,
+Dscho
+
+---1148973799-2107858282-1166709625=:19693--
