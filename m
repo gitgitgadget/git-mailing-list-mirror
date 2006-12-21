@@ -1,69 +1,90 @@
-From: Rocco Rutte <pdmef@gmx.net>
-Subject: [PATCH] Define -D__BSD_VISIBLE for FreeBSD
-Date: Thu, 21 Dec 2006 09:00:58 +0000
-Message-ID: <11666916581935-git-send-email-pdmef@gmx.net>
-Cc: Rocco Rutte <pdmef@gmx.net>
-X-From: git-owner@vger.kernel.org Thu Dec 21 10:02:21 2006
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC] gitweb wishlist and TODO list (part 1)
+Date: Thu, 21 Dec 2006 10:18:20 +0100
+Message-ID: <200612211018.20796.jnareb@gmail.com>
+References: <200612170000.06771.jnareb@gmail.com> <20061221032216.GF17864@localhost>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Kernel Org Admin <ftpadmin@kernel.org>,
+	Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Thu Dec 21 10:16:27 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GxJoW-0001Km-8V
-	for gcvg-git@gmane.org; Thu, 21 Dec 2006 10:02:08 +0100
+	id 1GxK2G-0003cO-Dg
+	for gcvg-git@gmane.org; Thu, 21 Dec 2006 10:16:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423039AbWLUJBY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Dec 2006 04:01:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423034AbWLUJBW
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Dec 2006 04:01:22 -0500
-Received: from mail.gmx.net ([213.165.64.20]:57548 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1423032AbWLUJBP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Dec 2006 04:01:15 -0500
-Received: (qmail invoked by alias); 21 Dec 2006 09:01:12 -0000
-Received: from cable-62-117-26-66.cust.blue-cable.de (EHLO peter.daprodeges.fqdn.th-h.de) [62.117.26.66]
-  by mail.gmx.net (mp050) with SMTP; 21 Dec 2006 10:01:12 +0100
-X-Authenticated: #1642131
-Received: from robert.daprodeges.fqdn.th-h.de (robert.daprodeges.dyndns.org [192.168.0.113])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by peter.daprodeges.fqdn.th-h.de (Postfix) with ESMTP
-	id 30FA420F16; Thu, 21 Dec 2006 09:01:12 +0000 (UTC)
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by robert.daprodeges.fqdn.th-h.de (Postfix) with ESMTP
-	id 3BFE033FF6; Thu, 21 Dec 2006 09:00:59 +0000 (UTC)
-To: git@vger.kernel.org
-X-Mailer: git-send-email 1.4.4.2.g9474f
-X-Y-GMX-Trusted: 0
+	id S1161180AbWLUJQB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Dec 2006 04:16:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161175AbWLUJQA
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Dec 2006 04:16:00 -0500
+Received: from ug-out-1314.google.com ([66.249.92.171]:17858 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1422899AbWLUJPo convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 21 Dec 2006 04:15:44 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so2557002uga
+        for <git@vger.kernel.org>; Thu, 21 Dec 2006 01:15:43 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=HrFsA2f0FDMZls34AMaXyWcNf1ZYsLNqXDz7HcVBh95O3LkIL/MYn8y3nL/R23TukYyTwsqMcWbP9GV4VHzbFECYOCWUOUumE2vhmt8nj9jk2RYM7f6B1OohdiwR9gHVyfxhDyCx3VI8I00sLkFaKw/i6FVIzx+ItSu9OqXCZws=
+Received: by 10.67.19.17 with SMTP id w17mr11976583ugi.1166692542859;
+        Thu, 21 Dec 2006 01:15:42 -0800 (PST)
+Received: from host-81-190-25-107.torun.mm.pl ( [81.190.25.107])
+        by mx.google.com with ESMTP id 53sm13593876ugn.2006.12.21.01.15.42;
+        Thu, 21 Dec 2006 01:15:42 -0800 (PST)
+To: Robert Fitzsimons <robfitz@273k.net>
+User-Agent: KMail/1.9.3
+In-Reply-To: <20061221032216.GF17864@localhost>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35035>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35036>
 
-FreeBSD (6-STABLE) "hides" many declarations (like fchmod(), IPPROTO_IPV6,
-etc.) within '#ifdef __BSD_VISIBLE' blocks. Without this flag, compilation
-will produce lots of warnings and will even fail to compile daemon.c
-since IPPROTO_IPV6 isn't available without it.
+Robert Fitzsimons wrote:
+>> * Cache validation and infinite cache for unchanging pages
+>> 
+>>   By itself cache validation would not bring much performance boost (for
+>>   gitweb installations with large traffic), but with the reverse proxy,
+>>   aka. caching engine, aka. HTTP accelerator in front of server this could
+>>   help a lot.
 
->From looking at some include files of OpenBSD and NetBSD (via cvsweb)
-they don't seem to need this flag.
+BTW in mod_perl cache validation is as simple as using meets_condition()
+method on request object after we send at least one of validator
+headers (Last-Modified:, ETag:)... but this would mean that cache
+validation would be available only when under mod_perl...
 
-Signed-off-by: Rocco Rutte <pdmef@gmx.net>
----
- Makefile |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+> There is no need for extra servers to provide server side caching.
+> Apache2 includes suitable modules (mod_cache) which can be configured to
+> cache in memory or disk the pages generated by gitweb.
+[...]
+> mod_cache will only cache pages with a query string in the url if they
+> have an expires header.  So we can put a temporary hack in using
+> mod_expires until gitweb sets an appropriate value.
 
-diff --git a/Makefile b/Makefile
-index 7651104..46c49e0 100644
---- a/Makefile
-+++ b/Makefile
-@@ -366,7 +366,7 @@ ifeq ($(uname_O),Cygwin)
- endif
- ifeq ($(uname_S),FreeBSD)
- 	NEEDS_LIBICONV = YesPlease
--	BASIC_CFLAGS += -I/usr/local/include
-+	BASIC_CFLAGS += -I/usr/local/include -D__BSD_VISIBLE
- 	BASIC_LDFLAGS += -L/usr/local/lib
- endif
- ifeq ($(uname_S),OpenBSD)
+>From the discussion in the 
+  "Re: kernel.org mirroring (Re: [GIT PULL] MMC update)"
+  http://thread.gmane.org/gmane.comp.version-control.git/33604
+thread Apache mod_cache doesn't bring much. Perhaps because of the above...
+although adding artificial expires header seems a bit like a hack.
+
+> Also the content type would need to be change to just return text/html
+> or MSIE will do the wrong think if it's given a application/xhtml+xml
+> page.
+
+>From gitweb.perl:
+
+  # require explicit support from the UA if we are to send the page as
+  # 'application/xhtml+xml', otherwise send it as plain old 'text/html'.
+  # we have to do this because MSIE sometimes globs '*/*', pretending to
+  # support xhtml+xml but choking when it gets what it asked for.
+
+This was added by Alp Toker <alp@atoker.com> in f6801d669ee11:
+  "gitweb: Send XHTML as 'application/xhtml+xml' where possible"
+
 -- 
-1.4.4.2.g9474f
+Jakub Narebski
+Poland
