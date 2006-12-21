@@ -1,7 +1,7 @@
-From: Junio C Hamano <junkio@cox.net>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
 Subject: Re: [BUG] daemon.c blows up on OSX
-Date: Wed, 20 Dec 2006 17:48:42 -0800
-Message-ID: <7v64c63tol.fsf@assigned-by-dhcp.cox.net>
+Date: 20 Dec 2006 17:50:34 -0800
+Message-ID: <86hcvqvwyd.fsf@blue.stonehenge.com>
 References: <7vmz5ib8eu.fsf@assigned-by-dhcp.cox.net>
 	<86vek6z0k2.fsf@blue.stonehenge.com>
 	<Pine.LNX.4.64.0612201412250.3576@woody.osdl.org>
@@ -16,79 +16,67 @@ References: <7vmz5ib8eu.fsf@assigned-by-dhcp.cox.net>
 	<8664c6xdgi.fsf@blue.stonehenge.com>
 	<24BF45E9-DD98-4609-9D65-B01EAA30CCA8@silverinsanity.com>
 	<86psaevxo3.fsf@blue.stonehenge.com>
+	<7v64c63tol.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: "Terje Sten Bjerkseth" <terje@bjerkseth.org>,
-	"Linus Torvalds" <torvalds@osdl.org>,
-	"Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 21 02:48:55 2006
+	"Linus Torvalds" <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 21 02:50:40 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GxD3B-0003AE-Gn
-	for gcvg-git@gmane.org; Thu, 21 Dec 2006 02:48:50 +0100
+	id 1GxD4x-0003Ow-B7
+	for gcvg-git@gmane.org; Thu, 21 Dec 2006 02:50:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161128AbWLUBso (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Dec 2006 20:48:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161129AbWLUBso
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Dec 2006 20:48:44 -0500
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:35588 "EHLO
-	fed1rmmtao01.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161128AbWLUBso (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Dec 2006 20:48:44 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20061221014843.BTWW9173.fed1rmmtao01.cox.net@fed1rmimpo01.cox.net>;
-          Wed, 20 Dec 2006 20:48:43 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id 1Do11W0011kojtg0000000; Wed, 20 Dec 2006 20:48:01 -0500
-To: merlyn@stonehenge.com (Randal L. Schwartz)
-In-Reply-To: <86psaevxo3.fsf@blue.stonehenge.com> (Randal L. Schwartz's
-	message of "20 Dec 2006 17:35:08 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1161129AbWLUBuh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Dec 2006 20:50:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161130AbWLUBuh
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Dec 2006 20:50:37 -0500
+Received: from blue.stonehenge.com ([209.223.236.162]:19582 "EHLO
+	blue.stonehenge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161129AbWLUBug (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Dec 2006 20:50:36 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by blue.stonehenge.com (Postfix) with ESMTP id 969208F5A3;
+	Wed, 20 Dec 2006 17:50:35 -0800 (PST)
+Received: from blue.stonehenge.com ([127.0.0.1])
+ by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
+ with LMTP id 06702-01-13; Wed, 20 Dec 2006 17:50:34 -0800 (PST)
+Received: by blue.stonehenge.com (Postfix, from userid 1001)
+	id E28528F5D4; Wed, 20 Dec 2006 17:50:34 -0800 (PST)
+To: Junio C Hamano <junkio@cox.net>
+x-mayan-date: Long count = 12.19.13.16.7; tzolkin = 8 Manik; haab = 0 Kankin
+In-Reply-To: <7v64c63tol.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35004>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35005>
 
-merlyn@stonehenge.com (Randal L. Schwartz) writes:
+>>>>> "Junio" == Junio C Hamano <junkio@cox.net> writes:
 
->>> I tried the moral equivalent of that, and it failed to compile many
->>> other things then.  So that's not it.
-> ...
-> I did it with #if 0 / #end instead of the __APPLE_CC__ symbol.
-> But, weirdly, now that I used the symbol, I get a good compile.
-> ...
-> Sorry for being objectionable earlier then.  I've attached the precise
-> patch I used and works and verified.
+Junio> Just to make sure... the attached looks exactly what Terje's
+Junio> patch would have been before the whitespace damage.  Can I take
+Junio> this as confirmation that the patch works for you and Terje?
 
-Just to make sure... the attached looks exactly what Terje's
-patch would have been before the whitespace damage.  Can I take
-this as confirmation that the patch works for you and Terje?
+The patch I uploaded should be character-equivalent to Terje's.
+I don't know what "whitespace damage" you're referencing.
 
-I wonder what the earlier failure you got from "the moral
-equivalent" was -- I hope it is not an indication that we have a
-dependency bug in our Makefile somewhere.
+Junio> I wonder what the earlier failure you got from "the moral
+Junio> equivalent" was -- I hope it is not an indication that we have a
+Junio> dependency bug in our Makefile somewhere.
 
-Thanks.
+Yeah, I'm not sure why
 
-> diff --git a/git-compat-util.h b/git-compat-util.h
-> index bc296b3..41fa7f6 100644
-> --- a/git-compat-util.h
-> +++ b/git-compat-util.h
-> @@ -11,8 +11,10 @@
->  
->  #define ARRAY_SIZE(x) (sizeof(x)/sizeof(x[0]))
->  
-> +#ifndef __APPLE_CC__
->  #define _XOPEN_SOURCE 600 /* glibc2 and AIX 5.3L need 500, OpenBSD needs 600 for S_ISLNK() */
->  #define _XOPEN_SOURCE_EXTENDED 1 /* AIX 5.3L needs this */
-> +#endif
->  #define _GNU_SOURCE
->  #define _BSD_SOURCE
->  
-> -- 
-> 1.4.4.3.g9e3f8
+#if 0
+those two defines
+#end
+
+doesn't do the same thing.  Oh well, shrug.
+
+-- 
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
+See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
