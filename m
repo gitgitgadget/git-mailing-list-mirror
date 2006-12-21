@@ -1,81 +1,107 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: t5000-tar-tree.sh failing
-Date: Thu, 21 Dec 2006 15:00:25 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612211458360.19693@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20061221133746.GA13751@cepheus>
+Subject: [PATCH] git-tag: support -F <file> option
+Date: Thu, 21 Dec 2006 15:13:02 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0612211512160.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <emdsi9$ecm$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="-1148973799-2107858282-1166709625=:19693"
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 21 15:00:41 2006
+X-From: git-owner@vger.kernel.org Thu Dec 21 15:13:13 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GxOTH-0002If-Uw
-	for gcvg-git@gmane.org; Thu, 21 Dec 2006 15:00:32 +0100
+	id 1GxOfU-0004Yn-SC
+	for gcvg-git@gmane.org; Thu, 21 Dec 2006 15:13:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422881AbWLUOA2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Dec 2006 09:00:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422949AbWLUOA2
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Dec 2006 09:00:28 -0500
-Received: from mail.gmx.net ([213.165.64.20]:54607 "HELO mail.gmx.net"
+	id S964967AbWLUONF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Dec 2006 09:13:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964956AbWLUONF
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Dec 2006 09:13:05 -0500
+Received: from mail.gmx.net ([213.165.64.20]:55080 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1422881AbWLUOA2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Dec 2006 09:00:28 -0500
-Received: (qmail invoked by alias); 21 Dec 2006 14:00:25 -0000
+	id S964967AbWLUONE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Dec 2006 09:13:04 -0500
+Received: (qmail invoked by alias); 21 Dec 2006 14:13:02 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp047) with SMTP; 21 Dec 2006 15:00:25 +0100
+  by mail.gmx.net (mp047) with SMTP; 21 Dec 2006 15:13:02 +0100
 X-Authenticated: #1490710
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<zeisberg@informatik.uni-freiburg.de>
-In-Reply-To: <20061221133746.GA13751@cepheus>
+To: Han-Wen Nienhuys <hanwen@xs4all.nl>
+In-Reply-To: <emdsi9$ecm$1@sea.gmane.org>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35068>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35069>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
----1148973799-2107858282-1166709625=:19693
-Content-Type: TEXT/PLAIN; charset=iso-8859-1
-Content-Transfer-Encoding: 8BIT
+This imitates the behaviour of git-commit.
 
-Hi,
+Noticed by Han-Wen Nienhuys.
 
-On Thu, 21 Dec 2006, Uwe Kleine-König wrote:
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+---
 
-> [...]
-> 	* FAIL 14: extract ZIP archive
-> 		(mkdir d && cd d && $UNZIP ../d.zip)
-> [...]
->
-> I think the problem is:
-> 
-> 	zeisberg@cepheus:~/gsrc/git$ unzip
-> 	bash: unzip: command not found
+	On Thu, 21 Dec 2006, Han-Wen Nienhuys wrote:
 
-Yep. That's the problem.
+	> Working on a little darcs2git script, I found the following 
+	> inconsistency
+	> 
+	> git-commit supports -m and -F 
+	> git-tag supports only -m
 
-> Probably the subversion tests suffer the same (for svn instead of 
-> unzip).
-> 
-> Do we want the tests to depend on all that or would it be sensible to
-> output a warning that a program is missing?
+	How about this?
 
-Why not enclose the tests in a
+ Documentation/git-tag.txt |    6 +++++-
+ git-tag.sh                |   11 +++++++++++
+ 2 files changed, 16 insertions(+), 1 deletions(-)
 
-	if unzip -h >/dev/null 2>/dev/null; then
-
-		# all these tests
-
-	fi
-
-Hmm?
-
-Ciao,
-Dscho
-
----1148973799-2107858282-1166709625=:19693--
+diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
+index 45476c2..48b82b8 100644
+--- a/Documentation/git-tag.txt
++++ b/Documentation/git-tag.txt
+@@ -9,7 +9,8 @@ git-tag - Create a tag object signed with GPG
+ SYNOPSIS
+ --------
+ [verse]
+-'git-tag' [-a | -s | -u <key-id>] [-f | -d] [-m <msg>] <name> [<head>]
++'git-tag' [-a | -s | -u <key-id>] [-f | -d] [-m <msg> | -F <file>]
++	 <name> [<head>]
+ 'git-tag' -l [<pattern>]
+ 
+ DESCRIPTION
+@@ -60,6 +61,9 @@ OPTIONS
+ -m <msg>::
+ 	Use the given tag message (instead of prompting)
+ 
++-F <file>::
++	Take the tag message from the given file.  Use '-' to
++	read the message from the standard input.
+ 
+ Author
+ ------
+diff --git a/git-tag.sh b/git-tag.sh
+index d53f94c..36cd6aa 100755
+--- a/git-tag.sh
++++ b/git-tag.sh
+@@ -45,6 +45,17 @@ do
+ 	    message_given=1
+ 	fi
+ 	;;
++    -F)
++	annotate=1
++	shift
++	if test "$#" = "0"; then
++	    die "error: option -F needs an argument"
++	    exit 2
++	else
++	    message="$(cat "$1")"
++	    message_given=1
++	fi
++	;;
+     -u)
+ 	annotate=1
+ 	signed=1
+-- 
+1.4.4.3.g0ba4
