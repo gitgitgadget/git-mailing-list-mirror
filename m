@@ -1,56 +1,69 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFH/RFT] git-rm: update to saner semantics
-Date: Thu, 21 Dec 2006 10:38:52 +0100
-Organization: At home
-Message-ID: <emdkib$fve$1@sea.gmane.org>
-References: <7vwt4lboa2.fsf@assigned-by-dhcp.cox.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: specify charset for commits (Was: [PATCH] Fix documentation
+ copy&paste typo)
+Date: Thu, 21 Dec 2006 10:51:44 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0612211050450.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <11655782712452-git-send-email-zeisberg@informatik.uni-freiburg.de>
+ <20061219141618.GA2539@cepheus> <7vac1jre1u.fsf@assigned-by-dhcp.cox.net>
+ <20061221085907.GA2244@cepheus>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Thu Dec 21 10:40:28 2006
+Content-Type: MULTIPART/MIXED; BOUNDARY="-1148973799-393969666-1166694704=:19693"
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 21 10:51:52 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GxKPU-0007fN-1C
-	for gcvg-git@gmane.org; Thu, 21 Dec 2006 10:40:20 +0100
+	id 1GxKac-0000zr-Or
+	for gcvg-git@gmane.org; Thu, 21 Dec 2006 10:51:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965177AbWLUJkN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Dec 2006 04:40:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965178AbWLUJkM
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Dec 2006 04:40:12 -0500
-Received: from main.gmane.org ([80.91.229.2]:58930 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965177AbWLUJkK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Dec 2006 04:40:10 -0500
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1GxKPC-00029J-GG
-	for git@vger.kernel.org; Thu, 21 Dec 2006 10:40:02 +0100
-Received: from host-81-190-25-107.torun.mm.pl ([81.190.25.107])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 21 Dec 2006 10:40:02 +0100
-Received: from jnareb by host-81-190-25-107.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 21 Dec 2006 10:40:02 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-25-107.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1422908AbWLUJvr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Dec 2006 04:51:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422920AbWLUJvr
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Dec 2006 04:51:47 -0500
+Received: from mail.gmx.net ([213.165.64.20]:44277 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1422908AbWLUJvq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Dec 2006 04:51:46 -0500
+Received: (qmail invoked by alias); 21 Dec 2006 09:51:44 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp047) with SMTP; 21 Dec 2006 10:51:44 +0100
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<zeisberg@informatik.uni-freiburg.de>
+In-Reply-To: <20061221085907.GA2244@cepheus>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35044>
 
-Junio C Hamano wrote:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> -"git-rm [-n] [-v] [-f] <filepattern>...";
-> +"git-rm [-n] [-f] [--cached] <filepattern>...";
+---1148973799-393969666-1166694704=:19693
+Content-Type: TEXT/PLAIN; charset=iso-8859-1
+Content-Transfer-Encoding: 8BIT
 
-Why do we lost -v (for verbose)?
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Hi,
+
+On Thu, 21 Dec 2006, Uwe Kleine-König wrote:
+
+> Junio C Hamano wrote:
+> > Me, keyboard and Emacs screwed up and stored it in ISO-2022
+> > instead of UTF-8.  Sorry.
+> It's a pity, but too late to change.[1]
+> 
+> What do you think about a patch that makes git-commit-tree call iconv on
+> its input to get it to UTF-8 (or any other charset).
+
+We had this discussion over and over again. Last time (I think) was here:
+
+http://article.gmane.org/gmane.comp.version-control.git/11710
+
+Summary: we do not want to force the use of utf8.
+
+Hth,
+Dscho
+---1148973799-393969666-1166694704=:19693--
