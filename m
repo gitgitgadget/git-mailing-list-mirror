@@ -1,83 +1,63 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: newbie question - git-pull and local branch merge
-Date: Fri, 22 Dec 2006 02:46:48 -0800
-Message-ID: <7vejqs1a3r.fsf@assigned-by-dhcp.cox.net>
-References: <6bb9c1030612220227h2dc83a78u2e31e0f4e6801412@mail.gmail.com>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: What's cooking in git.git (topics)
+Date: Fri, 22 Dec 2006 11:11:56 +0000
+Message-ID: <200612221111.58071.andyparkins@gmail.com>
+References: <7vzm9g2rv5.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 22 11:46:53 2006
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Fri Dec 22 12:12:17 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GxhvR-0000tA-3s
-	for gcvg-git@gmane.org; Fri, 22 Dec 2006 11:46:53 +0100
+	id 1GxiJu-0004Pb-5D
+	for gcvg-git@gmane.org; Fri, 22 Dec 2006 12:12:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946023AbWLVKqu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Dec 2006 05:46:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946024AbWLVKqu
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Dec 2006 05:46:50 -0500
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:63066 "EHLO
-	fed1rmmtao07.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1946023AbWLVKqu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Dec 2006 05:46:50 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao07.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20061222104649.QUSL22053.fed1rmmtao07.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 22 Dec 2006 05:46:49 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id 1mm61W0041kojtg0000000; Fri, 22 Dec 2006 05:46:07 -0500
-To: "Pelle Svensson" <pelle2004@gmail.com>
-In-Reply-To: <6bb9c1030612220227h2dc83a78u2e31e0f4e6801412@mail.gmail.com>
-	(Pelle Svensson's message of "Fri, 22 Dec 2006 11:27:54 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1946039AbWLVLMF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Dec 2006 06:12:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946040AbWLVLMF
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Dec 2006 06:12:05 -0500
+Received: from ug-out-1314.google.com ([66.249.92.168]:61678 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1946039AbWLVLME (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Dec 2006 06:12:04 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so2945196uga
+        for <git@vger.kernel.org>; Fri, 22 Dec 2006 03:12:02 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=leBKzzjLx6AZ0qMYqEJXaAM58PdeIlQZuNckvZ/uGYbFw69dDn36xl7JRV9Bv63otNkSw21m9AO1MHUsUVoG/jrd3F9PVcIgCUcCZBCGE3U3hm9YR/PsCpbE6zNvDp8jm7BTvCKYLH6G4qlOex909cUwpB9X+qcqZw6IyEo/OwA=
+Received: by 10.66.255.7 with SMTP id c7mr13495171ugi.1166785922158;
+        Fri, 22 Dec 2006 03:12:02 -0800 (PST)
+Received: from dvr.360vision.com ( [194.70.53.227])
+        by mx.google.com with ESMTP id j34sm13036342ugc.2006.12.22.03.12.00;
+        Fri, 22 Dec 2006 03:12:01 -0800 (PST)
+To: git@vger.kernel.org
+User-Agent: KMail/1.9.5
+In-Reply-To: <7vzm9g2rv5.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35160>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35161>
 
-"Pelle Svensson" <pelle2004@gmail.com> writes:
+On Friday 2006 December 22 09:37, Junio C Hamano wrote:
 
-> 8. git-pull <- Problem!
+> * jc/git-add--interactive (Mon Dec 11 17:09:26 2006 -0800) 2 commits
+>  + git-add --interactive: hunk splitting
+>  + git-add --interactive
 
-And the problem is...???
+I used this to disentangle a load of changes that I made under pressure and 
+turned them into lovely isolated commits.  I didn't have any trouble with it, 
+and thought it was incredibly useful.
 
-> Accidentally I had 2 files not committed and one of these also
-> had changes in the git-pull master branch which git could
-> not merge automatically.
+I'd vote for putting it in 1.5 - it's in keeping with the usability theme - 
+people love interactive stuff.
 
-So you had changes to fileA that you already committed, and
-further changes in your working tree, and Linus side updated
-that same file since you started working on it?
 
-If that is the case, I suspect that the pull stopped saying
-something like "Entry ... not uptodate. Cannot merge."  If that
-is the case I think your working tree has what you had before
-you started the pull.  Deal with your own changes in the files
-you dirtied (say, commit them first) and pull again.
-
-Otherwise, what happened was you had changes to fileB that you
-already committed, and Linus side also updated the same file in
-the meantime, and you did _not_ have any change to that fileB in
-your working tree (you might have had some other files locally
-modified).  And the pull would have reported something like
-"CONFLICT (content)" in such a case.
-
-$ git diff
-
-will show you an output that looks like diff but not really (you
-can tell by its hunk header that have three '@' letters instead
-of normal two); you have a conflicted merge result, and have the
-usual conflict markers in that file.  Edit the file to resolve
-conflict.  Then say:
-
-$ git update-index conflicted-file-1.c conflicted-file-2.c ...
-$ git commit
-
-to record the merge commit.  Do not update-index the files that
-you had your own changes before pulling -- those changes do not
-have anything to do with this merge and you do not want to
-record them as part of the merge.
+Andy
+-- 
+Dr Andy Parkins, M Eng (hons), MIEE
+andyparkins@gmail.com
