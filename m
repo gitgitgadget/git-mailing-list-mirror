@@ -1,89 +1,114 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: confusion over the new branch and merge config
-Date: Fri, 22 Dec 2006 23:40:49 +0100
-Message-ID: <200612222340.50029.jnareb@gmail.com>
-References: <Pine.LNX.4.64.0612211555210.18171@xanadu.home> <emhh4k$u4q$1@sea.gmane.org> <Pine.LNX.4.64.0612221609430.18171@xanadu.home>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Updated Kernel Hacker's guide to git
+Date: Fri, 22 Dec 2006 14:45:18 -0800
+Message-ID: <7v7iwjwnwh.fsf@assigned-by-dhcp.cox.net>
+References: <38b2ab8a0612210424o4ec5fcd5kb5086c52ccd76491@mail.gmail.com>
+	<Pine.LNX.4.64.0612211013500.3394@woody.osdl.org>
+	<87slf83erg.wl%cworth@cworth.org>
+	<Pine.LNX.4.64.0612212009370.3536@woody.osdl.org>
+	<877iwjinda.wl%cworth@cworth.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 22 23:38:13 2006
+X-From: git-owner@vger.kernel.org Fri Dec 22 23:45:25 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1Gxt1n-0002y0-VK
-	for gcvg-git@gmane.org; Fri, 22 Dec 2006 23:38:12 +0100
+	id 1Gxt8m-00047s-13
+	for gcvg-git@gmane.org; Fri, 22 Dec 2006 23:45:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752878AbWLVWiI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 22 Dec 2006 17:38:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753149AbWLVWiI
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Dec 2006 17:38:08 -0500
-Received: from ug-out-1314.google.com ([66.249.92.169]:6169 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752878AbWLVWiH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Dec 2006 17:38:07 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so3103510uga
-        for <git@vger.kernel.org>; Fri, 22 Dec 2006 14:38:06 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=AWwi6+6A/w+AQguJ1vAsJfl9Z4kmpxqCZF598vpDulvzEazdgqpvtfJeCviEI+vdQoSGYM2bdR8awC4CdfQ/nXLkwAp9HxiuYuk7qztZ12BX6iShx4Bp4s3H2KlkwFNgz++KLL6WdNN5SjsmhE87v414P3bSVVjcBtilS+0EqzY=
-Received: by 10.67.93.6 with SMTP id v6mr1377551ugl.1166827085959;
-        Fri, 22 Dec 2006 14:38:05 -0800 (PST)
-Received: from host-81-190-25-107.torun.mm.pl ( [81.190.25.107])
-        by mx.google.com with ESMTP id 72sm13774658ugb.2006.12.22.14.38.05;
-        Fri, 22 Dec 2006 14:38:05 -0800 (PST)
-To: Nicolas Pitre <nico@cam.org>, Junio Hamano <junkio@cox.net>
-User-Agent: KMail/1.9.3
-In-Reply-To: <Pine.LNX.4.64.0612221609430.18171@xanadu.home>
-Content-Disposition: inline
+	id S1753154AbWLVWpV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Dec 2006 17:45:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753148AbWLVWpU
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Dec 2006 17:45:20 -0500
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:34490 "EHLO
+	fed1rmmtao11.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753154AbWLVWpU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Dec 2006 17:45:20 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20061222224519.OOT25875.fed1rmmtao11.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 22 Dec 2006 17:45:19 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id 1ykc1W02B1kojtg0000000; Fri, 22 Dec 2006 17:44:37 -0500
+To: Carl Worth <cworth@cworth.org>
+In-Reply-To: <877iwjinda.wl%cworth@cworth.org> (Carl Worth's message of "Fri,
+	22 Dec 2006 14:20:33 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35240>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35241>
 
-Nicolas Pitre wrote:
->=20
-> Could you at least keep me in CC when replying to me please?
+Carl Worth <cworth@cworth.org> writes:
 
-I have Cc-ed you and Junio, but somehow message I send to mailing
-list loses the Cc:. Perhaps it is time to change news client (KMail),
-or upgrade it...
+> On Thu, 21 Dec 2006 20:13:52 -0800 (PST), Linus Torvalds wrote:
+>> I do it all the time, I never even use the old-fashioned syntax any more.
+>> It's much more concise and easy to read, and it has all the nice shortcuts
+>> (like empty meaning "HEAD", so you can do "git diff ..next" to see the
+>> diff from HEAD to another branch).
+>
+> I can understand the advantage of a shortcut like "git diff ..next",
+> but I still don't understand why it's the comparison of HEAD and next
+> that's really interesting here. Wouldn't comparing the merge-base to
+> next be more desirable?
 
-> On Fri, 22 Dec 2006, Jakub Narebski wrote:
->=20
->> <opublikowany i wys=B3any>
->=20
-> ?
+"git diff ...next" should work just as well, I think.
 
-Sorry, it is added (in my locale) when both sending reply via mail,
-and to newsgroup (and to git mailing list via GMane NNTP news2mail
-interface).
+> But, really, I still don't understand exactly _what_ "diff a..b" even
+> means. Can you explain it to me?
 
+diff between two points.
 
->> Perhaps less confusing, but also less powerfull. Current notation
->> allows for pulling _without need for tracking branches_.
->=20
-> Is this really a killer feature worth the confusion?
->=20
-> If you put the repo to pull from on the command line then sure you mi=
-ght=20
-> not want a tracking branch, but if you go to the trouble of adding a=20
-> branch.blah.merge config entry then you certainly don't mind having a=
-=20
-> tracking branch?
+> Presumably the rev-parse magic is happening to the arguments. So does
+> the diff code just end up seeing the expanded equivalent of "b ^a" and
+> then just use the ^ to decide which tree to be on the left side or
+> something?
 
-I'm not sure. On one hand you have this feature, pulling without tracki=
-ng
-branch (which is nice workflow for one-branch repos at least), on the
-other hand the tracking branch tells us the remote, and we can check if
-they match.=20
+Exactly; diff just reuses the non-magic part of revision
+parameter parsing without using the ancestry traversal
+machinery (which is the magic part).
 
-On another hand, you can have two remotes which are the same repository
-(mirrors for example)... although that would be better solved by allowi=
-ng
-multiple url...
---=20
-Jakub Narebski
-Poland
+>> It's also useful exactly because of the semantics of things like "...".
+>
+> And now I'm really confused. If I'm not mistaken, rev-parse will turn
+> "a...b" into something like "a b ^$(merge-base a b)", right? So does
+> the diff code now end up seeing three different tree specifiers? What
+> does it do with that?
+
+It knows that rev-parse makes it "b a ^base", and it knows what
+the user meant is "base..b".
+
+That's all because we teach them to spell "a...b" when they want
+"base..b".  Similarly, because we allow them to spell "a..b"
+when they mean "between two points, a and b", it handles "b ^a"
+as the equivalent to giving two trees separately, as "a b".
+
+> And how is this useful? (As you said before,
+> diff is always going to end up acting on only two items, so I don't
+> see where there could be an interesting distinction from how you
+> obtain two items from "a..b" compared to "a...b".) But it might be
+> just that I'm really confused here.
+
+I do not think you are seriously saying that comparing A and
+B in this picture is meaningless:
+
+      o---o---B
+     /
+ ---M---o---A
+
+Yes, it is often useful to compare M and B, but that "often" is
+limited to the phase of the workflow where you are at A and are
+contemplating of merging B.  But merging two forked branches is
+not the only thing you do.
+
+Comparing two revisions regardless of how they are topologically
+related is useful as often.  It is only that it may not as
+useful while you are trying to merge B into A.
+
+So there are two ways to let you do both, and they need to be
+specified differently (.. vs ...)  because you need to tell it
+to do which one.
