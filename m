@@ -1,87 +1,83 @@
-From: Nicolas Vilz <niv@iaglans.de>
-Subject: Re: git-svn throwing assertion on old svn tracking branch
-Date: Fri, 22 Dec 2006 10:43:38 +0100
-Message-ID: <20061222094337.GC9595@hermes>
-References: <20061220235551.GA2974@hermes.lan.home.vilz.de> <20061221010520.GB3901@localdomain> <20061222013510.GA9595@hermes> <20061222021613.GB9595@hermes> <20061222083803.GD26800@hand.yhbt.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Updated Kernel Hacker's guide to git
+Date: Fri, 22 Dec 2006 02:26:06 -0800
+Message-ID: <7vvek41b29.fsf@assigned-by-dhcp.cox.net>
+References: <38b2ab8a0612210424o4ec5fcd5kb5086c52ccd76491@mail.gmail.com>
+	<Pine.LNX.4.64.0612211013500.3394@woody.osdl.org>
+	<38b2ab8a0612220135p6925be4cmf003811f616395ba@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 22 10:43:28 2006
+Cc: "Jay Cliburn" <jacliburn@bellsouth.net>, git@vger.kernel.org,
+	"Jeff Garzik" <jeff@garzik.org>,
+	"Linus Torvalds" <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Fri Dec 22 11:26:21 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1Gxgw4-0008GH-Ds
-	for gcvg-git@gmane.org; Fri, 22 Dec 2006 10:43:28 +0100
+	id 1GxhbT-00061X-UM
+	for gcvg-git@gmane.org; Fri, 22 Dec 2006 11:26:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946016AbWLVJnZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Dec 2006 04:43:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946015AbWLVJnZ
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Dec 2006 04:43:25 -0500
-Received: from geht-ab-wie-schnitzel.de ([217.69.165.145]:1461 "EHLO
-	vsectoor.geht-ab-wie-schnitzel.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1946010AbWLVJnZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 22 Dec 2006 04:43:25 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by vsectoor.geht-ab-wie-schnitzel.de (Postfix) with ESMTP id 066F83EE9;
-	Fri, 22 Dec 2006 10:43:16 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at vsectoor.geht-ab-wie-schnitzel.de
-Received: from vsectoor.geht-ab-wie-schnitzel.de ([127.0.0.1])
-	by localhost (vsectoor.geht-ab-wie-schnitzel.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 4fHQ7bft6y75; Fri, 22 Dec 2006 10:43:03 +0100 (CET)
-Received: from localhost (dslb-088-066-037-196.pools.arcor-ip.net [88.66.37.196])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by vsectoor.geht-ab-wie-schnitzel.de (Postfix) with ESMTP id 533733EDC;
-	Fri, 22 Dec 2006 10:43:03 +0100 (CET)
-To: Eric Wong <normalperson@yhbt.net>
-Content-Disposition: inline
-In-Reply-To: <20061222083803.GD26800@hand.yhbt.net>
-X-message-flag: Please send plain text messages only. Thank you.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1946021AbWLVK0I (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Dec 2006 05:26:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946023AbWLVK0I
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Dec 2006 05:26:08 -0500
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:61049 "EHLO
+	fed1rmmtao05.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1946021AbWLVK0H (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Dec 2006 05:26:07 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20061222102607.GDHH15640.fed1rmmtao05.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 22 Dec 2006 05:26:07 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id 1mRQ1W0031kojtg0000000; Fri, 22 Dec 2006 05:25:24 -0500
+To: "Francis Moreau" <francis.moro@gmail.com>
+In-Reply-To: <38b2ab8a0612220135p6925be4cmf003811f616395ba@mail.gmail.com>
+	(Francis Moreau's message of "Fri, 22 Dec 2006 10:35:47 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35157>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35158>
 
-On Fri, Dec 22, 2006 at 12:38:03AM -0800, Eric Wong wrote:
-> Nicolas Vilz <niv@iaglans.de> wrote:
-> > On Fri, Dec 22, 2006 at 02:35:10AM +0100, Nicolas Vilz wrote:
-> > > On Wed, Dec 20, 2006 at 05:05:20PM -0800, Eric Wong wrote:
-> > > > Nicolas Vilz <niv@iaglans.de> wrote:
-> > [...]
-> > > beneath there is svn, version 1.4.2 (r22196) ... on that repository is
-> > > Subversion version 1.1.4 (r13838).
-> > 
-> > i should ammend, that the same error message comes, when i want to
-> > dcommit something in this repository...
-> 
-> Weird, so you have the SVN:: libraries installed? (dcommit requires it).
-> Is the repository you're tracking public?  If so, I'd like to have a
-> look...
-unfortunatelly, its not public...
+"Francis Moreau" <francis.moro@gmail.com> writes:
 
-I noticed, it is not the step of committing anything, but the step to
-fetch the revisions in the svn tree. I had a workaround last night... I
-used the documentation on Advanced Example: Tracking a Reorganized
-Repository to reorganize my tree from broken old repository to
-reorganized fresh tree that is working... that all because time was
-running out this night and i had to work something.
+> I think this part is really confusing. For a new comer, saying that:
+>
+> 	git diff a b == git diff a..b
+>
+> is really not intuitive. Maybe just because adding a new symbol ".."
+> in git diff command line means (for me) that we're doing a special
+> diff. I would never thought by my own that ".." means a simple "to".
 
-I keep the old one as a souvenier... The problem lies somewhere there in
-the old branch. The history is not lost here in any case.
+We did not originally have "A B"; you were supposed to always
+say "A..B".  But all other SCM had "A B" notation, so we added
+support for both because doing so was trivial and there is no
+risk of confusion (because diff is about two points while log is
+about a set).  These two notations are interchangeable for
+"diff".  If it confuses you, you can stick to the "git diff A B"
+notation.  Of if you are like Linus, stick to "A..B" notation.
+Either way, you can pretend that the other notation does not
+even exist and be happy ;-).
 
-I backuped my repository and pruned my tree as you suggested it... I
-connected to that remote repository... and then the assertion came down
-on me. Personally i can live with that reorganized repository. If you
-are really keen on digging the error down to ground, i could try to
-setup something.
+Yes, users often wondered why "git diff" accepts "A B", "git
+log" wants "A..B" and "git log A B" is a disaster.  But the root
+cause of the confusion was not about notation but about the
+conceptual difference (two points vs a set).
 
-Perhaps back were i worked on that repository, git-svn accessed a little
-different from now....
-
-If you are still interested in digging, I think about a private solution
-for that.
-
-Sincerly
-Nicolas Vilz
+I do not think changing the meaning of "diff A..B" to what "diff
+A...B" means is a good thing.  The notation "..." even _looks_
+like a magic, and in diff context, what it does _is_ magic (it
+is magic in log context, too).  You are giving two points, but
+what actually is used as the two points for diff are different
+from what you gave; in that sense, it is a very good notation.
+Changing it would confuse and inconvenience people who already
+understood and got used to the difference between "diff" and
+"log": diff takes two points, so given usual A..B notation it
+uses A and B, while log is about a set and means 'the ones
+reachable from B, excluding the ones reachable from A'; "A...B"
+is magic and does a magical thing in both "diff" and "log",
+taking the merge bases between A and B into account.
