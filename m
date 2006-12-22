@@ -1,64 +1,82 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] sha1_name(): accept ':directory/' to get at the cache_tree
-Date: Fri, 22 Dec 2006 19:05:01 +0100
-Message-ID: <200612221905.02915.jnareb@gmail.com>
-References: <Pine.LNX.4.63.0612220318320.19693@wbgn013.biozentrum.uni-wuerzburg.de> <emg4qp$f8v$2@sea.gmane.org> <Pine.LNX.4.63.0612221315370.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: What's in git.git (stable)
+Date: Fri, 22 Dec 2006 19:09:40 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0612221902490.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <7vodpw46zj.fsf@assigned-by-dhcp.cox.net> <86k60jsvh8.fsf@blue.stonehenge.com>
+ <86fyb7sv9f.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 22 19:02:29 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 22 19:09:55 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1Gxoiw-0002VG-F2
-	for gcvg-git@gmane.org; Fri, 22 Dec 2006 19:02:26 +0100
+	id 1Gxoq6-0003j9-33
+	for gcvg-git@gmane.org; Fri, 22 Dec 2006 19:09:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752573AbWLVSCX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Dec 2006 13:02:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752517AbWLVSCX
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Dec 2006 13:02:23 -0500
-Received: from ug-out-1314.google.com ([66.249.92.172]:39079 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752573AbWLVSCW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Dec 2006 13:02:22 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so3041201uga
-        for <git@vger.kernel.org>; Fri, 22 Dec 2006 10:02:21 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=TP62aT9NXPQSnSuZ5cF3qTy7zgpGHFL2bc2Bolen27j79LzjQz6LC25HQbmzI5kU+KN74ZKUffzvwZlIfwQFK/r7MBffYWE7Imsr4CxxsG1pX/A+H2odxsbp4iUYezuFyb/dbvF115h4Nm2PkVvoHzLbo2ER63mou5VpaM+nobs=
-Received: by 10.67.21.11 with SMTP id y11mr1082712ugi.1166810540691;
-        Fri, 22 Dec 2006 10:02:20 -0800 (PST)
-Received: from host-81-190-25-107.torun.mm.pl ( [81.190.25.107])
-        by mx.google.com with ESMTP id s7sm16010695uge.2006.12.22.10.02.20;
-        Fri, 22 Dec 2006 10:02:20 -0800 (PST)
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-User-Agent: KMail/1.9.3
-In-Reply-To: <Pine.LNX.4.63.0612221315370.19693@wbgn013.biozentrum.uni-wuerzburg.de>
-Content-Disposition: inline
+	id S1751684AbWLVSJo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Dec 2006 13:09:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751699AbWLVSJo
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Dec 2006 13:09:44 -0500
+Received: from mail.gmx.net ([213.165.64.20]:51718 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751684AbWLVSJn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Dec 2006 13:09:43 -0500
+Received: (qmail invoked by alias); 22 Dec 2006 18:09:41 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp022) with SMTP; 22 Dec 2006 19:09:41 +0100
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: "Randal L. Schwartz" <merlyn@stonehenge.com>
+In-Reply-To: <86fyb7sv9f.fsf@blue.stonehenge.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35191>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35192>
 
-Johannes Schindelin wrote:
+Hi,
 
-> On Fri, 22 Dec 2006, Jakub Narebski wrote:
+On Fri, 22 Dec 2006, Randal L. Schwartz wrote:
+
+> >>>>> "Randal" == Randal L Schwartz <merlyn@stonehenge.com> writes:
 > 
->> Junio C Hamano wrote:
->> 
->>> (2) What does this do when the index is unmerged?
->> 
->> I think it should show "git ls-files --unmerged --abbrev", perhaps...
+> >>>>> "Junio" == Junio C Hamano <junkio@cox.net> writes:
+> Junio> git-pull: refuse default merge without branch.*.merge
 > 
-> Nah. I'd rather fail out, saying that because there are unmerged entries, 
-> there is no valid tree in the index.
+> Randal> Argh.  How do I get back the old behavior?
+> Randal> "git-pull origin" doesn't seem to be enough.
 
-Well, 'git diff' on unmerged IIRC does 'git diff -cc', so why not 'git show :'
-do 'git ls-files --unmerged --abbrev'...
--- 
-Jakub Narebski
-Poland
+Maybe "git-pull origin master"?
+
+> Randal> You just broke a bunch of automated scripts for me.
+> 
+> Ahh, it's "git-pull . origin".
+
+This is just a merge, not a real pull (it leaves out the fetch part).
+
+> Maybe a bit more warning for non-upward-compatible changes though, 
+> please.
+
+It is unfortunate that this change broke your scripts. But I really think 
+that the new behaviour is much saner: If you have different branches, you 
+probably do not want to pull the _same_ remote branch into _all_ of them.
+
+So, for each branch (e.g. "xyz") for which you have a preferred upstream 
+(e.g. remote "linus" with branch "master"), say
+
+	$ git repo-config branch.xyz.remote linus
+	$ git repo-config branch.xyz.merge refs/heads/master
+
+Then,
+
+	$ git pull
+
+pulls your preferred upstream. But when you pull from another remote, or 
+into another branch, without specifying which remote branch you want to 
+pull, git now refuses to blindly pull branch "master". This should prevent 
+quite some pilot errors.
+
+Ciao,
+Dscho
