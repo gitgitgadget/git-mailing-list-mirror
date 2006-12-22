@@ -1,82 +1,67 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
 Subject: Re: What's in git.git (stable)
-Date: Fri, 22 Dec 2006 19:09:40 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612221902490.19693@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <7vodpw46zj.fsf@assigned-by-dhcp.cox.net> <86k60jsvh8.fsf@blue.stonehenge.com>
- <86fyb7sv9f.fsf@blue.stonehenge.com>
+Date: 22 Dec 2006 10:12:47 -0800
+Message-ID: <861wmrsstc.fsf@blue.stonehenge.com>
+References: <7vodpw46zj.fsf@assigned-by-dhcp.cox.net>
+	<86k60jsvh8.fsf@blue.stonehenge.com>
+	<86fyb7sv9f.fsf@blue.stonehenge.com>
+	<Pine.LNX.4.63.0612221902490.19693@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 22 19:09:55 2006
+X-From: git-owner@vger.kernel.org Fri Dec 22 19:13:05 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1Gxoq6-0003j9-33
-	for gcvg-git@gmane.org; Fri, 22 Dec 2006 19:09:50 +0100
+	id 1Gxot9-0004K9-MS
+	for gcvg-git@gmane.org; Fri, 22 Dec 2006 19:13:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751684AbWLVSJo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Dec 2006 13:09:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751699AbWLVSJo
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Dec 2006 13:09:44 -0500
-Received: from mail.gmx.net ([213.165.64.20]:51718 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751684AbWLVSJn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Dec 2006 13:09:43 -0500
-Received: (qmail invoked by alias); 22 Dec 2006 18:09:41 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp022) with SMTP; 22 Dec 2006 19:09:41 +0100
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: "Randal L. Schwartz" <merlyn@stonehenge.com>
-In-Reply-To: <86fyb7sv9f.fsf@blue.stonehenge.com>
-X-Y-GMX-Trusted: 0
+	id S1751736AbWLVSMt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Dec 2006 13:12:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751738AbWLVSMt
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Dec 2006 13:12:49 -0500
+Received: from blue.stonehenge.com ([209.223.236.162]:27017 "EHLO
+	blue.stonehenge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751704AbWLVSMt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Dec 2006 13:12:49 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by blue.stonehenge.com (Postfix) with ESMTP id 5978E8FEFC;
+	Fri, 22 Dec 2006 10:12:48 -0800 (PST)
+Received: from blue.stonehenge.com ([127.0.0.1])
+ by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
+ with LMTP id 14321-01-90; Fri, 22 Dec 2006 10:12:47 -0800 (PST)
+Received: by blue.stonehenge.com (Postfix, from userid 1001)
+	id 650088FF02; Fri, 22 Dec 2006 10:12:47 -0800 (PST)
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+x-mayan-date: Long count = 12.19.13.16.9; tzolkin = 10 Muluc; haab = 2 Kankin
+In-Reply-To: <Pine.LNX.4.63.0612221902490.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35192>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35193>
 
-Hi,
+>>>>> "Johannes" == Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On Fri, 22 Dec 2006, Randal L. Schwartz wrote:
+>> Ahh, it's "git-pull . origin".
 
-> >>>>> "Randal" == Randal L Schwartz <merlyn@stonehenge.com> writes:
-> 
-> >>>>> "Junio" == Junio C Hamano <junkio@cox.net> writes:
-> Junio> git-pull: refuse default merge without branch.*.merge
-> 
-> Randal> Argh.  How do I get back the old behavior?
-> Randal> "git-pull origin" doesn't seem to be enough.
+Johannes> This is just a merge, not a real pull (it leaves out the fetch part).
 
-Maybe "git-pull origin master"?
+OK, so what does what a naked "git-pull" used to do before, which was
+"fetch origin, then pull it into the current branch"?
 
-> Randal> You just broke a bunch of automated scripts for me.
-> 
-> Ahh, it's "git-pull . origin".
+Johannes> So, for each branch (e.g. "xyz") for which you have a preferred upstream 
+Johannes> (e.g. remote "linus" with branch "master"), say
 
-This is just a merge, not a real pull (it leaves out the fetch part).
+Johannes> 	$ git repo-config branch.xyz.remote linus
+Johannes> 	$ git repo-config branch.xyz.merge refs/heads/master
 
-> Maybe a bit more warning for non-upward-compatible changes though, 
-> please.
+But that's not upward compatible.  The default should be the old behavior,
+or we need a better way to notify people that this breaks things.
 
-It is unfortunate that this change broke your scripts. But I really think 
-that the new behaviour is much saner: If you have different branches, you 
-probably do not want to pull the _same_ remote branch into _all_ of them.
-
-So, for each branch (e.g. "xyz") for which you have a preferred upstream 
-(e.g. remote "linus" with branch "master"), say
-
-	$ git repo-config branch.xyz.remote linus
-	$ git repo-config branch.xyz.merge refs/heads/master
-
-Then,
-
-	$ git pull
-
-pulls your preferred upstream. But when you pull from another remote, or 
-into another branch, without specifying which remote branch you want to 
-pull, git now refuses to blindly pull branch "master". This should prevent 
-quite some pilot errors.
-
-Ciao,
-Dscho
+-- 
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
+See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
