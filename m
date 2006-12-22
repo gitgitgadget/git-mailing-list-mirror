@@ -1,85 +1,73 @@
-From: Sean <seanlkml@sympatico.ca>
-Subject: Re: Separating "add path to index" from "update content in index"
-Date: Thu, 21 Dec 2006 22:06:32 -0500
-Message-ID: <20061221220632.46444296.seanlkml@sympatico.ca>
-References: <89b129c60612191233s5a7f36f2hd409c4b9a2bbbc5c@mail.gmail.com>
-	<7v64c7pmlw.fsf@assigned-by-dhcp.cox.net>
-	<87wt4m2o99.wl%cworth@cworth.org>
-	<7vmz5i6vqb.fsf@assigned-by-dhcp.cox.net>
-	<87vek62n1k.wl%cworth@cworth.org>
-	<7v1wmu5ecs.fsf@assigned-by-dhcp.cox.net>
-	<87tzzp3fgh.wl%cworth@cworth.org>
-	<slrneokplo.nsf.Peter.B.Baumann@xp.machine.xx>
-	<7vbqlw92fw.fsf@assigned-by-dhcp.cox.net>
-	<87d56cirs8.wl%cworth@cworth.org>
+From: "Duncan Mak" <duncan@a-chinaman.com>
+Subject: Re: [PATCH] fix vc git
+Date: Thu, 21 Dec 2006 23:11:32 -0500
+Message-ID: <8e745ecf0612212011q26f81d91uce143b4212fc5e8b@mail.gmail.com>
+References: <8e745ecf0612210325m72a569d7k370dd5953ccf6f27@mail.gmail.com>
+	 <emdr6v$9ma$1@sea.gmane.org>
+	 <8e745ecf0612210359j3f895521r1fff497a512253d3@mail.gmail.com>
+	 <7vhcvo92fx.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>,
-	Peter Baumann <Peter.B.Baumann@stud.informatik.uni-erlangen.de>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 22 04:06:47 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 22 05:11:40 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GxakA-0001Fo-EK
-	for gcvg-git@gmane.org; Fri, 22 Dec 2006 04:06:46 +0100
+	id 1Gxbkw-0008BM-BB
+	for gcvg-git@gmane.org; Fri, 22 Dec 2006 05:11:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1945923AbWLVDGf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Dec 2006 22:06:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1945924AbWLVDGf
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Dec 2006 22:06:35 -0500
-Received: from bayc1-pasmtp13.bayc1.hotmail.com ([65.54.191.173]:42404 "EHLO
-	BAYC1-PASMTP13.CEZ.ICE" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1945923AbWLVDGe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Dec 2006 22:06:34 -0500
-X-Originating-IP: [65.93.43.74]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([65.93.43.74]) by BAYC1-PASMTP13.CEZ.ICE over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
-	 Thu, 21 Dec 2006 19:06:42 -0800
-Received: from guru.attic.local ([10.10.10.28])
-	by linux1.attic.local with esmtp (Exim 4.43)
-	id 1GxZnq-0007yW-0W; Thu, 21 Dec 2006 21:06:30 -0500
-To: Carl Worth <cworth@cworth.org>
-In-Reply-To: <87d56cirs8.wl%cworth@cworth.org>
-X-Mailer: Sylpheed version 2.2.10 (GTK+ 2.10.4; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 22 Dec 2006 03:06:42.0593 (UTC) FILETIME=[34D28910:01C72576]
+	id S1751749AbWLVELe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Dec 2006 23:11:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754811AbWLVELe
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Dec 2006 23:11:34 -0500
+Received: from ug-out-1314.google.com ([66.249.92.170]:10829 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751749AbWLVELe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Dec 2006 23:11:34 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so2869319uga
+        for <git@vger.kernel.org>; Thu, 21 Dec 2006 20:11:32 -0800 (PST)
+Received: by 10.78.185.16 with SMTP id i16mr1144124huf.1166760692834;
+        Thu, 21 Dec 2006 20:11:32 -0800 (PST)
+Received: by 10.78.172.10 with HTTP; Thu, 21 Dec 2006 20:11:32 -0800 (PST)
+To: "Junio C Hamano" <junkio@cox.net>
+In-Reply-To: <7vhcvo92fx.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35124>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35125>
 
-On Thu, 21 Dec 2006 18:32:55 -0800
-Carl Worth <cworth@cworth.org> wrote:
+I don't think vc-git-registered-file will ever be called with a
+filename without a directory, as it is used as a hook on
+vc-next-action, which works on a real file.
 
-> So here I'm arguing against "git add" being a more convenient synonym
-> for "git update-index". I still think it would be nice to have a more
-> convenient synonym. I've proposed "stage" before but that wasn't well
-> accepted. Just shortening "update-index" to "update" would be
-> problematic as many other RCSs use "update" as a way of picking up new
-> content that has become available on the remote end. So, the best
-> suggestion I have at this point is "refresh". So I'd be happy if
-> either:
-> 
-> 	git refresh --add
-> or:
-> 	git add --refresh
-> 
-> would provide the behavior that currently is provided by "git add",
-> (that is, add a new path to the index and update the content of that
-> path in the index from the content of the named file in the working
-> tree). But it would be great if "git add" without the --refresh would
-> add the path without updating the content.
+Either way, it's a modified patch:
 
+Fix vc-git.el to not cd into a non-existent directory.
 
-The end result you're trying to achieve is worthwhile, but it seems the
-new git add capabilities have already taken root.  What do you think
-about accepting the new behavior of add, but offer a new command, say:
+---
 
-$ git track-file <file>
+ contrib/emacs/vc-git.el |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-Which would do exactly as you propose in your email, add the path to
-the index with empty content?
-
-Sean
+base c902c9a608c1b727160d6fbb04fa363d9418cd00
+last 96e9944b714094ab81f8091711a92506886b8004
+diff --git a/contrib/emacs/vc-git.el b/contrib/emacs/vc-git.el
+index 8b6361922fd6e6a2fcd9acb20fd54f5b645b36f0..668bd4a98653046aadf91e7a91af6cd76ba044d4
+100644
+--- a/contrib/emacs/vc-git.el
++++ b/contrib/emacs/vc-git.el
+@@ -58,7 +58,7 @@
+   (with-temp-buffer
+     (let* ((dir (file-name-directory file))
+            (name (file-relative-name file dir)))
+-      (when dir (cd dir))
++      (when (and dir (file-exists-p dir)) (cd dir))
+       (and (ignore-errors (eq 0 (call-process "git" nil '(t nil) nil
+"ls-files" "-c" "-z" "--" name)))
+            (let ((str (buffer-string)))
+              (and (> (length str) (length name))
+-- 
+1.4.4.1
