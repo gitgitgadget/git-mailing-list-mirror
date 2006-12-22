@@ -1,58 +1,92 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] Use git-merge-file in git-merge-one-file, too
-Date: Fri, 22 Dec 2006 03:20:55 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612220320340.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [PATCH] Suggest 'add' in am/revert/cherry-pick.
+Date: Thu, 21 Dec 2006 21:30:17 -0500
+Message-ID: <20061222023017.GA15136@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Fri Dec 22 03:21:01 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 22 03:30:30 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1Gxa1s-0004Yj-3W
-	for gcvg-git@gmane.org; Fri, 22 Dec 2006 03:21:00 +0100
+	id 1GxaB0-0005SW-CG
+	for gcvg-git@gmane.org; Fri, 22 Dec 2006 03:30:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1945911AbWLVCU5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Dec 2006 21:20:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1945916AbWLVCU5
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Dec 2006 21:20:57 -0500
-Received: from mail.gmx.net ([213.165.64.20]:36557 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1945911AbWLVCU4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Dec 2006 21:20:56 -0500
-Received: (qmail invoked by alias); 22 Dec 2006 02:20:55 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp038) with SMTP; 22 Dec 2006 03:20:55 +0100
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: git@vger.kernel.org, junkio@cox.net
-X-Y-GMX-Trusted: 0
+	id S1945916AbWLVCaW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Dec 2006 21:30:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1945917AbWLVCaW
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Dec 2006 21:30:22 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:32961 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1945916AbWLVCaW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Dec 2006 21:30:22 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1GxaAi-0007Qm-KC; Thu, 21 Dec 2006 21:30:08 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id BA58D20FB65; Thu, 21 Dec 2006 21:30:17 -0500 (EST)
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35120>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35121>
 
+Now that we have decided to make 'add' behave like 'update-index'
+(and therefore fully classify update-index as strictly plumbing)
+the am/revert/cherry-pick family of commands should not steer the
+user towards update-index.  Instead send them to the command they
+probably already know, 'add'.
 
-Would you believe? I edited git-merge-one-file (note the missing ".sh"!)
-when I submitted the patch which became commit e2b7008752...
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
- git-merge-one-file.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ git-am.sh     |    4 ++--
+ git-revert.sh |    2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/git-merge-one-file.sh b/git-merge-one-file.sh
-index c49e4c6..7d62d79 100755
---- a/git-merge-one-file.sh
-+++ b/git-merge-one-file.sh
-@@ -104,7 +104,7 @@ case "${1:-.}${2:-.}${3:-.}" in
- 	# Be careful for funny filename such as "-L" in "$4", which
- 	# would confuse "merge" greatly.
- 	src1=`git-unpack-file $2`
--	merge "$src1" "$orig" "$src2"
-+	git-merge-file "$src1" "$orig" "$src2"
- 	ret=$?
- 
- 	# Create the working tree file, using "our tree" version from the
+diff --git a/git-am.sh b/git-am.sh
+index 5df6787..0126a77 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -401,14 +401,14 @@ do
+ 		changed="$(git-diff-index --cached --name-only HEAD)"
+ 		if test '' = "$changed"
+ 		then
+-			echo "No changes - did you forget update-index?"
++			echo "No changes - did you forget to use 'git add'?"
+ 			stop_here_user_resolve $this
+ 		fi
+ 		unmerged=$(git-ls-files -u)
+ 		if test -n "$unmerged"
+ 		then
+ 			echo "You still have unmerged paths in your index"
+-			echo "did you forget update-index?"
++			echo "did you forget to use 'git add'?"
+ 			stop_here_user_resolve $this
+ 		fi
+ 		apply_status=0
+diff --git a/git-revert.sh b/git-revert.sh
+index 6eab3c7..50cc47b 100755
+--- a/git-revert.sh
++++ b/git-revert.sh
+@@ -155,7 +155,7 @@ Conflicts:
+ 		uniq
+ 	    } >>"$GIT_DIR/MERGE_MSG"
+ 	    echo >&2 "Automatic $me failed.  After resolving the conflicts,"
+-	    echo >&2 "mark the corrected paths with 'git-update-index <paths>'"
++	    echo >&2 "mark the corrected paths with 'git-add <paths>'"
+ 	    echo >&2 "and commit the result."
+ 	    case "$me" in
+ 	    cherry-pick)
 -- 
-1.4.4.2.gd74c-dirty
+1.4.4.3.g87d8
