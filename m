@@ -1,176 +1,61 @@
 From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: [PATCH] Make git-show-branch options similar to git-branch.
-Date: Fri, 22 Dec 2006 08:58:39 -0500
-Message-ID: <20061222135839.GB26084@179.242.249.10.in-addr.arpa>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Fri Dec 22 14:58:47 2006
+Subject: Re: Change in git-svn dcommit semantics?
+Date: Fri, 22 Dec 2006 09:09:01 -0500
+Message-ID: <3EB63EEE-0F78-47CE-B94E-325A9F6817C5@silverinsanity.com>
+References: <m2mz5jegka.fsf@ziti.local> <94FF72E0-F8BD-4773-803E-F179754BF0ED@silverinsanity.com> <Pine.LNX.4.63.0612200053550.19693@wbgn013.biozentrum.uni-wuerzburg.de> <C2881A17-27F7-467C-B353-189BB7DBFD1E@silverinsanity.com> <7v3b7bnz6q.fsf@assigned-by-dhcp.cox.net> <emb77h$cf2$1@sea.gmane.org> <360A3F7A-0849-4BCE-8550-1F05BB9821C5@silverinsanity.com> <20061220115731.GA29786@coredump.intra.peff.net>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Fri Dec 22 15:09:11 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1Gxkv5-0005lS-7t
-	for gcvg-git@gmane.org; Fri, 22 Dec 2006 14:58:43 +0100
+	id 1Gxl59-0007Y6-8S
+	for gcvg-git@gmane.org; Fri, 22 Dec 2006 15:09:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754844AbWLVN6k (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Dec 2006 08:58:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754843AbWLVN6k
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Dec 2006 08:58:40 -0500
-Received: from vs072.rosehosting.com ([216.114.78.72]:49043 "EHLO
+	id S1423057AbWLVOJE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Dec 2006 09:09:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423032AbWLVOJE
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Dec 2006 09:09:04 -0500
+Received: from vs072.rosehosting.com ([216.114.78.72]:57780 "EHLO
 	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754845AbWLVN6j (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Dec 2006 08:58:39 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by silverinsanity.com (Postfix) with ESMTP id 4E9DF1FFC02B
-	for <git@vger.kernel.org>; Fri, 22 Dec 2006 13:58:39 +0000 (UTC)
-Received: from Mutt by mutt-smtp-wrapper.pl 1.2  (www.zdo.com/articles/mutt-smtp-wrapper.shtml)
-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.4.2.1i
+	with ESMTP id S1423039AbWLVOJD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Dec 2006 09:09:03 -0500
+Received: from [IPv6???1] (localhost [127.0.0.1])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTP id 77B431FFC02B;
+	Fri, 22 Dec 2006 14:09:02 +0000 (UTC)
+In-Reply-To: <20061220115731.GA29786@coredump.intra.peff.net>
+To: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35176>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35177>
 
-Branch has "-r" for remote branches and "-a" for local and remote.
-Seems logical to mirror that in show-branch.  Also removes the
-dubiously useful "--tags" option (as part of changing the meaning for
-"--all").
+On Dec 20, 2006, at 6:57 AM, Jeff King wrote:
 
-Signed-off-by: Brian Gernhardt <benji@silverinsanity.com>
----
+> On Wed, Dec 20, 2006 at 06:47:45AM -0500, Brian Gernhardt wrote:
+>
+>>>> The --full-diff option helps because it shows the diff for other
+>>>> files (that do not have different number of substring COLLISION
+>>>> in the pre and postimage) in the same commit as well.
+>>>
+>>> Yet another undocumented option. Sigh...
+>>
+>> I'd send in a patch to fix that (little gnome work is what I do in
+>> Wikipedia, and seems to be what I do here), but the option seems to
+>> be in setup_revision.c:setup_revisions, which is used in several
+>> places.  Is there a central place to put that in the documentation?
+>> Should there be?
+>
+> Please read the rest of the thread for some explanation from Junio on
+> how this option works.
 
- Similar to my eariler patch but instead of wanting to add --remotes
- for completeness I now want to add it to mirror "git branch".  By the
- prinicple of least surprise, "git branch -a" and "git show-branch -a"
- should display the same refs.  (Same for "-r".)
+I was trying to write quick documentation for this option, placing it  
+in Documentation/diff-options.txt (is that the right place for it?),  
+when I ran across --pickaxe-all.  How do the two options differ?
 
- Documentation/git-show-branch.txt |   10 +++++---
- builtin-show-branch.c             |   40 ++++++++++++++++++++++++-------------
- 2 files changed, 32 insertions(+), 18 deletions(-)
-
-diff --git a/Documentation/git-show-branch.txt b/Documentation/git-show-branch.txt
-index 948ff10..dafacd4 100644
---- a/Documentation/git-show-branch.txt
-+++ b/Documentation/git-show-branch.txt
-@@ -8,7 +8,7 @@ git-show-branch - Show branches and their commits
- SYNOPSIS
- --------
- [verse]
--'git-show-branch' [--all] [--heads] [--tags] [--topo-order] [--current]
-+'git-show-branch' [--all] [--remotes] [--topo-order] [--current]
- 		[--more=<n> | --list | --independent | --merge-base]
- 		[--no-name | --sha1-name] [--topics] [<rev> | <glob>]...
- 
-@@ -37,9 +37,11 @@ OPTIONS
- 	branches under $GIT_DIR/refs/heads/topic, giving
- 	`topic/*` would show all of them.
- 
----all --heads --tags::
--	Show all refs under $GIT_DIR/refs, $GIT_DIR/refs/heads,
--	and $GIT_DIR/refs/tags, respectively.
-+-r|--remotes::
-+	Show the remote-tracking branches.
-+
-+-a|--all::
-+	Show both remote-tracking branches and local branches.
- 
- --current::
- 	With this option, the command includes the current
-diff --git a/builtin-show-branch.c b/builtin-show-branch.c
-index b9d9781..c67f2fa 100644
---- a/builtin-show-branch.c
-+++ b/builtin-show-branch.c
-@@ -4,7 +4,7 @@
- #include "builtin.h"
- 
- static const char show_branch_usage[] =
--"git-show-branch [--sparse] [--current] [--all] [--heads] [--tags] [--topo-order] [--more=count | --list | --independent | --merge-base ] [--topics] [<refs>...] | --reflog[=n] <branch>";
-+"git-show-branch [--sparse] [--current] [--all] [--remotes] [--topo-order] [--more=count | --list | --independent | --merge-base ] [--topics] [<refs>...] | --reflog[=n] <branch>";
- 
- static int default_num;
- static int default_alloc;
-@@ -383,6 +383,20 @@ static int append_head_ref(const char *refname, const unsigned char *sha1, int f
- 	return append_ref(refname + ofs, sha1, flag, cb_data);
- }
- 
-+static int append_remote_ref(const char *refname, const unsigned char *sha1, int flag, void *cb_data)
-+{
-+	unsigned char tmp[20];
-+	int ofs = 13;
-+	if (strncmp(refname, "refs/remotes/", ofs))
-+		return 0;
-+	/* If both heads/foo and tags/foo exists, get_sha1 would
-+	 * get confused.
-+	 */
-+	if (get_sha1(refname + ofs, tmp) || hashcmp(tmp, sha1))
-+		ofs = 5;
-+	return append_ref(refname + ofs, sha1, flag, cb_data);
-+}
-+
- static int append_tag_ref(const char *refname, const unsigned char *sha1, int flag, void *cb_data)
- {
- 	if (strncmp(refname, "refs/tags/", 10))
-@@ -423,16 +437,16 @@ static int append_matching_ref(const char *refname, const unsigned char *sha1, i
- 	return append_ref(refname, sha1, flag, cb_data);
- }
- 
--static void snarf_refs(int head, int tag)
-+static void snarf_refs(int head, int remotes)
- {
- 	if (head) {
- 		int orig_cnt = ref_name_cnt;
- 		for_each_ref(append_head_ref, NULL);
- 		sort_ref_range(orig_cnt, ref_name_cnt);
- 	}
--	if (tag) {
-+	if (remotes) {
- 		int orig_cnt = ref_name_cnt;
--		for_each_ref(append_tag_ref, NULL);
-+		for_each_ref(append_remote_ref, NULL);
- 		sort_ref_range(orig_cnt, ref_name_cnt);
- 	}
- }
-@@ -554,7 +568,7 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
- 	struct commit_list *list = NULL, *seen = NULL;
- 	unsigned int rev_mask[MAX_REVS];
- 	int num_rev, i, extra = 0;
--	int all_heads = 0, all_tags = 0;
-+	int all_heads = 0, all_remotes = 0;
- 	int all_mask, all_revs;
- 	int lifo = 1;
- 	char head[128];
-@@ -586,12 +600,10 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
- 			ac--; av++;
- 			break;
- 		}
--		else if (!strcmp(arg, "--all"))
--			all_heads = all_tags = 1;
--		else if (!strcmp(arg, "--heads"))
--			all_heads = 1;
--		else if (!strcmp(arg, "--tags"))
--			all_tags = 1;
-+		else if (!strcmp(arg, "--all") || !strcmp(arg, "-a"))
-+			all_heads = all_remotes = 1;
-+		else if (!strcmp(arg, "--remotes") || !strcmp(arg, "-r"))
-+			all_remotes = 1;
- 		else if (!strcmp(arg, "--more"))
- 			extra = 1;
- 		else if (!strcmp(arg, "--list"))
-@@ -636,11 +648,11 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
- 		usage(show_branch_usage);
- 
- 	/* If nothing is specified, show all branches by default */
--	if (ac + all_heads + all_tags == 0)
-+	if (ac + all_heads + all_remotes == 0)
- 		all_heads = 1;
- 
--	if (all_heads + all_tags)
--		snarf_refs(all_heads, all_tags);
-+	if (all_heads + all_remotes)
-+		snarf_refs(all_heads, all_remotes);
- 	if (reflog) {
- 		int reflen;
- 		if (!ac)
--- 
-1.4.4.GIT
+~~ Brian
