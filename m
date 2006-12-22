@@ -1,58 +1,121 @@
-From: Marco Roeland <marco.roeland@xs4all.nl>
-Subject: Re: cloning the kernel - why long time in "Resolving 313037 deltas"
-Date: Fri, 22 Dec 2006 09:04:50 +0100
-Message-ID: <20061222080450.GB9595@fiberbit.xs4all.nl>
-References: <86y7p57y05.fsf@blue.stonehenge.com> <Pine.LNX.4.64.0612181251020.3479@woody.osdl.org> <86r6uw9azn.fsf@blue.stonehenge.com> <Pine.LNX.4.64.0612181625140.18171@xanadu.home> <86hcvs984c.fsf@blue.stonehenge.com> <Pine.LNX.4.64.0612181414200.3479@woody.osdl.org> <8664c896xv.fsf@blue.stonehenge.com> <46a038f90612181502y3e2a41cds7f16113ad0270f31@mail.gmail.com> <991F50E2-2C98-4710-84C5-3D7348E00B64@mac.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 3/3] Don't crash during repack of a reflog with pruned commits.
+Date: Fri, 22 Dec 2006 00:16:23 -0800
+Message-ID: <7vodpw5ors.fsf@assigned-by-dhcp.cox.net>
+References: <be6b1443171482e1930bd7744a0218db0c03d611.1166748450.git.spearce@spearce.org>
+	<20061222004906.GC14789@spearce.org>
+	<20061222005606.GA14773@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Cc: Martin Langhoff <martin.langhoff@gmail.com>,
-	"Randal L. Schwartz" <merlyn@stonehenge.com>,
-	Linus Torvalds <torvalds@osdl.org>,
-	Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 22 09:05:18 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 22 09:16:31 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GxfP1-0003LC-JM
-	for gcvg-git@gmane.org; Fri, 22 Dec 2006 09:05:15 +0100
+	id 1GxfZt-0004ct-FL
+	for gcvg-git@gmane.org; Fri, 22 Dec 2006 09:16:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1945963AbWLVIFF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Dec 2006 03:05:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1945959AbWLVIFF
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Dec 2006 03:05:05 -0500
-Received: from fiberbit.xs4all.nl ([213.84.224.214]:46166 "EHLO
-	fiberbit.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1945963AbWLVIFD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Dec 2006 03:05:03 -0500
-Received: from marco by fiberbit.xs4all.nl with local (Exim 4.63)
-	(envelope-from <marco.roeland@xs4all.nl>)
-	id 1GxfOc-0002dY-LI; Fri, 22 Dec 2006 09:04:50 +0100
-To: Kyle Moffett <mrmacman_g4@mac.com>
-Content-Disposition: inline
-In-Reply-To: <991F50E2-2C98-4710-84C5-3D7348E00B64@mac.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1945965AbWLVIQ0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Dec 2006 03:16:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1945967AbWLVIQ0
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Dec 2006 03:16:26 -0500
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:48857 "EHLO
+	fed1rmmtao02.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1945965AbWLVIQZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Dec 2006 03:16:25 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20061222081624.UVTK97.fed1rmmtao02.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 22 Dec 2006 03:16:24 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id 1kFh1W00A1kojtg0000000; Fri, 22 Dec 2006 03:15:41 -0500
+To: Shawn Pearce <spearce@spearce.org>
+In-Reply-To: <20061222005606.GA14773@spearce.org> (Shawn Pearce's message of
+	"Thu, 21 Dec 2006 19:56:06 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35139>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35140>
 
-On Thursday December 21st 2006 at 20:44 Kyle Moffett wrote:
+Shawn Pearce <spearce@spearce.org> writes:
 
-> I've actually also seen filesystem operation latency double or triple  
-> if you start trying to do operations from multiple threads at once.   
-> Suddenly the already dog-slow single-CPU operations start bouncing  
-> caches and the Mac OS X mostly-whole-of-BSD-BKL across CPUs and it  
-> just crawls.  I can definitely see the local disk IO taking 100x  
-> longer than the network I/O, especially with an 8-megabit internet link.
+> Just because the commit has not been pruned does not mean that a blob
+> or tree referenced by that commit has not been pruned.
 
-The mmap() implementation on Mac OS X ate 85% percent of system time on
-the old version for git-index-pack. Of that time nearly all was spent on
-some Mach locking function. So yes the BKL like locking inside the Mach
-message passing seems to be the big culprit, perhaps Andy Tanenbaum can
-explain this on LCA 2007. <ducks>
+True.  How about this?
 
-As most developers now run multicore CPU's we notice these differences
-even better now! ;-)
--- 
-Marco Roeland
+---
+
+ builtin-reflog.c |   43 ++++++++++++++++++++++++++++++++++++++++---
+ 1 files changed, 40 insertions(+), 3 deletions(-)
+
+diff --git a/builtin-reflog.c b/builtin-reflog.c
+index d4f7353..4097c32 100644
+--- a/builtin-reflog.c
++++ b/builtin-reflog.c
+@@ -3,7 +3,7 @@
+ #include "commit.h"
+ #include "refs.h"
+ #include "dir.h"
+-#include <time.h>
++#include "tree-walk.h"
+ 
+ struct expire_reflog_cb {
+ 	FILE *newlog;
+@@ -13,13 +13,50 @@ struct expire_reflog_cb {
+ 	unsigned long expire_unreachable;
+ };
+ 
++static int tree_is_complete(const unsigned char *sha1)
++{
++	struct tree_desc desc;
++	void *buf;
++	char type[20];
++
++	buf = read_sha1_file(sha1, type, &desc.size);
++	if (!buf)
++		return 0;
++	desc.buf = buf;
++	while (desc.size) {
++		const unsigned char *elem;
++		const char *name;
++		unsigned mode;
++
++		elem = tree_entry_extract(&desc, &name, &mode);
++		if (!has_sha1_file(elem) ||
++		    (S_ISDIR(mode) && !tree_is_complete(elem))) {
++			free(buf);
++			return 0;
++		}
++		update_tree_entry(&desc);
++	}
++	free(buf);
++	return 1;
++}
++
+ static int keep_entry(struct commit **it, unsigned char *sha1)
+ {
++	struct commit *commit;
++
+ 	*it = NULL;
+ 	if (is_null_sha1(sha1))
+ 		return 1;
+-	*it = lookup_commit_reference_gently(sha1, 1);
+-	return (*it != NULL);
++	commit = lookup_commit_reference_gently(sha1, 1);
++	if (!commit)
++		return 0;
++
++	/* Make sure everything in this commit exists. */
++	parse_object(commit->object.sha1);
++	if (!tree_is_complete(commit->tree->object.sha1))
++		return 0;
++	*it = commit;
++	return 1;
+ }
+ 
+ static int expire_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
