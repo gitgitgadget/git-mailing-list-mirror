@@ -1,66 +1,71 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [PATCH] Don't define _XOPEN_SOURCE on MacOSX and FreeBSD as it is too restricting
-Date: Thu, 21 Dec 2006 20:04:03 -0500
-Message-ID: <20061222010403.GC14773@spearce.org>
-References: <Pine.LNX.4.64.0612201524230.3576@woody.osdl.org> <caf068570612201636g75180138r223aef7c42f69a50@mail.gmail.com> <7vtzzq3wo6.fsf@assigned-by-dhcp.cox.net> <caf068570612201654s3949202cl55bd21307ca59453@mail.gmail.com> <7vodpy3vxi.fsf@assigned-by-dhcp.cox.net> <86vek6vyc7.fsf@blue.stonehenge.com> <caf068570612201735o776e01a8he2e9ab90fc2ee4f@mail.gmail.com> <20061221103938.GA7055@fiberbit.xs4all.nl> <20061221112835.GA7713@fiberbit.xs4all.nl> <7v64c492fv.fsf@assigned-by-dhcp.cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 3/3] Don't crash during repack of a reflog with pruned commits.
+Date: Fri, 22 Dec 2006 02:18:33 +0100
+Organization: At home
+Message-ID: <emfbk4$f45$1@sea.gmane.org>
+References: <be6b1443171482e1930bd7744a0218db0c03d611.1166748450.git.spearce@spearce.org> <20061222004906.GC14789@spearce.org> <7vmz5g92h7.fsf@assigned-by-dhcp.cox.net> <20061222010018.GB14773@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Marco Roeland <marco.roeland@xs4all.nl>,
-	Terje Sten Bjerkseth <terje@bjerkseth.org>,
-	"Randal L. Schwartz" <merlyn@stonehenge.com>,
-	Linus Torvalds <torvalds@osdl.org>,
-	Rocco Rutte <pdmef@gmx.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 22 02:04:35 2006
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Fri Dec 22 02:17:50 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GxYpo-0004pn-Ih
-	for gcvg-git@gmane.org; Fri, 22 Dec 2006 02:04:28 +0100
+	id 1GxZ2h-0006Vv-8e
+	for gcvg-git@gmane.org; Fri, 22 Dec 2006 02:17:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423177AbWLVBEO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Dec 2006 20:04:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423172AbWLVBEO
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Dec 2006 20:04:14 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:58335 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1423177AbWLVBEM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Dec 2006 20:04:12 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1GxYpH-00066I-Um; Thu, 21 Dec 2006 20:03:56 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 3383320FB65; Thu, 21 Dec 2006 20:04:04 -0500 (EST)
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7v64c492fv.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1945894AbWLVBRi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Dec 2006 20:17:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1945899AbWLVBRi
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Dec 2006 20:17:38 -0500
+Received: from main.gmane.org ([80.91.229.2]:34272 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1945894AbWLVBRi (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Dec 2006 20:17:38 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1GxZ1o-00043p-DH
+	for git@vger.kernel.org; Fri, 22 Dec 2006 02:16:55 +0100
+Received: from host-81-190-25-107.torun.mm.pl ([81.190.25.107])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 22 Dec 2006 02:16:52 +0100
+Received: from jnareb by host-81-190-25-107.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 22 Dec 2006 02:16:52 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-25-107.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35110>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35111>
 
-Junio C Hamano <junkio@cox.net> wrote:
->  #0.5 Have you checked the tip of 'master' that has Terje's
->       patch?  It was reported to work yesterday and that is what
->       was committed already.
+Shawn Pearce wrote:
 
-OK, but that isn't applied in next for some reason.  I'm still
-carrying around my own version of Terje's patch.  :-(
- 
->  #1   __APPLE__ vs __APPLE_CC__ is not something I can decide (I
->       do not run a Mac).  If MaxOS is derived from FreeBSD, does
->       it by chance define __FreeBSD as well?
+> Junio C Hamano <junkio@cox.net> wrote:
+>> "Shawn O. Pearce" <spearce@spearce.org> writes:
+>> 
+>>> If the user has been using reflog for a long time (e.g. since its
+>>> introduction) then it is very likely that an existing branch's
+>>> reflog may still mention commits which have long since been pruned
+>>> out of the repository.
+>> 
+>> I've thought about this issue when I did the repack/prune; my
+>> take on this was you should prune reflog first then repack.
+> 
+> OK, but we should suggest that to the user rather than just
+> cryptically saying 'fatal: bad object refs/heads/build'.
 
-__FreeBSD doesn't work here on my Mac.
-
+I still think it is a good idea to allow user (experienced user)
+to set to not consider reflog for saving. Especially that there
+exist repositories which have reflogs with long pruned commits,
+and it would be nice to preserve the reflog info, even if some of
+information is not available.
 -- 
-Shawn.
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
