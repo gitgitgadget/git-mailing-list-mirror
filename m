@@ -1,64 +1,56 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: What's in git.git (stable)
-Date: Fri, 22 Dec 2006 21:04:09 +0100
-Organization: At home
-Message-ID: <emhdir$he9$1@sea.gmane.org>
-References: <7vodpw46zj.fsf@assigned-by-dhcp.cox.net> <86k60jsvh8.fsf@blue.stonehenge.com> <86fyb7sv9f.fsf@blue.stonehenge.com> <7vwt4jzrjb.fsf@assigned-by-dhcp.cox.net>
+From: Nicolas Pitre <nico@cam.org>
+Subject: [PATCH] make the message about the need for a new branch a bit clearer
+Date: Fri, 22 Dec 2006 15:06:54 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0612221502360.18171@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Fri Dec 22 21:02:05 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 22 21:07:06 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1Gxqaj-0007ES-25
-	for gcvg-git@gmane.org; Fri, 22 Dec 2006 21:02:05 +0100
+	id 1GxqfT-00082h-No
+	for gcvg-git@gmane.org; Fri, 22 Dec 2006 21:07:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752475AbWLVUCA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 22 Dec 2006 15:02:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752356AbWLVUCA
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Dec 2006 15:02:00 -0500
-Received: from main.gmane.org ([80.91.229.2]:33669 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752451AbWLVUB7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Dec 2006 15:01:59 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GxqaS-0008Oe-2B
-	for git@vger.kernel.org; Fri, 22 Dec 2006 21:01:48 +0100
-Received: from host-81-190-25-107.torun.mm.pl ([81.190.25.107])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 22 Dec 2006 21:01:48 +0100
-Received: from jnareb by host-81-190-25-107.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 22 Dec 2006 21:01:48 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-25-107.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1752563AbWLVUGz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Dec 2006 15:06:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752578AbWLVUGz
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Dec 2006 15:06:55 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:15261 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752563AbWLVUGz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Dec 2006 15:06:55 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JAO00JW9YJIPZA0@VL-MO-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Fri, 22 Dec 2006 15:06:54 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35204>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35205>
 
-<opublikowany i wys=B3any>
+Signed-off-by: Nicolas Pitre <nico@cam.org>
+---
 
-Junio C Hamano wrote:
-
-> Possibilities:
->=20
-> =A0(1) Forget about that "protection" business. =A0If you do not
-> =A0 =A0 =A0want mistakes, use 'branch.*.merge' but otherwise we will
-> =A0 =A0 =A0continue to follow the good old "first set of branches"
-> =A0 =A0 =A0rule.
-
-What about marking default branch to merge explicitely using
-"Merge:" in remotes/<repo>, or remote.<name>.merge?
-
---=20
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+diff --git a/git-checkout.sh b/git-checkout.sh
+index c877440..923d81c 100755
+--- a/git-checkout.sh
++++ b/git-checkout.sh
+@@ -146,8 +146,11 @@ fi
+ 
+ [ -z "$branch$newbranch" ] &&
+ 	[ "$new" != "$old" ] &&
+-	die "git checkout: to checkout the requested commit you need to specify 
+-              a name for a new branch which is created and switched to"
++	die "git checkout: provided reference cannot be checked out directly
++
++  You need -b to associate a new branch with the wanted checkout. Example:
++  git checkout -b <new_branch_name> $arg
++"
+ 
+ if [ "X$old" = X ]
+ then
