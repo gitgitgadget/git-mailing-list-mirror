@@ -1,106 +1,83 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 2/2] git-commit-tree: if i18n.commitencoding is utf-8 (default),
- check it
-Date: Fri, 22 Dec 2006 22:06:08 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612222204010.19693@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <11655782712452-git-send-email-zeisberg@informatik.uni-freiburg.de>
- <20061221085907.GA2244@cepheus> <Pine.LNX.4.63.0612211050450.19693@wbgn013.biozentrum.uni-wuerzburg.de>
- <200612211623.14236.litvinov2004@gmail.com> <7vejqtaz7q.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0612220351520.19693@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0612221030440.18171@xanadu.home> <7vslf7zrdp.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: warning merge message
+Date: Fri, 22 Dec 2006 13:12:00 -0800
+Message-ID: <7vodpvy6sf.fsf@assigned-by-dhcp.cox.net>
+References: <867728.44872.qm@web31814.mail.mud.yahoo.com>
+	<7vr6us92m2.fsf@assigned-by-dhcp.cox.net>
+	<7v1wms79mg.fsf@assigned-by-dhcp.cox.net>
+	<200612222142.15489.Josef.Weidendorfer@gmx.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Nicolas Pitre <nico@cam.org>,
-	=?iso-8859-1?Q?Uwe_Kleine-K=F6nig?= 
-	<zeisberg@informatik.uni-freiburg.de>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 22 22:06:22 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Luben Tuikov <ltuikov@yahoo.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 22 22:12:09 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1Gxrao-0004iL-1R
-	for gcvg-git@gmane.org; Fri, 22 Dec 2006 22:06:14 +0100
+	id 1GxrgV-0005la-Oc
+	for gcvg-git@gmane.org; Fri, 22 Dec 2006 22:12:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752724AbWLVVGL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Dec 2006 16:06:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752731AbWLVVGL
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Dec 2006 16:06:11 -0500
-Received: from mail.gmx.net ([213.165.64.20]:44127 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752724AbWLVVGK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Dec 2006 16:06:10 -0500
-Received: (qmail invoked by alias); 22 Dec 2006 21:06:08 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp044) with SMTP; 22 Dec 2006 22:06:08 +0100
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vslf7zrdp.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S1752872AbWLVVME (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Dec 2006 16:12:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752869AbWLVVME
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Dec 2006 16:12:04 -0500
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:62213 "EHLO
+	fed1rmmtao04.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752789AbWLVVMB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Dec 2006 16:12:01 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20061222211200.BXEP7494.fed1rmmtao04.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 22 Dec 2006 16:12:00 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id 1xBJ1W0021kojtg0000000; Fri, 22 Dec 2006 16:11:18 -0500
+To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+In-Reply-To: <200612222142.15489.Josef.Weidendorfer@gmx.de> (Josef
+	Weidendorfer's message of "Fri, 22 Dec 2006 21:42:15 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35219>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35220>
 
+Josef Weidendorfer <Josef.Weidendorfer@gmx.de> writes:
 
-Now, git-commit-tree refuses to commit when i18n.commitencoding is
-either unset, or set to "utf-8", and the commit message does not
-minimally conform to the UTF-8 encoding.
+> On Friday 22 December 2006 07:00, Junio C Hamano wrote:
+>> Junio C Hamano <junkio@cox.net> writes:
+>> 
+>> > The above message was meant only for "git pull", but was leaked
+>> > even when you did "git fetch"; it was a bug and was corrected
+>> > already (hopefully).
+>> 
+>> Gaah... it turns out that it was not fixed properly.
+>
+> Sorry, I am missing something.
 
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
----
+You are not missing anything -- I CC'ed you not because I meant
+to point fingers at you but I hoped you had better ideas since
+you touched the related logic recently.
 
-	Unfortunately, I could not think of a shorter oneline description. 
-	But my next patch fixes at least the output in shortlog.
+> What is the exact problem that goes wrong here?
 
- builtin-commit-tree.c |   14 ++++++++++++--
- 1 files changed, 12 insertions(+), 2 deletions(-)
+The problem is the same as on another thread where Merlyn got
+his scripts broken.  It is not _issuing_ the warning that is
+wrong anymore, but is about deciding how to decide that no merge
+candidate should exist.
 
-diff --git a/builtin-commit-tree.c b/builtin-commit-tree.c
-index 856f3cd..810b440 100644
---- a/builtin-commit-tree.c
-+++ b/builtin-commit-tree.c
-@@ -7,6 +7,7 @@
- #include "commit.h"
- #include "tree.h"
- #include "builtin.h"
-+#include "utf8.h"
- 
- #define BLOCKING (1ul << 14)
- 
-@@ -32,7 +33,7 @@ static void add_buffer(char **bufp, unsigned int *sizep, const char *fmt, ...)
- 	len = vsnprintf(one_line, sizeof(one_line), fmt, args);
- 	va_end(args);
- 	size = *sizep;
--	newsize = size + len;
-+	newsize = size + len + 1;
- 	alloc = (size + 32767) & ~32767;
- 	buf = *bufp;
- 	if (newsize > alloc) {
-@@ -40,7 +41,7 @@ static void add_buffer(char **bufp, unsigned int *sizep, const char *fmt, ...)
- 		buf = xrealloc(buf, alloc);
- 		*bufp = buf;
- 	}
--	*sizep = newsize;
-+	*sizep = newsize - 1;
- 	memcpy(buf + size, one_line, len);
- }
- 
-@@ -127,6 +128,15 @@ int cmd_commit_tree(int argc, const char **argv, const char *prefix)
- 	while (fgets(comment, sizeof(comment), stdin) != NULL)
- 		add_buffer(&buffer, &size, "%s", comment);
- 
-+	/* And check the encoding */
-+	buffer[size] = '\0';
-+	if (!strcmp(git_commit_encoding, "utf-8") && utf8_strlen(buffer) < 0) {
-+		fprintf(stderr, "Commit message does not conform to UTF-8.\n"
-+			"Please fix the message,"
-+			" or set the config variable i18n.commitencoding.\n");
-+		return 1;
-+	}
-+
- 	if (!write_sha1_file(buffer, size, commit_type, commit_sha1)) {
- 		printf("%s\n", sha1_to_hex(commit_sha1));
- 		return 0;
--- 
-1.4.4.3.ge5f98-dirty
+We used to always merge with the first set of branches (either
+the first "Pull: " line in remotes/$origin or the first instance
+of "remotes.$origin.fetch" configuration).  Santi then added
+"branch.$current.merge" to override that depending on what
+branch we are currently on, which was backward compatible --
+without such a configuration, we still used the "first set of
+branches" rule.
+
+People for a long time observed "the first set of branches" rule
+was often a wrong thing to do while on a branch other than
+'master' (but we do not want to add hardcoded 'master'
+unnecessarily), and I recently screwed up by changing the logic
+in such a way that everything is marked as not-for-merge unless
+branches.*.merge is not set when pulling from the default
+remote, which was completely bogus and bitten Luben.
