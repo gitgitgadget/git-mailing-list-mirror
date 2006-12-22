@@ -1,123 +1,123 @@
-From: "Francis Moreau" <francis.moro@gmail.com>
-Subject: Re: Updated Kernel Hacker's guide to git
-Date: Fri, 22 Dec 2006 10:35:47 +0100
-Message-ID: <38b2ab8a0612220135p6925be4cmf003811f616395ba@mail.gmail.com>
-References: <38b2ab8a0612210424o4ec5fcd5kb5086c52ccd76491@mail.gmail.com>
-	 <Pine.LNX.4.64.0612211013500.3394@woody.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: What's cooking in git.git (topics)
+Date: Fri, 22 Dec 2006 01:37:50 -0800
+Message-ID: <7vzm9g2rv5.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Jay Cliburn" <jacliburn@bellsouth.net>, git@vger.kernel.org,
-	"Jeff Garzik" <jeff@garzik.org>
-X-From: git-owner@vger.kernel.org Fri Dec 22 10:35:59 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Fri Dec 22 10:38:36 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1Gxgon-0007Kj-Rc
-	for gcvg-git@gmane.org; Fri, 22 Dec 2006 10:35:58 +0100
+	id 1GxgrH-0007gD-IP
+	for gcvg-git@gmane.org; Fri, 22 Dec 2006 10:38:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946008AbWLVJft (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Dec 2006 04:35:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965144AbWLVJft
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Dec 2006 04:35:49 -0500
-Received: from wx-out-0506.google.com ([66.249.82.230]:34805 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965113AbWLVJfs (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Dec 2006 04:35:48 -0500
-Received: by wx-out-0506.google.com with SMTP id h27so2680880wxd
-        for <git@vger.kernel.org>; Fri, 22 Dec 2006 01:35:47 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=mUFGujtt9PrRKS1eaiAvyKhbCe+4+2Npwnf2uauuHcn1l9XUSx7YQmIeXoXLZXbUupLOCcSSsYjtNMWy/1cJVO6b/QLa5ZRijDPalfn5PtC3r7Ri245f79FoLQqQtYnYo/u0UkD10gFVKkbhkygYS7i/Nf8je6K3/MpAkncw1OM=
-Received: by 10.90.32.14 with SMTP id f14mr9191798agf.1166780147899;
-        Fri, 22 Dec 2006 01:35:47 -0800 (PST)
-Received: by 10.90.106.16 with HTTP; Fri, 22 Dec 2006 01:35:47 -0800 (PST)
-To: "Linus Torvalds" <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0612211013500.3394@woody.osdl.org>
-Content-Disposition: inline
+	id S1946011AbWLVJhw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Dec 2006 04:37:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946015AbWLVJhw
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Dec 2006 04:37:52 -0500
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:57275 "EHLO
+	fed1rmmtao05.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1946013AbWLVJhv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Dec 2006 04:37:51 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20061222093750.FZKI15640.fed1rmmtao05.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 22 Dec 2006 04:37:50 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id 1ld81W0031kojtg0000000; Fri, 22 Dec 2006 04:37:08 -0500
+To: git@vger.kernel.org
+X-master-at: 2295e8d0c4cec41fbe257ddb957516a7c1a139df
+X-next-at: e228b5351ee4831987e1d1a82d842c92042fd27a
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35154>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35155>
 
-Linus Torvalds wrote:
->
-> In short, for git diff (and ONLY) git diff, all of these are the same:
->
-> 	git diff a..b
-> 	git diff a b
-> 	git diff b ^a
->
+Here are the topics that have been cooking.  Commits prefixed
+with '-' are only in 'pu' while commits prefixed with '+' are
+in 'next'.  The topics list the commits in reverse chronological
+order.
 
-I think this part is really confusing. For a new comer, saying that:
+* jc/rm (Fri Dec 22 01:02:59 2006 -0800) 2 commits
+ - t3600: update the test for updated git rm
+ - git-rm: update to saner semantics
 
-	git diff a b == git diff a..b
+This still needs 'require -r to descend into directories'
+safety.  I'd really want to have this in v1.5.0.
 
-is really not intuitive. Maybe just because adding a new symbol ".."
-in git diff command line means (for me) that we're doing a special
-diff. I would never thought by my own that ".." means a simple "to".
+* jc/fsck-reflog (Fri Dec 22 00:46:33 2006 -0800) 8 commits
+ + reflog expire: prune commits that are not incomplete
+ + Don't crash during repack of a reflog with pruned commits.
+ + git reflog expire
+ + Move in_merge_bases() to commit.c
+ + reflog: fix warning message.
+ + Teach git-repack to preserve objects referred to by reflog
+   entries.
+ + Protect commits recorded in reflog from pruning.
+ + add for_each_reflog_ent() iterator
 
-> [ ADDITIONALLY git diff _also_ has a magic special case of
->
-> 	git diff a b ^c
->
->   which actually means the same as "git diff c..a" (and "b" is
->   totally ignored). That may sound strange, but it's because the
->   expression "a...b" means "b a --not $(git-merge-base a b)", and so what
->   you actually WANT is that if you do
->
-> 	git diff a...b
->
->   you should get "diff from merge-base to b", so when "a...b" expands to
->   "b a ^merge-base", then git understands that if it gets that stange
->   command line with THREE commits, and one of them is negated, you really
->   wanted the diff from the negated one to the first one ]
->
-> It basically all boils down to:
->
-> 	"git diff" is special
->
+The latest 'reflog expire' hopefully should revive Shawn's
+repository and make prune or repack working again for him.
 
-but this very special part of git diff is also not documented at all
-when reading the manual of git-diff... Maybe it can be reached by
-others manuals ?
+Tip for 'next' users.  fsck and prune consider commits that are
+referenced by reflog entries reachable, but your repositories
+may have been pruned by earlier 'prune' already, which may cause
+repack to barf and refuse.  Please use 'reflog expire --all' to
+prune out reflog entries that refer to commits that are already
+lost if repack fails in your repository and try again.
 
-> exactly because unlike almost ALL other git commands, "git diff" does not
-> work on a _list_ of commits, it only works on two end-points. That means
-> that the "list operations" actually end up meaning something else for git
-> diff than they do for "git log" and friends.
->
+Because we have made the reflog enabled by default, I really
+would want to have this in v1.5.0 to prevent unbounded growth of
+reflog files.
 
-I think I got your point now: git-diff only works on two end-points.
+I think none of the rest are 'must have's for v1.5.0.  Perhaps
+except for js/rerere series.
 
-
-Why not making it less special as follow:
-
-	git diff a b
-	git diff b ^a
-
-These two diff commands are the same. They do a diff between a and b
-end-points (maybe commits is better there since we don't add one more
-keyword). It's similar to diff command. For me it's quite intuitive.
-
-	git diff a..b
-
-Ok now the command syntax is more special (maybe simply because
-traditional diff() does not have a similar syntax, it's really
-specific to git). "git log" and friends have a similar syntax and they
-do work on a list of commits. For consistency sake, make this commad
-works on commit list too. Therefore this command would end up doing
-exactly the same thing like "git diff a...b"
-
-	git diff a...b
-
-No more need of this special syntax.
-
-
-What do you think ?
-
-thanks
--- 
-Francis
+* js/rerere (Wed Dec 20 17:39:41 2006 +0100) 3 commits
+ + Make git-rerere a builtin
+ + Add a test for git-rerere
+ + move read_mmfile() into xdiff-interface
+* jc/skip-count (Tue Dec 19 18:25:32 2006 -0800) 1 commit
+ + revision: --skip=<n>
+* jn/web (Sat Dec 16 17:12:55 2006 +0100) 1 commit
+ - gitweb: Add some mod_perl specific support
+* jc/git-add--interactive (Mon Dec 11 17:09:26 2006 -0800) 2 commits
+ + git-add --interactive: hunk splitting
+ + git-add --interactive
+* jc/explain (Mon Dec 4 19:35:04 2006 -0800) 1 commit
+ - git-explain
+* jc/3way (Wed Nov 29 18:53:13 2006 -0800) 1 commit
+ + git-merge: preserve and merge local changes when doing fast
+   forward
+* js/shallow (Fri Nov 24 16:00:13 2006 +0100) 15 commits
+ + fetch-pack: Do not fetch tags for shallow clones.
+ + get_shallow_commits: Avoid memory leak if a commit has been
+   reached already.
+ + git-fetch: Reset shallow_depth before auto-following tags.
+ + upload-pack: Check for NOT_SHALLOW flag before sending a shallow
+   to the client.
+ + fetch-pack: Properly remove the shallow file when it becomes
+   empty.
+ + shallow clone: unparse and reparse an unshallowed commit
+ + Why didn't we mark want_obj as ~UNINTERESTING in the old code?
+ + Why does it mean we do not have to register shallow if we have
+   one?
+ + We should make sure that the protocol is still extensible.
+ + add tests for shallow stuff
+ + Shallow clone: do not ignore shallowness when following tags
+ + allow deepening of a shallow repository
+ + allow cloning a repository "shallowly"
+ + support fetching into a shallow repository
+ + upload-pack: no longer call rev-list
+* jc/web (Wed Nov 8 14:54:09 2006 -0800) 1 commit
+ - gitweb: steal loadavg throttle from kernel.org
+* jc/pickaxe (Sun Nov 5 11:52:43 2006 -0800) 1 commit
+ - blame: --show-stats for easier optimization work.
+* jc/diff (Mon Sep 25 23:03:34 2006 -0700) 1 commit
+ - para-walk: walk n trees, index and working tree in parallel
+* jc/diff-apply-patch (Fri Sep 22 16:17:58 2006 -0700) 1 commit
+ + git-diff/git-apply: make diff output a bit friendlier to GNU patch
+   (part 2)
