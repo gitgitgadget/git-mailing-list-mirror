@@ -1,35 +1,35 @@
 From: Shawn Pearce <spearce@spearce.org>
 Subject: Re: [PATCH 3/3] Don't crash during repack of a reflog with pruned commits.
-Date: Thu, 21 Dec 2006 19:56:06 -0500
-Message-ID: <20061222005606.GA14773@spearce.org>
-References: <be6b1443171482e1930bd7744a0218db0c03d611.1166748450.git.spearce@spearce.org> <20061222004906.GC14789@spearce.org>
+Date: Thu, 21 Dec 2006 20:00:18 -0500
+Message-ID: <20061222010018.GB14773@spearce.org>
+References: <be6b1443171482e1930bd7744a0218db0c03d611.1166748450.git.spearce@spearce.org> <20061222004906.GC14789@spearce.org> <7vmz5g92h7.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 22 01:56:16 2006
+X-From: git-owner@vger.kernel.org Fri Dec 22 02:00:39 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GxYhr-0003tt-2A
-	for gcvg-git@gmane.org; Fri, 22 Dec 2006 01:56:15 +0100
+	id 1GxYm1-0004PK-Vw
+	for gcvg-git@gmane.org; Fri, 22 Dec 2006 02:00:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423171AbWLVA4L (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Dec 2006 19:56:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423147AbWLVA4L
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Dec 2006 19:56:11 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:58001 "EHLO
+	id S1423147AbWLVBAa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Dec 2006 20:00:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423174AbWLVBAa
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Dec 2006 20:00:30 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:58194 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1423171AbWLVA4J (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Dec 2006 19:56:09 -0500
+	with ESMTP id S1423147AbWLVBAa (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Dec 2006 20:00:30 -0500
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1GxYha-0005iI-3U; Thu, 21 Dec 2006 19:55:58 -0500
+	id 1GxYlm-0005rU-B7; Thu, 21 Dec 2006 20:00:18 -0500
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 74E1820FB65; Thu, 21 Dec 2006 19:56:06 -0500 (EST)
+	id C236120FB65; Thu, 21 Dec 2006 20:00:23 -0500 (EST)
 To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
-In-Reply-To: <20061222004906.GC14789@spearce.org>
+In-Reply-To: <7vmz5g92h7.fsf@assigned-by-dhcp.cox.net>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -42,30 +42,21 @@ X-Source-Dir:
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35107>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35108>
 
-"Shawn O. Pearce" <spearce@spearce.org> wrote:
-> If the user has been using reflog for a long time (e.g. since its
-> introduction) then it is very likely that an existing branch's
-> reflog may still mention commits which have long since been pruned
-> out of the repository.
+Junio C Hamano <junkio@cox.net> wrote:
+> "Shawn O. Pearce" <spearce@spearce.org> writes:
 > 
-> Rather than aborting with a very useless error message during
-> git-repack, pack as many valid commits as we can get from the
-> reflog and let the user know that the branch's reflog contains
-> already pruned commits.  A future 'git reflog expire' (or whatever
-> it finally winds up being called) can then be performed to expunge
-> those reflog entries.
+> > If the user has been using reflog for a long time (e.g. since its
+> > introduction) then it is very likely that an existing branch's
+> > reflog may still mention commits which have long since been pruned
+> > out of the repository.
+> 
+> I've thought about this issue when I did the repack/prune; my
+> take on this was you should prune reflog first then repack.
 
-If its not obvious from the patch, this doesn't entirely fix the
-problem.
-
-Just because the commit has not been pruned does not mean that a blob
-or tree referenced by that commit has not been pruned.  Right now
-I am missing 1 blob and cannot repack because of it.
-
-At least with this series of 3 patches the error message resulting
-from this one missing blob is clearer.
+OK, but we should suggest that to the user rather than just
+cryptically saying 'fatal: bad object refs/heads/build'.
 
 -- 
 Shawn.
