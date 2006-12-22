@@ -1,115 +1,87 @@
-From: "Lars Hjemli" <hjemli@gmail.com>
-Subject: Re: confusion over the new branch and merge config
-Date: Fri, 22 Dec 2006 10:39:30 +0100
-Message-ID: <8c5c35580612220139x491dc3ecwf3fc60dda2fa379f@mail.gmail.com>
-References: <Pine.LNX.4.64.0612211555210.18171@xanadu.home>
-	 <200612220841.46016.andyparkins@gmail.com>
+From: Nicolas Vilz <niv@iaglans.de>
+Subject: Re: git-svn throwing assertion on old svn tracking branch
+Date: Fri, 22 Dec 2006 10:43:38 +0100
+Message-ID: <20061222094337.GC9595@hermes>
+References: <20061220235551.GA2974@hermes.lan.home.vilz.de> <20061221010520.GB3901@localdomain> <20061222013510.GA9595@hermes> <20061222021613.GB9595@hermes> <20061222083803.GD26800@hand.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Nicolas Pitre" <nico@cam.org>
-X-From: git-owner@vger.kernel.org Fri Dec 22 10:39:41 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 22 10:43:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GxgsP-0007nj-0z
-	for gcvg-git@gmane.org; Fri, 22 Dec 2006 10:39:41 +0100
+	id 1Gxgw4-0008GH-Ds
+	for gcvg-git@gmane.org; Fri, 22 Dec 2006 10:43:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946013AbWLVJji (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Dec 2006 04:39:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946010AbWLVJji
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Dec 2006 04:39:38 -0500
-Received: from nf-out-0910.google.com ([64.233.182.184]:31113 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1946015AbWLVJjh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Dec 2006 04:39:37 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so3379418nfa
-        for <git@vger.kernel.org>; Fri, 22 Dec 2006 01:39:35 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=N4kl/YodB670gp6eUHjTKyYiM0nc9JVzgVKSZg7G/jT2HIrRQsgMovpWhzbA6wRz99k4nuv0X4+3YkXStSJRXgUNHHupE7SV5LykCORi+VPgSWE87Jvvj+aYz2usef1TEc/G5PYDtua7Y6ScVlywStIGqCUEyafBfrcAo/xiIj0=
-Received: by 10.82.172.15 with SMTP id u15mr536481bue.1166780375752;
-        Fri, 22 Dec 2006 01:39:35 -0800 (PST)
-Received: by 10.82.171.10 with HTTP; Fri, 22 Dec 2006 01:39:30 -0800 (PST)
-To: "Andy Parkins" <andyparkins@gmail.com>
-In-Reply-To: <200612220841.46016.andyparkins@gmail.com>
+	id S1946016AbWLVJnZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Dec 2006 04:43:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946015AbWLVJnZ
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Dec 2006 04:43:25 -0500
+Received: from geht-ab-wie-schnitzel.de ([217.69.165.145]:1461 "EHLO
+	vsectoor.geht-ab-wie-schnitzel.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1946010AbWLVJnZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 22 Dec 2006 04:43:25 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by vsectoor.geht-ab-wie-schnitzel.de (Postfix) with ESMTP id 066F83EE9;
+	Fri, 22 Dec 2006 10:43:16 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at vsectoor.geht-ab-wie-schnitzel.de
+Received: from vsectoor.geht-ab-wie-schnitzel.de ([127.0.0.1])
+	by localhost (vsectoor.geht-ab-wie-schnitzel.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 4fHQ7bft6y75; Fri, 22 Dec 2006 10:43:03 +0100 (CET)
+Received: from localhost (dslb-088-066-037-196.pools.arcor-ip.net [88.66.37.196])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by vsectoor.geht-ab-wie-schnitzel.de (Postfix) with ESMTP id 533733EDC;
+	Fri, 22 Dec 2006 10:43:03 +0100 (CET)
+To: Eric Wong <normalperson@yhbt.net>
 Content-Disposition: inline
+In-Reply-To: <20061222083803.GD26800@hand.yhbt.net>
+X-message-flag: Please send plain text messages only. Thank you.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35156>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35157>
 
-On 12/22/06, Andy Parkins <andyparkins@gmail.com> wrote:
-> On Thursday 2006 December 21 22:17, Nicolas Pitre wrote:
-> > $ git branch -r
-> > * master
-> >   origin/HEAD
-> >   origin/html
-> >   origin/maint
-> >   origin/man
-> >   origin/master
-> >   origin/next
-> >   origin/pu
-> >   origin/todo
->
-> I'm trying to track down why "master" is being shown in this case";
+On Fri, Dec 22, 2006 at 12:38:03AM -0800, Eric Wong wrote:
+> Nicolas Vilz <niv@iaglans.de> wrote:
+> > On Fri, Dec 22, 2006 at 02:35:10AM +0100, Nicolas Vilz wrote:
+> > > On Wed, Dec 20, 2006 at 05:05:20PM -0800, Eric Wong wrote:
+> > > > Nicolas Vilz <niv@iaglans.de> wrote:
+> > [...]
+> > > beneath there is svn, version 1.4.2 (r22196) ... on that repository is
+> > > Subversion version 1.1.4 (r13838).
+> > 
+> > i should ammend, that the same error message comes, when i want to
+> > dcommit something in this repository...
+> 
+> Weird, so you have the SVN:: libraries installed? (dcommit requires it).
+> Is the repository you're tracking public?  If so, I'd like to have a
+> look...
+unfortunatelly, its not public...
 
-This looks very much like "git branch -a".
+I noticed, it is not the step of committing anything, but the step to
+fetch the revisions in the svn tree. I had a workaround last night... I
+used the documentation on Advanced Example: Tracking a Reorganized
+Repository to reorganize my tree from broken old repository to
+reorganized fresh tree that is working... that all because time was
+running out this night and i had to work something.
 
-I've just tried this:
+I keep the old one as a souvenier... The problem lies somewhere there in
+the old branch. The history is not lost here in any case.
 
-$ git clone git://git2.kernel.org/pub/scm/git/git.git
-Initialized empty Git repository in /home/larsh/src/tmp/git/.git/
-remote: Generating pack...
-remote: Done counting 34527 objects.
-remote: Deltifying 34527 objects.
-remote:  100% (34527/34527) done
-Indexing 34527 objects.
-remote: Total 34527, written 34527 (delta 23920), reused 34111 (delta 23623)
- 100% (34527/34527) done
-Resolving 23920 deltas.
- 100% (23920/23920) done
-Checking files out...
- 100% (748/748) done
-$ cd git
-$ git branch -r
-  origin/HEAD
-  origin/html
-  origin/maint
-  origin/man
-  origin/master
-  origin/next
-  origin/pu
-  origin/todo
-$ git branch -a
-* master
-  origin/HEAD
-  origin/html
-  origin/maint
-  origin/man
-  origin/master
-  origin/next
-  origin/pu
-  origin/todo
-$ cp .git/refs/heads/master .git/refs/remotes/master
-$ git branch -r
-  master
-  origin/HEAD
-  origin/html
-  origin/maint
-  origin/man
-  origin/master
-  origin/next
-  origin/pu
-  origin/todo
-$ git symbolic-ref HEAD refs/remotes/master
-$ git branch -r
-fatal: HEAD not found below refs/heads!
-$ git --version
-git version 1.4.4.2.gee60
+I backuped my repository and pruned my tree as you suggested it... I
+connected to that remote repository... and then the assertion came down
+on me. Personally i can live with that reorganized repository. If you
+are really keen on digging the error down to ground, i could try to
+setup something.
 
+Perhaps back were i worked on that repository, git-svn accessed a little
+different from now....
 
--- 
-larsh
+If you are still interested in digging, I think about a private solution
+for that.
+
+Sincerly
+Nicolas Vilz
