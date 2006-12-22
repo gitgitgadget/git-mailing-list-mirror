@@ -1,75 +1,101 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: What's in git.git (stable)
-Date: Fri, 22 Dec 2006 21:44:34 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612222141060.19693@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <7vodpw46zj.fsf@assigned-by-dhcp.cox.net> <86k60jsvh8.fsf@blue.stonehenge.com>
- <86fyb7sv9f.fsf@blue.stonehenge.com> <Pine.LNX.4.63.0612221902490.19693@wbgn013.biozentrum.uni-wuerzburg.de>
- <861wmrsstc.fsf@blue.stonehenge.com> <Pine.LNX.4.63.0612221949490.19693@wbgn013.biozentrum.uni-wuerzburg.de>
- <7virg3zo1k.fsf@assigned-by-dhcp.cox.net>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: confusion over the new branch and merge config
+Date: Fri, 22 Dec 2006 15:49:46 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0612221539100.18171@xanadu.home>
+References: <Pine.LNX.4.64.0612211555210.18171@xanadu.home>
+ <7vd56cam66.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, "Randal L. Schwartz" <merlyn@stonehenge.com>
-X-From: git-owner@vger.kernel.org Fri Dec 22 21:44:50 2006
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 22 21:49:54 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GxrFv-00085L-U7
-	for gcvg-git@gmane.org; Fri, 22 Dec 2006 21:44:40 +0100
+	id 1GxrKy-00016E-GQ
+	for gcvg-git@gmane.org; Fri, 22 Dec 2006 21:49:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752647AbWLVUoh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Dec 2006 15:44:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752648AbWLVUoh
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Dec 2006 15:44:37 -0500
-Received: from mail.gmx.net ([213.165.64.20]:34571 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752647AbWLVUoh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Dec 2006 15:44:37 -0500
-Received: (qmail invoked by alias); 22 Dec 2006 20:44:35 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp041) with SMTP; 22 Dec 2006 21:44:35 +0100
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+	id S1752661AbWLVUts (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Dec 2006 15:49:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752663AbWLVUts
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Dec 2006 15:49:48 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:54306 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752661AbWLVUtr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Dec 2006 15:49:47 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JAP00GXT0IYK7E0@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Fri, 22 Dec 2006 15:49:47 -0500 (EST)
+In-reply-to: <7vd56cam66.fsf@assigned-by-dhcp.cox.net>
+X-X-Sender: nico@xanadu.home
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7virg3zo1k.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35214>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35215>
 
-Hi,
+On Thu, 21 Dec 2006, Junio C Hamano wrote:
 
-On Fri, 22 Dec 2006, Junio C Hamano wrote:
-
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> Nicolas Pitre <nico@cam.org> writes:
 > 
-> > HOWEVER, it has been in "What's cooking in git (topics)".
+> > $ git pull origin/next
+> > fatal: The remote end hung up unexpectedly
+> > Cannot get the repository state from git://git.kernel.org/pub/scm/git/git.git/next
 > >
-> > Having said that, we could (at least for some time) print a big red 
-> > warning for the specific case of "git pull" meaning "git pull origin 
-> > <whateveristhefirstfetchedhead>" that this will GO AWAY SOON.
-> >
-> > Of course, you would not see it. Only your script.
-> >
-> > BTW I would _never_ allow a script to rely on such a DWIM feature.
+> > [ WTF?  Where that ...pub/scm/git/git.git/next comes from?  Hmmm... ]
 > 
-> That's too strong a statement.  It is not DWIM but has been a
-> longstanding rule to use "the first set of branches" for the
-> merge.  We've merged the first set of branches since day one,
-> and even after branch.*.merge we've done so unless you do not
-> have such configuration.
+> This comes from ancient request by Linus to allow:
+> 
+> 	$ cat .git/remotes/jgarzik
+> 	URL: master.kernel.org:/pub/scm/linux/kernel/git/jgarzik/
+> 	$ git pull jgarzik/misc-2.6
+> 
+> See http://article.gmane.org/gmane.comp.version-control.git/6181
+> for the full text.
+> 
+> Personally I thought this was confusing when I implemented it
+> the first time, and I still find it confusing.
+> 
+> I suspect nobody uses it.  I am all for removing this "URL
+> prefix shorthand" feature in v1.5.0.
 
-Okay, I have been wrong. My sincere apologies.
+Please do.  I'm sure Linus can find a better way now.
 
-So, if I understand your option (2) correctly, it complains _only_ if 
-there is at least one branch.*.merge in the config, but not for the 
-current branch?
+> > $ git pull . remotes/origin/next
+> > Already up-to-date.
+> >
+> > [ Woooh!  But since I always hated this syntax let's try merge instead. ]
+> >
+> > $ git merge origin/next
+> > Already up-to-date.
+> 
+> Yes, that is one of the reasons that you would prefer 'merge'
+> when you are working locally.
 
-I think that would safeguard the existing repositories _and_ the new ones, 
-because git-clone sets them up with such an entry to begin with.
+Sure.  But why doesn't pull accept "origin/next"?
 
-If that behaviour was meant by (2), I am all for it.
+> > $ git pull origin
+> > Warning: No merge candidate found because value of config option
+> >          "branch.local_next.merge" does not match any remote branch fetched.
+> > No changes.
+> >
+> > So this means that branch.local_next.merge should be set to origin/next?  
+> 
+> No, the message says "any REMOTE branch" -- refs/heads/next is
+> what it is called at the remote, and that is how the value is
+> expected to be spelled; I think somebody added an example to
+> config.txt recently to stress this.  The above error messasge
+> obviously was not clear enough.  Rewording appreciated.
 
-Ciao,
-Dscho
+But wouldn't it be much less confusing if it used the local name for 
+that remote branch instead?  After all it is what should be used with 
+git-merge if performed manually, it is what diff, log, and al must use 
+as well.  Why would this need a remote name for something that is a 
+local operation after all?  I think "refs/heads/master" is really 
+ambigous since you might be confused between the local and remote 
+meaning of it, whereas "origin/master" carries no confusion at all.
+
+
+Nicolas
