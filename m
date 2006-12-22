@@ -1,83 +1,72 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Updated Kernel Hacker's guide to git
-Date: Fri, 22 Dec 2006 02:26:06 -0800
-Message-ID: <7vvek41b29.fsf@assigned-by-dhcp.cox.net>
-References: <38b2ab8a0612210424o4ec5fcd5kb5086c52ccd76491@mail.gmail.com>
-	<Pine.LNX.4.64.0612211013500.3394@woody.osdl.org>
-	<38b2ab8a0612220135p6925be4cmf003811f616395ba@mail.gmail.com>
+From: "Pelle Svensson" <pelle2004@gmail.com>
+Subject: newbie question - git-pull and local branch merge
+Date: Fri, 22 Dec 2006 11:27:54 +0100
+Message-ID: <6bb9c1030612220227h2dc83a78u2e31e0f4e6801412@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Jay Cliburn" <jacliburn@bellsouth.net>, git@vger.kernel.org,
-	"Jeff Garzik" <jeff@garzik.org>,
-	"Linus Torvalds" <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Fri Dec 22 11:26:21 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Fri Dec 22 11:28:04 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GxhbT-00061X-UM
-	for gcvg-git@gmane.org; Fri, 22 Dec 2006 11:26:16 +0100
+	id 1Gxhd8-0006Ek-Dr
+	for gcvg-git@gmane.org; Fri, 22 Dec 2006 11:27:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946021AbWLVK0I (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Dec 2006 05:26:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946023AbWLVK0I
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Dec 2006 05:26:08 -0500
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:61049 "EHLO
-	fed1rmmtao05.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1946021AbWLVK0H (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Dec 2006 05:26:07 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20061222102607.GDHH15640.fed1rmmtao05.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 22 Dec 2006 05:26:07 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id 1mRQ1W0031kojtg0000000; Fri, 22 Dec 2006 05:25:24 -0500
-To: "Francis Moreau" <francis.moro@gmail.com>
-In-Reply-To: <38b2ab8a0612220135p6925be4cmf003811f616395ba@mail.gmail.com>
-	(Francis Moreau's message of "Fri, 22 Dec 2006 10:35:47 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1946025AbWLVK1z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Dec 2006 05:27:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946026AbWLVK1z
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Dec 2006 05:27:55 -0500
+Received: from py-out-1112.google.com ([64.233.166.179]:28104 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1946025AbWLVK1y (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Dec 2006 05:27:54 -0500
+Received: by py-out-1112.google.com with SMTP id a29so1564023pyi
+        for <git@vger.kernel.org>; Fri, 22 Dec 2006 02:27:54 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=pTRtl7tDwjloErgbklrffrhcAVLSYHSgxSAiPXr3VAJpW4S/YLcVFAZS2t4aw4triesHBPmFh1cmjOUXD6hKK1VHz5m/2r35mN34i+yI7N5U/EyVHuk0CNLazDXvnCEvceYBZMV4OXZU28OMX1mVyhVAomWdAGjc5z30/myl54Q=
+Received: by 10.35.79.3 with SMTP id g3mr14893886pyl.1166783274242;
+        Fri, 22 Dec 2006 02:27:54 -0800 (PST)
+Received: by 10.35.51.20 with HTTP; Fri, 22 Dec 2006 02:27:54 -0800 (PST)
+To: git@vger.kernel.org
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35158>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35159>
 
-"Francis Moreau" <francis.moro@gmail.com> writes:
+Hi,
 
-> I think this part is really confusing. For a new comer, saying that:
->
-> 	git diff a b == git diff a..b
->
-> is really not intuitive. Maybe just because adding a new symbol ".."
-> in git diff command line means (for me) that we're doing a special
-> diff. I would never thought by my own that ".." means a simple "to".
+I'm quiet new to git and I have done this so far:
 
-We did not originally have "A B"; you were supposed to always
-say "A..B".  But all other SCM had "A B" notation, so we added
-support for both because doing so was trivial and there is no
-risk of confusion (because diff is about two points while log is
-about a set).  These two notations are interchangeable for
-"diff".  If it confuses you, you can stick to the "git diff A B"
-notation.  Of if you are like Linus, stick to "A..B" notation.
-Either way, you can pretend that the other notation does not
-even exist and be happy ;-).
+1. Installed git-1.4.4
+2. pulled linus kernel tree.
+3. Created a local branch 'git-checkout my stuff'
+4. Edit a number of files.
+5. git-commit -a
+6. git-pull
+7. Edit a couple more files.
+8. git-pull <- Problem!
 
-Yes, users often wondered why "git diff" accepts "A B", "git
-log" wants "A..B" and "git log A B" is a disaster.  But the root
-cause of the confusion was not about notation but about the
-conceptual difference (two points vs a set).
+Accidentally I had 2 files not committed and one of these also
+had changes in the git-pull master branch which git could
+not merge automatically.
 
-I do not think changing the meaning of "diff A..B" to what "diff
-A...B" means is a good thing.  The notation "..." even _looks_
-like a magic, and in diff context, what it does _is_ magic (it
-is magic in log context, too).  You are giving two points, but
-what actually is used as the two points for diff are different
-from what you gave; in that sense, it is a very good notation.
-Changing it would confuse and inconvenience people who already
-understood and got used to the difference between "diff" and
-"log": diff takes two points, so given usual A..B notation it
-uses A and B, while log is about a set and means 'the ones
-reachable from B, excluding the ones reachable from A'; "A...B"
-is magic and does a magical thing in both "diff" and "log",
-taking the merge bases between A and B into account.
+Changes has been done but I'm not fully convinced what has happen.
+I see that files has been changed and the failing merge file need's
+to be edit.
+
+The really question I need answer is how can I see what changes
+has been done in the master branch (the one pulled in) of the
+file I suppose to merge manually. Is there no way to get out
+the 2 last versions from the master branch and supply them to
+KDiff3 or similarly diff program.
+
+Also by reading the documentation I wounder what the difference is of:
+
+- commit and check-in, seem to be same thing.
+- update index-file and update the repository.
+
+/Thanks
