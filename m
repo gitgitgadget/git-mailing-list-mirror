@@ -1,116 +1,69 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Updated Kernel Hacker's guide to git
-Date: Sat, 23 Dec 2006 00:00:12 +0100
-Organization: At home
-Message-ID: <emhnsm$iuo$1@sea.gmane.org>
-References: <38b2ab8a0612210424o4ec5fcd5kb5086c52ccd76491@mail.gmail.com> <Pine.LNX.4.64.0612211013500.3394@woody.osdl.org> <87slf83erg.wl%cworth@cworth.org> <Pine.LNX.4.64.0612212009370.3536@woody.osdl.org> <877iwjinda.wl%cworth@cworth.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: warning merge message
+Date: Fri, 22 Dec 2006 15:00:56 -0800
+Message-ID: <7vy7ozv8lz.fsf@assigned-by-dhcp.cox.net>
+References: <867728.44872.qm@web31814.mail.mud.yahoo.com>
+	<200612222142.15489.Josef.Weidendorfer@gmx.de>
+	<7vodpvy6sf.fsf@assigned-by-dhcp.cox.net>
+	<200612222349.54363.Josef.Weidendorfer@gmx.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Fri Dec 22 23:57:53 2006
+Cc: Luben Tuikov <ltuikov@yahoo.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Dec 23 00:01:09 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GxtKn-0006Tz-Gj
-	for gcvg-git@gmane.org; Fri, 22 Dec 2006 23:57:49 +0100
+	id 1GxtNs-0006zC-SM
+	for gcvg-git@gmane.org; Sat, 23 Dec 2006 00:01:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752928AbWLVW5o (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Dec 2006 17:57:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753083AbWLVW5o
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Dec 2006 17:57:44 -0500
-Received: from main.gmane.org ([80.91.229.2]:47837 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752928AbWLVW5n (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Dec 2006 17:57:43 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GxtKX-0007Lp-TO
-	for git@vger.kernel.org; Fri, 22 Dec 2006 23:57:33 +0100
-Received: from host-81-190-25-107.torun.mm.pl ([81.190.25.107])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 22 Dec 2006 23:57:33 +0100
-Received: from jnareb by host-81-190-25-107.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 22 Dec 2006 23:57:33 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-25-107.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1753084AbWLVXA6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Dec 2006 18:00:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753249AbWLVXA6
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Dec 2006 18:00:58 -0500
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:44157 "EHLO
+	fed1rmmtao10.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753084AbWLVXA5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Dec 2006 18:00:57 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20061222230057.CRMY20715.fed1rmmtao10.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 22 Dec 2006 18:00:57 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id 1z0E1W00H1kojtg0000000; Fri, 22 Dec 2006 18:00:14 -0500
+To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+In-Reply-To: <200612222349.54363.Josef.Weidendorfer@gmx.de> (Josef
+	Weidendorfer's message of "Fri, 22 Dec 2006 23:49:54 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35243>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35244>
 
-[Cc: Carl Worth <cworth@cworth.org>, Linus Torvalds <torvalds@osdl.org>
- git@vger.kernel.org]
+Josef Weidendorfer <Josef.Weidendorfer@gmx.de> writes:
 
-Carl Worth wrote:
+> In a previous discussion, you talked about switching to
+> the new behavior (ie. getting rid of this "first set of
+> branches" rule) when there is at least one branch.*.merge
+> setting in the config file.
+>
+> Unfortunately I can not see an easy way to check this with
+> repo-config, as there is no wildcard support for keys
+> (Ok, I can do a list of keys and grep).
 
-> On Thu, 21 Dec 2006 20:13:52 -0800 (PST), Linus Torvalds wrote:
->> I do it all the time, I never even use the old-fashioned syntax any more.
->> It's much more concise and easy to read, and it has all the nice shortcuts
->> (like empty meaning "HEAD", so you can do "git diff ..next" to see the
->> diff from HEAD to another branch).
-> 
-> I can understand the advantage of a shortcut like "git diff ..next",
-> but I still don't understand why it's the comparison of HEAD and next
-> that's really interesting here. Wouldn't comparing the merge-base to
-> next be more desirable? For example, if I'm considering whether to
-> merge in next or not, why should I care to see in the diff all the
-> irrelevant stuff that's happened on HEAD since next branched off?
-> 
-> But, really, I still don't understand exactly _what_ "diff a..b" even
-> means. Can you explain it to me?
+I think --get-regexp is what you want -- see my "patch for
+discussion".
 
-For me, it's just a bit of syntactic sugar (I always have in mind that
-git-log and friends outputs commit list and use revisions range, while
-git-diff and friends needs two (or less) revisions) allowing to
-copy'n'paste arguments from "git log a..b" to "git diff a..b"
+> I think it is better to provide an option
+> "pull.do-not-follow-the-first-set-of-branches-rule".
+> And we should make this the default after init-db or clone.
+
+Yes, but the problem is that old timers do make new clones.
+
+pull.i-like-the-first-set-of-branches in ~/.gitconfig is the
+only thing I can think of but that is too ugly and is already on
+the slippery slope of user.expert configuration which I do not
+think we want.
  
-> Presumably the rev-parse magic is happening to the arguments. So does
-> the diff code just end up seeing the expanded equivalent of "b ^a" and
-> then just use the ^ to decide which tree to be on the left side or
-> something?
-
-And that is just implementation. I don't think anyone uses "git diff b ^a".
-
->> It's also useful exactly because of the semantics of things like "...".
-> 
-> And now I'm really confused. If I'm not mistaken, rev-parse will turn
-> "a...b" into something like "a b ^$(merge-base a b)", right? So does
-> the diff code now end up seeing three different tree specifiers? What
-> does it do with that? And how is this useful? (As you said before,
-> diff is always going to end up acting on only two items, so I don't
-> see where there could be an interesting distinction from how you
-> obtain two items from "a..b" compared to "a...b".) But it might be
-> just that I'm really confused here.
-
-I would have thought that it would be combined diff of a and b against
-it's merge base... but it is not.
-
-"git diff a...b" is turned into "git diff a b ^$(git merge-base a b)",
-and by a bit of magic (and by a convention) it is turned into
-"git diff ^$(merge-base a b) a" (and a...b ceases to be _symmetric_
-for git-diff).
-
-I'd like for "git diff --cc a...b" to do 'the right thing' and show
-git diff --cc for pretended merge (I'm not sure if with or without
-resolving trivial conflicts).
-
->> So "git diff a b" doesn't even look good to me any more, because it's
->> literally missing that mental "to" that the ".." adds for me when I read
->> it.
-> 
-> OK, that's fine. But can you comment on why you want the comparison
-> between the tips and not something based on a comparison from the
-> merge-base to a tip?
-
-a..b does not imply merge-base, a...b does.
-
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
