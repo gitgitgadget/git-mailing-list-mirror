@@ -1,64 +1,85 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: t5000-tar-tree.sh failing
-Date: Fri, 22 Dec 2006 03:48:40 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612220345530.19693@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20061221133746.GA13751@cepheus>
- <Pine.LNX.4.63.0612211458360.19693@wbgn013.biozentrum.uni-wuerzburg.de>
- <9A725DAA-FAA8-4779-A73D-ED117CC068C1@silverinsanity.com>
- <20061221185948.GA27072@informatik.uni-freiburg.de>
+From: Sean <seanlkml@sympatico.ca>
+Subject: Re: Separating "add path to index" from "update content in index"
+Date: Thu, 21 Dec 2006 22:06:32 -0500
+Message-ID: <20061221220632.46444296.seanlkml@sympatico.ca>
+References: <89b129c60612191233s5a7f36f2hd409c4b9a2bbbc5c@mail.gmail.com>
+	<7v64c7pmlw.fsf@assigned-by-dhcp.cox.net>
+	<87wt4m2o99.wl%cworth@cworth.org>
+	<7vmz5i6vqb.fsf@assigned-by-dhcp.cox.net>
+	<87vek62n1k.wl%cworth@cworth.org>
+	<7v1wmu5ecs.fsf@assigned-by-dhcp.cox.net>
+	<87tzzp3fgh.wl%cworth@cworth.org>
+	<slrneokplo.nsf.Peter.B.Baumann@xp.machine.xx>
+	<7vbqlw92fw.fsf@assigned-by-dhcp.cox.net>
+	<87d56cirs8.wl%cworth@cworth.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Brian Gernhardt <benji@silverinsanity.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 22 03:48:59 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>,
+	Peter Baumann <Peter.B.Baumann@stud.informatik.uni-erlangen.de>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 22 04:06:47 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GxaSu-0007t7-Im
-	for gcvg-git@gmane.org; Fri, 22 Dec 2006 03:48:56 +0100
+	id 1GxakA-0001Fo-EK
+	for gcvg-git@gmane.org; Fri, 22 Dec 2006 04:06:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1945918AbWLVCsn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Dec 2006 21:48:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1945919AbWLVCsm
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Dec 2006 21:48:42 -0500
-Received: from mail.gmx.net ([213.165.64.20]:55722 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1945918AbWLVCsm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Dec 2006 21:48:42 -0500
-Received: (qmail invoked by alias); 22 Dec 2006 02:48:40 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp039) with SMTP; 22 Dec 2006 03:48:40 +0100
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Uwe Kleine-Koenig <zeisberg@informatik.uni-freiburg.de>
-In-Reply-To: <20061221185948.GA27072@informatik.uni-freiburg.de>
-X-Y-GMX-Trusted: 0
+	id S1945923AbWLVDGf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Dec 2006 22:06:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1945924AbWLVDGf
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Dec 2006 22:06:35 -0500
+Received: from bayc1-pasmtp13.bayc1.hotmail.com ([65.54.191.173]:42404 "EHLO
+	BAYC1-PASMTP13.CEZ.ICE" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1945923AbWLVDGe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Dec 2006 22:06:34 -0500
+X-Originating-IP: [65.93.43.74]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Received: from linux1.attic.local ([65.93.43.74]) by BAYC1-PASMTP13.CEZ.ICE over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
+	 Thu, 21 Dec 2006 19:06:42 -0800
+Received: from guru.attic.local ([10.10.10.28])
+	by linux1.attic.local with esmtp (Exim 4.43)
+	id 1GxZnq-0007yW-0W; Thu, 21 Dec 2006 21:06:30 -0500
+To: Carl Worth <cworth@cworth.org>
+In-Reply-To: <87d56cirs8.wl%cworth@cworth.org>
+X-Mailer: Sylpheed version 2.2.10 (GTK+ 2.10.4; i386-redhat-linux-gnu)
+X-OriginalArrivalTime: 22 Dec 2006 03:06:42.0593 (UTC) FILETIME=[34D28910:01C72576]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35123>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35124>
 
-Hi,
+On Thu, 21 Dec 2006 18:32:55 -0800
+Carl Worth <cworth@cworth.org> wrote:
 
-On Thu, 21 Dec 2006, Uwe Kleine-Koenig wrote:
+> So here I'm arguing against "git add" being a more convenient synonym
+> for "git update-index". I still think it would be nice to have a more
+> convenient synonym. I've proposed "stage" before but that wasn't well
+> accepted. Just shortening "update-index" to "update" would be
+> problematic as many other RCSs use "update" as a way of picking up new
+> content that has become available on the remote end. So, the best
+> suggestion I have at this point is "refresh". So I'd be happy if
+> either:
+> 
+> 	git refresh --add
+> or:
+> 	git add --refresh
+> 
+> would provide the behavior that currently is provided by "git add",
+> (that is, add a new path to the index and update the content of that
+> path in the index from the content of the named file in the working
+> tree). But it would be great if "git add" without the --refresh would
+> add the path without updating the content.
 
-> I'm not sure if (in this case) a missing unzip should be as silent as
-> you suggest.  The danger is, that s.o. makes a change, runs `make test`
-> and is then conviced that nothing broke.
 
-Well, the tests are not distributed with the binary packages. For a 
-reason. The maintainer of the binary packages has to check if the tests 
-succeed. An she better know what she's doing!
+The end result you're trying to achieve is worthwhile, but it seems the
+new git add capabilities have already taken root.  What do you think
+about accepting the new behavior of add, but offer a new command, say:
 
-So, if Joe Average compiles git, does not have unzip installed, and runs 
-the tests, chances are that he does not want to be bothered about the zip 
-tests failing because of the absence of unzip.
+$ git track-file <file>
 
->  So I think that the test should fail, but with a more descriptive error 
-> than it is now.
+Which would do exactly as you propose in your email, add the path to
+the index with empty content?
 
-Sorry. Does not work here. I _only_ look at the messages if the test suite 
-fails somewhere, with a loud error message at the end.
-
-Ciao,
-Dscho
+Sean
