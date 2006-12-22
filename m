@@ -1,68 +1,55 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] sha1_name(): accept ':directory/' to get at the cache_tree
-Date: Fri, 22 Dec 2006 13:18:55 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612221316550.19693@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0612220318320.19693@wbgn013.biozentrum.uni-wuerzburg.de>
- <20061222084425.GA4644@steel.home>
+From: Nicolas Vilz <niv@iaglans.de>
+Subject: git-svn dcommit ignors svn.authorsfile config and -A / --author-file cmd-line-option
+Date: Fri, 22 Dec 2006 13:28:36 +0100
+Message-ID: <20061222122836.GD9595@hermes>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, junkio@cox.net
-X-From: git-owner@vger.kernel.org Fri Dec 22 13:19:33 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Fri Dec 22 13:28:27 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GxjMy-0006Fs-AM
-	for gcvg-git@gmane.org; Fri, 22 Dec 2006 13:19:24 +0100
+	id 1GxjVe-0007bK-8L
+	for gcvg-git@gmane.org; Fri, 22 Dec 2006 13:28:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965176AbWLVMS6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Dec 2006 07:18:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964975AbWLVMS6
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Dec 2006 07:18:58 -0500
-Received: from mail.gmx.net ([213.165.64.20]:44671 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S965176AbWLVMS5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Dec 2006 07:18:57 -0500
-Received: (qmail invoked by alias); 22 Dec 2006 12:18:56 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp054) with SMTP; 22 Dec 2006 13:18:56 +0100
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Alex Riesen <raa.lkml@gmail.com>
-In-Reply-To: <20061222084425.GA4644@steel.home>
-X-Y-GMX-Trusted: 0
+	id S964819AbWLVM2T (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Dec 2006 07:28:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964942AbWLVM2T
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Dec 2006 07:28:19 -0500
+Received: from geht-ab-wie-schnitzel.de ([217.69.165.145]:1820 "EHLO
+	vsectoor.geht-ab-wie-schnitzel.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S964819AbWLVM2S (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 22 Dec 2006 07:28:18 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by vsectoor.geht-ab-wie-schnitzel.de (Postfix) with ESMTP id 2D50F3FCF
+	for <git@vger.kernel.org>; Fri, 22 Dec 2006 13:28:17 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at vsectoor.geht-ab-wie-schnitzel.de
+Received: from vsectoor.geht-ab-wie-schnitzel.de ([127.0.0.1])
+	by localhost (vsectoor.geht-ab-wie-schnitzel.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 79G8VcnV0kYH for <git@vger.kernel.org>;
+	Fri, 22 Dec 2006 13:27:53 +0100 (CET)
+Received: from localhost (dslb-088-066-037-196.pools.arcor-ip.net [88.66.37.196])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by vsectoor.geht-ab-wie-schnitzel.de (Postfix) with ESMTP id 381E83FC4
+	for <git@vger.kernel.org>; Fri, 22 Dec 2006 13:27:53 +0100 (CET)
+To: git@vger.kernel.org
+Content-Disposition: inline
+X-message-flag: Please send plain text messages only. Thank you.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35168>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35169>
 
-Hi,
+Hello again,
 
-On Fri, 22 Dec 2006, Alex Riesen wrote:
+I wonder, if git dcommit supports the option or the repo-config key
+svn.authors.file... i think it does not, or i do something wrong...
 
-> Johannes Schindelin, Fri, Dec 22, 2006 03:19:21 +0100:
-> > 
-> > If the cache tree is not up-to-date, it will be updated first. So, now
-> > 
-> > 	$ git show :Documentation/
-> > 
-> > will in effect show what files/directories are in the index' version
-> > of the directory Documentation. The three commands
-> > 
-> > 	$ git show :./
-> > 	$ git show :.
-> > 	$ git show :
-> > 
-> > are all equivalent and show the index' idea of the root directory.
-> 
-> That is a bit unexpected if you're not in the root directory of
-> repository, but in some subdir of the working directory.
-> Why root? Why not the current directory relative to root?
+<username> = <name> <email>
 
-Why root? Because you are not asking for the working directory. Use "ls" 
-for that. You are asking for the index. If you git-show a commit, you 
-don't expect the output to be restricted by the subdirectory you're in, 
-either, right?
+did work on git-svn fetch iirc ... but does it on git-svn dcommit, too?
 
-CIao,
-Dscho
+Sincerly
+Nicolas
