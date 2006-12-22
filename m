@@ -1,64 +1,61 @@
-From: fork0@t-online.de (Alex Riesen)
-Subject: Re: [PATCH] sha1_name(): accept ':directory/' to get at the cache_tree
-Date: Fri, 22 Dec 2006 09:44:25 +0100
-Message-ID: <20061222084425.GA4644@steel.home>
-References: <Pine.LNX.4.63.0612220318320.19693@wbgn013.biozentrum.uni-wuerzburg.de>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: "Jesper Juhl" <jesper.juhl@gmail.com>
+Subject: Re: Updated Kernel Hacker's guide to git
+Date: Fri, 22 Dec 2006 09:50:32 +0100
+Message-ID: <9a8748490612220050t294d3785r94f0b3c74e935b24@mail.gmail.com>
+References: <4589F9B1.2020405@garzik.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, junkio@cox.net
-X-From: git-owner@vger.kernel.org Fri Dec 22 09:44:59 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Linux Kernel" <linux-kernel@vger.kernel.org>,
+	"Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Dec 22 09:50:49 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1Gxg1L-0000aC-SZ
-	for gcvg-git@gmane.org; Fri, 22 Dec 2006 09:44:52 +0100
+	id 1Gxg6x-0001Mo-Gq
+	for gcvg-git@gmane.org; Fri, 22 Dec 2006 09:50:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1945995AbWLVIot (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Dec 2006 03:44:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1945990AbWLVIor
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Dec 2006 03:44:47 -0500
-Received: from mailout08.sul.t-online.com ([194.25.134.20]:55818 "EHLO
-	mailout08.sul.t-online.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1945987AbWLVIoq (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 22 Dec 2006 03:44:46 -0500
-Received: from fwd28.aul.t-online.de 
-	by mailout08.sul.t-online.com with smtp 
-	id 1Gxg1C-0005b3-04; Fri, 22 Dec 2006 09:44:42 +0100
-Received: from tigra.home (bpeweBZYgezY8w9gWZLm2NDvlJyyJwlqgumaFtjru+yRbPesE6duUU@[84.163.127.243]) by fwd28.sul.t-online.de
-	with esmtp id 1Gxg0v-1i9hb60; Fri, 22 Dec 2006 09:44:25 +0100
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 558AE277AF;
-	Fri, 22 Dec 2006 09:44:25 +0100 (CET)
-Received: from raa by steel.home with local (Exim 4.62 #1 (Debian))
-	id 1Gxg0v-0001FR-5t; Fri, 22 Dec 2006 09:44:25 +0100
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+	id S1945987AbWLVIud (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Dec 2006 03:50:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1945992AbWLVIud
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Dec 2006 03:50:33 -0500
+Received: from wx-out-0506.google.com ([66.249.82.233]:12471 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1945987AbWLVIuc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Dec 2006 03:50:32 -0500
+Received: by wx-out-0506.google.com with SMTP id h27so2669981wxd
+        for <git@vger.kernel.org>; Fri, 22 Dec 2006 00:50:32 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Kol5LuRVYDlO3hgtgs9mhM2ZUjSvyG9UTsOA0MwxvOw1GJy9vZZ/tojn9Obfw/+ltYdS6glyUdPD5sKhdaS6PMmvqeFycQJZ3yjLEaoQfngUb8nnxlZvI17F3MTpxzo4aq2mxg7q8R1Y3y3oSGKwVQFgxlOGriJi7GYSN3t9O1I=
+Received: by 10.90.75.10 with SMTP id x10mr9176715aga.1166777432241;
+        Fri, 22 Dec 2006 00:50:32 -0800 (PST)
+Received: by 10.90.29.7 with HTTP; Fri, 22 Dec 2006 00:50:32 -0800 (PST)
+To: "Jeff Garzik" <jeff@garzik.org>
+In-Reply-To: <4589F9B1.2020405@garzik.org>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0612220318320.19693@wbgn013.biozentrum.uni-wuerzburg.de>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-ID: bpeweBZYgezY8w9gWZLm2NDvlJyyJwlqgumaFtjru+yRbPesE6duUU
-X-TOI-MSGID: f7d0a1ae-f83e-4a6b-8211-9bd62e4acdf6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35150>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35151>
 
-Johannes Schindelin, Fri, Dec 22, 2006 03:19:21 +0100:
-> 
-> If the cache tree is not up-to-date, it will be updated first. So, now
-> 
-> 	$ git show :Documentation/
-> 
-> will in effect show what files/directories are in the index' version
-> of the directory Documentation. The three commands
-> 
-> 	$ git show :./
-> 	$ git show :.
-> 	$ git show :
-> 
-> are all equivalent and show the index' idea of the root directory.
+On 21/12/06, Jeff Garzik <jeff@garzik.org> wrote:
+> I refreshed my git intro/cookbook for kernel hackers, at
+> http://linux.yyz.us/git-howto.html
+>
+> This describes most of the commands I use in day-to-day kernel hacking.
+>   Let me know if there are glaring errors or missing key commands.
+>
+Very nice.
 
-That is a bit unexpected if you're not in the root directory of
-repository, but in some subdir of the working directory.
-Why root? Why not the current directory relative to root?
+A bit on how to revert a commit and how to rebase a branch would make
+it even nicer :)
+
+Thank you for a very good document, Jeff.
+
+-- 
+Jesper Juhl <jesper.juhl@gmail.com>
+Don't top-post  http://www.catb.org/~esr/jargon/html/T/top-post.html
+Plain text mails only, please      http://www.expita.com/nomime.html
