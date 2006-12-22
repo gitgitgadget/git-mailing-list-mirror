@@ -1,108 +1,84 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: What's in git.git (stable)
-Date: Fri, 22 Dec 2006 01:25:52 -0800
-Message-ID: <7vodpw46zj.fsf@assigned-by-dhcp.cox.net>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [PATCH] hooks/commit-msg: add example to add Signed-off-by line to message
+Date: Fri, 22 Dec 2006 09:28:07 +0000
+Message-ID: <200612220928.08921.andyparkins@gmail.com>
+References: <7vejqufonm.fsf@assigned-by-dhcp.cox.net> <200612210924.17357.andyparkins@gmail.com> <7v64c47abv.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Fri Dec 22 10:26:07 2006
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Fri Dec 22 10:28:30 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GxgfE-00062z-EW
-	for gcvg-git@gmane.org; Fri, 22 Dec 2006 10:26:04 +0100
+	id 1GxghR-0006Ow-JY
+	for gcvg-git@gmane.org; Fri, 22 Dec 2006 10:28:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946001AbWLVJZy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Dec 2006 04:25:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946005AbWLVJZy
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Dec 2006 04:25:54 -0500
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:60680 "EHLO
-	fed1rmmtao04.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1946001AbWLVJZx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Dec 2006 04:25:53 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20061222092553.NJAX7494.fed1rmmtao04.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 22 Dec 2006 04:25:53 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id 1lRA1W0031kojtg0000000; Fri, 22 Dec 2006 04:25:10 -0500
+	id S1946005AbWLVJ2R (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Dec 2006 04:28:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946010AbWLVJ2Q
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Dec 2006 04:28:16 -0500
+Received: from ug-out-1314.google.com ([66.249.92.173]:46747 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1946005AbWLVJ2Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Dec 2006 04:28:16 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so2920339uga
+        for <git@vger.kernel.org>; Fri, 22 Dec 2006 01:28:14 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=A1GXPEDOXROohlgk9DVgYs4EYHJw2XcOqlWFdTpXvHp5TwCBmmPBwXdPC+ELgjXr2/KA3Ezb155WUShZ11VuD1AFUt6PHlmqyzglu/fko3eVqKuzzLINDRjnLDaC4gYC58kZmMDMuKSt6Dsx454FD1vaW1+PAkNkl6eLnQQMoqA=
+Received: by 10.67.103.7 with SMTP id f7mr474680ugm.1166779694013;
+        Fri, 22 Dec 2006 01:28:14 -0800 (PST)
+Received: from dvr.360vision.com ( [194.70.53.227])
+        by mx.google.com with ESMTP id j1sm15391998ugf.2006.12.22.01.28.11;
+        Fri, 22 Dec 2006 01:28:13 -0800 (PST)
 To: git@vger.kernel.org
-X-maint-at: e6d40d65df07059fc655fabe62fa5b575ead7815
-X-master-at: 2295e8d0c4cec41fbe257ddb957516a7c1a139df
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+User-Agent: KMail/1.9.5
+In-Reply-To: <7v64c47abv.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35152>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35153>
 
-I guess I'll need to push another maintenance release out soon,
-if only to fix the manual pages.
+On Friday 2006 December 22 05:45, Junio C Hamano wrote:
 
-On the 'master' front there are a handful more topics pushed out
-from 'next'.  I still need to apply the __FREEBSD__ fix yet, but
-otherwise we should be able to start calming things down.
+> I suspect this sed script is quite wrong.  Did you test it?
 
-* The 'maint' branch has these fixes since the last announcement.
+I plead not guilty; cut and pasted from Johannes.  In it's defence; I've been 
+using it since he gave it to me without trouble.  My patch is wrapping it a 
+little differently, but the sed is certainly the same.
 
-   Johannes Schindelin (1):
-      diff --check: fix off by one error
+Amazingly it does work though...
 
-   Junio C Hamano (1):
-      spurious .sp in manpages
+>  * quoting with dq means you are losing one level of backslash
+>    to the shell and sed is not seeing them.
 
-* The 'master' branch has these since the last announcement.
+Unusual.  It doesn't seem to apply to non-recognised escapes:
 
-   Eric Wong (3):
-      git-svn: convert to using Git.pm
-      git-svn: remove support for the svn command-line client
-      git-svn: rename 'commit' command to 'set-tree'
+$ echo "\1\(\)\+$/"
+\1\(\)\+$/
 
-   Johannes Schindelin (5):
-      Introduce GIT_TEMPLATE_DIR
-      diff --check: fix off by one error
-      Use git-merge-file in git-merge-one-file, too
-      git-tag: support -F <file> option
-      git-reset --hard: tell the user what the HEAD was reset to
+>  * one-or-more regexp '+' is typically not found in sed.
 
-   Josef Weidendorfer (1):
-      Move "no merge candidate" warning into git-pull
+Seems to be in mine (GNU sed version 4.1.5).
 
-   Junio C Hamano (22):
-      git-clone: use wildcard specification for tracking branches
-      git-pull: refuse default merge without branch.*.merge
-      git-clone: lose the artificial "first" fetch refspec
-      git-clone: lose the traditional 'no-separate-remote' layout
-      rev-list --left-right
-      Teach all of log family --left-right output.
-      Make left-right automatic.
-      fix testsuite: make sure they use templates freshly built from the source
-      Teach git-branch to delete tracking branches with -r -d
-      blame: -b (blame.blankboundary) and --root (blame.showroot)
-      Revert "fix testsuite: make sure they use templates freshly
-        built from the source"
-      Do not create $GIT_DIR/remotes/ directory anymore.
-      Use preprocessor constants for environment variable names.
-      Revert "Make left-right automatic."
-      git-add: error out when given no arguments.
-      spurious .sp in manpages
-      compat/inet_ntop: do not use u_int
-      diff documentation: mostly talk about <commit>
-      Revert "git-pull: refuse default merge without branch.*.merge"
-      parse-remote: mark all refs not for merge only when fetching more
-        than one
-      _XOPEN_SOURCE problem also exists on FreeBSD
-      commit-tree: do not overflow MAXPARENT
+$ echo "xxxxxx" | sed -n 's/\(x\+\)$/MATCH/p'
+MATCH
 
-   Quy Tonthat (2):
-      git-branch -d: do not stop at the first failure.
-      Documentation/git-branch: new -r to delete remote-tracking branches.
+> off that new change as well, I think.  So checking the last
+> instance of the existing signed-off-by line, ignoring earlier
+> ones, may be more preferrable.
 
-   Shawn Pearce (3):
-      Suggest 'add' in am/revert/cherry-pick.
-      Rename imap-send's internal info/warn functions.
-      Introduce a global level warn() function.
+Accepted.
 
-   Terje Sten Bjerkseth (1):
-      Fix system header problems on Mac OS X
+Notwithstanding the fact that it seems to be working for me; I'll fix the 
+problems you highlight and re-patch.
+
+
+Andy
+-- 
+Dr Andy Parkins, M Eng (hons), MIEE
+andyparkins@gmail.com
