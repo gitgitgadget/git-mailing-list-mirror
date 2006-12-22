@@ -1,114 +1,75 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Updated Kernel Hacker's guide to git
-Date: Fri, 22 Dec 2006 14:45:18 -0800
-Message-ID: <7v7iwjwnwh.fsf@assigned-by-dhcp.cox.net>
-References: <38b2ab8a0612210424o4ec5fcd5kb5086c52ccd76491@mail.gmail.com>
-	<Pine.LNX.4.64.0612211013500.3394@woody.osdl.org>
-	<87slf83erg.wl%cworth@cworth.org>
-	<Pine.LNX.4.64.0612212009370.3536@woody.osdl.org>
-	<877iwjinda.wl%cworth@cworth.org>
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: Re: warning merge message
+Date: Fri, 22 Dec 2006 23:49:54 +0100
+Message-ID: <200612222349.54363.Josef.Weidendorfer@gmx.de>
+References: <867728.44872.qm@web31814.mail.mud.yahoo.com> <200612222142.15489.Josef.Weidendorfer@gmx.de> <7vodpvy6sf.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 22 23:45:25 2006
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Luben Tuikov <ltuikov@yahoo.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 22 23:50:24 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1Gxt8m-00047s-13
-	for gcvg-git@gmane.org; Fri, 22 Dec 2006 23:45:24 +0100
+	id 1GxtDS-0005FR-No
+	for gcvg-git@gmane.org; Fri, 22 Dec 2006 23:50:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753154AbWLVWpV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Dec 2006 17:45:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753148AbWLVWpU
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Dec 2006 17:45:20 -0500
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:34490 "EHLO
-	fed1rmmtao11.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753154AbWLVWpU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Dec 2006 17:45:20 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20061222224519.OOT25875.fed1rmmtao11.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 22 Dec 2006 17:45:19 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id 1ykc1W02B1kojtg0000000; Fri, 22 Dec 2006 17:44:37 -0500
-To: Carl Worth <cworth@cworth.org>
-In-Reply-To: <877iwjinda.wl%cworth@cworth.org> (Carl Worth's message of "Fri,
-	22 Dec 2006 14:20:33 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753148AbWLVWuG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Dec 2006 17:50:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753172AbWLVWuG
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Dec 2006 17:50:06 -0500
+Received: from mail.gmx.net ([213.165.64.20]:48682 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753148AbWLVWuF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Dec 2006 17:50:05 -0500
+Received: (qmail invoked by alias); 22 Dec 2006 22:50:03 -0000
+Received: from p5496B9D3.dip0.t-ipconnect.de (EHLO noname) [84.150.185.211]
+  by mail.gmx.net (mp053) with SMTP; 22 Dec 2006 23:50:03 +0100
+X-Authenticated: #352111
+To: Junio C Hamano <junkio@cox.net>
+User-Agent: KMail/1.9.5
+In-Reply-To: <7vodpvy6sf.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35241>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35242>
 
-Carl Worth <cworth@cworth.org> writes:
+On Friday 22 December 2006 22:12, Junio C Hamano wrote:
+> People for a long time observed "the first set of branches" rule
+> was often a wrong thing to do while on a branch other than
+> 'master' (but we do not want to add hardcoded 'master'
+> unnecessarily), and I recently screwed up by changing the logic
+> in such a way that everything is marked as not-for-merge unless
+> branches.*.merge is not set when pulling from the default
+> remote,
 
-> On Thu, 21 Dec 2006 20:13:52 -0800 (PST), Linus Torvalds wrote:
->> I do it all the time, I never even use the old-fashioned syntax any more.
->> It's much more concise and easy to read, and it has all the nice shortcuts
->> (like empty meaning "HEAD", so you can do "git diff ..next" to see the
->> diff from HEAD to another branch).
->
-> I can understand the advantage of a shortcut like "git diff ..next",
-> but I still don't understand why it's the comparison of HEAD and next
-> that's really interesting here. Wouldn't comparing the merge-base to
-> next be more desirable?
+Ah, yes.
 
-"git diff ...next" should work just as well, I think.
+I saw your patch and thought: Wow, that means to fully throw
+away the previous behavior, which could upset people ;-)
+But then I thought: Hmm... probably on purpose, as this
+"the first set of branches" rule really was strange.
 
-> But, really, I still don't understand exactly _what_ "diff a..b" even
-> means. Can you explain it to me?
+> which was completely bogus and bitten Luben. 
 
-diff between two points.
+So I see you actually _wanted_ to keep old behavior
+for existing repositories.
 
-> Presumably the rev-parse magic is happening to the arguments. So does
-> the diff code just end up seeing the expanded equivalent of "b ^a" and
-> then just use the ^ to decide which tree to be on the left side or
-> something?
+In a previous discussion, you talked about switching to
+the new behavior (ie. getting rid of this "first set of
+branches" rule) when there is at least one branch.*.merge
+setting in the config file.
 
-Exactly; diff just reuses the non-magic part of revision
-parameter parsing without using the ancestry traversal
-machinery (which is the magic part).
+Unfortunately I can not see an easy way to check this with
+repo-config, as there is no wildcard support for keys
+(Ok, I can do a list of keys and grep).
 
->> It's also useful exactly because of the semantics of things like "...".
->
-> And now I'm really confused. If I'm not mistaken, rev-parse will turn
-> "a...b" into something like "a b ^$(merge-base a b)", right? So does
-> the diff code now end up seeing three different tree specifiers? What
-> does it do with that?
+I think it is better to provide an option
+"pull.do-not-follow-the-first-set-of-branches-rule".
+And we should make this the default after init-db or clone.
 
-It knows that rev-parse makes it "b a ^base", and it knows what
-the user meant is "base..b".
-
-That's all because we teach them to spell "a...b" when they want
-"base..b".  Similarly, because we allow them to spell "a..b"
-when they mean "between two points, a and b", it handles "b ^a"
-as the equivalent to giving two trees separately, as "a b".
-
-> And how is this useful? (As you said before,
-> diff is always going to end up acting on only two items, so I don't
-> see where there could be an interesting distinction from how you
-> obtain two items from "a..b" compared to "a...b".) But it might be
-> just that I'm really confused here.
-
-I do not think you are seriously saying that comparing A and
-B in this picture is meaningless:
-
-      o---o---B
-     /
- ---M---o---A
-
-Yes, it is often useful to compare M and B, but that "often" is
-limited to the phase of the workflow where you are at A and are
-contemplating of merging B.  But merging two forked branches is
-not the only thing you do.
-
-Comparing two revisions regardless of how they are topologically
-related is useful as often.  It is only that it may not as
-useful while you are trying to merge B into A.
-
-So there are two ways to let you do both, and they need to be
-specified differently (.. vs ...)  because you need to tell it
-to do which one.
+Josef
