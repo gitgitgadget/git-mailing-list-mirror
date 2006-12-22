@@ -1,77 +1,66 @@
-From: Sean <seanlkml@sympatico.ca>
-Subject: Re: confusion over the new branch and merge config
-Date: Thu, 21 Dec 2006 20:01:48 -0500
-Message-ID: <20061221200148.ac6e39b4.seanlkml@sympatico.ca>
-References: <Pine.LNX.4.64.0612211555210.18171@xanadu.home>
-	<7vd56cam66.fsf@assigned-by-dhcp.cox.net>
-	<20061221182102.906ad046.seanlkml@sympatico.ca>
-	<7vvek492q1.fsf@assigned-by-dhcp.cox.net>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [PATCH] Don't define _XOPEN_SOURCE on MacOSX and FreeBSD as it is too restricting
+Date: Thu, 21 Dec 2006 20:04:03 -0500
+Message-ID: <20061222010403.GC14773@spearce.org>
+References: <Pine.LNX.4.64.0612201524230.3576@woody.osdl.org> <caf068570612201636g75180138r223aef7c42f69a50@mail.gmail.com> <7vtzzq3wo6.fsf@assigned-by-dhcp.cox.net> <caf068570612201654s3949202cl55bd21307ca59453@mail.gmail.com> <7vodpy3vxi.fsf@assigned-by-dhcp.cox.net> <86vek6vyc7.fsf@blue.stonehenge.com> <caf068570612201735o776e01a8he2e9ab90fc2ee4f@mail.gmail.com> <20061221103938.GA7055@fiberbit.xs4all.nl> <20061221112835.GA7713@fiberbit.xs4all.nl> <7v64c492fv.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 22 02:01:58 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Marco Roeland <marco.roeland@xs4all.nl>,
+	Terje Sten Bjerkseth <terje@bjerkseth.org>,
+	"Randal L. Schwartz" <merlyn@stonehenge.com>,
+	Linus Torvalds <torvalds@osdl.org>,
+	Rocco Rutte <pdmef@gmx.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 22 02:04:35 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GxYnK-0004Yz-CF
-	for gcvg-git@gmane.org; Fri, 22 Dec 2006 02:01:54 +0100
+	id 1GxYpo-0004pn-Ih
+	for gcvg-git@gmane.org; Fri, 22 Dec 2006 02:04:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423174AbWLVBBw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Dec 2006 20:01:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423172AbWLVBBw
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Dec 2006 20:01:52 -0500
-Received: from bayc1-pasmtp04.bayc1.hotmail.com ([65.54.191.164]:42265 "EHLO
-	BAYC1-PASMTP04.CEZ.ICE" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1423174AbWLVBBv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Dec 2006 20:01:51 -0500
-X-Originating-IP: [65.93.43.74]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([65.93.43.74]) by BAYC1-PASMTP04.CEZ.ICE over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
-	 Thu, 21 Dec 2006 17:01:50 -0800
-Received: from guru.attic.local ([10.10.10.28])
-	by linux1.attic.local with esmtp (Exim 4.43)
-	id 1GxXr8-0007rw-KI; Thu, 21 Dec 2006 19:01:46 -0500
+	id S1423177AbWLVBEO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Dec 2006 20:04:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423172AbWLVBEO
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Dec 2006 20:04:14 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:58335 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1423177AbWLVBEM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Dec 2006 20:04:12 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1GxYpH-00066I-Um; Thu, 21 Dec 2006 20:03:56 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 3383320FB65; Thu, 21 Dec 2006 20:04:04 -0500 (EST)
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vvek492q1.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Sylpheed version 2.2.10 (GTK+ 2.10.4; i386-redhat-linux-gnu)
-X-OriginalArrivalTime: 22 Dec 2006 01:01:50.0706 (UTC) FILETIME=[C34F4D20:01C72564]
+Content-Disposition: inline
+In-Reply-To: <7v64c492fv.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35109>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35110>
 
-On Thu, 21 Dec 2006 16:46:46 -0800
 Junio C Hamano <junkio@cox.net> wrote:
+>  #0.5 Have you checked the tip of 'master' that has Terje's
+>       patch?  It was reported to work yesterday and that is what
+>       was committed already.
 
-> You can always say "git log refs/heads/next" even though you are
-> allowed to say "git log next".  Maybe we should remove that
-> shorthand to make it consistent?   I think not.
-
-Of course not.  But why not add the shorthand to the other case
-to make it consistent?
-
-> The remote side can add things without your knowing, so
-> insisting on the exact match makes sense in a weird sort of
-> way.
-
-I'm sure there are technical reasons why things are they way they
-are, nothing weird about that.  But looking in from the outside
-and not knowing what those reasons are, leads to an honest
-question if it's absolutely necessary for a user to have to learn
-about the internal "refs/heads" directory structure of Git.
-It would be nicer if they could just think in terms of branches
-and tags.
+OK, but that isn't applied in next for some reason.  I'm still
+carrying around my own version of Terje's patch.  :-(
  
-> And this is a config file you would set once and then can forget
-> about it.  I do not see a big deal about having to spell it
-> fully.
+>  #1   __APPLE__ vs __APPLE_CC__ is not something I can decide (I
+>       do not run a Mac).  If MaxOS is derived from FreeBSD, does
+>       it by chance define __FreeBSD as well?
 
-It's not a huge deal, it's just one more slightly unexpected thing
-for a user to have to deal with in learning Git.  It seems reasonable
-for a user to be able to refer to a remote branch as "remote/branch",
-and not  "remote/refs/heads/branch".  But if that simply can't be
-accommodated, so be it.
+__FreeBSD doesn't work here on my Mac.
 
-Sean
+-- 
+Shawn.
