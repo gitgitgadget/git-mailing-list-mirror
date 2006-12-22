@@ -1,87 +1,75 @@
-From: Alexandre Julliard <julliard@winehq.org>
-Subject: Re: [PATCH] fix vc git
-Date: Fri, 22 Dec 2006 14:56:15 +0100
-Message-ID: <87ac1guj9c.fsf@wine.dyndns.org>
-References: <8e745ecf0612210325m72a569d7k370dd5953ccf6f27@mail.gmail.com>
-	<emdr6v$9ma$1@sea.gmane.org>
-	<8e745ecf0612210359j3f895521r1fff497a512253d3@mail.gmail.com>
-	<7vhcvo92fx.fsf@assigned-by-dhcp.cox.net>
-	<8e745ecf0612212011q26f81d91uce143b4212fc5e8b@mail.gmail.com>
-	<87ejqsumu3.fsf@wine.dyndns.org>
-	<8e745ecf0612220451v367479dq13af2d829a9547c2@mail.gmail.com>
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: [PATCH] Keep "git --git-dir" from causing a bus error.
+Date: Fri, 22 Dec 2006 08:56:25 -0500
+Message-ID: <20061222135625.GA26084@179.242.249.10.in-addr.arpa>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 22 14:56:28 2006
+X-From: git-owner@vger.kernel.org Fri Dec 22 14:56:33 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1Gxksp-0005N7-Vr
-	for gcvg-git@gmane.org; Fri, 22 Dec 2006 14:56:24 +0100
+	id 1Gxksx-0005OX-PA
+	for gcvg-git@gmane.org; Fri, 22 Dec 2006 14:56:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754839AbWLVN4U (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Dec 2006 08:56:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422998AbWLVN4U
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Dec 2006 08:56:20 -0500
-Received: from mail.codeweavers.com ([216.251.189.131]:49134 "EHLO
-	mail.codeweavers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754839AbWLVN4U (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Dec 2006 08:56:20 -0500
-Received: from adsl-84-226-45-154.adslplus.ch ([84.226.45.154] helo=wine.dyndns.org)
-	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1Gxksk-0003cW-EP; Fri, 22 Dec 2006 07:56:18 -0600
-Received: by wine.dyndns.org (Postfix, from userid 1000)
-	id E8ED84F672; Fri, 22 Dec 2006 14:56:15 +0100 (CET)
-To: "Duncan Mak" <duncan@a-chinaman.com>
-In-Reply-To: <8e745ecf0612220451v367479dq13af2d829a9547c2@mail.gmail.com> (Duncan Mak's message of "Fri\, 22 Dec 2006 07\:51\:45 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.91 (gnu/linux)
+	id S1754841AbWLVN41 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Dec 2006 08:56:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754843AbWLVN41
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Dec 2006 08:56:27 -0500
+Received: from vs072.rosehosting.com ([216.114.78.72]:43132 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754841AbWLVN40 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Dec 2006 08:56:26 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by silverinsanity.com (Postfix) with ESMTP id 9E6231FFC02B
+	for <git@vger.kernel.org>; Fri, 22 Dec 2006 13:56:25 +0000 (UTC)
+Received: from Mutt by mutt-smtp-wrapper.pl 1.2  (www.zdo.com/articles/mutt-smtp-wrapper.shtml)
+To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35174>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35175>
 
-"Duncan Mak" <duncan@a-chinaman.com> writes:
+The option checking code for --git-dir had an off by 1 error that
+would cause it to access uninitialized memory if it was the last
+argument.  This causes it to display an error and display the usage
+string instead.
 
-> Yeah, but the issue is that, as you know, to create a new file in
-> emacs, you give find-file  a non-existent file and emacs will open up
-> a buffer for you and let you save it when you're done.
-
-OK, but in that case vc-git-registered needs to return failure, you
-cannot call git-ls-files as it may find the file in the wrong
-directory. I'd suggest something like this:
-
-
->From abf4311add221102957145255d5418a7ec06fe1d Mon Sep 17 00:00:00 2001
-From: Alexandre Julliard <julliard@winehq.org>
-Date: Fri, 22 Dec 2006 14:51:23 +0100
-Subject: [PATCH] vc-git: Ignore errors caused by a non-existent directory in vc-git-registered.
-
-Signed-off-by: Alexandre Julliard <julliard@winehq.org>
+Signed-off-by: Brian Gernhardt <benji@silverinsanity.com>
 ---
- contrib/emacs/vc-git.el |    5 +++--
- 1 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/contrib/emacs/vc-git.el b/contrib/emacs/vc-git.el
-index 8b63619..3eb4bd1 100644
---- a/contrib/emacs/vc-git.el
-+++ b/contrib/emacs/vc-git.el
-@@ -58,8 +58,9 @@
-   (with-temp-buffer
-     (let* ((dir (file-name-directory file))
-            (name (file-relative-name file dir)))
--      (when dir (cd dir))
--      (and (ignore-errors (eq 0 (call-process "git" nil '(t nil) nil "ls-files" "-c" "-z" "--" name)))
-+      (and (ignore-errors
-+             (when dir (cd dir))
-+             (eq 0 (call-process "git" nil '(t nil) nil "ls-files" "-c" "-z" "--" name)))
-            (let ((str (buffer-string)))
-              (and (> (length str) (length name))
-                   (string= (substring str 0 (1+ (length name))) (concat name "\0"))))))))
--- 
-1.4.4.2.g28ce
+ I would have made this display the git directory, but the code to
+ do that seems to be unique to rev-parse and involve more set up than is
+ done at the time the option is parsed.
 
+ git.c |   13 ++++++++-----
+ 1 files changed, 8 insertions(+), 5 deletions(-)
+
+diff --git a/git.c b/git.c
+index 73cf4d4..2b3c9f9 100644
+--- a/git.c
++++ b/git.c
+@@ -59,11 +59,14 @@ static int handle_options(const char*** argv, int* argc)
+ 		} else if (!strcmp(cmd, "-p") || !strcmp(cmd, "--paginate")) {
+ 			setup_pager();
+ 		} else if (!strcmp(cmd, "--git-dir")) {
+-			if (*argc < 1)
+-				return -1;
+-			setenv("GIT_DIR", (*argv)[1], 1);
+-			(*argv)++;
+-			(*argc)--;
++			if (*argc < 2) {
++				fprintf(stderr, "No directory given for --git-dir.\n" );
++				usage(git_usage_string);
++			} else {
++				setenv("GIT_DIR", (*argv)[1], 1);
++				(*argv)++;
++				(*argc)--;
++			}
+ 		} else if (!strncmp(cmd, "--git-dir=", 10)) {
+ 			setenv("GIT_DIR", cmd + 10, 1);
+ 		} else if (!strcmp(cmd, "--bare")) {
 -- 
-Alexandre Julliard
-julliard@winehq.org
+1.4.4.GIT
