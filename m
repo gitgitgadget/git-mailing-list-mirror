@@ -1,72 +1,77 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Updated Kernel Hacker's guide to git
-Date: Fri, 22 Dec 2006 14:34:18 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0612221432430.3671@woody.osdl.org>
-References: <38b2ab8a0612210424o4ec5fcd5kb5086c52ccd76491@mail.gmail.com>
- <Pine.LNX.4.64.0612211013500.3394@woody.osdl.org> <87slf83erg.wl%cworth@cworth.org>
- <Pine.LNX.4.64.0612212009370.3536@woody.osdl.org> <877iwjinda.wl%cworth@cworth.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/2] libgit.a: add some UTF-8 handling functions
+Date: Fri, 22 Dec 2006 23:34:45 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0612222331581.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <11655782712452-git-send-email-zeisberg@informatik.uni-freiburg.de>
+ <20061221085907.GA2244@cepheus> <Pine.LNX.4.63.0612211050450.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+ <200612211623.14236.litvinov2004@gmail.com> <7vejqtaz7q.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0612220351520.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.64.0612221030440.18171@xanadu.home> <7vslf7zrdp.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0612222201200.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20061222221913.GA3071@cepheus>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Francis Moreau <francis.moro@gmail.com>,
-	Jay Cliburn <jacliburn@bellsouth.net>, git@vger.kernel.org,
-	Jeff Garzik <jeff@garzik.org>
-X-From: git-owner@vger.kernel.org Fri Dec 22 23:34:45 2006
+Content-Type: MULTIPART/MIXED; BOUNDARY="-1148973799-1043184935-1166826885=:19693"
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 22 23:34:52 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GxsyS-0002QC-1g
-	for gcvg-git@gmane.org; Fri, 22 Dec 2006 23:34:44 +0100
+	id 1GxsyY-0002RS-N2
+	for gcvg-git@gmane.org; Fri, 22 Dec 2006 23:34:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752778AbWLVWel (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Dec 2006 17:34:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752686AbWLVWel
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Dec 2006 17:34:41 -0500
-Received: from smtp.osdl.org ([65.172.181.25]:48977 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752778AbWLVWek (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Dec 2006 17:34:40 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kBMMYJ2J027178
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 22 Dec 2006 14:34:20 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kBMMYIOI002222;
-	Fri, 22 Dec 2006 14:34:19 -0800
-To: Carl Worth <cworth@cworth.org>
-In-Reply-To: <877iwjinda.wl%cworth@cworth.org>
-X-Spam-Status: No, hits=-0.653 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.107__
-X-MIMEDefang-Filter: osdl$Revision: 1.165 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1752686AbWLVWer (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Dec 2006 17:34:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752878AbWLVWer
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Dec 2006 17:34:47 -0500
+Received: from mail.gmx.net ([213.165.64.20]:37800 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752686AbWLVWeq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Dec 2006 17:34:46 -0500
+Received: (qmail invoked by alias); 22 Dec 2006 22:34:45 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp027) with SMTP; 22 Dec 2006 23:34:45 +0100
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<zeisberg@informatik.uni-freiburg.de>
+In-Reply-To: <20061222221913.GA3071@cepheus>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35238>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35239>
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
+---1148973799-1043184935-1166826885=:19693
+Content-Type: TEXT/PLAIN; charset=iso-8859-1
+Content-Transfer-Encoding: 8BIT
 
-On Fri, 22 Dec 2006, Carl Worth wrote:
-> 
-> I can understand the advantage of a shortcut like "git diff ..next",
-> but I still don't understand why it's the comparison of HEAD and next
-> that's really interesting here.
+Dear Mr Zeisberg,
 
-I can't understand why people complain about this.
+On Fri, 22 Dec 2006, Uwe Kleine-König wrote:
 
-YOU DON'T HAVE TO USE IT. 
+> Johannes Schindelin wrote:
+> > Note that we do not go the full nine yards: we could also check that
+> > the character is encoded with the minimum amount of bytes, as pointed
+> > out by Uwe Kleine-Koenig.
+> While we're talking about UTF-8 in commit-logs:  I'd prefer to have my
+> name properly written with o-umlaut.
 
-Nobvody forces you. Really. And dammit, if I want to compare HEAD and 
-next, I compare HEAD and next. You have absolutely no business saying that 
-you don't understand why I'd want to do it. It's MY LIFE.
+I did this because I have no easy way to input UTF-8, and because I am 
+lazy, and because I did not know how many times this patch has to be 
+revised.
 
-> But, really, I still don't understand exactly _what_ "diff a..b" even
-> means. Can you explain it to me?
+Apart from that, it seems that the checking of UTF-8 is actually quite 
+simple, and we could even copy it from 
+http://www.cl.cam.ac.uk/~mgk25/ucs/utf8_check.c, where the check you 
+proposed is included.
 
-It means exactly the same as "diff a b".
+But I had enough of UTF-8 for a day.
 
-It's that simple.
+Ciao,
+Dscho
 
-So now go away. Stop complaining.
-
-		Linus
+---1148973799-1043184935-1166826885=:19693--
