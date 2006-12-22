@@ -1,61 +1,112 @@
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: Re: Change in git-svn dcommit semantics?
-Date: Fri, 22 Dec 2006 09:09:01 -0500
-Message-ID: <3EB63EEE-0F78-47CE-B94E-325A9F6817C5@silverinsanity.com>
-References: <m2mz5jegka.fsf@ziti.local> <94FF72E0-F8BD-4773-803E-F179754BF0ED@silverinsanity.com> <Pine.LNX.4.63.0612200053550.19693@wbgn013.biozentrum.uni-wuerzburg.de> <C2881A17-27F7-467C-B353-189BB7DBFD1E@silverinsanity.com> <7v3b7bnz6q.fsf@assigned-by-dhcp.cox.net> <emb77h$cf2$1@sea.gmane.org> <360A3F7A-0849-4BCE-8550-1F05BB9821C5@silverinsanity.com> <20061220115731.GA29786@coredump.intra.peff.net>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Fri Dec 22 15:09:11 2006
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<zeisberg@informatik.uni-freiburg.de>
+Subject: Re: specify charset for commits
+Date: Fri, 22 Dec 2006 16:09:49 +0100
+Organization: Universitaet Freiburg, Institut f. Informatik
+Message-ID: <20061222150948.GA6005@cepheus>
+References: <11655782712452-git-send-email-zeisberg@informatik.uni-freiburg.de> <20061221085907.GA2244@cepheus> <Pine.LNX.4.63.0612211050450.19693@wbgn013.biozentrum.uni-wuerzburg.de> <200612211623.14236.litvinov2004@gmail.com> <7vejqtaz7q.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0612220351520.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <junkio@cox.net>,
+	Alexander Litvinov <litvinov2004@gmail.com>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 22 16:10:49 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1Gxl59-0007Y6-8S
-	for gcvg-git@gmane.org; Fri, 22 Dec 2006 15:09:07 +0100
+	id 1Gxm2q-0002J0-A2
+	for gcvg-git@gmane.org; Fri, 22 Dec 2006 16:10:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423057AbWLVOJE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Dec 2006 09:09:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423032AbWLVOJE
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Dec 2006 09:09:04 -0500
-Received: from vs072.rosehosting.com ([216.114.78.72]:57780 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1423039AbWLVOJD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Dec 2006 09:09:03 -0500
-Received: from [IPv6???1] (localhost [127.0.0.1])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTP id 77B431FFC02B;
-	Fri, 22 Dec 2006 14:09:02 +0000 (UTC)
-In-Reply-To: <20061220115731.GA29786@coredump.intra.peff.net>
-To: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-X-Mailer: Apple Mail (2.752.3)
+	id S1423166AbWLVPJz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 22 Dec 2006 10:09:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423167AbWLVPJz
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Dec 2006 10:09:55 -0500
+Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:33090 "EHLO
+	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1423166AbWLVPJy (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 22 Dec 2006 10:09:54 -0500
+Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
+	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
+	(Exim 4.60)
+	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
+	id 1Gxm1x-0000jQ-6V; Fri, 22 Dec 2006 16:09:53 +0100
+Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
+	by login.informatik.uni-freiburg.de (8.13.7+Sun/8.12.11) with ESMTP id kBMF9ojF016412;
+	Fri, 22 Dec 2006 16:09:50 +0100 (MET)
+Received: (from zeisberg@localhost)
+	by login.informatik.uni-freiburg.de (8.13.7+Sun/8.12.11/Submit) id kBMF9nAJ016411;
+	Fri, 22 Dec 2006 16:09:49 +0100 (MET)
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <zeisberg@informatik.uni-freiburg.de>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <junkio@cox.net>,
+	Alexander Litvinov <litvinov2004@gmail.com>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0612220351520.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35177>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35178>
 
-On Dec 20, 2006, at 6:57 AM, Jeff King wrote:
+Hello Johannes,
 
-> On Wed, Dec 20, 2006 at 06:47:45AM -0500, Brian Gernhardt wrote:
->
->>>> The --full-diff option helps because it shows the diff for other
->>>> files (that do not have different number of substring COLLISION
->>>> in the pre and postimage) in the same commit as well.
->>>
->>> Yet another undocumented option. Sigh...
->>
->> I'd send in a patch to fix that (little gnome work is what I do in
->> Wikipedia, and seems to be what I do here), but the option seems to
->> be in setup_revision.c:setup_revisions, which is used in several
->> places.  Is there a central place to put that in the documentation?
->> Should there be?
->
-> Please read the rest of the thread for some explanation from Junio on
-> how this option works.
+Johannes Schindelin wrote:
+> The problem is: you cannot easily recognize if it is UTF8 or not,=20
+> programatically. There is a good indicator _against_ UTF8, namely the=
+=20
+> first byte can _only_ be 0xxxxxxx, 110xxxxx, 1110xxxx, 11110xxx. But =
+there=20
+> is no _positive_ sign that it is UTF8. For example, many umlauts and =
+other=20
+> special modifications to letters, stay in the range 0x7f-0xff.
+That's not the only indication.  Here comes a (Python) function that
+checks is string s is correctly UTF-8 encoded:
 
-I was trying to write quick documentation for this option, placing it  
-in Documentation/diff-options.txt (is that the right place for it?),  
-when I ran across --pickaxe-all.  How do the two options differ?
+	def is_utf8_str(s):
+	  cnt_furtherbytes =3D 0
+	  for c in s:
+	    if cnt_furtherbytes > 0:
+	      if ord(c) & 0xc0 =3D=3D 0x80:
+		cnt_furtherbytes -=3D 1
+	      else:
+		return False
+	    else:
+	      if ord(c) < 0x80:
+		continue
+	      elif ord(c) < 0xc0:
+	        return False
+	      elif ord(c) < 0xe0:
+		cnt_furtherbytes =3D 1
+	      elif ord(c) < 0xf0:
+		cnt_furtherbytes =3D 2
+	      elif ord(c) < 0xf8:
+		cnt_furtherbytes =3D 3
+	      elif ord(c) < 0xfc:
+		cnt_furtherbytes =3D 4
+	      elif ord(c) < 0xfe:
+		cnt_furtherbytes =3D 5
+	      else:
+		return False
+	  return True
 
-~~ Brian
+An UTF-8 character is either one byte long with the msb 0 or a sequence
+starting with a value between 0xc0 and 0xfd (inclusive) and depending o=
+n
+that first value up to six further bytes in the range 0x80 to 0xbf.
+
+You could even be more strict by checking for Unicode 3.1 conformance
+(i.e. a character has to be encoded in it's shortest form).
+
+Look at utf8(7) for further details.  (This manpage is included in the
+Debian manpages package.)
+
+Best regards
+Uwe
+
+--=20
+Uwe Kleine-K=F6nig
+
+http://www.google.com/search?q=3D5+choose+3
