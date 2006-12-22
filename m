@@ -1,77 +1,89 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/2] libgit.a: add some UTF-8 handling functions
-Date: Fri, 22 Dec 2006 23:34:45 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612222331581.19693@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <11655782712452-git-send-email-zeisberg@informatik.uni-freiburg.de>
- <20061221085907.GA2244@cepheus> <Pine.LNX.4.63.0612211050450.19693@wbgn013.biozentrum.uni-wuerzburg.de>
- <200612211623.14236.litvinov2004@gmail.com> <7vejqtaz7q.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0612220351520.19693@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0612221030440.18171@xanadu.home> <7vslf7zrdp.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0612222201200.19693@wbgn013.biozentrum.uni-wuerzburg.de>
- <20061222221913.GA3071@cepheus>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: confusion over the new branch and merge config
+Date: Fri, 22 Dec 2006 23:40:49 +0100
+Message-ID: <200612222340.50029.jnareb@gmail.com>
+References: <Pine.LNX.4.64.0612211555210.18171@xanadu.home> <emhh4k$u4q$1@sea.gmane.org> <Pine.LNX.4.64.0612221609430.18171@xanadu.home>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="-1148973799-1043184935-1166826885=:19693"
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 22 23:34:52 2006
+X-From: git-owner@vger.kernel.org Fri Dec 22 23:38:13 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GxsyY-0002RS-N2
-	for gcvg-git@gmane.org; Fri, 22 Dec 2006 23:34:51 +0100
+	id 1Gxt1n-0002y0-VK
+	for gcvg-git@gmane.org; Fri, 22 Dec 2006 23:38:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752686AbWLVWer (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Dec 2006 17:34:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752878AbWLVWer
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Dec 2006 17:34:47 -0500
-Received: from mail.gmx.net ([213.165.64.20]:37800 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752686AbWLVWeq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Dec 2006 17:34:46 -0500
-Received: (qmail invoked by alias); 22 Dec 2006 22:34:45 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp027) with SMTP; 22 Dec 2006 23:34:45 +0100
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<zeisberg@informatik.uni-freiburg.de>
-In-Reply-To: <20061222221913.GA3071@cepheus>
-X-Y-GMX-Trusted: 0
+	id S1752878AbWLVWiI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 22 Dec 2006 17:38:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753149AbWLVWiI
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Dec 2006 17:38:08 -0500
+Received: from ug-out-1314.google.com ([66.249.92.169]:6169 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752878AbWLVWiH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Dec 2006 17:38:07 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so3103510uga
+        for <git@vger.kernel.org>; Fri, 22 Dec 2006 14:38:06 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=AWwi6+6A/w+AQguJ1vAsJfl9Z4kmpxqCZF598vpDulvzEazdgqpvtfJeCviEI+vdQoSGYM2bdR8awC4CdfQ/nXLkwAp9HxiuYuk7qztZ12BX6iShx4Bp4s3H2KlkwFNgz++KLL6WdNN5SjsmhE87v414P3bSVVjcBtilS+0EqzY=
+Received: by 10.67.93.6 with SMTP id v6mr1377551ugl.1166827085959;
+        Fri, 22 Dec 2006 14:38:05 -0800 (PST)
+Received: from host-81-190-25-107.torun.mm.pl ( [81.190.25.107])
+        by mx.google.com with ESMTP id 72sm13774658ugb.2006.12.22.14.38.05;
+        Fri, 22 Dec 2006 14:38:05 -0800 (PST)
+To: Nicolas Pitre <nico@cam.org>, Junio Hamano <junkio@cox.net>
+User-Agent: KMail/1.9.3
+In-Reply-To: <Pine.LNX.4.64.0612221609430.18171@xanadu.home>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35239>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35240>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Nicolas Pitre wrote:
+>=20
+> Could you at least keep me in CC when replying to me please?
 
----1148973799-1043184935-1166826885=:19693
-Content-Type: TEXT/PLAIN; charset=iso-8859-1
-Content-Transfer-Encoding: 8BIT
+I have Cc-ed you and Junio, but somehow message I send to mailing
+list loses the Cc:. Perhaps it is time to change news client (KMail),
+or upgrade it...
 
-Dear Mr Zeisberg,
+> On Fri, 22 Dec 2006, Jakub Narebski wrote:
+>=20
+>> <opublikowany i wys=B3any>
+>=20
+> ?
 
-On Fri, 22 Dec 2006, Uwe Kleine-König wrote:
+Sorry, it is added (in my locale) when both sending reply via mail,
+and to newsgroup (and to git mailing list via GMane NNTP news2mail
+interface).
 
-> Johannes Schindelin wrote:
-> > Note that we do not go the full nine yards: we could also check that
-> > the character is encoded with the minimum amount of bytes, as pointed
-> > out by Uwe Kleine-Koenig.
-> While we're talking about UTF-8 in commit-logs:  I'd prefer to have my
-> name properly written with o-umlaut.
 
-I did this because I have no easy way to input UTF-8, and because I am 
-lazy, and because I did not know how many times this patch has to be 
-revised.
+>> Perhaps less confusing, but also less powerfull. Current notation
+>> allows for pulling _without need for tracking branches_.
+>=20
+> Is this really a killer feature worth the confusion?
+>=20
+> If you put the repo to pull from on the command line then sure you mi=
+ght=20
+> not want a tracking branch, but if you go to the trouble of adding a=20
+> branch.blah.merge config entry then you certainly don't mind having a=
+=20
+> tracking branch?
 
-Apart from that, it seems that the checking of UTF-8 is actually quite 
-simple, and we could even copy it from 
-http://www.cl.cam.ac.uk/~mgk25/ucs/utf8_check.c, where the check you 
-proposed is included.
+I'm not sure. On one hand you have this feature, pulling without tracki=
+ng
+branch (which is nice workflow for one-branch repos at least), on the
+other hand the tracking branch tells us the remote, and we can check if
+they match.=20
 
-But I had enough of UTF-8 for a day.
-
-Ciao,
-Dscho
-
----1148973799-1043184935-1166826885=:19693--
+On another hand, you can have two remotes which are the same repository
+(mirrors for example)... although that would be better solved by allowi=
+ng
+multiple url...
+--=20
+Jakub Narebski
+Poland
