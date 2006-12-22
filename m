@@ -1,72 +1,71 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: GIT - error: no such remote ref refs/heads/TestBranch
-Date: Thu, 21 Dec 2006 16:52:51 -0800
-Message-ID: <7vbqlw92fw.fsf@assigned-by-dhcp.cox.net>
-References: <89b129c60612191233s5a7f36f2hd409c4b9a2bbbc5c@mail.gmail.com>
-	<7v64c7pmlw.fsf@assigned-by-dhcp.cox.net>
-	<87wt4m2o99.wl%cworth@cworth.org>
-	<7vmz5i6vqb.fsf@assigned-by-dhcp.cox.net>
-	<87vek62n1k.wl%cworth@cworth.org>
-	<7v1wmu5ecs.fsf@assigned-by-dhcp.cox.net>
-	<87tzzp3fgh.wl%cworth@cworth.org>
-	<slrneokplo.nsf.Peter.B.Baumann@xp.machine.xx>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [PATCH 3/3] Don't crash during repack of a reflog with pruned commits.
+Date: Thu, 21 Dec 2006 19:56:06 -0500
+Message-ID: <20061222005606.GA14773@spearce.org>
+References: <be6b1443171482e1930bd7744a0218db0c03d611.1166748450.git.spearce@spearce.org> <20061222004906.GC14789@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 22 01:53:12 2006
+X-From: git-owner@vger.kernel.org Fri Dec 22 01:56:16 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GxYen-0003SN-3v
-	for gcvg-git@gmane.org; Fri, 22 Dec 2006 01:53:05 +0100
+	id 1GxYhr-0003tt-2A
+	for gcvg-git@gmane.org; Fri, 22 Dec 2006 01:56:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423169AbWLVAw4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Dec 2006 19:52:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423170AbWLVAw4
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Dec 2006 19:52:56 -0500
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:56909 "EHLO
-	fed1rmmtao03.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1423169AbWLVAwz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Dec 2006 19:52:55 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20061222005252.OIRJ29122.fed1rmmtao03.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 21 Dec 2006 19:52:52 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id 1ct41W00Z1kojtg0000000; Thu, 21 Dec 2006 19:53:04 -0500
-To: Peter Baumann <Peter.B.Baumann@stud.informatik.uni-erlangen.de>
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1423171AbWLVA4L (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Dec 2006 19:56:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423147AbWLVA4L
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Dec 2006 19:56:11 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:58001 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1423171AbWLVA4J (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Dec 2006 19:56:09 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1GxYha-0005iI-3U; Thu, 21 Dec 2006 19:55:58 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 74E1820FB65; Thu, 21 Dec 2006 19:56:06 -0500 (EST)
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <20061222004906.GC14789@spearce.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35106>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35107>
 
-Peter Baumann <Peter.B.Baumann@stud.informatik.uni-erlangen.de>
-writes:
+"Shawn O. Pearce" <spearce@spearce.org> wrote:
+> If the user has been using reflog for a long time (e.g. since its
+> introduction) then it is very likely that an existing branch's
+> reflog may still mention commits which have long since been pruned
+> out of the repository.
+> 
+> Rather than aborting with a very useless error message during
+> git-repack, pack as many valid commits as we can get from the
+> reflog and let the user know that the branch's reflog contains
+> already pruned commits.  A future 'git reflog expire' (or whatever
+> it finally winds up being called) can then be performed to expunge
+> those reflog entries.
 
-> I'm also not so confident about mixing "add NEW files" with "updating
-> the contents of already known files".
+If its not obvious from the patch, this doesn't entirely fix the
+problem.
 
-File boundaries do not matter ;-)  You are adding contents.
-Sometimes new contents are contained in a file that git already
-knew about.  Other times they are contained in a file that git
-did not know about.
+Just because the commit has not been pruned does not mean that a blob
+or tree referenced by that commit has not been pruned.  Right now
+I am missing 1 blob and cannot repack because of it.
 
-But that is a phylosophical answer, not a practical one, since
-majority of the time (unless you are talking about the first few
-weeks of a new project) you will be adding contents that happen
-to be in the files git knows about.
+At least with this series of 3 patches the error message resulting
+from this one missing blob is clearer.
 
-I think the operation related but different from "git add ."
-Carl talks about would be useful in practice.  I do not know
-what the option should be called.
-
-	"git add --modified"?
-        "git add --tracked"?
-        "git add --updated"?
-
-It would work in the same way as the pre-commit step of "git
-commit -a".
+-- 
+Shawn.
