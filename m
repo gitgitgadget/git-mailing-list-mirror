@@ -1,138 +1,85 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [RFC/PATCH 3/2] Wrap lines in shortlog
-Date: Fri, 22 Dec 2006 22:15:59 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612222208310.19693@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <11655782712452-git-send-email-zeisberg@informatik.uni-freiburg.de>
- <20061221085907.GA2244@cepheus> <Pine.LNX.4.63.0612211050450.19693@wbgn013.biozentrum.uni-wuerzburg.de>
- <200612211623.14236.litvinov2004@gmail.com> <7vejqtaz7q.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0612220351520.19693@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0612221030440.18171@xanadu.home> <7vslf7zrdp.fsf@assigned-by-dhcp.cox.net>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: confusion over the new branch and merge config
+Date: Fri, 22 Dec 2006 16:20:31 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0612221609430.18171@xanadu.home>
+References: <Pine.LNX.4.64.0612211555210.18171@xanadu.home>
+ <7vd56cam66.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0612221539100.18171@xanadu.home> <emhh4k$u4q$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="-1148973799-426952902-1166821767=:19693"
-Cc: Nicolas Pitre <nico@cam.org>,
-	=?iso-8859-1?Q?Uwe_Kleine-K=F6nig?= 
-	<zeisberg@informatik.uni-freiburg.de>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 22 22:16:16 2006
+Content-Type: multipart/mixed; boundary="Boundary_(ID_5/1jGYvRTGfMnw0MfDX5Lw)"
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 22 22:20:45 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GxrkN-0006Qo-3c
-	for gcvg-git@gmane.org; Fri, 22 Dec 2006 22:16:07 +0100
+	id 1Gxroh-0007CM-V6
+	for gcvg-git@gmane.org; Fri, 22 Dec 2006 22:20:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750849AbWLVVQD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Dec 2006 16:16:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750997AbWLVVQD
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Dec 2006 16:16:03 -0500
-Received: from mail.gmx.net ([213.165.64.20]:53049 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750849AbWLVVQB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Dec 2006 16:16:01 -0500
-Received: (qmail invoked by alias); 22 Dec 2006 21:15:59 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp020) with SMTP; 22 Dec 2006 22:15:59 +0100
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vslf7zrdp.fsf@assigned-by-dhcp.cox.net>
-Content-ID: <Pine.LNX.4.63.0612222209400.19693@wbgn013.biozentrum.uni-wuerzburg.de>
-X-Y-GMX-Trusted: 0
+	id S1751791AbWLVVUd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Dec 2006 16:20:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752816AbWLVVUd
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Dec 2006 16:20:33 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:27096 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751791AbWLVVUc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Dec 2006 16:20:32 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JAP00GK51Y7LCX0@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Fri, 22 Dec 2006 16:20:31 -0500 (EST)
+In-reply-to: <emhh4k$u4q$1@sea.gmane.org>
+X-X-Sender: nico@xanadu.home
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35221>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35222>
 
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
----1148973799-426952902-1166821767=:19693
-Content-Type: TEXT/PLAIN; CHARSET=US-ASCII
-Content-ID: <Pine.LNX.4.63.0612222209401.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+--Boundary_(ID_5/1jGYvRTGfMnw0MfDX5Lw)
+Content-type: TEXT/PLAIN; charset=UTF-8
+Content-transfer-encoding: 8BIT
 
-Hi,
 
-It is nicer to wrap the lines of too long oneline descriptions. This patch 
-even works in UTF-8.
+Could you at least keep me in CC when replying to me please?
 
-The patch is attached, since I cannot find the setting in pine to make it 
-a UTF-8 one. Besides, I deliberately fscked up one test case.
+On Fri, 22 Dec 2006, Jakub Narebski wrote:
 
-Ciao,
-Dscho
+> <opublikowany i wysłany>
 
----1148973799-426952902-1166821767=:19693
-Content-Type: TEXT/PLAIN; CHARSET=iso-8859-1; NAME=git.txt
-Content-Transfer-Encoding: BASE64
-Content-ID: <Pine.LNX.4.63.0612222209270.19693@wbgn013.biozentrum.uni-wuerzburg.de>
-Content-Description: shortlog.patch
-Content-Disposition: ATTACHMENT; FILENAME=git.txt
+?
 
-W1BBVENIXSBVc2UgcHJpbnRfd3JhcHBlZF90ZXh0KCkgaW4gc2hvcnRsb2cN
-Cg0KU29tZSBvbmVsaW5lIGRlc2NyaXB0aW9ucyBhcmUganVzdCB0b28gbG9u
-Zy4gSW4gc2hvcnRsb2csIGl0IGxvb2tzIG11Y2gNCm5pY2VyIHdoZW4gdGhl
-eSBhcmUgd3JhcHBlZC4gU2luY2UgcHJpbnRfd3JhcHBlZF90ZXh0KCkgaXMg
-VVRGLTggYXdhcmUsDQppdCBhbHNvIHdvcmtzIHdpdGggdGhvc2UgZGVzY3Jp
-cHRpb25zLg0KDQpTaWduZWQtb2ZmLWJ5OiBKb2hhbm5lcyBTY2hpbmRlbGlu
-IDxKb2hhbm5lcy5TY2hpbmRlbGluQGdteC5kZT4NCg0KLS0tDQoNCglQcm9i
-YWJseSB0aGlzIHNob3VsZCBjaGVjayBpMThuLmNvbW1pdGVuY29kaW5nLCB0
-b28uLi4NCg0KIGJ1aWx0aW4tc2hvcnRsb2cuYyAgfCAgICA0ICsrKy0NCiB0
-L3Q0MjAxLXNob3J0bG9nLnNoIHwgICA1MCArKysrKysrKysrKysrKysrKysr
-KysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKw0KIDIgZmlsZXMgY2hh
-bmdlZCwgNTMgaW5zZXJ0aW9ucygrKSwgMSBkZWxldGlvbnMoLSkNCg0KZGlm
-ZiAtLWdpdCBhL2J1aWx0aW4tc2hvcnRsb2cuYyBiL2J1aWx0aW4tc2hvcnRs
-b2cuYw0KaW5kZXggZWRiNDA0Mi4uMzBlN2NiNSAxMDA2NDQNCi0tLSBhL2J1
-aWx0aW4tc2hvcnRsb2cuYw0KKysrIGIvYnVpbHRpbi1zaG9ydGxvZy5jDQpA
-QCAtNCw2ICs0LDcgQEANCiAjaW5jbHVkZSAiZGlmZi5oIg0KICNpbmNsdWRl
-ICJwYXRoLWxpc3QuaCINCiAjaW5jbHVkZSAicmV2aXNpb24uaCINCisjaW5j
-bHVkZSAidXRmOC5oIg0KIA0KIHN0YXRpYyBjb25zdCBjaGFyIHNob3J0bG9n
-X3VzYWdlW10gPQ0KICJnaXQtc2hvcnRsb2cgWy1uXSBbLXNdIFs8Y29tbWl0
-LWlkPi4uLiBdIjsNCkBAIC0zMjEsNyArMzIyLDggQEAgaW50IGNtZF9zaG9y
-dGxvZyhpbnQgYXJnYywgY29uc3QgY2hhciAqKmFyZ3YsIGNvbnN0IGNoYXIg
-KnByZWZpeCkNCiAJCX0gZWxzZSB7DQogCQkJcHJpbnRmKCIlcyAoJWQpOlxu
-IiwgbGlzdC5pdGVtc1tpXS5wYXRoLCBvbmVsaW5lcy0+bnIpOw0KIAkJCWZv
-ciAoaiA9IG9uZWxpbmVzLT5uciAtIDE7IGogPj0gMDsgai0tKQ0KLQkJCQlw
-cmludGYoIiAgICAgICVzXG4iLCBvbmVsaW5lcy0+aXRlbXNbal0ucGF0aCk7
-DQorCQkJCXByaW50X3dyYXBwZWRfdGV4dChvbmVsaW5lcy0+aXRlbXNbal0u
-cGF0aCwNCisJCQkJCTYsIDksIDc2KTsNCiAJCQlwcmludGYoIlxuIik7DQog
-CQl9DQogDQpkaWZmIC0tZ2l0IGEvdC90NDIwMS1zaG9ydGxvZy5zaCBiL3Qv
-dDQyMDEtc2hvcnRsb2cuc2gNCm5ldyBmaWxlIG1vZGUgMTAwNjQ0DQppbmRl
-eCAwMDAwMDAwLi5lNDA4NWY5DQotLS0gL2Rldi9udWxsDQorKysgYi90L3Q0
-MjAxLXNob3J0bG9nLnNoDQpAQCAtMCwwICsxLDUwIEBADQorIyEvYmluL3No
-DQorIw0KKyMgQ29weXJpZ2h0IChjKSAyMDA2IEpvaGFubmVzIEUuIFNjaGlu
-ZGVsaW4NCisjDQorDQordGVzdF9kZXNjcmlwdGlvbj0nZ2l0LXNob3J0bG9n
-DQorJw0KKw0KKy4gLi90ZXN0LWxpYi5zaA0KKw0KK2VjaG8gMSA+IGExDQor
-Z2l0IGFkZCBhMQ0KK3RyZWU9JChnaXQgd3JpdGUtdHJlZSkNCitjb21taXQ9
-JCgoZWNobyAiVGVzdCI7IGVjaG8pIHwgZ2l0IGNvbW1pdC10cmVlICR0cmVl
-KQ0KK2dpdCB1cGRhdGUtcmVmIEhFQUQgJGNvbW1pdCANCisNCitlY2hvIDIg
-PiBhMQ0KK2dpdCBjb21taXQgLW0gIlRoaXMgaXMgYSB2ZXJ5LCB2ZXJ5IGxv
-bmcgZmlyc3QgbGluZSBmb3IgdGhlIGNvbW1pdCBtZXNzYWdlIHRvIHNlZSBp
-ZiBpdCBpcyB3cmFwcGVkIGNvcnJlY3RseSIgYTENCisNCisjIHRlc3QgaWYg
-dGhlIHdyYXBwaW5nIGlzIHN0aWxsIHZhbGlkIHdoZW4gcmVwbGFjaW5nIGFs
-bCBpJ3MgYnkgdHJlYmxlIGNsZWZzLg0KK2VjaG8gMyA+IGExDQorZ2l0IGNv
-bW1pdCAtbSAiJChlY2hvICJUaGlzIGlzIGEgdmVyeSwgdmVyeSBsb25nIGZp
-cnN0IGxpbmUgZm9yIHRoZSBjb21taXQgbWVzc2FnZSB0byBzZWUgaWYgaXQg
-aXMgd3JhcHBlZCBjb3JyZWN0bHkiIHwgc2VkICJzL2kvMTIzNC9nIiB8IHRy
-IDEyMzQgJ1wzNjBcMjM1XDIwNFwyMzYnKSIgYTENCisNCisjIG5vdyBmc2Nr
-IHVwIHRoZSB1dGY4DQorZ2l0IHJlcG8tY29uZmlnIGkxOG4uY29tbWl0ZW5j
-b2Rpbmcgbm9uLXV0Zi04DQorZWNobyA0ID4gYTENCitnaXQgY29tbWl0IC1t
-ICIkKGVjaG8gIlRoaXMgaXMgYSB2ZXJ5LCB2ZXJ5IGxvbmcgZmlyc3QgbGlu
-ZSBmb3IgdGhlIGNvbW1pdCBtZXNzYWdlIHRvIHNlZSBpZiBpdCBpcyB3cmFw
-cGVkIGNvcnJlY3RseSIgfCBzZWQgInMvaS8xMjM0L2ciIHwgdHIgMTIzNCAn
-XDM3MFwyMzVcMjA0XDIzNicpIiBhMQ0KKw0KK2VjaG8gNSA+IGExDQorZ2l0
-IGNvbW1pdCAtbSAiYQkJCQkJCQkJMTIJMzQJNTYJNzgiIGExDQorDQorZ2l0
-IHNob3J0bG9nIEhFQUQgPiBvdXQNCisNCitjYXQgPiBleHBlY3QgPDwgRU9G
-DQorQSBVIFRob3IgKDUpOg0KKyAgICAgIFRlc3QNCisgICAgICBUaGlzIGlz
-IGEgdmVyeSwgdmVyeSBsb25nIGZpcnN0IGxpbmUgZm9yIHRoZSBjb21taXQg
-bWVzc2FnZSB0byBzZWUgaWYNCisgICAgICAgICBpdCBpcyB3cmFwcGVkIGNv
-cnJlY3RseQ0KKyAgICAgIFRo8J2EnnMg8J2EnnMgYSB2ZXJ5LCB2ZXJ5IGxv
-bmcgZvCdhJ5yc3QgbPCdhJ5uZSBmb3IgdGhlIGNvbW3wnYSedCBtZXNzYWdl
-IHRvIHNlZSDwnYSeZg0KKyAgICAgICAgIPCdhJ50IPCdhJ5zIHdyYXBwZWQg
-Y29ycmVjdGx5DQorICAgICAgVGj4nYSecyD4nYSecyBhIHZlcnksIHZlcnkg
-bG9uZyBm+J2EnnJzdCBs+J2Enm5lIGZvciB0aGUgY29tbfidhJ50DQorICAg
-ICAgICAgbWVzc2FnZSB0byBzZWUg+J2EnmYg+J2EnnQg+J2EnnMgd3JhcHBl
-ZCBjb3JyZWN0bHkNCisgICAgICBhCQkJCQkJCQkxMgkzNA0KKyAgICAgICAg
-IDU2CTc4DQorDQorRU9GDQorDQordGVzdF9leHBlY3Rfc3VjY2VzcyAnc2hv
-cnRsb2cgd3JhcHBpbmcnICdkaWZmIC11IGV4cGVjdCBvdXQnDQorDQordGVz
-dF9kb25lDQo=
+> Nicolas Pitre wrote:
+> > On Thu, 21 Dec 2006, Junio C Hamano wrote:
+> 
+> >> No, the message says "any REMOTE branch" -- refs/heads/next is
+> >> what it is called at the remote, and that is how the value is
+> >> expected to be spelled; I think somebody added an example to
+> >> config.txt recently to stress this.  The above error messasge
+> >> obviously was not clear enough.  Rewording appreciated.
+> > 
+> > But wouldn't it be much less confusing if it used the local name for 
+> > that remote branch instead?  After all it is what should be used with 
+> > git-merge if performed manually, it is what diff, log, and al must use 
+> > as well.  Why would this need a remote name for something that is a 
+> > local operation after all?  I think "refs/heads/master" is really 
+> > ambigous since you might be confused between the local and remote 
+> > meaning of it, whereas "origin/master" carries no confusion at all.
+> 
+> Perhaps less confusing, but also less powerfull. Current notation
+> allows for pulling _without need for tracking branches_.
 
----1148973799-426952902-1166821767=:19693--
+Is this really a killer feature worth the confusion?
+
+If you put the repo to pull from on the command line then sure you might 
+not want a tracking branch, but if you go to the trouble of adding a 
+branch.blah.merge config entry then you certainly don't mind having a 
+tracking branch?
+
+
+Nicolas
+
+--Boundary_(ID_5/1jGYvRTGfMnw0MfDX5Lw)--
