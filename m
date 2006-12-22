@@ -1,95 +1,81 @@
-From: Nicolas Vilz <niv@iaglans.de>
-Subject: Re: git-svn throwing assertion on old svn tracking branch
-Date: Fri, 22 Dec 2006 02:35:10 +0100
-Message-ID: <20061222013510.GA9595@hermes>
-References: <20061220235551.GA2974@hermes.lan.home.vilz.de> <20061221010520.GB3901@localdomain>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 22 02:35:34 2006
+From: Kyle Moffett <mrmacman_g4@mac.com>
+Subject: Re: cloning the kernel - why long time in "Resolving 313037 deltas"
+Date: Thu, 21 Dec 2006 20:44:12 -0500
+Message-ID: <991F50E2-2C98-4710-84C5-3D7348E00B64@mac.com>
+References: <86y7p57y05.fsf@blue.stonehenge.com> <Pine.LNX.4.64.0612181251020.3479@woody.osdl.org> <86r6uw9azn.fsf@blue.stonehenge.com> <Pine.LNX.4.64.0612181625140.18171@xanadu.home> <86hcvs984c.fsf@blue.stonehenge.com> <Pine.LNX.4.64.0612181414200.3479@woody.osdl.org> <8664c896xv.fsf@blue.stonehenge.com> <46a038f90612181502y3e2a41cds7f16113ad0270f31@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v752.2)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>,
+	Linus Torvalds <torvalds@osdl.org>,
+	Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 22 02:51:15 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GxZJo-0008AV-2v
-	for gcvg-git@gmane.org; Fri, 22 Dec 2006 02:35:28 +0100
+	id 1GxZZ1-0001LJ-BI
+	for gcvg-git@gmane.org; Fri, 22 Dec 2006 02:51:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1945906AbWLVBe5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Dec 2006 20:34:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1945907AbWLVBe5
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Dec 2006 20:34:57 -0500
-Received: from geht-ab-wie-schnitzel.de ([217.69.165.145]:4478 "EHLO
-	vsectoor.geht-ab-wie-schnitzel.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1945906AbWLVBe5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 21 Dec 2006 20:34:57 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by vsectoor.geht-ab-wie-schnitzel.de (Postfix) with ESMTP id 8BFB63F5D;
-	Fri, 22 Dec 2006 02:34:54 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at vsectoor.geht-ab-wie-schnitzel.de
-Received: from vsectoor.geht-ab-wie-schnitzel.de ([127.0.0.1])
-	by localhost (vsectoor.geht-ab-wie-schnitzel.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id TA9KK1FjWvj5; Fri, 22 Dec 2006 02:34:30 +0100 (CET)
-Received: from localhost (dslb-088-066-037-196.pools.arcor-ip.net [88.66.37.196])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by vsectoor.geht-ab-wie-schnitzel.de (Postfix) with ESMTP id 2C9543EDC;
-	Fri, 22 Dec 2006 02:34:28 +0100 (CET)
-To: Eric Wong <normalperson@yhbt.net>
-Content-Disposition: inline
-In-Reply-To: <20061221010520.GB3901@localdomain>
-X-message-flag: Please send plain text messages only. Thank you.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1945913AbWLVBvI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Dec 2006 20:51:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1945915AbWLVBvI
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Dec 2006 20:51:08 -0500
+Received: from smtpout.mac.com ([17.250.248.181]:53751 "EHLO smtpout.mac.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1945913AbWLVBvH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Dec 2006 20:51:07 -0500
+X-Greylist: delayed 392 seconds by postgrey-1.27 at vger.kernel.org; Thu, 21 Dec 2006 20:51:07 EST
+Received: from mac.com (smtpin05-en2 [10.13.10.150])
+	by smtpout.mac.com (Xserve/8.12.11/smtpout11/MantshX 4.0) with ESMTP id kBM1iKAh005669;
+	Thu, 21 Dec 2006 17:44:20 -0800 (PST)
+Received: from [10.0.0.4] (ip70-187-212-71.dc.dc.cox.net [70.187.212.71])
+	(authenticated bits=0)
+	by mac.com (Xserve/smtpin05/MantshX 4.0) with ESMTP id kBM1iFHN009549
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Thu, 21 Dec 2006 17:44:18 -0800 (PST)
+In-Reply-To: <46a038f90612181502y3e2a41cds7f16113ad0270f31@mail.gmail.com>
+To: Martin Langhoff <martin.langhoff@gmail.com>
+X-Mailer: Apple Mail (2.752.2)
+X-Brightmail-Tracker: AAAAAA==
+X-Brightmail-scanned: yes
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35114>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35115>
 
-On Wed, Dec 20, 2006 at 05:05:20PM -0800, Eric Wong wrote:
-> Nicolas Vilz <niv@iaglans.de> wrote:
-> > hello guys,
-> > 
-> > it has been a while, i tried git in conjunction with svn... i got a nice
-> > history, when working with it. This Work is now a year old.
-> > 
-> > Now I wanted to get on working and got following error message while
-> > fetching from one specific svn tracking branch:
-> > 
-> > $ git-svn fetch -i svn_master
-> > perl: subversion/libsvn_subr/path.c:343: svn_path_remove_component: 
-> > Assertion `is_canonical(path->data, path->len)' failed.
-> > Aborted
-> 
-> I don't recall seeing that error before.
-> 
-> Are you using the command-line client or the perl SVN libraries?  If
-> you're using the command-line client, you may want to try:
-> rm -rf .git/svn/svn_master/tree && git-svn rebuild -i svn_master
-> 
-> > I checked the svn working copy, it is uptodate now (although i had to
-> > search for it, i havent been using this repository for one year...)
-> 
-> Does the directory you're tracking the the repository still
-> exist?  If it disappeared, git-svn could have some issues with it
-> (regardless of command-line or SVN libraries).
+On Dec 18, 2006, at 18:02:07, Martin Langhoff wrote:
+> On 18 Dec 2006 14:26:36 -0800, Randal L. Schwartz  
+> <merlyn@stonehenge.com> wrote:
+>> Linus Torvalds wrote:
+>>> You're running this under OS X, aren't you? It's a pig of an OS,  
+>>> but "almost one hour" vs "25 seconds" is still unreasonable.
+>>
+>> I agree!
+>
+> Me too -- but entirely possible. Disk IO is specially painful on  
+> OSX.  Stat calls are horrid. Using Arch (which abused stat calls to  
+> no end) many ops would take 50x-100x longer on OSX than on Linux. A  
+> large unpacked repo with git is a real pain -- and packing it can  
+> take hours.
 
-The repository i am tracking does still exist. both, the tree and the
-repository are on the same revision-number, so i am a bit clueless.
+I've actually also seen filesystem operation latency double or triple  
+if you start trying to do operations from multiple threads at once.   
+Suddenly the already dog-slow single-CPU operations start bouncing  
+caches and the Mac OS X mostly-whole-of-BSD-BKL across CPUs and it  
+just crawls.  I can definitely see the local disk IO taking 100x  
+longer than the network I/O, especially with an 8-megabit internet link.
 
-I tried a fresh fetch of this repository, it worked. so it shouldn't be
-a client-server version mismatch..
+> Once you are packed it's sweet, but large repos are a pain to deal  
+> with. You won't impress anyone with performance over a linux kernel  
+> repo -- starting up gitk can take a long time. Stat-heavy stuff  
+> like git-diff is noticeably slower under OSX.
 
-I also tried 
+Just as an example, it takes my OS-X-running Quad-2.5GHz G5 ten times  
+as long to do a "grep -rl foo linux/" as my Linux-running dual-1GHz  
+G4 with 400MHz system bus.  This is disk-cache-hot too.  And that's  
+not even a stat-heavy workload.  There's more than one reason I'm  
+trying to make a Mac OS X ABI emulation layer on top of Linux :-D.
 
-rm -rf .git/svn/svn_master/tree && git-svn rebuild -i svn_master
-
-this had no effect to git-svn fetch -i svn_master... i get the very same
-error message...
-
-I didn't alter there anything, so i think, fetching works, but if
-nothing is there to fetch, there is the initial error message...
-
-beneath there is svn, version 1.4.2 (r22196) ... on that repository is
-Subversion version 1.1.4 (r13838).
-
-
-Nicolas Vilz
+Cheers,
+Kyle Moffett
