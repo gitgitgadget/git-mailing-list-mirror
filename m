@@ -1,65 +1,93 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: What's cooking in git.git (topics)
-Date: Sat, 23 Dec 2006 00:53:00 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612230052220.19693@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <7vzm9g2rv5.fsf@assigned-by-dhcp.cox.net> <200612221111.58071.andyparkins@gmail.com>
- <7vlkkzv6rq.fsf@assigned-by-dhcp.cox.net>
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: Re: warning merge message
+Date: Sat, 23 Dec 2006 01:05:01 +0100
+Message-ID: <200612230105.01408.Josef.Weidendorfer@gmx.de>
+References: <867728.44872.qm@web31814.mail.mud.yahoo.com> <200612222349.54363.Josef.Weidendorfer@gmx.de> <7vy7ozv8lz.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Dec 23 00:53:14 2006
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Luben Tuikov <ltuikov@yahoo.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Dec 23 01:05:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GxuCJ-0005Xi-MK
-	for gcvg-git@gmane.org; Sat, 23 Dec 2006 00:53:08 +0100
+	id 1GxuO9-00076Y-KD
+	for gcvg-git@gmane.org; Sat, 23 Dec 2006 01:05:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753280AbWLVXxE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Dec 2006 18:53:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753291AbWLVXxE
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Dec 2006 18:53:04 -0500
-Received: from mail.gmx.net ([213.165.64.20]:59750 "HELO mail.gmx.net"
+	id S1753291AbWLWAFN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Dec 2006 19:05:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753302AbWLWAFN
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Dec 2006 19:05:13 -0500
+Received: from mail.gmx.net ([213.165.64.20]:52731 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753280AbWLVXxC (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Dec 2006 18:53:02 -0500
-Received: (qmail invoked by alias); 22 Dec 2006 23:53:00 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp025) with SMTP; 23 Dec 2006 00:53:00 +0100
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+	id S1753291AbWLWAFL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Dec 2006 19:05:11 -0500
+Received: (qmail invoked by alias); 23 Dec 2006 00:05:10 -0000
+Received: from p5496B9D3.dip0.t-ipconnect.de (EHLO noname) [84.150.185.211]
+  by mail.gmx.net (mp028) with SMTP; 23 Dec 2006 01:05:10 +0100
+X-Authenticated: #352111
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vlkkzv6rq.fsf@assigned-by-dhcp.cox.net>
+User-Agent: KMail/1.9.5
+In-Reply-To: <7vy7ozv8lz.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35249>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35250>
 
-Hi,
-
-On Fri, 22 Dec 2006, Junio C Hamano wrote:
-
-> Andy Parkins <andyparkins@gmail.com> writes:
+On Saturday 23 December 2006 00:00, Junio C Hamano wrote:
+> Josef Weidendorfer <Josef.Weidendorfer@gmx.de> writes:
 > 
-> > On Friday 2006 December 22 09:37, Junio C Hamano wrote:
+> > In a previous discussion, you talked about switching to
+> > the new behavior (ie. getting rid of this "first set of
+> > branches" rule) when there is at least one branch.*.merge
+> > setting in the config file.
 > >
-> >> * jc/git-add--interactive (Mon Dec 11 17:09:26 2006 -0800) 2 commits
-> >>  + git-add --interactive: hunk splitting
-> >>  + git-add --interactive
-> >
-> > I used this to disentangle a load of changes that I made under pressure and 
-> > turned them into lovely isolated commits.  I didn't have any trouble with it, 
-> > and thought it was incredibly useful.
-> >
-> > I'd vote for putting it in 1.5 - it's in keeping with the usability theme - 
-> > people love interactive stuff.
+> > Unfortunately I can not see an easy way to check this with
+> > repo-config, as there is no wildcard support for keys
+> > (Ok, I can do a list of keys and grep).
 > 
-> Seconds?  Thirds?  Vetoes?
+> I think --get-regexp is what you want -- see my "patch for
+> discussion".
 
-Obviously, I like git-hunk-commit better ;-)
+I see. I just read the thread.
 
-Seriously again, I will play with it in the next days.
+The git mailing list is already quite high volume ;-)
+Around 150+ new postings a day.
+I think I first should browse through any new threads before
+answering any mail.
+ 
+> > I think it is better to provide an option
+> > "pull.do-not-follow-the-first-set-of-branches-rule".
+> > And we should make this the default after init-db or clone.
+> 
+> Yes, but the problem is that old timers do make new clones.
 
-Ciao,
-Dscho
+Yes, they do.
+But this is not breaking existing repositories.
+
+If you collect such incompatibilities for the 1.5.0 release
+notes and provide the workaround ("remove that pull.do-not ..."
+option) to get back the old behavior, it should be fine.
+
+I can imagine that we want to add branch.*.remote/merge lines
+with "git checkout -b XXX remotes/YYY". Of course this should
+only be done if the pull.do-not is set. Relying on existance
+branch.*.merge lines seems fragile for me.
+
+What about putting this option into the config template instead of
+setting it in clone?
+If somebody always wants the old behavior, he should provide a template
+with this option not set.
+
+> pull.i-like-the-first-set-of-branches in ~/.gitconfig is the
+> only thing I can think of but that is too ugly and is already on
+> the slippery slope of user.expert configuration which I do not
+> think we want.
+
+I agree.
+
+Josef
