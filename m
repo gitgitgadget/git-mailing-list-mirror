@@ -1,83 +1,107 @@
 From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH 2/2] Remove NO_ACCURATE_DIFF options from build systems
-Date: Fri, 22 Dec 2006 22:18:03 -0800
-Message-ID: <1166854684559-git-send-email-normalperson@yhbt.net>
-References: <11668546833727-git-send-email-normalperson@yhbt.net>
+Subject: [PATCH 1/2] Makefile: add quick-install-doc for installing pre-built manpages
+Date: Fri, 22 Dec 2006 22:18:02 -0800
+Message-ID: <11668546833727-git-send-email-normalperson@yhbt.net>
 Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Sat Dec 23 07:18:16 2006
+X-From: git-owner@vger.kernel.org Sat Dec 23 07:18:21 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1Gy0D0-0003F4-Ks
-	for gcvg-git@gmane.org; Sat, 23 Dec 2006 07:18:15 +0100
+	id 1Gy0D0-0003F4-4C
+	for gcvg-git@gmane.org; Sat, 23 Dec 2006 07:18:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752501AbWLWGSK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 23 Dec 2006 01:18:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752532AbWLWGSK
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Dec 2006 01:18:10 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:38622 "EHLO hand.yhbt.net"
+	id S1752513AbWLWGSI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 23 Dec 2006 01:18:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752532AbWLWGSI
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Dec 2006 01:18:08 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:38620 "EHLO hand.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752563AbWLWGSH (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1752513AbWLWGSH (ORCPT <rfc822;git@vger.kernel.org>);
 	Sat, 23 Dec 2006 01:18:07 -0500
 Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id 1848B7DC031;
-	Fri, 22 Dec 2006 22:18:05 -0800 (PST)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Fri, 22 Dec 2006 22:18:04 -0800
+	by hand.yhbt.net (Postfix) with SMTP id A63DE7DC02A;
+	Fri, 22 Dec 2006 22:18:03 -0800 (PST)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Fri, 22 Dec 2006 22:18:03 -0800
 To: Junio C Hamano <junkio@cox.net>
 X-Mailer: git-send-email 1.4.4.3.gc902c
-In-Reply-To: <11668546833727-git-send-email-normalperson@yhbt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35273>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35274>
 
-The code no longer uses it, as we have --inaccurate-eof in
-git-apply.
+This adds and uses the install-doc-quick.sh file to
+Documentation/, which is usable for people who track either the
+'html' or 'man' heads in Junio's repository.
 
 Signed-off-by: Eric Wong <normalperson@yhbt.net>
 ---
- Makefile     |    6 ------
- configure.ac |    3 ---
- 2 files changed, 0 insertions(+), 9 deletions(-)
+ Documentation/Makefile             |    3 +++
+ Documentation/install-doc-quick.sh |   32 ++++++++++++++++++++++++++++++++
+ Makefile                           |    2 ++
+ 3 files changed, 37 insertions(+), 0 deletions(-)
 
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index d68bc4a..d563142 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -112,3 +112,6 @@ $(patsubst %.txt,%.html,$(wildcard howto/*.txt)): %.html : %.txt
+ 
+ install-webdoc : html
+ 	sh ./install-webdoc.sh $(WEBDOC_DEST)
++
++quick-install:
++	DESTDIR=$(mandir) sh ./install-doc-quick.sh man
+diff --git a/Documentation/install-doc-quick.sh b/Documentation/install-doc-quick.sh
+new file mode 100644
+index 0000000..44ccf60
+--- /dev/null
++++ b/Documentation/install-doc-quick.sh
+@@ -0,0 +1,32 @@
++#!/bin/sh
++# This requires a branch named in $head
++# (usually 'man' or 'html', provided by the git.git repository)
++set -e
++head="$1"
++if ! git-rev-parse --verify "$head" >/dev/null; then
++	echo >&2 "head: $head does not exist in the current repository"
++	exit 1
++fi
++
++if test -z "$DESTDIR"; then
++	echo >&2 'DESTDIR must be set in the environment'
++	exit 1
++fi
++
++GIT_INDEX_FILE=`pwd`/.quick-doc.index
++export GIT_INDEX_FILE
++rm -f "$GIT_INDEX_FILE"
++SUBDIRECTORY_OK=t
++. git-sh-setup
++export GIT_DIR
++git-read-tree $head
++git-checkout-index -a -f --prefix="$DESTDIR"/
++
++if test -n "$GZ"; then
++	cd "$DESTDIR"
++	for i in `git-ls-tree -r --name-only $head`
++	do
++		gzip < $i > $i.gz && rm $i
++	done
++fi
++rm -f "$GIT_INDEX_FILE"
 diff --git a/Makefile b/Makefile
-index 5492836..ebc1a17 100644
+index 7651104..5492836 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -79,9 +79,6 @@ all:
- #
- # Define NO_ICONV if your libc does not properly support iconv.
- #
--# Define NO_ACCURATE_DIFF if your diff program at least sometimes misses
--# a missing newline at the end of the file.
--#
- # Define USE_NSEC below if you want git to care about sub-second file mtimes
- # and ctimes. Note that you need recent glibc (at least 2.2.4) for this, and
- # it will BREAK YOUR LOCAL DIFFS! show-diff and anything using it will likely
-@@ -549,9 +546,6 @@ else
- endif
- endif
- endif
--ifdef NO_ACCURATE_DIFF
--	BASIC_CFLAGS += -DNO_ACCURATE_DIFF
--endif
- ifdef NO_PERL_MAKEMAKER
- 	export NO_PERL_MAKEMAKER
- endif
-diff --git a/configure.ac b/configure.ac
-index e153d53..7cfb3a0 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -235,9 +235,6 @@ AC_SUBST(NO_SETENV)
- #
- # Define NO_SYMLINK_HEAD if you never want .git/HEAD to be a symbolic link.
- # Enable it on Windows.  By default, symrefs are still used.
--#
--# Define NO_ACCURATE_DIFF if your diff program at least sometimes misses
--# a missing newline at the end of the file.
+@@ -830,6 +830,8 @@ install: all
+ install-doc:
+ 	$(MAKE) -C Documentation install
  
- ## Site configuration (override autodetection)
- ## --with-PACKAGE[=ARG] and --without-PACKAGE
++quick-install-doc:
++	$(MAKE) -C Documentation quick-install
+ 
+ 
+ 
 -- 
 1.4.4.3.gc902c
