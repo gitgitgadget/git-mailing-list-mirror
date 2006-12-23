@@ -1,76 +1,77 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<zeisberg@informatik.uni-freiburg.de>
-Subject: Re: [PATCH 1/2] libgit.a: add some UTF-8 handling functions
-Date: Sat, 23 Dec 2006 09:52:06 +0100
-Organization: Universitaet Freiburg, Institut f. Informatik
-Message-ID: <20061223085206.GA2189@cepheus>
-References: <Pine.LNX.4.63.0612211050450.19693@wbgn013.biozentrum.uni-wuerzburg.de> <200612211623.14236.litvinov2004@gmail.com> <7vejqtaz7q.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0612220351520.19693@wbgn013.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.64.0612221030440.18171@xanadu.home> <7vslf7zrdp.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0612222201200.19693@wbgn013.biozentrum.uni-wuerzburg.de> <20061222221913.GA3071@cepheus> <Pine.LNX.4.63.0612222331581.19693@wbgn013.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.63.0612230048350.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 2/2] Display 'theirs' branch name when possible in merge.
+Date: Sat, 23 Dec 2006 10:11:28 +0100
+Organization: At home
+Message-ID: <emirms$kh3$1@sea.gmane.org>
+References: <6115ec06459724c7c37c355805462cb61715e9c5.1166863413.git.spearce@spearce.org> <20061223084447.GB10203@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=iso-8859-2
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, junkio@cox.net
-X-From: git-owner@vger.kernel.org Sat Dec 23 09:52:27 2006
+X-From: git-owner@vger.kernel.org Sat Dec 23 10:09:24 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1Gy2c7-0001gs-4k
-	for gcvg-git@gmane.org; Sat, 23 Dec 2006 09:52:19 +0100
+	id 1Gy2sd-000398-61
+	for gcvg-git@gmane.org; Sat, 23 Dec 2006 10:09:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752703AbWLWIwM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sat, 23 Dec 2006 03:52:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752724AbWLWIwM
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Dec 2006 03:52:12 -0500
-Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:36276 "EHLO
-	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752703AbWLWIwL (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 23 Dec 2006 03:52:11 -0500
-Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
-	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
-	(Exim 4.60)
-	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
-	id 1Gy2bx-00013Z-OP; Sat, 23 Dec 2006 09:52:09 +0100
-Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
-	by login.informatik.uni-freiburg.de (8.13.7+Sun/8.12.11) with ESMTP id kBN8q74r005557;
-	Sat, 23 Dec 2006 09:52:07 +0100 (MET)
-Received: (from zeisberg@localhost)
-	by login.informatik.uni-freiburg.de (8.13.7+Sun/8.12.11/Submit) id kBN8q711005556;
-	Sat, 23 Dec 2006 09:52:07 +0100 (MET)
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <zeisberg@informatik.uni-freiburg.de>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, junkio@cox.net
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0612230048350.19693@wbgn013.biozentrum.uni-wuerzburg.de>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1752302AbWLWJJM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sat, 23 Dec 2006 04:09:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752778AbWLWJJM
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Dec 2006 04:09:12 -0500
+Received: from main.gmane.org ([80.91.229.2]:50664 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752302AbWLWJJK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Dec 2006 04:09:10 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Gy2sE-0001mJ-GC
+	for git@vger.kernel.org; Sat, 23 Dec 2006 10:08:58 +0100
+Received: from host-81-190-25-107.torun.mm.pl ([81.190.25.107])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 23 Dec 2006 10:08:58 +0100
+Received: from jnareb by host-81-190-25-107.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 23 Dec 2006 10:08:58 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-25-107.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35304>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35305>
 
-Hallo Johannes,
+Shawn O. Pearce wrote:
 
-Johannes Schindelin wrote:
-> @@ -127,6 +128,15 @@ int cmd_commit_tree(int argc, const char **argv,=
- const char *prefix)
->  	while (fgets(comment, sizeof(comment), stdin) !=3D NULL)
->  		add_buffer(&buffer, &size, "%s", comment);
-> =20
-> +	/* And check the encoding */
-> +	buffer[size] =3D '\0';
-> +	if (!strcmp(git_commit_encoding, "utf-8") && !is_utf8(buffer)) {
-Maybe you could be more generous here.  E.g.
+> Displaying the SHA1 of 'their' branch (the branch being merged into
+> the current branch) is not nearly as friendly as just displaying
+> the name of that branch, especially if that branch is already local
+> to this repository.
+>=20
+> git-merge now sets the environment variable 'GITHEAD_%(sha1)=3D%(name=
+)'
+> for each argument it gets passed, making the actual input name that
+> resolved to the commit '%(sha1)' easily available to the invoked
+> merge strategy.
+>=20
+> git-merge-recursive makes use of these environment variables when
+> they are available by using '%(name)' whenever it outputs the commit
+> identification rather than '%(sha1)'. =A0This is most obvious in the
+> conflict hunks created by xdl_merge:
+>=20
+> =A0 $ git mege sideb~1
+      git merge sideb~1
+> =A0 <<<<<<< HEAD:INSTALL
+> =A0 =A0 =A0Good!
+> =A0 =3D=3D=3D=3D=3D=3D=3D
+> =A0 =A0 =A0Oops.
+> =A0 >>>>>>> sideb~1:INSTALL
 
-	if ((!strcasecmp(git_commit_encoding, "utf-8") ||
-	!strcasecmp(git_commit_encoding, "utf8")) && !is_utf8(buffer))
-
-Junio suggested to make this check if i18n.commitEncoding is empty.  I
-didn't check the code to see if this case is included.
-
-Gruessle
-Uwe
-
+Very nice. Thanks.
 --=20
-Uwe Kleine-K=F6nig
-
-http://www.google.com/search?q=3D2+to+the+power+of+12
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
