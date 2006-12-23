@@ -1,33 +1,35 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH 0/17] Sliding window mmap for packfiles.
-Date: Sat, 23 Dec 2006 02:33:17 -0500
-Message-ID: <20061223073317.GA9837@spearce.org>
+Subject: [PATCH 2/17] Introduce new config option for mmap limit.
+Date: Sat, 23 Dec 2006 02:33:35 -0500
+Message-ID: <20061223073335.GC9837@spearce.org>
+References: <53b67707929c7f051f6d384c5d96e653bfa8419c.1166857884.git.spearce@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 23 08:33:36 2006
+X-From: git-owner@vger.kernel.org Sat Dec 23 08:33:46 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1Gy1Nt-0001lG-21
-	for gcvg-git@gmane.org; Sat, 23 Dec 2006 08:33:33 +0100
+	id 1Gy1O4-0001mU-PN
+	for gcvg-git@gmane.org; Sat, 23 Dec 2006 08:33:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752501AbWLWHdW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 23 Dec 2006 02:33:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752532AbWLWHdW
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Dec 2006 02:33:22 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:38723 "EHLO
+	id S1752628AbWLWHdj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 23 Dec 2006 02:33:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752636AbWLWHdj
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Dec 2006 02:33:39 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:38733 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752501AbWLWHdW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Dec 2006 02:33:22 -0500
+	with ESMTP id S1752628AbWLWHdi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Dec 2006 02:33:38 -0500
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1Gy1NH-000357-WF; Sat, 23 Dec 2006 02:32:56 -0500
+	id 1Gy1NY-00035e-P1; Sat, 23 Dec 2006 02:33:12 -0500
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 465AD20FB65; Sat, 23 Dec 2006 02:33:18 -0500 (EST)
+	id 6C17920FB65; Sat, 23 Dec 2006 02:33:35 -0500 (EST)
 To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
+In-Reply-To: <53b67707929c7f051f6d384c5d96e653bfa8419c.1166857884.git.spearce@spearce.org>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -40,60 +42,109 @@ X-Source-Dir:
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35282>
 
-This 17 patch series implements my much discussed, but never produced
-(until now), 'mmap sliding window' for packfile data access.
+Rather than hardcoding the maximum number of bytes which can be
+mmapped from pack files we should make this value configurable,
+allowing the end user to increase or decrease this limit on a
+per-repository basis depending on the size of the repository
+and the capabilities of their operating system.
 
-The key idea behind this topic is to mmap large non-contiguous
-segments of a packfile rather than the entire file.  If available
-virtual memory is getting low we unmap the least recently used
-packfile segment to free up address space for the currently needed
-segment.
+In general users should not need to manually tune such a low-level
+setting within the core code, but being able to artifically limit
+the number of bytes which we can mmap at once from pack files will
+make it easier to craft test cases for the new mmap sliding window
+implementation.
 
-This series also permits accessing packfiles up to 4 GiB in size,
-even on systems which permit only 2 GiB of virtual memory within
-a single process (e.g. Windows and some older UNIXes).  Of course
-4 GiB is still the upper limit on packfile size due to the current
-format of the index file.
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ Documentation/config.txt |    9 +++++++++
+ cache.h                  |    1 +
+ config.c                 |    5 +++++
+ environment.c            |    1 +
+ sha1_file.c              |    3 +--
+ 5 files changed, 17 insertions(+), 2 deletions(-)
 
-This series is 'pu' ready, but it may be too early to bring it
-directly into 'next'.
-
-Patch summary
--------------
-
-  1 - Replace unpack_entry_gently with unpack_entry.
-  2 - Introduce new config option for mmap limit.
-  3 - Refactor packed_git to prepare for sliding mmap windows.
-  4 - Use off_t for index and pack file lengths.
-  5 - Create read_or_die utility routine.
-  6 - Refactor how we open pack files to prepare for multiple windows.
-
-    Most of the above changes are incremental refactorings to help
-    get the code in a state where we can start to implement and make
-    use of the struct pack_window concept this series introduces.
-
-  7 - Replace use_packed_git with window cursors.
-  8 - Loop over pack_windows when inflating/accessing data.
-  9 - Document why header parsing won't exceed a window.
- 10 - Unmap individual windows rather than entire files.
- 11 - Fully activate the sliding window pack access.
-
-    These commits actually implement the core of the mmap sliding
-    window implementation and the necessary garbage collection to
-    support unmapping the least recently used window.
-
- 12 - Load core configuration in git-verify-pack.
- 13 - Ensure core.packedGitWindowSize cannot be less than 2 pages.
- 14 - Improve error message when packfile mmap fails.
- 15 - Support unmapping windows on 'temporary' packfiles.
-
-    The above sequence of commits are bug fixes on top of the initial
-    commits.  I did not fold these back into the earlier commits
-    as I felt the bug fix commit messages provided useful details.
-
- 16 - Create pack_report() as a debugging aid.
- 17 - Test suite for sliding window mmap implementation.
-
-    These provide debugging and testing tools.
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 22482d6..4e93066 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -118,6 +118,15 @@ core.legacyheaders::
+ 	database directly (where the "http://" and "rsync://" protocols
+ 	count as direct access).
+ 
++core.packedGitLimit::
++	Maximum number of bytes to map simultaneously into memory
++	from pack files.  If Git needs to access more than this many
++	bytes at once to complete an operation it will unmap existing
++	regions to reclaim virtual address space within the process.
++	Default is 256 MiB, which should be reasonable for all
++	users/operating systems, except on largest Git projects.
++	You probably do not need to adjust this value.
++
+ alias.*::
+ 	Command aliases for the gitlink:git[1] command wrapper - e.g.
+ 	after defining "alias.last = cat-file commit HEAD", the invocation
+diff --git a/cache.h b/cache.h
+index 38db1bf..ad94c3f 100644
+--- a/cache.h
++++ b/cache.h
+@@ -196,6 +196,7 @@ extern int warn_ambiguous_refs;
+ extern int shared_repository;
+ extern const char *apply_default_whitespace;
+ extern int zlib_compression_level;
++extern size_t packed_git_limit;
+ 
+ #define GIT_REPO_VERSION 0
+ extern int repository_format_version;
+diff --git a/config.c b/config.c
+index 1662a46..1e79f09 100644
+--- a/config.c
++++ b/config.c
+@@ -298,6 +298,11 @@ int git_default_config(const char *var, const char *value)
+ 		return 0;
+ 	}
+ 
++	if (!strcmp(var, "core.packedgitlimit")) {
++		packed_git_limit = git_config_int(var, value);
++		return 0;
++	}
++
+ 	if (!strcmp(var, "user.name")) {
+ 		strlcpy(git_default_name, value, sizeof(git_default_name));
+ 		return 0;
+diff --git a/environment.c b/environment.c
+index f8c7dbc..8a09df2 100644
+--- a/environment.c
++++ b/environment.c
+@@ -22,6 +22,7 @@ char git_commit_encoding[MAX_ENCODING_LENGTH] = "utf-8";
+ int shared_repository = PERM_UMASK;
+ const char *apply_default_whitespace;
+ int zlib_compression_level = Z_DEFAULT_COMPRESSION;
++size_t packed_git_limit = 256 * 1024 * 1024;
+ int pager_in_use;
+ int pager_use_color = 1;
+ 
+diff --git a/sha1_file.c b/sha1_file.c
+index 4824a5d..4183f59 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -397,7 +397,6 @@ static char *find_sha1_file(const unsigned char *sha1, struct stat *st)
+ 	return NULL;
+ }
+ 
+-#define PACK_MAX_SZ (1<<26)
+ static int pack_used_ctr;
+ static unsigned long pack_mapped;
+ struct packed_git *packed_git;
+@@ -490,7 +489,7 @@ int use_packed_git(struct packed_git *p)
+ 		struct pack_header *hdr;
+ 
+ 		pack_mapped += p->pack_size;
+-		while (PACK_MAX_SZ < pack_mapped && unuse_one_packed_git())
++		while (packed_git_limit < pack_mapped && unuse_one_packed_git())
+ 			; /* nothing */
+ 		fd = open(p->pack_name, O_RDONLY);
+ 		if (fd < 0)
+-- 
+1.4.4.3.g87d8
