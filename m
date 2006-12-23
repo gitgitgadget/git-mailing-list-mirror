@@ -1,80 +1,86 @@
-From: Tom Prince <tom.prince@ualberta.net>
-Subject: Re: confusion over the new branch and merge config
-Date: Fri, 22 Dec 2006 20:10:31 -0700
-Message-ID: <20061223031031.GA7412@socrates.priv>
-References: <Pine.LNX.4.64.0612211555210.18171@xanadu.home>
- <7vd56cam66.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0612221539100.18171@xanadu.home>
- <7vpsabv6tm.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 23 04:10:42 2006
+From: Robert Fitzsimons <robfitz@273k.net>
+Subject: [PATCH 3/3] gitweb: Allow search to be disabled from the config file.
+Date: Sat, 23 Dec 2006 03:35:16 +0000
+Message-ID: <11668449274162-git-send-email-robfitz@273k.net>
+References: <11668449162618-git-send-email-robfitz@273k.net> <11668449271631-git-send-email-robfitz@273k.net>
+Cc: Robert Fitzsimons <robfitz@273k.net>
+X-From: git-owner@vger.kernel.org Sat Dec 23 04:35:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GxxHT-00007u-6b
-	for gcvg-git@gmane.org; Sat, 23 Dec 2006 04:10:39 +0100
+	id 1GxxfO-0002FR-2L
+	for gcvg-git@gmane.org; Sat, 23 Dec 2006 04:35:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751176AbWLWDKc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Dec 2006 22:10:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751269AbWLWDKc
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Dec 2006 22:10:32 -0500
-Received: from shawidc-mo1.cg.shawcable.net ([24.71.223.10]:64150 "EHLO
-	pd3mo3so.prod.shaw.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751176AbWLWDKb (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Dec 2006 22:10:31 -0500
-Received: from pd2mr7so.prod.shaw.ca (pd2mr7so-qfe3.prod.shaw.ca [10.0.141.10])
- by l-daemon (Sun ONE Messaging Server 6.0 HotFix 1.01 (built Mar 15 2004))
- with ESMTP id <0JAP007E2I5JCZ00@l-daemon> for git@vger.kernel.org; Fri,
- 22 Dec 2006 20:10:31 -0700 (MST)
-Received: from pn2ml8so.prod.shaw.ca ([10.0.121.152])
- by pd2mr7so.prod.shaw.ca (Sun Java System Messaging Server 6.2-2.05 (built Apr
- 28 2005)) with ESMTP id <0JAP00IXEI5J8QP1@pd2mr7so.prod.shaw.ca> for
- git@vger.kernel.org; Fri, 22 Dec 2006 20:10:31 -0700 (MST)
-Received: from socrates.priv ([68.148.57.191])
- by l-daemon (Sun ONE Messaging Server 6.0 HotFix 1.01 (built Mar 15 2004))
- with ESMTP id <0JAP00F6II5HW350@l-daemon> for git@vger.kernel.org; Fri,
- 22 Dec 2006 20:10:30 -0700 (MST)
-Received: from socrates.priv (localhost [127.0.0.1])
-	by socrates.priv (8.13.4/8.13.4) with ESMTP id kBN3AWvf027730; Fri,
- 22 Dec 2006 20:10:32 -0700
-Received: (from cougar@localhost)	by socrates.priv (8.13.4/8.13.4/Submit)
- id kBN3AVG4027729; Fri, 22 Dec 2006 20:10:31 -0700
-In-reply-to: <7vpsabv6tm.fsf@assigned-by-dhcp.cox.net>
-To: Junio C Hamano <junkio@cox.net>
-Mail-followup-to: Junio C Hamano <junkio@cox.net>,
- Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
-Content-disposition: inline
-User-Agent: Mutt/1.5.11-2006-05-17
+	id S1752337AbWLWDfR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Dec 2006 22:35:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752394AbWLWDfR
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Dec 2006 22:35:17 -0500
+Received: from igraine.blacknight.ie ([81.17.252.25]:59434 "EHLO
+	igraine.blacknight.ie" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752337AbWLWDfP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Dec 2006 22:35:15 -0500
+Received: from [194.125.99.166] (helo=localhost)
+	by igraine.blacknight.ie with esmtp (Exim 4.60)
+	(envelope-from <robfitz@273k.net>)
+	id 1GxxfA-00061d-W2; Sat, 23 Dec 2006 03:35:09 +0000
+To: git@vger.kernel.org
+X-Mailer: git-send-email 1.4.4.3.gae7ae3
+In-Reply-To: <11668449271631-git-send-email-robfitz@273k.net>
+X-blacknight-igraine-MailScanner-Information: Please contact the ISP for more information
+X-blacknight-igraine-MailScanner: Found to be clean
+X-blacknight-igraine-MailScanner-SpamCheck: not spam,
+	SpamAssassin (not cached, score=-2, required 7, autolearn=disabled,
+	RCVD_IN_NERDS_IE -2.00)
+X-MailScanner-From: robfitz@273k.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35255>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35256>
 
-On Fri, Dec 22, 2006 at 03:39:33PM -0800, Junio C Hamano wrote:
-> [PATCH] Do not support "partial URL shorthand" anymore.
-> 
-> We used to support specifying the top part of remote URL in
-> remotes and use that as a short-hand for the URL.
-> 
-> 	$ cat .git/remotes/jgarzik
-> 	URL: git://git.kernel.org/pub/scm/linux/kernel/git/jgarzik/
-> 	$ git pull jgarzik/misc-2.6
-> 
-> This is confusing when somebody attempts to do this:
-> 
-> 	$ git pull origin/foo
-> 
-> which is not syntactically correct (unless you have origin/foo.git
-> repository) and should fail, but it resulted in a mysterious
-> access to the 'foo' subdirectory of the origin repository.
-> 
-> Which was what it was designed to do, but because this is an
-> oddball "feature" I suspect nobody uses, let's remove it.
 
-Except with the forthcoming submodule support, this feature might become
-more useful.
+Signed-off-by: Robert Fitzsimons <robfitz@273k.net>
+---
+ gitweb/gitweb.perl |   13 +++++++++++++
+ 1 files changed, 13 insertions(+), 0 deletions(-)
 
-  Tom
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 6778b24..e8f63aa 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -128,6 +128,12 @@ our %feature = (
+ 		#         => [content-encoding, suffix, program]
+ 		'default' => ['x-gzip', 'gz', 'gzip']},
+ 
++	# Enable text search, which will list the commits which match author, 
++	# committer or commit text to a given string.  Enabled by default.
++	'search' => {
++		'override' => 0,
++		'default' => [1]},
++
+ 	# Enable the pickaxe search, which will list the commits that modified
+ 	# a given string in a file. This can be practical and quite faster
+ 	# alternative to 'blame', but still potentially CPU-intensive.
+@@ -1729,6 +1735,9 @@ EOF
+ 			print " / $action";
+ 		}
+ 		print "\n";
++	}
++	my ($have_search) = gitweb_check_feature('search');
++	if ((defined $project) && ($have_search)) {
+ 		if (!defined $searchtext) {
+ 			$searchtext = "";
+ 		}
+@@ -4147,6 +4156,10 @@ sub git_history {
+ }
+ 
+ sub git_search {
++	my ($have_search) = gitweb_check_feature('search');
++	if (!$have_search) {
++		die_error('403 Permission denied', "Permission denied");
++	}
+ 	if (!defined $searchtext) {
+ 		die_error(undef, "Text field empty");
+ 	}
+-- 
+1.4.4.3.gae7ae3
