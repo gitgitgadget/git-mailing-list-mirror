@@ -1,66 +1,72 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: confusion over the new branch and merge config
-Date: Sat, 23 Dec 2006 23:48:00 +0100
-Organization: At home
-Message-ID: <emkbhq$amu$1@sea.gmane.org>
-References: <Pine.LNX.4.64.0612211555210.18171@xanadu.home> <7vd56cam66.fsf@assigned-by-dhcp.cox.net> <20061223051210.GA29814@segfault.peff.net> <7vbqlvuoi4.fsf@assigned-by-dhcp.cox.net> <7vbqlvrldk.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0612231655420.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: warn non utf-8 commit log messages.
+Date: Sun, 24 Dec 2006 00:46:57 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0612240043510.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <11655782712452-git-send-email-zeisberg@informatik.uni-freiburg.de>
+ <20061221085907.GA2244@cepheus> <Pine.LNX.4.63.0612211050450.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+ <200612211623.14236.litvinov2004@gmail.com> <7vejqtaz7q.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0612220351520.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.64.0612221030440.18171@xanadu.home> <7vslf7zrdp.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0612222201200.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20061222221913.GA3071@cepheus> <Pine.LNX.4.63.0612222331581.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.63.0612230048350.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vfyb6qth6.fsf_-_@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Sat Dec 23 23:45:38 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Dec 24 00:47:12 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GyFcP-0000sz-95
-	for gcvg-git@gmane.org; Sat, 23 Dec 2006 23:45:29 +0100
+	id 1GyGa2-0007HQ-NZ
+	for gcvg-git@gmane.org; Sun, 24 Dec 2006 00:47:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753845AbWLWWp1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 23 Dec 2006 17:45:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753849AbWLWWp0
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Dec 2006 17:45:26 -0500
-Received: from main.gmane.org ([80.91.229.2]:39758 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753845AbWLWWp0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Dec 2006 17:45:26 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GyFcG-0003lZ-RN
-	for git@vger.kernel.org; Sat, 23 Dec 2006 23:45:21 +0100
-Received: from host-81-190-25-107.torun.mm.pl ([81.190.25.107])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 23 Dec 2006 23:45:20 +0100
-Received: from jnareb by host-81-190-25-107.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 23 Dec 2006 23:45:20 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-25-107.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1753935AbWLWXrA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 23 Dec 2006 18:47:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753963AbWLWXrA
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Dec 2006 18:47:00 -0500
+Received: from mail.gmx.net ([213.165.64.20]:51992 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753935AbWLWXrA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Dec 2006 18:47:00 -0500
+Received: (qmail invoked by alias); 23 Dec 2006 23:46:57 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp028) with SMTP; 24 Dec 2006 00:46:57 +0100
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vfyb6qth6.fsf_-_@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35332>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35333>
 
-Johannes Schindelin wrote:
+Hi,
 
-> On Sat, 23 Dec 2006, Junio C Hamano wrote:
+On Sat, 23 Dec 2006, Junio C Hamano wrote:
 
->> Having said that, I think we _could_ do this.
->> 
->> If you (or other people) use branch.*.merge, with its value set
->> to remote name _and_ local name, and actually verify that either
->> form works without confusion, please report back and I'll apply.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> I do not claim to understand your patch (I have no idea if || or && is 
-> stronger in shell), but here is another proposition: if the config 
-> variable starts with "refs/remotes/", assume it is local.
+> >> But I had enough of UTF-8 for a day.
+> >
+> > Okay, so I lied (this are both patches revised and combined):
+> 
+> I am thinking of putting this in 'next', with the following
+> changes on top of your combined patch.
+> 
+> git-commit-tree warns if the commit message does not minimally
+> conform to the UTF-8 encoding when i18n.commitencoding is either
+> unset, or set to "utf-8".  It does not die as in your version.
 
-Why? You can track another repository tracking branches, using it as a kind
-of proxy repository, even if it is not bare...
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Yeah, this is nicer.
+
+> -			if (w < width || space < 0) {
+> +			if (w < width || !space) {
+
+This is a real bug fix. Thank you. I changed quite a bit between offset 
+and char*, and eventually forgot this part.
+
+Ciao,
+Dscho
