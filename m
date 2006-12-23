@@ -1,90 +1,84 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 3/3] gitweb: Allow search to be disabled from the config file.
-Date: Sat, 23 Dec 2006 14:00:18 +0100
-Message-ID: <200612231400.18774.jnareb@gmail.com>
-References: <11668449162618-git-send-email-robfitz@273k.net> <emiomr$f4m$1@sea.gmane.org> <20061223122841.GD11474@localhost>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/2] libgit.a: add some UTF-8 handling functions
+Date: Sat, 23 Dec 2006 15:12:13 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0612231510130.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0612211050450.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+ <200612211623.14236.litvinov2004@gmail.com> <7vejqtaz7q.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0612220351520.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.64.0612221030440.18171@xanadu.home> <7vslf7zrdp.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0612222201200.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20061222221913.GA3071@cepheus> <Pine.LNX.4.63.0612222331581.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.63.0612230048350.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20061223085206.GA2189@cepheus>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 23 13:57:43 2006
+Content-Type: MULTIPART/MIXED; BOUNDARY="-1148973799-150421181-1166883132=:19693"
+Cc: git@vger.kernel.org, junkio@cox.net
+X-From: git-owner@vger.kernel.org Sat Dec 23 15:12:28 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1Gy6Ra-0000ZN-Rb
-	for gcvg-git@gmane.org; Sat, 23 Dec 2006 13:57:43 +0100
+	id 1Gy7bo-0000JS-0q
+	for gcvg-git@gmane.org; Sat, 23 Dec 2006 15:12:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753549AbWLWM5h (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 23 Dec 2006 07:57:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753545AbWLWM5h
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Dec 2006 07:57:37 -0500
-Received: from ug-out-1314.google.com ([66.249.92.175]:1032 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753533AbWLWM5g (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Dec 2006 07:57:36 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so3184404uga
-        for <git@vger.kernel.org>; Sat, 23 Dec 2006 04:57:35 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=Ct7MXUAgDeBTfOeW41PhrGCMBffiopTMoxcIW1+dpRZcdz99YZdtvOUHKCjN9Pt9Oq+Fm2GvgATJ/fL8pPGqNC/bRcFGTn9x99yjmjVBLVx38qASm4BcmxrDmnOnCv6M/3rCp6gcP4osrQywXsFxFOXjJn+AQabZHYlRtjQ+EWM=
-Received: by 10.67.19.20 with SMTP id w20mr2067914ugi.1166878655412;
-        Sat, 23 Dec 2006 04:57:35 -0800 (PST)
-Received: from host-81-190-25-107.torun.mm.pl ( [81.190.25.107])
-        by mx.google.com with ESMTP id 54sm17074844ugp.2006.12.23.04.57.34;
-        Sat, 23 Dec 2006 04:57:35 -0800 (PST)
-To: Robert Fitzsimons <robfitz@273k.net>
-User-Agent: KMail/1.9.3
-In-Reply-To: <20061223122841.GD11474@localhost>
-Content-Disposition: inline
+	id S1753151AbWLWOMQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 23 Dec 2006 09:12:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753154AbWLWOMQ
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Dec 2006 09:12:16 -0500
+Received: from mail.gmx.net ([213.165.64.20]:56291 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753151AbWLWOMP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Dec 2006 09:12:15 -0500
+Received: (qmail invoked by alias); 23 Dec 2006 14:12:13 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp035) with SMTP; 23 Dec 2006 15:12:13 +0100
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<zeisberg@informatik.uni-freiburg.de>
+In-Reply-To: <20061223085206.GA2189@cepheus>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35314>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35315>
 
-Robert Fitzsimons wrote:
-> Jakub Narebski wrote:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
->> I'm not sure if it is worth disabling such not demanding in resources
->> (contrary to pickaxe, blame and to some extent snapshot). Perhaps it would
->> be better to simply paginate search result, like "history" view got
->> paginated?
+---1148973799-150421181-1166883132=:19693
+Content-Type: TEXT/PLAIN; charset=iso-8859-1
+Content-Transfer-Encoding: 8BIT
+
+Hi,
+
+On Sat, 23 Dec 2006, Uwe Kleine-König wrote:
+
+> Johannes Schindelin wrote:
+> > @@ -127,6 +128,15 @@ int cmd_commit_tree(int argc, const char **argv, const char *prefix)
+> >  	while (fgets(comment, sizeof(comment), stdin) != NULL)
+> >  		add_buffer(&buffer, &size, "%s", comment);
+> >  
+> > +	/* And check the encoding */
+> > +	buffer[size] = '\0';
+> > +	if (!strcmp(git_commit_encoding, "utf-8") && !is_utf8(buffer)) {
+> Maybe you could be more generous here.  E.g.
 > 
-> Yes that makes sense.  I'll withdraw this patch and try and come up with
-> a new one which can paginate search results.
+> 	if ((!strcasecmp(git_commit_encoding, "utf-8") ||
+> 	!strcasecmp(git_commit_encoding, "utf8")) && !is_utf8(buffer))
+> 
+> Junio suggested to make this check if i18n.commitEncoding is empty.  I
+> didn't check the code to see if this case is included.
 
-Besides having removed search, it would follow removing search _form_.
-Hmmm... perhaps we should add 'pickaxe' to search form only if it is
-enabled?
+The problem is, as I pointed out in another mail, that environment.c sets 
+the default git_commit_encoding to "utf-8". This is hardwired, and I have 
+no way to check if that was set by the config or not, other than reparsing 
+the config myself.
 
-Something like (warning: this diff is certainly whitespace damaged!):
+> Gruessle
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 5feebaf..585d9fd 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -1894,7 +1903,8 @@ EOF
-                      $cgi->hidden(-name => "a") . "\n" .
-                      $cgi->hidden(-name => "h") . "\n" .
-                      $cgi->popup_menu(-name => 'st', -default => 'commit',
--                                      -values => ['commit', 'author', 'committer', 'pickaxe
-+                                      -values => ['commit', 'author', 'committer',
-+                                      gitweb_check_feature('pickaxe') ? 'pickaxe' : ()]) .
-                      $cgi->sup($cgi->a({-href => href(action=>"search_help")}, "?")) .
-                      " search:\n",
-                      $cgi->textfield(-name => "s", -value => $searchtext) . "\n" .
+Hah! You don't use umlauts and ssharp yourself!
 
-
-
-Take a look how it was done for "history" view in commit 8be683520e
-  "gitweb: Paginate history output"
-
-Although with search you have additional complication with marking match,
-and "log" view like rather than "shortlog" like view... so I'm not sure
-if it would truly help. On the other hand you can use --skip option you
-have introduced...
--- 
-Jakub Narebski
-Poland
+Ciao,
+Dscho
+---1148973799-150421181-1166883132=:19693--
