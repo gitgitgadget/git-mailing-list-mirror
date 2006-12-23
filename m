@@ -1,52 +1,55 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: author/commit counts
-Date: Sat, 23 Dec 2006 15:22:25 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612231521340.19693@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20061222181030.d733deb3.rdunlap@xenotime.net>
- <Pine.LNX.4.64.0612230001590.18171@xanadu.home>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: branch.<name>.merge specifying remote branch name
+Date: Sat, 23 Dec 2006 09:26:11 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0612230924110.18171@xanadu.home>
+References: <emirt5$kh3$2@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Randy Dunlap <rdunlap@xenotime.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 23 15:22:32 2006
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Dec 23 15:26:21 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1Gy7lf-0001U4-RS
-	for gcvg-git@gmane.org; Sat, 23 Dec 2006 15:22:32 +0100
+	id 1Gy7pH-0001tu-UU
+	for gcvg-git@gmane.org; Sat, 23 Dec 2006 15:26:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753550AbWLWOW2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 23 Dec 2006 09:22:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753549AbWLWOW2
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Dec 2006 09:22:28 -0500
-Received: from mail.gmx.net ([213.165.64.20]:45335 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752789AbWLWOW2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Dec 2006 09:22:28 -0500
-Received: (qmail invoked by alias); 23 Dec 2006 14:22:26 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp031) with SMTP; 23 Dec 2006 15:22:26 +0100
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Nicolas Pitre <nico@cam.org>
-In-Reply-To: <Pine.LNX.4.64.0612230001590.18171@xanadu.home>
-X-Y-GMX-Trusted: 0
+	id S1753151AbWLWO0N (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 23 Dec 2006 09:26:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753552AbWLWO0N
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Dec 2006 09:26:13 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:42971 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753549AbWLWO0M (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Dec 2006 09:26:12 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JAQ004CKDFN2C60@VL-MO-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Sat, 23 Dec 2006 09:26:12 -0500 (EST)
+In-reply-to: <emirt5$kh3$2@sea.gmane.org>
+X-X-Sender: nico@xanadu.home
+To: Jakub Narebski <jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35316>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35317>
 
-Hi,
+On Sat, 23 Dec 2006, Jakub Narebski wrote:
 
-On Sat, 23 Dec 2006, Nicolas Pitre wrote:
+> About the discussion about branch.<name>.merge specifying remote branch name
+> and relative merits of specifying remote branch name (without need for
+> tracking branch), and local branch name (which is supposedly more user
+> friendly, and branch name specifies also remote usually)...
+> 
+> Perhaps it is time to resurrect branch.<name>.mergeLocal (or localMerge)
+> idea, and both sides would be happy (well, at least when one would code
+> it ;-).
 
-> 	git log --author=<blah> | git shortlog -s
+Adding more and more options doesn't make it friendlier to use.
 
-Note that the builtin shortlog reuses the fine revision walking machinery:
+Why couldn't both names (local and remote) be accepted by 
+branch.blah.merge?
 
-	git shortlog --author=<blah> -n -s
 
-works like a charm.
-
-Ciao,
-Dscho
+Nicolas
