@@ -1,56 +1,52 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [RFC] git reflog show
-Date: Sat, 23 Dec 2006 02:42:54 -0800
-Message-ID: <7v4prmsxjl.fsf@assigned-by-dhcp.cox.net>
-References: <20061223101956.GD9396@spearce.org>
+From: Robert Fitzsimons <robfitz@273k.net>
+Subject: Re: [PATCH 3/3] gitweb: Allow search to be disabled from the config file.
+Date: Sat, 23 Dec 2006 12:28:41 +0000
+Message-ID: <20061223122841.GD11474@localhost>
+References: <11668449162618-git-send-email-robfitz@273k.net> <11668449271631-git-send-email-robfitz@273k.net> <11668449274162-git-send-email-robfitz@273k.net> <emiomr$f4m$1@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 23 11:43:03 2006
+X-From: git-owner@vger.kernel.org Sat Dec 23 13:29:00 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1Gy4LD-00044M-D8
-	for gcvg-git@gmane.org; Sat, 23 Dec 2006 11:42:59 +0100
+	id 1Gy5zj-00065j-3g
+	for gcvg-git@gmane.org; Sat, 23 Dec 2006 13:28:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753154AbWLWKm4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 23 Dec 2006 05:42:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753239AbWLWKm4
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Dec 2006 05:42:56 -0500
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:51667 "EHLO
-	fed1rmmtao07.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753154AbWLWKmz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Dec 2006 05:42:55 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao07.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20061223104255.CMWD3976.fed1rmmtao07.cox.net@fed1rmimpo01.cox.net>;
-          Sat, 23 Dec 2006 05:42:55 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id 2AiC1W0021kojtg0000000; Sat, 23 Dec 2006 05:42:12 -0500
-To: Shawn Pearce <spearce@spearce.org>
-In-Reply-To: <20061223101956.GD9396@spearce.org> (Shawn Pearce's message of
-	"Sat, 23 Dec 2006 05:19:56 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753291AbWLWM2q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 23 Dec 2006 07:28:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753526AbWLWM2q
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Dec 2006 07:28:46 -0500
+Received: from igraine.blacknight.ie ([81.17.252.25]:50867 "EHLO
+	igraine.blacknight.ie" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753291AbWLWM2q (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Dec 2006 07:28:46 -0500
+Received: from [194.125.99.166] (helo=localhost)
+	by igraine.blacknight.ie with esmtp (Exim 4.60)
+	(envelope-from <robfitz@273k.net>)
+	id 1Gy5zI-0004X9-Sw; Sat, 23 Dec 2006 12:28:29 +0000
+To: Jakub Narebski <jnareb@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <emiomr$f4m$1@sea.gmane.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-blacknight-igraine-MailScanner-Information: Please contact the ISP for more information
+X-blacknight-igraine-MailScanner: Found to be clean
+X-blacknight-igraine-MailScanner-SpamCheck: not spam,
+	SpamAssassin (not cached, score=-2, required 7, autolearn=disabled,
+	RCVD_IN_NERDS_IE -2.00)
+X-MailScanner-From: robfitz@273k.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35312>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35313>
 
-Shawn Pearce <spearce@spearce.org> writes:
+> I'm not sure if it is worth disabling such not demanding in resources
+> (contrary to pickaxe, blame and to some extent snapshot). Perhaps it would
+> be better to simply paginate search result, like "history" view got
+> paginated?
 
-> I'm toying with what a 'git reflog show' might look like.  I attached
-> the prototype code below.  Here's the output from the recent part of
-> my mmap pack window topic:
->
->   $ ./git-reflog show refs/heads/sp/mapwin
->   ...clipped for space...
->   
+Yes that makes sense.  I'll withdraw this patch and try and come up with
+a new one which can paginate search results.
 
-The output should look almost the same as "git log" for the part
-that represents a series of normal branch activity where commits
-are built up one-by-one.  I think it would be useful if you can
-somehow make parts that are _not_ linear stand out and perhaps
-allow omitting a stretch of ordinary single strand of pearls.
+Robert
