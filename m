@@ -1,71 +1,62 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: branch.<name>.merge specifying remote branch name
-Date: Sat, 23 Dec 2006 15:32:39 +0100
-Message-ID: <200612231532.39363.jnareb@gmail.com>
-References: <emirt5$kh3$2@sea.gmane.org> <Pine.LNX.4.64.0612230924110.18171@xanadu.home>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: author/commit counts
+Date: Sat, 23 Dec 2006 14:28:00 +0000 (UTC)
+Message-ID: <loom.20061223T152605-994@post.gmane.org>
+References: <20061222181030.d733deb3.rdunlap@xenotime.net> <20061223023719.GA8734@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 23 15:30:02 2006
+X-From: git-owner@vger.kernel.org Sat Dec 23 15:30:14 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1Gy7sv-0002Fm-Id
-	for gcvg-git@gmane.org; Sat, 23 Dec 2006 15:30:01 +0100
+	id 1Gy7t6-0002H4-8D
+	for gcvg-git@gmane.org; Sat, 23 Dec 2006 15:30:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753557AbWLWO36 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 23 Dec 2006 09:29:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753552AbWLWO36
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Dec 2006 09:29:58 -0500
-Received: from ug-out-1314.google.com ([66.249.92.168]:18034 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753151AbWLWO35 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Dec 2006 09:29:57 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so3196948uga
-        for <git@vger.kernel.org>; Sat, 23 Dec 2006 06:29:56 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:references:in-reply-to:cc:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=GY5kbCvg9Qc7/CsBu7wRD2SqfUsJfVKC+zdL70VMBjioLC7VsbAui5UHAI6IbAhzzDnjBrChJuxD/2CAgP3phndYZrpudmBpNbXFqUjQ+wyNOiYNXB89bO2jlIsb4A9YWGJzqjrAXAn2LGl0ewOac7pDSOZFtYFSsl2wgU5uq+E=
-Received: by 10.66.219.11 with SMTP id r11mr15259819ugg.1166884195702;
-        Sat, 23 Dec 2006 06:29:55 -0800 (PST)
-Received: from host-81-190-25-107.torun.mm.pl ( [81.190.25.107])
-        by mx.google.com with ESMTP id 72sm14504506ugb.2006.12.23.06.29.55;
-        Sat, 23 Dec 2006 06:29:55 -0800 (PST)
-To: Nicolas Pitre <nico@cam.org>
-User-Agent: KMail/1.9.3
-In-Reply-To: <Pine.LNX.4.64.0612230924110.18171@xanadu.home>
-Content-Disposition: inline
+	id S1753550AbWLWOaH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 23 Dec 2006 09:30:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753564AbWLWOaG
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Dec 2006 09:30:06 -0500
+Received: from main.gmane.org ([80.91.229.2]:60427 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753552AbWLWOaF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Dec 2006 09:30:05 -0500
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1Gy7sw-0006tg-AP
+	for git@vger.kernel.org; Sat, 23 Dec 2006 15:30:02 +0100
+Received: from wbgn128.biozentrum.uni-wuerzburg.de ([132.187.25.128])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 23 Dec 2006 15:30:02 +0100
+Received: from johannes.schindelin by wbgn128.biozentrum.uni-wuerzburg.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 23 Dec 2006 15:30:02 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 132.187.25.128 (Mozilla/5.0 (X11; U; Linux i686; de; rv:1.8.0.3) Gecko/20060425 SUSE/1.5.0.3-7 Firefox/1.5.0.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35318>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35319>
 
-Nicolas Pitre wrote:
-> On Sat, 23 Dec 2006, Jakub Narebski wrote:
-> 
->> About the discussion about branch.<name>.merge specifying remote branch name
->> and relative merits of specifying remote branch name (without need for
->> tracking branch), and local branch name (which is supposedly more user
->> friendly, and branch name specifies also remote usually)...
->> 
->> Perhaps it is time to resurrect branch.<name>.mergeLocal (or localMerge)
->> idea, and both sides would be happy (well, at least when one would code
->> it ;-).
-> 
-> Adding more and more options doesn't make it friendlier to use.
-> 
-> Why couldn't both names (local and remote) be accepted by 
-> branch.blah.merge?
+Shawn Pearce <spearce <at> spearce.org> writes:
 
-Junio just implemented that. Although it is a bit of magic (which can bite
-when you have remote which is not '.', and which has branches with the same
-names like some of your local branches, and vice versa). mergeLocal would
-be unambiguous...
+>   $ git log | grep ^Author | cut -d\< -f1 | sort \
+>   	| uniq -c | sort -n -r | head -20
 
--- 
-Jakub Narebski
-Poland
+As Junio pointed out in another mail, "git shortlog -n -s | head -20" is
+shorter...
+
+> You can also see the very clear gap between Junio and the rest of the
+> world.  There's very little dispute about who really codes Git.  
+
+Note that this still holds when doing the technically correct thing:
+
+$ git shortlog -n -s --no-merges
+
+Ciao,
+Dscho
