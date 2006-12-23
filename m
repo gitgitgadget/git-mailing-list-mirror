@@ -1,124 +1,64 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH] Makefile: add quick-install-doc for installing pre-built manpages
-Date: Sat, 23 Dec 2006 08:26:09 -0800
-Message-ID: <20061223162609.GA23084@localdomain>
-References: <11668546833727-git-send-email-normalperson@yhbt.net> <7virg3t54l.fsf@assigned-by-dhcp.cox.net>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: What's cooking in git.git (topics)
+Date: Sat, 23 Dec 2006 16:38:45 +0000
+Message-ID: <200612231638.50045.andyparkins@gmail.com>
+References: <7vzm9g2rv5.fsf@assigned-by-dhcp.cox.net> <7vlkkzv6rq.fsf@assigned-by-dhcp.cox.net> <200612230112.24212.Josef.Weidendorfer@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 23 17:26:33 2006
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Sat Dec 23 17:41:51 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1Gy9hd-00074B-JA
-	for gcvg-git@gmane.org; Sat, 23 Dec 2006 17:26:29 +0100
+	id 1Gy9wS-0000Ok-9O
+	for gcvg-git@gmane.org; Sat, 23 Dec 2006 17:41:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753575AbWLWQ0N (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 23 Dec 2006 11:26:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753562AbWLWQ0M
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Dec 2006 11:26:12 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:39131 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753559AbWLWQ0M (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Dec 2006 11:26:12 -0500
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id C07D37DC02A;
-	Sat, 23 Dec 2006 08:26:09 -0800 (PST)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Sat, 23 Dec 2006 08:26:09 -0800
-To: Junio C Hamano <junkio@cox.net>
+	id S1753578AbWLWQlf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 23 Dec 2006 11:41:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753582AbWLWQlf
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Dec 2006 11:41:35 -0500
+Received: from nf-out-0910.google.com ([64.233.182.186]:52121 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753578AbWLWQle (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Dec 2006 11:41:34 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so3832916nfa
+        for <git@vger.kernel.org>; Sat, 23 Dec 2006 08:41:33 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=rVjlImzZ8QscI7bnXAbStEuzAtjt+uLHM7Z1Fv1Rle9+Lvr6/yRPwPBtl0DUJvrqKaSmKA2fN9EecUz3LVc/iru6pTbAQMSHEuk69LTtV7WV8irQr5IGNnvI0HMpRqQIlSmCBtPVB0ZZ2/3A8Jjq86GaGF/fIvx9wmbpgUiACVQ=
+Received: by 10.48.216.8 with SMTP id o8mr13174059nfg.1166892092701;
+        Sat, 23 Dec 2006 08:41:32 -0800 (PST)
+Received: from ?192.168.7.100? ( [82.0.29.64])
+        by mx.google.com with ESMTP id n22sm48644425nfc.2006.12.23.08.41.31;
+        Sat, 23 Dec 2006 08:41:31 -0800 (PST)
+To: git@vger.kernel.org
+User-Agent: KMail/1.9.5
+In-Reply-To: <200612230112.24212.Josef.Weidendorfer@gmx.de>
 Content-Disposition: inline
-In-Reply-To: <7virg3t54l.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35324>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35325>
 
-This adds and uses the install-doc-quick.sh file to
-Documentation/, which is usable for people who track either the
-'html' or 'man' heads in Junio's repository (prefixed with
-'origin/' if cloned locally).  You may override this by
-specifying DOC_REF in the make environment or in config.mak.
+On Saturday 2006, December 23 00:12, Josef Weidendorfer wrote:
 
-GZ may also be set in the environment (or config.mak) if you
-wish to gzip the documentation after installing it.
+> Andy: Did you check whether your disentangled commits each actually did
+> compile on their own? If yes, how did you do it?
 
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
----
- Documentation/Makefile             |    4 ++++
- Documentation/install-doc-quick.sh |   31 +++++++++++++++++++++++++++++++
- Makefile                           |    2 ++
- 3 files changed, 37 insertions(+), 0 deletions(-)
+I didn't; they were easily separable and independent fortunately.  I don't 
+have a good way of doing what you ask other than making the commits then 
+testing each of those individually; then again there have been plenty of 
+ocassions when a git guru tells me some magic that suddenly does exactly what 
+I want.
 
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index d68bc4a..93c7024 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -32,6 +32,7 @@ man7dir=$(mandir)/man7
- # DESTDIR=
- 
- INSTALL?=install
-+DOC_REF = origin/man
- 
- -include ../config.mak.autogen
- 
-@@ -112,3 +113,6 @@ $(patsubst %.txt,%.html,$(wildcard howto/*.txt)): %.html : %.txt
- 
- install-webdoc : html
- 	sh ./install-webdoc.sh $(WEBDOC_DEST)
-+
-+quick-install:
-+	sh ./install-doc-quick.sh $(DOC_REF) $(mandir)
-diff --git a/Documentation/install-doc-quick.sh b/Documentation/install-doc-quick.sh
-new file mode 100755
-index 0000000..a640549
---- /dev/null
-+++ b/Documentation/install-doc-quick.sh
-@@ -0,0 +1,31 @@
-+#!/bin/sh
-+# This requires a branch named in $head
-+# (usually 'man' or 'html', provided by the git.git repository)
-+set -e
-+head="$1"
-+mandir="$2"
-+SUBDIRECTORY_OK=t
-+USAGE='<refname> <target directory>'
-+. git-sh-setup
-+export GIT_DIR
-+
-+test -z "$mandir" && usage
-+if ! git-rev-parse --verify "$head^0" >/dev/null; then
-+	echo >&2 "head: $head does not exist in the current repository"
-+	usage
-+fi
-+
-+GIT_INDEX_FILE=`pwd`/.quick-doc.index
-+export GIT_INDEX_FILE
-+rm -f "$GIT_INDEX_FILE"
-+git-read-tree $head
-+git-checkout-index -a -f --prefix="$mandir"/
-+
-+if test -n "$GZ"; then
-+	cd "$mandir"
-+	for i in `git-ls-tree -r --name-only $head`
-+	do
-+		gzip < $i > $i.gz && rm $i
-+	done
-+fi
-+rm -f "$GIT_INDEX_FILE"
-diff --git a/Makefile b/Makefile
-index 4362297..ebc1a17 100644
---- a/Makefile
-+++ b/Makefile
-@@ -824,6 +824,8 @@ install: all
- install-doc:
- 	$(MAKE) -C Documentation install
- 
-+quick-install-doc:
-+	$(MAKE) -C Documentation quick-install
- 
- 
- 
+In the case of testing my split commits I suppose it would need some way of 
+pushing the working directory into a kind of alternate index temporarily.
+
+
+Andy
 -- 
-1.4.4.3.gc902c
+Dr Andrew Parkins, M Eng (Hons), AMIEE
+andyparkins@gmail.com
