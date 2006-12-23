@@ -1,128 +1,76 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH 2/2] Display 'theirs' branch name when possible in merge.
-Date: Sat, 23 Dec 2006 03:44:47 -0500
-Message-ID: <20061223084447.GB10203@spearce.org>
-References: <6115ec06459724c7c37c355805462cb61715e9c5.1166863413.git.spearce@spearce.org>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<zeisberg@informatik.uni-freiburg.de>
+Subject: Re: [PATCH 1/2] libgit.a: add some UTF-8 handling functions
+Date: Sat, 23 Dec 2006 09:52:06 +0100
+Organization: Universitaet Freiburg, Institut f. Informatik
+Message-ID: <20061223085206.GA2189@cepheus>
+References: <Pine.LNX.4.63.0612211050450.19693@wbgn013.biozentrum.uni-wuerzburg.de> <200612211623.14236.litvinov2004@gmail.com> <7vejqtaz7q.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0612220351520.19693@wbgn013.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.64.0612221030440.18171@xanadu.home> <7vslf7zrdp.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0612222201200.19693@wbgn013.biozentrum.uni-wuerzburg.de> <20061222221913.GA3071@cepheus> <Pine.LNX.4.63.0612222331581.19693@wbgn013.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.63.0612230048350.19693@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 23 09:44:57 2006
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, junkio@cox.net
+X-From: git-owner@vger.kernel.org Sat Dec 23 09:52:27 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1Gy2Uz-00012p-AZ
-	for gcvg-git@gmane.org; Sat, 23 Dec 2006 09:44:57 +0100
+	id 1Gy2c7-0001gs-4k
+	for gcvg-git@gmane.org; Sat, 23 Dec 2006 09:52:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752647AbWLWIou (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 23 Dec 2006 03:44:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752674AbWLWIou
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Dec 2006 03:44:50 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:40603 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752647AbWLWIou (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Dec 2006 03:44:50 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1Gy2UR-0006TY-Nm; Sat, 23 Dec 2006 03:44:23 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 0E5C120FB65; Sat, 23 Dec 2006 03:44:47 -0500 (EST)
-To: Junio C Hamano <junkio@cox.net>
+	id S1752703AbWLWIwM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sat, 23 Dec 2006 03:52:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752724AbWLWIwM
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Dec 2006 03:52:12 -0500
+Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:36276 "EHLO
+	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752703AbWLWIwL (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 23 Dec 2006 03:52:11 -0500
+Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
+	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
+	(Exim 4.60)
+	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
+	id 1Gy2bx-00013Z-OP; Sat, 23 Dec 2006 09:52:09 +0100
+Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
+	by login.informatik.uni-freiburg.de (8.13.7+Sun/8.12.11) with ESMTP id kBN8q74r005557;
+	Sat, 23 Dec 2006 09:52:07 +0100 (MET)
+Received: (from zeisberg@localhost)
+	by login.informatik.uni-freiburg.de (8.13.7+Sun/8.12.11/Submit) id kBN8q711005556;
+	Sat, 23 Dec 2006 09:52:07 +0100 (MET)
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <zeisberg@informatik.uni-freiburg.de>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, junkio@cox.net
 Content-Disposition: inline
-In-Reply-To: <6115ec06459724c7c37c355805462cb61715e9c5.1166863413.git.spearce@spearce.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+In-Reply-To: <Pine.LNX.4.63.0612230048350.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35303>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35304>
 
-Displaying the SHA1 of 'their' branch (the branch being merged into
-the current branch) is not nearly as friendly as just displaying
-the name of that branch, especially if that branch is already local
-to this repository.
+Hallo Johannes,
 
-git-merge now sets the environment variable 'GITHEAD_%(sha1)=%(name)'
-for each argument it gets passed, making the actual input name that
-resolved to the commit '%(sha1)' easily available to the invoked
-merge strategy.
+Johannes Schindelin wrote:
+> @@ -127,6 +128,15 @@ int cmd_commit_tree(int argc, const char **argv,=
+ const char *prefix)
+>  	while (fgets(comment, sizeof(comment), stdin) !=3D NULL)
+>  		add_buffer(&buffer, &size, "%s", comment);
+> =20
+> +	/* And check the encoding */
+> +	buffer[size] =3D '\0';
+> +	if (!strcmp(git_commit_encoding, "utf-8") && !is_utf8(buffer)) {
+Maybe you could be more generous here.  E.g.
 
-git-merge-recursive makes use of these environment variables when
-they are available by using '%(name)' whenever it outputs the commit
-identification rather than '%(sha1)'.  This is most obvious in the
-conflict hunks created by xdl_merge:
+	if ((!strcasecmp(git_commit_encoding, "utf-8") ||
+	!strcasecmp(git_commit_encoding, "utf8")) && !is_utf8(buffer))
 
-  $ git mege sideb~1
-  <<<<<<< HEAD:INSTALL
-     Good!
-  =======
-     Oops.
-  >>>>>>> sideb~1:INSTALL
+Junio suggested to make this check if i18n.commitEncoding is empty.  I
+didn't check the code to see if this case is included.
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- git-merge.sh      |    2 ++
- merge-recursive.c |   17 ++++++++++++++++-
- 2 files changed, 18 insertions(+), 1 deletions(-)
+Gruessle
+Uwe
 
-diff --git a/git-merge.sh b/git-merge.sh
-index a17aa2c..5c2d03b 100755
---- a/git-merge.sh
-+++ b/git-merge.sh
-@@ -266,6 +266,8 @@ do
- 	remotehead=$(git-rev-parse --verify "$remote"^0 2>/dev/null) ||
- 	    die "$remote - not something we can merge"
- 	remoteheads="${remoteheads}$remotehead "
-+	eval GITHEAD_$remotehead='"$remote"'
-+	export GITHEAD_$remotehead
- done
- set x $remoteheads ; shift
- 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index abebb95..a96821c 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -1263,6 +1263,18 @@ static struct commit *get_ref(const char *ref)
- 	return (struct commit *)object;
- }
- 
-+static char* better_branch_name(const char *branch)
-+{
-+	static char githead_env[8 + 40 + 1];
-+	char* name;
-+
-+	if (strlen(branch) != 40)
-+		return branch;
-+	sprintf(githead_env, "GITHEAD_%s", branch);
-+	name = getenv(githead_env);
-+	return name ? name : branch;
-+}
-+
- int main(int argc, char *argv[])
- {
- 	static const char *bases[2];
-@@ -1293,11 +1305,14 @@ int main(int argc, char *argv[])
- 
- 	branch1 = argv[++i];
- 	branch2 = argv[++i];
--	printf("Merging %s with %s\n", branch1, branch2);
- 
- 	h1 = get_ref(branch1);
- 	h2 = get_ref(branch2);
- 
-+	branch1 = better_branch_name(branch1);
-+	branch2 = better_branch_name(branch2);
-+	printf("Merging %s with %s\n", branch1, branch2);
-+
- 	if (bases_count == 1) {
- 		struct commit *ancestor = get_ref(bases[0]);
- 		clean = merge(h1, h2, branch1, branch2, 0, ancestor, &result);
--- 
-1.4.4.3.g87d8
+--=20
+Uwe Kleine-K=F6nig
+
+http://www.google.com/search?q=3D2+to+the+power+of+12
