@@ -1,134 +1,68 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH 17/17] Test suite for sliding window mmap implementation.
-Date: Sat, 23 Dec 2006 02:34:51 -0500
-Message-ID: <20061223073451.GR9837@spearce.org>
-References: <53b67707929c7f051f6d384c5d96e653bfa8419c.1166857884.git.spearce@spearce.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 1/2] Makefile: add quick-install-doc for installing pre-built manpages
+Date: Fri, 22 Dec 2006 23:59:06 -0800
+Message-ID: <7virg3t54l.fsf@assigned-by-dhcp.cox.net>
+References: <11668546833727-git-send-email-normalperson@yhbt.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 23 08:35:06 2006
+X-From: git-owner@vger.kernel.org Sat Dec 23 08:59:14 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1Gy1PJ-0001wo-GL
-	for gcvg-git@gmane.org; Sat, 23 Dec 2006 08:35:01 +0100
+	id 1Gy1mj-0004nh-Ow
+	for gcvg-git@gmane.org; Sat, 23 Dec 2006 08:59:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752898AbWLWHez (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 23 Dec 2006 02:34:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752892AbWLWHez
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Dec 2006 02:34:55 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:38835 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752888AbWLWHey (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Dec 2006 02:34:54 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1Gy1Om-0003EP-N3; Sat, 23 Dec 2006 02:34:28 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 6595F20FB65; Sat, 23 Dec 2006 02:34:51 -0500 (EST)
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <53b67707929c7f051f6d384c5d96e653bfa8419c.1166857884.git.spearce@spearce.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1752646AbWLWH7K (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 23 Dec 2006 02:59:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752628AbWLWH7K
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Dec 2006 02:59:10 -0500
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:39498 "EHLO
+	fed1rmmtao07.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752646AbWLWH7J (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Dec 2006 02:59:09 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20061223075907.BJNE3976.fed1rmmtao07.cox.net@fed1rmimpo01.cox.net>;
+          Sat, 23 Dec 2006 02:59:07 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id 27yQ1W00B1kojtg0000000; Sat, 23 Dec 2006 02:58:25 -0500
+To: Eric Wong <normalperson@yhbt.net>
+In-Reply-To: <11668546833727-git-send-email-normalperson@yhbt.net> (Eric
+	Wong's message of "Fri, 22 Dec 2006 22:18:02 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35297>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35298>
 
-This is a basic set of tests for the sliding window mmap.  We mostly
-focus on the verify-pack and pack-objects implementations (including
-delta reuse) as these commands appear to cover the bulk of the
-affected portions of sha1_file.c.
+Eric Wong <normalperson@yhbt.net> writes:
 
-The test cases don't verify the virtual memory size used, as
-this can differ from system to system.  Instead it just verifies
-that we can run with very low values for core.packedGitLimit and
-core.packedGitWindowSize.
+> This adds and uses the install-doc-quick.sh file to
+> Documentation/, which is usable for people who track either the
+> 'html' or 'man' heads in Junio's repository.
 
-Adding pack_report() to the end of both builtin-verify-pack.c and
-builtin-pack-objects.c and manually inspecting the statistics output
-can help to verify that the total virtual memory size attributed
-to pack mmap usage is what one might expect on the current system.
+Sadly I cannot use this myself ;-).
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- t/t5301-sliding-window.sh |   60 +++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 60 insertions(+), 0 deletions(-)
+Two points and a half.
 
-diff --git a/t/t5301-sliding-window.sh b/t/t5301-sliding-window.sh
-new file mode 100755
-index 0000000..5a7232a
---- /dev/null
-+++ b/t/t5301-sliding-window.sh
-@@ -0,0 +1,60 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2006 Shawn Pearce
-+#
-+
-+test_description='mmap sliding window tests'
-+. ./test-lib.sh
-+
-+test_expect_success \
-+    'setup' \
-+    'rm -f .git/index*
-+     for i in a b c
-+     do
-+         echo $i >$i &&
-+         dd if=/dev/urandom bs=32k count=1 >>$i &&
-+         git-update-index --add $i || return 1
-+     done &&
-+     echo d >d && cat c >>d && git-update-index --add d &&
-+     tree=`git-write-tree` &&
-+     commit1=`git-commit-tree $tree </dev/null` &&
-+     git-update-ref HEAD $commit1 &&
-+     git-repack -a -d &&
-+     test "`git-count-objects`" = "0 objects, 0 kilobytes" &&
-+     pack1=`ls .git/objects/pack/*.pack` &&
-+     test -f "$pack1"'
-+
-+test_expect_success \
-+    'verify-pack -v, defaults' \
-+    'git-verify-pack -v "$pack1"'
-+
-+test_expect_success \
-+    'verify-pack -v, packedGitWindowSize == 1 page' \
-+    'git-repo-config core.packedGitWindowSize 512 &&
-+     git-verify-pack -v "$pack1"'
-+
-+test_expect_success \
-+    'verify-pack -v, packedGit{WindowSize,Limit} == 1 page' \
-+    'git-repo-config core.packedGitWindowSize 512 &&
-+     git-repo-config core.packedGitLimit 512 &&
-+     git-verify-pack -v "$pack1"'
-+
-+test_expect_success \
-+    'repack -a -d, packedGit{WindowSize,Limit} == 1 page' \
-+    'git-repo-config core.packedGitWindowSize 512 &&
-+     git-repo-config core.packedGitLimit 512 &&
-+     commit2=`git-commit-tree $tree -p $commit1 </dev/null` &&
-+     git-update-ref HEAD $commit2 &&
-+     git-repack -a -d &&
-+     test "`git-count-objects`" = "0 objects, 0 kilobytes" &&
-+     pack2=`ls .git/objects/pack/*.pack` &&
-+     test -f "$pack2"
-+     test "$pack1" \!= "$pack2"'
-+
-+test_expect_success \
-+    'verify-pack -v, defaults' \
-+    'git-repo-config --unset core.packedGitWindowSize &&
-+     git-repo-config --unset core.packedGitLimit &&
-+     git-verify-pack -v "$pack2"'
-+
-+test_done
--- 
-1.4.4.3.g87d8
+(1) DESTDIR traditionally is always used to denote the virtual
+    root directory for fake install, typically later to be
+    copied over elsewhere or tarred up (e.g. "install git.1
+    $(DESTDIR)/usr/share/man/man1/git.1"); I'd suggest to make
+    install-doc-quick.sh script take two parameters, the branch
+    and the destination directory.
+
+(2) "git-clone" makes my html and man branches tracked with
+    remotes/origin/{html,man} by default; you would want to make
+    the local tracking branch 'man' you have hardcoded in the
+    Makefile overridable and make it default to "origin/man".
+
+(2.5) "chmod +x install-doc-quick.sh", even if you say "sh
+      ./..." in your Makefile.
+
+
+      
