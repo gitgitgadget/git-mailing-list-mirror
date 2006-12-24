@@ -1,32 +1,32 @@
 From: Robert Fitzsimons <robfitz@273k.net>
-Subject: [PATCH 4/8] gitweb: Change log action to use parse_commits.
-Date: Sun, 24 Dec 2006 14:31:45 +0000
-Message-ID: <11669707101872-git-send-email-robfitz@273k.net>
-References: 20061224143041.GF11474@localhost <11669707092427-git-send-email-robfitz@273k.net> <11669707094097-git-send-email-robfitz@273k.net> <11669707102678-git-send-email-robfitz@273k.net>
+Subject: [PATCH 5/8] gitweb: Change header search action to use parse_commits.
+Date: Sun, 24 Dec 2006 14:31:46 +0000
+Message-ID: <116697071140-git-send-email-robfitz@273k.net>
+References: 20061224143041.GF11474@localhost <11669707092427-git-send-email-robfitz@273k.net> <11669707094097-git-send-email-robfitz@273k.net> <11669707102678-git-send-email-robfitz@273k.net> <11669707101872-git-send-email-robfitz@273k.net>
 Cc: Robert Fitzsimons <robfitz@273k.net>
-X-From: git-owner@vger.kernel.org Sun Dec 24 15:32:06 2006
+X-From: git-owner@vger.kernel.org Sun Dec 24 15:32:07 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GyUON-0005W6-QP
-	for gcvg-git@gmane.org; Sun, 24 Dec 2006 15:32:00 +0100
+	id 1GyUON-0005W6-97
+	for gcvg-git@gmane.org; Sun, 24 Dec 2006 15:31:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751919AbWLXOby (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Dec 2006 09:31:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751920AbWLXOby
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Dec 2006 09:31:54 -0500
-Received: from igraine.blacknight.ie ([81.17.252.25]:32882 "EHLO
+	id S1751830AbWLXObw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Dec 2006 09:31:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751912AbWLXObw
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Dec 2006 09:31:52 -0500
+Received: from igraine.blacknight.ie ([81.17.252.25]:32876 "EHLO
 	igraine.blacknight.ie" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751919AbWLXObx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Dec 2006 09:31:53 -0500
+	with ESMTP id S1751830AbWLXObw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Dec 2006 09:31:52 -0500
 Received: from [212.2.174.82] (helo=localhost)
 	by igraine.blacknight.ie with esmtp (Exim 4.60)
 	(envelope-from <robfitz@273k.net>)
-	id 1GyUNr-0002ud-AZ; Sun, 24 Dec 2006 14:31:27 +0000
+	id 1GyUNr-0002um-Om; Sun, 24 Dec 2006 14:31:28 +0000
 To: git@vger.kernel.org
 X-Mailer: git-send-email 1.4.4.3.ge655-dirty
-In-Reply-To: <11669707102678-git-send-email-robfitz@273k.net>
+In-Reply-To: <11669707101872-git-send-email-robfitz@273k.net>
 X-blacknight-igraine-MailScanner-Information: Please contact the ISP for more information
 X-blacknight-igraine-MailScanner: Found to be clean
 X-blacknight-igraine-MailScanner-SpamCheck: not spam,
@@ -37,68 +37,83 @@ X-MailScanner-From: robfitz@273k.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35365>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35366>
 
-Also add missing next link to bottom of page.
 
 Signed-off-by: Robert Fitzsimons <robfitz@273k.net>
 ---
- gitweb/gitweb.perl |   25 ++++++++++++++-----------
- 1 files changed, 14 insertions(+), 11 deletions(-)
+ gitweb/gitweb.perl |   23 +++++++++--------------
+ 1 files changed, 9 insertions(+), 14 deletions(-)
 
 diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 5f1ace9..42b7449 100755
+index 42b7449..53dd225 100755
 --- a/gitweb/gitweb.perl
 +++ b/gitweb/gitweb.perl
-@@ -3645,28 +3645,25 @@ sub git_log {
- 	}
- 	my $refs = git_get_references();
- 
--	my $limit = sprintf("--max-count=%i", (100 * ($page+1)));
--	open my $fd, "-|", git_cmd(), "rev-list", $limit, $hash, "--"
--		or die_error(undef, "Open git-rev-list failed");
--	my @revlist = map { chomp; $_ } <$fd>;
--	close $fd;
-+	my @commitlist = parse_commits($hash, 101, (100 * $page));
- 
--	my $paging_nav = format_paging_nav('log', $hash, $head, $page, $#revlist);
-+	my $paging_nav = format_paging_nav('log', $hash, $head, $page, (100 * ($page+1)));
- 
- 	git_header_html();
- 	git_print_page_nav('log','', $hash,undef,undef, $paging_nav);
- 
--	if (!@revlist) {
-+	if (!@commitlist) {
- 		my %co = parse_commit($hash);
- 
- 		git_print_header_div('summary', $project);
- 		print "<div class=\"page_body\"> Last change $co{'age_string'}.<br/><br/></div>\n";
- 	}
--	for (my $i = ($page * 100); $i <= $#revlist; $i++) {
--		my $commit = $revlist[$i];
--		my $ref = format_ref_marker($refs, $commit);
--		my %co = parse_commit($commit);
-+	my $to = ($#commitlist >= 99) ? (99) : ($#commitlist);
-+	for (my $i = 0; $i <= $to; $i++) {
-+		my %co = %{$commitlist[$i]};
- 		next if !%co;
-+		my $commit = $co{'id'};
-+		my $ref = format_ref_marker($refs, $commit);
- 		my %ad = parse_date($co{'author_epoch'});
- 		git_print_header_div('commit',
- 		               "<span class=\"age\">$co{'age_string'}</span>" .
-@@ -3688,6 +3685,12 @@ sub git_log {
- 		git_print_log($co{'comment'}, -final_empty_line=> 1);
- 		print "</div>\n";
- 	}
-+	if ($#commitlist >= 100) {
-+		print "<div class=\"page_nav\">\n";
-+		print $cgi->a({-href => href(action=>"log", hash=>$hash, page=>$page+1),
-+			       -accesskey => "n", -title => "Alt-n"}, "next");
-+		print "</div>\n";
-+	}
- 	git_footer_html();
+@@ -2910,18 +2910,18 @@ sub git_heads_body {
  }
  
+ sub git_search_grep_body {
+-	my ($greplist, $from, $to, $extra) = @_;
++	my ($commitlist, $from, $to, $extra) = @_;
+ 	$from = 0 unless defined $from;
+-	$to = $#{$greplist} if (!defined $to || $#{$greplist} < $to);
++	$to = $#{$commitlist} if (!defined $to || $#{$commitlist} < $to);
+ 
+ 	print "<table class=\"grep\" cellspacing=\"0\">\n";
+ 	my $alternate = 1;
+ 	for (my $i = $from; $i <= $to; $i++) {
+-		my $commit = $greplist->[$i];
+-		my %co = parse_commit($commit);
++		my %co = %{$commitlist->[$i]};
+ 		if (!%co) {
+ 			next;
+ 		}
++		my $commit = $co{'id'};
+ 		if ($alternate) {
+ 			print "<tr class=\"dark\">\n";
+ 		} else {
+@@ -4307,13 +4307,8 @@ sub git_search {
+ 		} elsif ($searchtype eq 'committer') {
+ 			$greptype = "--committer=";
+ 		}
+-		open my $fd, "-|", git_cmd(), "rev-list",
+-			("--max-count=" . (100 * ($page+1))),
+-			($greptype . $searchtext),
+-			$hash, "--"
+-			or next;
+-		my @revlist = map { chomp; $_ } <$fd>;
+-		close $fd;
++		$greptype .= $searchtext;
++		my @commitlist = parse_commits($hash, 101, (100 * $page), $greptype);
+ 
+ 		my $paging_nav = '';
+ 		if ($page > 0) {
+@@ -4330,7 +4325,7 @@ sub git_search {
+ 			$paging_nav .= "first";
+ 			$paging_nav .= " &sdot; prev";
+ 		}
+-		if ($#revlist >= (100 * ($page+1)-1)) {
++		if ($#commitlist >= 100) {
+ 			$paging_nav .= " &sdot; " .
+ 				$cgi->a({-href => href(action=>"search", hash=>$hash,
+ 						       searchtext=>$searchtext, searchtype=>$searchtype,
+@@ -4340,7 +4335,7 @@ sub git_search {
+ 			$paging_nav .= " &sdot; next";
+ 		}
+ 		my $next_link = '';
+-		if ($#revlist >= (100 * ($page+1)-1)) {
++		if ($#commitlist >= 100) {
+ 			$next_link =
+ 				$cgi->a({-href => href(action=>"search", hash=>$hash,
+ 						       searchtext=>$searchtext, searchtype=>$searchtype,
+@@ -4350,7 +4345,7 @@ sub git_search {
+ 
+ 		git_print_page_nav('','', $hash,$co{'tree'},$hash, $paging_nav);
+ 		git_print_header_div('commit', esc_html($co{'title'}), $hash);
+-		git_search_grep_body(\@revlist, ($page * 100), $#revlist, $next_link);
++		git_search_grep_body(\@commitlist, 0, 99, $next_link);
+ 	}
+ 
+ 	if ($searchtype eq 'pickaxe') {
 -- 
 1.4.4.3.ge655-dirty
