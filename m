@@ -1,32 +1,32 @@
 From: Robert Fitzsimons <robfitz@273k.net>
-Subject: [PATCH 1/8] gitweb: Add parse_commits, used to bulk load commit objects.
-Date: Sun, 24 Dec 2006 14:31:42 +0000
-Message-ID: <11669707092427-git-send-email-robfitz@273k.net>
+Subject: [PATCH 2/8] gitweb: We do longer need the --parents flag in rev-list.
+Date: Sun, 24 Dec 2006 14:31:43 +0000
+Message-ID: <11669707094097-git-send-email-robfitz@273k.net>
+References: 20061224143041.GF11474@localhost <11669707092427-git-send-email-robfitz@273k.net>
 Cc: Robert Fitzsimons <robfitz@273k.net>
-X-From: git-owner@vger.kernel.org Sun Dec 24 15:31:40 2006
+X-From: git-owner@vger.kernel.org Sun Dec 24 15:31:53 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GyUO3-0005SR-3w
-	for gcvg-git@gmane.org; Sun, 24 Dec 2006 15:31:39 +0100
+	id 1GyUOC-0005Tw-82
+	for gcvg-git@gmane.org; Sun, 24 Dec 2006 15:31:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751738AbWLXObg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Dec 2006 09:31:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751750AbWLXObg
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Dec 2006 09:31:36 -0500
-Received: from igraine.blacknight.ie ([81.17.252.25]:32840 "EHLO
+	id S1751749AbWLXObn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Dec 2006 09:31:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751786AbWLXObn
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Dec 2006 09:31:43 -0500
+Received: from igraine.blacknight.ie ([81.17.252.25]:32858 "EHLO
 	igraine.blacknight.ie" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751738AbWLXObf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Dec 2006 09:31:35 -0500
+	with ESMTP id S1751749AbWLXObn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Dec 2006 09:31:43 -0500
 Received: from [212.2.174.82] (helo=localhost)
 	by igraine.blacknight.ie with esmtp (Exim 4.60)
 	(envelope-from <robfitz@273k.net>)
-	id 1GyUNp-0002uQ-T8; Sun, 24 Dec 2006 14:31:26 +0000
+	id 1GyUNq-0002uT-Ec; Sun, 24 Dec 2006 14:31:26 +0000
 To: git@vger.kernel.org
 X-Mailer: git-send-email 1.4.4.3.ge655-dirty
-In-Reply-To: 20061224143041.GF11474@localhost
-References: 20061224143041.GF11474@localhost
+In-Reply-To: <11669707092427-git-send-email-robfitz@273k.net>
 X-blacknight-igraine-MailScanner-Information: Please contact the ISP for more information
 X-blacknight-igraine-MailScanner: Found to be clean
 X-blacknight-igraine-MailScanner-SpamCheck: not spam,
@@ -37,127 +37,64 @@ X-MailScanner-From: robfitz@273k.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35360>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35361>
 
-Add a new method parse_commits which is able to parse multiple commit
-objects at once.  Reworked parse_commit to share the commit object
-parsing logic.
+We only want to know the direct parents of a given commit object,
+these parents are available in the --header output of rev-list.  If
+--parents is supplied with --full-history the output includes merge
+commits that aren't relevant.
 
 Signed-off-by: Robert Fitzsimons <robfitz@273k.net>
 ---
- gitweb/gitweb.perl |   91 ++++++++++++++++++++++++++++++++++++++++++----------
- 1 files changed, 74 insertions(+), 17 deletions(-)
+ gitweb/gitweb.perl |   11 ++++++-----
+ 1 files changed, 6 insertions(+), 5 deletions(-)
 
 diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index d01d689..6bd57a4 100755
+index 6bd57a4..c645686 100755
 --- a/gitweb/gitweb.perl
 +++ b/gitweb/gitweb.perl
-@@ -1270,25 +1270,13 @@ sub parse_tag {
- 	return %tag
- }
- 
--sub parse_commit {
--	my $commit_id = shift;
--	my $commit_text = shift;
--
--	my @commit_lines;
-+sub parse_commit_text {
-+	my ($commit_text) = @_;
-+	my @commit_lines = split '\n', $commit_text;
- 	my %co;
- 
--	if (defined $commit_text) {
--		@commit_lines = @$commit_text;
--	} else {
--		local $/ = "\0";
--		open my $fd, "-|", git_cmd(), "rev-list",
--			"--header", "--parents", "--max-count=1",
--			$commit_id, "--"
--			or return;
--		@commit_lines = split '\n', <$fd>;
--		close $fd or return;
--		pop @commit_lines;
--	}
-+	pop @commit_lines; # Remove '\0'
-+
- 	my $header = shift @commit_lines;
+@@ -1281,13 +1281,14 @@ sub parse_commit_text {
  	if (!($header =~ m/^[0-9a-fA-F]{40}/)) {
  		return;
-@@ -1375,6 +1363,75 @@ sub parse_commit {
- 	return %co;
- }
+ 	}
+-	($co{'id'}, my @parents) = split ' ', $header;
+-	$co{'parents'} = \@parents;
+-	$co{'parent'} = $parents[0];
++	$co{'id'} = $header;
++	my @parents;
+ 	while (my $line = shift @commit_lines) {
+ 		last if $line eq "\n";
+ 		if ($line =~ m/^tree ([0-9a-fA-F]{40})$/) {
+ 			$co{'tree'} = $1;
++		} elsif ($line =~ m/^parent ([0-9a-fA-F]{40})$/) {
++			push @parents, $1;
+ 		} elsif ($line =~ m/^author (.*) ([0-9]+) (.*)$/) {
+ 			$co{'author'} = $1;
+ 			$co{'author_epoch'} = $2;
+@@ -1314,6 +1315,8 @@ sub parse_commit_text {
+ 	if (!defined $co{'tree'}) {
+ 		return;
+ 	};
++	$co{'parents'} = \@parents;
++	$co{'parent'} = $parents[0];
  
-+sub parse_commit {
-+	my ($commit_id) = @_;
-+	my %co;
-+
-+	local $/ = "\0";
-+
-+	open my $fd, "-|", git_cmd(), "rev-list",
-+		"--header",
-+		"--parents",
-+		"--max-count=1",
-+		$commit_id,
-+		"--",
-+		or die_error(undef, "Open git-rev-list failed");
-+	%co = parse_commit_text(<$fd>);
-+	close $fd;
-+
-+	return %co;
-+}
-+
-+sub parse_commits {
-+	my ($commit_id, $maxcount, $skip, $arg, $filename) = @_;
-+	my @cos;
-+
-+	$maxcount ||= 1;
-+	$skip ||= 0;
-+
-+	# Delete once rev-list supports the --skip option
-+	if ($skip > 0) {
-+		open my $fd, "-|", git_cmd(), "rev-list",
-+			($arg ? ($arg) : ()),
-+			("--max-count=" . ($maxcount + $skip)),
-+			$commit_id,
-+			"--",
-+			($filename ? ($filename) : ())
-+			or die_error(undef, "Open git-rev-list failed");
-+		while (my $line = <$fd>) {
-+			if ($skip-- <= 0) {
-+				chomp $line;
-+				my %co = parse_commit($line);
-+				push @cos, \%co;
-+			}
-+		}
-+		close $fd;
-+
-+		return wantarray ? @cos : \@cos;
-+	}
-+
-+	local $/ = "\0";
-+
-+	open my $fd, "-|", git_cmd(), "rev-list",
-+		"--header",
-+		"--parents",
-+		($arg ? ($arg) : ()),
-+		("--max-count=" . $maxcount),
-+		# Add once rev-list supports the --skip option
-+		# ("--skip=" . $skip),
-+		$commit_id,
-+		"--",
-+		($filename ? ($filename) : ())
-+		or die_error(undef, "Open git-rev-list failed");
-+	while (my $line = <$fd>) {
-+		my %co = parse_commit_text($line);
-+		push @cos, \%co;
-+	}
-+	close $fd;
-+
-+	return wantarray ? @cos : \@cos;
-+}
-+
- # parse ref from ref_file, given by ref_id, with given type
- sub parse_ref {
- 	my $ref_file = shift;
+ 	foreach my $title (@commit_lines) {
+ 		$title =~ s/^    //;
+@@ -1371,7 +1374,6 @@ sub parse_commit {
+ 
+ 	open my $fd, "-|", git_cmd(), "rev-list",
+ 		"--header",
+-		"--parents",
+ 		"--max-count=1",
+ 		$commit_id,
+ 		"--",
+@@ -1414,7 +1416,6 @@ sub parse_commits {
+ 
+ 	open my $fd, "-|", git_cmd(), "rev-list",
+ 		"--header",
+-		"--parents",
+ 		($arg ? ($arg) : ()),
+ 		("--max-count=" . $maxcount),
+ 		# Add once rev-list supports the --skip option
 -- 
 1.4.4.3.ge655-dirty
