@@ -1,43 +1,59 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: confusion over the new branch and merge config
-Date: Sun, 24 Dec 2006 01:15:50 -0500
-Message-ID: <20061224061549.GA17186@segfault.peff.net>
-References: <Pine.LNX.4.64.0612211555210.18171@xanadu.home> <7vd56cam66.fsf@assigned-by-dhcp.cox.net> <20061223051210.GA29814@segfault.peff.net> <7vbqlvuoi4.fsf@assigned-by-dhcp.cox.net> <7vbqlvrldk.fsf@assigned-by-dhcp.cox.net>
+From: "Francis Moreau" <francis.moro@gmail.com>
+Subject: Re: [PATCH 0/17] Sliding window mmap for packfiles.
+Date: Sun, 24 Dec 2006 09:56:59 +0100
+Message-ID: <38b2ab8a0612240056k152344ael891e9b0b9f8cbc47@mail.gmail.com>
+References: <20061223073317.GA9837@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 24 07:15:53 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Dec 24 09:57:15 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GyMeG-0003bM-Q0
-	for gcvg-git@gmane.org; Sun, 24 Dec 2006 07:15:53 +0100
+	id 1GyPAQ-00072y-Mv
+	for gcvg-git@gmane.org; Sun, 24 Dec 2006 09:57:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754133AbWLXGPu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Dec 2006 01:15:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754141AbWLXGPu
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Dec 2006 01:15:50 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3895 "HELO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754133AbWLXGPt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Dec 2006 01:15:49 -0500
-Received: (qmail 17343 invoked by uid 1000); 24 Dec 2006 01:15:50 -0500
-To: Junio C Hamano <junkio@cox.net>
+	id S1754187AbWLXI5A (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Dec 2006 03:57:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754209AbWLXI5A
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Dec 2006 03:57:00 -0500
+Received: from wx-out-0506.google.com ([66.249.82.231]:27183 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754187AbWLXI5A (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Dec 2006 03:57:00 -0500
+Received: by wx-out-0506.google.com with SMTP id h27so3245191wxd
+        for <git@vger.kernel.org>; Sun, 24 Dec 2006 00:56:59 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=ZuSYJGFfNn4FLFetbJ1/kp5hfvcbWH8FIQ+tj+sMT3FPFE8soTu+K8So0g6aGtd536bpJdWwymQRGisaeKH/I/mSVoeOS/meYxxN3ypuqzL8drdTgoxHMSHNiNIW9pLnbiihxJEgPP+vjgtvWjuRi94IUE+e3UqUX0CZLizPw2w=
+Received: by 10.90.105.20 with SMTP id d20mr10027049agc.1166950619395;
+        Sun, 24 Dec 2006 00:56:59 -0800 (PST)
+Received: by 10.90.106.16 with HTTP; Sun, 24 Dec 2006 00:56:59 -0800 (PST)
+To: "Shawn O. Pearce" <spearce@spearce.org>
+In-Reply-To: <20061223073317.GA9837@spearce.org>
 Content-Disposition: inline
-In-Reply-To: <7vbqlvrldk.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35347>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35348>
 
-On Sat, Dec 23, 2006 at 01:51:03AM -0800, Junio C Hamano wrote:
+Hi,
 
-> If you (or other people) use branch.*.merge, with its value set
-> to remote name _and_ local name, and actually verify that either
-> form works without confusion, please report back and I'll apply.
+On 12/23/06, Shawn O. Pearce <spearce@spearce.org> wrote:
+> This 17 patch series implements my much discussed, but never produced
+[snip]
+>
+> This series also permits accessing packfiles up to 4 GiB in size,
+> even on systems which permit only 2 GiB of virtual memory within
+> a single process (e.g. Windows and some older UNIXes).  Of course
 
-I am happy to try this out and report back. However, I'm out of town for
-the holidays, so I won't have anything useful to say until next week.
+Just out of curiosity, do you mean that there are some OS running on
+32 bits machines which allow 4GiB size of virtual memory within a
+single process ? If so, could you give an example of such OS ?
 
--Peff
+thanks
+-- 
+Francis
