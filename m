@@ -1,76 +1,57 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [PATCH 7/7] Replace mmap with xmmap, better handling MAP_FAILED.
-Date: Sun, 24 Dec 2006 15:34:48 -0500
-Message-ID: <20061224203448.GB631@spearce.org>
-References: <487c7d0ea81f2f82f330e277e0aea38a66ca7cfe.1166939109.git.spearce@spearce.org> <20061224054723.GG8146@spearce.org> <Pine.LNX.4.63.0612241410400.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: confusion over the new branch and merge config
+Date: Sun, 24 Dec 2006 15:49:50 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0612241544250.18171@xanadu.home>
+References: <Pine.LNX.4.64.0612211555210.18171@xanadu.home>
+ <7vd56cam66.fsf@assigned-by-dhcp.cox.net>
+ <20061223051210.GA29814@segfault.peff.net>
+ <7vbqlvuoi4.fsf@assigned-by-dhcp.cox.net>
+ <7vbqlvrldk.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 24 21:35:01 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Dec 24 21:50:21 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1Gya3d-0000BF-Tt
-	for gcvg-git@gmane.org; Sun, 24 Dec 2006 21:34:58 +0100
+	id 1GyaIU-0002SO-Ed
+	for gcvg-git@gmane.org; Sun, 24 Dec 2006 21:50:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752633AbWLXUez (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Dec 2006 15:34:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752708AbWLXUez
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Dec 2006 15:34:55 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:54852 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752633AbWLXUey (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Dec 2006 15:34:54 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1Gya3P-0006xu-Gg; Sun, 24 Dec 2006 15:34:43 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 8E9BC20FB65; Sun, 24 Dec 2006 15:34:49 -0500 (EST)
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0612241410400.19693@wbgn013.biozentrum.uni-wuerzburg.de>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1752711AbWLXUtw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Dec 2006 15:49:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752748AbWLXUtw
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Dec 2006 15:49:52 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:27144 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752711AbWLXUtv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Dec 2006 15:49:51 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JAS00GBWPV2K2J2@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Sun, 24 Dec 2006 15:49:50 -0500 (EST)
+In-reply-to: <7vbqlvrldk.fsf@assigned-by-dhcp.cox.net>
+X-X-Sender: nico@xanadu.home
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35373>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35374>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> All in all it is a good change -- for the builtin programs.
-> 
-> But it is less good for the libification. Maybe it is time for a 
-> discussion about the possible strategies to avoid dying in libgit.a?
+On Sat, 23 Dec 2006, Junio C Hamano wrote:
 
-Well we have the same problem with xmalloc.  All I've done is move
-the MAP_FAILED cases which tend to wind up die()'ing later anyway
-into the same scope of area where the xmalloc issue is.
+> If you (or other people) use branch.*.merge, with its value set
+> to remote name _and_ local name, and actually verify that either
+> form works without confusion, please report back and I'll apply.
 
-We die() all over the place.  ~1312 times according to 'git grep die'.
-Git isn't a program for the living.  :-)
+This is nice, thanks.
 
-To properly libify we have a few issues:
+What would be nice as well is to be able to provide only the _name_ of 
+the tracking branch without the refs/remotes/$origin/ prefix.  Since 
+there is already a 'branch."blah".remote = $origin' entry, then having 
+'branch."blah".merge = $foo' could mean "refs/remotes/$origin/$foo" when 
+$foo contains no slash.
 
-  - we cannot just exit this process when we run into an error;
 
-  - routines need to cleanup temporary resources (memory, file
-    descriptors) when returning an error;
-
-  - static variables like environment.c need to be reorganized to
-    support multiple repositories in the same program;
-
-  - objects need to be able to be deallocated, especially
-    if the revision walking machinary has done rewriting
-
-Though the die() is the largest issue.
-
--- 
-Shawn.
+Nicolas
