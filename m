@@ -1,32 +1,32 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH 3/7] Ensure packed_git.next is initialized to NULL.
-Date: Sun, 24 Dec 2006 00:46:04 -0500
-Message-ID: <20061224054604.GC8146@spearce.org>
+Subject: [PATCH 4/7] Default core.packdGitWindowSize to 1 MiB if NO_MMAP.
+Date: Sun, 24 Dec 2006 00:46:13 -0500
+Message-ID: <20061224054613.GD8146@spearce.org>
 References: <487c7d0ea81f2f82f330e277e0aea38a66ca7cfe.1166939109.git.spearce@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 24 06:46:16 2006
+X-From: git-owner@vger.kernel.org Sun Dec 24 06:46:26 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GyMBY-0001SE-Pt
-	for gcvg-git@gmane.org; Sun, 24 Dec 2006 06:46:13 +0100
+	id 1GyMBg-0001Sp-O4
+	for gcvg-git@gmane.org; Sun, 24 Dec 2006 06:46:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754119AbWLXFqJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Dec 2006 00:46:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754115AbWLXFqI
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Dec 2006 00:46:08 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:53736 "EHLO
+	id S1754134AbWLXFqS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Dec 2006 00:46:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754140AbWLXFqR
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Dec 2006 00:46:17 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:53743 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754119AbWLXFqH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Dec 2006 00:46:07 -0500
+	with ESMTP id S1754134AbWLXFqR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Dec 2006 00:46:17 -0500
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1GyMBS-0008Ov-6r; Sun, 24 Dec 2006 00:46:06 -0500
+	id 1GyMBb-0008PE-S7; Sun, 24 Dec 2006 00:46:15 -0500
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 7607120FB65; Sun, 24 Dec 2006 00:46:04 -0500 (EST)
+	id 1EBE920FB65; Sun, 24 Dec 2006 00:46:14 -0500 (EST)
 To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
 In-Reply-To: <487c7d0ea81f2f82f330e277e0aea38a66ca7cfe.1166939109.git.spearce@spearce.org>
@@ -42,36 +42,56 @@ X-Source-Dir:
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35340>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35341>
 
-Junio noticed while reviewing this patch series that I removed the
-initialization of packed_git.next = NULL in 88078baa.  That removal
-was not intended so I'm restoring the initialization where necessary.
+If the compiler has asked us to disable use of mmap() on their
+platform then we are forced to use git_mmap and its emulation via
+pread.  In this case large (e.g. 32 MiB) windows for pack access
+are simply too big as a command will wind up reading a lot more
+data than it will ever need, significantly reducing response time.
+
+To prevent a high latency when NO_MMAP has been selected we now
+use a default of 1 MiB for core.packedGitWindowSize.  Credit goes
+to Linus and Junio for recommending this more reasonable setting.
 
 Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
- sha1_file.c |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+ environment.c     |    2 +-
+ git-compat-util.h |    2 ++
+ 2 files changed, 3 insertions(+), 1 deletions(-)
 
-diff --git a/sha1_file.c b/sha1_file.c
-index 1a87f95..8de8ce0 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -676,6 +676,7 @@ struct packed_git *add_packed_git(char *path, int path_len, int local)
- 	p->index_size = idx_size;
- 	p->pack_size = st.st_size;
- 	p->index_base = idx_map;
-+	p->next = NULL;
- 	p->windows = NULL;
- 	p->pack_fd = -1;
- 	p->pack_local = local;
-@@ -707,6 +708,7 @@ struct packed_git *parse_pack_index_file(const unsigned char *sha1, char *idx_pa
- 	p->index_size = idx_size;
- 	p->pack_size = 0;
- 	p->index_base = idx_map;
-+	p->next = NULL;
- 	p->windows = NULL;
- 	p->pack_fd = -1;
- 	hashcpy(p->sha1, sha1);
+diff --git a/environment.c b/environment.c
+index 289fc84..e89aab4 100644
+--- a/environment.c
++++ b/environment.c
+@@ -22,7 +22,7 @@ char git_commit_encoding[MAX_ENCODING_LENGTH] = "utf-8";
+ int shared_repository = PERM_UMASK;
+ const char *apply_default_whitespace;
+ int zlib_compression_level = Z_DEFAULT_COMPRESSION;
+-size_t packed_git_window_size = 32 * 1024 * 1024;
++size_t packed_git_window_size = DEFAULT_packed_git_window_size;
+ size_t packed_git_limit = 256 * 1024 * 1024;
+ int pager_in_use;
+ int pager_use_color = 1;
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 5d9eb26..e056339 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -87,6 +87,7 @@ extern void set_warn_routine(void (*routine)(const char *warn, va_list params));
+ #define MAP_FAILED ((void*)-1)
+ #endif
+ 
++#define DEFAULT_packed_git_window_size (1 * 1024 * 1024)
+ #define mmap git_mmap
+ #define munmap git_munmap
+ extern void *git_mmap(void *start, size_t length, int prot, int flags, int fd, off_t offset);
+@@ -95,6 +96,7 @@ extern int git_munmap(void *start, size_t length);
+ #else /* NO_MMAP */
+ 
+ #include <sys/mman.h>
++#define DEFAULT_packed_git_window_size (32 * 1024 * 1024)
+ 
+ #endif /* NO_MMAP */
+ 
 -- 
 1.4.4.3.g2e63
