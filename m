@@ -1,58 +1,76 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH 2/7] Switch git_mmap to use pread.
-Date: Sun, 24 Dec 2006 12:14:52 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0612241213320.3671@woody.osdl.org>
-References: <487c7d0ea81f2f82f330e277e0aea38a66ca7cfe.1166939109.git.spearce@spearce.org>
- <20061224054547.GB8146@spearce.org> <Pine.LNX.4.63.0612241407250.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [PATCH 7/7] Replace mmap with xmmap, better handling MAP_FAILED.
+Date: Sun, 24 Dec 2006 15:34:48 -0500
+Message-ID: <20061224203448.GB631@spearce.org>
+References: <487c7d0ea81f2f82f330e277e0aea38a66ca7cfe.1166939109.git.spearce@spearce.org> <20061224054723.GG8146@spearce.org> <Pine.LNX.4.63.0612241410400.19693@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 24 21:15:12 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Dec 24 21:35:01 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GyZkV-0005yH-6z
-	for gcvg-git@gmane.org; Sun, 24 Dec 2006 21:15:11 +0100
+	id 1Gya3d-0000BF-Tt
+	for gcvg-git@gmane.org; Sun, 24 Dec 2006 21:34:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752661AbWLXUPF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Dec 2006 15:15:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752663AbWLXUPE
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Dec 2006 15:15:04 -0500
-Received: from smtp.osdl.org ([65.172.181.25]:54732 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752661AbWLXUPD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Dec 2006 15:15:03 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id kBOKEr2J029867
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 24 Dec 2006 12:14:54 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id kBOKEqs3012825;
-	Sun, 24 Dec 2006 12:14:52 -0800
+	id S1752633AbWLXUez (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Dec 2006 15:34:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752708AbWLXUez
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Dec 2006 15:34:55 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:54852 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752633AbWLXUey (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Dec 2006 15:34:54 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1Gya3P-0006xu-Gg; Sun, 24 Dec 2006 15:34:43 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 8E9BC20FB65; Sun, 24 Dec 2006 15:34:49 -0500 (EST)
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0612241407250.19693@wbgn013.biozentrum.uni-wuerzburg.de>
-X-Spam-Status: No, hits=-1.156 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.107__
-X-MIMEDefang-Filter: osdl$Revision: 1.165 $
-X-Scanned-By: MIMEDefang 2.36
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0612241410400.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35372>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35373>
 
-
-
-On Sun, 24 Dec 2006, Johannes Schindelin wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> All in all it is a good change -- for the builtin programs.
 > 
-> I don't think it matters much. The _only_ platform we really use NO_MMAP 
-> (other than for testing) is Windows, and AFAICT it does not have pread(), 
-> so it is emulated by lseek/read/lseek anyway.
+> But it is less good for the libification. Maybe it is time for a 
+> discussion about the possible strategies to avoid dying in libgit.a?
 
-Windows definitely has pread(). It is, of course, possible that Cygwin 
-emulates it some other way (including doing a "lseek/read/lseek" 
-combination), but pread() should still be better - because maybe some 
-future cygwin release ends up using the native interfaces.
+Well we have the same problem with xmalloc.  All I've done is move
+the MAP_FAILED cases which tend to wind up die()'ing later anyway
+into the same scope of area where the xmalloc issue is.
 
-		Linus
+We die() all over the place.  ~1312 times according to 'git grep die'.
+Git isn't a program for the living.  :-)
+
+To properly libify we have a few issues:
+
+  - we cannot just exit this process when we run into an error;
+
+  - routines need to cleanup temporary resources (memory, file
+    descriptors) when returning an error;
+
+  - static variables like environment.c need to be reorganized to
+    support multiple repositories in the same program;
+
+  - objects need to be able to be deallocated, especially
+    if the revision walking machinary has done rewriting
+
+Though the die() is the largest issue.
+
+-- 
+Shawn.
