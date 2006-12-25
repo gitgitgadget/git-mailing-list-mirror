@@ -1,72 +1,71 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] commit encoding: store it in commit header rather than mucking with NUL
-Date: Sun, 24 Dec 2006 23:27:27 -0800
-Message-ID: <7vr6uoo2ow.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.63.0612241505290.19693@wbgn013.biozentrum.uni-wuerzburg.de>
-	<Pine.LNX.4.63.0612241643440.19693@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7v3b74q1c9.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0612250134040.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+Subject: [PATCH 0/5] git-add/git-rm updates
+Date: Mon, 25 Dec 2006 03:09:22 -0800
+Message-ID: <7vr6uomdul.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 25 08:27:51 2006
+X-From: git-owner@vger.kernel.org Mon Dec 25 12:09:42 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GykFS-0003Ir-CB
-	for gcvg-git@gmane.org; Mon, 25 Dec 2006 08:27:50 +0100
+	id 1Gyni8-0003R3-HB
+	for gcvg-git@gmane.org; Mon, 25 Dec 2006 12:09:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754253AbWLYH13 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 25 Dec 2006 02:27:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754249AbWLYH13
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Dec 2006 02:27:29 -0500
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:63575 "EHLO
-	fed1rmmtao11.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751977AbWLYH12 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Dec 2006 02:27:28 -0500
+	id S1754404AbWLYLJY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 25 Dec 2006 06:09:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754408AbWLYLJY
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Dec 2006 06:09:24 -0500
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:49234 "EHLO
+	fed1rmmtao06.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754404AbWLYLJY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Dec 2006 06:09:24 -0500
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao11.cox.net
+          by fed1rmmtao06.cox.net
           (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20061225072728.EWWU25875.fed1rmmtao11.cox.net@fed1rmimpo02.cox.net>;
-          Mon, 25 Dec 2006 02:27:28 -0500
+          id <20061225110923.RIOK2628.fed1rmmtao06.cox.net@fed1rmimpo02.cox.net>;
+          Mon, 25 Dec 2006 06:09:23 -0500
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id 2vTh1W0031kojtg0000000; Mon, 25 Dec 2006 02:27:41 -0500
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0612250134040.19693@wbgn013.biozentrum.uni-wuerzburg.de>
-	(Johannes Schindelin's message of "Mon, 25 Dec 2006 01:41:47 +0100
-	(CET)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id 2z9c1W00f1kojtg0000000; Mon, 25 Dec 2006 06:09:36 -0500
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35380>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35381>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+This series futzes with a pair of functions in dir.c machinery
+and enhances git-add and git-rm command.
 
->>  - I was not sure if the "assume the whole commit->buffer is in
->>    the local encoding and recode it into UTF-8" is correct.
->
-> For the purpose of showing it, there is no point in using two different 
-> encodings. I am not aware of any terminal (and do not own such a terminal 
-> anyway) which can display text with parts encoded differently from the 
-> rest.
+[PATCH 1/5] match_pathspec() -- return how well the spec matched
 
-That's not what I meant.  Because the definition of the contents
-of the commit has been (and will be --- the unpublished topic
-was about suggesting stronger convention across Porcelains) just
-the set of fixed headers plus binary blob, the use of different
-encodings is entirely up to the users.
+The function match_pathspec() takes the pathspec given from the
+command line and tells if a given name matches it.  This
+enhances its return value so that the command can tell how well
+the name matches.  Earlier, the caller could not tell if matched
+pathspec was exactly the same as the name, was a fileglob that
+matched the name, or was a leading directory.
 
-I was afraid that there might be something we did (or we did not
-do) that encouraged people to have their names (via environment
-variables, or perhaps user.name) always in UTF-8 while recording
-the log messages in the legacy encoding, and if that kind of use
-is already done in the wild, we would end up having to not
-reencode the header field but reencode the body.
+[PATCH 2/5] git-rm: update to saner semantics
+[PATCH 3/5] t3600: update the test for updated git rm
 
-But I do not think we ever encouraged encoding names in UTF-8 or
-anything else (we did encourage use of UTF-8 in the commit log),
-so I think we are Ok.
- 
+This updates git-rm to saner semantics Linus suggested on the
+list earlier, and updates the tests.  When a path is removed, it
+is removed both from the working tree and from the index.  As a
+safety measure, the path is required to be cache-clean, and also
+must match the HEAD (unless it is before the initial commit on
+the branch).
+
+[PATCH 4/5] read_directory: show_both option.
+
+The function read_directory() is the workhorse to traverse
+working tree while taking '.gitignore' into account.  This
+updates the function to allow callers that are interested in
+both ignored and non-ignored paths to get both paths so that it
+can do its own filtering on the result.
+
+[PATCH 5/5] git-add: add ignored files when asked explicitly.
+
+One thing many people found confusing about git-add was that a
+file whose name matches an ignored pattern could not be added.
+This is an RFC fix for the problem.
