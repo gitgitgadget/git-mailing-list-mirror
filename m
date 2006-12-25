@@ -1,88 +1,56 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] commit encoding: store it in commit header rather than
- mucking with NUL
-Date: Mon, 25 Dec 2006 01:41:47 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612250134040.19693@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0612241505290.19693@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.63.0612241643440.19693@wbgn013.biozentrum.uni-wuerzburg.de>
- <7v3b74q1c9.fsf@assigned-by-dhcp.cox.net>
+From: Alexander Litvinov <litvinov2004@gmail.com>
+Subject: Re: [PATCH 1/2] libgit.a: add some UTF-8 handling functions
+Date: Mon, 25 Dec 2006 10:03:54 +0600
+Message-ID: <200612251003.55018.litvinov2004@gmail.com>
+References: <11655782712452-git-send-email-zeisberg@informatik.uni-freiburg.de> <7vpsabwq34.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0612222319230.19693@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 25 01:42:13 2006
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>, Nicolas Pitre <nico@cam.org>,
+	Uwe =?iso-8859-1?q?Kleine-K=F6nig?= 
+	<zeisberg@informatik.uni-freiburg.de>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 25 05:04:16 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1Gyduu-0001sf-3R
-	for gcvg-git@gmane.org; Mon, 25 Dec 2006 01:42:12 +0100
+	id 1Gyh4Q-0007Gi-Qc
+	for gcvg-git@gmane.org; Mon, 25 Dec 2006 05:04:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753194AbWLYAlu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Dec 2006 19:41:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753273AbWLYAlu
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Dec 2006 19:41:50 -0500
-Received: from mail.gmx.net ([213.165.64.20]:49679 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753194AbWLYAlt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Dec 2006 19:41:49 -0500
-Received: (qmail invoked by alias); 25 Dec 2006 00:41:47 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp016) with SMTP; 25 Dec 2006 01:41:47 +0100
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v3b74q1c9.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S1754239AbWLYEEG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Dec 2006 23:04:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754249AbWLYEEF
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Dec 2006 23:04:05 -0500
+Received: from ug-out-1314.google.com ([66.249.92.170]:31056 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754239AbWLYEEE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Dec 2006 23:04:04 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so3409208uga
+        for <git@vger.kernel.org>; Sun, 24 Dec 2006 20:04:03 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=soD+iX+fNdY2mBkK5No01ME33p8kVtRaOuoyVj2CaQsOzo7sUWIGzTs0mropHhXvIIkP1iLHTVPQ7f7lRuER7zjkxg2iWiVqW+A6tGlu17jnxmIQFLgrq7txuV2wzYRgsM7F2zsfG/pS4umG3mrrSrjdDrgNv2+HgVCUxP0shvI=
+Received: by 10.67.117.18 with SMTP id u18mr3978744ugm.1167019442950;
+        Sun, 24 Dec 2006 20:04:02 -0800 (PST)
+Received: from lan.ac-sw.lcl ( [81.1.223.2])
+        by mx.google.com with ESMTP id 13sm16356474ugb.2006.12.24.20.04.00;
+        Sun, 24 Dec 2006 20:04:02 -0800 (PST)
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+User-Agent: KMail/1.8
+In-Reply-To: <Pine.LNX.4.63.0612222319230.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35378>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35379>
 
-Hi,
+> > > To me, characters are the symbols occupying one "column" each. Bytes
+> > > are the 8-bit thingies that you usually use to encode the characters.
 
-On Sun, 24 Dec 2006, Junio C Hamano wrote:
+You can check man 3 wcwidth:
+wcwidth - determine columns needed for a wide character
 
-> Thanks for paying a very close attention to what is in 'pu'.
-
-You're welcome ;-)
-
->  - I did not want to break existing git implementations, but
->    hadn't audited the commit header parsers to see if they do
->    not get upset when they see unrecognized header fields in
->    commit objects.
-
-I did not really audit it, but am quite sure that only parse_commit() 
-really walks the buffer, and even this function just ignores what comes 
-after committer. But if I read the code correctly, then the mandatory 
-headers ("tree parent* author committer") have to come first, in that 
-order.
-
->  - I was not sure if the "assume the whole commit->buffer is in
->    the local encoding and recode it into UTF-8" is correct.
-
-For the purpose of showing it, there is no point in using two different 
-encodings. I am not aware of any terminal (and do not own such a terminal 
-anyway) which can display text with parts encoded differently from the 
-rest.
-
->  - Existing Porcelains such as gitk know i18n.commitencoding is
->    a hint to them by the core, and expect the core to give them
->    output in the local encoding.  With the change, the core
->    feeds UTF-8 to the caller, unless the Porcelain gets the log
->    with plumbing "cat-file".  This means they either have to
->    lose code to do their own recoding (which is probably a good
->    thing in the long run), or we would need to have a flag for
->    them to tell the core not to do the conversion.  But a new
->    flag to ask for older behaviour is always a wrong way of
->    transitioning across backward incompatibility.
-> 
->    I think the output conversion from the log should be more
->    explicitly asked for it, than just a mere configuration
->    variable that cannot be overriden by gitk and friends.
-
-Probably a new flag "--encoding" to log, which sets git_commit_encoding. 
-And the function you introduced should probably not blindly convert to 
-UTF-8, but to the current git_commit_encoding.
-
-Ciao,
-Dscho
+We possible could convert utf-8 encoded string into wchar_t[] and use that 
+function.
