@@ -1,74 +1,57 @@
-From: "Deepak Barua" <dbbarua@gmail.com>
-Subject: Adding spell checker to GIT
-Date: Tue, 26 Dec 2006 17:32:14 +0530
-Message-ID: <b5a19cd20612260402l36451df3g6759de238e05c67c@mail.gmail.com>
+From: Robert Fitzsimons <robfitz@273k.net>
+Subject: Re: What's in git.git (stable) and announcing GIT 1.5.0 preview
+Date: Tue, 26 Dec 2006 13:22:04 +0000
+Message-ID: <20061226132204.GB6558@localhost>
+References: <7v3b73gx43.fsf@assigned-by-dhcp.cox.net> <emr01i$hcb$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; 
-	boundary="----=_Part_76919_17715127.1167134534592"
-X-From: git-owner@vger.kernel.org Tue Dec 26 13:02:33 2006
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 26 14:22:14 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GzB0q-00055r-Nb
-	for gcvg-git@gmane.org; Tue, 26 Dec 2006 13:02:33 +0100
+	id 1GzCFu-00058O-HC
+	for gcvg-git@gmane.org; Tue, 26 Dec 2006 14:22:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932531AbWLZMCR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Dec 2006 07:02:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932541AbWLZMCR
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Dec 2006 07:02:17 -0500
-Received: from nf-out-0910.google.com ([64.233.182.189]:39330 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932531AbWLZMCQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Dec 2006 07:02:16 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so4809352nfa
-        for <git@vger.kernel.org>; Tue, 26 Dec 2006 04:02:15 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type;
-        b=VtGVPsTaP+IoIVKasdfrfnMJ62ot7fhoJwlWODe4A9qPekbMQ4LlizkDsjcf6SofsO61v2j4mbyvbJww3CqV10MuTwkrjr9XJuAkFg6WjhvI+Kbsv1fOTPJbQIdi1Kl9DwhS4D6vypxF+RkjF2emjaIfXL+GErlbeS4UTFohfsM=
-Received: by 10.48.48.18 with SMTP id v18mr15835499nfv.1167134535563;
-        Tue, 26 Dec 2006 04:02:15 -0800 (PST)
-Received: by 10.49.11.7 with HTTP; Tue, 26 Dec 2006 04:02:14 -0800 (PST)
-To: git@vger.kernel.org
+	id S932573AbWLZNV4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 26 Dec 2006 08:21:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932583AbWLZNV4
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Dec 2006 08:21:56 -0500
+Received: from igraine.blacknight.ie ([81.17.252.25]:38911 "EHLO
+	igraine.blacknight.ie" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932573AbWLZNVz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Dec 2006 08:21:55 -0500
+Received: from a-103-152.cust.iol.ie ([194.125.103.152] helo=localhost)
+	by igraine.blacknight.ie with esmtp (Exim 4.60)
+	(envelope-from <robfitz@273k.net>)
+	id 1GzCFR-0007cc-GS; Tue, 26 Dec 2006 13:21:41 +0000
+To: Jakub Narebski <jnareb@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <emr01i$hcb$1@sea.gmane.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-blacknight-igraine-MailScanner-Information: Please contact the ISP for more information
+X-blacknight-igraine-MailScanner: Found to be clean
+X-blacknight-igraine-MailScanner-SpamCheck: not spam,
+	SpamAssassin (not cached, score=-0.012, required 7,
+	autolearn=disabled, RCVD_IN_NERDS_IE -2.00, RCVD_IN_SORBS_DUL 1.99)
+X-MailScanner-From: robfitz@273k.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35417>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35418>
 
-------=_Part_76919_17715127.1167134534592
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
+> > =A0 =A0 =A0 gitweb: Allow search to be disabled from the config fil=
+e.
+>=20
+> Hmmmm... IIRC this did not removed the search form. Besides it is not=
+ like
+> the basic search is expensive...
 
-Hi All,
-        I just need some more help on how to check the file in
-concerned in the pre commit hook , i have attached a document which
-containes the basic perl code i am going to use.
+I just double checked.  The search feature is enabled by default, when
+the feature is disable the search form isn't shown.
 
-Regards
-Deepak
+I don't mind if this change is reverted.
 
--- 
-Code Code Code Away
-
-------=_Part_76919_17715127.1167134534592
-Content-Type: application/octet-stream; name="test"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="test"
-X-Attachment-Id: f_ew69rawx
-
-IyEvdXNyL2Jpbi9wZXJsIC13CiNTcGVsbCBjaGVja2luZyBzY3JpcHQgaW4gcGVybCBmb3IgR0lU
-IHNvdXJjZSB0cmFja2VyIHByb2dyYW0uCiNTaG91bGQgYmUgcGFydCBvZiBwcmUtY29tbWl0IGhv
-b2sKCiAgICB1c2UgVGV4dDo6QXNwZWxsOwogICAgbXkgJGZpbGVuYW1lOwogICAgbXkgJGNvbnRp
-bnVlID0gMDsgCiAgICBvcGVuKCRmaWxlbmFtZSwiLi9jaGVja2VyLnNoIikgb3IgZGllICJDb3Vs
-ZCBub3Qgb3BlbiBmaWxlIjsKICAgIG15ICRzcGVsbGVyID0gVGV4dDo6QXNwZWxsLT5uZXc7CiAg
-ICBkaWUgdW5sZXNzICRzcGVsbGVyOwogICAgd2hpbGUoPCRmaWxlbmFtZT4pIHsKCQoJaWYobS9c
-L1wqLyB8fCAkY29udGludWUgPT0gMSkgewoJICAgQHdvcmRzID0gc3BsaXQgLyAvLCRfOwogICAg
-ICAgICAgIGZvcmVhY2ggJHdvcmQgKEB3b3JkcykgewogICAgICAgICAgIGlmKCR3b3JkIGVxICIq
-LyIpIHsKICAgICAgICAgICAgICAgICRjb250aW51ZSA9IDA7CgkgICAJbGFzdDsKCSAgIH0KCSAg
-IGVsc2UgewoJICAgCXByaW50ICRzcGVsbGVyLT5jaGVjaygkd29yZCkKCQkgCT8gIiR3b3JkIGZv
-dW5kXG4iCiAgICAgICAgICAgICAgICAgCTogIiR3b3JkIG5vdCBmb3V1bmQgXG4iOwogICAgICAg
-ICAgIAl9CgkgICAkY29udGludWUgPSAxOwoJICAgfQoJCgl9CiAgICAgbmV4dDsJCiAgICB9CiAg
-ICBjbG9zZSAkZmlsZW5hbWU7CgoK
-------=_Part_76919_17715127.1167134534592--
+Robert
