@@ -1,85 +1,65 @@
-From: Hannu Koivisto <azure@iki.fi>
-Subject: Errors when updating an old git.git repository
-Date: Tue, 26 Dec 2006 16:49:28 +0200
-Organization: NOYB
-Message-ID: <87d566ww3r.fsf@trews52.bothi.fi>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 5/5] git-add: add ignored files when asked explicitly.
+Date: Tue, 26 Dec 2006 16:34:18 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0612261632360.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <7vbqlskz2u.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0612251443230.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vslf3khsc.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Tue Dec 26 15:50:05 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 26 16:34:30 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GzDco-0007UW-FT
-	for gcvg-git@gmane.org; Tue, 26 Dec 2006 15:49:54 +0100
+	id 1GzEJv-0004Ko-KY
+	for gcvg-git@gmane.org; Tue, 26 Dec 2006 16:34:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932642AbWLZOtv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Dec 2006 09:49:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932640AbWLZOtv
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Dec 2006 09:49:51 -0500
-Received: from main.gmane.org ([80.91.229.2]:42437 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932642AbWLZOtu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Dec 2006 09:49:50 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1GzDcZ-0005OQ-B5
-	for git@vger.kernel.org; Tue, 26 Dec 2006 15:49:39 +0100
-Received: from her-gw.ionific.com ([195.197.73.226])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 26 Dec 2006 15:49:39 +0100
-Received: from azure by her-gw.ionific.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 26 Dec 2006 15:49:39 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: her-gw.ionific.com
-User-Agent: Gnus/5.090014 (Oort Gnus v0.14) Emacs/22.0.50
- (i686-pc-linux-gnu)
-Cancel-Lock: sha1:oFT9ZTKiPPkub/g3/bUqvb1uSgU=
+	id S932663AbWLZPeW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Dec 2006 10:34:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932678AbWLZPeV
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Dec 2006 10:34:21 -0500
+Received: from mail.gmx.net ([213.165.64.20]:39134 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932663AbWLZPeV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Dec 2006 10:34:21 -0500
+Received: (qmail invoked by alias); 26 Dec 2006 15:34:19 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp044) with SMTP; 26 Dec 2006 16:34:19 +0100
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vslf3khsc.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35420>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35421>
 
-Greetings,
+Hi,
 
-I just did "git-clone git://git.kernel.org/pub/scm/git/git.git".
-git-pull in the resulting repository gives "Already up-to-date."
-and "git-pull --tags" does the same.  Just what I'd expect.
+On Mon, 25 Dec 2006, Junio C Hamano wrote:
 
-Before I did that, I had an old (several months) git.git repository
-laying on the hard drive and I updated it with "git pull".  It
-complained something tag related and I tried again with "git pull
---tags".  Now I'm in a situation where "git-pull --tags" gives "No
-changes." but plain "git-pull" gives me this:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > On Mon, 25 Dec 2006, Junio C Hamano wrote:
+> >
+> >>     $ git add foo.o
+> >>     $ git add '*.o'
+> >
+> > Most people do
+> >
+> > 	$ git add *.o
+> >
+> > instead, where bash expands the expression. Maybe this new behaviour 
+> > should be hidden between a "-f" option?
+> 
+> When would anybody do "git add *.o"?
 
--------------------------------------------------------------------
-remote: Generating pack...
-remote: Done counting 293 objects.
-remote: Result has 214 objects.
-remote: Deltifying 214 objects.
-remote: 14/214) done14) done
-Unpacking 214 objects
-remote: Total 214, written 214 (delta 156), reused 181 (delta 123)
- 100% (214/214) done
-error: no such remote ref refs/heads/jc/bind
-error: no such remote ref refs/heads/jc/bind-2
-error: no such remote ref refs/heads/gb/diffdelta
-* refs/heads/pu: not updating to non-fast forward branch 'pu' of git://git.kernel.org/pub/scm/git/git
-  old...new: 0c9951a...f959571
-Already up-to-date.
--------------------------------------------------------------------
+Not exactly "git add *.o", but when I see in git-status that there are 
+only a couple of files which are untracked, and I want them added, I 
+lazily do "git add *".
 
-If I run either git-pull or "git-pull --tags" again, I get the same
-results.
-
-Since updating a freshly cloned repository doesn't result to such
-an odd behaviour, I assume this old repository is broken somehow.
-If someone wants to inspect it, I can make it available via web.
-
-I'm using git 1.4.4.3 on Debian GNU/Linux.
-
--- 
-Hannu
+Ciao,
+Dscho
