@@ -1,86 +1,74 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: What's cooking in git.git (topics)
-Date: Tue, 26 Dec 2006 12:20:07 +0100
-Organization: At home
-Message-ID: <emr0bt$hcb$2@sea.gmane.org>
-References: <7vmz5bfidj.fsf@assigned-by-dhcp.cox.net>
+From: "Deepak Barua" <dbbarua@gmail.com>
+Subject: Adding spell checker to GIT
+Date: Tue, 26 Dec 2006 17:32:14 +0530
+Message-ID: <b5a19cd20612260402l36451df3g6759de238e05c67c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Tue Dec 26 12:20:27 2006
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_76919_17715127.1167134534592"
+X-From: git-owner@vger.kernel.org Tue Dec 26 13:02:33 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GzALy-0000ec-Ug
-	for gcvg-git@gmane.org; Tue, 26 Dec 2006 12:20:19 +0100
+	id 1GzB0q-00055r-Nb
+	for gcvg-git@gmane.org; Tue, 26 Dec 2006 13:02:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932345AbWLZLUP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Dec 2006 06:20:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932512AbWLZLUP
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Dec 2006 06:20:15 -0500
-Received: from main.gmane.org ([80.91.229.2]:46701 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932345AbWLZLUN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Dec 2006 06:20:13 -0500
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1GzALi-0008Gd-BB
-	for git@vger.kernel.org; Tue, 26 Dec 2006 12:20:02 +0100
-Received: from host-81-190-19-121.torun.mm.pl ([81.190.19.121])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 26 Dec 2006 12:20:02 +0100
-Received: from jnareb by host-81-190-19-121.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 26 Dec 2006 12:20:02 +0100
-X-Injected-Via-Gmane: http://gmane.org/
+	id S932531AbWLZMCR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Dec 2006 07:02:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932541AbWLZMCR
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Dec 2006 07:02:17 -0500
+Received: from nf-out-0910.google.com ([64.233.182.189]:39330 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932531AbWLZMCQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Dec 2006 07:02:16 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so4809352nfa
+        for <git@vger.kernel.org>; Tue, 26 Dec 2006 04:02:15 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type;
+        b=VtGVPsTaP+IoIVKasdfrfnMJ62ot7fhoJwlWODe4A9qPekbMQ4LlizkDsjcf6SofsO61v2j4mbyvbJww3CqV10MuTwkrjr9XJuAkFg6WjhvI+Kbsv1fOTPJbQIdi1Kl9DwhS4D6vypxF+RkjF2emjaIfXL+GErlbeS4UTFohfsM=
+Received: by 10.48.48.18 with SMTP id v18mr15835499nfv.1167134535563;
+        Tue, 26 Dec 2006 04:02:15 -0800 (PST)
+Received: by 10.49.11.7 with HTTP; Tue, 26 Dec 2006 04:02:14 -0800 (PST)
 To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-19-121.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35416>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35417>
 
-Junio C Hamano wrote:
+------=_Part_76919_17715127.1167134534592
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
-> Here are the topics that have been cooking.  Commits prefixed
-> with '-' are only in 'pu' while commits prefixed with '+' are
-> in 'next'.  The topics list the commits in reverse chronological
-> order.
-> 
-> 
-> * jc/fsck-reflog (Fri Dec 22 23:42:30 2006 -0800) 9 commits
->  + reflog expire: do not punt on tags that point at non commits.
->  + reflog expire: prune commits that are not incomplete
->  + Don't crash during repack of a reflog with pruned commits.
->  + git reflog expire
->  + Move in_merge_bases() to commit.c
->  + reflog: fix warning message.
->  + Teach git-repack to preserve objects referred to by reflog
->    entries.
->  + Protect commits recorded in reflog from pruning.
->  + add for_each_reflog_ent() iterator
-> 
-> I'd like to push this out before we go -rc1, since the reflogs
-> are now enabled by default, and otherwise would grow unbounded.
+Hi All,
+        I just need some more help on how to check the file in
+concerned in the pre commit hook , i have attached a document which
+containes the basic perl code i am going to use.
 
-I'd still like the preserving reflogged data during pruning and
-repacking to be optional (default to on). But failing that I'd
-like to have option to "reflog expire" to remove only specific
-(pattern match, prefix match?) entries, for example to remove
-all the "commit --amend" and StGIT work, but leaving rebases,
-resets, merges and other stuff.
-
-> * jn/web (Sat Dec 16 17:12:55 2006 +0100) 1 commit
->  - gitweb: Add some mod_perl specific support
-
-I'm about to send improved series of patches, few first ready to
-be applied, the rest for review.
+Regards
+Deepak
 
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Code Code Code Away
+
+------=_Part_76919_17715127.1167134534592
+Content-Type: application/octet-stream; name="test"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="test"
+X-Attachment-Id: f_ew69rawx
+
+IyEvdXNyL2Jpbi9wZXJsIC13CiNTcGVsbCBjaGVja2luZyBzY3JpcHQgaW4gcGVybCBmb3IgR0lU
+IHNvdXJjZSB0cmFja2VyIHByb2dyYW0uCiNTaG91bGQgYmUgcGFydCBvZiBwcmUtY29tbWl0IGhv
+b2sKCiAgICB1c2UgVGV4dDo6QXNwZWxsOwogICAgbXkgJGZpbGVuYW1lOwogICAgbXkgJGNvbnRp
+bnVlID0gMDsgCiAgICBvcGVuKCRmaWxlbmFtZSwiLi9jaGVja2VyLnNoIikgb3IgZGllICJDb3Vs
+ZCBub3Qgb3BlbiBmaWxlIjsKICAgIG15ICRzcGVsbGVyID0gVGV4dDo6QXNwZWxsLT5uZXc7CiAg
+ICBkaWUgdW5sZXNzICRzcGVsbGVyOwogICAgd2hpbGUoPCRmaWxlbmFtZT4pIHsKCQoJaWYobS9c
+L1wqLyB8fCAkY29udGludWUgPT0gMSkgewoJICAgQHdvcmRzID0gc3BsaXQgLyAvLCRfOwogICAg
+ICAgICAgIGZvcmVhY2ggJHdvcmQgKEB3b3JkcykgewogICAgICAgICAgIGlmKCR3b3JkIGVxICIq
+LyIpIHsKICAgICAgICAgICAgICAgICRjb250aW51ZSA9IDA7CgkgICAJbGFzdDsKCSAgIH0KCSAg
+IGVsc2UgewoJICAgCXByaW50ICRzcGVsbGVyLT5jaGVjaygkd29yZCkKCQkgCT8gIiR3b3JkIGZv
+dW5kXG4iCiAgICAgICAgICAgICAgICAgCTogIiR3b3JkIG5vdCBmb3V1bmQgXG4iOwogICAgICAg
+ICAgIAl9CgkgICAkY29udGludWUgPSAxOwoJICAgfQoJCgl9CiAgICAgbmV4dDsJCiAgICB9CiAg
+ICBjbG9zZSAkZmlsZW5hbWU7CgoK
+------=_Part_76919_17715127.1167134534592--
