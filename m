@@ -1,57 +1,67 @@
-From: Robert Fitzsimons <robfitz@273k.net>
-Subject: Re: What's in git.git (stable) and announcing GIT 1.5.0 preview
-Date: Tue, 26 Dec 2006 13:22:04 +0000
-Message-ID: <20061226132204.GB6558@localhost>
-References: <7v3b73gx43.fsf@assigned-by-dhcp.cox.net> <emr01i$hcb$1@sea.gmane.org>
+From: Hannu Koivisto <azure@iki.fi>
+Subject: git-cvsimport and git-checkout problem
+Date: Tue, 26 Dec 2006 16:13:55 +0200
+Organization: NOYB
+Message-ID: <87fyb2wxr0.fsf@trews52.bothi.fi>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 26 14:22:14 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Tue Dec 26 15:30:17 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GzCFu-00058O-HC
-	for gcvg-git@gmane.org; Tue, 26 Dec 2006 14:22:10 +0100
+	id 1GzDJn-00058F-Da
+	for gcvg-git@gmane.org; Tue, 26 Dec 2006 15:30:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932573AbWLZNV4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 26 Dec 2006 08:21:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932583AbWLZNV4
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Dec 2006 08:21:56 -0500
-Received: from igraine.blacknight.ie ([81.17.252.25]:38911 "EHLO
-	igraine.blacknight.ie" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932573AbWLZNVz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Dec 2006 08:21:55 -0500
-Received: from a-103-152.cust.iol.ie ([194.125.103.152] helo=localhost)
-	by igraine.blacknight.ie with esmtp (Exim 4.60)
-	(envelope-from <robfitz@273k.net>)
-	id 1GzCFR-0007cc-GS; Tue, 26 Dec 2006 13:21:41 +0000
-To: Jakub Narebski <jnareb@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <emr01i$hcb$1@sea.gmane.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-blacknight-igraine-MailScanner-Information: Please contact the ISP for more information
-X-blacknight-igraine-MailScanner: Found to be clean
-X-blacknight-igraine-MailScanner-SpamCheck: not spam,
-	SpamAssassin (not cached, score=-0.012, required 7,
-	autolearn=disabled, RCVD_IN_NERDS_IE -2.00, RCVD_IN_SORBS_DUL 1.99)
-X-MailScanner-From: robfitz@273k.net
+	id S932626AbWLZOaJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Dec 2006 09:30:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932640AbWLZOaJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Dec 2006 09:30:09 -0500
+Received: from main.gmane.org ([80.91.229.2]:55043 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932626AbWLZOaH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Dec 2006 09:30:07 -0500
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1GzDJZ-0001qr-UK
+	for git@vger.kernel.org; Tue, 26 Dec 2006 15:30:02 +0100
+Received: from her-gw.ionific.com ([195.197.73.226])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 26 Dec 2006 15:30:01 +0100
+Received: from azure by her-gw.ionific.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 26 Dec 2006 15:30:01 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: her-gw.ionific.com
+User-Agent: Gnus/5.090014 (Oort Gnus v0.14) Emacs/22.0.50
+ (i686-pc-linux-gnu)
+Cancel-Lock: sha1:4XbJZl3HaHVruufZCIyR+zVpudE=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35418>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35419>
 
-> > =A0 =A0 =A0 gitweb: Allow search to be disabled from the config fil=
-e.
->=20
-> Hmmmm... IIRC this did not removed the search form. Besides it is not=
- like
-> the basic search is expensive...
+Greetings,
 
-I just double checked.  The search feature is enabled by default, when
-the feature is disable the search form isn't shown.
+I'm learning git and decided to try importing a small CVS module
+into a git repository (before attempting a really big one).
+Existence of -i in git-cvsimport would seem to imply that it
+checkouts by default but it didn't seem to do that.  That is, I did
+"git-cvsimport -d ~/.cvs_root -C module module" and I got a
+"module" directory that contains ".git" directory but nothing else.
+And saying "git checkout master" in "module" doesn't seem to do
+anything.
 
-I don't mind if this change is reverted.
+Finally I realized to try "git-checkout -f master" and that
+worked.  By reading git-checkout(1) I just cannot see why -f was
+needed in this case or even what it generally does ("re-read of
+everything" -- um, what everything and why would you explicitly
+want to re-read that everything?).
 
-Robert
+I'm using git 1.4.4.3 and cvsps 2.1 (from a git repository
+recommended by some web page) on Debian GNU/Linux.
+
+-- 
+Hannu
