@@ -1,151 +1,108 @@
-From: "David Tweed" <david.tweed@gmail.com>
-Subject: Re: git-add & "file vanishing" -> need git-add again [reformatted]
-Date: Wed, 27 Dec 2006 21:58:51 +0000
-Message-ID: <e1dab3980612271358w3dec594cy8453910ca9064806@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: gcc -L/path/lib -R/path/lib
+Date: Wed, 27 Dec 2006 14:13:39 -0800
+Message-ID: <7v1wml56ng.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Wed Dec 27 22:58:58 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Wed Dec 27 23:14:22 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GzgnY-0003aZ-ED
-	for gcvg-git@gmane.org; Wed, 27 Dec 2006 22:58:56 +0100
+	id 1Gzh2M-0005aF-Rp
+	for gcvg-git@gmane.org; Wed, 27 Dec 2006 23:14:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754800AbWL0V6x (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Dec 2006 16:58:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754804AbWL0V6x
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Dec 2006 16:58:53 -0500
-Received: from nz-out-0506.google.com ([64.233.162.239]:32182 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754800AbWL0V6x (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Dec 2006 16:58:53 -0500
-Received: by nz-out-0506.google.com with SMTP id s1so1940086nze
-        for <git@vger.kernel.org>; Wed, 27 Dec 2006 13:58:52 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=Sc4T2SKd0nTryxykkbxgYFmkuTZ4Ex5PDB2jfoekkvvxolKUlFndL0AJ4cu7Jwsn7UVgyd0PN+keQp6rxbeXLLBzi+totKHSJszYeiY2DazLM4Q2eJZ3p4onSvjkqHTVoN6cobZMAe1xVnfPP82s13MSIcwTq+k8SXMcT4mJGM4=
-Received: by 10.65.177.6 with SMTP id e6mr20081568qbp.1167256732283;
-        Wed, 27 Dec 2006 13:58:52 -0800 (PST)
-Received: by 10.65.160.2 with HTTP; Wed, 27 Dec 2006 13:58:51 -0800 (PST)
+	id S932689AbWL0WNm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Dec 2006 17:13:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932642AbWL0WNm
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Dec 2006 17:13:42 -0500
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:56326 "EHLO
+	fed1rmmtao05.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932689AbWL0WNk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Dec 2006 17:13:40 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20061227221340.BMYV15640.fed1rmmtao05.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 27 Dec 2006 17:13:40 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id 3yDt1W00f1kojtg0000000; Wed, 27 Dec 2006 17:13:53 -0500
 To: git@vger.kernel.org
-Content-Disposition: inline
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35484>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35485>
 
-This is a resend of previous mail reformatted.
-(Unfortunately even university staff acounts
-these days seem to only give you unconfigurable
-web-browser interfaces; hopefully gmail won't butcher
-the 72-character wrapped layout I'm seeing on my
-screen right now too much.)
-Many thanks for your forbearance and any insight.
+While trying git with cURL 7.16.0, I found that in my
+environment (Debian x86-64, mostly testing, with gcc 4.1.2
+prerelease), gcc does not seem to like -R/path/lib to be used to
+specify the runtime library paths.
 
-Original message<<<<<<<<<<<<<<<<<<<<<<<<
+I am a bit surprised if nobody had this issue before, so I might
+be reinventing the wheel and in a wrong/suboptimal way, but this
+patch seems to work around the issue for me.
 
-Hi, I'm working on using git for chronological backups (think
-selective P9 venti), which I've almost got working. (I know I'm using
-git for something it wasn't designed for, and is arguably perverse.)
-I've been trying to figure out why files which "ought" to be tracked
-weren't in the database in certain commits and I think I've figured
-out why.  Can someone confirm the following: with the set of
-operations
-
-git-init-db ....
-git-add path/to/fileX
-git-commit -a -m blah <1>
-..... changes to things including fileX and commits
-[fileX vanishes from the tree being tracked, but nothing
-mentioned to git] <2>
-..... changes to things and commits
-[file X reappears in the working tree being tracked]
-<3>
-git-commit -a -m blah <4>
-
-The git trees from <1> to <2> all contain fileX, even if its contents
-haven't changed. Between <2> and <4> the git tree doesn't contain
-fileX (perfectly properly). From <4> onwards fileX still doesn't
-appear in the git trees recorded from the working directory even
-though fileX is there again. If I want fileX tracked I have to
-explicitly git-add it again at <3>. (Ie, git-commit -a when it detects
-a file have vanished from the working tree removes it from the files
-git will look at in future for changes to commit.)
-
-Is it also correct that this behaviour ("forget" about a tracked file
-when it disappear from the working tree in a commit) would be
-difficult to change without major surgery to git?  Would there be any
-problems with git-add'ing every file you want the tree to track before
-every commit?
-
-(I'm currently working on code to keep track of things that have ever
-been tracked, and whether they're currently in the tree, in my scripts
-outside git but obviously partially duplicating stuff git has in its
-datastructures has the potential for subtle bugs when they diverge.)
-
-Long story:
----------------
-
-I'm trying to move a snapshotting-style system from my personal
-hack-job to git. As well as manual snapshots there's a cron job that
-runs every hour to snapshot stuff. Consequently there will be
-"automatic commits" when you wouldn't have made one if you were doing
-normal source control, eg, after you've wrongly deleted a file and
-before you've noticed & restored it from the database an automatic
-commit can come in (and even more kinky situations you don't want to
-know about) and so sees the file "gone".
-
-Sidenote: I'm moving the database from the old format to the new one
-by repeatedly unpacking the old database for snapshot X, git-add'ing
-any file names which have _never_ been in any snapshot before,
-git-commit -a, git-tag, then remove all the files unpacked by the old
-database and move onto snapshot X+1. This takes less than a second per
-snapshot. I understand this shouldn't be a problem but just to let
-people know the timestamps on the files aren't what would be expected.
-
-Follow up clarification msg <<<<<<<<<<<<<<<<<<<<<<<<
-
-|Not sure how large your snapshots are -- a
-|second sounds like a long time for git operations. While it is a bit
-|more complex, you _can_ operate directly on the index, and the
-|"snapshot" never needs to hit the disk as such during your migration.
-
-By trying to be brief I was a rather cryptic. What I was trying to say
-was:
-
-Running the git commands earlier in the message in a script, I see
-that file are not present from the git tree generated by a commit at a
-time when I know the file I'd previously git-added reappeared in the
-working directory. I'm hypothesising that this is because when the
-file disappears the machinery in git loses the `track this file'
-information. However, I haven't (and would prefer not to) dig into the
-git code to check that's the correct explanation. If this is why the
-files aren't being tracked I can try to script around the issue by
-git-adding all the files I want tracked by the snapshot before the
-git-commit -a. To help anyone thinking about if the explanation is
-right, the working directory is repeatedly being wiped and refilled
-from my old backup system with a second, so often all files have both
-creation and modification times set to the current second. This is a
-really weird thing to do and might in some way be responsible for the
-untracked file (cf racy-git)."
-
-Most of the maybe half-second overhead is coming from my script
-unpacking the files with gzip from my old database; git seems more
-than fast enough.
-
-|Have a look at how the cvsimport script works for an example.
-
-As its my personal db which I'll only convert once if I can just make
-replaying work I don't need anything more complicated; I've only got
-2000-odd snapshots.
+Comments?
 
 
--- 
-cheers, dave tweed__________________________
-david.tweed@gmail.com
-Rm 124, School of Systems Engineering, University of Reading.
-Details are all that matters; God dwells there, and you never get to
-see Him if you don't struggle to get them right. -- Stephen Jay Gould
+diff --git a/Makefile b/Makefile
+index 52d4a3a..7b24323 100644
+--- a/Makefile
++++ b/Makefile
+@@ -79,6 +79,10 @@ all:
+ #
+ # Define NO_ICONV if your libc does not properly support iconv.
+ #
++# Define NO_R_TO_GCC if your gcc does not like "-R/path/lib" that
++# tells runtime paths for dynamic libraries; "-Wl,-rpath=/path/lib"
++# is used instead.
++#
+ # Define USE_NSEC below if you want git to care about sub-second file mtimes
+ # and ctimes. Note that you need recent glibc (at least 2.2.4) for this, and
+ # it will BREAK YOUR LOCAL DIFFS! show-diff and anything using it will likely
+@@ -422,11 +426,19 @@ ifeq ($(uname_S),Darwin)
+ 	endif
+ endif
+ 
++ifdef NO_R_TO_GCC_LINKER
++	# Some gcc does not accept and pass -R to the linker to specify
++	# the runtime dynamic library path.
++	CC_LD_DYNPATH = -Wl,-rpath=
++else
++	CC_LD_DYNPATH = -R
++endif
++
+ ifndef NO_CURL
+ 	ifdef CURLDIR
+-		# This is still problematic -- gcc does not always want -R.
++		# Try "-Wl,-rpath=$(CURLDIR)/lib" in such a case.
+ 		BASIC_CFLAGS += -I$(CURLDIR)/include
+-		CURL_LIBCURL = -L$(CURLDIR)/lib -R$(CURLDIR)/lib -lcurl
++		CURL_LIBCURL = -L$(CURLDIR)/lib $(CC_LD_DYNPATH)$(CURLDIR)/lib -lcurl
+ 	else
+ 		CURL_LIBCURL = -lcurl
+ 	endif
+@@ -445,9 +457,8 @@ endif
+ ifndef NO_OPENSSL
+ 	OPENSSL_LIBSSL = -lssl
+ 	ifdef OPENSSLDIR
+-		# Again this may be problematic -- gcc does not always want -R.
+ 		BASIC_CFLAGS += -I$(OPENSSLDIR)/include
+-		OPENSSL_LINK = -L$(OPENSSLDIR)/lib -R$(OPENSSLDIR)/lib
++		OPENSSL_LINK = -L$(OPENSSLDIR)/lib $(CC_LD_DYNPATH)$(OPENSSLDIR)/lib
+ 	else
+ 		OPENSSL_LINK =
+ 	endif
+@@ -463,9 +474,8 @@ else
+ endif
+ ifdef NEEDS_LIBICONV
+ 	ifdef ICONVDIR
+-		# Again this may be problematic -- gcc does not always want -R.
+ 		BASIC_CFLAGS += -I$(ICONVDIR)/include
+-		ICONV_LINK = -L$(ICONVDIR)/lib -R$(ICONVDIR)/lib
++		ICONV_LINK = -L$(ICONVDIR)/lib $(CC_LD_DYNPATH)$(ICONVDIR)/lib
+ 	else
+ 		ICONV_LINK =
+ 	endif
