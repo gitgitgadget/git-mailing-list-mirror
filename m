@@ -1,185 +1,60 @@
-From: Alexandre Julliard <julliard@winehq.org>
-Subject: Re: Segfault in xdl_merge is back
-Date: Wed, 27 Dec 2006 13:53:57 +0100
-Message-ID: <87fyb11ouy.fsf@wine.dyndns.org>
-References: <20061227041644.GA22449@spearce.org>
-	<Pine.LNX.4.63.0612271214120.19693@wbgn013.biozentrum.uni-wuerzburg.de>
-Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="=-=-="
-Cc: Shawn Pearce <spearce@spearce.org>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 27 13:55:19 2006
+From: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
+Subject: Re: [RFH] An early draft of v1.5.0 release notes
+Date: Wed, 27 Dec 2006 10:00:08 -0300
+Message-ID: <200612271300.kBRD082j007703@laptop13.inf.utfsm.cl>
+References: <jnareb@gmail.com>
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 27 14:00:39 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GzYJS-0005i5-7Y
-	for gcvg-git@gmane.org; Wed, 27 Dec 2006 13:55:18 +0100
+	id 1GzYOY-0006Oz-Fl
+	for gcvg-git@gmane.org; Wed, 27 Dec 2006 14:00:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932809AbWL0MzI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Dec 2006 07:55:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932804AbWL0MzI
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Dec 2006 07:55:08 -0500
-Received: from mail.codeweavers.com ([216.251.189.131]:52947 "EHLO
-	mail.codeweavers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932809AbWL0MzG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Dec 2006 07:55:06 -0500
-Received: from adsl-89-217-159-166.adslplus.ch ([89.217.159.166] helo=wine.dyndns.org)
-	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1GzYIB-0005pQ-Q0; Wed, 27 Dec 2006 06:54:00 -0600
-Received: by wine.dyndns.org (Postfix, from userid 1000)
-	id 684F24F66D; Wed, 27 Dec 2006 13:53:57 +0100 (CET)
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0612271214120.19693@wbgn013.biozentrum.uni-wuerzburg.de> (Johannes Schindelin's message of "Wed\, 27 Dec 2006 12\:22\:01 +0100 \(CET\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.92 (gnu/linux)
+	id S932794AbWL0NAY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Dec 2006 08:00:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932804AbWL0NAY
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Dec 2006 08:00:24 -0500
+Received: from inti.inf.utfsm.cl ([200.1.21.155]:42426 "EHLO inti.inf.utfsm.cl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932794AbWL0NAX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Dec 2006 08:00:23 -0500
+Received: from laptop13.inf.utfsm.cl (laptop13.inf.utfsm.cl [200.1.19.201])
+	by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id kBRD08q5010378
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 27 Dec 2006 10:00:08 -0300
+Received: from laptop13.inf.utfsm.cl (laptop13.inf.utfsm.cl [127.0.0.1])
+	by laptop13.inf.utfsm.cl (8.13.8/8.13.8) with ESMTP id kBRD082j007703;
+	Wed, 27 Dec 2006 10:00:08 -0300
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: Message from Jakub Narebski <jnareb@gmail.com> 
+   of "Wed, 27 Dec 2006 13:12:15 BST." <200612271312.15877.jnareb@gmail.com> 
+X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.5  (beta27)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (inti.inf.utfsm.cl [200.1.19.1]); Wed, 27 Dec 2006 10:00:08 -0300 (CLST)
+X-Virus-Scanned: ClamAV version 0.88.5, clamav-milter version 0.88.5 on inti.inf.utfsm.cl
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35467>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35468>
 
---=-=-=
+Jakub Narebski <jnareb@gmail.com> wrote:
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+[...]
 
-> As you said in another mail, Junio suggested using git-merge-file on the 
-> blobs themselves. This is a little tricky, since git-merge-file does not 
-> read blobs; only files. I'd do this:
->
-> 	- in merge-recursive.c just before line 658 I'd add an
-> 	  fprintf(stderr, "xdl_merge: %s %s %s\n", sha1_to_hex(a->sha1),
-> 		sha1_to_hex(o->sha1), sha1_to_hex(b->sha1));
-> 	- run the merge until it segfaults
-> 	- get the blobs by using the last three SHA1's in the output by
-> 	  $ git-show <sha1>  > a   # or "o" or "b"
-> 	- $ git merge-file -p a o b >/dev/null
->
-> This command line ensures that "a" is not edited, and you can repeat the 
-> merge as often as needed.
+> Perhaps that is the idea, but that idea is not described in above
+> new feature announcement. "... to reencode the message to UTF-8 
+> when displaying, if needed." would cover it, but perhaps better
+> would be to cover this in more detail: "reencode message to UTF-8
+> if i18n.commitencoding is not set to something other than UTF-8",
+> or "reencode ... to i18n.commitencoding ... if needed".
 
-I'm seeing the problem here on Linux, I have attached a tarball with
-a set of files from Wine that trigger the bug.
-
-The gdb backtrace looks like this:
-
-Core was generated by `git-merge-file -p a o b'.
-Program terminated with signal 11, Segmentation fault.
-#0  0x080b60be in xdl_refine_conflicts (xe1=0xbfcaf22c, xe2=0xbfcaf1a4, m=0x8106668, xpp=0xbfcaf348) at xdiff/xmerge.c:197
-197                     t1.ptr = (char *)xe1->xdf2.recs[m->i1]->ptr;
-(gdb) bt
-#0  0x080b60be in xdl_refine_conflicts (xe1=0xbfcaf22c, xe2=0xbfcaf1a4, m=0x8106668, xpp=0xbfcaf348) at xdiff/xmerge.c:197
-#1  0x080b6843 in xdl_do_merge (xe1=0xbfcaf22c, xscr1=0x0, name1=0xbfcafbcf "a", xe2=0xbfcaf1a4, xscr2=0x0, name2=0xbfcafbd3 "b", level=2, xpp=0xbfcaf348, result=0xbfcaf34c) at xdiff/xmerge.c:351
-#2  0x080b6b8c in xdl_merge (orig=0xbfcaf35c, mf1=0xbfcaf354, name1=0xbfcafbcf "a", mf2=0xbfcaf364, name2=0xbfcafbd3 "b", xpp=0xbfcaf348, level=2, result=0xbfcaf34c) at xdiff/xmerge.c:408
-#3  0x08067887 in cmd_merge_file (argc=4, argv=0xbfcaf4b8, envp=0x0) at builtin-merge-file.c:43
-#4  0x0804b0e5 in handle_internal_command (argc=5, argv=0xbfcaf4b4, envp=0xbfcaf4cc) at git.c:294
-#5  0x0804b1e7 in main (argc=5, argv=0xbfcaf4b4, envp=0xbfcaf4cc) at git.c:331
-(gdb) p *xe1
-$1 = {xdf1 = {rcha = {head = 0x8105ca8, tail = 0x8107558, isize = 16, nsize = 1056, ancur = 0x8107558, sncur = 0x0, scurr = 0}, nrec = 259, hbits = 9, rhash = 0x81054a0, dstart = 36, dend = 257, 
-    recs = 0x8105080, rchg = 0x80ff009 "", rindex = 0x8107988, nreff = 18, ha = 0x8107da0}, xdf2 = {rcha = {head = 0x8108370, tail = 0x81085b0, isize = 16, nsize = 176, ancur = 0x81085b0, sncur = 0x0, 
-      scurr = 0}, nrec = 41, hbits = 6, rhash = 0x8108268, dstart = 36, dend = 39, recs = 0x81081b8, rchg = 0x80ff119 "", rindex = 0x8108670, nreff = 3, ha = 0x8108720}}
-(gdb) p *xe2
-$2 = {xdf1 = {rcha = {head = 0x81060d8, tail = 0x810aad0, isize = 16, nsize = 1056, ancur = 0x810aad0, sncur = 0x0, scurr = 0}, nrec = 259, hbits = 9, rhash = 0x8104878, dstart = 44, dend = 43, 
-    recs = 0x8106b18, rchg = 0x8106509 "", rindex = 0x810b998, nreff = 0, ha = 0x810bdb0}, xdf2 = {rcha = {head = 0x810ce20, tail = 0x810db40, isize = 16, nsize = 1104, ancur = 0x810db40, sncur = 0x0, 
-      scurr = 0}, nrec = 270, hbits = 9, rhash = 0x810c618, dstart = 44, dend = 54, recs = 0x810c1c8, rchg = 0x8106f39 "", rindex = 0x810dfa0, nreff = 8, ha = 0x810e3e0}}
-(gdb) p *m
-$3 = {next = 0x0, mode = 0, i1 = 41, i2 = 41, chg1 = 0, chg2 = 229}
-
-
-And here's the Valgrind output:
-
-==32758== Memcheck, a memory error detector.
-==32758== Copyright (C) 2002-2006, and GNU GPL'd, by Julian Seward et al.
-==32758== Using LibVEX rev 1658, a library for dynamic binary translation.
-==32758== Copyright (C) 2004-2006, and GNU GPL'd, by OpenWorks LLP.
-==32758== Using valgrind-3.2.1-Debian, a dynamic binary instrumentation framework.
-==32758== Copyright (C) 2000-2006, and GNU GPL'd, by Julian Seward et al.
-==32758== For more details, rerun with: -v
-==32758== 
-==32758== Use of uninitialised value of size 4
-==32758==    at 0x80B60BE: xdl_refine_conflicts (xmerge.c:197)
-==32758==    by 0x80B6842: xdl_do_merge (xmerge.c:351)
-==32758==    by 0x80B6B8B: xdl_merge (xmerge.c:408)
-==32758==    by 0x8067886: cmd_merge_file (builtin-merge-file.c:43)
-==32758==    by 0x804B0E4: handle_internal_command (git.c:294)
-==32758==    by 0x804B1E6: main (git.c:331)
-==32758== 
-==32758== Invalid read of size 4
-==32758==    at 0x80B60BE: xdl_refine_conflicts (xmerge.c:197)
-==32758==    by 0x80B6842: xdl_do_merge (xmerge.c:351)
-==32758==    by 0x80B6B8B: xdl_merge (xmerge.c:408)
-==32758==    by 0x8067886: cmd_merge_file (builtin-merge-file.c:43)
-==32758==    by 0x804B0E4: handle_internal_command (git.c:294)
-==32758==    by 0x804B1E6: main (git.c:331)
-==32758==  Address 0x4 is not stack'd, malloc'd or (recently) free'd
-==32758== 
-==32758== Process terminating with default action of signal 11 (SIGSEGV): dumping core
-==32758==  Access not within mapped region at address 0x4
-==32758==    at 0x80B60BE: xdl_refine_conflicts (xmerge.c:197)
-==32758==    by 0x80B6842: xdl_do_merge (xmerge.c:351)
-==32758==    by 0x80B6B8B: xdl_merge (xmerge.c:408)
-==32758==    by 0x8067886: cmd_merge_file (builtin-merge-file.c:43)
-==32758==    by 0x804B0E4: handle_internal_command (git.c:294)
-==32758==    by 0x804B1E6: main (git.c:331)
-
-Hope this helps,
-
+And what happens to the people who can't/won't display UTF-8? This is a
+both a project wide configuration (how does stuff get saved) + a user/local
+configuration (how to display stuff).
 -- 
-Alexandre Julliard
-julliard@winehq.org
-
-
---=-=-=
-Content-Type: application/octet-stream
-Content-Disposition: attachment; filename=merge-file-segfault.tar.gz
-Content-Transfer-Encoding: base64
-
-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
---=-=-=--
+Dr. Horst H. von Brand                   User #22616 counter.li.org
+Departamento de Informatica                    Fono: +56 32 2654431
+Universidad Tecnica Federico Santa Maria             +56 32 2654239
+Casilla 110-V, Valparaiso, Chile               Fax:  +56 32 2797513
