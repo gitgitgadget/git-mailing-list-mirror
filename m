@@ -1,60 +1,50 @@
-From: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
-Subject: Re: [RFH] An early draft of v1.5.0 release notes
-Date: Wed, 27 Dec 2006 10:00:08 -0300
-Message-ID: <200612271300.kBRD082j007703@laptop13.inf.utfsm.cl>
-References: <jnareb@gmail.com>
+From: Martin Waitz <tali@admingilde.org>
+Subject: Re: [PATCH] Create 'git gc' to perform common maintenance operations.
+Date: Wed, 27 Dec 2006 14:11:13 +0100
+Message-ID: <20061227131113.GB6115@admingilde.org>
+References: <20061227071759.GA23057@spearce.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 27 14:00:39 2006
+X-From: git-owner@vger.kernel.org Wed Dec 27 14:11:27 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GzYOY-0006Oz-Fl
-	for gcvg-git@gmane.org; Wed, 27 Dec 2006 14:00:34 +0100
+	id 1GzYYx-0007WO-2o
+	for gcvg-git@gmane.org; Wed, 27 Dec 2006 14:11:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932794AbWL0NAY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Dec 2006 08:00:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932804AbWL0NAY
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Dec 2006 08:00:24 -0500
-Received: from inti.inf.utfsm.cl ([200.1.21.155]:42426 "EHLO inti.inf.utfsm.cl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932794AbWL0NAX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Dec 2006 08:00:23 -0500
-Received: from laptop13.inf.utfsm.cl (laptop13.inf.utfsm.cl [200.1.19.201])
-	by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id kBRD08q5010378
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 27 Dec 2006 10:00:08 -0300
-Received: from laptop13.inf.utfsm.cl (laptop13.inf.utfsm.cl [127.0.0.1])
-	by laptop13.inf.utfsm.cl (8.13.8/8.13.8) with ESMTP id kBRD082j007703;
-	Wed, 27 Dec 2006 10:00:08 -0300
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: Message from Jakub Narebski <jnareb@gmail.com> 
-   of "Wed, 27 Dec 2006 13:12:15 BST." <200612271312.15877.jnareb@gmail.com> 
-X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.5  (beta27)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (inti.inf.utfsm.cl [200.1.19.1]); Wed, 27 Dec 2006 10:00:08 -0300 (CLST)
-X-Virus-Scanned: ClamAV version 0.88.5, clamav-milter version 0.88.5 on inti.inf.utfsm.cl
-X-Virus-Status: Clean
+	id S932805AbWL0NLQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Dec 2006 08:11:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932813AbWL0NLQ
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Dec 2006 08:11:16 -0500
+Received: from mail.admingilde.org ([213.95.32.147]:51189 "EHLO
+	mail.admingilde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932805AbWL0NLP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Dec 2006 08:11:15 -0500
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
+	id 1GzYYr-0005qI-O4; Wed, 27 Dec 2006 14:11:13 +0100
+To: "Shawn O. Pearce" <spearce@spearce.org>
+Content-Disposition: inline
+In-Reply-To: <20061227071759.GA23057@spearce.org>
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35468>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35469>
 
-Jakub Narebski <jnareb@gmail.com> wrote:
+hoi :)
 
-[...]
+On Wed, Dec 27, 2006 at 02:17:59AM -0500, Shawn O. Pearce wrote:
+> Junio asked for a 'git gc' utility which users can execute on a
+> regular basis to perform basic repository actions such as:
+> 
+>  * pack-refs --prune
+>  * reflog expire
+>  * repack -a -d
 
-> Perhaps that is the idea, but that idea is not described in above
-> new feature announcement. "... to reencode the message to UTF-8 
-> when displaying, if needed." would cover it, but perhaps better
-> would be to cover this in more detail: "reencode message to UTF-8
-> if i18n.commitencoding is not set to something other than UTF-8",
-> or "reencode ... to i18n.commitencoding ... if needed".
+what about doing "git-repack -a -d -l" by default?
 
-And what happens to the people who can't/won't display UTF-8? This is a
-both a project wide configuration (how does stuff get saved) + a user/local
-configuration (how to display stuff).
 -- 
-Dr. Horst H. von Brand                   User #22616 counter.li.org
-Departamento de Informatica                    Fono: +56 32 2654431
-Universidad Tecnica Federico Santa Maria             +56 32 2654239
-Casilla 110-V, Valparaiso, Chile               Fax:  +56 32 2797513
+Martin Waitz
