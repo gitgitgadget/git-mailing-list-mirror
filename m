@@ -1,57 +1,67 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [RFH] An early draft of v1.5.0 release notes
-Date: Wed, 27 Dec 2006 02:50:49 -0800
-Message-ID: <7vvejx7gty.fsf@assigned-by-dhcp.cox.net>
-References: <7vvejx948y.fsf@assigned-by-dhcp.cox.net>
-	<emtgps$f1q$1@sea.gmane.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Segfault in xdl_merge is back
+Date: Wed, 27 Dec 2006 12:22:01 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0612271214120.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20061227041644.GA22449@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: jnareb@gmail.com
-X-From: git-owner@vger.kernel.org Wed Dec 27 11:51:09 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 27 12:22:13 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GzWNC-0000mf-JW
-	for gcvg-git@gmane.org; Wed, 27 Dec 2006 11:51:02 +0100
+	id 1GzWrJ-0004E4-PA
+	for gcvg-git@gmane.org; Wed, 27 Dec 2006 12:22:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753731AbWL0Kuw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Dec 2006 05:50:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754453AbWL0Kuv
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Dec 2006 05:50:51 -0500
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:63815 "EHLO
-	fed1rmmtao10.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754094AbWL0Kuv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Dec 2006 05:50:51 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao10.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20061227105050.TIEQ20715.fed1rmmtao10.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 27 Dec 2006 05:50:50 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id 3mr31W00h1kojtg0000000; Wed, 27 Dec 2006 05:51:04 -0500
-To: git@vger.kernel.org
-In-Reply-To: <emtgps$f1q$1@sea.gmane.org> (Jakub Narebski's message of "Wed,
-	27 Dec 2006 11:12:56 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932235AbWL0LWF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Dec 2006 06:22:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932669AbWL0LWF
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Dec 2006 06:22:05 -0500
+Received: from mail.gmx.net ([213.165.64.20]:53243 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932235AbWL0LWE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Dec 2006 06:22:04 -0500
+Received: (qmail invoked by alias); 27 Dec 2006 11:22:02 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp040) with SMTP; 27 Dec 2006 12:22:02 +0100
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Shawn Pearce <spearce@spearce.org>
+In-Reply-To: <20061227041644.GA22449@spearce.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35461>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35462>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Hi,
 
-> Just a few comments:
->
->>  - git-add without any argument does not add everything
->>    anymore.  Say "git add ." if you want to.
->
-> Perhaps information that git-add can be used to add ignored files
-> with -f option should be added? Or is it not important enough?
+On Tue, 26 Dec 2006, Shawn Pearce wrote:
 
-Thanks.  Will change the above bullet to this:
+> So I've been able to reproduce the segfault that was earlier reported in 
+> xdl_merge.  Unfortunately its in the repo that I can't publish.
 
- - git-add without any argument does not add everything
-   anymore.  Use 'git-add .' instead.  Also you can add
-   otherwise ignored files with an -f option.
+So here I am again, wanting to help, being unable to. *Sigh*. At least 
+this time it is due to legal reasons, not unknown ones.
+
+As you said in another mail, Junio suggested using git-merge-file on the 
+blobs themselves. This is a little tricky, since git-merge-file does not 
+read blobs; only files. I'd do this:
+
+	- in merge-recursive.c just before line 658 I'd add an
+	  fprintf(stderr, "xdl_merge: %s %s %s\n", sha1_to_hex(a->sha1),
+		sha1_to_hex(o->sha1), sha1_to_hex(b->sha1));
+	- run the merge until it segfaults
+	- get the blobs by using the last three SHA1's in the output by
+	  $ git-show <sha1>  > a   # or "o" or "b"
+	- $ git merge-file -p a o b >/dev/null
+
+This command line ensures that "a" is not edited, and you can repeat the 
+merge as often as needed.
+
+If this still segfaults, I'd like to have the files privately (I will not 
+look at the contents, as they are irrelevant to this particular bug).
+
+Ciao,
+Dscho
