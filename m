@@ -1,61 +1,69 @@
-From: Luben Tuikov <ltuikov@yahoo.com>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: What's in git.git (stable)
-Date: Tue, 26 Dec 2006 17:19:03 -0800 (PST)
-Message-ID: <368927.59162.qm@web31804.mail.mud.yahoo.com>
-References: <7vd566ciwq.fsf@assigned-by-dhcp.cox.net>
-Reply-To: ltuikov@yahoo.com
+Date: Tue, 26 Dec 2006 18:14:24 -0800
+Message-ID: <7vslf2axvj.fsf@assigned-by-dhcp.cox.net>
+References: <368927.59162.qm@web31804.mail.mud.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, "Randal L. Schwartz" <merlyn@stonehenge.com>,
 	Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Dec 27 02:19:18 2006
+X-From: git-owner@vger.kernel.org Wed Dec 27 03:14:31 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GzNRu-0004PV-DQ
-	for gcvg-git@gmane.org; Wed, 27 Dec 2006 02:19:18 +0100
+	id 1GzOJJ-0000Nc-TC
+	for gcvg-git@gmane.org; Wed, 27 Dec 2006 03:14:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932875AbWL0BTG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Dec 2006 20:19:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932872AbWL0BTF
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Dec 2006 20:19:05 -0500
-Received: from web31804.mail.mud.yahoo.com ([68.142.207.67]:41386 "HELO
-	web31804.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S932875AbWL0BTF (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Dec 2006 20:19:05 -0500
-Received: (qmail 60753 invoked by uid 60001); 27 Dec 2006 01:19:03 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=X-YMail-OSG:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
-  b=0zGAqEI7kStWQ3oghPEYaLMGoFPcYx/04srJwqTecXFcdz+6xFQnOzN0/CTZvPWsums7SzX+IuiUnXUHjfr4ko4ifTR55Vxl9iJm3fnNmDPOLEgVipXpQ54grNLRQR29nOTwLxvqjso8xcrh3N6i0NknHuDZWf1dn3ztmPWXrtI=;
-X-YMail-OSG: _Kwt3EwVM1m4yVg3oQbFaQJ.qfmoEFKdRoYz7B9i
-Received: from [71.84.31.238] by web31804.mail.mud.yahoo.com via HTTP; Tue, 26 Dec 2006 17:19:03 PST
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vd566ciwq.fsf@assigned-by-dhcp.cox.net>
+	id S932890AbWL0CO0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Dec 2006 21:14:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932892AbWL0CO0
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Dec 2006 21:14:26 -0500
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:52833 "EHLO
+	fed1rmmtao11.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932890AbWL0CO0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Dec 2006 21:14:26 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20061227021425.LAYI25875.fed1rmmtao11.cox.net@fed1rmimpo02.cox.net>;
+          Tue, 26 Dec 2006 21:14:25 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id 3eEe1W00h1kojtg0000000; Tue, 26 Dec 2006 21:14:39 -0500
+To: ltuikov@yahoo.com
+In-Reply-To: <368927.59162.qm@web31804.mail.mud.yahoo.com> (Luben Tuikov's
+	message of "Tue, 26 Dec 2006 17:19:03 -0800 (PST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35442>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35443>
 
---- Junio C Hamano <junkio@cox.net> wrote:
-> Luben Tuikov <ltuikov@yahoo.com> writes:
-> 
-> >> I am not quite sure about that.  An old timer would work in a
-> >> newly cloned repository after all, and what this "newbie
-> >> protection" is breaking is not existing repositories but
-> >> expectation from existing users.
-> >
-> > Hmm, "newbie protection" doesn't sound good.  It sounds like
-> > "screw the old-timers and let's change well-established workflow".
-> 
-> As far as I am concerned, this is a topic already closed four
-> days ago with commit fb8696d9.
-> 
-> Are you way too behind, are you rubbing it in, or am I
-> hallucinating and fb8696d9 did not actually fix it?
+Luben Tuikov <ltuikov@yahoo.com> writes:
 
-I'm behind.  I'll pull and take a look at that commit.
+> --- Junio C Hamano <junkio@cox.net> wrote:
+>> Luben Tuikov <ltuikov@yahoo.com> writes:
+>> 
+>> >> I am not quite sure about that.  An old timer would work in a
+>> >> newly cloned repository after all, and what this "newbie
+>> >> protection" is breaking is not existing repositories but
+>> >> expectation from existing users.
+>> >
+>> > Hmm, "newbie protection" doesn't sound good.  It sounds like
+>> > "screw the old-timers and let's change well-established workflow".
+>> 
+>> As far as I am concerned, this is a topic already closed four
+>> days ago with commit fb8696d9.
+>> 
+>> Are you way too behind, are you rubbing it in, or am I
+>> hallucinating and fb8696d9 did not actually fix it?
+>
+> I'm behind.  I'll pull and take a look at that commit.
 
-    Luben
+Thanks.
+
+And sorry that I sounded harsher than necessary.  Between the
+two paragraphs, I meant to say "... with commit fb8696d9.  It
+was a mistake, I broke existing workflows, I apologized, and the
+commit should have fixed it".
