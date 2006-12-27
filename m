@@ -1,195 +1,217 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH] Create 'git gc' to perform common maintenance operations.
-Date: Wed, 27 Dec 2006 02:17:59 -0500
-Message-ID: <20061227071759.GA23057@spearce.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [RFH] An early draft of v1.5.0 release notes
+Date: Tue, 26 Dec 2006 23:39:41 -0800
+Message-ID: <7vvejx948y.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 27 08:18:22 2006
+X-From: git-owner@vger.kernel.org Wed Dec 27 08:39:48 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GzT3L-0006VG-5p
-	for gcvg-git@gmane.org; Wed, 27 Dec 2006 08:18:19 +0100
+	id 1GzTO7-0008A4-Jc
+	for gcvg-git@gmane.org; Wed, 27 Dec 2006 08:39:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932937AbWL0HSH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Dec 2006 02:18:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932961AbWL0HSH
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Dec 2006 02:18:07 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:54823 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932937AbWL0HSG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Dec 2006 02:18:06 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1GzT3B-0003qz-5g; Wed, 27 Dec 2006 02:18:09 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 9DC3920FB65; Wed, 27 Dec 2006 02:17:59 -0500 (EST)
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S932969AbWL0Hjn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Dec 2006 02:39:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932970AbWL0Hjn
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Dec 2006 02:39:43 -0500
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:36353 "EHLO
+	fed1rmmtao06.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932969AbWL0Hjm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Dec 2006 02:39:42 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20061227073942.CEIU2628.fed1rmmtao06.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 27 Dec 2006 02:39:42 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id 3jfv1W00L1kojtg0000000; Wed, 27 Dec 2006 02:39:55 -0500
+To: git@vger.kernel.org
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35449>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35450>
 
-Junio asked for a 'git gc' utility which users can execute on a
-regular basis to perform basic repository actions such as:
+This is still rough, but I think we have a pretty good idea what
+will and what won't be in v1.5.0 by now, and end-of-year is a
+good slow time to summarize what we have done.
 
- * pack-refs --prune
- * reflog expire
- * repack -a -d
- * prune
- * rerere gc
+One thing I am wondering is if delta from v1.4.4.3 is good
+enough for the intended audience of this release notes.  I am
+reasonably sure that the name v1.5.0 will attract more people
+than usual and there will be many people upgrading directly from
+ancient versions such as v1.1.6 or v1.2.0, and there are a
+handful "one-way-street upgrades" and quite a few user visible
+changes that already have happened before v1.4.4.  Namely:
 
-So here is a command which does exactly that.  The parameters fed
-to reflog's expire subcommand can be chosen by the user by setting
-configuration options in .git/config (or ~/.gitconfig), as users may
-want different expiration windows for each repository but shouldn't
-be bothered to remember what they are all of the time.
+ - Pack-compatible loose object headers, introduced between
+   v1.4.1 and v1.4.2; repository cannot be read with ancient
+   version of git anymore -- this is a one-way street but
+   core.legacyheaders is still not enabled by default);
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
+ - delta-base-offset pack encoding, introduced between v1.4.2
+   and v1.4.3; this is also a one-way street.
 
- This is a resend, as Linus pointed out prune runs faster if
- its done after the repack and not before.  Thanks Linus!
+ - 'git -p' to paginate anything -- many commands do pagination
+   by default on a tty.  Introduced between v1.4.1 and v1.4.2;
+   this may surprise old timer users.
 
- .gitignore               |    1 +
- Documentation/git-gc.txt |   55 ++++++++++++++++++++++++++++++++++++++++++++++
- Makefile                 |    2 +-
- git-gc.sh                |   30 +++++++++++++++++++++++++
- 4 files changed, 87 insertions(+), 1 deletions(-)
+ - 'git archive' superseded 'git tar' in v1.4.3;
 
-diff --git a/.gitignore b/.gitignore
-index 91e6966..f92e359 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -41,6 +41,7 @@ git-fmt-merge-msg
- git-for-each-ref
- git-format-patch
- git-fsck-objects
-+git-gc
- git-get-tar-commit-id
- git-grep
- git-hash-object
-diff --git a/Documentation/git-gc.txt b/Documentation/git-gc.txt
-new file mode 100644
-index 0000000..a494b1f
---- /dev/null
-+++ b/Documentation/git-gc.txt
-@@ -0,0 +1,55 @@
-+git-gc(1)
-+===========
-+
-+NAME
-+----
-+git-gc - Cleanup unnecessary files and optimize the local repository.
-+
-+
-+SYNOPSIS
-+--------
-+'git-gc'
-+
-+DESCRIPTION
-+-----------
-+Runs a number of housekeeping tasks within the current repository,
-+such as compressing file revisions (to reduce disk space and increase
-+performance) and removing unreachable objects which may have been
-+created from prior invocations of gitlink:git-add[1].
-+
-+Users are encouraged to run this task on a regular basis within
-+each repository to maintain good disk space utilization and good
-+operating performance.
-+
-+Configuration
-+-------------
-+
-+The optional configuration variable 'gc.reflogExpire' can be
-+set to indicate how long historical entries within each branch's
-+reflog should remain available in this repository.  The setting is
-+expressed as a length of time, for example '90 days' or '3 months'.
-+It defaults to '90 days'.
-+
-+The optional configuration variable 'gc.reflogExpireUnreachable'
-+can be set to indicate how long historical reflog entries which
-+are not part of the current branch should remain available in
-+this repository.  These types of entries are generally created as
-+a result of using `git commit \--amend` or `git rebase` and are the
-+commits prior to the amend or rebase occuring.  Since these changes
-+are not part of the current project most users will want to expire
-+them sooner.  This option defaults to '60 days'.
-+
-+See Also
-+--------
-+gitlink:git-prune[1]
-+gitlink:git-repack[1]
-+gitlink:git-rerere[1]
-+
-+Author
-+------
-+Written by Shawn O. Pearce <spearce@spearce.org>
-+
-+GIT
-+---
-+Part of the gitlink:git[7] suite
-+
-diff --git a/Makefile b/Makefile
-index b8b746f..fb6ba27 100644
---- a/Makefile
-+++ b/Makefile
-@@ -157,7 +157,7 @@ BASIC_LDFLAGS =
- SCRIPT_SH = \
- 	git-bisect.sh git-checkout.sh \
- 	git-clean.sh git-clone.sh git-commit.sh \
--	git-fetch.sh \
-+	git-fetch.sh git-gc.sh \
- 	git-ls-remote.sh \
- 	git-merge-one-file.sh git-parse-remote.sh \
- 	git-pull.sh git-rebase.sh \
-diff --git a/git-gc.sh b/git-gc.sh
-new file mode 100755
-index 0000000..8b1172b
---- /dev/null
-+++ b/git-gc.sh
-@@ -0,0 +1,30 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2006, Shawn O. Pearce
-+#
-+# Cleanup unreachable files and optimize the repository.
-+
-+USAGE=''
-+SUBDIRECTORY_OK=Yes
-+. git-sh-setup
-+
-+reflog_expire=$(git-repo-config gc.reflogExpire)
-+if [ -z "$reflog_expire" ]
-+then
-+	reflog_expire="90 days"
-+fi
-+
-+reflog_unreachable=$(git-repo-config gc.reflogExpireUnreachable)
-+if [ -z "$reflog_unreachable" ]
-+then
-+	reflog_unreachable="60 days"
-+fi
-+
-+git-pack-refs --prune &&
-+git-reflog expire \
-+	--expire="$reflog_expire" \
-+	--expire-unreachable="$reflog_unreachable" \
-+	--all &&
-+git-repack -a -d &&
-+git-prune &&
-+git-rerere gc || exit
--- 
-1.4.4.3.gd2e4
+ - 'git pack-refs' appeared in v1.4.4;
+
+ - 'git cvsserver' was new invention in v1.3.0;
+
+ - 'git repo-config', 'git grep', 'git rebase' and 'gitk' were
+   seriously enhanced during v1.4.0 timeperiod.
+
+ - 'gitweb' became part of git.git during v1.4.0 timeperiod and
+   seriously modified since then.
+
+ - reflog is v1.4.0 invention.
+
+In the following, I am assuming that jc/utf8 and jc/fsck-reflog
+topics currently in 'next' will be part of v1.5.0.
+
+
+-- >8 --
+
+Updates in v1.5.0 since v1.4.4 series
+-------------------------------------
+
+* Index manipulation
+
+ - git-add is to add contents to the index (aka "staging area"
+   for the next commit), whether the file the contents happen to
+   be is an existing one or a newly created one.
+
+ - git-add without any argument does not add everything
+   anymore.  Say "git add ." if you want to.
+
+ - git-add tries to be more friendly to users by offering an
+   interactive mode.
+
+ - git-commit <path> used to refuse to commit if <path> was
+   different between HEAD and the index (i.e. update-index was
+   used on it earlier).  This check was removed.
+
+ - git-rm is much saner and safer.  It is used to remove paths
+   from both the index file and the working tree, and makes sure
+   you are not losing any local modification before doing so.
+
+ - git-reset <tree> <paths>... can be used to revert index
+   entries for selected paths.
+
+ - git-update-index is much less visible.
+
+
+* Repository layout
+
+ - The data for origin repository is stored in the configuration
+   file $GIT_DIR/config, not in $GIT_DIR/remotes/, for newly
+   created clones (the latter is still supported).
+
+ - git-clone always uses what is known as "separate remote"
+   layout for a newly created repository with a working tree;
+   i.e. tracking branches in $GIT_DIR/refs/remotes/origin/ are
+   used to track branches from the origin.  New branches that
+   appear on the origin side after a clone is made are also
+   tracked automatically.
+
+ - git-clone used to be buggy and copied refs outside refs/heads
+   and refs/tags; it doesn't anymore.
+
+ - git-branch and git-show-branch know remote tracking branches.
+
+ - git-push can now be used to delete a remote branch or a tag.
+
+
+* Reflog
+
+ - Reflog records the history of where the tip of each branch
+   was at each moment.  This facility is enabled by default for
+   repositories with working trees, and can be accessed with the
+   "branch@{time}" and "branch@{Nth}" notation.
+
+ - "git show-branch" learned showing the reflog data with the
+   new --reflog option.
+
+ - The commits referred to by reflog entries are now protected
+   against pruning.  The new command "git reflog expire" can be
+   used to truncate older reflog entries and entries that refer
+   to commits that have been pruned away previously.
+
+   Existing repositories that have been using reflog may get
+   complaints from fsck-objects; please run "git reflog expire
+   --all" first to remove reflog entries that refer to commits
+   that are no longer in the repository before attempting to
+   repack it.
+
+ - git-branch knows how to rename branches and moves existing
+   reflog data from the old branch to the new one.
+
+
+* Packed refs
+
+ - Repositories with hundreds of tags have been paying large
+   overhead, both in storage and in runtime.  A new command,
+   git-pack-refs, can be used to "pack" them in more efficient
+   representation.
+
+ - Clones and fetches over dumb transports are now aware of
+   packed refs and can download from repositories that use
+   them.
+
+
+* Configuration
+
+ - configuration related to colorize setting are consolidated
+   under color.* namespace (older diff.color.*, status.color.*
+   are still supported).
+
+
+* Less external dependency
+
+ - We have been depended on "merge" program from RCS suite for
+   the file-level 3-way merge, but now we lost this dependency.
+
+ - The original implementation of git-merge-recursive which was
+   in Python has been removed; we have C implementation of it
+   now.
+
+ - git-shortlog is not in Perl anymore, and more importantly it
+   does not have to be piped output from git-log.  It can
+   traverse the commit ancestry itself.
+
+
+* I18n
+
+ - We have always encouraged the commit message to be encoded in
+   UTF-8, but the users are allowed to use legacy encoding as
+   appropriate for their projects (which will never change).
+   A non UTF-8 commit encoding however _must_ be explicitly set
+   with i18n.commitencoding in the repository configuration;
+   otherwise git-commit-tree will complain if the log message does
+   not look like a valid UTF-8 string.
+
+ - A commit object recorded in non UTF-8 encoding records the
+   encoding i18n.commitencoding specified in the originating
+   repository in a new "encoding" header.  This information is
+   used by git-log and friends to reencode the message to UTF-8
+   when displaying.
+
+
+* User support
+
+ - Quite a lot of documentation updates.
+
+ - Bash completion scripts have been updated heavily.
+
+ - Better error messages for often used Porcelainish commands.
+
+
+----------------------------------------------------------------
+(shortlog since v1.4.4.3 here)
