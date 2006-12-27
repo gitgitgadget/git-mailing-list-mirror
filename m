@@ -1,35 +1,36 @@
 From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [RFH] An early draft of v1.5.0 release notes
-Date: Wed, 27 Dec 2006 03:18:19 -0500
-Message-ID: <20061227081819.GB23022@spearce.org>
-References: <7vvejx948y.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: Segfault in xdl_merge is back
+Date: Wed, 27 Dec 2006 03:24:40 -0500
+Message-ID: <20061227082440.GC23022@spearce.org>
+References: <20061227041644.GA22449@spearce.org> <Pine.LNX.4.64.0612262245250.4473@woody.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 27 09:19:10 2006
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 27 09:24:56 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GzU0C-0003SG-8X
-	for gcvg-git@gmane.org; Wed, 27 Dec 2006 09:19:08 +0100
+	id 1GzU5k-0003tz-Kf
+	for gcvg-git@gmane.org; Wed, 27 Dec 2006 09:24:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752724AbWL0IS3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Dec 2006 03:18:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752301AbWL0IS2
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Dec 2006 03:18:28 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:55986 "EHLO
+	id S1753102AbWL0IYt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Dec 2006 03:24:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753545AbWL0IYt
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Dec 2006 03:24:49 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:56095 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752724AbWL0ISY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Dec 2006 03:18:24 -0500
+	with ESMTP id S1752301AbWL0IYt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Dec 2006 03:24:49 -0500
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1GzTzY-0005dZ-T3; Wed, 27 Dec 2006 03:18:29 -0500
+	id 1GzU5i-0005ok-9x; Wed, 27 Dec 2006 03:24:50 -0500
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 878AB20FB65; Wed, 27 Dec 2006 03:18:20 -0500 (EST)
-To: Junio C Hamano <junkio@cox.net>
+	id 149F420FB65; Wed, 27 Dec 2006 03:24:40 -0500 (EST)
+To: Linus Torvalds <torvalds@osdl.org>
 Content-Disposition: inline
-In-Reply-To: <7vvejx948y.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <Pine.LNX.4.64.0612262245250.4473@woody.osdl.org>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -42,76 +43,37 @@ X-Source-Dir:
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35454>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35455>
 
-Junio C Hamano <junkio@cox.net> wrote:
-> This is still rough, but I think we have a pretty good idea what
-> will and what won't be in v1.5.0 by now, and end-of-year is a
-> good slow time to summarize what we have done.
-
-This is certainly a good idea.  And your summary was pretty good
-too, I enjoyed the read.  This group has certainly accomplished
-quite a bit lately!
-
-Just a few comments:
- 
->  - Pack-compatible loose object headers, introduced between
->    v1.4.1 and v1.4.2; repository cannot be read with ancient
->    version of git anymore -- this is a one-way street but
->    core.legacyheaders is still not enabled by default);
+Linus Torvalds <torvalds@osdl.org> wrote:
+> On Tue, 26 Dec 2006, Shawn Pearce wrote:
+> > 
+> > I'm suspecting this is actually some sort of memory corruption in
+> > the heap (due to a bad malloc/free) as the bug seems to rear its
+> > head only based on the data we are allocating/have allocated.
 > 
->  - delta-base-offset pack encoding, introduced between v1.4.2
->    and v1.4.3; this is also a one-way street.
+> Can you try to reproduce it under Linux and use "valgrind" to run the 
+> thing that SIGSEGV's? That tends to be a pretty good way to debug bad 
+> allocations..
+> 
+> So instead of bisecting it on cygwin, try to use the build that broke on 
+> Linux too (ie undo the 5caf9232 "fix") and when you can reproduce it under 
+> Linux, compiel withour -O2 and with debug information, and gdb will be a 
+> lot more useful, but also run it with valgrind..
 
-Perhaps you can clarify that using these means the repository
-cannot be used with an earlier version of Git?  You may also want
-to highlight why these features are good, answering the question
-"Why should I enable them if it breaks backwards compatibility?".
+Good advice.  Unfortunately it may be difficult to get valgrind onto
+a Linux system where I can also put that repository which is failing.
 
-Isn't the new packed-refs format also a one-way street?  If you
-use them for tags on a web server and the client is using a very
-old http commit walker, what happens?
- 
->  - git-clone used to be buggy and copied refs outside refs/heads
->    and refs/tags; it doesn't anymore.
+Junio suggested that I try running git-merge-file on the three
+blobs that I'm segfaulting on.  That's a pretty quick test.
 
-I mentioned to you on #git this morning that I don't think this
-is noteworthy for this release.
+Failing that I may have to find a way to get valgrind onto a Linux
+system - but that could take a month or more.  (The UNIX admins
+are overworked and don't care much about Linux, and I don't have
+my own Linux system there.)
 
-You missed talking about the mess of pack files created by git-push
-now, especially with pushes over 100 objects.  ;-)
- 
->  - git-push can now be used to delete a remote branch or a tag.
-
-You should mention this requires server side support too.  I read
-that and assumed I could just upgrade my client and push to delete
-- which isn't the case, and I know its not...  but I still read it
-that way.
- 
->  - "git show-branch" learned showing the reflog data with the
->    new --reflog option.
-
-I had hoped we could get 'git reflog show' into 1.5.0 but the
-current discussion with Johannes seems like that's unlikely.
- 
->  - We have been depended on "merge" program from RCS suite for
->    the file-level 3-way merge, but now we lost this dependency.
-
-Perhaps just reword as:
-
-	We no longer require the "merge" program from the RCS suite.
-	All 3-way file-level merges are now done internally.
- 
->  - git-shortlog is not in Perl anymore, and more importantly it
->    does not have to be piped output from git-log.  It can
->    traverse the commit ancestry itself.
-
-The "traverse the commit ancestry itself" part is not very
-readable for the average user.  How about instead:
-
-	git-shortlog is no longer a Perl script.  git-shortlog also
-	no longer requires output piped from git-log; it can accept
-	revision parameters directly on the command line.
+I'd really like to get this segfault fixed before 1.5.0 ships. Its
+a rather nasty bug and I suspect the culprit is already in 1.5.0-rc0.
 
 -- 
 Shawn.
