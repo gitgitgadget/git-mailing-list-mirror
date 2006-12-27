@@ -1,111 +1,71 @@
-From: Robert Fitzsimons <robfitz@273k.net>
-Subject: [PATCH] gitweb: Re-enable rev-list --parents for parse_commit.
-Date: Wed, 27 Dec 2006 14:22:21 +0000
-Message-ID: <20061227142221.GC6558@localhost>
-References: <11669707092427-git-send-email-robfitz@273k.net> <11669707094097-git-send-email-robfitz@273k.net> <empkcf$qp$1@sea.gmane.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 27 15:22:39 2006
+From: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
+Subject: Re: http git and curl 7.16.0
+Date: Wed, 27 Dec 2006 11:57:46 -0300
+Message-ID: <200612271457.kBREvkj2011916@laptop13.inf.utfsm.cl>
+References: <skimo@kotnet.org>
+Cc: George Sherwood <pilot@beernabeer.com>,
+	Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Dec 27 15:58:53 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GzZfs-0007oJ-3j
-	for gcvg-git@gmane.org; Wed, 27 Dec 2006 15:22:32 +0100
+	id 1GzaEz-0003rh-4Q
+	for gcvg-git@gmane.org; Wed, 27 Dec 2006 15:58:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932897AbWL0OW2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Dec 2006 09:22:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932857AbWL0OW2
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Dec 2006 09:22:28 -0500
-Received: from igraine.blacknight.ie ([81.17.252.25]:58860 "EHLO
-	igraine.blacknight.ie" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932838AbWL0OW1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Dec 2006 09:22:27 -0500
-Received: from 213-202-172-175.bas504.dsl.esat.net ([213.202.172.175] helo=localhost)
-	by igraine.blacknight.ie with esmtp (Exim 4.60)
-	(envelope-from <robfitz@273k.net>)
-	id 1GzZfN-0000kD-TN; Wed, 27 Dec 2006 14:22:02 +0000
-To: Jakub Narebski <jnareb@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <empkcf$qp$1@sea.gmane.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-blacknight-igraine-MailScanner-Information: Please contact the ISP for more information
-X-blacknight-igraine-MailScanner: Found to be clean
-X-blacknight-igraine-MailScanner-SpamCheck: not spam,
-	SpamAssassin (not cached, score=-0.012, required 7,
-	autolearn=disabled, RCVD_IN_NERDS_IE -2.00, RCVD_IN_SORBS_DUL 1.99)
-X-MailScanner-From: robfitz@273k.net
+	id S932958AbWL0O6i (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Dec 2006 09:58:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932956AbWL0O6i
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Dec 2006 09:58:38 -0500
+Received: from inti.inf.utfsm.cl ([200.1.21.155]:47049 "EHLO inti.inf.utfsm.cl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932857AbWL0O6h (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Dec 2006 09:58:37 -0500
+Received: from laptop13.inf.utfsm.cl (laptop13.inf.utfsm.cl [200.1.19.201])
+	by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id kBREvrTn023770
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 27 Dec 2006 11:57:53 -0300
+Received: from laptop13.inf.utfsm.cl (laptop13.inf.utfsm.cl [127.0.0.1])
+	by laptop13.inf.utfsm.cl (8.13.8/8.13.8) with ESMTP id kBREvkj2011916;
+	Wed, 27 Dec 2006 11:57:49 -0300
+To: skimo@liacs.nl
+In-Reply-To: Message from Sven Verdoolaege <skimo@kotnet.org> 
+   of "Sun, 17 Dec 2006 12:32:35 BST." <20061217113235.GJ25274MdfPADPa@greensroom.kotnet.org> 
+X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.5  (beta27)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (inti.inf.utfsm.cl [200.1.21.155]); Wed, 27 Dec 2006 11:57:53 -0300 (CLST)
+X-Virus-Scanned: ClamAV version 0.88.5, clamav-milter version 0.88.5 on inti.inf.utfsm.cl
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35472>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35473>
 
-Re-enable rev-list --parents for parse_commit which was removed in
-(208b2dff95bb48682c351099023a1cbb0e1edf26).  rev-list --parents is not
-just used to return the parent headers in the commit object, it
-includes any grafts which are vaild for the commit.
+Sven Verdoolaege <skimo@kotnet.org> wrote:
+> On Sat, Nov 18, 2006 at 08:07:08AM +0400, George Sherwood wrote:
+> > I seem to be having a problem doing an http checkout with git built
+> > with curl 7.16.0 enabled.  If I build against curl 7.16.0 and try a
+> > clone, I get:
 
-Signed-off-by: Robert Fitzsimons <robfitz@273k.net>
----
+> > git clone http://dmlb2000.homelinux.org/~dmlb2000/git-repos/local/castfs.git
+> > error: Unable to start request error: Could not interpret heads/master
+> > as something to pull
+> > 
+> > If I rebuild git against curl 7.15.5 then I get:
+> [..]
+> > and the checkout finishes.
+> > 
+> > Has any one else seen this?
 
+> FWIW, I've seen the same with curl 7.16.0 on a Solaris 9 machine.
+> It worked fine with curl 7.15.0.
 
-> Actually --header output gives us original parents. Rewritten parents
-> (available with --parents) include also grafts and shallow clone grafts.
-> For parse_commit we want --parents, for parse_commits we don't want it
-> because --parents affects --full-history.
+It works fine for me on Aurora Corona (sparc) with curl-7.15.5-1.al3, while
+it fails as above on Fedora rawhide (i386) with curl-7.16.0-4.fc7.
 
-Heres a patch the re-enables --parents for parse_commit.
-
-Robert
-
-
- gitweb/gitweb.perl |   10 +++++-----
- 1 files changed, 5 insertions(+), 5 deletions(-)
-
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 65fcdb0..da12be7 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -1271,7 +1271,7 @@ sub parse_tag {
- }
- 
- sub parse_commit_text {
--	my ($commit_text) = @_;
-+	my ($commit_text, $withparents) = @_;
- 	my @commit_lines = split '\n', $commit_text;
- 	my %co;
- 
-@@ -1281,13 +1281,12 @@ sub parse_commit_text {
- 	if (!($header =~ m/^[0-9a-fA-F]{40}/)) {
- 		return;
- 	}
--	$co{'id'} = $header;
--	my @parents;
-+	($co{'id'}, my @parents) = split ' ', $header;
- 	while (my $line = shift @commit_lines) {
- 		last if $line eq "\n";
- 		if ($line =~ m/^tree ([0-9a-fA-F]{40})$/) {
- 			$co{'tree'} = $1;
--		} elsif ($line =~ m/^parent ([0-9a-fA-F]{40})$/) {
-+		} elsif ((!defined $withparents) && ($line =~ m/^parent ([0-9a-fA-F]{40})$/)) {
- 			push @parents, $1;
- 		} elsif ($line =~ m/^author (.*) ([0-9]+) (.*)$/) {
- 			$co{'author'} = $1;
-@@ -1373,12 +1372,13 @@ sub parse_commit {
- 	local $/ = "\0";
- 
- 	open my $fd, "-|", git_cmd(), "rev-list",
-+		"--parents",
- 		"--header",
- 		"--max-count=1",
- 		$commit_id,
- 		"--",
- 		or die_error(undef, "Open git-rev-list failed");
--	%co = parse_commit_text(<$fd>);
-+	%co = parse_commit_text(<$fd>, 1);
- 	close $fd;
- 
- 	return %co;
+Furthermore, with new curl pulling from HTTP repos when there are updates
+gives double free errors and a crash.
 -- 
-1.4.4.3.g6934
+Dr. Horst H. von Brand                   User #22616 counter.li.org
+Departamento de Informatica                    Fono: +56 32 2654431
+Universidad Tecnica Federico Santa Maria             +56 32 2654239
+Casilla 110-V, Valparaiso, Chile               Fax:  +56 32 2797513
