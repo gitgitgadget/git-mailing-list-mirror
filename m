@@ -1,79 +1,53 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: Segfault in xdl_merge is back
-Date: Wed, 27 Dec 2006 03:24:40 -0500
-Message-ID: <20061227082440.GC23022@spearce.org>
-References: <20061227041644.GA22449@spearce.org> <Pine.LNX.4.64.0612262245250.4473@woody.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Create 'git gc' to perform common maintenance operations.
+Date: Wed, 27 Dec 2006 00:26:36 -0800
+Message-ID: <7vhcvh922r.fsf@assigned-by-dhcp.cox.net>
+References: <20061227071759.GA23057@spearce.org>
+	<7vr6ul93wz.fsf@assigned-by-dhcp.cox.net>
+	<20061227075330.GA23022@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 27 09:24:56 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 27 09:26:41 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GzU5k-0003tz-Kf
-	for gcvg-git@gmane.org; Wed, 27 Dec 2006 09:24:52 +0100
+	id 1GzU7V-00042r-0M
+	for gcvg-git@gmane.org; Wed, 27 Dec 2006 09:26:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753102AbWL0IYt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Dec 2006 03:24:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753545AbWL0IYt
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Dec 2006 03:24:49 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:56095 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752301AbWL0IYt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Dec 2006 03:24:49 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1GzU5i-0005ok-9x; Wed, 27 Dec 2006 03:24:50 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 149F420FB65; Wed, 27 Dec 2006 03:24:40 -0500 (EST)
-To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0612262245250.4473@woody.osdl.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1753580AbWL0I0i (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Dec 2006 03:26:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753598AbWL0I0i
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Dec 2006 03:26:38 -0500
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:36442 "EHLO
+	fed1rmmtao09.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753580AbWL0I0h (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Dec 2006 03:26:37 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20061227082637.BJVU18767.fed1rmmtao09.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 27 Dec 2006 03:26:37 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id 3kSq1W00F1kojtg0000000; Wed, 27 Dec 2006 03:26:50 -0500
+To: Shawn Pearce <spearce@spearce.org>
+In-Reply-To: <20061227075330.GA23022@spearce.org> (Shawn Pearce's message of
+	"Wed, 27 Dec 2006 02:53:30 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35455>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35456>
 
-Linus Torvalds <torvalds@osdl.org> wrote:
-> On Tue, 26 Dec 2006, Shawn Pearce wrote:
-> > 
-> > I'm suspecting this is actually some sort of memory corruption in
-> > the heap (due to a bad malloc/free) as the bug seems to rear its
-> > head only based on the data we are allocating/have allocated.
-> 
-> Can you try to reproduce it under Linux and use "valgrind" to run the 
-> thing that SIGSEGV's? That tends to be a pretty good way to debug bad 
-> allocations..
-> 
-> So instead of bisecting it on cygwin, try to use the build that broke on 
-> Linux too (ie undo the 5caf9232 "fix") and when you can reproduce it under 
-> Linux, compiel withour -O2 and with debug information, and gdb will be a 
-> lot more useful, but also run it with valgrind..
+Shawn Pearce <spearce@spearce.org> writes:
 
-Good advice.  Unfortunately it may be difficult to get valgrind onto
-a Linux system where I can also put that repository which is failing.
+> I don't care either way.  60 days may be too long for some users,
+> but for others it may be nice to have.  I think the two defaults
+> should match just because.  Feel free to edit my patch before
+> applying to be whatever 'git-reflog expire' uses if you want.
 
-Junio suggested that I try running git-merge-file on the three
-blobs that I'm segfaulting on.  That's a pretty quick test.
-
-Failing that I may have to find a way to get valgrind onto a Linux
-system - but that could take a month or more.  (The UNIX admins
-are overworked and don't care much about Linux, and I don't have
-my own Linux system there.)
-
-I'd really like to get this segfault fixed before 1.5.0 ships. Its
-a rather nasty bug and I suspect the culprit is already in 1.5.0-rc0.
-
--- 
-Shawn.
+I think the built-in git-reflog should be updated to honor the
+configuration in the absense of command line options; if we do
+that git-gc.sh does not even have to call repo-config anymore.
