@@ -1,55 +1,57 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [RFH] An early draft of v1.5.0 release notes
-Date: Wed, 27 Dec 2006 16:49:11 -0800
-Message-ID: <7vbqlo4zg8.fsf@assigned-by-dhcp.cox.net>
-References: <200612271300.kBRD082j007703@laptop13.inf.utfsm.cl>
-	<7vtzzh5dnv.fsf@assigned-by-dhcp.cox.net>
+From: Robert Fitzsimons <robfitz@273k.net>
+Subject: Re: [RFC/PATCH 6/6] gitweb: Make possible to run under mod_perl without ParseHeaders
+Date: Thu, 28 Dec 2006 01:03:11 +0000
+Message-ID: <20061228010311.GD6558@localhost>
+References: <200612272355.31923.jnareb@gmail.com> <200612280106.24331.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 28 01:49:23 2006
+X-From: git-owner@vger.kernel.org Thu Dec 28 02:03:32 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GzjSU-0006fN-MM
-	for gcvg-git@gmane.org; Thu, 28 Dec 2006 01:49:23 +0100
+	id 1GzjgB-00080L-H9
+	for gcvg-git@gmane.org; Thu, 28 Dec 2006 02:03:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964832AbWL1AtS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Dec 2006 19:49:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964834AbWL1AtS
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Dec 2006 19:49:18 -0500
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:61153 "EHLO
-	fed1rmmtao05.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964832AbWL1AtS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Dec 2006 19:49:18 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20061228004912.GAKS15640.fed1rmmtao05.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 27 Dec 2006 19:49:12 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id 40pR1W00z1kojtg0000000; Wed, 27 Dec 2006 19:49:26 -0500
-To: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
-In-Reply-To: <7vtzzh5dnv.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Wed, 27 Dec 2006 11:42:12 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S964827AbWL1BDQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Dec 2006 20:03:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964834AbWL1BDQ
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Dec 2006 20:03:16 -0500
+Received: from igraine.blacknight.ie ([81.17.252.25]:33787 "EHLO
+	igraine.blacknight.ie" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964827AbWL1BDP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Dec 2006 20:03:15 -0500
+Received: from 213-202-132-133.bas502.dsl.esat.net ([213.202.132.133] helo=localhost)
+	by igraine.blacknight.ie with esmtp (Exim 4.60)
+	(envelope-from <robfitz@273k.net>)
+	id 1GzjfX-0004Cy-Db; Thu, 28 Dec 2006 01:02:51 +0000
+To: Jakub Narebski <jnareb@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <200612280106.24331.jnareb@gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-blacknight-igraine-MailScanner-Information: Please contact the ISP for more information
+X-blacknight-igraine-MailScanner: Found to be clean
+X-blacknight-igraine-MailScanner-SpamCheck: not spam,
+	SpamAssassin (not cached, score=-0.012, required 7,
+	autolearn=disabled, RCVD_IN_NERDS_IE -2.00, RCVD_IN_SORBS_DUL 1.99)
+X-MailScanner-From: robfitz@273k.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35495>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35496>
 
-Junio C Hamano <junkio@cox.net> writes:
+> @@ -1854,7 +1976,8 @@ EOF
+>  		      $cgi->hidden(-name => "a") . "\n" .
+>  		      $cgi->hidden(-name => "h") . "\n" .
+>  		      $cgi->popup_menu(-name => 'st', -default => 'commit',
+> -				       -values => ['commit', 'author', 'committer', 'pickaxe']) .
+> +		                       -values => ['commit', 'author', 'committer',
+> +		                       gitweb_check_feature('pickaxe') ? 'pickaxe' : ()]) .
+>  		      $cgi->sup($cgi->a({-href => href(action=>"search_help")}, "?")) .
+>  		      " search:\n",
+>  		      $cgi->textfield(-name => "s", -value => $searchtext) . "\n" .
 
-> "Horst H. von Brand" <vonbrand@inf.utfsm.cl> writes:
-> ...
->> And what happens to the people who can't/won't display UTF-8? This is a
->> both a project wide configuration (how does stuff get saved) + a user/local
->> configuration (how to display stuff).
-> ...
-> Maybe i18n.displayencoding set to latin1 is what you are after?
-> I think it might make sense...
+This should be a separate patch.
 
-I've done this and will be pushing the result out in 'next'
-shortly, with a new test.  I find the result mostly sensible.
+Robert
