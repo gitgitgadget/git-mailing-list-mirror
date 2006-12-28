@@ -1,64 +1,52 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: t9200-git-cvsexportcommit.sh failed on CYGWIN
-Date: Thu, 28 Dec 2006 12:54:29 +0100
-Organization: At home
-Message-ID: <en0b47$bjm$3@sea.gmane.org>
-References: <459338AA.8000407@gmail.com>
+From: Jim Meyering <jim@meyering.net>
+Subject: [PATCH] update hook: redirect _both_ diagnostic lines to stderr upon tag failure
+Date: Thu, 28 Dec 2006 16:05:02 +0100
+Message-ID: <87tzzg6oyp.fsf@rho.meyering.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Thu Dec 28 12:55:22 2006
+X-From: git-owner@vger.kernel.org Thu Dec 28 16:05:34 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1Gztqt-0003yH-8h
-	for gcvg-git@gmane.org; Thu, 28 Dec 2006 12:55:15 +0100
+	id 1Gzwoy-0003Nu-Hv
+	for gcvg-git@gmane.org; Thu, 28 Dec 2006 16:05:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754821AbWL1LzM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Dec 2006 06:55:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754826AbWL1LzM
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Dec 2006 06:55:12 -0500
-Received: from main.gmane.org ([80.91.229.2]:35412 "EHLO ciao.gmane.org"
+	id S1754864AbWL1PFF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Dec 2006 10:05:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754865AbWL1PFE
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Dec 2006 10:05:04 -0500
+Received: from mx.meyering.net ([82.230.74.64]:37157 "EHLO mx.meyering.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754821AbWL1LzK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Dec 2006 06:55:10 -0500
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1Gztqg-00078A-BT
-	for git@vger.kernel.org; Thu, 28 Dec 2006 12:55:02 +0100
-Received: from host-81-190-19-121.torun.mm.pl ([81.190.19.121])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 28 Dec 2006 12:55:02 +0100
-Received: from jnareb by host-81-190-19-121.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 28 Dec 2006 12:55:02 +0100
-X-Injected-Via-Gmane: http://gmane.org/
+	id S1754864AbWL1PFD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Dec 2006 10:05:03 -0500
+Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000)
+	id 64B754EC6; Thu, 28 Dec 2006 16:05:02 +0100 (CET)
 To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-19-121.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35556>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35557>
 
-[Cc: git@vger.kernel.org]
 
-SungHyun Nam wrote:
+Otherwise, sending the diagnostic to stdout would provoke a protocol failure.
+Signed-off-by: Jim Meyering <jim@meyering.net>
+---
+ templates/hooks--update |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-> Below is the test messages.
-> 
-> BTW, I hope I can define 'NO_CVS_TESTS' to skip this test.
-[...]
-> *   ok 7: Update file with spaces in file name
-> * FAIL 8: File with non-ascii file name
->         mkdir -p
-
-What filesystem? Some filesystems are just broken...
-
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+diff --git a/templates/hooks--update b/templates/hooks--update
+index 76d5ac2..9863a80 100644
+--- a/templates/hooks--update
++++ b/templates/hooks--update
+@@ -19,7 +19,7 @@ # Remove this code to treat dumb tags th
+ case "$1","$ref_type" in
+ refs/tags/*,commit)
+ 	echo "*** Un-annotated tags are not allowed in this repo" >&2
+-	echo "*** Use 'git tag [ -a | -s ]' for tags you want to propagate."
++	echo "*** Use 'git tag [ -a | -s ]' for tags you want to propagate." >&2
+ 	exit 1;;
+ refs/tags/*,tag)
+ 	echo "### Pushing version '${1##refs/tags/}' to the masses" >&2
+--
+1.4.2.GIT
