@@ -1,87 +1,83 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 0/11] Misc. pull/merge/am improvements
-Date: Thu, 28 Dec 2006 03:04:10 -0800
-Message-ID: <7vtzzguvrp.fsf@assigned-by-dhcp.cox.net>
-References: <20061228073441.GB17304@spearce.org>
-	<7vmz58whnx.fsf@assigned-by-dhcp.cox.net>
-	<20061228084245.GA18150@spearce.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFH] An early draft of v1.5.0 release notes
+Date: Thu, 28 Dec 2006 12:50:37 +0100
+Organization: At home
+Message-ID: <en0asv$bjm$1@sea.gmane.org>
+References: <junkio@cox.net> <200612271206.kBRC6ke2004207@laptop13.inf.utfsm.cl> <7v64bw3ewk.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 28 12:04:26 2006
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Thu Dec 28 12:48:06 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1Gzt3a-0006FH-E8
-	for gcvg-git@gmane.org; Thu, 28 Dec 2006 12:04:19 +0100
+	id 1Gztjs-0002tk-BW
+	for gcvg-git@gmane.org; Thu, 28 Dec 2006 12:48:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754820AbWL1LEN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Dec 2006 06:04:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754831AbWL1LEN
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Dec 2006 06:04:13 -0500
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:48808 "EHLO
-	fed1rmmtao03.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754820AbWL1LEM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Dec 2006 06:04:12 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20061228110411.IADV29122.fed1rmmtao03.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 28 Dec 2006 06:04:11 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id 4B4Q1W00n1kojtg0000000; Thu, 28 Dec 2006 06:04:25 -0500
-To: Shawn Pearce <spearce@spearce.org>
-In-Reply-To: <20061228084245.GA18150@spearce.org> (Shawn Pearce's message of
-	"Thu, 28 Dec 2006 03:42:45 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753505AbWL1Lr4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Dec 2006 06:47:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753456AbWL1Lr4
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Dec 2006 06:47:56 -0500
+Received: from main.gmane.org ([80.91.229.2]:45216 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753312AbWL1Lr4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Dec 2006 06:47:56 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Gztjh-0005nM-79
+	for git@vger.kernel.org; Thu, 28 Dec 2006 12:47:49 +0100
+Received: from host-81-190-19-121.torun.mm.pl ([81.190.19.121])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 28 Dec 2006 12:47:49 +0100
+Received: from jnareb by host-81-190-19-121.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 28 Dec 2006 12:47:49 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-19-121.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35553>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35554>
 
-Shawn Pearce <spearce@spearce.org> writes:
+[Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>,
+ "Horst H. von Brand" <vonbrand@inf.utfsm.cl>]
 
-> Junio C Hamano <junkio@cox.net> wrote:
-> ...
->> I am very tempted to have sliding window mmap() if it helps
->> people on cygwin, for example.
->
-> Especially now that NO_MMAP is the default on that platform.
-> At this point it may be ready to graduate to next to try and get a
-> wider audience.  Since fixing that segfault in pack-objects I can't
-> break it.  Of course I couldn't break it before you found that error,
-> so take my words with a grain of salt... ;-)
+Junio C Hamano wrote:
 
-Well, I have a bad news for you.
+> "Horst H. von Brand" <vonbrand@inf.utfsm.cl> writes:
+> 
+>> Junio C Hamano <junkio@cox.net> wrote:
+>>> This is still rough, but I think we have a pretty good idea what
+>>> will and what won't be in v1.5.0 by now, and end-of-year is a
+>>> good slow time to summarize what we have done.
+>>
+>> Could somebody please summarize how to "upgrade" a repository to the new
+>> layout?  This has got my head spinning... and I'm /not/ cloning the
+>> various repos I've got here just to take advantage of the changes.
+> 
+> The old layout was to map remote branch $B to local tracking
+> branch .git/refs/heads/$B, unless $B == 'master' in which case
+> it was mapped to .git/refs/heads/origin (and I think we
+> discarded 'origin' at remote).
 
-"ng refs/heads/master n/a (unpacker error)" is back.  I cannot
-push things out.
+How to discard 'origin' in the new wildcard / globbing remote config?
+IIRC there was proposal to use '-' or '!' to exclude branch from
+fetching, but no code...
 
-But a bad news is that the problem does not decompose so easily;
-git-push has too many players involved.  I _think_ I have the
-list of positive and negative objects fed to rev-list --objects
---thin --stdin, whose output is in turn fed to pack-objects, but
-manually running these steps in isolation seems to produce an Ok
-result that index-pack --stdin --fix-thin accepts happily.
+[...]
+>  - create the config section like the above in .git/config, and
 
-While I was looking at the problem, I noticed something a bit
-easier to reproduce and should be lot easier to diagnose.  At
-http://userweb.kernel.org/~junio/broken.tar, I have a tarball of
-git.git repository.
+You can use contrib/remotes2config.sh script...
 
-When you extract it, you will have a directory "broken/" with a
-single directory ".git/" in it.  The repository passes
-"fsck-objects --full" from master just fine.
-
-However, if you try to "git repack -a -d" it using "next" plus
-"sp/mmap" with your latest fix ("pu" also has it), you will see:
-
-        Generating pack...
-        Done counting 32054 objects.
-        fatal: internal error: pack revindex corrupt
-
-In that sample repository, I have pack.window, and
-repack.deltabaseoffset.  These settings do not seem to affect
-the breakage.
+>  - remove .git/remotes/origin when you are done.
+ 
+...which saves remotes/ under remotes.old/
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
