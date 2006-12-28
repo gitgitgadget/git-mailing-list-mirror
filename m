@@ -1,35 +1,35 @@
 From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [PATCH 7/11] Avoid git-fetch in `git-pull .` when possible.
-Date: Thu, 28 Dec 2006 03:17:01 -0500
-Message-ID: <20061228081701.GA18029@spearce.org>
-References: <9847899e4ba836980dbfed6d0ea1c82f31f21456.1167290864.git.spearce@spearce.org> <20061228073517.GG17867@spearce.org> <7v8xgsxx1r.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: [PATCH 11/11] Improve merge performance by avoiding in-index merges.
+Date: Thu, 28 Dec 2006 03:24:41 -0500
+Message-ID: <20061228082441.GB18029@spearce.org>
+References: <9847899e4ba836980dbfed6d0ea1c82f31f21456.1167290864.git.spearce@spearce.org> <20061228073534.GK17867@spearce.org> <7vejqkxx1s.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 28 09:17:29 2006
+X-From: git-owner@vger.kernel.org Thu Dec 28 09:24:52 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GzqS8-0004TU-SR
-	for gcvg-git@gmane.org; Thu, 28 Dec 2006 09:17:29 +0100
+	id 1GzqZG-0005pT-6h
+	for gcvg-git@gmane.org; Thu, 28 Dec 2006 09:24:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964960AbWL1IRH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Dec 2006 03:17:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964965AbWL1IRH
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Dec 2006 03:17:07 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:46626 "EHLO
+	id S964965AbWL1IYq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Dec 2006 03:24:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964969AbWL1IYq
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Dec 2006 03:24:46 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:46786 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964960AbWL1IRG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Dec 2006 03:17:06 -0500
+	with ESMTP id S964965AbWL1IYp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Dec 2006 03:24:45 -0500
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1GzqRI-0000w3-S9; Thu, 28 Dec 2006 03:16:37 -0500
+	id 1GzqYi-00018j-2W; Thu, 28 Dec 2006 03:24:16 -0500
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 1A21720FB65; Thu, 28 Dec 2006 03:17:01 -0500 (EST)
+	id 96AAA20FB65; Thu, 28 Dec 2006 03:24:41 -0500 (EST)
 To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
-In-Reply-To: <7v8xgsxx1r.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <7vejqkxx1s.fsf@assigned-by-dhcp.cox.net>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -42,46 +42,34 @@ X-Source-Dir:
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35538>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35539>
 
 Junio C Hamano <junkio@cox.net> wrote:
 > "Shawn O. Pearce" <spearce@spearce.org> writes:
 > 
-> > Users may also now use `git-pull . foo~3` to merge the early part
-> > of branch foo.  This was not previously possible as git-fetch does
-> > not know how to fetch foo~3 from a repository.
+> > For a really trivial merge which can be handled entirely by
+> > `read-tree -m -u`, skipping the read-tree and just going directly
+> > into merge-recursive saves on average 50 ms on my PowerPC G4 system.
+> > May sound odd, but it does appear to be true.
 > 
-> I personally think this is not an improvement, but rather a new
-> source of confusion.  If the user wants a local merge, there is
-> 'git-merge'.  And the distinction between the commands makes it
-> clear that local merge can merge any commits exactly because
-> they are available locally, while remote fetch+merge needs to
-> choose from what the remote side offers so not arbitrary commits
-> like foo@{3.days.ago} cannot be pulled.
+> This sounds awfully attractive yet disruptive.  Should be cooked
+> in 'next' for at least two weeks, maybe even longer to verify
+> that performance figure holds for everybody.
 
-True.  But you know you are doing a local merge with `git pull .`.
-So why should you be restricted from using the capabilities of a
-local merge just because the frontend you prefer to use is limited
-when its doing remote merges?
-
-I didn't really do this change for this feature, I did for the
-performance (see below).
+I agree.  I have been thinking about doing this for a while but
+just never sat down and did it until night.  To get it in 1.5.0 I
+probably should have done this back in early Decmember.  Whoops,
+bad timing on my part.  ;-)
  
-> Also I thought there was a configuration variable that talks
-> about "remote = ."  (didn't I merge that patch -- I do not
-> remember offhand) and I wonder how that interacts with this
-> change.
+> Also I think you need to make sure running merge-recursive
+> upfront offers the same safety as the code you are removing then
+> running it, as I vaguely recall its checking for local changes
+> were slightly looser.
 
-I must have missed that discussion on the list.  Not sure how as
-I read everything.  Oh, its that grey stuff upstairs not recalling
-history as well as Git does... ;-)
- 
-> How much performance gain are we talking about here?
-
-It halves my 'git pull . foo' times on my Mac OS X PowerPC 64 system:
-
-  Without: ~900 ms
-  With:    ~440 ms
+>From what I can tell, merge-recursive and read-tree -m are running
+exactly the same code.  So aside from the fact that I bypassed the
+update-index --refresh by accident, I don't think they will have
+different outcomes.
 
 -- 
 Shawn.
