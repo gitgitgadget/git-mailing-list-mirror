@@ -1,59 +1,67 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH 3/3] t9200-git-cvsexportcommit.sh: quiet down commit
-Date: Thu, 28 Dec 2006 10:14:49 -0800
-Message-ID: <20061228181448.GA17775@localdomain>
-References: <11672970521665-git-send-email-normalperson@yhbt.net> <11672970542015-git-send-email-normalperson@yhbt.net> <11672970561224-git-send-email-normalperson@yhbt.net> <11672970581666-git-send-email-normalperson@yhbt.net> <7vfyb0wexo.fsf@assigned-by-dhcp.cox.net>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: read-for-fill and caching in gitweb (Re: kernel.org mirroring)
+Date: Fri, 29 Dec 2006 09:45:07 +1300
+Message-ID: <46a038f90612281245s52bdd868h8c421951c7abeb84@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 28 19:15:00 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Jeff Garzik" <jeff@garzik.org>, "H. Peter Anvin" <hpa@zytor.com>,
+	"Rogan Dawes" <discard@dawes.za.net>,
+	"Kernel Org Admin" <ftpadmin@kernel.org>,
+	"Git Mailing List" <git@vger.kernel.org>,
+	"Jakub Narebski" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 28 21:45:17 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GzzmN-0006uN-2S
-	for gcvg-git@gmane.org; Thu, 28 Dec 2006 19:14:59 +0100
+	id 1H027l-0002p5-MQ
+	for gcvg-git@gmane.org; Thu, 28 Dec 2006 21:45:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754909AbWL1SOz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Dec 2006 13:14:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754915AbWL1SOz
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Dec 2006 13:14:55 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:43303 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754909AbWL1SOv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Dec 2006 13:14:51 -0500
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id 3E7437DC08E;
-	Thu, 28 Dec 2006 10:14:49 -0800 (PST)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Thu, 28 Dec 2006 10:14:49 -0800
-To: Junio C Hamano <junkio@cox.net>
+	id S1753739AbWL1UpK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Dec 2006 15:45:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754968AbWL1UpJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Dec 2006 15:45:09 -0500
+Received: from wx-out-0506.google.com ([66.249.82.227]:7453 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753739AbWL1UpI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Dec 2006 15:45:08 -0500
+Received: by wx-out-0506.google.com with SMTP id h27so4683979wxd
+        for <git@vger.kernel.org>; Thu, 28 Dec 2006 12:45:07 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=ShuFz2KnsUuIqmNzibzTzxyaKOytvqpJTUpBL6Q10BDAagBTGWyl389i5cr+OD1xec+wxAlO9CRUKCc8or0C4fxNc38j5Nn3VSherycYij1MpMgx+bi320pOaSBchppyHKWTBOyccjl7iPoWXVHuXEle+w9Zbz0UBqWSFUC2a0g=
+Received: by 10.90.115.4 with SMTP id n4mr12207733agc.1167338707474;
+        Thu, 28 Dec 2006 12:45:07 -0800 (PST)
+Received: by 10.90.28.1 with HTTP; Thu, 28 Dec 2006 12:45:07 -0800 (PST)
+To: "Linus Torvalds" <torvalds@osdl.org>
 Content-Disposition: inline
-In-Reply-To: <7vfyb0wexo.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35559>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35560>
 
-Junio C Hamano <junkio@cox.net> wrote:
-> Eric Wong <normalperson@yhbt.net> writes:
-> 
-> > Also, fixed an unportable use of 'export'.
-> 
-> As a traditionalist, I tend to prefer "var=val; export var" over
-> "export var=val" myself, but I wonder how unportable this is
-> these days.
-> 
-> Just wondering, no objection.
-> 
-> Do you have a specific shell in mind that groks other constructs
-> used in our tests but not "export var=val" form?
+On 12/9/06, Linus Torvalds <torvalds@osdl.org> wrote:
+> Actually, just looking at the examples, it looks like memcached is
+> fundamentally flawed, exactly the same way Apache mod_cache is
+> fundamentally flawed.
 
-I can't remember, and I can't seem to find one, either.  Even posh
-(latest debian unstable) and ash (from woody) seem to support it...
+memcached is really fast internally, but can be rather slow from the
+POV of the client code, as it forces a costly
+marshalling/unmarshalling of data. For perl-only situations where it
+is OK to have per-server caches, I have been looking at
+Cache::FastMmap. I will probably try to implement caching for the
+projects, summary & log/shortlog pages using Cache::FastMap
 
-On a related note, how portable is mkdir -p these days?  I remember
-seeing systems that don't have it, too.
+And I'll do read-for-fill for it, and see how that goes.
 
--- 
-Eric Wong
+(BTW, in the last week I've had to implement a similar
+anti-thundering-herds cache in PHP using memcached and/or eaccelerator
+-- a shmem cache -- and I've done a read-for-fill for both of them
+that works reasonably well.)
+
+cheers,
+
+
+martin
