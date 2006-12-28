@@ -1,33 +1,35 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH 1/2] Teach git-reset to let others override its reflog entry.
-Date: Wed, 27 Dec 2006 20:43:36 -0500
-Message-ID: <20061228014336.GA16790@spearce.org>
+Subject: [PATCH 2/2] Use branch names in 'git-rebase -m' conflict hunks.
+Date: Wed, 27 Dec 2006 20:43:40 -0500
+Message-ID: <20061228014340.GB16790@spearce.org>
+References: <35ce346ffc16a7c294a8a1e69e604dfec81d288f.1167270210.git.spearce@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 28 02:43:45 2006
+X-From: git-owner@vger.kernel.org Thu Dec 28 02:43:49 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GzkJ5-0003Ap-1r
-	for gcvg-git@gmane.org; Thu, 28 Dec 2006 02:43:43 +0100
+	id 1GzkJB-0003C1-1E
+	for gcvg-git@gmane.org; Thu, 28 Dec 2006 02:43:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964840AbWL1Bnk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Dec 2006 20:43:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964834AbWL1Bnk
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Dec 2006 20:43:40 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:37318 "EHLO
+	id S964834AbWL1Bno (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Dec 2006 20:43:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964845AbWL1Bno
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Dec 2006 20:43:44 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:37321 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964845AbWL1Bnj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Dec 2006 20:43:39 -0500
+	with ESMTP id S964834AbWL1Bnn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Dec 2006 20:43:43 -0500
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1GzkIw-0004Yj-CE; Wed, 27 Dec 2006 20:43:34 -0500
+	id 1GzkJ0-0004Ys-RQ; Wed, 27 Dec 2006 20:43:38 -0500
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 281C720FB65; Wed, 27 Dec 2006 20:43:36 -0500 (EST)
+	id A31C020FB65; Wed, 27 Dec 2006 20:43:40 -0500 (EST)
 To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
+In-Reply-To: <35ce346ffc16a7c294a8a1e69e604dfec81d288f.1167270210.git.spearce@spearce.org>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -40,95 +42,61 @@ X-Source-Dir:
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35502>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35503>
 
-When git-rebase invokes `git reset --hard` to rewind the user's
-branch prior to starting to reapply each commit this is showing
-up in the reflog as a simple `git reset --hard <cmt>` but its not
-clear to the end-user inspecting the log why there is a reset.
+If a three-way merge in git-rebase generates a conflict then we
+should take advantage of git-merge-recursive's ability to include
+the branch name of each side of the conflict hunk by setting the
+GITHEAD_* environment variables.
 
-The new --reflog-action for git-reset behaves like the same option
-to git-merge; it can be used by the caller to override the message
-entry in the reflog and is intended to be used only when git-reset
-is acting as plumbing, not porcelain.
+In the case of rebase there aren't really two clear branches; we
+have the branch we are rebasing onto, and we have the branch we are
+currently rebasing.  Since most conflicts will be arising between
+the user's current branch and the branch they are rebasing onto
+we assume the stuff that isn't in the current commit is the "onto"
+branch and the stuff in the current commit is the "current" branch.
+
+This assumption may however come up wrong if the user resolves one
+conflict in such a way that it conflicts again on a future commit
+also being rebased.  In this case the user's prior resolution will
+appear to be in the "onto" part of the hunk.
 
 Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
- Documentation/git-reset.txt |    5 +++++
- git-rebase.sh               |    4 ++--
- git-reset.sh                |    8 ++++++--
- 3 files changed, 13 insertions(+), 4 deletions(-)
+ git-rebase.sh |   11 ++++++++++-
+ 1 files changed, 10 insertions(+), 1 deletions(-)
 
-diff --git a/Documentation/git-reset.txt b/Documentation/git-reset.txt
-index 4f42478..7eaa186 100644
---- a/Documentation/git-reset.txt
-+++ b/Documentation/git-reset.txt
-@@ -45,6 +45,11 @@ OPTIONS
- 	switched to. Any changes to tracked files in the working tree
- 	since <commit> are lost.
- 
-+--reflog-action=<action>::
-+	This is used internally when `git-rebase` calls this command
-+	to reset the current branch prior to merging the rebased
-+	commits onto it.
-+
- <commit>::
- 	Commit to make the current HEAD.
- 
 diff --git a/git-rebase.sh b/git-rebase.sh
-index ece3142..b99f1e3 100755
+index b99f1e3..1f00cb0 100755
 --- a/git-rebase.sh
 +++ b/git-rebase.sh
-@@ -174,7 +174,7 @@ do
- 		else
- 			die "No rebase in progress?"
- 		fi
--		git reset --hard ORIG_HEAD
-+		git reset --reflog-action="rebase: abort" --hard ORIG_HEAD
- 		exit
+@@ -80,10 +80,18 @@ continue_merge () {
+ call_merge () {
+ 	cmt="$(cat $dotest/cmt.$1)"
+ 	echo "$cmt" > "$dotest/current"
+-	git-merge-$strategy "$cmt^" -- HEAD "$cmt"
++	hd=$(git-rev-parse --verify HEAD)
++	cmt_name=$(git-symbolic-ref HEAD)
++	msgnum=$(cat $dotest/msgnum)
++	end=$(cat $dotest/end)
++	eval GITHEAD_$cmt='"${cmt_name##refs/heads/}~$(($end - $msgnum))"'
++	eval GITHEAD_$hd='"$(cat $dotest/onto_name)"'
++	export GITHEAD_$cmt GITHEAD_$hd
++	git-merge-$strategy "$cmt^" -- "$hd" "$cmt"
+ 	rv=$?
+ 	case "$rv" in
+ 	0)
++		unset GITHEAD_$cmt GITHEAD_$hd
+ 		return
  		;;
- 	--onto)
-@@ -293,7 +293,7 @@ fi
+ 	1)
+@@ -316,6 +324,7 @@ fi
  
- # Rewind the head to "$onto"; this saves our current head in ORIG_HEAD.
- echo "First, rewinding head to replay your work on top of it..."
--git-reset --hard "$onto"
-+git-reset --hard --reflog-action="rebase: rewind to $onto_name" "$onto"
+ mkdir -p "$dotest"
+ echo "$onto" > "$dotest/onto"
++echo "$onto_name" > "$dotest/onto_name"
+ prev_head=`git-rev-parse HEAD^0`
+ echo "$prev_head" > "$dotest/prev_head"
  
- # If the $onto is a proper descendant of the tip of the branch, then
- # we just fast forwarded.
-diff --git a/git-reset.sh b/git-reset.sh
-index 2379db0..7ef6789 100755
---- a/git-reset.sh
-+++ b/git-reset.sh
-@@ -6,7 +6,7 @@ USAGE='[--mixed | --soft | --hard]  [<commit-ish>] [ [--] <paths>...]'
- SUBDIRECTORY_OK=Yes
- . git-sh-setup
- 
--update= reset_type=--mixed
-+rloga= update= reset_type=--mixed
- unset rev
- 
- while case $# in 0) break ;; esac
-@@ -15,6 +15,9 @@ do
- 	--mixed | --soft | --hard)
- 		reset_type="$1"
- 		;;
-+	--reflog-action=*)
-+		rloga=`expr "z$1" : 'z-[^=]*=\(.*\)'`
-+		;;
- 	--)
- 		break
- 		;;
-@@ -81,7 +84,8 @@ then
- else
- 	rm -f "$GIT_DIR/ORIG_HEAD"
- fi
--git-update-ref -m "reset $reset_type $*" HEAD "$rev"
-+test "$rloga" = '' && rloga="reset $reset_type $*"
-+git-update-ref -m "$rloga" HEAD "$rev"
- update_ref_status=$?
- 
- case "$reset_type" in
 -- 
 1.4.4.3.gd2e4
