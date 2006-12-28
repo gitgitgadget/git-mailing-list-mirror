@@ -1,151 +1,88 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: branch.pu.forcefetch
-Date: Thu, 28 Dec 2006 14:44:54 -0800
-Message-ID: <7vzm97tzbt.fsf@assigned-by-dhcp.cox.net>
-References: <1167251519.2247.10.camel@dv>
-	<7vfyb159dn.fsf@assigned-by-dhcp.cox.net>
-	<1167341346.12660.17.camel@dv>
+From: Steven Grimm <koreth@midwinter.com>
+Subject: How to build manpages on OS X
+Date: Thu, 28 Dec 2006 15:32:08 -0800
+Message-ID: <459453F8.1010200@midwinter.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Shawn Pearce <spearce@spearce.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Lars Hjemli <hjemli@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 28 23:45:09 2006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Fri Dec 29 00:32:22 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1H03zh-00022p-UM
-	for gcvg-git@gmane.org; Thu, 28 Dec 2006 23:45:02 +0100
+	id 1H04jS-0007tu-Fc
+	for gcvg-git@gmane.org; Fri, 29 Dec 2006 00:32:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965027AbWL1Wo5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Dec 2006 17:44:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965034AbWL1Wo4
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Dec 2006 17:44:56 -0500
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:59245 "EHLO
-	fed1rmmtao10.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965027AbWL1Wo4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Dec 2006 17:44:56 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao10.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20061228224455.KQEO20715.fed1rmmtao10.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 28 Dec 2006 17:44:55 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id 4Nl81W00S1kojtg0000000; Thu, 28 Dec 2006 17:45:09 -0500
-To: Pavel Roskin <proski@gnu.org>
-In-Reply-To: <1167341346.12660.17.camel@dv> (Pavel Roskin's message of "Thu,
-	28 Dec 2006 16:29:06 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753849AbWL1Xbz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Dec 2006 18:31:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753872AbWL1Xbz
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Dec 2006 18:31:55 -0500
+Received: from tater.midwinter.com ([216.32.86.90]:37036 "HELO midwinter.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753849AbWL1Xbs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Dec 2006 18:31:48 -0500
+Received: (qmail 20731 invoked from network); 28 Dec 2006 23:31:47 -0000
+Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=200606; d=midwinter.com;
+  b=r5C1Nk05BMhNNg/UrOSoOf0HO4u/bfLJlOSiY7bkjMl7BVJtvQhZZha2jSaPJawu  ;
+Received: from localhost (HELO ?127.0.0.1?) (koreth@127.0.0.1)
+  by localhost with SMTP; 28 Dec 2006 23:31:47 -0000
+User-Agent: Mail/News 1.5.0.2 (Macintosh/20060324)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35564>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35565>
 
-[jc: some people CC'ed because I'll talk about logallrefupdates
- at the end]
+Didn't see this documented anywhere, so...
 
-Pavel Roskin <proski@gnu.org> writes:
+If you want to do a full build of git on OS X including the manpages, 
+you need the asciidoc and xmlto packages. Both of them are available 
+from macports.org (formerly known as DarwinPorts) but out of the box, 
+they don't work quite right. If you try doing a "make doc", you get the 
+following error from xmlto:
 
-> Actually, it's strange that I don't actually have refs/heads/pu
-> under .git, and it doesn't get created even if I run "git-pull" or
-> "git-pull origin pu".
+I/O error : Attempt to load network entity 
+http://docbook.sourceforge.net/release/xsl/current/manpages/docbook.xsl
 
-"git-pull" without argument (and "git-pull origin") are affected
-by the config (and .git/remotes/origin), so we will look at your
-config later.
+The superficial reason for that error is that xmlto is calling the 
+xsltproc utility with a command-line option that tells it to not fetch 
+documents from the network. If you edit xmlto and remove that option, 
+the doc build will work, but it will have to fetch a bunch of files from 
+SourceForge for every manpage, which is dog slow.
 
-With "git-pull origin pu", you are saying "use URL for origin
-but this time I am not interested in the set of branches to
-fetch by default specified in my config".  And single token "pu"
-means you do not want to store the fetch result in any tracking
-branch (otherwise you would explicitly say "pu:refs/heads/pu" or
-"pu:/refs/remotes/origin/pu").
+The real solution is to use local copies of the files it's trying to 
+fetch. These files are installed as part of one of the dependencies when 
+you install xmlto, but the install process doesn't tell the system where 
+to look for them! To use these local copies, you need to do two things.
 
-> We have a line that says: "pull from pu branch of origin and merge it
-> into local pu branch even if fast-forward is impossible".
+First, create an XML catalog file. Typically it's called catalog.xml. 
+The contents should be:
 
-Are you talking about "remote.origin.fetch = +pu:refs/heads/pu"?
+<?xml version='1.0'?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+<rewriteURI 
+uriStartString="http://docbook.sourceforge.net/release/xsl/current/"
+        rewritePrefix="file:///opt/local/share/xsl/docbook-xsl/" />
+<rewriteURI uriStartString="http://www.oasis-open.org/docbook/xml/4.2/"
+        rewritePrefix="file:///opt/local/share/xml/docbook-xml/4.3/" />
+</catalog>
 
-If so, the line does _not_ say that.  It does not talk about
-pulling nor merging.  What it says is "My refs/heads/pu is used
-as a tracking branch for keeping track of the progress of his
-'pu'; because I know he rewinds and rebases, please override the
-fast-forward check when you store the updated value of his 'pu'
-to my 'refs/heads/pu'".
+Yes, that second rewriteURI maps the 4.2 docbook URI to the 4.3 version 
+-- blame the MacPorts packages, because that's what gets installed. The 
+mismatch doesn't appear to hurt anything. (If you're reading this from 
+the mailing list archive, MacPorts might have updated the packages since 
+I wrote this, so adjust the paths accordingly.)
 
-> However,
-> there it no local pu branch.  Yet not having this line blocks updating
-> of master branch.
+Now you need to tell the system to use the file. You do that using the 
+XML_CATALOG_FILES environment variable, like so:
 
-Now that is worrisome.  "git pull"  and "git pull origin" (but
-not "git pull pu" for the reason I mentioned earlier) should
-create your "pu" branch if you have the configuration.
+$ export XML_CATALOG_FILES=`pwd`/catalog.xml
+$ make prefix=/opt/local doc
+$ sudo make prefix=/opt/local install-doc
 
-Let me understand the situation.  Your config file is:
+Annoying that it doesn't just work, but hopefully this will save someone 
+some Googling around.
 
-> My .git/config file is:
->
-> [core]
->         repositoryformatversion = 0
->         filemode = true
->         logallrefupdates = true
-> [remote "origin"]
->         url = git://www.kernel.org/pub/scm/git/git.git
->         fetch = refs/heads/*:refs/remotes/origin/*
-> [branch "master"]
->         remote = origin
->         merge = refs/heads/master
-
-So you may not have refs/heads/pu (iow, you do not build on top
-of my 'pu'), but the config says refs/remotes/origin/ is used to
-track all my branches.  Do you have refs/remotes/origin/pu?
-
-If so, then "git fetch" would error out exactly because 'pu'
-would not fast forward and the config says it does not allow
-non-fast-forward fetch.
-
-It might make sense to make the default configuration git
-clone creates to say
-
-        [remote "origin"]
-                url = git://www.kernel.org/pub/scm/git/git.git
-                fetch = +refs/heads/*:refs/remotes/origin/*
-
-instead.
-
-I think I suggested this once but vaguely recall some people
-objected, for the reason that an unusual situation such as
-non-fast-forward should always error out for safety and should
-require an explicit override by the user.
-
-But come to think of it, I think failing to update the remote
-tracking branch for non-fast-forward does not buy us very much.
-Letting the user to be aware of the situation has value, but at
-that point, I do not think there is much else the user can do.
-The purpose of the tracking branches is to track what happens on
-the remote side, and the user is in no position to override what
-has already happend on the remote side (otherwise it stops being
-"tracking branches").  If reflogs are enabled on remote tracking
-braches, you can always get back the older state if you wanted
-to.
-
-That makes me notice another thing.  We do not seem to create
-reflog for remotes/ hierarchy even when logallrefupdates is set
-to true.  Would people object if we did this?
-
-diff --git a/refs.c b/refs.c
-index 8b2a3c1..e88ed8b 100644
---- a/refs.c
-+++ b/refs.c
-@@ -925,7 +925,8 @@ static int log_ref_write(struct ref_lock *lock,
- 	const char *committer;
- 
- 	if (log_all_ref_updates &&
--	    !strncmp(lock->ref_name, "refs/heads/", 11)) {
-+	    (!strncmp(lock->ref_name, "refs/heads/", 11) ||
-+	     !strncmp(lock->ref_name, "refs/remotes/", 13))) {
- 		if (safe_create_leading_directories(lock->log_file) < 0)
- 			return error("unable to create directory for %s",
- 				lock->log_file);
+-Steve
