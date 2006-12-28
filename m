@@ -1,83 +1,73 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Shawn Pearce <spearce@spearce.org>
 Subject: Re: [PATCH 1/2] Teach git-reset to let others override its reflog entry.
-Date: Wed, 27 Dec 2006 22:13:58 -0800
-Message-ID: <7vslf0zgwp.fsf@assigned-by-dhcp.cox.net>
-References: <20061228014336.GA16790@spearce.org>
+Date: Thu, 28 Dec 2006 01:22:34 -0500
+Message-ID: <20061228062233.GA17304@spearce.org>
+References: <20061228014336.GA16790@spearce.org> <7vslf0zgwp.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 28 07:14:13 2006
+X-From: git-owner@vger.kernel.org Thu Dec 28 07:22:58 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GzoWm-0001kp-OX
-	for gcvg-git@gmane.org; Thu, 28 Dec 2006 07:14:09 +0100
+	id 1GzofI-0002pH-9I
+	for gcvg-git@gmane.org; Thu, 28 Dec 2006 07:22:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964940AbWL1GOE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Dec 2006 01:14:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964946AbWL1GOE
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Dec 2006 01:14:04 -0500
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:57663 "EHLO
-	fed1rmmtao03.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964940AbWL1GOD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Dec 2006 01:14:03 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20061228061359.FXKF29122.fed1rmmtao03.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 28 Dec 2006 01:13:59 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id 46EC1W00X1kojtg0000000; Thu, 28 Dec 2006 01:14:13 -0500
-To: "Shawn O. Pearce" <spearce@spearce.org>
-In-Reply-To: <20061228014336.GA16790@spearce.org> (Shawn O. Pearce's message
-	of "Wed, 27 Dec 2006 20:43:36 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S964943AbWL1GWk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Dec 2006 01:22:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964945AbWL1GWk
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Dec 2006 01:22:40 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:44260 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964943AbWL1GWj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Dec 2006 01:22:39 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1GzoeZ-0005fC-Bu; Thu, 28 Dec 2006 01:22:11 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id EBFFF20FB65; Thu, 28 Dec 2006 01:22:34 -0500 (EST)
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vslf0zgwp.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35520>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35521>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
+Junio C Hamano <junkio@cox.net> wrote:
+> "Shawn O. Pearce" <spearce@spearce.org> writes:
+> 
+> > The new --reflog-action for git-reset behaves like the same option
+> > to git-merge; it can be used by the caller to override the message
+> > entry in the reflog and is intended to be used only when git-reset
+> > is acting as plumbing, not porcelain.
+> 
+> Honestly, I hate these --reflog-action options everywhere.
 
-> The new --reflog-action for git-reset behaves like the same option
-> to git-merge; it can be used by the caller to override the message
-> entry in the reflog and is intended to be used only when git-reset
-> is acting as plumbing, not porcelain.
+Me too.  Yet I submit patches to add them.  ;-)
+ 
+> Then calls to "git-update-ref -m" could use the value of
+> "$GIT_REFLOG_ACTION", without explicit --reflog-action=
+> parameters and $rloga variables.
 
-Honestly, I hate these --reflog-action options everywhere.
+I agree.  Your suggestion is way more elegant.
 
-I wonder if something like this would be easier to manage in the
-longer run:
+I have some more git-am/git-merge/git-pull/git-rebase patches
+brewing; I'm finishing the commit message for the last in the
+sequence.  I'll update it to include your suggestion and try to
+start cleaning up this --reflog-action mess, then ship the series
+out to the list, including this mini 2 patch series you are
+rejecting for good reason.
 
- * In git-sh-setup.sh, have this shell function.
-
-	set_reflog_action () {
-		if test -z "${GIT_REFLOG_ACTION+set}"
-                then
-                	GIT_REFLOG_ACTION="$*"
-                        export GIT_REFLOG_ACTION
-		fi
-	}
-
- * Begin git-reset.sh with something like this:
-
-	#!/bin/sh
-
-	. git-sh-setup
-	set_reflog_action "reset $*"
-
- * Update Porcelain-ish commands that use git-reset in the same
-   way.  For example, git-rebase could say:
-
-	#!/bin/sh
-
-	. git-sh-setup
-	set_reflog_action "rebase $*"
-
-Then calls to "git-update-ref -m" could use the value of
-"$GIT_REFLOG_ACTION", without explicit --reflog-action=
-parameters and $rloga variables.
-
-Hmm?
+-- 
+Shawn.
