@@ -1,72 +1,60 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: Why git-merge-resolve in git-am?
-Date: Thu, 28 Dec 2006 02:48:58 -0500
-Message-ID: <20061228074857.GC17304@spearce.org>
-References: <20061228014525.GC16612@spearce.org> <7vr6uk3h2p.fsf@assigned-by-dhcp.cox.net> <20061228022038.GE16612@spearce.org> <7virfw3gb2.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 7/11] Avoid git-fetch in `git-pull .` when possible.
+Date: Thu, 28 Dec 2006 00:08:16 -0800
+Message-ID: <7v8xgsxx1r.fsf@assigned-by-dhcp.cox.net>
+References: <9847899e4ba836980dbfed6d0ea1c82f31f21456.1167290864.git.spearce@spearce.org>
+	<20061228073517.GG17867@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 28 08:49:20 2006
+X-From: git-owner@vger.kernel.org Thu Dec 28 09:08:32 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1Gzq0m-0002EE-K9
-	for gcvg-git@gmane.org; Thu, 28 Dec 2006 08:49:12 +0100
+	id 1GzqJR-0003i4-I6
+	for gcvg-git@gmane.org; Thu, 28 Dec 2006 09:08:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964957AbWL1HtF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Dec 2006 02:49:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964959AbWL1HtF
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Dec 2006 02:49:05 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:46148 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964957AbWL1HtE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Dec 2006 02:49:04 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1Gzq09-0000B1-IO; Thu, 28 Dec 2006 02:48:33 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 8C47420FB65; Thu, 28 Dec 2006 02:48:58 -0500 (EST)
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7virfw3gb2.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S964959AbWL1IIV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Dec 2006 03:08:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964960AbWL1IIV
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Dec 2006 03:08:21 -0500
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:56917 "EHLO
+	fed1rmmtao07.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964959AbWL1IIS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Dec 2006 03:08:18 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20061228080817.GQEF3976.fed1rmmtao07.cox.net@fed1rmimpo02.cox.net>;
+          Thu, 28 Dec 2006 03:08:17 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id 488X1W0061kojtg0000000; Thu, 28 Dec 2006 03:08:31 -0500
+To: "Shawn O. Pearce" <spearce@spearce.org>
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35534>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35535>
 
-Junio C Hamano <junkio@cox.net> wrote:
-> Shawn Pearce <spearce@spearce.org> writes:
-> 
-> > Good reasons, but all are strictly historical.  So there's actually
-> > no technical reason we can't use merge-recursive here in git-am.
-> 
-> A very early version of recursive was unusable (it did not pay
-> attention to the merge base the caller gave it and tried to
-> always compute it by itself), but that was fixed sometime later.
-> 
-> I do not recall offhand C version still has that fix (I think it
-> does but you should double check); as long ias it honors the
-> merge base the caller computed, it should be Ok to replace
-> resolve with recursive.  Go wild.
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-I checked.  It does use the merge base supplied by the caller,
-but only if the caller supplies only one merge base.  Otherwise it
-computes its own.
+> Users may also now use `git-pull . foo~3` to merge the early part
+> of branch foo.  This was not previously possible as git-fetch does
+> not know how to fetch foo~3 from a repository.
 
-This isn't a problem for git-am as we only supply one merge base.
-What was a problem was git-am supplies trees, not commits, and the
-code internally uses commits.  I fixed that in patch 9/11 'Allow
-merging bare trees' in my recent series.
+I personally think this is not an improvement, but rather a new
+source of confusion.  If the user wants a local merge, there is
+'git-merge'.  And the distinction between the commands makes it
+clear that local merge can merge any commits exactly because
+they are available locally, while remote fetch+merge needs to
+choose from what the remote side offers so not arbitrary commits
+like foo@{3.days.ago} cannot be pulled.
 
--- 
-Shawn.
+Also I thought there was a configuration variable that talks
+about "remote = ."  (didn't I merge that patch -- I do not
+remember offhand) and I wonder how that interacts with this
+change.
+
+How much performance gain are we talking about here?
