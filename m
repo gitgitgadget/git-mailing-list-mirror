@@ -1,32 +1,32 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH 8/11] Move better_branch_name above get_ref in merge-recursive.
-Date: Thu, 28 Dec 2006 02:35:20 -0500
-Message-ID: <20061228073520.GH17867@spearce.org>
+Subject: [PATCH 11/11] Improve merge performance by avoiding in-index merges.
+Date: Thu, 28 Dec 2006 02:35:34 -0500
+Message-ID: <20061228073534.GK17867@spearce.org>
 References: <9847899e4ba836980dbfed6d0ea1c82f31f21456.1167290864.git.spearce@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 28 08:35:37 2006
+X-From: git-owner@vger.kernel.org Thu Dec 28 08:35:47 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GzpnW-0000xI-FJ
-	for gcvg-git@gmane.org; Thu, 28 Dec 2006 08:35:30 +0100
+	id 1Gzpnl-0000za-Ui
+	for gcvg-git@gmane.org; Thu, 28 Dec 2006 08:35:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964993AbWL1Hf2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Dec 2006 02:35:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964955AbWL1Hf2
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Dec 2006 02:35:28 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:45838 "EHLO
+	id S964996AbWL1Hfm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Dec 2006 02:35:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964998AbWL1Hfm
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Dec 2006 02:35:42 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:45856 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964993AbWL1HfZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Dec 2006 02:35:25 -0500
+	with ESMTP id S964996AbWL1Hfl (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Dec 2006 02:35:41 -0500
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1Gzpmx-0007yL-OV; Thu, 28 Dec 2006 02:34:56 -0500
+	id 1GzpnA-0007zH-Mw; Thu, 28 Dec 2006 02:35:12 -0500
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 0531520FB65; Thu, 28 Dec 2006 02:35:21 -0500 (EST)
+	id 0DD6320FB65; Thu, 28 Dec 2006 02:35:34 -0500 (EST)
 To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
 In-Reply-To: <9847899e4ba836980dbfed6d0ea1c82f31f21456.1167290864.git.spearce@spearce.org>
@@ -42,58 +42,90 @@ X-Source-Dir:
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35530>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35531>
 
-To permit the get_ref function to use the static better_branch_name
-function to generate a string on demand I'm moving it up earlier.
-The actual logic was not affected in this change.
+In the early days of Git we performed a 3-way read-tree based merge
+before attempting any specific merge strategy, as our core merge
+strategies of merge-one-file and merge-recursive were slower script
+based programs which took far longer to execute.  This was a good
+performance optimization in the past, as most merges were able to
+be handled strictly by `read-tree -m -u`.
+
+However now that merge-recursive is a C based program which performs
+a full 3-way read-tree before it starts running we need to pay the
+cost of the 3-way read-tree twice if we have to do any sort of file
+level merging.  This slows down some classes of simple merges which
+`read-tree -m -u` could not handle but which merge-recursive does
+automatically.
+
+For a really trivial merge which can be handled entirely by
+`read-tree -m -u`, skipping the read-tree and just going directly
+into merge-recursive saves on average 50 ms on my PowerPC G4 system.
+May sound odd, but it does appear to be true.
+
+In a really simple merge which needs to use merge-recursive to handle
+a file that was modified on both branches, skipping the read-tree
+in git-merge saves on average almost 100 ms (on the same PowerPC G4)
+as we avoid doing some work twice.
+
+We only avoid `read-tree -m -u` if the only strategy to use is
+merge-recursive, as not all merge strategies perform as well as
+merge-recursive does.
 
 Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
- merge-recursive.c |   24 ++++++++++++------------
- 1 files changed, 12 insertions(+), 12 deletions(-)
+ git-merge.sh |   39 ++++++++++++++++++++++-----------------
+ 1 files changed, 22 insertions(+), 17 deletions(-)
 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index ca4f19e..1c84ed7 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -1248,6 +1248,18 @@ static int merge(struct commit *h1,
- 	return clean;
- }
- 
-+static const char *better_branch_name(const char *branch)
-+{
-+	static char githead_env[8 + 40 + 1];
-+	char *name;
-+
-+	if (strlen(branch) != 40)
-+		return branch;
-+	sprintf(githead_env, "GITHEAD_%s", branch);
-+	name = getenv(githead_env);
-+	return name ? name : branch;
-+}
-+
- static struct commit *get_ref(const char *ref)
- {
- 	unsigned char sha1[20];
-@@ -1263,18 +1275,6 @@ static struct commit *get_ref(const char *ref)
- 	return (struct commit *)object;
- }
- 
--static const char *better_branch_name(const char *branch)
--{
--	static char githead_env[8 + 40 + 1];
--	char *name;
+diff --git a/git-merge.sh b/git-merge.sh
+index a8f673e..74d4fb0 100755
+--- a/git-merge.sh
++++ b/git-merge.sh
+@@ -341,23 +341,28 @@ f,*)
+ ?,1,*,)
+ 	# We are not doing octopus, not fast forward, and have only
+ 	# one common.  See if it is really trivial.
+-	git var GIT_COMMITTER_IDENT >/dev/null || exit
 -
--	if (strlen(branch) != 40)
--		return branch;
--	sprintf(githead_env, "GITHEAD_%s", branch);
--	name = getenv(githead_env);
--	return name ? name : branch;
--}
--
- int main(int argc, char *argv[])
- {
- 	static const char *bases[2];
+-	echo "Trying really trivial in-index merge..."
+-	git-update-index --refresh 2>/dev/null
+-	if git-read-tree --trivial -m -u -v $common $head "$1" &&
+-	   result_tree=$(git-write-tree)
+-	then
+-	    echo "Wonderful."
+-	    result_commit=$(
+-	        echo "$merge_msg" |
+-	        git-commit-tree $result_tree -p HEAD -p "$1"
+-	    ) || exit
+-	    finish "$result_commit" "In-index merge"
+-	    dropsave
+-	    exit 0
+-	fi
+-	echo "Nope."
++	case "$use_strategies" in
++	recursive|'recursive '|recur|'recur ')
++		: run merge later
++		;;
++	*)
++		git var GIT_COMMITTER_IDENT >/dev/null || exit
++		echo "Trying really trivial in-index merge..."
++		git-update-index --refresh 2>/dev/null
++		if git-read-tree --trivial -m -u -v $common $head "$1" &&
++		   result_tree=$(git-write-tree)
++		then
++			echo "Wonderful."
++			result_commit=$(
++				echo "$merge_msg" |
++				git-commit-tree $result_tree -p HEAD -p "$1"
++			) || exit
++			finish "$result_commit" "In-index merge"
++			dropsave
++			exit 0
++		fi
++		echo "Nope."
++	esac
+ 	;;
+ *)
+ 	# An octopus.  If we can reach all the remote we are up to date.
 -- 
 1.4.4.3.gd2e4
