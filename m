@@ -1,57 +1,67 @@
-From: Robert Fitzsimons <robfitz@273k.net>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: [RFC/PATCH 6/6] gitweb: Make possible to run under mod_perl without ParseHeaders
-Date: Thu, 28 Dec 2006 01:03:11 +0000
-Message-ID: <20061228010311.GD6558@localhost>
-References: <200612272355.31923.jnareb@gmail.com> <200612280106.24331.jnareb@gmail.com>
+Date: Thu, 28 Dec 2006 02:12:44 +0100
+Message-ID: <200612280212.45120.jnareb@gmail.com>
+References: <200612272355.31923.jnareb@gmail.com> <200612280106.24331.jnareb@gmail.com> <20061228010311.GD6558@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 28 02:03:32 2006
+X-From: git-owner@vger.kernel.org Thu Dec 28 02:10:02 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1GzjgB-00080L-H9
-	for gcvg-git@gmane.org; Thu, 28 Dec 2006 02:03:31 +0100
+	id 1GzjmS-00008z-0i
+	for gcvg-git@gmane.org; Thu, 28 Dec 2006 02:10:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964827AbWL1BDQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Dec 2006 20:03:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964834AbWL1BDQ
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Dec 2006 20:03:16 -0500
-Received: from igraine.blacknight.ie ([81.17.252.25]:33787 "EHLO
-	igraine.blacknight.ie" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964827AbWL1BDP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Dec 2006 20:03:15 -0500
-Received: from 213-202-132-133.bas502.dsl.esat.net ([213.202.132.133] helo=localhost)
-	by igraine.blacknight.ie with esmtp (Exim 4.60)
-	(envelope-from <robfitz@273k.net>)
-	id 1GzjfX-0004Cy-Db; Thu, 28 Dec 2006 01:02:51 +0000
-To: Jakub Narebski <jnareb@gmail.com>
+	id S964807AbWL1BJx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Dec 2006 20:09:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964840AbWL1BJw
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Dec 2006 20:09:52 -0500
+Received: from ug-out-1314.google.com ([66.249.92.170]:54678 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964832AbWL1BJw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Dec 2006 20:09:52 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so4030368uga
+        for <git@vger.kernel.org>; Wed, 27 Dec 2006 17:09:50 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=kPRK6+YQCQRa8Xa5oDm/dw5NfQKaNl8WMx/lNHbBJa4uaL4FbXlAYppLcr1TDz5GpsLTe4YApie5OgxFpstFHQ2kzTiOIlroelBlRAmflJxIfu9EWxqiQi/8wfIbcdEsdIX7kppSCq+4okoP3b0+ul/xfEL+fX3UoJdI+MfuBXg=
+Received: by 10.66.255.7 with SMTP id c7mr20574723ugi.1167268190685;
+        Wed, 27 Dec 2006 17:09:50 -0800 (PST)
+Received: from host-81-190-19-121.torun.mm.pl ( [81.190.19.121])
+        by mx.google.com with ESMTP id u6sm23828432uge.2006.12.27.17.09.50;
+        Wed, 27 Dec 2006 17:09:50 -0800 (PST)
+To: Robert Fitzsimons <robfitz@273k.net>
+User-Agent: KMail/1.9.3
+In-Reply-To: <20061228010311.GD6558@localhost>
 Content-Disposition: inline
-In-Reply-To: <200612280106.24331.jnareb@gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-blacknight-igraine-MailScanner-Information: Please contact the ISP for more information
-X-blacknight-igraine-MailScanner: Found to be clean
-X-blacknight-igraine-MailScanner-SpamCheck: not spam,
-	SpamAssassin (not cached, score=-0.012, required 7,
-	autolearn=disabled, RCVD_IN_NERDS_IE -2.00, RCVD_IN_SORBS_DUL 1.99)
-X-MailScanner-From: robfitz@273k.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35496>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35497>
 
-> @@ -1854,7 +1976,8 @@ EOF
->  		      $cgi->hidden(-name => "a") . "\n" .
->  		      $cgi->hidden(-name => "h") . "\n" .
->  		      $cgi->popup_menu(-name => 'st', -default => 'commit',
-> -				       -values => ['commit', 'author', 'committer', 'pickaxe']) .
-> +		                       -values => ['commit', 'author', 'committer',
-> +		                       gitweb_check_feature('pickaxe') ? 'pickaxe' : ()]) .
->  		      $cgi->sup($cgi->a({-href => href(action=>"search_help")}, "?")) .
->  		      " search:\n",
->  		      $cgi->textfield(-name => "s", -value => $searchtext) . "\n" .
+Robert Fitzsimons wrote:
+>> @@ -1854,7 +1976,8 @@ EOF
+>>  		      $cgi->hidden(-name => "a") . "\n" .
+>>  		      $cgi->hidden(-name => "h") . "\n" .
+>>  		      $cgi->popup_menu(-name => 'st', -default => 'commit',
+>> -				       -values => ['commit', 'author', 'committer', 'pickaxe']) .
+>> +		                       -values => ['commit', 'author', 'committer',
+>> +		                       gitweb_check_feature('pickaxe') ? 'pickaxe' : ()]) .
+>>  		      $cgi->sup($cgi->a({-href => href(action=>"search_help")}, "?")) .
+>>  		      " search:\n",
+>>  		      $cgi->textfield(-name => "s", -value => $searchtext) . "\n" .
+> 
+> This should be a separate patch.
 
-This should be a separate patch.
+I'm sorry, somehow I missed this.
 
-Robert
+Besides, it would be better to assign return value to some
+variable, to avoid calling gitweb_check_feature again... 
+-- 
+Jakub Narebski
+Poland
