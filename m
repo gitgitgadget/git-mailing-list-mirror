@@ -1,94 +1,110 @@
-From: Robert Fitzsimons <robfitz@273k.net>
-Subject: Re: read-for-fill and caching in gitweb (Re: kernel.org mirroring)
-Date: Fri, 29 Dec 2006 19:31:56 +0000
-Message-ID: <20061229193156.GG6558@localhost>
-References: <46a038f90612281245s52bdd868h8c421951c7abeb84@mail.gmail.com> <20061229032126.GE6558@localhost> <200612291140.46909.jnareb@gmail.com>
+From: Luben Tuikov <ltuikov@yahoo.com>
+Subject: SIGSEGV in merge recursive
+Date: Fri, 29 Dec 2006 11:49:43 -0800 (PST)
+Message-ID: <699806.13055.qm@web31803.mail.mud.yahoo.com>
+Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Robert Fitzsimons <robfitz@273k.net>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	Linus Torvalds <torvalds@osdl.org>,
-	Jeff Garzik <jeff@garzik.org>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Rogan Dawes <discard@dawes.za.net>,
-	Kernel Org Admin <ftpadmin@kernel.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Dec 29 20:32:21 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Fri Dec 29 20:49:56 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1H0NSm-0000WS-FG
-	for gcvg-git@gmane.org; Fri, 29 Dec 2006 20:32:20 +0100
+	id 1H0Njn-0002ws-Us
+	for gcvg-git@gmane.org; Fri, 29 Dec 2006 20:49:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965125AbWL2TcO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Dec 2006 14:32:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965121AbWL2TcO
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Dec 2006 14:32:14 -0500
-Received: from igraine.blacknight.ie ([81.17.252.25]:38268 "EHLO
-	igraine.blacknight.ie" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965125AbWL2TcN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Dec 2006 14:32:13 -0500
-Received: from 213-202-135-153.bas502.dsl.esat.net ([213.202.135.153] helo=localhost)
-	by igraine.blacknight.ie with esmtp (Exim 4.60)
-	(envelope-from <robfitz@273k.net>)
-	id 1H0NRz-0004d4-AT; Fri, 29 Dec 2006 19:31:31 +0000
-To: Jakub Narebski <jnareb@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <200612291140.46909.jnareb@gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-blacknight-igraine-MailScanner-Information: Please contact the ISP for more information
-X-blacknight-igraine-MailScanner: Found to be clean
-X-blacknight-igraine-MailScanner-SpamCheck: not spam,
-	SpamAssassin (not cached, score=-0.012, required 7,
-	autolearn=disabled, RCVD_IN_NERDS_IE -2.00, RCVD_IN_SORBS_DUL 1.99)
-X-MailScanner-From: robfitz@273k.net
+	id S965121AbWL2Ttp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Dec 2006 14:49:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965129AbWL2Ttp
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Dec 2006 14:49:45 -0500
+Received: from web31803.mail.mud.yahoo.com ([68.142.207.66]:41282 "HELO
+	web31803.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S965121AbWL2Tto (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 29 Dec 2006 14:49:44 -0500
+Received: (qmail 15128 invoked by uid 60001); 29 Dec 2006 19:49:43 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=X-YMail-OSG:Received:Date:From:Reply-To:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
+  b=GfU2hQxH9yU9Nvla/Or12zORtzLftLSAYhcsaTxVsWt8nmQDX9xcGHQeshrYs4BUZWTeNW/i0W4Iw3eme3U8UGCLXO+Mz8al/zS9q04BEgF1xtm4xytXdPHW2fIwQhvXa9LiQcZ39o4q6b0fa9JUOQK4I75bm8dO/xAqd3oMBjo=;
+X-YMail-OSG: RArxWd8VM1megffZk1LXV10TJOx6LgrafEXqxpH7PIn5WhcQfDBRyOAufs1YplRw8R.th5e2MSeOgcwIFg9f7fmyUu4PchWRBfYCbJBIFslX3pF9vRvFoHK0utasJtEQN8Y5BEaRyvYk.6uu9yb9q3ZRZf5PQnMlw..bT1B4.xR.1Uve1_jC85kBj_N8
+Received: from [71.84.31.238] by web31803.mail.mud.yahoo.com via HTTP; Fri, 29 Dec 2006 11:49:43 PST
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35604>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35605>
 
-> >                  project_list   summary  shortlog        log
-> > v267                  173 1.6  1141 8.8   795 5.0   919  1.9
-> > 1.4.4.3               220 2.3   397 2.4   930 4.2  1113 56.9
-> > 1.5.0.rc0.g4a4d       226 1.9   292 1.7   352 4.0   491  6.7
-> > 1.5.0.rc0.g4a4d        60 1.0   131 0.7   195 1.2   347  3.7
-> > (mod_perl)
+This time it happens when merging one of my git trees into another:
 
-> It is simply the case that new features cost more. Namely in earlier
-> versions of gitweb Last Change time was taken from HEAD (from current
-> branch), in newer we check all branches (using git-for-each-ref).
-> For published public repository it migh make sense to pack also heads
-> (make them packed refs).
->
-> I was thinking about making this a gitweb %feature, allowing gitweb
-> administrator to chose if Last Change is taken from all branches
-> (as it is now), from HEAD (as it was before), or from given branch
-> (for example master).
+$git-pull . git-upstream
+Trying really trivial in-index merge...
+fatal: Merge requires file-level merging
+Nope.
+git-merge-recursive 777f68432f1db967573e5722bf0fd08af05e748f -- HEAD
+d985fdaf7a4b8b1dde313c8fad12983dc4ce20f7
+Merging HEAD with d985fdaf7a4b8b1dde313c8fad12983dc4ce20f7
+Merging:
+52d5052 Merge branch 'git-upstream' into git-lt-work
+d985fda Merge branch 'next' into git-upstream
+found 1 common ancestor(s):
+777f684 Merge branch 'next' into git-upstream
+Auto-merging .gitignore
+/home/luben/bin/git-merge: line 441:  2889 Segmentation fault      git-merge-$strategy $common --
+"$head_arg" "$@"
+Merge with strategy recursive failed.
 
-I've sent a separate email with a patch to add this feature.
-("[PATCH] gitweb: New feature last_modified_ref."
-<20061229185805.GF6558@localhost>).
+(git-upstream has already had "next" merged into it without a problem.)
 
-Here are the new numbers.  Notes: I've only got 3 projects in my project
-list and I did a 'git gc' on them since yesterday.
+And here is the backtrace:
 
-                 project_list    summary   shortlog         log
+$gdb ~/bin/git-merge-recursive
+GNU gdb 6.5
+Copyright (C) 2006 Free Software Foundation, Inc.
+GDB is free software, covered by the GNU General Public License, and you are
+welcome to change it and/or distribute copies of it under certain conditions.
+Type "show copying" to see the conditions.
+There is absolutely no warranty for GDB.  Type "show warranty" for details.
+This GDB was configured as "i686-pc-linux-gnu"...Using host libthread_db library
+"/lib/libthread_db.so.1".
 
-v267                 174  1.1   286  2.1   794  3.4    921  3.2
-1.4.4.3              207  1.7   383  2.0   921  5.2   1082  3.8
-g04509 + patch       213  1.6   297 68.9   341  3.9    484  5.0
-g04509 + patch        71 69.9   117  2.5   190  2.1    341  2.7
-(mod_perl)
-g04509 + patch       209  1.0   276  1.5   342  3.3    483  6.3
-(HEAD)
-g04509 + patch        66 70.1   117  2.6   189  3.4    341  3.8
-(HEAD, mod_perl)
+(gdb) run 777f68432f1db967573e5722bf0fd08af05e748f -- HEAD
+d985fdaf7a4b8b1dde313c8fad12983dc4ce20f7
+Starting program: /home/luben/bin/git-merge-recursive 777f68432f1db967573e5722bf0fd08af05e748f --
+HEAD d985fdaf7a4b8b1dde313c8fad12983dc4ce20f7
+Failed to read a valid object file image from memory.
+Merging HEAD with d985fdaf7a4b8b1dde313c8fad12983dc4ce20f7
+Merging:
+52d5052 Merge branch 'git-upstream' into git-lt-work
+d985fda Merge branch 'next' into git-upstream
+found 1 common ancestor(s):
+777f684 Merge branch 'next' into git-upstream
+Auto-merging .gitignore
 
-The v267 summary time is wrong, that version of gitweb is not
-packed-refs aware.
+Program received signal SIGSEGV, Segmentation fault.
+0x08070469 in xdl_merge (orig=0xbff3aae0, mf1=0xbff3aad8, 
+    name1=0x80f5208 "HEAD:.gitignore", mf2=0xbff3aad0, 
+    name2=0x80f59a8 "d985fdaf7a4b8b1dde313c8fad12983dc4ce20f7:.gitignore", 
+    xpp=0xbff3aae8, level=2, result=0xbff3aac8) at xdiff/xmerge.c:200
+warning: Source file is more recent than executable.
+200                      */
+(gdb) bt
+#0  0x08070469 in xdl_merge (orig=0xbff3aae0, mf1=0xbff3aad8, 
+    name1=0x80f5208 "HEAD:.gitignore", mf2=0xbff3aad0, 
+    name2=0x80f59a8 "d985fdaf7a4b8b1dde313c8fad12983dc4ce20f7:.gitignore", 
+    xpp=0xbff3aae8, level=2, result=0xbff3aac8) at xdiff/xmerge.c:200
+#1  0x0804a6c2 in merge_file (o=0xbff3accc, a=0xbff3ac74, b=0xbff3aca0, 
+    branch1=0xbff3c928 "HEAD", 
+    branch2=0xbff3c92d "d985fdaf7a4b8b1dde313c8fad12983dc4ce20f7")
+    at merge-recursive.c:660
+#2  0x0804c296 in merge_trees (head=0x80924c8, merge=0x80924e8, 
+    common=0x8092508, branch1=<value optimized out>, 
+    branch2=<value optimized out>, result=0xbff3add0) at merge-recursive.c:1067
+#3  0x0804c9cd in merge (h1=0x80874c0, h2=0x8087544, 
+    branch1=0xbff3c928 "HEAD", 
+    branch2=0xbff3c92d "d985fdaf7a4b8b1dde313c8fad12983dc4ce20f7", 
+    call_depth=0, ancestor=0x8087518, result=0xbff3ae24)
+    at merge-recursive.c:1238
+#4  0x0804cc78 in main (argc=3, argv=0xbff3aea4) at merge-recursive.c:1320
 
-I think I need a more consistent test setup I'm seeing some weird
-deviations.
-
-Robert
+      Luben
