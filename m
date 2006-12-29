@@ -1,174 +1,108 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: What's in git.git (stable)
-Date: Thu, 28 Dec 2006 21:44:25 -0800
-Message-ID: <7vvejvp87a.fsf@assigned-by-dhcp.cox.net>
-References: <7v3b73gx43.fsf@assigned-by-dhcp.cox.net>
+Subject: What's cooking in git.git (topics)
+Date: Thu, 28 Dec 2006 21:44:38 -0800
+Message-ID: <7vtzzfp86x.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Fri Dec 29 06:44:34 2006
+X-From: git-owner@vger.kernel.org Fri Dec 29 06:44:44 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1H0AXe-0005nK-UT
-	for gcvg-git@gmane.org; Fri, 29 Dec 2006 06:44:31 +0100
+	id 1H0AXr-0005o1-F9
+	for gcvg-git@gmane.org; Fri, 29 Dec 2006 06:44:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964832AbWL2Fo1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Dec 2006 00:44:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754244AbWL2Fo1
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Dec 2006 00:44:27 -0500
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:44986 "EHLO
-	fed1rmmtao07.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754071AbWL2Fo0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Dec 2006 00:44:26 -0500
+	id S964948AbWL2Fok (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Dec 2006 00:44:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964927AbWL2Fok
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Dec 2006 00:44:40 -0500
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:45628 "EHLO
+	fed1rmmtao04.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754827AbWL2Foj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Dec 2006 00:44:39 -0500
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao07.cox.net
+          by fed1rmmtao04.cox.net
           (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20061229054425.GUPC3976.fed1rmmtao07.cox.net@fed1rmimpo02.cox.net>;
-          Fri, 29 Dec 2006 00:44:25 -0500
+          id <20061229054438.WHZR7494.fed1rmmtao04.cox.net@fed1rmimpo02.cox.net>;
+          Fri, 29 Dec 2006 00:44:38 -0500
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id 4Vkf1W0081kojtg0000000; Fri, 29 Dec 2006 00:44:39 -0500
+	id 4Vks1W0071kojtg0000000; Fri, 29 Dec 2006 00:44:52 -0500
 To: git@vger.kernel.org
-X-maint-at: e6d40d65df07059fc655fabe62fa5b575ead7815
 X-master-at: eff73751bb94b0241fd2204effb8680fe9973cbf
-In-Reply-To: <7v3b73gx43.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Mon, 25 Dec 2006 19:22:04 -0800")
+X-next-at: 3c1f051a8e726067eeef4981fde7b484ba137f2f
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35582>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35583>
 
-I've merged a handful topics since v1.5.0-rc0.
+Here are the topics that have been cooking.  Commits prefixed
+with '-' are only in 'pu' while commits prefixed with '+' are
+in 'next'.  The topics list the commits in reverse chronological
+order.
 
- - reflog is now integral part of the data tracked by git, as
-   far as local repository is concerned.  You do not have to end
-   your sentence with "... but only if you haven't pruned" when
-   you tell your users "don't worry, you can get it back with
-   master@{2.hours.ago}" anymore.
+* sp/merge (Thu Dec 28 02:35:34 2006 -0500) 5 commits
+ - Improve merge performance by avoiding in-index merges.
+ - Avoid git-fetch in `git-pull .` when possible.
+ + Use merge-recursive in git-am -3.
+ + Allow merging bare trees in merge-recursive.
+ + Move better_branch_name above get_ref in merge-recursive.
 
- - a single command "git gc" would help your repository
-   housekeeping chores.
+Good intentions, very attractive, somewhat disruptive and might
+be risky breaking existing users.  I'd like at least the earlier
+parts to be in v1.5.0-rc1.
 
- - shallow-clone capable upload-pack/fetch-pack pair is in.
-   Although I think the way they cauterize the ancestry graph
-   during the want-have exchange is basically sound, I haven't
-   used it extensively and suspect not many people have.  The
-   additional code, however, does not seem to harm the normal,
-   non-shallow operation in any way; this is to give them wider
-   exposure.
+* jc/curl (Wed Dec 27 13:59:26 2006 -0800) 1 commit
+ + Work around http-fetch built with cURL 7.16.0
 
- - recording the commit encoding in the new "encoding" header
-   and using it together with i18n.{logoutput,commit}encoding
-   upon output is also in.  I think Nico's suggestion to use
-   LANG also makes sense (perhaps with LC_CTYPE), but haven't
-   done that myself yet.
+Waiting for an Ack.
 
- - git-svn got a handful improvements.
+* sp/mmap (Wed Dec 27 02:46:23 2006 -0500) 22 commits
+ - Fix random segfaults in pack-objects.
+ - Cleanup read_cache_from error handling.
+ - Replace mmap with xmmap, better handling MAP_FAILED.
+ - Release pack windows before reporting out of memory.
+ - Default core.packdGitWindowSize to 1 MiB if NO_MMAP.
+ - Test suite for sliding window mmap implementation.
+ - Create pack_report() as a debugging aid.
+ - Support unmapping windows on 'temporary' packfiles.
+ - Improve error message when packfile mmap fails.
+ - Ensure core.packedGitWindowSize cannot be less than 2 pages.
+ - Load core configuration in git-verify-pack.
+ - Fully activate the sliding window pack access.
+ - Unmap individual windows rather than entire files.
+ - Document why header parsing won't exceed a window.
+ - Loop over pack_windows when inflating/accessing data.
+ - Replace use_packed_git with window cursors.
+ - Refactor how we open pack files to prepare for multiple windows.
+ - Create read_or_die utility routine.
+ - Use off_t for index and pack file lengths.
+ - Refactor packed_git to prepare for sliding mmap windows.
+ - Introduce new config option for mmap limit.
+ - Replace unpack_entry_gently with unpack_entry.
 
- - segfaulting bug in xdl_merge was fixed.
+Known breakage exists that this series is highly suspected.
+Will diagnose and merge to 'next' after fixing.
 
-I'm waiting for ack's to my workaround for http-fetch breakage
-when built with cURL 7.16.0, which I would like to resolve
-before v1.5.0-rc1.  Also I have a reproducible problem which I
-suspect is with Shawn's sliding mmap(), and am hoping we can
-ship the sliding mmap() as part of the v1.5.0 after resolving
-it.
+* jc/diff-apply-patch (Fri Sep 22 16:17:58 2006 -0700) 1 commit
+ + git-diff/git-apply: make diff output a bit friendlier to GNU patch
+   (part 2)
 
-----------------------------------------------------------------
-* The 'master' branch has these since the last announcement.
+I promised this to wait until February.  Most likely to be in
+v1.5.1.   
 
-   Alexandre Julliard (6):
-      Shallow clone: do not ignore shallowness when following tags
-      fetch-pack: Properly remove the shallow file when it becomes empty.
-      upload-pack: Check for NOT_SHALLOW flag before sending a shallow to
-        the client.
-      git-fetch: Reset shallow_depth before auto-following tags.
-      get_shallow_commits: Avoid memory leak if a commit has been reached
-	already.
-      fetch-pack: Do not fetch tags for shallow clones.
+* jc/diff (Mon Dec 25 01:08:50 2006 -0800) 2 commits
+ - test-para: combined diff between HEAD, index and working tree.
+ - para-walk: walk n trees, index and working tree in parallel
+* jc/explain (Mon Dec 4 19:35:04 2006 -0800) 1 commit
+ - git-explain
+* jc/3way (Wed Nov 29 18:53:13 2006 -0800) 1 commit
+ + git-merge: preserve and merge local changes when doing fast
+   forward
+* jc/web (Wed Nov 8 14:54:09 2006 -0800) 1 commit
+ - gitweb: steal loadavg throttle from kernel.org
+* jc/pickaxe (Sun Nov 5 11:52:43 2006 -0800) 1 commit
+ - blame: --show-stats for easier optimization work.
 
-   Andy Parkins (1):
-      hooks/commit-msg: add example to add Signed-off-by line to message
-
-   Eric Wong (9):
-      git-svn: quiet down tests and fix some unportable shell constructs
-      git-svn: dcommit should diff against the current HEAD after committing
-      t6024-recursive-merge: quiet down this test
-      test-lib: quiet down init-db output for tests
-      t9200-git-cvsexportcommit.sh: quiet down commit
-      git-svn: remove non-delta fetch code paths
-      git-svn: print out the SVN library version in --version, too
-      git-svn: verify_ref() should actually --verify
-      git-svn: sort multi-init output
-
-   Jakub Narebski (2):
-      gitweb: Add mod_perl version string to "generator" meta header
-      gitweb: Precompile CGI routines for mod_perl
-
-   Jim Meyering (1):
-      update hook: redirect _both_ diagnostic lines to stderr upon tag failure
-
-   Johannes Schindelin (6):
-      upload-pack: no longer call rev-list
-      support fetching into a shallow repository
-      allow cloning a repository "shallowly"
-      allow deepening of a shallow repository
-      add tests for shallow stuff
-      xdl_merge(): fix a segmentation fault when refining conflicts
-
-   Junio C Hamano (32):
-      We should make sure that the protocol is still extensible.
-      Why does it mean we do not have to register shallow if we have one?
-      Why didn't we mark want_obj as ~UNINTERESTING in the old code?
-      shallow clone: unparse and reparse an unshallowed commit
-      add for_each_reflog_ent() iterator
-      Protect commits recorded in reflog from pruning.
-      Teach git-repack to preserve objects referred to by reflog entries.
-      reflog: fix warning message.
-      Move in_merge_bases() to commit.c
-      git reflog expire
-      reflog expire: prune commits that are not incomplete
-      reflog expire: do not punt on tags that point at non commits.
-      show-branch --reflog: add documentation.
-      Document --numstat in git-apply and git-diff
-      Document git-reset <commit> -- <paths>...
-      Move encoding conversion routine out of mailinfo to utf8.c
-      i18n.logToUTF8: convert commit log message to UTF-8
-      Teach log family --encoding
-      everyday: update for v1.5.0
-      count-objects -v: show number of packs as well.
-      rerere gc: honor configuration and document it
-      git-reflog: gc.* configuration and documentation.
-      everyday: replace a few 'prune' and 'repack' with 'gc'
-      Use 'repack -a -d -l' instead of 'repack -a -d' in git-gc
-      Set NO_MMAP for Cygwin by default
-      UTF-8: introduce i18n.logoutputencoding.
-      gcc does not necessarily pass runtime libpath with -R
-      Rename t3900 test vector file
-      t3900: test conversion to non UTF-8 as well
-      GIT_SKIP_TESTS: allow users to omit tests that are known to break
-      core.logallrefupdates: log remotes/ tracking branches.
-      Allow non-fast-forward of remote tracking branches in default clone
-
-   Nicolas Pitre (3):
-      add .mailmap for git-shortlog output with the git repository
-      Add git-reflog to .gitignore
-      move git-blame to its place in .gitignore
-
-   Quy Tonthat (1):
-      git-send-email: default value for "From:" field.
-
-   Robert Fitzsimons (1):
-      gitweb: Re-enable rev-list --parents for parse_commit.
-
-   Shawn O. Pearce (8):
-      Don't crash during repack of a reflog with pruned commits.
-      Create 'git gc' to perform common maintenance operations.
-      Use GIT_REFLOG_ACTION environment variable instead.
-      Honor GIT_REFLOG_ACTION in git-rebase.
-      Use branch names in 'git-rebase -m' conflict hunks.
-      Ensure `git-pull` fails if `git-merge` fails.
-      Honor pull.{twohead,octopus} in git-merge.
-      Allow git-merge to select the default strategy.
+These are on hold or will not be merged ever.
