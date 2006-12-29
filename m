@@ -1,106 +1,91 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [BUG] git-fetch -k is broken
-Date: Thu, 28 Dec 2006 18:03:46 -0800
-Message-ID: <7vlkkrsbjx.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0611301441440.9647@xanadu.home>
-	<7vd574iqa0.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0612282031390.18171@xanadu.home>
+Subject: Re: branch.pu.forcefetch
+Date: Thu, 28 Dec 2006 18:30:16 -0800
+Message-ID: <7v8xgrsabr.fsf@assigned-by-dhcp.cox.net>
+References: <1167251519.2247.10.camel@dv>
+	<7vfyb159dn.fsf@assigned-by-dhcp.cox.net>
+	<1167341346.12660.17.camel@dv>
+	<7vzm97tzbt.fsf@assigned-by-dhcp.cox.net>
+	<1167355326.15189.34.camel@dv>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Fri Dec 29 03:04:00 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 29 03:30:24 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1H0768-0005pC-Ic
-	for gcvg-git@gmane.org; Fri, 29 Dec 2006 03:03:52 +0100
+	id 1H07Vn-0007rJ-VQ
+	for gcvg-git@gmane.org; Fri, 29 Dec 2006 03:30:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755028AbWL2CDs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Dec 2006 21:03:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755030AbWL2CDr
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Dec 2006 21:03:47 -0500
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:53259 "EHLO
-	fed1rmmtao12.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755026AbWL2CDr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Dec 2006 21:03:47 -0500
+	id S1753836AbWL2CaS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Dec 2006 21:30:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755041AbWL2CaS
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Dec 2006 21:30:18 -0500
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:64015 "EHLO
+	fed1rmmtao11.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753836AbWL2CaR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Dec 2006 21:30:17 -0500
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao12.cox.net
+          by fed1rmmtao11.cox.net
           (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20061229020346.HMKH19398.fed1rmmtao12.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 28 Dec 2006 21:03:46 -0500
+          id <20061229023017.PEXH25875.fed1rmmtao11.cox.net@fed1rmimpo02.cox.net>;
+          Thu, 28 Dec 2006 21:30:17 -0500
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id 4S401W0091kojtg0000000; Thu, 28 Dec 2006 21:04:00 -0500
-To: git@vger.kernel.org
-In-Reply-To: <Pine.LNX.4.64.0612282031390.18171@xanadu.home> (Nicolas Pitre's
-	message of "Thu, 28 Dec 2006 20:41:53 -0500 (EST)")
+	id 4SWW1W00P1kojtg0000000; Thu, 28 Dec 2006 21:30:30 -0500
+To: Pavel Roskin <proski@gnu.org>
+In-Reply-To: <1167355326.15189.34.camel@dv> (Pavel Roskin's message of "Thu,
+	28 Dec 2006 20:22:06 -0500")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35574>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35575>
 
-Nicolas Pitre <nico@cam.org> writes:
+Pavel Roskin <proski@gnu.org> writes:
 
-> [ resuming an old thread ]
+>> Are you talking about "remote.origin.fetch = +pu:refs/heads/pu"?
 >
-> On Thu, 30 Nov 2006, Junio C Hamano wrote:
->
->> Nicolas Pitre <nico@cam.org> writes:
->> 
->> > Actually, the .keep file is simply not removed as it should.
->> >
->> > But first it appears that commit f64d7fd2 added an && on line 431 of 
->> > git-fetch.sh and that cannot be right.  There is simply no condition for 
->> > not removing the lock file.  It must be removed regardless if the 
->> > previous command succeeded or not.  Junio?
->> 
->> True, but your "echo" patch breaks things even more -- when fast
->> forward check fails, it should cause the entire command should
->> report that with the exit status.
->
-> This "echo" patch was not a fix.  It was only an expeditive hack to 
-> demonstrate the problem.  Please consider this stripped down test case 
-> instead:
->
-> -------- >8
-> #!/bin/sh
-> #
->
-> LF='
-> '
-> IFS="$LF"
->
->     ( : subshell because we muck with IFS
->       pack_lockfile=
->       IFS=" 	$LF"
->       (
-> 	  echo "keep	123456789abcdef0123456789abcdef012345678"
->       ) |
->       while read sha1 remote_name
->       do
-> 	  case "$sha1" in
-> 	  # special line coming from index-pack with the pack name
-> 	  keep)
-> 		  pack_lockfile="$GIT_OBJECT_DIRECTORY/pack/pack-$remote_name.keep"
-> 		  echo "pack_lockfile set to $pack_lockfile"
-> 		  continue ;;
-> 	  esac
->       done &&
->       if [ "$pack_lockfile" ]; then echo "rm -f $pack_lockfile"; fi
->       echo "pack_lockfile=$pack_lockfile"
->     )
-> -------- >8
->
-> The output I get is:
->
-> pack_lockfile set to /pack/pack-123456789abcdef0123456789abcdef012345678.keep
-> pack_lockfile=
->
-> In other words the line with the echo "rm -f ..." never shows up and I 
-> don't know why.
+> Yes, I'm talking about that line.  And I don't like that I have to use a
+> magic token "refs/heads/pu" that doesn't correspond to a real file to
+> make it possible to keep git up-to-date.
 
-The whole while loop is run in a subshell and the process runs
-the last echo "pack_lockfile=$pack_lockfile" is a process
-different from the one that did the other echo in the while
-loop.
+I think we misunderstood each other.  That line is inconsistent
+with what your config has, which is the separate-remote layout,
+which I did not know you were using.  In separate-remote layout,
+you don't have refs/heads/pu so if we do not do the patches you
+are agreeing to, you would want to have something like:
+
+	[remote "origin"]
+                fetch = +refs/heads/pu:refs/remotes/origin/pu
+        	fetch = refs/heads/*:refs/remotes/origin/*
+
+In other words, "path does not correspond to a real file"
+problem does not exist.  If you tell git to track 'pu' at
+refs/remotes/origin/pu, it will use that path -- so that path
+has a corresponding real file.
+
+> Unfortunately, updating the current branch fails because pu is not
+> fast-forwarding.  Why fail if I'm not even on pu?
+
+Your being not on 'pu' does not have anything to do with it.  In
+fact, you do not even want to be _on_ any of your tracking
+branches.  In the separate-remote layout, you cannot even be on
+remotes/origin/pu branch.
+
+What you are seeing is fetch's safety feature that stops and
+notifies you the situation when the remote rewinds/rebases the
+branch you are tracking with tracking branches.  We have had it
+turned on by default for a long time, and you have it turned on
+in your config because that is the default.  If you do not want
+to use that feature (and for git.git, you certainly don't), just
+turn it off.  When you know you do not want to use a feature,
+you do not have to.
+
+Turning it off by default was not a wise thing to do in general
+for a long time, because rewound/rebased tip loses information,
+and we did not have reflog enabled by default.  Your message
+raised this issue to attention of the list, and I suggested two
+patches out of it, both of which I think are sane things to do.
+If the list agrees, we can turn it off by default now.
