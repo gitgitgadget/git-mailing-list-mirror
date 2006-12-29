@@ -1,72 +1,64 @@
-From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
-Subject: Re: [RFH] An early draft of v1.5.0 release notes
-Date: Fri, 29 Dec 2006 12:56:00 +0100
-Message-ID: <87k60alxv3.fsf@morpheus.local>
-References: <200612271300.kBRD082j007703@laptop13.inf.utfsm.cl> <7vtzzh5dnv.fsf@assigned-by-dhcp.cox.net> <7vbqlo4zg8.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0612272041421.18171@xanadu.home>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Fri Dec 29 12:56:31 2006
+From: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
+Subject: Re: [PATCH/RFT] Work around http-fetch built with cURL 7.16.0
+Date: Fri, 29 Dec 2006 09:37:52 -0300
+Message-ID: <200612291237.kBTCbq0P010010@laptop13.inf.utfsm.cl>
+References: <junkio@cox.net>
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 29 13:38:07 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1H0GLV-0006Sh-8z
-	for gcvg-git@gmane.org; Fri, 29 Dec 2006 12:56:21 +0100
+	id 1H0Gzq-0002aS-5c
+	for gcvg-git@gmane.org; Fri, 29 Dec 2006 13:38:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752313AbWL2L4O convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 29 Dec 2006 06:56:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752314AbWL2L4O
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Dec 2006 06:56:14 -0500
-Received: from main.gmane.org ([80.91.229.2]:36038 "EHLO ciao.gmane.org"
+	id S1752376AbWL2Mh7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Dec 2006 07:37:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752651AbWL2Mh7
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Dec 2006 07:37:59 -0500
+Received: from inti.inf.utfsm.cl ([200.1.21.155]:37103 "EHLO inti.inf.utfsm.cl"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752281AbWL2L4N (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Dec 2006 06:56:13 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1H0GLG-0007kk-77
-	for git@vger.kernel.org; Fri, 29 Dec 2006 12:56:06 +0100
-Received: from c83-253-22-207.bredband.comhem.se ([83.253.22.207])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 29 Dec 2006 12:56:06 +0100
-Received: from davidk by c83-253-22-207.bredband.comhem.se with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 29 Dec 2006 12:56:06 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: c83-253-22-207.bredband.comhem.se
-User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (gnu/linux)
-Cancel-Lock: sha1:RaNZGePsQm2Wcbze87uet5b4uHA=
+	id S1752376AbWL2Mh6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Dec 2006 07:37:58 -0500
+Received: from laptop13.inf.utfsm.cl (laptop13.inf.utfsm.cl [200.1.19.201])
+	by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id kBTCbqFg031052
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 29 Dec 2006 09:37:52 -0300
+Received: from laptop13.inf.utfsm.cl (laptop13.inf.utfsm.cl [127.0.0.1])
+	by laptop13.inf.utfsm.cl (8.13.8/8.13.8) with ESMTP id kBTCbq0P010010;
+	Fri, 29 Dec 2006 09:37:52 -0300
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: Message from Junio C Hamano <junkio@cox.net> 
+   of "Thu, 28 Dec 2006 16:40:13 -0800." <7vfyazttzm.fsf_-_@assigned-by-dhcp.cox.net> 
+X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.5  (beta27)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (inti.inf.utfsm.cl [200.1.21.155]); Fri, 29 Dec 2006 09:37:52 -0300 (CLST)
+X-Virus-Scanned: ClamAV version 0.88.5, clamav-milter version 0.88.5 on inti.inf.utfsm.cl
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35589>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35590>
 
-Nicolas Pitre <nico@cam.org> writes:
+Junio C Hamano <junkio@cox.net> wrote:
+> It appears that curl_easy_duphandle() from libcurl 7.16.0
+> returns a curl session handle which fails GOOD_MULTI_HANDLE()
+> check in curl_multi_add_handle().  This causes fetch_ref() to
+> fail because start_active_slot() cannot start the request.
+> 
+> For now, check for 7.16.0 to work this issue around.
+> 
+> Signed-off-by: Junio C Hamano <junkio@cox.net>
+> ---
+> 
+>  * I think people who were having trouble with cURL 7.16.0 want
+>    to have the issue resolved before v1.5.0-rc1.  Please test
+>    and report, or else ;-).
 
-> On Wed, 27 Dec 2006, Junio C Hamano wrote:
->
->> Junio C Hamano <junkio@cox.net> writes:
->>=20
->> > "Horst H. von Brand" <vonbrand@inf.utfsm.cl> writes:
->> > ...
->> >> And what happens to the people who can't/won't display UTF-8? Thi=
-s is a
->> >> both a project wide configuration (how does stuff get saved) + a =
-user/local
->> >> configuration (how to display stuff).
->> > ...
->> > Maybe i18n.displayencoding set to latin1 is what you are after?
->> > I think it might make sense...
->>=20
->> I've done this and will be pushing the result out in 'next'
->> shortly, with a new test.  I find the result mostly sensible.
->
-> Shouldn't the LANG environment variable be used for this purpose=20
-> instead?
+Checked it out. Now clone and pull both work here.
 
-You mean LC_CTYPE, no?
-
---=20
-David K=C3=A5gedal
+Thanks!
+-- 
+Dr. Horst H. von Brand                   User #22616 counter.li.org
+Departamento de Informatica                    Fono: +56 32 2654431
+Universidad Tecnica Federico Santa Maria             +56 32 2654239
+Casilla 110-V, Valparaiso, Chile               Fax:  +56 32 2797513
