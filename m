@@ -1,69 +1,90 @@
-From: Robert Fitzsimons <robfitz@273k.net>
-Subject: Re: read-for-fill and caching in gitweb (Re: kernel.org mirroring)
-Date: Fri, 29 Dec 2006 03:21:26 +0000
-Message-ID: <20061229032126.GE6558@localhost>
-References: <46a038f90612281245s52bdd868h8c421951c7abeb84@mail.gmail.com>
+From: Pavel Roskin <proski@gnu.org>
+Subject: Re: branch.pu.forcefetch
+Date: Thu, 28 Dec 2006 22:34:23 -0500
+Message-ID: <1167363263.15189.79.camel@dv>
+References: <1167251519.2247.10.camel@dv>
+	 <7vfyb159dn.fsf@assigned-by-dhcp.cox.net> <1167341346.12660.17.camel@dv>
+	 <7vzm97tzbt.fsf@assigned-by-dhcp.cox.net> <1167355326.15189.34.camel@dv>
+	 <7v8xgrsabr.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>, Jeff Garzik <jeff@garzik.org>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Rogan Dawes <discard@dawes.za.net>,
-	Kernel Org Admin <ftpadmin@kernel.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 29 04:22:06 2006
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 29 04:34:40 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1H08Jm-0003sZ-1c
-	for gcvg-git@gmane.org; Fri, 29 Dec 2006 04:22:02 +0100
+	id 1H08Vz-0004vE-E1
+	for gcvg-git@gmane.org; Fri, 29 Dec 2006 04:34:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753559AbWL2DV5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Dec 2006 22:21:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753552AbWL2DV4
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Dec 2006 22:21:56 -0500
-Received: from igraine.blacknight.ie ([81.17.252.25]:37426 "EHLO
-	igraine.blacknight.ie" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753312AbWL2DV4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Dec 2006 22:21:56 -0500
-Received: from 213-202-135-153.bas502.dsl.esat.net ([213.202.135.153] helo=localhost)
-	by igraine.blacknight.ie with esmtp (Exim 4.60)
-	(envelope-from <robfitz@273k.net>)
-	id 1H08J1-00022c-TM; Fri, 29 Dec 2006 03:21:16 +0000
-To: Martin Langhoff <martin.langhoff@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <46a038f90612281245s52bdd868h8c421951c7abeb84@mail.gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-blacknight-igraine-MailScanner-Information: Please contact the ISP for more information
-X-blacknight-igraine-MailScanner: Found to be clean
-X-blacknight-igraine-MailScanner-SpamCheck: not spam,
-	SpamAssassin (not cached, score=-0.012, required 7,
-	autolearn=disabled, RCVD_IN_NERDS_IE -2.00, RCVD_IN_SORBS_DUL 1.99)
-X-MailScanner-From: robfitz@273k.net
+	id S1753552AbWL2De1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Dec 2006 22:34:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754065AbWL2De1
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Dec 2006 22:34:27 -0500
+Received: from fencepost.gnu.org ([199.232.76.164]:40040 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753552AbWL2De1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Dec 2006 22:34:27 -0500
+Received: from proski by fencepost.gnu.org with local (Exim 4.60)
+	(envelope-from <proski@gnu.org>)
+	id 1H08VZ-0000i9-1v
+	for git@vger.kernel.org; Thu, 28 Dec 2006 22:34:13 -0500
+Received: from proski by gnu.org with local (Exim 4.63)
+	(envelope-from <proski@gnu.org>)
+	id 1H08Vj-00088t-Tq; Thu, 28 Dec 2006 22:34:23 -0500
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v8xgrsabr.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Evolution 2.8.0 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35576>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35577>
 
-> I will probably try to implement caching for the
-> projects, summary & log/shortlog pages using Cache::FastMap
+On Thu, 2006-12-28 at 18:30 -0800, Junio C Hamano wrote:
+> Pavel Roskin <proski@gnu.org> writes:
+> 
+> >> Are you talking about "remote.origin.fetch = +pu:refs/heads/pu"?
+> >
+> > Yes, I'm talking about that line.  And I don't like that I have to use a
+> > magic token "refs/heads/pu" that doesn't correspond to a real file to
+> > make it possible to keep git up-to-date.
+> 
+> I think we misunderstood each other.
 
-Here are the mean (and standard deviation) in milliseconds for those
-pages using a few different versions of gitweb.
+I just didn't notice that your question used a different line.  I was
+talking about
 
-                 project_list   summary  shortlog        log
-v267                  173 1.6  1141 8.8   795 5.0   919  1.9
-1.4.4.3               220 2.3   397 2.4   930 4.2  1113 56.9
-1.5.0.rc0.g4a4d       226 1.9   292 1.7   352 4.0   491  6.7
-1.5.0.rc0.g4a4d        60 1.0   131 0.7   195 1.2   347  3.7
-(mod_perl)
- 
-I think there would be a benefit in deploying a more recent version of
-gitweb on kernel.org and and even bigger benefit if it use mod_perl.  I
-would be happy to help, if I can.
+	fetch = +refs/heads/pu:refs/remotes/origin/pu
 
-I'll look into the increase in time for the project_list in more recent
-versions of gitweb, tomorrow.
+> That line is inconsistent
+> with what your config has, which is the separate-remote layout,
+> which I did not know you were using.  In separate-remote layout,
+> you don't have refs/heads/pu so if we do not do the patches you
+> are agreeing to, you would want to have something like:
+> 
+> 	[remote "origin"]
+>                 fetch = +refs/heads/pu:refs/remotes/origin/pu
+>         	fetch = refs/heads/*:refs/remotes/origin/*
 
-Robert
+I get it now.  "refs/heads/pu" must be the path on the remote side.
+
+The whole thing remains pretty hairy for my taste, but it looks like we
+are going to untangle it step-by-step.
+
+> Turning it off by default was not a wise thing to do in general
+> for a long time, because rewound/rebased tip loses information,
+> and we did not have reflog enabled by default.  Your message
+> raised this issue to attention of the list, and I suggested two
+> patches out of it, both of which I think are sane things to do.
+> If the list agrees, we can turn it off by default now.
+
+Just a random idea - if fast-forward fails, save the original head
+somewhere under refs as a backup.  It's like "patch" saving *.orig files
+if there is any doubt that the patch was applied cleanly.
+
+But I'm fine with reflog too.
+
+-- 
+Regards,
+Pavel Roskin
