@@ -1,72 +1,75 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH 2/2] Allow non-fast-forward of remote tracking branches in default clone
-Date: Thu, 28 Dec 2006 16:32:17 -0800
-Message-ID: <7vk60btucu.fsf_-_@assigned-by-dhcp.cox.net>
-References: <1167251519.2247.10.camel@dv>
-	<7vfyb159dn.fsf@assigned-by-dhcp.cox.net>
-	<1167341346.12660.17.camel@dv>
-	<7vzm97tzbt.fsf@assigned-by-dhcp.cox.net>
+Subject: [PATCH/RFT] Work around http-fetch built with cURL 7.16.0
+Date: Thu, 28 Dec 2006 16:40:13 -0800
+Message-ID: <7vfyazttzm.fsf_-_@assigned-by-dhcp.cox.net>
+References: <skimo@kotnet.org>
+	<200612271457.kBREvkj2011916@laptop13.inf.utfsm.cl>
+	<7vlkkt5d49.fsf@assigned-by-dhcp.cox.net>
+	<7v8xgt57wu.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Fri Dec 29 01:32:28 2006
+X-From: git-owner@vger.kernel.org Fri Dec 29 01:40:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1H05fa-0005pN-BE
-	for gcvg-git@gmane.org; Fri, 29 Dec 2006 01:32:22 +0100
+	id 1H05nI-0006ca-H6
+	for gcvg-git@gmane.org; Fri, 29 Dec 2006 01:40:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753902AbWL2AcT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Dec 2006 19:32:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753932AbWL2AcT
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Dec 2006 19:32:19 -0500
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:41261 "EHLO
-	fed1rmmtao08.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753902AbWL2AcS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Dec 2006 19:32:18 -0500
+	id S965040AbWL2AkQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Dec 2006 19:40:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965042AbWL2AkQ
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Dec 2006 19:40:16 -0500
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:54580 "EHLO
+	fed1rmmtao10.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965040AbWL2AkP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Dec 2006 19:40:15 -0500
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao08.cox.net
+          by fed1rmmtao10.cox.net
           (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20061229003218.UBEW16632.fed1rmmtao08.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 28 Dec 2006 19:32:18 -0500
+          id <20061229004014.NUAU20715.fed1rmmtao10.cox.net@fed1rmimpo02.cox.net>;
+          Thu, 28 Dec 2006 19:40:14 -0500
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id 4QYX1W00o1kojtg0000000; Thu, 28 Dec 2006 19:32:32 -0500
+	id 4QgU1W0041kojtg0000000; Thu, 28 Dec 2006 19:40:28 -0500
 To: git@vger.kernel.org
-In-Reply-To: <7vzm97tzbt.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Thu, 28 Dec 2006 14:44:54 -0800")
+In-Reply-To: <7v8xgt57wu.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Wed, 27 Dec 2006 13:46:25 -0800")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35569>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35570>
 
-This changes the default remote.origin.fetch configuration
-created by git-clone so that it allows non-fast-forward updates.
+It appears that curl_easy_duphandle() from libcurl 7.16.0
+returns a curl session handle which fails GOOD_MULTI_HANDLE()
+check in curl_multi_add_handle().  This causes fetch_ref() to
+fail because start_active_slot() cannot start the request.
 
-When using the separate-remote layout with reflog enabled, it
-does not make much sense to refuse to update the remote tracking
-branch just because some of them do not fast-forward.  git-fetch
-issues warnings on non-fast-forwardness, and the user can peek
-at what the previous state was using the reflog.
+For now, check for 7.16.0 to work this issue around.
 
 Signed-off-by: Junio C Hamano <junkio@cox.net>
 ---
- git-clone.sh |    2 +-
+
+ * I think people who were having trouble with cURL 7.16.0 want
+   to have the issue resolved before v1.5.0-rc1.  Please test
+   and report, or else ;-).
+
+ http.h |    2 +-
  1 files changed, 1 insertions(+), 1 deletions(-)
 
-diff --git a/git-clone.sh b/git-clone.sh
-index f37eb9d..3d388de 100755
---- a/git-clone.sh
-+++ b/git-clone.sh
-@@ -388,7 +388,7 @@ then
+diff --git a/http.h b/http.h
+index 6e12e41..324fcf4 100644
+--- a/http.h
++++ b/http.h
+@@ -18,7 +18,7 @@
+ #define curl_global_init(a) do { /* nothing */ } while(0)
+ #endif
  
- 		# Set up the mappings to track the remote branches.
- 		git-repo-config remote."$origin".fetch \
--			"refs/heads/*:$remote_top/*" '^$' &&
-+			"+refs/heads/*:$remote_top/*" '^$' &&
- 		rm -f "refs/remotes/$origin/HEAD"
- 		git-symbolic-ref "refs/remotes/$origin/HEAD" \
- 			"refs/remotes/$origin/$head_points_at" &&
+-#if LIBCURL_VERSION_NUM < 0x070c04
++#if (LIBCURL_VERSION_NUM < 0x070c04) || (LIBCURL_VERSION_NUM == 0x071000)
+ #define NO_CURL_EASY_DUPHANDLE
+ #endif
+ 
 -- 
 1.5.0.rc0.gf5c587
