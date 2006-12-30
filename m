@@ -1,57 +1,62 @@
-From: Robert Fitzsimons <robfitz@273k.net>
-Subject: Re: [PATCH] gitweb: New feature last_modified_ref.
-Date: Sat, 30 Dec 2006 00:12:18 +0000
-Message-ID: <20061230001218.GH6558@localhost>
-References: <20061229185805.GF6558@localhost> <7vlkkqms8n.fsf@assigned-by-dhcp.cox.net>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: What's cooking in git.git (topics)
+Date: Fri, 29 Dec 2006 22:21:20 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0612292219280.18171@xanadu.home>
+References: <7vtzzfp86x.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0612291853210.19693@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Robert Fitzsimons <robfitz@273k.net>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 30 01:12:29 2006
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Dec 30 04:21:30 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H0Rpj-0008Sj-ME
-	for gcvg-git@gmane.org; Sat, 30 Dec 2006 01:12:20 +0100
+	id 1H0Umk-00050z-91
+	for gcvg-git@gmane.org; Sat, 30 Dec 2006 04:21:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755078AbWL3AMO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Dec 2006 19:12:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755107AbWL3AMO
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Dec 2006 19:12:14 -0500
-Received: from igraine.blacknight.ie ([81.17.252.25]:51596 "EHLO
-	igraine.blacknight.ie" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755078AbWL3AMN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Dec 2006 19:12:13 -0500
-Received: from 213-202-190-9.bas504.dsl.esat.net ([213.202.190.9] helo=localhost)
-	by igraine.blacknight.ie with esmtp (Exim 4.60)
-	(envelope-from <robfitz@273k.net>)
-	id 1H0RpO-0005MX-Qk; Sat, 30 Dec 2006 00:11:58 +0000
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vlkkqms8n.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-blacknight-igraine-MailScanner-Information: Please contact the ISP for more information
-X-blacknight-igraine-MailScanner: Found to be clean
-X-blacknight-igraine-MailScanner-SpamCheck: not spam,
-	SpamAssassin (not cached, score=-0.012, required 7,
-	autolearn=disabled, RCVD_IN_NERDS_IE -2.00, RCVD_IN_SORBS_DUL 1.99)
-X-MailScanner-From: robfitz@273k.net
+	id S1030229AbWL3DVW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Dec 2006 22:21:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030231AbWL3DVW
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Dec 2006 22:21:22 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:10059 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030229AbWL3DVW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Dec 2006 22:21:22 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR001.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JB2001RBHBK5EG0@VL-MO-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Fri, 29 Dec 2006 22:21:21 -0500 (EST)
+In-reply-to: <Pine.LNX.4.63.0612291853210.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+X-X-Sender: nico@xanadu.home
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35611>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35612>
 
-> I somehow suspect this is solving the problem with a wrong
-> tradeoff.
+On Fri, 29 Dec 2006, Johannes Schindelin wrote:
 
-I think the main problem is that we are trying to fix possible
-performance problems with the latest version, just because they might
-cause a major problem on kernel.org.
+> Hi,
+> 
+> On Thu, 28 Dec 2006, Junio C Hamano wrote:
+> 
+> > * jc/3way (Wed Nov 29 18:53:13 2006 -0800) 1 commit
+> >  + git-merge: preserve and merge local changes when doing fast
+> >    forward
+> 
+> I'd like this, but behind a command line switch. And in addition to saying 
+> "cannot merge, blabla needs update", git could spit out "if you want to 
+> risk a 3way merge, go ahead and add the --preserve-local flag to 
+> git-merge".
+> 
+> Comments?
 
-At this point I think we should get the latest version loaded and see
-what the real problems are.
+Is there really a point for not always doing it?
 
-Robert
+IOW, if you really want a command line switch, maybe it should be used 
+to prevent the above not to allow it?
+
+
+Nicolas
