@@ -1,81 +1,57 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH/RFH] send-pack: fix pipeline.
-Date: Fri, 29 Dec 2006 15:53:29 -0800
-Message-ID: <7vlkkql0na.fsf@assigned-by-dhcp.cox.net>
-References: <7v1wmjoumq.fsf@assigned-by-dhcp.cox.net>
-	<7vzm96latb.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0612291307520.4473@woody.osdl.org>
+From: Robert Fitzsimons <robfitz@273k.net>
+Subject: Re: [PATCH] gitweb: New feature last_modified_ref.
+Date: Sat, 30 Dec 2006 00:12:18 +0000
+Message-ID: <20061230001218.GH6558@localhost>
+References: <20061229185805.GF6558@localhost> <7vlkkqms8n.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Andy Whitcroft <apw@shadowen.org>
-X-From: git-owner@vger.kernel.org Sat Dec 30 00:53:41 2006
+Cc: Robert Fitzsimons <robfitz@273k.net>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Dec 30 01:12:29 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H0RXa-00071I-VU
-	for gcvg-git@gmane.org; Sat, 30 Dec 2006 00:53:35 +0100
+	id 1H0Rpj-0008Sj-ME
+	for gcvg-git@gmane.org; Sat, 30 Dec 2006 01:12:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755093AbWL2Xxc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Dec 2006 18:53:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755099AbWL2Xxc
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Dec 2006 18:53:32 -0500
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:38992 "EHLO
-	fed1rmmtao05.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755093AbWL2Xxb (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Dec 2006 18:53:31 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20061229235330.HGGA15640.fed1rmmtao05.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 29 Dec 2006 18:53:30 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id 4nsk1W00r1kojtg0000000; Fri, 29 Dec 2006 18:52:45 -0500
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0612291307520.4473@woody.osdl.org> (Linus
-	Torvalds's message of "Fri, 29 Dec 2006 13:20:41 -0800 (PST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1755078AbWL3AMO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Dec 2006 19:12:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755107AbWL3AMO
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Dec 2006 19:12:14 -0500
+Received: from igraine.blacknight.ie ([81.17.252.25]:51596 "EHLO
+	igraine.blacknight.ie" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755078AbWL3AMN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Dec 2006 19:12:13 -0500
+Received: from 213-202-190-9.bas504.dsl.esat.net ([213.202.190.9] helo=localhost)
+	by igraine.blacknight.ie with esmtp (Exim 4.60)
+	(envelope-from <robfitz@273k.net>)
+	id 1H0RpO-0005MX-Qk; Sat, 30 Dec 2006 00:11:58 +0000
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vlkkqms8n.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-blacknight-igraine-MailScanner-Information: Please contact the ISP for more information
+X-blacknight-igraine-MailScanner: Found to be clean
+X-blacknight-igraine-MailScanner-SpamCheck: not spam,
+	SpamAssassin (not cached, score=-0.012, required 7,
+	autolearn=disabled, RCVD_IN_NERDS_IE -2.00, RCVD_IN_SORBS_DUL 1.99)
+X-MailScanner-From: robfitz@273k.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35610>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35611>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+> I somehow suspect this is solving the problem with a wrong
+> tradeoff.
 
-> On Fri, 29 Dec 2006, Junio C Hamano wrote:
->>
->> I really need a sanity checking on this one.  I think I got the
->> botched pipeline fixed with the patch I am replying to, but I do
->> not understand the waitpid() business.  Care to enlighten me?
->
-> I think it was a beginning of a half-hearted attempt to check the exit 
-> status of the rev-list in case something went wrong.
->
-> Which we simply don't do, so if git-rev-list ends up with some problem 
-> (due to a corrupt git repo or something), it will just send a partial 
-> pack.
->
-> For some reason I thought we had fixed that by just generating the object 
-> list internally, but I guess we don't do that. That's just stupid. We 
-> should make "send-pack.c" use
->
-> 	list-heads | git pack-objects --revs
->
-> 	list-heads | git-rev-list --stdin | git-pack-objects
->
-> because as it is now, I think send-pack is more fragile than it needs to 
-> be.
->
-> Or maybe I'm just confused.
+I think the main problem is that we are trying to fix possible
+performance problems with the latest version, just because they might
+cause a major problem on kernel.org.
 
-Dont' worry, you are no more confused than I am ;-).
+At this point I think we should get the latest version loaded and see
+what the real problems are.
 
-"I thought we've done the 'pack-objects --revs' for the
-upload-pack side but haven't done so on the send-pack side." was
-what I initially wrote, but apparently we haven't.  On the other
-hand, I think upload-pack gets error termination from rev-list
-right.
-
-It seems that repack is the only thing that uses the internal
-rev-list.
+Robert
