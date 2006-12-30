@@ -1,62 +1,53 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: What's cooking in git.git (topics)
-Date: Fri, 29 Dec 2006 22:21:20 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0612292219280.18171@xanadu.home>
-References: <7vtzzfp86x.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0612291853210.19693@wbgn013.biozentrum.uni-wuerzburg.de>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 30 04:21:30 2006
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: Re: [PATCH] Fix 'git add' with .gitignore (Re: git-add ignores .gitignore)
+Date: Fri, 29 Dec 2006 23:42:32 -0500
+Message-ID: <8D9102A3-C5A7-40B7-AE11-EE091A516775@silverinsanity.com>
+References: <033682AF-B324-4049-B331-8A8AF2335E4D@silverinsanity.com> <7vpsa2msx2.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Dec 30 05:42:47 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H0Umk-00050z-91
-	for gcvg-git@gmane.org; Sat, 30 Dec 2006 04:21:26 +0100
+	id 1H0W3N-0000hq-BJ
+	for gcvg-git@gmane.org; Sat, 30 Dec 2006 05:42:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030229AbWL3DVW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Dec 2006 22:21:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030231AbWL3DVW
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Dec 2006 22:21:22 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:10059 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030229AbWL3DVW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Dec 2006 22:21:22 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JB2001RBHBK5EG0@VL-MO-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 29 Dec 2006 22:21:21 -0500 (EST)
-In-reply-to: <Pine.LNX.4.63.0612291853210.19693@wbgn013.biozentrum.uni-wuerzburg.de>
-X-X-Sender: nico@xanadu.home
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+	id S1030272AbWL3Emg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Dec 2006 23:42:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030274AbWL3Emf
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Dec 2006 23:42:35 -0500
+Received: from vs072.rosehosting.com ([216.114.78.72]:40686 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030272AbWL3Emf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Dec 2006 23:42:35 -0500
+Received: from [192.168.0.2] (cpe-69-204-218-82.stny.res.rr.com [69.204.218.82])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTP id AD5901FFC02B;
+	Sat, 30 Dec 2006 04:42:34 +0000 (UTC)
+In-Reply-To: <7vpsa2msx2.fsf@assigned-by-dhcp.cox.net>
+To: Junio C Hamano <junkio@cox.net>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35612>
-
-On Fri, 29 Dec 2006, Johannes Schindelin wrote:
-
-> Hi,
-> 
-> On Thu, 28 Dec 2006, Junio C Hamano wrote:
-> 
-> > * jc/3way (Wed Nov 29 18:53:13 2006 -0800) 1 commit
-> >  + git-merge: preserve and merge local changes when doing fast
-> >    forward
-> 
-> I'd like this, but behind a command line switch. And in addition to saying 
-> "cannot merge, blabla needs update", git could spit out "if you want to 
-> risk a 3way merge, go ahead and add the --preserve-local flag to 
-> git-merge".
-> 
-> Comments?
-
-Is there really a point for not always doing it?
-
-IOW, if you really want a command line switch, maybe it should be used 
-to prevent the above not to allow it?
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35613>
 
 
-Nicolas
+On Dec 29, 2006, at 1:57 PM, Junio C Hamano wrote:
+
+> Thanks for noticing.
+
+Hard not to.  Git suddenly tried to add a couple hundred files from a  
+library I don't want to track.  ;-)
+
+> How about this patch, after you revert that commit?
+
+I'm on vacation at my in-laws, so I'll try it when I get a chance but  
+it may take a few days.  (I'm only checking e-mail and that's just so  
+I'm not buried in git list mails on Tuesday.
+
+~~ Brian
