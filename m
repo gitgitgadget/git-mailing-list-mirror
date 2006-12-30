@@ -1,70 +1,61 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] git-fetch: Avoid reading packed refs over and over again
-Date: Sat, 30 Dec 2006 20:24:01 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612302020060.19693@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0612172048331.3635@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vslfe3r4d.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0612181329480.3635@wbgn013.biozentrum.uni-wuerzburg.de>
- <4596B837.8030108@xs4all.nl>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Default "tar" umask..
+Date: Sat, 30 Dec 2006 11:27:32 -0800
+Message-ID: <7vfyaxjiaj.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0612301037570.4473@woody.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 30 20:24:19 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Dec 30 20:27:37 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H0joP-000063-Hu
-	for gcvg-git@gmane.org; Sat, 30 Dec 2006 20:24:09 +0100
+	id 1H0jrl-0000TG-4p
+	for gcvg-git@gmane.org; Sat, 30 Dec 2006 20:27:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030293AbWL3TYG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 30 Dec 2006 14:24:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030301AbWL3TYG
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Dec 2006 14:24:06 -0500
-Received: from mail.gmx.net ([213.165.64.20]:58962 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1030293AbWL3TYD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Dec 2006 14:24:03 -0500
-Received: (qmail invoked by alias); 30 Dec 2006 19:24:02 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp053) with SMTP; 30 Dec 2006 20:24:02 +0100
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Han-Wen Nienhuys <hanwen@xs4all.nl>
-In-Reply-To: <4596B837.8030108@xs4all.nl>
-X-Y-GMX-Trusted: 0
+	id S1030308AbWL3T1e (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 30 Dec 2006 14:27:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030306AbWL3T1e
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Dec 2006 14:27:34 -0500
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:48748 "EHLO
+	fed1rmmtao02.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030308AbWL3T1d (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Dec 2006 14:27:33 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20061230192732.OQKD97.fed1rmmtao02.cox.net@fed1rmimpo01.cox.net>;
+          Sat, 30 Dec 2006 14:27:32 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id 57Sm1W00e1kojtg0000000; Sat, 30 Dec 2006 14:26:47 -0500
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0612301037570.4473@woody.osdl.org> (Linus
+	Torvalds's message of "Sat, 30 Dec 2006 10:45:23 -0800 (PST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35627>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35628>
 
-Hi,
+Linus Torvalds <torvalds@osdl.org> writes:
 
-On Sat, 30 Dec 2006, Han-Wen Nienhuys wrote:
+> We just had a posting on the kernel security list where a person was 
+> upset that the 2.6.19.1 and .2 tar-files were apparently group and 
+> world-writable.
 
-> Johannes Schindelin escreveu:
-> > 
-> > Here you have to check first, if len > 3. Strictly speaking, there should 
-> > not be any line coming in which is shorter than 42 bytes. But I was 
-> > recentely bitten by such an assuption...
-> > 
-> > Overall, I like it. I even have the impression that this could actually 
-> > open a way to build in fetch instead of relying on a POSIX conformant and 
-> > fast shell for such a central part of git.
-> 
-> is there any chance of this going in GIT 1.5.0 ? It's not in the rc0 
-> release.
+I had an impression that this is only an issue when you untar as
+root, and running 'tar xf' as root _is_ a more serious security
+issue than whatever permission the tar archive itself records.
 
-Um.
+Having said that, I do not see much reason for anybody to want
+to extract any material that is worth to be placed under version
+control in a way that is world-writable, so I do not mind having
+002 as the default, but I feel that group-writability should be
+kept under control of the umask of end users who know what they
+are doing.
 
-$ git grep -e exclude-existing v1.5.0-rc0
-v1.5.0-rc0:builtin-show-ref.c:          if (!strcmp(arg, "--exclude-existing"))
-v1.5.0-rc0:builtin-show-ref.c:          if (!strncmp(arg, "--exclude-existing=", 19))
-v1.5.0-rc0:git-fetch.sh:                git-show-ref --exclude-existing=refs/tags/ |
-
-The last line means that it _is_ in v1.5.0-rc0. (BTW it is the commit 
-tags/v1.5.0-rc0~84, which I found by "git log v1.5.0-rc0 git-fetch.sh | 
-git name-rev --tags --stdin | less".)
-
-Ciao,
-Dscho
+Historically we used to have 022 as the default, and IIRC we
+loosened it exactly because some people hated that we created
+files and directories closed to group members.
