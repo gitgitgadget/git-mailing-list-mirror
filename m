@@ -1,63 +1,55 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: What's cooking in git.git (topics)
-Date: Sat, 30 Dec 2006 13:54:09 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612301350580.19693@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <7vtzzfp86x.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0612291853210.19693@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0612292219280.18171@xanadu.home>
- <Pine.LNX.4.63.0612301217010.19693@wbgn013.biozentrum.uni-wuerzburg.de>
- <45965A82.8030903@gmx.net>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Nicolas Pitre <nico@cam.org>, Junio C Hamano <junkio@cox.net>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 30 13:54:26 2006
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: Re: [PATCH] Fix 'git add' with .gitignore (Re: git-add ignores .gitignore)
+Date: Sat, 30 Dec 2006 09:50:03 -0500
+Message-ID: <497AFE26-3192-4265-820D-EED80B3452DC@silverinsanity.com>
+References: <033682AF-B324-4049-B331-8A8AF2335E4D@silverinsanity.com> <7vpsa2msx2.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Dec 30 15:50:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H0djC-0003Bc-9V
-	for gcvg-git@gmane.org; Sat, 30 Dec 2006 13:54:22 +0100
+	id 1H0fXP-0003sB-6e
+	for gcvg-git@gmane.org; Sat, 30 Dec 2006 15:50:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754382AbWL3MyM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 30 Dec 2006 07:54:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754383AbWL3MyM
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Dec 2006 07:54:12 -0500
-Received: from mail.gmx.net ([213.165.64.20]:60519 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754379AbWL3MyL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Dec 2006 07:54:11 -0500
-Received: (qmail invoked by alias); 30 Dec 2006 12:54:09 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp013) with SMTP; 30 Dec 2006 13:54:09 +0100
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Raimund Bauer <ray007@gmx.net>
-In-Reply-To: <45965A82.8030903@gmx.net>
-X-Y-GMX-Trusted: 0
+	id S1755115AbWL3OuF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 30 Dec 2006 09:50:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755131AbWL3OuF
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Dec 2006 09:50:05 -0500
+Received: from vs072.rosehosting.com ([216.114.78.72]:36676 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755115AbWL3OuE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Dec 2006 09:50:04 -0500
+Received: from [192.168.0.2] (cpe-69-204-218-82.stny.res.rr.com [69.204.218.82])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTP id 358D41FFD321;
+	Sat, 30 Dec 2006 14:50:03 +0000 (UTC)
+In-Reply-To: <7vpsa2msx2.fsf@assigned-by-dhcp.cox.net>
+To: Junio C Hamano <junkio@cox.net>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35619>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35620>
 
-Hi,
 
-On Sat, 30 Dec 2006, Raimund Bauer wrote:
+On Dec 29, 2006, at 1:57 PM, Junio C Hamano wrote:
 
-> * Johannes Schindelin wrote, On 30.12.2006 12:22:
-> > (Of course, the correct thing would not be "git reset --hard", but rather
-> > "git diff --ours | git apply -R; git reset", but that's a tad long, no?)
-> Then maybe introduce "git reset --ours" which does exactly that?
+> Thanks for noticing.
+>
+> The commit 4888c534 tried to mark the path it returns so that
+> the caller can tell if it is ignored or not, but botched the
+> case where a directory is ignored.  It should have marked the
+> contents as ignored if higher level directory was.
+>
+> But I think the approach that change makes is more expensive
+> than the original code and is not necessary.  How about this
+> patch, after you revert that commit?
 
-That is possible.
+Tried it and it works for me!  Thanks.
 
-But does it make sense? 
-
-It is a volatile state, and errors are too easy. So I think it makes sense 
-to have to _ask_ for such a state.
-
-(Having said that, I think that it actually might make sense for bisecting 
-an error where you _need_ a local patch to get it running to begin with.)
-
-Ciao,
-Dscho
+~~ Brian
