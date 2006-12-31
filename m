@@ -1,86 +1,56 @@
-From: Junio C Hamano <junkio@cox.net>
+From: "Shawn O. Pearce" <spearce@spearce.org>
 Subject: Re: [PATCH 1/2] Teach Git how to parse standard power of 2 suffixes.
-Date: Sat, 30 Dec 2006 22:30:41 -0800
-Message-ID: <7vlkkoinla.fsf@assigned-by-dhcp.cox.net>
-References: <20061231031305.GA5620@spearce.org>
-	<7vy7ooip6y.fsf@assigned-by-dhcp.cox.net>
-	<20061231061232.GC6106@spearce.org>
-	<7vpsa0inwr.fsf@assigned-by-dhcp.cox.net>
-	<20061231062618.GD6106@spearce.org>
+Date: Sun, 31 Dec 2006 01:36:25 -0500
+Message-ID: <20061231063625.GE6106@spearce.org>
+References: <20061231031305.GA5620@spearce.org> <7vy7ooip6y.fsf@assigned-by-dhcp.cox.net> <20061231061232.GC6106@spearce.org> <7vpsa0inwr.fsf@assigned-by-dhcp.cox.net> <20061231062618.GD6106@spearce.org> <7vlkkoinla.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sun Dec 31 07:30:47 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Dec 31 07:36:40 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H0uDW-0005IW-HR
-	for gcvg-git@gmane.org; Sun, 31 Dec 2006 07:30:46 +0100
+	id 1H0uJC-0005n0-Rq
+	for gcvg-git@gmane.org; Sun, 31 Dec 2006 07:36:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933035AbWLaGan (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 31 Dec 2006 01:30:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933036AbWLaGan
-	(ORCPT <rfc822;git-outgoing>); Sun, 31 Dec 2006 01:30:43 -0500
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:54540 "EHLO
-	fed1rmmtao04.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933035AbWLaGan (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Dec 2006 01:30:43 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20061231063042.SMJX7494.fed1rmmtao04.cox.net@fed1rmimpo01.cox.net>;
-          Sun, 31 Dec 2006 01:30:42 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id 5JVw1W00A1kojtg0000000; Sun, 31 Dec 2006 01:29:56 -0500
-To: git@vger.kernel.org
-In-Reply-To: <20061231062618.GD6106@spearce.org> (Shawn O. Pearce's message of
-	"Sun, 31 Dec 2006 01:26:18 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S933036AbWLaGga (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 31 Dec 2006 01:36:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933037AbWLaGga
+	(ORCPT <rfc822;git-outgoing>); Sun, 31 Dec 2006 01:36:30 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:46096 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933036AbWLaGg3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Dec 2006 01:36:29 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1H0uJD-0006H5-Rj; Sun, 31 Dec 2006 01:36:39 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id F2BC720FB65; Sun, 31 Dec 2006 01:36:25 -0500 (EST)
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vlkkoinla.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35682>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35683>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
+Junio C Hamano <junkio@cox.net> wrote:
+> I have this already in the private 'master' I am prepareing for
+> pushout:
 
-> Junio C Hamano <junkio@cox.net> wrote:
->> "Shawn O. Pearce" <spearce@spearce.org> writes:
->> 
->> > Junio C Hamano <junkio@cox.net> wrote:
->> >
->> >> Why?  Are you allowing "1024 k"?  Do we want to?
->> >
->> > Yes.  Why not?
->> 
->> Stricter input checking.  Allowing extra things later is far
->> easier than later finding problems with a looser way we started
->> from and having to tighten it.
->
-> Good point.  I'm currently writing tests for this btw.
-
-I have this already in the private 'master' I am prepareing for
-pushout:
-
-diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
-index e48a4ec..a29caa0 100755
---- a/t/t1300-repo-config.sh
-+++ b/t/t1300-repo-config.sh
-@@ -391,5 +391,15 @@ EOF
+Does it pass?  I can't get something similar to work here...
+I must be a moron or something.
  
- test_expect_success "rename succeeded" "diff -u expect .git/config"
- 
-+test_expect_success numbers '
-+
-+	git-repo-config kilo.gram 1k &&
-+	git-repo-config mega.ton 1m &&
-+	k=$(git-repo-config --int --get kilo.gram) &&
-+	test z1024 = "z$k" &&
-+	m=$(git-repo-config --int --get mega.ton) &&
-+	test z1048576 = "z$m"
-+'
-+
- test_done
- 
+
 -- 
-1.5.0.rc0.g81760
+Shawn.
