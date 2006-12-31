@@ -1,88 +1,105 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC/PATCH 4/4] Disallow working directory commands in a bare
- repository.
-Date: Sun, 31 Dec 2006 16:13:10 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0612311606330.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <3ffc8ddd9b500c2a34d2bd6ba147dc750d951bcd.1167539318.git.spearce@spearce.org>
- <20061231043238.GD5823@spearce.org> <7virfsk4sd.fsf@assigned-by-dhcp.cox.net>
- <20061231061122.GB6106@spearce.org> <7vk608fq9u.fsf@assigned-by-dhcp.cox.net>
- <20061231124921.GA14286@thunk.org>
+Subject: Re: Possible regression in git-rev-list --header
+Date: Sun, 31 Dec 2006 16:27:03 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0612311613180.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <e5bfff550612300956mef4691fqf607fad173c571da@mail.gmail.com> 
+ <Pine.LNX.4.63.0612301955340.19693@wbgn013.biozentrum.uni-wuerzburg.de> 
+ <7v7iw9jftv.fsf@assigned-by-dhcp.cox.net>  <7vlkkphvrb.fsf@assigned-by-dhcp.cox.net>
+  <Pine.LNX.4.63.0612310211300.25709@wbgn013.biozentrum.uni-wuerzburg.de> 
+ <7v64bsj0s4.fsf@assigned-by-dhcp.cox.net> <e5bfff550612310345j4c882b7av51879ca1175a1c6b@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 31 16:13:20 2006
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Dec 31 16:27:24 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H12NC-00083H-0K
-	for gcvg-git@gmane.org; Sun, 31 Dec 2006 16:13:18 +0100
+	id 1H12ah-00010u-6Z
+	for gcvg-git@gmane.org; Sun, 31 Dec 2006 16:27:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933183AbWLaPNN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 31 Dec 2006 10:13:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933184AbWLaPNN
-	(ORCPT <rfc822;git-outgoing>); Sun, 31 Dec 2006 10:13:13 -0500
-Received: from mail.gmx.net ([213.165.64.20]:45339 "HELO mail.gmx.net"
+	id S933192AbWLaP1H (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 31 Dec 2006 10:27:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933188AbWLaP1H
+	(ORCPT <rfc822;git-outgoing>); Sun, 31 Dec 2006 10:27:07 -0500
+Received: from mail.gmx.net ([213.165.64.20]:40139 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S933183AbWLaPNM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Dec 2006 10:13:12 -0500
-Received: (qmail invoked by alias); 31 Dec 2006 15:13:11 -0000
+	id S933192AbWLaP1G (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Dec 2006 10:27:06 -0500
+Received: (qmail invoked by alias); 31 Dec 2006 15:27:04 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp002) with SMTP; 31 Dec 2006 16:13:11 +0100
+  by mail.gmx.net (mp004) with SMTP; 31 Dec 2006 16:27:04 +0100
 X-Authenticated: #1490710
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Theodore Tso <tytso@mit.edu>
-In-Reply-To: <20061231124921.GA14286@thunk.org>
+To: Marco Costalba <mcostalba@gmail.com>
+In-Reply-To: <e5bfff550612310345j4c882b7av51879ca1175a1c6b@mail.gmail.com>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35700>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35701>
 
 Hi,
 
-On Sun, 31 Dec 2006, Theodore Tso wrote:
+On Sun, 31 Dec 2006, Marco Costalba wrote:
 
-> On Sun, Dec 31, 2006 at 12:01:01AM -0800, Junio C Hamano wrote:
-> > > Why not just tell these users to setup the working directories with
-> > > local .git directories and not use GIT_DIR?
-> > 
-> > suggest that we might want to bite the bullet and declare that
-> > these things are not supported anymore in v1.5.0.
-> 
-> While we're talking about potentially deprecating GIT_DIR for users,
-> out of curiosity, what valid workflows would cause users to want to
-> use GIT_INDEX_FILE and GIT_OBJECT_DIRECTORY?  Seems like they would
-> cause more confusion and support problems than anything else.  
+> Regarding qgit parsing 'bug' I would like to point out something that
+> probably is not clear.
 
-Easy, guys.
+But it _is_ a bug!
 
-It is a valid -- indeed, useful -- thing to be able to script nice 
-helpers. For example, in one project I track tar balls. So, I wrote a 
-script which will unpack the tar ball in a directory, build a new index 
-from it, and commit the corresponding tree on top of the tracking branch. 
-This setup relies _heavily_ on being able to redirect GIT_INDEX_FILE and 
-GIT_DIR.
+> 1) Parsing routine _must_ be able to sustain the loading of more then
+> 40000 revisions in a couple of seconds, so must be very quick. A lot
+> of effort has been put to index the header info at maximum speed. Now
+> it takes about 300ms to parse the whole linux tree. You can have this
+> only if the header format is 'fixed enough', it means that you would
+> not expect whole new lines (new '\n' chars) to appear from nowhere in
+> header, with the exception of log message and parents info lines of
+> course.
 
-So, these things are _useful_. Please don't break them.
+I don't see why this would slow down parsing _at all_. Besides, you should 
+really stop relying on the header format being fixed for all eternity. 
+There has been talk about putting more useful information into the header, 
+and there _are_ valid reasons to keep the header extensible.
 
-As for the presence of "index" in a bare repo: I think this is not a 
-problem, _as long_ as things continue to work as before, i.e.
+Further, if you rely on parsing being super-fast, why not just parse 
+_only_ the header information that you actually need? The header still 
+consists of
 
-	$ GIT_DIR=$(pwd) git log
+	- exactly one "tree",
+	- an arbitrary amount of "parent" lines,
+	- exactly one "author", and
+	- exactly one "committer" line
 
-and
+After that may come optional headers, but by that time you should 
+_already_ have stopped parsing! And the order is fixed already 
+(parse_commit_buffer() relies on it).
 
-	$ git --bare log
+After all, you have an initial parsing for the purpose of organizing the 
+commits, and you can have _another_ for the purpose of displaying the 
+message (you can remember the offset where the first parsing stopped to 
+accelerate the second). The latter parsing should be done individually, 
+when displaying the commit.
 
-do _not_ complain if "index" is there. Now, if somebody starts git in a 
-bare repo, where "index" is present, it could die with a helpful message 
-like
+And I still have to disagree with Junio that the encoding header is no 
+longer needed when displaying the commit message. The "tree" and "parent" 
+headers are also displayed, even if their information is already used for 
+purposes of displaying them.
 
-	It seems that this is a bare git repository, but there is an index 
-	file present, which contradicts that assumption. If the repository
-	is indeed bare, please remove the index file.
+The commit header contains information about that particular commit, and 
+if I ask to see the headers, I want to see them, and not be treated like 
+an idiot who does not know how to handle that information.
+
+(If I ask for git-log to show everything encoded in Latin-1, it might 
+still be interesting to know who used which encoding. And if it is 
+displayed in my local encoding, but the commit header says UTF-8, I _do_ 
+know that this is the original encoding, not the displayed one, thank you 
+very much!)
+
+So please, Marco, fix that bug in qgit. Otherwise you will restrict our 
+ability to enhance commit objects with useful meta information _anyway_. 
+IOW, even if the encoding header is not shown (which I would not like), 
+you should fix that bug.
 
 Ciao,
 Dscho
