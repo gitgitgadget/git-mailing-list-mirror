@@ -1,35 +1,33 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: What commands can and can not be used with bare repositories?
-Date: Sat, 30 Dec 2006 20:57:32 -0500
-Message-ID: <20061231015732.GB5082@spearce.org>
-References: <E1H0poE-0000qd-Ee@candygram.thunk.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [PATCH 1/2] Teach Git how to parse standard power of 2 suffixes.
+Date: Sat, 30 Dec 2006 21:02:18 -0500
+Message-ID: <20061231020218.GA5366@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 31 02:57:49 2006
+X-From: git-owner@vger.kernel.org Sun Dec 31 03:02:27 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H0pxI-0008SM-98
-	for gcvg-git@gmane.org; Sun, 31 Dec 2006 02:57:44 +0100
+	id 1H0q1q-0000JA-1A
+	for gcvg-git@gmane.org; Sun, 31 Dec 2006 03:02:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932622AbWLaB5h (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 30 Dec 2006 20:57:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932636AbWLaB5h
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Dec 2006 20:57:37 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:38541 "EHLO
+	id S932652AbWLaCCW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 30 Dec 2006 21:02:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932653AbWLaCCW
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Dec 2006 21:02:22 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:38667 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932622AbWLaB5g (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Dec 2006 20:57:36 -0500
+	with ESMTP id S932652AbWLaCCW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Dec 2006 21:02:22 -0500
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1H0pwx-0007WE-4Y; Sat, 30 Dec 2006 20:57:23 -0500
+	id 1H0q1Z-0007eJ-20; Sat, 30 Dec 2006 21:02:09 -0500
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id B54D420FB65; Sat, 30 Dec 2006 20:57:32 -0500 (EST)
-To: Theodore Ts'o <tytso@mit.edu>
+	id 05BE620FB65; Sat, 30 Dec 2006 21:02:18 -0500 (EST)
+To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
-In-Reply-To: <E1H0poE-0000qd-Ee@candygram.thunk.org>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -42,45 +40,74 @@ X-Source-Dir:
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35647>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35648>
 
-Theodore Ts'o <tytso@mit.edu> wrote:
-> What isn't documented is what commands actually can deal with a bare
-> repository.  At the moment, it looks like a bare repository can be a
-> target of a git pull, push, and merge commands
+Sometimes its necessary to supply a value as a power of two in a
+configuration parameter.  In this case the user may want to use
+the standard suffixes such as K, KB, KiB, etc. to indicate that
+the numerical value should be multiplied by a constant base before
+being used.
 
-Sorry but 'git merge' cannot be used in a bare repository (no working
-directory to update during the merge) and 'git merge' can only work on
-the current repository, which rules out the bare repository.
+The new git_config_datasize function can be used in config file
+handler functions to obtain a size_t in bytes.
 
-> and it can be a source
-> for a git clone, but that seems to be about it.  All other commands,
-> such as "git log" blow up with the error message "Not a git repository".
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
 
-Try "git --bare log".  Or "git --git-dir=/path/to log".
+ Applies on top of sp/mmap, but was broken out to make it easier
+ to apply earlier in case someone else needed this function.
 
-> This to me seems a bit lame, since why isn't a "bare repository" also a
-> "git repository"?  All of the information is there for "git log" to
-> work.  Commands that require a working directory obviously can't work,
-> but there are plenty of git commands for which there's no reason why
-> they shouldn't be able to operate on a bare repository.  For example,
-> "git repack", "git log", "git fetch", etc.
+ cache.h  |    1 +
+ config.c |   25 +++++++++++++++++++++++++
+ 2 files changed, 26 insertions(+), 0 deletions(-)
 
-Actually most commands work on a bare repository.
-Very few don't: the ones that require a working directory.
-E.g. status/revert/cherry-pick/commit/am/merge/pull.  (You can
-pull from a bare repository, but you cannot run pull *in* a bare
-repository.)
-
-> confused, but maybe we could fix that.  What if we were to change "git
-> clone --bare" to create the .git -> . symlink, and then add a check to
-> commands that require a working directory to see if ".git" is a symlink
-> to ., and if so, give an error message, "operation not supported on bare
-> repository"?
-
-No.  Better would be to make git's repository setup logic
-automatically detect if "." is a Git repository, and if so let the
-commands that work without a working directory run.
-
+diff --git a/cache.h b/cache.h
+index a5fc232..abbcab3 100644
+--- a/cache.h
++++ b/cache.h
+@@ -418,6 +418,7 @@ extern int git_config_from_file(config_fn_t fn, const char *);
+ extern int git_config(config_fn_t fn);
+ extern int git_config_int(const char *, const char *);
+ extern int git_config_bool(const char *, const char *);
++extern size_t git_config_datasize(const char *, const char *);
+ extern int git_config_set(const char *, const char *);
+ extern int git_config_set_multivar(const char *, const char *, const char *, int);
+ extern int git_config_rename_section(const char *, const char *);
+diff --git a/config.c b/config.c
+index 2e0d5a8..07ad2f1 100644
+--- a/config.c
++++ b/config.c
+@@ -255,6 +255,31 @@ int git_config_bool(const char *name, const char *value)
+ 	return git_config_int(name, value) != 0;
+ }
+ 
++size_t git_config_datasize(const char *name, const char *value)
++{
++	if (value && *value) {
++		char *end;
++		unsigned long val = strtoul(value, &end, 0);
++		while (isspace(*end))
++			end++;
++		if (!*end)
++			return val;
++		if (!strcasecmp(end, "k")
++			|| !strcasecmp(end, "kb")
++			|| !strcasecmp(end, "kib"))
++			return val * 1024;
++		if (!strcasecmp(end, "m")
++			|| !strcasecmp(end, "mb")
++			|| !strcasecmp(end, "mib"))
++			return val * 1024 * 1024;
++		if (!strcasecmp(end, "g")
++			|| !strcasecmp(end, "gb")
++			|| !strcasecmp(end, "gib"))
++			return val * 1024 * 1024 * 1024;
++	}
++	die("bad config value for '%s' in %s", name, config_file_name);
++}
++
+ int git_default_config(const char *var, const char *value)
+ {
+ 	/* This needs a better name */
 -- 
-Shawn.
+1.5.0.rc0.g6bb1
