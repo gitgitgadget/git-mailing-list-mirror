@@ -1,64 +1,54 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: [PATCH 1/2] Teach Git how to parse standard power of 2 suffixes.
-Date: Sun, 31 Dec 2006 01:12:32 -0500
-Message-ID: <20061231061232.GC6106@spearce.org>
-References: <20061231031305.GA5620@spearce.org> <7vy7ooip6y.fsf@assigned-by-dhcp.cox.net>
+Date: Sat, 30 Dec 2006 22:23:48 -0800
+Message-ID: <7vpsa0inwr.fsf@assigned-by-dhcp.cox.net>
+References: <20061231031305.GA5620@spearce.org>
+	<7vy7ooip6y.fsf@assigned-by-dhcp.cox.net>
+	<20061231061232.GC6106@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 31 07:12:40 2006
+X-From: git-owner@vger.kernel.org Sun Dec 31 07:24:07 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H0tvz-0003cn-JX
-	for gcvg-git@gmane.org; Sun, 31 Dec 2006 07:12:39 +0100
+	id 1H0u73-0004hl-4E
+	for gcvg-git@gmane.org; Sun, 31 Dec 2006 07:24:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933032AbWLaGMg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 31 Dec 2006 01:12:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933031AbWLaGMg
-	(ORCPT <rfc822;git-outgoing>); Sun, 31 Dec 2006 01:12:36 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:45549 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933032AbWLaGMf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Dec 2006 01:12:35 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1H0tw6-00053n-6i; Sun, 31 Dec 2006 01:12:46 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 605F820FB65; Sun, 31 Dec 2006 01:12:32 -0500 (EST)
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vy7ooip6y.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S933029AbWLaGXv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 31 Dec 2006 01:23:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933031AbWLaGXv
+	(ORCPT <rfc822;git-outgoing>); Sun, 31 Dec 2006 01:23:51 -0500
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:50982 "EHLO
+	fed1rmmtao05.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933029AbWLaGXu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Dec 2006 01:23:50 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20061231062350.JZWR15640.fed1rmmtao05.cox.net@fed1rmimpo01.cox.net>;
+          Sun, 31 Dec 2006 01:23:50 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id 5JP31W0041kojtg0000000; Sun, 31 Dec 2006 01:23:04 -0500
+To: "Shawn O. Pearce" <spearce@spearce.org>
+In-Reply-To: <20061231061232.GC6106@spearce.org> (Shawn O. Pearce's message of
+	"Sun, 31 Dec 2006 01:12:32 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35679>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35680>
 
-Junio C Hamano <junkio@cox.net> wrote:
-> > diff --git a/config.c b/config.c
-> > index 2e0d5a8..83ce9e1 100644
-> > --- a/config.c
-> > +++ b/config.c
-> > @@ -236,8 +236,16 @@ int git_config_int(const char *name, const char *value)
-> >  	if (value && *value) {
-> >  		char *end;
-> >  		int val = strtol(value, &end, 0);
-> > +		while (isspace(*end))
-> > +			end++;
-> 
-> Why?  Are you allowing "1024 k"?  Do we want to?
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-Yes.  Why not?
+> Junio C Hamano <junkio@cox.net> wrote:
+>
+>> Why?  Are you allowing "1024 k"?  Do we want to?
+>
+> Yes.  Why not?
 
--- 
-Shawn.
+Stricter input checking.  Allowing extra things later is far
+easier than later finding problems with a looser way we started
+from and having to tighten it.
