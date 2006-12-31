@@ -1,75 +1,81 @@
-From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: Re: SIGSEGV in merge recursive
-Date: Sat, 30 Dec 2006 17:42:06 -0800 (PST)
-Message-ID: <10871.51671.qm@web31801.mail.mud.yahoo.com>
-References: <Pine.LNX.4.63.0612301204280.19693@wbgn013.biozentrum.uni-wuerzburg.de>
-Reply-To: ltuikov@yahoo.com
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Possible regression in git-rev-list --header
+Date: Sat, 30 Dec 2006 17:45:47 -0800
+Message-ID: <7v64bsj0s4.fsf@assigned-by-dhcp.cox.net>
+References: <e5bfff550612300956mef4691fqf607fad173c571da@mail.gmail.com>
+	<Pine.LNX.4.63.0612301955340.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7v7iw9jftv.fsf@assigned-by-dhcp.cox.net>
+	<7vlkkphvrb.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0612310211300.25709@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 31 02:42:58 2006
+Content-Type: text/plain; charset=us-ascii
+Cc: Marco Costalba <mcostalba@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Dec 31 02:46:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H0piL-00073r-BN
-	for gcvg-git@gmane.org; Sun, 31 Dec 2006 02:42:17 +0100
+	id 1H0pm6-0007ct-KV
+	for gcvg-git@gmane.org; Sun, 31 Dec 2006 02:46:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932572AbWLaBmJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 30 Dec 2006 20:42:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932579AbWLaBmJ
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Dec 2006 20:42:09 -0500
-Received: from web31801.mail.mud.yahoo.com ([68.142.207.64]:43227 "HELO
-	web31801.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S932572AbWLaBmI (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 30 Dec 2006 20:42:08 -0500
-Received: (qmail 51928 invoked by uid 60001); 31 Dec 2006 01:42:07 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=X-YMail-OSG:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
-  b=Gpu87ZNoGvOSAG3sqYTtyvxITsl9gCWbmlgO+gsbVFiUHM5Rzi8A8eC4GmVnikXSmjCY6zbDKvUtolhB3G7fF7AcDwnv1tv35rl5/OrTVQETainEDk8CGMy0/Te8G78mesijGNJajbWUQqhjtiyXZ8yN1GuRi0kOhN5pCU3HNfM=;
-X-YMail-OSG: MsuGciIVM1kn62L6BBeySK8yLqZ3EueCA9r8HdlWhxA4Spg7B4S87j8PU_81I3FR2uO75SNT8lrmGq9BgvIFhZp9zEMhapi2TvCaIazdp22dWjjAD0Ov7TrfZYe6d8Fg_LgiH7JkGdLE7CrapSDdwSAFpL8Oo4cXQF5YPDjciOhW7ip1mDXlJSTW
-Received: from [71.84.31.238] by web31801.mail.mud.yahoo.com via HTTP; Sat, 30 Dec 2006 17:42:06 PST
+	id S932583AbWLaBpu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 30 Dec 2006 20:45:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932616AbWLaBpt
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Dec 2006 20:45:49 -0500
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:37890 "EHLO
+	fed1rmmtao05.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932598AbWLaBps (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Dec 2006 20:45:48 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20061231014547.FWCK15640.fed1rmmtao05.cox.net@fed1rmimpo01.cox.net>;
+          Sat, 30 Dec 2006 20:45:47 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id 5Dl11W00V1kojtg0000000; Sat, 30 Dec 2006 20:45:02 -0500
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0612301204280.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+In-Reply-To: <Pine.LNX.4.63.0612310211300.25709@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Sun, 31 Dec 2006 02:13:27 +0100
+	(CET)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35643>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35644>
 
---- Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> On Fri, 29 Dec 2006, Luben Tuikov wrote:
-> 
-> > > > Failed to read a valid object file image from memory.
-> > > 
-> > > Who says this?
-> 
-> Again, who says this? I cannot find _anything_ in my local repo (with its 
-> own set of modifications, which do not hide such a message).
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-GDB.  This message is not present when I run it manually from shell prompt.
+> On Sat, 30 Dec 2006, Junio C Hamano wrote:
+>
+>> Another thing.  I think it would make sense to remove "encoding" header 
+>> after pretty_print_commit successfully re-codes the buffer.  An 
+>> alternative is to rewrite "encoding" header to show which encoding the 
+>> log now uses (and omit it if it is UTF-8).
+>
+> I think it would be wrong. Sure, the output may be encoded differently, 
+> but the _original_ commit was not. And this is the information I want 
+> to see when I look at the raw commit.
 
-> Given that there is a fix in master for a segfault, I have to admit that I 
-> believe you did not use _that_ version, but a git without that fix.
+When you want to see the raw commit, you would not ask for it to
+re-code, so "removal after successfully re-codes" would not kick
+in (if you _really_ want to look at the raw commit, I guess
+cat-file can help, but let's not go there).  Re-coding the
+message but still showing what the original encoding was does
+not sound making much sense to me.
 
-A-ha!  Since I never run master, after I read your message, I compiled
-master, installed it and tried the same merge/pull and it succeeded -- i.e.
-didn't segfault, but complained about unresolved conflicts (as it should).
+I've pushed this out after a small rework.
 
-So it appears that the fix is in "master", but not in "next".
+The rule is:
 
-Junio, can you confirm this?
+ - if you ask for re-coding (either by i18n.* configuration or
+   an explicit --encoding option from the command line), and if
+   re-coding successfully does its job, you do not see
+   "encoding" header;
 
-    Luben
+ - if the buffer cannot successfully be re-coded, no re-coding
+   is done, and the caller can inspect "encoding" header.
 
-
-> Besides, Alexandre hit an interesting bug, which is not at all easy to 
-> reproduce (except with three 70k files which I don't want to include in 
-> the test set). Since Alexandre provided _examples_ where I can _reproduce_ 
-> the problem, I will be working on that bug, and not yours.
-> 
-> Ciao,
-> Dscho
-> 
-> 
+ - if you do not ask for re-coding, "encoding" header is left as
+   is, so is the commit log message.  The caller can deal with
+   any re-coding itself.
