@@ -1,81 +1,57 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [RFC/PATCH 4/4] Disallow working directory commands in a bare repository.
-Date: Sat, 30 Dec 2006 21:33:54 -0800
-Message-ID: <7virfsk4sd.fsf@assigned-by-dhcp.cox.net>
-References: <3ffc8ddd9b500c2a34d2bd6ba147dc750d951bcd.1167539318.git.spearce@spearce.org>
-	<20061231043238.GD5823@spearce.org>
+From: "Michael S. Tsirkin" <mst@mellanox.co.il>
+Subject: Re: What commands can and can not be used with bare repositories?
+Date: Sun, 31 Dec 2006 07:32:43 +0200
+Message-ID: <20061231053243.GB5240@mellanox.co.il>
+References: <20061231021248.GA26067@thunk.org>
+Reply-To: "Michael S. Tsirkin" <mst@mellanox.co.il>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 31 06:34:05 2006
+Cc: Shawn Pearce <spearce@spearce.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Dec 31 06:37:57 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H0tKc-0008HL-TS
-	for gcvg-git@gmane.org; Sun, 31 Dec 2006 06:34:03 +0100
+	id 1H0tOO-00008Q-Jf
+	for gcvg-git@gmane.org; Sun, 31 Dec 2006 06:37:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932795AbWLaFd7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 31 Dec 2006 00:33:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932919AbWLaFd7
-	(ORCPT <rfc822;git-outgoing>); Sun, 31 Dec 2006 00:33:59 -0500
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:35511 "EHLO
-	fed1rmmtao08.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932795AbWLaFd7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Dec 2006 00:33:59 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20061231053355.VXUB16632.fed1rmmtao08.cox.net@fed1rmimpo01.cox.net>;
-          Sun, 31 Dec 2006 00:33:55 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id 5HZ91W0091kojtg0000000; Sun, 31 Dec 2006 00:33:10 -0500
-To: "Shawn O. Pearce" <spearce@spearce.org>
-In-Reply-To: <20061231043238.GD5823@spearce.org> (Shawn O. Pearce's message of
-	"Sat, 30 Dec 2006 23:32:38 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932890AbWLaFhx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 31 Dec 2006 00:37:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932919AbWLaFhx
+	(ORCPT <rfc822;git-outgoing>); Sun, 31 Dec 2006 00:37:53 -0500
+Received: from p02c11o142.mxlogic.net ([208.65.145.65]:41093 "EHLO
+	p02c11o142.mxlogic.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932890AbWLaFhw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Dec 2006 00:37:52 -0500
+Received: from unknown [194.90.237.34] (EHLO mtlexch01.mtl.com)
+	by p02c11o142.mxlogic.net (mxl_mta-4.0.1-5)
+	with ESMTP id 0bc47954.2635144112.59535.00-008.p02c11o142.mxlogic.net (envelope-from <mst@mellanox.co.il>);
+	Sat, 30 Dec 2006 22:37:52 -0700 (MST)
+Received: from mellanox.co.il ([10.4.4.6]) by mtlexch01.mtl.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Sun, 31 Dec 2006 07:34:37 +0200
+Received: by mellanox.co.il (sSMTP sendmail emulation); Sun, 31 Dec 2006 07:37:43 +0200
+To: Theodore Tso <tytso@mit.edu>
+Content-Disposition: inline
+In-Reply-To: <20061231021248.GA26067@thunk.org>
+User-Agent: Mutt/1.5.11
+X-OriginalArrivalTime: 31 Dec 2006 05:34:37.0937 (UTC) FILETIME=[5CA84E10:01C72C9D]
+X-TM-AS-Product-Ver: SMEX-7.0.0.1526-3.6.1039-14904.000
+X-TM-AS-Result: No--4.867000-4.000000-31
+X-Spam: [F=0.0100000000; S=0.010(2006120601)]
+X-MAIL-FROM: <mst@mellanox.co.il>
+X-SOURCE-IP: [194.90.237.34]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35670>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35671>
 
-I think the intent is good.
+> That makes sense, although the hueristic for determining whether or
+> not "." is a Git repository might be a little interesting.  Say, if
+> there is no containing directory which has a .git directory, and the
+> directories "objects", "info", and "refs" are present?
 
-But execution has room for improvement, and it is not your
-fault.  The shell script version of require_not_bare is as
-fragile as is_bare_git_dir(), which I already do not like, and I
-think if we are going to use is_bare_git_dir() more, I think we
-would want to have something a bit more robust.
-
-If we could outlaw $GIT_DIR/index in a bare repository, then
-lack of $GIT_DIR/index combined with nonexistence of ref that
-is pointed at by $GIT_DIR/HEAD could become a good indication
-that the repository is bare ("the current branch unborn" check
-is needed not to mistake a repository before the initial commit
-as a bare one).
-
-Alas, many public repositories you would see (e.g. check
-kernel.org) have been primed with rsync of .git/ from
-developer's working repository and have leftover index that is
-otherwise unused.  Because of this heavy historical baggage, I
-suspect that it is rather hard to convince people to allow us to
-use this technique.
-
-When you have $GIT_DIR in your environment, no working-tree
-command is expected to work unless you are at the toplevel of
-the working-tree.  In the past, people talked about their
-workflows using more than one working trees that are associated
-with a single $GIT_DIR and that is certainly supposed to work.
-But I wonder how widely such a set-up is employed in practice.
-If we outlawed working-tree commands when $GIT_DIR environment
-exists, how much hurt are we talking about, I wonder.
-
-Another thing to think about is if we are happy with the above
-restriction that makes environment $GIT_DIR to imply you are
-always working at the toplevel.  Maybe it could be a good idea
-to kill this bird as well by introducing $GIT_WORKTREE_TOP
-environment variable.  Presence of it obviously means we are not
-in a bare repository, but at the same time it would allow us to
-teach setup_git_directory_gentry() to cd up to that directory to
-make the commands behave as expected.
+Maybe, git clone --bare should create a special file under the
+repository directory?
+	
+-- 
+MST
