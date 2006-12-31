@@ -1,7 +1,7 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
+From: Shawn Pearce <spearce@spearce.org>
 Subject: Re: What commands can and can not be used with bare repositories?
-Date: Sat, 30 Dec 2006 20:57:28 -0500
-Message-ID: <20061231015728.GB20348@fieldses.org>
+Date: Sat, 30 Dec 2006 20:57:32 -0500
+Message-ID: <20061231015732.GB5082@spearce.org>
 References: <E1H0poE-0000qd-Ee@candygram.thunk.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -11,35 +11,54 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H0pxI-0008SM-Px
-	for gcvg-git@gmane.org; Sun, 31 Dec 2006 02:57:45 +0100
+	id 1H0pxI-0008SM-98
+	for gcvg-git@gmane.org; Sun, 31 Dec 2006 02:57:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932636AbWLaB5i (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 30 Dec 2006 20:57:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932635AbWLaB5h
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Dec 2006 20:57:37 -0500
-Received: from mail.fieldses.org ([66.93.2.214]:41570 "EHLO
-	pickle.fieldses.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932637AbWLaB5h (ORCPT <rfc822;git@vger.kernel.org>);
+	id S932622AbWLaB5h (ORCPT <rfc822;gcvg-git@m.gmane.org>);
 	Sat, 30 Dec 2006 20:57:37 -0500
-Received: from bfields by pickle.fieldses.org with local (Exim 4.63)
-	(envelope-from <bfields@fieldses.org>)
-	id 1H0px2-0006cN-Ak; Sat, 30 Dec 2006 20:57:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932636AbWLaB5h
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Dec 2006 20:57:37 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:38541 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932622AbWLaB5g (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Dec 2006 20:57:36 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1H0pwx-0007WE-4Y; Sat, 30 Dec 2006 20:57:23 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id B54D420FB65; Sat, 30 Dec 2006 20:57:32 -0500 (EST)
 To: Theodore Ts'o <tytso@mit.edu>
 Content-Disposition: inline
 In-Reply-To: <E1H0poE-0000qd-Ee@candygram.thunk.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35646>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35647>
 
-On Sat, Dec 30, 2006 at 08:48:22PM -0500, Theodore Ts'o wrote:
+Theodore Ts'o <tytso@mit.edu> wrote:
 > What isn't documented is what commands actually can deal with a bare
 > repository.  At the moment, it looks like a bare repository can be a
-> target of a git pull, push, and merge commands, and it can be a source
+> target of a git pull, push, and merge commands
+
+Sorry but 'git merge' cannot be used in a bare repository (no working
+directory to update during the merge) and 'git merge' can only work on
+the current repository, which rules out the bare repository.
+
+> and it can be a source
 > for a git clone, but that seems to be about it.  All other commands,
 > such as "git log" blow up with the error message "Not a git repository".
+
+Try "git --bare log".  Or "git --git-dir=/path/to log".
+
 > This to me seems a bit lame, since why isn't a "bare repository" also a
 > "git repository"?  All of the information is there for "git log" to
 > work.  Commands that require a working directory obviously can't work,
@@ -47,13 +66,21 @@ On Sat, Dec 30, 2006 at 08:48:22PM -0500, Theodore Ts'o wrote:
 > they shouldn't be able to operate on a bare repository.  For example,
 > "git repack", "git log", "git fetch", etc.
 
-Yup.  Anything that should work actually does; you just need to know to
-use one of:
+Actually most commands work on a bare repository.
+Very few don't: the ones that require a working directory.
+E.g. status/revert/cherry-pick/commit/am/merge/pull.  (You can
+pull from a bare repository, but you cannot run pull *in* a bare
+repository.)
 
-	GIT_DIR=. git log
-	git --git-dir=. log
-	git --bare log
+> confused, but maybe we could fix that.  What if we were to change "git
+> clone --bare" to create the .git -> . symlink, and then add a check to
+> commands that require a working directory to see if ".git" is a symlink
+> to ., and if so, give an error message, "operation not supported on bare
+> repository"?
 
-Why git couldn't figure this out for you, I don't know....
+No.  Better would be to make git's repository setup logic
+automatically detect if "." is a Git repository, and if so let the
+commands that work without a working directory run.
 
---b.
+-- 
+Shawn.
