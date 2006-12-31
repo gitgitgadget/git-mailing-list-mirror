@@ -1,57 +1,80 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: [PATCH 3/4] Automatically detect a bare git repository.
-Date: Sun, 31 Dec 2006 07:52:05 -0500
-Message-ID: <20061231125205.GB14286@thunk.org>
-References: <3ffc8ddd9b500c2a34d2bd6ba147dc750d951bcd.1167539318.git.spearce@spearce.org> <20061231043019.GC5823@spearce.org>
+From: Juergen Ruehle <j.ruehle@bmiag.de>
+Subject: Re: What's cooking in git.git (topics)
+Date: Sun, 31 Dec 2006 14:38:45 +0100
+Message-ID: <17815.48485.178000.90522@lapjr.intranet.kiel.bmiag.de>
+References: <7vhcvcfpze.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 31 13:52:19 2006
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Dec 31 14:39:23 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H10Af-0000zK-Mf
-	for gcvg-git@gmane.org; Sun, 31 Dec 2006 13:52:14 +0100
+	id 1H10uF-0005iN-U5
+	for gcvg-git@gmane.org; Sun, 31 Dec 2006 14:39:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933163AbWLaMwK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 31 Dec 2006 07:52:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933164AbWLaMwK
-	(ORCPT <rfc822;git-outgoing>); Sun, 31 Dec 2006 07:52:10 -0500
-Received: from thunk.org ([69.25.196.29]:41081 "EHLO thunker.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933163AbWLaMwJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Dec 2006 07:52:09 -0500
-Received: from root (helo=candygram.thunk.org)
-	by thunker.thunk.org with local-esmtps 
-	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
-	id 1H10Es-0001ve-SD; Sun, 31 Dec 2006 07:56:35 -0500
-Received: from tytso by candygram.thunk.org with local (Exim 4.62)
-	(envelope-from <tytso@thunk.org>)
-	id 1H10AX-0007Lb-HE; Sun, 31 Dec 2006 07:52:05 -0500
-To: "Shawn O. Pearce" <spearce@spearce.org>
-Content-Disposition: inline
-In-Reply-To: <20061231043019.GC5823@spearce.org>
-User-Agent: Mutt/1.5.12-2006-07-14
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+	id S933174AbWLaNjG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 31 Dec 2006 08:39:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933175AbWLaNjF
+	(ORCPT <rfc822;git-outgoing>); Sun, 31 Dec 2006 08:39:05 -0500
+Received: from meriadoc.bmiag.de ([62.154.210.133]:34246 "EHLO
+	meriadoc.bmiag.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933173AbWLaNjE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Dec 2006 08:39:04 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by meriadoc.bmiag.de (Postfix) with ESMTP id 495C03AECC;
+	Sun, 31 Dec 2006 14:39:00 +0100 (CET)
+Received: from meriadoc.bmiag.de ([127.0.0.1])
+	by localhost (meriadoc [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 06178-05; Sun, 31 Dec 2006 14:39:00 +0100 (CET)
+Received: from eotheod.intranet.kiel.bmiag.de (eotheod.intranet.kiel.bmiag.de [10.130.2.1])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	by meriadoc.bmiag.de (Postfix) with ESMTP id 6BE633AECB;
+	Sun, 31 Dec 2006 14:38:58 +0100 (CET)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by eotheod.intranet.kiel.bmiag.de (Postfix) with ESMTP id 2B90F3ADC8;
+	Sun, 31 Dec 2006 14:38:58 +0100 (CET)
+Received: from eotheod.intranet.kiel.bmiag.de ([127.0.0.1])
+	by localhost (eotheod [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 03316-09; Sun, 31 Dec 2006 14:38:55 +0100 (CET)
+Received: from LAPJR (dialin5.galadriel.bmiag.de [192.168.251.5])
+	by eotheod.intranet.kiel.bmiag.de (Postfix) with ESMTP id B182F3ADC6;
+	Sun, 31 Dec 2006 14:38:49 +0100 (CET)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vhcvcfpze.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: VM 7.19 under Emacs 21.3.1
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at eotheod.intranet.kiel.bmiag.de
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at meriadoc.bmiag.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35696>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35697>
 
-On Sat, Dec 30, 2006 at 11:30:19PM -0500, Shawn O. Pearce wrote:
-> Many users find it unfriendly that they can create a bare git
-> repository easily with `git clone --bare` but are then unable to
-> run simple commands like `git log` once they cd into that newly
-> created bare repository.  This occurs because we do not check to
-> see if the current working directory is a git repository.
+Junio C Hamano writes:
+ > * jc/3way (Wed Nov 29 18:53:13 2006 -0800) 1 commit
+ >  + git-merge: preserve and merge local changes when doing fast
+ >    forward
+ > 
+ > A few people wanted to have this in v1.5.0, but I am a bit
+ > reluctant to do so --- I think the behaviour of its failure mode
+ > is rather nasty, even though it tries to help the user by
+ > dropping the local diff in .git/LOCAL_DIFF file.
 
-Thanks for coding this up!   
+It happened to me (not really an experienced user) for the first time
+on the last pull. Though unexpected it wasn't an unpleasant
+experience. The failure mode doesn't feel smooth, but after thinking
+about possible improvements I couldn't come up with anything better.
+It already states explicitly what it's doing including telling the
+user about LOCAL_DIFF. The only thing I wasn't sure about was how to
+get rid of the unmerged index entries after I fixed the conflicts
+without adding the local change to the index. In the end I did an
+update-index/reset combination, but perhaps repeating the list of
+files with conflicting local changes after the merge and cleaning the
+index instead of leaving unmerged entries in the index would be
+better.
 
-If you do this, does this mean that we can also eliminate the global
-variable --bare, since git will be able to figure out we're in a bare
-repository all by itself?
-
-						- Ted
+I think (because of LOCAL_DIFF) it is safe to have this in 1.5 even in
+its current incarnation.
