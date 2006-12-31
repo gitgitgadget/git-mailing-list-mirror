@@ -1,63 +1,62 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [PATCH 0/11] Misc. pull/merge/am improvements
-Date: Sat, 30 Dec 2006 20:21:15 -0500
-Message-ID: <20061231012115.GA5082@spearce.org>
-References: <20061228073441.GB17304@spearce.org> <7vmz58whnx.fsf@assigned-by-dhcp.cox.net> <20061228084245.GA18150@spearce.org> <7vtzzguvrp.fsf@assigned-by-dhcp.cox.net> <20061229045327.GD12072@spearce.org> <7vmz57p6tn.fsf@assigned-by-dhcp.cox.net>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Strict ordering by date
+Date: Sat, 30 Dec 2006 17:03:31 -0800
+Message-ID: <45970C63.1020509@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 31 02:21:31 2006
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Sun Dec 31 02:36:59 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H0pOD-0005ZF-W6
-	for gcvg-git@gmane.org; Sun, 31 Dec 2006 02:21:30 +0100
+	id 1H0pd9-0006XU-Lj
+	for gcvg-git@gmane.org; Sun, 31 Dec 2006 02:36:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932566AbWLaBVU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 30 Dec 2006 20:21:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932572AbWLaBVU
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Dec 2006 20:21:20 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:37673 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932566AbWLaBVT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Dec 2006 20:21:19 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1H0pNq-0006Oi-HN; Sat, 30 Dec 2006 20:21:06 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 968DE20FB65; Sat, 30 Dec 2006 20:21:15 -0500 (EST)
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vmz57p6tn.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S932575AbWLaBgl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 30 Dec 2006 20:36:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932579AbWLaBgl
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Dec 2006 20:36:41 -0500
+Received: from terminus.zytor.com ([192.83.249.54]:59141 "EHLO
+	terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932575AbWLaBgk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Dec 2006 20:36:40 -0500
+X-Greylist: delayed 1984 seconds by postgrey-1.27 at vger.kernel.org; Sat, 30 Dec 2006 20:36:40 EST
+Received: from [172.27.0.16] (c-67-180-238-27.hsd1.ca.comcast.net [67.180.238.27])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.8/8.13.7) with ESMTP id kBV13WZi023167
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 30 Dec 2006 17:03:33 -0800
+User-Agent: Thunderbird 1.5.0.9 (X11/20061219)
+To: git@vger.kernel.org
+X-Virus-Scanned: ClamAV 0.88.7/2396/Sat Dec 30 03:57:43 2006 on terminus.zytor.com
+X-Virus-Status: Clean
+X-Spam-Status: No, score=1.1 required=5.0 tests=AWL,BAYES_00,
+	DATE_IN_FUTURE_96_XX,RCVD_IN_SORBS_DUL,TW_PM autolearn=no 
+	version=3.1.7
+X-Spam-Level: *
+X-Spam-Checker-Version: SpamAssassin 3.1.7 (2006-10-05) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35641>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35642>
 
-Junio C Hamano <junkio@cox.net> wrote:
-> > Junio C Hamano <junkio@cox.net> wrote:
-> >> While I was looking at the problem, I noticed something a bit
-> >> easier to reproduce and should be lot easier to diagnose.  At
-> >> http://userweb.kernel.org/~junio/broken.tar, I have a tarball of
-> >> git.git repository.
-> >
-> 
-> I think there is a thinko in the OFS_DELTA arm of that switch
-> statement.  You are resetting buf to (in-pack-offset + used), so
-> you should fetch the variably encoded length starting from buf[0].
+Hi all,
 
-Yes.  Your patch looks correct; that's a really bad thinko on
-my part.  Thanks for tracking it down, and fixing it.
+I have added a --pretty=rpm option to git in order to automatically 
+generate the changelog for an RPM specfile.  So far, so good. 
+Unfortunately, rpmbuild is very picky and will simply refuse to run, at 
+all, if any of the entries are out of reverse chronological order.  When 
+dealing with merges or cherrypicking -- or, for that matter, a commit 
+done with a broken time setting -- this doesn't work with either 
+--date-order or --topo-order.
 
--- 
-Shawn.
+(And yes, this is an rpmbuild misfeature.)
+
+I've tried to add a --strict-date-order option, but it's not clear at 
+what point -- if any -- we actually have the full list of entries to 
+display.  It doesn't seem to happen anywhere inside revision.c.
+
+Any pointers appreciated.
+
+	-hpa
