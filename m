@@ -1,92 +1,115 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: Possible regression in git-rev-list --header
-Date: Sun, 31 Dec 2006 12:45:37 +0100
-Message-ID: <e5bfff550612310345j4c882b7av51879ca1175a1c6b@mail.gmail.com>
-References: <e5bfff550612300956mef4691fqf607fad173c571da@mail.gmail.com>
-	 <Pine.LNX.4.63.0612301955340.19693@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <7v7iw9jftv.fsf@assigned-by-dhcp.cox.net>
-	 <7vlkkphvrb.fsf@assigned-by-dhcp.cox.net>
-	 <Pine.LNX.4.63.0612310211300.25709@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <7v64bsj0s4.fsf@assigned-by-dhcp.cox.net>
+From: Theodore Tso <tytso@mit.edu>
+Subject: [PATCH, UPDATED] Fix formatting for urls section of fetch, pull, and push manpages
+Date: Sat, 30 Dec 2006 23:11:52 -0500
+Message-ID: <20061231041152.GA791@thunk.org>
+References: <E1H0p79-0004T8-8V@candygram.thunk.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 31 12:45:56 2006
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Sun Dec 31 13:37:11 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H0z8T-0002Tc-FE
-	for gcvg-git@gmane.org; Sun, 31 Dec 2006 12:45:53 +0100
+	id 1H0zvz-0007xH-8G
+	for gcvg-git@gmane.org; Sun, 31 Dec 2006 13:37:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933134AbWLaLpj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 31 Dec 2006 06:45:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933135AbWLaLpj
-	(ORCPT <rfc822;git-outgoing>); Sun, 31 Dec 2006 06:45:39 -0500
-Received: from py-out-1112.google.com ([64.233.166.183]:22587 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933134AbWLaLpi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Dec 2006 06:45:38 -0500
-Received: by py-out-1112.google.com with SMTP id a29so2915684pyi
-        for <git@vger.kernel.org>; Sun, 31 Dec 2006 03:45:37 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=qvKTgllzrewJiO08tqm+8vvDq+/LllV4UmjD3OSIBQMHnHyoD3dU83DF/A2HjWFKrKyc3JPzdhQMJJ4mcNJPJvp2f/Uql7Cs/pznO+rItZepzlD2h5jB5ktHg+l8lEGCBg6fB+6VQFH+WFj+Vcchfk/jcg9H/m3HS7NK5nMBukA=
-Received: by 10.35.66.1 with SMTP id t1mr33879939pyk.1167565537790;
-        Sun, 31 Dec 2006 03:45:37 -0800 (PST)
-Received: by 10.35.93.11 with HTTP; Sun, 31 Dec 2006 03:45:37 -0800 (PST)
-To: "Junio C Hamano" <junkio@cox.net>
-In-Reply-To: <7v64bsj0s4.fsf@assigned-by-dhcp.cox.net>
+	id S933157AbWLaMg7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 31 Dec 2006 07:36:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933159AbWLaMg7
+	(ORCPT <rfc822;git-outgoing>); Sun, 31 Dec 2006 07:36:59 -0500
+Received: from thunk.org ([69.25.196.29]:55120 "EHLO thunker.thunk.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933157AbWLaMg6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Dec 2006 07:36:58 -0500
+Received: from root (helo=candygram.thunk.org)
+	by thunker.thunk.org with local-esmtps 
+	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
+	id 1H100D-0001pL-3b; Sun, 31 Dec 2006 07:41:25 -0500
+Received: from tytso by candygram.thunk.org with local (Exim 4.62)
+	(envelope-from <tytso@thunk.org>)
+	id 1H0s36-0001AB-Fe; Sat, 30 Dec 2006 23:11:52 -0500
+To: git@vger.kernel.org
 Content-Disposition: inline
+In-Reply-To: <E1H0p79-0004T8-8V@candygram.thunk.org>
+User-Agent: Mutt/1.5.12-2006-07-14
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35693>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35694>
 
-I'm sorry to reply only now but I have problems with my internet
-connection, I am also not able to test Junio patches now.
+The line:
 
-Regarding qgit parsing 'bug' I would like to point out something that
-probably is not clear.
+[remote "<remote>"]
 
-1) Parsing routine _must_ be able to sustain the loading of more then
-40000 revisions in a couple of seconds, so must be very quick. A lot
-of effort has been put to index the header info at maximum speed. Now
-it takes about 300ms to parse the whole linux tree. You can have this
-only if the header format is 'fixed enough', it means that you would
-not expect whole new lines (new '\n' chars) to appear from nowhere in
-header, with the exception of log message and parents info lines of
-course.
+was getting swallowed up by asciidoc, causing a critical line in the
+explanation for how to store the .git/remotes information in .git/config
+to go missing from the git-fetch, git-pull, and git-push manpages.
 
-2) I _have_ to rely on headers info because that's where I get data to
-show the user, that's the whole point of calling git-rev-list with
---headers option.
+Put all of the examples into delimited blocks to fix this problem and to
+make them look nicer.
 
-3) The rule of double '\n\n' as an indicator of the start of log
-message it's not only very slow, it's also broken in cases of no log,
-see 7b7abfe3dd81d in Linux tree.
+Signed-off-by: "Theodore Ts'o" <tytso@mit.edu>
 
-4) We are talking of keeping back compatibility, _fixing_ qgit does
-not solves the issues with current qgit users.
+[Updated to make thee nroff'ed man pages look nicer]
 
-So please I really would ask again to *do not print that encoding
-extra line if not requested to do so*
+---
+ Documentation/urls.txt |   19 +++++++++++++++----
+ 1 files changed, 15 insertions(+), 4 deletions(-)
 
-Thanks again
-Marco
-
-P.S: One way to really speed up the indexing would be if git-rev-list
-prints at the beginning the length of the record, i.e. the distance
-from the next '\0' terminating point. I don't know if this info is
-already available to git-rev-list before to print the record or has to
-find it anyway, in the latter case there is no point in doing this.
-But in the former case it would be possible to avoid a costly
-find('\0'), starting from the beginning of log message. Log message is
-more then the half of all the record length so it would be possible to
-avoid a good amount of unuseful work because only the position of the
-next '\0' is needed during parsing, not the log message, that is
-retrieved and shown to the user only on demand, i.e. only for the
-selected revision.
+diff --git a/Documentation/urls.txt b/Documentation/urls.txt
+index 670827c..745f967 100644
+--- a/Documentation/urls.txt
++++ b/Documentation/urls.txt
+@@ -40,10 +40,13 @@ In addition to the above, as a short-hand, the name of a
+ file in `$GIT_DIR/remotes` directory can be given; the
+ named file should be in the following format:
+ 
++------------
+ 	URL: one of the above URL format
+ 	Push: <refspec>
+ 	Pull: <refspec>
+ 
++------------
++
+ Then such a short-hand is specified in place of
+ <repository> without <refspec> parameters on the command
+ line, <refspec> specified on `Push:` lines or `Pull:`
+@@ -54,10 +57,13 @@ be specified for additional branch mappings.
+ Or, equivalently, in the `$GIT_DIR/config` (note the use
+ of `fetch` instead of `Pull:`):
+ 
+-[remote "<remote>"]
+-	url = <url>
+-	push = <refspec>
+-	fetch = <refspec>
++------------
++	[remote "<remote>"]
++		url = <url>
++		push = <refspec>
++		fetch = <refspec>
++
++------------
+ 
+ The name of a file in `$GIT_DIR/branches` directory can be
+ specified as an older notation short-hand; the named
+@@ -68,10 +74,15 @@ name of remote head (URL fragment notation).
+ without the fragment is equivalent to have this in the
+ corresponding file in the `$GIT_DIR/remotes/` directory.
+ 
++------------
+ 	URL: <url>
+ 	Pull: refs/heads/master:<remote>
+ 
++------------
++
+ while having `<url>#<head>` is equivalent to
+ 
++------------
+ 	URL: <url>
+ 	Pull: refs/heads/<head>:<remote>
++------------
+-- 
+1.5.0.rc0.g1d42
