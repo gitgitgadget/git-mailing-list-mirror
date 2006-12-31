@@ -1,62 +1,75 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Strict ordering by date
-Date: Sat, 30 Dec 2006 17:03:31 -0800
-Message-ID: <45970C63.1020509@zytor.com>
+From: Luben Tuikov <ltuikov@yahoo.com>
+Subject: Re: SIGSEGV in merge recursive
+Date: Sat, 30 Dec 2006 17:42:06 -0800 (PST)
+Message-ID: <10871.51671.qm@web31801.mail.mud.yahoo.com>
+References: <Pine.LNX.4.63.0612301204280.19693@wbgn013.biozentrum.uni-wuerzburg.de>
+Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sun Dec 31 02:36:59 2006
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Dec 31 02:42:58 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H0pd9-0006XU-Lj
-	for gcvg-git@gmane.org; Sun, 31 Dec 2006 02:36:56 +0100
+	id 1H0piL-00073r-BN
+	for gcvg-git@gmane.org; Sun, 31 Dec 2006 02:42:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932575AbWLaBgl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 30 Dec 2006 20:36:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932579AbWLaBgl
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Dec 2006 20:36:41 -0500
-Received: from terminus.zytor.com ([192.83.249.54]:59141 "EHLO
-	terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932575AbWLaBgk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Dec 2006 20:36:40 -0500
-X-Greylist: delayed 1984 seconds by postgrey-1.27 at vger.kernel.org; Sat, 30 Dec 2006 20:36:40 EST
-Received: from [172.27.0.16] (c-67-180-238-27.hsd1.ca.comcast.net [67.180.238.27])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.8/8.13.7) with ESMTP id kBV13WZi023167
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 30 Dec 2006 17:03:33 -0800
-User-Agent: Thunderbird 1.5.0.9 (X11/20061219)
-To: git@vger.kernel.org
-X-Virus-Scanned: ClamAV 0.88.7/2396/Sat Dec 30 03:57:43 2006 on terminus.zytor.com
-X-Virus-Status: Clean
-X-Spam-Status: No, score=1.1 required=5.0 tests=AWL,BAYES_00,
-	DATE_IN_FUTURE_96_XX,RCVD_IN_SORBS_DUL,TW_PM autolearn=no 
-	version=3.1.7
-X-Spam-Level: *
-X-Spam-Checker-Version: SpamAssassin 3.1.7 (2006-10-05) on terminus.zytor.com
+	id S932572AbWLaBmJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 30 Dec 2006 20:42:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932579AbWLaBmJ
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Dec 2006 20:42:09 -0500
+Received: from web31801.mail.mud.yahoo.com ([68.142.207.64]:43227 "HELO
+	web31801.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S932572AbWLaBmI (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 30 Dec 2006 20:42:08 -0500
+Received: (qmail 51928 invoked by uid 60001); 31 Dec 2006 01:42:07 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=X-YMail-OSG:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
+  b=Gpu87ZNoGvOSAG3sqYTtyvxITsl9gCWbmlgO+gsbVFiUHM5Rzi8A8eC4GmVnikXSmjCY6zbDKvUtolhB3G7fF7AcDwnv1tv35rl5/OrTVQETainEDk8CGMy0/Te8G78mesijGNJajbWUQqhjtiyXZ8yN1GuRi0kOhN5pCU3HNfM=;
+X-YMail-OSG: MsuGciIVM1kn62L6BBeySK8yLqZ3EueCA9r8HdlWhxA4Spg7B4S87j8PU_81I3FR2uO75SNT8lrmGq9BgvIFhZp9zEMhapi2TvCaIazdp22dWjjAD0Ov7TrfZYe6d8Fg_LgiH7JkGdLE7CrapSDdwSAFpL8Oo4cXQF5YPDjciOhW7ip1mDXlJSTW
+Received: from [71.84.31.238] by web31801.mail.mud.yahoo.com via HTTP; Sat, 30 Dec 2006 17:42:06 PST
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0612301204280.19693@wbgn013.biozentrum.uni-wuerzburg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35642>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35643>
 
-Hi all,
+--- Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> On Fri, 29 Dec 2006, Luben Tuikov wrote:
+> 
+> > > > Failed to read a valid object file image from memory.
+> > > 
+> > > Who says this?
+> 
+> Again, who says this? I cannot find _anything_ in my local repo (with its 
+> own set of modifications, which do not hide such a message).
 
-I have added a --pretty=rpm option to git in order to automatically 
-generate the changelog for an RPM specfile.  So far, so good. 
-Unfortunately, rpmbuild is very picky and will simply refuse to run, at 
-all, if any of the entries are out of reverse chronological order.  When 
-dealing with merges or cherrypicking -- or, for that matter, a commit 
-done with a broken time setting -- this doesn't work with either 
---date-order or --topo-order.
+GDB.  This message is not present when I run it manually from shell prompt.
 
-(And yes, this is an rpmbuild misfeature.)
+> Given that there is a fix in master for a segfault, I have to admit that I 
+> believe you did not use _that_ version, but a git without that fix.
 
-I've tried to add a --strict-date-order option, but it's not clear at 
-what point -- if any -- we actually have the full list of entries to 
-display.  It doesn't seem to happen anywhere inside revision.c.
+A-ha!  Since I never run master, after I read your message, I compiled
+master, installed it and tried the same merge/pull and it succeeded -- i.e.
+didn't segfault, but complained about unresolved conflicts (as it should).
 
-Any pointers appreciated.
+So it appears that the fix is in "master", but not in "next".
 
-	-hpa
+Junio, can you confirm this?
+
+    Luben
+
+
+> Besides, Alexandre hit an interesting bug, which is not at all easy to 
+> reproduce (except with three 70k files which I don't want to include in 
+> the test set). Since Alexandre provided _examples_ where I can _reproduce_ 
+> the problem, I will be working on that bug, and not yours.
+> 
+> Ciao,
+> Dscho
+> 
+> 
