@@ -1,120 +1,246 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: What's cooking in git.git (topics)
-Date: Sun, 31 Dec 2006 00:07:17 -0800
-Message-ID: <7vhcvcfpze.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: [PATCH/RFH] send-pack: fix pipeline.
+Date: Sun, 31 Dec 2006 01:30:27 -0800
+Message-ID: <7v1wmgfm4s.fsf@assigned-by-dhcp.cox.net>
+References: <7v1wmjoumq.fsf@assigned-by-dhcp.cox.net>
+	<7vzm96latb.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0612291307520.4473@woody.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sun Dec 31 09:07:37 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Dec 31 10:30:50 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H0vj9-0005ZE-1Y
-	for gcvg-git@gmane.org; Sun, 31 Dec 2006 09:07:31 +0100
+	id 1H0x1m-00057d-Ci
+	for gcvg-git@gmane.org; Sun, 31 Dec 2006 10:30:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933092AbWLaIH1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 31 Dec 2006 03:07:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933093AbWLaIH1
-	(ORCPT <rfc822;git-outgoing>); Sun, 31 Dec 2006 03:07:27 -0500
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:35614 "EHLO
-	fed1rmmtao06.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933092AbWLaIH0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Dec 2006 03:07:26 -0500
+	id S933097AbWLaJar (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 31 Dec 2006 04:30:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933100AbWLaJar
+	(ORCPT <rfc822;git-outgoing>); Sun, 31 Dec 2006 04:30:47 -0500
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:36247 "EHLO
+	fed1rmmtao01.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933097AbWLaJaq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Dec 2006 04:30:46 -0500
 Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao06.cox.net
+          by fed1rmmtao01.cox.net
           (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20061231080723.CLEH2628.fed1rmmtao06.cox.net@fed1rmimpo01.cox.net>;
-          Sun, 31 Dec 2006 03:07:23 -0500
+          id <20061231093043.YNHY9173.fed1rmmtao01.cox.net@fed1rmimpo01.cox.net>;
+          Sun, 31 Dec 2006 04:30:43 -0500
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo01.cox.net with bizsmtp
-	id 5L6d1W00C1kojtg0000000; Sun, 31 Dec 2006 03:06:37 -0500
-To: git@vger.kernel.org
-X-master-at: a862f97e98decc317437fa3b04081f68fb4ffbf3
-X-next-at: ef675248958d4ea0716c08d2cc57225955bfd281
+	id 5MVs1W0061kojtg0000000; Sun, 31 Dec 2006 04:29:57 -0500
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0612291307520.4473@woody.osdl.org> (Linus
+	Torvalds's message of "Fri, 29 Dec 2006 13:20:41 -0800 (PST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35688>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35689>
 
-Here are the topics that have been cooking.  Commits prefixed
-with '-' are only in 'pu' while commits prefixed with '+' are
-in 'next'.  The topics list the commits in reverse chronological
-order.
+Linus Torvalds <torvalds@osdl.org> writes:
 
-* jc/send-pack-pipeline (Fri Dec 29 12:14:30 2006 -0800) 2 commits
- + Documentation: illustrate send-pack pipeline.
- + send-pack: fix pipeline.
+> For some reason I thought we had fixed that by just generating the object 
+> list internally, but I guess we don't do that. That's just stupid.
 
-There was a longstanding bug that was exposed only by accident
-when used with Shawn's sliding mmap changes (sp/mmap), and these
-are to fix it.  I'll merge this to 'master' before v1.5.0-rc1.
+Thanks.  How about this?
 
-* sp/mmap (Sat Dec 30 22:13:43 2006 -0500) 25 commits
- + Update packedGit config option documentation.
- + mmap: set FD_CLOEXEC for file descriptors we keep open for mmap()
- + pack-objects: fix use of use_pack().
- + Fix random segfaults in pack-objects.
- + Cleanup read_cache_from error handling.
- + Replace mmap with xmmap, better handling MAP_FAILED.
- + Release pack windows before reporting out of memory.
- + Default core.packdGitWindowSize to 1 MiB if NO_MMAP.
- + Test suite for sliding window mmap implementation.
- + Create pack_report() as a debugging aid.
- + Support unmapping windows on 'temporary' packfiles.
- + Improve error message when packfile mmap fails.
- + Ensure core.packedGitWindowSize cannot be less than 2 pages.
- + Load core configuration in git-verify-pack.
- + Fully activate the sliding window pack access.
- + Unmap individual windows rather than entire files.
- + Document why header parsing won't exceed a window.
- + Loop over pack_windows when inflating/accessing data.
- + Replace use_packed_git with window cursors.
- + Refactor how we open pack files to prepare for multiple windows.
- + Create read_or_die utility routine.
- + Use off_t for index and pack file lengths.
- + Refactor packed_git to prepare for sliding mmap windows.
- + Introduce new config option for mmap limit.
- + Replace unpack_entry_gently with unpack_entry.
+-- >8 --
+[PATCH] send-pack: tell pack-objects to use its internal rev-list.
 
-This is Shawn's sliding mmap series to allow smaller virtual
-memory footprint to access larger packfiles.  I started using
-this series in production tonight.  Although the size of the
-series is somewhat intimidating, they are sane changes and I
-think it may be worth considering for 'master'.  This does not
-change the user experience majorly as has almost no UI elements,
-so it could go in either before or after v1.5.0.
+This means one less process in the pipeline to worry about, and
+removes about 1/8 of the code.
 
-* jc/3way (Wed Nov 29 18:53:13 2006 -0800) 1 commit
- + git-merge: preserve and merge local changes when doing fast
-   forward
+Signed-off-by: Junio C Hamano <junkio@cox.net>
 
-A few people wanted to have this in v1.5.0, but I am a bit
-reluctant to do so --- I think the behaviour of its failure mode
-is rather nasty, even though it tries to help the user by
-dropping the local diff in .git/LOCAL_DIFF file.
+---
+ send-pack.c |  139 ++++++++++++++++++-----------------------------------------
+ 1 files changed, 42 insertions(+), 97 deletions(-)
 
-* sp/merge (Sun Dec 31 00:02:13 2006 -0500) 6 commits
- - Refresh the index before starting merge-recursive.
- - Improve merge performance by avoiding in-index merges.
- - Avoid git-fetch in `git-pull .` when possible.
- + Use merge-recursive in git-am -3.
- + Allow merging bare trees in merge-recursive.
- + Move better_branch_name above get_ref in merge-recursive.
-
-I'm reasonably happy with the earlier three of this series but
-not really about the latter, and I've already described why.
-
-* jc/diff (Mon Dec 25 01:08:50 2006 -0800) 2 commits
- - test-para: combined diff between HEAD, index and working tree.
- - para-walk: walk n trees, index and working tree in parallel
-* jc/explain (Mon Dec 4 19:35:04 2006 -0800) 1 commit
- - git-explain
-* jc/web (Wed Nov 8 14:54:09 2006 -0800) 1 commit
- - gitweb: steal loadavg throttle from kernel.org
-* jc/pickaxe (Sun Nov 5 11:52:43 2006 -0800) 1 commit
- - blame: --show-stats for easier optimization work.
-* jc/diff-apply-patch (Fri Sep 22 16:17:58 2006 -0700) 1 commit
- + git-diff/git-apply: make diff output a bit friendlier to GNU patch
-   (part 2)
-
-These are not for 'master' for now.
+diff --git a/send-pack.c b/send-pack.c
+index 29cf736..eaa6efb 100644
+--- a/send-pack.c
++++ b/send-pack.c
+@@ -14,100 +14,49 @@ static int send_all;
+ static int force_update;
+ static int use_thin_pack;
+ 
+-static void exec_pack_objects(void)
+-{
+-	static const char *args[] = {
+-		"pack-objects",
+-		"--all-progress",
+-		"--stdout",
+-		NULL
+-	};
+-	execv_git_cmd(args);
+-	die("git-pack-objects exec failed (%s)", strerror(errno));
+-}
+-
+-static void exec_rev_list(struct ref *refs)
+-{
+-	static const char *args[4];
+-	int i = 0;
+-
+-	args[i++] = "rev-list";	/* 0 */
+-	if (use_thin_pack)	/* 1 */
+-		args[i++] = "--objects-edge";
+-	else
+-		args[i++] = "--objects";
+-
+-	args[i++] = "--stdin";
+-
+-	args[i] = NULL;
+-	execv_git_cmd(args);
+-	die("git-rev-list exec failed (%s)", strerror(errno));
+-}
+-
+ /*
+- * Run "rev-list --stdin | pack-objects" pipe.
+- */
+-static void rev_list(struct ref *refs)
+-{
+-	int pipe_fd[2];
+-	pid_t pack_objects_pid;
+-
+-	if (pipe(pipe_fd) < 0)
+-		die("rev-list setup: pipe failed");
+-	pack_objects_pid = fork();
+-	if (!pack_objects_pid) {
+-		/* The child becomes pack-objects; reads from pipe
+-		 * and writes to the original fd
+-		 */
+-		dup2(pipe_fd[0], 0);
+-		close(pipe_fd[0]);
+-		close(pipe_fd[1]);
+-		exec_pack_objects();
+-		die("pack-objects setup failed");
+-	}
+-	if (pack_objects_pid < 0)
+-		die("pack-objects fork failed");
+-
+-	/* We become rev-list --stdin; output goes to pipe. */
+-	dup2(pipe_fd[1], 1);
+-	close(pipe_fd[0]);
+-	close(pipe_fd[1]);
+-	exec_rev_list(refs);
+-}
+-
+-/*
+- * Create "rev-list --stdin | pack-objects" pipe and feed
+- * the refs into the pipeline.
++ * Make a pack stream and spit it out into file descriptor fd
+  */
+-static void rev_list_generate(int fd, struct ref *refs)
++static int pack_objects(int fd, struct ref *refs)
+ {
+ 	int pipe_fd[2];
+-	pid_t rev_list_generate_pid;
++	pid_t pid;
+ 
+ 	if (pipe(pipe_fd) < 0)
+-		die("rev-list-generate setup: pipe failed");
+-	rev_list_generate_pid = fork();
+-	if (!rev_list_generate_pid) {
+-		/* The child becomes the "rev-list | pack-objects"
+-		 * pipeline.  It takes input from us, and its output
+-		 * goes to fd.
++		return error("send-pack: pipe failed");
++	pid = fork();
++	if (!pid) {
++		/*
++		 * The child becomes pack-objects --revs; we feed
++		 * the revision parameters to it via its stdin and
++		 * let its stdout go back to the other end.
+ 		 */
++		static const char *args[] = {
++			"pack-objects",
++			"--all-progress",
++			"--revs",
++			"--stdout",
++			NULL,
++			NULL,
++		};
++		if (use_thin_pack)
++			args[4] = "--thin";
+ 		dup2(pipe_fd[0], 0);
+ 		dup2(fd, 1);
+ 		close(pipe_fd[0]);
+ 		close(pipe_fd[1]);
+ 		close(fd);
+-		rev_list(refs);
+-		die("rev-list setup failed");
++		execv_git_cmd(args);
++		die("git-pack-objects exec failed (%s)", strerror(errno));
+ 	}
+-	if (rev_list_generate_pid < 0)
+-		die("rev-list-generate fork failed");
+ 
+-	/* We feed the rev parameters to them.  We do not write into
+-	 * fd nor read from the pipe.
++	/*
++	 * We feed the pack-objects we just spawned with revision
++	 * parameters by writing to the pipe.
+ 	 */
+ 	close(pipe_fd[0]);
+ 	close(fd);
++
+ 	while (refs) {
+ 		char buf[42];
+ 
+@@ -126,28 +75,24 @@ static void rev_list_generate(int fd, struct ref *refs)
+ 		refs = refs->next;
+ 	}
+ 	close(pipe_fd[1]);
+-	// waitpid(rev_list_generate_pid);
+-	exit(0);
+-}
+ 
+-/*
+- * Make a pack stream and spit it out into file descriptor fd
+- */
+-static void pack_objects(int fd, struct ref *refs)
+-{
+-	pid_t rev_list_pid;
++	for (;;) {
++		int status, code;
++		pid_t waiting = waitpid(pid, &status, 0);
+ 
+-	rev_list_pid = fork();
+-	if (!rev_list_pid) {
+-		rev_list_generate(fd, refs);
+-		die("rev-list setup failed");
++		if (waiting < 0) {
++			if (errno == EINTR)
++				continue;
++			return error("waitpid failed (%s)", strerror(errno));
++		}
++		if ((waiting != pid) || WIFSIGNALED(status) ||
++		    !WIFEXITED(status))
++			return error("pack-objects died with strange error");
++		code = WEXITSTATUS(status);
++		if (code)
++			return -code;
++		return 0;
+ 	}
+-	if (rev_list_pid < 0)
+-		die("rev-list fork failed");
+-	/*
+-	 * We don't wait for the rev-list pipeline in the parent:
+-	 * we end up waiting for the other end instead
+-	 */
+ }
+ 
+ static void unmark_and_free(struct commit_list *list, unsigned int mark)
+@@ -379,7 +324,7 @@ static int send_pack(int in, int out, int nr_refspec, char **refspec)
+ 
+ 	packet_flush(out);
+ 	if (new_refs)
+-		pack_objects(out, remote_refs);
++		ret = pack_objects(out, remote_refs);
+ 	close(out);
+ 
+ 	if (expect_status_report) {
