@@ -1,32 +1,32 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH 3/4] Automatically detect a bare git repository.
-Date: Sat, 30 Dec 2006 23:30:19 -0500
-Message-ID: <20061231043019.GC5823@spearce.org>
+Subject: [RFC/PATCH 4/4] Disallow working directory commands in a bare repository.
+Date: Sat, 30 Dec 2006 23:32:38 -0500
+Message-ID: <20061231043238.GD5823@spearce.org>
 References: <3ffc8ddd9b500c2a34d2bd6ba147dc750d951bcd.1167539318.git.spearce@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Theodore Tso <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Sun Dec 31 05:30:29 2006
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Dec 31 05:32:48 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H0sL4-0003Dt-Rn
-	for gcvg-git@gmane.org; Sun, 31 Dec 2006 05:30:27 +0100
+	id 1H0sNJ-0003MR-OR
+	for gcvg-git@gmane.org; Sun, 31 Dec 2006 05:32:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932730AbWLaEaY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 30 Dec 2006 23:30:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932732AbWLaEaY
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Dec 2006 23:30:24 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:43014 "EHLO
+	id S932727AbWLaEcm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 30 Dec 2006 23:32:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932732AbWLaEcm
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Dec 2006 23:32:42 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:43067 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932730AbWLaEaX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Dec 2006 23:30:23 -0500
+	with ESMTP id S932727AbWLaEcl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Dec 2006 23:32:41 -0500
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1H0sKm-0008Um-7t; Sat, 30 Dec 2006 23:30:08 -0500
+	id 1H0sN1-00006R-CO; Sat, 30 Dec 2006 23:32:27 -0500
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 88A9420FB65; Sat, 30 Dec 2006 23:30:19 -0500 (EST)
+	id A069920FB65; Sat, 30 Dec 2006 23:32:38 -0500 (EST)
 To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
 In-Reply-To: <3ffc8ddd9b500c2a34d2bd6ba147dc750d951bcd.1167539318.git.spearce@spearce.org>
@@ -42,159 +42,217 @@ X-Source-Dir:
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35664>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35665>
 
-Many users find it unfriendly that they can create a bare git
-repository easily with `git clone --bare` but are then unable to
-run simple commands like `git log` once they cd into that newly
-created bare repository.  This occurs because we do not check to
-see if the current working directory is a git repository.
+If the user tries to run a porcelainish command which requires
+a working directory in a bare repository they may get unexpected
+results which are difficult to predict and may differ from command
+to command.
 
-Instead of failing out with "fatal: Not a git repository" we should
-try to automatically detect if the current working directory is
-a bare repository and use that for GIT_DIR, and fail out only if
-that doesn't appear to be true.
-
-We test the current working directory only after we have tried
-searching up the directory tree.  This is to retain backwards
-compatibility with our previous behavior on the off chance that
-a user has a 'refs' and 'objects' subdirectories and a 'HEAD'
-file that looks like a symref, all stored within a repository's
-associated working directory.
-
-This change also consolidates the validation logic between the case
-of GIT_DIR being supplied and GIT_DIR not being supplied, cleaning
-up the code.
+Instead we should detect that the current repository is a bare
+repository and refuse to run the command there, as there is no
+working directory associated with it.
 
 Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
 
- This is in response to Theodore Tso's email asking why 'git log'
- doesn't work in a bare repository.  Now it does.  :-)
+ This is more of an RFC than an actual patch.  I think its a good
+ idea (clearly, as I spent the time to write it) but this may break
+ users who explicitly set GIT_DIR to some path which doesn't end in
+ "/.git" (e.g. GIT_DIR=$HOME/foo.git).
 
- setup.c |   73 +++++++++++++++++++++++++++++++++-----------------------------
- 1 files changed, 39 insertions(+), 34 deletions(-)
+ I've tried to only alter poreclainish and leave plumbing alone,
+ under the rationale that a different Porcelain may have different
+ behavior with regards to GIT_DIR.
 
-diff --git a/setup.c b/setup.c
-index 2afdba4..2ae57f7 100644
---- a/setup.c
-+++ b/setup.c
-@@ -131,28 +131,46 @@ const char **get_pathspec(const char *prefix, const char **pathspec)
+ git-am.sh       |    1 +
+ git-checkout.sh |    1 +
+ git-clean.sh    |    1 +
+ git-commit.sh   |    1 +
+ git-merge.sh    |    1 +
+ git-pull.sh     |    1 +
+ git-rebase.sh   |    1 +
+ git-reset.sh    |    1 +
+ git-revert.sh   |    1 +
+ git-sh-setup.sh |    7 +++++++
+ git.c           |   11 +++++++----
+ 11 files changed, 23 insertions(+), 4 deletions(-)
+
+diff --git a/git-am.sh b/git-am.sh
+index c3bbd78..8487e75 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -7,6 +7,7 @@ USAGE='[--signoff] [--dotest=<dir>] [--utf8] [--binary] [--3way]
+   or, when resuming [--skip | --resolved]'
+ . git-sh-setup
+ set_reflog_action am
++require_not_bare
+ 
+ git var GIT_COMMITTER_IDENT >/dev/null || exit
+ 
+diff --git a/git-checkout.sh b/git-checkout.sh
+index 92ec069..b2d2dfa 100755
+--- a/git-checkout.sh
++++ b/git-checkout.sh
+@@ -3,6 +3,7 @@
+ USAGE='[-f] [-b <new_branch>] [-m] [<branch>] [<paths>...]'
+ SUBDIRECTORY_OK=Sometimes
+ . git-sh-setup
++require_not_bare
+ 
+ old_name=HEAD
+ old=$(git-rev-parse --verify $old_name 2>/dev/null)
+diff --git a/git-clean.sh b/git-clean.sh
+index 3834323..79c5bad 100755
+--- a/git-clean.sh
++++ b/git-clean.sh
+@@ -14,6 +14,7 @@ When optional <paths>... arguments are given, the paths
+ affected are further limited to those that match them.'
+ SUBDIRECTORY_OK=Yes
+ . git-sh-setup
++require_not_bare
+ 
+ ignored=
+ ignoredonly=
+diff --git a/git-commit.sh b/git-commit.sh
+index 6bce41a..813f41c 100755
+--- a/git-commit.sh
++++ b/git-commit.sh
+@@ -6,6 +6,7 @@
+ USAGE='[-a] [-s] [-v] [--no-verify] [-m <message> | -F <logfile> | (-C|-c) <commit>] [-u] [--amend] [-e] [--author <author>] [[-i | -o] <path>...]'
+ SUBDIRECTORY_OK=Yes
+ . git-sh-setup
++require_not_bare
+ 
+ git-rev-parse --verify HEAD >/dev/null 2>&1 || initial_commit=t
+ branch=$(GIT_DIR="$GIT_DIR" git-symbolic-ref HEAD)
+diff --git a/git-merge.sh b/git-merge.sh
+index ba42260..d91ff0d 100755
+--- a/git-merge.sh
++++ b/git-merge.sh
+@@ -7,6 +7,7 @@ USAGE='[-n] [--no-commit] [--squash] [-s <strategy>] [-m=<merge-message>] <commi
+ 
+ . git-sh-setup
+ set_reflog_action "merge $*"
++require_not_bare
+ 
+ LF='
+ '
+diff --git a/git-pull.sh b/git-pull.sh
+index 28d0819..1d91386 100755
+--- a/git-pull.sh
++++ b/git-pull.sh
+@@ -8,6 +8,7 @@ USAGE='[-n | --no-summary] [--no-commit] [-s strategy]... [<fetch-options>] <rep
+ LONG_USAGE='Fetch one or more remote refs and merge it/them into the current HEAD.'
+ . git-sh-setup
+ set_reflog_action "pull $*"
++require_not_bare
+ 
+ strategy_args= no_summary= no_commit= squash=
+ while case "$#,$1" in 0) break ;; *,-*) ;; *) break ;; esac
+diff --git a/git-rebase.sh b/git-rebase.sh
+index 828c59c..fd58e8e 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -29,6 +29,7 @@ Example:       git-rebase master~1 topic
+ '
+ . git-sh-setup
+ set_reflog_action rebase
++require_not_bare
+ 
+ RESOLVEMSG="
+ When you have resolved this problem run \"git rebase --continue\".
+diff --git a/git-reset.sh b/git-reset.sh
+index a969370..90164e1 100755
+--- a/git-reset.sh
++++ b/git-reset.sh
+@@ -6,6 +6,7 @@ USAGE='[--mixed | --soft | --hard]  [<commit-ish>] [ [--] <paths>...]'
+ SUBDIRECTORY_OK=Yes
+ . git-sh-setup
+ set_reflog_action "reset $*"
++require_not_bare
+ 
+ update= reset_type=--mixed
+ unset rev
+diff --git a/git-revert.sh b/git-revert.sh
+index 50cc47b..f0d2829 100755
+--- a/git-revert.sh
++++ b/git-revert.sh
+@@ -19,6 +19,7 @@ case "$0" in
+ 	die "What are you talking about?" ;;
+ esac
+ . git-sh-setup
++require_not_bare
+ 
+ no_commit=
+ while case "$#" in 0) break ;; esac
+diff --git a/git-sh-setup.sh b/git-sh-setup.sh
+index 87b939c..7e1d024 100755
+--- a/git-sh-setup.sh
++++ b/git-sh-setup.sh
+@@ -28,6 +28,13 @@ set_reflog_action() {
+ 	fi
  }
  
- /*
-- * Test if it looks like we're at the top level git directory.
-+ * Test if it looks like we're at a git directory.
-  * We want to see:
-  *
-- *  - either a .git/objects/ directory _or_ the proper
-+ *  - either a objects/ directory _or_ the proper
-  *    GIT_OBJECT_DIRECTORY environment variable
-- *  - a refs/ directory under ".git"
-+ *  - a refs/ directory
-  *  - either a HEAD symlink or a HEAD file that is formatted as
-  *    a proper "ref:".
-  */
--static int is_toplevel_directory(void)
-+static int is_git_directory(const char *suspect)
++require_not_bare() {
++	case "$GIT_DIR" in
++	.git|*/.git) : ok;;
++	*) die "fatal: $0 cannot be used in a bare git directory."
++	esac
++}
++
+ if [ -z "$LONG_USAGE" ]
+ then
+ 	LONG_USAGE="Usage: $0 $USAGE"
+diff --git a/git.c b/git.c
+index c82ca45..61c6390 100644
+--- a/git.c
++++ b/git.c
+@@ -199,6 +199,7 @@ const char git_version_string[] = GIT_VERSION;
+ 
+ #define RUN_SETUP	(1<<0)
+ #define USE_PAGER	(1<<1)
++#define NOT_BARE 	(1<<2)
+ 
+ static void handle_internal_command(int argc, const char **argv, char **envp)
  {
--	if (access(".git/refs/", X_OK) ||
--	    access(getenv(DB_ENVIRONMENT) ?
--		   getenv(DB_ENVIRONMENT) : ".git/objects/", X_OK) ||
--	    validate_symref(".git/HEAD"))
-+	char path[PATH_MAX];
-+	size_t len = strlen(suspect);
-+
-+	strcpy(path, suspect);
-+	if (getenv(DB_ENVIRONMENT)) {
-+		if (access(getenv(DB_ENVIRONMENT), X_OK))
-+			return 0;
-+	}
-+	else {
-+		strcpy(path + len, "/objects");
-+		if (access(path, X_OK))
-+			return 0;
-+	}
-+
-+	strcpy(path + len, "/refs");
-+	if (access(path, X_OK))
- 		return 0;
-+
-+	strcpy(path + len, "/HEAD");
-+	if (validate_symref(path))
-+		return 0;
-+
- 	return 1;
- }
+@@ -208,7 +209,7 @@ static void handle_internal_command(int argc, const char **argv, char **envp)
+ 		int (*fn)(int, const char **, const char *);
+ 		int option;
+ 	} commands[] = {
+-		{ "add", cmd_add, RUN_SETUP },
++		{ "add", cmd_add, RUN_SETUP | NOT_BARE },
+ 		{ "annotate", cmd_annotate, },
+ 		{ "apply", cmd_apply },
+ 		{ "archive", cmd_archive },
+@@ -238,7 +239,7 @@ static void handle_internal_command(int argc, const char **argv, char **envp)
+ 		{ "mailinfo", cmd_mailinfo },
+ 		{ "mailsplit", cmd_mailsplit },
+ 		{ "merge-file", cmd_merge_file },
+-		{ "mv", cmd_mv, RUN_SETUP },
++		{ "mv", cmd_mv, RUN_SETUP | NOT_BARE },
+ 		{ "name-rev", cmd_name_rev, RUN_SETUP },
+ 		{ "pack-objects", cmd_pack_objects, RUN_SETUP },
+ 		{ "pickaxe", cmd_blame, RUN_SETUP | USE_PAGER },
+@@ -251,8 +252,8 @@ static void handle_internal_command(int argc, const char **argv, char **envp)
+ 		{ "rerere", cmd_rerere, RUN_SETUP },
+ 		{ "rev-list", cmd_rev_list, RUN_SETUP },
+ 		{ "rev-parse", cmd_rev_parse, RUN_SETUP },
+-		{ "rm", cmd_rm, RUN_SETUP },
+-		{ "runstatus", cmd_runstatus, RUN_SETUP },
++		{ "rm", cmd_rm, RUN_SETUP | NOT_BARE },
++		{ "runstatus", cmd_runstatus, RUN_SETUP | NOT_BARE },
+ 		{ "shortlog", cmd_shortlog, RUN_SETUP | USE_PAGER },
+ 		{ "show-branch", cmd_show_branch, RUN_SETUP },
+ 		{ "show", cmd_show, RUN_SETUP | USE_PAGER },
+@@ -289,6 +290,8 @@ static void handle_internal_command(int argc, const char **argv, char **envp)
+ 			prefix = setup_git_directory();
+ 		if (p->option & USE_PAGER)
+ 			setup_pager();
++		if (p->option & NOT_BARE && is_bare_git_dir(get_git_dir()))
++			die("%s cannot be used in a pare git directory", cmd);
+ 		trace_argv_printf(argv, argc, "trace: built-in: git");
  
- const char *setup_git_directory_gently(int *nongit_ok)
- {
- 	static char cwd[PATH_MAX+1];
-+	const char *gitdirenv;
- 	int len, offset;
- 
- 	/*
-@@ -160,36 +178,17 @@ const char *setup_git_directory_gently(int *nongit_ok)
- 	 * to do any discovery, but we still do repository
- 	 * validation.
- 	 */
--	if (getenv(GIT_DIR_ENVIRONMENT)) {
--		char path[PATH_MAX];
--		int len = strlen(getenv(GIT_DIR_ENVIRONMENT));
--		if (sizeof(path) - 40 < len)
-+	gitdirenv = getenv(GIT_DIR_ENVIRONMENT);
-+	if (gitdirenv) {
-+		if (PATH_MAX - 40 < strlen(gitdirenv))
- 			die("'$%s' too big", GIT_DIR_ENVIRONMENT);
--		memcpy(path, getenv(GIT_DIR_ENVIRONMENT), len);
--		
--		strcpy(path + len, "/refs");
--		if (access(path, X_OK))
--			goto bad_dir_environ;
--		strcpy(path + len, "/HEAD");
--		if (validate_symref(path))
--			goto bad_dir_environ;
--		if (getenv(DB_ENVIRONMENT)) {
--			if (access(getenv(DB_ENVIRONMENT), X_OK))
--				goto bad_dir_environ;
--		}
--		else {
--			strcpy(path + len, "/objects");
--			if (access(path, X_OK))
--				goto bad_dir_environ;
--		}
--		return NULL;
--	bad_dir_environ:
-+		if (is_git_directory(gitdirenv))
-+			return NULL;
- 		if (nongit_ok) {
- 			*nongit_ok = 1;
- 			return NULL;
- 		}
--		path[len] = 0;
--		die("Not a git repository: '%s'", path);
-+		die("Not a git repository: '%s'", gitdirenv);
- 	}
- 
- 	if (!getcwd(cwd, sizeof(cwd)) || cwd[0] != '/')
-@@ -197,11 +196,17 @@ const char *setup_git_directory_gently(int *nongit_ok)
- 
- 	offset = len = strlen(cwd);
- 	for (;;) {
--		if (is_toplevel_directory())
-+		if (is_git_directory(".git"))
- 			break;
- 		chdir("..");
- 		do {
- 			if (!offset) {
-+				if (is_git_directory(cwd)) {
-+					if (chdir(cwd))
-+						die("Cannot come back to cwd");
-+					setenv(GIT_DIR_ENVIRONMENT, cwd, 1);
-+					return NULL;
-+				}
- 				if (nongit_ok) {
- 					if (chdir(cwd))
- 						die("Cannot come back to cwd");
+ 		exit(p->fn(argc, argv, prefix));
 -- 
 1.5.0.rc0.g6bb1
