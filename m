@@ -1,81 +1,86 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Possible regression in git-rev-list --header
-Date: Sat, 30 Dec 2006 17:45:47 -0800
-Message-ID: <7v64bsj0s4.fsf@assigned-by-dhcp.cox.net>
-References: <e5bfff550612300956mef4691fqf607fad173c571da@mail.gmail.com>
-	<Pine.LNX.4.63.0612301955340.19693@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7v7iw9jftv.fsf@assigned-by-dhcp.cox.net>
-	<7vlkkphvrb.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0612310211300.25709@wbgn013.biozentrum.uni-wuerzburg.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Marco Costalba <mcostalba@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 31 02:46:23 2006
+From: "Theodore Ts'o" <tytso@mit.edu>
+Subject: What commands can and can not be used with bare repositories?
+Date: Sat, 30 Dec 2006 20:48:22 -0500
+Message-ID: <E1H0poE-0000qd-Ee@candygram.thunk.org>
+X-From: git-owner@vger.kernel.org Sun Dec 31 02:48:35 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H0pm6-0007ct-KV
-	for gcvg-git@gmane.org; Sun, 31 Dec 2006 02:46:11 +0100
+	id 1H0poJ-0007pZ-Vb
+	for gcvg-git@gmane.org; Sun, 31 Dec 2006 02:48:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932583AbWLaBpu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 30 Dec 2006 20:45:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932616AbWLaBpt
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Dec 2006 20:45:49 -0500
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:37890 "EHLO
-	fed1rmmtao05.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932598AbWLaBps (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Dec 2006 20:45:48 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20061231014547.FWCK15640.fed1rmmtao05.cox.net@fed1rmimpo01.cox.net>;
-          Sat, 30 Dec 2006 20:45:47 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id 5Dl11W00V1kojtg0000000; Sat, 30 Dec 2006 20:45:02 -0500
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0612310211300.25709@wbgn013.biozentrum.uni-wuerzburg.de>
-	(Johannes Schindelin's message of "Sun, 31 Dec 2006 02:13:27 +0100
-	(CET)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932616AbWLaBsZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 30 Dec 2006 20:48:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932635AbWLaBsZ
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Dec 2006 20:48:25 -0500
+Received: from thunk.org ([69.25.196.29]:55059 "EHLO thunker.thunk.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932616AbWLaBsY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Dec 2006 20:48:24 -0500
+Received: from root (helo=candygram.thunk.org)
+	by thunker.thunk.org with local-esmtps 
+	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
+	id 1H0psY-0008S1-C9; Sat, 30 Dec 2006 20:52:50 -0500
+Received: from tytso by candygram.thunk.org with local (Exim 4.62)
+	(envelope-from <tytso@thunk.org>)
+	id 1H0poE-0000qd-Ee; Sat, 30 Dec 2006 20:48:22 -0500
+To: git@vger.kernel.org
+Full-Name: Theodore Ts'o
+Phone: (781) 391-3464
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35644>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35645>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+In order to minimize the amount of files which need to be backed up, I
+decided to create an "upstream" repository which contains nothing but
+Linus's tree, which I packed into a single pack file, and which I would
+then only update every 3-6 months.
 
-> On Sat, 30 Dec 2006, Junio C Hamano wrote:
->
->> Another thing.  I think it would make sense to remove "encoding" header 
->> after pretty_print_commit successfully re-codes the buffer.  An 
->> alternative is to rewrite "encoding" header to show which encoding the 
->> log now uses (and omit it if it is UTF-8).
->
-> I think it would be wrong. Sure, the output may be encoded differently, 
-> but the _original_ commit was not. And this is the information I want 
-> to see when I look at the raw commit.
+The git tree(s) that I would use for Linux hacking would then use the
+upstream repository as an alternate source of objects.  That way the
+"git gc" command is much faster, and it doesn't end up thrashing the
+main pack file found in the "upstream" repository (which is currently
+about 135 megs).  This streamlines my backups a tad (every little bit
+helps).
 
-When you want to see the raw commit, you would not ask for it to
-re-code, so "removal after successfully re-codes" would not kick
-in (if you _really_ want to look at the raw commit, I guess
-cat-file can help, but let's not go there).  Re-coding the
-message but still showing what the original encoding was does
-not sound making much sense to me.
+The only real problem with this is that I don't really need to have a
+working directory in the "upstream" repository, so I decided to try
+using a "bare repository".  This is only barely (sorry) documented in
+the git Documentation, where in the git-clone manpage there is a
+description of how the administrative files end up in the top-level
+directory instead of the .git subdirectory.  
 
-I've pushed this out after a small rework.
+What isn't documented is what commands actually can deal with a bare
+repository.  At the moment, it looks like a bare repository can be a
+target of a git pull, push, and merge commands, and it can be a source
+for a git clone, but that seems to be about it.  All other commands,
+such as "git log" blow up with the error message "Not a git repository".
+This to me seems a bit lame, since why isn't a "bare repository" also a
+"git repository"?  All of the information is there for "git log" to
+work.  Commands that require a working directory obviously can't work,
+but there are plenty of git commands for which there's no reason why
+they shouldn't be able to operate on a bare repository.  For example,
+"git repack", "git log", "git fetch", etc.
 
-The rule is:
+So as a suggestion, it would be good if exactly what you can and can't
+use a "bare repository" for were documented.  If it really is push,
+pull, fetch, and clone, I'll happily submit a patch to enhance the
+documentation accordingly.   
 
- - if you ask for re-coding (either by i18n.* configuration or
-   an explicit --encoding option from the command line), and if
-   re-coding successfully does its job, you do not see
-   "encoding" header;
+The next obvious question, though, is *should* that be all that works?
+A somewhat squinky hack that works quite nicely is to create a symlink
+from . to .git in the bare repository.  At this point "git log", "git
+fetch", "git repack", etc., all start working.  Of course, commands such
+as "git status" that involve a working directory will be pretty
+confused, but maybe we could fix that.  What if we were to change "git
+clone --bare" to create the .git -> . symlink, and then add a check to
+commands that require a working directory to see if ".git" is a symlink
+to ., and if so, give an error message, "operation not supported on bare
+repository"?
 
- - if the buffer cannot successfully be re-coded, no re-coding
-   is done, and the caller can inspect "encoding" header.
-
- - if you do not ask for re-coding, "encoding" header is left as
-   is, so is the commit log message.  The caller can deal with
-   any re-coding itself.
+					- Ted
