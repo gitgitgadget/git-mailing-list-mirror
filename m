@@ -1,91 +1,73 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: [PATCH] Documentation: update git-pull.txt for clone's new default behavior
-Date: Mon, 1 Jan 2007 08:17:26 -0500
-Message-ID: <20070101131726.GA21933@thunk.org>
-References: <7vfyav8ae1.fsf@assigned-by-dhcp.cox.net> <997672.38239.qm@web31814.mail.mud.yahoo.com>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: i18n, alternative solution
+Date: Mon, 1 Jan 2007 15:47:47 +0100
+Organization: Dewire
+Message-ID: <200701011547.48697.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
-	Shawn Pearce <spearce@spearce.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	"J. Bruce Fields" <bfields@fieldses.org>
-X-From: git-owner@vger.kernel.org Mon Jan 01 14:35:03 2007
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Mon Jan 01 15:44:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H1NJf-0003yL-As
-	for gcvg-git@gmane.org; Mon, 01 Jan 2007 14:35:03 +0100
+	id 1H1OOm-0000Lc-3S
+	for gcvg-git@gmane.org; Mon, 01 Jan 2007 15:44:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755198AbXAANe7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 1 Jan 2007 08:34:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755199AbXAANe6
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Jan 2007 08:34:58 -0500
-Received: from thunk.org ([69.25.196.29]:53005 "EHLO thunker.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755198AbXAANe6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Jan 2007 08:34:58 -0500
-Received: from root (helo=candygram.thunk.org)
-	by thunker.thunk.org with local-esmtp   (Exim 4.50 #1 (Debian))
-	id 1H1NNk-0005oU-DT; Mon, 01 Jan 2007 08:39:16 -0500
-Received: from tytso by candygram.thunk.org with local (Exim 4.62)
-	(envelope-from <tytso@thunk.org>)
-	id 1H1N2c-0006zr-UE; Mon, 01 Jan 2007 08:17:27 -0500
-To: Luben Tuikov <ltuikov@yahoo.com>
+	id S1755216AbXAAOoV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 1 Jan 2007 09:44:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755218AbXAAOoU
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Jan 2007 09:44:20 -0500
+Received: from [83.140.172.130] ([83.140.172.130]:2973 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1755216AbXAAOoT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Jan 2007 09:44:19 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 964A3802671
+	for <git@vger.kernel.org>; Mon,  1 Jan 2007 15:40:05 +0100 (CET)
+Received: from dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 09005-07 for <git@vger.kernel.org>; Mon,  1 Jan 2007 15:40:05 +0100 (CET)
+Received: from [10.9.0.2] (unknown [10.9.0.2])
+	by dewire.com (Postfix) with ESMTP id 38634802651
+	for <git@vger.kernel.org>; Mon,  1 Jan 2007 15:40:03 +0100 (CET)
+To: git@vger.kernel.org
+User-Agent: KMail/1.9.4
 Content-Disposition: inline
-In-Reply-To: <997672.38239.qm@web31814.mail.mud.yahoo.com>
-User-Agent: Mutt/1.5.12-2006-07-14
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35737>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35738>
 
-Luben,
+Hi and Happy New Year
 
-Let me see if I can understand what you are asking for without using
-the term "branch spec", which I don't think has been adequately
-defined yet in this thread.  (Where "the SCM industry has adopted"
-isn't a definition.  :-)
+Things are happening wrt to support for working with multiple locales, which 
+is nice to see. I've not had time to follow the development so these comments 
+(and code) may be considered somewhat late in the process.
 
-Currently, today, if you type:
+What disturbes me is the complexity that the approach of storing multiple 
+encodings in the same repository results in. I was hacking another solution 
+earlier this autumn, that takes another approach, i.e. UTF-8 is the internal 
+encoding. period. If you want to working with anything else, you convert on 
+input and output. The code is very simply since it has few cases to consider 
+and I don' t need to store encoding anywhere. What is missing is a flags to 
+disable i18n for a flag (or enable it). 
 
-	git fetch <non-URL>
+The uglyness is the filename parts since I catch all filename operations and 
+not only the ones I need. The target wasn't final code, but to prove that it 
+could be done.
 
-... it will look up "<non-URL>" in a single global namespace, which
-(using only the new config scheme) is looked up in remote.<non-URL>
-and remote.<non-URL>.{url,fetch} is used to control the operation of
-git-fetch.
+The focus is on file names, but commit messages were included since it was so 
+simple. You can get the code at http://rosenberg.homelinux.net/repos/GIT.git 
+on the branch i18n. I modded the testcases to verify that GIT works after the 
+patches, but one would probably prefer to write new test cases for UTF-8. 
 
-What you want to do is to change this to where:
+5d73e28397f7ec0f85fcb8e31e91326afbcfea19 is the last commit that executes all 
+test cases successfully. 
 
-	git fetch <non-URL>
+I could send the code as patches if you like, not on top of the lastest 
+version though, but 1.4.2-something,
 
-...will now lookup "<non-URL>" in a namespace which is qualified by
-the branch that you are in.  So you want to look up the information in
-branches.<current-branch>.<non-URL>.{url,fetch} instead.
-
-You haven't stated it explicitly, but I assume that if
-branches.<current-branch>.<non-URL> doesn't exist, you're proposing
-that the code fall back to looking in the old configuration parameter,
-remote.<non-URL>, so that certain names that should be global can
-continue to be global, and that people who want a single global
-namespace can continue to have it?
-
-Is that your proposal, stripped of the arguments of why you want it,
-and of the somewhat confusing "parent" example (which is a bad one
-given that your "git pull parent" example was the semantic equivalent
-of "git pull")?
-
-If it is, I'm a bit nervous since it's making the git-fetch command
-modal, and modal UI's are confusing to users.  On the other hand, it's
-a fundamental modality we have already (based on the question "which
-branch am I"), and there are hacks that will allow you to put the
-current branch into your command-line.  And as long as you are
-proposing a lookup in branches.current.branch.<non-URL> first before
-checking remotes.<non-URL> it seems mostly harmless to me.  I doubt
-I'd ever use it, but maybe it would be helpful to some.
-
-						- Ted
+-- robin
