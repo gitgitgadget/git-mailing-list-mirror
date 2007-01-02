@@ -1,81 +1,82 @@
-From: Andy Whitcroft <apw@shadowen.org>
-Subject: Re: [PATCH 0/17] Sliding window mmap for packfiles.
-Date: Tue, 02 Jan 2007 15:28:33 +0000
-Message-ID: <459A7A21.4060901@shadowen.org>
-References: <20061223073317.GA9837@spearce.org> <38b2ab8a0612240056k152344ael891e9b0b9f8cbc47@mail.gmail.com> <20061224090508.GF7443@spearce.org> <38b2ab8a0612240136r559376d4s14af3123f762a45d@mail.gmail.com> <20061224094959.GA7814@spearce.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: confusion over the new branch and merge config
+Date: Tue, 02 Jan 2007 09:32:30 -0800
+Message-ID: <7vps9xwd01.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0612211555210.18171@xanadu.home>
+	<7vd56cam66.fsf@assigned-by-dhcp.cox.net>
+	<20061223051210.GA29814@segfault.peff.net>
+	<7vbqlvuoi4.fsf@assigned-by-dhcp.cox.net>
+	<7vbqlvrldk.fsf@assigned-by-dhcp.cox.net>
+	<20070102144940.GA23932@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Francis Moreau <francis.moro@gmail.com>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 02 16:28:53 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 02 18:32:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H1lZF-0002oG-OT
-	for gcvg-git@gmane.org; Tue, 02 Jan 2007 16:28:46 +0100
+	id 1H1nV8-0006rV-RV
+	for gcvg-git@gmane.org; Tue, 02 Jan 2007 18:32:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755308AbXABP2m (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 2 Jan 2007 10:28:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755310AbXABP2m
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Jan 2007 10:28:42 -0500
-Received: from hellhawk.shadowen.org ([80.68.90.175]:3558 "EHLO
-	hellhawk.shadowen.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755308AbXABP2l (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Jan 2007 10:28:41 -0500
-Received: from localhost ([127.0.0.1])
-	by hellhawk.shadowen.org with esmtp (Exim 4.50)
-	id 1H1lYD-0000Jl-ME; Tue, 02 Jan 2007 15:27:41 +0000
-User-Agent: Icedove 1.5.0.9 (X11/20061220)
-To: Shawn Pearce <spearce@spearce.org>
-In-Reply-To: <20061224094959.GA7814@spearce.org>
-X-Enigmail-Version: 0.94.1.0
-OpenPGP: url=http://www.shadowen.org/~apw/public-key
+	id S1753585AbXABRcc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 2 Jan 2007 12:32:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753640AbXABRcc
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Jan 2007 12:32:32 -0500
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:62148 "EHLO
+	fed1rmmtao08.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753585AbXABRcb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Jan 2007 12:32:31 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20070102173230.VMHH16632.fed1rmmtao08.cox.net@fed1rmimpo01.cox.net>;
+          Tue, 2 Jan 2007 12:32:30 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id 6HXj1W00M1kojtg0000000; Tue, 02 Jan 2007 12:31:44 -0500
+To: Jeff King <peff@peff.net>
+In-Reply-To: <20070102144940.GA23932@coredump.intra.peff.net> (Jeff King's
+	message of "Tue, 2 Jan 2007 09:49:40 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35791>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35792>
 
-Shawn Pearce wrote:
-> Francis Moreau <francis.moro@gmail.com> wrote:
->> On 12/24/06, Shawn Pearce <spearce@spearce.org> wrote:
->>> However with this series even a 32 bit OS which only permits
->>> processes to have at most 2 GiB of address space (2 GiB split
->>> between kernel space and userspace) can access packfiles up
->>> to 4 GiB in size.  That seems to be the split most OSes wind
->>> up using, if they didn't push it out to 3.2 GiB like Linux
->>> and Solaris have done.
->>>
->> Does it still needed for 64 bit OS ?
-> 
-> Not really.  Almost any reasonable 64 bit OS which is also running
-> a Git compiled for 64 bit userspace would be able to mmap multiple
-> 4 GiB packfiles without this series.
->  
->> if not, can the overhead (if there is a significant one) implied by
->> your rework be avoid for such cases ?
-> 
-> The overhead is rather low.  I did try hard to make it only a handful
-> of machine instructions worth of additional work, and even then I
-> tried to ammortize those over relatively large blocks of data to
-> reduce the impact.  But yes, there is an overhead over the current
-> shipping version of Git.
-> 
-> However at least some of the overhead can be avoided by setting
-> core.packedGitWindowSize and core.packedGitLimit to higher values.
-> This will allow the implementation to mmap() larger windows of the
-> packfiles and retain a greater number of windows in memory at once.
-> 
-> If core.packedGitWindowSize is larger than your largest packfile
-> then most of the code will just "shutoff" and won't get in the way.
-> Its default is 32 MiB (see Documentation/config.txt).
-> 
-> I think the additional overhead added by this series is neglible
-> and worth the more graceful degredation it allows when virtual
-> address space becomes limited.
+Jeff King <peff@peff.net> writes:
 
-You now change the default size based on NO_MMAP, could you not just
-bump the window size to 4GiB on 64 bit?
+> On Sat, Dec 23, 2006 at 01:51:03AM -0800, Junio C Hamano wrote:
+>
+>> If you (or other people) use branch.*.merge, with its value set
+>> to remote name _and_ local name, and actually verify that either
+>> form works without confusion, please report back and I'll apply.
+>
+> This [using tracking branches in branch.*.merge] seems to be working for
+> me, but it is possible to get some confusing results with it. Try this
+> config:
+>
+> [remote "origin"]
+>   url = /my/other/git/repo
+>   fetch = refs/heads/master:refs/heads/origin
+>   fetch = refs/heads/origin:refs/heads/junio
+> [branch "master"]
+>   remote = origin
+>   merge = refs/heads/origin
+>
+> That is, we have a local tracking branch 'X' which has the same name as
+> a remote branch 'X'. When we fetch, both will be marked for merge in
+> FETCH_HEAD, and git-pull will attempt to do an octopus.
+>
+> Is this too convoluted a config to worry about (no, I don't actually do
+> this in my repository -- I just constructed the most plausible reason I
+> could think of for having conflicting names). I actually think having a
+> branch.*.mergelocal would make just as much sense and would be more
+> robust (plus, it should be safe and sensible for "git-checkout -b foo
+> bar" to point branch.foo.mergelocal to refs/heads/bar).
 
--apw
+If we are to worry about, and I think we might have to, I think
+not worrying about mergelocal and not accepting the name of
+local tracking branch is the only sensible thing to do.
+
+Is there a problem if we did that?  I do not think of any.
