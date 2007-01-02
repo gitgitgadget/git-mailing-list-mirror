@@ -1,85 +1,75 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: [PATCH] Documentation: update git-pull.txt for clone's new default behavior
-Date: Mon, 01 Jan 2007 16:21:21 -0800
-Message-ID: <7vd55y46ta.fsf@assigned-by-dhcp.cox.net>
-References: <20070101214023.GB23857@fieldses.org>
-	<182318.86313.qm@web31812.mail.mud.yahoo.com>
+Date: Tue, 02 Jan 2007 01:38:39 +0100
+Organization: At home
+Message-ID: <enc9cn$a4o$1@sea.gmane.org>
+References: <20070101214023.GB23857@fieldses.org> <182318.86313.qm@web31812.mail.mud.yahoo.com> <7vd55y46ta.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "J. Bruce Fields" <bfields@fieldses.org>
-X-From: git-owner@vger.kernel.org Tue Jan 02 01:21:29 2007
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Tue Jan 02 01:36:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H1XPC-0001nj-EM
-	for gcvg-git@gmane.org; Tue, 02 Jan 2007 01:21:26 +0100
+	id 1H1XdL-0005OO-B3
+	for gcvg-git@gmane.org; Tue, 02 Jan 2007 01:36:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932679AbXABAVX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 1 Jan 2007 19:21:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932690AbXABAVX
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Jan 2007 19:21:23 -0500
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:34363 "EHLO
-	fed1rmmtao05.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932679AbXABAVW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Jan 2007 19:21:22 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070102002122.SIMK15640.fed1rmmtao05.cox.net@fed1rmimpo02.cox.net>;
-          Mon, 1 Jan 2007 19:21:22 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id 60Mb1W00u1kojtg0000000; Mon, 01 Jan 2007 19:21:36 -0500
-To: ltuikov@yahoo.com
-In-Reply-To: <182318.86313.qm@web31812.mail.mud.yahoo.com> (Luben Tuikov's
-	message of "Mon, 1 Jan 2007 16:01:15 -0800 (PST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754700AbXABAfw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 1 Jan 2007 19:35:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754747AbXABAfw
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Jan 2007 19:35:52 -0500
+Received: from main.gmane.org ([80.91.229.2]:54134 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754700AbXABAfv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Jan 2007 19:35:51 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1H1Xd0-0004q1-Fx
+	for git@vger.kernel.org; Tue, 02 Jan 2007 01:35:42 +0100
+Received: from host-81-190-24-56.torun.mm.pl ([81.190.24.56])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 02 Jan 2007 01:35:42 +0100
+Received: from jnareb by host-81-190-24-56.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 02 Jan 2007 01:35:42 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-24-56.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35756>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35757>
 
-Luben Tuikov <ltuikov@yahoo.com> writes:
+Junio C Hamano wrote:
 
-> --- "J. Bruce Fields" <bfields@fieldses.org> wrote:
-> ...
->> -The common `Pull: master:origin` mapping of a remote `master`
->> -branch to a local `origin` branch, which is then merged to a
->> -local development branch, again typically named `master`, is made
->> -when you run `git clone` for you to follow this pattern.
->
-> So is this no longer the case?
->
-> Can someone please bring me up to date?
->
-> What is going on?
+> So after a clone, you would get:
+>=20
+> =A0=A0=A0=A0=A0=A0=A0=A0[remote "origin"]
+> =A0 =A0 =A0 =A0 =A0=A0=A0=A0=A0=A0=A0=A0url =3D ....
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 fetch =3D refs/heads/*:refs/remotes/o=
+rigin/*
 
-What's going on is clean-up towards v1.5.0-rc1 ;-).
+By the way, I have thought that you would also get (to avoid nasty=20
+"we don't know which branch is first in glob")
 
- - 'git clone' does not create a file that has a line that looks
-   like "Pull: master:origin" anywhere anymore.
+                  fetch =3D refs/heads/master:refs/remotes/origin/maste=
+r
 
- - 'git clone' also does not create the traditional "'master' is
-   special and we map that to origin, others are mapped as is
-   under refs/heads/, and we have to drop 'origin' from the
-   remote side because that name we want to use to store their
-   'master'" layout.
+or
 
-So after a clone, you would get:
+                  fetch =3D refs/heads/master:refs/remotes/origin/HEAD
 
-	[remote "origin"]
-        	url = ....
-                fetch = refs/heads/*:refs/remotes/origin/*
-        [branch "master"]
-        	remote = origin
-                merge = refs/heads/master
+(if master was current branch)
 
-This configuration still causes "git pull" or "git pull origin"
-while on "master" to fetch and store the remote side's master as
-what you can refer to as 'origin' (because it expands to
-'remotes/origin/HEAD' thanks to sha1_name.c::get_sha1_basic()),
-and then merges that to your current branch, so there is no
-change in the user experience in the big picture, but what is
-created to achieve that effect is different from what was
-described.
+> =A0 =A0 =A0 =A0 [branch "master"]
+> =A0 =A0 =A0 =A0 =A0=A0=A0=A0=A0=A0=A0=A0remote =3D origin
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 merge =3D refs/heads/master
+
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
