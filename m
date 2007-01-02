@@ -1,68 +1,85 @@
 From: Junio C Hamano <junkio@cox.net>
 Subject: Re: [PATCH] Documentation: update git-pull.txt for clone's new default behavior
-Date: Mon, 01 Jan 2007 16:12:29 -0800
-Message-ID: <7vhcva4782.fsf@assigned-by-dhcp.cox.net>
-References: <20070101213906.GA23857@fieldses.org>
-	<535252.4420.qm@web31811.mail.mud.yahoo.com>
-	<20070102000606.GA32148@fieldses.org>
+Date: Mon, 01 Jan 2007 16:21:21 -0800
+Message-ID: <7vd55y46ta.fsf@assigned-by-dhcp.cox.net>
+References: <20070101214023.GB23857@fieldses.org>
+	<182318.86313.qm@web31812.mail.mud.yahoo.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Shawn Pearce <spearce@spearce.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Luben Tuikov <ltuikov@yahoo.com>
-X-From: git-owner@vger.kernel.org Tue Jan 02 01:12:37 2007
+Cc: git@vger.kernel.org, "J. Bruce Fields" <bfields@fieldses.org>
+X-From: git-owner@vger.kernel.org Tue Jan 02 01:21:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H1XGd-0007h0-JR
-	for gcvg-git@gmane.org; Tue, 02 Jan 2007 01:12:35 +0100
+	id 1H1XPC-0001nj-EM
+	for gcvg-git@gmane.org; Tue, 02 Jan 2007 01:21:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932616AbXABAMc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 1 Jan 2007 19:12:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932652AbXABAMc
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Jan 2007 19:12:32 -0500
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:48238 "EHLO
-	fed1rmmtao03.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932616AbXABAMb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Jan 2007 19:12:31 -0500
+	id S932679AbXABAVX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 1 Jan 2007 19:21:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932690AbXABAVX
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Jan 2007 19:21:23 -0500
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:34363 "EHLO
+	fed1rmmtao05.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932679AbXABAVW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Jan 2007 19:21:22 -0500
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao03.cox.net
+          by fed1rmmtao05.cox.net
           (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070102001231.KLSQ29122.fed1rmmtao03.cox.net@fed1rmimpo02.cox.net>;
-          Mon, 1 Jan 2007 19:12:31 -0500
+          id <20070102002122.SIMK15640.fed1rmmtao05.cox.net@fed1rmimpo02.cox.net>;
+          Mon, 1 Jan 2007 19:21:22 -0500
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id 60Ck1W00e1kojtg0000000; Mon, 01 Jan 2007 19:12:45 -0500
-To: "J. Bruce Fields" <bfields@fieldses.org>
-In-Reply-To: <20070102000606.GA32148@fieldses.org> (J. Bruce Fields's message
-	of "Mon, 1 Jan 2007 19:06:06 -0500")
+	id 60Mb1W00u1kojtg0000000; Mon, 01 Jan 2007 19:21:36 -0500
+To: ltuikov@yahoo.com
+In-Reply-To: <182318.86313.qm@web31812.mail.mud.yahoo.com> (Luben Tuikov's
+	message of "Mon, 1 Jan 2007 16:01:15 -0800 (PST)")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35755>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35756>
 
-"J. Bruce Fields" <bfields@fieldses.org> writes:
+Luben Tuikov <ltuikov@yahoo.com> writes:
 
-> On Mon, Jan 01, 2007 at 03:59:44PM -0800, Luben Tuikov wrote:
->> --- "J. Bruce Fields" <bfields@fieldses.org> wrote:
->> > +git pull origin next::
->> 
->> No.
->> 
->> > +	Merge into the current branch the remote branch `next`;
->> 
->> So, "origin" now means "current branch".
+> --- "J. Bruce Fields" <bfields@fieldses.org> wrote:
+> ...
+>> -The common `Pull: master:origin` mapping of a remote `master`
+>> -branch to a local `origin` branch, which is then merged to a
+>> -local development branch, again typically named `master`, is made
+>> -when you run `git clone` for you to follow this pattern.
 >
-> No, "origin" refers to the remote repository that you originally cloned
-> from.
+> So is this no longer the case?
 >
-> Pulls always merge into the current branch.  So it wouldn't make sense
-> to specify the current branch on the command line.
+> Can someone please bring me up to date?
+>
+> What is going on?
 
-I was also somewhat confused by these examples.  I think the
-description is fine as long as we make it clear that they are
-not meant to describe what an advanced user _could_ do with
-various customizations, but to describe what happens with the
-default configuration set up by git-clone.
+What's going on is clean-up towards v1.5.0-rc1 ;-).
+
+ - 'git clone' does not create a file that has a line that looks
+   like "Pull: master:origin" anywhere anymore.
+
+ - 'git clone' also does not create the traditional "'master' is
+   special and we map that to origin, others are mapped as is
+   under refs/heads/, and we have to drop 'origin' from the
+   remote side because that name we want to use to store their
+   'master'" layout.
+
+So after a clone, you would get:
+
+	[remote "origin"]
+        	url = ....
+                fetch = refs/heads/*:refs/remotes/origin/*
+        [branch "master"]
+        	remote = origin
+                merge = refs/heads/master
+
+This configuration still causes "git pull" or "git pull origin"
+while on "master" to fetch and store the remote side's master as
+what you can refer to as 'origin' (because it expands to
+'remotes/origin/HEAD' thanks to sha1_name.c::get_sha1_basic()),
+and then merges that to your current branch, so there is no
+change in the user experience in the big picture, but what is
+created to achieve that effect is different from what was
+described.
