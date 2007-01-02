@@ -1,284 +1,63 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Draft v1.5.0 release notes
-Date: Mon, 01 Jan 2007 16:08:39 -0800
-Message-ID: <7vlkkm47eg.fsf@assigned-by-dhcp.cox.net>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: [PATCH] Documentation: update git-pull.txt for clone's new default behavior
+Date: Mon, 1 Jan 2007 19:10:44 -0500
+Message-ID: <20070102001044.GB32148@fieldses.org>
+References: <20070101214023.GB23857@fieldses.org> <182318.86313.qm@web31812.mail.mud.yahoo.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Tue Jan 02 01:08:59 2007
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
+	Shawn Pearce <spearce@spearce.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jan 02 01:10:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H1XD0-0006lL-Ki
-	for gcvg-git@gmane.org; Tue, 02 Jan 2007 01:08:51 +0100
+	id 1H1XEw-0007GW-1j
+	for gcvg-git@gmane.org; Tue, 02 Jan 2007 01:10:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932653AbXABAIn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 1 Jan 2007 19:08:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932665AbXABAIn
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Jan 2007 19:08:43 -0500
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:64558 "EHLO
-	fed1rmmtao05.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932653AbXABAIm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Jan 2007 19:08:42 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070102000841.SBHJ15640.fed1rmmtao05.cox.net@fed1rmimpo02.cox.net>;
-          Mon, 1 Jan 2007 19:08:41 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id 608u1W00d1kojtg0000000; Mon, 01 Jan 2007 19:08:55 -0500
-To: git@vger.kernel.org
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932636AbXABAKr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 1 Jan 2007 19:10:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932652AbXABAKr
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Jan 2007 19:10:47 -0500
+Received: from mail.fieldses.org ([66.93.2.214]:43057 "EHLO
+	pickle.fieldses.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932636AbXABAKq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Jan 2007 19:10:46 -0500
+Received: from bfields by pickle.fieldses.org with local (Exim 4.63)
+	(envelope-from <bfields@fieldses.org>)
+	id 1H1XEq-0000a0-Cz; Mon, 01 Jan 2007 19:10:44 -0500
+To: Luben Tuikov <ltuikov@yahoo.com>
+Content-Disposition: inline
+In-Reply-To: <182318.86313.qm@web31812.mail.mud.yahoo.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35753>
-
-The latest draft is kept as 'todo:v1.5.0.txt'.  Since I've
-merged the shallow clone changes, I've added a few sentences for
-the series as well.
-
---
-
-GIT v1.5.0 Release Notes
-========================
-
-Old news
---------
-
-This section is for people who are upgrading from ancient
-versions of git.  Although all of the changes in this section
-happened before the current v1.4.4 release, they are summarized
-here in the v1.5.0 release notes for people who skipped earlier
-versions.
-
-In general, you should not have to worry about incompatibility,
-and there is no need to perform "repository conversion" if you
-are updating to v1.5.0.  However, some of the changes are
-one-way street upgrades; once you use them your repository
-can no longer be used with ancient git.
-
- - There is a configuration variable core.legacyheaders that
-   changes the format of loose objects so that they are more
-   efficient to pack and to send out of the repository over git
-   native protocol, since v1.4.2.  However, this format cannot
-   be read by git older than that version; people fetching from
-   your repository using older clients over dumb transports
-   (e.g. http) using older versions of git will also be
-   affected.  This is not enabled by default.
-
- - Since v1.4.3, configuration repack.usedeltabaseoffset allows
-   packfile to be created in more space efficient format, which
-   cannot be read by git older than that version.  This is not
-   enabled by default.
-
- - 'git pack-refs' appeared in v1.4.4; this command allows tags
-   to be accessed much more efficiently than the traditional
-   'one-file-per-tag' format.  Older git-native clients can
-   still fetch from a repository that packed and pruned refs
-   (the server side needs to run the up-to-date version of git),
-   but older dumb transports cannot.  Packing of refs is done by
-   an explicit user action, either by use of "git pack-refs
-   --prune" command or by use of "git gc" command.
-
- - 'git -p' to paginate anything -- many commands do pagination
-   by default on a tty.  Introduced between v1.4.1 and v1.4.2;
-   this may surprise old timers.
-
- - 'git archive' superseded 'git tar' in v1.4.3;
-
- - 'git cvsserver' was new invention in v1.3.0;
-
- - 'git repo-config', 'git grep', 'git rebase' and 'gitk' were
-   seriously enhanced during v1.4.0 timeperiod.
-
- - 'gitweb' became part of git.git during v1.4.0 timeperiod and
-   seriously modified since then.
-
- - reflog is an v1.4.0 invention.  This alows you to name a
-   revision that a branch used to be at (e.g. "git diff
-   master@{yesterday} master" allows you to see changes since
-   yesterday's tip of the branch).
-
-
-Updates in v1.5.0 since v1.4.4 series
--------------------------------------
-
-* Index manipulation
-
- - git-add is to add contents to the index (aka "staging area"
-   for the next commit), whether the file the contents happen to
-   be is an existing one or a newly created one.
-
- - git-add without any argument does not add everything
-   anymore.  Use 'git-add .' instead.  Also you can add
-   otherwise ignored files with an -f option.
-
- - git-add tries to be more friendly to users by offering an
-   interactive mode.
-
- - git-commit <path> used to refuse to commit if <path> was
-   different between HEAD and the index (i.e. update-index was
-   used on it earlier).  This check was removed.
-
- - git-rm is much saner and safer.  It is used to remove paths
-   from both the index file and the working tree, and makes sure
-   you are not losing any local modification before doing so.
-
- - git-reset <tree> <paths>... can be used to revert index
-   entries for selected paths.
-
- - git-update-index is much less visible.
-
-
-* Repository layout and objects transfer
-
- - The data for origin repository is stored in the configuration
-   file $GIT_DIR/config, not in $GIT_DIR/remotes/, for newly
-   created clones.  The latter is still supported and there is
-   no need to convert your existing repository if you are
-   already comfortable with your workflow with the layout.
-
- - git-clone always uses what is known as "separate remote"
-   layout for a newly created repository with a working tree;
-   i.e. tracking branches in $GIT_DIR/refs/remotes/origin/ are
-   used to track branches from the origin.  New branches that
-   appear on the origin side after a clone is made are also
-   tracked automatically.
-
- - git-branch and git-show-branch know remote tracking branches.
-
- - git-push can now be used to delete a remote branch or a tag.
-   This requires the updated git on the remote side.
-
- - git-push more agressively keeps the transferred objects
-   packed.  Earlier we recommended to monitor amount of loose
-   objects and repack regularly, but you should repack when you
-   accumulated too many small packs this way as well.  Updated
-   git-count-objects helps you with this.
-
-
-* Reflog
-
- - Reflog records the history of where the tip of each branch
-   was at each moment.  This facility is enabled by default for
-   repositories with working trees, and can be accessed with the
-   "branch@{time}" and "branch@{Nth}" notation.
-
- - "git show-branch" learned showing the reflog data with the
-   new --reflog option.
-
- - The commits referred to by reflog entries are now protected
-   against pruning.  The new command "git reflog expire" can be
-   used to truncate older reflog entries and entries that refer
-   to commits that have been pruned away previously with older
-   versions of git.
-
-   Existing repositories that have been using reflog may get
-   complaints from fsck-objects; please run "git reflog expire
-   --all" first to remove reflog entries that refer to commits
-   that are no longer in the repository before attempting to
-   repack it.
-
- - git-branch knows how to rename branches and moves existing
-   reflog data from the old branch to the new one.
-
-
-* Packed refs
-
- - Repositories with hundreds of tags have been paying large
-   overhead, both in storage and in runtime.  A new command,
-   git-pack-refs, can be used to "pack" them in more efficient
-   representation.
-
- - Clones and fetches over dumb transports are now aware of
-   packed refs and can download from repositories that use
-   them.
-
-
-* Configuration
-
- - configuration related to colorize setting are consolidated
-   under color.* namespace (older diff.color.*, status.color.*
-   are still supported).
-
-
-* Less external dependency
-
- - We no longer require the "merge" program from the RCS suite.
-   All 3-way file-level merges are now done internally.
-
- - The original implementation of git-merge-recursive which was
-   in Python has been removed; we have C implementation of it
-   now.
-
- - git-shortlog is no longer a Perl script.  It no longer
-   requires output piped from git-log; it can accept revision
-   parameters directly on the command line.
-
-
-* I18n
-
- - We have always encouraged the commit message to be encoded in
-   UTF-8, but the users are allowed to use legacy encoding as
-   appropriate for their projects.  This will continue to be the
-   case.  However, a non UTF-8 commit encoding _must_ be
-   explicitly set with i18n.commitencoding in the repository
-   where a commit is made; otherwise git-commit-tree will
-   complain if the log message does not look like a valid UTF-8
-   string.
-
- - The value of i18n.commitencoding in the originating
-   repository is recorded in the commit object on the "encoding"
-   header, if it is not UTF-8.  git-log and friends notice this,
-   and reencodes the message to the log output encoding when
-   displaying, if they are different.  The log output encoding
-   is determined by "git log --encoding=<encoding>",
-   i18n.logoutputencoding configuration, or i18n.commitencoding
-   configuration, in the decreasing order of preference, and
-   defaults to UTF-8. 
-
-
-* Foreign SCM interfaces
-
-  - git-svn now requires the Perl SVN:: libraries, the
-    command-line backend was too slow and limited.
-
-  - the 'commit' command has been renamed to 'set-tree', and
-    'dcommit' is the recommended replacement for day-to-day
-    work.
-
-
-* User support
-
- - Quite a lot of documentation updates.
-
- - Bash completion scripts have been updated heavily.
-
- - Better error messages for often used Porcelainish commands.
-
-
-* Shallow clones
-
- - There is a partial support for 'shallow' repositories that
-   keeps only recent history now.  A 'shallow clone' is created
-   by specifying how deep that truncated history should be.
-
-   Currently a shallow repository has number of limitations:
-
-   - Cloning and fetching _from_ a shallow clone are not
-     supported (nor tested -- so they might work by accident but
-     they are not expected to).
-
-   - Pushing from nor into a shallow clone are not expected to
-     work.
-
-   - Merging inside a shallow repository would work as long as a
-     merge base is found in the recent history, but otherwise it
-     will be like merging unrelated histories and may result in
-     huge conflicts.
-
-   but this would be more than adequate for people who want to
-   look at near the tip of a big project with a deep history and
-   send patches in e-mail format.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35754>
+
+On Mon, Jan 01, 2007 at 04:01:15PM -0800, Luben Tuikov wrote:
+> --- "J. Bruce Fields" <bfields@fieldses.org> wrote:
+> > -The common `Pull: master:origin` mapping of a remote `master`
+> > -branch to a local `origin` branch, which is then merged to a
+> > -local development branch, again typically named `master`, is made
+> > -when you run `git clone` for you to follow this pattern.
+> 
+> So is this no longer the case?
+
+Right; that mapping is no longer what git clone sets up for you.
+
+> Can someone please bring me up to date?
+> 
+> What is going on?
+
+The simplest way to understand the current behavior is probably to
+install the latest git, read the git-clone man page, clone a new
+repository, and take a look at it.
+
+Remote branches are stored in separate namespaces under
+.git/refs/remotes/, so that they don't muck up your view of your local
+branches, and so git can enforce different policies for them (such as
+forbidding committing to them).
+
+--b.
