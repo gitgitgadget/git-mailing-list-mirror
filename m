@@ -1,86 +1,78 @@
-From: Theodore Tso <tytso@mit.edu>
+From: Luben Tuikov <ltuikov@yahoo.com>
 Subject: Re: [PATCH] Documentation: update git-pull.txt for clone's new default behavior
-Date: Mon, 1 Jan 2007 20:08:16 -0500
-Message-ID: <20070102010816.GB4253@thunk.org>
-References: <20070101131726.GA21933@thunk.org> <926020.70066.qm@web31802.mail.mud.yahoo.com>
+Date: Mon, 1 Jan 2007 17:28:15 -0800 (PST)
+Message-ID: <65526.67561.qm@web31806.mail.mud.yahoo.com>
+References: <20070102001044.GB32148@fieldses.org>
+Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
 	Shawn Pearce <spearce@spearce.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	"J. Bruce Fields" <bfields@fieldses.org>
-X-From: git-owner@vger.kernel.org Tue Jan 02 02:08:35 2007
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jan 02 02:28:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H1Y8n-0005HI-G1
-	for gcvg-git@gmane.org; Tue, 02 Jan 2007 02:08:33 +0100
+	id 1H1YRw-00025X-3q
+	for gcvg-git@gmane.org; Tue, 02 Jan 2007 02:28:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932566AbXABBIV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 1 Jan 2007 20:08:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932636AbXABBIV
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Jan 2007 20:08:21 -0500
-Received: from THUNK.ORG ([69.25.196.29]:40729 "EHLO thunker.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932566AbXABBIU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Jan 2007 20:08:20 -0500
-Received: from root (helo=candygram.thunk.org)
-	by thunker.thunk.org with local-esmtps 
-	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
-	id 1H1YCu-00072l-1J; Mon, 01 Jan 2007 20:12:48 -0500
-Received: from tytso by candygram.thunk.org with local (Exim 4.62)
-	(envelope-from <tytso@thunk.org>)
-	id 1H1Y8W-0007q9-SF; Mon, 01 Jan 2007 20:08:16 -0500
-To: Luben Tuikov <ltuikov@yahoo.com>
-Content-Disposition: inline
-In-Reply-To: <926020.70066.qm@web31802.mail.mud.yahoo.com>
-User-Agent: Mutt/1.5.12-2006-07-14
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+	id S932663AbXABB2R (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 1 Jan 2007 20:28:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932679AbXABB2R
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Jan 2007 20:28:17 -0500
+Received: from web31806.mail.mud.yahoo.com ([68.142.207.69]:22160 "HELO
+	web31806.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S932663AbXABB2Q (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 1 Jan 2007 20:28:16 -0500
+Received: (qmail 67929 invoked by uid 60001); 2 Jan 2007 01:28:16 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=X-YMail-OSG:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
+  b=hriruPEW2r2uQ94KLvUIIoMh+BO0pVB43lNNw8y0lwGYmeLHLlOqJ2KOB82wKxZjYHu4zoXaaIOt/JU6J/8yBbwH2d9I6UaiTrnhq7nU3/D/230SdNFewP/V17mtaMnhSDKiFG997yvyjGw3kdk5vh+JiVkB6jY4RJwcZgU9F94=;
+X-YMail-OSG: dbki0W4VM1nv.JY_GjwAx.cre9gimwavzYfcdg9dnakXkOBYwFaUD0ZUUr2zV6d2dAfj1vFG8GMacAYdEf9zxEW80eSNU18898hPFaPtG7DqXe3tP5e4VRjsNVsmV2jDk2xj0bQqNKcoF2UhjTxnOJ1Zfbti0A--
+Received: from [71.84.31.238] by web31806.mail.mud.yahoo.com via HTTP; Mon, 01 Jan 2007 17:28:15 PST
+To: "J. Bruce Fields" <bfields@fieldses.org>
+In-Reply-To: <20070102001044.GB32148@fieldses.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35759>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35760>
 
-On Mon, Jan 01, 2007 at 03:56:05PM -0800, Luben Tuikov wrote:
-> > Currently, today, if you type:
+--- "J. Bruce Fields" <bfields@fieldses.org> wrote:
+> On Mon, Jan 01, 2007 at 04:01:15PM -0800, Luben Tuikov wrote:
+> > --- "J. Bruce Fields" <bfields@fieldses.org> wrote:
+> > > -The common `Pull: master:origin` mapping of a remote `master`
+> > > -branch to a local `origin` branch, which is then merged to a
+> > > -local development branch, again typically named `master`, is made
+> > > -when you run `git clone` for you to follow this pattern.
 > > 
-> > 	git fetch <non-URL>
-> > 
-> > ... it will look up "<non-URL>" in a single global namespace, which
-> > (using only the new config scheme) is looked up in remote.<non-URL>
-> > and remote.<non-URL>.{url,fetch} is used to control the operation of
-> > git-fetch.
+> > So is this no longer the case?
 > 
-> I'm talking about more in terms of git-merge, but since git-pull
-> is a git-fetch and git-merge, I've been using git-pull for completeness.
+> Right; that mapping is no longer what git clone sets up for you.
+> 
+> > Can someone please bring me up to date?
+> > 
+> > What is going on?
+> 
+> The simplest way to understand the current behavior is probably to
+> install the latest git, read the git-clone man page, clone a new
+> repository, and take a look at it.
+> 
+> Remote branches are stored in separate namespaces under
+> .git/refs/remotes/, so that they don't muck up your view of your local
+> branches, and so git can enforce different policies for them (such as
+> forbidding committing to them).
 
-Well, yes; since git-pull is implemented in terms of git-fetch
-followed by a git-merge, that's why I talked about git-fetch.  It is
-git-fetch which uses remote.<non-URL>.{url,fetch}, not git-merge or
-git-pull (since it just passes those arguments over to git-fetch).
+Smells like another "newbie" protection.
 
-> More specifically,
-> branch.<branch-match>.<symbolic-ref match>.{fetch,merge}.
+Let me understand, someone here installed git, didn't read the then
+man page of git-clone/pull/fetch, screwed up their repo, and decided
+to change established behavior.
 
-What do you mean by <branch-match> and <symbolic-ref match>?
+Regardless, I think addressable (named) branch specs are the way to go.
+This will as well, unify/reconcile remotes/ and local stuff, since
+it is already implemented for remotes/ .
 
-Are you assuming some kind of glob match?  If so, what are the
-specific rules of the match that you are proposing?
-
-> branch.<branch-match>..{fetch,merge} is allowed and defalts
-> to already implemented "git-pull".
-
-What do you mean by ".." here?   
-
-> Think of "git-pull", not just of "git-fetch".  As well as think
-> of a setup where there are more than one branch implementing
-> software dependency, resolving to a software product.
-
-git-pull is implemented in terms of git-fetch.  So if we make the
-change to git-fetch, the changes naturally follow to git-pull.  Or are
-you proposing to change that?
-
-						- Ted
+     Luben
