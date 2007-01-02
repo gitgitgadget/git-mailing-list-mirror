@@ -1,62 +1,59 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: confusion over the new branch and merge config
-Date: Tue, 02 Jan 2007 21:30:21 +0100
-Organization: At home
-Message-ID: <enef73$467$1@sea.gmane.org>
-References: <Pine.LNX.4.64.0612211555210.18171@xanadu.home> <7vd56cam66.fsf@assigned-by-dhcp.cox.net> <20061223051210.GA29814@segfault.peff.net> <7vbqlvuoi4.fsf@assigned-by-dhcp.cox.net> <7vbqlvrldk.fsf@assigned-by-dhcp.cox.net> <20070102144940.GA23932@coredump.intra.peff.net> <7vps9xwd01.fsf@assigned-by-dhcp.cox.net> <20070102173410.GA25325@coredump.intra.peff.net> <7v1wmdure6.fsf@assigned-by-dhcp.cox.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: What's cooking in git.git (topics)
+Date: Tue, 2 Jan 2007 21:29:36 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0701022127040.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <7vwt4647g0.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Tue Jan 02 21:28:02 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 02 21:29:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H1qEh-0001Le-9a
-	for gcvg-git@gmane.org; Tue, 02 Jan 2007 21:27:51 +0100
+	id 1H1qGX-0001sd-7u
+	for gcvg-git@gmane.org; Tue, 02 Jan 2007 21:29:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755407AbXABU1s convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 2 Jan 2007 15:27:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755408AbXABU1s
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Jan 2007 15:27:48 -0500
-Received: from main.gmane.org ([80.91.229.2]:34683 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755407AbXABU1r (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Jan 2007 15:27:47 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1H1qES-0007Rt-VF
-	for git@vger.kernel.org; Tue, 02 Jan 2007 21:27:37 +0100
-Received: from host-81-190-20-195.torun.mm.pl ([81.190.20.195])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 02 Jan 2007 21:27:36 +0100
-Received: from jnareb by host-81-190-20-195.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 02 Jan 2007 21:27:36 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-20-195.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1755406AbXABU3k (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 2 Jan 2007 15:29:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753646AbXABU3k
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Jan 2007 15:29:40 -0500
+Received: from mail.gmx.net ([213.165.64.20]:55405 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755408AbXABU3j (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Jan 2007 15:29:39 -0500
+Received: (qmail invoked by alias); 02 Jan 2007 20:29:38 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp009) with SMTP; 02 Jan 2007 21:29:38 +0100
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vwt4647g0.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35812>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35813>
 
-Junio C Hamano wrote:
+Hi,
 
-> Obviously, the local names should matter more when you are doing
-> local operations. =A0So if you are using mergeLocal to give a
-> shorthand to "git merge" that does not explicitly say what to
-> merge, the above discussion does not apply. =A0But if that is the
-> case, mergeLocal should also not affect the selection of
-> branches to be merged when "git pull" happens from a remote
-> either.
+On Mon, 1 Jan 2007, Junio C Hamano wrote:
 
-You can always use remote =3D ".", and then remote and local branches
-are the same...
---=20
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+> * jc/3way (Wed Nov 29 18:53:13 2006 -0800) 1 commit
+>  + git-merge: preserve and merge local changes when doing fast
+>    forward
+> 
+> Johannes's suggestion to record a tree object instead of LOCAL_DIFF is 
+> roger but not wilco yet --- I haven't thought through the issue to see 
+> an improvement in the suggestion.  We will be clobbering both index and 
+> the working tree, and I think "diff --binary HEAD" and "write-tree" 
+> record the equivalent amount of information given a HEAD for recovery.
+
+For recovery, yes. The difference comes in
+
+- that you can use the familiar git operations to recover (git read-tree 
+  PRE_MERGE_TREE), and
+- that you can do other git operations on the tree, but not on the diff.
+
+Hth,
+Dscho
