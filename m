@@ -1,72 +1,84 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH] instaweb: load Apache mime and dir modules if they are needed
-Date: Tue, 2 Jan 2007 00:57:11 -0800
-Message-ID: <20070102085711.GA28842@mayonaise.dyndns.org>
+From: "Deepak Barua" <dbbarua@gmail.com>
+Subject: Re: git not tracking changes
+Date: Tue, 2 Jan 2007 15:24:13 +0530
+Message-ID: <b5a19cd20701020154w63fd4c4s46a6cb3c6f50ce5a@mail.gmail.com>
+References: <b5a19cd20701012152n4f496198h93cab1b9b85a9a45@mail.gmail.com>
+	 <20070102055937.GD27690@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 02 09:57:29 2007
+X-From: git-owner@vger.kernel.org Tue Jan 02 10:54:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H1fSY-0000pb-1e
-	for gcvg-git@gmane.org; Tue, 02 Jan 2007 09:57:26 +0100
+	id 1H1gLb-0007g5-RY
+	for gcvg-git@gmane.org; Tue, 02 Jan 2007 10:54:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932998AbXABI5O (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 2 Jan 2007 03:57:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933001AbXABI5O
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Jan 2007 03:57:14 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:58980 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932998AbXABI5N (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Jan 2007 03:57:13 -0500
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id 073EE2DC01A;
-	Tue,  2 Jan 2007 00:57:11 -0800 (PST)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Tue, 02 Jan 2007 00:57:11 -0800
-To: Junio C Hamano <junkio@cox.net>
+	id S932691AbXABJyP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 2 Jan 2007 04:54:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932732AbXABJyP
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Jan 2007 04:54:15 -0500
+Received: from nf-out-0910.google.com ([64.233.182.189]:9501 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932691AbXABJyO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Jan 2007 04:54:14 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so7275301nfa
+        for <git@vger.kernel.org>; Tue, 02 Jan 2007 01:54:13 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Xqe26E2VVXCthPCp2kcsHFkOQTTVxhWm+W5gihD5HUZAjzFXEWhw73l+tToSp9PokD1Z8my5wDsOLW8cE9JEjZfib5pZ6d9jycntrJRw2UpQemRlOfz161vnRAgTwA+7OUgY65Ol6b1fN2EK1F7qc9oILdiYtXx8Bw+9C1OqP/E=
+Received: by 10.49.93.13 with SMTP id v13mr4202778nfl.1167731653353;
+        Tue, 02 Jan 2007 01:54:13 -0800 (PST)
+Received: by 10.49.11.7 with HTTP; Tue, 2 Jan 2007 01:54:13 -0800 (PST)
+To: "Shawn O. Pearce" <spearce@spearce.org>
+In-Reply-To: <20070102055937.GD27690@spearce.org>
 Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35783>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35784>
 
-I've noticed that Apache 2.2 on a Debian etch machine has
-these compiled as modules.
+Thank you shawn.
 
-Also set ServerName to avoid a warning at startup.
+Regards
+Deepak
 
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
----
- git-instaweb.sh |   10 ++++++++++
- 1 files changed, 10 insertions(+), 0 deletions(-)
+On 1/2/07, Shawn O. Pearce <spearce@spearce.org> wrote:
+> Deepak Barua <dbbarua@gmail.com> wrote:
+> > Hi,
+> >    When i do a git add of a config.h file then make some changes and
+> > then do git commit it does not reflect the changes..
+> > eg
+> > dep@zion:~/programs/elinks/elinks-0.11-20061220$ git add config.h
+>
+> Here you told Git to take the current contents of config.h and
+> stage it into the index.  That content will be in the next
+> commit.
+>
+> > dep@zion:~/programs/elinks/elinks-0.11-20061220$ vi config.h
+>
+> Then you modify it.  Git doesn't know about those changes to
+> config.h, nor does it care at this point.
+>
+> > dep@zion:~/programs/elinks/elinks-0.11-20061220$ git commit
+> > nothing to commit
+>
+> This is occuring because the content staged in the index does not
+> differ from the content in HEAD (the last commit on this branch).
+> You need to run `git add config.h` again now that you have modified
+> it to restage the modified file.
+>
+> Basically I'm assuming that when you ran `git add config.h` the
+> first time the content must have matched HEAD, which meant you
+> didn't actually stage anything.
+>
+> --
+> Shawn.
+>
 
-diff --git a/git-instaweb.sh b/git-instaweb.sh
-index 16cd351..08362f4 100755
---- a/git-instaweb.sh
-+++ b/git-instaweb.sh
-@@ -160,10 +160,20 @@ apache2_conf () {
- 	test "$local" = true && bind='127.0.0.1:'
- 	echo 'text/css css' > $fqgitdir/mime.types
- 	cat > "$conf" <<EOF
-+ServerName "git-instaweb"
- ServerRoot "$fqgitdir/gitweb"
- DocumentRoot "$fqgitdir/gitweb"
- PidFile "$fqgitdir/pid"
- Listen $bind$port
-+EOF
-+
-+	for mod in mime dir; do
-+		if test -e $module_path/mod_${mod}.so; then
-+			echo "LoadModule ${mod}_module " \
-+			     "$module_path/mod_${mod}.so" >> "$conf"
-+		fi
-+	done
-+	cat >> "$conf" <<EOF
- TypesConfig $fqgitdir/mime.types
- DirectoryIndex gitweb.cgi
- EOF
+
 -- 
-Eric Wong
+Code Code Code Away
