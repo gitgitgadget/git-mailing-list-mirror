@@ -1,60 +1,167 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [RFC/PATCH] fail pull/merge early in the middle of conflicted merge
-Date: Tue, 02 Jan 2007 11:35:36 -0800
-Message-ID: <7vmz51usqf.fsf@assigned-by-dhcp.cox.net>
-References: <7vwt478b5d.fsf@assigned-by-dhcp.cox.net>
-	<20070101204354.GA26687@spearce.org>
+From: Edgar Toernig <froese@gmx.de>
+Subject: Re: [PATCH] Detached HEAD (experimental)
+Date: Tue, 2 Jan 2007 20:59:01 +0100
+Message-ID: <20070102205901.3f4a9f1e.froese@gmx.de>
+References: <7vac11yirf.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 02 20:36:02 2007
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 02 20:59:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H1pQW-0002N0-9m
-	for gcvg-git@gmane.org; Tue, 02 Jan 2007 20:36:00 +0100
+	id 1H1pn1-0000uK-Mn
+	for gcvg-git@gmane.org; Tue, 02 Jan 2007 20:59:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964967AbXABTfn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 2 Jan 2007 14:35:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964968AbXABTfn
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Jan 2007 14:35:43 -0500
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:36144 "EHLO
-	fed1rmmtao03.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964964AbXABTfi (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Jan 2007 14:35:38 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070102193537.GMZV29122.fed1rmmtao03.cox.net@fed1rmimpo01.cox.net>;
-          Tue, 2 Jan 2007 14:35:37 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id 6Kap1W00t1kojtg0000000; Tue, 02 Jan 2007 14:34:50 -0500
-To: "Shawn O. Pearce" <spearce@spearce.org>
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754911AbXABT7J (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 2 Jan 2007 14:59:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964931AbXABT7J
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Jan 2007 14:59:09 -0500
+Received: from mail.gmx.net ([213.165.64.20]:35960 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754911AbXABT7I (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Jan 2007 14:59:08 -0500
+Received: (qmail invoked by alias); 02 Jan 2007 19:59:05 -0000
+Received: from p50900A82.dip0.t-ipconnect.de (EHLO dialup) [80.144.10.130]
+  by mail.gmx.net (mp001) with SMTP; 02 Jan 2007 20:59:05 +0100
+X-Authenticated: #271361
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vac11yirf.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35807>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35808>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
+[Note: casual git-user speaking]
 
-> Junio C Hamano <junkio@cox.net> wrote:
->> After a pull that results in a conflicted merge, a new user
->> often tries another "git pull" in desperation.  When the index
->> is unmerged, merge backends correctly bail out without touching
->> either index nor the working tree, so this does not make the
->> wound any worse.
+Junio C Hamano wrote:
 >
-> I've seen this many times too.  I don't understand why users cannot
-> read output messages and realize the current command failed, but
-> they don't.  *sigh*
+> This allows "git checkout -d v1.4.3" to detach the HEAD from any
+> branch but point directly at the named commit.  After this, "git
+> branch" starts reporting that you are not on any branch.
 
-That is not user's fault.  Tools should not make things worse
-when run more than once after they failed, and we do not either,
-so it is not a stupid behaviour on the user's part to do that.
+Nice.  But why -d?  Create more confusion? [1]
 
-We just need to make sure that it is more clear to the user that
-pull after a conflicted pull is futile, which is what this patch
-does.
+> You can go back the normal state by switching to an existing
+> branch, say, "git checkout master" for example.
+
+This is fine.  Often you want to test a couple of tags, one
+after another, so "git checkout v1", "git checkout v2", ...
+should work.
+
+> Another way to get out of this is "git checkout -b newbranch".
+
+Wth should this do?  I already noticed this line in your posting
+from 29.Dec: [slightly edited]
+
+	$ git checkout v1.5.0
+	Checking out a tag -- you are not on any branch now...
+	$ <modify>
+	$ git commit -m 'fix' -a
+	You cannot commit without a current branch.
+	$ git checkout -b maint-1.5.0
+	$ git commit -m 'fix' -a
+
+I assume it will create a new branch and modify HEAD so that
+the current working dir/index gets committed into that branch.
+(Basically "git branch main-1.5.0 &&
+            echo 'ref: refs/head/main-1.5.0' >.git/HEAD")
+If that's the case, I was looking for that incantation for
+a long time and couldn't find it.  I'm using the git-branch
+and echo as shown above to get that.  The man-page isn't
+very helpful for that special case of git-checkout.
+
+Anyway, if I want to commit and git tells me that I can't
+because I'm not on a branch, the _most unintuitive_ thing
+would be calling 'git-checkout'.  I want to checkin!  No
+way that I call checkout and risk losing all my changes.
+
+What's wrong with a -b option to commit, similar to -b on
+checkout?
+
+	$ git checkout v1.5.0
+	Checking out a tag -- you are not on any branch now...
+	$ <modify>
+	$ git commit -m 'fix' -a
+	You cannot commit without a current branch.
+	Give '-b <newbranch>' to commit into a new branch. 
+	$ git commit -b maint-1.5.0 -m 'fix' -a
+
+Another variant (the one I prefer): commit just updates HEAD and
+git-branch can be used to give it a name (and switch to it!).
+So these workflows would be possible:
+
+Name after commit:
+
+	$ git checkout v1.5.0
+	Checking out a tag -- you are not on any branch now...
+	$ git branch
+	  master
+	* (unnamed) c8ff51290518949225c832bae1e22b1bba6ab2cd
+	$ <modify>
+	$ git commit -m 'fix' -a
+	Warning: data committed into unnamed branch.
+	Give it a name now with "git branch <newname>"
+	$ git branch
+	  master
+	* (unnamed) 13482f25863e5380cdd41065338e1709d469a605
+	$ git branch maint-1.5.0
+	$ git branch
+	  master
+	* main-1.5.0
+
+or name before commit:
+
+	$ git checkout v1.5.0
+	Checking out a tag -- you are not on any branch now...
+	$ <modify>
+	$ git branch
+	  master
+	* (unnamed) c8ff51290518949225c832bae1e22b1bba6ab2cd
+	$ git branch maint-1.5.0
+	$ git branch
+	  master
+	* maint-1.5.0
+	$ git commit -m 'fix' -a
+
+Yes, 'git branch <newname>' would get a new semantic:
+if no start-point is given the newname will become the
+new current branch.
+
+[Btw, I would even do that when we are on some branch. How
+often did I do a checkout of a regular branch and only later
+noticed, that I want to commit changes into a temp-branch:
+
+	$ git checkout master
+	$ <play around, fix compile issues, add debug stuff>
+	$ git branch debug
+	$ git branch
+	  master
+	* debug
+	$ git commit -a -m "Add foo debugging code"
+]
+
+But that special case is IMHO (M = my, a casual user's) much
+better than some weird checkout-incantations.
+
+Ciao, ET.
+
+
+[1] My pet-peeve:
+
+	$ git checkout foo
+	fatal: Entry 'bar' not uptodate. Cannot merge.
+
+    What the heck?  Nobody asked for a merge!?!?!  What
+    is it trying to do?  Does it actually mean:
+
+	fatal: Working dir is dirty.  Either give '-f'
+	to force the checkout and lose your changes, or
+	give '-m' to merge 'foo' and your changes.
+
+   ?  But then, why does an 'rm bar' fixes that?  Now 'bar'
+   definitely isn't "uptodate".
