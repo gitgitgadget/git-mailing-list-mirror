@@ -1,65 +1,72 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] Fix infinite loop when deleting multiple packed refs.
-Date: Tue, 2 Jan 2007 03:47:41 -0500
-Message-ID: <20070102084741.GA28898@spearce.org>
-References: <b566b20c0701012244l21f85472k83970c0c573ce105@mail.gmail.com> <20070102081709.GA28779@spearce.org> <7vtzz9x1fo.fsf@assigned-by-dhcp.cox.net>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [PATCH] instaweb: load Apache mime and dir modules if they are needed
+Date: Tue, 2 Jan 2007 00:57:11 -0800
+Message-ID: <20070102085711.GA28842@mayonaise.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 02 09:47:53 2007
+X-From: git-owner@vger.kernel.org Tue Jan 02 09:57:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H1fJF-0006f0-GA
-	for gcvg-git@gmane.org; Tue, 02 Jan 2007 09:47:49 +0100
+	id 1H1fSY-0000pb-1e
+	for gcvg-git@gmane.org; Tue, 02 Jan 2007 09:57:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932994AbXABIrq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 2 Jan 2007 03:47:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932996AbXABIrq
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Jan 2007 03:47:46 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:52146 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932994AbXABIrq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Jan 2007 03:47:46 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.52)
-	id 1H1fJ8-0001Z8-JJ; Tue, 02 Jan 2007 03:47:42 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 5A1B420FB65; Tue,  2 Jan 2007 03:47:41 -0500 (EST)
+	id S932998AbXABI5O (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 2 Jan 2007 03:57:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933001AbXABI5O
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Jan 2007 03:57:14 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:58980 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932998AbXABI5N (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Jan 2007 03:57:13 -0500
+Received: from hand.yhbt.net (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with SMTP id 073EE2DC01A;
+	Tue,  2 Jan 2007 00:57:11 -0800 (PST)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Tue, 02 Jan 2007 00:57:11 -0800
 To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
-In-Reply-To: <7vtzz9x1fo.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35782>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35783>
 
-Junio C Hamano <junkio@cox.net> wrote:
-> "Shawn O. Pearce" <spearce@spearce.org> writes:
-> 
-> >  Fixed.  ;-)
-> >
-> >  Junio, this applies to master, but hopefully could also apply to
-> >  maint, as the bug also shows up there.
-> 
-> I see a few instances of single static lock_file variable in our
-> code, but all of them seem to be locking the index and only
-> once, so they should be safe.
-> 
-> Thanks.
+I've noticed that Apache 2.2 on a Debian etch machine has
+these compiled as modules.
 
-I just realized that my patch used 'calloc' and not 'xcalloc'.
-Would you mind correcting it for me?  ;-)
+Also set ServerName to avoid a warning at startup.
 
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
+---
+ git-instaweb.sh |   10 ++++++++++
+ 1 files changed, 10 insertions(+), 0 deletions(-)
+
+diff --git a/git-instaweb.sh b/git-instaweb.sh
+index 16cd351..08362f4 100755
+--- a/git-instaweb.sh
++++ b/git-instaweb.sh
+@@ -160,10 +160,20 @@ apache2_conf () {
+ 	test "$local" = true && bind='127.0.0.1:'
+ 	echo 'text/css css' > $fqgitdir/mime.types
+ 	cat > "$conf" <<EOF
++ServerName "git-instaweb"
+ ServerRoot "$fqgitdir/gitweb"
+ DocumentRoot "$fqgitdir/gitweb"
+ PidFile "$fqgitdir/pid"
+ Listen $bind$port
++EOF
++
++	for mod in mime dir; do
++		if test -e $module_path/mod_${mod}.so; then
++			echo "LoadModule ${mod}_module " \
++			     "$module_path/mod_${mod}.so" >> "$conf"
++		fi
++	done
++	cat >> "$conf" <<EOF
+ TypesConfig $fqgitdir/mime.types
+ DirectoryIndex gitweb.cgi
+ EOF
 -- 
-Shawn.
+Eric Wong
