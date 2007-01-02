@@ -1,91 +1,98 @@
 From: Andy Whitcroft <apw@shadowen.org>
-Subject: Re: [PATCH/RFH] send-pack: fix pipeline.
-Date: Tue, 02 Jan 2007 14:06:10 +0000
-Message-ID: <459A66D2.3000804@shadowen.org>
-References: <7v1wmjoumq.fsf@assigned-by-dhcp.cox.net>	<7vzm96latb.fsf@assigned-by-dhcp.cox.net>	<Pine.LNX.4.64.0612291307520.4473@woody.osdl.org> <7vlkkql0na.fsf@assigned-by-dhcp.cox.net>
+Subject: [PATCH] send pack check for failure to send revisions list
+Date: Tue, 2 Jan 2007 14:12:09 +0000
+Message-ID: <722763b67370326ef33dabb3c8e34e7e@pinky>
+References: <459A66D2.3000804@shadowen.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 02 15:06:39 2007
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Tue Jan 02 15:44:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H1kHj-0005PJ-Vn
-	for gcvg-git@gmane.org; Tue, 02 Jan 2007 15:06:36 +0100
+	id 1H1ksR-0007kw-JC
+	for gcvg-git@gmane.org; Tue, 02 Jan 2007 15:44:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754850AbXABOGU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 2 Jan 2007 09:06:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754857AbXABOGU
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Jan 2007 09:06:20 -0500
-Received: from hellhawk.shadowen.org ([80.68.90.175]:3508 "EHLO
-	hellhawk.shadowen.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754848AbXABOGR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Jan 2007 09:06:17 -0500
-Received: from localhost ([127.0.0.1])
-	by hellhawk.shadowen.org with esmtp (Exim 4.50)
-	id 1H1kGU-0000Bg-ST; Tue, 02 Jan 2007 14:05:19 +0000
-User-Agent: Icedove 1.5.0.9 (X11/20061220)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vlkkql0na.fsf@assigned-by-dhcp.cox.net>
-X-Enigmail-Version: 0.94.1.0
-OpenPGP: url=http://www.shadowen.org/~apw/public-key
+	id S1754851AbXABOoW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 2 Jan 2007 09:44:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754857AbXABOoW
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Jan 2007 09:44:22 -0500
+Received: from 41.150.104.212.access.eclipse.net.uk ([212.104.150.41]:35336
+	"EHLO localhost.localdomain" rhost-flags-OK-FAIL-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1754851AbXABOoV (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 2 Jan 2007 09:44:21 -0500
+X-Greylist: delayed 1930 seconds by postgrey-1.27 at vger.kernel.org; Tue, 02 Jan 2007 09:44:21 EST
+Received: from apw by localhost.localdomain with local (Exim 4.63)
+	(envelope-from <apw@shadowen.org>)
+	id 1H1kN7-00088o-Lz; Tue, 02 Jan 2007 14:12:09 +0000
+To: git@vger.kernel.org
+Content-Disposition: inline
+InReply-To: <459A66D2.3000804@shadowen.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35787>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35788>
 
-Junio C Hamano wrote:
-> Linus Torvalds <torvalds@osdl.org> writes:
-> 
->> On Fri, 29 Dec 2006, Junio C Hamano wrote:
->>> I really need a sanity checking on this one.  I think I got the
->>> botched pipeline fixed with the patch I am replying to, but I do
->>> not understand the waitpid() business.  Care to enlighten me?
->> I think it was a beginning of a half-hearted attempt to check the exit 
->> status of the rev-list in case something went wrong.
->>
->> Which we simply don't do, so if git-rev-list ends up with some problem 
->> (due to a corrupt git repo or something), it will just send a partial 
->> pack.
->>
->> For some reason I thought we had fixed that by just generating the object 
->> list internally, but I guess we don't do that. That's just stupid. We 
->> should make "send-pack.c" use
->>
->> 	list-heads | git pack-objects --revs
->>
->> 	list-heads | git-rev-list --stdin | git-pack-objects
->>
->> because as it is now, I think send-pack is more fragile than it needs to 
->> be.
->>
->> Or maybe I'm just confused.
-> 
-> Dont' worry, you are no more confused than I am ;-).
-> 
-> "I thought we've done the 'pack-objects --revs' for the
-> upload-pack side but haven't done so on the send-pack side." was
-> what I initially wrote, but apparently we haven't.  On the other
-> hand, I think upload-pack gets error termination from rev-list
-> right.
-> 
-> It seems that repack is the only thing that uses the internal
-> rev-list.
+When passing the revisions list to pack-objects we do not check for
+errors nor short writes.  Introduce a new write_in_full which will
+handle short writes and report errors to the caller.  Use this to
+short cut the send on failure, allowing us to wait for and report
+the child in case the failure is its fault.
 
->From what I can see in next/pu (by the time I stopped stuffing food and
-booze into myself and remembered how to turn on the computer) you have
-ripped all this code out and started using the builtin rev-list
-functions.  So what I can see in there now looks sane, and seems to work
-in some limited testing here.
-
-Reading the code does highlight a weakness in the face of incomplete
-writes in the ref list send, which has always been in there.  Now we may
-never see these on Linux, but as we do not know what OS is under us and
-the relevant standards say they can occur we should cope me thinks.
-
-I have just been testing a patch for that which I will post in follow up
-to this post.
-
--apw
+Signed-off-by: Andy Whitcroft <apw@shadowen.org>
+---
+diff --git a/send-pack.c b/send-pack.c
+index eaa6efb..c195d08 100644
+--- a/send-pack.c
++++ b/send-pack.c
+@@ -65,12 +65,16 @@ static int pack_objects(int fd, struct ref *refs)
+ 			memcpy(buf + 1, sha1_to_hex(refs->old_sha1), 40);
+ 			buf[0] = '^';
+ 			buf[41] = '\n';
+-			write(pipe_fd[1], buf, 42);
++			if (!write_in_full(pipe_fd[1], buf, 42,
++						"send-pack: send refs"))
++				break;
+ 		}
+ 		if (!is_null_sha1(refs->new_sha1)) {
+ 			memcpy(buf, sha1_to_hex(refs->new_sha1), 40);
+ 			buf[40] = '\n';
+-			write(pipe_fd[1], buf, 41);
++			if (!write_in_full(pipe_fd[1], buf, 41,
++						"send-pack: send refs"))
++				break;
+ 		}
+ 		refs = refs->next;
+ 	}
+diff --git a/write_or_die.c b/write_or_die.c
+index 8cf6486..6db1d31 100644
+--- a/write_or_die.c
++++ b/write_or_die.c
+@@ -59,3 +59,26 @@ int write_or_whine(int fd, const void *buf, size_t count, const char *msg)
+ 
+ 	return 1;
+ }
++
++int write_in_full(int fd, const void *buf, size_t count, const char *msg)
++{
++	const char *p = buf;
++	ssize_t written;
++
++	while (count > 0) {
++		written = xwrite(fd, p, count);
++		if (written == 0) {
++			fprintf(stderr, "%s: disk full?\n", msg);
++			return 0;
++		}
++		else if (written < 0) {
++			fprintf(stderr, "%s: write error (%s)\n",
++				msg, strerror(errno));
++			return 0;
++		}
++		count -= written;
++		p += written;
++	}
++
++	return 1;
++}
