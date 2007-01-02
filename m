@@ -1,63 +1,62 @@
-From: "Michael S. Tsirkin" <mst@mellanox.co.il>
-Subject: Re: How to commit removed file?
-Date: Tue, 2 Jan 2007 22:10:41 +0200
-Message-ID: <20070102201041.GB10451@mellanox.co.il>
-References: <20061231102444.GD26552@mellanox.co.il>
-Reply-To: "Michael S. Tsirkin" <mst@mellanox.co.il>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: confusion over the new branch and merge config
+Date: Tue, 02 Jan 2007 21:30:21 +0100
+Organization: At home
+Message-ID: <enef73$467$1@sea.gmane.org>
+References: <Pine.LNX.4.64.0612211555210.18171@xanadu.home> <7vd56cam66.fsf@assigned-by-dhcp.cox.net> <20061223051210.GA29814@segfault.peff.net> <7vbqlvuoi4.fsf@assigned-by-dhcp.cox.net> <7vbqlvrldk.fsf@assigned-by-dhcp.cox.net> <20070102144940.GA23932@coredump.intra.peff.net> <7vps9xwd01.fsf@assigned-by-dhcp.cox.net> <20070102173410.GA25325@coredump.intra.peff.net> <7v1wmdure6.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Tue Jan 02 21:10:30 2007
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Tue Jan 02 21:28:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H1pxs-0004Ma-OU
-	for gcvg-git@gmane.org; Tue, 02 Jan 2007 21:10:29 +0100
+	id 1H1qEh-0001Le-9a
+	for gcvg-git@gmane.org; Tue, 02 Jan 2007 21:27:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754893AbXABUKZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 2 Jan 2007 15:10:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754930AbXABUKZ
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Jan 2007 15:10:25 -0500
-Received: from p02c11o142.mxlogic.net ([208.65.145.65]:54263 "EHLO
-	p02c11o142.mxlogic.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754925AbXABUKY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Jan 2007 15:10:24 -0500
-Received: from unknown [194.90.237.34] (EHLO mtlexch01.mtl.com)
-	by p02c11o142.mxlogic.net (mxl_mta-4.0.1-5)
-	with ESMTP id 03cba954.2405587888.458.00-003.p02c11o142.mxlogic.net (envelope-from <mst@mellanox.co.il>);
-	Tue, 02 Jan 2007 13:10:24 -0700 (MST)
-Received: from mellanox.co.il ([10.4.4.6]) by mtlexch01.mtl.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Tue, 2 Jan 2007 22:11:48 +0200
-Received: by mellanox.co.il (sSMTP sendmail emulation); Tue,  2 Jan 2007 22:08:33 +0200
-To: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <20061231102444.GD26552@mellanox.co.il>
-User-Agent: Mutt/1.5.11
-X-OriginalArrivalTime: 02 Jan 2007 20:11:48.0768 (UTC) FILETIME=[3BE74A00:01C72EAA]
-X-TM-AS-Product-Ver: SMEX-7.0.0.1526-3.6.1039-14912.000
-X-TM-AS-Result: No--6.256700-4.000000-31
-X-Spam: [F=0.0100000000; S=0.010(2006120601)]
-X-MAIL-FROM: <mst@mellanox.co.il>
-X-SOURCE-IP: [194.90.237.34]
+	id S1755407AbXABU1s convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 2 Jan 2007 15:27:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755408AbXABU1s
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Jan 2007 15:27:48 -0500
+Received: from main.gmane.org ([80.91.229.2]:34683 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755407AbXABU1r (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Jan 2007 15:27:47 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1H1qES-0007Rt-VF
+	for git@vger.kernel.org; Tue, 02 Jan 2007 21:27:37 +0100
+Received: from host-81-190-20-195.torun.mm.pl ([81.190.20.195])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 02 Jan 2007 21:27:36 +0100
+Received: from jnareb by host-81-190-20-195.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 02 Jan 2007 21:27:36 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-20-195.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35811>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35812>
 
-> I'd like to remove a file and commit the removal while
-> leaving out other changes in repository/index.
-> 
-> $git rm kernel_patches/fixes/ib_verbs_warning_fix.patch
-> rm 'kernel_patches/fixes/ib_verbs_warning_fix.patch'
-> 
-> $ git commit kernel_patches/fixes/ib_verbs_warning_fix.patch
-> error: pathspec 'kernel_patches/fixes/ib_verbs_warning_fix.patch' did not match
-> any file(s) known to git.
-> Did you forget to 'git add'?
-> 
-> A similiar thing works with "git add".
+Junio C Hamano wrote:
 
-Any ideas? Can this be done with git?
+> Obviously, the local names should matter more when you are doing
+> local operations. =A0So if you are using mergeLocal to give a
+> shorthand to "git merge" that does not explicitly say what to
+> merge, the above discussion does not apply. =A0But if that is the
+> case, mergeLocal should also not affect the selection of
+> branches to be merged when "git pull" happens from a remote
+> either.
 
--- 
-MST
+You can always use remote =3D ".", and then remote and local branches
+are the same...
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
