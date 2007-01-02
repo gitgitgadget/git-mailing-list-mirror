@@ -1,88 +1,92 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [RFC] Re: git-svn: make git-svn commit-diff able to work without explicit arguments
-Date: Tue, 02 Jan 2007 14:01:11 -0800
-Message-ID: <7vwt45rsuw.fsf@assigned-by-dhcp.cox.net>
-References: <459AA31E.5070705@gmail.com>
-	<7vr6udtbmv.fsf@assigned-by-dhcp.cox.net>
-	<20070102211339.GF17898@hades.madism.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: How to commit removed file?
+Date: Tue, 02 Jan 2007 23:13:45 +0100
+Organization: At home
+Message-ID: <enel8u$n8g$2@sea.gmane.org>
+References: <20061231102444.GD26552@mellanox.co.il> <20070102201041.GB10451@mellanox.co.il> <Pine.LNX.4.63.0701022211100.22628@wbgn013.biozentrum.uni-wuerzburg.de> <7vfyatt8di.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 02 23:01:25 2007
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Tue Jan 02 23:11:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H1rh8-0003xU-Lr
-	for gcvg-git@gmane.org; Tue, 02 Jan 2007 23:01:19 +0100
+	id 1H1rqb-0006mU-AY
+	for gcvg-git@gmane.org; Tue, 02 Jan 2007 23:11:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964946AbXABWBP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 2 Jan 2007 17:01:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964960AbXABWBP
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Jan 2007 17:01:15 -0500
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:36240 "EHLO
-	fed1rmmtao08.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964946AbXABWBO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Jan 2007 17:01:14 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070102220113.FDQV16632.fed1rmmtao08.cox.net@fed1rmimpo01.cox.net>;
-          Tue, 2 Jan 2007 17:01:13 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id 6N0R1W00l1kojtg0000000; Tue, 02 Jan 2007 17:00:26 -0500
-To: Steve =?iso-8859-1?Q?Fr=E9cinaux?= <nudrema@gmail.com>
-In-Reply-To: <20070102211339.GF17898@hades.madism.org> (Pierre Habouzit's
-	message of "Tue, 2 Jan 2007 22:13:39 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754984AbXABWK6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 2 Jan 2007 17:10:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754990AbXABWK6
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Jan 2007 17:10:58 -0500
+Received: from main.gmane.org ([80.91.229.2]:55417 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754982AbXABWK4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Jan 2007 17:10:56 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1H1rqJ-00015Z-QG
+	for git@vger.kernel.org; Tue, 02 Jan 2007 23:10:48 +0100
+Received: from host-81-190-20-195.torun.mm.pl ([81.190.20.195])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 02 Jan 2007 23:10:47 +0100
+Received: from jnareb by host-81-190-20-195.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 02 Jan 2007 23:10:47 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-20-195.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35827>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35828>
 
-Pierre Habouzit <madcoder@debian.org> writes:
+Junio C Hamano wrote:
 
-> ... and
-> sometimes think that in a A--B--C--D and in fact, I'd prefer to have:
->
->   {A,C}--B--D. how is it possible to do that in a not too cumbersome
-> way? because that would make sens to work in some scratch branch, and
-> then reorganize patches in a saner better way in the master branch.
->
->   But I fail to see how to achieve that without using cumbersome
-> export-to-patch then git apply patch and edit logs which is painful and
-> not really using git.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+>> On Tue, 2 Jan 2007, Michael S. Tsirkin wrote:
+>>
+>>>> I'd like to remove a file and commit the removal while
+>>>> leaving out other changes in repository/index.
+>>>> 
+>>>> $git rm kernel_patches/fixes/ib_verbs_warning_fix.patch
+>>>> rm 'kernel_patches/fixes/ib_verbs_warning_fix.patch'
+>>>> 
+>>>> $ git commit kernel_patches/fixes/ib_verbs_warning_fix.patch
+>>>> error: pathspec 'kernel_patches/fixes/ib_verbs_warning_fix.patch' did
+not match
+>>>> any file(s) known to git.
+>>>> Did you forget to 'git add'?
+>>>> 
+>>>> A similiar thing works with "git add".
+>>> 
+>>> Any ideas? Can this be done with git?
+>>
+>> Did you actually try the "--" thing I suggested in 
+>> http://article.gmane.org/gmane.comp.version-control.git/35699/?
+>>
+>> Besides, I just tested with current "next": 
+>>
+>> $ git commit kernel_patches/fixes/ib_verbs_warning_fix.patch
+>> Created commit 89a5bb5ac16fb8be9b6e061284e191cafb3e4da2
+>>  1 files changed, 0 insertions(+), 22 deletions(-)
+>>  delete mode 100644 a234
+> 
+> The difference is Michael did "git rm" to explicitly tell git to
+> forget about that path, while you used the vanilla "/bin/rm".
+> 
+> Personally I never saw the point of having "git rm".  Maybe we
+> should remove it to prevent this confusion from happening.
 
-First of all, "format-patch and then edit" is a perfectly sane
-way to use git.  Any workflow that takes advantage of cheap
-branch creatin and cheap resetting of the tip of a branch _is_
-"really using git".  It depends on the size of the series you
-are redoing, but I do that all the time.
+Does this happen with new git-rm, which removes file also from
+working directory?
 
-Also cherry-pick, rebase, squash merge are your friends.
-
-If you are on $original branch (which may be your 'master') with
-commits A--B--C--D:
-
-	git checkout -b temp HEAD~3 ;# that's A
-        git cherry-pick $original~1 ;# that's C
-	git checkout $original
-        git rebase temp
-
-would make the $original A--C'-B'-D'.  Then:
-
-	git checkout temp ; git reset --hard $original~4 ;# parent of A
-	git merge -s squash $original~2 ;# squash A and C'
-
-would prepare you to make a squashed commit out of the two to
-the temp branch.  Then:
-
-	git checkout $original
-        git rebase --onto temp HEAD~2 ;# that's C'
-	git branch -d temp
-
-would give you (A+C)--B'-D' on $original branch.
-
-StGIT would make life even easier for you.  It is designed to
-make things like the above simpler.
+BTW. you probably can do this with git-update-index...
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
