@@ -1,98 +1,66 @@
-From: Andy Whitcroft <apw@shadowen.org>
-Subject: [PATCH] send pack check for failure to send revisions list
-Date: Tue, 2 Jan 2007 14:12:09 +0000
-Message-ID: <722763b67370326ef33dabb3c8e34e7e@pinky>
-References: <459A66D2.3000804@shadowen.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: confusion over the new branch and merge config
+Date: Tue, 2 Jan 2007 09:49:40 -0500
+Message-ID: <20070102144940.GA23932@coredump.intra.peff.net>
+References: <Pine.LNX.4.64.0612211555210.18171@xanadu.home> <7vd56cam66.fsf@assigned-by-dhcp.cox.net> <20061223051210.GA29814@segfault.peff.net> <7vbqlvuoi4.fsf@assigned-by-dhcp.cox.net> <7vbqlvrldk.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Tue Jan 02 15:44:38 2007
+Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 02 15:50:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H1ksR-0007kw-JC
-	for gcvg-git@gmane.org; Tue, 02 Jan 2007 15:44:31 +0100
+	id 1H1kxj-0000tE-IX
+	for gcvg-git@gmane.org; Tue, 02 Jan 2007 15:49:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754851AbXABOoW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 2 Jan 2007 09:44:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754857AbXABOoW
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Jan 2007 09:44:22 -0500
-Received: from 41.150.104.212.access.eclipse.net.uk ([212.104.150.41]:35336
-	"EHLO localhost.localdomain" rhost-flags-OK-FAIL-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1754851AbXABOoV (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 2 Jan 2007 09:44:21 -0500
-X-Greylist: delayed 1930 seconds by postgrey-1.27 at vger.kernel.org; Tue, 02 Jan 2007 09:44:21 EST
-Received: from apw by localhost.localdomain with local (Exim 4.63)
-	(envelope-from <apw@shadowen.org>)
-	id 1H1kN7-00088o-Lz; Tue, 02 Jan 2007 14:12:09 +0000
-To: git@vger.kernel.org
+	id S1755270AbXABOto (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 2 Jan 2007 09:49:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755281AbXABOtn
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Jan 2007 09:49:43 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4289 "HELO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755290AbXABOtn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Jan 2007 09:49:43 -0500
+Received: (qmail 27607 invoked from network); 2 Jan 2007 09:49:49 -0500
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
+  by 66-23-211-5.clients.speedfactory.net with SMTP; 2 Jan 2007 09:49:49 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 02 Jan 2007 09:49:40 -0500
+To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
-InReply-To: <459A66D2.3000804@shadowen.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <7vbqlvrldk.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35788>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35789>
 
-When passing the revisions list to pack-objects we do not check for
-errors nor short writes.  Introduce a new write_in_full which will
-handle short writes and report errors to the caller.  Use this to
-short cut the send on failure, allowing us to wait for and report
-the child in case the failure is its fault.
+On Sat, Dec 23, 2006 at 01:51:03AM -0800, Junio C Hamano wrote:
 
-Signed-off-by: Andy Whitcroft <apw@shadowen.org>
----
-diff --git a/send-pack.c b/send-pack.c
-index eaa6efb..c195d08 100644
---- a/send-pack.c
-+++ b/send-pack.c
-@@ -65,12 +65,16 @@ static int pack_objects(int fd, struct ref *refs)
- 			memcpy(buf + 1, sha1_to_hex(refs->old_sha1), 40);
- 			buf[0] = '^';
- 			buf[41] = '\n';
--			write(pipe_fd[1], buf, 42);
-+			if (!write_in_full(pipe_fd[1], buf, 42,
-+						"send-pack: send refs"))
-+				break;
- 		}
- 		if (!is_null_sha1(refs->new_sha1)) {
- 			memcpy(buf, sha1_to_hex(refs->new_sha1), 40);
- 			buf[40] = '\n';
--			write(pipe_fd[1], buf, 41);
-+			if (!write_in_full(pipe_fd[1], buf, 41,
-+						"send-pack: send refs"))
-+				break;
- 		}
- 		refs = refs->next;
- 	}
-diff --git a/write_or_die.c b/write_or_die.c
-index 8cf6486..6db1d31 100644
---- a/write_or_die.c
-+++ b/write_or_die.c
-@@ -59,3 +59,26 @@ int write_or_whine(int fd, const void *buf, size_t count, const char *msg)
- 
- 	return 1;
- }
-+
-+int write_in_full(int fd, const void *buf, size_t count, const char *msg)
-+{
-+	const char *p = buf;
-+	ssize_t written;
-+
-+	while (count > 0) {
-+		written = xwrite(fd, p, count);
-+		if (written == 0) {
-+			fprintf(stderr, "%s: disk full?\n", msg);
-+			return 0;
-+		}
-+		else if (written < 0) {
-+			fprintf(stderr, "%s: write error (%s)\n",
-+				msg, strerror(errno));
-+			return 0;
-+		}
-+		count -= written;
-+		p += written;
-+	}
-+
-+	return 1;
-+}
+> If you (or other people) use branch.*.merge, with its value set
+> to remote name _and_ local name, and actually verify that either
+> form works without confusion, please report back and I'll apply.
+
+This [using tracking branches in branch.*.merge] seems to be working for
+me, but it is possible to get some confusing results with it. Try this
+config:
+
+[remote "origin"]
+  url = /my/other/git/repo
+  fetch = refs/heads/master:refs/heads/origin
+  fetch = refs/heads/origin:refs/heads/junio
+[branch "master"]
+  remote = origin
+  merge = refs/heads/origin
+
+That is, we have a local tracking branch 'X' which has the same name as
+a remote branch 'X'. When we fetch, both will be marked for merge in
+FETCH_HEAD, and git-pull will attempt to do an octopus.
+
+Is this too convoluted a config to worry about (no, I don't actually do
+this in my repository -- I just constructed the most plausible reason I
+could think of for having conflicting names). I actually think having a
+branch.*.mergelocal would make just as much sense and would be more
+robust (plus, it should be safe and sensible for "git-checkout -b foo
+bar" to point branch.foo.mergelocal to refs/heads/bar).
+
+-Peff
