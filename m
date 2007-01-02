@@ -1,75 +1,63 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Theodore Tso <tytso@mit.edu>
 Subject: Re: [PATCH] Documentation: update git-pull.txt for clone's new default behavior
-Date: Tue, 02 Jan 2007 01:38:39 +0100
-Organization: At home
-Message-ID: <enc9cn$a4o$1@sea.gmane.org>
-References: <20070101214023.GB23857@fieldses.org> <182318.86313.qm@web31812.mail.mud.yahoo.com> <7vd55y46ta.fsf@assigned-by-dhcp.cox.net>
+Date: Mon, 1 Jan 2007 19:57:08 -0500
+Message-ID: <20070102005708.GA4253@thunk.org>
+References: <20070101214023.GB23857@fieldses.org> <182318.86313.qm@web31812.mail.mud.yahoo.com> <20070102001044.GB32148@fieldses.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Tue Jan 02 01:36:08 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Luben Tuikov <ltuikov@yahoo.com>, Junio C Hamano <junkio@cox.net>,
+	git@vger.kernel.org, Shawn Pearce <spearce@spearce.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jan 02 01:57:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H1XdL-0005OO-B3
-	for gcvg-git@gmane.org; Tue, 02 Jan 2007 01:36:03 +0100
+	id 1H1XyS-0002N8-Nb
+	for gcvg-git@gmane.org; Tue, 02 Jan 2007 01:57:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754700AbXABAfw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 1 Jan 2007 19:35:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754747AbXABAfw
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Jan 2007 19:35:52 -0500
-Received: from main.gmane.org ([80.91.229.2]:54134 "EHLO ciao.gmane.org"
+	id S1754792AbXABA5Q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 1 Jan 2007 19:57:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932636AbXABA5Q
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Jan 2007 19:57:16 -0500
+Received: from THUNK.ORG ([69.25.196.29]:56206 "EHLO thunker.thunk.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754700AbXABAfv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Jan 2007 19:35:51 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1H1Xd0-0004q1-Fx
-	for git@vger.kernel.org; Tue, 02 Jan 2007 01:35:42 +0100
-Received: from host-81-190-24-56.torun.mm.pl ([81.190.24.56])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 02 Jan 2007 01:35:42 +0100
-Received: from jnareb by host-81-190-24-56.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 02 Jan 2007 01:35:42 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-24-56.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1754792AbXABA5P (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Jan 2007 19:57:15 -0500
+Received: from root (helo=candygram.thunk.org)
+	by thunker.thunk.org with local-esmtps 
+	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
+	id 1H1Y27-00071M-LG; Mon, 01 Jan 2007 20:01:39 -0500
+Received: from tytso by candygram.thunk.org with local (Exim 4.62)
+	(envelope-from <tytso@thunk.org>)
+	id 1H1Xxk-0006gE-CO; Mon, 01 Jan 2007 19:57:08 -0500
+To: "J. Bruce Fields" <bfields@fieldses.org>
+Content-Disposition: inline
+In-Reply-To: <20070102001044.GB32148@fieldses.org>
+User-Agent: Mutt/1.5.12-2006-07-14
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35757>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35758>
 
-Junio C Hamano wrote:
+On Mon, Jan 01, 2007 at 07:10:44PM -0500, J. Bruce Fields wrote:
+> 
+> The simplest way to understand the current behavior is probably to
+> install the latest git, read the git-clone man page, clone a new
+> repository, and take a look at it.
 
-> So after a clone, you would get:
->=20
-> =A0=A0=A0=A0=A0=A0=A0=A0[remote "origin"]
-> =A0 =A0 =A0 =A0 =A0=A0=A0=A0=A0=A0=A0=A0url =3D ....
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 fetch =3D refs/heads/*:refs/remotes/o=
-rigin/*
+This should be mentioned in the 1.5 release notes --- that you won't
+see a lot of the power the new git unless you create a new repository
+using git-clone.  For example, the man page for git-branch says that
+"git branch -r" will list remote branches won't print anything if the
+repository was originally cloned using an older version of git.  
 
-By the way, I have thought that you would also get (to avoid nasty=20
-"we don't know which branch is first in glob")
+(I was using the version that shipped with Ubuntu Edgy before I
+recently upgraded to the bleeding edge "next" branch so I could try
+out the latest and greatest git features that was being discussed on
+the mailing list.  :-)
 
-                  fetch =3D refs/heads/master:refs/remotes/origin/maste=
-r
-
-or
-
-                  fetch =3D refs/heads/master:refs/remotes/origin/HEAD
-
-(if master was current branch)
-
-> =A0 =A0 =A0 =A0 [branch "master"]
-> =A0 =A0 =A0 =A0 =A0=A0=A0=A0=A0=A0=A0=A0remote =3D origin
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 merge =3D refs/heads/master
-
---=20
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+						- Ted
