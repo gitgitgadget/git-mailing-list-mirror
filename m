@@ -1,81 +1,57 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] Detached HEAD (experimental)
-Date: Tue, 02 Jan 2007 23:18:13 +0100
-Organization: At home
-Message-ID: <enelha$n8g$3@sea.gmane.org>
-References: <7vac11yirf.fsf@assigned-by-dhcp.cox.net> <87ps9xgkjo.wl%cworth@cworth.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: How to commit removed file?
+Date: Tue, 2 Jan 2007 23:20:29 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0701022318480.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20061231102444.GD26552@mellanox.co.il> <20070102201041.GB10451@mellanox.co.il>
+ <Pine.LNX.4.63.0701022211100.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vfyatt8di.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Tue Jan 02 23:20:20 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, "Michael S. Tsirkin" <mst@mellanox.co.il>
+X-From: git-owner@vger.kernel.org Tue Jan 02 23:20:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H1rzO-0000v6-4o
-	for gcvg-git@gmane.org; Tue, 02 Jan 2007 23:20:10 +0100
+	id 1H1rzn-00013b-Ny
+	for gcvg-git@gmane.org; Tue, 02 Jan 2007 23:20:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932910AbXABWUF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 2 Jan 2007 17:20:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964913AbXABWUF
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Jan 2007 17:20:05 -0500
-Received: from main.gmane.org ([80.91.229.2]:36244 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932914AbXABWUE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Jan 2007 17:20:04 -0500
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1H1rzG-0002YI-3o
-	for git@vger.kernel.org; Tue, 02 Jan 2007 23:20:02 +0100
-Received: from host-81-190-20-195.torun.mm.pl ([81.190.20.195])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 02 Jan 2007 23:20:02 +0100
-Received: from jnareb by host-81-190-20-195.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 02 Jan 2007 23:20:02 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-20-195.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S964913AbXABWUc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 2 Jan 2007 17:20:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964931AbXABWUc
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Jan 2007 17:20:32 -0500
+Received: from mail.gmx.net ([213.165.64.20]:55356 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S964913AbXABWUc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Jan 2007 17:20:32 -0500
+Received: (qmail invoked by alias); 02 Jan 2007 22:20:30 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp031) with SMTP; 02 Jan 2007 23:20:30 +0100
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vfyatt8di.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35830>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35831>
 
-Carl Worth wrote:
+Hi,
 
-> Similarly, I think this use case of "just tracking" should support
-> branches disappearing from the remote repository without the user
-> having to edit any config file. If there are entries that are
-> automatically added by git-clone that should be removed later, that
-> should happen automatically. A recent thread suggested adding an error
-> message instructing the user to delete the entries. That's again
-> unkind to a user who doesn't really want to learn git, but just wants
-> to get at the most recent version of some code that happens to be
-> available through git.
-> 
-> That disappearing branches cause problems requiring manual cleanup of
-> configuration files is one of the reasons that we are not using any
-> feature branches in the "central" cairo repository, for example, (we
-> do have branches for release maintenance). I'd really like to be able
-> to put some feature branches there for shared work, (rather than
-> forcing that work out to separate personal repositories as we do
-> know).
-> 
-> Maybe the configuration file entries added by git-clone need to be
-> marked in some way to distinguish them from manually added entries, so
-> that we would feel more comfortable automatically removing them when a
-> remote branch has disappeared.
+On Tue, 2 Jan 2007, Junio C Hamano wrote:
 
-Is it still problem (the dissapearing remote branches) with the new
-wildcard remote.<name>.fetch generated by new git-clone? I think it
-should not complain that some branches vanished, but it would not I think
-it would remove no longer needed tracking branches (local branches)
-for us...
+> The difference is Michael did "git rm" to explicitly tell git to forget 
+> about that path, while you used the vanilla "/bin/rm".
 
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Ah. In this case, it is enough to just say "git commit"...
+
+> Personally I never saw the point of having "git rm".  Maybe we should 
+> remove it to prevent this confusion from happening.
+
+People seem so used to "cvs remove" that they had to have "git rm". Dunno. 
+I never used it. (Except to verify that indeed even "--" does not work 
+with Michael's example.)
+
+Ciao,
+Dscho
