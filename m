@@ -1,63 +1,53 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Documentation: update git-pull.txt for clone's new default behavior
-Date: Mon, 01 Jan 2007 22:32:55 -0800
-Message-ID: <7vzm92x7jc.fsf@assigned-by-dhcp.cox.net>
-References: <20070102001044.GB32148@fieldses.org>
-	<65526.67561.qm@web31806.mail.mud.yahoo.com>
+From: "Nicholas Miell" <nmiell@gmail.com>
+Subject: infinite loop with git branch -D and packed-refs
+Date: Mon, 1 Jan 2007 22:44:01 -0800
+Message-ID: <b566b20c0701012244l21f85472k83970c0c573ce105@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "J. Bruce Fields" <bfields@fieldses.org>, git@vger.kernel.org,
-	Shawn Pearce <spearce@spearce.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jan 02 07:33:02 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Tue Jan 02 07:44:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H1dCn-0005iC-Fu
-	for gcvg-git@gmane.org; Tue, 02 Jan 2007 07:33:01 +0100
+	id 1H1dNg-0008Uz-D7
+	for gcvg-git@gmane.org; Tue, 02 Jan 2007 07:44:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755281AbXABGc6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 2 Jan 2007 01:32:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755282AbXABGc6
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Jan 2007 01:32:58 -0500
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:38989 "EHLO
-	fed1rmmtao04.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755281AbXABGc6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Jan 2007 01:32:58 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070102063257.IGAZ7494.fed1rmmtao04.cox.net@fed1rmimpo01.cox.net>;
-          Tue, 2 Jan 2007 01:32:57 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id 66Y91W00K1kojtg0000000; Tue, 02 Jan 2007 01:32:10 -0500
-To: Luben Tuikov <ltuikov@yahoo.com>
-In-Reply-To: <65526.67561.qm@web31806.mail.mud.yahoo.com> (Luben Tuikov's
-	message of "Mon, 1 Jan 2007 17:28:15 -0800 (PST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1755280AbXABGoG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 2 Jan 2007 01:44:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755284AbXABGoG
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Jan 2007 01:44:06 -0500
+Received: from nf-out-0910.google.com ([64.233.182.185]:64184 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755280AbXABGoD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Jan 2007 01:44:03 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so7222908nfa
+        for <git@vger.kernel.org>; Mon, 01 Jan 2007 22:44:02 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=UkRpNBLec8PEql66ZmP1O7uLoHI+HiDe+yucTp7pZLCToX4XBw397/dfDaf3arW0X1+K0jVst6Uwva9cW32iA25ElwpzN6rJhdDi0bBOA7R6q6COHnDy8G7JJogQueP7X88i1MISAZAx+DzujiifdNHk+22PkK9vSKD4vBgu+F8=
+Received: by 10.82.114.3 with SMTP id m3mr1479863buc.1167720242082;
+        Mon, 01 Jan 2007 22:44:02 -0800 (PST)
+Received: by 10.82.159.1 with HTTP; Mon, 1 Jan 2007 22:44:01 -0800 (PST)
+To: git@vger.kernel.org
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35773>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35774>
 
-Luben Tuikov <ltuikov@yahoo.com> writes:
+# this is with 1.4.4.2, spearce says master is also affected.
+# (not subscribed, please Cc:)
 
-> --- "J. Bruce Fields" <bfields@fieldses.org> wrote:
-> ...
->> Remote branches are stored in separate namespaces under
->> .git/refs/remotes/, so that they don't muck up your view of your local
->> branches, and so git can enforce different policies for them (such as
->> forbidding committing to them).
->
-> Smells like another "newbie" protection.
->
-> Let me understand, someone here installed git, didn't read the then
-> man page of git-clone/pull/fetch, screwed up their repo, and decided
-> to change established behavior.
-
-You smelled and understood wrongly in this case.  Another point
-in separate-remote layout is that it makes it easier to interact
-with more than one remotes, and we do not have to treat 'master'
-and 'origin' as branch names any more specially than necessary.
+mkdir test
+cd test
+git init-db
+touch blah
+git add blah
+git commit -m "blah"
+git checkout -b A
+git checkout -b B
+git checkout master
+git pack-refs --all --prune
+git branch -D A B # --> infinite loop in lockfile.c:remove_lock_file()
