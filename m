@@ -1,107 +1,284 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: What's cooking in git.git (topics)
-Date: Mon, 01 Jan 2007 16:07:43 -0800
-Message-ID: <7vwt4647g0.fsf@assigned-by-dhcp.cox.net>
+Subject: Draft v1.5.0 release notes
+Date: Mon, 01 Jan 2007 16:08:39 -0800
+Message-ID: <7vlkkm47eg.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Tue Jan 02 01:07:53 2007
+X-From: git-owner@vger.kernel.org Tue Jan 02 01:08:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H1XC1-0006W3-1i
-	for gcvg-git@gmane.org; Tue, 02 Jan 2007 01:07:49 +0100
+	id 1H1XD0-0006lL-Ki
+	for gcvg-git@gmane.org; Tue, 02 Jan 2007 01:08:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754792AbXABAHq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 1 Jan 2007 19:07:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932626AbXABAHq
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Jan 2007 19:07:46 -0500
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:47798 "EHLO
-	fed1rmmtao03.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754792AbXABAHp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Jan 2007 19:07:45 -0500
+	id S932653AbXABAIn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 1 Jan 2007 19:08:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932665AbXABAIn
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Jan 2007 19:08:43 -0500
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:64558 "EHLO
+	fed1rmmtao05.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932653AbXABAIm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Jan 2007 19:08:42 -0500
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao03.cox.net
+          by fed1rmmtao05.cox.net
           (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070102000744.KJMP29122.fed1rmmtao03.cox.net@fed1rmimpo02.cox.net>;
-          Mon, 1 Jan 2007 19:07:44 -0500
+          id <20070102000841.SBHJ15640.fed1rmmtao05.cox.net@fed1rmimpo02.cox.net>;
+          Mon, 1 Jan 2007 19:08:41 -0500
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id 607y1W00g1kojtg0000000; Mon, 01 Jan 2007 19:07:59 -0500
+	id 608u1W00d1kojtg0000000; Mon, 01 Jan 2007 19:08:55 -0500
 To: git@vger.kernel.org
-X-master-at: f4bf2184ae8b79f95b9f56c1ea5455d04e559299
-X-next-at: ab5a14ddd366930434971dece31431687121dba8
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35752>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35753>
 
-Here are the topics that have been cooking.  Commits prefixed
-with '-' are only in 'pu' while commits prefixed with '+' are
-in 'next'.  The topics list the commits in reverse chronological
-order.
+The latest draft is kept as 'todo:v1.5.0.txt'.  Since I've
+merged the shallow clone changes, I've added a few sentences for
+the series as well.
 
-* sp/mmap (Sat Dec 30 22:13:43 2006 -0500) 25 commits
- + Update packedGit config option documentation.
- + mmap: set FD_CLOEXEC for file descriptors we keep open for mmap()
- + pack-objects: fix use of use_pack().
- + Fix random segfaults in pack-objects.
- + Cleanup read_cache_from error handling.
- + Replace mmap with xmmap, better handling MAP_FAILED.
- + Release pack windows before reporting out of memory.
- + Default core.packdGitWindowSize to 1 MiB if NO_MMAP.
- + Test suite for sliding window mmap implementation.
- + Create pack_report() as a debugging aid.
- + Support unmapping windows on 'temporary' packfiles.
- + Improve error message when packfile mmap fails.
- + Ensure core.packedGitWindowSize cannot be less than 2 pages.
- + Load core configuration in git-verify-pack.
- + Fully activate the sliding window pack access.
- + Unmap individual windows rather than entire files.
- + Document why header parsing won't exceed a window.
- + Loop over pack_windows when inflating/accessing data.
- + Replace use_packed_git with window cursors.
- + Refactor how we open pack files to prepare for multiple windows.
- + Create read_or_die utility routine.
- + Use off_t for index and pack file lengths.
- + Refactor packed_git to prepare for sliding mmap windows.
- + Introduce new config option for mmap limit.
- + Replace unpack_entry_gently with unpack_entry.
+--
 
-This is what I was looking at on Cygwin on my wife's box today
-(I do not have an easy access to Windows boxes otherwise so my
-Cygwin testing is limited to only weekends when I am at home).
+GIT v1.5.0 Release Notes
+========================
 
-* jc/3way (Wed Nov 29 18:53:13 2006 -0800) 1 commit
- + git-merge: preserve and merge local changes when doing fast
-   forward
+Old news
+--------
 
-Johannes's suggestion to record a tree object instead of
-LOCAL_DIFF is roger but not wilco yet --- I haven't thought
-through the issue to see an improvement in the suggestion.  We
-will be clobbering both index and the working tree, and I think
-"diff --binary HEAD" and "write-tree" record the equivalent
-amount of information given a HEAD for recovery.
+This section is for people who are upgrading from ancient
+versions of git.  Although all of the changes in this section
+happened before the current v1.4.4 release, they are summarized
+here in the v1.5.0 release notes for people who skipped earlier
+versions.
 
-* sp/merge (Sun Dec 31 00:02:13 2006 -0500) 3 commits
- - Refresh the index before starting merge-recursive.
- - Improve merge performance by avoiding in-index merges.
- - Avoid git-fetch in `git-pull .` when possible.
+In general, you should not have to worry about incompatibility,
+and there is no need to perform "repository conversion" if you
+are updating to v1.5.0.  However, some of the changes are
+one-way street upgrades; once you use them your repository
+can no longer be used with ancient git.
 
-Three patches in the earlier part of this series have graduated
-to 'master' as I think they are useful.
+ - There is a configuration variable core.legacyheaders that
+   changes the format of loose objects so that they are more
+   efficient to pack and to send out of the repository over git
+   native protocol, since v1.4.2.  However, this format cannot
+   be read by git older than that version; people fetching from
+   your repository using older clients over dumb transports
+   (e.g. http) using older versions of git will also be
+   affected.  This is not enabled by default.
 
-* jc/diff (Mon Dec 25 01:08:50 2006 -0800) 2 commits
- - test-para: combined diff between HEAD, index and working tree.
- - para-walk: walk n trees, index and working tree in parallel
-* jc/explain (Mon Dec 4 19:35:04 2006 -0800) 1 commit
- - git-explain
-* jc/web (Wed Nov 8 14:54:09 2006 -0800) 1 commit
- - gitweb: steal loadavg throttle from kernel.org
-* jc/pickaxe (Sun Nov 5 11:52:43 2006 -0800) 1 commit
- - blame: --show-stats for easier optimization work.
-* jc/diff-apply-patch (Fri Sep 22 16:17:58 2006 -0700) 1 commit
- + git-diff/git-apply: make diff output a bit friendlier to GNU patch
-   (part 2)
+ - Since v1.4.3, configuration repack.usedeltabaseoffset allows
+   packfile to be created in more space efficient format, which
+   cannot be read by git older than that version.  This is not
+   enabled by default.
 
-These are on hold.
+ - 'git pack-refs' appeared in v1.4.4; this command allows tags
+   to be accessed much more efficiently than the traditional
+   'one-file-per-tag' format.  Older git-native clients can
+   still fetch from a repository that packed and pruned refs
+   (the server side needs to run the up-to-date version of git),
+   but older dumb transports cannot.  Packing of refs is done by
+   an explicit user action, either by use of "git pack-refs
+   --prune" command or by use of "git gc" command.
+
+ - 'git -p' to paginate anything -- many commands do pagination
+   by default on a tty.  Introduced between v1.4.1 and v1.4.2;
+   this may surprise old timers.
+
+ - 'git archive' superseded 'git tar' in v1.4.3;
+
+ - 'git cvsserver' was new invention in v1.3.0;
+
+ - 'git repo-config', 'git grep', 'git rebase' and 'gitk' were
+   seriously enhanced during v1.4.0 timeperiod.
+
+ - 'gitweb' became part of git.git during v1.4.0 timeperiod and
+   seriously modified since then.
+
+ - reflog is an v1.4.0 invention.  This alows you to name a
+   revision that a branch used to be at (e.g. "git diff
+   master@{yesterday} master" allows you to see changes since
+   yesterday's tip of the branch).
+
+
+Updates in v1.5.0 since v1.4.4 series
+-------------------------------------
+
+* Index manipulation
+
+ - git-add is to add contents to the index (aka "staging area"
+   for the next commit), whether the file the contents happen to
+   be is an existing one or a newly created one.
+
+ - git-add without any argument does not add everything
+   anymore.  Use 'git-add .' instead.  Also you can add
+   otherwise ignored files with an -f option.
+
+ - git-add tries to be more friendly to users by offering an
+   interactive mode.
+
+ - git-commit <path> used to refuse to commit if <path> was
+   different between HEAD and the index (i.e. update-index was
+   used on it earlier).  This check was removed.
+
+ - git-rm is much saner and safer.  It is used to remove paths
+   from both the index file and the working tree, and makes sure
+   you are not losing any local modification before doing so.
+
+ - git-reset <tree> <paths>... can be used to revert index
+   entries for selected paths.
+
+ - git-update-index is much less visible.
+
+
+* Repository layout and objects transfer
+
+ - The data for origin repository is stored in the configuration
+   file $GIT_DIR/config, not in $GIT_DIR/remotes/, for newly
+   created clones.  The latter is still supported and there is
+   no need to convert your existing repository if you are
+   already comfortable with your workflow with the layout.
+
+ - git-clone always uses what is known as "separate remote"
+   layout for a newly created repository with a working tree;
+   i.e. tracking branches in $GIT_DIR/refs/remotes/origin/ are
+   used to track branches from the origin.  New branches that
+   appear on the origin side after a clone is made are also
+   tracked automatically.
+
+ - git-branch and git-show-branch know remote tracking branches.
+
+ - git-push can now be used to delete a remote branch or a tag.
+   This requires the updated git on the remote side.
+
+ - git-push more agressively keeps the transferred objects
+   packed.  Earlier we recommended to monitor amount of loose
+   objects and repack regularly, but you should repack when you
+   accumulated too many small packs this way as well.  Updated
+   git-count-objects helps you with this.
+
+
+* Reflog
+
+ - Reflog records the history of where the tip of each branch
+   was at each moment.  This facility is enabled by default for
+   repositories with working trees, and can be accessed with the
+   "branch@{time}" and "branch@{Nth}" notation.
+
+ - "git show-branch" learned showing the reflog data with the
+   new --reflog option.
+
+ - The commits referred to by reflog entries are now protected
+   against pruning.  The new command "git reflog expire" can be
+   used to truncate older reflog entries and entries that refer
+   to commits that have been pruned away previously with older
+   versions of git.
+
+   Existing repositories that have been using reflog may get
+   complaints from fsck-objects; please run "git reflog expire
+   --all" first to remove reflog entries that refer to commits
+   that are no longer in the repository before attempting to
+   repack it.
+
+ - git-branch knows how to rename branches and moves existing
+   reflog data from the old branch to the new one.
+
+
+* Packed refs
+
+ - Repositories with hundreds of tags have been paying large
+   overhead, both in storage and in runtime.  A new command,
+   git-pack-refs, can be used to "pack" them in more efficient
+   representation.
+
+ - Clones and fetches over dumb transports are now aware of
+   packed refs and can download from repositories that use
+   them.
+
+
+* Configuration
+
+ - configuration related to colorize setting are consolidated
+   under color.* namespace (older diff.color.*, status.color.*
+   are still supported).
+
+
+* Less external dependency
+
+ - We no longer require the "merge" program from the RCS suite.
+   All 3-way file-level merges are now done internally.
+
+ - The original implementation of git-merge-recursive which was
+   in Python has been removed; we have C implementation of it
+   now.
+
+ - git-shortlog is no longer a Perl script.  It no longer
+   requires output piped from git-log; it can accept revision
+   parameters directly on the command line.
+
+
+* I18n
+
+ - We have always encouraged the commit message to be encoded in
+   UTF-8, but the users are allowed to use legacy encoding as
+   appropriate for their projects.  This will continue to be the
+   case.  However, a non UTF-8 commit encoding _must_ be
+   explicitly set with i18n.commitencoding in the repository
+   where a commit is made; otherwise git-commit-tree will
+   complain if the log message does not look like a valid UTF-8
+   string.
+
+ - The value of i18n.commitencoding in the originating
+   repository is recorded in the commit object on the "encoding"
+   header, if it is not UTF-8.  git-log and friends notice this,
+   and reencodes the message to the log output encoding when
+   displaying, if they are different.  The log output encoding
+   is determined by "git log --encoding=<encoding>",
+   i18n.logoutputencoding configuration, or i18n.commitencoding
+   configuration, in the decreasing order of preference, and
+   defaults to UTF-8. 
+
+
+* Foreign SCM interfaces
+
+  - git-svn now requires the Perl SVN:: libraries, the
+    command-line backend was too slow and limited.
+
+  - the 'commit' command has been renamed to 'set-tree', and
+    'dcommit' is the recommended replacement for day-to-day
+    work.
+
+
+* User support
+
+ - Quite a lot of documentation updates.
+
+ - Bash completion scripts have been updated heavily.
+
+ - Better error messages for often used Porcelainish commands.
+
+
+* Shallow clones
+
+ - There is a partial support for 'shallow' repositories that
+   keeps only recent history now.  A 'shallow clone' is created
+   by specifying how deep that truncated history should be.
+
+   Currently a shallow repository has number of limitations:
+
+   - Cloning and fetching _from_ a shallow clone are not
+     supported (nor tested -- so they might work by accident but
+     they are not expected to).
+
+   - Pushing from nor into a shallow clone are not expected to
+     work.
+
+   - Merging inside a shallow repository would work as long as a
+     merge base is found in the recent history, but otherwise it
+     will be like merging unrelated histories and may result in
+     huge conflicts.
+
+   but this would be more than adequate for people who want to
+   look at near the tip of a big project with a deep history and
+   send patches in e-mail format.
