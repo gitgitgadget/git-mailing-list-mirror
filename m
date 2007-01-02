@@ -1,202 +1,61 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: A note from the maintainer
-Date: Mon, 01 Jan 2007 19:31:33 -0800
-Message-ID: <7v4pra14ve.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: [PATCH] Documentation: update git-pull.txt for clone's new default behavior
+Date: Mon, 01 Jan 2007 19:36:08 -0800
+Message-ID: <7vy7omyuaf.fsf@assigned-by-dhcp.cox.net>
+References: <405044.6078.qm@web31809.mail.mud.yahoo.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Tue Jan 02 04:31:48 2007
+Cc: git@vger.kernel.org, "J. Bruce Fields" <bfields@fieldses.org>
+X-From: git-owner@vger.kernel.org Tue Jan 02 04:36:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H1aNH-0007xt-TQ
-	for gcvg-git@gmane.org; Tue, 02 Jan 2007 04:31:40 +0100
+	id 1H1aRi-0000at-D0
+	for gcvg-git@gmane.org; Tue, 02 Jan 2007 04:36:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755216AbXABDbf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 1 Jan 2007 22:31:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755219AbXABDbf
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Jan 2007 22:31:35 -0500
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:42961 "EHLO
-	fed1rmmtao09.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755216AbXABDbf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Jan 2007 22:31:35 -0500
+	id S1755230AbXABDgL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 1 Jan 2007 22:36:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755243AbXABDgL
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Jan 2007 22:36:11 -0500
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:41752 "EHLO
+	fed1rmmtao02.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755230AbXABDgK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Jan 2007 22:36:10 -0500
 Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao09.cox.net
+          by fed1rmmtao02.cox.net
           (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070102033134.KSRL18767.fed1rmmtao09.cox.net@fed1rmimpo01.cox.net>;
-          Mon, 1 Jan 2007 22:31:34 -0500
+          id <20070102033610.LZWM97.fed1rmmtao02.cox.net@fed1rmimpo01.cox.net>;
+          Mon, 1 Jan 2007 22:36:10 -0500
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo01.cox.net with bizsmtp
-	id 63Wn1W0071kojtg0000000; Mon, 01 Jan 2007 22:30:47 -0500
-To: git@vger.kernel.org
+	id 63bN1W00G1kojtg0000000; Mon, 01 Jan 2007 22:35:23 -0500
+To: ltuikov@yahoo.com
+In-Reply-To: <405044.6078.qm@web31809.mail.mud.yahoo.com> (Luben Tuikov's
+	message of "Mon, 1 Jan 2007 18:05:11 -0800 (PST)")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35766>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35767>
 
-It has been a while since I sent this message out the last time,
-and there seem to be some new people on the git list.
+Luben Tuikov <ltuikov@yahoo.com> writes:
 
-This message talks about how git.git is managed, and how you can
-work with it.
+> Questions:
+>
+> What is the reasonining of defining branch.<name>.merge to point
+> to the "remote's setup"?
 
+See list archives.  
 
-* IRC and Mailing list
+Because you are not required to use remote tracking branches.
+By the way, I think we allow the name of the remote tracking
+branch as well, but we do not advertise it -- always using
+remote's name consistently is much less confusing.
 
-Many active members of development community hang around on #git
-IRC channel.  Its log is available at:
+> The reasoning is that the remote's setup should only leak into
+> [remote] and no further.  I.e. [remote] is the only one concerned
+> with the mapping between the remote repo and the local repo.
 
-	http://colabti.de/irclogger/irclogger_logs/git
-
-[jc: Does anybody know a shortcut for "Today's" page on this
- site?  It irritates me having to click the latest link on this
- page to get to the latest]
-
-
-The development however is primarily done on this mailing list
-you are reading right now.  If you have patches, please send
-them to the list, following Documentation/SubmittingPatches.
-
-I usually read all patches posted to the list, and follow almost
-all the discussions on the list, unless the topic is about an
-obscure corner that I do not personally use.  But I am obviously
-not perfect.  If you sent a patch that you did not hear from
-anybody for three days, that is a very good indication that it
-was dropped on the floor --- please do not hesitate to remind
-me.
-
-
-The list from time to time gets messages that either
-
- - state something incorrect, with a certain authoritative tone,
-   without doing minimum homework.
-
- - try to rehash issues that have been ruled some time ago
-   without bringing anything new to the table,
-
-I used to try responding to such messages quickly with pointers
-to archived list messages and/or the name of the commit object
-that settled the issue, in order to save other readers from
-wasting time on them, but that has been a huge timesink for me,
-so I'll stop doing so and simply ignore them.
-
-This does not apply to messages from new people (the definition
-of new is rather subjective --- if I cannot connect your name
-with a specific contribution you made to the git community, you
-are still new); I would welcome questions and comments from new
-people on the list.  They are good sources for us to learn which
-parts of git's concepts are harder to learn and which
-documentation can be improved.
-
-
-The list is available at a few public sites as well:
-
-	http://marc.theaimsgroup.com/?l=git
-	http://news.gmane.org/gmane.comp.version-control.git
-	nntp://news.gmane.org/gmane.comp.version-control.git
-
-
-* Repositories and branches.
-
-My public git.git repository is at:
-
-	git://git.kernel.org/pub/scm/git/git.git/
-
-It is mirrored at Pasky's repo.or.cz as well.
-
-There are three branches in git.git repository that are not
-about the source tree of git: "todo", "html" and "man".  The
-first one is meant to contain TODO list for me, but I am not
-good at maintaining such a list so it is not as often updated as
-I would have liked.  It also contains some helper scripts I
-use to maintain it.
-
-The "html" and "man" are autogenerated documentation from the
-tip of the "master" branch; the tip of "html" is extracted to be
-visible at kernel.org at:
-
-	http://www.kernel.org/pub/software/scm/git/docs/
-
-The script to auto-maintain these two documentation branches are
-found in "todo" branch as dodoc.sh script, if you are interested.
-
-There are four branches in git.git repository that track the
-source tree of git: "master", "maint", "next", and "pu".
-
-The "master" branch is meant to contain what are reasonably
-tested and ready to be used in a production setting.  There
-could occasionally be minor breakages or brown paper bag bugs
-but they are not expected to be anything major.  Every now and
-then, a "feature release" is cut from the tip of this branch and
-they typically are named with three dotted decimal digits.  The
-last such release was v1.4.4 done on Nov 14th last year.
-
-Whenever a feature release is made, "maint" branch is forked off
-from "master" at that point.  Obvious, safe and urgent fixes
-after a feature release are applied to this branch and
-maintenance releases are cut from it.  The maintenance releases
-are typically named with four dotted decimal, named after the
-feature release they are updates to; the last such release was
-v1.4.4.3.  Usually new development will never go to this branch.
-This branch is also pulled into "master" to propagate the fixes
-forward.
-
-A trivial and safe enhancement goes directly on top of "master".
-A new development, either initiated by myself or more often by
-somebody found his or her own itch to scratch, does not usually
-happen on "master", however.  Instead, it is forked into a
-separate topic branch from the tip of "master", and first tested
-in isolation; I may make minimum fixups at this point.  Usually
-there are a handful such topic branches that are running ahead
-of "master" in git.git repository.  I do not publish the tip of
-these branches in my public repository, however, partly to keep
-the number of branches that downstream developers need to worry
-about and primarily because I am lazy.
-
-I judge the quality of topic branches, taking advices from the
-mailing list discussions.  Some of them start out as "good idea
-but obviously is broken in some areas (e.g. breaks the existing
-testsuite)" and then with some more work (either by the original
-contributor or help from other people on the list) becomes "more
-or less done and can now be tested by wider audience".  Luckily,
-most of them start out in the latter, better shape.
-
-The "next" branch is to merge and test topic branches in the
-latter category with "master".  In general it should always
-contain the tip of "master".  They may not be quite production
-ready, but are expected to work more or less without major
-breakage.  I usually use "next" version of git for my own work.
-"next" is where new and exciting things take place.
-
-The above three branches, "master", "maint" and "next" are never
-rewound, so you should be able to safely track them (that means
-the topics that have been merged into "next" are not rebased).
-
-The "pu" (proposed updates) branch bundles all the remaining
-topic branches.  The topic branches and "pu" are subject to
-rebasing in general.  Especially "pu" is almost always rewound
-to the tip of "next" and reconstructed to contain the remaining
-topic branches.
-
-When a topic that was in "pu" proves to be in testable shape, it
-graduates to "next".  I do this with:
-
-	git checkout next
-        git merge that-topic-branch
-
-Sometimes, an idea that looked promising turns out to be not so
-hot and the topic can be dropped from "pu" in such a case.
-
-A topic that is in "next" is _expected_ to be tweaked and fixed
-to perfection before it is merged to "master".  I do this with:
-
-	git checkout master
-        git merge that-topic-branch
-        git branch -d that-topic-branch
-
-However, being in "next" is not a guarantee to appear in the
-next release (being in "master" is such a guarantee, unless it
-is later found seriously broken and reverted), or even in _any_
-future release.  There even was a case that a topic needed a few
-reverting before graduating to "master".
+No.  Remote is not about mapping -- if mapping is there you can
+talk about it, but that is optional.
