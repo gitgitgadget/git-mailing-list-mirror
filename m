@@ -1,71 +1,65 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Documentation: update git-pull.txt for clone's new default behavior
-Date: Mon, 01 Jan 2007 19:45:45 -0800
-Message-ID: <7vodpiytue.fsf@assigned-by-dhcp.cox.net>
-References: <926020.70066.qm@web31802.mail.mud.yahoo.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: A note from the maintainer
+Date: Mon, 1 Jan 2007 22:47:46 -0500
+Message-ID: <20070102034746.GB27690@spearce.org>
+References: <7v4pra14ve.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Theodore Tso <tytso@mit.edu>, git@vger.kernel.org,
-	Shawn Pearce <spearce@spearce.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	"J. Bruce Fields" <bfields@fieldses.org>
-X-From: git-owner@vger.kernel.org Tue Jan 02 04:45:52 2007
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 02 04:47:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H1ab2-00037X-Cn
-	for gcvg-git@gmane.org; Tue, 02 Jan 2007 04:45:52 +0100
+	id 1H1ad2-0003e0-DQ
+	for gcvg-git@gmane.org; Tue, 02 Jan 2007 04:47:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755248AbXABDpt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 1 Jan 2007 22:45:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755253AbXABDpt
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Jan 2007 22:45:49 -0500
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:41578 "EHLO
-	fed1rmmtao06.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755248AbXABDps (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Jan 2007 22:45:48 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070102034547.ONMQ2628.fed1rmmtao06.cox.net@fed1rmimpo01.cox.net>;
-          Mon, 1 Jan 2007 22:45:47 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id 63kz1W00K1kojtg0000000; Mon, 01 Jan 2007 22:45:00 -0500
-To: ltuikov@yahoo.com
-In-Reply-To: <926020.70066.qm@web31802.mail.mud.yahoo.com> (Luben Tuikov's
-	message of "Mon, 1 Jan 2007 15:56:05 -0800 (PST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1755181AbXABDrx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 1 Jan 2007 22:47:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755249AbXABDrx
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Jan 2007 22:47:53 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:44436 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755181AbXABDrx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Jan 2007 22:47:53 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.52)
+	id 1H1acl-00061n-MM; Mon, 01 Jan 2007 22:47:39 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id C753720FB65; Mon,  1 Jan 2007 22:47:46 -0500 (EST)
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7v4pra14ve.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35768>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35769>
 
-Luben Tuikov <ltuikov@yahoo.com> writes:
+Junio C Hamano <junkio@cox.net> wrote:
+> I usually read all patches posted to the list, and follow almost
+> all the discussions on the list, unless the topic is about an
+> obscure corner that I do not personally use.  But I am obviously
+> not perfect.  If you sent a patch that you did not hear from
+> anybody for three days, that is a very good indication that it
+> was dropped on the floor --- please do not hesitate to remind
+> me.
 
-> It is in this sense that I do "cd <branch>; git-pull . <branch>"
-> in a sequence, and I'd rather do "cd <branch>; git-pull <symbolic-ref>"
-> to define which branch is the merge coming from given the current branch
-> _and_ the symbolic ref.
+Though a contributor should probably check the `maint`, `master`,
+`next` or `pu` branches of git.git before sending a reminder.
 
-If I am reading you correctly, you have multiple directories,
-each with its own .git/ directory but major parts of these .git/
-directories are shared (namely, objects/ and refs/).  You would
-not be able to have separate checkout in these directories if
-you shared .git/HEAD and .git/index, so at least each of these
-directories has these two files for its own.
+Often we find that you have accepted a patch without comment (as
+the patch is obviously correct and nobody else had a reason to
+comment on it).  In this case the patch will just appear in one of
+the git.git branches, with no email indicating that.
 
-Is that what you are doing?
-
-If that is the case, I think you do not even have to have the
-"branch spec" to express the patchflow among them.  Essentially
-you are using "one branch, one directory, one repository"
-workflow (my understanding is that this is how BK worked but I
-haven't seen it) but with your own improvements.  The reason
-this is an improvement is because such a shared .git/refs/
-allows you to do diff and log across branches this way, so if
-you have a separate .git/config just like you already have
-separate .git/HEAD and .git/index in these directories, you can
-use [remote "xyz"] sections in each of them to achieve what you
-called 'symbolic'.
+-- 
+Shawn.
