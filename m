@@ -1,76 +1,97 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: Possible regression in git-rev-list --header
-Date: Tue, 2 Jan 2007 23:29:14 +0100
-Message-ID: <e5bfff550701021429j1587949fgfe19effcaf74e6df@mail.gmail.com>
-References: <e5bfff550612300956mef4691fqf607fad173c571da@mail.gmail.com>
-	 <7vlkkphvrb.fsf@assigned-by-dhcp.cox.net>
-	 <Pine.LNX.4.63.0612310211300.25709@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <7v64bsj0s4.fsf@assigned-by-dhcp.cox.net>
-	 <e5bfff550612310345j4c882b7av51879ca1175a1c6b@mail.gmail.com>
-	 <Pine.LNX.4.63.0612311613180.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <e5bfff550612310743t4ca1b017ubceddffafd06ac59@mail.gmail.com>
-	 <7vodpja0u8.fsf@assigned-by-dhcp.cox.net>
-	 <Pine.LNX.4.63.0701022219050.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <7vps9xrs9y.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Detached HEAD (experimental)
+Date: Tue, 02 Jan 2007 14:44:31 -0800
+Message-ID: <7virfprquo.fsf@assigned-by-dhcp.cox.net>
+References: <7vac11yirf.fsf@assigned-by-dhcp.cox.net>
+	<87ps9xgkjo.wl%cworth@cworth.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 02 23:29:48 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 02 23:44:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H1s8e-0003Z0-P9
-	for gcvg-git@gmane.org; Tue, 02 Jan 2007 23:29:45 +0100
+	id 1H1sN3-0007pc-8s
+	for gcvg-git@gmane.org; Tue, 02 Jan 2007 23:44:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964998AbXABW3Q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 2 Jan 2007 17:29:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964996AbXABW3Q
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Jan 2007 17:29:16 -0500
-Received: from py-out-1112.google.com ([64.233.166.180]:3581 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964998AbXABW3P (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Jan 2007 17:29:15 -0500
-Received: by py-out-1112.google.com with SMTP id a29so3272315pyi
-        for <git@vger.kernel.org>; Tue, 02 Jan 2007 14:29:14 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=HokkpS0VPr4D+tCRfTV6f/6xbqHbcBccDHmSHRN+FGL6zWpZLi30Zhc2+rcMC7wi+Aw14ZNvy/nHfmUqQxmFFZVwpLMCzxIVOiPsXyRw0psJHUB0n3NumKz2ie7JUzDPmkxGWOq90sxyA2UuzezUu+kM+lRb+FgzgvrJM7di8RQ=
-Received: by 10.35.39.13 with SMTP id r13mr38565051pyj.1167776954379;
-        Tue, 02 Jan 2007 14:29:14 -0800 (PST)
-Received: by 10.35.42.4 with HTTP; Tue, 2 Jan 2007 14:29:14 -0800 (PST)
-To: "Junio C Hamano" <junkio@cox.net>
-In-Reply-To: <7vps9xrs9y.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S964913AbXABWoe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 2 Jan 2007 17:44:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964990AbXABWoe
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Jan 2007 17:44:34 -0500
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:37400 "EHLO
+	fed1rmmtao12.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964913AbXABWod (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Jan 2007 17:44:33 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20070102224433.SZYM19398.fed1rmmtao12.cox.net@fed1rmimpo01.cox.net>;
+          Tue, 2 Jan 2007 17:44:33 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id 6Njl1W0071kojtg0000000; Tue, 02 Jan 2007 17:43:46 -0500
+To: Carl Worth <cworth@cworth.org>
+In-Reply-To: <87ps9xgkjo.wl%cworth@cworth.org> (Carl Worth's message of "Tue,
+	02 Jan 2007 13:56:11 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35834>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35835>
 
-On 1/2/07, Junio C Hamano <junkio@cox.net> wrote:
+Carl Worth <cworth@cworth.org> writes:
+
+> On Mon, 01 Jan 2007 23:45:08 -0800, Junio C Hamano wrote:
+>> This allows "git checkout -d v1.4.3" to detach the HEAD from any
+>> branch but point directly at the named commit.
 >
-> > And Marco has to fix the header parsing anyway.
+> Being able to perform "checkout" with a tag like this, (and no
+> specific branch), is something I've been wanting git to acquire for
+> some time. So, thanks for coding this up!
 >
-> No question about that.  If iconv() punts, qgit will see
-> "encoding" header to deal with even when the re-coding is in
-> effect.  I think it may be a sensible thing for qgit to replace
-> the log message and show "log message in this encoding, which
-> cannot be shown in this window" instead in such a case, but that
-> is up to Porcelain.
+>> This is still experimental.  While I think it makes sense to
+>> allow commits on top of detached HEAD, it is rather dangerous
+>> unless you are careful and know what you are doing.
 >
+> This part I don't understand. I don't see why it's useful to introduce
+> new danger to "git checkout"...
 
-Yes, git-rev-list output is stored in memory as a big chunk of row
-bytes, conversion
-to utf8 (the internal format used by Qt string class) is done _only_
-for displayed items, just
-before to show them to user so is not performance critical. I agree
-with Junio, that info could be used to teach Qt string conversion
-function how to handle the data. Something like:
+I am not saying being risky is useful.  That's why I said it is
+experimental.
 
-         convertWithCodec(const char* data, codec* codecName)
+We could do two things, and I think disallowing commits is not
+necessarily a better option of the two.  We could allow commits
+and prevent the user from switching out of the detached HEAD
+state without an explicit action instead.  If we go the first
+route, you need to also prevent merges into the detached HEAD.
+If we go the latter I think you only need to add a check in
+"git-checkout" but there may be other cases.  In either way, we
+need a safety valve, which the experimental code does not have.
 
-So perhaps if Qt is better then iconv we could display a good log
-message anyway.
+And being able to merge into the detached HEAD turns out to be
+somewhat useful.  I checked out the v1.4.4.3 and tried to see if
+a topic is applicable by merging into that detached HEAD and
+running testsuite.  Of course, without any safety valve, I can
+easily lose the merge result by switching out of the detached
+HEAD state (say, "git checkout master"), but on the other hand,
+creating a new branch at that point with "git checkout -b
+v1.4.4.3-maint" would let me continue from that point without
+losing anything.
+
+But this is only "somewhat" -- I do not have strong opinion
+either way, other than that we need a safety valve (which we
+agree).
+
+In any case, I did this because I got tired of waiting for it to
+happen (I thought you wanted to hack on this over the long
+week^W yearend, so I deliberately stayed away from doing this)
+and I was bored.  This will not be in 'next' in the current
+shape.
+
+You've thought about the issue long enough to write your
+commentary and I agree to most of your points (including
+favoring "no commit allowed in this state" over "allow commits
+and merges to help advanced usage" for its simplicity), so if
+you code it up with a clean patch, I would not reject it on the
+basis of its design.
