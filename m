@@ -1,84 +1,91 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] xdl_merge(): fix a segmentation fault when refining conflicts
-Date: Tue, 2 Jan 2007 14:18:47 +0100
-Message-ID: <200701021418.48624.jnareb@gmail.com>
-References: <20061227041644.GA22449@spearce.org> <en6fj1$ji5$1@sea.gmane.org> <Pine.LNX.4.63.0612310208460.25709@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Andy Whitcroft <apw@shadowen.org>
+Subject: Re: [PATCH/RFH] send-pack: fix pipeline.
+Date: Tue, 02 Jan 2007 14:06:10 +0000
+Message-ID: <459A66D2.3000804@shadowen.org>
+References: <7v1wmjoumq.fsf@assigned-by-dhcp.cox.net>	<7vzm96latb.fsf@assigned-by-dhcp.cox.net>	<Pine.LNX.4.64.0612291307520.4473@woody.osdl.org> <7vlkkql0na.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Shawn Pearce <spearce@spearce.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 02 14:16:03 2007
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 02 15:06:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H1jUf-00073I-BL
-	for gcvg-git@gmane.org; Tue, 02 Jan 2007 14:15:53 +0100
+	id 1H1kHj-0005PJ-Vn
+	for gcvg-git@gmane.org; Tue, 02 Jan 2007 15:06:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964894AbXABNPu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 2 Jan 2007 08:15:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964868AbXABNPu
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Jan 2007 08:15:50 -0500
-Received: from ug-out-1314.google.com ([66.249.92.173]:16290 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964897AbXABNPt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Jan 2007 08:15:49 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so4895102uga
-        for <git@vger.kernel.org>; Tue, 02 Jan 2007 05:15:47 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=HKogL4yp2adbiP4H4NaCq8M35/GBZ8+XTFhpcU2E1H+xtqTXtDOcxMO6NQsKRpKvXSl3o6h9Dck+fFnKhs+xFcr9pDMPEJZU7WU/zBb8Lfuw8nrDc2n+loWy3Sly6vnIMpSuFJOdN7I24htEHSjFAx9ChFGIBuAWeNbPIjIIa7c=
-Received: by 10.67.97.7 with SMTP id z7mr13902128ugl.1167743746975;
-        Tue, 02 Jan 2007 05:15:46 -0800 (PST)
-Received: from host-81-190-20-195.torun.mm.pl ( [81.190.20.195])
-        by mx.google.com with ESMTP id e33sm12854049ugd.2007.01.02.05.15.46;
-        Tue, 02 Jan 2007 05:15:46 -0800 (PST)
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-User-Agent: KMail/1.9.3
-In-Reply-To: <Pine.LNX.4.63.0612310208460.25709@wbgn013.biozentrum.uni-wuerzburg.de>
-Content-Disposition: inline
+	id S1754850AbXABOGU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 2 Jan 2007 09:06:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754857AbXABOGU
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Jan 2007 09:06:20 -0500
+Received: from hellhawk.shadowen.org ([80.68.90.175]:3508 "EHLO
+	hellhawk.shadowen.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754848AbXABOGR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Jan 2007 09:06:17 -0500
+Received: from localhost ([127.0.0.1])
+	by hellhawk.shadowen.org with esmtp (Exim 4.50)
+	id 1H1kGU-0000Bg-ST; Tue, 02 Jan 2007 14:05:19 +0000
+User-Agent: Icedove 1.5.0.9 (X11/20061220)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vlkkql0na.fsf@assigned-by-dhcp.cox.net>
+X-Enigmail-Version: 0.94.1.0
+OpenPGP: url=http://www.shadowen.org/~apw/public-key
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35786>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35787>
 
-On Sun, 31 Dec 2006, Johannes Schindelin wrote:
-
-> On Sat, 30 Dec 2006, Jakub Narebski wrote:
+Junio C Hamano wrote:
+> Linus Torvalds <torvalds@osdl.org> writes:
 > 
->> Johannes Schindelin wrote:
->> 
->>> Of course, you can hit mismerges like the illustrated one _without_ 
->>> being marked as conflict (e.g. if the chunk of identical code is _not_ 
->>> added, but only the increments), but we should at least avoid them 
->>> where possible.
->> 
->> Perhaps you could make it even more conservating merge conflicts option 
->> (to tighten merge conflicts even more) to xdl_merge, but not used by 
->> default because as it removes accidental conflicts it increases 
->> mismerges (falsely not conflicted).
+>> On Fri, 29 Dec 2006, Junio C Hamano wrote:
+>>> I really need a sanity checking on this one.  I think I got the
+>>> botched pipeline fixed with the patch I am replying to, but I do
+>>> not understand the waitpid() business.  Care to enlighten me?
+>> I think it was a beginning of a half-hearted attempt to check the exit 
+>> status of the rev-list in case something went wrong.
+>>
+>> Which we simply don't do, so if git-rev-list ends up with some problem 
+>> (due to a corrupt git repo or something), it will just send a partial 
+>> pack.
+>>
+>> For some reason I thought we had fixed that by just generating the object 
+>> list internally, but I guess we don't do that. That's just stupid. We 
+>> should make "send-pack.c" use
+>>
+>> 	list-heads | git pack-objects --revs
+>>
+>> 	list-heads | git-rev-list --stdin | git-pack-objects
+>>
+>> because as it is now, I think send-pack is more fragile than it needs to 
+>> be.
+>>
+>> Or maybe I'm just confused.
 > 
-> There is no way to do this sanely. If you want to catch these mismerges, 
-> you have to mark _all_ modifications as conflicting.
+> Dont' worry, you are no more confused than I am ;-).
+> 
+> "I thought we've done the 'pack-objects --revs' for the
+> upload-pack side but haven't done so on the send-pack side." was
+> what I initially wrote, but apparently we haven't.  On the other
+> hand, I think upload-pack gets error termination from rev-list
+> right.
+> 
+> It seems that repack is the only thing that uses the internal
+> rev-list.
 
-Currently you have:
- - a level value of 0 means that all overlapping changes are treated
-   as conflicts,
- - a value of 1 means that if the overlapping changes are identical,
-   it is not treated as a conflict.
- - If you set level to 2, overlapping changes will be analyzed, so that
-   almost identical changes will not result in huge conflicts. Rather,
-   only the conflicting lines will be shown inside conflict markers.
+>From what I can see in next/pu (by the time I stopped stuffing food and
+booze into myself and remembered how to turn on the computer) you have
+ripped all this code out and started using the builtin rev-list
+functions.  So what I can see in there now looks sane, and seems to work
+in some limited testing here.
 
-I was thinking about:
- - If you set level to 3, if one part after overlapping changes analysis
-   in level 2 has empty conflict region, resolve this conflict as second
-   side. WARNING: this reduces number of merge conflicts, but might give
-   mismerges!
+Reading the code does highlight a weakness in the face of incomplete
+writes in the ref list send, which has always been in there.  Now we may
+never see these on Linux, but as we do not know what OS is under us and
+the relevant standards say they can occur we should cope me thinks.
 
-Or something like that.
--- 
-Jakub Narebski
-Poland
+I have just been testing a patch for that which I will post in follow up
+to this post.
+
+-apw
