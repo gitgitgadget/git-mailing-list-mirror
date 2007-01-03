@@ -1,60 +1,64 @@
-From: "Lars Hjemli" <hjemli@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: [PATCH] git-branch: show detached HEAD
-Date: Wed, 3 Jan 2007 08:50:50 +0100
-Message-ID: <8c5c35580701022350n13742ec1n6f5fadcf1dfb18aa@mail.gmail.com>
+Date: Tue, 02 Jan 2007 23:52:53 -0800
+Message-ID: <7vslespmwa.fsf@assigned-by-dhcp.cox.net>
 References: <7vac11yirf.fsf@assigned-by-dhcp.cox.net>
-	 <1167780131528-git-send-email-hjemli@gmail.com>
-	 <20070103051811.GB23358@spearce.org>
-	 <7v7iw4r47e.fsf@assigned-by-dhcp.cox.net>
+	<1167780131528-git-send-email-hjemli@gmail.com>
+	<20070103051811.GB23358@spearce.org>
+	<7v7iw4r47e.fsf@assigned-by-dhcp.cox.net>
+	<8c5c35580701022350n13742ec1n6f5fadcf1dfb18aa@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 03 08:50:55 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 03 08:53:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H20tj-0006K5-7F
-	for gcvg-git@gmane.org; Wed, 03 Jan 2007 08:50:55 +0100
+	id 1H20vp-0006qm-O9
+	for gcvg-git@gmane.org; Wed, 03 Jan 2007 08:53:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754991AbXACHuw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 3 Jan 2007 02:50:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754993AbXACHuw
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Jan 2007 02:50:52 -0500
-Received: from nf-out-0910.google.com ([64.233.182.188]:47346 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754984AbXACHuv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Jan 2007 02:50:51 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so7606972nfa
-        for <git@vger.kernel.org>; Tue, 02 Jan 2007 23:50:50 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=XpwXN1yNHKxvXor9DlhhWQHWPHgH4KMVGS8VZ085edopLFPMWGv52Qy7spx6Hlid3hQ8CuNMdadxA9k5H/Nk/ufNC46xvhDY/evO/X6xsLq+N+M3amz1Pft9+QqvO8Grve2Ua3LTbkbnuax4Dlcl+OvfliZ69djmTIHPOACXbmY=
-Received: by 10.82.179.9 with SMTP id b9mr1677329buf.1167810650671;
-        Tue, 02 Jan 2007 23:50:50 -0800 (PST)
-Received: by 10.82.171.10 with HTTP; Tue, 2 Jan 2007 23:50:50 -0800 (PST)
-To: "Junio C Hamano" <junkio@cox.net>
-In-Reply-To: <7v7iw4r47e.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S1755000AbXACHw4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 3 Jan 2007 02:52:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755002AbXACHwz
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Jan 2007 02:52:55 -0500
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:41922 "EHLO
+	fed1rmmtao10.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754998AbXACHwz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Jan 2007 02:52:55 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20070103075254.TCPZ20715.fed1rmmtao10.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 3 Jan 2007 02:52:54 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id 6Xt81W00R1kojtg0000000; Wed, 03 Jan 2007 02:53:09 -0500
+To: "Lars Hjemli" <hjemli@gmail.com>
+In-Reply-To: <8c5c35580701022350n13742ec1n6f5fadcf1dfb18aa@mail.gmail.com>
+	(Lars Hjemli's message of "Wed, 3 Jan 2007 08:50:50 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35850>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35851>
 
-On 1/3/07, Junio C Hamano <junkio@cox.net> wrote:
-> I would even make it stronger to say something like:
+"Lars Hjemli" <hjemli@gmail.com> writes:
+
+> On 1/3/07, Junio C Hamano <junkio@cox.net> wrote:
+>> I would even make it stronger to say something like:
+>>
+>>         * You are not on ANY branch right now.
+>>           master
+>>           next
+>>           pu
+>>           ...
+>>
 >
->         * You are not on ANY branch right now.
->           master
->           next
->           pu
->           ...
->
+> Hmm, that wouldn't be very nice for 'git-branch -v' (which suddenly
+> got extra useful with detached head).
 
-Hmm, that wouldn't be very nice for 'git-branch -v' (which suddenly
-got extra useful with detached head).
+Ah, please scratch that.
 
--- 
-larsh
+I did not remember that option, since I do not use it myself.
+Thanks for injecting sanity.
