@@ -1,63 +1,61 @@
-From: "Lars Hjemli" <hjemli@gmail.com>
-Subject: Re: Possible regression in git-rev-list --header
-Date: Wed, 3 Jan 2007 11:38:07 +0100
-Message-ID: <8c5c35580701030238t651af0f3kcff7600768dda722@mail.gmail.com>
-References: <e5bfff550612300956mef4691fqf607fad173c571da@mail.gmail.com>
-	 <7vlkkphvrb.fsf@assigned-by-dhcp.cox.net>
-	 <Pine.LNX.4.63.0612310211300.25709@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <7v64bsj0s4.fsf@assigned-by-dhcp.cox.net>
-	 <e5bfff550612310345j4c882b7av51879ca1175a1c6b@mail.gmail.com>
-	 <Pine.LNX.4.63.0612311613180.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <e5bfff550612310743t4ca1b017ubceddffafd06ac59@mail.gmail.com>
-	 <7vodpja0u8.fsf@assigned-by-dhcp.cox.net>
-	 <e5bfff550701030121n700fab25x63278457c884a3f7@mail.gmail.com>
-	 <8c5c35580701030221w5c04e2eaq757d12c4ca0b0780@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Detached HEAD (experimental)
+Date: Wed, 3 Jan 2007 05:46:20 -0500
+Message-ID: <20070103104620.GA27015@coredump.intra.peff.net>
+References: <7vac11yirf.fsf@assigned-by-dhcp.cox.net> <87ps9xgkjo.wl%cworth@cworth.org> <7virfprquo.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Jan 03 11:38:24 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Carl Worth <cworth@cworth.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 03 11:46:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H23Ve-0001G6-Rh
-	for gcvg-git@gmane.org; Wed, 03 Jan 2007 11:38:15 +0100
+	id 1H23db-0003YY-KH
+	for gcvg-git@gmane.org; Wed, 03 Jan 2007 11:46:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750695AbXACKiK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 3 Jan 2007 05:38:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750701AbXACKiK
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Jan 2007 05:38:10 -0500
-Received: from nf-out-0910.google.com ([64.233.182.187]:32925 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750695AbXACKiJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Jan 2007 05:38:09 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so7652738nfa
-        for <git@vger.kernel.org>; Wed, 03 Jan 2007 02:38:08 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=LcIPoSGd0LGOnv80BWL8ABkUge/cLWDDT1X4NhHNo7RWj8PtlF4s5XW7ghlseYJOrM/jiKZ63kLIpEsQNRjjFBgLEN13JyGMxH6TkDAlxCpq/UOOfkTWezG/HIVSb0PvqlGWKcuwMT4gTdAJWOd1CH7J04wKlt7nwCMHpU4zGWY=
-Received: by 10.82.120.14 with SMTP id s14mr1611767buc.1167820687787;
-        Wed, 03 Jan 2007 02:38:07 -0800 (PST)
-Received: by 10.82.171.10 with HTTP; Wed, 3 Jan 2007 02:38:07 -0800 (PST)
-To: "Marco Costalba" <mcostalba@gmail.com>
-In-Reply-To: <8c5c35580701030221w5c04e2eaq757d12c4ca0b0780@mail.gmail.com>
+	id S1750695AbXACKqY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 3 Jan 2007 05:46:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750708AbXACKqY
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Jan 2007 05:46:24 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1516 "HELO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750695AbXACKqX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Jan 2007 05:46:23 -0500
+Received: (qmail 27046 invoked from network); 3 Jan 2007 05:46:30 -0500
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
+  by 66-23-211-5.clients.speedfactory.net with SMTP; 3 Jan 2007 05:46:30 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 03 Jan 2007 05:46:20 -0500
+To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
+In-Reply-To: <7virfprquo.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35857>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35858>
 
-On 1/3/07, Lars Hjemli <hjemli@gmail.com> wrote:
->   commit ::= header [blank+ [title+ [blank+ text*]]] '\0'
->   header ::= tree parent* author committer
+On Tue, Jan 02, 2007 at 02:44:31PM -0800, Junio C Hamano wrote:
 
-Sorry, this should have been
+> necessarily a better option of the two.  We could allow commits
+> and prevent the user from switching out of the detached HEAD
+> state without an explicit action instead.  If we go the first
 
-   commit ::= header [blank+ [title+ [blank+ text*]]] '\0'
-   header ::= tree parent* author committer other_header*
+I think you should only enact this safety valve if there have actually
+been commits. Otherwise, people who are just tracking and do a
+"git-checkout v1.4.0; look look look; git-checkout v1.5.0" will get a
+confusing message.
 
--- 
-larsh
+Personally, I like the "don't allow commit without a branch" approach,
+but only if you can "git-commit -b newbranch" and "git-merge -b
+newbranch" to make it convenient to create a branch. Making commits that
+aren't on any branch seems like a broken state (and indeed, you have to
+use special options to get out of the state); it makes more sense to me
+to never enter the state in the first place.
+
+Also, the implementation should be conceptually simple. Put
+refs/tags/v1.4.0 into HEAD on checkout. Disallow commit/merge unless
+HEAD points to refs/heads/*.
+
+Just my 2 cents...
+
+-Peff
