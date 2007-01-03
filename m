@@ -1,56 +1,66 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] git-branch: show detached HEAD
-Date: Wed, 3 Jan 2007 00:18:11 -0500
-Message-ID: <20070103051811.GB23358@spearce.org>
-References: <7vac11yirf.fsf@assigned-by-dhcp.cox.net> <1167780131528-git-send-email-hjemli@gmail.com>
+From: Juergen Ruehle <j.ruehle@bmiag.de>
+Subject: Re: [PATCH/RFC] Assorted small changes to runstatus
+Date: Wed, 3 Jan 2007 06:34:29 +0100
+Message-ID: <17819.16485.756000.15186@lapjr.intranet.kiel.bmiag.de>
+References: <1167765983316-git-send-email-j.ruehle@bmiag.de>
+	<7v8xgkstzt.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed Jan 03 06:18:28 2007
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 03 06:34:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H1yW9-0001TM-Qb
-	for gcvg-git@gmane.org; Wed, 03 Jan 2007 06:18:26 +0100
+	id 1H1ym5-0005eg-LX
+	for gcvg-git@gmane.org; Wed, 03 Jan 2007 06:34:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752356AbXACFSQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 3 Jan 2007 00:18:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753113AbXACFSQ
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Jan 2007 00:18:16 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:36403 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752356AbXACFSP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Jan 2007 00:18:15 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1H1yWD-0005yi-UK; Wed, 03 Jan 2007 00:18:30 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 7A37820FB65; Wed,  3 Jan 2007 00:18:11 -0500 (EST)
-To: Lars Hjemli <hjemli@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <1167780131528-git-send-email-hjemli@gmail.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1753662AbXACFeu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 3 Jan 2007 00:34:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754065AbXACFet
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Jan 2007 00:34:49 -0500
+Received: from meriadoc.bmiag.de ([62.154.210.133]:33348 "EHLO
+	meriadoc.bmiag.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753662AbXACFet (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Jan 2007 00:34:49 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by meriadoc.bmiag.de (Postfix) with ESMTP id 651253AED8;
+	Wed,  3 Jan 2007 06:15:40 +0100 (CET)
+Received: from meriadoc.bmiag.de ([127.0.0.1])
+	by localhost (meriadoc [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 05905-02; Wed, 3 Jan 2007 06:15:40 +0100 (CET)
+Received: from eorl.intranet.kiel.bmiag.de (eorl.intranet.kiel.bmiag.de [10.131.2.1])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	by meriadoc.bmiag.de (Postfix) with ESMTP id 174923AED7;
+	Wed,  3 Jan 2007 06:15:38 +0100 (CET)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by eorl.intranet.kiel.bmiag.de (Postfix) with ESMTP id 490923ADC8;
+	Wed,  3 Jan 2007 06:34:44 +0100 (CET)
+Received: from eorl.intranet.kiel.bmiag.de ([127.0.0.1])
+	by localhost (eorl [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+	id 26732-05; Wed, 3 Jan 2007 06:34:38 +0100 (CET)
+Received: from LAPJR (dialin5.galadriel.bmiag.de [192.168.251.5])
+	by eorl.intranet.kiel.bmiag.de (Postfix) with ESMTP id 5FC413ADC6;
+	Wed,  3 Jan 2007 06:34:31 +0100 (CET)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v8xgkstzt.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: VM 7.19 under Emacs 21.3.1
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at eorl.intranet.kiel.bmiag.de
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at meriadoc.bmiag.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35842>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35843>
 
-Lars Hjemli <hjemli@gmail.com> wrote:
-> This makes git-branch show a detached HEAD as '* (no branch)'.
+Junio C Hamano writes:
+ > Thanks.  3 and 4 are obviously good, 1 is probably good although
+ > I do not have much preference either way myself.  The part that
+ > adds helpful messages of 2 is nice but I am not sure about the
+ > wording "Cached changes".
+ > 
+ > Maybe people who were in the update-index and git-add discussion
+ > have better input than I can give.
 
-It would be nicer if when you are on a remote tracking branch or
-on a tag that the name of the tag or the remote tracking branch is
-shown rather than '* (no branch)'.
-
--- 
-Shawn.
+Yes, that was the intention. Thanks for looking at the proposal.
