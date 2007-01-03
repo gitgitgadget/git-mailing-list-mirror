@@ -1,58 +1,65 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] git-branch: show detached HEAD
-Date: Tue, 02 Jan 2007 23:05:20 -0800
-Message-ID: <7v1wmcr3nz.fsf@assigned-by-dhcp.cox.net>
-References: <7vac11yirf.fsf@assigned-by-dhcp.cox.net>
-	<1167780131528-git-send-email-hjemli@gmail.com>
+Subject: Re: How to commit removed file?
+Date: Tue, 02 Jan 2007 23:14:03 -0800
+Message-ID: <7vwt44pop0.fsf@assigned-by-dhcp.cox.net>
+References: <7vfyatt8di.fsf@assigned-by-dhcp.cox.net>
+	<20070103060640.GD20259@mellanox.co.il>
+	<7vhcv8r4ac.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 03 08:05:35 2007
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 03 08:14:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H20Bm-0003M7-D7
-	for gcvg-git@gmane.org; Wed, 03 Jan 2007 08:05:30 +0100
+	id 1H20KF-0005ly-U4
+	for gcvg-git@gmane.org; Wed, 03 Jan 2007 08:14:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754780AbXACHFW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 3 Jan 2007 02:05:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754826AbXACHFW
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Jan 2007 02:05:22 -0500
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:39492 "EHLO
-	fed1rmmtao06.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754780AbXACHFW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Jan 2007 02:05:22 -0500
+	id S1754826AbXACHOL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 3 Jan 2007 02:14:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754867AbXACHOL
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Jan 2007 02:14:11 -0500
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:47564 "EHLO
+	fed1rmmtao03.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754826AbXACHOK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Jan 2007 02:14:10 -0500
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao06.cox.net
+          by fed1rmmtao03.cox.net
           (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070103070521.DLVX2628.fed1rmmtao06.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 3 Jan 2007 02:05:21 -0500
+          id <20070103071410.DYQW29122.fed1rmmtao03.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 3 Jan 2007 02:14:10 -0500
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id 6X5b1W00V1kojtg0000000; Wed, 03 Jan 2007 02:05:36 -0500
-To: Lars Hjemli <hjemli@gmail.com>
-In-Reply-To: <1167780131528-git-send-email-hjemli@gmail.com> (Lars Hjemli's
-	message of "Wed, 3 Jan 2007 00:22:11 +0100")
+	id 6XEP1W00N1kojtg0000000; Wed, 03 Jan 2007 02:14:24 -0500
+To: "Michael S. Tsirkin" <mst@mellanox.co.il>
+In-Reply-To: <7vhcv8r4ac.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Tue, 02 Jan 2007 22:51:55 -0800")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35847>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35848>
 
-Lars Hjemli <hjemli@gmail.com> writes:
+Junio C Hamano <junkio@cox.net> writes:
 
-> This makes git-branch show a detached HEAD as '* (no branch)'.
+> ...  That's a
+> great news.
 >
-> Signed-off-by: Lars Hjemli <hjemli@gmail.com>
-> ---
->
-> This might be a premature patch. But if/when we allow HEAD to be detached, 
-> git-branch should tell us that HEAD is the current 'branch'.
+> I am not interested to make it "all" myself -- if somebody else
+> does it, that is fine, though ;-).
 
-I fully agree with the motivation, but 100 lines of change to
-adjust only to detached HEAD seems too much.  What else is going
-on in this patch, I wonder...
+Just in case you do not know me, sorry for too much negative
+tone in my message.  I was just venting. It was not like I was
+offended by something you said or anything like that.
 
-Can we have two patches, one for loop restructuring without
-detached HEAD support, and then another to add support for it?
+The "commit path..." feature, while I would even agree that it
+sometimes is useful in simple cases, is something that goes
+quite against what git does normally, and anybody would
+understand why after inspecting what git-commit has to do to
+implement that.  I personally hate that "feature".
+
+Having said that, I am known to support features that I do not
+agree with myself for other people, and sometimes even implement
+them myself.  But that does not mean I have to like them ;-).
