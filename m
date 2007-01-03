@@ -1,70 +1,57 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH] gitweb: Fix error in git_project_index subroutine
-Date: Wed,  3 Jan 2007 16:03:01 +0100
-Message-ID: <1167836581326-git-send-email-jnareb@gmail.com>
-Cc: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 03 16:00:08 2007
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [BUG] daemon.c blows up on OSX
+Date: Wed, 03 Jan 2007 16:25:38 +0100
+Message-ID: <459BCAF2.1080002@op5.se>
+References: <7vmz5ib8eu.fsf@assigned-by-dhcp.cox.net>	<86vek6z0k2.fsf@blue.stonehenge.com>	<Pine.LNX.4.64.0612201412250.3576@woody.osdl.org>	<86irg6yzt1.fsf_-_@blue.stonehenge.com>	<7vr6uu6w8e.fsf@assigned-by-dhcp.cox.net>	<86ejquyz4v.fsf@blue.stonehenge.com>	<86ac1iyyla.fsf@blue.stonehenge.com>	<Pine.LNX.4.64.0612201502090.3576@woody.osdl.org>	<86wt4mximh.fsf@blue.stonehenge.com>	<Pine.LNX.4.64.0612201524230.3576@woody.osdl.org>	<caf068570612201636g75180138r223aef7c42f69a50@mail.gmail.com> <7vtzzq3wo6.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Terje Sten Bjerkseth <terje@bjerkseth.org>,
+	Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 03 16:25:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H27ay-0005eA-SZ
-	for gcvg-git@gmane.org; Wed, 03 Jan 2007 16:00:01 +0100
+	id 1H27zs-0005Dt-2X
+	for gcvg-git@gmane.org; Wed, 03 Jan 2007 16:25:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750823AbXACO76 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 3 Jan 2007 09:59:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750825AbXACO75
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Jan 2007 09:59:57 -0500
-Received: from ug-out-1314.google.com ([66.249.92.171]:47548 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750823AbXACO75 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Jan 2007 09:59:57 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so5190692uga
-        for <git@vger.kernel.org>; Wed, 03 Jan 2007 06:59:55 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:cc:subject:date:message-id:x-mailer;
-        b=lHaAwRaaXQpBnCpYiIY6LAMgaQa7csFWefrisvns/6qFPhrIZbC2uwRXjc198pWh20A6oYJuTrnhC3doISx/siapnMiqe8xnk8QMoABJngmCnlcMXb+bDLSdzfjHZgRrcS6Ra9vTub4BUPO4cvkDcs802BNzDqNGFwyaLEh4eTY=
-Received: by 10.66.221.6 with SMTP id t6mr27096671ugg.1167836395200;
-        Wed, 03 Jan 2007 06:59:55 -0800 (PST)
-Received: from roke.D-201 ( [81.190.20.195])
-        by mx.google.com with ESMTP id 72sm27322757ugb.2007.01.03.06.59.54;
-        Wed, 03 Jan 2007 06:59:54 -0800 (PST)
-Received: from roke.D-201 (localhost.localdomain [127.0.0.1])
-	by roke.D-201 (8.13.4/8.13.4) with ESMTP id l03F32Kn005384;
-	Wed, 3 Jan 2007 16:03:03 +0100
-Received: (from jnareb@localhost)
-	by roke.D-201 (8.13.4/8.13.4/Submit) id l03F329c005383;
-	Wed, 3 Jan 2007 16:03:02 +0100
-To: git@vger.kernel.org
-X-Mailer: git-send-email 1.4.4.3
+	id S1750865AbXACPZl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 3 Jan 2007 10:25:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750867AbXACPZk
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Jan 2007 10:25:40 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:38084 "EHLO
+	smtp-gw1.op5.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750854AbXACPZk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Jan 2007 10:25:40 -0500
+Received: from [192.168.1.20] (unknown [213.88.215.14])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id E034A6BCC4; Wed,  3 Jan 2007 16:25:38 +0100 (CET)
+User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vtzzq3wo6.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35871>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35872>
 
-Instead of "$projectroot/$pr->{'path'}" to get the path to project
-GIT_DIR, it was used "$projectroot/$project" which is valid only
-for actions where project parameter is set, and 'project_index' is not
-one of them.
+Junio C Hamano wrote:
+> 
+> Does everybody use Apple CC on OSX?  Is the symbol defined even
+> with GCC?  Or Gcc fixes headers well enough and makes this a
+> non-issue?
+> 
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
- gitweb/gitweb.perl |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+Just for future reference
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index d845e91..7f54834 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -2995,7 +2995,7 @@ sub git_project_index {
- 
- 	foreach my $pr (@projects) {
- 		if (!exists $pr->{'owner'}) {
--			$pr->{'owner'} = get_file_owner("$projectroot/$project");
-+			$pr->{'owner'} = get_file_owner("$projectroot/$pr->{'path'}");
- 		}
- 
- 		my ($path, $owner) = ($pr->{'path'}, $pr->{'owner'});
+http://predef.sourceforge.net/preos.html
+
+holds a pretty complete list of identifying macros for more kinds of 
+systems than I've had the questionable privilege of having to work with. 
+I've used it pretty extensively when trying to write portable code, 
+since I too have a hard time liking autoconf and friends.
+
 -- 
-1.4.4.3
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
