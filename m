@@ -1,61 +1,63 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Skip excessive blank lines before commit body
-Date: Wed, 03 Jan 2007 09:03:03 -0800
-Message-ID: <7v64booxfc.fsf@assigned-by-dhcp.cox.net>
-References: <11678312532251-git-send-email-hjemli@gmail.com>
+From: Theodore Tso <tytso@mit.edu>
+Subject: Re: [DRAFT] Branching and merging with git
+Date: Wed, 3 Jan 2007 12:04:11 -0500
+Message-ID: <20070103170411.GB5491@thunk.org>
+References: <20061116221701.4499.qmail@science.horizon.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Marco Costalba" <mcostalba@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 03 18:03:14 2007
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 03 18:04:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H29W9-00015x-L7
-	for gcvg-git@gmane.org; Wed, 03 Jan 2007 18:03:09 +0100
+	id 1H29XK-0001T0-0b
+	for gcvg-git@gmane.org; Wed, 03 Jan 2007 18:04:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750931AbXACRDG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 3 Jan 2007 12:03:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750962AbXACRDG
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Jan 2007 12:03:06 -0500
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:40666 "EHLO
-	fed1rmmtao06.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750958AbXACRDF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Jan 2007 12:03:05 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070103170304.MAAX2628.fed1rmmtao06.cox.net@fed1rmimpo01.cox.net>;
-          Wed, 3 Jan 2007 12:03:04 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id 6h2G1W00F1kojtg0000000; Wed, 03 Jan 2007 12:02:16 -0500
-To: Lars Hjemli <hjemli@gmail.com>
-In-Reply-To: <11678312532251-git-send-email-hjemli@gmail.com> (Lars Hjemli's
-	message of "Wed, 3 Jan 2007 14:34:13 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1750958AbXACRET (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 3 Jan 2007 12:04:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750951AbXACRET
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Jan 2007 12:04:19 -0500
+Received: from thunk.org ([69.25.196.29]:52319 "EHLO thunker.thunk.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750956AbXACRES (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Jan 2007 12:04:18 -0500
+Received: from root (helo=candygram.thunk.org)
+	by thunker.thunk.org with local-esmtps 
+	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
+	id 1H29bY-0006kr-H4; Wed, 03 Jan 2007 12:08:44 -0500
+Received: from tytso by candygram.thunk.org with local (Exim 4.62)
+	(envelope-from <tytso@thunk.org>)
+	id 1H29X9-0003Z0-6H; Wed, 03 Jan 2007 12:04:11 -0500
+To: linux@horizon.com
+Content-Disposition: inline
+In-Reply-To: <20061116221701.4499.qmail@science.horizon.com>
+User-Agent: Mutt/1.5.12-2006-07-14
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35878>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35879>
 
-Lars Hjemli <hjemli@gmail.com> writes:
+On Thu, Nov 16, 2006 at 05:17:01PM -0500, linux@horizon.com wrote:
+> I know it took me a while to get used to playing with branches, and I
+> still get nervous when doing something creative.  So I've been trying
+> to get more comfortable, and wrote the following to document what I've
+> learned.
 
-> This modifies pretty_print_commit() to make the output of
-> git-rev-list and friends a bit more predictable.
->
-> A commit body starting with blank lines might be unheard-of,
-> but still possible to create using git-commit-tree (so is
-> bound to appear somewhere, sometime).
+What ever happened to this document?  There was some talk of getting
+this integrated into the git tree as Docmentation/tutorial-3.txt.
+IMHO it would be really, really good to do this before 1.5.0, since I
+think a lot of users would find it really useful.  Some of the text
+may need to be moved to other locations, but it might go faster if we
+get the base document into the tree first, and then we can submit
+patches to move text around to integrate it into the other
+documentation files.
 
-This is unfortunately (!!) a good change.  By design,
-commit-tree should take whatever binary garbage the user throws
-at it as-is (there is no requirement for it to be even text),
-and the "punchline + LF + body + LF + signoffs" is strictly by
-convention.  We already reformat using indentations and friends,
-so your change is a very sane thing to do.
+I'm certainly willing to help out submitting patches to improve the
+documentation, and I think this would be a big step towards helping
+new users to git become much more quickly proficient.
 
-We might want to tighten the formatting convention enforced at
-the Porcelain level -- we can start the process by shipping a
-sample commit message hook that checks a well formatted commit
-log message, perhaps?
+						- Ted
