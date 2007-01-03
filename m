@@ -1,66 +1,93 @@
-From: Juergen Ruehle <j.ruehle@bmiag.de>
-Subject: Re: [PATCH/RFC] Assorted small changes to runstatus
-Date: Wed, 3 Jan 2007 06:34:29 +0100
-Message-ID: <17819.16485.756000.15186@lapjr.intranet.kiel.bmiag.de>
-References: <1167765983316-git-send-email-j.ruehle@bmiag.de>
-	<7v8xgkstzt.fsf@assigned-by-dhcp.cox.net>
+From: "Michael S. Tsirkin" <mst@mellanox.co.il>
+Subject: Re: How to commit removed file?
+Date: Wed, 3 Jan 2007 08:06:40 +0200
+Message-ID: <20070103060640.GD20259@mellanox.co.il>
+References: <7vfyatt8di.fsf@assigned-by-dhcp.cox.net>
+Reply-To: "Michael S. Tsirkin" <mst@mellanox.co.il>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 03 06:34:55 2007
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 03 07:08:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H1ym5-0005eg-LX
-	for gcvg-git@gmane.org; Wed, 03 Jan 2007 06:34:53 +0100
+	id 1H1zIX-0005OV-3k
+	for gcvg-git@gmane.org; Wed, 03 Jan 2007 07:08:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753662AbXACFeu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 3 Jan 2007 00:34:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754065AbXACFet
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Jan 2007 00:34:49 -0500
-Received: from meriadoc.bmiag.de ([62.154.210.133]:33348 "EHLO
-	meriadoc.bmiag.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753662AbXACFet (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Jan 2007 00:34:49 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by meriadoc.bmiag.de (Postfix) with ESMTP id 651253AED8;
-	Wed,  3 Jan 2007 06:15:40 +0100 (CET)
-Received: from meriadoc.bmiag.de ([127.0.0.1])
-	by localhost (meriadoc [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 05905-02; Wed, 3 Jan 2007 06:15:40 +0100 (CET)
-Received: from eorl.intranet.kiel.bmiag.de (eorl.intranet.kiel.bmiag.de [10.131.2.1])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	by meriadoc.bmiag.de (Postfix) with ESMTP id 174923AED7;
-	Wed,  3 Jan 2007 06:15:38 +0100 (CET)
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by eorl.intranet.kiel.bmiag.de (Postfix) with ESMTP id 490923ADC8;
-	Wed,  3 Jan 2007 06:34:44 +0100 (CET)
-Received: from eorl.intranet.kiel.bmiag.de ([127.0.0.1])
-	by localhost (eorl [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
-	id 26732-05; Wed, 3 Jan 2007 06:34:38 +0100 (CET)
-Received: from LAPJR (dialin5.galadriel.bmiag.de [192.168.251.5])
-	by eorl.intranet.kiel.bmiag.de (Postfix) with ESMTP id 5FC413ADC6;
-	Wed,  3 Jan 2007 06:34:31 +0100 (CET)
+	id S1754340AbXACGIW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 3 Jan 2007 01:08:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754373AbXACGIW
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Jan 2007 01:08:22 -0500
+Received: from p02c11o145.mxlogic.net ([208.65.145.68]:58300 "EHLO
+	p02c11o145.mxlogic.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754283AbXACGIV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Jan 2007 01:08:21 -0500
+Received: from unknown [63.251.237.3]
+	by p02c11o145.mxlogic.net (mxl_mta-4.0.1-5)
+	with SMTP id 5584b954.2604829616.16592.00-007.p02c11o145.mxlogic.net (envelope-from <mst@mellanox.co.il>);
+	Tue, 02 Jan 2007 23:08:21 -0700 (MST)
+Received: from mtlexch01.mtl.com ([10.0.8.11]) by mtiexch01.mti.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Tue, 2 Jan 2007 22:10:01 -0800
+Received: from mellanox.co.il ([10.4.4.6]) by mtlexch01.mtl.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Wed, 3 Jan 2007 08:07:45 +0200
+Received: by mellanox.co.il (sSMTP sendmail emulation); Wed,  3 Jan 2007 08:04:30 +0200
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v8xgkstzt.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: VM 7.19 under Emacs 21.3.1
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at eorl.intranet.kiel.bmiag.de
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at meriadoc.bmiag.de
+Content-Disposition: inline
+In-Reply-To: <7vfyatt8di.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
+X-OriginalArrivalTime: 03 Jan 2007 06:07:45.0426 (UTC) FILETIME=[7C884F20:01C72EFD]
+X-TM-AS-Product-Ver: SMEX-7.0.0.1526-3.6.1039-14912.001
+X-TM-AS-Result: No--14.069000-4.000000-31
+X-Spam: [F=0.0100000000; S=0.010(2006120601)]
+X-MAIL-FROM: <mst@mellanox.co.il>
+X-SOURCE-IP: [63.251.237.3]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35843>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35844>
 
-Junio C Hamano writes:
- > Thanks.  3 and 4 are obviously good, 1 is probably good although
- > I do not have much preference either way myself.  The part that
- > adds helpful messages of 2 is nice but I am not sure about the
- > wording "Cached changes".
- > 
- > Maybe people who were in the update-index and git-add discussion
- > have better input than I can give.
+Mutt Label Removed By VIM
+> Quoting r. Junio C Hamano <junkio@cox.net>:
+> Subject: Re: How to commit removed file?
+> 
+> >> > I'd like to remove a file and commit the removal while
+> >> > leaving out other changes in repository/index.
+> >> > 
+> >> > $git rm kernel_patches/fixes/ib_verbs_warning_fix.patch
+> >> > rm 'kernel_patches/fixes/ib_verbs_warning_fix.patch'
+> >> > 
+> >> > $ git commit kernel_patches/fixes/ib_verbs_warning_fix.patch
+> >> > error: pathspec 'kernel_patches/fixes/ib_verbs_warning_fix.patch' did not match
+> >> > any file(s) known to git.
+> >> > Did you forget to 'git add'?
+> >> > 
+> >> > A similiar thing works with "git add".
+> >> 
+> >> Any ideas? Can this be done with git?
+> >
+> > Did you actually try the "--" thing I suggested in 
+> > http://article.gmane.org/gmane.comp.version-control.git/35699/?
+> >
+> > Besides, I just tested with current "next": 
+> >
+> > $ git commit kernel_patches/fixes/ib_verbs_warning_fix.patch
+> > Created commit 89a5bb5ac16fb8be9b6e061284e191cafb3e4da2
+> >  1 files changed, 0 insertions(+), 22 deletions(-)
+> >  delete mode 100644 a234
+> 
+> The difference is Michael did "git rm" to explicitly tell git to
+> forget about that path, while you used the vanilla "/bin/rm".
+> 
+> Personally I never saw the point of having "git rm".  Maybe we
+> should remove it to prevent this confusion from happening.
 
-Yes, that was the intention. Thanks for looking at the proposal.
+But won't the same problem appear with
+
+rm file
+git-update-index file
+git-commit file
+
+-- 
+MST
