@@ -1,52 +1,64 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: cloning the kernel - why long time in "Resolving 313037 deltas"
-Date: Wed, 03 Jan 2007 14:55:20 +0100
-Message-ID: <459BB5C8.4000608@op5.se>
-References: <86y7p57y05.fsf@blue.stonehenge.com>	 <Pine.LNX.4.64.0612181251020.3479@woody.osdl.org>	 <86r6uw9azn.fsf@blue.stonehenge.com>	 <Pine.LNX.4.64.0612181625140.18171@xanadu.home>	 <86hcvs984c.fsf@blue.stonehenge.com>	 <Pine.LNX.4.64.0612181414200.3479@woody.osdl.org>	 <8664c896xv.fsf@blue.stonehenge.com> <46a038f90612181502y3e2a41cds7f16113ad0270f31@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] Documentation/tutorial: misc updates
+Date: Wed, 03 Jan 2007 15:07:41 +0100
+Organization: At home
+Message-ID: <engd5e$8fr$1@sea.gmane.org>
+References: <sbejar@gmail.com> <200701031350.l03Doulu015800@laptop13.inf.utfsm.cl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>,
-	Linus Torvalds <torvalds@osdl.org>,
-	Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 03 14:55:54 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Wed Jan 03 15:05:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H26ag-0001ed-JH
-	for gcvg-git@gmane.org; Wed, 03 Jan 2007 14:55:38 +0100
+	id 1H26k6-0004MB-C3
+	for gcvg-git@gmane.org; Wed, 03 Jan 2007 15:05:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750783AbXACNzY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 3 Jan 2007 08:55:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750785AbXACNzY
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Jan 2007 08:55:24 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:36803 "EHLO
-	smtp-gw1.op5.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750786AbXACNzW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Jan 2007 08:55:22 -0500
-Received: from [192.168.1.20] (unknown [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id A2FB36BCC7; Wed,  3 Jan 2007 14:55:20 +0100 (CET)
-User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
-To: Martin Langhoff <martin.langhoff@gmail.com>
-In-Reply-To: <46a038f90612181502y3e2a41cds7f16113ad0270f31@mail.gmail.com>
+	id S1750785AbXACOFT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 3 Jan 2007 09:05:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750786AbXACOFT
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Jan 2007 09:05:19 -0500
+Received: from main.gmane.org ([80.91.229.2]:45428 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750785AbXACOFR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Jan 2007 09:05:17 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1H26jn-0000VH-71
+	for git@vger.kernel.org; Wed, 03 Jan 2007 15:05:03 +0100
+Received: from host-81-190-20-195.torun.mm.pl ([81.190.20.195])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 03 Jan 2007 15:05:03 +0100
+Received: from jnareb by host-81-190-20-195.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 03 Jan 2007 15:05:03 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-20-195.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35868>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35869>
 
-Martin Langhoff wrote:
+Horst H. von Brand wrote:
+
+>> +------------------------------------------------
+>> +$ git branch -d experimental
+>> +------------------------------------------------
+>> +
+>> +This command ensures that the changes in the experimental branch are
+>> +already in the current branch.
+>> +
 > 
-> Once you are packed it's sweet, but large repos are a pain to deal
-> with. You won't impress anyone with performance over a linux kernel
-> repo -- starting up gitk can take a long time.
+> Huh? This deletes the branch, it doesn't ensure changes have been saved.
 
-I'd suggest running qgit instead, and make sure you've run it once on 
-the repo you're demoing. qgit has a nice little cache where it tucks 
-away most of the data it uses, which makes it draw things a lot faster.
-
+It ensures that the branch we want to delete is in lineage of
+current branch (otherwise we would have to use -D).
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
