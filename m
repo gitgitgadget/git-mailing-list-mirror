@@ -1,77 +1,77 @@
-From: merlyn@stonehenge.com (Randal L. Schwartz)
+From: "Shawn O. Pearce" <spearce@spearce.org>
 Subject: Re: git-svnimport failed and now git-repack hates me
-Date: 03 Jan 2007 18:40:02 -0800
-Message-ID: <86ps9vbjlp.fsf@blue.stonehenge.com>
-References: <204011cb0701031552j8292d23v950f828279702d3@mail.gmail.com>
-	<Pine.LNX.4.64.0701031737300.4989@woody.osdl.org>
-	<20070104023350.GA1194@localdomain>
+Date: Wed, 3 Jan 2007 21:45:23 -0500
+Message-ID: <20070104024523.GD18206@spearce.org>
+References: <204011cb0701031552j8292d23v950f828279702d3@mail.gmail.com> <Pine.LNX.4.64.0701031737300.4989@woody.osdl.org> <20070104020652.GB18206@spearce.org> <20070104023510.GC18206@spearce.org> <204011cb0701031836w7d33ca8dh5de08984eec9730d@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Chris Lee <chris133@gmail.com>, Linus Torvalds <torvalds@osdl.org>,
+Cc: Linus Torvalds <torvalds@osdl.org>,
 	Junio C Hamano <junkio@cox.net>,
-	Shawn Pearce <spearce@spearce.org>,
 	Sasha Khapyorsky <sashak@voltaire.com>,
 	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jan 04 03:40:18 2007
+X-From: git-owner@vger.kernel.org Thu Jan 04 03:45:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H2IWX-0002dE-T2
-	for gcvg-git@gmane.org; Thu, 04 Jan 2007 03:40:10 +0100
+	id 1H2Ibk-0003yX-W8
+	for gcvg-git@gmane.org; Thu, 04 Jan 2007 03:45:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932194AbXADCkF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 3 Jan 2007 21:40:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932211AbXADCkF
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Jan 2007 21:40:05 -0500
-Received: from blue.stonehenge.com ([209.223.236.162]:20044 "EHLO
-	blue.stonehenge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932194AbXADCkD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Jan 2007 21:40:03 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by blue.stonehenge.com (Postfix) with ESMTP id C170A8DC23;
-	Wed,  3 Jan 2007 18:40:02 -0800 (PST)
-Received: from blue.stonehenge.com ([127.0.0.1])
- by localhost (blue.stonehenge.com [127.0.0.1]) (amavisd-new, port 10024)
- with LMTP id 11501-01-12; Wed,  3 Jan 2007 18:40:02 -0800 (PST)
-Received: by blue.stonehenge.com (Postfix, from userid 1001)
-	id 40A0E8DC8A; Wed,  3 Jan 2007 18:40:02 -0800 (PST)
-To: Eric Wong <normalperson@yhbt.net>
-x-mayan-date: Long count = 12.19.13.17.1; tzolkin = 9 Imix; haab = 14 Kankin
-In-Reply-To: <20070104023350.GA1194@localdomain>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S932234AbXADCpa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 3 Jan 2007 21:45:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932236AbXADCpa
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Jan 2007 21:45:30 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:60508 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932234AbXADCp3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Jan 2007 21:45:29 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1H2Ibi-00032v-AS; Wed, 03 Jan 2007 21:45:30 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 78E1120FB65; Wed,  3 Jan 2007 21:45:23 -0500 (EST)
+To: Chris Lee <chris133@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <204011cb0701031836w7d33ca8dh5de08984eec9730d@mail.gmail.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35907>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35908>
 
->>>>> "Eric" == Eric Wong <normalperson@yhbt.net> writes:
+Chris Lee <chris133@gmail.com> wrote:
+> On 1/3/07, Shawn O. Pearce <spearce@spearce.org> wrote:
+> >I should also point out that my git-fastimport hack that we used
+> >on the huge Mozilla import may be helpful here.  Its _very_ fast
+> >as it goes right to a pack file, but there's no SVN frontend for
+> >it at this time.
+> 
+> I would be *really* interested in playing with that. Where do I get it?
 
-Eric> Part of it is Perl, which (as far as I know) never frees allocated
-Eric> memory back to the OS (although Perl can reuse the allocated memory for
-Eric> other things).
+Its a fork of git.git on repo.or.cz; the gitweb can be seen here:
 
-It does on Linux, of all things.  That's because Linux has a smarter
-malloc/free that uses mmap(2) for the large chunks.  On Linux, Perl memory
-size can apparently grow and shrink nicely.  The "old school" advice about
-Perl comes from sbrk(2)-driven malloc/free.
+  http://repo.or.cz/w/git/fastimport.git
 
-Try:
+the clone url is:
 
-        $x[1e6] = "0";
-        sleep 10; # do a ps here
-        @x = ();
-        sleep 30; # do a ps here
+  git://repo.or.cz/git/fastimport.git
+  http://repo.or.cz/r/git/fastimport.git
 
-and watch the process on Linux.  If I'm right, this should show a large
-process,  then a smaller one.
+The entire code is in fast-import.c.  The input stream it consumes
+comes in on STDIN and is documented in a large comment at the top
+of the file.
 
-If you're getting a growing process though, you probably have a circular data
-reference.  Maybe you have a tree with backpointers, and those backpointers
-should have been weakened?
+All that's needed is to get data from SVN in a way that it can be
+fed into git-fastimport.
 
 -- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
-See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
+Shawn.
