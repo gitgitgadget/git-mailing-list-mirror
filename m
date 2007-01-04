@@ -1,55 +1,69 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH] Skip excessive blank lines before commit body
-Date: Thu, 04 Jan 2007 16:50:54 +0100
-Message-ID: <459D225E.4010208@op5.se>
-References: <11678312532251-git-send-email-hjemli@gmail.com>
+From: Andy Whitcroft <apw@shadowen.org>
+Subject: Re: [PATCH] git-reset --hard: tell the user what the HEAD was reset
+ to
+Date: Thu, 04 Jan 2007 15:59:44 +0000
+Message-ID: <459D2470.2090001@shadowen.org>
+References: <emcf17$esj$1@sea.gmane.org> <Pine.LNX.4.63.0612211525070.19693@wbgn013.biozentrum.uni-wuerzburg.de> <459BACE1.5020406@shadowen.org> <Pine.LNX.4.63.0701041357380.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Thu Jan 04 16:51:08 2007
+Cc: Han-Wen Nienhuys <hanwen@xs4all.nl>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 04 17:00:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H2Urz-0003dm-O5
-	for gcvg-git@gmane.org; Thu, 04 Jan 2007 16:51:08 +0100
+	id 1H2V0m-0006WW-7o
+	for gcvg-git@gmane.org; Thu, 04 Jan 2007 17:00:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932374AbXADPu5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 4 Jan 2007 10:50:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932372AbXADPu5
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Jan 2007 10:50:57 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:55059 "EHLO
-	smtp-gw1.op5.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932374AbXADPu4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Jan 2007 10:50:56 -0500
-Received: from [192.168.1.20] (unknown [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id 2E3F06BCC2; Thu,  4 Jan 2007 16:50:55 +0100 (CET)
-User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
-To: Lars Hjemli <hjemli@gmail.com>
-In-Reply-To: <11678312532251-git-send-email-hjemli@gmail.com>
+	id S964958AbXADP7s (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 4 Jan 2007 10:59:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964935AbXADP7r
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Jan 2007 10:59:47 -0500
+Received: from hellhawk.shadowen.org ([80.68.90.175]:1809 "EHLO
+	hellhawk.shadowen.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964958AbXADP7q (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Jan 2007 10:59:46 -0500
+Received: from localhost ([127.0.0.1])
+	by hellhawk.shadowen.org with esmtp (Exim 4.50)
+	id 1H2UzS-0005lp-FA; Thu, 04 Jan 2007 15:58:50 +0000
+User-Agent: Icedove 1.5.0.9 (X11/20061220)
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0701041357380.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Enigmail-Version: 0.94.1.0
+OpenPGP: url=http://www.shadowen.org/~apw/public-key
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35936>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35937>
 
-Lars Hjemli wrote:
-> This modifies pretty_print_commit() to make the output of git-rev-list and
-> friends a bit more predictable.
+Johannes Schindelin wrote:
+> Hi,
 > 
-> A commit body starting with blank lines might be unheard-of, but still possible
-> to create using git-commit-tree (so is bound to appear somewhere, sometime).
+> On Wed, 3 Jan 2007, Andy Whitcroft wrote:
 > 
+>> I think we need to delimit the name better, probabally we need to quote
+>> it.  Perhaps something like:
+>>
+>>   HEAD is now at ac9c110: "git-fetch: remove .keep file at the end".
+> 
+> Fine. But this is "git log --pretty=oneline --abbrev-commit". I don't know 
+> how many things break if you change _that_.
+> 
+> Alternatively, you could pipe that into a sed command adding the colon and 
+> the quotes.
 
-Lovely. I was just looking in to doing the exact same thing myself.
+Quack, so it is.
 
-For reference, there is a tool somewhere that creates CVS commit 
-messages with an empty title-line. When imported to git, those empty 
-lines remain and fuzz up gitk and qgit viewing ad nauseum. I'm guessing 
-(and hoping) this patch would take care of it.
+apw@pinky$ git log --pretty=oneline --abbrev-commit | head -1
+f4bf218... Update clone/fetch documentation with --depth (shallow clone)
+option
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Perhaps we could do something like:
+
+Head is now at "f4bf218... Update clone/fetch documentation with --depth
+(shallow clone) option"
+
+Hmmm ... oh well I guess I'll just get used to it.
+
+-apw
