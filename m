@@ -1,90 +1,177 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Possible regression in git-rev-list --header
-Date: Thu, 04 Jan 2007 16:21:04 +0100
-Message-ID: <459D1B60.1050604@op5.se>
-References: <e5bfff550612300956mef4691fqf607fad173c571da@mail.gmail.com>	 <Pine.LNX.4.63.0612310211300.25709@wbgn013.biozentrum.uni-wuerzburg.de>	 <7v64bsj0s4.fsf@assigned-by-dhcp.cox.net>	 <e5bfff550612310345j4c882b7av51879ca1175a1c6b@mail.gmail.com>	 <Pine.LNX.4.63.0612311613180.22628@wbgn013.biozentrum.uni-wuerzburg.de>	 <e5bfff550612310743t4ca1b017ubceddffafd06ac59@mail.gmail.com>	 <7vodpja0u8.fsf@assigned-by-dhcp.cox.net>	 <e5bfff550701030121n700fab25x63278457c884a3f7@mail.gmail.com>	 <8c5c35580701030221w5c04e2eaq757d12c4ca0b0780@mail.gmail.com>	 <e5bfff550701030235g6f26044h8dd73e8abe1ec9e3@mail.gmail.com> <8c5c35580701030314t69b6a7dbhf9cb99de4567b93e@mail.gmail.com>
+From: "Chris Lee" <chris133@gmail.com>
+Subject: Re: git-svnimport failed and now git-repack hates me
+Date: Wed, 3 Jan 2007 18:16:51 -0800
+Message-ID: <204011cb0701031816hda8af9bw4d4a469c2b111339@mail.gmail.com>
+References: <204011cb0701031552j8292d23v950f828279702d3@mail.gmail.com>
+	 <Pine.LNX.4.64.0701031737300.4989@woody.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Marco Costalba <mcostalba@gmail.com>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jan 04 16:21:11 2007
+X-From: git-owner@vger.kernel.org Thu Jan 04 16:29:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H2UP1-0003Uq-51
-	for gcvg-git@gmane.org; Thu, 04 Jan 2007 16:21:11 +0100
+	id 1H2UX2-00067x-LH
+	for gcvg-git@gmane.org; Thu, 04 Jan 2007 16:29:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964902AbXADPVH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 4 Jan 2007 10:21:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964903AbXADPVH
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Jan 2007 10:21:07 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:54613 "EHLO
-	smtp-gw1.op5.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964902AbXADPVG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Jan 2007 10:21:06 -0500
-Received: from [192.168.1.20] (unknown [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id D0DF26BCC2; Thu,  4 Jan 2007 16:21:04 +0100 (CET)
-User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
-To: Lars Hjemli <hjemli@gmail.com>
-In-Reply-To: <8c5c35580701030314t69b6a7dbhf9cb99de4567b93e@mail.gmail.com>
+	id S964906AbXADP3W (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 4 Jan 2007 10:29:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964911AbXADP3V
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Jan 2007 10:29:21 -0500
+Received: from smtp.osdl.org ([65.172.181.24]:58403 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S964906AbXADP3T (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Jan 2007 10:29:19 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l04FTGWi018459
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 4 Jan 2007 07:29:16 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l04FTF5l022302;
+	Thu, 4 Jan 2007 07:29:15 -0800
+X-Return-Path: <chris133@gmail.com>
+X-Received: from woody.osdl.org (localhost.localdomain [127.0.0.1])
+	by woody.osdl.org (8.13.8/8.13.8) with ESMTP id l04F8CLU008057
+	for <torvalds@localhost>; Thu, 4 Jan 2007 07:08:33 -0800
+X-Received: from imap.osdl.org [65.172.181.5]
+	by woody.osdl.org with IMAP (fetchmail-6.3.4)
+	for <torvalds@localhost> (single-drop); Thu, 04 Jan 2007 07:08:33 -0800 (PST)
+X-Received: from smtp.osdl.org (smtp.osdl.org [65.172.181.24])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l04EsSpH021050
+	for <torvalds@mail.gateway.osdl.net>; Thu, 4 Jan 2007 07:01:25 -0800
+X-Received: from wr-out-0506.google.com (wr-out-0506.google.com [64.233.184.236])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l042GqJh022926
+	for <torvalds@osdl.org>; Wed, 3 Jan 2007 18:16:52 -0800
+X-Received: by wr-out-0506.google.com with SMTP id i20so2173283wra
+        for <torvalds@osdl.org>; Wed, 03 Jan 2007 18:16:51 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=gCpbBN7VYwS5a2uvSFvE2H5Ge7nRlspPbOHnx0EZUdxeXvSTcp0liogeZwTjoH3BKZaXInN+iqti7S4KSNy7sTPzv4d8qMTgfwJLFO7Xj3RtPpBU1lZeAPdbcsPzZ8jtAbtQQ9BXuz8z/gCmArC92PsyHv4TleJ38JF7THd2TEs=
+X-Received: by 10.90.105.19 with SMTP id d19mr13810667agc.1167877011870;
+        Wed, 03 Jan 2007 18:16:51 -0800 (PST)
+X-Received: by 10.90.80.11 with HTTP; Wed, 3 Jan 2007 18:16:51 -0800 (PST)
+To: "Linus Torvalds" <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0701031737300.4989@woody.osdl.org>
+Content-Disposition: inline
+Received-SPF: pass (domain of chris133@gmail.com designates 64.233.184.236 as permitted sender)
+X-Spam-Status: No, hits=0.499 required=5 tests=FROM_ENDS_IN_NUMS,OSDL_HEADER_SPF_PASS
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.107__
+X-MIMEDefang-Filter: osdl$Revision: 1.166 $
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35933>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35934>
 
-Lars Hjemli wrote:
-> On 1/3/07, Marco Costalba <mcostalba@gmail.com> wrote:
->> On 1/3/07, Lars Hjemli <hjemli@gmail.com> wrote:
->> > On 1/3/07, Marco Costalba <mcostalba@gmail.com> wrote:
->> > >         - one blank line
->> > >         - zero or one line with log title
->> > >         - zero or more lines with log message
->> > >         - a terminating '\0'
->> >
->> > I think the should be:
->> >   -zero or more blank lines
->>
->> Isn't it zero or _one_ blank line? Why more then one? would be it
->> useful? surely is slower to parse.
-> 
-> My point is just that the log message is unformatted. There is nothing
-> stopping you from
-> adding blank lines at the start of the message.
-> 
-> But then I tested it, and it seems as 'git-commit' strips off any
-> leading blank lines (but git-commit-tree does not). So expecting one
-> blank _might_ be good enough.
-> 
+On 1/3/07, Linus Torvalds <torvalds@osdl.org> wrote:
+> > So I'm using git 1.4.1, and I have been experimenting with importing
+> > the KDE sources from Subversion using git-svnimport.
+>
+> As one single _huge_ import? All the sub-projects together? I have to say,
+> that sounds pretty horrid.
 
-Other scm's from which we can import repositories have no such 
-mechanisms though. It would be nice to have this functionality in 
-rev-list. I'm looking into it at the moment.
+Unfortunately, that's how the KDE repo is organized. (I tried arguing
+against this when they were going to do the original import, but I
+lost the argument.) And git-svnimport doesn't appear to have any sort
+of method for splitting a gigantic svn repo into several smaller git
+repos.
 
-> 
->>
->> >   -zero or more blank lines
->>
->> Why? this is necessary only to disambiguate muti (non blank) lines
->> titles, but as Junio pointed out distinction between log title and log
->> message is only in the Porcelain, not encoded in git. So the Porcalain
->> is going to show _one_line title if any an the remaining stuff in the
->> log message.
-> 
-> Well, if the porcelain chooses to do so, it probably is ok. But I
-> think the parsing/presentation of the log title/message would be more
-> correct/better formatted if the parser is more "adaptive" to the
-> content.
-> 
+> > First issue I ran into: On a machine with 4GB of RAM, when I tried to
+> > do a full import, git-svnimport died after 309906 revisions, saying
+> > that it couldn't fork.
+> >
+> > Checking `top` and `ps` revealed that there were no git-svnimport
+> > processes doing anything, but all of my 4G of RAM was still marked as
+> > used by the kernel. I had to do sysctl -w vm.drop_caches=3 to get it
+> > to free all the RAM that the svn import had used up.
+>
+> I think that was just all cached, and all ok. The reason you didn't see
+> any git-svnimport was that it had died off already, and all your memory
+> was just caches. You could just have left it alone, and the kernel would
+> have started re-using the memory for other things even without any
+> "drop_caches".
+>
+> But what you did there didn't make anything worse, it was just likely had
+> no real impact.
 
-I disagree. If the title spans over more than one line, it's most likely 
-because it's too long to fit in one, in which case it won't look good 
-(or even be viewable in qgit / gitk) when printed anyways.
+I got the tip about drop_caches from davej. Normally, when a process
+taking up a huge amount of memory exits, it shows a bunch of free
+memory in `top` and friends. I was a little bit surprised when that
+didn't happen this time.
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+> However, it does sound like git-svnimport probably acts like git-cvsimport
+> used to, and just keeps too much in memory - so it's never going to act
+> really nicely..
+>
+> It also looks like git-svnimport never repacks the repo, which is
+> absolutely horrible for performance on all levels. The CVS importer
+> repacks every one thousand commits or something like that.
+
+Yeah. I haven't bothered hacking git-svnimport yet - but it looks like
+having it automatically repack every thousand revisions or so would
+probably be a pretty big win.
+
+> > Now, after that, I tried doing `git-repack -a` because I wanted to see
+> > how small the packed archive would be (before trying to continue
+> > importing the rest of the revisions. There are at least another 100k
+> > revisions that I should be able to import, eventually.)
+>
+> I suspect you'd have been better off just re-starting, and using something
+> like
+>
+>         while :
+>         do
+>                 git svnimport -l 1000 <...>
+>                 .. figure out some way to decide if it's all done ..
+>                 git repack -d
+>         done
+>
+> which would make svnimport act a bit  more sanely, and repack
+> incrementally. That should make both the import much faster, _and_ avoid
+> any insane big repack at the end (well, you'd still want to do a "git
+> repack -a -d" at the end to turn the many smaller packs into a bigger one,
+> but it would be nicer).
+>
+> However, I don't know what the proper magic is for svnimport to do that
+> sane "do it in chunks and tell when you're all done". Or even better - to
+> just make it repack properly and not keep everything in memory.
+
+You can pass limits to svnimport to give it a revision to start at and
+another one to end at, so that wouldn't be too bad - I was thinking
+about working around it like that (so that i don't have to go poking
+around in the Perl code behind the svn importer).
+
+By default, if I had, say, one pack with the first 1000 revisions, and
+I imported another 1000, running 'git-repack' on its own would leave
+the first pack alone and create a new pack with just the second 1000
+revisions, right?
+
+> > The repack finished after about nine hours, but when I try to do a
+> > git-verify-pack on it, it dies with this error message:
+> >
+> > error: Packfile
+> > .git/objects/pack/pack-540263fe66ab9398cc796f000d52531a5c6f3df3.pack
+> > SHA1 mismatch with itself
+>
+> That sounds suspiciously like the bug we had in out POWER sha1
+> implementation that would generate the wrong SHA1 for any pack-file that
+> was over 512MB in size, due to an overflow in 32 bits (SHA1 does some
+> counting in _bits_, so 512MB is 4G _bits_),
+>
+> Now, I assume you're not on POWER (and we fixed that bug anyway - and I
+> think long before 1.4.1 too), but I could easily imagine the same bug in
+> some other SHA1 implementation (or perhaps _another_ overflow at the 1GB
+> or 2GB mark..). I assume that the pack-file you had was something horrid..
+>
+> I hope this is with a 64-bit kernel and a 64-bit user space? That should
+> limit _some_ of the issues. But I would still not be surprised if your
+> SHA1 libraries had some 32-bit ("unsigned int") or 31-bit ("int") limits
+> in them somewhere - very few people do SHA1's over huge areas, and even
+> when you do SHA1 on something like a DVD image (which is easily over any
+> 4GB limit), that tends to be done as many smaller calls to the SHA1
+> library routines.
+
+This is on a dual-CPU dual-core Opteron, running the AMD64 variant of
+Ubuntu's Edgy release (64-bit kernel, 64-bit native userland). The
+pack-file was around 2.3GB.
