@@ -1,61 +1,138 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: clarification on git-update-index --remove
-Date: Thu, 04 Jan 2007 12:27:43 -0800
-Message-ID: <7vwt42k05c.fsf@assigned-by-dhcp.cox.net>
-References: <e1dab3980701041129l3944df8ep985141d8f436d0a7@mail.gmail.com>
+From: "Deepak Barua" <dbbarua@gmail.com>
+Subject: Adding spell checker to GIT
+Date: Fri, 5 Jan 2007 02:16:42 +0530
+Message-ID: <b5a19cd20701041246we052685hd700580df2cc120d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 04 21:27:53 2007
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_16984_713456.1167943602216"
+X-From: git-owner@vger.kernel.org Thu Jan 04 21:46:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H2ZBk-0004b0-ID
-	for gcvg-git@gmane.org; Thu, 04 Jan 2007 21:27:48 +0100
+	id 1H2ZUG-0001gV-05
+	for gcvg-git@gmane.org; Thu, 04 Jan 2007 21:46:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030186AbXADU1p (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 4 Jan 2007 15:27:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030189AbXADU1p
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Jan 2007 15:27:45 -0500
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:43166 "EHLO
-	fed1rmmtao04.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030186AbXADU1p (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Jan 2007 15:27:45 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070104202744.WCYZ7494.fed1rmmtao04.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 4 Jan 2007 15:27:44 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id 78Tz1W0031kojtg0000000; Thu, 04 Jan 2007 15:27:59 -0500
-To: "David Tweed" <david.tweed@gmail.com>
-In-Reply-To: <e1dab3980701041129l3944df8ep985141d8f436d0a7@mail.gmail.com>
-	(David Tweed's message of "Thu, 4 Jan 2007 19:29:32 +0000")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1030188AbXADUqp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 4 Jan 2007 15:46:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030191AbXADUqp
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Jan 2007 15:46:45 -0500
+Received: from nf-out-0910.google.com ([64.233.182.189]:25521 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030188AbXADUqo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Jan 2007 15:46:44 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so8157498nfa
+        for <git@vger.kernel.org>; Thu, 04 Jan 2007 12:46:43 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type;
+        b=jVbomBGThRLWmcXjuofJBJI0z/zDY0IQMqXbvrUExJMcvMleBulZlr+QX8zHyrSTOrhO0ovj0ZcHNCHhdLAMViwnlzTyFbe5xcE4/LvjSGz5gMWjO8NbnefPr6oTjDIa7/is86lMquOCN7EXL2Pm6p5p8hiG8BTjsP/IZJIg0ZY=
+Received: by 10.49.54.3 with SMTP id g3mr6919530nfk.1167943603526;
+        Thu, 04 Jan 2007 12:46:43 -0800 (PST)
+Received: by 10.49.11.7 with HTTP; Thu, 4 Jan 2007 12:46:42 -0800 (PST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35953>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35954>
 
-"David Tweed" <david.tweed@gmail.com> writes:
+------=_Part_16984_713456.1167943602216
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
-> --remove::
-> 	If a specified file is in the index but is missing then it's
-> 	removed.
-> 	Default behavior is to ignore removed file.
+Hi All,
+         I and sasikumar have designed and built a spell checker into
+the pre-commit hook, could someone please test it and give us your
+comments.
 
-If necessary, better rewording to remove confusion is very much
-appreciated.
+Just add the file with same name pre-commit hook to .git/hooks
+directory in your git project and make it executable.
 
-"update-index <path>..." without options (that is "Default
-behaviour") updates the index using the contents of the named
-<path> found on the filesystem.  It does _not_ add new paths to
-the index, nor remove paths (that exists in the index) from the
-index.
+Regards
+Deepak
 
-Giving --add allows new paths to be added to the index if named
-paths are found on the filesystem.  Giving --remove allows
-existing paths to be removed from the index if named paths are
-not found on the filesystem.
+-- 
+Code Code Code Away
+
+------=_Part_16984_713456.1167943602216
+Content-Type: application/octet-stream; name=pre-commit
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_ewjneymo
+Content-Disposition: attachment; filename="pre-commit"
+
+IyEvYmluL3NoCiMKIyBBbiBleGFtcGxlIGhvb2sgc2NyaXB0IHRvIHZlcmlmeSB3aGF0IGlzIGFi
+b3V0IHRvIGJlIGNvbW1pdHRlZC4KIyBDYWxsZWQgYnkgZ2l0LWNvbW1pdCB3aXRoIG5vIGFyZ3Vt
+ZW50cy4gIFRoZSBob29rIHNob3VsZAojIGV4aXQgd2l0aCBub24temVybyBzdGF0dXMgYWZ0ZXIg
+aXNzdWluZyBhbiBhcHByb3ByaWF0ZSBtZXNzYWdlIGlmCiMgaXQgd2FudHMgdG8gc3RvcCB0aGUg
+Y29tbWl0LgojCiMgVG8gZW5hYmxlIHRoaXMgaG9vaywgbWFrZSB0aGlzIGZpbGUgZXhlY3V0YWJs
+ZS4KCiMgVGhpcyBpcyBzbGlnaHRseSBtb2RpZmllZCBmcm9tIEFuZHJldyBNb3J0b24ncyBQZXJm
+ZWN0IFBhdGNoLgojIExpbmVzIHlvdSBpbnRyb2R1Y2Ugc2hvdWxkIG5vdCBoYXZlIHRyYWlsaW5n
+IHdoaXRlc3BhY2UuCiMgQWxzbyBjaGVjayBmb3IgYW4gaW5kZW50YXRpb24gdGhhdCBoYXMgU1Ag
+YmVmb3JlIGEgVEFCLgoKIyBBZGRlZCBTcGVsbCBDaGVja2luZyBDb2RlIHRvIHRoZSBleGlzdGlu
+ZyBjb2RlCiMgQnkgRGVlcGFrIEJhcnVhIGFuZCBTYXNpa3VtYXIgS2FuZGhhc2FteQoKaWYgZ2l0
+LXJldi1wYXJzZSAtLXZlcmlmeSBIRUFEIDI+L2Rldi9udWxsCnRoZW4KCWdpdC1kaWZmLWluZGV4
+IC1wIC1NIC0tY2FjaGVkIEhFQUQKZWxzZQoJIyBORUVEU1dPUks6IHdlIHNob3VsZCBwcm9kdWNl
+IGEgZGlmZiB3aXRoIGFuIGVtcHR5IHRyZWUgaGVyZQoJIyBpZiB3ZSB3YW50IHRvIGRvIHRoZSBz
+YW1lIHZlcmlmaWNhdGlvbiBmb3IgdGhlIGluaXRpYWwgaW1wb3J0LgoJOgpmaSB8CnBlcmwgLWUg
+JwogICAjIEFkZGluZyB0aGUgQXNwZWxsIG1vZHVsZSB0byB0aGUgcGVybCBzY3JpcHQgbmVlZCBh
+c3BlbGwtZGV2IGluc3RhbGxlZCBpbiBtYWNoaW5lIGZvciB0aGUgc2FtZQogCiAgICB1c2UgVGV4
+dDo6QXNwZWxsOwogICAgbXkgJGZvdW5kX2JhZCA9IDA7CiAgICBteSAkZmlsZW5hbWU7CiAgICBt
+eSAkcmVwb3J0ZWRfZmlsZW5hbWUgPSAiIjsKICAgIG15ICRsaW5lbm87CiAgICBteSAkY29udGlu
+dWUgPSAwOwogICAgbXkgJHN0YXJ0X3BhdHRlcm4gPSAiIjsKICAgIG15ICRlbmRfcGF0dGVybiA9
+ICIiOwogICAgbXkgJGNob3Nlbl9wYXR0ZXJuID0gIiI7CiAgICBteSAkbWF0Y2hfY29uZGl0aW9u
+ID0gMDsKIyBGaW5kaW5nIHRoZSBmaWxlIG5hbWUgZXh0ZW5zaW9uCiAgICBzdWIgZmluZF9leHQg
+ewoKCglpZigkX1swXSA9fiAvXC5jY3xcLmphdmEvKSB7CgoJCSRzdGFydF9wYXR0ZXJuICA9IHFy
+IS9cKnwvLyAhOyAgCgl9CgkKCWVsc2lmKCRfWzBdID1+IC9cLmN8XC5oLykgewoJCSRzdGFydF9w
+YXR0ZXJuID0gcXIhL1wqITsKCX0KCgllbHNlIHsKCQkKCQkkc3RhcnRfcGF0dGVybiA9IHFyIVwj
+ICE7CgkJJGVuZF9wYXR0ZXJuID0gcXEhXDAxNCE7Cgl9CgogICAgfQoKCiAgICBzdWIgYmFkX2xp
+bmUgewoJbXkgKCR3aHksICRsaW5lKSA9IEBfOwoJaWYgKCEkZm91bmRfYmFkKSB7CgkgICAgcHJp
+bnQgU1RERVJSICIqXG4iOwoJICAgIHByaW50IFNUREVSUiAiKiBZb3UgaGF2ZSBzb21lIHN1c3Bp
+Y2lvdXMgcGF0Y2ggbGluZXM6XG4iOwoJICAgIHByaW50IFNUREVSUiAiKlxuIjsKCSAgICAkZm91
+bmRfYmFkID0gMTsKCX0KCWlmICgkcmVwb3J0ZWRfZmlsZW5hbWUgbmUgJGZpbGVuYW1lKSB7Cgkg
+ICAgcHJpbnQgU1RERVJSICIqIEluICRmaWxlbmFtZVxuIjsKCSAgICAkcmVwb3J0ZWRfZmlsZW5h
+bWUgPSAkZmlsZW5hbWU7Cgl9CglwcmludCBTVERFUlIgIiogJHdoeSAobGluZSAkbGluZW5vKVxu
+IjsKCXByaW50IFNUREVSUiAiJGZpbGVuYW1lOiRsaW5lbm86JGxpbmVcbiI7CiAgICB9CiAgICAj
+IENyZWF0ZWQgYSBzcGVsbCBjaGVja2VyIGluc3RhbmNlCiAgICBteSAkc3BlbGxlciA9IFRleHQ6
+OkFzcGVsbC0+bmV3OwogICAgZGllIHVubGVzcyAkc3BlbGxlcjsKICAgIHdoaWxlICg8PikgewoJ
+aWYgKG18XmRpZmYgLS1naXQgYS8oLiopIGIvXDEkfCkgewoJICAgICRmaWxlbmFtZSA9ICQxOwoJ
+ICAgIGZpbmRfZXh0KCRmaWxlbmFtZSk7ICAjIENhbGxpbmcgdGhlIGZpbGUgZXh0ZW5zaW9uIGZp
+bmRpbmcgZnVuY3Rpb24KCSAgICBuZXh0OwoJfQoJaWYgKC9eQEAgLVxTKyBcKyhcZCspLykgewoJ
+ICAgICRsaW5lbm8gPSAkMSAtIDE7CgkgICAgbmV4dDsKCX0KCWlmICgvXiAvKSB7CgkgICAgJGxp
+bmVubysrOwoJICAgIG5leHQ7Cgl9CglpZiAocy9eXCsvLykgewoJICAgICRsaW5lbm8rKzsKCSAg
+ICBzL1xuLyBcMDE0IC87ICMgU3Vic3RpdHV0aW5nIHRoZSBuZXdsaW5lIGluIHRoZSBmaWxlIHdp
+dGgganVuayBvY3RhbCBjaGFyYWN0ZXIgc28gY2hvbXAgd291bGQgbm90IHJlbW92ZSBpdAoJICAg
+IGNob21wOyAKCSMgTWFpbiBtYXRjaCBjb25kaXRpb24gZm9yIHRoZSBzdGFydCBvZiB0aGUgY29t
+bWVudCBsaW5lcwoKCSAgIGlmKCgkbWF0Y2hfY29uZGl0aW9uID0gbS8oJHN0YXJ0X3BhdHRlcm4p
+LykgfHwgJGNvbnRpbnVlID09IDEpIHsKCSAgIAogICAgICAgICAgICMgQ29uZGl0aW9uIGNoZWNr
+aW5nIGZvciBub3QgY29udGludWluZyBjb21tZW50IGFuZCBuZXcgY29tbWVudCBwYXR0ZXJuIGlz
+IG1hdGNoZWQKCSAgICgkY29udGludWUgIT0gMSAmJiAkbWF0Y2hfY29uZGl0aW9uID09IDEpID8g
+JGNob3Nlbl9wYXR0ZXJuID0gJCsgOiAiQ29udGludWUgUGF0dGVybiI7IAoJICAgCiAgICAgICAg
+ICAgIyBDb25kaXRpb24gY2hlY2tpbmcgZm9yIG5vdCBjb250aW51aW5nIGNvbW1lbnQgYW5kIG5v
+IG5ldyBjb21tZW50IHBhdHRlcm4gaXMgZm91bmQKCSAgICgkY29udGludWUgIT0gMSAmJiAkbWF0
+Y2hfY29uZGl0aW9uICE9IDEpID8gJGNob3Nlbl9wYXR0ZXJuID0gIiIgOiAiQ29udGludWUgUGF0
+dGVybiI7IAoJICAgCgkgICAjIElmIGNob3NlbiBwYXR0ZXJuIGlzIGFzIHNwZWNpZmllZCB0aGVu
+IHRoZSBjb3JyZXNwb25kaW5nIGVuZCBwYXR0ZXJuIGlzIGFzc2lnbmVkCgkgICAkY2hvc2VuX3Bh
+dHRlcm4gZXEgcXEhL1wqISA/ICRlbmRfcGF0dGVybj1xcSFcKi8hIDogIkVuZCBQYXR0ZXJuIE5v
+dCBGb3VuZCIgOwoJICAgJGNob3Nlbl9wYXR0ZXJuIGVxIHFxIS8vISA/ICRlbmRfcGF0dGVybj1x
+cSFcMDE0ISA6ICJFbmQgUGF0dGVybiBOb3QgRm91bmQiIDsKCSAgIAogICAgICAgICAgICMgU3Bs
+aXQgdGhlIGxpbmUgdG8gaW5kaXZpZHVhbCB3b3JkcwogICAgICAgICAgIEB3b3JkcyA9IHNwbGl0
+IC8gLywkXzsKICAgICAgICAgICBmb3JlYWNoICR3b3JkIChAd29yZHMpIHsKCSAgICMgQ2hlY2sg
+dG8gc2VlIGlmIGVuZCBpcyByZWFjaGVkIAogICAgICAgICAgIGlmKCR3b3JkIGVxICRlbmRfcGF0
+dGVybikgewoJIAkkY29udGludWU9MDsKCQkkY2hvc2VuX3BhdHRlcm49IiI7CgkJJGVuZF9wYXR0
+ZXJuPSIiOwogICAgICAgICAgICAgICAgbGFzdDsKICAgICAgICAgICB9CgkgICAjIFNraXAgdGhl
+IHN0YXJ0IHBhdHRlcm4KCSAgIGVsc2lmKCR3b3JkIGVxICRjaG9zZW5fcGF0dGVybikgewoJICAg
+bmV4dDsKICAgICAgICAgICB9CgkgICAjIFBlcmZvcm0gc3BlbGwgY2hlY2tpbmcgZm9yIHRoZSBz
+ZWxlY3RlZCB3b3JkIAogICAgICAgICAgIGVsc2UgewogICAgICAgICAgICAgICAgICRzcGVsbGVy
+LT5jaGVjaygkd29yZCkKICAgICAgICAgICAgICAgICAgICAgICAgPyAiRm91bmQiCiAgICAgICAg
+ICAgICAgICAgICAgICAgIDogYmFkX2xpbmUoIlwiJHdvcmRcIiBzcGVsbGluZyB3cm9uZyIsIiAi
+KTsKICAgICAgICAgICAgICAgIH0KCSAgICRjb250aW51ZSA9IDE7CiAgICAgICAgICAgIAoJICAg
+fQoKICAgICAgICB9CglzLyBcMDE0IC8gLzsgIyBTdWJzdGl0dXRpbmcgdGhlIGp1bmsgb2N0YWwg
+d2l0aCBhIHNwYWNlCiAgICAgICAgIyBDb250aW51YXRpb24gb2YgdGhlIG9sZCBjb2RlIGluIHBy
+ZS1jb21taXQKCWlmICgvXHMkLykgewogICAgICAgICAgICBiYWRfbGluZSgidHJhaWxpbmcgd2hp
+dGVzcGFjZSIsICRfKTsKICAgICAgICB9CiAgICAgICAgaWYgKC9eXHMqICAgLykgewogICAgICAg
+ICAgIGJhZF9saW5lKCJpbmRlbnQgU1AgZm9sbG93ZWQgYnkgYSBUQUIiLCAkXyk7CiAgICAgICAg
+fQogICAgICAgIGlmICgvXig/Ols8Pj1dKXs3fS8pIHsKICAgICAgICAgICBiYWRfbGluZSgidW5y
+ZXNvbHZlZCBtZXJnZSBjb25mbGljdCIsICRfKTsKICAgICAgICB9CgkgICAKCX0KCiAgICB9CiAg
+ICBleGl0KCRmb3VuZF9iYWQpOwonCgo=
+------=_Part_16984_713456.1167943602216--
