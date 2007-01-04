@@ -1,135 +1,211 @@
-From: "Guilhem Bonnefille" <guilhem.bonnefille@gmail.com>
-Subject: Re: HTTP access via proxy
-Date: Thu, 4 Jan 2007 20:53:20 +0100
-Message-ID: <8b65902a0701041153p71a4a6f8peb46f95930be6cd@mail.gmail.com>
-References: <8b65902a0701030505s1a80ef62vb42b5fe1088218fb@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Speedup recursive by flushing index only once for all entries
+Date: Thu, 04 Jan 2007 12:22:01 -0800
+Message-ID: <7v8xgileza.fsf@assigned-by-dhcp.cox.net>
+References: <81b0412b0701040247k47e398e6q34dd5233bb5706f6@mail.gmail.com>
+	<Pine.LNX.4.63.0701041327490.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<81b0412b0701040447u329dcf9bvcd7adb9e9d199f18@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Thu Jan 04 20:53:27 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Git Mailing List" <git@vger.kernel.org>,
+	"Junio C Hamano" <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Thu Jan 04 21:22:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H2YeT-0002xh-GU
-	for gcvg-git@gmane.org; Thu, 04 Jan 2007 20:53:25 +0100
+	id 1H2Z6M-0002vh-TF
+	for gcvg-git@gmane.org; Thu, 04 Jan 2007 21:22:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964817AbXADTxV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 4 Jan 2007 14:53:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965045AbXADTxV
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Jan 2007 14:53:21 -0500
-Received: from wr-out-0506.google.com ([64.233.184.228]:35077 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964817AbXADTxV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Jan 2007 14:53:21 -0500
-Received: by wr-out-0506.google.com with SMTP id 68so937503wri
-        for <git@vger.kernel.org>; Thu, 04 Jan 2007 11:53:20 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=j/yjuezcvzvp7+vPa1D2/N+wHAPtv1ffYcFMcDz0WfY6Eo8Y5ypzl1Pb9X1VrHfEzqhkhWCHs9pDv+Jf3ydhDIrHJT8ckKUT0GplnOYijWvm1JgwoaB7dBZVvEvQ8uSi3q+RByFR7e3S1HhgyZGii81jioPlwi+zlWOcXWJcSU0=
-Received: by 10.90.79.6 with SMTP id c6mr376970agb.1167940400375;
-        Thu, 04 Jan 2007 11:53:20 -0800 (PST)
-Received: by 10.90.117.19 with HTTP; Thu, 4 Jan 2007 11:53:20 -0800 (PST)
-To: git@vger.kernel.org
-In-Reply-To: <8b65902a0701030505s1a80ef62vb42b5fe1088218fb@mail.gmail.com>
-Content-Disposition: inline
+	id S965066AbXADUWF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 4 Jan 2007 15:22:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965080AbXADUWF
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Jan 2007 15:22:05 -0500
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:53257 "EHLO
+	fed1rmmtao07.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965066AbXADUWE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Jan 2007 15:22:04 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20070104202202.HSXK3976.fed1rmmtao07.cox.net@fed1rmimpo02.cox.net>;
+          Thu, 4 Jan 2007 15:22:02 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id 78NG1W00N1kojtg0000000; Thu, 04 Jan 2007 15:22:17 -0500
+To: "Alex Riesen" <raa.lkml@gmail.com>
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35950>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35951>
 
-I finally found something.
+"Alex Riesen" <raa.lkml@gmail.com> writes:
 
-The bug is that git-http-fetch have succes with first HTTP GET, but
-second loose authentification tokens. So, proxy reject access.
+> Me too, just wondered why didn't we do this back then.
+> Anyway, my "monster-merge" and the builtin tests pass with
+> no visible problems.
+>
+>> However, I was wondering if the index has to be written at all.
+>> I expect the written index (except the last one, of course) to have no
+>> user...
+>
+> Good question...
 
-I tried with libcurl 7.16, and it works.
+That's most likely because you played safe, and started from the
+Python version whose only way to manipulate the index and write
+out a tree was to actually write the index out.
 
-So, I think it is a libcurl problem.
+So let's step back a bit.
 
-On 1/3/07, Guilhem Bonnefille <guilhem.bonnefille@gmail.com> wrote:
-> Hi,
->
-> I'm new to GIT. I've just discovered it recenntly, I found it powerfull.
->
-> Actually, I'm trying to "connect" to GIT repositories from office.
-> There is a proxy. I set the http_proxy varenv. But the cloning failed.
->
-> Seems to be a 407 error, but I do not understand what to do. Any help
-> is welcome.
->
-> Here is the output:
-> $ git-clone http://repo.or.cz/r/cogito.git
-> Getting alternates list for http://repo.or.cz/r/cogito.git/
-> Getting pack list for http://repo.or.cz/r/cogito.git/
-> Getting index for pack 605b6b3b97cd6a8725f9be2c858812646de69340
-> Getting index for pack fbfa016d2f36e7317c82ccae9ba84f98ee23c232
-> Getting index for pack 3e83e7bd975592d35f507a83d9d72b8f6fa2f90c
-> Getting index for pack 3718e548f38e28d2b5c0fa845ecde4fa8011097f
-> Getting index for pack 2ca93e541574382d920bb2310d774e1c4ce3f097
-> Getting index for pack ec503789c27cc660192d567defd4d4620e5ff433
-> Getting index for pack be4d257c2efb91623aeb6031689f348aa897cfd6
-> Getting index for pack b8d235df7313ca48648dedea9fd059d7fe0fc440
-> Getting index for pack 05ee5f60265a8cf543e5a42c04af0f7dacdf7ce3
-> Getting index for pack a33f5335e33bb274e7c838fc0dc6deec5713ca3f
-> Getting index for pack 8530b481a7f02b3d09fe00c6b6afedc658933dc1
-> Getting index for pack 4b7808cea29f690eaa10aacff9eac93a38b5ddd3
-> Getting index for pack f8c8b06fec5010796ce83d3809d022e8e2ac1c16
-> Getting index for pack 7ddc7c3ff0dc06aefe42ad477ba3be48a54b6c48
-> Getting index for pack f3e337782d2bf95568a7bd96866c4bdffb2f183f
-> Getting index for pack 298348359dbe6956c697261eb88b47d9e6c6666e
-> Getting index for pack 57964c548d649be865d283d6ab3ca10bf302f082
-> Getting index for pack 78202a8501eff4614d7bb1972902a6c880bb2002
-> Getting index for pack 51412f3fc46ba6059457a5890369895a96a6b427
-> Getting index for pack 9b452ef8de67af41587ebb196ca4518280ba1795
-> Getting index for pack 56df4494fdb935bb2f8de3388c901be086cf9bd7
-> Getting index for pack cd046245115aa0b088f1b53bba2e68e0000b1c54
-> Getting index for pack bdf83dd134bd89eca9431f0d6b7601e32d516ae9
-> Getting index for pack 48baac389492f0071f8713547371eaae5507868d
-> Getting index for pack 8b4c56b9f2e0d9586b10c24ef87b933f8d3c0d72
-> Getting index for pack 49e12d13de0cb60255b343c59eeaf61b168fa0de
-> Getting index for pack 9af7de2760000428a9bb60ea5afc150bb8a60fb8
-> Getting pack 9af7de2760000428a9bb60ea5afc150bb8a60fb8
->  which contains b6a6e87cb3e1368ad0f78c18fdb6c29dde4ae83e
-> walk b6a6e87cb3e1368ad0f78c18fdb6c29dde4ae83e
-> Getting alternates list for http://repo.or.cz/r/cogito.git/
-> Getting alternates list for http://repo.or.cz/r/cogito.git/
-> Getting alternates list for http://repo.or.cz/r/cogito.git/
-> Getting alternates list for http://repo.or.cz/r/cogito.git/
-> Getting alternates list for http://repo.or.cz/r/cogito.git/
-> Getting pack 49e12d13de0cb60255b343c59eeaf61b168fa0de
->  which contains 18d0bd75adae8c1994373e8e5afdb388268c048c
-> error: Unable to get pack file
-> http://repo.or.cz/r/cogito.git//objects/pack/pack-49e12d13de0cb60255b343c59eeaf61b168fa0de.pack
-> The requested URL returned error: 407
-> Getting alternates list for http://repo.or.cz/r/cogito.git/
-> error: Unable to find 18d0bd75adae8c1994373e8e5afdb388268c048c under
-> http://repo.or.cz/r/cogito.git/
-> Cannot obtain needed commit 18d0bd75adae8c1994373e8e5afdb388268c048c
-> while processing commit b6a6e87cb3e1368ad0f78c18fdb6c29dde4ae83e.
-> Waiting for http://repo.or.cz/r/cogito.git/objects/c2/8d9943e5d8a51088266db92030480602c35fc1
->
->
-> Surprisingly, if I download the pack file directly with curl, it works:
-> curl http://repo.or.cz/r/cogito.git//objects/pack/pack-49e12d13de0cb60255b343c59eeaf61b168fa0de.pack
->
->
-> I'm using:
-> - a freshly downloaded GIT tarball.
-> - curl-7.12.1-5.rhel4
-> - curl-devel-7.12.1-5.rhel4
->
-> --
-> Guilhem BONNEFILLE
-> -=- #UIN: 15146515 JID: guyou@im.apinc.org MSN: guilhem_bonnefille@hotmail.com
-> -=- mailto:guilhem.bonnefille@gmail.com
-> -=- http://nathguil.free.fr/
->
+ * The top-level interface is merge() function that takes two
+   heads and the ancestor, and is responsible for coming up with
+   a merged tree in *result if it can.  The main() calls it to
+   see if things merge cleanly, and wants the index populated
+   with the final merge result, be it clean or unmerged.
 
+ * merge() in addition to two heads and their ancestor takes
+   call-depth because it does the "recursive" business.  When it
+   operates with positive call-depth, it is coming up with a
+   virtual commit that has the merge result tree of two merge
+   bases.  In this case index_only is set to true and what is in
+   the working tree does not matter (i.e. usual "your local
+   modification will be clobbered, cannot merge" check should
+   not apply [*1*]).  It calls setup_index() to read in the true
+   index (for the outermost case) or a temporary index (from one
+   of the ancestor trees in the recursive case) before passing
+   control to the real workhorse, merge_trees().
 
--- 
-Guilhem BONNEFILLE
--=- #UIN: 15146515 JID: guyou@im.apinc.org MSN: guilhem_bonnefille@hotmail.com
--=- mailto:guilhem.bonnefille@gmail.com
--=- http://nathguil.free.fr/
+   What merge() does before its call to setup_index() does not
+   depend on what the index is (even in recursive case, because
+   the real work done by merge_trees() in the recursively called
+   merge() is preceded by the call to setup_index()).  When
+   merge() returns, the index contents, both in-core and on the
+   filesystem, matter only for the outermost call to merge().
+
+   So that suggests that flush_cache() in main() needs to stay.
+
+ * merge_trees() takes the two heads and the ancestor, and comes
+   up with the merge result, using in-core index.  It calls
+   git_merge_trees() which is 3-way "read-tree -m", and calls
+   git_write_tree() with two purposes: (1) to see if the merge
+   was cleanly done, and (2) to get the tree to be used as the
+   virtual ancestor (in other words, for the outermost merge,
+   writing of the tree is not important -- a tree is produced as
+   an unused side effect of seeing if the merge was clean).  If
+   it results in a clean merge for the outermost merge, the call
+   to flush_cache() in main() is what matters -- the calling
+   script of merge-recursive writes a tree out from the index
+   written by that call.  I'll address the need for
+   git_write_tree() to write the index shortly.
+
+   If the call to git_merge_trees() results in conflicted merge,
+   merge_trees() falls into the rename detection codepath.  Most
+   of the work is done in process_renames(), which updates the
+   index, and then remaining unmatched paths are dealt with by
+   calling process_entry(), which also updates the index.  These
+   index updates could all be done in-core without writing the
+   resulting index file out; we should not discard nor re-read
+   the index while they are processing one path at a time.
+
+   In a sense, merge_trees() does what 3-way "read-tree -m"
+   could have done if it were rename aware.
+
+ * git_merge_trees() is a bit questionable.  It reads from the
+   current_index_file which is the true index for the outermost
+   merge or the temporary index populated from the 'head'
+   parameter give to it earlier by merge().  I think this use of
+   temporary index is not necessary.  In other words, we could
+   start from an empty cache if index_only, I think.
+
+   And I think the reason git_write_tree() writes the index out
+   is because of this call to read_cache_from() at the beginning
+   of git_merge_trees().  It is told to write a tree out of the
+   current in-core index -- so I do not know why it needs to
+   call read_cache_from() to begin with.
+
+Given the above analysis, it seems to me that the current code
+too heavily inherited the invariant that the in-core and on
+filesystem index should match at every step from the original
+Python version.  I think your patch goes in the right direction
+to correct that, but it does not spell out the new invariant the
+code assumes cleanly enough.  For example, I do not think you
+would want the call to flush_cache() in process_renames() for
+the same reason you took out the call from process_entry() --
+they both make many calls to update_file() and remove_file() to
+touch the index and the working tree.
+
+How about making the invariants to be:
+
+	upon entry of merge(), the in-core cache is populated as
+	appropriate for the merge.  That is, it has the contents
+	of the true index for the outermost one, and discarded
+	for the virtual ancestor merge.
+
+	upon exit from merge(), the in-core cache holds the
+	merge result for that round of merge.  That is, it is
+	suitable for flush_cache() to leave the final result for
+	the outermost merge, and it is a merged index that wrote
+	the virtual ancestor tree was written out from for inner
+	merges.
+
+The codeflow would then become like this:
+
+	main() {
+                hold_lock_file_for_update(lock, git_path("index"), 1);
+                merge();
+		write_cache() || close || commit_lock_file();
+	}
+
+	merge() {
+        	while (more than one ancestor) {
+			discard_cache();
+                        merge(two ancestors using their common);
+		}
+		discard_cache();
+		if (call_depth == 0) {
+                	read_cache();
+                        index_only = 0;
+		}
+		else
+                	index_only = 1;
+                merge_trees();
+	}
+
+        merge_trees() {
+		if (up to date)
+                	return;
+		git_merge_trees();
+		if (in-core index is unmerged) {
+			process_renames();
+		}
+                if (index_only)
+                       	git_write_tree();
+        }
+
+        git_merge_trees() {
+        	unpack_trees();
+        }
+
+        git_write_tree() {
+		if (stale cache tree)
+                	cache_tree_update();
+                lookup_tree();
+	}
+
+        process_renames(), process_entry() {
+		call remove_file() and update_file() as needed,
+		trusting that the caller set up the in-core
+                index as appropriate and previous calls to these
+                functions left the in-core index to correctly
+                reflect what have been done so far.
+        }
+
+By the way, Alex, you seem to heavily work on Cygwin, and I am
+interested in your experience with Shawn's sliding mmap() on
+real projects, as I suspect Cygwin would be more heavily
+impacted with any mmap() related changes.  You already said
+performance is "bearable".  Does that mean it was better and
+got worse but still bearable, or it was unusably slow but now it
+is bearably usable?
