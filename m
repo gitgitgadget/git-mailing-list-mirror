@@ -1,102 +1,92 @@
 From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH 5/5] git-add: add ignored files when asked explicitly.
-Date: Thu, 04 Jan 2007 14:58:57 +0100
-Message-ID: <459D0821.10204@op5.se>
-References: <7vbqlskz2u.fsf@assigned-by-dhcp.cox.net>	<Pine.LNX.4.63.0612251443230.19693@wbgn013.biozentrum.uni-wuerzburg.de> <7vslf3khsc.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: Possible regression in git-rev-list --header
+Date: Thu, 04 Jan 2007 16:18:23 +0100
+Message-ID: <459D1ABF.8010500@op5.se>
+References: <e5bfff550612300956mef4691fqf607fad173c571da@mail.gmail.com>	 <7vlkkphvrb.fsf@assigned-by-dhcp.cox.net>	 <Pine.LNX.4.63.0612310211300.25709@wbgn013.biozentrum.uni-wuerzburg.de>	 <7v64bsj0s4.fsf@assigned-by-dhcp.cox.net>	 <e5bfff550612310345j4c882b7av51879ca1175a1c6b@mail.gmail.com>	 <Pine.LNX.4.63.0612311613180.22628@wbgn013.biozentrum.uni-wuerzburg.de>	 <e5bfff550612310743t4ca1b017ubceddffafd06ac59@mail.gmail.com>	 <7vodpja0u8.fsf@assigned-by-dhcp.cox.net>	 <e5bfff550701030121n700fab25x63278457c884a3f7@mail.gmail.com>	 <8c5c35580701030221w5c04e2eaq757d12c4ca0b0780@mail.gmail.com> <e5bfff550701030235g6f26044h8dd73e8abe1ec9e3@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 04 14:59:19 2007
+Cc: Lars Hjemli <hjemli@gmail.com>, Junio C Hamano <junkio@cox.net>,
+	git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jan 04 16:18:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H2T7Y-0003jb-Sb
-	for gcvg-git@gmane.org; Thu, 04 Jan 2007 14:59:05 +0100
+	id 1H2UMP-0002cs-NU
+	for gcvg-git@gmane.org; Thu, 04 Jan 2007 16:18:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964858AbXADN7A (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 4 Jan 2007 08:59:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964861AbXADN7A
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Jan 2007 08:59:00 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:53032 "EHLO
+	id S964893AbXADPS0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 4 Jan 2007 10:18:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964896AbXADPSZ
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Jan 2007 10:18:25 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:54550 "EHLO
 	smtp-gw1.op5.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964858AbXADN67 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Jan 2007 08:58:59 -0500
+	with ESMTP id S964893AbXADPSZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Jan 2007 10:18:25 -0500
 Received: from [192.168.1.20] (unknown [213.88.215.14])
 	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id 3CE496BCC4; Thu,  4 Jan 2007 14:58:58 +0100 (CET)
+	id 9E8AD6BCC2; Thu,  4 Jan 2007 16:18:23 +0100 (CET)
 User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vslf3khsc.fsf@assigned-by-dhcp.cox.net>
+To: Marco Costalba <mcostalba@gmail.com>
+In-Reply-To: <e5bfff550701030235g6f26044h8dd73e8abe1ec9e3@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35931>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35932>
 
-Junio C Hamano wrote:
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
->> On Mon, 25 Dec 2006, Junio C Hamano wrote:
+Marco Costalba wrote:
+> On 1/3/07, Lars Hjemli <hjemli@gmail.com> wrote:
+>> On 1/3/07, Marco Costalba <mcostalba@gmail.com> wrote:
+>> >         - one blank line
+>> >         - zero or one line with log title
+>> >         - zero or more lines with log message
+>> >         - a terminating '\0'
 >>
->>>     $ git add foo.o
->>>     $ git add '*.o'
->> Most people do
->>
->> 	$ git add *.o
->>
->> instead, where bash expands the expression. Maybe this new behaviour 
->> should be hidden between a "-f" option?
+>> I think the should be:
+>>   -zero or more blank lines
 > 
-> When would anybody do "git add *.o"?
+> Isn't it zero or _one_ blank line? Why more then one? would be it
+> useful? surely is slower to parse.
 > 
 
-Make that "git add *.c" then, in a directory normally containing a lot 
-of generated C-files.
+I've imported a repository from CVS to git (the nagiosplugin repo), 
+where one author consistently put an empty line before the "commit 
+subject". I'm fairly certain this is done by the tool he uses (some GUI 
+thing, no doubt).
 
-> 
-> An alternative is to use the mechanism I added here to _detect_
-> the attempt to add an ignored file with explicitly spelled out
-> pathspec, and issue an info message that says something like:
-> 
-> 	Path 'xyzzy/filfre.o' is not being ignored by one of
-> 	your .gitignore files.  If you really want to add it,
-> 	please add this entry to .gitignore file:
-> 
->         !/xyzzy/filfre.o
-> 
-
-Sounds very sensible to me, although I assume you meant "path 
-xyzzy/filfre.o is being ignored" (ie, "is not being ignored" (sic) was a 
-typo).
+I'm currently looking into stripping optional empty lines appearing 
+postheaders-prebody from rev-list output, as it completely fudges qgit 
+and gitk viewing alike. Good thing the author in question only does 
+translations and no code work, or I'd be screaming with frustration 
+trying to figure out which commit does what. Mind you, CVS's lack of 
+forensic tools doesn't exactly inspire the clear and concise commit 
+messages we see in git, but still...
 
 
-> One advantage of this is that it would help guiding the user in
-> the right direction, giving a reusable piece of knowledge,
-> without changing the behaviour of the command (what is refused
-> is refused).  But I can already see people's complaints: if the
-> tool knows how to fix that situation why forces the user to do
-> so?
+>>   -zero or more non-blank lines with log title
 > 
-> Although the reason why the alternative does not do so is "The
-> user earlier said *.o files are uninteresting but came back with
-> a conflicting request to add xyzzy/filfre.o, which could be a
-> mistake.  We ask for a confirmation", which is very sensible,
-
-Very sensible indeed. If you tell a cabdriver "go-left-go-right" (very 
-fast) he'll (hopefully) stop and ask you where you really wanted to go.
-
-> another alternative would be to add the path anyway and issue an
-> warning, like this:
-> 
-> 	$ ls xyzzy
->         filfre.c	filfre.o
-> 	$ git add xyzzy/filfre.?
-> 	added ignored path xyzzy/filfre.o
+> multi lines titles are allowed? never saw one of them.
 > 
 
-I like the "you did something weird. Education served" option better.
+They aren't disallowed. The log message part only by convention consists 
+of a title line followed by a blank and then the message body. It's 
+entirely possible to just start writing the message straight off, or put 
+any number of blank lines wherever.
+
+>>   -zero or more blank lines
+> 
+> Why? this is necessary only to disambiguate muti (non blank) lines
+> titles, but as Junio pointed out distinction between log title and log
+> message is only in the Porcelain, not encoded in git. So the Porcalain
+> is going to show _one_line title if any an the remaining stuff in the
+> log message.
+> 
+
+Sensible. There's no (reliable) way of knowing if the first line with 
+text on is actually a title or just the start of a 25-line sentence, or 
+even the signoff line, or completely empty.
 
 -- 
 Andreas Ericsson                   andreas.ericsson@op5.se
