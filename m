@@ -1,127 +1,68 @@
-From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: Default "tar" umask..
-Date: Fri, 05 Jan 2007 23:30:22 +0100
-Message-ID: <459ED17E.2080101@lsrfire.ath.cx>
-References: <Pine.LNX.4.64.0612301037570.4473@woody.osdl.org>	<7vfyaxjiaj.fsf@assigned-by-dhcp.cox.net>	<459EB78B.60000@lsrfire.ath.cx> <7vzm8xdw3t.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 1/2] Suggest use of "git add file1 file2" when there is nothing to commit.
+Date: Fri, 05 Jan 2007 14:33:11 -0800
+Message-ID: <7virfldryw.fsf@assigned-by-dhcp.cox.net>
+References: <20061216025309.GA19955@spearce.org>
+	<1168029891.11130.18.camel@ibook.zvpunry.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jan 05 23:30:36 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Jan 05 23:33:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H2xa3-0000UE-9H
-	for gcvg-git@gmane.org; Fri, 05 Jan 2007 23:30:31 +0100
+	id 1H2xci-0001LY-L8
+	for gcvg-git@gmane.org; Fri, 05 Jan 2007 23:33:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750820AbXAEWa2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 5 Jan 2007 17:30:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750821AbXAEWa2
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Jan 2007 17:30:28 -0500
-Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:44533
-	"EHLO neapel230.server4you.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750820AbXAEWa1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 5 Jan 2007 17:30:27 -0500
-Received: from [10.0.1.3] (p508E67CC.dip.t-dialin.net [80.142.103.204])
-	by neapel230.server4you.de (Postfix) with ESMTP id 2624D10005;
-	Fri,  5 Jan 2007 23:30:26 +0100 (CET)
-User-Agent: Thunderbird 1.5.0.9 (Windows/20061207)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vzm8xdw3t.fsf@assigned-by-dhcp.cox.net>
+	id S1750817AbXAEWdN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 5 Jan 2007 17:33:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750819AbXAEWdN
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Jan 2007 17:33:13 -0500
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:35597 "EHLO
+	fed1rmmtao12.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750817AbXAEWdN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Jan 2007 17:33:13 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20070105223312.DFJM19398.fed1rmmtao12.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 5 Jan 2007 17:33:12 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id 7aYP1W00J1kojtg0000000; Fri, 05 Jan 2007 17:32:23 -0500
+To: Michael Loeffler <zvpunry@zvpunry.de>
+In-Reply-To: <1168029891.11130.18.camel@ibook.zvpunry.de> (Michael Loeffler's
+	message of "Fri, 05 Jan 2007 21:44:51 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36032>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36033>
 
-[Junio: Sorry for resending, I somehow dropped the CC:'s the first time.]
+Michael Loeffler <zvpunry@zvpunry.de> writes:
 
-Junio C Hamano schrieb:
->>> >>> Having said that, I do not see much reason for anybody to want to
->>> >>>  extract any material that is worth to be placed under version
->>> >>> control in a way that is world-writable, so I do not mind having
->>> >>> 002 as the default, but I feel that group-writability should be
->>> >>> kept under control of the umask of end users who know what they
->>> >>> are doing.
->> >> Yes, using 002 is tempting.  But it's got the same "looseness"
->> >> problems as 000, only on a smaller scaler: there are certainly
->> >> situations where a user doesn't want to share write permissions
->> >> with all the members of her current group.  If we change the
->> >> default, let's go all the way to 022.
-> > 
-> > I don't think the above argument makes much sense -- it does not 
-> > explain why you do not go "all the way" to 077.
+> Am Freitag, den 15.12.2006, 21:53 -0500 schrieb Shawn O. Pearce:
+> ...
+>> +		printf("%s (%s)\n",
+>> +			s->amend ? "# No changes" : "nothing to commit",
+>> +			use_add_msg);
+>>  }
+> I don't like the new 'nothing to commit (use "git add ... message")'
+> message. I use git status very often to see if there is something to
+> commit, but now there is always this annoying "use git add ..." message.
 
-Well, what I had in mind were free software projects and simple users,
-i.e. publicly hosted tar files and users that only download and extract
-them, and then don't add confidential changes afterwards.  You're right,
-of course: why stop there?  077 would be safest. :->
+I tend to not like _ANY_ change at all, but I've learned to wait
+and see if I get used to it when I see something that annoys me
+initially, to see if the annoyance is because what it does is
+truly wrong or it is because what it does is merely different
+from what I am used to.
 
-> > On the other hand, I can explain 002 fairly easily and consistently.
-> > This matters only for users who can become root and does not know or
-> > care about implied -p, and the group root belongs to had better not
-> > contain any suspicious user, so leaving group open does not hurt.
-> > 022 actively hurts sane usage (i.e. work always with a sane umask and
-> > extract as non root users) while 002 does not.
+So I've been trying it out myself as one of the guinea pigs on
+this one as well.
 
-Hm, right, I was not thinking straight -- I didn't see that the gid of
-the extracted files will be set to 0 by tar (as specified in our tar
-files).  Err, unless the target system has a group named git, which
-would then be used instead.  Come to think of it, having this "git"
-group name in there is a bit strange and unnecessary.  How about the
-following patch?
+So far, my judgement is that this is of the better kind; it is
+easy to get used to, and once you get used to it, it is easily
+ignorable.
 
-
-In order to make the generated tar files more friendly to users who
-extract them as root using GNU tar and its implied -p option, change
-the default umask to 002 and change the owner name and group name to
-root.  This ensures that a) the extracted files and directories are
-not world-writable and b) that they belong to user and group root.
-
-Before they would have been assigned to a user and/or group named
-git if it existed.  This also answers the question in the removed
-comment: uid=0, gid=0, uname=root, gname=root is exactly what we
-want.
-
-Normal users who let tar apply their umask while extracting are
-only affected if their umask allowed the world to change their
-files (e.g. a umask of zero).  This case is so unlikely and strange
-that we don't need to support it.
-
-Credit goes to Junio for finding the ideal default umask of 002
-through sheer logic.
-
-Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
-
----
- archive-tar.c |    7 +++----
- 1 files changed, 3 insertions(+), 4 deletions(-)
-
-diff --git a/archive-tar.c b/archive-tar.c
-index af47fdc..7d52a06 100644
---- a/archive-tar.c
-+++ b/archive-tar.c
-@@ -15,7 +15,7 @@ static char block[BLOCKSIZE];
- static unsigned long offset;
- 
- static time_t archive_time;
--static int tar_umask;
-+static int tar_umask = 002;
- static int verbose;
- 
- /* writes out the whole block, but only if it is full */
-@@ -210,11 +210,10 @@ static void write_entry(const unsigned char *sha1, struct strbuf *path,
- 	sprintf(header.size, "%011lo", S_ISREG(mode) ? size : 0);
- 	sprintf(header.mtime, "%011lo", archive_time);
- 
--	/* XXX: should we provide more meaningful info here? */
- 	sprintf(header.uid, "%07o", 0);
- 	sprintf(header.gid, "%07o", 0);
--	strlcpy(header.uname, "git", sizeof(header.uname));
--	strlcpy(header.gname, "git", sizeof(header.gname));
-+	strlcpy(header.uname, "root", sizeof(header.uname));
-+	strlcpy(header.gname, "root", sizeof(header.gname));
- 	sprintf(header.devmajor, "%07o", 0);
- 	sprintf(header.devminor, "%07o", 0);
- 
+Other people's tastes may differ, of course.
