@@ -1,262 +1,165 @@
-From: Andy Whitcroft <apw@shadowen.org>
-Subject: [PATCH] use xread where we are not checking for EAGAIN/EINTR
-Date: Fri, 05 Jan 2007 10:54:33 +0000
-Message-ID: <1cb8699724ff000fbf0c14ba3e15031e@pinky>
-X-From: git-owner@vger.kernel.org Fri Jan 05 11:54:44 2007
+From: Junio C Hamano <junkio@cox.net>
+Subject: a few remaining issues...
+Date: Fri, 05 Jan 2007 03:06:46 -0800
+Message-ID: <7v7iw1hgvt.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Fri Jan 05 12:06:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H2mie-0004hP-7X
-	for gcvg-git@gmane.org; Fri, 05 Jan 2007 11:54:40 +0100
+	id 1H2muQ-0008Q6-Vp
+	for gcvg-git@gmane.org; Fri, 05 Jan 2007 12:06:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161054AbXAEKyh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 5 Jan 2007 05:54:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161055AbXAEKyh
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Jan 2007 05:54:37 -0500
-Received: from 41.150.104.212.access.eclipse.net.uk ([212.104.150.41]:38537
-	"EHLO localhost.localdomain" rhost-flags-OK-FAIL-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1161054AbXAEKyf (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 5 Jan 2007 05:54:35 -0500
-Received: from localhost ([127.0.0.1] helo=localhost.localdomain)
-	by localhost.localdomain with esmtp (Exim 4.63)
-	(envelope-from <apw@shadowen.org>)
-	id 1H2miX-0004bJ-47
-	for git@vger.kernel.org; Fri, 05 Jan 2007 10:54:33 +0000
+	id S1161035AbXAELGs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 5 Jan 2007 06:06:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161058AbXAELGr
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Jan 2007 06:06:47 -0500
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:50248 "EHLO
+	fed1rmmtao11.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161035AbXAELGq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Jan 2007 06:06:46 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20070105110646.QUFD25875.fed1rmmtao11.cox.net@fed1rmimpo02.cox.net>;
+          Fri, 5 Jan 2007 06:06:46 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id 7P711W00B1kojtg0000000; Fri, 05 Jan 2007 06:07:01 -0500
 To: git@vger.kernel.org
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35992>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35993>
 
+This is not meant to be an exhaustive list, and I probably will
+change my mind after I sleep on them, but before I go to bed,
+here are a handful of glitches I think are worth fixing.
 
-We have xread() to handle those OS's which will return EAGAIN or
-EINTR when the read is interrupted.  We should use this where we
-are not otherwise handling such errors.
+* Bare repository.
 
-Signed-off-by: Andy Whitcroft <apw@shadowen.org>
----
+We have a heuristic to determine bareness and change our
+behaviour (albeit slightly) based on it.  The heuristic is not
+perfect, but the intent is to avoid things that are undesirable
+for bare repository when we know (or guess) it is one, and allow
+the repository owner to override if we guessed wrong.  Currently
+the only such "undesirable thing" is the use of reflog even when
+core.logallrefupdates is not set, but we have an RFC patch
+floating around to forbid working-tree operations in a bare
+repository to prevent accidents from happening.  I think at that
+point it may be prudent to also give users a way to mark a bare
+repository explicitly as such, say, with "core.bare = true".
+Repository creation by init-db and clone with --bare option can
+automatically set this, so adding this should not be too painful
+for the users.
 
-    We have an xread() wrapper to help us with those nasty
-    interrupt returns and yet we fail to use it consistently.
-    This patch updates those plain read()'s which do not
-    have any handling for errors, or which treat those errors
-    as user visible fatal errors.
+* Packed refs.
 
-    This feels right to me, but perhaps there is some good
-    reason that things are done this way ... if so could
-    someone elighten me.
+'git-pack-refs --all' leaves heads/ unpacked because they are
+expected to change often, but it packs remotes/.  This does not
+make any sense (it is another fallout from "separate remote"
+layout that many people pushed, even though I was mildly against
+it and mostly uninterested in it, and in the retrospect I think
+they did not know about or knew but did not tell me about issues
+like this, which makes me somewhat unhappy X-<).  I'd like to
+change the command not to pack anything but tags/ hierarchy.
+This keeps bases/ used by StGIT unpacked, which makes a lot of
+sense -- the hierarchy is even more volatile than heads/.
 
-    If this is a sensible change, then I'll have a look at
-    the write side.
----
-diff --git a/dir.c b/dir.c
-index 0338d6c..8fe0865 100644
---- a/dir.c
-+++ b/dir.c
-@@ -142,7 +142,7 @@ static int add_excludes_from_file_1(const char *fname,
- 		return 0;
- 	}
- 	buf = xmalloc(size+1);
--	if (read(fd, buf, size) != size)
-+	if (xread(fd, buf, size) != size)
- 		goto err;
- 	close(fd);
- 
-diff --git a/http-fetch.c b/http-fetch.c
-index 396552d..50a3b00 100644
---- a/http-fetch.c
-+++ b/http-fetch.c
-@@ -175,7 +175,7 @@ static void start_object_request(struct object_request *obj_req)
- 	prevlocal = open(prevfile, O_RDONLY);
- 	if (prevlocal != -1) {
- 		do {
--			prev_read = read(prevlocal, prev_buf, PREV_BUF_SIZE);
-+			prev_read = xread(prevlocal, prev_buf, PREV_BUF_SIZE);
- 			if (prev_read>0) {
- 				if (fwrite_sha1_file(prev_buf,
- 						     1,
-diff --git a/http-push.c b/http-push.c
-index ecefdfd..acb5c27 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -288,7 +288,7 @@ static void start_fetch_loose(struct transfer_request *request)
- 	prevlocal = open(prevfile, O_RDONLY);
- 	if (prevlocal != -1) {
- 		do {
--			prev_read = read(prevlocal, prev_buf, PREV_BUF_SIZE);
-+			prev_read = xread(prevlocal, prev_buf, PREV_BUF_SIZE);
- 			if (prev_read>0) {
- 				if (fwrite_sha1_file(prev_buf,
- 						     1,
-diff --git a/imap-send.c b/imap-send.c
-index ad91858..3f1e542 100644
---- a/imap-send.c
-+++ b/imap-send.c
-@@ -224,7 +224,7 @@ socket_perror( const char *func, Socket_t *sock, int ret )
- static int
- socket_read( Socket_t *sock, char *buf, int len )
- {
--	int n = read( sock->fd, buf, len );
-+	int n = xread( sock->fd, buf, len );
- 	if (n <= 0) {
- 		socket_perror( "read", sock, n );
- 		close( sock->fd );
-@@ -390,7 +390,7 @@ arc4_init( void )
- 		fprintf( stderr, "Fatal: no random number source available.\n" );
- 		exit( 3 );
- 	}
--	if (read( fd, dat, 128 ) != 128) {
-+	if (xread( fd, dat, 128 ) != 128) {
- 		fprintf( stderr, "Fatal: cannot read random number source.\n" );
- 		exit( 3 );
- 	}
-diff --git a/local-fetch.c b/local-fetch.c
-index 7b6875c..21bcf75 100644
---- a/local-fetch.c
-+++ b/local-fetch.c
-@@ -184,7 +184,7 @@ int fetch_ref(char *ref, unsigned char *sha1)
- 		fprintf(stderr, "cannot open %s\n", filename);
- 		return -1;
- 	}
--	if (read(ifd, hex, 40) != 40 || get_sha1_hex(hex, sha1)) {
-+	if (xread(ifd, hex, 40) != 40 || get_sha1_hex(hex, sha1)) {
- 		close(ifd);
- 		fprintf(stderr, "cannot read from %s\n", filename);
- 		return -1;
-diff --git a/path.c b/path.c
-index 066f621..f6f9cfd 100644
---- a/path.c
-+++ b/path.c
-@@ -113,7 +113,7 @@ int validate_symref(const char *path)
- 	fd = open(path, O_RDONLY);
- 	if (fd < 0)
- 		return -1;
--	len = read(fd, buffer, sizeof(buffer)-1);
-+	len = xread(fd, buffer, sizeof(buffer)-1);
- 	close(fd);
- 
- 	/*
-diff --git a/refs.c b/refs.c
-index 121774c..f6afd61 100644
---- a/refs.c
-+++ b/refs.c
-@@ -284,7 +284,7 @@ const char *resolve_ref(const char *ref, unsigned char *sha1, int reading, int *
- 		fd = open(path, O_RDONLY);
- 		if (fd < 0)
- 			return NULL;
--		len = read(fd, buffer, sizeof(buffer)-1);
-+		len = xread(fd, buffer, sizeof(buffer)-1);
- 		close(fd);
- 
- 		/*
-diff --git a/sha1_file.c b/sha1_file.c
-index d9622d9..0c9483c 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -1869,7 +1869,7 @@ int write_sha1_from_fd(const unsigned char *sha1, int fd, char *buffer,
- 			if (ret != Z_OK)
- 				break;
- 		}
--		size = read(fd, buffer + *bufposn, bufsize - *bufposn);
-+		size = xread(fd, buffer + *bufposn, bufsize - *bufposn);
- 		if (size <= 0) {
- 			close(local);
- 			unlink(tmpfile);
-diff --git a/ssh-fetch.c b/ssh-fetch.c
-index b006c5c..6ec9488 100644
---- a/ssh-fetch.c
-+++ b/ssh-fetch.c
-@@ -82,7 +82,7 @@ int fetch(unsigned char *sha1)
- 		remote = conn_buf[0];
- 		memmove(conn_buf, conn_buf + 1, --conn_buf_posn);
- 	} else {
--		if (read(fd_in, &remote, 1) < 1)
-+		if (xread(fd_in, &remote, 1) < 1)
- 			return -1;
- 	}
- 	/* fprintf(stderr, "Got %d\n", remote); */
-@@ -99,7 +99,7 @@ static int get_version(void)
- 	char type = 'v';
- 	write(fd_out, &type, 1);
- 	write(fd_out, &local_version, 1);
--	if (read(fd_in, &remote_version, 1) < 1) {
-+	if (xread(fd_in, &remote_version, 1) < 1) {
- 		return error("Couldn't read version from remote end");
- 	}
- 	return 0;
-@@ -111,10 +111,10 @@ int fetch_ref(char *ref, unsigned char *sha1)
- 	char type = 'r';
- 	write(fd_out, &type, 1);
- 	write(fd_out, ref, strlen(ref) + 1);
--	read(fd_in, &remote, 1);
-+	xread(fd_in, &remote, 1);
- 	if (remote < 0)
- 		return remote;
--	read(fd_in, sha1, 20);
-+	xread(fd_in, sha1, 20);
- 	return 0;
- }
- 
-diff --git a/ssh-upload.c b/ssh-upload.c
-index 0b52ae1..3f2794c 100644
---- a/ssh-upload.c
-+++ b/ssh-upload.c
-@@ -23,7 +23,7 @@ static int serve_object(int fd_in, int fd_out) {
- 	signed char remote;
- 	int posn = 0;
- 	do {
--		size = read(fd_in, sha1 + posn, 20 - posn);
-+		size = xread(fd_in, sha1 + posn, 20 - posn);
- 		if (size < 0) {
- 			perror("git-ssh-upload: read ");
- 			return -1;
-@@ -54,7 +54,7 @@ static int serve_object(int fd_in, int fd_out) {
- 
- static int serve_version(int fd_in, int fd_out)
- {
--	if (read(fd_in, &remote_version, 1) < 1)
-+	if (xread(fd_in, &remote_version, 1) < 1)
- 		return -1;
- 	write(fd_out, &local_version, 1);
- 	return 0;
-@@ -67,7 +67,7 @@ static int serve_ref(int fd_in, int fd_out)
- 	int posn = 0;
- 	signed char remote = 0;
- 	do {
--		if (read(fd_in, ref + posn, 1) < 1)
-+		if (xread(fd_in, ref + posn, 1) < 1)
- 			return -1;
- 		posn++;
- 	} while (ref[posn - 1]);
-@@ -89,7 +89,7 @@ static void service(int fd_in, int fd_out) {
- 	char type;
- 	int retval;
- 	do {
--		retval = read(fd_in, &type, 1);
-+		retval = xread(fd_in, &type, 1);
- 		if (retval < 1) {
- 			if (retval < 0)
- 				perror("git-ssh-upload: read ");
-diff --git a/upload-pack.c b/upload-pack.c
-index c568ef0..03a4156 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -242,7 +242,7 @@ static void create_pack_file(void)
- 					*cp++ = buffered;
- 					outsz++;
- 				}
--				sz = read(pu_pipe[0], cp,
-+				sz = xread(pu_pipe[0], cp,
- 					  sizeof(data) - outsz);
- 				if (0 < sz)
- 						;
-@@ -267,7 +267,7 @@ static void create_pack_file(void)
- 				/* Status ready; we ship that in the side-band
- 				 * or dump to the standard error.
- 				 */
--				sz = read(pe_pipe[0], progress,
-+				sz = xread(pe_pipe[0], progress,
- 					  sizeof(progress));
- 				if (0 < sz)
- 					send_client_data(2, progress, sz);
+'git-pack-refs' should default to --prune.  There is no point
+not to, really.
+
+'git-pack-refs' should probably learn how to unpack, although
+there is no real need for it.
+
+* Remote management.
+
+I pushed out 'git-remote' in 'next' tonight, but as I said, I
+think it does very limited things it should do in the current
+shape.  What it involves is just scripting and requires no deep
+core knowledge, so it might be a good project to enhance on for
+new people.
+
+Often people suggest "git checkout -b next origin/next" to add
+branch.next.remote = origin and branch.next.merge = refs/heads/next.
+
+I do not think it should be the default, but I do understand why
+people would want this (what I mean is that I do not think -b
+does not imply you would want to keep tracking and merging from
+there for almost all the time -- rather I would suspect it would
+be 50:50 thing), so I am not opposed to add an easy way to ask
+for these two variables to be set up when the new branch is
+made.  Perhaps "git checkout -B"?
+
+* Handling paths that are unknown to the index.
+
+I sent out patches tonight to teach "git reset <tree> -- <path>"
+to restore the absense of path in the index from the tree
+tonight.  There was another one recently brought up on the list:
+"git commit -- <path>" for path that is no longer known to the
+index.  While jumping the index is a practice I particularly do
+not want to encourage by extending git to support it, we already
+have support for most of the cases, so I think it makes sense to
+do this for consistency.  I haven't thought about the necessary
+changes yet, so people can beat me if they want to.  My vague
+idea is to check HEAD to see if <path> exists and if so refrain
+from complaining.
+
+* Detached HEAD.
+
+You've seen an experimental patch, discussion, and a few
+follow-up patches, all in 'pu'.  I'm not actively looking at
+this right now.
+
+* Reflogs.
+
+'git reflog show' needs to be done -- and preferrably in a way
+that does not add too much code.
+
+After rebasing a huge series, you need to know that N patches
+were involved and have to say HEAD@{N}, instead of HEAD@{1}.
+This is unfortunate --- we might want to find a way to make the
+reflog's recording granularity match the user operation
+granularity better.  But this is probably a fairly intrusive
+change we would not want right now.
+
+* Misconfigured "tracking branch" refspecs.
+
+There is a special hack in git-pull that passes --update-head-ok
+to git-fetch.  This is a workaround for a case where underlying
+git-fetch is told to update the current branch that is also used
+as a tracking branch.  This can happen either because the user
+misconfigured "Pull: refs/heads/master:refs/heads/master", or
+the user checked out a tracking branch to take a peek, and
+forgot he was on such a branch and issued "git pull".  Both are
+much less likely to happen in the separate remote layout, and I
+think we should deprecate both --update-head-ok flag in
+git-fetch and support for this situation in git-pull.
+
+Instead, we should unconditionally allow fetching into the
+current branch for bare repositories.
+
+The reason we should not allow fetching into the current branch
+for a repository with a working tree is that allowing so will
+make the index and working tree useless.  Such a fetch updates
+the value of HEAD, and after that happens the old value of HEAD
+is lost and, there is no way to even run a 3-way merge between
+the (old) HEAD, index and the working tree.  Even if the old
+value of HEAD is kept somewhere before the fetch happens (which
+is what --update-head-ok code allows git-pull to do), the
+difference between old HEAD and HEAD needs to be propagated to
+both index and the working tree separately, so it involves two
+3-way merges, which is way complicated than it is really worth.
+
+* Topic management.
+
+In 'todo' branch there is a git-topic script I use to generate
+the "What's cooking" messages.  Although the script in its
+current form is probably too specific to my workflow (which has
+one baseline with two development branches, and names topics in
+certain ways -- the latter is customizable from the command
+line), I think something like that may be useful for people who
+need to manage multiple topic branches.
