@@ -1,63 +1,139 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: What's cooking in git.git (topics)
-Date: Fri, 5 Jan 2007 10:37:08 +0100
-Message-ID: <81b0412b0701050137g49d07c8aw2ce6938dfcef1646@mail.gmail.com>
-References: <7vwt4647g0.fsf@assigned-by-dhcp.cox.net>
-	 <81b0412b0701041022h30cd4fcxd62dbf3ecb504ea9@mail.gmail.com>
-	 <20070105025921.GA14042@spearce.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH 1/2] diff-index --cached --raw: show tree entry on the LHS for unmerged entries.
+Date: Fri, 05 Jan 2007 01:42:22 -0800
+Message-ID: <7vr6u9izcx.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 05 10:37:45 2007
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Fri Jan 05 10:42:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H2lVy-0003YI-DZ
-	for gcvg-git@gmane.org; Fri, 05 Jan 2007 10:37:30 +0100
+	id 1H2lam-0004YN-0t
+	for gcvg-git@gmane.org; Fri, 05 Jan 2007 10:42:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161028AbXAEJhM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 5 Jan 2007 04:37:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161021AbXAEJhM
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Jan 2007 04:37:12 -0500
-Received: from ug-out-1314.google.com ([66.249.92.175]:52442 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161028AbXAEJhK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Jan 2007 04:37:10 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so5655779uga
-        for <git@vger.kernel.org>; Fri, 05 Jan 2007 01:37:08 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=UJEsOpPabWAN8yc61RTYPpjRVRycFI0trzXz0/ArNZcpczDCeS+Geif/YcDRw40FW1ENz31kpAEyW6MZT+Wfj2jUeD18c+Uqgbd9Hmt+N21pzWzsTRJ9nMg04CVIOQBMX8zMYHHBvfQcyraATCQlW7aQQMl/tXPbjgyWCQTwv9g=
-Received: by 10.78.158.11 with SMTP id g11mr2879678hue.1167989828728;
-        Fri, 05 Jan 2007 01:37:08 -0800 (PST)
-Received: by 10.78.135.3 with HTTP; Fri, 5 Jan 2007 01:37:08 -0800 (PST)
-To: "Shawn O. Pearce" <spearce@spearce.org>
-In-Reply-To: <20070105025921.GA14042@spearce.org>
-Content-Disposition: inline
+	id S965143AbXAEJmZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 5 Jan 2007 04:42:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030364AbXAEJmZ
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Jan 2007 04:42:25 -0500
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:39997 "EHLO
+	fed1rmmtao11.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965143AbXAEJmY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Jan 2007 04:42:24 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20070105094223.QIYC25875.fed1rmmtao11.cox.net@fed1rmimpo02.cox.net>;
+          Fri, 5 Jan 2007 04:42:23 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id 7Mie1W0021kojtg0000000; Fri, 05 Jan 2007 04:42:38 -0500
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35985>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35986>
 
-On 1/5/07, Shawn O. Pearce <spearce@spearce.org> wrote:
-> > >* sp/mmap (Sat Dec 30 22:13:43 2006 -0500) 25 commits
-> >
-> > Running this and the merge-recursive speedup I sent today locally.
-> > sp/mmap needs relatively recent cygwin library (otherwise pread
-> > is broken). No other ill effects noticed. Perfomance is bearable.
->
-> The default on Cygwin is now NO_MMAP.  I've disabled that default
+This updates the way diffcore represents an unmerged pair
+somewhat.  It used to be that entries with mode=0 on both sides
+were used to represent an unmerged pair, but now it has an
+explicit flag.  This is to allow diff-index --cached to report
+the entry from the tree when the path is unmerged in the index.
 
-I left it at NO_MMAP: wanted to see how bad pread performs.
-No worse than mmap, as it seems.
+This is used in updating "git reset <tree> -- <path>" to restore
+absense of the path in the index from the tree.
 
-> in my own Cygwin environment and continue to use mmap() rather than
-> pread(), but I'm also running my sp/mmap change there.  I haven't
-> noticed a performance difference, but I also haven't tested for one.
-> IOW if there is a difference its close enough to noise to not be
-> visible to me as a user.
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
 
-Confirm that.
+ * This is rather subtle but touches fairly core part of the
+   plumbing, which I tried to stay away from doing these days.
+   I do not think it would break anything, but please holler if
+   it breaks your scripts...
+
+ diff-lib.c |    9 ++++++---
+ diff.c     |    6 ++++--
+ diff.h     |    4 +++-
+ diffcore.h |    4 ++--
+ 4 files changed, 15 insertions(+), 8 deletions(-)
+
+diff --git a/diff-lib.c b/diff-lib.c
+index fc69fb9..2c9be60 100644
+--- a/diff-lib.c
++++ b/diff-lib.c
+@@ -97,7 +97,7 @@ int run_diff_files(struct rev_info *revs, int silent_on_removed)
+ 			 * Show the diff for the 'ce' if we found the one
+ 			 * from the desired stage.
+ 			 */
+-			diff_unmerge(&revs->diffopt, ce->name);
++			diff_unmerge(&revs->diffopt, ce->name, 0, null_sha1);
+ 			if (ce_stage(ce) != diff_unmerged_stage)
+ 				continue;
+ 		}
+@@ -297,9 +297,12 @@ static int diff_cache(struct rev_info *revs,
+ 			    !show_modified(revs, ce, ac[1], 0,
+ 					   cached, match_missing))
+ 				break;
+-			/* fallthru */
++			diff_unmerge(&revs->diffopt, ce->name,
++				     ntohl(ce->ce_mode), ce->sha1);
++			break;
+ 		case 3:
+-			diff_unmerge(&revs->diffopt, ce->name);
++			diff_unmerge(&revs->diffopt, ce->name,
++				     0, null_sha1);
+ 			break;
+ 
+ 		default:
+diff --git a/diff.c b/diff.c
+index f14288b..2c2e9dc 100644
+--- a/diff.c
++++ b/diff.c
+@@ -2875,10 +2875,12 @@ void diff_change(struct diff_options *options,
+ }
+ 
+ void diff_unmerge(struct diff_options *options,
+-		  const char *path)
++		  const char *path,
++		  unsigned mode, const unsigned char *sha1)
+ {
+ 	struct diff_filespec *one, *two;
+ 	one = alloc_filespec(path);
+ 	two = alloc_filespec(path);
+-	diff_queue(&diff_queued_diff, one, two);
++	fill_filespec(one, sha1, mode);
++	diff_queue(&diff_queued_diff, one, two)->is_unmerged = 1;
+ }
+diff --git a/diff.h b/diff.h
+index eff4455..7a347cf 100644
+--- a/diff.h
++++ b/diff.h
+@@ -144,7 +144,9 @@ extern void diff_change(struct diff_options *,
+ 			const char *base, const char *path);
+ 
+ extern void diff_unmerge(struct diff_options *,
+-			 const char *path);
++			 const char *path,
++			 unsigned mode,
++			 const unsigned char *sha1);
+ 
+ extern int diff_scoreopt_parse(const char *opt);
+ 
+diff --git a/diffcore.h b/diffcore.h
+index 2249bc2..1ea8067 100644
+--- a/diffcore.h
++++ b/diffcore.h
+@@ -54,9 +54,9 @@ struct diff_filepair {
+ 	unsigned source_stays : 1; /* all of R/C are copies */
+ 	unsigned broken_pair : 1;
+ 	unsigned renamed_pair : 1;
++	unsigned is_unmerged : 1;
+ };
+-#define DIFF_PAIR_UNMERGED(p) \
+-	(!DIFF_FILE_VALID((p)->one) && !DIFF_FILE_VALID((p)->two))
++#define DIFF_PAIR_UNMERGED(p) ((p)->is_unmerged)
+ 
+ #define DIFF_PAIR_RENAME(p) ((p)->renamed_pair)
+ 
+-- 
+1.5.0.rc0.ge0f6
