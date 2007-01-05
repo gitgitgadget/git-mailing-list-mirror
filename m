@@ -1,67 +1,64 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] use xread where we are not checking for EAGAIN/EINTR
-Date: Fri, 05 Jan 2007 03:19:55 -0800
-Message-ID: <7vvejlg1pg.fsf@assigned-by-dhcp.cox.net>
-References: <1cb8699724ff000fbf0c14ba3e15031e@pinky>
+Subject: Re: [PATCH 2/4] Improve cached content header of status output
+Date: Fri, 05 Jan 2007 03:22:31 -0800
+Message-ID: <7vr6u9g1l4.fsf@assigned-by-dhcp.cox.net>
+References: <1167765983316-git-send-email-j.ruehle@bmiag.de>
+	<11677659921833-git-send-email-j.ruehle@bmiag.de>
+	<459E2E57.6020503@shadowen.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 05 12:20:02 2007
+X-From: git-owner@vger.kernel.org Fri Jan 05 12:22:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H2n7B-0003qc-Gs
-	for gcvg-git@gmane.org; Fri, 05 Jan 2007 12:20:01 +0100
+	id 1H2n9g-0004V7-EA
+	for gcvg-git@gmane.org; Fri, 05 Jan 2007 12:22:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161063AbXAELT5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 5 Jan 2007 06:19:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161064AbXAELT5
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Jan 2007 06:19:57 -0500
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:64229 "EHLO
-	fed1rmmtao07.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161063AbXAELT5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Jan 2007 06:19:57 -0500
+	id S1161064AbXAELWd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 5 Jan 2007 06:22:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161065AbXAELWd
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Jan 2007 06:22:33 -0500
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:37124 "EHLO
+	fed1rmmtao05.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161064AbXAELWc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Jan 2007 06:22:32 -0500
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao07.cox.net
+          by fed1rmmtao05.cox.net
           (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070105111956.FIVB3976.fed1rmmtao07.cox.net@fed1rmimpo02.cox.net>;
-          Fri, 5 Jan 2007 06:19:56 -0500
+          id <20070105112232.MHPX15640.fed1rmmtao05.cox.net@fed1rmimpo02.cox.net>;
+          Fri, 5 Jan 2007 06:22:32 -0500
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id 7PLB1W0071kojtg0000000; Fri, 05 Jan 2007 06:20:11 -0500
+	id 7PNn1W0041kojtg0000000; Fri, 05 Jan 2007 06:22:47 -0500
 To: Andy Whitcroft <apw@shadowen.org>
-In-Reply-To: <1cb8699724ff000fbf0c14ba3e15031e@pinky> (Andy Whitcroft's
-	message of "Fri, 05 Jan 2007 10:54:33 +0000")
+In-Reply-To: <459E2E57.6020503@shadowen.org> (Andy Whitcroft's message of
+	"Fri, 05 Jan 2007 10:54:15 +0000")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35995>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35996>
 
 Andy Whitcroft <apw@shadowen.org> writes:
 
->     We have an xread() wrapper to help us with those nasty
->     interrupt returns and yet we fail to use it consistently.
->     This patch updates those plain read()'s which do not
->     have any handling for errors, or which treat those errors
->     as user visible fatal errors.
+>> +static void wt_status_print_cached_header(const char *reference)
+>> +{
+>> +	const char *c = color(WT_STATUS_HEADER);
+>> +	color_printf_ln(c, "# Cached changes to be committed:");
+>> ...
 >
->     This feels right to me, but perhaps there is some good
->     reason that things are done this way ... if so could
->     someone elighten me.
+> We seem to be using 'Cached' and 'staged' here.  I thought we had
+> updated all the docs to call files in the index "Staged for commit".
 
-Thanks.
+	# Changes staged to be committed:
 
-I do not think any of the changes you did introduced new bugs,
-but I think some of them are still wrong.  xread() protects us
-from EINTR happening before any byte is read, but it can still
-give a short read.  Many callers have a loop like this:
+Somebody did not like the verb "stage"; perhaps we can say:
 
-	do {
-        	size = xread(...);
-                yet_to_go -= size;
-	} while (yet_to_go);
+	# You have added changes to these files to be committed:
+	...
+        # There are yet to be added changes to these files:
+	...
 
-but some are not (e.g. add_excludes_from_file_1() in dir.c
-expects xread() does not return before reading full buffer).
+?
