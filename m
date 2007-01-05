@@ -1,75 +1,92 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-svnimport failed and now git-repack hates me
-Date: Fri, 05 Jan 2007 15:09:15 -0800
-Message-ID: <7v64bldqas.fsf@assigned-by-dhcp.cox.net>
-References: <204011cb0701031552j8292d23v950f828279702d3@mail.gmail.com>
-	<Pine.LNX.4.64.0701031737300.4989@woody.osdl.org>
-	<7v1wmbnw9x.fsf@assigned-by-dhcp.cox.net>
-	<204011cb0701040958k884b613i8a4639201ae6443b@mail.gmail.com>
-	<7v1wmalez6.fsf@assigned-by-dhcp.cox.net>
-	<204011cb0701050919w2001105asefe2fd99165dfa95@mail.gmail.com>
-	<7vbqldfg56.fsf@assigned-by-dhcp.cox.net>
-	<204011cb0701051133r1ede14a6gd5093a3e7fa88cb5@mail.gmail.com>
-	<20070105193958.GE8753@spearce.org>
-	<7vtzz5duk1.fsf@assigned-by-dhcp.cox.net>
-	<204011cb0701051503m3a431e07qc12662eecc08884f@mail.gmail.com>
+From: Luben Tuikov <ltuikov@yahoo.com>
+Subject: Re: [PATCH] Documentation: update git-pull.txt for clone's new default behavior
+Date: Fri, 5 Jan 2007 15:15:18 -0800 (PST)
+Message-ID: <826.67287.qm@web31809.mail.mud.yahoo.com>
+References: <7vtzz9usyp.fsf@assigned-by-dhcp.cox.net>
+Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
-	"Linus Torvalds" <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Sat Jan 06 00:09:30 2007
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, "J. Bruce Fields" <bfields@fieldses.org>
+X-From: git-owner@vger.kernel.org Sat Jan 06 00:15:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H2yBd-0002Uf-KI
-	for gcvg-git@gmane.org; Sat, 06 Jan 2007 00:09:21 +0100
+	id 1H2yHU-0004Dk-6J
+	for gcvg-git@gmane.org; Sat, 06 Jan 2007 00:15:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750842AbXAEXJR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 5 Jan 2007 18:09:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750843AbXAEXJR
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Jan 2007 18:09:17 -0500
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:57093 "EHLO
-	fed1rmmtao07.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750842AbXAEXJQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Jan 2007 18:09:16 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao07.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070105230915.ZSVT3976.fed1rmmtao07.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 5 Jan 2007 18:09:15 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id 7b8T1W0021kojtg0000000; Fri, 05 Jan 2007 18:08:27 -0500
-To: "Chris Lee" <chris133@gmail.com>
-In-Reply-To: <204011cb0701051503m3a431e07qc12662eecc08884f@mail.gmail.com>
-	(Chris Lee's message of "Fri, 5 Jan 2007 15:03:26 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1750850AbXAEXPV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 5 Jan 2007 18:15:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750855AbXAEXPV
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Jan 2007 18:15:21 -0500
+Received: from web31809.mail.mud.yahoo.com ([68.142.207.72]:30103 "HELO
+	web31809.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1750850AbXAEXPU (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 5 Jan 2007 18:15:20 -0500
+Received: (qmail 68372 invoked by uid 60001); 5 Jan 2007 23:15:19 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=X-YMail-OSG:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
+  b=u4oEA28sqSp31ythoLVMJoM7cu6mWWFRAoiiBoMfs6lh8XQu8pxm7273DDhab46kWXiq28I06U7jSpqzYS5qyBDLRmWEPLH7PtKiEDeI2uRTd2PEKupg8qRGdtLBVcHGmNVPuxOeiPVYGOelAyuiUk5M0NCYJtabKLswD9EdVKY=;
+X-YMail-OSG: 0v_eec8VM1mRLQZXKANr.a9AbltrBkn2yC1reQ0l2njefITxpzn6LYxVa79sElNDndinCgJK7vYAYrkHQI11zbDk6_ru4Se_LwkiLpi1JcO72N_9Ly0crHFDHJXm4yh7d5wBSykZ_P4v93XajnM96bL1tXTqejIIXaVYHjMe_SRE2.ty8HpqKuR6
+Received: from [64.215.88.90] by web31809.mail.mud.yahoo.com via HTTP; Fri, 05 Jan 2007 15:15:18 PST
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vtzz9usyp.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36042>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36043>
 
-"Chris Lee" <chris133@gmail.com> writes:
+--- Junio C Hamano <junkio@cox.net> wrote:
+> 
+> Because [remote] is NOT about mapping.  It asks the fetch
+> mechanism to fetch from that remote, so the primary thing you
+> should look at is .url, not RHS of colon on .fetch lines.  Use
+> of tracking branches is strictly optional.
 
-> On 1/5/07, Junio C Hamano <junkio@cox.net> wrote:
->> Subject: [PATCH] builtin-prune: memory diet.
->>
->> Somehow we forgot to turn save_commit_buffer off while walking
->> the reachable objects.  Releasing the memory for commit object
->> data that we do not use matters for large projects (for example,
->> about 90MB is saved while traversing linux-2.6 history).
->
-> Is git-verify-pack supposed to mmap the entire packfile? Because the
-> version I have maps 2.3GB into RAM and keeps it there until it's done.
+Remote
+------
 
-Yes -- we need to hash the whole thing as well as doing other
-checks on it.  Sliding mmap() in "next" will mmap that in chunks
-of 32MB or 1GB, but its needing to read every byte of it does
-not change.
+Please help me understand.  Here is a sample remote from
+an actual repo (actual names changed):
 
-The problem Linus pointed out was that your SHA1_Update()
-implementations may not be prepared to hash the whole 2.3GB in
-one go.  The one in "master" (and "maint", although I haven't
-done a v1.4.4.4 maintenance release yet) calls SHA1_Update()
-in chunks to work around that potential issue.
+[remote "origin"]
+        url = http://blah/bleah.git
+        fetch = +refs/heads/*:refs/remotes/origin/*
+
+This basically says: "Get it" from such and such url, where
+on the repo at that url, i.e. the remote side, you will
+find stuff in "refs/heads/", and when you get it here, locally,
+put it in refs/remotes/origin/.
+
+Now if this isn't a mapping, then please can someone
+explain to me what a "mapping" is?
+
+The "fetch = <remote>:<local>" is inherently a mapping,
+its syntax dictates it, as does the actual actions
+it performs: "fetch" from "remote" and "put in local <local>".
+
+Branch
+------
+
+Here is an actual example:
+
+[branch "branchA"]
+        remote = origin
+        merge = refs/heads/branchA
+
+Yeah, but by default "refs/heads/branchA" doesn't exist (see
+my previous email).  It doesn't have to, since it specifies
+the "remote part", but that has already been handled by
+"[remote]".
+
+Unless of course "[branch "..."]" specifies the _remote_ branch
+being tracked in refs/remotes/origin.  Is this the case.
+
+Does "[branch]" apply to local branches too?  If so,
+then what happens when refs/heads/branchA does exist and is
+the same as the one it describes -- i.e. completely old behavior.
+
+Thanks,
+    Luben
