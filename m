@@ -1,59 +1,50 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/2] git-reset <tree> -- <path> restores absense of <path>
- in <tree>
-Date: Fri, 5 Jan 2007 11:29:24 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0701051128120.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <7vmz4xiz6t.fsf@assigned-by-dhcp.cox.net>
+From: "Jonathan Trites" <tritesnikov@gmail.com>
+Subject: Deleting branches in cogito
+Date: Fri, 5 Jan 2007 04:29:59 -0600
+Message-ID: <11935db10701050229h215416afk9ac2008c4f176b36@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 05 11:29:31 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Fri Jan 05 11:30:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H2mKI-0005v1-Ar
-	for gcvg-git@gmane.org; Fri, 05 Jan 2007 11:29:30 +0100
+	id 1H2mKv-00064p-6B
+	for gcvg-git@gmane.org; Fri, 05 Jan 2007 11:30:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161041AbXAEK31 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 5 Jan 2007 05:29:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161043AbXAEK31
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Jan 2007 05:29:27 -0500
-Received: from mail.gmx.net ([213.165.64.20]:38763 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1161041AbXAEK30 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Jan 2007 05:29:26 -0500
-Received: (qmail invoked by alias); 05 Jan 2007 10:29:24 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp053) with SMTP; 05 Jan 2007 11:29:24 +0100
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vmz4xiz6t.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S1161045AbXAEKaE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 5 Jan 2007 05:30:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161047AbXAEKaB
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Jan 2007 05:30:01 -0500
+Received: from wx-out-0506.google.com ([66.249.82.237]:54418 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161048AbXAEKaA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Jan 2007 05:30:00 -0500
+Received: by wx-out-0506.google.com with SMTP id h27so7048386wxd
+        for <git@vger.kernel.org>; Fri, 05 Jan 2007 02:29:59 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=psfwOyD7ki0RDMQSU+AoH9ZafTchhlkeDnuj5TUYuVruplLs8RtnA7xQJnVYwKeAVfds/hmYxX8yImlu+PgzB3+W+dVFRU9bp2YbXi7O7YN1LVRSnaLjDa1Bbaf+fuqKzzY7ysfnBm0GtJqexP8SDkQNziqFhVZHJjj9Z1Di1/U=
+Received: by 10.90.98.10 with SMTP id v10mr633675agb.1167992999900;
+        Fri, 05 Jan 2007 02:29:59 -0800 (PST)
+Received: by 10.90.100.7 with HTTP; Fri, 5 Jan 2007 02:29:59 -0800 (PST)
+To: git@vger.kernel.org
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35989>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35990>
 
-Hi,
+Forgive my brain damage, but how does one go about deleting branches
+in cogito? I've been up and down google and the mailing lists and I
+can't find any mention of how one does this.
 
-On Fri, 5 Jan 2007, Junio C Hamano wrote:
+I see there are commands cg-switch, cg-branch-add, cg-branch-chg, and
+cg-branch-ls, but nowhere do I see a "cg-branch-rm" command or
+equivalent cg-switch command line option.
 
->  * By the way, I noticed that "git log --diff-filter=A --
->    t/t5401-update-hooks.sh" does not find the commit that
->    introduced the path.  v1.4.1.1 seems to work but v1.4.2.4
->    does not.  I haven't bisected it yet...
-
-It is this commit:
-
-1798562: "log --raw: Don't descend into subdirectories by default"
-
-And sure enough,
-
-$ git log next -r --diff-filter=A -- t/t5401-update-hooks.sh
-
-works.
-
-Ciao,
-Dscho
+In the git commands I see "git-branch -d", and maybe this is the
+command I am looking for, but is there a "native" cogito command to
+delete branches?
