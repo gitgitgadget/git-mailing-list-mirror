@@ -1,92 +1,65 @@
-From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: Re: [PATCH] Documentation: update git-pull.txt for clone's new default behavior
-Date: Fri, 5 Jan 2007 15:15:18 -0800 (PST)
-Message-ID: <826.67287.qm@web31809.mail.mud.yahoo.com>
-References: <7vtzz9usyp.fsf@assigned-by-dhcp.cox.net>
-Reply-To: ltuikov@yahoo.com
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: New way of tracking remote branches -- question
+Date: Fri, 05 Jan 2007 15:17:26 -0800
+Message-ID: <7vzm8xcbcp.fsf@assigned-by-dhcp.cox.net>
+References: <776323.21089.qm@web31808.mail.mud.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, "J. Bruce Fields" <bfields@fieldses.org>
-X-From: git-owner@vger.kernel.org Sat Jan 06 00:15:28 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 06 00:17:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H2yHU-0004Dk-6J
-	for gcvg-git@gmane.org; Sat, 06 Jan 2007 00:15:24 +0100
+	id 1H2yJX-0004nX-Gi
+	for gcvg-git@gmane.org; Sat, 06 Jan 2007 00:17:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750850AbXAEXPV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 5 Jan 2007 18:15:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750855AbXAEXPV
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Jan 2007 18:15:21 -0500
-Received: from web31809.mail.mud.yahoo.com ([68.142.207.72]:30103 "HELO
-	web31809.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1750850AbXAEXPU (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 5 Jan 2007 18:15:20 -0500
-Received: (qmail 68372 invoked by uid 60001); 5 Jan 2007 23:15:19 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=X-YMail-OSG:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
-  b=u4oEA28sqSp31ythoLVMJoM7cu6mWWFRAoiiBoMfs6lh8XQu8pxm7273DDhab46kWXiq28I06U7jSpqzYS5qyBDLRmWEPLH7PtKiEDeI2uRTd2PEKupg8qRGdtLBVcHGmNVPuxOeiPVYGOelAyuiUk5M0NCYJtabKLswD9EdVKY=;
-X-YMail-OSG: 0v_eec8VM1mRLQZXKANr.a9AbltrBkn2yC1reQ0l2njefITxpzn6LYxVa79sElNDndinCgJK7vYAYrkHQI11zbDk6_ru4Se_LwkiLpi1JcO72N_9Ly0crHFDHJXm4yh7d5wBSykZ_P4v93XajnM96bL1tXTqejIIXaVYHjMe_SRE2.ty8HpqKuR6
-Received: from [64.215.88.90] by web31809.mail.mud.yahoo.com via HTTP; Fri, 05 Jan 2007 15:15:18 PST
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vtzz9usyp.fsf@assigned-by-dhcp.cox.net>
+	id S1750860AbXAEXR2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 5 Jan 2007 18:17:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750859AbXAEXR2
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Jan 2007 18:17:28 -0500
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:58260 "EHLO
+	fed1rmmtao04.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750855AbXAEXR1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Jan 2007 18:17:27 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20070105231727.NXTO7494.fed1rmmtao04.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 5 Jan 2007 18:17:27 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id 7bGe1W00J1kojtg0000000; Fri, 05 Jan 2007 18:16:38 -0500
+To: ltuikov@yahoo.com
+In-Reply-To: <776323.21089.qm@web31808.mail.mud.yahoo.com> (Luben Tuikov's
+	message of "Fri, 5 Jan 2007 15:02:31 -0800 (PST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36044>
 
---- Junio C Hamano <junkio@cox.net> wrote:
-> 
-> Because [remote] is NOT about mapping.  It asks the fetch
-> mechanism to fetch from that remote, so the primary thing you
-> should look at is .url, not RHS of colon on .fetch lines.  Use
-> of tracking branches is strictly optional.
+Luben Tuikov <ltuikov@yahoo.com> writes:
 
-Remote
-------
+> I can see that the remote heads are where they are supposed to be
+> but no local tracking heads are created (by default).  I had
+> to do this manually.
+>
+> Old behavior was that git did that for you automatically.
+> So I suppose this is another newbie protection.
 
-Please help me understand.  Here is a sample remote from
-an actual repo (actual names changed):
+A very fuzzily stated question which is hard to answer, but I do
+not think it is another newbie protection, if it apparently is
+actively hurting you.  Also the documentation may need to be
+updated to teach you enough about how to achieve what you want.
 
-[remote "origin"]
-        url = http://blah/bleah.git
-        fetch = +refs/heads/*:refs/remotes/origin/*
+You can see where remote heads are by doing what?  ls-remote?
+"Old behaviour" for what configuration?
 
-This basically says: "Get it" from such and such url, where
-on the repo at that url, i.e. the remote side, you will
-find stuff in "refs/heads/", and when you get it here, locally,
-put it in refs/remotes/origin/.
+A fresh clone made with a recent version sets things up to track
+all remote branches from the repository you cloned from under
+remotes/origin/, and it even tracks new ones as they are added
+at the remote, so you probably are doing something different
+from the default configuration that has:
 
-Now if this isn't a mapping, then please can someone
-explain to me what a "mapping" is?
-
-The "fetch = <remote>:<local>" is inherently a mapping,
-its syntax dictates it, as does the actual actions
-it performs: "fetch" from "remote" and "put in local <local>".
-
-Branch
-------
-
-Here is an actual example:
-
-[branch "branchA"]
-        remote = origin
-        merge = refs/heads/branchA
-
-Yeah, but by default "refs/heads/branchA" doesn't exist (see
-my previous email).  It doesn't have to, since it specifies
-the "remote part", but that has already been handled by
-"[remote]".
-
-Unless of course "[branch "..."]" specifies the _remote_ branch
-being tracked in refs/remotes/origin.  Is this the case.
-
-Does "[branch]" apply to local branches too?  If so,
-then what happens when refs/heads/branchA does exist and is
-the same as the one it describes -- i.e. completely old behavior.
-
-Thanks,
-    Luben
+    remotes.origin.fetch = +refs/heads/*:refs/remotes/origin/*
