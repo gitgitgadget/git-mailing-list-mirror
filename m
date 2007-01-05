@@ -1,57 +1,63 @@
-From: Andy Whitcroft <apw@shadowen.org>
-Subject: Re: Pushing into a repository with working directory?
-Date: Fri, 05 Jan 2007 09:32:19 +0000
-Message-ID: <459E1B23.4060400@shadowen.org>
-References: <20070102045108.GC27690@spearce.org> <459E1182.201@shadowen.org> <7vwt41j1le.fsf@assigned-by-dhcp.cox.net>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: What's cooking in git.git (topics)
+Date: Fri, 5 Jan 2007 10:37:08 +0100
+Message-ID: <81b0412b0701050137g49d07c8aw2ce6938dfcef1646@mail.gmail.com>
+References: <7vwt4647g0.fsf@assigned-by-dhcp.cox.net>
+	 <81b0412b0701041022h30cd4fcxd62dbf3ecb504ea9@mail.gmail.com>
+	 <20070105025921.GA14042@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 05 10:32:40 2007
+Cc: "Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 05 10:37:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H2lR4-0002R7-D4
-	for gcvg-git@gmane.org; Fri, 05 Jan 2007 10:32:26 +0100
+	id 1H2lVy-0003YI-DZ
+	for gcvg-git@gmane.org; Fri, 05 Jan 2007 10:37:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965140AbXAEJcX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 5 Jan 2007 04:32:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161012AbXAEJcW
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Jan 2007 04:32:22 -0500
-Received: from hellhawk.shadowen.org ([80.68.90.175]:2507 "EHLO
-	hellhawk.shadowen.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965140AbXAEJcW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Jan 2007 04:32:22 -0500
-Received: from localhost ([127.0.0.1])
-	by hellhawk.shadowen.org with esmtp (Exim 4.50)
-	id 1H2lQ7-0007nZ-7g; Fri, 05 Jan 2007 09:31:27 +0000
-User-Agent: Icedove 1.5.0.9 (X11/20061220)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vwt41j1le.fsf@assigned-by-dhcp.cox.net>
-X-Enigmail-Version: 0.94.1.0
-OpenPGP: url=http://www.shadowen.org/~apw/public-key
+	id S1161028AbXAEJhM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 5 Jan 2007 04:37:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161021AbXAEJhM
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Jan 2007 04:37:12 -0500
+Received: from ug-out-1314.google.com ([66.249.92.175]:52442 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161028AbXAEJhK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Jan 2007 04:37:10 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so5655779uga
+        for <git@vger.kernel.org>; Fri, 05 Jan 2007 01:37:08 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=UJEsOpPabWAN8yc61RTYPpjRVRycFI0trzXz0/ArNZcpczDCeS+Geif/YcDRw40FW1ENz31kpAEyW6MZT+Wfj2jUeD18c+Uqgbd9Hmt+N21pzWzsTRJ9nMg04CVIOQBMX8zMYHHBvfQcyraATCQlW7aQQMl/tXPbjgyWCQTwv9g=
+Received: by 10.78.158.11 with SMTP id g11mr2879678hue.1167989828728;
+        Fri, 05 Jan 2007 01:37:08 -0800 (PST)
+Received: by 10.78.135.3 with HTTP; Fri, 5 Jan 2007 01:37:08 -0800 (PST)
+To: "Shawn O. Pearce" <spearce@spearce.org>
+In-Reply-To: <20070105025921.GA14042@spearce.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35984>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35985>
 
-Junio C Hamano wrote:
-> Andy Whitcroft <apw@shadowen.org> writes:
-> 
->> Special casing the 'current' branch makes any sort of automated push
->> setup unreliable.  Indeed the special case preventing a fetch into the
->> current branch is pretty annoying for the same reason.  I would almost
->> prefer to relax that than add the same for push.
-> 
-> How would you relax the fetch case?  Fetching into the current
-> branch, unless the repository is bare, is always a fishy
-> operation.
+On 1/5/07, Shawn O. Pearce <spearce@spearce.org> wrote:
+> > >* sp/mmap (Sat Dec 30 22:13:43 2006 -0500) 25 commits
+> >
+> > Running this and the merge-recursive speedup I sent today locally.
+> > sp/mmap needs relatively recent cygwin library (otherwise pread
+> > is broken). No other ill effects noticed. Perfomance is bearable.
+>
+> The default on Cygwin is now NO_MMAP.  I've disabled that default
 
-Is it fishy if the working directory and index match HEAD?  If not, then
-we could detect that and allow update in that case?
+I left it at NO_MMAP: wanted to see how bad pread performs.
+No worse than mmap, as it seems.
 
-Also, if we had dangling head support we could "leave" HEAD pointing to
-the starting commit, and emit a nice fat warning.
+> in my own Cygwin environment and continue to use mmap() rather than
+> pread(), but I'm also running my sp/mmap change there.  I haven't
+> noticed a performance difference, but I also haven't tested for one.
+> IOW if there is a difference its close enough to noise to not be
+> visible to me as a user.
 
--apw
+Confirm that.
