@@ -1,60 +1,78 @@
-From: "Chris Lee" <chris133@gmail.com>
-Subject: Re: git-svnimport failed and now git-repack hates me
-Date: Fri, 5 Jan 2007 09:19:35 -0800
-Message-ID: <204011cb0701050919w2001105asefe2fd99165dfa95@mail.gmail.com>
-References: <204011cb0701031552j8292d23v950f828279702d3@mail.gmail.com>
-	 <Pine.LNX.4.64.0701031737300.4989@woody.osdl.org>
-	 <7v1wmbnw9x.fsf@assigned-by-dhcp.cox.net>
-	 <204011cb0701040958k884b613i8a4639201ae6443b@mail.gmail.com>
-	 <7v1wmalez6.fsf@assigned-by-dhcp.cox.net>
+From: Manu <manu@blairos.org>
+Subject: Re: fatal: unable to create '.git/index': File exists
+Date: Fri, 5 Jan 2007 18:30:00 +0100
+Message-ID: <f898cca90701050930l21338b88t1bd75e037beeca05@mail.gmail.com>
+References: <200701051150.09968.lenb@kernel.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Fri Jan 05 18:19:55 2007
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 05 18:30:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H2sjE-0002eN-Bj
-	for gcvg-git@gmane.org; Fri, 05 Jan 2007 18:19:40 +0100
+	id 1H2stL-0005RD-SJ
+	for gcvg-git@gmane.org; Fri, 05 Jan 2007 18:30:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422629AbXAERTh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 5 Jan 2007 12:19:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422630AbXAERTh
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Jan 2007 12:19:37 -0500
-Received: from wx-out-0506.google.com ([66.249.82.235]:46105 "EHLO
+	id S1422637AbXAERaE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 5 Jan 2007 12:30:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422642AbXAERaE
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Jan 2007 12:30:04 -0500
+Received: from wx-out-0506.google.com ([66.249.82.229]:50828 "EHLO
 	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1422629AbXAERTg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Jan 2007 12:19:36 -0500
-Received: by wx-out-0506.google.com with SMTP id h27so7144250wxd
-        for <git@vger.kernel.org>; Fri, 05 Jan 2007 09:19:35 -0800 (PST)
+	with ESMTP id S1422637AbXAERaA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Jan 2007 12:30:00 -0500
+Received: by wx-out-0506.google.com with SMTP id h27so7146605wxd
+        for <git@vger.kernel.org>; Fri, 05 Jan 2007 09:30:00 -0800 (PST)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=O+iM7A6E/d4EyVv+eu9aWYI4ydV2aw7G+g2D5yky8IbrfvChcYxrnMuXL2drhJotL9I+Q0IRoJGisZcgxWCOZFCWsn1Moyf4NzStuWbddm7lg/KnTLUF0n5lg6zU1tcRofRExRSF7lrbboy8wtVBkxWOlBE+1dslh4S230Awc4c=
-Received: by 10.90.68.15 with SMTP id q15mr980077aga.1168017575918;
-        Fri, 05 Jan 2007 09:19:35 -0800 (PST)
-Received: by 10.90.81.19 with HTTP; Fri, 5 Jan 2007 09:19:35 -0800 (PST)
-To: "Git Mailing List" <git@vger.kernel.org>
-In-Reply-To: <7v1wmalez6.fsf@assigned-by-dhcp.cox.net>
+        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=G1x+uYWKsRdUsZZZKnwpYRu/Iw01A5hdV4ejUHsfvzWGTgPvkd4wc3NFV9k+aVXQ3Xmvv/8QpcU46fP6OD4SpoBnoibqzP1ixyHOBLHA9ONYo2bAPvIdGc2t3ZQ8k3eGKbIvgc9pfrdufT1Zvs7n0bNHX6o59LC0dXCZ6xV5qaI=
+Received: by 10.70.90.17 with SMTP id n17mr43646291wxb.1168018200271;
+        Fri, 05 Jan 2007 09:30:00 -0800 (PST)
+Received: by 10.70.36.15 with HTTP; Fri, 5 Jan 2007 09:30:00 -0800 (PST)
+To: "Len Brown" <lenb@kernel.org>
+In-Reply-To: <200701051150.09968.lenb@kernel.org>
 Content-Disposition: inline
+X-Google-Sender-Auth: 9a701360a7bee728
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36009>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36010>
 
-So, first up:
+Got this message once.
+The reason was a git process still had a lock on the index file.
+Make sure you have no git processes left running from the interruption
+of git pull.
 
-Using git-verify-pack from master does not fail. It actually does
-verify the pack (after a pretty decent wait.) I should have tried
-master first before sending out the first mail. :)
+ps -ux | grep "git"
 
-It takes about eleven minutes for git-verify-pack to complete, but it
-does run to completion. So something that changed between 1.4.1 and
-master made everything great again.
+Manu
 
-I haven't tried git-prune yet, but I'll report back with the results
-from that next.
-
-Junio: Did you still want me to try those steps with that patch
-anyway, even though it works on master?
+On 1/5/07, Len Brown <lenb@kernel.org> wrote:
+> I kicked off a pull.
+> Realized I was on the wrong branch
+> and immediately did a ^C
+>
+> Now I can't change branches:
+>
+> # git checkout release
+> fatal: unable to create '.git/index': File exists
+> fatal: unable to create '.git/index': File exists
+>
+> git reset --hard
+> does not help.
+>
+> curiously, moving .git/index to /tmp and repeating
+> results in the same error.
+>
+> clues?
+>
+> thanks,
+> -Len
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
