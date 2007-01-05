@@ -1,74 +1,123 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: git-svnimport failed and now git-repack hates me
-Date: Fri, 5 Jan 2007 15:17:30 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0701051515000.3661@woody.osdl.org>
-References: <204011cb0701031552j8292d23v950f828279702d3@mail.gmail.com>
- <Pine.LNX.4.64.0701031737300.4989@woody.osdl.org> <7v1wmbnw9x.fsf@assigned-by-dhcp.cox.net>
- <204011cb0701040958k884b613i8a4639201ae6443b@mail.gmail.com>
- <7v1wmalez6.fsf@assigned-by-dhcp.cox.net> <204011cb0701050919w2001105asefe2fd99165dfa95@mail.gmail.com>
- <7vbqldfg56.fsf@assigned-by-dhcp.cox.net> <204011cb0701051133r1ede14a6gd5093a3e7fa88cb5@mail.gmail.com>
- <20070105193958.GE8753@spearce.org> <7vtzz5duk1.fsf@assigned-by-dhcp.cox.net>
- <204011cb0701051503m3a431e07qc12662eecc08884f@mail.gmail.com>
- <7v64bldqas.fsf@assigned-by-dhcp.cox.net>
+From: Yann Dirson <ydirson@altern.org>
+Subject: [RFC] Adding stack-level logging/undo to StGIT
+Date: Sat, 6 Jan 2007 00:19:44 +0100
+Message-ID: <20070105231944.GB6179@nan92-1-81-57-214-146.fbx.proxad.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Chris Lee <chris133@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 06 00:17:51 2007
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Sat Jan 06 00:19:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H2yJi-0004s8-N6
-	for gcvg-git@gmane.org; Sat, 06 Jan 2007 00:17:43 +0100
+	id 1H2yLn-0005UP-GH
+	for gcvg-git@gmane.org; Sat, 06 Jan 2007 00:19:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750859AbXAEXRk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 5 Jan 2007 18:17:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750861AbXAEXRk
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Jan 2007 18:17:40 -0500
-Received: from smtp.osdl.org ([65.172.181.24]:41412 "EHLO smtp.osdl.org"
+	id S1750861AbXAEXTs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 5 Jan 2007 18:19:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750863AbXAEXTs
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Jan 2007 18:19:48 -0500
+Received: from smtp2-g19.free.fr ([212.27.42.28]:55585 "EHLO smtp2-g19.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750858AbXAEXRj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Jan 2007 18:17:39 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l05NHVWi013016
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 5 Jan 2007 15:17:32 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l05NHUAv007447;
-	Fri, 5 Jan 2007 15:17:31 -0800
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v64bldqas.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=-0.67 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.107__
-X-MIMEDefang-Filter: osdl$Revision: 1.167 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1750861AbXAEXTs (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Jan 2007 18:19:48 -0500
+Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
+	by smtp2-g19.free.fr (Postfix) with ESMTP id A7EB77677;
+	Sat,  6 Jan 2007 00:19:46 +0100 (CET)
+Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
+	id 7DF901F08C; Sat,  6 Jan 2007 00:19:44 +0100 (CET)
+To: Catalin Marinas <catalin.marinas@gmail.com>,
+	GIT list <git@vger.kernel.org>
+Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36045>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36046>
+
+This mail is a draft collection of design ideas to hopefully progress
+towards full "undo" functionnality in StGIT.  The issue is not
+trivial, so I'd prefer to hear from users before starting to code
+anything :)
 
 
+The main goal with this feature is to provide a log of what happenned
+to a stgit stack, with sufficient details to be able to undo any
+number of operations.  A "stg undo" (and fellow "stg redo") would
+replace current --undo flags that only a couple of commands implement.
+Another command (maybe "stg slog" ?) would allow to examine this log.
 
-On Fri, 5 Jan 2007, Junio C Hamano wrote:
-> 
-> The problem Linus pointed out was that your SHA1_Update()
-> implementations may not be prepared to hash the whole 2.3GB in
-> one go.  The one in "master" (and "maint", although I haven't
-> done a v1.4.4.4 maintenance release yet) calls SHA1_Update()
-> in chunks to work around that potential issue.
+Since some existing stgit operations are already made of several more
+elementary operations, the log will most likely have to record sort of
+BEGIN/END events, which will pave the way to transactions.
 
-Well, I think Chris is worried about having it all mapped at the same 
-time.
 
-It does actually end up forcing the kernel to do more work (it's harder to 
-re-use a mapped page than it is to reuse one that isn't), and in that 
-sense, if you have less than <n> GB of RAM and can't just keep it all in 
-memory at the same time, doing one large mmap is possibly more expensive 
-than chunking things up.
+What I'm thinking of is to use a mechanism similar to the one already
+used for patch logs: the stack log would use its own head ref pointing
+to a commit describing the operation, with the stacklog commit for the
+previous operation as parent.
 
-That said, I doubt it's a huge problem. If you can't fit the whole file in 
-memory, your real performance issue is going to be the IO, not the fact 
-that the kernel has to work a bit harder at unmapping pages ;)
+Information to be available from a stacklog commit include:
 
-		Linus
+- the series file
+- the current top patchname
+- the relevant patchlog commits
+
+The current top can be put into a "Current:" pseudo-header in the
+commit message.
+
+The series file seems a good candidate to be history-tracked by GIT
+(in its own tree if necessary - a tree would even provide some place
+to extend the mechanism when needed).
+
+The list of patchlog commits, ordered by the series file, may or may
+not be useful to history-track.  It could be kept in a blob alongside
+the series file, or could be part of the stacklog commit message.  The
+latter would allow to jump from stacklog to patchlog in gitk at no
+cost (although that's hardly an excuse per se ;).
+
+
+Which patchlogs should be referenced by a stacklog entry ?
+
+I would rule out those for patches left unapplied by the operation,
+which (unless I miss some point) are by definition not touched by that
+operation (I'm talking about elementary operations like
+push/pop/new/delete here - compound operations can obviously have
+side-effects, recorded in the elementary stacklogs that build them up).
+
+For elementary operations as well, it looks like just recording the
+patchlog for the patch left at the top by the operation could be
+enough.  Or do I miss something ?
+
+
+Maybe maintainance of the stacklog requires a separate index file ?
+
+
+For compound operations, I'd like to be able to handle them as a
+single operation for most purpose - ie, "stg undo" after a "stg push
+p1" would both undo the push like "stg push --undo" currently does,
+and as well revert the series order to put p1 back where it was
+located.
+
+That is, a compound operation would be represented in the stack log by
+a single commit.  That commit would in turn point to the sequence of
+elementary commits that make the compound, probably by a "Sublogs:"
+pseudo-header in the compound stacklog message.
+
+Until a compound operation has been finalized, we would store in the
+stacklog the operations that will make the compound, using a special
+"BEGIN" operation to mark the start of the transaction.  When
+finalizing the transaction, those would be moved from the main
+stacklog to the compound stacklog entry, which would replace them.
+
+Problem: with this design, the first operation in the compound will
+point to the BEGIN op as its parent; I would prefer to have it point
+to the compound's parent (ie. the previous real operation on the
+stack).  That would allow to easily "break a transaction", either
+before it's finished, or afterwards by "undoing into it".
+
+So probably we should keep the BEGIN marker somewhere else.
+Any strong ideas out there ?
+
+Best regards,
+-- 
+Yann.
