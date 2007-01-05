@@ -1,84 +1,88 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Default "tar" umask..
-Date: Fri, 05 Jan 2007 13:03:50 -0800
-Message-ID: <7vzm8xdw3t.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0612301037570.4473@woody.osdl.org>
-	<7vfyaxjiaj.fsf@assigned-by-dhcp.cox.net>
-	<459EB78B.60000@lsrfire.ath.cx>
+From: Michael Krufky <mkrufky@linuxtv.org>
+Subject: Re: [PATCH] gitweb: Fix shortlog only showing HEAD revision.
+Date: Fri, 05 Jan 2007 16:21:51 -0500
+Message-ID: <459EC16F.1070809@linuxtv.org>
+References: <459C0232.3090804@linuxtv.org> <20070103202555.GA25768@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jan 05 22:04:04 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "J.H." <warthog19@eaglescrag.net>, git@vger.kernel.org,
+	linux-kernel <linux-kernel@vger.kernel.org>,
+	Michael Krufky <mkrufky@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 05 22:23:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H2wEL-0002F6-Ke
-	for gcvg-git@gmane.org; Fri, 05 Jan 2007 22:04:01 +0100
+	id 1H2wWI-0007Be-Gj
+	for gcvg-git@gmane.org; Fri, 05 Jan 2007 22:22:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750755AbXAEVDz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 5 Jan 2007 16:03:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750772AbXAEVDz
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Jan 2007 16:03:55 -0500
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:43381 "EHLO
-	fed1rmmtao06.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750755AbXAEVDz convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 5 Jan 2007 16:03:55 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070105210352.TZWJ2628.fed1rmmtao06.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 5 Jan 2007 16:03:52 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id 7Z331W00T1kojtg0000000; Fri, 05 Jan 2007 16:03:03 -0500
-In-Reply-To: <459EB78B.60000@lsrfire.ath.cx> (=?iso-8859-1?Q?Ren=E9?=
- Scharfe's message of "Fri,
-	05 Jan 2007 21:39:39 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-To: unlisted-recipients:; (no To-header on input)
+	id S1750716AbXAEVW3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 5 Jan 2007 16:22:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750777AbXAEVW3
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Jan 2007 16:22:29 -0500
+Received: from kirby.webscope.com ([204.141.84.54]:47827 "EHLO
+	kirby.webscope.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750716AbXAEVW2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Jan 2007 16:22:28 -0500
+Received: from [127.0.0.1] ([68.160.103.76])
+	(authenticated bits=0)
+	by kirby.webscope.com (8.12.8/8.12.8) with ESMTP id l05LRm6h019110;
+	Fri, 5 Jan 2007 16:27:53 -0500
+User-Agent: Thunderbird 1.5.0.9 (Windows/20061207)
+To: Robert Fitzsimons <robfitz@273k.net>
+In-Reply-To: <20070103202555.GA25768@localhost>
+X-Enigmail-Version: 0.94.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36022>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36023>
 
-Ren=E9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+Robert Fitzsimons wrote:
+> My change in 190d7fdcf325bb444fa806f09ebbb403a4ae4ee6 had a small bug
+> found by Michael Krufky which caused the passed in hash value to be
+> ignored, so shortlog would only show the HEAD revision.
+> 
+> Signed-off-by: Robert Fitzsimons <robfitz@273k.net>
+> ---
+> 
+> Thanks for finding this Michael.  It' just a small bug introducted by a
+> recent change I made.  Including John 'Warthog9' so hopefully he can add
+> this to the version of gitweb which is hosted on kernel.org.
+> 
+> Robert
 
-> Junio C Hamano schrieb:
->> ...
->> Having said that, I do not see much reason for anybody to want to
->> extract any material that is worth to be placed under version contro=
-l
->> in a way that is world-writable, so I do not mind having 002 as the
->> default, but I feel that group-writability should be kept under
->> control of the umask of end users who know what they are doing.
->
-> Yes, using 002 is tempting.  But it's got the same "looseness" proble=
-ms
-> as 000, only on a smaller scaler: there are certainly situations wher=
-e a
-> user doesn't want to share write permissions with all the members of =
-her
-> current group.  If we change the default, let's go all the way to 022=
-=2E
+Robert,
 
-I don't think the above argument makes much sense -- it does not
-explain why you do not go "all the way" to 077.
+Thank you for fixing this bug so quickly.  I've noticed that the gitweb
+templates on kernel.org have changed at least once since you wrote this email to
+me... (I can tell, based on the fact that the git:// link has moved from the
+project column to a link labeled, "git" all the way to the right.)
 
-On the other hand, I can explain 002 fairly easily and
-consistently.  This matters only for users who can become root
-and does not know or care about implied -p, and the group root
-belongs to had better not contain any suspicious user, so
-leaving group open does not hurt.  022 actively hurts sane usage
-(i.e. work always with a sane umask and extract as non root
-users) while 002 does not.
+Unfortunately, however, the bug that I had originally reported has not yet been
+fixed on the kernel.org www server.  Either the patch in question hasn't yet
+been applied to that installation, or it HAS in fact been applied, but doesn't
+fix the problem as intended.
 
-> Admittedly, that doesn't help users who download from a "022" project=
-,
-> but really want something looser.  I think it's more important to
-> avoid violating the expectations of all those who freak out at 0666
-> permission modes attached to their freshly downloaded files, though.
+Do you know which of the above is true?
 
-Exactly, and that is why I think 002 is much saner.
+Thanks again,
+
+Mike Krufky
+
+>  gitweb/gitweb.perl |    2 +-
+>  1 files changed, 1 insertions(+), 1 deletions(-)
+> 
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index d845e91..2e94c2c 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -4423,7 +4423,7 @@ sub git_shortlog {
+>  	}
+>  	my $refs = git_get_references();
+>  
+> -	my @commitlist = parse_commits($head, 101, (100 * $page));
+> +	my @commitlist = parse_commits($hash, 101, (100 * $page));
+>  
+>  	my $paging_nav = format_paging_nav('shortlog', $hash, $head, $page, (100 * ($page+1)));
+>  	my $next_link = '';
