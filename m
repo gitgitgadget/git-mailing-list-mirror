@@ -1,63 +1,74 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: [BUG] stgit: unexpected "unknown user details" on refresh
-Date: Fri, 5 Jan 2007 09:07:51 +0000
-Message-ID: <b0943d9e0701050107s21ec8527ud89425df4772998@mail.gmail.com>
-References: <20070104232224.GA12756@nan92-1-81-57-214-146.fbx.proxad.net>
+From: Nicolas Vilz <niv@iaglans.de>
+Subject: Re: git-svn throwing assertion on old svn tracking branch
+Date: Fri, 5 Jan 2007 10:18:55 +0100
+Message-ID: <20070105091855.GA10777@hermes.lan.home.vilz.de>
+References: <20061220235551.GA2974@hermes.lan.home.vilz.de> <20061221010520.GB3901@localdomain> <20070101022734.GF7730@hand.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "GIT list" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jan 05 10:08:15 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 05 10:19:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H2l3M-0005TH-Mx
-	for gcvg-git@gmane.org; Fri, 05 Jan 2007 10:07:57 +0100
+	id 1H2lEb-0008IQ-2K
+	for gcvg-git@gmane.org; Fri, 05 Jan 2007 10:19:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030369AbXAEJHx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 5 Jan 2007 04:07:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030371AbXAEJHx
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Jan 2007 04:07:53 -0500
-Received: from nz-out-0506.google.com ([64.233.162.229]:63775 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030369AbXAEJHv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Jan 2007 04:07:51 -0500
-Received: by nz-out-0506.google.com with SMTP id s1so3252121nze
-        for <git@vger.kernel.org>; Fri, 05 Jan 2007 01:07:51 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=GF/jBQao0rJhP5rtjalu7PsjFj/5nmBNk5Rn5kEKjWmbX7eKFWd3QlbKA0gBuDF+X9x9KC6/H/59OLVkr0cPZeVHon6wbrKzsZ7HdCat+54HnS6OxYRb34SGBsujwLxx5QaOe70DNr04QBmxoGuLNk0fFPSa4qfGPEJuxZqU5ZE=
-Received: by 10.64.243.10 with SMTP id q10mr851226qbh.1167988071123;
-        Fri, 05 Jan 2007 01:07:51 -0800 (PST)
-Received: by 10.65.133.13 with HTTP; Fri, 5 Jan 2007 01:07:51 -0800 (PST)
-To: "Yann Dirson" <ydirson@altern.org>
-In-Reply-To: <20070104232224.GA12756@nan92-1-81-57-214-146.fbx.proxad.net>
+	id S965134AbXAEJTa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 5 Jan 2007 04:19:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965135AbXAEJT3
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Jan 2007 04:19:29 -0500
+Received: from geht-ab-wie-schnitzel.de ([217.69.165.145]:3705 "EHLO
+	vsectoor.geht-ab-wie-schnitzel.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S965134AbXAEJT2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 5 Jan 2007 04:19:28 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by vsectoor.geht-ab-wie-schnitzel.de (Postfix) with ESMTP id E3CF33E6B;
+	Fri,  5 Jan 2007 10:19:26 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at vsectoor.geht-ab-wie-schnitzel.de
+Received: from vsectoor.geht-ab-wie-schnitzel.de ([127.0.0.1])
+	by localhost (vsectoor.geht-ab-wie-schnitzel.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id bZ3frF39tsMx; Fri,  5 Jan 2007 10:18:50 +0100 (CET)
+Received: from localhost (hermes.lan.home.vilz.de [192.168.100.26])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by vsectoor.geht-ab-wie-schnitzel.de (Postfix) with ESMTP id 7BEFF3E57;
+	Fri,  5 Jan 2007 10:18:49 +0100 (CET)
+To: Eric Wong <normalperson@yhbt.net>
 Content-Disposition: inline
+In-Reply-To: <20070101022734.GF7730@hand.yhbt.net>
+X-message-flag: Please send plain text messages only. Thank you.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35982>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35983>
 
-On 04/01/07, Yann Dirson <ydirson@altern.org> wrote:
-> Here is an error I just got when refreshing.  The refresh did occur, but
-> the error is annoying and may hide something:
->
-> dwitch@gandelf:/export/work/yann/git/stgit$ ./stg ref contrib/stg-whatchanged
-> Checking for changes in the working directory... done
-> Refreshing patch "whatchanged"...stg ref: unknown user details
+On Sun, Dec 31, 2006 at 06:27:34PM -0800, Eric Wong wrote:
+> Eric Wong <normalperson@yhbt.net> wrote:
+> > Nicolas Vilz <niv@iaglans.de> wrote:
+> > > hello guys,
+> > > 
+> > > it has been a while, i tried git in conjunction with svn... i got a nice
+> > > history, when working with it. This Work is now a year old.
+> > > 
+> > > Now I wanted to get on working and got following error message while
+> > > fetching from one specific svn tracking branch:
+> > > 
+> > > $ git-svn fetch -i svn_master
+> > > perl: subversion/libsvn_subr/path.c:343: svn_path_remove_component: 
+> > > Assertion `is_canonical(path->data, path->len)' failed.
+> > > Aborted
+> 
+> Actually, I just hit upon a weird bug in svm (SVN::Mirror) that was
+> similar to this (line 114 of the same file, 1.4.2dfsg1-2 in Debian).
+> Can you try taking the trailing slash out of the URL?
+> (.git/svn/svn_master/info/url).
+> 
+> Thanks.
 
-I changed StGIT to use the same configuration file as GIT and it
-cannot find the user information. To remove the error:
 
-  git repo-config --global user.name Yann Dirson
-  git repo-config --global user.email ydirson@altern.org
+Actually I can fetch the revisions now again. Maybe that that little
+trailing slash did it.
 
-It probably tries to set the author information for the patch and
-GIT_AUTH* or GIT_COMMIT* aren't set but it would be probably useful to
-get the full backtrace of this error (at the end of the stgit/main.py
-file, just add a "raise" before sys.exit(2)).
-
--- 
-Catalin
+Nicolas Vilz
