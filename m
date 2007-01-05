@@ -1,62 +1,70 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] [gitweb] Blame "linenr" link jumps to previous state at "orig_lineno"
-Date: Thu, 04 Jan 2007 19:50:00 -0800
-Message-ID: <7vk602jfo7.fsf@assigned-by-dhcp.cox.net>
-References: <605150.6351.qm@web31807.mail.mud.yahoo.com>
+Subject: Re: [PATCH] Increase packedGit{Limit,WindowSize} on 64 bit systems.
+Date: Thu, 04 Jan 2007 22:01:20 -0800
+Message-ID: <7v4pr6j9lb.fsf@assigned-by-dhcp.cox.net>
+References: <20070105032808.GA14247@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 05 04:50:11 2007
+X-From: git-owner@vger.kernel.org Fri Jan 05 07:01:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H2g5p-0001pv-Ac
-	for gcvg-git@gmane.org; Fri, 05 Jan 2007 04:50:09 +0100
+	id 1H2i8v-0007yT-Nt
+	for gcvg-git@gmane.org; Fri, 05 Jan 2007 07:01:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030320AbXAEDuF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 4 Jan 2007 22:50:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030321AbXAEDuE
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Jan 2007 22:50:04 -0500
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:52913 "EHLO
-	fed1rmmtao01.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030320AbXAEDuD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Jan 2007 22:50:03 -0500
+	id S1030340AbXAEGBW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 5 Jan 2007 01:01:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030350AbXAEGBW
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Jan 2007 01:01:22 -0500
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:48485 "EHLO
+	fed1rmmtao10.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030340AbXAEGBV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Jan 2007 01:01:21 -0500
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao01.cox.net
+          by fed1rmmtao10.cox.net
           (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070105035001.RVLY9173.fed1rmmtao01.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 4 Jan 2007 22:50:01 -0500
+          id <20070105060120.PHPF20715.fed1rmmtao10.cox.net@fed1rmimpo02.cox.net>;
+          Fri, 5 Jan 2007 01:01:20 -0500
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id 7FqG1W0081kojtg0000000; Thu, 04 Jan 2007 22:50:16 -0500
-To: ltuikov@yahoo.com
-In-Reply-To: <605150.6351.qm@web31807.mail.mud.yahoo.com> (Luben Tuikov's
-	message of "Thu, 4 Jan 2007 18:37:45 -0800 (PST)")
+	id 7J1b1W00g1kojtg0000000; Fri, 05 Jan 2007 01:01:36 -0500
+To: "Shawn O. Pearce" <spearce@spearce.org>
+In-Reply-To: <20070105032808.GA14247@spearce.org> (Shawn O. Pearce's message
+	of "Thu, 4 Jan 2007 22:28:08 -0500")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35977>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/35978>
 
-Luben Tuikov <ltuikov@yahoo.com> writes:
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-> A quick show-and-tell of this patch is after applying it, open
-> "blame" on a file, click on a linenr link of a block which
-> has only a single line changed -- the diff between what
-> you're seeing now and before is at least that line.  This you can
-> data-mine with gitweb back to where the line was introduced.  Similar
-> argument applies to blocks of more than one line.
+> If we have a 64 bit address space we can easily afford to commit
+> a larger amount of virtual address space to pack file access.
+> So on these platforms we should increase the default settings of
+> core.packedGit{Limit,WindowSize} to something that will better
+> handle very large projects.
 
-One non-question and one question:
+Hmmmm.  What's the reasoning behind this?
 
- - This favors the first parent, which is obviously the right
-   thing for most of the time.  I wonder what happens to a
-   merge, though, but I realize that a line attributed to a
-   merge is even rarer, and such a line is introduced by the
-   "evil merge".
+We have more than enough virtual memory anyway, we do not bother
+with our own mmap limit -- we will let the operating system
+worry about it.
 
- - I wonder if the line number is correct for the parent
-   commit.  How well does this work when you clicked a line that
-   was added at the end of the file, where the $orig_lineno goes
-   beyond the whole file in the parent?
+If that is the reasoning, I have a feeling that we might want to
+be even more agressive.  If you have a 1.5GB pack, wouldn't you
+rather map the whole thing in a single window, instead of
+splitting that into two?
+
+Currently we are limited (by pack offset) to 4GB per pack, so
+raising the window max to 4GB might make sense.
+
+On the total size of vm space, I am wondering what would happen
+if we make this unbounded.  You certainly notice mmap() failure
+and fall back to recycle other windows even when your total
+usage is under the limit, don't you?  Your later patches in the
+series even unmap the mapped but unused window lazily to make
+room for xmalloc() and friends, so I suspect it might even make
+it simpler not to have this limit especially on larger systems.
