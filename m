@@ -1,174 +1,63 @@
-From: "Stefan-W. Hahn" <stefan.hahn@s-hahn.de>
-Subject: problem with git clone on cygwin
-Date: Sat, 6 Jan 2007 18:03:30 +0100
-Organization: -no organization-
-Message-ID: <20070106170330.GA8041@scotty.home>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 1/2] Suggest use of "git add file1 file2" when there is nothing to commit.
+Date: Sat, 06 Jan 2007 10:17:52 -0800
+Message-ID: <7vfyao58a7.fsf@assigned-by-dhcp.cox.net>
+References: <20061216025309.GA19955@spearce.org>
+	<1168029891.11130.18.camel@ibook.zvpunry.de>
+	<7virfldryw.fsf@assigned-by-dhcp.cox.net>
+	<7vodpcae9s.fsf@assigned-by-dhcp.cox.net>
+	<17823.42284.620000.476920@lapjr.intranet.kiel.bmiag.de>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="h31gzZEtNLTqOjlF"
-X-From: git-owner@vger.kernel.org Sat Jan 06 18:08:54 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 06 19:18:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H3F2G-0007TP-Q8
-	for gcvg-git@gmane.org; Sat, 06 Jan 2007 18:08:49 +0100
+	id 1H3G7A-0007nl-RL
+	for gcvg-git@gmane.org; Sat, 06 Jan 2007 19:17:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751442AbXAFRIl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 6 Jan 2007 12:08:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751440AbXAFRIl
-	(ORCPT <rfc822;git-outgoing>); Sat, 6 Jan 2007 12:08:41 -0500
-Received: from moutng.kundenserver.de ([212.227.126.174]:65043 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751442AbXAFRIj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Jan 2007 12:08:39 -0500
-X-Greylist: delayed 303 seconds by postgrey-1.27 at vger.kernel.org; Sat, 06 Jan 2007 12:08:39 EST
-Received: from [84.134.58.103] (helo=scotty.home)
-	by mrelayeu.kundenserver.de (node=mrelayeu5) with ESMTP (Nemesis),
-	id 0ML25U-1H3ExA317H-0001PH; Sat, 06 Jan 2007 18:03:33 +0100
-Received: from scotty.home (localhost [127.0.0.1])
-	by scotty.home (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id l06H3Udh024396
-	for <git@vger.kernel.org>; Sat, 6 Jan 2007 18:03:31 +0100
-Received: (from hs@localhost)
-	by scotty.home (8.13.4/8.13.4/Submit) id l06H3Ull024393
-	for git@vger.kernel.org; Sat, 6 Jan 2007 18:03:30 +0100
-X-Authentication-Warning: scotty.home: hs set sender to stefan.hahn@s-hahn.de using -f
-To: git@vger.kernel.org
-Content-Disposition: inline
-X-Mailer: Mutt 1.5.6 http://www.mutt.org/
-X-Editor: GNU Emacs 21.4.1 http://www.gnu.org/
-X-Accept-Language: de en
-X-Location: Europe, Germany, Wolfenbuettel
-X-GPG-Public-Key: http://www.s-hahn.de/gpg-public-stefan.asc
-X-GPG-key-ID/Fingerprint: 0xE4FCD563 / EF09 97BB 3731 7DC7 25BA 5C39 185C F986 E4FC D563
-User-Agent: Mutt/1.5.9i
-X-Spam-Status: No, score=-0.0 required=5.0 tests=ALL_TRUSTED,
-	UNWANTED_LANGUAGE_BODY autolearn=failed version=3.0.3
-X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on scotty.home
-X-Virus-Scanned: ClamAV 0.88.7/2416/Sat Jan  6 05:54:14 2007 on scotty.home
-X-Virus-Status: Clean
-X-Provags-ID: kundenserver.de abuse@kundenserver.de login:77aa76da759ebc9bab1cc524fc813130
+	id S1751446AbXAFSRy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 6 Jan 2007 13:17:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751448AbXAFSRy
+	(ORCPT <rfc822;git-outgoing>); Sat, 6 Jan 2007 13:17:54 -0500
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:45144 "EHLO
+	fed1rmmtao09.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751446AbXAFSRx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Jan 2007 13:17:53 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20070106181752.OKNI18767.fed1rmmtao09.cox.net@fed1rmimpo02.cox.net>;
+          Sat, 6 Jan 2007 13:17:52 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id 7uJ71W01y1kojtg0000000; Sat, 06 Jan 2007 13:18:08 -0500
+To: Juergen Ruehle <j.ruehle@bmiag.de>
+In-Reply-To: <17823.42284.620000.476920@lapjr.intranet.kiel.bmiag.de> (Juergen
+	Ruehle's message of "Sat, 6 Jan 2007 14:33:32 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36091>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36092>
 
+Juergen Ruehle <j.ruehle@bmiag.de> writes:
 
---h31gzZEtNLTqOjlF
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+>  > How about doing this?
+>  > 
+>  > -- >8 --
+>  > git-status: squelch "use 'git add file...'" message when unneeded
+>  > 
+>  > Add a field in wt_status to record if there are any uncached
+>  > changes, and use it to decide when there is no point to add the
+>  > "use 'git add'" message.
+>
+> Commit 6e458bf63f48fb7d15cb70ad7c7b7b71915d94a2 in next is already
+> doing exactly that. Or am I missing something?
 
-Hi,
+If there is something you are missing, it is that I am
+overloaded these days ;-).
 
-running git on Cygwin I have a problem with git clone on local disk,
-while packing data. 
-
-The problem comes with v1.5.0-rc0. I bisected the problem down to
-commit 6d2fa7 as the first bad commit.
-
-It seems to be a problem with cygwin.dll prior v1.5.22 and pread(), if
-using an offset!=0. (I'm running cygwin.dll v1.5.21 build date
-2006-07-27 and I can't update because of other compatibility problems).
-
-So I tried:
-- not to set NO_MMAP to use real mmap
-- changing get_data_from_pack() from index-pack.c to used mmap() as
-  in 042aea8. (I did this because it directly uses pread().)
-This solved the problem for my testcase.
-
-The added testcase also succeeds on Linux but just with v1.4.4 or my
-patch on Cygwin.
-
-Is there anybody else having the same problem in git universe?
-
--- 
-Stefan-W. Hahn                          It is easy to make things.
-/ mailto:stefan.hahn@s-hahn.de /        It is hard to make things simple.			
-
-
---h31gzZEtNLTqOjlF
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: attachment; filename="ppp.diff"
-
-diff --git a/Makefile b/Makefile
-index 180e1e0..afa5d08 100644
---- a/Makefile
-+++ b/Makefile
-@@ -368,7 +368,7 @@ ifeq ($(uname_O),Cygwin)
- 	# There are conflicting reports about this.
- 	# On some boxes NO_MMAP is needed, and not so elsewhere.
- 	# Try commenting this out if you suspect MMAP is more efficient
--	NO_MMAP = YesPlease
-+	#NO_MMAP = YesPlease
- 	NO_IPV6 = YesPlease
- 	X = .exe
- endif
-diff --git a/index-pack.c b/index-pack.c
-index 5f6d128..f1d11a0 100644
---- a/index-pack.c
-+++ b/index-pack.c
-@@ -277,25 +277,27 @@ static void *get_data_from_pack(struct object_entry *obj)
- {
- 	unsigned long from = obj[0].offset + obj[0].hdr_size;
- 	unsigned long len = obj[1].offset - from;
--	unsigned char *src, *data;
-+	unsigned pg_offset = from % getpagesize();
-+	unsigned char *map, *data;
- 	z_stream stream;
- 	int st;
- 
--	src = xmalloc(len);
--	if (pread(pack_fd, src, len, from) != len)
--		die("cannot pread pack file: %s", strerror(errno));
-+	map = mmap(NULL, len + pg_offset, PROT_READ, MAP_PRIVATE,
-+		   pack_fd, from - pg_offset);
-+	if (map == MAP_FAILED)
-+		die("cannot mmap pack file: %s", strerror(errno));
- 	data = xmalloc(obj->size);
- 	memset(&stream, 0, sizeof(stream));
- 	stream.next_out = data;
- 	stream.avail_out = obj->size;
--	stream.next_in = src;
-+	stream.next_in = map + pg_offset;
- 	stream.avail_in = len;
- 	inflateInit(&stream);
- 	while ((st = inflate(&stream, Z_FINISH)) == Z_OK);
- 	inflateEnd(&stream);
- 	if (st != Z_STREAM_END || stream.total_out != obj->size)
- 		die("serious inflate inconsistency");
--	free(src);
-+	munmap(map, len + pg_offset);
- 	return data;
- }
- 
-diff --git a/t/t5610-clone-fail.sh b/t/t5610-clone-fail.sh
-new file mode 100755
-index 0000000..d46c255
---- /dev/null
-+++ b/t/t5610-clone-fail.sh
-@@ -0,0 +1,24 @@
-+#!/bin/sh
-+#
-+
-+test_description='test git-clone failure on cygwin using pread()
-+'
-+
-+. ./test-lib.sh
-+
-+# Need a repo to clone
-+test_create_repo foo2
-+
-+GIT_AUTHOR_EMAIL=xxxxxxxx@yyyyyyyy.yyyyy.yyyyyyy.yyy
-+GIT_COMMITTER_EMAIL=xxxxxxxx@yyyyyyyy.yyyyy.yyyyyyy.yyy
-+export GIT_AUTHOR_EMAIL
-+export GIT_COMMITTER_EMAIL
-+
-+(cd foo2 && echo "Hello" > file && git add file && git commit -m 'add file' >/dev/null 2>&1)
-+(cd foo2 && echo "Hello2" >> file && git commit -a -m 'test' >/dev/null 2>&1)
-+
-+test_expect_success \
-+    'clone with resolving' \
-+    'git-clone foo2 bar2'
-+
-+test_done
-
---h31gzZEtNLTqOjlF--
+Thanks for the reminder.
