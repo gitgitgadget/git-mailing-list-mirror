@@ -1,51 +1,65 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: [PATCH] Detached HEAD (experimental)
-Date: Sat, 6 Jan 2007 13:58:36 -0500
-Message-ID: <20070106185836.GH4655@fieldses.org>
-References: <7vac11yirf.fsf@assigned-by-dhcp.cox.net> <87ps9xgkjo.wl%cworth@cworth.org> <enelha$n8g$3@sea.gmane.org> <87mz51gd7e.wl%cworth@cworth.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] git-reset --hard: use quotes when we tell the user what HEAD was reset to
+Date: Sat, 06 Jan 2007 11:26:29 -0800
+Message-ID: <7v8xgg553u.fsf@assigned-by-dhcp.cox.net>
+References: <20070106102322.7468.57615.stgit@c165>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 06 19:59:05 2007
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 06 20:26:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H3Gkv-0001Rb-Sh
-	for gcvg-git@gmane.org; Sat, 06 Jan 2007 19:59:02 +0100
+	id 1H3HBa-000090-IJ
+	for gcvg-git@gmane.org; Sat, 06 Jan 2007 20:26:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932078AbXAFS6j (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 6 Jan 2007 13:58:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932083AbXAFS6j
-	(ORCPT <rfc822;git-outgoing>); Sat, 6 Jan 2007 13:58:39 -0500
-Received: from mail.fieldses.org ([66.93.2.214]:55401 "EHLO
-	pickle.fieldses.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932078AbXAFS6j (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Jan 2007 13:58:39 -0500
-Received: from bfields by pickle.fieldses.org with local (Exim 4.63)
-	(envelope-from <bfields@fieldses.org>)
-	id 1H3GkW-0002vh-TL; Sat, 06 Jan 2007 13:58:36 -0500
-To: Carl Worth <cworth@cworth.org>
-Content-Disposition: inline
-In-Reply-To: <87mz51gd7e.wl%cworth@cworth.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S932104AbXAFT0b (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 6 Jan 2007 14:26:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932106AbXAFT0b
+	(ORCPT <rfc822;git-outgoing>); Sat, 6 Jan 2007 14:26:31 -0500
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:47176 "EHLO
+	fed1rmmtao12.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932104AbXAFT0a (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Jan 2007 14:26:30 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20070106192629.YRA19398.fed1rmmtao12.cox.net@fed1rmimpo02.cox.net>;
+          Sat, 6 Jan 2007 14:26:29 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id 7vSk1W00q1kojtg0000000; Sat, 06 Jan 2007 14:26:45 -0500
+To: Fredrik Kuivinen <freku045@student.liu.se>
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36095>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36096>
 
-On Tue, Jan 02, 2007 at 04:34:45PM -0800, Carl Worth wrote:
-> And now I start getting confused. If git-checkout wants a branch, and
-> git-branch says that "origin/next" is a branch, then why won't this
-> work? OK, I know that something's special about origin/next, (it's a
-> "remote-tracking branch" and I needed a -r option to get git-branch to
-> list it for me), but nothing in the git-checkout documentation would
-> lead me to expect that "git checkout origin/next" wouldn't work.
+Fredrik Kuivinen <freku045@student.liu.se> writes:
 
-If we use the word "branches" for things that you can check out and
-commit to, then "remote-tracking branches" are not actually branches.
-Argh!
+> Idea and motivating example from Andy Whitcroft:
+>
+>     apw@pinky$ git checkout -b bar master
+>     apw@pinky$ git reset --hard ac9c1108d8915f0937795e354ad72c4ae6890a3f
+>     HEAD is now at ac9c110... git-fetch: remove .keep file at the end.
+>
+>     Huh, fetch?  Remove what .keep file?  Did I do a fetch?  What?
+>
+>     I think we need to delimit the name better, probabally we need to quote
+>     it.  Perhaps something like:
+>
+>     HEAD is now at ac9c110: "git-fetch: remove .keep file at the end".
 
-What would be better terminology here?
+I've also considered something along that line, but:
 
---b.
+ (1) I think this 'confusion' is only because you are futzing
+     with a project that deals with git-fetch and friends and
+     not a general problem.
+
+ (2) With "HEAD is now at xxxxx..."  prefix, even two characters
+     are precious to fit the title of the commit on a single
+     line.
+
+With these in mind, do you still want to do this?
