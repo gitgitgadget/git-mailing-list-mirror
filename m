@@ -1,59 +1,51 @@
-From: Josef Sipek <jsipek@fsl.cs.sunysb.edu>
-Subject: [ANNOUNCE] Guilt 0.16
-Date: Sat, 6 Jan 2007 13:46:39 -0500
-Message-ID: <20070106184639.GC12543@filer.fsl.cs.sunysb.edu>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: [PATCH] Detached HEAD (experimental)
+Date: Sat, 6 Jan 2007 13:58:36 -0500
+Message-ID: <20070106185836.GH4655@fieldses.org>
+References: <7vac11yirf.fsf@assigned-by-dhcp.cox.net> <87ps9xgkjo.wl%cworth@cworth.org> <enelha$n8g$3@sea.gmane.org> <87mz51gd7e.wl%cworth@cworth.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S932074AbXAFSqm@vger.kernel.org Sat Jan 06 19:46:58 2007
-Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S932074AbXAFSqm@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@gmane.org
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 06 19:59:05 2007
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H3GZF-0006rl-7z
-	for glk-linux-kernel-3@gmane.org; Sat, 06 Jan 2007 19:46:57 +0100
+	id 1H3Gkv-0001Rb-Sh
+	for gcvg-git@gmane.org; Sat, 06 Jan 2007 19:59:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932074AbXAFSqm (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Sat, 6 Jan 2007 13:46:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932073AbXAFSqm
-	(ORCPT <rfc822;linux-kernel-outgoing>);
-	Sat, 6 Jan 2007 13:46:42 -0500
-Received: from filer.fsl.cs.sunysb.edu ([130.245.126.2]:57243 "EHLO
-	filer.fsl.cs.sunysb.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932068AbXAFSql (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Sat, 6 Jan 2007 13:46:41 -0500
-Received: from filer.fsl.cs.sunysb.edu (IDENT:MCpjND9kqvwCPHeTyF/ReY8am60eV18S@localhost.localdomain [127.0.0.1])
-	by filer.fsl.cs.sunysb.edu (8.12.11.20060308/8.13.1) with ESMTP id l06IkerP015316;
-	Sat, 6 Jan 2007 13:46:40 -0500
-Received: (from jsipek@localhost)
-	by filer.fsl.cs.sunysb.edu (8.12.11.20060308/8.13.1/Submit) id l06IkdB5015314;
-	Sat, 6 Jan 2007 13:46:39 -0500
-To: git@vger.kernel.org, linux-kernel@vger.kernel.org
+	id S932078AbXAFS6j (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 6 Jan 2007 13:58:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932083AbXAFS6j
+	(ORCPT <rfc822;git-outgoing>); Sat, 6 Jan 2007 13:58:39 -0500
+Received: from mail.fieldses.org ([66.93.2.214]:55401 "EHLO
+	pickle.fieldses.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932078AbXAFS6j (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Jan 2007 13:58:39 -0500
+Received: from bfields by pickle.fieldses.org with local (Exim 4.63)
+	(envelope-from <bfields@fieldses.org>)
+	id 1H3GkW-0002vh-TL; Sat, 06 Jan 2007 13:58:36 -0500
+To: Carl Worth <cworth@cworth.org>
 Content-Disposition: inline
-User-Agent: Mutt/1.4.1i
-Sender: linux-kernel-owner@vger.kernel.org
+In-Reply-To: <87mz51gd7e.wl%cworth@cworth.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36094>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36095>
 
-Guilt (Git Quilt) is a series of bash scripts which add a Mercurial
-queues-like [1] functionality and interface to git.  The one distinguishing
-feature from other quilt-like porcelains, is the format of the patches
-directory. _All_ the information is stored as plain text - a series file and
-the patches (one per file). This easily lends itself to versioning the
-patches using any number of of SCMs.
+On Tue, Jan 02, 2007 at 04:34:45PM -0800, Carl Worth wrote:
+> And now I start getting confused. If git-checkout wants a branch, and
+> git-branch says that "origin/next" is a branch, then why won't this
+> work? OK, I know that something's special about origin/next, (it's a
+> "remote-tracking branch" and I needed a -r option to get git-branch to
+> list it for me), but nothing in the git-checkout documentation would
+> lead me to expect that "git checkout origin/next" wouldn't work.
 
-Tarballs:
-http://www.kernel.org/pub/linux/kernel/people/jsipek/guilt/
+If we use the word "branches" for things that you can check out and
+commit to, then "remote-tracking branches" are not actually branches.
+Argh!
 
-Git repository:
-git://git.kernel.org/pub/scm/linux/kernel/git/jsipek/guilt.git
+What would be better terminology here?
 
-
-The code is licensed under GPLv2.
-
-Of course, contributions and feedback are welcomed :)
-
-Josef "Jeff" Sipek.
-
-[1] http://www.selenic.com/mercurial/wiki/index.cgi/MqExtension
+--b.
