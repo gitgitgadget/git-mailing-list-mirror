@@ -1,54 +1,58 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: [PATCH] Detached HEAD (experimental)
-Date: Sat, 6 Jan 2007 17:52:42 -0500
-Message-ID: <20070106225242.GJ4655@fieldses.org>
-References: <7vac11yirf.fsf@assigned-by-dhcp.cox.net> <87mz51gd7e.wl%cworth@cworth.org> <20070106185836.GH4655@fieldses.org> <200701062048.15163.alan@chandlerfamily.org.uk>
+From: Juergen Ruehle <j.ruehle@bmiag.de>
+Subject: Re: [PATCH 1/2] Suggest use of "git add file1 file2" when there is nothing to commit.
+Date: Sun, 7 Jan 2007 00:00:44 +0100
+Message-ID: <17824.10780.295000.771566@lapjr.intranet.kiel.bmiag.de>
+References: <20061216025309.GA19955@spearce.org>
+	<1168029891.11130.18.camel@ibook.zvpunry.de>
+	<7virfldryw.fsf@assigned-by-dhcp.cox.net>
+	<7vodpcae9s.fsf@assigned-by-dhcp.cox.net>
+	<17823.42284.620000.476920@lapjr.intranet.kiel.bmiag.de>
+	<7vfyao58a7.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 06 23:52:48 2007
+X-From: git-owner@vger.kernel.org Sun Jan 07 00:01:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H3KP9-0001bW-O2
-	for gcvg-git@gmane.org; Sat, 06 Jan 2007 23:52:48 +0100
+	id 1H3KXL-0003lG-17
+	for gcvg-git@gmane.org; Sun, 07 Jan 2007 00:01:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932255AbXAFWwo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 6 Jan 2007 17:52:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932257AbXAFWwo
-	(ORCPT <rfc822;git-outgoing>); Sat, 6 Jan 2007 17:52:44 -0500
-Received: from mail.fieldses.org ([66.93.2.214]:55696 "EHLO
-	pickle.fieldses.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932255AbXAFWwo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Jan 2007 17:52:44 -0500
-Received: from bfields by pickle.fieldses.org with local (Exim 4.63)
-	(envelope-from <bfields@fieldses.org>)
-	id 1H3KP4-0006Ml-DY; Sat, 06 Jan 2007 17:52:42 -0500
-To: Alan Chandler <alan@chandlerfamily.org.uk>
-Content-Disposition: inline
-In-Reply-To: <200701062048.15163.alan@chandlerfamily.org.uk>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S932260AbXAFXBJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 6 Jan 2007 18:01:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932257AbXAFXBJ
+	(ORCPT <rfc822;git-outgoing>); Sat, 6 Jan 2007 18:01:09 -0500
+Received: from bilbo.bmiag.de ([62.154.210.131]:2080 "HELO bilbo.bmiag.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932260AbXAFXBI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Jan 2007 18:01:08 -0500
+Received: (qmail 5293 invoked by uid 106); 6 Jan 2007 23:01:06 -0000
+Received: from eorl.intranet.kiel.bmiag.de(10.131.2.1)
+ via SMTP by bilbo.bmiag.de, id smtpdglKuOv; Sun Jan  7 00:00:58 2007
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by eorl.intranet.kiel.bmiag.de (Postfix) with ESMTP id 58AF43ADC8;
+	Sun,  7 Jan 2007 00:00:57 +0100 (CET)
+Received: from eorl.intranet.kiel.bmiag.de ([127.0.0.1])
+	by localhost (eorl [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+	id 20923-10; Sun, 7 Jan 2007 00:00:51 +0100 (CET)
+Received: from LAPJR (dialin5.galadriel.bmiag.de [192.168.251.5])
+	by eorl.intranet.kiel.bmiag.de (Postfix) with ESMTP id 216963ADC6;
+	Sun,  7 Jan 2007 00:00:49 +0100 (CET)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vfyao58a7.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: VM 7.19 under Emacs 21.3.1
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at eorl.intranet.kiel.bmiag.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36103>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36104>
 
-On Sat, Jan 06, 2007 at 08:48:15PM +0000, Alan Chandler wrote:
-> On Saturday 06 January 2007 18:58, J. Bruce Fields wrote:
-> > If we use the word "branches" for things that you can check out and
-> > commit to, then "remote-tracking branches" are not actually branches.
-> > Argh!
-> >
-> > What would be better terminology here?
-> 
-> Why can't we use the terms 'local branch' and 'remote branch'.  We can 
-> only commit to local branches - you need to push to remote ones.
+Junio C Hamano writes:
+ > If there is something you are missing, it is that I am
+ > overloaded these days ;-).
 
-We'd have to replace "branch" by "local branch" in a lot of
-documentation, but that could work.
-
-Though what do you call a branch in a remote repository then, if not a
-remote branch?  I suppose it doesn't matter.
-
---b.
+I'm sorry. As a rather unsuccessful former maintainer of
+http://www.openarchitectureware.org/ I can fully appreciate git's luck
+to have such a dedicated maintainer.
