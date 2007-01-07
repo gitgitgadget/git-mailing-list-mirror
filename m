@@ -1,209 +1,95 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: How git affects kernel.org performance
-Date: Sun, 7 Jan 2007 11:13:06 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0701071028450.3661@woody.osdl.org>
-References: <1166297434.26330.34.camel@localhost.localdomain>
- <1166304080.13548.8.camel@nigel.suspend2.net> <459152B1.9040106@zytor.com>
- <1168140954.2153.1.camel@nigel.suspend2.net> <45A08269.4050504@zytor.com>
- <45A083F2.5000000@zytor.com> <Pine.LNX.4.64.0701062130260.3661@woody.osdl.org>
- <20070107085526.GR24090@1wt.eu> <45A0B63E.2020803@zytor.com>
- <20070107090336.GA7741@1wt.eu> <20070107102853.GB26849@infradead.org>
- <Pine.LNX.4.64.0701070957080.3661@woody.osdl.org>
+From: Juergen Ruehle <j.ruehle@bmiag.de>
+Subject: [PATCH] Remove unnecessary git-rm --cached reference from status output
+Date: Sun, 7 Jan 2007 20:18:26 +0100
+Message-ID: <17825.18306.974000.40992@lapjr.intranet.kiel.bmiag.de>
+References: <1167765983316-git-send-email-j.ruehle@bmiag.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Willy Tarreau <w@1wt.eu>, "H. Peter Anvin" <hpa@zytor.com>,
-	git@vger.kernel.org, nigel@nigel.suspend2.net,
-	"J.H." <warthog9@kernel.org>,
-	Randy Dunlap <randy.dunlap@oracle.com>,
-	Andrew Morton <akpm@osdl.org>, Pavel Machek <pavel@ucw.cz>,
-	kernel list <linux-kernel@vger.kernel.org>,
-	webmaster@kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 07 20:16:38 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jan 07 20:19:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H3dUH-0004ks-Kn
-	for gcvg-git@gmane.org; Sun, 07 Jan 2007 20:15:22 +0100
+	id 1H3dXd-0005Hg-28
+	for gcvg-git@gmane.org; Sun, 07 Jan 2007 20:18:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964946AbXAGTPB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 7 Jan 2007 14:15:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964944AbXAGTPB
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jan 2007 14:15:01 -0500
-Received: from smtp.osdl.org ([65.172.181.24]:41869 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S964924AbXAGTO6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Jan 2007 14:14:58 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l07JD8Wi031230
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 7 Jan 2007 11:13:08 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l07JD6Ak023490;
-	Sun, 7 Jan 2007 11:13:07 -0800
-To: Christoph Hellwig <hch@infradead.org>
-In-Reply-To: <Pine.LNX.4.64.0701070957080.3661@woody.osdl.org>
-X-Spam-Status: No, hits=-0.668 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.107__
-X-MIMEDefang-Filter: osdl$Revision: 1.167 $
-X-Scanned-By: MIMEDefang 2.36
+	id S964947AbXAGTSp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sun, 7 Jan 2007 14:18:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964955AbXAGTSp
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jan 2007 14:18:45 -0500
+Received: from meriadoc.bmiag.de ([62.154.210.133]:35353 "EHLO
+	meriadoc.bmiag.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964947AbXAGTSo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Jan 2007 14:18:44 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by meriadoc.bmiag.de (Postfix) with ESMTP id EEE533AEE0;
+	Sun,  7 Jan 2007 20:18:41 +0100 (CET)
+Received: from meriadoc.bmiag.de ([127.0.0.1])
+	by localhost (meriadoc [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 15362-01; Sun, 7 Jan 2007 20:18:41 +0100 (CET)
+Received: from eotheod.intranet.kiel.bmiag.de (eotheod.intranet.kiel.bmiag.de [10.130.2.1])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	by meriadoc.bmiag.de (Postfix) with ESMTP id 70A4D3AED7;
+	Sun,  7 Jan 2007 20:18:38 +0100 (CET)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by eotheod.intranet.kiel.bmiag.de (Postfix) with ESMTP id 5A6F43ADCC;
+	Sun,  7 Jan 2007 20:18:38 +0100 (CET)
+Received: from eotheod.intranet.kiel.bmiag.de ([127.0.0.1])
+	by localhost (eotheod [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 30445-07; Sun, 7 Jan 2007 20:18:35 +0100 (CET)
+Received: from LAPJR (dialin5.galadriel.bmiag.de [192.168.251.5])
+	by eotheod.intranet.kiel.bmiag.de (Postfix) with ESMTP id 8B2673ADCA;
+	Sun,  7 Jan 2007 20:18:32 +0100 (CET)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <1167765983316-git-send-email-j.ruehle@bmiag.de>
+X-Mailer: VM 7.19 under Emacs 21.3.1
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at eotheod.intranet.kiel.bmiag.de
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at meriadoc.bmiag.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36186>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36187>
 
+=46rom: =3D?utf-8?q?J=3DC3=3DBCrgen_R=3DC3=3DBChle?=3D <j-r@online.de>
 
+Since git-reset has learned restoring the absence of paths git-rm --cac=
+hed is
+no longer necessary. Therefore remove it from the cached content header=
+ hint.
 
-On Sun, 7 Jan 2007, Linus Torvalds wrote:
-> 
-> A year or two ago I did a totally half-assed code for the non-hashed 
-> readdir that improved performance by an order of magnitude for ext3 for a 
-> test-case of mine, but it was subtly buggy and didn't do the hashed case 
-> AT ALL.
+Also remove the unfortunate wording 'Cached' from the header itself.
 
-Btw, this isn't the test-case, but it's a half-way re-creation of 
-something like it. It's _really_ stupid, but here's what you can do:
+Signed-off-by: J=FCrgen R=FChle <j-r@online.de>
+---
+ !!This is based on next (or the jr/status series)!!
 
- - compile and run this idiotic program. It creates a directory called 
-   "throwaway" that is ~44kB in size, and if I did things right, it should 
-   not be totally contiguous on disk with the current ext3 allocation 
-   logic.
+ This does not yet implement the other proposed changes to the header
+ lines, pending further feedback.
 
- - as root, do "echo 3 > /proc/sys/vm/drop_caches" to get a cache-cold 
-   schenario.
+ wt-status.c |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
- - do "time ls throwaway > /dev/null".
-
-I don't know what people consider to be reasonable performance, but for 
-me, it takes about half a second to do a simple "ls". NOTE! This is _not_ 
-reading inode stat information or anything like that. It literally takes 
-0.3-0.4 seconds to read ~44kB off the disk. That's a whopping 125kB/s 
-throughput on a reasonably fast modern disk.
-
-That's what we in the industry call  "sad".
-
-And that's on a totally unloaded machine. There was _nothing_ else going 
-on. No IO congestion, no nothing. Just the cost of synchronously doing 
-ten or eleven disk reads.
-
-The fix?
-
- - proper read-ahead. Right now, even if the directory is totally 
-   contiguous on disk (just remove the thing that writes data to the 
-   files, so that you'll have empty files instead of 8kB files), I think 
-   we do those reads totally synchronously if the filesystem was mounted 
-   with directory hashing enabled.
-
-   Without hashing, the directory will be much smaller too, so readdir() 
-   will have less data to read. And it _should_ do some readahead, 
-   although in my testing, the best I could do was still 0.185s for a (now 
-   shrunken) 28kB directory. 
-
- - better directory block allocation patterns would likely help a lot, 
-   rather than single blocks. That's true even without any read-ahead (at 
-   least the disk wouldn't need to seek, and any on-disk track buffers etc 
-   would work better), but with read-ahead and contiguous blocks it should 
-   be just a couple of IO's (the indirect stuff means that it's more than 
-   one), and so you should see much better IO patterns because the 
-   elevator can try to help too.
-
-Maybe I just have unrealistic expectations, but I really don't like how a 
-fairly small 50kB directory takes an appreciable fraction of a second to 
-read.
-
-Once it's cached, it still takes too long, but at least at that point the 
-individual getdents calls take just tens of microseconds.
-
-Here's cold-cache numbers (notice: 34 msec for the first one, and 17 msec 
-in the middle.. The 5-6ms range indicates a single IO for the intermediate 
-ones, which basically says that each call does roughly one IO, except the 
-first one that does ~5 (probably the indirect index blocks), and two in 
-the middle who are able to fill up the buffer from the IO done by the 
-previous one (4kB buffers, so if the previous getdents() happened to just 
-read the beginning of a block, the next one might be able to fill 
-everything from that block without having to do IO).
-
-	getdents(3, /* 103 entries */, 4096)    = 4088 <0.034830>
-	getdents(3, /* 102 entries */, 4096)    = 4080 <0.006703>
-	getdents(3, /* 102 entries */, 4096)    = 4080 <0.006719>
-	getdents(3, /* 102 entries */, 4096)    = 4080 <0.000354>
-	getdents(3, /* 102 entries */, 4096)    = 4080 <0.000017>
-	getdents(3, /* 102 entries */, 4096)    = 4080 <0.005302>
-	getdents(3, /* 102 entries */, 4096)    = 4080 <0.016957>
-	getdents(3, /* 102 entries */, 4096)    = 4080 <0.000017>
-	getdents(3, /* 102 entries */, 4096)    = 4080 <0.003530>
-	getdents(3, /* 83 entries */, 4096)     = 3320 <0.000296>
-	getdents(3, /* 0 entries */, 4096)      = 0 <0.000006>
-
-Here's the pure CPU overhead: still pretty high (200 usec! For a single 
-system call! That's disgusting! In contrast, a 4kB read() call takes 7 
-usec on this machine, so the overhead of doing things one dentry at a 
-time, and calling down to several layers of filesystem is quite high):
-
-	getdents(3, /* 103 entries */, 4096)    = 4088 <0.000204>
-	getdents(3, /* 102 entries */, 4096)    = 4080 <0.000122>
-	getdents(3, /* 102 entries */, 4096)    = 4080 <0.000112>
-	getdents(3, /* 102 entries */, 4096)    = 4080 <0.000153>
-	getdents(3, /* 102 entries */, 4096)    = 4080 <0.000018>
-	getdents(3, /* 102 entries */, 4096)    = 4080 <0.000103>
-	getdents(3, /* 102 entries */, 4096)    = 4080 <0.000217>
-	getdents(3, /* 102 entries */, 4096)    = 4080 <0.000018>
-	getdents(3, /* 102 entries */, 4096)    = 4080 <0.000095>
-	getdents(3, /* 83 entries */, 4096)     = 3320 <0.000089>
-	getdents(3, /* 0 entries */, 4096)      = 0 <0.000006>
-
-but you can see the difference.. The real cost is obviously the IO.
-
-		Linus
-
-----
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <sys/stat.h>
-#include <sys/types.h>
-
-static char buffer[8192];
-
-static int create_file(const char *name)
-{
-	int fd = open(name, O_RDWR | O_CREAT | O_TRUNC, 0666);
-	if (fd < 0)
-		return fd;
-
-	write(fd, buffer, sizeof(buffer));
-	close(fd);
-	return 0;
-}
-
-int main(int argc, char **argv)
-{
-	int i;
-	char name[256];
-
-	/* Fill up the buffer with some random garbage */
-	for (i = 0; i < sizeof(buffer); i++)
-		buffer[i] = "abcdefghijklmnopqrstuvwxyz\n"[i % 27];
-
-	if (mkdir("throwaway", 0777) < 0 || chdir("throwaway") < 0) {
-		perror("throwaway");
-		exit(1);
-	}
-
-	/*
-	 * Create a reasonably big directory by having a number
-	 * of files with non-trivial filenames, and with some
-	 * real content to fragment the directory blocks..
-	 */
-	for (i = 0; i < 1000; i++) {
-		snprintf(name, sizeof(name),
-			"file-name-%d-%d-%d-%d",
-			i / 1000,
-			(i / 100) % 10,
-			(i / 10) % 10,
-			(i / 1) % 10);
-		create_file(name);
-	}
-	return 0;
-}
+diff --git a/wt-status.c b/wt-status.c
+index 8aac526..c48127d 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -56,9 +56,9 @@ void wt_status_prepare(struct wt_status *s)
+ static void wt_status_print_cached_header(const char *reference)
+ {
+ 	const char *c =3D color(WT_STATUS_HEADER);
+-	color_printf_ln(c, "# Cached changes to be committed:");
++	color_printf_ln(c, "# Changes to be committed:");
+ 	if (reference) {
+-		color_printf_ln(c, "#   (use \"git reset %s <file>...\" and \"git rm=
+ --cached <file>...\" to unstage)", reference);
++		color_printf_ln(c, "#   (use \"git reset %s <file>...\" to unstage)"=
+, reference);
+ 	} else {
+ 		color_printf_ln(c, "#   (use \"git rm --cached <file>...\" to unstag=
+e)");
+ 	}
+--=20
+1.5.0.rc0.g525e
