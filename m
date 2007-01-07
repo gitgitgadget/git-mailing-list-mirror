@@ -1,71 +1,71 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: How git affects kernel.org performance
-Date: Sun, 7 Jan 2007 11:37:42 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0701071136110.3661@woody.osdl.org>
-References: <458434B0.4090506@oracle.com> <1166297434.26330.34.camel@localhost.localdomain>
- <1166304080.13548.8.camel@nigel.suspend2.net> <459152B1.9040106@zytor.com>
- <1168140954.2153.1.camel@nigel.suspend2.net> <45A08269.4050504@zytor.com>
- <45A083F2.5000000@zytor.com> <Pine.LNX.4.64.0701062130260.3661@woody.osdl.org>
- <20070107085526.GR24090@1wt.eu> <45A0B63E.2020803@zytor.com>
- <20070107090336.GA7741@1wt.eu> <Pine.LNX.4.61.0701071141580.4365@yvahk01.tjqt.qr>
- <20070107104943.ee2c5e6f.randy.dunlap@oracle.com>
- <Pine.LNX.4.61.0701072004290.4365@yvahk01.tjqt.qr>
- <20070107112834.a8746a98.randy.dunlap@oracle.com>
+From: "Stefan-W. Hahn" <stefan.hahn@s-hahn.de>
+Subject: Re: [PATCH] Replacing the system call pread() with real mmap().
+Date: Sun, 7 Jan 2007 21:01:55 +0100
+Organization: -no organization-
+Message-ID: <20070107200155.GF9909@scotty.home>
+References: <20070106170330.GA8041@scotty.home> <20070107060007.GA10351@spearce.org> <20070107111712.GB9909@scotty.home> <20070107112445.GE10351@spearce.org> <20070107163637.GE9909@scotty.home> <Pine.LNX.4.63.0701071810220.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jan Engelhardt <jengelh@linux01.gwdg.de>, Willy Tarreau <w@1wt.eu>,
-	"H. Peter Anvin" <hpa@zytor.com>, git@vger.kernel.org,
-	nigel@nigel.suspend2.net, "J.H." <warthog9@kernel.org>,
-	Andrew Morton <akpm@osdl.org>, Pavel Machek <pavel@ucw.cz>,
-	kernel list <linux-kernel@vger.kernel.org>,
-	webmaster@kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 07 20:40:44 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jan 07 21:02:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H3drR-0008UI-M6
-	for gcvg-git@gmane.org; Sun, 07 Jan 2007 20:39:18 +0100
+	id 1H3eDh-0004wX-4F
+	for gcvg-git@gmane.org; Sun, 07 Jan 2007 21:02:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964982AbXAGTjO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 7 Jan 2007 14:39:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965003AbXAGTjN
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jan 2007 14:39:13 -0500
-Received: from smtp.osdl.org ([65.172.181.24]:43112 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S964982AbXAGTjM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Jan 2007 14:39:12 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l07JbhWi031853
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 7 Jan 2007 11:37:44 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l07JbgOM023979;
-	Sun, 7 Jan 2007 11:37:42 -0800
-To: Randy Dunlap <randy.dunlap@oracle.com>
-In-Reply-To: <20070107112834.a8746a98.randy.dunlap@oracle.com>
-X-Spam-Status: No, hits=-0.668 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.107__
-X-MIMEDefang-Filter: osdl$Revision: 1.167 $
-X-Scanned-By: MIMEDefang 2.36
+	id S965038AbXAGUCN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 7 Jan 2007 15:02:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965046AbXAGUCM
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jan 2007 15:02:12 -0500
+Received: from moutng.kundenserver.de ([212.227.126.174]:50425 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965038AbXAGUCL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Jan 2007 15:02:11 -0500
+Received: from [84.134.15.225] (helo=scotty.home)
+	by mrelayeu.kundenserver.de (node=mrelayeu6) with ESMTP (Nemesis),
+	id 0ML29c-1H3eDN0pwo-0007pT; Sun, 07 Jan 2007 21:01:59 +0100
+Received: from scotty.home (localhost [127.0.0.1])
+	by scotty.home (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id l07K1t4q004905;
+	Sun, 7 Jan 2007 21:01:55 +0100
+Received: (from hs@localhost)
+	by scotty.home (8.13.4/8.13.4/Submit) id l07K1tRt004902;
+	Sun, 7 Jan 2007 21:01:55 +0100
+X-Authentication-Warning: scotty.home: hs set sender to stefan.hahn@s-hahn.de using -f
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0701071810220.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Mailer: Mutt 1.5.6 http://www.mutt.org/
+X-Editor: GNU Emacs 21.4.1 http://www.gnu.org/
+X-Accept-Language: de en
+X-Location: Europe, Germany, Wolfenbuettel
+X-GPG-Public-Key: http://www.s-hahn.de/gpg-public-stefan.asc
+X-GPG-key-ID/Fingerprint: 0xE4FCD563 / EF09 97BB 3731 7DC7 25BA 5C39 185C F986 E4FC D563
+User-Agent: Mutt/1.5.9i
+X-Spam-Status: No, score=-0.0 required=5.0 tests=ALL_TRUSTED,
+	UNWANTED_LANGUAGE_BODY autolearn=failed version=3.0.3
+X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on scotty.home
+X-Virus-Scanned: ClamAV 0.88.7/2419/Sun Jan  7 16:27:13 2007 on scotty.home
+X-Virus-Status: Clean
+X-Provags-ID: kundenserver.de abuse@kundenserver.de login:77aa76da759ebc9bab1cc524fc813130
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36191>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36192>
 
+Also sprach Johannes Schindelin am Sun, 07 Jan 2007 at 18:10:55 +0100:
 
+> Care to elaborate? It worked pretty well on _all_ cygwin setups I tested 
+> with.
 
-On Sun, 7 Jan 2007, Randy Dunlap wrote:
-> 
-> ISTM that Linus is trying to make 2.6.20-final before LCA.  We'll see.
+Yes, but not today.
 
-No. Hopefully "final -rc" before LCA, but I'll do the actual 2.6.20 
-release afterwards. I don't want to have a merge window during LCA, as I 
-and many others will all be out anyway. So it's much better to have LCA 
-happen during the end of the stabilization phase when there's hopefully 
-not a lot going on.
+But after a first look the received pack file is corrupt. It doesn't
+start with the pack header.
 
-(Of course, often at the end of the stabilization phase there is all the 
-"ok, what about regression XyZ?" panic)
+Stefan
 
-		Linus
+-- 
+Stefan-W. Hahn                          It is easy to make things.
+/ mailto:stefan.hahn@s-hahn.de /        It is hard to make things simple.			
