@@ -1,52 +1,64 @@
-From: Willy Tarreau <w@1wt.eu>
-Subject: Re: How git affects kernel.org performance
-Date: Sun, 7 Jan 2007 11:52:30 +0100
-Message-ID: <20070107105230.GA8345@1wt.eu>
-References: <1166304080.13548.8.camel@nigel.suspend2.net> <459152B1.9040106@zytor.com> <1168140954.2153.1.camel@nigel.suspend2.net> <45A08269.4050504@zytor.com> <45A083F2.5000000@zytor.com> <Pine.LNX.4.64.0701062130260.3661@woody.osdl.org> <20070107085526.GR24090@1wt.eu> <45A0B63E.2020803@zytor.com> <20070107090336.GA7741@1wt.eu> <20070107102853.GB26849@infradead.org>
+From: "Chris Lee" <clee@kde.org>
+Subject: Simple UI question...
+Date: Sun, 7 Jan 2007 03:02:59 -0800
+Message-ID: <204011cb0701070302y54837c5bp967e2cddd3fb655d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sun Jan 07 11:53:56 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Sun Jan 07 12:03:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H3Vex-0003yl-SD
-	for gcvg-git@gmane.org; Sun, 07 Jan 2007 11:53:52 +0100
+	id 1H3Vnt-0006Is-LI
+	for gcvg-git@gmane.org; Sun, 07 Jan 2007 12:03:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932493AbXAGKxs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 7 Jan 2007 05:53:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932491AbXAGKxs
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jan 2007 05:53:48 -0500
-Received: from 1wt.eu ([62.212.114.60]:1824 "EHLO 1wt.eu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932490AbXAGKxr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Jan 2007 05:53:47 -0500
-To: Christoph Hellwig <hch@infradead.org>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org,
-	nigel@nigel.suspend2.net, "J.H." <warthog9@kernel.org>,
-	Randy Dunlap <randy.dunlap@oracle.com>,
-	Andrew Morton <akpm@osdl.org>, Pavel Machek <pavel@ucw.cz>,
-	kernel list <linux-kernel@vger.kernel.org>,
-	webmaster@kernel.org
+	id S932495AbXAGLDB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 7 Jan 2007 06:03:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932494AbXAGLDB
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jan 2007 06:03:01 -0500
+Received: from wx-out-0506.google.com ([66.249.82.224]:1375 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932495AbXAGLDA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Jan 2007 06:03:00 -0500
+Received: by wx-out-0506.google.com with SMTP id h27so7671685wxd
+        for <git@vger.kernel.org>; Sun, 07 Jan 2007 03:02:59 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:sender:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition:x-google-sender-auth;
+        b=X6uGkt2tKr9hoXto7JodRqvjnImgDGs4jwEfa5Z1Myy2xzMA46x2DYpmz1JkYrjXWqihQS1Uo+dpKdXVjbhHQr+RFz5eir9VF3F4L/atr8v6lA8kPkEBa/sEYA/vzG+GOOIc4D76lHXzms9VECdSUtIExUwu1UcGLwhn/F2dqnA=
+Received: by 10.90.66.9 with SMTP id o9mr1642492aga.1168167779907;
+        Sun, 07 Jan 2007 03:02:59 -0800 (PST)
+Received: by 10.90.81.19 with HTTP; Sun, 7 Jan 2007 03:02:59 -0800 (PST)
+To: "Git Mailing List" <git@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <20070107102853.GB26849@infradead.org>
-User-Agent: Mutt/1.5.11
+X-Google-Sender-Auth: af9d0e135c7dbc9f
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36151>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36152>
 
-On Sun, Jan 07, 2007 at 10:28:53AM +0000, Christoph Hellwig wrote:
-> On Sun, Jan 07, 2007 at 10:03:36AM +0100, Willy Tarreau wrote:
-> > The problem is that I have no sufficient FS knowledge to argument why
-> > it helps here. It was a desperate attempt to fix the problem for us
-> > and it definitely worked well.
-> 
-> XFS does rather efficient btree directories, and it does sophisticated
-> readahead for directories.  I suspect that's what is helping you there.
+Hey guys,
 
-Ok. Do you too think it might help (or even solve) the problem on
-kernel.org ?
+So I'm trying to figure out the best way to pull out a checkout of the
+entire tree as of a given revision ID. I have a whole bunch of
+revision IDs, and I'd like to know what the git equivalent of (say)
+the following is:
 
-Willy
+svn co -r280600 file:///path/to/svn/repo
+
+For the sake of argument, let's say that r280600 imported as
+07058310db903317faa300b93004a5a2e0fc2dcc into my git tree.
+
+How do I get a pristine checkout in my working copy of the entire tree
+as the repository saw it at 07058310db903317faa300b93004a5a2e0fc2dcc?
+
+Eric Anholt suggested 'git checkout -b temporary-branch-name
+$sha1sum'; davej suggested 'git-read-tree $sha1sum &&
+git-checkout-index -a -f' but for some reason, neither of these
+commands seems to do exactly as I expect. davej's method seems to work
+for some revision IDs, but not for others, and the other method seems
+to work just about as well. (The problem I have seen is that, for some
+revisions, the only files I get in the working copy are the files that
+were changed in that commit; the rest of the files in the tree do not
+get checked out.)
