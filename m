@@ -1,66 +1,62 @@
-From: Jeff Garzik <jeff@garzik.org>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: [KORG] Re: kernel.org lies about latest -mm kernel
-Date: Sat, 06 Jan 2007 23:22:31 -0500
-Message-ID: <45A07587.3080503@garzik.org>
-References: <20061214223718.GA3816@elf.ucw.cz>	 <20061216094421.416a271e.randy.dunlap@oracle.com>	 <20061216095702.3e6f1d1f.akpm@osdl.org>  <458434B0.4090506@oracle.com>	 <1166297434.26330.34.camel@localhost.localdomain>	 <1166304080.13548.8.camel@nigel.suspend2.net>  <459152B1.9040106@zytor.com> <1168140954.2153.1.camel@nigel.suspend2.net>
+Date: Sat, 6 Jan 2007 20:29:26 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0701062029170.3661@woody.osdl.org>
+References: <20061214223718.GA3816@elf.ucw.cz>  <20061216094421.416a271e.randy.dunlap@oracle.com>
+  <20061216095702.3e6f1d1f.akpm@osdl.org>  <458434B0.4090506@oracle.com> 
+ <1166297434.26330.34.camel@localhost.localdomain>  <1166304080.13548.8.camel@nigel.suspend2.net>
+  <459152B1.9040106@zytor.com> <1168140954.2153.1.camel@nigel.suspend2.net>
+ <45A07587.3080503@garzik.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "J.H." <warthog9@kernel.org>,
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: nigel@nigel.suspend2.net, "H. Peter Anvin" <hpa@zytor.com>,
+	Andrew Morton <akpm@osdl.org>, Greg KH <gregkh@suse.de>,
+	"J.H." <warthog9@kernel.org>,
 	Randy Dunlap <randy.dunlap@oracle.com>,
 	Pavel Machek <pavel@ucw.cz>,
 	kernel list <linux-kernel@vger.kernel.org>,
 	webmaster@kernel.org, Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Jan 07 05:23:05 2007
+X-From: git-owner@vger.kernel.org Sun Jan 07 05:30:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H3PYm-0002LR-AR
-	for gcvg-git@gmane.org; Sun, 07 Jan 2007 05:23:04 +0100
+	id 1H3Pfr-0003uB-Eo
+	for gcvg-git@gmane.org; Sun, 07 Jan 2007 05:30:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932369AbXAGEWx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 6 Jan 2007 23:22:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932387AbXAGEWx
-	(ORCPT <rfc822;git-outgoing>); Sat, 6 Jan 2007 23:22:53 -0500
-Received: from srv5.dvmed.net ([207.36.208.214]:46905 "EHLO mail.dvmed.net"
+	id S932391AbXAGEaT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 6 Jan 2007 23:30:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932390AbXAGEaT
+	(ORCPT <rfc822;git-outgoing>); Sat, 6 Jan 2007 23:30:19 -0500
+Received: from smtp.osdl.org ([65.172.181.24]:58673 "EHLO smtp.osdl.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932369AbXAGEWw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Jan 2007 23:22:52 -0500
-Received: from cpe-065-190-194-075.nc.res.rr.com ([65.190.194.75] helo=[10.10.10.10])
-	by mail.dvmed.net with esmtpsa (Exim 4.63 #1 (Red Hat Linux))
-	id 1H3PYG-00013e-KV; Sun, 07 Jan 2007 04:22:33 +0000
-User-Agent: Thunderbird 1.5.0.9 (X11/20061219)
-To: nigel@nigel.suspend2.net, "H. Peter Anvin" <hpa@zytor.com>,
-	Andrew Morton <akpm@osdl.org>, Greg KH <gregkh@suse.de>,
-	Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <1168140954.2153.1.camel@nigel.suspend2.net>
-X-Spam-Score: -4.3 (----)
-X-Spam-Report: SpamAssassin version 3.1.7 on srv5.dvmed.net summary:
-	Content analysis details:   (-4.3 points, 5.0 required)
+	id S932387AbXAGEaR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Jan 2007 23:30:17 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l074TRWi027089
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sat, 6 Jan 2007 20:29:28 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l074TQH9010098;
+	Sat, 6 Jan 2007 20:29:26 -0800
+To: Jeff Garzik <jeff@garzik.org>
+In-Reply-To: <45A07587.3080503@garzik.org>
+X-Spam-Status: No, hits=-1.169 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.107__
+X-MIMEDefang-Filter: osdl$Revision: 1.167 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36124>
-
-> On Tue, 2006-12-26 at 08:49 -0800, H. Peter Anvin wrote:
->> Not really.  In fact, it would hardly help at all.
->>
->> The two things git users can do to help is:
->>
->> 1. Make sure your alternatives file is set up correctly;
->> 2. Keep your trees packed and pruned, to keep the file count down.
->>
->> If you do this, the load imposed by a single git tree is fairly negible.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36125>
 
 
-Would kernel hackers be amenable to having their trees auto-repacked, 
-and linked via alternatives to Linus's linux-2.6.git?
 
-Looking through kernel.org, we have a ton of repositories, however 
-packed, that carrying their own copies of the linux-2.6.git repo.
+On Sat, 6 Jan 2007, Jeff Garzik wrote:
+> 
+> Also, I wonder if "git push" will push only the non-linux-2.6.git objects, if
+> both local and remote sides have the proper alternatives set up?
 
-Also, I wonder if "git push" will push only the non-linux-2.6.git 
-objects, if both local and remote sides have the proper alternatives set up?
+Yes.
 
-	Jeff
+		Linus
