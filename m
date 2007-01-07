@@ -1,93 +1,99 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: problem with git clone on cygwin
-Date: Sun, 7 Jan 2007 01:00:08 -0500
-Message-ID: <20070107060007.GA10351@spearce.org>
-References: <20070106170330.GA8041@scotty.home>
+From: "Songmao Tian" <kingkongmao@gmail.com>
+Subject: Re: Hello all, I am using git-svn and have some question
+Date: Sun, 7 Jan 2007 14:06:44 +0800
+Message-ID: <7d73e7d80701062206y34db9d06k3c871c7e83a8aa4@mail.gmail.com>
+References: <7d73e7d80701060124t16850e8ob8fbd202d230dd90@mail.gmail.com>
+	 <20070107002317.GC10933@localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 07 07:00:21 2007
+X-From: git-owner@vger.kernel.org Sun Jan 07 07:06:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H3R4s-0006mK-Ie
-	for gcvg-git@gmane.org; Sun, 07 Jan 2007 07:00:18 +0100
+	id 1H3RBC-00087j-Is
+	for gcvg-git@gmane.org; Sun, 07 Jan 2007 07:06:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932405AbXAGGAO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 7 Jan 2007 01:00:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932413AbXAGGAO
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jan 2007 01:00:14 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:48764 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932405AbXAGGAM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Jan 2007 01:00:12 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1H3R56-0000Eh-BO; Sun, 07 Jan 2007 01:00:32 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 81D7720FB65; Sun,  7 Jan 2007 01:00:08 -0500 (EST)
-To: "Stefan-W. Hahn" <stefan.hahn@s-hahn.de>
+	id S932415AbXAGGGr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 7 Jan 2007 01:06:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932416AbXAGGGq
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jan 2007 01:06:46 -0500
+Received: from nf-out-0910.google.com ([64.233.182.189]:59257 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932415AbXAGGGp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Jan 2007 01:06:45 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so9023253nfa
+        for <git@vger.kernel.org>; Sat, 06 Jan 2007 22:06:44 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=r8PNrWMDEdgq2S+9tXyMAh+eW+v3OT3YawC/rLTybccZgkauOzRVXvi49uTpILD7H2/SoSPFVrxoB+TH5DG8CIefwUa6GpFlLrJG0UPJGDBYH9MuwqNoei6G1ekE91PMc8jpNvuMFPyNnhLTgncQRnwj6xIp91hEFzG2nOswL7U=
+Received: by 10.49.64.18 with SMTP id r18mr24223036nfk.1168150004702;
+        Sat, 06 Jan 2007 22:06:44 -0800 (PST)
+Received: by 10.48.212.10 with HTTP; Sat, 6 Jan 2007 22:06:44 -0800 (PST)
+To: "Eric Wong" <normalperson@yhbt.net>
+In-Reply-To: <20070107002317.GC10933@localdomain>
 Content-Disposition: inline
-In-Reply-To: <20070106170330.GA8041@scotty.home>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36128>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36129>
 
-"Stefan-W. Hahn" <stefan.hahn@s-hahn.de> wrote:
-> running git on Cygwin I have a problem with git clone on local disk,
-> while packing data. 
-> 
-> The problem comes with v1.5.0-rc0. I bisected the problem down to
-> commit 6d2fa7 as the first bad commit.
+I have made a mistake, while use 1.4.4.1, exec git-svn multi-fetch
+will find possible parent for each branch, but 1.4.4.3 will not.
 
-That was a performance improvement for Mac OS X to reduce the
-index-pack time on linux.git from almost an hour to about 1 minute.
- 
-> It seems to be a problem with cygwin.dll prior v1.5.22 and pread(), if
-> using an offset!=0. (I'm running cygwin.dll v1.5.21 build date
-> 2006-07-27 and I can't update because of other compatibility problems).
+with parent found, git-rebase between branches will result in less
+conflict. I wonder if I have made another mistake while using
+1.4.4.3:), for i like the way 1.4.4.1's multi-fetch did
 
-Why can't you upgrade Cygwin?
- 
-> So I tried:
-> - not to set NO_MMAP to use real mmap
-
-FYI: you can "unset" NO_MMAP at compile time:
-
-  make NO_MMAP=
-
-or by putting it into your personal config.mak:
-
-  echo NO_MMAP= >config.mak
-  make
-
-this way you always build with the real mmap, but don't need to
-locally patch Makefile.
-
-> - changing get_data_from_pack() from index-pack.c to used mmap() as
->   in 042aea8. (I did this because it directly uses pread().)
-> This solved the problem for my testcase.
-
-This isn't ideal because of the performance problems that some
-OSes have with small but frequent mmap() calls.
-
-Perhaps we should add our own fake pread (aka git_pread) to
-git-compat-util.h and provide a NO_PREAD option in the Makefile?
-Though I don't think its really worth it, as pretty much every
-OS we run on should have a functioning pread call.  Except some
-Cygwins apparently.
-
--- 
-Shawn.
+On 1/7/07, Eric Wong <normalperson@yhbt.net> wrote:
+> Songmao Tian <kingkongmao@gmail.com> wrote:
+> > (git v1.4.4.3)
+> > I used the fantastic git-svn multi-init.
+> > git-svn multi-init http://...
+> >
+> > checkout a branch
+> > git-checkout -b kkmao remotes/kkmao
+> > git-checkout -b huahua remotes/huahua
+> >
+> > git-pull . kkmao
+> > (fix a conflict)
+>
+> I no longer recommend using plain git-pull or git-merge with git-svn,
+> especially when using dcommit (which I highly recommend).
+>
+> git-rebase or git-rebase --merge is the recommended method of merging
+> upstream changes.  Using the --squash flag with git-pull or git-merge
+> should also work here, but I have less experience with them.
+>
+> > git-checkout kkmao
+> >
+> > kkmao@Loongson:~/pmon/pmon-lm2e/git$ git-pull . huahua
+> > Updating dee0161..3fa715b
+> > Fast forward
+> > Targets/Bonito/conf/Bonito |    2 +-
+> > 1 files changed, 1 insertions(+), 1 deletions(-)
+>
+> On the other hand, pulls/merges without --squash resulting in fast
+> forwards are fine (but git-rebase handles fast forwards just as well).
+>
+> > finnally, "git-svn dcommit -i kkmao"failed, and got the following message
+> >
+> > kkmao@Loongson:~/pmon/pmon-lm2e/git$ git-svn dcommit -i kkmao
+> > diff-tree f179060aa2dd0a4ca4f95f2560ea708765a87a09~1
+> > f179060aa2dd0a4ca4f95f2560ea708765a87a09
+> > Merge conflict during commit: Your file or directory 'branches' is
+> > probably out-of-date: The version resource does not correspond to the
+> > resource within the transaction.  Either the requested version
+> > resource is out of date (needs to be updated), or the requested
+> > version resource is newer than the transaction root (restart the
+> > commit). at /home/kkmao/bin/git-svn line 1577
+>
+> This seems to be most likely because dcommit skips merge commits
+> (generated by your pull).
+>
+> --
+> Eric Wong
+>
