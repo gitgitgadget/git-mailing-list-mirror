@@ -1,82 +1,93 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: How git affects kernel.org performance
-Date: Sat, 6 Jan 2007 21:39:42 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0701062130260.3661@woody.osdl.org>
-References: <20061214223718.GA3816@elf.ucw.cz>  <20061216094421.416a271e.randy.dunlap@oracle.com>
-  <20061216095702.3e6f1d1f.akpm@osdl.org>  <458434B0.4090506@oracle.com> 
- <1166297434.26330.34.camel@localhost.localdomain>  <1166304080.13548.8.camel@nigel.suspend2.net>
-  <459152B1.9040106@zytor.com> <1168140954.2153.1.camel@nigel.suspend2.net>
- <45A08269.4050504@zytor.com> <45A083F2.5000000@zytor.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: problem with git clone on cygwin
+Date: Sun, 7 Jan 2007 01:00:08 -0500
+Message-ID: <20070107060007.GA10351@spearce.org>
+References: <20070106170330.GA8041@scotty.home>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, nigel@nigel.suspend2.net,
-	"J.H." <warthog9@kernel.org>,
-	Randy Dunlap <randy.dunlap@oracle.com>,
-	Andrew Morton <akpm@osdl.org>, Pavel Machek <pavel@ucw.cz>,
-	kernel list <linux-kernel@vger.kernel.org>,
-	webmaster@kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 07 06:40:38 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jan 07 07:00:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H3Qlj-0002QS-5P
-	for gcvg-git@gmane.org; Sun, 07 Jan 2007 06:40:31 +0100
+	id 1H3R4s-0006mK-Ie
+	for gcvg-git@gmane.org; Sun, 07 Jan 2007 07:00:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932403AbXAGFkX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 7 Jan 2007 00:40:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932406AbXAGFkX
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jan 2007 00:40:23 -0500
-Received: from smtp.osdl.org ([65.172.181.24]:33110 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932403AbXAGFkW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Jan 2007 00:40:22 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l075dhWi028609
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sat, 6 Jan 2007 21:39:44 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l075dgdL011058;
-	Sat, 6 Jan 2007 21:39:42 -0800
-To: "H. Peter Anvin" <hpa@zytor.com>
-In-Reply-To: <45A083F2.5000000@zytor.com>
-X-Spam-Status: No, hits=-0.669 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.107__
-X-MIMEDefang-Filter: osdl$Revision: 1.167 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932405AbXAGGAO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 7 Jan 2007 01:00:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932413AbXAGGAO
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jan 2007 01:00:14 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:48764 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932405AbXAGGAM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Jan 2007 01:00:12 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1H3R56-0000Eh-BO; Sun, 07 Jan 2007 01:00:32 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 81D7720FB65; Sun,  7 Jan 2007 01:00:08 -0500 (EST)
+To: "Stefan-W. Hahn" <stefan.hahn@s-hahn.de>
+Content-Disposition: inline
+In-Reply-To: <20070106170330.GA8041@scotty.home>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36127>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36128>
 
-
-
-On Sat, 6 Jan 2007, H. Peter Anvin wrote:
+"Stefan-W. Hahn" <stefan.hahn@s-hahn.de> wrote:
+> running git on Cygwin I have a problem with git clone on local disk,
+> while packing data. 
 > 
-> During extremely high load, it appears that what slows kernel.org down more
-> than anything else is the time that each individual getdents() call takes.
-> When I've looked this I've observed times from 200 ms to almost 2 seconds!
-> Since an unpacked *OR* unpruned git tree adds 256 directories to a cleanly
-> packed tree, you can do the math yourself.
+> The problem comes with v1.5.0-rc0. I bisected the problem down to
+> commit 6d2fa7 as the first bad commit.
 
-"getdents()" is totally serialized by the inode semaphore. It's one of the 
-most expensive system calls in Linux, partly because of that, and partly 
-because it has to call all the way down into the filesystem in a way that 
-almost no other common system call has to (99% of all filesystem calls can 
-be handled basically at the VFS layer with generic caches - but not 
-getdents()).
+That was a performance improvement for Mac OS X to reduce the
+index-pack time on linux.git from almost an hour to about 1 minute.
+ 
+> It seems to be a problem with cygwin.dll prior v1.5.22 and pread(), if
+> using an offset!=0. (I'm running cygwin.dll v1.5.21 build date
+> 2006-07-27 and I can't update because of other compatibility problems).
 
-So if there are concurrent readdirs on the same directory, they get 
-serialized. If there is any file creation/deletion activity in the 
-directory, it serializes getdents(). 
+Why can't you upgrade Cygwin?
+ 
+> So I tried:
+> - not to set NO_MMAP to use real mmap
 
-To make matters worse, I don't think it has any read-ahead at all when you 
-use hashed directory entries. So if you have cold-cache case, you'll read 
-every single block totally individually, and serialized. One block at a 
-time (I think the non-hashed case is likely also suspect, but that's a 
-separate issue)
+FYI: you can "unset" NO_MMAP at compile time:
 
-In other words, I'm not at all surprised it hits on filldir time. 
-Especially on ext3.
+  make NO_MMAP=
 
-		Linus
+or by putting it into your personal config.mak:
+
+  echo NO_MMAP= >config.mak
+  make
+
+this way you always build with the real mmap, but don't need to
+locally patch Makefile.
+
+> - changing get_data_from_pack() from index-pack.c to used mmap() as
+>   in 042aea8. (I did this because it directly uses pread().)
+> This solved the problem for my testcase.
+
+This isn't ideal because of the performance problems that some
+OSes have with small but frequent mmap() calls.
+
+Perhaps we should add our own fake pread (aka git_pread) to
+git-compat-util.h and provide a NO_PREAD option in the Makefile?
+Though I don't think its really worth it, as pretty much every
+OS we run on should have a functioning pread call.  Except some
+Cygwins apparently.
+
+-- 
+Shawn.
