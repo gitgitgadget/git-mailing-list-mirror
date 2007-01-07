@@ -1,67 +1,109 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: git-svnimport failed and now git-repack hates me
-Date: Sat, 6 Jan 2007 16:36:54 -0800
-Message-ID: <20070107003654.GA12551@localdomain>
-References: <7v1wmbnw9x.fsf@assigned-by-dhcp.cox.net> <204011cb0701040958k884b613i8a4639201ae6443b@mail.gmail.com> <7v1wmalez6.fsf@assigned-by-dhcp.cox.net> <204011cb0701050919w2001105asefe2fd99165dfa95@mail.gmail.com> <7vbqldfg56.fsf@assigned-by-dhcp.cox.net> <204011cb0701051133r1ede14a6gd5093a3e7fa88cb5@mail.gmail.com> <20070105193958.GE8753@spearce.org> <7vtzz5duk1.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0701051354590.3661@woody.osdl.org> <Pine.LNX.4.64.0701051414140.14017@blackbox.fnordora.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 07 01:37:01 2007
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH 1/5] gitweb: Fix error in git_patchest_body for file creation/deletion patch
+Date: Sun,  7 Jan 2007 02:52:23 +0100
+Message-ID: <1168134751748-git-send-email-jnareb@gmail.com>
+References: <100171.86639.qm@web31814.mail.mud.yahoo.com>
+Cc: Luben Tuikov <ltuikov@yahoo.com>, Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jan 07 02:52:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H3M20-0000xx-Mc
-	for gcvg-git@gmane.org; Sun, 07 Jan 2007 01:37:01 +0100
+	id 1H3NDI-0001C8-6h
+	for gcvg-git@gmane.org; Sun, 07 Jan 2007 02:52:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932292AbXAGAg5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 6 Jan 2007 19:36:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932293AbXAGAg5
-	(ORCPT <rfc822;git-outgoing>); Sat, 6 Jan 2007 19:36:57 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:33484 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932292AbXAGAg4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Jan 2007 19:36:56 -0500
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id C62A97DC094;
-	Sat,  6 Jan 2007 16:36:54 -0800 (PST)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Sat, 06 Jan 2007 16:36:54 -0800
-To: alan <alan@clueserver.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0701051414140.14017@blackbox.fnordora.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S932315AbXAGBwc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 6 Jan 2007 20:52:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932314AbXAGBwc
+	(ORCPT <rfc822;git-outgoing>); Sat, 6 Jan 2007 20:52:32 -0500
+Received: from nf-out-0910.google.com ([64.233.182.191]:5836 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932308AbXAGBwb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Jan 2007 20:52:31 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so8960302nfa
+        for <git@vger.kernel.org>; Sat, 06 Jan 2007 17:52:30 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=oTE7iUEndOeq3v15euVJePSHlGXXL9Lj4XS4JowxorcIQzejy+RJMnCLFCDjnHSeII8NebbEUoJCLY2eEueswnGnUXnp/1jcrshobkgPR8d38yjEhiGs8IkAdqwY0fb/eJc2ejpxTNmem3+kJdqU8YtE1o1OMU1QkABU9l77nCo=
+Received: by 10.49.13.14 with SMTP id q14mr26607988nfi.1168134750158;
+        Sat, 06 Jan 2007 17:52:30 -0800 (PST)
+Received: from roke.D-201 ( [81.190.18.145])
+        by mx.google.com with ESMTP id r33sm101828946nfc.2007.01.06.17.52.29;
+        Sat, 06 Jan 2007 17:52:29 -0800 (PST)
+Received: from roke.D-201 (localhost.localdomain [127.0.0.1])
+	by roke.D-201 (8.13.4/8.13.4) with ESMTP id l071qVkg007248;
+	Sun, 7 Jan 2007 02:52:32 +0100
+Received: (from jnareb@localhost)
+	by roke.D-201 (8.13.4/8.13.4/Submit) id l071qV19007247;
+	Sun, 7 Jan 2007 02:52:31 +0100
+To: git@vger.kernel.org
+X-Mailer: git-send-email 1.4.4.3
+In-Reply-To: <100171.86639.qm@web31814.mail.mud.yahoo.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36109>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36110>
 
-alan <alan@clueserver.org> wrote:
-> I am trying to import a subversion repository and have yet to be able to 
-> suck down the whole thing without segfaulting.  It is a large repository. 
-> Works fine until about the last 10% and then runs out of memory.
+$from_id, $to_id variables should be local per PATCH.
+
+Fix error in git_patchset_body for file creation (deletion) patches,
+where instead of /dev/null as from-file (to-file) diff header line, it
+had link to previous file with current file name.  This error occured
+only if there was another patch before file creation (deletion) patch.
+
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+Luben Tuikov wrote:
+
+> The second bug is displaying a renamed file with the
+> same name as the one of the preceding "patch". Saw
+> this one today when I pulled.
 > 
-> open3: fork failed: Cannot allocate memory at /usr/bin/git-svn line 2711
-> 512 at /usr/bin/git-svn line 446
->         main::fetch_lib() called at /usr/bin/git-svn line 314
->         main::fetch() called at /usr/bin/git-svn line 173
-> 
-> I need to try the "partial download" script and see if that helps.
+> To exhibit these, you need to "commitdiff" a commit
+> which has at least one rename and at least one regular
+> diff preceding the rename.
 
-Which version of git-svn is this?  If it's a public repository I'd
-like to have a look.
+I think this should also fix this bug.
 
-git-svn memory usage should be bounded by:
-	max(max(commit-message size),
-	    max(number of files changed per revision))
+ gitweb/gitweb.perl |    6 +++++-
+ 1 files changed, 5 insertions(+), 1 deletions(-)
 
-I'm not sure if the size of the files changed per-revision or if the
-size of the deltas is an issue with git-svn.  But if you have a repo
-with big files and big changes to them, let me know so I can take a
-look.
-
-Can you also try lowering $inc in git-svn to something lower (perhaps
-100)? (my $inc = 1000; in the fetch_lib function) and see if that helps
-things?  Thanks.
-
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 7906280..04c8015 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -2378,7 +2378,6 @@ sub git_patchset_body {
+ 	my $patch_line;
+ 	my $diffinfo;
+ 	my (%from, %to);
+-	my ($from_id, $to_id);
+ 
+ 	print "<div class=\"patchset\">\n";
+ 
+@@ -2392,6 +2391,7 @@ sub git_patchset_body {
+  PATCH:
+ 	while ($patch_line) {
+ 		my @diff_header;
++		my ($from_id, $to_id);
+ 
+ 		# git diff header
+ 		#assert($patch_line =~ m/^diff /) if DEBUG;
+@@ -2439,11 +2439,15 @@ sub git_patchset_body {
+ 				$from{'href'} = href(action=>"blob", hash_base=>$hash_parent,
+ 				                     hash=>$diffinfo->{'from_id'},
+ 				                     file_name=>$from{'file'});
++			} else {
++				delete $from{'href'};
+ 			}
+ 			if ($diffinfo->{'status'} ne "D") { # not deleted file
+ 				$to{'href'} = href(action=>"blob", hash_base=>$hash,
+ 				                   hash=>$diffinfo->{'to_id'},
+ 				                   file_name=>$to{'file'});
++			} else {
++				delete $to{'href'};
+ 			}
+ 			# this is first patch for raw difftree line with $patch_idx index
+ 			# we index @$difftree array from 0, but number patches from 1
 -- 
-Eric Wong
+1.4.4.3
