@@ -1,101 +1,66 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: [PATCH] Documentation: tutorial editing
-Date: Sat, 6 Jan 2007 22:38:38 -0500
-Message-ID: <20070107033838.GB9104@fieldses.org>
+From: Jeff Garzik <jeff@garzik.org>
+Subject: Re: [KORG] Re: kernel.org lies about latest -mm kernel
+Date: Sat, 06 Jan 2007 23:22:31 -0500
+Message-ID: <45A07587.3080503@garzik.org>
+References: <20061214223718.GA3816@elf.ucw.cz>	 <20061216094421.416a271e.randy.dunlap@oracle.com>	 <20061216095702.3e6f1d1f.akpm@osdl.org>  <458434B0.4090506@oracle.com>	 <1166297434.26330.34.camel@localhost.localdomain>	 <1166304080.13548.8.camel@nigel.suspend2.net>  <459152B1.9040106@zytor.com> <1168140954.2153.1.camel@nigel.suspend2.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 07 04:38:48 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "J.H." <warthog9@kernel.org>,
+	Randy Dunlap <randy.dunlap@oracle.com>,
+	Pavel Machek <pavel@ucw.cz>,
+	kernel list <linux-kernel@vger.kernel.org>,
+	webmaster@kernel.org, Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Jan 07 05:23:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H3Ors-0000A8-9S
-	for gcvg-git@gmane.org; Sun, 07 Jan 2007 04:38:44 +0100
+	id 1H3PYm-0002LR-AR
+	for gcvg-git@gmane.org; Sun, 07 Jan 2007 05:23:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932378AbXAGDik (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 6 Jan 2007 22:38:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932380AbXAGDik
-	(ORCPT <rfc822;git-outgoing>); Sat, 6 Jan 2007 22:38:40 -0500
-Received: from mail.fieldses.org ([66.93.2.214]:36533 "EHLO
-	pickle.fieldses.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932378AbXAGDik (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Jan 2007 22:38:40 -0500
-Received: from bfields by pickle.fieldses.org with local (Exim 4.63)
-	(envelope-from <bfields@fieldses.org>)
-	id 1H3Orm-0002le-Nv; Sat, 06 Jan 2007 22:38:38 -0500
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S932369AbXAGEWx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 6 Jan 2007 23:22:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932387AbXAGEWx
+	(ORCPT <rfc822;git-outgoing>); Sat, 6 Jan 2007 23:22:53 -0500
+Received: from srv5.dvmed.net ([207.36.208.214]:46905 "EHLO mail.dvmed.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932369AbXAGEWw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Jan 2007 23:22:52 -0500
+Received: from cpe-065-190-194-075.nc.res.rr.com ([65.190.194.75] helo=[10.10.10.10])
+	by mail.dvmed.net with esmtpsa (Exim 4.63 #1 (Red Hat Linux))
+	id 1H3PYG-00013e-KV; Sun, 07 Jan 2007 04:22:33 +0000
+User-Agent: Thunderbird 1.5.0.9 (X11/20061219)
+To: nigel@nigel.suspend2.net, "H. Peter Anvin" <hpa@zytor.com>,
+	Andrew Morton <akpm@osdl.org>, Greg KH <gregkh@suse.de>,
+	Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <1168140954.2153.1.camel@nigel.suspend2.net>
+X-Spam-Score: -4.3 (----)
+X-Spam-Report: SpamAssassin version 3.1.7 on srv5.dvmed.net summary:
+	Content analysis details:   (-4.3 points, 5.0 required)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36123>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36124>
 
-Edit for conciseness.
+> On Tue, 2006-12-26 at 08:49 -0800, H. Peter Anvin wrote:
+>> Not really.  In fact, it would hardly help at all.
+>>
+>> The two things git users can do to help is:
+>>
+>> 1. Make sure your alternatives file is set up correctly;
+>> 2. Keep your trees packed and pruned, to keep the file count down.
+>>
+>> If you do this, the load imposed by a single git tree is fairly negible.
 
-Add a "Making changes" section header.
 
-When possible, make sure that stuff in text boxes could be entered literally.
-(Don't use "..." unless we want a user to type that.)
+Would kernel hackers be amenable to having their trees auto-repacked, 
+and linked via alternatives to Linus's linux-2.6.git?
 
-Move 'commit -a' example into a literal code section, clarify that it finds
-modified files automatically.
+Looking through kernel.org, we have a ton of repositories, however 
+packed, that carrying their own copies of the linux-2.6.git repo.
 
-Signed-off-by: "J. Bruce Fields" <bfields@citi.umich.edu>
----
- Documentation/tutorial.txt |   16 ++++++++++------
- 1 files changed, 10 insertions(+), 6 deletions(-)
+Also, I wonder if "git push" will push only the non-linux-2.6.git 
+objects, if both local and remote sides have the proper alternatives set up?
 
-diff --git a/Documentation/tutorial.txt b/Documentation/tutorial.txt
-index 79884d9..2fdeed2 100644
---- a/Documentation/tutorial.txt
-+++ b/Documentation/tutorial.txt
-@@ -43,8 +43,7 @@ Initialized empty Git repository in .git/
- 
- You've now initialized the working directory--you may notice a new
- directory created, named ".git".  Tell git that you want it to track
--every file under the current directory with (notice the dot '.'
--that means the current directory):
-+every file under the current directory (note the '.') with:
- 
- ------------------------------------------------
- $ git add .
-@@ -59,6 +58,9 @@ $ git commit
- will prompt you for a commit message, then record the current state
- of all the files to the repository.
- 
-+Making changes
-+--------------
-+
- Try modifying some files, then run
- 
- ------------------------------------------------
-@@ -70,19 +72,21 @@ want the updated contents of these files in the commit and then
- make a commit, like this:
- 
- ------------------------------------------------
--$ git add file1 file...
-+$ git add file1 file2 file3
- $ git commit
- ------------------------------------------------
- 
- This will again prompt your for a message describing the change, and then
--record the new versions of the files you listed.  It is cumbersome
--to list all files and you can say `git commit -a` (which stands for 'all')
--instead of running `git add` beforehand.
-+record the new versions of the files you listed. 
-+
-+Alternatively, instead of running `git add` beforehand, you can use
- 
- ------------------------------------------------
- $ git commit -a
- ------------------------------------------------
- 
-+which will automatically notice modified (but not new) files.
-+
- A note on commit messages: Though not required, it's a good idea to
- begin the commit message with a single short (less than 50 character)
- line summarizing the change, followed by a blank line and then a more
--- 
-1.5.0.rc0.ge16c2
+	Jeff
