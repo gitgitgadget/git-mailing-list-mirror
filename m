@@ -1,99 +1,68 @@
-From: "Songmao Tian" <kingkongmao@gmail.com>
-Subject: Re: Hello all, I am using git-svn and have some question
-Date: Sun, 7 Jan 2007 14:06:44 +0800
-Message-ID: <7d73e7d80701062206y34db9d06k3c871c7e83a8aa4@mail.gmail.com>
-References: <7d73e7d80701060124t16850e8ob8fbd202d230dd90@mail.gmail.com>
-	 <20070107002317.GC10933@localdomain>
+From: Josef Sipek <jsipek@fsl.cs.sunysb.edu>
+Subject: Re: Some guilt fixes
+Date: Sun, 7 Jan 2007 01:16:50 -0500
+Message-ID: <20070107061650.GD22162@filer.fsl.cs.sunysb.edu>
+References: <11681354924120-git-send-email-vonbrand@inf.utfsm.cl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 07 07:06:51 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Josef Sipek <jsipek@cs.sunysb.edu>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jan 07 07:17:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H3RBC-00087j-Is
-	for gcvg-git@gmane.org; Sun, 07 Jan 2007 07:06:50 +0100
+	id 1H3RLH-0001u8-RX
+	for gcvg-git@gmane.org; Sun, 07 Jan 2007 07:17:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932415AbXAGGGr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 7 Jan 2007 01:06:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932416AbXAGGGq
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jan 2007 01:06:46 -0500
-Received: from nf-out-0910.google.com ([64.233.182.189]:59257 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932415AbXAGGGp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Jan 2007 01:06:45 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so9023253nfa
-        for <git@vger.kernel.org>; Sat, 06 Jan 2007 22:06:44 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=r8PNrWMDEdgq2S+9tXyMAh+eW+v3OT3YawC/rLTybccZgkauOzRVXvi49uTpILD7H2/SoSPFVrxoB+TH5DG8CIefwUa6GpFlLrJG0UPJGDBYH9MuwqNoei6G1ekE91PMc8jpNvuMFPyNnhLTgncQRnwj6xIp91hEFzG2nOswL7U=
-Received: by 10.49.64.18 with SMTP id r18mr24223036nfk.1168150004702;
-        Sat, 06 Jan 2007 22:06:44 -0800 (PST)
-Received: by 10.48.212.10 with HTTP; Sat, 6 Jan 2007 22:06:44 -0800 (PST)
-To: "Eric Wong" <normalperson@yhbt.net>
-In-Reply-To: <20070107002317.GC10933@localdomain>
+	id S932416AbXAGGRF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 7 Jan 2007 01:17:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932417AbXAGGRF
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jan 2007 01:17:05 -0500
+Received: from filer.fsl.cs.sunysb.edu ([130.245.126.2]:45091 "EHLO
+	filer.fsl.cs.sunysb.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932416AbXAGGRE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Jan 2007 01:17:04 -0500
+Received: from filer.fsl.cs.sunysb.edu (IDENT:56TL/mpAWWCQAeMThpwF5f59PShA8zAi@localhost.localdomain [127.0.0.1])
+	by filer.fsl.cs.sunysb.edu (8.12.11.20060308/8.13.1) with ESMTP id l076Gp5K007040;
+	Sun, 7 Jan 2007 01:16:51 -0500
+Received: (from jsipek@localhost)
+	by filer.fsl.cs.sunysb.edu (8.12.11.20060308/8.13.1/Submit) id l076GpoY007038;
+	Sun, 7 Jan 2007 01:16:51 -0500
+To: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
 Content-Disposition: inline
+In-Reply-To: <11681354924120-git-send-email-vonbrand@inf.utfsm.cl>
+User-Agent: Mutt/1.4.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36129>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36130>
 
-I have made a mistake, while use 1.4.4.1, exec git-svn multi-fetch
-will find possible parent for each branch, but 1.4.4.3 will not.
+On Sat, Jan 06, 2007 at 11:04:50PM -0300, Horst H. von Brand wrote:
+> 
+> The following two patches clean guilt up a bit.
+> The first one cleans up the Makefiles, the second one
+> runs the tests on the files at hand, not the installed ones
+> (if they exist at all).
+ 
+Thanks!
+ 
+> Please consider placing a file giving contact information (and how to
+> participate in its development) under Documentation.
 
-with parent found, git-rebase between branches will result in less
-conflict. I wonder if I have made another mistake while using
-1.4.4.3:), for i like the way 1.4.4.1's multi-fetch did
+Good point.
 
-On 1/7/07, Eric Wong <normalperson@yhbt.net> wrote:
-> Songmao Tian <kingkongmao@gmail.com> wrote:
-> > (git v1.4.4.3)
-> > I used the fantastic git-svn multi-init.
-> > git-svn multi-init http://...
-> >
-> > checkout a branch
-> > git-checkout -b kkmao remotes/kkmao
-> > git-checkout -b huahua remotes/huahua
-> >
-> > git-pull . kkmao
-> > (fix a conflict)
->
-> I no longer recommend using plain git-pull or git-merge with git-svn,
-> especially when using dcommit (which I highly recommend).
->
-> git-rebase or git-rebase --merge is the recommended method of merging
-> upstream changes.  Using the --squash flag with git-pull or git-merge
-> should also work here, but I have less experience with them.
->
-> > git-checkout kkmao
-> >
-> > kkmao@Loongson:~/pmon/pmon-lm2e/git$ git-pull . huahua
-> > Updating dee0161..3fa715b
-> > Fast forward
-> > Targets/Bonito/conf/Bonito |    2 +-
-> > 1 files changed, 1 insertions(+), 1 deletions(-)
->
-> On the other hand, pulls/merges without --squash resulting in fast
-> forwards are fine (but git-rebase handles fast forwards just as well).
->
-> > finnally, "git-svn dcommit -i kkmao"failed, and got the following message
-> >
-> > kkmao@Loongson:~/pmon/pmon-lm2e/git$ git-svn dcommit -i kkmao
-> > diff-tree f179060aa2dd0a4ca4f95f2560ea708765a87a09~1
-> > f179060aa2dd0a4ca4f95f2560ea708765a87a09
-> > Merge conflict during commit: Your file or directory 'branches' is
-> > probably out-of-date: The version resource does not correspond to the
-> > resource within the transaction.  Either the requested version
-> > resource is out of date (needs to be updated), or the requested
-> > version resource is newer than the transaction root (restart the
-> > commit). at /home/kkmao/bin/git-svn line 1577
->
-> This seems to be most likely because dcommit skips merge commits
-> (generated by your pull).
->
-> --
-> Eric Wong
->
+> I understand you have to point explicitly at the COPYING file in each
+> of the files in the package to make the license stick. Please check
+> this.
+
+That makes sense.
+
+Thanks a bunch, and congratulations to being the first Guilt contributor. :)
+
+Josef "Jeff" Sipek.
+
+-- 
+The reasonable man adapts himself to the world; the unreasonable one
+persists in trying to adapt the world to himself. Therefore all progress
+depends on the unreasonable man.
+		- George Bernard Shaw
