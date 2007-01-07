@@ -1,69 +1,64 @@
-From: jeffpc@josefsipek.net (Josef "Jeff" Sipek)
+From: "Chris Lee" <clee@kde.org>
 Subject: Re: Simple UI question...
-Date: Sun, 7 Jan 2007 06:06:48 -0500
-Message-ID: <20070107110648.GA20091@josefsipek.net>
+Date: Sun, 7 Jan 2007 03:50:52 -0800
+Message-ID: <204011cb0701070350l4c736bcerbb236caf09a4d461@mail.gmail.com>
 References: <204011cb0701070302y54837c5bp967e2cddd3fb655d@mail.gmail.com>
+	 <20070107111305.GD10351@spearce.org>
+	 <204011cb0701070321w18942a3w7fb4f7ecd26fc457@mail.gmail.com>
+	 <20070107112944.GF10351@spearce.org>
+	 <204011cb0701070338i5f8a8b4bw8b39050aeb192edb@mail.gmail.com>
+	 <7vk5zz12va.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Jan 07 12:41:34 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jan 07 12:50:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H3WP7-0007L5-VK
-	for gcvg-git@gmane.org; Sun, 07 Jan 2007 12:41:34 +0100
+	id 1H3WYD-0001Ax-AY
+	for gcvg-git@gmane.org; Sun, 07 Jan 2007 12:50:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932514AbXAGLlb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 7 Jan 2007 06:41:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932517AbXAGLlb
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jan 2007 06:41:31 -0500
-Received: from mrs.stonybrook.edu ([129.49.1.206]:40805 "EHLO
-	mrs.stonybrook.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932514AbXAGLla (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Jan 2007 06:41:30 -0500
-X-Greylist: delayed 2077 seconds by postgrey-1.27 at vger.kernel.org; Sun, 07 Jan 2007 06:41:30 EST
-Received: from relay1.stonybrook.edu (relay1 [172.30.255.13])
-	by mrs.stonybrook.edu (8.13.8/8.13.6) with SMTP id l07B6ojk025255;
-	Sun, 7 Jan 2007 06:06:50 -0500 (EST)
-Received: from mailrelay.stonybrook.edu ([172.30.255.13])
- by relay1.stonybrook.edu (SMSSMTP 4.1.14.46) with SMTP id M2007010706065002196
- ; Sun, 07 Jan 2007 06:06:50 -0500
-Received: from josefsipek.net (turing.ams.sunysb.edu [129.49.108.158])
-	by mailrelay.stonybrook.edu (8.13.8/8.13.8) with ESMTP id l07B6mY6025252;
-	Sun, 7 Jan 2007 06:06:50 -0500 (EST)
-Received: by josefsipek.net (Postfix, from userid 1000)
-	id DDC3E1C00EC6; Sun,  7 Jan 2007 06:06:48 -0500 (EST)
-To: Chris Lee <clee@kde.org>
+	id S932500AbXAGLux (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 7 Jan 2007 06:50:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932506AbXAGLux
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jan 2007 06:50:53 -0500
+Received: from wx-out-0506.google.com ([66.249.82.229]:18313 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932500AbXAGLux (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Jan 2007 06:50:53 -0500
+Received: by wx-out-0506.google.com with SMTP id h27so7680931wxd
+        for <git@vger.kernel.org>; Sun, 07 Jan 2007 03:50:52 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=AxmIdgtvA2zXM21ZXAuq3UUet2WzHjUvc5HU2UhW/FpfuGrZTVPEox1ATaz2dS4Ft8NJTV8dAWXGzZPL63hlT6XPhj7RY9pKj1ecDulBOvV6OfLIq4xxLrASZBEI4AJJ+GNfTUQSbVc+/soaQn3Kzxa0HyXq0vWdYSIx2GjOni4=
+Received: by 10.90.104.14 with SMTP id b14mr1623722agc.1168170652480;
+        Sun, 07 Jan 2007 03:50:52 -0800 (PST)
+Received: by 10.90.81.19 with HTTP; Sun, 7 Jan 2007 03:50:52 -0800 (PST)
+To: "Junio C Hamano" <junkio@cox.net>
+In-Reply-To: <7vk5zz12va.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
-In-Reply-To: <204011cb0701070302y54837c5bp967e2cddd3fb655d@mail.gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+X-Google-Sender-Auth: ffd20a51a8f77e74
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36165>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36166>
 
-On Sun, Jan 07, 2007 at 03:02:59AM -0800, Chris Lee wrote:
-> Hey guys,
-> 
-> So I'm trying to figure out the best way to pull out a checkout of the
-> entire tree as of a given revision ID. I have a whole bunch of
-> revision IDs, and I'd like to know what the git equivalent of (say)
-> the following is:
-> 
-> svn co -r280600 file:///path/to/svn/repo
-> 
-> For the sake of argument, let's say that r280600 imported as
-> 07058310db903317faa300b93004a5a2e0fc2dcc into my git tree.
-> 
-> How do I get a pristine checkout in my working copy of the entire tree
-> as the repository saw it at 07058310db903317faa300b93004a5a2e0fc2dcc?
+On 1/7/07, Junio C Hamano <junkio@cox.net> wrote:
+> "Chris Lee" <clee@kde.org> writes:
+> > So, if I were starting with an empty working directory, and I had just
+> > synced over the .git folder from the place where I'm doing the actual
+> > importing - how would I populate the working directory with a copy of
+> > the contents of the tree from (say)
+> > 07058310db903317faa300b93004a5a2e0fc2dcc ?
+>
+> git reset --hard 070583
 
-I have great success with:
+Okay, thanks :)
 
-git-reset --hard $hash
-
-Jeff.
-
--- 
-#endif /* NO LIFE */
+(I don't really care about trying to do actual development on any of
+the branches that I've imported - I mostly am interested in finding
+out some numbers on things like 'How much faster is git when rewinding
+the directory tree to a given commit ID?' and related issues.)
