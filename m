@@ -1,196 +1,517 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH 2/2 (fixed)] instaweb: add support for nginx + FastCGI
-Date: Sat, 6 Jan 2007 18:18:14 -0800
-Message-ID: <20070107021814.GA21370@mayonaise.dyndns.org>
-References: <11678969111362-git-send-email-normalperson@yhbt.net> <1167896979262-git-send-email-normalperson@yhbt.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: Fix "Use of uninitialized value" warning in git_tags_body
+Date: Sun, 7 Jan 2007 03:40:00 +0100
+Message-ID: <200701070340.01182.jnareb@gmail.com>
+References: <11678612691404-git-send-email-jnareb@gmail.com> <enh9h8$7l0$2@sea.gmane.org> <7vsleqjz1u.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: Multipart/Mixed;
+  boundary="Boundary-00=_B2FoFmqOCbyDQtQ"
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 07 03:18:22 2007
+X-From: git-owner@vger.kernel.org Sun Jan 07 03:40:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H3Nc3-0007S4-I6
-	for gcvg-git@gmane.org; Sun, 07 Jan 2007 03:18:19 +0100
+	id 1H3NxD-0003rW-OH
+	for gcvg-git@gmane.org; Sun, 07 Jan 2007 03:40:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932338AbXAGCSR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 6 Jan 2007 21:18:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932339AbXAGCSQ
-	(ORCPT <rfc822;git-outgoing>); Sat, 6 Jan 2007 21:18:16 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:33682 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932338AbXAGCSQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Jan 2007 21:18:16 -0500
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id 6E49D7DC094;
-	Sat,  6 Jan 2007 18:18:14 -0800 (PST)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Sat, 06 Jan 2007 18:18:14 -0800
+	id S932351AbXAGCkH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 6 Jan 2007 21:40:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932353AbXAGCkH
+	(ORCPT <rfc822;git-outgoing>); Sat, 6 Jan 2007 21:40:07 -0500
+Received: from ug-out-1314.google.com ([66.249.92.171]:8297 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932351AbXAGCkE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Jan 2007 21:40:04 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so5981839uga
+        for <git@vger.kernel.org>; Sat, 06 Jan 2007 18:40:03 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:message-id;
+        b=tU9yoyQiZ2TSCFcITP24QhO9QQOzYKcZLeeK094qTCOPg+jb7JzYF0StXVkqBJCPoOe/JIWFYlozS5jR/lVRB2WD5YpBBSRRWZ7Akuk6b3icoT5fuKAz4Vps0VywXkYGdv0ulAW1gZB6Zj3L7hMnNQWHHyw+x9WWr/WETvsCjR4=
+Received: by 10.66.232.10 with SMTP id e10mr31706373ugh.1168137602800;
+        Sat, 06 Jan 2007 18:40:02 -0800 (PST)
+Received: from host-81-190-18-145.torun.mm.pl ( [81.190.18.145])
+        by mx.google.com with ESMTP id y7sm37545933ugc.2007.01.06.18.39.58;
+        Sat, 06 Jan 2007 18:40:02 -0800 (PST)
 To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <1167896979262-git-send-email-normalperson@yhbt.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vsleqjz1u.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36121>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36122>
 
-nginx does not support regular CGI
+--Boundary-00=_B2FoFmqOCbyDQtQ
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
----
+Junio C Hamano wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+> 
+>>> Fix "Use of uninitialized value" warning in git_tags_body generated
+>>> for lightweight tags of tree and blob object; those don't have age
+>>> ($tag{'age'}) defined.
+>>
+>> By the way, the latest "Fix warnings" patches for gitweb were result
+>> of working on bare bones test suite for gitweb. For now I'm only
+>> checking if there was anything written to STDERR.
+> 
+> I think this is a useful thing to have in-tree at this point,
+> with perhaps minor tweaks I'd suggest later.  That way other
+> people can write more tests to catch regressions.
 
-Oops, the original patch returned -1 in use_fcgi() instead of 1,
-which shells don't like :x
+I plan to submit it soonish... should I submit it early, incomplete,
+or first fix it up a bit?
 
- Makefile        |    5 +++-
- git-instaweb.sh |   72 ++++++++++++++++++++++++++++++++++++++++++++++++++++++-
- 2 files changed, 75 insertions(+), 2 deletions(-)
+>> BTW how in portable way to check that given file matches given patterns
+>> in specified order, or matches given patterns in any order?
+> 
+> This depends on how different the same page is rendered at
+> different times; I suspect the outputs for the same request from
+> two runs of the test are expected to be different in age, commit
+> and tag object ID and nothing else?
 
-diff --git a/Makefile b/Makefile
-index 2b33a2a..05848f1 100644
---- a/Makefile
-+++ b/Makefile
-@@ -690,7 +690,8 @@ gitweb/gitweb.fcgi: gitweb/gitweb-fcgi.perl
- 	chmod +x $@+
- 	mv $@+ $@
+The problem with test for gitweb is that is fairly easy to test
+for things that should not change independent of the changes in
+output, namely:
+ * gitweb should not write warnings and errors to web server log,
+   if they result from incorrect parameters (e.g. object not found);
+   simple check if anything is written to STDERR
+ * the output should be well-formed XHTML (or XML in the case
+   of OPML, RSS and Atom fields), but this needs externel tools
+   like HTMLtidy
+ * HTTP status is well defined, too
  
--git-instaweb: git-instaweb.sh gitweb/gitweb.cgi gitweb/gitweb.css
-+git-instaweb: git-instaweb.sh gitweb/gitweb.cgi gitweb/gitweb.css \
-+              gitweb/gitweb.fcgi
- 	rm -f $@ $@+
- 	sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
- 	    -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
-@@ -699,6 +700,8 @@ git-instaweb: git-instaweb.sh gitweb/gitweb.cgi gitweb/gitweb.css
- 	    -e '/@@GITWEB_CGI@@/d' \
- 	    -e '/@@GITWEB_CSS@@/r gitweb/gitweb.css' \
- 	    -e '/@@GITWEB_CSS@@/d' \
-+	    -e '/@@GITWEB_FCGI@@/r gitweb/gitweb.fcgi' \
-+	    -e '/@@GITWEB_FCGI@@/d' \
- 	    $@.sh > $@+
- 	chmod +x $@+
- 	mv $@+ $@
-diff --git a/git-instaweb.sh b/git-instaweb.sh
-index 08362f4..d712c0c 100755
---- a/git-instaweb.sh
-+++ b/git-instaweb.sh
-@@ -20,7 +20,7 @@ httpd="`git repo-config --get instaweb.httpd`"
- browser="`git repo-config --get instaweb.browser`"
- port=`git repo-config --get instaweb.port`
- module_path="`git repo-config --get instaweb.modulepath`"
--
-+fcgi_pid_file="$fqgitdir"/gitweb/fcgi.pid
- conf=$GIT_DIR/gitweb/httpd.conf
- 
- # Defaults:
-@@ -34,7 +34,22 @@ test -z "$browser" && browser='firefox'
- # any untaken local port will do...
- test -z "$port" && port=1234
- 
-+use_fcgi () {
-+	case "$httpd" in
-+	*nginx*)
-+		return 0
-+		;;
-+	esac
-+	return 1
-+}
-+
- start_httpd () {
-+	if use_fcgi; then
-+		"$fqgitdir"/gitweb/gitweb.fcgi \
-+		           --fcgi-socket="$fcgi_sock" \
-+			   --cgi-bin="$fqgitdir/gitweb/gitweb.cgi" &
-+		echo $! > "$fcgi_pid_file"
-+	fi
- 	httpd_only="`echo $httpd | cut -f1 -d' '`"
- 	if test "`expr index $httpd_only /`" -eq '1' || \
- 				which $httpd_only >/dev/null
-@@ -61,6 +76,9 @@ start_httpd () {
- }
- 
- stop_httpd () {
-+	if use_fcgi; then
-+		test -f "$fcgi_pid_file" && kill `cat "$fcgi_pid_file"`
-+	fi
- 	test -f "$fqgitdir/pid" && kill `cat "$fqgitdir/pid"`
- }
- 
-@@ -138,7 +156,48 @@ mkdir -p "$GIT_DIR/gitweb/tmp"
- GIT_EXEC_PATH="`git --exec-path`"
- GIT_DIR="$fqgitdir"
- export GIT_EXEC_PATH GIT_DIR
-+fcgi_sock="$fqgitdir/gitweb/fcgi.sock"
- 
-+nginx_conf () {
-+	mkdir -p "$fqgitdir"/gitweb/logs
-+	cat > "$conf" <<EOF
-+pid $fqgitdir/pid;
-+error_log $fqgitdir/gitweb/logs/error.log;
-+events {
-+	worker_connections 1024;
-+}
-+http {
-+	access_log $fqgitdir/gitweb/logs/access.log;
-+	types {
-+		text/css css;
-+	}
-+	server {
-+		listen $port;
-+		root $fqgitdir/gitweb;
-+		location = / {
-+			fastcgi_pass unix:$fcgi_sock;
-+			fastcgi_index gitweb.fcgi;
-+			fastcgi_param QUERY_STRING \$query_string;
-+			fastcgi_param REQUEST_METHOD \$request_method;
-+			fastcgi_param CONTENT_TYPE \$content_type;
-+			fastcgi_param CONTENT_LENGTH \$content_length;
-+			fastcgi_param SCRIPT_NAME \$fastcgi_script_name;
-+			fastcgi_param REQUEST_URI \$request_uri;
-+			fastcgi_param DOCUMENT_URI \$document_uri;
-+			fastcgi_param DOCUMENT_ROOT \$document_root;
-+			fastcgi_param SERVER_PROTOCOL \$server_protocol;
-+			fastcgi_param GATEWAY_INTERFACE CGI/1.1;
-+			fastcgi_param SERVER_SOFTWARE nginx;
-+			fastcgi_param REMOTE_ADDR \$remote_addr;
-+			fastcgi_param REMOTE_PORT \$remote_port;
-+			fastcgi_param SERVER_ADDR \$server_addr;
-+			fastcgi_param SERVER_PORT \$server_port;
-+			fastcgi_param SERVER_NAME \$server_name;
-+		}
-+	}
-+}
-+EOF
-+}
- 
- lighttpd_conf () {
- 	cat > "$conf" <<EOF
-@@ -230,8 +289,16 @@ gitweb_css () {
- EOFGITWEB
- }
- 
-+gitweb_fcgi () {
-+	cat > "$1" <<\EOFGITWEB
-+@@GITWEB_FCGI@@
-+EOFGITWEB
-+	chmod +x "$1"
-+}
-+
- gitweb_cgi $GIT_DIR/gitweb/gitweb.cgi
- gitweb_css $GIT_DIR/gitweb/gitweb.css
-+gitweb_fcgi $GIT_DIR/gitweb/gitweb.fcgi
- 
- case "$httpd" in
- *lighttpd*)
-@@ -240,6 +307,9 @@ case "$httpd" in
- *apache2*)
- 	apache2_conf
- 	;;
-+*nginx*)
-+	nginx_conf
-+	;;
- *)
- 	echo "Unknown httpd specified: $httpd"
- 	exit 1
+What is harder to check is that:
+ * all the information which should be is there
+
+The goal is to have test which does not change from pass to fail
+if we replace ' ' by '&nbsp;', make some fragment hyperlink,
+add something, etc...
+
+> If so, I think using test_tick() to force the stable commit
+> object ID while your test is building a test repository would be
+> a useful thing to do.  Also I think replacing call to "time"
+> (you seem to call it from multiple places, all to compute "age")
+> with a call to a subroutine "git_time" and then defining:
+> 
+> 	sub git_time {
+>         	if (exists $::ENV{GIT_TEST_TIME}) {
+>                 	return $::ENV{GIT_TEST_TIME};
+>                 }
+>                 return time;
+>         }
+> 
+> to help testing would be sensible.  Set and export GIT_TEST_TIME
+> to a fixed time (say, midnight GMT December 28th, 2006) in
+> gitweb_init and you will get stable agestring if you have
+> already made the commit and author timestamps stable with
+> test_tick().
+
+Good idea, nice to know. Even nicer would be to have it described
+in t/README...
+
 -- 
-1.5.0.rc0.gc26c8
+Jakub Narebski
+Poland
+
+--Boundary-00=_B2FoFmqOCbyDQtQ
+Content-Type: text/plain;
+  charset="iso-8859-1";
+  name="t9300-gitweb-standalone-basic.sh"
+Content-Transfer-Encoding: 8bit
+Content-Disposition: attachment;
+	filename="t9300-gitweb-standalone-basic.sh"
+
+#!/bin/sh
+#
+# Copyright (c) 2007 Jakub Narebski
+#
+
+test_description='gitweb as standalone script (basic tests).
+
+This test runs gitweb (git web interface) as CGI script from
+commandline, and checks that it does not spew any errors
+or warnings.'
+
+gitweb_init () {
+	cat >gitweb_config.perl <<EOF
+#!/usr/bin/perl
+
+# gitweb configuration for tests
+
+our \$version = "current";
+our \$GIT = "git";
+our \$projectroot = "$(pwd)";
+our \$home_link_str = "projects";
+our \$site_name = "[localhost]";
+our \$site_header = "";
+our \$site_footer = "";
+our \$home_text = "indextext.html";
+our @stylesheets = ("file:///$(pwd)/../../gitweb/gitweb.css");
+our \$logo = "file:///$(pwd)/../../gitweb/git-logo.png";
+our \$favicon = "file:///$(pwd)/../../gitweb/git-favicon.png";
+our \$projects_list = "";
+our \$export_ok = "";
+our \$strict_export = "";
+EOF
+}
+
+gitweb_run () {
+	export GATEWAY_INTERFACE="CGI/1.1"
+	export HTTP_ACCEPT="*/*"
+	export REQUEST_METHOD="GET"
+	export QUERY_STRING=""$1""
+	export PATH_INFO=""$2""
+
+	export GITWEB_CONFIG=$(pwd)/gitweb_config.perl
+
+	rm -f gitweb.log &&
+	perl -- $(pwd)/../../gitweb/gitweb.perl \
+		>/dev/null 2>gitweb.log &&
+	test ! -s gitweb.log
+}
+
+. ./test-lib.sh
+
+gitweb_init
+
+#test_debug 'cat $(pwd)/gitweb_config.perl'
+
+# ----------------------------------------------------------------------
+# no commits
+
+test_expect_success \
+	'no commits: projects_list (implicit)' \
+	'gitweb_run'
+test_debug 'cat gitweb.log'
+
+test_expect_success \
+	'no commits: projects_index' \
+	'gitweb_run "a=project_index"'
+test_debug 'cat gitweb.log'
+
+test_expect_success \
+	'no commits: .git summary (implicit)' \
+	'gitweb_run "p=.git"'
+test_debug 'cat gitweb.log'
+
+test_expect_success \
+	'no commits: .git commit (implicit)' \
+	'gitweb_run "p=.git;a=commit"'
+test_debug 'cat gitweb.log'
+
+test_expect_success \
+	'no commits: .git tree (implicit)' \
+	'gitweb_run "p=.git;a=tree"'
+test_debug 'cat gitweb.log'
+
+test_expect_success \
+	'no commits: .git heads (implicit)' \
+	'gitweb_run "p=.git;a=heads"'
+test_debug 'cat gitweb.log'
+
+test_expect_success \
+	'no commits: .git tags (implicit)' \
+	'gitweb_run "p=.git;a=tags"'
+test_debug 'cat gitweb.log'
+
+
+# ----------------------------------------------------------------------
+# initial commit
+
+test_expect_success \
+	'make initial commit' \
+	'echo "Not an empty file." > file &&
+	 git add file &&
+	 git commit -a -m "Initial commit." &&
+	 git branch b'
+
+test_expect_success \
+	'projects_list (implicit)' \
+	'gitweb_run'
+test_debug 'cat gitweb.log'
+
+test_expect_success \
+	'projects_index' \
+	'gitweb_run "a=project_index"'
+test_debug 'cat gitweb.log'
+
+test_expect_success \
+	'.git summary (implicit)' \
+	'gitweb_run "p=.git"'
+test_debug 'cat gitweb.log'
+
+test_expect_success \
+	'.git commit (implicit)' \
+	'gitweb_run "p=.git;a=commit"'
+test_debug 'cat gitweb.log'
+
+test_expect_success \
+	'.git commitdiff (implicit)' \
+	'gitweb_run "p=.git;a=commitdiff"'
+test_debug 'cat gitweb.log'
+
+test_expect_success \
+	'.git commit (HEAD)' \
+	'gitweb_run "p=.git;a=commit;h=HEAD"'
+test_debug 'cat gitweb.log'
+
+test_expect_success \
+	'.git commit (..invalid^..)' \
+	'gitweb_run "p=.git;a=commit;h=..invalid^.."'
+test_debug 'cat gitweb.log'
+
+test_expect_success \
+	'.git tree (implicit)' \
+	'gitweb_run "p=.git;a=tree"'
+test_debug 'cat gitweb.log'
+
+test_expect_success \
+	'.git blob (file)' \
+	'gitweb_run "p=.git;a=blob;f=file"'
+test_debug 'cat gitweb.log'
+
+test_expect_success \
+	'.git blob_plain (file)' \
+	'gitweb_run "p=.git;a=blob_plain;f=file"'
+test_debug 'cat gitweb.log'
+
+# ----------------------------------------------------------------------
+# nonexistent objects
+
+test_expect_success \
+	'.git commit (non-existent)' \
+	'gitweb_run "p=.git;a=commit;h=non-existent"'
+test_debug 'cat gitweb.log'
+
+test_expect_success \
+	'.git commitdiff (non-existent)' \
+	'gitweb_run "p=.git;a=commitdiff;h=non-existent"'
+test_debug 'cat gitweb.log'
+
+test_expect_success \
+	'.git tree (0000000000000000000000000000000000000000)' \
+	'gitweb_run "p=.git;a=tree;h=0000000000000000000000000000000000000000"'
+test_debug 'cat gitweb.log'
+
+test_expect_success \
+	'.git blob (non-existent)' \
+	'gitweb_run "p=.git;a=blob;f=non-existent"'
+test_debug 'cat gitweb.log'
+
+test_expect_success \
+	'.git blob_plain (non-existent)' \
+	'gitweb_run "p=.git;a=blob_plain;f=non-existent"'
+test_debug 'cat gitweb.log'
+
+# ----------------------------------------------------------------------
+# commitdiff testing (implicit, one implicit tree-ish)
+
+test_expect_success \
+	'commitdiff: root' \
+	'gitweb_run "p=.git;a=commitdiff"'
+test_debug 'cat gitweb.log'
+
+test_expect_success \
+	'commitdiff: file added' \
+	'echo "New file" > new_file &&
+	 git add new_file &&
+	 git commit -a -m "File added." &&
+	 gitweb_run "p=.git;a=commitdiff"'
+test_debug 'cat gitweb.log'
+
+test_expect_success \
+	'commitdiff: mode change' \
+	'chmod a+x new_file &&
+	 git commit -a -m "Mode changed." &&
+	 gitweb_run "p=.git;a=commitdiff"'
+test_debug 'cat gitweb.log'
+
+test_expect_success \
+	'commitdiff: file renamed' \
+	'git mv new_file renamed_file &&
+	 git commit -a -m "File renamed." &&
+	 gitweb_run "p=.git;a=commitdiff"'
+test_debug 'cat gitweb.log'
+
+test_expect_success \
+	'commitdiff: file to symlink' \
+	'rm renamed_file &&
+	 ln -s file renamed_file &&
+	 git commit -a -m "File to symlink." &&
+	 gitweb_run "p=.git;a=commitdiff"'
+test_debug 'cat gitweb.log'
+
+test_expect_success \
+	'commitdiff: file deleted' \
+	'git rm renamed_file &&
+	 rm -f renamed_file &&
+	 git commit -a -m "File removed." &&
+	 gitweb_run "p=.git;a=commitdiff"'
+test_debug 'cat gitweb.log'
+
+test_expect_success \
+	'commitdiff: file copied / new file' \
+	'cp file file2 &&
+	 git add file2 &&
+	 git commit -a -m "File copied." &&
+	 gitweb_run "p=.git;a=commitdiff"'
+test_debug 'cat gitweb.log'
+
+test_expect_success \
+	'commitdiff: mode change and modified' \
+	'echo "New line" >> file2 &&
+	 chmod a+x file2 &&
+	 git commit -a -m "Mode change and modification." &&
+	 gitweb_run "p=.git;a=commitdiff"'
+test_debug 'cat gitweb.log'
+
+test_expect_success \
+	'commitdiff: renamed and modified' \
+	'cat >file2<<EOF &&
+Dominus regit me,
+et nihil mihi deerit.
+In loco pascuae ibi me collocavit,
+super aquam refectionis educavit me;
+animam meam convertit,
+deduxit me super semitas jusitiae,
+propter nomen suum.
+EOF
+	 git commit -a -m "File added." &&
+	 git mv file2 file3 &&
+	 echo "Propter nomen suum." >> file3 &&
+	 git commit -a -m "File rename and modification." &&
+	 gitweb_run "p=.git;a=commitdiff"'
+test_debug 'cat gitweb.log'
+
+test_expect_success \
+	'commitdiff: renamed, mode change and modified' \
+	'git mv file3 file2 &&
+	 echo "Propter nomen suum." >> file2 &&
+	 chmod a+x file2 &&
+	 git commit -a -m "File rename, mode change and modification." &&
+	 gitweb_run "p=.git;a=commitdiff"'
+test_debug 'cat gitweb.log'
+
+# ----------------------------------------------------------------------
+# commitdiff testing (taken from t4114-apply-typechange.sh)
+
+test_expect_success 'setup typechange commits' '
+	echo "hello world" > foo &&
+	echo "hi planet" > bar &&
+	git update-index --add foo bar &&
+	git commit -m initial &&
+	git branch initial &&
+	rm -f foo &&
+	ln -s bar foo &&
+	git update-index foo &&
+	git commit -m "foo symlinked to bar" &&
+	git branch foo-symlinked-to-bar &&
+	rm -f foo &&
+	echo "how far is the sun?" > foo &&
+	git update-index foo &&
+	git commit -m "foo back to file" &&
+	git branch foo-back-to-file &&
+	rm -f foo &&
+	git update-index --remove foo &&
+	mkdir foo &&
+	echo "if only I knew" > foo/baz &&
+	git update-index --add foo/baz &&
+	git commit -m "foo becomes a directory" &&
+	git branch "foo-becomes-a-directory" &&
+	echo "hello world" > foo/baz &&
+	git update-index foo/baz &&
+	git commit -m "foo/baz is the original foo" &&
+	git branch foo-baz-renamed-from-foo
+	'
+
+test_expect_success \
+	'commitdiff(2): file renamed from foo to foo/baz' \
+	'gitweb_run "p=.git;a=commitdiff;hp=initial;h=foo-baz-renamed-from-foo"'
+test_debug 'cat gitweb.log'
+
+test_expect_success \
+	'commitdiff(2): file renamed from foo/baz to foo' \
+	'gitweb_run "p=.git;a=commitdiff;hp=foo-baz-renamed-from-foo;h=initial"'
+test_debug 'cat gitweb.log'
+
+test_expect_success \
+	'commitdiff(2): directory becomes file' \
+	'gitweb_run "p=.git;a=commitdiff;hp=foo-becomes-a-directory;h=initial"'
+test_debug 'cat gitweb.log'
+
+test_expect_success \
+	'commitdiff(2): file becomes directory' \
+	'gitweb_run "p=.git;a=commitdiff;hp=initial;h=foo-becomes-a-directory"'
+test_debug 'cat gitweb.log'
+
+test_expect_success \
+	'commitdiff(2): file becomes symlink' \
+	'gitweb_run "p=.git;a=commitdiff;hp=initial;h=foo-symlinked-to-bar"'
+test_debug 'cat gitweb.log'
+
+test_expect_success \
+	'commitdiff(2): symlink becomes file' \
+	'gitweb_run "p=.git;a=commitdiff;hp=foo-symlinked-to-bar;h=foo-back-to-file"'
+test_debug 'cat gitweb.log'
+
+test_expect_success \
+	'commitdiff(2): symlink becomes directory' \
+	'gitweb_run "p=.git;a=commitdiff;hp=foo-symlinked-to-bar;h=foo-becomes-a-directory"'
+test_debug 'cat gitweb.log'
+
+test_expect_success \
+	'commitdiff(2): directory becomes symlink' \
+	'gitweb_run "p=.git;a=commitdiff;hp=foo-becomes-a-directory;h=foo-symlinked-to-bar"'
+test_debug 'cat gitweb.log'
+
+# ----------------------------------------------------------------------
+# commitdiff large
+test_expect_success \
+	'create a merge' \
+	'git checkout b &&
+	 echo "Branch" >> b &&
+	 git add b &&
+	 git commit -a -m "On branch" &&
+	 git checkout master &&
+	 git pull . b'
+
+test_expect_success \
+	'commitdiff: merge commit' \
+	'gitweb_run "p=.git;a=commitdiff"'
+test_debug 'cat gitweb.log'
+
+# ----------------------------------------------------------------------
+# tags testing
+
+test_expect_success \
+	'tags: different types of tags' \
+	'git tag -a -m "Tag commit object" tag-commit HEAD &&
+	 git tag -a -m "" tag-commit-nomessage HEAD &&
+	 git tag -a -m "Tag tag object" tag-tag tag-commit &&
+	 git tag -a -m "Tag tree object" tag-tree HEAD^{tree} &&
+	 git tag -a -m "Tag blob object" tag-blob HEAD:file &&
+	 git tag lightweight/tag-commit HEAD &&
+	 git tag lightweight/tag-tag tag-commit &&
+	 git tag lightweight/tag-tree HEAD^{tree} &&
+	 git tag lightweight/tag-blob HEAD:file &&
+	 gitweb_run "p=.git;a=tags"'
+test_debug 'cat gitweb.log'
+
+test_expect_success \
+	'tag: Tag to commit object' \
+	'gitweb_run "p=.git;a=tag;h=tag-commit"'
+test_debug 'cat gitweb.log'
+
+test_expect_success \
+	'tag: on lightweight tag (invalid)' \
+	'gitweb_run "p=.git;a=tag;h=lightweight/tag-commit"'
+test_debug 'cat gitweb.log'
+
+test_done
+
+--Boundary-00=_B2FoFmqOCbyDQtQ--
