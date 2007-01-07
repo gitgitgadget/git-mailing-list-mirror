@@ -1,84 +1,101 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH 5/5] gitweb: Fix split patches output (e.g. file to symlink)
-Date: Sun,  7 Jan 2007 02:52:27 +0100
-Message-ID: <11681347551377-git-send-email-jnareb@gmail.com>
-References: <100171.86639.qm@web31814.mail.mud.yahoo.com>
-Cc: Luben Tuikov <ltuikov@yahoo.com>, Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jan 07 02:52:56 2007
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [PATCH] Documentation/git-svn: clarify dcommit, rebase vs pull/merge
+Date: Sat, 6 Jan 2007 17:53:40 -0800
+Message-ID: <20070107015340.GA18322@localdomain>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jan 07 02:53:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H3NDK-0001C8-Bp
-	for gcvg-git@gmane.org; Sun, 07 Jan 2007 02:52:46 +0100
+	id 1H3NEH-0001R8-Lv
+	for gcvg-git@gmane.org; Sun, 07 Jan 2007 02:53:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932319AbXAGBwj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 6 Jan 2007 20:52:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932313AbXAGBwi
-	(ORCPT <rfc822;git-outgoing>); Sat, 6 Jan 2007 20:52:38 -0500
-Received: from nf-out-0910.google.com ([64.233.182.190]:5038 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932308AbXAGBwd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Jan 2007 20:52:33 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so8960301nfa
-        for <git@vger.kernel.org>; Sat, 06 Jan 2007 17:52:32 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=UkvDAAgcGuRU9CwMUo3Hav3mEUWvLaozeVp6Xcrqh/gk4Kx21vUIyajeARR4YqCAVi9981clVj+ePjwjDiK+HXIzOIr74af2dNJtlQ3BhTICsFqc3q17K+7pbnSnPEhLskQOOEuHM6WYoHrbQ8YKSKo7XfitaNb5VUvkNc9IHlU=
-Received: by 10.49.41.3 with SMTP id t3mr8937572nfj.1168134752360;
-        Sat, 06 Jan 2007 17:52:32 -0800 (PST)
-Received: from roke.D-201 ( [81.190.18.145])
-        by mx.google.com with ESMTP id x27sm101645665nfb.2007.01.06.17.52.31;
-        Sat, 06 Jan 2007 17:52:32 -0800 (PST)
-Received: from roke.D-201 (localhost.localdomain [127.0.0.1])
-	by roke.D-201 (8.13.4/8.13.4) with ESMTP id l071qZe1007276;
-	Sun, 7 Jan 2007 02:52:35 +0100
-Received: (from jnareb@localhost)
-	by roke.D-201 (8.13.4/8.13.4/Submit) id l071qZnm007275;
-	Sun, 7 Jan 2007 02:52:35 +0100
-To: git@vger.kernel.org
-X-Mailer: git-send-email 1.4.4.3
-In-Reply-To: <100171.86639.qm@web31814.mail.mud.yahoo.com>
+	id S932311AbXAGBxn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 6 Jan 2007 20:53:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932313AbXAGBxn
+	(ORCPT <rfc822;git-outgoing>); Sat, 6 Jan 2007 20:53:43 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:33663 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932311AbXAGBxm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Jan 2007 20:53:42 -0500
+Received: from hand.yhbt.net (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with SMTP id CEC247DC094;
+	Sat,  6 Jan 2007 17:53:40 -0800 (PST)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Sat, 06 Jan 2007 17:53:40 -0800
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36115>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36116>
 
-Do not replace /dev/null in two-line from-file/to-file diff header for
-split patches ("split" patch mean more than one patch per one
-diff-tree raw line) by a/file or b/file link.
+Clarify that dcommit creates a revision in SVN for every commit
+in git.  Also, add 'merge' to the rebase vs pull section because
+git-merge is now a first-class UI.
 
-Split patches differ from pair of deletion/creation patch in git diff
-header: both a/file and b/file are hyperlinks, in all patches in a
-split.
-
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
 ---
- gitweb/gitweb.perl |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+ Documentation/git-svn.txt |   33 ++++++++++++++++++---------------
+ 1 files changed, 18 insertions(+), 15 deletions(-)
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index d60d7c6..f46a422 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -2525,7 +2525,7 @@ sub git_patchset_body {
- 		last PATCH unless $patch_line;
- 		next PATCH if ($patch_line =~ m/^diff /);
- 		#assert($patch_line =~ m/^---/) if DEBUG;
--		if ($from{'href'}) {
-+		if ($from{'href'} && $patch_line =~ m!^--- "?a/!) {
- 			$patch_line = '--- a/' .
- 			              $cgi->a({-href=>$from{'href'}, -class=>"path"},
- 			                      esc_path($from{'file'}));
-@@ -2537,7 +2537,7 @@ sub git_patchset_body {
- 		chomp $patch_line;
+diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
+index f754d2f..ce63def 100644
+--- a/Documentation/git-svn.txt
++++ b/Documentation/git-svn.txt
+@@ -53,11 +53,13 @@ See '<<fetch-args,Additional Fetch Arguments>>' if you are interested in
+ manually joining branches on commit.
  
- 		#assert($patch_line =~ m/^+++/) if DEBUG;
--		if ($to{'href'}) {
-+		if ($to{'href'} && $patch_line =~ m!^\+\+\+ "?b/!) {
- 			$patch_line = '+++ b/' .
- 			              $cgi->a({-href=>$to{'href'}, -class=>"path"},
- 			                      esc_path($to{'file'}));
+ 'dcommit'::
+-	Commit all diffs from a specified head directly to the SVN
++	Commit each diff from a specified head directly to the SVN
+ 	repository, and then rebase or reset (depending on whether or
+-	not there is a diff between SVN and head).  It is recommended
+-	that you run git-svn fetch and rebase (not pull) your commits
+-	against the latest changes in the SVN repository.
++	not there is a diff between SVN and head).  This will create
++	a revision in SVN for each commit in git.
++	It is recommended that you run git-svn fetch and rebase (not
++	pull or merge) your commits against the latest changes in the
++	SVN repository.
+ 	An optional command-line argument may be specified as an
+ 	alternative to HEAD.
+ 	This is advantageous over 'set-tree' (below) because it produces
+@@ -408,19 +410,20 @@ See also:
+ 	git-svn multi-init
+ ------------------------------------------------------------------------
+ 
+-REBASE VS. PULL
+----------------
++REBASE VS. PULL/MERGE
++---------------------
+ 
+ Originally, git-svn recommended that the remotes/git-svn branch be
+-pulled from.  This is because the author favored 'git-svn set-tree B'
+-to commit a single head rather than the 'git-svn set-tree A..B' notation
+-to commit multiple commits.
+-
+-If you use 'git-svn set-tree A..B' to commit several diffs and you do not
+-have the latest remotes/git-svn merged into my-branch, you should use
+-'git rebase' to update your work branch instead of 'git pull'.  'pull'
+-can cause non-linear history to be flattened when committing into SVN,
+-which can lead to merge commits reversing previous commits in SVN.
++pulled or merged from.  This is because the author favored
++'git-svn set-tree B' to commit a single head rather than the
++'git-svn set-tree A..B' notation to commit multiple commits.
++
++If you use 'git-svn set-tree A..B' to commit several diffs and you do
++not have the latest remotes/git-svn merged into my-branch, you should
++use 'git rebase' to update your work branch instead of 'git pull' or
++'git merge'.  'pull/merge' can cause non-linear history to be flattened
++when committing into SVN, which can lead to merge commits reversing
++previous commits in SVN.
+ 
+ DESIGN PHILOSOPHY
+ -----------------
+
 -- 
-1.4.4.3
+Eric Wong
