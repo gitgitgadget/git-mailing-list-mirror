@@ -1,84 +1,67 @@
 From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: Hello all, I am using git-svn and have some question
-Date: Sat, 6 Jan 2007 16:23:17 -0800
-Message-ID: <20070107002317.GC10933@localdomain>
-References: <7d73e7d80701060124t16850e8ob8fbd202d230dd90@mail.gmail.com>
+Subject: Re: git-svnimport failed and now git-repack hates me
+Date: Sat, 6 Jan 2007 16:36:54 -0800
+Message-ID: <20070107003654.GA12551@localdomain>
+References: <7v1wmbnw9x.fsf@assigned-by-dhcp.cox.net> <204011cb0701040958k884b613i8a4639201ae6443b@mail.gmail.com> <7v1wmalez6.fsf@assigned-by-dhcp.cox.net> <204011cb0701050919w2001105asefe2fd99165dfa95@mail.gmail.com> <7vbqldfg56.fsf@assigned-by-dhcp.cox.net> <204011cb0701051133r1ede14a6gd5093a3e7fa88cb5@mail.gmail.com> <20070105193958.GE8753@spearce.org> <7vtzz5duk1.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0701051354590.3661@woody.osdl.org> <Pine.LNX.4.64.0701051414140.14017@blackbox.fnordora.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 07 01:23:35 2007
+X-From: git-owner@vger.kernel.org Sun Jan 07 01:37:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H3Los-0005vy-Uq
-	for gcvg-git@gmane.org; Sun, 07 Jan 2007 01:23:27 +0100
+	id 1H3M20-0000xx-Mc
+	for gcvg-git@gmane.org; Sun, 07 Jan 2007 01:37:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932282AbXAGAXU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 6 Jan 2007 19:23:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932281AbXAGAXU
-	(ORCPT <rfc822;git-outgoing>); Sat, 6 Jan 2007 19:23:20 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:33476 "EHLO hand.yhbt.net"
+	id S932292AbXAGAg5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 6 Jan 2007 19:36:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932293AbXAGAg5
+	(ORCPT <rfc822;git-outgoing>); Sat, 6 Jan 2007 19:36:57 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:33484 "EHLO hand.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932282AbXAGAXT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Jan 2007 19:23:19 -0500
+	id S932292AbXAGAg4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Jan 2007 19:36:56 -0500
 Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id DBE6E7DC094;
-	Sat,  6 Jan 2007 16:23:17 -0800 (PST)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Sat, 06 Jan 2007 16:23:17 -0800
-To: Songmao Tian <kingkongmao@gmail.com>
+	by hand.yhbt.net (Postfix) with SMTP id C62A97DC094;
+	Sat,  6 Jan 2007 16:36:54 -0800 (PST)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Sat, 06 Jan 2007 16:36:54 -0800
+To: alan <alan@clueserver.org>
 Content-Disposition: inline
-In-Reply-To: <7d73e7d80701060124t16850e8ob8fbd202d230dd90@mail.gmail.com>
+In-Reply-To: <Pine.LNX.4.64.0701051414140.14017@blackbox.fnordora.org>
 User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36108>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36109>
 
-Songmao Tian <kingkongmao@gmail.com> wrote:
-> (git v1.4.4.3)
-> I used the fantastic git-svn multi-init.
-> git-svn multi-init http://...
+alan <alan@clueserver.org> wrote:
+> I am trying to import a subversion repository and have yet to be able to 
+> suck down the whole thing without segfaulting.  It is a large repository. 
+> Works fine until about the last 10% and then runs out of memory.
 > 
-> checkout a branch
-> git-checkout -b kkmao remotes/kkmao
-> git-checkout -b huahua remotes/huahua
+> open3: fork failed: Cannot allocate memory at /usr/bin/git-svn line 2711
+> 512 at /usr/bin/git-svn line 446
+>         main::fetch_lib() called at /usr/bin/git-svn line 314
+>         main::fetch() called at /usr/bin/git-svn line 173
 > 
-> git-pull . kkmao
-> (fix a conflict)
+> I need to try the "partial download" script and see if that helps.
 
-I no longer recommend using plain git-pull or git-merge with git-svn,
-especially when using dcommit (which I highly recommend).
+Which version of git-svn is this?  If it's a public repository I'd
+like to have a look.
 
-git-rebase or git-rebase --merge is the recommended method of merging
-upstream changes.  Using the --squash flag with git-pull or git-merge
-should also work here, but I have less experience with them.
+git-svn memory usage should be bounded by:
+	max(max(commit-message size),
+	    max(number of files changed per revision))
 
-> git-checkout kkmao
-> 
-> kkmao@Loongson:~/pmon/pmon-lm2e/git$ git-pull . huahua
-> Updating dee0161..3fa715b
-> Fast forward
-> Targets/Bonito/conf/Bonito |    2 +-
-> 1 files changed, 1 insertions(+), 1 deletions(-)
+I'm not sure if the size of the files changed per-revision or if the
+size of the deltas is an issue with git-svn.  But if you have a repo
+with big files and big changes to them, let me know so I can take a
+look.
 
-On the other hand, pulls/merges without --squash resulting in fast
-forwards are fine (but git-rebase handles fast forwards just as well).
-
-> finnally, "git-svn dcommit -i kkmao"failed, and got the following message
-> 
-> kkmao@Loongson:~/pmon/pmon-lm2e/git$ git-svn dcommit -i kkmao
-> diff-tree f179060aa2dd0a4ca4f95f2560ea708765a87a09~1
-> f179060aa2dd0a4ca4f95f2560ea708765a87a09
-> Merge conflict during commit: Your file or directory 'branches' is
-> probably out-of-date: The version resource does not correspond to the
-> resource within the transaction.  Either the requested version
-> resource is out of date (needs to be updated), or the requested
-> version resource is newer than the transaction root (restart the
-> commit). at /home/kkmao/bin/git-svn line 1577
-
-This seems to be most likely because dcommit skips merge commits
-(generated by your pull).
+Can you also try lowering $inc in git-svn to something lower (perhaps
+100)? (my $inc = 1000; in the fetch_lib function) and see if that helps
+things?  Thanks.
 
 -- 
 Eric Wong
