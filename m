@@ -1,71 +1,76 @@
-From: "Stefan-W. Hahn" <stefan.hahn@s-hahn.de>
-Subject: Re: [PATCH] Replacing the system call pread() with real mmap().
-Date: Sun, 7 Jan 2007 21:01:55 +0100
-Organization: -no organization-
-Message-ID: <20070107200155.GF9909@scotty.home>
-References: <20070106170330.GA8041@scotty.home> <20070107060007.GA10351@spearce.org> <20070107111712.GB9909@scotty.home> <20070107112445.GE10351@spearce.org> <20070107163637.GE9909@scotty.home> <Pine.LNX.4.63.0701071810220.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Greg KH <gregkh@suse.de>
+Subject: Re: [KORG] Re: kernel.org lies about latest -mm kernel
+Date: Sun, 7 Jan 2007 12:11:46 -0800
+Message-ID: <20070107201146.GA21956@suse.de>
+References: <20061214223718.GA3816@elf.ucw.cz> <20061216094421.416a271e.randy.dunlap@oracle.com> <20061216095702.3e6f1d1f.akpm@osdl.org> <458434B0.4090506@oracle.com> <1166297434.26330.34.camel@localhost.localdomain> <1166304080.13548.8.camel@nigel.suspend2.net> <459152B1.9040106@zytor.com> <1168140954.2153.1.camel@nigel.suspend2.net> <45A07587.3080503@garzik.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 07 21:02:22 2007
+Cc: nigel@nigel.suspend2.net, "H. Peter Anvin" <hpa@zytor.com>,
+	Andrew Morton <akpm@osdl.org>,
+	Linus Torvalds <torvalds@osdl.org>,
+	"J.H." <warthog9@kernel.org>,
+	Randy Dunlap <randy.dunlap@oracle.com>,
+	Pavel Machek <pavel@ucw.cz>,
+	kernel list <linux-kernel@vger.kernel.org>,
+	webmaster@kernel.org, Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Jan 07 21:12:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H3eDh-0004wX-4F
-	for gcvg-git@gmane.org; Sun, 07 Jan 2007 21:02:17 +0100
+	id 1H3eNe-0007Ci-SH
+	for gcvg-git@gmane.org; Sun, 07 Jan 2007 21:12:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965038AbXAGUCN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 7 Jan 2007 15:02:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965046AbXAGUCM
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jan 2007 15:02:12 -0500
-Received: from moutng.kundenserver.de ([212.227.126.174]:50425 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965038AbXAGUCL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Jan 2007 15:02:11 -0500
-Received: from [84.134.15.225] (helo=scotty.home)
-	by mrelayeu.kundenserver.de (node=mrelayeu6) with ESMTP (Nemesis),
-	id 0ML29c-1H3eDN0pwo-0007pT; Sun, 07 Jan 2007 21:01:59 +0100
-Received: from scotty.home (localhost [127.0.0.1])
-	by scotty.home (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id l07K1t4q004905;
-	Sun, 7 Jan 2007 21:01:55 +0100
-Received: (from hs@localhost)
-	by scotty.home (8.13.4/8.13.4/Submit) id l07K1tRt004902;
-	Sun, 7 Jan 2007 21:01:55 +0100
-X-Authentication-Warning: scotty.home: hs set sender to stefan.hahn@s-hahn.de using -f
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+	id S965073AbXAGUMb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 7 Jan 2007 15:12:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965116AbXAGUMb
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jan 2007 15:12:31 -0500
+Received: from mail.suse.de ([195.135.220.2]:49111 "EHLO mx1.suse.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965073AbXAGUMa (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Jan 2007 15:12:30 -0500
+Received: from Relay1.suse.de (mail2.suse.de [195.135.221.8])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mx1.suse.de (Postfix) with ESMTP id 1F76A12235;
+	Sun,  7 Jan 2007 21:12:29 +0100 (CET)
+To: Jeff Garzik <jeff@garzik.org>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0701071810220.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-X-Mailer: Mutt 1.5.6 http://www.mutt.org/
-X-Editor: GNU Emacs 21.4.1 http://www.gnu.org/
-X-Accept-Language: de en
-X-Location: Europe, Germany, Wolfenbuettel
-X-GPG-Public-Key: http://www.s-hahn.de/gpg-public-stefan.asc
-X-GPG-key-ID/Fingerprint: 0xE4FCD563 / EF09 97BB 3731 7DC7 25BA 5C39 185C F986 E4FC D563
-User-Agent: Mutt/1.5.9i
-X-Spam-Status: No, score=-0.0 required=5.0 tests=ALL_TRUSTED,
-	UNWANTED_LANGUAGE_BODY autolearn=failed version=3.0.3
-X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on scotty.home
-X-Virus-Scanned: ClamAV 0.88.7/2419/Sun Jan  7 16:27:13 2007 on scotty.home
-X-Virus-Status: Clean
-X-Provags-ID: kundenserver.de abuse@kundenserver.de login:77aa76da759ebc9bab1cc524fc813130
+In-Reply-To: <45A07587.3080503@garzik.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36192>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36193>
 
-Also sprach Johannes Schindelin am Sun, 07 Jan 2007 at 18:10:55 +0100:
+On Sat, Jan 06, 2007 at 11:22:31PM -0500, Jeff Garzik wrote:
+> >On Tue, 2006-12-26 at 08:49 -0800, H. Peter Anvin wrote:
+> >>Not really.  In fact, it would hardly help at all.
+> >>
+> >>The two things git users can do to help is:
+> >>
+> >>1. Make sure your alternatives file is set up correctly;
+> >>2. Keep your trees packed and pruned, to keep the file count down.
+> >>
+> >>If you do this, the load imposed by a single git tree is fairly negible.
+> 
+> 
+> Would kernel hackers be amenable to having their trees auto-repacked, 
+> and linked via alternatives to Linus's linux-2.6.git?
+> 
+> Looking through kernel.org, we have a ton of repositories, however 
+> packed, that carrying their own copies of the linux-2.6.git repo.
 
-> Care to elaborate? It worked pretty well on _all_ cygwin setups I tested 
-> with.
+Well, I create my repos by doing a:
+	git clone -l --bare
+which makes a hardlink from Linus's tree.
 
-Yes, but not today.
+But then it gets copied over to the public server, which probably severs
+that hardlink :(
 
-But after a first look the received pack file is corrupt. It doesn't
-start with the pack header.
+Any shortcut to clone or set up a repo using "alternatives" so that we
+don't have this issue at all?
 
-Stefan
+thanks,
 
--- 
-Stefan-W. Hahn                          It is easy to make things.
-/ mailto:stefan.hahn@s-hahn.de /        It is hard to make things simple.			
+greg k-h
