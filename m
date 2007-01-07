@@ -1,67 +1,81 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] git-reset --hard: use quotes when we tell the user what HEAD was reset to
-Date: Sun, 07 Jan 2007 13:10:59 -0800
-Message-ID: <7vfyam1r18.fsf@assigned-by-dhcp.cox.net>
-References: <20070106102322.7468.57615.stgit@c165>
-	<7v8xgg553u.fsf@assigned-by-dhcp.cox.net>
-	<4c8ef70701070456k2f0585f4ga6c35bd77c939c59@mail.gmail.com>
+Subject: Re: Default "tar" umask..
+Date: Sun, 07 Jan 2007 13:28:30 -0800
+Message-ID: <7v8xge1q81.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0612301037570.4473@woody.osdl.org>
+	<7vfyaxjiaj.fsf@assigned-by-dhcp.cox.net>
+	<459EB78B.60000@lsrfire.ath.cx>
+	<7vzm8xdw3t.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0701051336000.3661@woody.osdl.org>
+	<7vmz4xdssh.fsf@assigned-by-dhcp.cox.net>
+	<m3irfizwvv.fsf@defiant.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 07 22:11:10 2007
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jan 07 22:28:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H3fIH-0001jR-Mk
-	for gcvg-git@gmane.org; Sun, 07 Jan 2007 22:11:06 +0100
+	id 1H3fZD-0005UQ-4e
+	for gcvg-git@gmane.org; Sun, 07 Jan 2007 22:28:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965168AbXAGVLB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 7 Jan 2007 16:11:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965170AbXAGVLB
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jan 2007 16:11:01 -0500
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:34566 "EHLO
-	fed1rmmtao12.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965169AbXAGVLA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Jan 2007 16:11:00 -0500
+	id S965198AbXAGV2d (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 7 Jan 2007 16:28:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965201AbXAGV2d
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jan 2007 16:28:33 -0500
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:34973 "EHLO
+	fed1rmmtao10.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965198AbXAGV2c (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Jan 2007 16:28:32 -0500
 Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao12.cox.net
+          by fed1rmmtao10.cox.net
           (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070107211059.ZMMH19398.fed1rmmtao12.cox.net@fed1rmimpo01.cox.net>;
-          Sun, 7 Jan 2007 16:10:59 -0500
+          id <20070107212831.IHUV20715.fed1rmmtao10.cox.net@fed1rmimpo01.cox.net>;
+          Sun, 7 Jan 2007 16:28:31 -0500
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo01.cox.net with bizsmtp
-	id 8MAA1W0051kojtg0000000; Sun, 07 Jan 2007 16:10:10 -0500
-To: "Fredrik Kuivinen" <frekui@gmail.com>
-In-Reply-To: <4c8ef70701070456k2f0585f4ga6c35bd77c939c59@mail.gmail.com>
-	(Fredrik Kuivinen's message of "Sun, 7 Jan 2007 13:56:59 +0100")
+	id 8MTh1W00Z1kojtg0000000; Sun, 07 Jan 2007 16:27:42 -0500
+To: Krzysztof Halasa <khc@pm.waw.pl>
+In-Reply-To: <m3irfizwvv.fsf@defiant.localdomain> (Krzysztof Halasa's message
+	of "Sun, 07 Jan 2007 16:20:36 +0100")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36198>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36199>
 
-"Fredrik Kuivinen" <frekui@gmail.com> writes:
+Krzysztof Halasa <khc@pm.waw.pl> writes:
 
->> >     I think we need to delimit the name better, probabally we need to quote
->> >     it.  Perhaps something like:
->> >
->> >     HEAD is now at ac9c110: "git-fetch: remove .keep file at the end".
->> ...
-> I don't think the second point is much of an issue. Is it really that
-> irritating to
-> read a word-wrapped line of text? I agree with the first point though, in most
-> cases it will not be a problem in other projects.
+> Junio C Hamano <junkio@cox.net> writes:
 >
-> I still think it is worth doing it, but it certainly isn't super
-> important. Feel free
-> to drop the patch if you want to.
+>> If the archive is made with 022, that would
+>> break expectation of users whose umask is 002 (a sane value in
+>> modern "own" group setups).
+>
+> What exactly do they expect from 002? That root group will be able
+> to write to the files?
 
-I do not care much either way, but the third point is that the
-quoted output would look "interesting" if the original title
-text has double-quoted words.  I.e.
+It is more like "no suspicious individual would not be able to
+write to them".  You could always tell tar to honor your umask
+while extracting as root and have 022 or a tighter umask if you
+have somebody untrustworthy in your 'root' group.
 
-    HEAD is now at 9945d98: "Add "--cacheinfo" option to update-cache."
+And in mordern setup, umask 002 makes tons of sense.  My primary
+group is 'junio' in modern setup, but I belong to secondary
+groups like 'git' and 'mix' that are shared with other people
+who work on 'git' and 'mix' projects.  umask 002 is the natural
+thing to use from log-in and never change.
 
-Notice also your hand-wrapped example has the final full-stop
-outside the quote, which your patch would not produce ;-).
+My home directory is owned by junio.junio and has mode 2775.
+Only I can create a new file or a directory there, and result of
+doing so is owned by junio.junio and has 0664 or 0775 which
+means only I can write to it.
+
+A directory used by 'git' project is owned by <somebody>.git
+where that <somebody> is from the git group and has mode 2775.
+Only the project members of 'git', who shared the 'git' group
+with me, can create a new file or a directory there, and result
+of doing so is owned by <user>.git where <user> is the project
+member who is doing so, and has 0664 or 0775 which means only
+the project members of 'git' can write to it.
