@@ -1,64 +1,77 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: Getting gitk to display all refs but stgit logs
-Date: Mon, 8 Jan 2007 22:32:59 +0100
-Message-ID: <20070108213259.GB17093@nan92-1-81-57-214-146.fbx.proxad.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: a few remaining issues...
+Date: Mon, 08 Jan 2007 13:59:29 -0800
+Message-ID: <7vr6u5uqm6.fsf@assigned-by-dhcp.cox.net>
+References: <7v7iw1hgvt.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Mon Jan 08 22:33:29 2007
+X-From: git-owner@vger.kernel.org Mon Jan 08 22:59:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H427T-00085j-PW
-	for gcvg-git@gmane.org; Mon, 08 Jan 2007 22:33:28 +0100
+	id 1H42Wq-0006Vy-Vg
+	for gcvg-git@gmane.org; Mon, 08 Jan 2007 22:59:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750864AbXAHVdX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 8 Jan 2007 16:33:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751055AbXAHVdX
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jan 2007 16:33:23 -0500
-Received: from smtp2-g19.free.fr ([212.27.42.28]:34559 "EHLO smtp2-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750864AbXAHVdW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Jan 2007 16:33:22 -0500
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp2-g19.free.fr (Postfix) with ESMTP id F23627CF1
-	for <git@vger.kernel.org>; Mon,  8 Jan 2007 22:33:19 +0100 (CET)
-Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
-	id B9E411F0A3; Mon,  8 Jan 2007 22:32:59 +0100 (CET)
-To: GIT list <git@vger.kernel.org>
-Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S964910AbXAHV7b (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 8 Jan 2007 16:59:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964956AbXAHV7b
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jan 2007 16:59:31 -0500
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:35048 "EHLO
+	fed1rmmtao07.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964910AbXAHV7a (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Jan 2007 16:59:30 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20070108215929.FDNG3976.fed1rmmtao07.cox.net@fed1rmimpo01.cox.net>;
+          Mon, 8 Jan 2007 16:59:29 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id 8lyf1W00l1kojtg0000000; Mon, 08 Jan 2007 16:58:40 -0500
+To: git@vger.kernel.org
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36282>
 
-Since v0.11, StGIT creates references to keep a hand on patch logs.
-This has the unfortunate side-effect that "gitk --all" suddenly shows
-all those very annoying, and soon becomes unusable on
-repositories for which was very convenient.
+Updates to the previous "remaining issues" list before 1.5.0.
 
-I guess it would be acceptable to have stgit itself launch gitk with
-the correct options.
+* Bare repository.
 
-The only way I could find to suppress these refs from the display is
-to find the refs ourselves and pipe them to gitk using --stdin:
+I think what I have in 'next' to add 'core.bare' configuration
+to make the bare repository detection safer is ready to be used
+to port the RFC patch from Shawn to forbid working-tree
+operations in a bare repository to prevent accidents from
+happening.  It would be nice if we can cook it for a few days in
+'next' and push it out to 'master' before v1.5.0-rc1.
 
- find .git/refs/ -type f -not -name '*.log' -printf '%P\n'|gitk --stdin
+Volunteers?
 
-Unfortunately, requesting an update from gitk then behaves as if
-nothing had been given on command-line (obviously it is passing
---stdin to git-rev-list without repeating the data).
 
-We could do slightly better by enclosing the find in backquotes on the
-gitk command-line, but that would still hide new refs to git-rev-list
-when updating the graph.
+* Packed refs.
 
-Is there a better way already, or should we work on something specific
-here ?  A possible solution I think of could be to call something like:
+'git-pack-refs' should default to --prune.  There is no point
+not to, really.  Objections?
 
- gitk --stdin-command="find .git/refs/ -type f -not -name '*.log' -printf '%P\n'"
+We _might_ want to teach 'git-pack-refs' how to unpack, although
+there is no real need for it.  I do not care too deeply either
+way.
 
-Best regards,
--- 
-Yann.
+
+* Detached HEAD.
+
+This is now in 'master' ;-).
+
+
+* Make -u default to 'git-am'.
+
+Since we are talking about allowing potentially incompatible UI
+changes in v1.5.0 iff the change improves the general situation,
+I would say why not.  I'd add --no-utf8 just in case, but
+personally I do not offhand see need for it.  Projects that want
+their commit log messages in legacy encoding can and should say
+"i18n.commitencoding = EUCJP" or somesuch and they can continue
+using their preferred encodings without changing their tools nor
+work habit and without having to worry about re-coding errors.
