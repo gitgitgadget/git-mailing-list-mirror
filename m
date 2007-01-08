@@ -1,60 +1,92 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Detached HEAD (experimental)
-Date: Mon, 8 Jan 2007 08:17:35 -0500
-Message-ID: <20070108131735.GA2647@coredump.intra.peff.net>
-References: <7vac11yirf.fsf@assigned-by-dhcp.cox.net> <87ps9xgkjo.wl%cworth@cworth.org> <7virfprquo.fsf@assigned-by-dhcp.cox.net> <87odphgfzz.wl%cworth@cworth.org> <7vbql9ydd7.fsf@assigned-by-dhcp.cox.net>
+From: Andy Whitcroft <apw@shadowen.org>
+Subject: Re: [PATCH 2/4] Improve cached content header of status output
+Date: Mon, 08 Jan 2007 13:28:41 +0000
+Message-ID: <45A24709.9090904@shadowen.org>
+References: <1167765983316-git-send-email-j.ruehle@bmiag.de>	<11677659921833-git-send-email-j.ruehle@bmiag.de>	<459E2E57.6020503@shadowen.org>	<7vr6u9g1l4.fsf@assigned-by-dhcp.cox.net>	<459E4F2D.4000806@shadowen.org>	<17822.34697.691000.253492@lapjr.intranet.kiel.bmiag.de> <7vk601fh7k.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Carl Worth <cworth@cworth.org>
-X-From: git-owner@vger.kernel.org Mon Jan 08 14:17:51 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Juergen Ruehle <j.ruehle@bmiag.de>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 08 14:28:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H3uNh-0000mX-Fz
-	for gcvg-git@gmane.org; Mon, 08 Jan 2007 14:17:41 +0100
+	id 1H3uYV-0003nl-7F
+	for gcvg-git@gmane.org; Mon, 08 Jan 2007 14:28:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751519AbXAHNRi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 8 Jan 2007 08:17:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751524AbXAHNRi
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jan 2007 08:17:38 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1478 "HELO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751517AbXAHNRi (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Jan 2007 08:17:38 -0500
-Received: (qmail 785 invoked from network); 8 Jan 2007 08:17:48 -0500
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
-  by 66-23-211-5.clients.speedfactory.net with SMTP; 8 Jan 2007 08:17:48 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 08 Jan 2007 08:17:35 -0500
+	id S1161280AbXAHN2r (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 8 Jan 2007 08:28:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161282AbXAHN2r
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jan 2007 08:28:47 -0500
+Received: from hellhawk.shadowen.org ([80.68.90.175]:4375 "EHLO
+	hellhawk.shadowen.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161283AbXAHN2q (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Jan 2007 08:28:46 -0500
+Received: from localhost ([127.0.0.1])
+	by hellhawk.shadowen.org with esmtp (Exim 4.50)
+	id 1H3uXU-0006iq-8I; Mon, 08 Jan 2007 13:27:48 +0000
+User-Agent: Icedove 1.5.0.9 (X11/20061220)
 To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vbql9ydd7.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <7vk601fh7k.fsf@assigned-by-dhcp.cox.net>
+X-Enigmail-Version: 0.94.1.0
+OpenPGP: url=http://www.shadowen.org/~apw/public-key
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36254>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36255>
 
-On Mon, Jan 08, 2007 at 03:19:48AM -0800, Junio C Hamano wrote:
+Junio C Hamano wrote:
+> Juergen Ruehle <j.ruehle@bmiag.de> writes:
+> 
+>> Andy Whitcroft writes:
+>>  > Junio C Hamano wrote:
+>>  > > 
+>>  > > Somebody did not like the verb "stage"; perhaps we can say:
+>>  > > 
+>>  > > 	# You have added changes to these files to be committed:
+>>  > > 	...
+>>  > 
+>>  > # These files have changes and are marked for commit:
+>>  > 
+>>  > >         # There are yet to be added changes to these files:
+>>  > 
+>>  > # These files have changes but are not marked for commit:
+>>
+>> Does this better reflect that git tracks content and not files?
+>>
+>> # Changes to these files will be committed:
+>>
+>> # Changes to these files are not marked for commit:
+> 
+> One of the goals is to find a pair of messages that make sense
+> when the same file appears on both lists.
 
-> I decided to fast-track this one.  With a handful fix-ups, this
-> is now at the tip of 'next'.
+Doh, double changes ... yes.
 
-I haven't seen the code, waiting for kernel.org to mirror, but I have a
-question...
+I am not sure it is possible to sanely textualise that subtlety in a
+single line.  I wonder if its worth splitting this lot into three.
+Basically those files on list one, those on list two and those on both.
 
-> The primary difference from the one we discussed, and then has
-> been sitting in 'pu', is that coming back from the detached HEAD
-> state is allowed only with '-f' or to a branch that is a
-> fast-forward of HEAD.
+Anyhow, lets see if we can textualise:
 
-Hrm. So does that mean this doesn't work (without -f):
+# Changes to these files will be committed:
 
-  git checkout v1.4.0
-  ... look around ...
-  git checkout v1.2.0
+# The latest changes to these files will not be committed:
 
-I think a better (but more expensive) check would be "coming back from
-the detached HEAD is allowed only with '-f' or if HEAD is an ancestor
-of any non-HEAD ref."
+The first here still implies its the latest changes.  I can not
+trivially word round that.  Perhaps we could mention staging?
 
--Peff
+# Staged changes for these files will be commited:
+
+# These files have unstaged changes which will not be committed:
+
+>> BTW: how about also adding a hint how to review the changes in
+>> question (i.e. diff --cached and diff; as an alternative to diff
+>> --cached we could just advertise the --verbose switch to status and
+>> commit).
+> 
+> Sounds sane.
+
+
+-apw
