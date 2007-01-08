@@ -1,28 +1,29 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 1/2] Sanitize for_each_reflog_ent()
-Date: Mon, 8 Jan 2007 01:59:54 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0701080158500.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+Subject: [PATCH 2/2] Teach the revision walker to walk by reflogs with
+ --walk-reflogs
+Date: Mon, 8 Jan 2007 02:02:50 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0701080200090.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Mon Jan 08 02:00:02 2007
+X-From: git-owner@vger.kernel.org Mon Jan 08 02:03:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H3iro-00068O-TI
-	for gcvg-git@gmane.org; Mon, 08 Jan 2007 02:00:01 +0100
+	id 1H3iue-0006jg-K5
+	for gcvg-git@gmane.org; Mon, 08 Jan 2007 02:02:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965260AbXAHA75 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 7 Jan 2007 19:59:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965280AbXAHA75
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jan 2007 19:59:57 -0500
-Received: from mail.gmx.net ([213.165.64.20]:36893 "HELO mail.gmx.net"
+	id S965281AbXAHBCx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 7 Jan 2007 20:02:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965282AbXAHBCx
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jan 2007 20:02:53 -0500
+Received: from mail.gmx.net ([213.165.64.20]:55709 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S965260AbXAHA74 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Jan 2007 19:59:56 -0500
-Received: (qmail invoked by alias); 08 Jan 2007 00:59:54 -0000
+	id S965281AbXAHBCw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Jan 2007 20:02:52 -0500
+Received: (qmail invoked by alias); 08 Jan 2007 01:02:50 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp043) with SMTP; 08 Jan 2007 01:59:54 +0100
+  by mail.gmx.net (mp054) with SMTP; 08 Jan 2007 02:02:50 +0100
 X-Authenticated: #1490710
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
 To: git@vger.kernel.org, junkio@cox.net
@@ -30,187 +31,400 @@ X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36211>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36212>
 
 
-It used to ignore the return value of the helper function; now, it
-expects it to return 0, and stops iteration upon non-zero return
-values; this value is then passed on as the return value of
-for_each_reflog_ent().
-
-Further, it makes no sense to force the parsing upon the helper
-functions; for_each_reflog_ent() now calls the helper function with
-old and new sha1, the email, the timestamp & timezone, and the message.
+When called with "--walk-reflogs", as long as there are reflogs
+available, the walker will take this information into account, rather
+than the parent information in the commit object.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
 
-	IMHO it'd be a good idea to sanitize all for_each_*() functions
-	to take a callback pointer.
+	I do not have any idea if this will help bisecting through
+	reflogs...
 
- builtin-reflog.c |   17 +++++------------
- fsck-objects.c   |    4 +++-
- reachable.c      |    4 +++-
- refs.c           |   26 +++++++++++++++++++++-----
- refs.h           |    4 ++--
- revision.c       |    4 +++-
- 6 files changed, 37 insertions(+), 22 deletions(-)
+	Also, this is only lightly tested on the hard cases: circular 
+	reflogs, ranges, and mixed logging (log overlapping reflogged and 
+	non-reflogged revisions).
 
-diff --git a/builtin-reflog.c b/builtin-reflog.c
-index a967117..ede051a 100644
---- a/builtin-reflog.c
-+++ b/builtin-reflog.c
-@@ -195,19 +195,12 @@ static int keep_entry(struct commit **it, unsigned char *sha1)
- }
+ Makefile      |    2 +-
+ log-tree.c    |    3 +
+ reflog-walk.c |  249 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ reflog-walk.h |   11 +++
+ revision.c    |   11 +++
+ revision.h    |    3 +
+ 6 files changed, 278 insertions(+), 1 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 80c2c65..8914842 100644
+--- a/Makefile
++++ b/Makefile
+@@ -251,7 +251,7 @@ LIB_OBJS = \
+ 	interpolate.o \
+ 	lockfile.o \
+ 	object.o pack-check.o patch-delta.o path.o pkt-line.o sideband.o \
+-	reachable.o \
++	reachable.o reflog-walk.o \
+ 	quote.o read-cache.o refs.o run-command.o dir.o object-refs.o \
+ 	server-info.o setup.o sha1_file.o sha1_name.o strbuf.o \
+ 	tag.o tree.o usage.o config.o environment.o ctype.o copy.o \
+diff --git a/log-tree.c b/log-tree.c
+index 35be33a..f043ad3 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -2,6 +2,7 @@
+ #include "diff.h"
+ #include "commit.h"
+ #include "log-tree.h"
++#include "reflog-walk.h"
  
- static int expire_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
--			     char *data, void *cb_data)
-+		const char *email, unsigned long timestamp, int tz,
-+		const char *message, void *cb_data)
+ static void show_parents(struct commit *commit, int abbrev)
  {
- 	struct expire_reflog_cb *cb = cb_data;
--	unsigned long timestamp;
--	char *cp, *ep;
- 	struct commit *old, *new;
- 
--	cp = strchr(data, '>');
--	if (!cp || *++cp != ' ')
--		goto prune;
--	timestamp = strtoul(cp, &ep, 10);
--	if (*ep != ' ')
--		goto prune;
- 	if (timestamp < cb->cmd->expire_total)
- 		goto prune;
- 
-@@ -223,13 +216,13 @@ static int expire_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
- 
- 	if (cb->newlog)
- 		fprintf(cb->newlog, "%s %s %s",
--			sha1_to_hex(osha1), sha1_to_hex(nsha1), data);
-+			sha1_to_hex(osha1), sha1_to_hex(nsha1), message);
- 	if (cb->cmd->verbose)
--		printf("keep %s", data);
-+		printf("keep %s", message);
- 	return 0;
-  prune:
- 	if (!cb->newlog || cb->cmd->verbose)
--		printf("%sprune %s", cb->newlog ? "" : "would ", data);
-+		printf("%sprune %s", cb->newlog ? "" : "would ", message);
- 	return 0;
- }
- 
-diff --git a/fsck-objects.c b/fsck-objects.c
-index 1cc3b39..0d8a8eb 100644
---- a/fsck-objects.c
-+++ b/fsck-objects.c
-@@ -399,7 +399,9 @@ static void fsck_dir(int i, char *path)
- 
- static int default_refs;
- 
--static int fsck_handle_reflog_ent(unsigned char *osha1, unsigned char *nsha1, char *datail, void *cb_data)
-+static int fsck_handle_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
-+		const char *email, unsigned long timestamp, int tz,
-+		const char *message, void *cb_data)
- {
- 	struct object *obj;
- 
-diff --git a/reachable.c b/reachable.c
-index 4dfee1d..a6a3348 100644
---- a/reachable.c
-+++ b/reachable.c
-@@ -104,7 +104,9 @@ static void walk_commit_list(struct rev_info *revs)
+@@ -223,6 +224,8 @@ void show_log(struct rev_info *opt, const char *sep)
+ 		printf("%s",
+ 		       diff_get_color(opt->diffopt.color_diff, DIFF_RESET));
+ 		putchar(opt->commit_format == CMIT_FMT_ONELINE ? ' ' : '\n');
++		if (opt->reflog_info)
++			show_reflog_message(opt->reflog_info);
  	}
- }
  
--static int add_one_reflog_ent(unsigned char *osha1, unsigned char *nsha1, char *datail, void *cb_data)
-+static int add_one_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
-+		const char *email, unsigned long timestamp, int tz,
-+		const char *message, void *cb_data)
- {
- 	struct object *object;
- 	struct rev_info *revs = (struct rev_info *)cb_data;
-diff --git a/refs.c b/refs.c
-index 5205745..ea670d4 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1097,7 +1097,7 @@ int read_ref_at(const char *ref, unsigned long at_time, int cnt, unsigned char *
- 	return 0;
- }
- 
--void for_each_reflog_ent(const char *ref, each_reflog_ent_fn fn, void *cb_data)
-+int for_each_reflog_ent(const char *ref, each_reflog_ent_fn fn, void *cb_data)
- {
- 	const char *logfile;
- 	FILE *logfp;
-@@ -1106,19 +1106,35 @@ void for_each_reflog_ent(const char *ref, each_reflog_ent_fn fn, void *cb_data)
- 	logfile = git_path("logs/%s", ref);
- 	logfp = fopen(logfile, "r");
- 	if (!logfp)
--		return;
-+		return -1;
- 	while (fgets(buf, sizeof(buf), logfp)) {
- 		unsigned char osha1[20], nsha1[20];
--		int len;
-+		char *email_end, *message;
+ 	/*
+diff --git a/reflog-walk.c b/reflog-walk.c
+new file mode 100644
+index 0000000..23c19e9
+--- /dev/null
++++ b/reflog-walk.c
+@@ -0,0 +1,249 @@
++#include "cache.h"
++#include "commit.h"
++#include "refs.h"
++#include "diff.h"
++#include "revision.h"
++#include "path-list.h"
++
++struct complete_reflogs {
++	char *ref;
++	struct reflog_info {
++		unsigned char osha1[20], nsha1[20];
++		char *email;
 +		unsigned long timestamp;
-+		int len, ret, tz;
- 
- 		/* old SP new SP name <email> SP time TAB msg LF */
- 		len = strlen(buf);
- 		if (len < 83 || buf[len-1] != '\n' ||
- 		    get_sha1_hex(buf, osha1) || buf[40] != ' ' ||
--		    get_sha1_hex(buf + 41, nsha1) || buf[81] != ' ')
-+		    get_sha1_hex(buf + 41, nsha1) || buf[81] != ' ' ||
-+		    !(email_end = strchr(buf + 82, '>')) ||
-+		    email_end[1] != ' ' ||
-+		    !(timestamp = strtoul(email_end + 2, &message, 10)) ||
-+		    !message || message[0] != ' ' ||
-+		    (message[1] != '+' && message[1] != '-') ||
-+		    !isdigit(message[2]) || !isdigit(message[3]) ||
-+		    !isdigit(message[4]) || !isdigit(message[5]) ||
-+		    message[6] != '\t')
- 			continue; /* corrupt? */
--		fn(osha1, nsha1, buf+82, cb_data);
-+		email_end[1] = '\0';
-+		tz = strtol(message + 1, NULL, 10);
-+		message += 7;
-+		ret = fn(osha1, nsha1, buf+82, timestamp, tz, message, cb_data);
-+		if (ret)
-+			return ret;
- 	}
- 	fclose(logfp);
++		int tz;
++		char *message;
++	} *items;
++	int nr, alloc;
++};
++
++static int read_one_reflog(unsigned char *osha1, unsigned char *nsha1,
++		const char *email, unsigned long timestamp, int tz,
++		const char *message, void *cb_data)
++{
++	struct complete_reflogs *array = cb_data;
++	struct reflog_info *item;
++
++	if (array->nr >= array->alloc) {
++		array->alloc = alloc_nr(array->nr + 1);
++		array->items = xrealloc(array->items, array->alloc *
++			sizeof(struct reflog_info));
++	}
++	item = array->items + array->nr;
++	memcpy(item->osha1, osha1, 20);
++	memcpy(item->nsha1, nsha1, 20);
++	item->email = xstrdup(email);
++	item->timestamp = timestamp;
++	item->tz = tz;
++	item->message = xstrdup(message);
++	array->nr++;
 +	return 0;
- }
- 
-diff --git a/refs.h b/refs.h
-index de43cc7..0e877e8 100644
---- a/refs.h
-+++ b/refs.h
-@@ -45,8 +45,8 @@ extern int write_ref_sha1(struct ref_lock *lock, const unsigned char *sha1, cons
- extern int read_ref_at(const char *ref, unsigned long at_time, int cnt, unsigned char *sha1);
- 
- /* iterate over reflog entries */
--typedef int each_reflog_ent_fn(unsigned char *osha1, unsigned char *nsha1, char *, void *);
--void for_each_reflog_ent(const char *ref, each_reflog_ent_fn fn, void *cb_data);
-+typedef int each_reflog_ent_fn(unsigned char *osha1, unsigned char *nsha1, const char *, unsigned long, int, const char *, void *);
-+int for_each_reflog_ent(const char *ref, each_reflog_ent_fn fn, void *cb_data);
- 
- /** Returns 0 if target has the right format for a ref. **/
- extern int check_ref_format(const char *target);
++}
++
++static struct complete_reflogs *read_complete_reflog(const char *ref)
++{
++	struct complete_reflogs *reflogs =
++		xcalloc(sizeof(struct complete_reflogs), 1);
++	reflogs->ref = xstrdup(ref);
++	for_each_reflog_ent(ref, read_one_reflog, reflogs);
++	if (reflogs->nr == 0) {
++		unsigned char sha1[20];
++		const char *name = resolve_ref(ref, sha1, 1, NULL);
++		if (name)
++			for_each_reflog_ent(name, read_one_reflog, reflogs);
++	}
++	if (reflogs->nr == 0) {
++		int len = strlen(ref);
++		char *refname = xmalloc(len + 12);
++		sprintf(refname, "refs/%s", ref);
++		for_each_reflog_ent(refname, read_one_reflog, reflogs);
++		if (reflogs->nr == 0) {
++			sprintf(refname, "refs/heads/%s", ref);
++			for_each_reflog_ent(refname, read_one_reflog, reflogs);
++		}
++		free(refname);
++	}
++	return reflogs;
++}
++
++static int get_reflog_recno_by_time(struct complete_reflogs *array,
++	unsigned long timestamp)
++{
++	int i;
++	for (i = array->nr - 1; i >= 0; i++)
++		if (timestamp >= array->items[i].timestamp)
++			return i;
++	return -1;
++}
++
++struct commit_info_lifo {
++	struct commit_info {
++		struct commit *commit;
++		void *util;
++	} *items;
++	int nr, alloc;
++};
++
++static struct commit_info *get_commit_info(struct commit *commit,
++		struct commit_info_lifo *lifo, int pop)
++{
++	int i;
++	for (i = 0; i < lifo->nr; i++)
++		if (lifo->items[i].commit == commit) {
++			struct commit_info *result = &lifo->items[i];
++			if (pop) {
++				if (i + 1 < lifo->nr)
++					memmove(lifo->items + i,
++						lifo->items + i + 1,
++						(lifo->nr - i) *
++						sizeof(struct commit_info));
++				lifo->nr--;
++			}
++			return result;
++		}
++	return NULL;
++}
++
++static void add_commit_info(struct commit *commit, void *util,
++		struct commit_info_lifo *lifo)
++{
++	struct commit_info *info;
++	if (lifo->nr >= lifo->alloc) {
++		lifo->alloc = alloc_nr(lifo->nr + 1);
++		lifo->items = xrealloc(lifo->items,
++			lifo->alloc * sizeof(struct commit_info));
++	}
++	info = lifo->items + lifo->nr;
++	info->commit = commit;
++	info->util = util;
++	lifo->nr++;
++}
++
++struct commit_reflog {
++	int flag, recno;
++	struct complete_reflogs *reflogs;
++};
++
++struct reflog_walk_info {
++	struct commit_info_lifo reflogs, orig_parents;
++	struct path_list complete_reflogs;
++	struct commit_reflog *last_commit_reflog;
++};
++
++void init_reflog_walk(struct reflog_walk_info** info)
++{
++	*info = xcalloc(sizeof(struct reflog_walk_info), 1);
++}
++
++void add_reflog_for_walk(struct reflog_walk_info *info,
++		struct commit *commit, const char *name)
++{
++	unsigned long timestamp = 0;
++	int recno = -1;
++	struct path_list_item *item;
++	struct complete_reflogs *reflogs;
++	char *branch, *at = strchr(name, '@');
++	struct commit_reflog *commit_reflog;
++
++	branch = xstrdup(name);
++	if (at && at[1] == '{') {
++		char *ep;
++		branch[at - name] = '\0';
++		recno = strtoul(at + 2, &ep, 10);
++		if (*ep != '}') {
++			recno = -1;
++			timestamp = approxidate(at + 2);
++		}
++	} else
++		recno = 0;
++
++	item = path_list_lookup(branch, &info->complete_reflogs);
++	if (item)
++		reflogs = item->util;
++	else {
++		reflogs = read_complete_reflog(branch);
++		if (!reflogs) {
++			free(branch);
++			return;
++		}
++		path_list_insert(branch, &info->complete_reflogs)->util
++			= reflogs;
++	}
++
++	commit_reflog = xcalloc(sizeof(struct commit_reflog), 1);
++	if (recno < 0) {
++		commit_reflog->flag = 1;
++		commit_reflog->recno = get_reflog_recno_by_time(reflogs, timestamp);
++		if (commit_reflog->recno < 0) {
++			free(branch);
++			free(commit_reflog);
++			return;
++		}
++	} else
++		commit_reflog->recno = reflogs->nr - recno - 1;
++	commit_reflog->reflogs = reflogs;
++
++	add_commit_info(commit, commit_reflog, &info->reflogs);
++}
++
++void fake_reflog_parent(struct reflog_walk_info *info, struct commit *commit)
++{
++	struct commit_info *commit_info =
++		get_commit_info(commit, &info->reflogs, 0);
++	struct commit_reflog *commit_reflog;
++	struct reflog_info *reflog;
++
++	info->last_commit_reflog = NULL;
++	if (!commit_info)
++		return;
++
++	commit_reflog = commit_info->util;
++	if (commit_reflog->recno < 0) {
++		if (!(commit->object.flags & REFLOG_PARENT))
++			return;
++		commit_info = get_commit_info(commit, &info->orig_parents, 1);
++		if (!commit_info)
++			return;
++		if (commit->parents)
++			free_commit_list(commit->parents);
++		commit->parents = commit_info->util;
++		commit->object.flags &= ~REFLOG_PARENT;
++		free(commit_info);
++		get_commit_info(commit, &info->reflogs, 1);
++		return;
++	}
++
++	reflog = &commit_reflog->reflogs->items[commit_reflog->recno];
++	info->last_commit_reflog = commit_reflog;
++	commit_info->commit = (struct commit *)parse_object(reflog->osha1);
++	if (!commit_info->commit)
++		return;
++
++	commit->parents = xcalloc(sizeof(struct commit_list), 1);
++	commit->parents->item = commit_info->commit;
++	if (!(commit->object.flags & REFLOG_PARENT)) {
++		commit->object.flags |= REFLOG_PARENT;
++		add_commit_info(commit, commit->parents, &info->orig_parents);
++	}
++	commit->object.flags &= ~(SEEN | SHOWN);
++	commit_reflog->recno--;
++}
++
++void show_reflog_message(struct reflog_walk_info* info)
++{
++	if (info && info->last_commit_reflog) {
++		struct commit_reflog *commit_reflog = info->last_commit_reflog;
++		struct reflog_info *info;
++
++		printf("Reflog: %s@{", commit_reflog->reflogs->ref);
++		info = &commit_reflog->reflogs->items[commit_reflog->recno + 1];
++		if (commit_reflog->flag)
++			printf("%s", show_rfc2822_date(info->timestamp,
++						info->tz));
++		else
++			printf("%d", commit_reflog->reflogs->nr
++					- 2 - commit_reflog->recno);
++		printf("} (%s)\nReflog message: %s",
++			info->email, info->message);
++	}
++}
+diff --git a/reflog-walk.h b/reflog-walk.h
+new file mode 100644
+index 0000000..787996b
+--- /dev/null
++++ b/reflog-walk.h
+@@ -0,0 +1,11 @@
++#ifndef REFLOG_WALK_H
++#define REFLOG_WALK_H
++
++extern void init_reflog_walk(struct reflog_walk_info** info);
++extern void add_reflog_for_walk(struct reflog_walk_info *info,
++		struct commit *commit, const char *name);
++extern void fake_reflog_parent(struct reflog_walk_info *info,
++		struct commit *commit);
++extern void show_reflog_message(struct reflog_walk_info* info);
++
++#endif
 diff --git a/revision.c b/revision.c
-index 6e4ec46..1e3b29a 100644
+index 1e3b29a..3d0f061 100644
 --- a/revision.c
 +++ b/revision.c
-@@ -505,7 +505,9 @@ static void handle_one_reflog_commit(unsigned char *sha1, void *cb_data)
- 	}
+@@ -7,6 +7,7 @@
+ #include "refs.h"
+ #include "revision.h"
+ #include "grep.h"
++#include "reflog-walk.h"
+ 
+ static char *path_name(struct name_path *path, const char *name)
+ {
+@@ -116,6 +117,9 @@ void mark_parents_uninteresting(struct commit *commit)
+ void add_pending_object(struct rev_info *revs, struct object *obj, const char *name)
+ {
+ 	add_object_array(obj, name, &revs->pending);
++	if (revs->reflog_info && obj->type == OBJ_COMMIT)
++		add_reflog_for_walk(revs->reflog_info,
++				(struct commit *)obj, name);
  }
  
--static int handle_one_reflog_ent(unsigned char *osha1, unsigned char *nsha1, char *detail, void *cb_data)
-+static int handle_one_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
-+		const char *email, unsigned long timestamp, int tz,
-+		const char *message, void *cb_data)
- {
- 	handle_one_reflog_commit(osha1, cb_data);
- 	handle_one_reflog_commit(nsha1, cb_data);
+ static struct object *get_reference(struct rev_info *revs, const char *name, const unsigned char *sha1, unsigned int flags)
+@@ -864,6 +868,10 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, const ch
+ 				handle_reflog(revs, flags);
+ 				continue;
+ 			}
++			if (!strcmp(arg, "--walk-reflogs")) {
++				init_reflog_walk(&revs->reflog_info);
++				continue;
++			}
+ 			if (!strcmp(arg, "--not")) {
+ 				flags ^= UNINTERESTING;
+ 				continue;
+@@ -1208,6 +1216,9 @@ static struct commit *get_revision_1(struct rev_info *revs)
+ 		revs->commits = entry->next;
+ 		free(entry);
+ 
++		if (revs->reflog_info)
++			fake_reflog_parent(revs->reflog_info, commit);
++
+ 		/*
+ 		 * If we haven't done the list limiting, we need to look at
+ 		 * the parents here. We also need to do the date-based limiting
+diff --git a/revision.h b/revision.h
+index 8f7907d..ec40af9 100644
+--- a/revision.h
++++ b/revision.h
+@@ -10,6 +10,7 @@
+ #define BOUNDARY_SHOW	(1u<<6)
+ #define ADDED		(1u<<7)	/* Parents already parsed and added? */
+ #define SYMMETRIC_LEFT	(1u<<8)
++#define REFLOG_PARENT	(1u<<9)
+ 
+ struct rev_info;
+ struct log_info;
+@@ -89,6 +90,8 @@ struct rev_info {
+ 
+ 	topo_sort_set_fn_t topo_setter;
+ 	topo_sort_get_fn_t topo_getter;
++
++	struct reflog_walk_info *reflog_info;
+ };
+ 
+ #define REV_TREE_SAME		0
 -- 
 1.5.0.rc0.gcbf41-dirty
