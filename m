@@ -1,64 +1,65 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: [PATCH] cvsimport: skip commits that are too recent
-Date: Mon, 8 Jan 2007 15:13:32 +1300
-Message-ID: <46a038f90701071813g7b892af1y2cfa620ef2656657@mail.gmail.com>
-References: <1168218683853-git-send-email-martin@catalyst.net.nz>
-	 <7virfiz3at.fsf@assigned-by-dhcp.cox.net>
+From: Sasha Khapyorsky <sashak@voltaire.com>
+Subject: [PATCH] git-svnimport: fix edge revisions double importing
+Date: Mon, 8 Jan 2007 04:22:42 +0200
+Message-ID: <20070108022242.GA19217@sashak.voltaire.com>
+References: <204011cb0701031552j8292d23v950f828279702d3@mail.gmail.com> <Pine.LNX.4.64.0701031737300.4989@woody.osdl.org> <20070104213142.GE11861@sashak.voltaire.com> <204011cb0701041404g684525fdm1d057e57a57aca92@mail.gmail.com> <20070107001719.GB16771@sashak.voltaire.com> <204011cb0701071012g30cb69a5h4622d94574d10521@mail.gmail.com> <20070107185906.GD18379@sashak.voltaire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Martin Langhoff" <martin@catalyst.net.nz>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 08 03:13:53 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Chris Lee <chris133@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jan 08 03:15:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H3k1I-0004BQ-Cs
-	for gcvg-git@gmane.org; Mon, 08 Jan 2007 03:13:52 +0100
+	id 1H3k2p-0004Wm-PW
+	for gcvg-git@gmane.org; Mon, 08 Jan 2007 03:15:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030445AbXAHCNe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 7 Jan 2007 21:13:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030446AbXAHCNe
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jan 2007 21:13:34 -0500
-Received: from wx-out-0506.google.com ([66.249.82.238]:29455 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030445AbXAHCNd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Jan 2007 21:13:33 -0500
-Received: by wx-out-0506.google.com with SMTP id h27so7873815wxd
-        for <git@vger.kernel.org>; Sun, 07 Jan 2007 18:13:33 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=auCc2Vi8SzNG7JdKy8At+2T0CHTwYG1MKe4abmhsfrPOfBkm4fSV6beRghWG/jfTexchv1PAmFasIrkiJrLkCGEWGxXEUc+NLYfp8TTidTEd4E3FylJ2fzuhM/vkqxNm13V1pcMfVYjoEfqZ7ICxCStOCDXag+jt6Ez28a1wQjQ=
-Received: by 10.90.75.10 with SMTP id x10mr1772240aga.1168222413021;
-        Sun, 07 Jan 2007 18:13:33 -0800 (PST)
-Received: by 10.90.28.1 with HTTP; Sun, 7 Jan 2007 18:13:32 -0800 (PST)
-To: "Junio C Hamano" <junkio@cox.net>
-In-Reply-To: <7virfiz3at.fsf@assigned-by-dhcp.cox.net>
+	id S1030446AbXAHCPX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 7 Jan 2007 21:15:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030447AbXAHCPX
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jan 2007 21:15:23 -0500
+Received: from taurus.voltaire.com ([193.47.165.240]:53786 "EHLO
+	taurus.voltaire.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030446AbXAHCPX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Jan 2007 21:15:23 -0500
+Received: from sashak ([172.25.5.176]) by taurus.voltaire.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Mon, 8 Jan 2007 04:15:20 +0200
+Received: by sashak (sSMTP sendmail emulation); Mon,  8 Jan 2007 04:22:42 +0200
+To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
+In-Reply-To: <20070107185906.GD18379@sashak.voltaire.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-OriginalArrivalTime: 08 Jan 2007 02:15:20.0377 (UTC) FILETIME=[D8B37290:01C732CA]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36222>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36223>
 
-On 1/8/07, Junio C Hamano <junkio@cox.net> wrote:
->  Almost immediately
-> after that, I do another incremental cvsimport so that I can
-> rebase the remainder of my branch on top of what I made public.
+This fixes newly introduced bug when the incremental cycle edge revisions
+are imported twice.
 
-That probably means I should have added a
---force-fetch-all-and-i-mean-it flag to override the cautious
-behaviour. I'll repost ina few hours, with doco too.
+Signed-off-by: Sasha Khapyorsky <sashak@voltaire.com>
+---
+ git-svnimport.perl |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
- ...
-
-> Which means that you did not give me a new excuse to take a
-> coffee break and work on git stuff instead of my day job project
-> to my management but that is Ok.  I'll find other ways ;-).
-
-I'll try harder next time ;-)
-
-cheers
-
-
-martin
+diff --git a/git-svnimport.perl b/git-svnimport.perl
+index afbbe63..f1f1a7d 100755
+--- a/git-svnimport.perl
++++ b/git-svnimport.perl
+@@ -943,10 +943,10 @@ if ($opt_l < $current_rev) {
+ print "Processing from $current_rev to $opt_l ...\n" if $opt_v;
+ 
+ my $from_rev;
+-my $to_rev = $current_rev;
++my $to_rev = $current_rev - 1;
+ 
+ while ($to_rev < $opt_l) {
+-	$from_rev = $to_rev;
++	$from_rev = $to_rev + 1;
+ 	$to_rev = $from_rev + $repack_after;
+ 	$to_rev = $opt_l if $opt_l < $to_rev;
+ 	print "Fetching from $from_rev to $to_rev ...\n" if $opt_v;
+-- 
+1.5.0.rc0.g2484-dirty
