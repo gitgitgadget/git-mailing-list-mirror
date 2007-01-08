@@ -1,122 +1,206 @@
 From: Andy Whitcroft <apw@shadowen.org>
-Subject: Re: [PATCH] use xread where we are not checking for EAGAIN/EINTR
-Date: Mon, 08 Jan 2007 15:56:15 +0000
-Message-ID: <45A2699F.5060100@shadowen.org>
-References: <1cb8699724ff000fbf0c14ba3e15031e@pinky> <7vvejlg1pg.fsf@assigned-by-dhcp.cox.net> <459E4270.9090307@shadowen.org>
-Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------070703040301050106020909"
-Cc: Andy Whitcroft <apw@shadowen.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 08 16:56:39 2007
+Subject: [PATCH 1/4] short i/o: clean up the naming for the write_{in,or}_xxx family
+Date: Mon, 08 Jan 2007 15:57:52 +0000
+Message-ID: <25af6e84117845e1ca282192b77e5e67@pinky>
+References: <45A2699F.5060100@shadowen.org>
+X-From: git-owner@vger.kernel.org Mon Jan 08 16:58:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H3wrP-0000p7-5x
-	for gcvg-git@gmane.org; Mon, 08 Jan 2007 16:56:31 +0100
+	id 1H3wsq-0001Bt-HC
+	for gcvg-git@gmane.org; Mon, 08 Jan 2007 16:58:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750878AbXAHP4V (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 8 Jan 2007 10:56:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750883AbXAHP4V
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jan 2007 10:56:21 -0500
-Received: from hellhawk.shadowen.org ([80.68.90.175]:4558 "EHLO
-	hellhawk.shadowen.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750878AbXAHP4S (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Jan 2007 10:56:18 -0500
-Received: from localhost ([127.0.0.1])
-	by hellhawk.shadowen.org with esmtp (Exim 4.50)
-	id 1H3wqH-00074V-I1; Mon, 08 Jan 2007 15:55:21 +0000
-User-Agent: Icedove 1.5.0.9 (X11/20061220)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <459E4270.9090307@shadowen.org>
-X-Enigmail-Version: 0.94.1.0
-OpenPGP: url=http://www.shadowen.org/~apw/public-key
+	id S1161323AbXAHP54 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 8 Jan 2007 10:57:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161320AbXAHP54
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jan 2007 10:57:56 -0500
+Received: from 41.150.104.212.access.eclipse.net.uk ([212.104.150.41]:55589
+	"EHLO localhost.localdomain" rhost-flags-OK-FAIL-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1161323AbXAHP5z (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 8 Jan 2007 10:57:55 -0500
+Received: from localhost ([127.0.0.1] helo=localhost.localdomain)
+	by localhost.localdomain with esmtp (Exim 4.63)
+	(envelope-from <apw@shadowen.org>)
+	id 1H3wsi-0003VA-Qo
+	for git@vger.kernel.org; Mon, 08 Jan 2007 15:57:52 +0000
+To: git@vger.kernel.org
+InReply-To: <45A2699F.5060100@shadowen.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36267>
-
-This is a multi-part message in MIME format.
---------------070703040301050106020909
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-
-Andy Whitcroft wrote:
-> Junio C Hamano wrote:
->> Andy Whitcroft <apw@shadowen.org> writes:
->>
->>>     We have an xread() wrapper to help us with those nasty
->>>     interrupt returns and yet we fail to use it consistently.
->>>     This patch updates those plain read()'s which do not
->>>     have any handling for errors, or which treat those errors
->>>     as user visible fatal errors.
->>>
->>>     This feels right to me, but perhaps there is some good
->>>     reason that things are done this way ... if so could
->>>     someone elighten me.
->> Thanks.
->>
->> I do not think any of the changes you did introduced new bugs,
->> but I think some of them are still wrong.  xread() protects us
->> from EINTR happening before any byte is read, but it can still
->> give a short read.  Many callers have a loop like this:
->>
->> 	do {
->>         	size = xread(...);
->>                 yet_to_go -= size;
->> 	} while (yet_to_go);
->>
->> but some are not (e.g. add_excludes_from_file_1() in dir.c
->> expects xread() does not return before reading full buffer).
-> 
-> Yes, that is true.  I was going to fix that in the next step with the
-> writes.  But yes thats likely to involve them becoming 'read_in_full'
-> style thing and in fact churn us more.
-> 
-> Ignore this one and I'll look to do it 'right'.
-
-Ok, after much hacking about I think I've got something sensible sorted
-out for this.  Following this email are four patches which convert the
-various read/write/xread/xwrite users over to xread/read_in_full and
-xwrite/write_in_full as appropriate.  Its pretty invasive as obviously
-I/O is pretty common in an SCM.
-
-next with this stack passes the builtin test suite.  I additionally used
-the attached patch to induce severe short read/write semantics.  Before
-this patch series git was _very_ unhappy, unable to even create a
-repository.
-
-This series is against next.
-
--apw
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36268>
 
 
---------------070703040301050106020909
-Content-Type: text/plain;
- name="PATCH"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline;
- filename="PATCH"
+We recently introduced a write_in_full() which would either write
+the specified object or emit an error message and fail.  In order
+to fix the read side we now want to introduce a read_in_full()
+but without an error emit.  This patch cleans up the naming
+of this family of calls:
 
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 55456da..931cbed 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -210,6 +210,7 @@ static inline void *xmmap(void *start, size_t length,
- static inline ssize_t xread(int fd, void *buf, size_t len)
+1) convert the existing write_or_whine() to write_or_whine_pipe()
+   to better indicate its pipe specific nature,
+2) convert the existing write_in_full() calls to write_or_whine()
+   to better indicate its nature,
+3) introduce a write_in_full() providing a write or fail semantic,
+   and
+4) convert write_or_whine() and write_or_whine_pipe() to use
+   write_in_full().
+
+Signed-off-by: Andy Whitcroft <apw@shadowen.org>
+---
+diff --git a/cache.h b/cache.h
+index 36be64e..38a20a8 100644
+--- a/cache.h
++++ b/cache.h
+@@ -433,9 +433,10 @@ extern char *git_log_output_encoding;
+ 
+ extern int copy_fd(int ifd, int ofd);
+ extern void read_or_die(int fd, void *buf, size_t count);
+-extern int write_in_full(int fd, const void *buf, size_t count, const char *);
++extern int write_in_full(int fd, const void *buf, size_t count);
+ extern void write_or_die(int fd, const void *buf, size_t count);
+ extern int write_or_whine(int fd, const void *buf, size_t count, const char *msg);
++extern int write_or_whine_pipe(int fd, const void *buf, size_t count, const char *msg);
+ 
+ /* pager.c */
+ extern void setup_pager(void);
+diff --git a/send-pack.c b/send-pack.c
+index c195d08..6756264 100644
+--- a/send-pack.c
++++ b/send-pack.c
+@@ -65,14 +65,14 @@ static int pack_objects(int fd, struct ref *refs)
+ 			memcpy(buf + 1, sha1_to_hex(refs->old_sha1), 40);
+ 			buf[0] = '^';
+ 			buf[41] = '\n';
+-			if (!write_in_full(pipe_fd[1], buf, 42,
++			if (!write_or_whine(pipe_fd[1], buf, 42,
+ 						"send-pack: send refs"))
+ 				break;
+ 		}
+ 		if (!is_null_sha1(refs->new_sha1)) {
+ 			memcpy(buf, sha1_to_hex(refs->new_sha1), 40);
+ 			buf[40] = '\n';
+-			if (!write_in_full(pipe_fd[1], buf, 41,
++			if (!write_or_whine(pipe_fd[1], buf, 41,
+ 						"send-pack: send refs"))
+ 				break;
+ 		}
+diff --git a/trace.c b/trace.c
+index 495e5ed..27fef86 100644
+--- a/trace.c
++++ b/trace.c
+@@ -101,7 +101,7 @@ void trace_printf(const char *format, ...)
+ 	nfvasprintf(&trace_str, format, rest);
+ 	va_end(rest);
+ 
+-	write_or_whine(fd, trace_str, strlen(trace_str), err_msg);
++	write_or_whine_pipe(fd, trace_str, strlen(trace_str), err_msg);
+ 
+ 	free(trace_str);
+ 
+@@ -139,7 +139,7 @@ void trace_argv_printf(const char **argv, int count, const char *format, ...)
+ 	strncpy(trace_str + format_len, argv_str, argv_len);
+ 	strcpy(trace_str + trace_len - 1, "\n");
+ 
+-	write_or_whine(fd, trace_str, trace_len, err_msg);
++	write_or_whine_pipe(fd, trace_str, trace_len, err_msg);
+ 
+ 	free(argv_str);
+ 	free(format_str);
+diff --git a/write_or_die.c b/write_or_die.c
+index 6db1d31..613c0c3 100644
+--- a/write_or_die.c
++++ b/write_or_die.c
+@@ -35,49 +35,61 @@ void write_or_die(int fd, const void *buf, size_t count)
+ 	}
+ }
+ 
+-int write_or_whine(int fd, const void *buf, size_t count, const char *msg)
++int write_in_full(int fd, const void *buf, size_t count)
  {
- 	ssize_t nr;
-+	if (len > 5) len = 5;
- 	while (1) {
- 		nr = read(fd, buf, len);
- 		if ((nr < 0) && (errno == EAGAIN || errno == EINTR))
-@@ -221,6 +222,7 @@ static inline ssize_t xread(int fd, void *buf, size_t len)
- static inline ssize_t xwrite(int fd, const void *buf, size_t len)
+ 	const char *p = buf;
+-	ssize_t written;
++	ssize_t total = 0;
++	ssize_t wcount = 0;
+ 
+ 	while (count > 0) {
+-		written = xwrite(fd, p, count);
+-		if (written == 0) {
+-			fprintf(stderr, "%s: disk full?\n", msg);
+-			return 0;
+-		}
+-		else if (written < 0) {
+-			if (errno == EPIPE)
+-				exit(0);
+-			fprintf(stderr, "%s: write error (%s)\n",
+-				msg, strerror(errno));
+-			return 0;
++		wcount = xwrite(fd, p, count);
++		if (wcount <= 0) {
++			if (total)
++				return total;
++			else
++				return wcount;
+ 		}
+-		count -= written;
+-		p += written;
++		count -= wcount;
++		p += wcount;
++		total += wcount;
++	}
++
++	return wcount;
++}
++
++int write_or_whine_pipe(int fd, const void *buf, size_t count, const char *msg)
++{
++	ssize_t written;
++
++	written = write_in_full(fd, buf, count);
++	if (written == 0) {
++		fprintf(stderr, "%s: disk full?\n", msg);
++		return 0;
++	}
++	else if (written < 0) {
++		if (errno == EPIPE)
++			exit(0);
++		fprintf(stderr, "%s: write error (%s)\n",
++			msg, strerror(errno));
++		return 0;
+ 	}
+ 
+ 	return 1;
+ }
+ 
+-int write_in_full(int fd, const void *buf, size_t count, const char *msg)
++int write_or_whine(int fd, const void *buf, size_t count, const char *msg)
  {
- 	ssize_t nr;
-+	if (len > 5) len = 5;
- 	while (1) {
- 		nr = write(fd, buf, len);
- 		if ((nr < 0) && (errno == EAGAIN || errno == EINTR))
-
---------------070703040301050106020909--
+-	const char *p = buf;
+ 	ssize_t written;
+ 
+-	while (count > 0) {
+-		written = xwrite(fd, p, count);
+-		if (written == 0) {
+-			fprintf(stderr, "%s: disk full?\n", msg);
+-			return 0;
+-		}
+-		else if (written < 0) {
+-			fprintf(stderr, "%s: write error (%s)\n",
+-				msg, strerror(errno));
+-			return 0;
+-		}
+-		count -= written;
+-		p += written;
++	written = write_in_full(fd, buf, count);
++	if (written == 0) {
++		fprintf(stderr, "%s: disk full?\n", msg);
++		return 0;
++	}
++	else if (written < 0) {
++		fprintf(stderr, "%s: write error (%s)\n",
++			msg, strerror(errno));
++		return 0;
+ 	}
+ 
+ 	return 1;
