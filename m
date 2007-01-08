@@ -1,70 +1,64 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: I just pulled and built 'next'...
-Date: Mon, 8 Jan 2007 16:00:02 -0500
-Message-ID: <20070108210002.GA15121@thunk.org>
-References: <E1H3uc2-0004m1-Ua@think.thunk.org> <7vvejhwa6g.fsf@assigned-by-dhcp.cox.net>
+From: Yann Dirson <ydirson@altern.org>
+Subject: Getting gitk to display all refs but stgit logs
+Date: Mon, 8 Jan 2007 22:32:59 +0100
+Message-ID: <20070108213259.GB17093@nan92-1-81-57-214-146.fbx.proxad.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 08 22:00:22 2007
+X-From: git-owner@vger.kernel.org Mon Jan 08 22:33:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H41bH-0007eM-RX
-	for gcvg-git@gmane.org; Mon, 08 Jan 2007 22:00:12 +0100
+	id 1H427T-00085j-PW
+	for gcvg-git@gmane.org; Mon, 08 Jan 2007 22:33:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932663AbXAHVAH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 8 Jan 2007 16:00:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932664AbXAHVAH
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jan 2007 16:00:07 -0500
-Received: from thunk.org ([69.25.196.29]:54468 "EHLO thunker.thunk.org"
+	id S1750864AbXAHVdX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 8 Jan 2007 16:33:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751055AbXAHVdX
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jan 2007 16:33:23 -0500
+Received: from smtp2-g19.free.fr ([212.27.42.28]:34559 "EHLO smtp2-g19.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932673AbXAHVAF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Jan 2007 16:00:05 -0500
-Received: from root (helo=candygram.thunk.org)
-	by thunker.thunk.org with local-esmtps 
-	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
-	id 1H41fd-0005bH-ST; Mon, 08 Jan 2007 16:04:42 -0500
-Received: from tytso by candygram.thunk.org with local (Exim 4.62)
-	(envelope-from <tytso@thunk.org>)
-	id 1H41b8-0001Cf-9X; Mon, 08 Jan 2007 16:00:02 -0500
-To: Junio C Hamano <junkio@cox.net>
+	id S1750864AbXAHVdW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Jan 2007 16:33:22 -0500
+Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
+	by smtp2-g19.free.fr (Postfix) with ESMTP id F23627CF1
+	for <git@vger.kernel.org>; Mon,  8 Jan 2007 22:33:19 +0100 (CET)
+Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
+	id B9E411F0A3; Mon,  8 Jan 2007 22:32:59 +0100 (CET)
+To: GIT list <git@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <7vvejhwa6g.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.12-2006-07-14
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36280>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36281>
 
-On Mon, Jan 08, 2007 at 12:11:35PM -0800, Junio C Hamano wrote:
-> One question is how you would sort the result.  If you sort them
-> by taggerdate, you would get v1.4.4.4 anyway ;-).
+Since v0.11, StGIT creates references to keep a hand on patch logs.
+This has the unfortunate side-effect that "gitk --all" suddenly shows
+all those very annoying, and soon becomes unusable on
+repositories for which was very convenient.
 
-I was assuming either lexigraphically, or via some really complicated
-rpm/dpkg version number comparison scheme.  :-)
+I guess it would be acceptable to have stgit itself launch gitk with
+the correct options.
 
-> If we go with topology, we do not necessarily have to find all
-> the tags.  When we hit a commit that is tagged, we can stop the
-> traversal (so after finding v1.5.0-rc0, we do not have to go
-> back along the 'master' lineage to find v1.4.4 tag).  Traversing
-> from the tip of 'master' (or 'next') this way we will notice
-> that v1.5.0-rc0 and v1.4.4.4 are the candidates without going
-> any further in the past.
-> 
-> But the question still remains which one between the two to
-> pick.
+The only way I could find to suppress these refs from the display is
+to find the refs ourselves and pipe them to gitk using --stdin:
 
-Yeah, that is the question.  If we're willing to look at the tag name,
-it's pretty clear that if both v1.5.0-rc0 and v1.4.4.4 is reachable
-from the head, it should be based on the "newer" version, i.e.,
-v1.5.0-rc0.  A human can figure this out easily, but algorithimically
-we end up having to use something like the rpm or dpkg version
-comparison algorithm, both of which are hueristics that will sometimes
-get thigns wrong.
+ find .git/refs/ -type f -not -name '*.log' -printf '%P\n'|gitk --stdin
 
-						- Ted
+Unfortunately, requesting an update from gitk then behaves as if
+nothing had been given on command-line (obviously it is passing
+--stdin to git-rev-list without repeating the data).
+
+We could do slightly better by enclosing the find in backquotes on the
+gitk command-line, but that would still hide new refs to git-rev-list
+when updating the graph.
+
+Is there a better way already, or should we work on something specific
+here ?  A possible solution I think of could be to call something like:
+
+ gitk --stdin-command="find .git/refs/ -type f -not -name '*.log' -printf '%P\n'"
+
+Best regards,
+-- 
+Yann.
