@@ -1,59 +1,79 @@
-From: David Woodhouse <dwmw2@infradead.org>
-Subject: Re: OT: character encodings
-Date: Mon, 08 Jan 2007 09:53:51 +0800
-Message-ID: <1168221232.14763.80.camel@shinybook.infradead.org>
-References: <Pine.LNX.4.64.0701062216210.3661@woody.osdl.org>
-	 <Pine.LNX.4.61.0701071152570.4365@yvahk01.tjqt.qr>
-	 <20070107114439.GC21613@flint.arm.linux.org.uk> <45A0F060.9090207@imap.cc>
-	 <1168182838.14763.24.camel@shinybook.infradead.org>
-	 <20070107153833.GA21133@flint.arm.linux.org.uk>
-	 <1168187346.14763.70.camel@shinybook.infradead.org>
-	 <20070107170656.GC21133@flint.arm.linux.org.uk> <45A14A2A.9060306@imap.cc>
-	 <20070107195051.GF21133@flint.arm.linux.org.uk>  <45A17645.1030905@imap.cc>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] cvsimport: skip commits that are too recent
+Date: Sun, 07 Jan 2007 17:59:38 -0800
+Message-ID: <7virfiz3at.fsf@assigned-by-dhcp.cox.net>
+References: <1168218683853-git-send-email-martin@catalyst.net.nz>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Russell King <rmk+lkml@arm.linux.org.uk>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 08 02:53:48 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: junkio@cox.net, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 08 02:59:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H3jhq-0000Em-9u
-	for gcvg-git@gmane.org; Mon, 08 Jan 2007 02:53:46 +0100
+	id 1H3jnb-0001SE-4y
+	for gcvg-git@gmane.org; Mon, 08 Jan 2007 02:59:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030438AbXAHBxn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 7 Jan 2007 20:53:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030442AbXAHBxn
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jan 2007 20:53:43 -0500
-Received: from pentafluge.infradead.org ([213.146.154.40]:44909 "EHLO
-	pentafluge.infradead.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030438AbXAHBxm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Jan 2007 20:53:42 -0500
-Received: from mail3.quantacn.com ([61.152.217.200] helo=[172.21.170.25])
-	by pentafluge.infradead.org with esmtpsa (Exim 4.63 #1 (Red Hat Linux))
-	id 1H3jhc-0007S2-DU; Mon, 08 Jan 2007 01:53:35 +0000
-To: Tilman Schmidt <tilman@imap.cc>
-In-Reply-To: <45A17645.1030905@imap.cc>
-X-Mailer: Evolution 2.8.2.1 (2.8.2.1-2.fc6.dwmw2.1) 
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by pentafluge.infradead.org
-	See http://www.infradead.org/rpr.html
+	id S1030443AbXAHB7k (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 7 Jan 2007 20:59:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030444AbXAHB7k
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jan 2007 20:59:40 -0500
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:61002 "EHLO
+	fed1rmmtao12.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030443AbXAHB7j (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Jan 2007 20:59:39 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20070108015939.HBHK19398.fed1rmmtao12.cox.net@fed1rmimpo01.cox.net>;
+          Sun, 7 Jan 2007 20:59:39 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id 8Ryp1W00B1kojtg0000000; Sun, 07 Jan 2007 20:58:50 -0500
+To: Martin Langhoff <martin@catalyst.net.nz>
+In-Reply-To: <1168218683853-git-send-email-martin@catalyst.net.nz> (Martin
+	Langhoff's message of "Mon, 8 Jan 2007 14:11:23 +1300")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36220>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36221>
 
-On Sun, 2007-01-07 at 23:37 +0100, Tilman Schmidt wrote:
-> > That depends on your point of view.  David's assertion was that git
-> > internally uses UTF-8.
-> 
-> Well, I'm inclined to say he was wrong. Git internally is completely
-> oblivious to character encoding.
+Martin Langhoff <martin@catalyst.net.nz> writes:
 
-See the 'i18n.commitencoding' property, stored in the repository config
-and defaulting to UTF-8. Git is certainly capable of converting to its
-internal storage encoding when you commit; if it doesn't do so by
-default then that would be a bug.
+> With this patch, cvsimport will skip commits made
+> in the last 10 minutes. The recent-ness test is of
+> 5 minutes + cvsps fuzz window (5 minutes default).
+>
+> When working with a CVS repository that is in use,
+> importing commits that are too recent can lead to
+> partially incorrect trees. This is mainly due to
+>
+>  - Commits that are within the cvsps fuzz window may later
+>    be found to have affected more files.
+>
+>  - When performing incremental imports, clock drift between
+>    the systems may lead to skipped commits.
 
--- 
-dwmw2
+Hmmmmm.  This is good for tracking other people's work, but, I
+am not quite sure how well it works with my workflow.
+
+I have a CVS upstream, but I manage my own development with git.
+I start my day by running an incremental cvsimport, rebase my
+branch on top of whatever at the tip of the cvsimport branch.  I
+use cvsexportcommit (actually a moral equivalent of it I've been
+using before cvsexportcommit has become part of git) to make
+parts of my branch that are ready for other people's consumption
+available by making commits on the CVS side.  Almost immediately
+after that, I do another incremental cvsimport so that I can
+rebase the remainder of my branch on top of what I made public.
+
+I guess there is no negative impact your patch has on me -- this
+10 minute window does not mean that I cannot continue working.
+I can keep working on my stuff on my (old) branch without the
+second cvsimport and rebase and there is nothing lost.  I can do
+the second cvsimport and rebase later.
+
+Which means that you did not give me a new excuse to take a
+coffee break and work on git stuff instead of my day job project
+to my management but that is Ok.  I'll find other ways ;-).
