@@ -1,90 +1,64 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: [PATCH] Documentation: clarify glossary definition of "reachable"
-Date: Sun, 7 Jan 2007 22:28:45 -0500
-Message-ID: <20070108032845.GJ18009@fieldses.org>
-References: <20070108002839.GF18009@fieldses.org> <7vvejiz40u.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [ANNOUNCE] GIT 1.4.4.4
+Date: Sun, 07 Jan 2007 19:30:50 -0800
+Message-ID: <7v7ivyyz2t.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 08 04:28:51 2007
+Cc: linux-kernel@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 08 04:30:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H3lBq-0003Fa-9l
-	for gcvg-git@gmane.org; Mon, 08 Jan 2007 04:28:50 +0100
+	id 1H3lDr-0003pm-Ud
+	for gcvg-git@gmane.org; Mon, 08 Jan 2007 04:30:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030469AbXAHD2r (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 7 Jan 2007 22:28:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030470AbXAHD2r
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jan 2007 22:28:47 -0500
-Received: from mail.fieldses.org ([66.93.2.214]:38063 "EHLO
-	pickle.fieldses.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030469AbXAHD2r (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Jan 2007 22:28:47 -0500
-Received: from bfields by pickle.fieldses.org with local (Exim 4.63)
-	(envelope-from <bfields@fieldses.org>)
-	id 1H3lBl-0000DR-Uc; Sun, 07 Jan 2007 22:28:45 -0500
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vvejiz40u.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1030470AbXAHDaw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 7 Jan 2007 22:30:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030472AbXAHDaw
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jan 2007 22:30:52 -0500
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:32861 "EHLO
+	fed1rmmtao06.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030470AbXAHDav (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Jan 2007 22:30:51 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20070108033051.DTZO2628.fed1rmmtao06.cox.net@fed1rmimpo01.cox.net>;
+          Sun, 7 Jan 2007 22:30:51 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id 8TW11W0061kojtg0000000; Sun, 07 Jan 2007 22:30:01 -0500
+To: git@vger.kernel.org
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36231>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36232>
 
-On Sun, Jan 07, 2007 at 05:44:01PM -0800, Junio C Hamano wrote:
-> That is better but the description is too commit centric.
-> 
->         The set of reachable objects from a tag is the tag
->         itself and the set of reachable objects from the object
->         it tags.  The set of reachable objects from a commit is
->         the commit itself, and the set of reachable objects from
->         its parents and its tree.  The set of reachable objects
->         from a tree is the tree itself, and the set of reachable
->         objects from the trees and blobs contained within it.
->         The set of reachable objects from a blob is the blob
->         itself.
-> 
-> And that description is too verbose and too technical
-> (definition being recursive).  Better rewording?
+The latest maintenance release GIT 1.4.4.4 is available at the
+usual places:
 
-Oops, you're right!  Take two:  (I'm still giving the commit case first
-as a special example, because I think it's the most important case, and
-because it requires less knowledge to understand.)
+  http://www.kernel.org/pub/software/scm/git/
 
---b.
+  git-1.4.4.4.tar.{gz,bz2}			(tarball)
+  git-htmldocs-1.4.4.4.tar.{gz,bz2}		(preformatted docs)
+  git-manpages-1.4.4.4.tar.{gz,bz2}		(preformatted docs)
+  RPMS/$arch/git-*-1.4.4.4-1.$arch.rpm	(RPM)
 
->From 1b1885dc3cf597452c597f34e6f52856c9524239 Mon Sep 17 00:00:00 2001
-From: J. Bruce Fields <bfields@citi.umich.edu>
-Date: Sun, 7 Jan 2007 19:25:35 -0500
-Subject: [PATCH] [PATCH] Documentation: clarify definition of "reachable"
+This is to push out a handful bugfixes since 1.4.4.3.
 
-Clarify definition of "reachable" (what chain?)
+On the 'master' development front, the stabilization for v1.5.0
+will start soonish.
 
-Signed-off-by: "J. Bruce Fields" <bfields@citi.umich.edu>
----
- Documentation/glossary.txt |    7 +++++--
- 1 files changed, 5 insertions(+), 2 deletions(-)
+----------------------------------------------------------------
 
-diff --git a/Documentation/glossary.txt b/Documentation/glossary.txt
-index 7c1a659..cd61aa2 100644
---- a/Documentation/glossary.txt
-+++ b/Documentation/glossary.txt
-@@ -235,8 +235,11 @@ push::
- 	local head, the push fails.
- 
- reachable::
--	An object is reachable from a ref/commit/tree/tag, if there is a
--	chain leading from the latter to the former.
-+	All of the ancestors of a given commit are said to be reachable from
-+	that commit.  More generally, one object is reachable from another if
-+	we can reach the one from the other by a chain that follows tags to
-+	whatever they tag, commits to their parents or trees, and trees to the
-+	trees or blobs that they contain.
- 
- rebase::
- 	To clean a branch by starting from the head of the main line of
--- 
-1.5.0.rc0.ge16c2
+Changes since v1.4.4.3 are as follows:
+
+Johannes Schindelin (1):
+      diff --check: fix off by one error
+
+Junio C Hamano (3):
+      spurious .sp in manpages
+      Fix infinite loop when deleting multiple packed refs.
+      pack-check.c::verify_packfile(): don't run SHA-1 update on huge data
