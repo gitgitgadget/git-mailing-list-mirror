@@ -1,51 +1,62 @@
-From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: Re: [PATCH 1/5] gitweb: Fix error in git_patchest_body for file creation/deletion patch
-Date: Sun, 7 Jan 2007 19:53:41 -0800 (PST)
-Message-ID: <601528.75484.qm@web31805.mail.mud.yahoo.com>
-References: <1168134751748-git-send-email-jnareb@gmail.com>
-Reply-To: ltuikov@yahoo.com
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 1/2] Suggest use of "git add file1 file2" when there is nothing to commit.
+Date: Sun, 07 Jan 2007 21:48:13 -0800
+Message-ID: <7vslemxe5e.fsf@assigned-by-dhcp.cox.net>
+References: <20061216025309.GA19955@spearce.org>
+	<1168029891.11130.18.camel@ibook.zvpunry.de>
+	<7virfldryw.fsf@assigned-by-dhcp.cox.net>
+	<7vodpcae9s.fsf@assigned-by-dhcp.cox.net>
+	<17823.42284.620000.476920@lapjr.intranet.kiel.bmiag.de>
+	<7vfyao58a7.fsf@assigned-by-dhcp.cox.net>
+	<17824.10780.295000.771566@lapjr.intranet.kiel.bmiag.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Luben Tuikov <ltuikov@yahoo.com>
-X-From: git-owner@vger.kernel.org Mon Jan 08 04:53:50 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 08 06:48:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H3lZx-0000cw-Tw
-	for gcvg-git@gmane.org; Mon, 08 Jan 2007 04:53:46 +0100
+	id 1H3nMw-0008Qf-V8
+	for gcvg-git@gmane.org; Mon, 08 Jan 2007 06:48:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030485AbXAHDxn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 7 Jan 2007 22:53:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030482AbXAHDxn
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jan 2007 22:53:43 -0500
-Received: from web31805.mail.mud.yahoo.com ([68.142.207.68]:42878 "HELO
-	web31805.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1030483AbXAHDxm (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 7 Jan 2007 22:53:42 -0500
-Received: (qmail 91481 invoked by uid 60001); 8 Jan 2007 03:53:41 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=X-YMail-OSG:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
-  b=UeImXhDDlnFc4ezvqJIU6j45De7r93V/T0CdIEXcnOOlupPLsQ7s+YYG69EfSHLoESuZy51V7uhy27TdoaxC+OVaNDHP839+G8L49qxATZi3nh4xc1QxAhGHTma6BdDOtklF5tT6g8sfphCm1yWcJkDg3uxafESPsGoUpgho5+Y=;
-X-YMail-OSG: JBVId7AVM1nH363yb4OM01OIe1jr015MK.VjshLuE6VGTXi8YRXasixDZRrjiBR.aIinOhkZPNpTHZUUO_UmN0j_Ji22V.w6AMgTKehrQGwvBTR4U9HicsCXKiDgm18TUFzht_yuLA--
-Received: from [71.80.230.185] by web31805.mail.mud.yahoo.com via HTTP; Sun, 07 Jan 2007 19:53:41 PST
-To: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-In-Reply-To: <1168134751748-git-send-email-jnareb@gmail.com>
+	id S1161165AbXAHFsQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 8 Jan 2007 00:48:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161166AbXAHFsQ
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jan 2007 00:48:16 -0500
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:61594 "EHLO
+	fed1rmmtao02.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161165AbXAHFsP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Jan 2007 00:48:15 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20070108054814.EEPA97.fed1rmmtao02.cox.net@fed1rmimpo01.cox.net>;
+          Mon, 8 Jan 2007 00:48:14 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id 8VnQ1W00F1kojtg0000000; Mon, 08 Jan 2007 00:47:25 -0500
+To: Juergen Ruehle <j.ruehle@bmiag.de>
+In-Reply-To: <17824.10780.295000.771566@lapjr.intranet.kiel.bmiag.de> (Juergen
+	Ruehle's message of "Sun, 7 Jan 2007 00:00:44 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36236>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36237>
 
---- Jakub Narebski <jnareb@gmail.com> wrote:
+Juergen Ruehle <j.ruehle@bmiag.de> writes:
 
-> $from_id, $to_id variables should be local per PATCH.
+> Junio C Hamano writes:
+>  > If there is something you are missing, it is that I am
+>  > overloaded these days ;-).
+>
+> I'm sorry. As a rather unsuccessful former maintainer of
+> http://www.openarchitectureware.org/ I can fully appreciate git's luck
+> to have such a dedicated maintainer.
 
-There. You've already refactored the logic, now pull it into
-a separate function.
-
-BTW, I'll try the patches (unless Junio commits them to "next"
-first) Monday sometime.
-
-    Luben
+Actually there is one difference that I found practically
+important.  It usually is a norm for me to have a handful
+untracked files that I do not even bother adding to .gitignore
+in the repository.  My patch does not suggest "add" when there
+are untracked files but no locally modified files.
