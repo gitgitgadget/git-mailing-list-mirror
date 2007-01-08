@@ -1,79 +1,110 @@
-From: "Guilhem Bonnefille" <guilhem.bonnefille@gmail.com>
-Subject: Re: [DRAFT] Branching and merging with git
-Date: Mon, 8 Jan 2007 13:38:19 +0100
-Message-ID: <8b65902a0701080438v4822eabdi135a5358f977328a@mail.gmail.com>
-References: <20061116221701.4499.qmail@science.horizon.com>
-	 <20070103170411.GB5491@thunk.org>
-	 <20070107234411.GD18009@fieldses.org>
-	 <20070108004006.GB23182@thunk.org>
-	 <20070108004641.GG18009@fieldses.org>
+From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
+Subject: Re: [1/2 PATCH] git-svn: make multi-init less confusing
+Date: Mon, 08 Jan 2007 13:56:07 +0100
+Message-ID: <87lkkdr82g.fsf@morpheus.local>
+References: <87fyaqvgoz.fsf@morpheus.local> <20070105020158.GA21925@localdomain> <871wmaugh6.fsf@morpheus.local> <m2ejq9trf1.fsf@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Theodore Tso" <tytso@mit.edu>, linux@horizon.com,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 08 13:38:25 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Mon Jan 08 13:56:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H3tlg-00080P-Hi
-	for gcvg-git@gmane.org; Mon, 08 Jan 2007 13:38:24 +0100
+	id 1H3u34-0003xb-7D
+	for gcvg-git@gmane.org; Mon, 08 Jan 2007 13:56:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161266AbXAHMiV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 8 Jan 2007 07:38:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161269AbXAHMiV
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jan 2007 07:38:21 -0500
-Received: from wr-out-0506.google.com ([64.233.184.225]:51012 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161266AbXAHMiU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Jan 2007 07:38:20 -0500
-Received: by wr-out-0506.google.com with SMTP id i28so25297wra
-        for <git@vger.kernel.org>; Mon, 08 Jan 2007 04:38:19 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Y+k+ecE2RT+7TU4T0A7wm4p1miqx2m4yP+ywhtTuxgm9xqUfAzM8OqAWP4ACbPa/4Hw3/NtrST7qKBdVfzGtZI/A0Bcc9EHlZB+UMEHJhL13NwaRP3sm1WfaQbFRwJ2rBtbr33zCYtrG/zRZuNaON8DUUqi6uCgF0TWrqRcesq8=
-Received: by 10.90.34.3 with SMTP id h3mr2050521agh.1168259899507;
-        Mon, 08 Jan 2007 04:38:19 -0800 (PST)
-Received: by 10.90.51.4 with HTTP; Mon, 8 Jan 2007 04:38:19 -0800 (PST)
-To: "J. Bruce Fields" <bfields@fieldses.org>
-In-Reply-To: <20070108004641.GG18009@fieldses.org>
-Content-Disposition: inline
+	id S1161279AbXAHM4S convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 8 Jan 2007 07:56:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161280AbXAHM4S
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jan 2007 07:56:18 -0500
+Received: from main.gmane.org ([80.91.229.2]:56442 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1161279AbXAHM4S (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Jan 2007 07:56:18 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1H3u2x-0005HL-SQ
+	for git@vger.kernel.org; Mon, 08 Jan 2007 13:56:16 +0100
+Received: from dns.vtab.com ([62.20.90.195])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 08 Jan 2007 13:56:15 +0100
+Received: from davidk by dns.vtab.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 08 Jan 2007 13:56:15 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: dns.vtab.com
+User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (gnu/linux)
+Cancel-Lock: sha1:iWXKkjIGVV/SHZwrGBhUOBP4G74=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36248>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36249>
 
-On 1/8/07, J. Bruce Fields <bfields@fieldses.org> wrote:
-> On Sun, Jan 07, 2007 at 07:40:06PM -0500, Theodore Tso wrote:
-> > On Sun, Jan 07, 2007 at 06:44:11PM -0500, J. Bruce Fields wrote:
-> > > On Wed, Jan 03, 2007 at 12:04:11PM -0500, Theodore Tso wrote:
-> > > > What ever happened to this document?  There was some talk of getting
-> > > > this integrated into the git tree as Docmentation/tutorial-3.txt.
-> > >
-> > > Just to throw more fuel on the fire....
-> > >
-> > > I have a draft attempt at a complete "git user's manual" at
-> > >
-> > >     http://www.fieldses.org/~bfields/
-> >
-> > Is that the right URL?  That gets me to "Not Bruce's Webpage" and I
-> > don't see an obvious link to git documentation...
+Seth Falcon <sethfalcon@gmail.com> writes:
+
+> David K=C3=A5gedal <davidk@lysator.liu.se> writes:
+>> Now if you could only clarify the documentation of dcommit to explai=
+n
+>> whether it creates one svn revision per commit in your branch, or if
+>> it creates a single svn revision with the full diff, and the
+>> documentation would be perfect :-)
 >
-> Crap:
+> dcommit creates one svn rev for each commit listed by:
 >
->         http://www.fieldses.org/~bfields/git-user-manual.html
+>    git log remotes/git-svn..HEAD
+>
+> + seth
 
-Nice work.
+Ok, so I tried rewriting the documentation.  But I'm still not sure I
+understand fully how it works.
 
-My only 2 cents: the SVN book is really a good book, as it contains
-both simple user and advanced hacker info. As it is in free licence,
-perhaps it could be possible to "port" the book to Git. I saw that the
-SVK book is such a port. But it's a DocBook document.
-http://svnbook.red-bean.com/
--- 
-Guilhem BONNEFILLE
--=- #UIN: 15146515 JID: guyou@im.apinc.org MSN: guilhem_bonnefille@hotmail.com
--=- mailto:guilhem.bonnefille@gmail.com
--=- http://nathguil.free.fr/
+diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
+index f5f57e8..8c91e78 100644
+--- a/Documentation/git-svn.txt
++++ b/Documentation/git-svn.txt
+@@ -57,15 +57,18 @@ See '<<fetch-args,Additional Fetch Arguments>>' if =
+you are interested in
+ manually joining branches on commit.
+=20
+ 'dcommit'::
+-	Commit all diffs from a specified head directly to the SVN
+-	repository, and then rebase or reset (depending on whether or
+-	not there is a diff between SVN and head).  It is recommended
+-	that you run git-svn fetch and rebase (not pull) your commits
+-	against the latest changes in the SVN repository.
+-	An optional command-line argument may be specified as an
+-	alternative to HEAD.
+-	This is advantageous over 'set-tree' (below) because it produces
+-	cleaner, more linear history.
++	Commit to the Subversion repository all commits in a branch
++	that are not yet in Subversion.  If no branch name is given,
++	HEAD is used.
++=09
++	After committing, the branch is rebased or reset (depending on
++	whether or not there is a diff between SVN and the branch).
++	It is recommended that you run git-svn fetch and rebase (not
++	pull) your commits against the latest changes in the SVN
++	repository.
++
++	This is advantageous over 'set-tree' (below) because it
++	produces cleaner, more linear history.
+=20
+ 'log'::
+ 	This should make it easy to look up svn log messages when svn
+
+=46irst of all, I would like to see the 'dcommit' header show that a
+branch name can be given, and what else you might want to write there.
+
+Secondly, the second paragraph is not very clear.  What does it mean
+that the branch is "rebased or reset"? Against what? And why does it
+matter if I have a diff? And does it still work if I'm dcommitting
+another branch than HEAD?
+
+I can probably guess the answer to some of these questions, but I
+would like to improve the documentation so nobody has to guess.
+
+--=20
+David K=C3=A5gedal
