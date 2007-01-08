@@ -1,94 +1,75 @@
-From: Josef Sipek <jsipek@fsl.cs.sunysb.edu>
-Subject: [ANNOUNCE] Guilt 0.17
-Date: Mon, 8 Jan 2007 04:47:34 -0500
-Message-ID: <20070108094734.GF2329@filer.fsl.cs.sunysb.edu>
+From: Juergen Ruehle <j.ruehle@bmiag.de>
+Subject: Re: [PATCH 1/2] Suggest use of "git add file1 file2" when there is nothing to commit.
+Date: Mon, 8 Jan 2007 11:42:02 +0100
+Message-ID: <17826.8186.10000.584890@lapjr.intranet.kiel.bmiag.de>
+References: <20061216025309.GA19955@spearce.org>
+	<1168029891.11130.18.camel@ibook.zvpunry.de>
+	<7virfldryw.fsf@assigned-by-dhcp.cox.net>
+	<7vodpcae9s.fsf@assigned-by-dhcp.cox.net>
+	<17823.42284.620000.476920@lapjr.intranet.kiel.bmiag.de>
+	<7vfyao58a7.fsf@assigned-by-dhcp.cox.net>
+	<17824.10780.295000.771566@lapjr.intranet.kiel.bmiag.de>
+	<7vslemxe5e.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: linux-kernel@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 08 10:47:47 2007
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 08 11:42:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H3r6W-0008Hq-5o
-	for gcvg-git@gmane.org; Mon, 08 Jan 2007 10:47:44 +0100
+	id 1H3rxT-0005FI-8c
+	for gcvg-git@gmane.org; Mon, 08 Jan 2007 11:42:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965300AbXAHJrg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 8 Jan 2007 04:47:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965301AbXAHJrg
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jan 2007 04:47:36 -0500
-Received: from filer.fsl.cs.sunysb.edu ([130.245.126.2]:58461 "EHLO
-	filer.fsl.cs.sunysb.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965300AbXAHJrf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Jan 2007 04:47:35 -0500
-Received: from filer.fsl.cs.sunysb.edu (IDENT:Qyam4tgrQFEPa8ZVQ0/qnFAyVBl4mFST@localhost.localdomain [127.0.0.1])
-	by filer.fsl.cs.sunysb.edu (8.12.11.20060308/8.13.1) with ESMTP id l089lZLw027563;
-	Mon, 8 Jan 2007 04:47:35 -0500
-Received: (from jsipek@localhost)
-	by filer.fsl.cs.sunysb.edu (8.12.11.20060308/8.13.1/Submit) id l089lYXw027561;
-	Mon, 8 Jan 2007 04:47:34 -0500
-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.4.1i
+	id S1161208AbXAHKmT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 8 Jan 2007 05:42:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161218AbXAHKmT
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jan 2007 05:42:19 -0500
+Received: from bilbo.bmiag.de ([62.154.210.131]:2962 "HELO bilbo.bmiag.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1161208AbXAHKmS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Jan 2007 05:42:18 -0500
+Received: (qmail 9920 invoked by uid 106); 8 Jan 2007 10:42:16 -0000
+Received: from eotheod.intranet.kiel.bmiag.de(10.130.2.1)
+ via SMTP by bilbo.bmiag.de, id smtpdJJpUfG; Mon Jan  8 11:42:12 2007
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by eotheod.intranet.kiel.bmiag.de (Postfix) with ESMTP id 370123ADCC;
+	Mon,  8 Jan 2007 11:42:12 +0100 (CET)
+Received: from eotheod.intranet.kiel.bmiag.de ([127.0.0.1])
+	by localhost (eotheod [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 09895-09; Mon, 8 Jan 2007 11:42:08 +0100 (CET)
+Received: from LAPJR (lapjr.intranet.kiel.bmiag.de [10.191.7.182])
+	by eotheod.intranet.kiel.bmiag.de (Postfix) with ESMTP id E43C83ADCA;
+	Mon,  8 Jan 2007 11:42:04 +0100 (CET)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vslemxe5e.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: VM 7.19 under Emacs 21.3.1
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at eotheod.intranet.kiel.bmiag.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36244>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36245>
 
-Guilt v0.17 is available for download.
+Junio C Hamano writes:
+ > Juergen Ruehle <j.ruehle@bmiag.de> writes:
+ > 
+ > > Junio C Hamano writes:
+ > >  > If there is something you are missing, it is that I am
+ > >  > overloaded these days ;-).
+ > >
+ > > I'm sorry. As a rather unsuccessful former maintainer of
+ > > http://www.openarchitectureware.org/ I can fully appreciate git's luck
+ > > to have such a dedicated maintainer.
+ > 
+ > Actually there is one difference that I found practically
+ > important.  It usually is a norm for me to have a handful
+ > untracked files that I do not even bother adding to .gitignore
+ > in the repository.  My patch does not suggest "add" when there
+ > are untracked files but no locally modified files.
 
-Guilt (Git Quilt) is a series of bash scripts which add a Mercurial
-queues-like functionality and interface to git.
-
-Tarballs:
-http://www.kernel.org/pub/linux/kernel/people/jsipek/guilt/
-
-Git repo:
-git://git.kernel.org/pub/scm/linux/kernel/git/jsipek/guilt.git
-
-
-Overall, a lot of good changes that make the whole porcelain more robust.
-The most notable one is the format of the status file (lists pushed patches)
-which now also includes the hash of the commit object associated with the
-patch.
-
-Go ahead, use it, abuse it, and send patches ;)
-
-Josef "Jeff" Sipek.
-
-----------
-
-Changes since v0.16:
-
-Horst H. von Brand (2):
-      Fix up Makefiles
-      Run regression on the current version
-
-Josef 'Jeff' Sipek (24):
-      A minimalistic makefile
-      Contributing doc file
-      Added guilt-add
-      Added guilt-status
-      Expanded the HOWTO
-      Added usage strings to all commands
-      All arguments to guilt-add are filenames
-      More thorough argument checking & display usage string on failure
-      Changed status file format to include the hash of the commit
-      Fixed guilt-refresh doing an unnecessary and somewhat wrong pop&push
-      Fixed up guilt-{delete,pop} not matching the patch name properly
-      Fixed guilt-{delete,pop} regexps some more
-      Force UTC as timezone for regression tests
-      Fixed a bug in guilt-pop introduced by the status file format switch
-      Error messages should go to stderr
-      Merge branch 'usage'
-      Merge branch 'status-file'
-      Yet another TODO update
-      Added guilt-rm
-      Makefile update & cleanup
-      pop: Display the name of the patch from the status file, not the series file
-      new: Create dir structure for the patch if necessary
-      Documentation/TODO: Mark guilt-rm as done
-      Guilt v0.17
-
--- 
-NT is to UNIX what a doughnut is to a particle accelerator.
+Yes. I don't have a real preference. I have a slight suspicion that
+the hint is useful for newbies because having only untracked files is
+the initial situation, but the hint in my patch is actually wrong
+because git-commit won't help in this situation. Do you want to revert
+the patch and apply yours or should I send a correction?
