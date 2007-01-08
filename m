@@ -1,68 +1,90 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH] gitweb: Remove superfluous "|" in "commit" view
-Date: Mon,  8 Jan 2007 02:10:42 +0100
-Message-ID: <11682186422078-git-send-email-jnareb@gmail.com>
-Cc: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 08 02:10:59 2007
+From: Martin Langhoff <martin@catalyst.net.nz>
+Subject: [PATCH] cvsimport: skip commits that are too recent
+Date: Mon,  8 Jan 2007 14:11:23 +1300
+Message-ID: <1168218683853-git-send-email-martin@catalyst.net.nz>
+Cc: Martin Langhoff <martin@catalyst.net.nz>
+X-From: git-owner@vger.kernel.org Mon Jan 08 02:35:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H3j2L-0008Pj-6x
-	for gcvg-git@gmane.org; Mon, 08 Jan 2007 02:10:53 +0100
+	id 1H3jQ0-0004yE-Kf
+	for gcvg-git@gmane.org; Mon, 08 Jan 2007 02:35:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030364AbXAHBKk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 7 Jan 2007 20:10:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965287AbXAHBKj
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jan 2007 20:10:39 -0500
-Received: from nf-out-0910.google.com ([64.233.182.189]:25834 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965286AbXAHBKi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Jan 2007 20:10:38 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so9310761nfa
-        for <git@vger.kernel.org>; Sun, 07 Jan 2007 17:10:37 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:cc:subject:date:message-id:x-mailer;
-        b=oOLuTxu7SUT443af01kIPCwvadh7SdlK4e+ON3N0B4536UjkLWFWKXawTnxQzCXq3k/22/w+YF7uZWpS+aWo48poLWyNb4lPNcZ4kuUhpcgGOk9uQAbjhc6n5CV3wFBifVxXAN+We2uo2iCP5rsleYoyMvG7d/55aWUbH3781t4=
-Received: by 10.48.48.18 with SMTP id v18mr28433418nfv.1168218637343;
-        Sun, 07 Jan 2007 17:10:37 -0800 (PST)
-Received: from roke.D-201 ( [81.190.18.145])
-        by mx.google.com with ESMTP id m15sm21905090nfc.2007.01.07.17.10.36;
-        Sun, 07 Jan 2007 17:10:37 -0800 (PST)
-Received: from roke.D-201 (localhost.localdomain [127.0.0.1])
-	by roke.D-201 (8.13.4/8.13.4) with ESMTP id l081Ahfo006069;
-	Mon, 8 Jan 2007 02:10:44 +0100
-Received: (from jnareb@localhost)
-	by roke.D-201 (8.13.4/8.13.4/Submit) id l081AgZm006068;
-	Mon, 8 Jan 2007 02:10:42 +0100
-To: git@vger.kernel.org
-X-Mailer: git-send-email 1.4.4.3
+	id S965289AbXAHBfR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 7 Jan 2007 20:35:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965295AbXAHBfR
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jan 2007 20:35:17 -0500
+Received: from godel.catalyst.net.nz ([202.78.240.40]:46657 "EHLO
+	mail1.catalyst.net.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965289AbXAHBfQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Jan 2007 20:35:16 -0500
+X-Greylist: delayed 1434 seconds by postgrey-1.27 at vger.kernel.org; Sun, 07 Jan 2007 20:35:15 EST
+Received: from leibniz.catalyst.net.nz ([202.78.240.7] helo=mltest)
+	by mail1.catalyst.net.nz with esmtp (Exim 4.50)
+	id 1H3j2k-0002bo-RM; Mon, 08 Jan 2007 14:11:18 +1300
+Received: from martin by mltest with local (Exim 3.36 #1 (Debian))
+	id 1H3j2p-00042i-00; Mon, 08 Jan 2007 14:11:23 +1300
+To: junkio@cox.net, git@vger.kernel.org
+X-Mailer: git-send-email 1.5.0.rc0.g4017-dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36213>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36214>
 
-Remove superfluous trailing "|" separator from difftree part of "commit"
-view for new files (created in given commit).
+With this patch, cvsimport will skip commits made
+in the last 10 minutes. The recent-ness test is of
+5 minutes + cvsps fuzz window (5 minutes default).
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+When working with a CVS repository that is in use,
+importing commits that are too recent can lead to
+partially incorrect trees. This is mainly due to
+
+ - Commits that are within the cvsps fuzz window may later
+   be found to have affected more files.
+
+ - When performing incremental imports, clock drift between
+   the systems may lead to skipped commits.
+
+This commit helps keep incremental imports of in-use
+CVS repositories sane.
+
+Signed-off-by: Martin Langhoff <martin@catalyst.net.nz>
 ---
- gitweb/gitweb.perl |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ git-cvsimport.perl |   14 ++++++++++++++
+ 1 files changed, 14 insertions(+), 0 deletions(-)
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index f46a422..25e5079 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -2239,7 +2239,7 @@ sub git_difftree_body {
- 			}
- 			print $cgi->a({-href => href(action=>"blob", hash=>$diff{'to_id'},
- 			                             hash_base=>$hash, file_name=>$diff{'file'})},
--			              "blob") . " | ";
-+			              "blob");
- 			print "</td>\n";
+diff --git a/git-cvsimport.perl b/git-cvsimport.perl
+index c5bf2d1..2686775 100755
+--- a/git-cvsimport.perl
++++ b/git-cvsimport.perl
+@@ -129,6 +129,11 @@ if ($opt_M) {
+ 	push (@mergerx, qr/$opt_M/);
+ }
  
- 		} elsif ($diff{'status'} eq "D") { # deleted
++# Remember UTC of our starting time
++# we'll want to avoid importing commits
++# that are too recent
++our $starttime = time();
++
+ select(STDERR); $|=1; select(STDOUT);
+ 
+ 
+@@ -824,6 +829,15 @@ while (<CVS>) {
+ 			$state = 11;
+ 			next;
+ 		}
++		if ( $starttime - 300 - (defined $opt_z ? $opt_z : 300) <= $date) {
++			# skip if the commit is too recent
++			# that the cvsps default fuzz is 300s, we give ourselves another
++			# 300s just in case -- this also prevents skipping commits
++			# due to server clock drift
++			print "skip patchset $patchset: $date too recent\n" if $opt_v;
++			$state = 11;
++			next;
++		}
+ 		if (exists $ignorebranch{$branch}) {
+ 			print STDERR "Skipping $branch\n";
+ 			$state = 11;
 -- 
-1.4.4.3
+1.5.0.rc0.g4017-dirty
