@@ -1,89 +1,115 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: How git affects kernel.org performance
-Date: Mon, 8 Jan 2007 09:17:55 -0500
-Message-ID: <20070108141755.GF32756@thunk.org>
-References: <45A08269.4050504@zytor.com> <45A083F2.5000000@zytor.com> <Pine.LNX.4.64.0701062130260.3661@woody.osdl.org> <20070107085526.GR24090@1wt.eu> <20070107011542.3496bc76.akpm@osdl.org> <20070108030555.GA7289@in.ibm.com> <20070108125819.GA32756@thunk.org> <20070108134147.GB5291@linuxtv.org> <20070108135622.GD32756@thunk.org> <20070108135952.GF25857@elf.ucw.cz>
+From: Juergen Ruehle <j.ruehle@bmiag.de>
+Subject: Re: [PATCH 2/4] Improve cached content header of status output
+Date: Mon, 8 Jan 2007 15:27:31 +0100
+Message-ID: <17826.21715.925000.540592@lapjr.intranet.kiel.bmiag.de>
+References: <1167765983316-git-send-email-j.ruehle@bmiag.de>
+	<11677659921833-git-send-email-j.ruehle@bmiag.de>
+	<459E2E57.6020503@shadowen.org>
+	<7vr6u9g1l4.fsf@assigned-by-dhcp.cox.net>
+	<459E4F2D.4000806@shadowen.org>
+	<17822.34697.691000.253492@lapjr.intranet.kiel.bmiag.de>
+	<7vk601fh7k.fsf@assigned-by-dhcp.cox.net>
+	<45A24709.9090904@shadowen.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Stezenbach <js@linuxtv.org>,
-	Suparna Bhattacharya <suparna@in.ibm.com>,
-	Andrew Morton <akpm@osdl.org>, Willy Tarreau <w@1wt.eu>,
-	Linus Torvalds <torvalds@osdl.org>,
-	"H. Peter Anvin" <hpa@zytor.com>, git@vger.kernel.org,
-	nigel@nigel.suspend2.net, "J.H." <warthog9@kernel.org>,
-	Randy Dunlap <randy.dunlap@oracle.com>,
-	kernel list <linux-kernel@vger.kernel.org>,
-	webmaster@kernel.org,
-	"linux-ext4@vger.kernel.org" <linux-ext4@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jan 08 15:23:01 2007
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 08 15:28:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H3vOr-0001Pa-E2
-	for gcvg-git@gmane.org; Mon, 08 Jan 2007 15:22:57 +0100
+	id 1H3vTc-0002gN-JY
+	for gcvg-git@gmane.org; Mon, 08 Jan 2007 15:27:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161313AbXAHOWv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 8 Jan 2007 09:22:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161314AbXAHOWu
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jan 2007 09:22:50 -0500
-Received: from thunk.org ([69.25.196.29]:49386 "EHLO thunker.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1161312AbXAHOWt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Jan 2007 09:22:49 -0500
-Received: from root (helo=candygram.thunk.org)
-	by thunker.thunk.org with local-esmtps 
-	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
-	id 1H3vOU-0003rw-7U; Mon, 08 Jan 2007 09:22:34 -0500
-Received: from tytso by candygram.thunk.org with local (Exim 4.62)
-	(envelope-from <tytso@thunk.org>)
-	id 1H3vJz-0005qW-5c; Mon, 08 Jan 2007 09:17:55 -0500
-To: Pavel Machek <pavel@ucw.cz>
-Mail-Followup-To: Theodore Tso <tytso@mit.edu>, Pavel Machek <pavel@ucw.cz>,
-	Johannes Stezenbach <js@linuxtv.org>,
-	Suparna Bhattacharya <suparna@in.ibm.com>,
-	Andrew Morton <akpm@osdl.org>, Willy Tarreau <w@1wt.eu>,
-	Linus Torvalds <torvalds@osdl.org>,
-	"H. Peter Anvin" <hpa@zytor.com>, git@vger.kernel.org,
-	nigel@nigel.suspend2.net, "J.H." <warthog9@kernel.org>,
-	Randy Dunlap <randy.dunlap@oracle.com>,
-	kernel list <linux-kernel@vger.kernel.org>, webmaster@kernel.org,
-	"linux-ext4@vger.kernel.org" <linux-ext4@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <20070108135952.GF25857@elf.ucw.cz>
-User-Agent: Mutt/1.5.12-2006-07-14
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+	id S1751542AbXAHO1t (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 8 Jan 2007 09:27:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751541AbXAHO1t
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jan 2007 09:27:49 -0500
+Received: from meriadoc.bmiag.de ([62.154.210.133]:44406 "EHLO
+	meriadoc.bmiag.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750789AbXAHO1s (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Jan 2007 09:27:48 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by meriadoc.bmiag.de (Postfix) with ESMTP id 630B83AF22;
+	Mon,  8 Jan 2007 15:27:45 +0100 (CET)
+Received: from meriadoc.bmiag.de ([127.0.0.1])
+	by localhost (meriadoc [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 11796-10; Mon, 8 Jan 2007 15:27:45 +0100 (CET)
+Received: from eotheod.intranet.kiel.bmiag.de (eotheod.intranet.kiel.bmiag.de [10.130.2.1])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	by meriadoc.bmiag.de (Postfix) with ESMTP id C2B363AF21;
+	Mon,  8 Jan 2007 15:27:40 +0100 (CET)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by eotheod.intranet.kiel.bmiag.de (Postfix) with ESMTP id 423543ADCC;
+	Mon,  8 Jan 2007 15:27:40 +0100 (CET)
+Received: from eotheod.intranet.kiel.bmiag.de ([127.0.0.1])
+	by localhost (eotheod [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 13555-08; Mon, 8 Jan 2007 15:27:37 +0100 (CET)
+Received: from LAPJR (lapjr.intranet.kiel.bmiag.de [10.191.7.182])
+	by eotheod.intranet.kiel.bmiag.de (Postfix) with ESMTP id 5D4903ADCA;
+	Mon,  8 Jan 2007 15:27:35 +0100 (CET)
+To: Andy Whitcroft <apw@shadowen.org>
+In-Reply-To: <45A24709.9090904@shadowen.org>
+X-Mailer: VM 7.19 under Emacs 22.0.92.1
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at eotheod.intranet.kiel.bmiag.de
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at meriadoc.bmiag.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36264>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36265>
 
-On Mon, Jan 08, 2007 at 02:59:52PM +0100, Pavel Machek wrote:
-> Hi!
-> 
-> > > Would e2fsck -D help? What kind of optimization
-> > > does it perform?
-> > 
-> > It will help a little; e2fsck -D compresses the logical view of the
-> > directory, but it doesn't optimize the physical layout on disk at all,
-> > and of course, it won't help with the lack of readahead logic.  It's
-> > possible to improve how e2fsck -D works, at the moment, it's not
-> > trying to make the directory be contiguous on disk.  What it should
-> > probably do is to pull a list of all of the blocks used by the
-> > directory, sort them, and then try to see if it can improve on the
-> > list by allocating some new blocks that would make the directory more
-> > contiguous on disk.  I suspect any improvements that would be seen by
-> > doing this would be second order effects at most, though.
-> 
-> ...sounds like a job for e2defrag, not e2fsck...
+Andy Whitcroft writes:
+ > Junio C Hamano wrote:
+ > > Juergen Ruehle <j.ruehle@bmiag.de> writes:
+ > >> Does this better reflect that git tracks content and not files?
+ > >>
+ > >> # Changes to these files will be committed:
+ > >>
+ > >> # Changes to these files are not marked for commit:
+ > > 
+ > > One of the goals is to find a pair of messages that make sense
+ > > when the same file appears on both lists.
+ > 
+ > Doh, double changes ... yes.
+ > 
+ > I am not sure it is possible to sanely textualise that subtlety in a
+ > single line.  I wonder if its worth splitting this lot into three.
+ > Basically those files on list one, those on list two and those on both.
+ > 
+ > Anyhow, lets see if we can textualise:
+ > 
+ > # Changes to these files will be committed:
+ > 
+ > # The latest changes to these files will not be committed:
+ > 
+ > The first here still implies its the latest changes.  I can not
+ > trivially word round that.  Perhaps we could mention staging?
+ > 
+ > # Staged changes for these files will be commited:
+ > 
+ > # These files have unstaged changes which will not be committed:
+ > 
+ > >> BTW: how about also adding a hint how to review the changes in
+ > >> question (i.e. diff --cached and diff; as an alternative to diff
+ > >> --cached we could just advertise the --verbose switch to status and
+ > >> commit).
+ > > 
+ > > Sounds sane.
 
-I wasn't proposing to move other data blocks around in order make the
-directory be contiguous, but just a "quick and dirty" try to make
-things better.  But yes, in order to really fix layout issues you
-would have to do a full defrag, and it's probably more important that
-we try to fix things so that defragmentation runs aren't necessary in
-the first place....
+Together with an appropriate second line it is looking good to me
 
-						- Ted
+# Staged changes for these files will be commited:
+#   (use --verbose to review and "git reset HEAD <file>..." to unstage)
+
+# These files have unstaged changes which will not be committed:
+#   (Use "git diff" to review and "git add <file>..." to stage for commit)
+
+Perhaps we do not even need to mention files?
+
+# Staged changes to be commited:
+#   (use --verbose to review and "git reset HEAD <file>..." to unstage)
+
+# Unstaged changes to the working directory which will not be committed:
+#   (Use "git diff" to review and "git add <file>..." to stage for commit)
