@@ -1,75 +1,92 @@
-From: Juergen Ruehle <j.ruehle@bmiag.de>
-Subject: Re: [PATCH 1/2] Suggest use of "git add file1 file2" when there is nothing to commit.
-Date: Mon, 8 Jan 2007 11:42:02 +0100
-Message-ID: <17826.8186.10000.584890@lapjr.intranet.kiel.bmiag.de>
-References: <20061216025309.GA19955@spearce.org>
-	<1168029891.11130.18.camel@ibook.zvpunry.de>
-	<7virfldryw.fsf@assigned-by-dhcp.cox.net>
-	<7vodpcae9s.fsf@assigned-by-dhcp.cox.net>
-	<17823.42284.620000.476920@lapjr.intranet.kiel.bmiag.de>
-	<7vfyao58a7.fsf@assigned-by-dhcp.cox.net>
-	<17824.10780.295000.771566@lapjr.intranet.kiel.bmiag.de>
-	<7vslemxe5e.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Detached HEAD (experimental)
+Date: Mon, 08 Jan 2007 03:19:48 -0800
+Message-ID: <7vbql9ydd7.fsf@assigned-by-dhcp.cox.net>
+References: <7vac11yirf.fsf@assigned-by-dhcp.cox.net>
+	<87ps9xgkjo.wl%cworth@cworth.org>
+	<7virfprquo.fsf@assigned-by-dhcp.cox.net>
+	<87odphgfzz.wl%cworth@cworth.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 08 11:42:27 2007
+Cc: Carl Worth <cworth@cworth.org>
+X-From: git-owner@vger.kernel.org Mon Jan 08 12:19:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H3rxT-0005FI-8c
-	for gcvg-git@gmane.org; Mon, 08 Jan 2007 11:42:27 +0100
+	id 1H3sXh-0005Uv-5u
+	for gcvg-git@gmane.org; Mon, 08 Jan 2007 12:19:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161208AbXAHKmT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 8 Jan 2007 05:42:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161218AbXAHKmT
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jan 2007 05:42:19 -0500
-Received: from bilbo.bmiag.de ([62.154.210.131]:2962 "HELO bilbo.bmiag.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1161208AbXAHKmS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Jan 2007 05:42:18 -0500
-Received: (qmail 9920 invoked by uid 106); 8 Jan 2007 10:42:16 -0000
-Received: from eotheod.intranet.kiel.bmiag.de(10.130.2.1)
- via SMTP by bilbo.bmiag.de, id smtpdJJpUfG; Mon Jan  8 11:42:12 2007
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by eotheod.intranet.kiel.bmiag.de (Postfix) with ESMTP id 370123ADCC;
-	Mon,  8 Jan 2007 11:42:12 +0100 (CET)
-Received: from eotheod.intranet.kiel.bmiag.de ([127.0.0.1])
-	by localhost (eotheod [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 09895-09; Mon, 8 Jan 2007 11:42:08 +0100 (CET)
-Received: from LAPJR (lapjr.intranet.kiel.bmiag.de [10.191.7.182])
-	by eotheod.intranet.kiel.bmiag.de (Postfix) with ESMTP id E43C83ADCA;
-	Mon,  8 Jan 2007 11:42:04 +0100 (CET)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vslemxe5e.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: VM 7.19 under Emacs 21.3.1
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at eotheod.intranet.kiel.bmiag.de
+	id S1161216AbXAHLTu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 8 Jan 2007 06:19:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161230AbXAHLTu
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jan 2007 06:19:50 -0500
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:40127 "EHLO
+	fed1rmmtao06.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161216AbXAHLTt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Jan 2007 06:19:49 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20070108111948.KSAY2628.fed1rmmtao06.cox.net@fed1rmimpo02.cox.net>;
+          Mon, 8 Jan 2007 06:19:48 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id 8bL31W00U1kojtg0000000; Mon, 08 Jan 2007 06:20:04 -0500
+To: git@vger.kernel.org
+In-Reply-To: <87odphgfzz.wl%cworth@cworth.org> (Carl Worth's message of "Tue,
+	02 Jan 2007 15:34:24 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36245>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36246>
 
-Junio C Hamano writes:
- > Juergen Ruehle <j.ruehle@bmiag.de> writes:
- > 
- > > Junio C Hamano writes:
- > >  > If there is something you are missing, it is that I am
- > >  > overloaded these days ;-).
- > >
- > > I'm sorry. As a rather unsuccessful former maintainer of
- > > http://www.openarchitectureware.org/ I can fully appreciate git's luck
- > > to have such a dedicated maintainer.
- > 
- > Actually there is one difference that I found practically
- > important.  It usually is a norm for me to have a handful
- > untracked files that I do not even bother adding to .gitignore
- > in the repository.  My patch does not suggest "add" when there
- > are untracked files but no locally modified files.
+Carl Worth <cworth@cworth.org> writes:
 
-Yes. I don't have a real preference. I have a slight suspicion that
-the hint is useful for newbies because having only untracked files is
-the initial situation, but the hint in my patch is actually wrong
-because git-commit won't help in this situation. Do you want to revert
-the patch and apply yours or should I send a correction?
+> On Tue, 02 Jan 2007 14:44:31 -0800, Junio C Hamano wrote:
+> ...
+>> In any case, I did this because I got tired of waiting for it to
+>> happen (I thought you wanted to hack on this over the long
+>> week^W yearend, so I deliberately stayed away from doing this)
+>> and I was bored.  This will not be in 'next' in the current
+>> shape.
+> ...
+> I don't actually prefer "no commit allowed". I just didn't want the
+> user to have to explicitly disable the safety before being able to
+> perform a checkout based on a tag.
+>
+> I am still interested in this feature,...
+
+I decided to fast-track this one.  With a handful fix-ups, this
+is now at the tip of 'next'.
+
+The primary difference from the one we discussed, and then has
+been sitting in 'pu', is that coming back from the detached HEAD
+state is allowed only with '-f' or to a branch that is a
+fast-forward of HEAD.
+
+So you can do:
+
+	git checkout v1.2.0 ;# detach
+        ... look around ...
+        git checkout v1.4.0 ;# still detached
+        ... look around ...
+        git checkout master ;# Ok, because v1.4.0 is an ancestor of master
+
+but you would be warned and asked to say -f if you do:
+
+        git checkout v1.4.0 ;# detach
+        edit ...
+        git commit -a -m 'some tweak'
+	git checkout master ;# Not Ok -- you may lose that commit.
+
+An alternative exit in this case is to create a new branch at
+that point.  So this does work:
+
+        git checkout v1.4.0 ;# detach
+        edit ...
+        git commit -a -m 'some tweak'
+	git checkout -b maint-1.4.0 ;# start the maint-1.4.0 branch
+
+Have fun.
