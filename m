@@ -1,64 +1,57 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [ANNOUNCE] GIT 1.4.4.4
-Date: Sun, 07 Jan 2007 19:30:50 -0800
-Message-ID: <7v7ivyyz2t.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: linux-kernel@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 08 04:30:57 2007
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [PATCH 2/2] git-svn: pass an unambiguous ref to rev-list when grafting-branches
+Date: Sun,  7 Jan 2007 19:35:41 -0800
+Message-ID: <11682273424039-git-send-email-normalperson@yhbt.net>
+References: <11682273413995-git-send-email-normalperson@yhbt.net>
+Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Mon Jan 08 04:35:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H3lDr-0003pm-Ud
-	for gcvg-git@gmane.org; Mon, 08 Jan 2007 04:30:56 +0100
+	id 1H3lIZ-00052k-5Y
+	for gcvg-git@gmane.org; Mon, 08 Jan 2007 04:35:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030470AbXAHDaw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 7 Jan 2007 22:30:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030472AbXAHDaw
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jan 2007 22:30:52 -0500
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:32861 "EHLO
-	fed1rmmtao06.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030470AbXAHDav (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Jan 2007 22:30:51 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070108033051.DTZO2628.fed1rmmtao06.cox.net@fed1rmimpo01.cox.net>;
-          Sun, 7 Jan 2007 22:30:51 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id 8TW11W0061kojtg0000000; Sun, 07 Jan 2007 22:30:01 -0500
-To: git@vger.kernel.org
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1030477AbXAHDfp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 7 Jan 2007 22:35:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030478AbXAHDfp
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jan 2007 22:35:45 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:34338 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1030477AbXAHDfo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Jan 2007 22:35:44 -0500
+Received: from hand.yhbt.net (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with SMTP id 2EF2A7DC099;
+	Sun,  7 Jan 2007 19:35:43 -0800 (PST)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Sun, 07 Jan 2007 19:35:43 -0800
+To: Junio C Hamano <junkio@cox.net>
+X-Mailer: git-send-email 1.5.0.rc0.ge21b-dirty
+In-Reply-To: <11682273413995-git-send-email-normalperson@yhbt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36232>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36233>
 
-The latest maintenance release GIT 1.4.4.4 is available at the
-usual places:
+Some users apparently create local heads with the same basename
+as the remote branch they're tracking.
 
-  http://www.kernel.org/pub/software/scm/git/
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
+---
+ git-svn.perl |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-  git-1.4.4.4.tar.{gz,bz2}			(tarball)
-  git-htmldocs-1.4.4.4.tar.{gz,bz2}		(preformatted docs)
-  git-manpages-1.4.4.4.tar.{gz,bz2}		(preformatted docs)
-  RPMS/$arch/git-*-1.4.4.4-1.$arch.rpm	(RPM)
-
-This is to push out a handful bugfixes since 1.4.4.3.
-
-On the 'master' development front, the stabilization for v1.5.0
-will start soonish.
-
-----------------------------------------------------------------
-
-Changes since v1.4.4.3 are as follows:
-
-Johannes Schindelin (1):
-      diff --check: fix off by one error
-
-Junio C Hamano (3):
-      spurious .sp in manpages
-      Fix infinite loop when deleting multiple packed refs.
-      pack-check.c::verify_packfile(): don't run SHA-1 update on huge data
+diff --git a/git-svn.perl b/git-svn.perl
+index a092be8..56f1700 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -1086,7 +1086,7 @@ sub graft_merge_msg {
+ 	my ($grafts, $l_map, $u, $p, @re) = @_;
+ 
+ 	my $x = $l_map->{$u}->{$p};
+-	my $rl = rev_list_raw($x);
++	my $rl = rev_list_raw("refs/remotes/$x");
+ 	while (my $c = next_rev_list_entry($rl)) {
+ 		foreach my $re (@re) {
+ 			my (@br) = ($c->{m} =~ /$re/g);
+-- 
+1.5.0.rc0.ge21b-dirty
