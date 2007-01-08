@@ -1,120 +1,120 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] --utf8 is now default for 'git-am'
-Date: Mon, 08 Jan 2007 13:59:29 -0800
-Message-ID: <7vlkkduqm6.fsf@assigned-by-dhcp.cox.net>
+From: Yann Dirson <ydirson@altern.org>
+Subject: [PATCH] Add contrib/stg-gitk: helper script to run gitk
+Date: Mon, 08 Jan 2007 23:12:26 +0100
+Message-ID: <20070108220918.18329.30083.stgit@gandelf.nowhere.earth>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Mon Jan 08 22:59:46 2007
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: GIT list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jan 08 23:14:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H42Wr-0006Vy-GG
-	for gcvg-git@gmane.org; Mon, 08 Jan 2007 22:59:41 +0100
+	id 1H42l1-0001u3-01
+	for gcvg-git@gmane.org; Mon, 08 Jan 2007 23:14:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964916AbXAHV7c (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 8 Jan 2007 16:59:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964947AbXAHV7c
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jan 2007 16:59:32 -0500
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:54238 "EHLO
-	fed1rmmtao08.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964916AbXAHV7a (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Jan 2007 16:59:30 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070108215930.XHQF16632.fed1rmmtao08.cox.net@fed1rmimpo01.cox.net>;
-          Mon, 8 Jan 2007 16:59:30 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id 8lyg1W00P1kojtg0000000; Mon, 08 Jan 2007 16:58:40 -0500
-To: git@vger.kernel.org
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1030190AbXAHWOQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 8 Jan 2007 17:14:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030257AbXAHWOQ
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jan 2007 17:14:16 -0500
+Received: from postfix1-g20.free.fr ([212.27.60.42]:49041 "EHLO
+	postfix1-g20.free.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030190AbXAHWOP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Jan 2007 17:14:15 -0500
+Received: from smtp4-g19.free.fr (smtp4-g19.free.fr [212.27.42.30])
+	by postfix1-g20.free.fr (Postfix) with ESMTP id 10235779D74
+	for <git@vger.kernel.org>; Mon,  8 Jan 2007 23:14:14 +0100 (CET)
+Received: from bylbo.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
+	by smtp4-g19.free.fr (Postfix) with ESMTP id 9BDBD8916;
+	Mon,  8 Jan 2007 23:13:12 +0100 (CET)
+Received: from gandelf.nowhere.earth ([10.0.0.5] ident=dwitch)
+	by bylbo.nowhere.earth with esmtp (Exim 4.62)
+	(envelope-from <ydirson@altern.org>)
+	id 1H42jg-0003ce-5w; Mon, 08 Jan 2007 23:12:56 +0100
+To: Catalin Marinas <catalin.marinas@gmail.com>
+User-Agent: StGIT/0.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36283>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36284>
 
-Since we are talking about allowing potentially incompatible UI
-changes in v1.5.0 iff the change improves the general situation,
-I would say why not.
 
-There is --no-utf8 flag to avoid re-coding from botching the log
-message just in case, but we may not even need it.
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
+
+Signed-off-by: Yann Dirson <ydirson@altern.org>
 ---
- Documentation/git-am.txt |   19 ++++++++++++++++---
- git-am.sh                |    8 +++++---
- 2 files changed, 21 insertions(+), 6 deletions(-)
 
-diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
-index 910457d..53e81cb 100644
---- a/Documentation/git-am.txt
-+++ b/Documentation/git-am.txt
-@@ -9,7 +9,7 @@ git-am - Apply a series of patches in a mailbox
- SYNOPSIS
- --------
- [verse]
--'git-am' [--signoff] [--dotest=<dir>] [--utf8] [--binary] [--3way]
-+'git-am' [--signoff] [--dotest=<dir>] [--utf8 | --no-utf8] [--binary] [--3way]
-          [--interactive] [--whitespace=<option>] <mbox>...
- 'git-am' [--skip | --resolved]
- 
-@@ -29,8 +29,21 @@ OPTIONS
- 	Instead of `.dotest` directory, use <dir> as a working
- 	area to store extracted patches.
- 
----utf8, --keep::
--	Pass `-u` and `-k` flags to `git-mailinfo` (see
-+--keep::
-+	Pass `-k` flag to `git-mailinfo` (see gitlink:git-mailinfo[1]).
+Here is a small helper script implementing the display of current/named/all
+stgit stacks (or standard branches) in gitk.  As noted earlier, that does not
+allow to see new refs by requesting an update from gitk, but it will still be
+useful to me at least :)
+
+ contrib/stg-gitk |   59 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 59 insertions(+), 0 deletions(-)
+
+diff --git a/contrib/stg-gitk b/contrib/stg-gitk
+new file mode 100755
+index 0000000..8d4ae43
+--- /dev/null
++++ b/contrib/stg-gitk
+@@ -0,0 +1,59 @@
++#!/bin/sh
++set -e
 +
-+--utf8::
-+	Pass `-u` flag to `git-mailinfo` (see gitlink:git-mailinfo[1]).
-+	The proposed commit log message taken from the e-mail
-+	are re-coded into UTF-8 encoding (configuration variable
-+	`i18n.commitencoding` can be used to specify project's
-+	preferred encoding if it is not UTF-8).
-++
-+This was optional in prior versions of git, but now it is the
-+default.   You could use `--no-utf8` to override this.
++# stg-gitk - helper script to graphically display an StGIT stack
 +
-+--no-utf8::
-+	Do not pass `-u` flag to `git-mailinfo` (see
- 	gitlink:git-mailinfo[1]).
- 
- --binary::
-diff --git a/git-am.sh b/git-am.sh
-index 7c0bb60..d9eb79d 100755
---- a/git-am.sh
-+++ b/git-am.sh
-@@ -2,7 +2,7 @@
- #
- # Copyright (c) 2005, 2006 Junio C Hamano
- 
--USAGE='[--signoff] [--dotest=<dir>] [--utf8] [--binary] [--3way]
-+USAGE='[--signoff] [--dotest=<dir>] [--utf8 | --no-utf8] [--binary] [--3way]
-   [--interactive] [--whitespace=<option>] <mbox>...
-   or, when resuming [--skip | --resolved]'
- . git-sh-setup
-@@ -105,7 +105,7 @@ It does not apply to blobs recorded in its index."
- }
- 
- prec=4
--dotest=.dotest sign= utf8= keep= skip= interactive= resolved= binary= ws= resolvemsg=
-+dotest=.dotest sign= utf8=t keep= skip= interactive= resolved= binary= ws= resolvemsg=
- 
- while case "$#" in 0) break;; esac
- do
-@@ -128,7 +128,9 @@ do
- 	-s|--s|--si|--sig|--sign|--signo|--signof|--signoff)
- 	sign=t; shift ;;
- 	-u|--u|--ut|--utf|--utf8)
--	utf8=t; shift ;;
-+	shift ;; # this is now default
-+	--no-u|--no-ut|--no-utf|--no-utf8)
-+	utf8=; shift ;;
- 	-k|--k|--ke|--kee|--keep)
- 	keep=t; shift ;;
- 
++# Allows quick synchronization of a cvs mirror branch (does not try to
++# reconstruct patchsets, creates "jumbo" commits), and commits stgit
++# patches to CVS.
++
++# LIMITATIONS:
++# - asking gitk to "update" won't detect any new ref
++# - no support for spaces in branch names
++
++# Copyright (c) 2007 Yann Dirson <ydirson@altern.org>
++# Subject to the GNU GPL, version 2.
++
++usage()
++{
++    echo "Usage: $(basename $0) [<branches>|--all]"
++    exit 1
++}
++
++allbranches=0
++case "$1" in
++--all) allbranches=1; shift ;;
++--*) usage ;;
++*) break ;;
++esac
++
++if [ $allbranches = 1 ] && [ "$#" -gt 0 ]; then
++    usage
++fi
++
++GIT_DIR=$(git-rev-parse --git-dir)
++GIT_DIR_SPKIPLEN=$(printf "$GIT_DIR/X" | wc -c)
++
++refdirs=''
++if [ $allbranches = 1 ]; then
++    refdirs="$GIT_DIR/refs"
++else
++    if [ "$#" = 0 ]; then
++	set -- "$(stg branch)"
++    fi
++
++    for b in "$@"; do
++	if [ -e "$GIT_DIR/refs/patches/$b" ]; then
++	    # StGIT branch: show all patches
++	    refdirs="$refdirs $GIT_DIR/refs/patches/$b"
++	elif [ -e "$GIT_DIR/refs/heads/$b" ]; then
++	    # other GIT branch
++	    refdirs="$refdirs $GIT_DIR/refs/heads/$b"
++	else
++	    echo >&2 "ERROR: no such branch '$b'"
++	    usage
++	fi
++    done
++fi
++
++gitk $(find $refdirs -type f -not -name '*.log' | cut -c${GIT_DIR_SPKIPLEN}- )
