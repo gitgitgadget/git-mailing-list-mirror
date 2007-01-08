@@ -1,383 +1,522 @@
 From: Andy Whitcroft <apw@shadowen.org>
-Subject: [PATCH 2/4] short i/o: fix calls to read to use xread or read_in_full
-Date: Mon, 08 Jan 2007 15:58:08 +0000
-Message-ID: <9bcbbe42c4508e6648004084698fca7a@pinky>
+Subject: [PATCH 3/4] short i/o: fix calls to write to use xwrite or write_in_full
+Date: Mon, 08 Jan 2007 15:58:23 +0000
+Message-ID: <9120c8418678fa5fe59f86abc7fb86b0@pinky>
 References: <45A2699F.5060100@shadowen.org>
-X-From: git-owner@vger.kernel.org Mon Jan 08 16:58:22 2007
+X-From: git-owner@vger.kernel.org Mon Jan 08 16:58:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H3wt5-0001GP-Jw
-	for gcvg-git@gmane.org; Mon, 08 Jan 2007 16:58:16 +0100
+	id 1H3wtL-0001K0-T5
+	for gcvg-git@gmane.org; Mon, 08 Jan 2007 16:58:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161320AbXAHP6L (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 8 Jan 2007 10:58:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750851AbXAHP6L
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jan 2007 10:58:11 -0500
-Received: from 41.150.104.212.access.eclipse.net.uk ([212.104.150.41]:55591
+	id S1750872AbXAHP62 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 8 Jan 2007 10:58:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161328AbXAHP62
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jan 2007 10:58:28 -0500
+Received: from 41.150.104.212.access.eclipse.net.uk ([212.104.150.41]:55594
 	"EHLO localhost.localdomain" rhost-flags-OK-FAIL-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1161324AbXAHP6J (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 8 Jan 2007 10:58:09 -0500
+	by vger.kernel.org with ESMTP id S1750872AbXAHP61 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 8 Jan 2007 10:58:27 -0500
 Received: from localhost ([127.0.0.1] helo=localhost.localdomain)
 	by localhost.localdomain with esmtp (Exim 4.63)
 	(envelope-from <apw@shadowen.org>)
-	id 1H3wsy-0003XV-5F
-	for git@vger.kernel.org; Mon, 08 Jan 2007 15:58:08 +0000
+	id 1H3wtD-0003Zc-CF
+	for git@vger.kernel.org; Mon, 08 Jan 2007 15:58:23 +0000
 To: git@vger.kernel.org
 InReply-To: <45A2699F.5060100@shadowen.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36269>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36270>
 
 
-We have a number of badly checked read() calls.  Often we are
-expecting read() to read exactly the size we requested or fail, this
-fails to handle interrupts or short reads.  Add a read_in_full()
-providing those semantics.  Otherwise we at a minimum need to check
-for EINTR and EAGAIN, where this is appropriate use xread().
+We have a number of badly checked write() calls.  Often we are
+expecting write() to write exactly the size we requested or fail,
+this fails to handle interrupts or short writes.  Switch to using
+the new write_in_full().  Otherwise we at a minimum need to check
+for EINTR and EAGAIN, where this is appropriate use xwrite().
+
+Note, the changes to config handling are much larger and handled
+in the next patch in the sequence.
 
 Signed-off-by: Andy Whitcroft <apw@shadowen.org>
 ---
-diff --git a/builtin-grep.c b/builtin-grep.c
-index 3b1b1cb..2bfbdb7 100644
---- a/builtin-grep.c
-+++ b/builtin-grep.c
-@@ -136,7 +136,7 @@ static int grep_file(struct grep_opt *opt, const char *filename)
- 	if (i < 0)
- 		goto err_ret;
- 	data = xmalloc(st.st_size + 1);
--	if (st.st_size != xread(i, data, st.st_size)) {
-+	if (st.st_size != read_in_full(i, data, st.st_size)) {
- 		error("'%s': short read %s", filename, strerror(errno));
- 		close(i);
- 		free(data);
-diff --git a/builtin-tar-tree.c b/builtin-tar-tree.c
-index 11e62fc..ad802fc 100644
---- a/builtin-tar-tree.c
-+++ b/builtin-tar-tree.c
-@@ -74,7 +74,7 @@ int cmd_get_tar_commit_id(int argc, const char **argv, const char *prefix)
- 	char *content = buffer + RECORDSIZE;
- 	ssize_t n;
- 
--	n = xread(0, buffer, HEADERSIZE);
-+	n = read_in_full(0, buffer, HEADERSIZE);
- 	if (n < HEADERSIZE)
- 		die("git-get-tar-commit-id: read error");
- 	if (header->typeflag[0] != 'g')
-diff --git a/builtin-upload-archive.c b/builtin-upload-archive.c
-index e4156f8..48ae09e 100644
---- a/builtin-upload-archive.c
-+++ b/builtin-upload-archive.c
-@@ -91,7 +91,7 @@ static void process_input(int child_fd, int band)
- 	char buf[16384];
- 	ssize_t sz = read(child_fd, buf, sizeof(buf));
- 	if (sz < 0) {
--		if (errno != EINTR)
-+		if (errno != EAGAIN && errno != EINTR)
- 			error_clnt("read error: %s\n", strerror(errno));
- 		return;
+diff --git a/builtin-rerere.c b/builtin-rerere.c
+index 079c0bd..318d959 100644
+--- a/builtin-rerere.c
++++ b/builtin-rerere.c
+@@ -51,9 +51,11 @@ static int write_rr(struct path_list *rr, int out_fd)
+ 	int i;
+ 	for (i = 0; i < rr->nr; i++) {
+ 		const char *path = rr->items[i].path;
+-		write(out_fd, rr->items[i].util, 40);
+-		write(out_fd, "\t", 1);
+-		write(out_fd, path, strlen(path) + 1);
++		int length = strlen(path) + 1;
++		if (write_in_full(out_fd, rr->items[i].util, 40) != 40 ||
++		    write_in_full(out_fd, "\t", 1) != 1 ||
++		    write_in_full(out_fd, path, length) != length)
++			die("unable to write rerere record");
  	}
-diff --git a/cache.h b/cache.h
-index 38a20a8..a9583ff 100644
---- a/cache.h
-+++ b/cache.h
-@@ -432,6 +432,7 @@ extern char *git_commit_encoding;
- extern char *git_log_output_encoding;
- 
- extern int copy_fd(int ifd, int ofd);
-+extern int read_in_full(int fd, void *buf, size_t count);
- extern void read_or_die(int fd, void *buf, size_t count);
- extern int write_in_full(int fd, const void *buf, size_t count);
- extern void write_or_die(int fd, const void *buf, size_t count);
-diff --git a/dir.c b/dir.c
-index 0338d6c..32b57f0 100644
---- a/dir.c
-+++ b/dir.c
-@@ -142,7 +142,7 @@ static int add_excludes_from_file_1(const char *fname,
- 		return 0;
- 	}
- 	buf = xmalloc(size+1);
--	if (read(fd, buf, size) != size)
-+	if (read_in_full(fd, buf, size) != size)
- 		goto err;
- 	close(fd);
- 
-diff --git a/http-fetch.c b/http-fetch.c
-index 396552d..50a3b00 100644
---- a/http-fetch.c
-+++ b/http-fetch.c
-@@ -175,7 +175,7 @@ static void start_object_request(struct object_request *obj_req)
- 	prevlocal = open(prevfile, O_RDONLY);
- 	if (prevlocal != -1) {
- 		do {
--			prev_read = read(prevlocal, prev_buf, PREV_BUF_SIZE);
-+			prev_read = xread(prevlocal, prev_buf, PREV_BUF_SIZE);
- 			if (prev_read>0) {
- 				if (fwrite_sha1_file(prev_buf,
- 						     1,
-diff --git a/http-push.c b/http-push.c
-index ecefdfd..acb5c27 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -288,7 +288,7 @@ static void start_fetch_loose(struct transfer_request *request)
- 	prevlocal = open(prevfile, O_RDONLY);
- 	if (prevlocal != -1) {
- 		do {
--			prev_read = read(prevlocal, prev_buf, PREV_BUF_SIZE);
-+			prev_read = xread(prevlocal, prev_buf, PREV_BUF_SIZE);
- 			if (prev_read>0) {
- 				if (fwrite_sha1_file(prev_buf,
- 						     1,
-diff --git a/imap-send.c b/imap-send.c
-index ad91858..8de19e3 100644
---- a/imap-send.c
-+++ b/imap-send.c
-@@ -224,7 +224,7 @@ socket_perror( const char *func, Socket_t *sock, int ret )
- static int
- socket_read( Socket_t *sock, char *buf, int len )
+ 	close(out_fd);
+ 	return commit_lock_file(&write_lock);
+@@ -244,7 +246,8 @@ static int outf(void *dummy, mmbuffer_t *ptr, int nbuf)
  {
--	int n = read( sock->fd, buf, len );
-+	int n = xread( sock->fd, buf, len );
- 	if (n <= 0) {
- 		socket_perror( "read", sock, n );
- 		close( sock->fd );
-@@ -390,7 +390,7 @@ arc4_init( void )
- 		fprintf( stderr, "Fatal: no random number source available.\n" );
- 		exit( 3 );
- 	}
--	if (read( fd, dat, 128 ) != 128) {
-+	if (read_in_full( fd, dat, 128 ) != 128) {
- 		fprintf( stderr, "Fatal: cannot read random number source.\n" );
- 		exit( 3 );
- 	}
-diff --git a/index-pack.c b/index-pack.c
-index 5f6d128..e9a5303 100644
---- a/index-pack.c
-+++ b/index-pack.c
-@@ -638,7 +638,7 @@ static void readjust_pack_header_and_sha1(unsigned char *sha1)
- 	/* Rewrite pack header with updated object number */
- 	if (lseek(output_fd, 0, SEEK_SET) != 0)
- 		die("cannot seek back: %s", strerror(errno));
--	if (xread(output_fd, &hdr, sizeof(hdr)) != sizeof(hdr))
-+	if (read_in_full(output_fd, &hdr, sizeof(hdr)) != sizeof(hdr))
- 		die("cannot read pack header back: %s", strerror(errno));
- 	hdr.hdr_entries = htonl(nr_objects);
- 	if (lseek(output_fd, 0, SEEK_SET) != 0)
-diff --git a/local-fetch.c b/local-fetch.c
-index 7b6875c..cf99cb7 100644
---- a/local-fetch.c
-+++ b/local-fetch.c
-@@ -184,7 +184,7 @@ int fetch_ref(char *ref, unsigned char *sha1)
- 		fprintf(stderr, "cannot open %s\n", filename);
- 		return -1;
- 	}
--	if (read(ifd, hex, 40) != 40 || get_sha1_hex(hex, sha1)) {
-+	if (read_in_full(ifd, hex, 40) != 40 || get_sha1_hex(hex, sha1)) {
- 		close(ifd);
- 		fprintf(stderr, "cannot read from %s\n", filename);
- 		return -1;
-diff --git a/path.c b/path.c
-index 066f621..bb5ee7b 100644
---- a/path.c
-+++ b/path.c
-@@ -113,7 +113,7 @@ int validate_symref(const char *path)
- 	fd = open(path, O_RDONLY);
- 	if (fd < 0)
- 		return -1;
--	len = read(fd, buffer, sizeof(buffer)-1);
-+	len = read_in_full(fd, buffer, sizeof(buffer)-1);
- 	close(fd);
- 
- 	/*
-diff --git a/refs.c b/refs.c
-index 5205745..2b69e1e 100644
---- a/refs.c
-+++ b/refs.c
-@@ -284,7 +284,7 @@ const char *resolve_ref(const char *ref, unsigned char *sha1, int reading, int *
- 		fd = open(path, O_RDONLY);
- 		if (fd < 0)
- 			return NULL;
--		len = read(fd, buffer, sizeof(buffer)-1);
-+		len = read_in_full(fd, buffer, sizeof(buffer)-1);
- 		close(fd);
- 
- 		/*
-diff --git a/sha1_file.c b/sha1_file.c
-index d9622d9..0c9483c 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -1869,7 +1869,7 @@ int write_sha1_from_fd(const unsigned char *sha1, int fd, char *buffer,
- 			if (ret != Z_OK)
- 				break;
- 		}
--		size = read(fd, buffer + *bufposn, bufsize - *bufposn);
-+		size = xread(fd, buffer + *bufposn, bufsize - *bufposn);
- 		if (size <= 0) {
- 			close(local);
- 			unlink(tmpfile);
-diff --git a/ssh-fetch.c b/ssh-fetch.c
-index b006c5c..72965d6 100644
---- a/ssh-fetch.c
-+++ b/ssh-fetch.c
-@@ -82,7 +82,7 @@ int fetch(unsigned char *sha1)
- 		remote = conn_buf[0];
- 		memmove(conn_buf, conn_buf + 1, --conn_buf_posn);
- 	} else {
--		if (read(fd_in, &remote, 1) < 1)
-+		if (xread(fd_in, &remote, 1) < 1)
- 			return -1;
- 	}
- 	/* fprintf(stderr, "Got %d\n", remote); */
-@@ -99,7 +99,7 @@ static int get_version(void)
- 	char type = 'v';
- 	write(fd_out, &type, 1);
- 	write(fd_out, &local_version, 1);
--	if (read(fd_in, &remote_version, 1) < 1) {
-+	if (xread(fd_in, &remote_version, 1) < 1) {
- 		return error("Couldn't read version from remote end");
- 	}
- 	return 0;
-@@ -111,10 +111,13 @@ int fetch_ref(char *ref, unsigned char *sha1)
- 	char type = 'r';
- 	write(fd_out, &type, 1);
- 	write(fd_out, ref, strlen(ref) + 1);
--	read(fd_in, &remote, 1);
-+
-+	if (read_in_full(fd_in, &remote, 1) != 1)
-+		return -1;
- 	if (remote < 0)
- 		return remote;
--	read(fd_in, sha1, 20);
-+	if (read_in_full(fd_in, sha1, 20) != 20)
-+		return -1;
+ 	int i;
+ 	for (i = 0; i < nbuf; i++)
+-		write(1, ptr[i].ptr, ptr[i].size);
++		if (write_in_full(1, ptr[i].ptr, ptr[i].size) != ptr[i].size)
++			return -1;
  	return 0;
  }
  
+diff --git a/builtin-tar-tree.c b/builtin-tar-tree.c
+index ad802fc..8055dda 100644
+--- a/builtin-tar-tree.c
++++ b/builtin-tar-tree.c
+@@ -82,7 +82,7 @@ int cmd_get_tar_commit_id(int argc, const char **argv, const char *prefix)
+ 	if (memcmp(content, "52 comment=", 11))
+ 		return 1;
+ 
+-	n = xwrite(1, content + 11, 41);
++	n = write_in_full(1, content + 11, 41);
+ 	if (n < 41)
+ 		die("git-get-tar-commit-id: write error");
+ 
+diff --git a/commit.c b/commit.c
+index 2a58175..9ce45ce 100644
+--- a/commit.c
++++ b/commit.c
+@@ -249,8 +249,10 @@ int write_shallow_commits(int fd, int use_pack_protocol)
+ 			if (use_pack_protocol)
+ 				packet_write(fd, "shallow %s", hex);
+ 			else {
+-				write(fd, hex,  40);
+-				write(fd, "\n", 1);
++				if (write_in_full(fd, hex,  40) != 40)
++					break;
++				if (write_in_full(fd, "\n", 1) != 1)
++					break;
+ 			}
+ 		}
+ 	return count;
+diff --git a/daemon.c b/daemon.c
+index b129b83..f039534 100644
+--- a/daemon.c
++++ b/daemon.c
+@@ -102,7 +102,7 @@ static void logreport(int priority, const char *err, va_list params)
+ 	buf[buflen++] = '\n';
+ 	buf[buflen] = '\0';
+ 
+-	write(2, buf, buflen);
++	write_in_full(2, buf, buflen);
+ }
+ 
+ static void logerror(const char *err, ...)
+diff --git a/diff.c b/diff.c
+index 1fee15a..f11a633 100644
+--- a/diff.c
++++ b/diff.c
+@@ -1403,7 +1403,7 @@ static void prep_temp_blob(struct diff_tempfile *temp,
+ 	fd = git_mkstemp(temp->tmp_path, TEMPFILE_PATH_LEN, ".diff_XXXXXX");
+ 	if (fd < 0)
+ 		die("unable to create temp-file");
+-	if (write(fd, blob, size) != size)
++	if (write_in_full(fd, blob, size) != size)
+ 		die("unable to write temp-file");
+ 	close(fd);
+ 	temp->name = temp->tmp_path;
+diff --git a/entry.c b/entry.c
+index 88df713..0ebf0f0 100644
+--- a/entry.c
++++ b/entry.c
+@@ -89,7 +89,7 @@ static int write_entry(struct cache_entry *ce, char *path, struct checkout *stat
+ 			return error("git-checkout-index: unable to create file %s (%s)",
+ 				path, strerror(errno));
+ 		}
+-		wrote = write(fd, new, size);
++		wrote = write_in_full(fd, new, size);
+ 		close(fd);
+ 		free(new);
+ 		if (wrote != size)
+@@ -104,7 +104,7 @@ static int write_entry(struct cache_entry *ce, char *path, struct checkout *stat
+ 				return error("git-checkout-index: unable to create "
+ 						 "file %s (%s)", path, strerror(errno));
+ 			}
+-			wrote = write(fd, new, size);
++			wrote = write_in_full(fd, new, size);
+ 			close(fd);
+ 			free(new);
+ 			if (wrote != size)
+diff --git a/http-fetch.c b/http-fetch.c
+index 50a3b00..fe8cd7b 100644
+--- a/http-fetch.c
++++ b/http-fetch.c
+@@ -71,7 +71,7 @@ static size_t fwrite_sha1_file(void *ptr, size_t eltsize, size_t nmemb,
+ 	int posn = 0;
+ 	struct object_request *obj_req = (struct object_request *)data;
+ 	do {
+-		ssize_t retval = write(obj_req->local,
++		ssize_t retval = xwrite(obj_req->local,
+ 				       (char *) ptr + posn, size - posn);
+ 		if (retval < 0)
+ 			return posn;
+diff --git a/http-push.c b/http-push.c
+index acb5c27..7e73eac 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -195,7 +195,7 @@ static size_t fwrite_sha1_file(void *ptr, size_t eltsize, size_t nmemb,
+ 	int posn = 0;
+ 	struct transfer_request *request = (struct transfer_request *)data;
+ 	do {
+-		ssize_t retval = write(request->local_fileno,
++		ssize_t retval = xwrite(request->local_fileno,
+ 				       (char *) ptr + posn, size - posn);
+ 		if (retval < 0)
+ 			return posn;
+diff --git a/imap-send.c b/imap-send.c
+index 8de19e3..3eaf025 100644
+--- a/imap-send.c
++++ b/imap-send.c
+@@ -236,7 +236,7 @@ socket_read( Socket_t *sock, char *buf, int len )
+ static int
+ socket_write( Socket_t *sock, const char *buf, int len )
+ {
+-	int n = write( sock->fd, buf, len );
++	int n = write_in_full( sock->fd, buf, len );
+ 	if (n != len) {
+ 		socket_perror( "write", sock, n );
+ 		close( sock->fd );
+diff --git a/index-pack.c b/index-pack.c
+index e9a5303..8d10d6b 100644
+--- a/index-pack.c
++++ b/index-pack.c
+@@ -814,7 +814,7 @@ static void final(const char *final_pack_name, const char *curr_pack_name,
+ 		char buf[48];
+ 		int len = snprintf(buf, sizeof(buf), "%s\t%s\n",
+ 				   report, sha1_to_hex(sha1));
+-		xwrite(1, buf, len);
++		write_in_full(1, buf, len);
+ 
+ 		/*
+ 		 * Let's just mimic git-unpack-objects here and write
+diff --git a/merge-recursive.c b/merge-recursive.c
+index bac16f5..87a27e0 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -517,7 +517,7 @@ static int mkdir_p(const char *path, unsigned long mode)
+ static void flush_buffer(int fd, const char *buf, unsigned long size)
+ {
+ 	while (size > 0) {
+-		long ret = xwrite(fd, buf, size);
++		long ret = write_in_full(fd, buf, size);
+ 		if (ret < 0) {
+ 			/* Ignore epipe */
+ 			if (errno == EPIPE)
+diff --git a/read-cache.c b/read-cache.c
+index 29cf9ab..8ecd826 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -870,7 +870,7 @@ static int ce_write_flush(SHA_CTX *context, int fd)
+ 	unsigned int buffered = write_buffer_len;
+ 	if (buffered) {
+ 		SHA1_Update(context, write_buffer, buffered);
+-		if (write(fd, write_buffer, buffered) != buffered)
++		if (write_in_full(fd, write_buffer, buffered) != buffered)
+ 			return -1;
+ 		write_buffer_len = 0;
+ 	}
+@@ -919,7 +919,7 @@ static int ce_flush(SHA_CTX *context, int fd)
+ 
+ 	/* Flush first if not enough space for SHA1 signature */
+ 	if (left + 20 > WRITE_BUFFER_SIZE) {
+-		if (write(fd, write_buffer, left) != left)
++		if (write_in_full(fd, write_buffer, left) != left)
+ 			return -1;
+ 		left = 0;
+ 	}
+@@ -927,7 +927,7 @@ static int ce_flush(SHA_CTX *context, int fd)
+ 	/* Append the SHA1 signature at the end */
+ 	SHA1_Final(write_buffer + left, context);
+ 	left += 20;
+-	return (write(fd, write_buffer, left) != left) ? -1 : 0;
++	return (write_in_full(fd, write_buffer, left) != left) ? -1 : 0;
+ }
+ 
+ static void ce_smudge_racily_clean_entry(struct cache_entry *ce)
+diff --git a/refs.c b/refs.c
+index 2b69e1e..4d6fad8 100644
+--- a/refs.c
++++ b/refs.c
+@@ -332,7 +332,7 @@ int create_symref(const char *ref_target, const char *refs_heads_master)
+ 	}
+ 	lockpath = mkpath("%s.lock", git_HEAD);
+ 	fd = open(lockpath, O_CREAT | O_EXCL | O_WRONLY, 0666);	
+-	written = write(fd, ref, len);
++	written = write_in_full(fd, ref, len);
+ 	close(fd);
+ 	if (written != len) {
+ 		unlink(lockpath);
+@@ -968,7 +968,7 @@ static int log_ref_write(struct ref_lock *lock,
+ 			sha1_to_hex(sha1),
+ 			committer);
+ 	}
+-	written = len <= maxlen ? write(logfd, logrec, len) : -1;
++	written = len <= maxlen ? write_in_full(logfd, logrec, len) : -1;
+ 	free(logrec);
+ 	close(logfd);
+ 	if (written != len)
+@@ -987,8 +987,8 @@ int write_ref_sha1(struct ref_lock *lock,
+ 		unlock_ref(lock);
+ 		return 0;
+ 	}
+-	if (write(lock->lock_fd, sha1_to_hex(sha1), 40) != 40 ||
+-	    write(lock->lock_fd, &term, 1) != 1
++	if (write_in_full(lock->lock_fd, sha1_to_hex(sha1), 40) != 40 ||
++	    write_in_full(lock->lock_fd, &term, 1) != 1
+ 		|| close(lock->lock_fd) < 0) {
+ 		error("Couldn't write %s", lock->lk->filename);
+ 		unlock_ref(lock);
+diff --git a/sha1_file.c b/sha1_file.c
+index 0c9483c..095a7e1 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -1611,20 +1611,13 @@ int move_temp_to_file(const char *tmpfile, const char *filename)
+ 
+ static int write_buffer(int fd, const void *buf, size_t len)
+ {
+-	while (len) {
+-		ssize_t size;
++	ssize_t size;
+ 
+-		size = write(fd, buf, len);
+-		if (!size)
+-			return error("file write: disk full");
+-		if (size < 0) {
+-			if (errno == EINTR || errno == EAGAIN)
+-				continue;
+-			return error("file write error (%s)", strerror(errno));
+-		}
+-		len -= size;
+-		buf = (char *) buf + size;
+-	}
++	size = write_in_full(fd, buf, len);
++	if (!size)
++		return error("file write: disk full");
++	if (size < 0)
++		return error("file write error (%s)", strerror(errno));
+ 	return 0;
+ }
+ 
+diff --git a/ssh-fetch.c b/ssh-fetch.c
+index 72965d6..4c172b6 100644
+--- a/ssh-fetch.c
++++ b/ssh-fetch.c
+@@ -20,22 +20,6 @@ static int fd_out;
+ static unsigned char remote_version;
+ static unsigned char local_version = 1;
+ 
+-static ssize_t force_write(int fd, void *buffer, size_t length)
+-{
+-	ssize_t ret = 0;
+-	while (ret < length) {
+-		ssize_t size = write(fd, (char *) buffer + ret, length - ret);
+-		if (size < 0) {
+-			return size;
+-		}
+-		if (size == 0) {
+-			return ret;
+-		}
+-		ret += size;
+-	}
+-	return ret;
+-}
+-
+ static int prefetches;
+ 
+ static struct object_list *in_transit;
+@@ -53,8 +37,9 @@ void prefetch(unsigned char *sha1)
+ 	node->item = lookup_unknown_object(sha1);
+ 	*end_of_transit = node;
+ 	end_of_transit = &node->next;
+-	force_write(fd_out, &type, 1);
+-	force_write(fd_out, sha1, 20);
++	/* XXX: what if these writes fail? */
++	write_in_full(fd_out, &type, 1);
++	write_in_full(fd_out, sha1, 20);
+ 	prefetches++;
+ }
+ 
+@@ -97,8 +82,10 @@ int fetch(unsigned char *sha1)
+ static int get_version(void)
+ {
+ 	char type = 'v';
+-	write(fd_out, &type, 1);
+-	write(fd_out, &local_version, 1);
++	if (write_in_full(fd_out, &type, 1) != 1 ||
++	    write_in_full(fd_out, &local_version, 1)) {
++		return error("Couldn't request version from remote end");
++	}
+ 	if (xread(fd_in, &remote_version, 1) < 1) {
+ 		return error("Couldn't read version from remote end");
+ 	}
+@@ -109,8 +96,10 @@ int fetch_ref(char *ref, unsigned char *sha1)
+ {
+ 	signed char remote;
+ 	char type = 'r';
+-	write(fd_out, &type, 1);
+-	write(fd_out, ref, strlen(ref) + 1);
++	int length = strlen(ref) + 1;
++	if (write_in_full(fd_out, &type, 1) != 1 ||
++	    write_in_full(fd_out, ref, length) != length)
++		return -1;
+ 
+ 	if (read_in_full(fd_in, &remote, 1) != 1)
+ 		return -1;
 diff --git a/ssh-upload.c b/ssh-upload.c
-index 0b52ae1..2747f96 100644
+index 2747f96..07e61e5 100644
 --- a/ssh-upload.c
 +++ b/ssh-upload.c
-@@ -21,17 +21,14 @@ static int serve_object(int fd_in, int fd_out) {
- 	ssize_t size;
- 	unsigned char sha1[20];
- 	signed char remote;
--	int posn = 0;
--	do {
--		size = read(fd_in, sha1 + posn, 20 - posn);
--		if (size < 0) {
--			perror("git-ssh-upload: read ");
--			return -1;
--		}
--		if (!size)
--			return -1;
--		posn += size;
--	} while (posn < 20);
-+
-+	size = read_in_full(fd_in, sha1, 20);
-+	if (size < 0) {
-+		perror("git-ssh-upload: read ");
-+		return -1;
-+	}
-+	if (!size)
-+		return -1;
+@@ -41,7 +41,8 @@ static int serve_object(int fd_in, int fd_out) {
+ 		remote = -1;
+ 	}
  	
- 	if (verbose)
- 		fprintf(stderr, "Serving %s\n", sha1_to_hex(sha1));
-@@ -54,7 +51,7 @@ static int serve_object(int fd_in, int fd_out) {
- 
- static int serve_version(int fd_in, int fd_out)
+-	write(fd_out, &remote, 1);
++	if (write_in_full(fd_out, &remote, 1) != 1)
++		return 0;
+ 	
+ 	if (remote < 0)
+ 		return 0;
+@@ -53,7 +54,7 @@ static int serve_version(int fd_in, int fd_out)
  {
--	if (read(fd_in, &remote_version, 1) < 1)
-+	if (xread(fd_in, &remote_version, 1) < 1)
+ 	if (xread(fd_in, &remote_version, 1) < 1)
  		return -1;
- 	write(fd_out, &local_version, 1);
+-	write(fd_out, &local_version, 1);
++	write_in_full(fd_out, &local_version, 1);
  	return 0;
-@@ -67,7 +64,7 @@ static int serve_ref(int fd_in, int fd_out)
- 	int posn = 0;
- 	signed char remote = 0;
- 	do {
--		if (read(fd_in, ref + posn, 1) < 1)
-+		if (xread(fd_in, ref + posn, 1) < 1)
- 			return -1;
- 		posn++;
- 	} while (ref[posn - 1]);
-@@ -89,7 +86,7 @@ static void service(int fd_in, int fd_out) {
- 	char type;
- 	int retval;
- 	do {
--		retval = read(fd_in, &type, 1);
-+		retval = xread(fd_in, &type, 1);
- 		if (retval < 1) {
- 			if (retval < 0)
- 				perror("git-ssh-upload: read ");
+ }
+ 
+@@ -74,10 +75,11 @@ static int serve_ref(int fd_in, int fd_out)
+ 
+ 	if (get_ref_sha1(ref, sha1))
+ 		remote = -1;
+-	write(fd_out, &remote, 1);
++	if (write_in_full(fd_out, &remote, 1) != 1)
++		return 0;
+ 	if (remote)
+ 		return 0;
+-	write(fd_out, sha1, 20);
++	write_in_full(fd_out, sha1, 20);
+         return 0;
+ }
+ 
+diff --git a/test-delta.c b/test-delta.c
+index 795aa08..16595ef 100644
+--- a/test-delta.c
++++ b/test-delta.c
+@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
+ 	}
+ 
+ 	fd = open (argv[4], O_WRONLY|O_CREAT|O_TRUNC, 0666);
+-	if (fd < 0 || write(fd, out_buf, out_size) != out_size) {
++	if (fd < 0 || write_in_full(fd, out_buf, out_size) != out_size) {
+ 		perror(argv[4]);
+ 		return 1;
+ 	}
+diff --git a/unpack-file.c b/unpack-file.c
+index ccddf1d..d24acc2 100644
+--- a/unpack-file.c
++++ b/unpack-file.c
+@@ -17,7 +17,7 @@ static char *create_temp_file(unsigned char *sha1)
+ 	fd = mkstemp(path);
+ 	if (fd < 0)
+ 		die("unable to create temp-file");
+-	if (write(fd, buf, size) != size)
++	if (write_in_full(fd, buf, size) != size)
+ 		die("unable to write temp-file");
+ 	close(fd);
+ 	return path;
 diff --git a/upload-pack.c b/upload-pack.c
-index c568ef0..03a4156 100644
+index 03a4156..3a466c6 100644
 --- a/upload-pack.c
 +++ b/upload-pack.c
-@@ -242,7 +242,7 @@ static void create_pack_file(void)
- 					*cp++ = buffered;
- 					outsz++;
- 				}
--				sz = read(pu_pipe[0], cp,
-+				sz = xread(pu_pipe[0], cp,
- 					  sizeof(data) - outsz);
- 				if (0 < sz)
- 						;
-@@ -267,7 +267,7 @@ static void create_pack_file(void)
- 				/* Status ready; we ship that in the side-band
- 				 * or dump to the standard error.
- 				 */
--				sz = read(pe_pipe[0], progress,
-+				sz = xread(pe_pipe[0], progress,
- 					  sizeof(progress));
- 				if (0 < sz)
- 					send_client_data(2, progress, sz);
+@@ -55,6 +55,7 @@ static ssize_t send_client_data(int fd, const char *data, ssize_t sz)
+ 		/* emergency quit */
+ 		fd = 2;
+ 	if (fd == 2) {
++		/* XXX: are we happy to lose stuff here? */
+ 		xwrite(fd, data, sz);
+ 		return sz;
+ 	}
 diff --git a/write_or_die.c b/write_or_die.c
-index 613c0c3..e7f8263 100644
+index e7f8263..a119e1d 100644
 --- a/write_or_die.c
 +++ b/write_or_die.c
-@@ -1,19 +1,36 @@
- #include "cache.h"
+@@ -33,45 +33,40 @@ void read_or_die(int fd, void *buf, size_t count)
+ 		die("read error (%s)", strerror(errno));
+ }
  
--void read_or_die(int fd, void *buf, size_t count)
-+int read_in_full(int fd, void *buf, size_t count)
+-void write_or_die(int fd, const void *buf, size_t count)
++int write_in_full(int fd, const void *buf, size_t count)
  {
- 	char *p = buf;
--	ssize_t loaded;
+ 	const char *p = buf;
+-	ssize_t written;
 +	ssize_t total = 0;
-+	ssize_t loaded = 0;
++	ssize_t written = 0;
  
  	while (count > 0) {
- 		loaded = xread(fd, p, count);
--		if (loaded == 0)
--			die("unexpected end of file");
--		else if (loaded < 0)
--			die("read error (%s)", strerror(errno));
-+		if (loaded <= 0) {
+ 		written = xwrite(fd, p, count);
+-		if (written == 0)
+-			die("disk full?");
+-		else if (written < 0) {
+-			if (errno == EPIPE)
+-				exit(0);
+-			die("write error (%s)", strerror(errno));
++		if (written <= 0) {
 +			if (total)
 +				return total;
 +			else
-+				return loaded;
-+		}
- 		count -= loaded;
- 		p += loaded;
-+		total += loaded;
++				return written;
+ 		}
+ 		count -= written;
+ 		p += written;
++		total += written;
  	}
 +
 +	return total;
-+}
-+
-+void read_or_die(int fd, void *buf, size_t count)
-+{
-+	ssize_t loaded;
-+
-+	loaded = read_in_full(fd, buf, count);
-+	if (loaded == 0)
-+		die("unexpected end of file");
-+	else if (loaded < 0)
-+		die("read error (%s)", strerror(errno));
  }
  
- void write_or_die(int fd, const void *buf, size_t count)
+-int write_in_full(int fd, const void *buf, size_t count)
++void write_or_die(int fd, const void *buf, size_t count)
+ {
+-	const char *p = buf;
+-	ssize_t total = 0;
+-	ssize_t wcount = 0;
++	ssize_t written;
+ 
+-	while (count > 0) {
+-		wcount = xwrite(fd, p, count);
+-		if (wcount <= 0) {
+-			if (total)
+-				return total;
+-			else
+-				return wcount;
+-		}
+-		count -= wcount;
+-		p += wcount;
+-		total += wcount;
++	written = write_in_full(fd, buf, count);
++	if (written == 0)
++		die("disk full?");
++	else if (written < 0) {
++		if (errno == EPIPE)
++			exit(0);
++		die("write error (%s)", strerror(errno));
+ 	}
+-
+-	return wcount;
+ }
+ 
+ int write_or_whine_pipe(int fd, const void *buf, size_t count, const char *msg)
