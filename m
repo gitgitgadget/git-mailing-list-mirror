@@ -1,84 +1,90 @@
-From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
-Subject: Re: [1/2 PATCH] git-svn: make multi-init less confusing
-Date: Mon, 08 Jan 2007 14:11:21 +0100
-Message-ID: <877ivxr7d2.fsf@morpheus.local>
-References: <87fyaqvgoz.fsf@morpheus.local> <20070105020158.GA21925@localdomain> <871wmaugh6.fsf@morpheus.local> <m2ejq9trf1.fsf@gmail.com> <87hcv1r7xv.fsf@morpheus.local>
+From: Theodore Tso <tytso@mit.edu>
+Subject: Re: How git affects kernel.org performance
+Date: Mon, 8 Jan 2007 07:58:19 -0500
+Message-ID: <20070108125819.GA32756@thunk.org>
+References: <1166297434.26330.34.camel@localhost.localdomain> <1166304080.13548.8.camel@nigel.suspend2.net> <459152B1.9040106@zytor.com> <1168140954.2153.1.camel@nigel.suspend2.net> <45A08269.4050504@zytor.com> <45A083F2.5000000@zytor.com> <Pine.LNX.4.64.0701062130260.3661@woody.osdl.org> <20070107085526.GR24090@1wt.eu> <20070107011542.3496bc76.akpm@osdl.org> <20070108030555.GA7289@in.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Mon Jan 08 14:12:02 2007
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git@gmane.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Andrew Morton <akpm@osdl.org>, Willy Tarreau <w@1wt.eu>,
+	Linus Torvalds <torvalds@osdl.org>,
+	"H. Peter Anvin" <hpa@zytor.com>, git@vger.kernel.org,
+	nigel@nigel.suspend2.net, "J.H." <warthog9@kernel.org>,
+	Randy Dunlap <randy.dunlap@oracle.com>,
+	Pavel Machek <pavel@ucw.cz>,
+	kernel list <linux-kernel@vger.kernel.org>,
+	webmaster@kernel.org,
+	"linux-ext4@vger.kernel.org" <linux-ext4@vger.kernel.org>
+X-From: linux-ext4-owner@vger.kernel.org Mon Jan 08 14:15:18 2007
+Return-path: <linux-ext4-owner@vger.kernel.org>
+Envelope-to: gcfe-linux-ext4@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H3uHp-0007hP-Iy
-	for gcvg-git@gmane.org; Mon, 08 Jan 2007 14:11:37 +0100
+	id 1H3uLH-0008BJ-97
+	for gcfe-linux-ext4@gmane.org; Mon, 08 Jan 2007 14:15:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161268AbXAHNLe convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 8 Jan 2007 08:11:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161276AbXAHNLe
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jan 2007 08:11:34 -0500
-Received: from main.gmane.org ([80.91.229.2]:42709 "EHLO ciao.gmane.org"
+	id S1751522AbXAHNPK (ORCPT <rfc822;gcfe-linux-ext4@m.gmane.org>);
+	Mon, 8 Jan 2007 08:15:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751516AbXAHNPK
+	(ORCPT <rfc822;linux-ext4-outgoing>); Mon, 8 Jan 2007 08:15:10 -0500
+Received: from thunk.org ([69.25.196.29]:48941 "EHLO thunker.thunk.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1161268AbXAHNLe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Jan 2007 08:11:34 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1H3uHf-0007pI-Lz
-	for git@vger.kernel.org; Mon, 08 Jan 2007 14:11:27 +0100
-Received: from dns.vtab.com ([62.20.90.195])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 08 Jan 2007 14:11:27 +0100
-Received: from davidk by dns.vtab.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 08 Jan 2007 14:11:27 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: dns.vtab.com
-User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (gnu/linux)
-Cancel-Lock: sha1:m0v5405uFVMKs2w2kkvUpXj1mN0=
-Sender: git-owner@vger.kernel.org
+	id S1751515AbXAHNPI (ORCPT <rfc822;linux-ext4@vger.kernel.org>);
+	Mon, 8 Jan 2007 08:15:08 -0500
+Received: from root (helo=candygram.thunk.org)
+	by thunker.thunk.org with local-esmtp   (Exim 4.50 #1 (Debian))
+	id 1H3uOH-0003NB-DQ; Mon, 08 Jan 2007 08:18:17 -0500
+Received: from tytso by candygram.thunk.org with local (Exim 4.62)
+	(envelope-from <tytso@thunk.org>)
+	id 1H3u4x-0001NQ-CV; Mon, 08 Jan 2007 07:58:19 -0500
+To: Suparna Bhattacharya <suparna@in.ibm.com>
+Mail-Followup-To: Theodore Tso <tytso@mit.edu>,
+	Suparna Bhattacharya <suparna@in.ibm.com>,
+	Andrew Morton <akpm@osdl.org>, Willy Tarreau <w@1wt.eu>,
+	Linus Torvalds <torvalds@osdl.org>,
+	"H. Peter Anvin" <hpa@zytor.com>, git@vger.kernel.org,
+	nigel@nigel.suspend2.net, "J.H." <warthog9@kernel.org>,
+	Randy Dunlap <randy.dunlap@oracle.com>, Pavel Machek <pavel@ucw.cz>,
+	kernel list <linux-kernel@vger.kernel.org>, webmaster@kernel.org,
+	"linux-ext4@vger.kernel.org" <linux-ext4@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <20070108030555.GA7289@in.ibm.com>
+User-Agent: Mutt/1.5.12-2006-07-14
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+Sender: linux-ext4-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36252>
+X-Mailing-List: linux-ext4@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36253>
 
-David K=C3=A5gedal <davidk@lysator.liu.se> writes:
+On Mon, Jan 08, 2007 at 08:35:55AM +0530, Suparna Bhattacharya wrote:
+> > Yeah, slowly-growing directories will get splattered all over the disk.
+> > 
+> > Possible short-term fixes would be to just allocate up to (say) eight
+> > blocks when we grow a directory by one block.  Or teach the
+> > directory-growth code to use ext3 reservations.
+> > 
+> > Longer-term people are talking about things like on-disk rerservations.
+> > But I expect directories are being forgotten about in all of that.
+> 
+> By on-disk reservations, do you mean persistent file preallocation ? (that
+> is explicit preallocation of blocks to a given file) If so, you are
+> right, we haven't really given any thought to the possibility of directories
+> needing that feature.
 
-> Seth Falcon <sethfalcon@gmail.com> writes:
->
->> David K=C3=A5gedal <davidk@lysator.liu.se> writes:
->>> Now if you could only clarify the documentation of dcommit to expla=
-in
->>> whether it creates one svn revision per commit in your branch, or i=
-f
->>> it creates a single svn revision with the full diff, and the
->>> documentation would be perfect :-)
->>
->> dcommit creates one svn rev for each commit listed by:
->>
->>    git log remotes/git-svn..HEAD
->
-> So if I want to commit a different subset, is that possible?  In my
-> case, I have a "master" branch with a few changes on top of git-svn
-> that I never want to commit to svn.  So what I want is to commit
-> "master..HEAD".  Can I do that with dcommit?  It seems that "git svn
-> set-tree master..HEAD" might do the trick.
+The fastest and probably most important thing to add is some readahead
+smarts to directories --- both to the htree and non-htree cases.  If
+you're using some kind of b-tree structure, such as XFS does for
+directories, preallocation doesn't help you much.  Delayed allocation
+can save you if your delayed allocator knows how to structure disk
+blocks so that a btree-traversal is efficient, but I'm guessing the
+biggest reason why we are losing is because we don't have sufficient
+readahead.  This also has the advantage that it will help without
+needing to doing a backup/restore to improve layout.
 
-I tried set-tree now, and all I got was a perl crash:
+Allocating some number of empty blocks when we grow the directory
+would be a quick hack that I'd probably do as a 2nd priority.  It
+won't help pre-existing directories, but combined with readahead
+logic, should help us out greatly in the non-btree case.  
 
-morpheus% git svn set-tree master..
-diff-tree 8dba2b29df78184fef96bbbf9521387846b140b3 b5561ab7309e9b7b3acf=
-acaa786358e7d90665c6
-        A       .gitignore
-=2E.. more files
-Use of uninitialized value in concatenation (.) or string at /usr/lib/p=
-erl5/SVN/Core.pm line 579.
-Malformed file:  at /usr/local/bin/git-svn line 459
-
-This is git f4bf2184ae8b79f95b9f56c1ea5455d04e559299 from Jan 1.
-
-Perl is v5.8.8 (Ubunty edgy)
-
---=20
-David K=C3=A5gedal
+						- Ted
