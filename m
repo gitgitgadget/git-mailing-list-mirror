@@ -1,90 +1,70 @@
-From: Martin Langhoff <martin@catalyst.net.nz>
-Subject: [PATCH] cvsimport: skip commits that are too recent
-Date: Mon,  8 Jan 2007 14:11:23 +1300
-Message-ID: <1168218683853-git-send-email-martin@catalyst.net.nz>
-Cc: Martin Langhoff <martin@catalyst.net.nz>
-X-From: git-owner@vger.kernel.org Mon Jan 08 02:35:24 2007
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [DRAFT] Branching and merging with git
+Date: Mon, 08 Jan 2007 02:22:35 +0100
+Organization: At home
+Message-ID: <ens6ci$ga9$1@sea.gmane.org>
+References: <20061116221701.4499.qmail@science.horizon.com> <20070103170411.GB5491@thunk.org> <20070107234411.GD18009@fieldses.org> <20070108004006.GB23182@thunk.org> <20070108004641.GG18009@fieldses.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Mon Jan 08 02:37:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H3jQ0-0004yE-Kf
-	for gcvg-git@gmane.org; Mon, 08 Jan 2007 02:35:20 +0100
+	id 1H3jSL-0005ZS-4y
+	for gcvg-git@gmane.org; Mon, 08 Jan 2007 02:37:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965289AbXAHBfR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 7 Jan 2007 20:35:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965295AbXAHBfR
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jan 2007 20:35:17 -0500
-Received: from godel.catalyst.net.nz ([202.78.240.40]:46657 "EHLO
-	mail1.catalyst.net.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965289AbXAHBfQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Jan 2007 20:35:16 -0500
-X-Greylist: delayed 1434 seconds by postgrey-1.27 at vger.kernel.org; Sun, 07 Jan 2007 20:35:15 EST
-Received: from leibniz.catalyst.net.nz ([202.78.240.7] helo=mltest)
-	by mail1.catalyst.net.nz with esmtp (Exim 4.50)
-	id 1H3j2k-0002bo-RM; Mon, 08 Jan 2007 14:11:18 +1300
-Received: from martin by mltest with local (Exim 3.36 #1 (Debian))
-	id 1H3j2p-00042i-00; Mon, 08 Jan 2007 14:11:23 +1300
-To: junkio@cox.net, git@vger.kernel.org
-X-Mailer: git-send-email 1.5.0.rc0.g4017-dirty
+	id S1030374AbXAHBhm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 7 Jan 2007 20:37:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030377AbXAHBhm
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jan 2007 20:37:42 -0500
+Received: from main.gmane.org ([80.91.229.2]:38792 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1030374AbXAHBhl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Jan 2007 20:37:41 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1H3jHJ-0007Vy-Q5
+	for git@vger.kernel.org; Mon, 08 Jan 2007 02:26:23 +0100
+Received: from host-81-190-18-145.torun.mm.pl ([81.190.18.145])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 08 Jan 2007 02:26:21 +0100
+Received: from jnareb by host-81-190-18-145.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 08 Jan 2007 02:26:21 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-18-145.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36214>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36215>
 
-With this patch, cvsimport will skip commits made
-in the last 10 minutes. The recent-ness test is of
-5 minutes + cvsps fuzz window (5 minutes default).
+J. Bruce Fields wrote:
 
-When working with a CVS repository that is in use,
-importing commits that are too recent can lead to
-partially incorrect trees. This is mainly due to
+> On Sun, Jan 07, 2007 at 07:40:06PM -0500, Theodore Tso wrote:
+>> On Sun, Jan 07, 2007 at 06:44:11PM -0500, J. Bruce Fields wrote:
+>>> 
+>>> I have a draft attempt at a complete "git user's manual" at
+>>> 
+>>>     http://www.fieldses.org/~bfields/
+>> 
+>> Is that the right URL?  That gets me to "Not Bruce's Webpage" and I
+>> don't see an obvious link to git documentation...
+> 
+> Crap:
+> 
+>       http://www.fieldses.org/~bfields/git-user-manual.html
 
- - Commits that are within the cvsps fuzz window may later
-   be found to have affected more files.
+Added to
+  http://git.or.cz/gitwiki/GitDocumentation
+  http://git.or.cz/gitwiki/GitLinks
 
- - When performing incremental imports, clock drift between
-   the systems may lead to skipped commits.
-
-This commit helps keep incremental imports of in-use
-CVS repositories sane.
-
-Signed-off-by: Martin Langhoff <martin@catalyst.net.nz>
----
- git-cvsimport.perl |   14 ++++++++++++++
- 1 files changed, 14 insertions(+), 0 deletions(-)
-
-diff --git a/git-cvsimport.perl b/git-cvsimport.perl
-index c5bf2d1..2686775 100755
---- a/git-cvsimport.perl
-+++ b/git-cvsimport.perl
-@@ -129,6 +129,11 @@ if ($opt_M) {
- 	push (@mergerx, qr/$opt_M/);
- }
- 
-+# Remember UTC of our starting time
-+# we'll want to avoid importing commits
-+# that are too recent
-+our $starttime = time();
-+
- select(STDERR); $|=1; select(STDOUT);
- 
- 
-@@ -824,6 +829,15 @@ while (<CVS>) {
- 			$state = 11;
- 			next;
- 		}
-+		if ( $starttime - 300 - (defined $opt_z ? $opt_z : 300) <= $date) {
-+			# skip if the commit is too recent
-+			# that the cvsps default fuzz is 300s, we give ourselves another
-+			# 300s just in case -- this also prevents skipping commits
-+			# due to server clock drift
-+			print "skip patchset $patchset: $date too recent\n" if $opt_v;
-+			$state = 11;
-+			next;
-+		}
- 		if (exists $ignorebranch{$branch}) {
- 			print STDERR "Skipping $branch\n";
- 			$state = 11;
 -- 
-1.5.0.rc0.g4017-dirty
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
