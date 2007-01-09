@@ -1,85 +1,131 @@
-From: "Guilhem Bonnefille" <guilhem.bonnefille@gmail.com>
-Subject: Re: Howto use StGit and git-svn at same time
-Date: Tue, 9 Jan 2007 22:41:20 +0100
-Message-ID: <8b65902a0701091341v5983c113tc5cd32c6c4c57719@mail.gmail.com>
-References: <8b65902a0701091335u160c6dfl81a523e4cd5adbee@mail.gmail.com>
+From: Andy Whitcroft <apw@shadowen.org>
+Subject: Re: [PATCH] Replacing the system call pread() with lseek()/xread()/lseek()
+ sequence.
+Date: Tue, 09 Jan 2007 21:41:41 +0000
+Message-ID: <45A40C15.1070200@shadowen.org>
+References: 7v1wm4kl24.fsf@assigned-by-dhcp.cox.net <11683766523955-git-send-email-> <11683766521544-git-send-email->
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Tue Jan 09 22:41:34 2007
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 09 22:41:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H4Oii-00077l-Pz
-	for gcvg-git@gmane.org; Tue, 09 Jan 2007 22:41:25 +0100
+	id 1H4Oj4-0007DU-Ge
+	for gcvg-git@gmane.org; Tue, 09 Jan 2007 22:41:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932368AbXAIVlW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 9 Jan 2007 16:41:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932402AbXAIVlW
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jan 2007 16:41:22 -0500
-Received: from wr-out-0506.google.com ([64.233.184.236]:15300 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932368AbXAIVlV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Jan 2007 16:41:21 -0500
-Received: by wr-out-0506.google.com with SMTP id i21so3080520wra
-        for <git@vger.kernel.org>; Tue, 09 Jan 2007 13:41:21 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=htWdNn7tmK/4dtubgeSjrlx6U/rwnVB9zP0Co2AlKQp1qkqlDuXeUldFPNuyFFiBf/xxtUtYImewf4P0HjOdU2M0Ct9mh3W+fc1oOod7O3HhEcTg/iFaULiQ804NN+5cENFY41/yDznVqDploUMMO7Ud9I7AqBh1RfU64EmsZPI=
-Received: by 10.90.29.2 with SMTP id c2mr3395617agc.1168378880803;
-        Tue, 09 Jan 2007 13:41:20 -0800 (PST)
-Received: by 10.90.51.4 with HTTP; Tue, 9 Jan 2007 13:41:20 -0800 (PST)
-To: git@vger.kernel.org
-In-Reply-To: <8b65902a0701091335u160c6dfl81a523e4cd5adbee@mail.gmail.com>
-Content-Disposition: inline
+	id S932414AbXAIVlo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 9 Jan 2007 16:41:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932402AbXAIVlo
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jan 2007 16:41:44 -0500
+Received: from hellhawk.shadowen.org ([80.68.90.175]:1728 "EHLO
+	hellhawk.shadowen.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932414AbXAIVln (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Jan 2007 16:41:43 -0500
+Received: from localhost ([127.0.0.1])
+	by hellhawk.shadowen.org with esmtp (Exim 4.50)
+	id 1H4Oi6-00024g-5D; Tue, 09 Jan 2007 21:40:46 +0000
+User-Agent: Icedove 1.5.0.9 (X11/20061220)
+To: "Stefan-W. Hahn" <stefan.hahn@s-hahn.de>
+In-Reply-To: <11683766521544-git-send-email->
+X-Enigmail-Version: 0.94.1.0
+OpenPGP: url=http://www.shadowen.org/~apw/public-key
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36408>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36409>
 
-Humh...
-I finished the conflicts solving game. I think the way I choosed is
-incorrect. Following gitk, it is now a big big bazaar in my commits
-history.
+Stefan-W. Hahn wrote:
+> From: Stefan-W. Hahn <stefan.hahn@s-hahn.de>
+> 
+> Using cygwin with cygwin.dll before 1.5.22 the system call pread() is buggy.
+> This patch introduces NO_PREAD. If NO_PREAD is set git uses a sequence of
+> lseek()/xread()/lseek() to emulate pread.
+> 
+> Signed-off-by: Stefan-W. Hahn <stefan.hahn@s-hahn.de>
+> ---
+>  Makefile          |    7 +++++++
+>  compat/pread.c    |   18 ++++++++++++++++++
+>  git-compat-util.h |    5 +++++
+>  3 files changed, 30 insertions(+), 0 deletions(-)
+> 
+> diff --git a/Makefile b/Makefile
+> index 6c12bc6..43113e9 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -69,6 +69,9 @@ all:
+>  #
+>  # Define NO_MMAP if you want to avoid mmap.
+>  #
+> +# Define NO_PREAD if you have a problem with pread() system call (e.g.
+> +# cygwin.dll before v1.5.22).
+> +#
+>  # Define NO_FAST_WORKING_DIRECTORY if accessing objects in pack files is
+>  # generally faster on your platform than accessing the working directory.
+>  #
+> @@ -523,6 +526,10 @@ ifdef NO_MMAP
+>  	COMPAT_CFLAGS += -DNO_MMAP
+>  	COMPAT_OBJS += compat/mmap.o
+>  endif
+> +ifdef NO_PREAD
+> +	COMPAT_CFLAGS += -DNO_PREAD
+> +	COMPAT_OBJS += compat/pread.o
+> +endif
+>  ifdef NO_FAST_WORKING_DIRECTORY
+>  	BASIC_CFLAGS += -DNO_FAST_WORKING_DIRECTORY
+>  endif
+> diff --git a/compat/pread.c b/compat/pread.c
+> new file mode 100644
+> index 0000000..9183c05
+> --- /dev/null
+> +++ b/compat/pread.c
+> @@ -0,0 +1,18 @@
+> +#include "../git-compat-util.h"
+> +
+> +ssize_t git_pread(int fd, void *buf, size_t count, off_t offset)
+> +{
+> +        off_t current_offset;
+> +        ssize_t rc;
+> +
+> +        current_offset = lseek(fd, 0, SEEK_CUR);
+> +
+> +        if (lseek(fd, offset, SEEK_SET) < 0)
+> +                return -1;
+> +
+> +        rc=read_in_full(fd, buf, count);
 
-Can you give me some tips about using both git-svn and stgit please?
+Seems to be style inconsistancy between current_offset = and rc= I
+believe the former is preferred.
 
-On 1/9/07, Guilhem Bonnefille <guilhem.bonnefille@gmail.com> wrote:
-> Hi,
->
-> I'm a newbie and I'm using:
-> - git-svn to connect to a public SVN repo,
-> - StGit to manage my patches for the project hosted by this repo.
->
-> The current GIT repo was previously cloned from a GIT repo made with
-> git-cvsimport. But the project moved to SVN, so I removed the GIT repo
-> connected to the CVS.
->
-> I succesfully fetch the SVN, create a "work" local branch (connected
-> to remotes/trunk), and create some patches.
-> As the SVN evolved, I wish to retrieve info and update my patches.
->
-> So I tried a "stg pull" whihc failed because "origin" no more exists.
-> So, I tried a "git-rebase remotes/trunk".
-> Is it correct?
->
-> I'm actually unable to conclude, as the maintainer apply my patches
-> with some improves, so I have to solve lots of conflicts. But I would
-> appreciate if you can confirm me that the git-rebase is the good way
-> to update a "workspace" managed both by git-svn and StGit.
->
-> --
-> Guilhem BONNEFILLE
-> -=- #UIN: 15146515 JID: guyou@im.apinc.org MSN: guilhem_bonnefille@hotmail.com
-> -=- mailto:guilhem.bonnefille@gmail.com
-> -=- http://nathguil.free.fr/
->
+> +
+> +        if (current_offset != lseek(fd, current_offset, SEEK_SET))
+> +                return -1;
 
+How likely are we ever to be in the right place here?  Seems vanishingly
+small putting us firmly in the four syscalls per call space.  I wonder
+if git ever actually cares about the seek location.  ie if we could stop
+reading and resetting it.  Probabally not worth working it out I guess
+as any _sane_ system has one.
 
--- 
-Guilhem BONNEFILLE
--=- #UIN: 15146515 JID: guyou@im.apinc.org MSN: guilhem_bonnefille@hotmail.com
--=- mailto:guilhem.bonnefille@gmail.com
--=- http://nathguil.free.fr/
+> +        return rc;
+> +}
+> diff --git a/git-compat-util.h b/git-compat-util.h
+> index e023bf1..f8d46d5 100644
+> --- a/git-compat-util.h
+> +++ b/git-compat-util.h
+> @@ -107,6 +107,11 @@ extern int git_munmap(void *start, size_t length);
+>  #define DEFAULT_PACKED_GIT_LIMIT \
+>  	((1024L * 1024L) * (sizeof(void*) >= 8 ? 8192 : 256))
+>  
+> +#ifdef NO_PREAD
+> +#define pread git_pread
+> +extern ssize_t git_pread(int fd, void *buf, size_t count, off_t offset);
+> +#endif
+> +
+>  #ifdef NO_SETENV
+>  #define setenv gitsetenv
+>  extern int gitsetenv(const char *, const char *, int);
+
+-apw
