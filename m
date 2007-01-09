@@ -1,101 +1,95 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] Detached HEAD (experimental)
-Date: Tue, 9 Jan 2007 15:46:32 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0701091539050.3594@woody.osdl.org>
-References: <7vac11yirf.fsf@assigned-by-dhcp.cox.net> <87ps9xgkjo.wl%cworth@cworth.org>
- <7virfprquo.fsf@assigned-by-dhcp.cox.net> <87odphgfzz.wl%cworth@cworth.org>
- <7vbql9ydd7.fsf@assigned-by-dhcp.cox.net> <20070108131735.GA2647@coredump.intra.peff.net>
- <7vzm8tt5kf.fsf@assigned-by-dhcp.cox.net> <20070109142130.GA10633@coredump.intra.peff.net>
- <7virffkick.fsf@assigned-by-dhcp.cox.net> <20070109213117.GB25012@fieldses.org>
- <7vy7obj07k.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] sha1_name(): accept ':directory/' to get at the cache_tree
+Date: Tue, 09 Jan 2007 15:47:01 -0800
+Message-ID: <7vodp7iwzu.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.63.0701091502030.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "J. Bruce Fields" <bfields@fieldses.org>,
-	Jeff King <peff@peff.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 10 00:46:57 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 10 00:47:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H4Qg0-0006TE-Js
-	for gcvg-git@gmane.org; Wed, 10 Jan 2007 00:46:44 +0100
+	id 1H4QgN-0006Xy-Pr
+	for gcvg-git@gmane.org; Wed, 10 Jan 2007 00:47:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932550AbXAIXql (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 9 Jan 2007 18:46:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932556AbXAIXql
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jan 2007 18:46:41 -0500
-Received: from smtp.osdl.org ([65.172.181.24]:54929 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932550AbXAIXqk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Jan 2007 18:46:40 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l09NkXWi024939
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 9 Jan 2007 15:46:33 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l09NkWsr018876;
-	Tue, 9 Jan 2007 15:46:32 -0800
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vy7obj07k.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=-2.665 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.107__
-X-MIMEDefang-Filter: osdl$Revision: 1.167 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932548AbXAIXrE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 9 Jan 2007 18:47:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932558AbXAIXrE
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jan 2007 18:47:04 -0500
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:49607 "EHLO
+	fed1rmmtao01.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932557AbXAIXrD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Jan 2007 18:47:03 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao01.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20070109234702.QUAZ9173.fed1rmmtao01.cox.net@fed1rmimpo01.cox.net>;
+          Tue, 9 Jan 2007 18:47:02 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id 9BmB1W0151kojtg0000000; Tue, 09 Jan 2007 18:46:12 -0500
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0701091502030.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Tue, 9 Jan 2007 15:03:08 +0100
+	(CET)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36428>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36429>
 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
+> 	'tis a resend of an earlier patch, but without support for the
+> 	bogus ":." as equivalent to ":/".
+>
+> 	I find this feature highly convenient when I just want to see
+> 	what files the index contains.
 
-On Tue, 9 Jan 2007, Junio C Hamano wrote:
-> 
-> Being able to test merge or even make commits without being on a
-> branch is vastly useful.
+I do not understand; do you mean ls-files?
 
-Yes. I think the detached head notion is really really important. I think 
-it was a mistake to not allow it initially, but hey, there were various 
-historical reasons, and the whole thing about how branches worked was a 
-bit up in the air.
+In any case, I wonder if this does a sane thing if you asked
+"git show :3:t/" on a fully merged index.
 
-I would suggest a solution:
+> @@ -561,6 +562,23 @@ int get_sha1(const char *name, unsigned char *sha1)
+>  			}
+>  			pos++;
+>  		}
+> +		if (namelen > 0 && cp[namelen - 1] == '/')
+> +			namelen--;
+> +		if (namelen == 0 || (ce && ce_namelen(ce) > namelen &&
+> +					ce->name[namelen] == '/' &&
+> +					!memcmp(ce->name, cp, namelen))) {
 
- - git checkout will refuse to switch AWAY from a detached head unless the 
-   SHA1 of the detached head exactly matches some other branch.
+I may be misreading the code, but what does ce point at?  Does
+this get the index sort order correctly?  For example, would
+this work?
 
-Not any expensive "reachability" cheaks. Simple and straightforward: just 
-say "no, I will not leave this branch-less HEAD behind, because it is not 
-described by any other branch or tag".
+	$ echo >t- && git add t-
+        $ git show :t
+	$ git show :t/
 
-So if you do
+> +			struct cache_tree *tree =
+> +				cache_tree_find(active_cache_tree, cp);
+> +			if (!cache_tree_fully_valid(tree)) {
+> +				ret = cache_tree_update(active_cache_tree,
+> +						active_cache, active_nr, 0, 0);
+> +				if (ret < 0)
+> +					return ret;
 
-	git checkout v1.4.4
+This gracefully errs out when the index is unmerged but fails to
+pretend the index knows about trees, if the unmerged part of
+index is outside the directory the user specified.
 
-you'll be fine, because even though you got a detached HEAD that isn't 
-attached to any branch, it still exists as a tag, so checking out 
-something else is fine - you've not lost any state.
+In short, I am not sure if it is worth it, and especially if the
+motivation is to pretend as if the index contains trees, I would
+be opposed to it.  The index does _not_ contain trees, and
+cache-tree is a pure optimization for the next write-tree.
+Nothing more.
 
-In contrast, if you actually start committing to that detached HEAD, you 
-need to either
-
- - use some new flag ("git checkout --forget-old") to explicitly say that 
-   you _want_ to leave this old naked branch behind
-
- - either tag the current point or make a real branch out of it (with 
-   either "git tag <tagname>" or "git branch <branchname>" respectively) 
-   and then you can check out some other tag/branch after that.
-
-Doing "reachability analysis" is not only expensive, it's actually really 
-wrong, because even if the current HEAD is _reachable_ from some other tag 
-or branch, you're still going to drop that point in the development series 
-unless it _exactly_ matchs it.
-
-Hmm?
-
-I'd love to see the detached HEAD series move into "master", but I do 
-think we should make sure that people can't drop their work easily by 
-mistake, and I think the above suggestion is both simple and workable.
-
-Comments?
-
-		Linus
+If it (pretending as if the index contains trees) is just a
+means to achieve something else worthy, I would not necessarily
+oppose to that goal, but I do not see what it is, and I do not
+know if the approach is right...
