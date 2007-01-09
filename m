@@ -1,53 +1,134 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: Re: [ANNOUNCE] qgit4 aka qgit ported to Windows
-Date: Tue, 9 Jan 2007 23:47:23 +0100
-Message-ID: <20070109224723.GG17093@nan92-1-81-57-214-146.fbx.proxad.net>
-References: <e5bfff550701091314k71e282e8x125db65d5c287a94@mail.gmail.com> <200701092255.17091.Josef.Weidendorfer@gmx.de> <e5bfff550701091430r759c083bse99bd79046f3205f@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>,
-	GIT list <git@vger.kernel.org>, Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Tue Jan 09 23:47:34 2007
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH] gitweb: Fix git_patchset_body not closing <div class="patch">
+Date: Wed, 10 Jan 2007 00:07:43 +0100
+Message-ID: <11683840631010-git-send-email-jnareb@gmail.com>
+References: <734286.71437.qm@web31814.mail.mud.yahoo.com>
+Cc: Luben Tuikov <ltuikov@yahoo.com>, Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 10 00:07:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H4Pkj-00088m-RW
-	for gcvg-git@gmane.org; Tue, 09 Jan 2007 23:47:34 +0100
+	id 1H4Q4D-0004tw-Gk
+	for gcvg-git@gmane.org; Wed, 10 Jan 2007 00:07:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932478AbXAIWrb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 9 Jan 2007 17:47:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932486AbXAIWrb
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jan 2007 17:47:31 -0500
-Received: from smtp5-g19.free.fr ([212.27.42.35]:57243 "EHLO smtp5-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932478AbXAIWra (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Jan 2007 17:47:30 -0500
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp5-g19.free.fr (Postfix) with ESMTP id 767E327A67;
-	Tue,  9 Jan 2007 23:47:29 +0100 (CET)
-Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
-	id 41B121F0A3; Tue,  9 Jan 2007 23:47:23 +0100 (CET)
-To: Marco Costalba <mcostalba@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <e5bfff550701091430r759c083bse99bd79046f3205f@mail.gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S932498AbXAIXHj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 9 Jan 2007 18:07:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932502AbXAIXHi
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jan 2007 18:07:38 -0500
+Received: from nf-out-0910.google.com ([64.233.182.190]:5321 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932498AbXAIXHh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Jan 2007 18:07:37 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so291310nfa
+        for <git@vger.kernel.org>; Tue, 09 Jan 2007 15:07:36 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=NW8GHA5QUANmBrWl7IGv4tSYSDChrwkWGeoctbJ4PT7fDkpCZngtYCnqSMSNTrjFhQlIDDgXBRFAVthJhAbjl0s3fX/vlLRpkAXxklzCT2ZR0En24F5a5tA+xx9YMfwDi8kiL2pVY90PnikeTw/hVpkPGG+3n5X3whX6eAV4lGo=
+Received: by 10.49.10.3 with SMTP id n3mr701164nfi.1168384056486;
+        Tue, 09 Jan 2007 15:07:36 -0800 (PST)
+Received: from roke.D-201 ( [81.190.20.31])
+        by mx.google.com with ESMTP id d2sm2137743nfe.2007.01.09.15.07.35;
+        Tue, 09 Jan 2007 15:07:36 -0800 (PST)
+Received: from roke.D-201 (localhost.localdomain [127.0.0.1])
+	by roke.D-201 (8.13.4/8.13.4) with ESMTP id l09N7iPs020881;
+	Wed, 10 Jan 2007 00:07:45 +0100
+Received: (from jnareb@localhost)
+	by roke.D-201 (8.13.4/8.13.4/Submit) id l09N7hQj020880;
+	Wed, 10 Jan 2007 00:07:43 +0100
+To: git@vger.kernel.org
+X-Mailer: git-send-email 1.4.4.3
+In-Reply-To: <734286.71437.qm@web31814.mail.mud.yahoo.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36418>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36419>
 
-On Tue, Jan 09, 2007 at 11:30:34PM +0100, Marco Costalba wrote:
-> Being not mergeable they lose the main motivation to be in the same
-> repository IMHO.
+Fix case when git_patchset_body didn't close <div class="patch">,
+for patchsets with last patch empty.
 
-Well, this also means you lose the history trail of you project.  Just
-suppose one day you'll face a piece of your code which you don't
-understand any more (face it, we all have that strange "did *I* write
-that ?" feeling some day ;).  Being able to hunt it down is nice - and
-grafting the qt3-based repo will only be useful it you know precisely
-where to put the graft...
+perlsyn(1):
+  The "last" command immediately exits the loop in question.
+  The "continue" block, if any, is not executed.
 
-Best regards,
+Remove some commented out code in git_patchset_body.
+
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+
+Luben Tuikov wrote:
+> --- Jakub Narebski <jnareb@gmail.com> wrote:
+>> Jakub Narebski wrote:
+>>> Luben Tuikov wrote:
+>>> 
+>>>> Ok, I see that Junio has committed the fixes to "next" -- thanks!
+>>>> That saved me time having to manually apply them.
+>>>> 
+>>>> Now, the results are that I see the same bug.
+>>>  
+>>> (The same bug = no closing div).
+>>> 
+>>> I'll try to reproduce this.
+>> 
+>> I failed to reproduce this error.
+>> 
+>> Could you apply the following patch, and report the result of
+>>   grep "</div>\|<div" | grep -v "<div.*</div>
+>> (find all opening and closing <div> elements, but omitting
+>> those which are opened and closed in the same line)?
+
+[...] 
+> <div class="patchset">
+> <div class="patch" id="patch1">
+> <div class="diff extended_header">
+> </div><!-- diff extended_header -->
+> </div><!-- patch 0 -->
+> <div class="patch" id="patch2">
+> <div class="diff extended_header">
+> </div><!-- diff extended_header -->
+> </div><!-- patchset -->
+[...] 
+> The bug is clear.
+
+Oops. I'm bit new to Perl.
+
+This should fix it.
+
+ gitweb/gitweb.perl |    7 ++++---
+ 1 files changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 25e5079..88af2e6 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -2412,7 +2412,6 @@ sub git_patchset_body {
+ 
+ 			push @diff_header, $patch_line;
+ 		}
+-		#last PATCH unless $patch_line;
+ 		my $last_patch_line = $patch_line;
+ 
+ 		# check if current patch belong to current raw line
+@@ -2522,7 +2521,10 @@ sub git_patchset_body {
+ 
+ 		# from-file/to-file diff header
+ 		$patch_line = $last_patch_line;
+-		last PATCH unless $patch_line;
++		if (! $patch_line) {
++			print "</div>\n"; # class="patch"
++			last PATCH;
++		}
+ 		next PATCH if ($patch_line =~ m/^diff /);
+ 		#assert($patch_line =~ m/^---/) if DEBUG;
+ 		if ($from{'href'} && $patch_line =~ m!^--- "?a/!) {
+@@ -2533,7 +2535,6 @@ sub git_patchset_body {
+ 		print "<div class=\"diff from_file\">$patch_line</div>\n";
+ 
+ 		$patch_line = <$fd>;
+-		#last PATCH unless $patch_line;
+ 		chomp $patch_line;
+ 
+ 		#assert($patch_line =~ m/^+++/) if DEBUG;
 -- 
-Yann.
+1.4.4.3
