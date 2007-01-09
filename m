@@ -1,36 +1,36 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: I just pulled and built 'next'...
-Date: Mon, 8 Jan 2007 22:21:24 -0500
-Message-ID: <20070109032124.GA1904@spearce.org>
-References: <E1H3uc2-0004m1-Ua@think.thunk.org> <7vvejhwa6g.fsf@assigned-by-dhcp.cox.net> <20070108210002.GA15121@thunk.org>
+Subject: Re: [PATCH] Detached HEAD (experimental)
+Date: Mon, 8 Jan 2007 22:26:40 -0500
+Message-ID: <20070109032640.GB1904@spearce.org>
+References: <7vac11yirf.fsf@assigned-by-dhcp.cox.net> <87ps9xgkjo.wl%cworth@cworth.org> <7virfprquo.fsf@assigned-by-dhcp.cox.net> <87odphgfzz.wl%cworth@cworth.org> <7vbql9ydd7.fsf@assigned-by-dhcp.cox.net> <20070108131735.GA2647@coredump.intra.peff.net> <7vzm8tt5kf.fsf@assigned-by-dhcp.cox.net> <87fyalyqqz.wl%cworth@cworth.org> <7v7ivxt3ft.fsf@assigned-by-dhcp.cox.net> <87d55pyp82.wl%cworth@cworth.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 09 04:21:36 2007
+X-From: git-owner@vger.kernel.org Tue Jan 09 04:26:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H47YM-0006ia-E8
-	for gcvg-git@gmane.org; Tue, 09 Jan 2007 04:21:34 +0100
+	id 1H47dR-0007mk-Fy
+	for gcvg-git@gmane.org; Tue, 09 Jan 2007 04:26:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750962AbXAIDVb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 8 Jan 2007 22:21:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750964AbXAIDVb
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jan 2007 22:21:31 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:48166 "EHLO
+	id S1750721AbXAID0q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 8 Jan 2007 22:26:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750713AbXAID0q
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jan 2007 22:26:46 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:48282 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750960AbXAIDVa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Jan 2007 22:21:30 -0500
+	with ESMTP id S1750721AbXAID0p (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Jan 2007 22:26:45 -0500
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.63)
 	(envelope-from <spearce@spearce.org>)
-	id 1H47Y4-0007f0-3m; Mon, 08 Jan 2007 22:21:16 -0500
+	id 1H47d9-0007oT-2M; Mon, 08 Jan 2007 22:26:31 -0500
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 49A9020FBAE; Mon,  8 Jan 2007 22:21:25 -0500 (EST)
-To: Theodore Tso <tytso@mit.edu>
+	id 9684120FBAE; Mon,  8 Jan 2007 22:26:40 -0500 (EST)
+To: Carl Worth <cworth@cworth.org>
 Content-Disposition: inline
-In-Reply-To: <20070108210002.GA15121@thunk.org>
+In-Reply-To: <87d55pyp82.wl%cworth@cworth.org>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -43,51 +43,31 @@ X-Source-Dir:
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36300>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36301>
 
-Theodore Tso <tytso@mit.edu> wrote:
-> On Mon, Jan 08, 2007 at 12:11:35PM -0800, Junio C Hamano wrote:
-> > One question is how you would sort the result.  If you sort them
-> > by taggerdate, you would get v1.4.4.4 anyway ;-).
+Carl Worth <cworth@cworth.org> wrote:
+> On Mon, 08 Jan 2007 17:05:26 -0800, Junio C Hamano wrote:
+> > An obvious alternative is not to allow building on top of a HEAD
+> > that is detached at all, which I suggested initially.
 > 
-> I was assuming either lexigraphically, or via some really complicated
-> rpm/dpkg version number comparison scheme.  :-)
-> 
-> > If we go with topology, we do not necessarily have to find all
-> > the tags.  When we hit a commit that is tagged, we can stop the
-> > traversal (so after finding v1.5.0-rc0, we do not have to go
-> > back along the 'master' lineage to find v1.4.4 tag).  Traversing
-> > from the tip of 'master' (or 'next') this way we will notice
-> > that v1.5.0-rc0 and v1.4.4.4 are the candidates without going
-> > any further in the past.
-> > 
-> > But the question still remains which one between the two to
-> > pick.
-> 
-> Yeah, that is the question.  If we're willing to look at the tag name,
-> it's pretty clear that if both v1.5.0-rc0 and v1.4.4.4 is reachable
-> from the head, it should be based on the "newer" version, i.e.,
-> v1.5.0-rc0.  A human can figure this out easily, but algorithimically
-> we end up having to use something like the rpm or dpkg version
-> comparison algorithm, both of which are hueristics that will sometimes
-> get thigns wrong.
+> I just want to make sure that people that never actually need it don't
+> have to see the message. And I don't think that _that_ part would be
+> feasible with the safety valve at the point of "leaving detached
+> state". It would basically come down to having to do reachability
+> analysis for the current HEAD from all known branches or something
+> equally horrific.
 
-  $ git rev-list v1.5.0-rc0..next | wc -l
-  687
-  $ git rev-list v1.4.4.4..next | wc -l
-  1051
+The common case is probably going to be where the argument to
+`git checkout` is a fast-foward of the detached HEAD.  And that's
+pretty cheap to check.  So we perform that check, and if we fail
+that then we search through every ref to determine if the detached
+HEAD is fully contained in any of those.  Currently that would be
+pretty slow to do with the current tools, but a small modification
+of say git-merge-base (or git-describe) might make it cheap enough
+to run during this slightly less common case.
 
-So what about doing Junio's suggestion of going by topology and
-coming up with the possible set of tags (v1.5.0-rc0 and v1.4.4.4
-right now), and if more than one is found compute the number of
-commits between each tag and the requested revision, and take the
-tag that has a smallest number of commits?
-
-I think it would come up right more often than not and avoids
-any sort of tag name parsing algorithm.  It is also somewhat
-explainable to users as it does have some common sense: the tag
-"nearest" to the requested revision is the one that has the most
-number of commits in common with the requested revision.
+No need to complicate merge/am/rebase/revert/commit/applymbox
+with a -b option.
 
 -- 
 Shawn.
