@@ -1,74 +1,88 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: New way of tracking remote branches -- question
-Date: Tue, 9 Jan 2007 21:57:09 +1300
-Message-ID: <46a038f90701090057w31d46530x4f70a76287bbef33@mail.gmail.com>
-References: <776323.21089.qm@web31808.mail.mud.yahoo.com>
-	 <7vejq9c9tf.fsf@assigned-by-dhcp.cox.net>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Pushing into a repository with working directory?
+Date: Tue, 09 Jan 2007 10:15:28 +0100
+Message-ID: <45A35D30.3070305@op5.se>
+References: <20070102045108.GC27690@spearce.org> <459E1182.201@shadowen.org> <7vwt41j1le.fsf@assigned-by-dhcp.cox.net> <20070105193646.GC8753@spearce.org> <45A24CE6.5060201@shadowen.org> <7vd55pt3ts.fsf@assigned-by-dhcp.cox.net> <20070109033213.GC1904@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: ltuikov@yahoo.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 09 09:57:18 2007
+Cc: Junio C Hamano <junkio@cox.net>, Andy Whitcroft <apw@shadowen.org>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 09 10:15:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H4CnD-00041X-4q
-	for gcvg-git@gmane.org; Tue, 09 Jan 2007 09:57:15 +0100
+	id 1H4D4y-0008Pw-8o
+	for gcvg-git@gmane.org; Tue, 09 Jan 2007 10:15:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751149AbXAII5L (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 9 Jan 2007 03:57:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751124AbXAII5L
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jan 2007 03:57:11 -0500
-Received: from wx-out-0506.google.com ([66.249.82.227]:47060 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751149AbXAII5K (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Jan 2007 03:57:10 -0500
-Received: by wx-out-0506.google.com with SMTP id h31so339319wxd
-        for <git@vger.kernel.org>; Tue, 09 Jan 2007 00:57:09 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=WzT2qoNblHgpsvKZ9GvKAZzy9lsmjd1UaLZkWLUQC4XPIYgRfuoBr2TZgaDXKjl/D5tIOj3AfixUdLRqPSJDflfJg2kqXTpdyrJM4eSwBDmAB/UgckNqe9vjbrB2WRMx+7bKPqOxjmAdJJOlLYSs6VH9T1z+/S3Fvo1RK6RaLwI=
-Received: by 10.90.81.14 with SMTP id e14mr2630504agb.1168333029298;
-        Tue, 09 Jan 2007 00:57:09 -0800 (PST)
-Received: by 10.90.28.1 with HTTP; Tue, 9 Jan 2007 00:57:09 -0800 (PST)
-To: "Junio C Hamano" <junkio@cox.net>
-In-Reply-To: <7vejq9c9tf.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S1751225AbXAIJPc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 9 Jan 2007 04:15:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751228AbXAIJPc
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jan 2007 04:15:32 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:41024 "EHLO
+	smtp-gw1.op5.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751225AbXAIJPa (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Jan 2007 04:15:30 -0500
+Received: from [192.168.1.20] (unknown [213.88.215.14])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id A81D56BCBC; Tue,  9 Jan 2007 10:15:28 +0100 (CET)
+User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
+To: "Shawn O. Pearce" <spearce@spearce.org>
+In-Reply-To: <20070109033213.GC1904@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36332>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36333>
 
-On 1/6/07, Junio C Hamano <junkio@cox.net> wrote:
-> You are talking about the separate remote layout "git clone"
-> creates, and talking about the fact that there is nothing in
-> refs/heads/ except master while refs/remotes/origin/ mirrors
-> what the remote side has faithfully, aren't you?
->
-> If that is the case, I can explain.  It is a good topic to talk
-> about.
-
-It's confusing me too ;-) though I think I'm getting to understand it.
-Still more comfortable with the cogito style, personally. The only
-thing I see as a clear improvement in git "remotes" is that I can
-fetch a bundle of heads for review. And that it can track heads that
-rewind. All the magic that happens if you have multiple pull lines is
-a bit scary, the kind of thing that should be disallowed or use a
-different syntax.
-
-One aspect that I am getting used to, but I still consider slightly
-bogus is that as we have added a layer of indirection, what used to
-point to a specific remote branch now points to a bundle or remotes
-heads.
-
-It is quite disconcerting to say git-pull origin, and see that pu is
-being pulled in. And  fortunately I'm tracking repos that don't have
-an 'origin' head. Otherwise I'd get origin/origin. :-(
-
-[reading on now...]
+Shawn O. Pearce wrote:
+> Junio C Hamano <junkio@cox.net> wrote:
+>> However, I am not sure if that is easy to understand for the
+>> users.  It would be sane to deny pushing into the current branch
+>> for a non-bare repositories by default, and if we do allow it
+>> (perhaps with 'git-push --force'), then detach the HEAD as you
+>> suggest.  On the other hand, pushing into the current branch of
+>> a bare repository should just work; the HEAD pointer in a bare
+>> repository is not about the commit the index and the working
+>> tree are based on, but which branch is the primary branch of the
+>> repository.
+> 
+> But from the working directory management tools' perspective HEAD
+> *is* about the current index and the current working directory.
+> If HEAD doesn't match the index and working directory closely
+> enough then the user is going to do something stupid, like commit
+> a negative delta by accident.
+> 
+> Pushing into the current branch of a repository with a working
+> directory probably shouldn't be allowed by default as users probably
+> don't want to do that.
 
 
+I do this all the time. I develop on my laptop and send changes to a 
+testserver where I check out the revision I just pushed to the working 
+directory attached to it. Doing it the other way around is cumbersome, 
+as I've got ssh-authentication installed on the server but don't wish to 
+have that on my laptop. I could ofcourse do this with the alternates 
+mechanism and pull things from the alternate repo to the one I really 
+use, but that seems like I have to work around a limitation in git that 
+isn't really there (or at least shouldn't be there for any logical or 
+technical reason).
 
-martin
+>  But if --force is used then detaching the
+> HEAD is probably the best idea.  The user could easily recover by
+> doing `git checkout origbranch` (though they may need `git checkout
+> -m origbranch` if their working directory was dirty).
+> 
+
+Since we can determine if there's a working directory or not, why not 
+just allow the fast-forward case if the working directory is clean and 
+update the working directory for the user? This can't lose any data and 
+would also make it very easy to, fe, keep a website in git and just push 
+it straight to the webserver  when there's been modifications in the 
+users repo. --force should behave the same way, possibly with an extra 
+check to see if the working directory is clean before checking it out.
+
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
