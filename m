@@ -1,66 +1,64 @@
 From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: Bug in git-status with non-ascii characters:
-Date: Tue, 9 Jan 2007 00:09:45 -0500
-Message-ID: <7BACA5DE-9DBA-4299-A965-E248263E27E2@silverinsanity.com>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=ISO-8859-1;
-	delsp=yes	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Tue Jan 09 06:10:18 2007
+Subject: [PATCH] Ignore git-init and git-remote
+Date: Tue, 9 Jan 2007 00:27:33 -0500
+Message-ID: <20070109052721.GA27927@Hermes.local>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Tue Jan 09 06:27:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H49FZ-0003n9-6e
-	for gcvg-git@gmane.org; Tue, 09 Jan 2007 06:10:17 +0100
+	id 1H49WM-0007iV-ER
+	for gcvg-git@gmane.org; Tue, 09 Jan 2007 06:27:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750861AbXAIFJu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 9 Jan 2007 00:09:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751051AbXAIFJu
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jan 2007 00:09:50 -0500
-Received: from vs072.rosehosting.com ([216.114.78.72]:36616 "EHLO
+	id S1751071AbXAIF1f (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 9 Jan 2007 00:27:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751077AbXAIF1f
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jan 2007 00:27:35 -0500
+Received: from vs072.rosehosting.com ([216.114.78.72]:51888 "EHLO
 	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750861AbXAIFJt convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 9 Jan 2007 00:09:49 -0500
-Received: from [192.168.1.5] (cpe-66-67-221-135.rochester.res.rr.com [66.67.221.135])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTP id 86B271FFC02B
-	for <git@vger.kernel.org>; Tue,  9 Jan 2007 05:09:48 +0000 (UTC)
-To: Git Mailing List <git@vger.kernel.org>
-X-Mailer: Apple Mail (2.752.3)
+	with ESMTP id S1751071AbXAIF1f (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Jan 2007 00:27:35 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by silverinsanity.com (Postfix) with ESMTP id CA7841FFD296
+	for <git@vger.kernel.org>; Tue,  9 Jan 2007 05:27:34 +0000 (UTC)
+Received: from Mutt by mutt-smtp-wrapper.pl 1.2  (www.zdo.com/articles/mutt-smtp-wrapper.shtml)
+To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36309>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36310>
 
-`git status` always reports the following:
+These new commands weren't added to .gitignore.  Add them so we don't
+end up with copies of them in the repo.
 
------ 8< -----
-# On branch refs/heads/master
-# Untracked files:
-#   (use "git add <file>..." to incrementally add content to commit)
-#
-#       gitweb/test/M=E4rchen
-no changes added to commit (use "git add" and/or "git commit [-a|-i|-=20
-o]")
------ 8< -----
+Signed-off-by: Brian Gernhardt <benji@silverinsanity.com>
+---
+ .gitignore |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
 
-When I do `rm gitweb/test/M<tab>` to remove this apparently unneeded =20
-file, `git status` reports:
-
------ 8< -----
-# On branch refs/heads/master
-# Changed but not added:
-#   (use "git add <file>..." to incrementally add content to commit)
-#
-#       deleted:    gitweb/test/M=E4rchen
-#
-no changes added to commit (use "git add" and/or "git commit [-a|-i|-=20
-o]")
------ 8< -----
-
-This is on Mac OS X, file system is HFS+ (Journaled).  Is this =20
-expected?  I can't figure out why it's happening.
-
-~~ Brian
+diff --git a/.gitignore b/.gitignore
+index 2904f12..6da1cdb 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -50,6 +50,7 @@ git-http-fetch
+ git-http-push
+ git-imap-send
+ git-index-pack
++git-init
+ git-init-db
+ git-instaweb
+ git-local-fetch
+@@ -92,6 +93,7 @@ git-rebase
+ git-receive-pack
+ git-reflog
+ git-relink
++git-remote
+ git-repack
+ git-repo-config
+ git-request-pull
+-- 
+1.4.4.4.g4083
