@@ -1,138 +1,107 @@
-From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: Re: [PATCH] gitweb: Fix git_patchset_body not closing <div class="patch">
-Date: Tue, 9 Jan 2007 15:35:31 -0800 (PST)
-Message-ID: <189181.35429.qm@web31811.mail.mud.yahoo.com>
-References: <11683840631010-git-send-email-jnareb@gmail.com>
-Reply-To: ltuikov@yahoo.com
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] Detached HEAD (experimental)
+Date: Tue, 9 Jan 2007 18:39:48 -0500
+Message-ID: <20070109233948.GC30023@spearce.org>
+References: <87ps9xgkjo.wl%cworth@cworth.org> <7virfprquo.fsf@assigned-by-dhcp.cox.net> <87odphgfzz.wl%cworth@cworth.org> <7vbql9ydd7.fsf@assigned-by-dhcp.cox.net> <20070108131735.GA2647@coredump.intra.peff.net> <7vzm8tt5kf.fsf@assigned-by-dhcp.cox.net> <20070109142130.GA10633@coredump.intra.peff.net> <7virffkick.fsf@assigned-by-dhcp.cox.net> <20070109213117.GB25012@fieldses.org> <7vy7obj07k.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 10 00:35:42 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: "J. Bruce Fields" <bfields@fieldses.org>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 10 00:39:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H4QVD-0003eZ-Gy
-	for gcvg-git@gmane.org; Wed, 10 Jan 2007 00:35:35 +0100
+	id 1H4QZS-0004pS-3C
+	for gcvg-git@gmane.org; Wed, 10 Jan 2007 00:39:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932538AbXAIXfc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 9 Jan 2007 18:35:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932540AbXAIXfc
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jan 2007 18:35:32 -0500
-Received: from web31811.mail.mud.yahoo.com ([68.142.207.74]:33238 "HELO
-	web31811.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S932538AbXAIXfc (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 9 Jan 2007 18:35:32 -0500
-Received: (qmail 36392 invoked by uid 60001); 9 Jan 2007 23:35:31 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=X-YMail-OSG:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
-  b=aVNl0loIKa7Ke9u/o/BevU3mDf3NPbZDDgGtEgqEI+YZKvU8mJsfu8+h2Q9/h42L70FMFSJZJjiZFHksXhDzPn8z5LAkkl+QVP7rBQTzt1zMNuvYYMXyEi4c+8hR6mWBL6xdptez6uVFeQvQ6wcNLlBgTALiIuGCYQFafaw+5mU=;
-X-YMail-OSG: 8616Dx8VM1mpF_G3lo_O_leiK5OUn0thc7u9B9CgtMDUJkgSYqUUakH30GFipfe1aWHy8vBFSDF5MYz0PsCnruf.cQoARsg0d341s5nqkBJ62CjDvgD1WdO8g50p0D34gSjQFdb3R8o-
-Received: from [64.215.88.90] by web31811.mail.mud.yahoo.com via HTTP; Tue, 09 Jan 2007 15:35:31 PST
-To: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-In-Reply-To: <11683840631010-git-send-email-jnareb@gmail.com>
+	id S932542AbXAIXjz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 9 Jan 2007 18:39:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932543AbXAIXjz
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jan 2007 18:39:55 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:34690 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932542AbXAIXjz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Jan 2007 18:39:55 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1H4QZA-0005sp-RY; Tue, 09 Jan 2007 18:39:41 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id D4E3620FBAE; Tue,  9 Jan 2007 18:39:48 -0500 (EST)
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vy7obj07k.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36423>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36424>
 
---- Jakub Narebski <jnareb@gmail.com> wrote:
+Junio C Hamano <junkio@cox.net> wrote:
+> I do not want to think about the consequences of adding more
+> cruft under .git/ directory.  For example, should PREV be
+> noticed by fsck and prune?  What should various forms of
+> 'git-reset' do with it?  How does it interact with 'git-bisect'?
 
-> Fix case when git_patchset_body didn't close <div class="patch">,
-> for patchsets with last patch empty.
-> 
-> perlsyn(1):
->   The "last" command immediately exits the loop in question.
->   The "continue" block, if any, is not executed.
-> 
-> Remove some commented out code in git_patchset_body.
-> 
-> Signed-off-by: Jakub Narebski <jnareb@gmail.com>
-Acked-by: Luben Tuikov <ltuikov@yahoo.com>
+I agree.  The reachability list for those is already starting to
+get out of control, and the rules for making sure those files are
+always in sync with every command is getting crazy.  Didn't we just
+fix `git reset --hard` to throw away .git/MERGE_MSG?  That's been
+a longstanding bug right there, and that's something that has been
+in the tree for a loooooooong time.
+ 
+> Being able to test merge or even make commits without being on a
+> branch is vastly useful.  It might or might not lead to anywhere
+> even after you make a handful commits -- and I would imagine
+> that it would be very handy to be able to be lazy and not having
+> to decide if it is worth a new branch.
 
-This patch fixes it.
+I agree.  I'm always creating and deleting `foof` because I need
+someplace to work real quick.  Being able to work on a detached HEAD
+would just slightly streamline the process, especially given that
+`git checkout -b a-real-name` is readily available to move that
+detached HEAD state into a real branch and continue on with it.
+ 
+> If Carl wants to do a patch to teach
+> 'git-commit' (and all other things that can create commits) not
+> to do things from working in a detached HEAD
 
-    Luben
+My concern here is to hit all of the corner cases.  reset.  bisect.
+am.  rebase.  merge.  cherry-pick/revert.  Did I get all of 'em?
+I'm not sure actually.  ;-)
 
+> It's tempting to forget about this whole "safety" business.
+> Because we allow "reset --hard" and other forms of operations
+> that can lose history if they were done while on a branch, only
+> giving the safety to "git checkout" feels somewhat silly.
 
-> ---
-> 
-> Luben Tuikov wrote:
-> > --- Jakub Narebski <jnareb@gmail.com> wrote:
-> >> Jakub Narebski wrote:
-> >>> Luben Tuikov wrote:
-> >>> 
-> >>>> Ok, I see that Junio has committed the fixes to "next" -- thanks!
-> >>>> That saved me time having to manually apply them.
-> >>>> 
-> >>>> Now, the results are that I see the same bug.
-> >>>  
-> >>> (The same bug = no closing div).
-> >>> 
-> >>> I'll try to reproduce this.
-> >> 
-> >> I failed to reproduce this error.
-> >> 
-> >> Could you apply the following patch, and report the result of
-> >>   grep "</div>\|<div" | grep -v "<div.*</div>
-> >> (find all opening and closing <div> elements, but omitting
-> >> those which are opened and closed in the same line)?
-> 
-> [...] 
-> > <div class="patchset">
-> > <div class="patch" id="patch1">
-> > <div class="diff extended_header">
-> > </div><!-- diff extended_header -->
-> > </div><!-- patch 0 -->
-> > <div class="patch" id="patch2">
-> > <div class="diff extended_header">
-> > </div><!-- diff extended_header -->
-> > </div><!-- patchset -->
-> [...] 
-> > The bug is clear.
-> 
-> Oops. I'm bit new to Perl.
-> 
-> This should fix it.
-> 
->  gitweb/gitweb.perl |    7 ++++---
->  1 files changed, 4 insertions(+), 3 deletions(-)
-> 
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index 25e5079..88af2e6 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -2412,7 +2412,6 @@ sub git_patchset_body {
->  
->  			push @diff_header, $patch_line;
->  		}
-> -		#last PATCH unless $patch_line;
->  		my $last_patch_line = $patch_line;
->  
->  		# check if current patch belong to current raw line
-> @@ -2522,7 +2521,10 @@ sub git_patchset_body {
->  
->  		# from-file/to-file diff header
->  		$patch_line = $last_patch_line;
-> -		last PATCH unless $patch_line;
-> +		if (! $patch_line) {
-> +			print "</div>\n"; # class="patch"
-> +			last PATCH;
-> +		}
->  		next PATCH if ($patch_line =~ m/^diff /);
->  		#assert($patch_line =~ m/^---/) if DEBUG;
->  		if ($from{'href'} && $patch_line =~ m!^--- "?a/!) {
-> @@ -2533,7 +2535,6 @@ sub git_patchset_body {
->  		print "<div class=\"diff from_file\">$patch_line</div>\n";
->  
->  		$patch_line = <$fd>;
-> -		#last PATCH unless $patch_line;
->  		chomp $patch_line;
->  
->  		#assert($patch_line =~ m/^+++/) if DEBUG;
-> -- 
-> 1.4.4.3
-> 
-> 
+But isn't the --hard switch the safety valve here?  And lets not
+forget that reflogs are enabled by default now so even a `reset
+--hard` on a real branch isn't a total loss (its only a loss for
+uncommitted files in the working directory).
+
+But a detached HEAD has no reflog. Which means operations that
+update it in a non-fastforward way would orphan work.  A subsequent
+gc/prune/repack might destroy it, unless an existing ref contains
+that previous commit.
+
+> Which makes the "merge-base --check-ancestry" stuff I did last
+> night pretty much unnecessary, but that's Ok.  It will find
+> other uses.
+
+Pity.  It looked like it was a good change and would be useful here
+as a safety valve.  Though based on what you said above I would
+think we'd actually want it in both checkout and reset (--soft and
+--hard versions).
+
+-- 
+Shawn.
