@@ -1,52 +1,80 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: [PATCH] sha1_name(): accept ':directory/' to get at the cache_tree
-Date: Tue, 9 Jan 2007 18:25:13 +0100
-Message-ID: <81b0412b0701090925p158e87an14da5cde33436f30@mail.gmail.com>
-References: <Pine.LNX.4.63.0701091502030.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<zeisberg@informatik.uni-freiburg.de>
+Subject: Re: I just pulled and built 'next'...
+Date: Tue, 9 Jan 2007 18:35:01 +0100
+Organization: Universitaet Freiburg, Institut f. Informatik
+Message-ID: <20070109173501.GA3732@cepheus>
+References: <E1H3uc2-0004m1-Ua@think.thunk.org> <7vvejhwa6g.fsf@assigned-by-dhcp.cox.net> <20070108210002.GA15121@thunk.org> <20070109032124.GA1904@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, junkio@cox.net
-X-From: git-owner@vger.kernel.org Tue Jan 09 18:25:37 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Theodore Tso <tytso@mit.edu>, Junio C Hamano <junkio@cox.net>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 09 18:35:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H4Kiw-0005C5-Lv
-	for gcvg-git@gmane.org; Tue, 09 Jan 2007 18:25:23 +0100
+	id 1H4Ksm-00082s-1e
+	for gcvg-git@gmane.org; Tue, 09 Jan 2007 18:35:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932272AbXAIRZQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 9 Jan 2007 12:25:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932281AbXAIRZQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jan 2007 12:25:16 -0500
-Received: from wr-out-0506.google.com ([64.233.184.228]:31074 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932272AbXAIRZP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Jan 2007 12:25:15 -0500
-Received: by wr-out-0506.google.com with SMTP id 68so1640351wri
-        for <git@vger.kernel.org>; Tue, 09 Jan 2007 09:25:14 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=PhPangt5fV3DFzBmQnrM6jUuGlDCmrOYOZbYahreg2hGGInW7Fivoi4yh/YL8jy24ZbLiel+tFNR4UL2FCcrLCMUcR5Pv7meO9VvGyXy/p3xAKTN+FabGwUXw64LRKgibtmnTCVZMiUW9BHXftJC9nruL96IbwJ91V0KuzAfH0M=
-Received: by 10.78.149.15 with SMTP id w15mr5953433hud.1168363513947;
-        Tue, 09 Jan 2007 09:25:13 -0800 (PST)
-Received: by 10.78.135.3 with HTTP; Tue, 9 Jan 2007 09:25:13 -0800 (PST)
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0701091502030.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	id S932292AbXAIRf3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 9 Jan 2007 12:35:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932293AbXAIRf2
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jan 2007 12:35:28 -0500
+Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:57235 "EHLO
+	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932292AbXAIRf1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 9 Jan 2007 12:35:27 -0500
+Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
+	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
+	(Exim 4.60)
+	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
+	id 1H4Ksg-0006k7-Fa; Tue, 09 Jan 2007 18:35:26 +0100
+Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
+	by login.informatik.uni-freiburg.de (8.13.7+Sun/8.12.11) with ESMTP id l09HZIbA020646;
+	Tue, 9 Jan 2007 18:35:18 +0100 (MET)
+Received: (from zeisberg@localhost)
+	by login.informatik.uni-freiburg.de (8.13.7+Sun/8.12.11/Submit) id l09HZ5o6020645;
+	Tue, 9 Jan 2007 18:35:05 +0100 (MET)
+To: "Shawn O. Pearce" <spearce@spearce.org>
+Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <zeisberg@informatik.uni-freiburg.de>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Theodore Tso <tytso@mit.edu>, Junio C Hamano <junkio@cox.net>,
+	git@vger.kernel.org
 Content-Disposition: inline
+In-Reply-To: <20070109032124.GA1904@spearce.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36378>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36379>
 
-On 1/9/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> 	'tis a resend of an earlier patch, but without support for the
-> 	bogus ":." as equivalent to ":/".
+Hello,
 
-Thanks :)
+Shawn O. Pearce wrote:
+>   $ git rev-list v1.5.0-rc0..next | wc -l
+>   687
+>   $ git rev-list v1.4.4.4..next | wc -l
+>   1051
+>=20
+> So what about doing Junio's suggestion of going by topology and
+> coming up with the possible set of tags (v1.5.0-rc0 and v1.4.4.4
+> right now), and if more than one is found compute the number of
+> commits between each tag and the requested revision, and take the
+> tag that has a smallest number of commits?
+One scenario where this will fail is when a bugfix is commited on top o=
+f
+v1.4.4.4 and then is merged into v1.5.0-rc0+gabcdef.
 
-> 	I find this feature highly convenient when I just want to see
-> 	what files the index contains.
+Just my 0.02$.
 
-I find it very useful too.
+Uwe
+
+--=20
+Uwe Kleine-K=F6nig
+
+exit vi, lesson III:
+: x ! <CR>
+
+NB: may write current file
