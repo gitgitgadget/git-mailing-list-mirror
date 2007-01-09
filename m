@@ -1,93 +1,86 @@
-From: Steven Grimm <koreth@midwinter.com>
-Subject: Recovering from an aborted git-rebase?
-Date: Tue, 09 Jan 2007 15:20:33 -0800
-Message-ID: <45A42341.8040304@midwinter.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] Replacing the system call pread() with lseek()/xread()/lseek() sequence.
+Date: Tue, 9 Jan 2007 18:25:41 -0500
+Message-ID: <20070109232540.GA30023@spearce.org>
+References: <45A40C15.1070200@shadowen.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Wed Jan 10 00:20:20 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: "Stefan-W. Hahn" <stefan.hahn@s-hahn.de>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 10 00:25:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H4QGJ-00086R-O4
-	for gcvg-git@gmane.org; Wed, 10 Jan 2007 00:20:12 +0100
+	id 1H4QLo-0001Cy-7C
+	for gcvg-git@gmane.org; Wed, 10 Jan 2007 00:25:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932514AbXAIXUH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 9 Jan 2007 18:20:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932515AbXAIXUG
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jan 2007 18:20:06 -0500
-Received: from tater.midwinter.com ([216.32.86.90]:57927 "HELO midwinter.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932514AbXAIXUF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Jan 2007 18:20:05 -0500
-Received: (qmail 9606 invoked from network); 9 Jan 2007 23:20:04 -0000
-Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=200606; d=midwinter.com;
-  b=KzwRXoX+B4GrR5KOx0R4NC7sAOfLqLZxdgGNnUyaXoWtDzFIpSRUeTiIC3M8XytA  ;
-Received: from localhost (HELO ?127.0.0.1?) (koreth@127.0.0.1)
-  by localhost with SMTP; 9 Jan 2007 23:20:04 -0000
-User-Agent: Mail/News 1.5.0.2 (Macintosh/20060324)
-To: git@vger.kernel.org
+	id S932515AbXAIXZt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 9 Jan 2007 18:25:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932521AbXAIXZt
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jan 2007 18:25:49 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:34220 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932515AbXAIXZt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Jan 2007 18:25:49 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1H4QLV-0004u8-Ft; Tue, 09 Jan 2007 18:25:33 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 4174720FBAE; Tue,  9 Jan 2007 18:25:41 -0500 (EST)
+To: Andy Whitcroft <apw@shadowen.org>
+Content-Disposition: inline
+In-Reply-To: <45A40C15.1070200@shadowen.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36420>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36421>
 
-Got this from one of the other people here who's using git. Luckily he 
-was able to restore his repo from a filesystem snapshot, so no permanent 
-harm done, but what's the pure-git way to recover from this? Are the 
-revisions in question really gone?
+Andy Whitcroft <apw@shadowen.org> wrote:
+> Stefan-W. Hahn wrote:
+> > Using cygwin with cygwin.dll before 1.5.22 the system call pread() is buggy.
+> > This patch introduces NO_PREAD. If NO_PREAD is set git uses a sequence of
+> > lseek()/xread()/lseek() to emulate pread.
+> > +
+> > +        rc=read_in_full(fd, buf, count);
+> 
+> Seems to be style inconsistancy between current_offset = and rc= I
+> believe the former is preferred.
 
----
-I have 3 branches:
-master
-fql
-fql-new
-master is basically just the same as remotes/git-svn, fql is a bunch of
-changes on top of that, and then fql-new is a new version of FQL so it makes
-changes on top of the changes in fql (with the intention being to make it
-easy to jump back if I didn't wind up liking the new version).
-unfortunately perhaps I made it too easy, as now fql and fql-new are
-identical and I can't get the additional set of changes back for fql-new.
+With the exception of this style difference, the patch looked
+pretty good.  Nice work Stefan.  Andy's right, we do tend to prefer
+"rc = read_in_full" over "rc=read_in_full".  Quite a bit actually,
+though Junio is the final decider on all such matters as he gets
+to choose to accept or reject the patch.  ;-)
 
-Generally when I want to sync up to SVN I just fetch it in master and then
-rebase everything to its parent branch - basically my goal being to get git
-show-branch to look the same as it did before the fetch.  This time I did
-the fetch command in fql-new instead of master, which I'm pretty sure I've
-done before with no real harm done.  Anyway, here's what I did:
-(in fql-new branch)
-dev005:~/www-git$ git svn fetch
-<pulls in the usual updates>
-dev005:~/www-git$ git rebase fql
-Current branch fql-new is up to date.
-dev005:~/www-git$ git checkout master
-dev005:~/www-git$ git rebase remotes/git-svn
-First, rewinding head to replay your work on top of it...
-HEAD is now at a5074e5... Fix IE6 display bug on photo_comments
-Fast-forwarded master to remotes/git-svn.
-dev005:~/www-git$ git checkout fql
-dev005:~/www-git$ git rebase master
-<works normally, lots of output spew>
-dev005:~/www-git$ git checkout fql-new
-dev005:~/www-git$ git rebase master
-First, rewinding head to replay your work on top of it...
-HEAD is now at a5074e5... Fix IE6 display bug on photo_comments
-*********
-at this point I think to myself "oops, I meant to rebase to fql, not to
-master" and press ctrl+c
-*********
-dev005:~/www-git$ git rebase fql
-First, rewinding head to replay your work on top of it...
-HEAD is now at 7b49c62... split up some fql/fields/ files to more closely
-match the actual tables we have
-Fast-forwarded fql-new to fql.
-******
-notice that it doesn't apply any changes on top of fql and doesn't output
-any spew here
-*******
-dev005:~/www-git$
+> > +
+> > +        if (current_offset != lseek(fd, current_offset, SEEK_SET))
+> > +                return -1;
+> 
+> How likely are we ever to be in the right place here?  Seems vanishingly
+> small putting us firmly in the four syscalls per call space.  I wonder
+> if git ever actually cares about the seek location.  ie if we could stop
+> reading and resetting it.  Probabally not worth working it out I guess
+> as any _sane_ system has one.
 
-and just like that, now all those changes from fql to fql-new are totally
-lost.  git log and git show-branch show no trace of them.
+Andy's right actually.  If we are using pread() we aren't relying
+on the current file pointer.  Which means its unnecessary to get
+the current pointer before seeking to the requested offset, and its
+unnecessary to restore it before the git_pread() function returns.
+
+Though its a possibly unnecessary optimization as like Andy points
+out, most sane systems already have a working pread() implementation.
+And those that don't, well, probably should be made to be sane.
+But we don't need to make Git suffer there if we don't have to.
+
+-- 
+Shawn.
