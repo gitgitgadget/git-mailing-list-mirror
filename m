@@ -1,36 +1,36 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Pushing into a repository with working directory?
-Date: Mon, 8 Jan 2007 22:32:13 -0500
-Message-ID: <20070109033213.GC1904@spearce.org>
-References: <20070102045108.GC27690@spearce.org> <459E1182.201@shadowen.org> <7vwt41j1le.fsf@assigned-by-dhcp.cox.net> <20070105193646.GC8753@spearce.org> <45A24CE6.5060201@shadowen.org> <7vd55pt3ts.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: building git in a separate directory
+Date: Mon, 8 Jan 2007 22:37:52 -0500
+Message-ID: <20070109033752.GD1904@spearce.org>
+References: <7c737f300701081930t755d9e61h581e421ecf7ab465@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Andy Whitcroft <apw@shadowen.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 09 04:32:27 2007
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 09 04:38:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H47io-0000SB-8Y
-	for gcvg-git@gmane.org; Tue, 09 Jan 2007 04:32:22 +0100
+	id 1H47oJ-0001bO-3K
+	for gcvg-git@gmane.org; Tue, 09 Jan 2007 04:38:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750749AbXAIDcT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 8 Jan 2007 22:32:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750771AbXAIDcT
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jan 2007 22:32:19 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:48473 "EHLO
+	id S1750783AbXAIDh5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 8 Jan 2007 22:37:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750854AbXAIDh5
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jan 2007 22:37:57 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:48670 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750749AbXAIDcT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Jan 2007 22:32:19 -0500
+	with ESMTP id S1750783AbXAIDh4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Jan 2007 22:37:56 -0500
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.63)
 	(envelope-from <spearce@spearce.org>)
-	id 1H47iW-00004r-EI; Mon, 08 Jan 2007 22:32:04 -0500
+	id 1H47nz-0000Tn-9H; Mon, 08 Jan 2007 22:37:43 -0500
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 0DD3E20FBAE; Mon,  8 Jan 2007 22:32:13 -0500 (EST)
-To: Junio C Hamano <junkio@cox.net>
+	id E79F320FBAE; Mon,  8 Jan 2007 22:37:52 -0500 (EST)
+To: Alexy Khrabrov <deliverable@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <7vd55pt3ts.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <7c737f300701081930t755d9e61h581e421ecf7ab465@mail.gmail.com>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -43,31 +43,23 @@ X-Source-Dir:
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36303>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36304>
 
-Junio C Hamano <junkio@cox.net> wrote:
-> However, I am not sure if that is easy to understand for the
-> users.  It would be sane to deny pushing into the current branch
-> for a non-bare repositories by default, and if we do allow it
-> (perhaps with 'git-push --force'), then detach the HEAD as you
-> suggest.  On the other hand, pushing into the current branch of
-> a bare repository should just work; the HEAD pointer in a bare
-> repository is not about the commit the index and the working
-> tree are based on, but which branch is the primary branch of the
-> repository.
+Alexy Khrabrov <deliverable@gmail.com> wrote:
+> Tried to build git 1.4.4.1 away from the source directory -- said
+> 
+> make configure
+> 
+> -- which made a configure, switched to a separate build/ directory,
+> invoked that/../configure -- which ran fine, except produced no
+> Makefile!
+> 
+> What's the way to build git outside from the source directory?
 
-But from the working directory management tools' perspective HEAD
-*is* about the current index and the current working directory.
-If HEAD doesn't match the index and working directory closely
-enough then the user is going to do something stupid, like commit
-a negative delta by accident.
-
-Pushing into the current branch of a repository with a working
-directory probably shouldn't be allowed by default as users probably
-don't want to do that.  But if --force is used then detaching the
-HEAD is probably the best idea.  The user could easily recover by
-doing `git checkout origbranch` (though they may need `git checkout
--m origbranch` if their working directory was dirty).
+I'm no sure that's supported right now.  Someone tried to submit
+patches for it but I don't think they were applied.  The configure
+script is really just a way to create a personal config.mak, which is
+the "real" way to configure Git prior to compiling it with Makefile.
 
 -- 
 Shawn.
