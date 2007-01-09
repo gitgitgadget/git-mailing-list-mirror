@@ -1,27 +1,27 @@
 From: Fengguang Wu <fengguang.wu@gmail.com>
 Subject: Re: How git affects kernel.org performance
 Date: Tue, 9 Jan 2007 15:59:46 +0800
-Message-ID: <20070109075945.GA8799__45841.3940541961$1168330087$gmane$org@mail.ustc.edu.cn>
+Message-ID: <20070109075945.GA8799__43201.4260594316$1168330087$gmane$org@mail.ustc.edu.cn>
 References: <1166304080.13548.8.camel@nigel.suspend2.net> <459152B1.9040106@zytor.com> <1168140954.2153.1.camel@nigel.suspend2.net> <45A08269.4050504@zytor.com> <45A083F2.5000000@zytor.com> <Pine.LNX.4.64.0701062130260.3661@woody.osdl.org> <20070107085526.GR24090@1wt.eu> <20070107011542.3496bc76.akpm@osdl.org> <20070108030555.GA7289@in.ibm.com> <20070108125819.GA32756@thunk.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: linux-ext4-owner@vger.kernel.org Tue Jan 09 09:08:02 2007
-Return-path: <linux-ext4-owner@vger.kernel.org>
-Envelope-to: gcfe-linux-ext4@gmane.org
+X-From: git-owner@vger.kernel.org Tue Jan 09 09:08:03 2007
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H4C1X-00014A-5e
-	for gcfe-linux-ext4@gmane.org; Tue, 09 Jan 2007 09:07:59 +0100
+	id 1H4C1V-00014A-3C
+	for gcvg-git@gmane.org; Tue, 09 Jan 2007 09:07:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751149AbXAIIHy (ORCPT <rfc822;gcfe-linux-ext4@m.gmane.org>);
-	Tue, 9 Jan 2007 03:07:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751147AbXAIIHu
-	(ORCPT <rfc822;linux-ext4-outgoing>); Tue, 9 Jan 2007 03:07:50 -0500
-Received: from smtp.ustc.edu.cn ([202.38.64.16]:50658 "HELO ustc.edu.cn"
+	id S1751146AbXAIIHt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 9 Jan 2007 03:07:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751147AbXAIIHt
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jan 2007 03:07:49 -0500
+Received: from smtp.ustc.edu.cn ([202.38.64.16]:50662 "HELO ustc.edu.cn"
 	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
-	id S1751149AbXAIIHs (ORCPT <rfc822;linux-ext4@vger.kernel.org>);
+	id S1751146AbXAIIHs (ORCPT <rfc822;git@vger.kernel.org>);
 	Tue, 9 Jan 2007 03:07:48 -0500
-X-Greylist: delayed 503 seconds by postgrey-1.27 at vger.kernel.org; Tue, 09 Jan 2007 03:07:47 EST
+X-Greylist: delayed 431 seconds by postgrey-1.27 at vger.kernel.org; Tue, 09 Jan 2007 03:07:44 EST
 Received: (eyou send program); Tue, 09 Jan 2007 15:59:14 +0800
 X-EYOUMAIL-SMTPAUTH: wfg@mail.ustc.edu.cn
 Received: from unknown (HELO localhost) (210.45.71.196)
@@ -54,10 +54,10 @@ Content-Disposition: inline
 In-Reply-To: <20070108125819.GA32756@thunk.org>
 X-GPG-Fingerprint: 53D2 DDCE AB5C 8DC6 188B  1CB1 F766 DA34 8D8B 1C6D
 User-Agent: Mutt/1.5.13 (2006-08-11)
-Sender: linux-ext4-owner@vger.kernel.org
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: linux-ext4@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36325>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36326>
 
 On Mon, Jan 08, 2007 at 07:58:19AM -0500, Theodore Tso wrote:
 > On Mon, Jan 08, 2007 at 08:35:55AM +0530, Suparna Bhattacharya wrote:
