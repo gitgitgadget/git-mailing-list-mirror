@@ -1,60 +1,54 @@
-From: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
-Subject: Re: building git in a separate directory
-Date: Tue, 09 Jan 2007 00:40:32 -0300
-Message-ID: <200701090340.l093eWGj011290@laptop13.inf.utfsm.cl>
-References: <deliverable@gmail.com>
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 09 04:40:45 2007
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: [DRAFT] Branching and merging with git
+Date: Mon, 8 Jan 2007 23:17:51 -0500
+Message-ID: <20070109041751.GE1686@fieldses.org>
+References: <20061116221701.4499.qmail@science.horizon.com> <20070103170411.GB5491@thunk.org> <20070107234411.GD18009@fieldses.org> <20070108004006.GB23182@thunk.org> <20070108004641.GG18009@fieldses.org> <8b65902a0701080438v4822eabdi135a5358f977328a@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Theodore Tso <tytso@mit.edu>, linux@horizon.com,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 09 05:18:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H47qq-0002Cj-CO
-	for gcvg-git@gmane.org; Tue, 09 Jan 2007 04:40:40 +0100
+	id 1H48R5-00016j-Bv
+	for gcvg-git@gmane.org; Tue, 09 Jan 2007 05:18:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750787AbXAIDkh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 8 Jan 2007 22:40:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750923AbXAIDkh
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jan 2007 22:40:37 -0500
-Received: from inti.inf.utfsm.cl ([200.1.21.155]:43434 "EHLO inti.inf.utfsm.cl"
+	id S1751030AbXAIERz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 8 Jan 2007 23:17:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751031AbXAIERz
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jan 2007 23:17:55 -0500
+Received: from mail.fieldses.org ([66.93.2.214]:44854 "EHLO fieldses.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750787AbXAIDkg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Jan 2007 22:40:36 -0500
-Received: from laptop13.inf.utfsm.cl (pc-173-245-83-200.cm.vtr.net [200.83.245.173])
-	by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id l093eXmT011246
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Tue, 9 Jan 2007 00:40:34 -0300
-Received: from laptop13.inf.utfsm.cl (laptop13.inf.utfsm.cl [127.0.0.1])
-	by laptop13.inf.utfsm.cl (8.13.8/8.13.8) with ESMTP id l093eWGj011290;
-	Tue, 9 Jan 2007 00:40:32 -0300
-To: "Alexy Khrabrov" <deliverable@gmail.com>
-In-Reply-To: Message from "Alexy Khrabrov" <deliverable@gmail.com> 
-   of "Mon, 08 Jan 2007 19:30:54 -0800." <7c737f300701081930t755d9e61h581e421ecf7ab465@mail.gmail.com> 
-X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.5  (beta27)
-X-Greylist: Delayed for 00:01:56 by milter-greylist-3.0 (inti.inf.utfsm.cl [200.1.19.1]); Tue, 09 Jan 2007 00:40:34 -0300 (CLST)
-X-Virus-Scanned: ClamAV version 0.88.5, clamav-milter version 0.88.5 on inti.inf.utfsm.cl
-X-Virus-Status: Clean
+	id S1751029AbXAIERy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Jan 2007 23:17:54 -0500
+Received: from bfields by fieldses.org with local (Exim 4.63)
+	(envelope-from <bfields@fieldses.org>)
+	id 1H48Qp-0002xb-Oh; Mon, 08 Jan 2007 23:17:51 -0500
+To: Guilhem Bonnefille <guilhem.bonnefille@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <8b65902a0701080438v4822eabdi135a5358f977328a@mail.gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36305>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36306>
 
-Alexy Khrabrov <deliverable@gmail.com> wrote:
-> Tried to build git 1.4.4.1 away from the source directory -- said
-> 
-> make configure
+On Mon, Jan 08, 2007 at 01:38:19PM +0100, Guilhem Bonnefille wrote:
+> Nice work.
 
-This is just the bare minimum required to use some of the autoconfiscating
-machinery, it is far from working. And IIUC, the git hackers won't ever go
-that route.
+Thanks!
 
-[...]
+> My only 2 cents: the SVN book is really a good book, as it contains
+> both simple user and advanced hacker info. As it is in free licence,
+> perhaps it could be possible to "port" the book to Git. I saw that the
+> SVK book is such a port. But it's a DocBook document.
+> http://svnbook.red-bean.com/
 
-> What's the way to build git outside from the source directory?
+Thanks, yes, that does look very polished.
 
-It isn't set up for that currently.
--- 
-Dr. Horst H. von Brand                   User #22616 counter.li.org
-Departamento de Informatica                    Fono: +56 32 2654431
-Universidad Tecnica Federico Santa Maria             +56 32 2654239
-Casilla 110-V, Valparaiso, Chile               Fax:  +56 32 2797513
+If there's any part you'd be particularly interested in seeing "ported",
+I'd be happy to help incorporate your work.
+
+--b.
