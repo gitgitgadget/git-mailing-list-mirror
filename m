@@ -1,140 +1,138 @@
-From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: Re: New way of tracking remote branches -- question
-Date: Mon, 8 Jan 2007 23:45:09 -0800 (PST)
-Message-ID: <524590.40333.qm@web31802.mail.mud.yahoo.com>
-References: <7v8xghariv.fsf@assigned-by-dhcp.cox.net>
-Reply-To: ltuikov@yahoo.com
+From: Fengguang Wu <fengguang.wu@gmail.com>
+Subject: Re: How git affects kernel.org performance
+Date: Tue, 9 Jan 2007 15:59:46 +0800
+Message-ID: <368329554.17014@ustc.edu.cn>
+References: <1166304080.13548.8.camel@nigel.suspend2.net> <459152B1.9040106@zytor.com> <1168140954.2153.1.camel@nigel.suspend2.net> <45A08269.4050504@zytor.com> <45A083F2.5000000@zytor.com> <Pine.LNX.4.64.0701062130260.3661@woody.osdl.org> <20070107085526.GR24090@1wt.eu> <20070107011542.3496bc76.akpm@osdl.org> <20070108030555.GA7289@in.ibm.com> <20070108125819.GA32756@thunk.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 09 08:45:18 2007
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git@gmane.org
+Content-Type: text/plain; charset=us-ascii
+X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1751145AbXAIH73@vger.kernel.org Tue Jan 09 09:00:10 2007
+Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1751145AbXAIH73@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H4BfY-0004cu-Ih
-	for gcvg-git@gmane.org; Tue, 09 Jan 2007 08:45:16 +0100
+	id 1H4Btw-0007mJ-MZ
+	for glk-linux-kernel-3@gmane.org; Tue, 09 Jan 2007 09:00:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751134AbXAIHpM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 9 Jan 2007 02:45:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751135AbXAIHpM
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jan 2007 02:45:12 -0500
-Received: from web31802.mail.mud.yahoo.com ([68.142.207.65]:41824 "HELO
-	web31802.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1751134AbXAIHpK (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 9 Jan 2007 02:45:10 -0500
-Received: (qmail 43011 invoked by uid 60001); 9 Jan 2007 07:45:09 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=X-YMail-OSG:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
-  b=Lv+FzDdW+Omr0CC777T8XNSHAvg2JQntax2U+tUeMA93bHiUBO0wvgpcZbJ1utl+8mJFA6O5VVTYRDMt2Bf5ZQkOTgXt77VhjCx/YPdTghOzoRTOHXwQWECUAsylLO2ApPW6xaFqOfG/GWEGRMS5XP1WKGn+T1xNMZlrAfl3VVo=;
-X-YMail-OSG: .JzdDL8VM1lmlBM9IbPV8OngVMpsuKuKqOWfmDuu7OnCxaMrM.47NZMow8x1F_1TDSLll_ch8zGiMWaBvovLXgsNFJXwjXDLrMPiT7QDuSUDFjVBr_CY8oqU8CvgAl2yUyWFXcTNI8P9jA9CJKjkIP.c9eClIaCv5xzZUpBYR3jIfk2eTnoPTODg
-Received: from [71.80.231.208] by web31802.mail.mud.yahoo.com via HTTP; Mon, 08 Jan 2007 23:45:09 PST
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v8xghariv.fsf@assigned-by-dhcp.cox.net>
-Sender: git-owner@vger.kernel.org
+	id S1751145AbXAIH73 (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Tue, 9 Jan 2007 02:59:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751143AbXAIH73
+	(ORCPT <rfc822;linux-kernel-outgoing>);
+	Tue, 9 Jan 2007 02:59:29 -0500
+Received: from smtp.ustc.edu.cn ([202.38.64.16]:43420 "HELO ustc.edu.cn"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
+	id S1751145AbXAIH72 (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
+	Tue, 9 Jan 2007 02:59:28 -0500
+Received: (eyou send program); Tue, 09 Jan 2007 15:59:14 +0800
+X-EYOUMAIL-SMTPAUTH: wfg@mail.ustc.edu.cn
+Received: from unknown (HELO localhost) (210.45.71.196)
+ by 202.38.64.8 with SMTP; Tue, 09 Jan 2007 15:59:14 +0800
+Received: from wfg by localhost with local (Exim 4.63)
+	(envelope-from <wfg@localhost>)
+	id 1H4Bta-0002Iu-1o; Tue, 09 Jan 2007 15:59:46 +0800
+To: Theodore Tso <tytso@mit.edu>,
+	Suparna Bhattacharya <suparna@in.ibm.com>,
+	Andrew Morton <akpm@osdl.org>, Willy Tarreau <w@1wt.eu>,
+	Linus Torvalds <torvalds@osdl.org>,
+	"H. Peter Anvin" <hpa@zytor.com>, git@vger.kernel.org,
+	nigel@nigel.suspend2.net, "J.H." <warthog9@kernel.org>,
+	Randy Dunlap <randy.dunlap@oracle.com>,
+	Pavel Machek <pavel@ucw.cz>,
+	kernel list <linux-kernel@vger.kernel.org>,
+	webmaster@kernel.org,
+	"linux-ext4@vger.kernel.org" <linux-ext4@vger.kernel.org>
+Message-ID: <20070109075945.GA8799@mail.ustc.edu.cn>
+Mail-Followup-To: Theodore Tso <tytso@mit.edu>,
+	Suparna Bhattacharya <suparna@in.ibm.com>,
+	Andrew Morton <akpm@osdl.org>, Willy Tarreau <w@1wt.eu>,
+	Linus Torvalds <torvalds@osdl.org>,
+	"H. Peter Anvin" <hpa@zytor.com>, git@vger.kernel.org,
+	nigel@nigel.suspend2.net, "J.H." <warthog9@kernel.org>,
+	Randy Dunlap <randy.dunlap@oracle.com>, Pavel Machek <pavel@ucw.cz>,
+	kernel list <linux-kernel@vger.kernel.org>, webmaster@kernel.org,
+	"linux-ext4@vger.kernel.org" <linux-ext4@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <20070108125819.GA32756@thunk.org>
+X-GPG-Fingerprint: 53D2 DDCE AB5C 8DC6 188B  1CB1 F766 DA34 8D8B 1C6D
+User-Agent: Mutt/1.5.13 (2006-08-11)
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36323>
+X-Mailing-List: linux-kernel@vger.kernel.org
 
-> Junio C Hamano <junkio@cox.net> writes:
+On Mon, Jan 08, 2007 at 07:58:19AM -0500, Theodore Tso wrote:
+> On Mon, Jan 08, 2007 at 08:35:55AM +0530, Suparna Bhattacharya wrote:
+> > > Yeah, slowly-growing directories will get splattered all over the disk.
+> > > 
+> > > Possible short-term fixes would be to just allocate up to (say) eight
+> > > blocks when we grow a directory by one block.  Or teach the
+> > > directory-growth code to use ext3 reservations.
+> > > 
+> > > Longer-term people are talking about things like on-disk rerservations.
+> > > But I expect directories are being forgotten about in all of that.
+> > 
+> > By on-disk reservations, do you mean persistent file preallocation ? (that
+> > is explicit preallocation of blocks to a given file) If so, you are
+> > right, we haven't really given any thought to the possibility of directories
+> > needing that feature.
 > 
-> If you wanted to do _ANY_ development on top of it (even if that
-> was just to set '#define DEBUG 1'), however, you would need to
-> branch off of it, say "git checkout -b my-next next", so the
-> above inconvenience is arguably very minor.  On the other hand,
-> the downside are the pollution of your own heads/ namespace
-> (having your forked branch and remote tracking branch means
-> heads/ would have next and pu from me and my-next and my-pu you
-> work on), and some people are not as careful and disciplined as
-> you are and have made mistakes of committing their own changes
-> while on such remote tracking branches (you can call the latter
-> part "newbie protection").  The next 'git fetch', especially
-> when it was forced _and_ was done while on 'next', was rather
-> unpleasant.  Of course, discipined people like you and me would
-> never do that, but we are not the only two people in the
-> universe ;-).
+> The fastest and probably most important thing to add is some readahead
+> smarts to directories --- both to the htree and non-htree cases.  If
 
-LOL, I love your sense of humor here! :-)
+Here's is a quick hack to practice the directory readahead idea.
+Comments are welcome, it's a freshman's work :)
 
-> The issue of "checking the tracking branch out to look-and-see"
-> is going to be addressed by the upcoming detached HEAD support,
-> so personally I do not think it will be a huge problem.  You
-> would have to say "git checkout origin/next" for it with the new
-> layout.
+Regards,
+Wu
+---
+ fs/ext3/dir.c   |   22 ++++++++++++++++++++++
+ fs/ext3/inode.c |    2 +-
+ 2 files changed, 23 insertions(+), 1 deletion(-)
 
-I guess, what I want is still to be able to "see" remotes/
-when I do "git branch".
-
-Sometimes I don't care to check out the remote branch, I just
-want to rev-list it.  Sometimes I do check it out so I can
-take a look and when I pull, I do the required reset, but
-as you said above :-) this requires discipline.
-
-And of course if I want to do my own development, I branch
-off, as I've done with "next", and never forget to "git-pull . next"
-after I pull from you.  Again this requires discipline.
-
-But what I appreciate in git, is this discipline.  The fact that
-I'm in control of it and that I have to do it -- keeps my mind sharp.
-
-I really think that the line separating porcelains from git
-should be drawn at some point.
-
-I think that this "automatic merge/newbie protection" policy,
-should've been well suited to porcelains as opposed to
-git.
-
-> Another thing the separate remote gives us is to make it easier
-> to interact with more than one remote, by having a new directory
-> next to remotes/origin/ directory.  If you used the traditional
-> layout, your heads/ namespace would explode because you would
-> have to have something like:
-> 
-> 	heads/origin		-- from linux-2.6's master
->         heads/origin-libata	-- from jgarzik libata ALL
-> 	heads/origin-sii-lbt	-- from jgarzik libata sii-lbt
->         ...
-> 
-> in a flat namespace intermixed with your own development
-> branches, instead of:
-> 
-> 	remotes/origin/master	-- from linux-2.6's master
->         remotes/libata/ALL
->         remotes/libata/sii-lbt
-> 	...
-> 
-> grouped together by where they come from (and they cannot
-> possibly be mucked around directly thanks to being in remotes/
-> hierarchy), separated from any of your own development branches
-> that are in heads/.
-
-I don't mind this at all, as long as I get to "see" it, when
-I do normal git operations, like "git branch".
-
-So maybe we should take it one step at a time and first
-implement that, still exposing it to "git branch" and then
-if porcelains want to establish a policy on top of this,
-that's fine.  But low-level git should not hide this from me.
-
-    Luben
-
-> Also, this is only about the default layout clone makes, and the
-> refs are not packed, so you can easily move remotes/origin/*
-> (except 'HEAD') to heads/ immediately after making a clone and
-> set up remotes.*.fetch configuration to match the traditional
-> layout if that is what you find more convenient.  The operation
-
-I do find that more convenient, but wouldn't like to have
-to do that, nor to have a script that does it for me to have
-to do it after I clone.
-
-It would be most convenient when this per-repo layout is
-implemented, yet I get to see this when I do "git-branch".
-
-I guess, most convenent, yet "newbie-protection" would be
-to disallow any commits to remotes/* in this way... I'd opt
-for that wholeheartedly.
-
-     Luben
+--- linux.orig/fs/ext3/dir.c
++++ linux/fs/ext3/dir.c
+@@ -94,6 +94,25 @@ int ext3_check_dir_entry (const char * f
+ 	return error_msg == NULL ? 1 : 0;
+ }
+ 
++int ext3_get_block(struct inode *inode, sector_t iblock,
++			struct buffer_head *bh_result, int create);
++
++static void ext3_dir_readahead(struct file * filp)
++{
++	struct inode *inode = filp->f_path.dentry->d_inode;
++	struct address_space *mapping = inode->i_sb->s_bdev->bd_inode->i_mapping;
++	unsigned long sector;
++	unsigned long blk;
++	pgoff_t offset;
++
++	for (blk = 0; blk < inode->i_blocks; blk++) {
++		sector = blk << (inode->i_blkbits - 9);
++		sector = generic_block_bmap(inode->i_mapping, sector, ext3_get_block);
++		offset = sector >> (PAGE_CACHE_SHIFT - 9);
++		do_page_cache_readahead(mapping, filp, offset, 1);
++	}
++}
++
+ static int ext3_readdir(struct file * filp,
+ 			 void * dirent, filldir_t filldir)
+ {
+@@ -108,6 +127,9 @@ static int ext3_readdir(struct file * fi
+ 
+ 	sb = inode->i_sb;
+ 
++	if (!filp->f_pos)
++		ext3_dir_readahead(filp);
++
+ #ifdef CONFIG_EXT3_INDEX
+ 	if (EXT3_HAS_COMPAT_FEATURE(inode->i_sb,
+ 				    EXT3_FEATURE_COMPAT_DIR_INDEX) &&
+--- linux.orig/fs/ext3/inode.c
++++ linux/fs/ext3/inode.c
+@@ -945,7 +945,7 @@ out:
+ 
+ #define DIO_CREDITS (EXT3_RESERVE_TRANS_BLOCKS + 32)
+ 
+-static int ext3_get_block(struct inode *inode, sector_t iblock,
++int ext3_get_block(struct inode *inode, sector_t iblock,
+ 			struct buffer_head *bh_result, int create)
+ {
+ 	handle_t *handle = journal_current_handle();
