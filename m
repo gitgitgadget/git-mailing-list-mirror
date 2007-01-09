@@ -1,66 +1,75 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 1/2] Sanitize for_each_reflog_ent()
-Date: Tue, 09 Jan 2007 12:22:08 -0800
-Message-ID: <7vmz4sj6hb.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.63.0701080158500.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7vr6u6z3x8.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0701081316110.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	<enumq8$oa$1@sea.gmane.org>
-	<Pine.LNX.4.63.0701091056520.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Alexandre Julliard <julliard@winehq.org>
+Subject: [PATCH] git-apply: Remove directories that have become empty after deleting a file.
+Date: Tue, 09 Jan 2007 21:25:46 +0100
+Message-ID: <87fyak0wxh.fsf@wine.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 09 21:22:28 2007
+X-From: git-owner@vger.kernel.org Tue Jan 09 21:26:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H4NUA-0001Nt-ME
-	for gcvg-git@gmane.org; Tue, 09 Jan 2007 21:22:19 +0100
+	id 1H4NXf-0002PC-OJ
+	for gcvg-git@gmane.org; Tue, 09 Jan 2007 21:25:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932250AbXAIUWL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 9 Jan 2007 15:22:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932271AbXAIUWL
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jan 2007 15:22:11 -0500
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:59069 "EHLO
-	fed1rmmtao05.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932250AbXAIUWK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Jan 2007 15:22:10 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070109202209.WSAT15640.fed1rmmtao05.cox.net@fed1rmimpo01.cox.net>;
-          Tue, 9 Jan 2007 15:22:09 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id 98MJ1W00x1kojtg0000000; Tue, 09 Jan 2007 15:21:19 -0500
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932271AbXAIUZx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 9 Jan 2007 15:25:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932280AbXAIUZx
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jan 2007 15:25:53 -0500
+Received: from mail.codeweavers.com ([216.251.189.131]:53675 "EHLO
+	mail.codeweavers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932271AbXAIUZw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Jan 2007 15:25:52 -0500
+Received: from adsl-84-226-97-216.adslplus.ch ([84.226.97.216] helo=wine.dyndns.org)
+	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1H4NXb-00058c-7L
+	for git@vger.kernel.org; Tue, 09 Jan 2007 14:25:52 -0600
+Received: by wine.dyndns.org (Postfix, from userid 1000)
+	id 4018B4F6AD; Tue,  9 Jan 2007 21:25:46 +0100 (CET)
+To: git@vger.kernel.org
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.92 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36393>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36394>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> On Tue, 9 Jan 2007, Jakub Narebski wrote:
->
->> Johannes Schindelin wrote:
->> ... 
->> > My reasoning is that invalid entries should rather be ignored than be 
->> > taken into account. So, to verify that you are not walking invalid data, 
->> > you have to parse it anyway.
->> 
->> I think that Junio was talking about the fact, that if you for example
->> do need only refname and sha1, there is no need to parse object at all.
->> If you don't need to, don't parse.
->
-> And it was exactly what _I_ was talking about, too:
->
-> if there are invalid entries, you ignore them. So for example, if there is 
-> no timestamp and message, you don't want the osha1 or nsha1, because it is 
-> an _invalid_ record.
+Signed-off-by: Alexandre Julliard <julliard@winehq.org>
+---
+ builtin-apply.c |   16 +++++++++++++++-
+ 1 files changed, 15 insertions(+), 1 deletions(-)
 
-That's fine.  I applied your patch with minimum fixups so that
-it does not make the surviving records _invalid_ ones after
-"reflog expire" runs ;-).
+diff --git a/builtin-apply.c b/builtin-apply.c
+index 1c35837..fac8349 100644
+--- a/builtin-apply.c
++++ b/builtin-apply.c
+@@ -2239,7 +2239,21 @@ static void remove_file(struct patch *patch)
+ 		cache_tree_invalidate_path(active_cache_tree, patch->old_name);
+ 	}
+ 	if (!cached)
+-		unlink(patch->old_name);
++	{
++		if (!unlink(patch->old_name))
++		{
++			char *name = xstrdup(patch->old_name);
++			char *end = strrchr(name, '/');
++			while (end)
++			{
++				*end = 0;
++				if (rmdir(name))
++					break;
++				end = strrchr(name, '/');
++			}
++			free(name);
++		}
++	}
+ }
+ 
+ static void add_index_file(const char *path, unsigned mode, void *buf, unsigned long size)
+-- 
+1.4.4.4.g37ed
+
+-- 
+Alexandre Julliard
+julliard@winehq.org
