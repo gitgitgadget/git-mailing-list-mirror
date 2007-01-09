@@ -1,57 +1,78 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: confusion over the new branch and merge config
-Date: Tue, 9 Jan 2007 11:18:32 -0500
-Message-ID: <20070109161832.GA9577@coredump.intra.peff.net>
-References: <Pine.LNX.4.64.0612211555210.18171@xanadu.home> <7vd56cam66.fsf@assigned-by-dhcp.cox.net> <20061223051210.GA29814@segfault.peff.net> <7vbqlvuoi4.fsf@assigned-by-dhcp.cox.net> <7vbqlvrldk.fsf@assigned-by-dhcp.cox.net> <20070102144940.GA23932@coredump.intra.peff.net> <7vps9xwd01.fsf@assigned-by-dhcp.cox.net> <20070102173410.GA25325@coredump.intra.peff.net> <7v1wmdure6.fsf@assigned-by-dhcp.cox.net> <20070109150524.GB10633@coredump.intra.peff.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: How git affects kernel.org performance
+Date: Tue, 9 Jan 2007 08:23:32 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0701090821550.3661@woody.osdl.org>
+References: <1166304080.13548.8.camel@nigel.suspend2.net> <459152B1.9040106@zytor.com>
+ <1168140954.2153.1.camel@nigel.suspend2.net> <45A08269.4050504@zytor.com>
+ <45A083F2.5000000@zytor.com> <Pine.LNX.4.64.0701062130260.3661@woody.osdl.org>
+ <20070107085526.GR24090@1wt.eu> <20070107011542.3496bc76.akpm@osdl.org>
+ <20070108030555.GA7289@in.ibm.com> <20070108125819.GA32756@thunk.org>
+ <368329554.17014@ustc.edu.cn>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 09 17:18:48 2007
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git@gmane.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Theodore Tso <tytso@mit.edu>,
+	Suparna Bhattacharya <suparna@in.ibm.com>,
+	Andrew Morton <akpm@osdl.org>, Willy Tarreau <w@1wt.eu>,
+	"H. Peter Anvin" <hpa@zytor.com>, git@vger.kernel.org,
+	nigel@nigel.suspend2.net, "J.H." <warthog9@kernel.org>,
+	Randy Dunlap <randy.dunlap@oracle.com>,
+	Pavel Machek <pavel@ucw.cz>,
+	kernel list <linux-kernel@vger.kernel.org>,
+	webmaster@kernel.org,
+	"linux-ext4@vger.kernel.org" <linux-ext4@vger.kernel.org>
+X-From: linux-ext4-owner@vger.kernel.org Tue Jan 09 17:28:50 2007
+Return-path: <linux-ext4-owner@vger.kernel.org>
+Envelope-to: gcfe-linux-ext4@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H4JgP-00052t-0w
-	for gcvg-git@gmane.org; Tue, 09 Jan 2007 17:18:41 +0100
+	id 1H4Jpu-0007ci-TD
+	for gcfe-linux-ext4@gmane.org; Tue, 09 Jan 2007 17:28:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932193AbXAIQSf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 9 Jan 2007 11:18:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932194AbXAIQSf
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jan 2007 11:18:35 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1314 "HELO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932190AbXAIQSe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Jan 2007 11:18:34 -0500
-Received: (qmail 5631 invoked from network); 9 Jan 2007 11:18:45 -0500
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
-  by 66-23-211-5.clients.speedfactory.net with SMTP; 9 Jan 2007 11:18:45 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 09 Jan 2007 11:18:32 -0500
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <20070109150524.GB10633@coredump.intra.peff.net>
-Sender: git-owner@vger.kernel.org
+	id S932204AbXAIQ2S (ORCPT <rfc822;gcfe-linux-ext4@m.gmane.org>);
+	Tue, 9 Jan 2007 11:28:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932207AbXAIQ2S
+	(ORCPT <rfc822;linux-ext4-outgoing>); Tue, 9 Jan 2007 11:28:18 -0500
+Received: from smtp.osdl.org ([65.172.181.24]:51343 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932204AbXAIQ2Q (ORCPT <rfc822;linux-ext4@vger.kernel.org>);
+	Tue, 9 Jan 2007 11:28:16 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l09GNYWi011308
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 9 Jan 2007 08:23:34 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l09GNWPo009162;
+	Tue, 9 Jan 2007 08:23:32 -0800
+To: Fengguang Wu <fengguang.wu@gmail.com>
+In-Reply-To: <368329554.17014@ustc.edu.cn>
+X-Spam-Status: No, hits=-0.666 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.107__
+X-MIMEDefang-Filter: osdl$Revision: 1.167 $
+X-Scanned-By: MIMEDefang 2.36
+Sender: linux-ext4-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36374>
+X-Mailing-List: linux-ext4@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36375>
 
-On Tue, Jan 09, 2007 at 10:05:24AM -0500, Jeff King wrote:
 
-> There are two advantages I see to putting local branches in branch.*.merge:
 
-Let me add a third:
+On Tue, 9 Jan 2007, Fengguang Wu wrote:
+> > 
+> > The fastest and probably most important thing to add is some readahead
+> > smarts to directories --- both to the htree and non-htree cases.  If
+> 
+> Here's is a quick hack to practice the directory readahead idea.
+> Comments are welcome, it's a freshman's work :)
 
-There are some operations which care about who our upstream is, but
-didn't necessarily just do a fetch (so FETCH_HEAD is not an option). For
-example, I have a short porcelain-ish script that formats all of my
-changes as patches and shows them as a mutt mailbox. If you don't
-specify an upstream, it uses 'origin'. However, this isn't right if I'm
-on 'next'. What I _really_ want is to say "a sensible upstream branch
-for the branch I'm currently on" which is basically what "mergeLocal"
-would be.
+Well, I'd probably have done it differently, but more important is whether 
+this actually makes a difference performance-wise. Have you benchmarked it 
+at all?
 
-Come to think of it, mergeLocal is a terrible name, since it should
-really would be for merging, rebasing, and anything else which wanted to
-say "where did I probably come from?" So perhaps "upstream" would make
-more sense?
+Doing an
 
--Peff
+	echo 3 > /proc/sys/vm/drop_caches
+
+is your friend for testing things like this, to force cold-cache 
+behaviour..
+
+		Linus
