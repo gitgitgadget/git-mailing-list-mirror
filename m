@@ -1,52 +1,78 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: a few remaining issues...
-Date: Tue, 9 Jan 2007 12:21:52 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0701091218080.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <7v7iw1hgvt.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0701051453520.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <20070105193306.GB8753@spearce.org>
+Subject: Re: [PATCH] Auto-quote config values in config.c:store_write_pair()
+Date: Tue, 9 Jan 2007 12:44:08 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0701091242330.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20070109052741.GB27927@Hermes.local>
+ <Pine.LNX.4.63.0701091128170.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vps9ompix.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 09 12:22:22 2007
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 09 12:44:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H4F3X-00051z-LY
-	for gcvg-git@gmane.org; Tue, 09 Jan 2007 12:22:16 +0100
+	id 1H4FOr-0001w4-Io
+	for gcvg-git@gmane.org; Tue, 09 Jan 2007 12:44:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751259AbXAILVz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 9 Jan 2007 06:21:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751253AbXAILVz
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jan 2007 06:21:55 -0500
-Received: from mail.gmx.net ([213.165.64.20]:48964 "HELO mail.gmx.net"
+	id S1751297AbXAILoL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 9 Jan 2007 06:44:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751289AbXAILoL
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jan 2007 06:44:11 -0500
+Received: from mail.gmx.net ([213.165.64.20]:54983 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751250AbXAILVy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Jan 2007 06:21:54 -0500
-Received: (qmail invoked by alias); 09 Jan 2007 11:21:52 -0000
+	id S1751297AbXAILoK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Jan 2007 06:44:10 -0500
+Received: (qmail invoked by alias); 09 Jan 2007 11:44:08 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp051) with SMTP; 09 Jan 2007 12:21:52 +0100
+  by mail.gmx.net (mp004) with SMTP; 09 Jan 2007 12:44:08 +0100
 X-Authenticated: #1490710
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: "Shawn O. Pearce" <spearce@spearce.org>
-In-Reply-To: <20070105193306.GB8753@spearce.org>
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vps9ompix.fsf@assigned-by-dhcp.cox.net>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36353>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36354>
 
 Hi,
 
-On Fri, 5 Jan 2007, Shawn O. Pearce wrote:
+[Cc'ing list]
 
-> I myself am also severly lacking in time right now.
+On Tue, 9 Jan 2007, Junio C Hamano wrote:
 
-Did you have any chance to look at the patch I posted? It adds 
-"--walk-reflogs" option to the revision walker, and as long as there is 
-reflog information, traverses the commits in that order. It also shows the 
-reflog data just below the "commit" line.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > On Tue, 9 Jan 2007, Brian Gernhardt wrote:
+> >
+> >> +	if (quote)
+> >> +		write(fd, "\"", 1);
+> >>  	for (i = 0; value[i]; i++)
+> >>  		switch (value[i]) {
+> >>  		case '\n': write(fd, "\\n", 2); break;
+> >> @@ -508,6 +520,8 @@ static void store_write_pair(int fd, const char* key, const char* value)
+> >>  		case '"': case '\\': write(fd, "\\", 1);
+> >>  		default: write(fd, value+i, 1);
+> >>  	}
+> >> +	if (quote)
+> >> +		write(fd, "\"", 1);
+> >
+> > AFAICS this misses the case where you have to quote a single '"'.
+> 
+> 	$ git-repo-config qu.ot 'ab"cd'
+>         $ git-repo-config --get qu.ot
+>         ab"cd
+>         $ tail -n 2 .git/config
+>         [qu]
+>         	ot = ab\"cd
+
+Oooopps! Even more embarassing: you can see it in the diff (it is line 508 
+of the original code). And most embarassing: AFAICT I wrote the code 
+myself!!!
+
+So I shut up.
 
 Ciao,
 Dscho
