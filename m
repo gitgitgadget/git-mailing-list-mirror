@@ -1,51 +1,75 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 5/6] Make merge-base a built-in.
-Date: Tue, 09 Jan 2007 13:22:53 -0800
-Message-ID: <7vd55nki8i.fsf@assigned-by-dhcp.cox.net>
-References: <7vd55oo52e.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0701091202560.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: [PATCH] Detached HEAD (experimental)
+Date: Tue, 9 Jan 2007 16:31:17 -0500
+Message-ID: <20070109213117.GB25012@fieldses.org>
+References: <7vac11yirf.fsf@assigned-by-dhcp.cox.net> <87ps9xgkjo.wl%cworth@cworth.org> <7virfprquo.fsf@assigned-by-dhcp.cox.net> <87odphgfzz.wl%cworth@cworth.org> <7vbql9ydd7.fsf@assigned-by-dhcp.cox.net> <20070108131735.GA2647@coredump.intra.peff.net> <7vzm8tt5kf.fsf@assigned-by-dhcp.cox.net> <20070109142130.GA10633@coredump.intra.peff.net> <7virffkick.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 09 22:23:03 2007
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 09 22:31:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H4OQs-00022R-Nx
-	for gcvg-git@gmane.org; Tue, 09 Jan 2007 22:22:59 +0100
+	id 1H4OZ6-0004OU-4X
+	for gcvg-git@gmane.org; Tue, 09 Jan 2007 22:31:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932374AbXAIVWz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 9 Jan 2007 16:22:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932385AbXAIVWz
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jan 2007 16:22:55 -0500
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:60487 "EHLO
-	fed1rmmtao03.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932374AbXAIVWy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Jan 2007 16:22:54 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070109212254.PHVV29122.fed1rmmtao03.cox.net@fed1rmimpo01.cox.net>;
-          Tue, 9 Jan 2007 16:22:54 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id 99N31W00V1kojtg0000000; Tue, 09 Jan 2007 16:22:04 -0500
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0701091202560.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	(Johannes Schindelin's message of "Tue, 9 Jan 2007 12:05:42 +0100
-	(CET)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932441AbXAIVbU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 9 Jan 2007 16:31:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932442AbXAIVbU
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jan 2007 16:31:20 -0500
+Received: from mail.fieldses.org ([66.93.2.214]:40220 "EHLO fieldses.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932441AbXAIVbU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Jan 2007 16:31:20 -0500
+Received: from bfields by fieldses.org with local (Exim 4.63)
+	(envelope-from <bfields@fieldses.org>)
+	id 1H4OYv-00029n-Pf; Tue, 09 Jan 2007 16:31:17 -0500
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7virffkick.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36403>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36404>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Tue, Jan 09, 2007 at 01:20:27PM -0800, Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
+> 
+> > For example, with what's in next now, I can do this:
+> >
+> >   git checkout v1.4.0
+> >   hack hack hack
+> >   git commit -m -a 'some changes which will never be seen again'
+> >   git checkout v1.2.0
+> >
+> > I thought the _point_ of the safety valve was not to lose those changes.
+> 
+> Fair enough.
+> 
+> We could always do the check upon "git checkout" from a detached
+> HEAD state, whether it takes you back on some existing branch or
+> leaves your HEAD still detached.
 
-> Anyway, I think this series is sane (i.e. I did not find obvious flaws 
-> reading them).
+Stupid question: why can't checkout do something like this?
 
-Heh, there were a few "easter eggs" in the one that are
-currently sitting on 'pu', but don't waste your time go hunting
-since I've fixed them up in my tree over lunch break.
+	if we're currently not on a branch, fail if .git/PREV
+		doesn't point to the same commit as .git/HEAD.
+
+	if we're checking out a non-branch, store its SHA1 into
+		.git/PREV.
+
+So the user gets a warning (overrideable with some kind of --force
+option) if they do a checkout when the HEAD isn't exactly what they last
+checked out.  Then
+
+	git checkout master
+	git checkout v1.4.0
+	git checkout v1.2.0
+	git checkout master
+
+all works without complaints, but the example above gives a warning at
+the "git checkout v1.2.0" point.
+
+--b.
