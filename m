@@ -1,68 +1,69 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: Re: Getting gitk to display all refs but stgit logs
-Date: Tue, 9 Jan 2007 20:41:08 +0100
-Message-ID: <20070109194108.GC17093@nan92-1-81-57-214-146.fbx.proxad.net>
-References: <20070108213259.GB17093@nan92-1-81-57-214-146.fbx.proxad.net> <e5bfff550701090417g3f8ab697n709721939ab36f5d@mail.gmail.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH] Replacing the system call pread() with
+ lseek()/xread()/lseek() sequence.
+Date: Tue, 09 Jan 2007 14:48:12 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0701091446150.4964@xanadu.home>
+References: <11683687161816-git-send-email-@videotron.ca>
+ <11683687162492-git-send-email-@videotron.ca>
+ <11683687161239-git-send-email-@videotron.ca>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: GIT list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jan 09 20:41:34 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 09 20:48:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H4MqV-00073M-ER
-	for gcvg-git@gmane.org; Tue, 09 Jan 2007 20:41:19 +0100
+	id 1H4MxF-0000dk-Iv
+	for gcvg-git@gmane.org; Tue, 09 Jan 2007 20:48:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932186AbXAITlR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 9 Jan 2007 14:41:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932188AbXAITlQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jan 2007 14:41:16 -0500
-Received: from smtp5-g19.free.fr ([212.27.42.35]:40489 "EHLO smtp5-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932186AbXAITlQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Jan 2007 14:41:16 -0500
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp5-g19.free.fr (Postfix) with ESMTP id C90F427B5F;
-	Tue,  9 Jan 2007 20:41:14 +0100 (CET)
-Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
-	id B3EF21F0A3; Tue,  9 Jan 2007 20:41:08 +0100 (CET)
-To: Marco Costalba <mcostalba@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <e5bfff550701090417g3f8ab697n709721939ab36f5d@mail.gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S932251AbXAITsP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 9 Jan 2007 14:48:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932295AbXAITsP
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jan 2007 14:48:15 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:20035 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932251AbXAITsO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Jan 2007 14:48:14 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JBM001AJ9OCK920@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 09 Jan 2007 14:48:12 -0500 (EST)
+In-reply-to: <11683687161239-git-send-email-@videotron.ca>
+X-X-Sender: nico@xanadu.home
+To: "Stefan-W. Hahn" <stefan.hahn@s-hahn.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36389>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36390>
 
-On Tue, Jan 09, 2007 at 01:17:57PM +0100, Marco Costalba wrote:
-> On 1/8/07, Yann Dirson <ydirson@altern.org> wrote:
-> >Since v0.11, StGIT creates references to keep a hand on patch logs.
-> >This has the unfortunate side-effect that "gitk --all" suddenly shows
-> >all those very annoying, and soon becomes unusable on
-> >repositories for which was very convenient.
-> >
-> 
-> Normally you only need branch names
-> 
-> gitk/qgit --all  --> practically equivalent to --> gitk/qgit <list of
-> branch names>
+On Tue, 9 Jan 2007, Stefan-W. Hahn wrote:
 
-Not exactly.  While qgit has knowledge of StGIT stacks and displays
-unapplied patches [1], gitk does not, and requesting a branch only
-shows the applied patches.  I have no opinion whether gitk should be
-taught about them, but I'd like it to be usable on them anyway.
+> --- /dev/null
+> +++ b/compat/pread.c
+> @@ -0,0 +1,15 @@
+> +#include "../git-compat-util.h"
+> +
+> +ssize_t git_pread(int fd,void *buf,size_t count,off_t offset)
+> +{
+> +        off_t current_offset = lseek(fd, 0, SEEK_CUR);
+> +
+> +        if (lseek(fd, offset, SEEK_SET) < 0)
+> +                return EINVAL;
 
-One thing that qgit also does not show, but which I regularly use when
-viewing StGIT stacks in gitk, is the ancestry of unapplied patches
-(eg. you can see at first glance whether an unapplied patch is
-uptodate, or has not been ported yet atop the currently-applied ones.
+You certainly wanted to return -1 here.
 
-[1] BTW, as of 1.5.3 it displays them backwards, causing all sors of
-problems - I've not yet collected all of my comments for you, but at
-least that one is sent now ;)
+> +
+> +        ssize_t rc=xread(fd, buf, count);
+> +
+> +        if (current_offset != lseek(fd, current_offset, SEEK_SET))
+> +                return EINVAL;
 
-Best regards,
--- 
-Yann.
+Ditto here.
+
+> +        return rc;
+> +}
+
+
+Nicolas
