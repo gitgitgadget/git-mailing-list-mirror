@@ -1,55 +1,80 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: [DRAFT] Branching and merging with git
-Date: Tue, 9 Jan 2007 23:15:17 -0500
-Message-ID: <20070110041517.GC25265@fieldses.org>
-References: <20061116221701.4499.qmail@science.horizon.com> <20070103170411.GB5491@thunk.org> <20070107234411.GD18009@fieldses.org> <7vzm8uz7pz.fsf@assigned-by-dhcp.cox.net> <20070108023511.GI18009@fieldses.org> <20070108140305.GE32756@thunk.org> <20070109024125.GD1686@fieldses.org> <45A3564E.7080003@op5.se> <20070109165828.GB9153@thunk.org>
+From: Pavel Roskin <proski@gnu.org>
+Subject: [PATCH] Fix warnings on PowerPC - use C99 printf format if available
+Date: Tue, 09 Jan 2007 23:07:11 -0500
+Message-ID: <20070110040710.7403.74668.stgit@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andreas Ericsson <ae@op5.se>, Junio C Hamano <junkio@cox.net>,
-	linux@horizon.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 10 05:15:35 2007
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Wed Jan 10 06:08:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H4Us6-0002Ov-1r
-	for gcvg-git@gmane.org; Wed, 10 Jan 2007 05:15:30 +0100
+	id 1H4Vhb-00063o-Hq
+	for gcvg-git@gmane.org; Wed, 10 Jan 2007 06:08:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932718AbXAJEPW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 9 Jan 2007 23:15:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932719AbXAJEPW
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jan 2007 23:15:22 -0500
-Received: from mail.fieldses.org ([66.93.2.214]:58229 "EHLO fieldses.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932718AbXAJEPW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Jan 2007 23:15:22 -0500
-Received: from bfields by fieldses.org with local (Exim 4.63)
-	(envelope-from <bfields@fieldses.org>)
-	id 1H4Urt-00022i-Nc; Tue, 09 Jan 2007 23:15:17 -0500
-To: Theodore Tso <tytso@mit.edu>
-Content-Disposition: inline
-In-Reply-To: <20070109165828.GB9153@thunk.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S932557AbXAJFIe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 10 Jan 2007 00:08:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932577AbXAJFIe
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Jan 2007 00:08:34 -0500
+Received: from c-71-230-131-166.hsd1.pa.comcast.net ([71.230.131.166]:54384
+	"EHLO localhost.localdomain" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S932557AbXAJFIe (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 10 Jan 2007 00:08:34 -0500
+X-Greylist: delayed 3675 seconds by postgrey-1.27 at vger.kernel.org; Wed, 10 Jan 2007 00:08:33 EST
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.8/8.13.8) with ESMTP id l0A47Bxm007412
+	for <git@vger.kernel.org>; Tue, 9 Jan 2007 23:07:11 -0500
+To: git@vger.kernel.org
+User-Agent: StGIT/0.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36476>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36477>
 
-On Tue, Jan 09, 2007 at 11:58:28AM -0500, Theodore Tso wrote:
-> If what we're going to do is a "git user's manual", I'd recommend
-> keeping the 2-3 pages in the manual, and do it via a link to some
-> other document.  One of the issues with the git documentation is that
-> it's *too* branchy, and some the branches go off to some truly scary
-> low-level implementation detail.  If we are going to assume that isn't
-> going to change (and I am glad that the low-level details are
-> documented, and am not advocating that they be deleted), then keeping
-> a user-friendly QuickStart in the main document might not be a bad
-> decision.
+Signed-off-by: Pavel Roskin <proski@gnu.org>
+---
 
-Sounds reasonable.
+ sha1_file.c |   15 +++++++++++----
+ 1 files changed, 11 insertions(+), 4 deletions(-)
 
-I'll probably set this aside a few days, then do some more work on it
-this weekend.  (Patches welcomed, though--source is in the master branch
-of git://linux-nfs.org/~bfields/git.git.)
-
---b.
+diff --git a/sha1_file.c b/sha1_file.c
+index 095a7e1..53e25f2 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -22,6 +22,12 @@
+ #endif
+ #endif
+ 
++#ifdef NO_C99_FORMAT
++#define SZ_FMT "lu"
++#else
++#define SZ_FMT "zu"
++#endif
++
+ const unsigned char null_sha1[20];
+ 
+ static unsigned int sha1_file_open_flag = O_NOATIME;
+@@ -407,9 +413,9 @@ struct packed_git *packed_git;
+ void pack_report()
+ {
+ 	fprintf(stderr,
+-		"pack_report: getpagesize()            = %10lu\n"
+-		"pack_report: core.packedGitWindowSize = %10lu\n"
+-		"pack_report: core.packedGitLimit      = %10lu\n",
++		"pack_report: getpagesize()            = %10" SZ_FMT "\n"
++		"pack_report: core.packedGitWindowSize = %10" SZ_FMT "\n"
++		"pack_report: core.packedGitLimit      = %10" SZ_FMT "\n",
+ 		page_size,
+ 		packed_git_window_size,
+ 		packed_git_limit);
+@@ -417,7 +423,8 @@ void pack_report()
+ 		"pack_report: pack_used_ctr            = %10u\n"
+ 		"pack_report: pack_mmap_calls          = %10u\n"
+ 		"pack_report: pack_open_windows        = %10u / %10u\n"
+-		"pack_report: pack_mapped              = %10lu / %10lu\n",
++		"pack_report: pack_mapped              = "
++			"%10" SZ_FMT " / %10" SZ_FMT "\n",
+ 		pack_used_ctr,
+ 		pack_mmap_calls,
+ 		pack_open_windows, peak_pack_open_windows,
