@@ -1,93 +1,81 @@
-From: Juergen Ruehle <j.ruehle@bmiag.de>
-Subject: Re: [PATCH] Provide better feedback for the untracked only case in status output
-Date: Wed, 10 Jan 2007 19:33:21 +0100
-Message-ID: <17829.12657.814000.514351@lapjr.intranet.kiel.bmiag.de>
-References: <7vps9pwa3e.fsf@assigned-by-dhcp.cox.net>
-	<1168412892113-git-send-email-j.ruehle@bmiag.de>
-	<17828.37642.473000.296809@lapjr.intranet.kiel.bmiag.de>
-	<7v4pqzfhzd.fsf@assigned-by-dhcp.cox.net>
+From: David Lang <david.lang@digitalinsight.com>
+Subject: Re: Using GIT to store /etc (Or: How to make GIT store all file 
+ permission bits)
+Date: Wed, 10 Jan 2007 10:34:31 -0800 (PST)
+Message-ID: <Pine.LNX.4.63.0701101027480.10339@qynat.qvtvafvgr.pbz>
+References: <787BE48C-1808-4A33-A368-5E8A3F00C787@mac.com> 
+ <8aa486160612100706y92bc722n93374e394fc58005@mail.gmail.com> 
+ <Pine.LNX.4.63.0701091735490.7747@qynat.qvtvafvgr.pbz> <20070110023031.GC30765@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 10 19:33:45 2007
+X-From: git-owner@vger.kernel.org Wed Jan 10 19:40:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H4iGf-0001Zk-HP
-	for gcvg-git@gmane.org; Wed, 10 Jan 2007 19:33:45 +0100
+	id 1H4iN6-0003qq-Il
+	for gcvg-git@gmane.org; Wed, 10 Jan 2007 19:40:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965019AbXAJSdn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 10 Jan 2007 13:33:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965021AbXAJSdm
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Jan 2007 13:33:42 -0500
-Received: from bilbo.bmiag.de ([62.154.210.131]:2987 "HELO bilbo.bmiag.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S965019AbXAJSdm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Jan 2007 13:33:42 -0500
-Received: (qmail 19241 invoked by uid 106); 10 Jan 2007 18:33:40 -0000
-Received: from eotheod.intranet.kiel.bmiag.de(10.130.2.1)
- via SMTP by bilbo.bmiag.de, id smtpdy8PxJZ; Wed Jan 10 19:33:30 2007
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by eotheod.intranet.kiel.bmiag.de (Postfix) with ESMTP id 76B6C3ADC8;
-	Wed, 10 Jan 2007 19:33:30 +0100 (CET)
-Received: from eotheod.intranet.kiel.bmiag.de ([127.0.0.1])
-	by localhost (eotheod [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 24253-02; Wed, 10 Jan 2007 19:33:27 +0100 (CET)
-Received: from LAPJR (dialin5.galadriel.bmiag.de [192.168.251.5])
-	by eotheod.intranet.kiel.bmiag.de (Postfix) with ESMTP id E22483ADC6;
-	Wed, 10 Jan 2007 19:33:24 +0100 (CET)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v4pqzfhzd.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: VM 7.19 under Emacs 22.0.92.1
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at eotheod.intranet.kiel.bmiag.de
+	id S965004AbXAJSkW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 10 Jan 2007 13:40:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965022AbXAJSkW
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Jan 2007 13:40:22 -0500
+Received: from warden-p.diginsite.com ([208.29.163.248]:45011 "HELO
+	warden.diginsite.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with SMTP id S965004AbXAJSkU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Jan 2007 13:40:20 -0500
+Received: from no.name.available by warden.diginsite.com
+          via smtpd (for vger.kernel.org [209.132.176.167]) with SMTP; Wed, 10 Jan 2007 10:40:20 -0800
+Received: from wlvims02.corp.ad.diginsite.com (wlvims02.diginsite.com [10.201.10.79]) by blackbird.diginsite.com (Tablus Interceptor) for <git@vger.kernel.org>; Wed, 10 Jan 2007 10:40:17 -0800
+Received: from dlang.diginsite.com ([10.201.10.67]) by wlvims02.corp.ad.diginsite.com with InterScan Message Security Suite; Wed, 10 Jan 2007 10:40:15 -0800
+X-X-Sender: dlang@dlang.diginsite.com
+To: "Shawn O. Pearce" <spearce@spearce.org>
+In-Reply-To: <20070110023031.GC30765@spearce.org>
+X-Tablus-Inspected: yes
+X-Tablus-Classifications: public
+X-Tablus-Action: allow
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36522>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36523>
 
-Junio C Hamano writes:
- > Juergen Ruehle <j.ruehle@bmiag.de> writes:
- > 
- > > Juergen Ruehle writes:
- > >  > [Corrupted patch deleted]
- > >
- > > Will try again when I know what happened.
- > 
- > While you are at it, let me point out one thing that has been
- > annoying me for a while.
- > 
- >  * The message claims to be from git-send-email;
- > 
- >  * Content-Type and CTE are UTF-8 and QP (which is fine);
- > 
- >  * You have in-body From: line; this is not wrong per-se and I
- >    understand why you would want one (your e-mail From: line
- >    uses ASCII approximations "ue" and "ue" and you would want
- >    the resulting commit to spell your name correctly).
- >
- >  * However, this in-body From: line is _doubly_ QP encoded (what
- >    you see above is your name, first RFC 2047 encoded and then
- >    QP encoded).  It shouldn't be.
- > 
- > So, my questions are:
- > 
- >  (1) is this what git-send-email generates and sends out by
- >      default?  If so that means it is a bug in that program that
- >      needs to be fixed.
- > 
- >  (2) if not, are you inserting the in-body From: by hand,
- >      perhaps cut & paste from format-patch output, before
- >      feeding git-send-email (which runs QP on it)?
- > 
- > If the latter, please do not paste the RFC 2047 quoted form.
- > You can spell your name in raw UTF-8 on the in-body From: line
- > just like you did on your Signed-off-by: line.
+On Tue, 9 Jan 2007, Shawn O. Pearce wrote:
 
-Yes, this is using git-send-email which sends the mail as 8bit encoded
-and provides the QP encoded From line. Unfortunately there seems to be
-a gateway in between that doesn't handle 8bit and QPs the mail again.
-Perhaps I need some other switches for format-patch and send-email to
-produce a better result? I'll take another look at the documentation
-before annoying you again.
+> David Lang <david.lang@digitalinsight.com> wrote:
+>> I want to have a tripwire-like system checking the files to make sure that
+>> they haven't changed unexpectedly. the program I'm looking at notices inode
+>> as well as timestamp and content changed.
+>>
+>> when you checkout a file from git will it re-write/overwrite a file that
+>> hasn't changed or will it realize there is no change and leave it as-is?
+>
+> If the stat data is current it will leave it as-is.  You can force
+> the index to refresh with `git update-index --refresh` or by running
+> git status.
+
+I was looking at checkout, not checkin so I'm not understanding how the index is 
+involved here.
+
+>> does this answer change if there is a trigger on checkout (to change
+>> permissions or otherwise manipulate the file)?
+>
+> Only if the trigger does something in addition, like force overwrite
+> files.  But we don't have a checkout trigger.  So there's no trigger.
+
+we don't have a checkout trigger? I thought that what Linus had suggested for 
+permissions was to have a script triggered on checkin that stored the 
+permissions of the files, and a script triggered on checkout that set the 
+permissions from the stored file.
+
+if there isn't a checkout trigger how would the permissions ever get set?
+
+in my particular case I'd like to have the checkin run a script that produces a 
+'generic' version of each file, and the checkout run a script that converts the 
+generic version into the host specific version. I already have a script that 
+does this work (and (ab)uses ssh to propogate the generic version to other hosts 
+and create the host specific versions there), but I was interested in useing git 
+to add better version control to the generic versions of the files (I currently 
+use RCS on each box to version control the host specific versions)
+
+David Lang
