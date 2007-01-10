@@ -1,56 +1,59 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: [ANNOUNCE] qgit4 aka qgit ported to Windows
-Date: Thu, 11 Jan 2007 12:17:43 +1300
-Message-ID: <46a038f90701101517s1d5e818eq2fba220d17a6aa03@mail.gmail.com>
-References: <e5bfff550701091314k71e282e8x125db65d5c287a94@mail.gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] Speedup recursive by flushing index only once for all
+ entries
+Date: Wed, 10 Jan 2007 15:23:18 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0701101521410.3594@woody.osdl.org>
+References: <81b0412b0701040247k47e398e6q34dd5233bb5706f6@mail.gmail.com> 
+ <Pine.LNX.4.63.0701041327490.22628@wbgn013.biozentrum.uni-wuerzburg.de> 
+ <81b0412b0701040447u329dcf9bvcd7adb9e9d199f18@mail.gmail.com> 
+ <7v8xgileza.fsf@assigned-by-dhcp.cox.net>  <81b0412b0701050322u67131900xea969b2da9981a94@mail.gmail.com>
+  <20070107163112.GA9336@steel.home>  <7vr6u2adgx.fsf@assigned-by-dhcp.cox.net>
+ <81b0412b0701101507n764aed73p31c7533e743283f0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "GIT list" <git@vger.kernel.org>, "Petr Baudis" <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Thu Jan 11 00:17:50 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 11 00:23:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H4mhX-0000iE-V5
-	for gcvg-git@gmane.org; Thu, 11 Jan 2007 00:17:48 +0100
+	id 1H4mn0-000217-4B
+	for gcvg-git@gmane.org; Thu, 11 Jan 2007 00:23:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965167AbXAJXRp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 10 Jan 2007 18:17:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965234AbXAJXRp
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Jan 2007 18:17:45 -0500
-Received: from wr-out-0506.google.com ([64.233.184.235]:2497 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965167AbXAJXRo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Jan 2007 18:17:44 -0500
-Received: by wr-out-0506.google.com with SMTP id i30so186710wra
-        for <git@vger.kernel.org>; Wed, 10 Jan 2007 15:17:44 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Enl86/U5YPKQipKQaDnOQeZvAgq1XmEK4a33OyyONF+d6X2Ci/5ksleFm39Z8CwGmurwt7p7Bycv+YWhZaWe/SoDFLtetoO5UjM6MY9rqcjBwYuXCdY+dmCmxeOVnk5uH83hvCR8o+ID/IY1wMz97YJVPW8IljT9BQRcfZKTZ2s=
-Received: by 10.90.105.20 with SMTP id d20mr647668agc.1168471063989;
-        Wed, 10 Jan 2007 15:17:43 -0800 (PST)
-Received: by 10.90.28.1 with HTTP; Wed, 10 Jan 2007 15:17:43 -0800 (PST)
-To: "Marco Costalba" <mcostalba@gmail.com>
-In-Reply-To: <e5bfff550701091314k71e282e8x125db65d5c287a94@mail.gmail.com>
-Content-Disposition: inline
+	id S965237AbXAJXXX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 10 Jan 2007 18:23:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965240AbXAJXXX
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Jan 2007 18:23:23 -0500
+Received: from smtp.osdl.org ([65.172.181.24]:35294 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965237AbXAJXXX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Jan 2007 18:23:23 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l0ANNJWi032378
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 10 Jan 2007 15:23:19 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l0ANNIxv011210;
+	Wed, 10 Jan 2007 15:23:18 -0800
+To: Alex Riesen <raa.lkml@gmail.com>
+In-Reply-To: <81b0412b0701101507n764aed73p31c7533e743283f0@mail.gmail.com>
+X-Spam-Status: No, hits=-2.665 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.107__
+X-MIMEDefang-Filter: osdl$Revision: 1.167 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36537>
-
-On 1/10/07, Marco Costalba <mcostalba@gmail.com> wrote:
-> 6) Start qgit.exe
-> 7) Have fun
-
-Great!
-
-How much does qgit4 depend on using commandline git? IOWs, how far
-from not needing cygwin+git, and shipping a git+qgit compiled against
-the MinGW that QT4 has?
-
-cheers,
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36538>
 
 
-martin
+
+On Thu, 11 Jan 2007, Alex Riesen wrote:
+> 
+> Yep. Tried the monster merge on it: 1m15sec on that small laptop.
+
+Is that supposed to be good? That still sounds really slow to me. What 
+kind of nasty project are you doing? Is this the 44k file project, and 
+under cygwin? Or is it that bad even under Linux?
+
+			Linus
