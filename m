@@ -1,48 +1,60 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Provide better feedback for the untracked only case in status output
-Date: Wed, 10 Jan 2007 17:29:15 -0500
-Message-ID: <20070110222914.GA22838@coredump.intra.peff.net>
-References: <1168452977.19643.57.camel@ibook.zvpunry.de> <11684679032630-git-send-email-j.ruehle@bmiag.de>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: [PATCH] Speedup recursive by flushing index only once for all entries
+Date: Thu, 11 Jan 2007 00:07:39 +0100
+Message-ID: <81b0412b0701101507n764aed73p31c7533e743283f0@mail.gmail.com>
+References: <81b0412b0701040247k47e398e6q34dd5233bb5706f6@mail.gmail.com>
+	 <Pine.LNX.4.63.0701041327490.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <81b0412b0701040447u329dcf9bvcd7adb9e9d199f18@mail.gmail.com>
+	 <7v8xgileza.fsf@assigned-by-dhcp.cox.net>
+	 <81b0412b0701050322u67131900xea969b2da9981a94@mail.gmail.com>
+	 <20070107163112.GA9336@steel.home>
+	 <7vr6u2adgx.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
-	=?iso-8859-1?Q?J=FCrgen_R=FChle?= <j-r@online.de>
-X-From: git-owner@vger.kernel.org Wed Jan 10 23:29:31 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 11 00:08:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H4lwo-0004Cu-LP
-	for gcvg-git@gmane.org; Wed, 10 Jan 2007 23:29:31 +0100
+	id 1H4mYF-0006fL-3V
+	for gcvg-git@gmane.org; Thu, 11 Jan 2007 00:08:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965133AbXAJW3U (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 10 Jan 2007 17:29:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965147AbXAJW3U
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Jan 2007 17:29:20 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4883 "HELO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S965133AbXAJW3T (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Jan 2007 17:29:19 -0500
-Received: (qmail 25124 invoked from network); 10 Jan 2007 17:29:30 -0500
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
-  by 66-23-211-5.clients.speedfactory.net with SMTP; 10 Jan 2007 17:29:30 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 10 Jan 2007 17:29:15 -0500
-To: Juergen Ruehle <j.ruehle@bmiag.de>
+	id S965226AbXAJXHm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 10 Jan 2007 18:07:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965231AbXAJXHm
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Jan 2007 18:07:42 -0500
+Received: from ug-out-1314.google.com ([66.249.92.169]:25397 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965226AbXAJXHl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Jan 2007 18:07:41 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so259497uga
+        for <git@vger.kernel.org>; Wed, 10 Jan 2007 15:07:40 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=VkdCYOacpX+m+IFHB+Ic26yTjBZnKLNPy6RGOMlZ9dVEWMgLiaF/mEbetVI1pdEjhJ5SeCqGMQYKk8FqM6N5ABJGhibL5WGoHt+eBKaBiMlNT/owzG/0WFCYlwp3dddIsguWiCFTIe9zuku+O4mLm+EyEDMnprnepsk8MlzLqD0=
+Received: by 10.78.171.20 with SMTP id t20mr291139hue.1168470459927;
+        Wed, 10 Jan 2007 15:07:39 -0800 (PST)
+Received: by 10.78.135.3 with HTTP; Wed, 10 Jan 2007 15:07:39 -0800 (PST)
+To: "Junio C Hamano" <junkio@cox.net>
+In-Reply-To: <7vr6u2adgx.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
-In-Reply-To: <11684679032630-git-send-email-j.ruehle@bmiag.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36535>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36536>
 
-On Wed, Jan 10, 2007 at 11:25:03PM +0100, Juergen Ruehle wrote:
+On 1/10/07, Junio C Hamano <junkio@cox.net> wrote:
+> This comes on top of yours.
+>
+> I'm reproducing all the merges in linux-2.6 history to make sure
+> the base one, yours and this produce the same result (the same
+> clean merge, or the same unmerged index and the same diff from
+> HEAD).  So far it is looking good.
 
->    - Patches to other files that contain these messages verbatim
->      (AFAICS this affects only the git-reset man page, tutorial-2 and the VIM
->       syntax highlighting)
+Yep. Tried the monster merge on it: 1m15sec on that small laptop.
 
-I have been tracking these changes for the vim highlighting, but have
-been waiting for things to settle before sending a patch (which should
-hopefully go into v1.5.0, but I will wait until this is finalized).
-
--Peff
+For whatever reason your patch left an "if (cache_dirty) flush_cache()",
+that's after my patch + yours. Had it removed.
