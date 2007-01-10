@@ -1,67 +1,122 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Using GIT to store /etc (Or: How to make GIT store all file permission bits)
-Date: Tue, 9 Jan 2007 21:30:31 -0500
-Message-ID: <20070110023031.GC30765@spearce.org>
-References: <787BE48C-1808-4A33-A368-5E8A3F00C787@mac.com> <8aa486160612100706y92bc722n93374e394fc58005@mail.gmail.com> <Pine.LNX.4.63.0701091735490.7747@qynat.qvtvafvgr.pbz>
+From: Nigel Cunningham <nigel@nigel.suspend2.net>
+Subject: Re: How git affects kernel.org performance
+Date: Wed, 10 Jan 2007 14:20:49 +1100
+Message-ID: <1168399249.2585.6.camel@nigel.suspend2.net>
+References: <1168140954.2153.1.camel@nigel.suspend2.net>
+	 <45A08269.4050504@zytor.com> <45A083F2.5000000@zytor.com>
+	 <Pine.LNX.4.64.0701062130260.3661@woody.osdl.org>
+	 <20070107085526.GR24090@1wt.eu> <20070107011542.3496bc76.akpm@osdl.org>
+	 <20070108030555.GA7289@in.ibm.com> <20070108125819.GA32756@thunk.org>
+	 <368329554.17014@ustc.edu.cn>
+	 <Pine.LNX.4.64.0701090821550.3661@woody.osdl.org>
+	 <20070110015739.GA26978@mail.ustc.edu.cn>
+Reply-To: nigel@nigel.suspend2.net
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 10 03:30:38 2007
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@osdl.org>, Theodore Tso <tytso@mit.edu>,
+	Suparna Bhattacharya <suparna@in.ibm.com>,
+	Andrew Morton <akpm@osdl.org>, Willy Tarreau <w@1wt.eu>,
+	"H. Peter Anvin" <hpa@zytor.com>, git@vger.kernel.org,
+	"J.H." <warthog9@kernel.org>,
+	Randy Dunlap <randy.dunlap@oracle.com>,
+	Pavel Machek <pavel@ucw.cz>,
+	kernel list <linux-kernel@vger.kernel.org>,
+	webmaster@kernel.org,
+	"linux-ext4@vger.kernel.org" <linux-ext4@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jan 10 04:21:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H4TEc-0004Vt-3r
-	for gcvg-git@gmane.org; Wed, 10 Jan 2007 03:30:38 +0100
+	id 1H4U1K-0006rU-Bd
+	for gcvg-git@gmane.org; Wed, 10 Jan 2007 04:20:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932669AbXAJCag (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 9 Jan 2007 21:30:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932671AbXAJCag
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jan 2007 21:30:36 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:40089 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932669AbXAJCaf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Jan 2007 21:30:35 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1H4TEM-0006eb-6O; Tue, 09 Jan 2007 21:30:22 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id D7E4420FBAE; Tue,  9 Jan 2007 21:30:31 -0500 (EST)
-To: David Lang <david.lang@digitalinsight.com>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0701091735490.7747@qynat.qvtvafvgr.pbz>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S932696AbXAJDUx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 9 Jan 2007 22:20:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932700AbXAJDUx
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jan 2007 22:20:53 -0500
+Received: from nigel.suspend2.net ([203.171.70.205]:44177 "EHLO
+	nigel.suspend2.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932696AbXAJDUw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Jan 2007 22:20:52 -0500
+Received: from [127.0.0.1] (nigel.suspend2.net [127.0.0.1])
+	by nigel.suspend2.net (Postfix) with ESMTP id 1F676E82E4;
+	Wed, 10 Jan 2007 14:20:50 +1100 (EST)
+To: Fengguang Wu <fengguang.wu@gmail.com>
+In-Reply-To: <20070110015739.GA26978@mail.ustc.edu.cn>
+X-Mailer: Evolution 2.8.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36473>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36474>
 
-David Lang <david.lang@digitalinsight.com> wrote:
-> I want to have a tripwire-like system checking the files to make sure that 
-> they haven't changed unexpectedly. the program I'm looking at notices inode 
-> as well as timestamp and content changed.
+Hi.
+
+On Wed, 2007-01-10 at 09:57 +0800, Fengguang Wu wrote:
+> On Tue, Jan 09, 2007 at 08:23:32AM -0800, Linus Torvalds wrote:
+> >
+> >
+> > On Tue, 9 Jan 2007, Fengguang Wu wrote:
+> > > >
+> > > > The fastest and probably most important thing to add is some readahead
+> > > > smarts to directories --- both to the htree and non-htree cases.  If
+> > >
+> > > Here's is a quick hack to practice the directory readahead idea.
+> > > Comments are welcome, it's a freshman's work :)
+> >
+> > Well, I'd probably have done it differently, but more important is whether
+> > this actually makes a difference performance-wise. Have you benchmarked it
+> > at all?
 > 
-> when you checkout a file from git will it re-write/overwrite a file that 
-> hasn't changed or will it realize there is no change and leave it as-is?
+> Yes, a trivial test shows a marginal improvement, on a minimal debian system:
+> 
+> # find / | wc -l
+> 13641
+> 
+> # time find / > /dev/null
+> 
+> real    0m10.000s
+> user    0m0.210s
+> sys     0m4.370s
+> 
+> # time find / > /dev/null
+> 
+> real    0m9.890s
+> user    0m0.160s
+> sys     0m3.270s
+> 
+> > Doing an
+> >
+> > 	echo 3 > /proc/sys/vm/drop_caches
+> >
+> > is your friend for testing things like this, to force cold-cache
+> > behaviour..
+> 
+> Thanks, I'll work out numbers on large/concurrent dir accesses soon.
 
-If the stat data is current it will leave it as-is.  You can force
-the index to refresh with `git update-index --refresh` or by running
-git status.
- 
-> does this answer change if there is a trigger on checkout (to change 
-> permissions or otherwise manipulate the file)?
+I gave it a try, and I'm afraid the results weren't pretty.
 
-Only if the trigger does something in addition, like force overwrite
-files.  But we don't have a checkout trigger.  So there's no trigger.
+I did:
 
--- 
-Shawn.
+time find /usr/src | wc -l
+
+on current git with (3 times) and without (5 times) the patch, and got
+
+with:
+real   54.306, 54.327, 53.742s
+usr    0.324, 0.284, 0.234s
+sys    2.432, 2.484, 2.592s
+
+without:
+real   24.413, 24.616, 24.080s
+usr    0.208, 0.316, 0.312s
+sys:   2.496, 2.440, 2.540s
+
+Subsequent runs without dropping caches did give a significant
+improvement in both cases (1.821/.188/1.632 is one result I wrote with
+the patch applied).
+
+Regards,
+
+Nigel
