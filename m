@@ -1,63 +1,68 @@
-From: Baz <brian.ewins@gmail.com>
-Subject: Re: [PATCH] Add contrib/stg-gitk: helper script to run gitk
-Date: Wed, 10 Jan 2007 10:34:53 +0000
-Message-ID: <2faad3050701100234g1580d344lcc84b143ee965a23@mail.gmail.com>
-References: <20070108220918.18329.30083.stgit@gandelf.nowhere.earth>
-	 <b0943d9e0701090202v7951076cg7c86c0f5499c7d60@mail.gmail.com>
-	 <20070109220332.GD17093@nan92-1-81-57-214-146.fbx.proxad.net>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [PATCH 1/3] Don't save the commit buffer in git-describe.
+Date: Wed, 10 Jan 2007 06:36:29 -0500
+Message-ID: <20070110113629.GA25251@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Catalin Marinas" <catalin.marinas@gmail.com>,
-	"GIT list" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jan 10 11:35:05 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 10 12:36:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H4anM-0002R4-8x
-	for gcvg-git@gmane.org; Wed, 10 Jan 2007 11:35:00 +0100
+	id 1H4bkz-0000qz-76
+	for gcvg-git@gmane.org; Wed, 10 Jan 2007 12:36:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964834AbXAJKez (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 10 Jan 2007 05:34:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964840AbXAJKez
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Jan 2007 05:34:55 -0500
-Received: from ug-out-1314.google.com ([66.249.92.171]:29168 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964834AbXAJKey (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Jan 2007 05:34:54 -0500
-Received: by ug-out-1314.google.com with SMTP id a2so65788ugf
-        for <git@vger.kernel.org>; Wed, 10 Jan 2007 02:34:53 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Xrph5bX/DlOdjGGJpxDmszpMPSoVIaLHJzkRO0JNnhgKpRGEaBnbHL1CDv0oSrwWb3EbYSVcNzNxCszfs7CvsAxbQmPrrKzARaJWfd+XcYfs7q5ziH2p6ULjGyDOEz/OTJzUlEItiHD/OBA0xWmmF/xlOGsygAlL8SZEQfYGS+Q=
-Received: by 10.66.232.9 with SMTP id e9mr253195ugh.1168425293351;
-        Wed, 10 Jan 2007 02:34:53 -0800 (PST)
-Received: by 10.66.221.1 with HTTP; Wed, 10 Jan 2007 02:34:53 -0800 (PST)
-To: "Yann Dirson" <ydirson@altern.org>
-In-Reply-To: <20070109220332.GD17093@nan92-1-81-57-214-146.fbx.proxad.net>
+	id S964862AbXAJLge (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 10 Jan 2007 06:36:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964864AbXAJLge
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Jan 2007 06:36:34 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:53327 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964862AbXAJLgd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Jan 2007 06:36:33 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1H4bkr-00044i-A2; Wed, 10 Jan 2007 06:36:29 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 6380620FBAE; Wed, 10 Jan 2007 06:36:30 -0500 (EST)
+To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36498>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36499>
 
-On 09/01/07, Yann Dirson <ydirson@altern.org> wrote:
-> (let's go off-topic)
->
-> That makes me think that such command names like "show" are a bit too
-> general: stgit uses "show" for patches, but nothing says it is for a
-> patch and not a series.
->
-> Also, when presenting GIT/StGIT to co-workers, I found them to be
-> confused by eg. "stg push" and "stg commit" having different semantics
-> than "git push" and "git commit".
+The commit buffer (message of the commit) is not actually
+used by the git-describe process.  We can save some memory
+by not keeping it around.
 
-They're also confusing because the stg docs and other stg commands
-consistently talk about patches being 'applied' or 'unapplied', not
-'pushed'. If stg push/pop were to make sense as single commands they
-would be eg stg apply/unapply, or stg patch-apply, stg patch-unapply.
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ describe.c |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
-Cheers,
-Baz
+diff --git a/describe.c b/describe.c
+index f4029ee..3c2df03 100644
+--- a/describe.c
++++ b/describe.c
+@@ -162,6 +162,7 @@ int main(int argc, char **argv)
+ 	}
+ 
+ 	setup_git_directory();
++	save_commit_buffer = 0;
+ 
+ 	if (argc <= i)
+ 		describe("HEAD", 1);
+-- 
+1.4.4.4.gf027-dirty
