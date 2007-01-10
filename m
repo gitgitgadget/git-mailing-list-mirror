@@ -1,80 +1,110 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Detached HEAD (experimental)
-Date: Tue, 09 Jan 2007 16:10:12 -0800
-Message-ID: <7vd55nivx7.fsf@assigned-by-dhcp.cox.net>
-References: <7vac11yirf.fsf@assigned-by-dhcp.cox.net>
-	<87ps9xgkjo.wl%cworth@cworth.org>
-	<7virfprquo.fsf@assigned-by-dhcp.cox.net>
-	<87odphgfzz.wl%cworth@cworth.org>
-	<7vbql9ydd7.fsf@assigned-by-dhcp.cox.net>
-	<20070108131735.GA2647@coredump.intra.peff.net>
-	<7vzm8tt5kf.fsf@assigned-by-dhcp.cox.net>
-	<20070109142130.GA10633@coredump.intra.peff.net>
-	<7virffkick.fsf@assigned-by-dhcp.cox.net>
-	<20070109213117.GB25012@fieldses.org>
-	<7vy7obj07k.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0701091539050.3594@woody.osdl.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: a few remaining issues...
+Date: Tue, 9 Jan 2007 19:16:19 -0500
+Message-ID: <20070110001619.GF30023@spearce.org>
+References: <7v7iw1hgvt.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0701051453520.22628@wbgn013.biozentrum.uni-wuerzburg.de> <20070105193306.GB8753@spearce.org> <Pine.LNX.4.63.0701091218080.22628@wbgn013.biozentrum.uni-wuerzburg.de> <7vtzz0j6hf.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0701100051350.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "J. Bruce Fields" <bfields@fieldses.org>,
-	Jeff King <peff@peff.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 10 01:10:26 2007
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 10 01:16:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H4R2p-00046t-Ip
-	for gcvg-git@gmane.org; Wed, 10 Jan 2007 01:10:19 +0100
+	id 1H4R8r-0005oV-FL
+	for gcvg-git@gmane.org; Wed, 10 Jan 2007 01:16:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932565AbXAJAKP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 9 Jan 2007 19:10:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932570AbXAJAKP
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jan 2007 19:10:15 -0500
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:43399 "EHLO
-	fed1rmmtao03.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932565AbXAJAKN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Jan 2007 19:10:13 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070110001012.VTDX29122.fed1rmmtao03.cox.net@fed1rmimpo01.cox.net>;
-          Tue, 9 Jan 2007 19:10:12 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id 9C9N1W0091kojtg0000000; Tue, 09 Jan 2007 19:09:22 -0500
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0701091539050.3594@woody.osdl.org> (Linus
-	Torvalds's message of "Tue, 9 Jan 2007 15:46:32 -0800 (PST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932572AbXAJAQZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 9 Jan 2007 19:16:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932573AbXAJAQZ
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jan 2007 19:16:25 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:36165 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932572AbXAJAQY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Jan 2007 19:16:24 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1H4R8V-0000li-20; Tue, 09 Jan 2007 19:16:11 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 69CCD20FBAE; Tue,  9 Jan 2007 19:16:19 -0500 (EST)
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0701100051350.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36434>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36435>
 
-Linus Torvalds <torvalds@osdl.org> writes:
-
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
 > On Tue, 9 Jan 2007, Junio C Hamano wrote:
->> 
->> Being able to test merge or even make commits without being on a
->> branch is vastly useful.
->
-> Yes. I think the detached head notion is really really important. I think 
-> it was a mistake to not allow it initially, but hey, there were various 
-> historical reasons, and the whole thing about how branches worked was a 
-> bit up in the air.
->
-> I would suggest a solution:
->
->  - git checkout will refuse to switch AWAY from a detached head unless the 
->    SHA1 of the detached head exactly matches some other branch.
+> 
+> > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> > 
+> > > On Fri, 5 Jan 2007, Shawn O. Pearce wrote:
+> > >
+> > >> I myself am also severly lacking in time right now.
+> > >
+> > > Did you have any chance to look at the patch I posted?
 
-... or an existing "ref^{commit}".
+No, I had not had a chance to look at it.  I don't see the patch in
+my inbox currently, so I must have deleted it earlier.  As much as
+I want this feature in 1.5.0's final release I don't really have
+the time/inclination to dredge though my own local mailing list
+archives or through the online ones to locate it either.
 
-> I'd love to see the detached HEAD series move into "master", but I do 
-> think we should make sure that people can't drop their work easily by 
-> mistake, and I think the above suggestion is both simple and workable.
->
-> Comments?
+Right now I want to track down a nasty bug in git-http-fetch that I
+noticed recently that's keeping me from tracking git.git through an
+HTTP proxy, and then I need to do some hacking on this lightweight
+subproject implementation I'm working on.  None of the existing
+implementations do what I needed over two weeks ago, so I'm writing
+my own.  I really need it to be done before the end of the week.
 
-I agree with the "reachability is wrong -- you would lose the
-point in the middle" reasoning.
+> > > It adds 
+> > > "--walk-reflogs" option to the revision walker, and as long as there is 
+> > > reflog information, traverses the commits in that order. It also shows the 
+> > > reflog data just below the "commit" line.
+> > 
+> > What does it do when you say, for example:
+> > 
+> > 	git log --walk-reflogs master..next
+> 
+> It means that (ideally) all revisions are shown which are in the reflog 
+> chain of next, and _not_ in the reflog chain of master.
+
+That makes a lot of sense actually.  Cute feature.
+ 
+> However, once the reflog traversal hits the oldest reflog entry, it 
+> reverts to commit parent traversal.
+
+That doesn't make sense...
+
+> > I couldn't make heads or tails out of the patch and did not understand 
+> > what it was trying to do.  It looked as if you were making the log 
+> > traversal machinery to walk _both_ reflog (probably from the latest to 
+> > older) and the usual ancestry.
+> 
+> Yes, first reflog, then usual ancestry.
+> 
+> Would you want that changed to _only_ reflog traversal?
+
+Yes.  The old ancestry has nothing to do with my local reflog.  I
+want to know where my reflog ends, as there's no record of that
+branch's lifespan before that point.
+
+Right now I have a reflog on `pu` which I've had since reflogs were
+first introduced last summer.  Yet it only goes back to Dec 23, 2006.
+Looking at the old ancestry of pu back into last Oct isn't really
+interesting when I'm studying what changes happened to locally.
+
+-- 
+Shawn.
