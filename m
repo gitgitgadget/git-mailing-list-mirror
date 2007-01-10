@@ -1,79 +1,55 @@
-From: David Woodhouse <dwmw2@infradead.org>
-Subject: Re: [PATCH] Re: git-mailinfo '-u' argument should be default.
-Date: Wed, 10 Jan 2007 11:24:53 +0800
-Message-ID: <1168399493.14763.462.camel@shinybook.infradead.org>
-References: <1147452362.2794.452.camel@pmac.infradead.org>
-	 <1168351405.14763.347.camel@shinybook.infradead.org>
-	 <7vzm8skphz.fsf@assigned-by-dhcp.cox.net>
-	 <1168386544.14763.407.camel@shinybook.infradead.org>
-	 <7vejq3hf8m.fsf@assigned-by-dhcp.cox.net>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: [DRAFT] Branching and merging with git
+Date: Tue, 9 Jan 2007 23:15:17 -0500
+Message-ID: <20070110041517.GC25265@fieldses.org>
+References: <20061116221701.4499.qmail@science.horizon.com> <20070103170411.GB5491@thunk.org> <20070107234411.GD18009@fieldses.org> <7vzm8uz7pz.fsf@assigned-by-dhcp.cox.net> <20070108023511.GI18009@fieldses.org> <20070108140305.GE32756@thunk.org> <20070109024125.GD1686@fieldses.org> <45A3564E.7080003@op5.se> <20070109165828.GB9153@thunk.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 10 04:24:44 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Andreas Ericsson <ae@op5.se>, Junio C Hamano <junkio@cox.net>,
+	linux@horizon.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 10 05:15:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H4U4u-0007ef-Ou
-	for gcvg-git@gmane.org; Wed, 10 Jan 2007 04:24:41 +0100
+	id 1H4Us6-0002Ov-1r
+	for gcvg-git@gmane.org; Wed, 10 Jan 2007 05:15:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932695AbXAJDYi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 9 Jan 2007 22:24:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932702AbXAJDYi
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jan 2007 22:24:38 -0500
-Received: from pentafluge.infradead.org ([213.146.154.40]:47622 "EHLO
-	pentafluge.infradead.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932695AbXAJDYh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Jan 2007 22:24:37 -0500
-Received: from mail3.quantacn.com ([61.152.217.200] helo=[172.21.170.25])
-	by pentafluge.infradead.org with esmtpsa (Exim 4.63 #1 (Red Hat Linux))
-	id 1H4U4m-00064X-QD; Wed, 10 Jan 2007 03:24:35 +0000
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vejq3hf8m.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Evolution 2.8.2.1 (2.8.2.1-2.fc6.dwmw2.1) 
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by pentafluge.infradead.org
-	See http://www.infradead.org/rpr.html
+	id S932718AbXAJEPW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 9 Jan 2007 23:15:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932719AbXAJEPW
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jan 2007 23:15:22 -0500
+Received: from mail.fieldses.org ([66.93.2.214]:58229 "EHLO fieldses.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932718AbXAJEPW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Jan 2007 23:15:22 -0500
+Received: from bfields by fieldses.org with local (Exim 4.63)
+	(envelope-from <bfields@fieldses.org>)
+	id 1H4Urt-00022i-Nc; Tue, 09 Jan 2007 23:15:17 -0500
+To: Theodore Tso <tytso@mit.edu>
+Content-Disposition: inline
+In-Reply-To: <20070109165828.GB9153@thunk.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36475>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36476>
 
-On Tue, 2007-01-09 at 16:55 -0800, Junio C Hamano wrote:
-> > That's not the use case for the -n option. Their case is what the
-> > i18n.commitencoding configuration option exists for.
-> 
-> I think you missed a subtle difference.
-> 
-> For a project that is latin-1 only (or ISO-2022 only, for that
-> matter -- 'only' is the real keyword here), users did not have
-> to do anything, and happily kept using git, and that includes
-> that they did not have to set i18n.commitencoding to anything.
+On Tue, Jan 09, 2007 at 11:58:28AM -0500, Theodore Tso wrote:
+> If what we're going to do is a "git user's manual", I'd recommend
+> keeping the 2-3 pages in the manual, and do it via a link to some
+> other document.  One of the issues with the git documentation is that
+> it's *too* branchy, and some the branches go off to some truly scary
+> low-level implementation detail.  If we are going to assume that isn't
+> going to change (and I am glad that the low-level details are
+> documented, and am not advocating that they be deleted), then keeping
+> a user-friendly QuickStart in the main document might not be a bad
+> decision.
 
-Well, apart from the fact that gitweb and git-format-patch would be
-mislabelling their output, for example.
+Sounds reasonable.
 
-> Defaulting to -u now means disrupt their established workflows
-> are disrupted by people coming from UTF-8 only world.  They now
-> are forced to set i18n.commitencoding to latin-1 and/or use -n.
->
-> When we inconvenience others by making changes to make our own
-> life easier, it is not a good idea to insult them at the same
-> time; rather, we should be asking forgiveness from them.
+I'll probably set this aside a few days, then do some more work on it
+this weekend.  (Patches welcomed, though--source is in the master branch
+of git://linux-nfs.org/~bfields/git.git.)
 
-This is true. Sometimes when we fix bugs, we find that people were
-relying on the old behaviour and are inconvenienced by the fix. That's
-unfortunate, and we should make sure there's a simple way for those
-people to adapt -- which in this case is setting 'i18n.commitencoding'.
-
-I'm not entirely sure where the 'insulting' comes in though -- I think
-you're referring to a comment which was 
- a) Only in my cover message rather than in the documentation, and
- b) Not even relevant to these people -- these people should be 
-    setting i18n.commitencoding to match their status quo, and my
-    disparaging comment was about the '-n' option which should be
-    avoided.
-
--- 
-dwmw2
+--b.
