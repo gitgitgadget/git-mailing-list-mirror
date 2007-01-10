@@ -1,72 +1,102 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] Detached HEAD (experimental)
-Date: Tue, 9 Jan 2007 16:54:02 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0701091649510.3594@woody.osdl.org>
-References: <87odphgfzz.wl%cworth@cworth.org> <7vbql9ydd7.fsf@assigned-by-dhcp.cox.net>
- <20070108131735.GA2647@coredump.intra.peff.net> <7vzm8tt5kf.fsf@assigned-by-dhcp.cox.net>
- <20070109142130.GA10633@coredump.intra.peff.net> <7virffkick.fsf@assigned-by-dhcp.cox.net>
- <20070109213117.GB25012@fieldses.org> <7vy7obj07k.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0701091539050.3594@woody.osdl.org> <7vd55nivx7.fsf@assigned-by-dhcp.cox.net>
- <20070110001822.GG30023@spearce.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] sha1_name(): accept ':directory/' to get at the cache_tree
+Date: Wed, 10 Jan 2007 01:54:43 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0701100151230.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0701091502030.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vodp7iwzu.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0701100108460.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vtzyzhg47.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>,
-	"J. Bruce Fields" <bfields@fieldses.org>,
-	Jeff King <peff@peff.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 10 01:54:33 2007
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 10 01:54:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H4Rja-0007MU-Bt
-	for gcvg-git@gmane.org; Wed, 10 Jan 2007 01:54:30 +0100
+	id 1H4Rk2-0007WK-Vn
+	for gcvg-git@gmane.org; Wed, 10 Jan 2007 01:54:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932598AbXAJAy1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 9 Jan 2007 19:54:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932600AbXAJAy1
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jan 2007 19:54:27 -0500
-Received: from smtp.osdl.org ([65.172.181.24]:59846 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932598AbXAJAy0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Jan 2007 19:54:26 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l0A0s3Wi026708
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 9 Jan 2007 16:54:04 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l0A0s2bV020159;
-	Tue, 9 Jan 2007 16:54:03 -0800
-To: "Shawn O. Pearce" <spearce@spearce.org>
-In-Reply-To: <20070110001822.GG30023@spearce.org>
-X-Spam-Status: No, hits=-2.666 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.107__
-X-MIMEDefang-Filter: osdl$Revision: 1.167 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932602AbXAJAyq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 9 Jan 2007 19:54:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932603AbXAJAyq
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jan 2007 19:54:46 -0500
+Received: from mail.gmx.net ([213.165.64.20]:45728 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932602AbXAJAyp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Jan 2007 19:54:45 -0500
+Received: (qmail invoked by alias); 10 Jan 2007 00:54:43 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp045) with SMTP; 10 Jan 2007 01:54:43 +0100
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vtzyzhg47.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36448>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36449>
 
+Hi,
 
+On Tue, 9 Jan 2007, Junio C Hamano wrote:
 
-On Tue, 9 Jan 2007, Shawn O. Pearce wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> My point about reset --hard/--soft probably also needing this check
-> still stands however.
+> > It is still at what cache_name_pos(cp, namelen) pointed to, or NULL if 
+> > the entry does not exist (e.g. there is no cache entry, or all cache 
+> > entries are lexicographically smaller).
+> >
+> >> For example, would this work?
+> >> 
+> >> 	$ echo >t- && git add t-
+> >>         $ git show :t
+> >> 	$ git show :t/
+> >
+> > I think so: The code explicitely checks for a trailing '/'. (See second 
+> > last line of the hunk you quoted.)
+> 
+> The comment was not about the trailing / version, but the one without.
+> Have you tried them?
 
-Well, I disagree, if only because the whole _point_ of "git reset" is to 
-leave some point behind. I use it all the time (well, often enough) as a 
-"undo" operation, and it's fundamentally different than "git checkout" at 
-least to my worldview.
+Of course not! I had the impression that cache_name_pos() just _had_ to 
+find the correct spot, but of course you are right: it does not.
 
-When you do "git reset" you _expect_ state to be reset/dropped. But when 
-just switching between branches, you don't.
+> >> > +			struct cache_tree *tree =
+> >> > +				cache_tree_find(active_cache_tree, cp);
+> >> > +			if (!cache_tree_fully_valid(tree)) {
+> >> > +				ret = cache_tree_update(active_cache_tree,
+> >> > +						active_cache, active_nr, 0, 0);
+> >> > +				if (ret < 0)
+> >> > +					return ret;
+> >> 
+> >> This gracefully errs out when the index is unmerged but fails to
+> >> pretend the index knows about trees, if the unmerged part of
+> >> index is outside the directory the user specified.
+> >
+> > That is correct. But in that case, we cannot sanely ask the question "what 
+> > would the tree object look like if we committed right now?"
+> 
+> But that is not the question you are asking.  "git-ls-files t/"
+> does work even though you still have cache.h unmerged in the
+> index.
 
-(I realize that "git checkout filename/goes/here" has kind of mixed up 
-"git reset" and "git checkout". The "git checkout filename" syntax 
-basically resets the filename, and that confuses things a bit. So in the 
-above, I really do talk about just "checking out a _commit_" and do a 
-state switch, not a "check out a filename" and overwrite the old contents 
-of that file).
+Ah! I retract that. I did _not_ want the recursive file list. I wanted the 
+equivalent of HEAD:t/ _after_ a commit.
 
-		Linus
+> > But then it turned out that I even use it before committing, like when I 
+> > ask "what files would be in my next revision?" It is not a question 
+> > arising daily, but sometimes it is interesting to see _before_ committing 
+> > them. (Note that I am not only interested in the _modified_ files.)
+> 
+> So it really is about being able to say show while you mean ls-files.
+> 
+> I am not opposed to that goal at all.  I think it makes it
+> easier to type.  But I think using cache-tree is a wrong
+> approach.
+
+Well, you are the master.
+
+Ciao,
+Dscho
