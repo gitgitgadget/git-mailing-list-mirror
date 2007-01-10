@@ -1,75 +1,62 @@
-From: Andreas Ericsson <ae@op5.se>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: [PATCH] Detached HEAD (experimental)
-Date: Wed, 10 Jan 2007 10:08:24 +0100
-Message-ID: <45A4AD08.1020002@op5.se>
-References: <7vac11yirf.fsf@assigned-by-dhcp.cox.net>	<87ps9xgkjo.wl%cworth@cworth.org>	<7virfprquo.fsf@assigned-by-dhcp.cox.net>	<87odphgfzz.wl%cworth@cworth.org>	<7vbql9ydd7.fsf@assigned-by-dhcp.cox.net>	<20070108131735.GA2647@coredump.intra.peff.net>	<7vzm8tt5kf.fsf@assigned-by-dhcp.cox.net>	<20070109142130.GA10633@coredump.intra.peff.net>	<7virffkick.fsf@assigned-by-dhcp.cox.net>	<20070109213117.GB25012@fieldses.org> <87zm8ryiyz.wl%cworth@cworth.org>
+Date: Wed, 10 Jan 2007 01:33:43 -0800
+Message-ID: <7vbql7cjk8.fsf@assigned-by-dhcp.cox.net>
+References: <7vac11yirf.fsf@assigned-by-dhcp.cox.net>
+	<7vy7obj07k.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0701091539050.3594@woody.osdl.org>
+	<200701100904.32077.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "J. Bruce Fields" <bfields@fieldses.org>,
-	Junio C Hamano <junkio@cox.net>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 10 10:08:39 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 10 10:33:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H4ZRe-00058X-JX
-	for gcvg-git@gmane.org; Wed, 10 Jan 2007 10:08:30 +0100
+	id 1H4ZqB-0003PR-LX
+	for gcvg-git@gmane.org; Wed, 10 Jan 2007 10:33:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932754AbXAJJI2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 10 Jan 2007 04:08:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932756AbXAJJI1
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Jan 2007 04:08:27 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:59205 "EHLO
-	smtp-gw1.op5.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932754AbXAJJI1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Jan 2007 04:08:27 -0500
-Received: from [192.168.1.20] (unknown [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id EF7586BCBF; Wed, 10 Jan 2007 10:08:24 +0100 (CET)
-User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
-To: Carl Worth <cworth@cworth.org>
-In-Reply-To: <87zm8ryiyz.wl%cworth@cworth.org>
+	id S932754AbXAJJdp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 10 Jan 2007 04:33:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932760AbXAJJdp
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Jan 2007 04:33:45 -0500
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:42338 "EHLO
+	fed1rmmtao02.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932754AbXAJJdo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Jan 2007 04:33:44 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20070110093344.ITXE97.fed1rmmtao02.cox.net@fed1rmimpo01.cox.net>;
+          Wed, 10 Jan 2007 04:33:44 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id 9MYt1W00D1kojtg0000000; Wed, 10 Jan 2007 04:32:53 -0500
+To: Andy Parkins <andyparkins@gmail.com>
+In-Reply-To: <200701100904.32077.andyparkins@gmail.com> (Andy Parkins's
+	message of "Wed, 10 Jan 2007 09:04:29 +0000")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36492>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36493>
 
-Carl Worth wrote:
-> 
-> Frankly, I don't understand why so much effort is being put toward
-> allowing these "fragile commits" to be made in the first place. Why
-> not require users to name the branch before creating any commits, just
-> as has always been the case?
-> 
+Andy Parkins <andyparkins@gmail.com> writes:
 
-Agreed. Possibly, we could have commit (or commit-tree) issue a big fat 
-warning along the lines of:
+> On Tuesday 2007 January 09 23:46, Linus Torvalds wrote:
+>
+>> I would suggest a solution:
+>>
+>>  - git checkout will refuse to switch AWAY from a detached head unless the
+>>    SHA1 of the detached head exactly matches some other branch.
+>
+> If the detached HEAD matches another branch what did we need a detached HEAD 
+> for in the first place?
+>
+> Seems that this check will in practice always be true.  A detached HEAD by 
+> definition doesn't match some other branch.
 
-*** WARNING ***
-You are about to create a commit on a detached HEAD.
-It is recommended that you run "git branch <name>" to create a branch to 
-commit to first. If you don't, you might lose this commit further on.
-*** WARNING ***
+You are forgetting this:
 
-which could be suppressed by a "--silently-ignore-detached-head" in case 
-scripts (securely) use this behaviour. Since committing on detached 
-heads really should be a very rare case I don't think many people will 
-find this terribly annoying.
-
-> To me, the only real advantage to the new "detached head" stuff is
-> simply making it easier to checkout previous state without having to
-> name a new branch precisely _because_ the user has not intent to
-> commit anything. If the user is going to commit something, then the
-> user should be able to come up with a name for the branch.
-> 
-
-Indeed and as I've said before, *all* developers have "silly-names" they 
-use for temporary stuff (foo, bar, frotz, nitfol, blaj, fnurg, sdf, ...) 
-so it's not like we'll put a heavy burden on peoples imagination.
-
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+	git checkout v1.0.0
