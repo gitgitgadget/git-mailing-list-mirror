@@ -1,70 +1,62 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] Detached HEAD (experimental)
-Date: Tue, 9 Jan 2007 20:07:25 -0500
-Message-ID: <20070110010725.GI30023@spearce.org>
-References: <20070108131735.GA2647@coredump.intra.peff.net> <7vzm8tt5kf.fsf@assigned-by-dhcp.cox.net> <20070109142130.GA10633@coredump.intra.peff.net> <7virffkick.fsf@assigned-by-dhcp.cox.net> <20070109213117.GB25012@fieldses.org> <87zm8ryiyz.wl%cworth@cworth.org> <20070109234421.GD30023@spearce.org> <eo1bqu$hji$1@sea.gmane.org> <20070110003433.GH30023@spearce.org> <20070110010312.GA25265@fieldses.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Don't die in git-http-fetch when fetching packs.
+Date: Tue, 09 Jan 2007 17:10:04 -0800
+Message-ID: <7v1wm3hekz.fsf@assigned-by-dhcp.cox.net>
+References: <20070110010452.GA30610@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 10 02:07:55 2007
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 10 02:10:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H4RwZ-0002bj-En
-	for gcvg-git@gmane.org; Wed, 10 Jan 2007 02:07:55 +0100
+	id 1H4Ryl-00039e-Be
+	for gcvg-git@gmane.org; Wed, 10 Jan 2007 02:10:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932617AbXAJBHb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 9 Jan 2007 20:07:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932614AbXAJBHb
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jan 2007 20:07:31 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:37906 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932617AbXAJBHa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Jan 2007 20:07:30 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1H4Rvx-0007ZF-Hk; Tue, 09 Jan 2007 20:07:17 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 1F21120FBAE; Tue,  9 Jan 2007 20:07:26 -0500 (EST)
-To: "J. Bruce Fields" <bfields@fieldses.org>
-Content-Disposition: inline
-In-Reply-To: <20070110010312.GA25265@fieldses.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S932606AbXAJBKH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 9 Jan 2007 20:10:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932622AbXAJBKH
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jan 2007 20:10:07 -0500
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:60038 "EHLO
+	fed1rmmtao03.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932614AbXAJBKG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Jan 2007 20:10:06 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20070110011004.XYRV29122.fed1rmmtao03.cox.net@fed1rmimpo01.cox.net>;
+          Tue, 9 Jan 2007 20:10:04 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id 9D9E1W00J1kojtg0000000; Tue, 09 Jan 2007 20:09:14 -0500
+To: "Shawn O. Pearce" <spearce@spearce.org>
+In-Reply-To: <20070110010452.GA30610@spearce.org> (Shawn O. Pearce's message
+	of "Tue, 9 Jan 2007 20:04:52 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36458>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36459>
 
-"J. Bruce Fields" <bfields@fieldses.org> wrote:
-> On Tue, Jan 09, 2007 at 07:34:33PM -0500, Shawn O. Pearce wrote:
-> > Unfortunately .git/logs/HEAD wouldn't be created by default as its
-> > not under refs/heads or refs/remotes.  Though it could be made to be
-> > on by default, in which case it would only log changes while HEAD
-> > is detached.  If HEAD is attached to a branch then .git/logs/HEAD
-> > wouldn't be appended to (or even created), while the branch's own
-> > log is still appended to.
-> 
-> That would also provide all the needed "safety valve" on git checkout,
-> wouldn't it?  Since you could always recover from
-> 
-> 	git checkout v1.4.0
-> 	git commit -m -a 'some changes'
-> 	git checkout 41.2.0
-> 
-> by looking back through the reflog for HEAD.
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-Yes.  Then that removes my desire for a safety check in reset,
-(which Linus doesn't want) thereby making both of us happy.
+> My sp/mmap changes to pack-check.c modified the function such that
+> it expects packed_git.pack_size to be populated with the total
+> bytecount of the packfile by the caller.
+>
+> But that isn't the case for packs obtained by git-http-fetch as
+> pack_size was not initialized before being accessed.  This caused
+> verify_pack to think it had 2^32-21 bytes available when the
+> downloaded pack perhaps was only 305 bytes in length.  The use_pack
+> function then later dies with "offset beyond end of packfile"
+> when computing the overall file checksum.
+>
+> Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+> ---
+>
+>  For the tip of my sp/mmap topic.  Without it HTTP fetch and push
+>  support is severely broken as it cannot deal with packs.
 
--- 
-Shawn.
+Ah, thanks.  I've seen this today and a repeated fetch after
+that fixed it and thought it was a mirroring lag.
