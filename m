@@ -1,7 +1,7 @@
 From: Fengguang Wu <fengguang.wu@gmail.com>
 Subject: Re: How git affects kernel.org performance
 Date: Wed, 10 Jan 2007 09:57:39 +0800
-Message-ID: <20070110015739.GA26978__35540.4359674596$1168394253$gmane$org@mail.ustc.edu.cn>
+Message-ID: <20070110015739.GA26978__11276.4408383102$1168394293$gmane$org@mail.ustc.edu.cn>
 References: <1168140954.2153.1.camel@nigel.suspend2.net> <45A08269.4050504@zytor.com> <45A083F2.5000000@zytor.com> <Pine.LNX.4.64.0701062130260.3661@woody.osdl.org> <20070107085526.GR24090@1wt.eu> <20070107011542.3496bc76.akpm@osdl.org> <20070108030555.GA7289@in.ibm.com> <20070108125819.GA32756@thunk.org> <368329554.17014@ustc.edu.cn> <Pine.LNX.4.64.0701090821550.3661@woody.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -15,22 +15,23 @@ Cc: Theodore Tso <tytso@mit.edu>,
 	kernel list <linux-kernel@vger.kernel.org>,
 	webmaster@kernel.org,
 	"linux-ext4@vger.kernel.org" <linux-ext4@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jan 10 02:57:29 2007
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git@gmane.org
+X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S932653AbXAJB5d@vger.kernel.org Wed Jan 10 02:58:10 2007
+Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S932653AbXAJB5d@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H4SiR-0005W6-JH
-	for gcvg-git@gmane.org; Wed, 10 Jan 2007 02:57:23 +0100
+	id 1H4Sj4-0005fc-6P
+	for glk-linux-kernel-3@gmane.org; Wed, 10 Jan 2007 02:58:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932643AbXAJB5U (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 9 Jan 2007 20:57:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932653AbXAJB5U
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jan 2007 20:57:20 -0500
-Received: from smtp.ustc.edu.cn ([202.38.64.16]:58523 "HELO ustc.edu.cn"
+	id S932653AbXAJB5d (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Tue, 9 Jan 2007 20:57:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932658AbXAJB5c
+	(ORCPT <rfc822;linux-kernel-outgoing>);
+	Tue, 9 Jan 2007 20:57:32 -0500
+Received: from smtp.ustc.edu.cn ([202.38.64.16]:58521 "HELO ustc.edu.cn"
 	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
-	id S932643AbXAJB5T (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Jan 2007 20:57:19 -0500
+	id S932653AbXAJB5b (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
+	Tue, 9 Jan 2007 20:57:31 -0500
 Received: (eyou send program); Wed, 10 Jan 2007 09:57:06 +0800
 X-EYOUMAIL-SMTPAUTH: wfg@mail.ustc.edu.cn
 Received: from unknown (HELO localhost) (210.45.70.10)
@@ -53,10 +54,10 @@ Content-Disposition: inline
 In-Reply-To: <Pine.LNX.4.64.0701090821550.3661@woody.osdl.org>
 X-GPG-Fingerprint: 53D2 DDCE AB5C 8DC6 188B  1CB1 F766 DA34 8D8B 1C6D
 User-Agent: Mutt/1.5.13 (2006-08-11)
-Sender: git-owner@vger.kernel.org
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36469>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36470>
 
 On Tue, Jan 09, 2007 at 08:23:32AM -0800, Linus Torvalds wrote:
 >
