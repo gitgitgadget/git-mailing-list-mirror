@@ -1,79 +1,58 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Re: git-mailinfo '-u' argument should be default.
-Date: Tue, 09 Jan 2007 16:55:53 -0800
-Message-ID: <7vejq3hf8m.fsf@assigned-by-dhcp.cox.net>
-References: <1147452362.2794.452.camel@pmac.infradead.org>
-	<1168351405.14763.347.camel@shinybook.infradead.org>
-	<7vzm8skphz.fsf@assigned-by-dhcp.cox.net>
-	<1168386544.14763.407.camel@shinybook.infradead.org>
+Subject: Re: [PATCH] get_tree_entry: map blank requested entry to tree root
+Date: Tue, 09 Jan 2007 16:57:11 -0800
+Message-ID: <7vac0rhf6g.fsf@assigned-by-dhcp.cox.net>
+References: <20070109161147.GA9313@coredump.intra.peff.net>
+	<7vk5zviwxa.fsf@assigned-by-dhcp.cox.net>
+	<20070110004633.GA14345@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 10 01:56:05 2007
+X-From: git-owner@vger.kernel.org Wed Jan 10 01:57:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H4Rl0-0007ri-FO
-	for gcvg-git@gmane.org; Wed, 10 Jan 2007 01:55:58 +0100
+	id 1H4RmG-0008Fk-BO
+	for gcvg-git@gmane.org; Wed, 10 Jan 2007 01:57:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932552AbXAJAzz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 9 Jan 2007 19:55:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932600AbXAJAzz
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jan 2007 19:55:55 -0500
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:50935 "EHLO
-	fed1rmmtao09.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932552AbXAJAzz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Jan 2007 19:55:55 -0500
+	id S932600AbXAJA5N (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 9 Jan 2007 19:57:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932603AbXAJA5N
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jan 2007 19:57:13 -0500
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:57622 "EHLO
+	fed1rmmtao07.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932600AbXAJA5N (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Jan 2007 19:57:13 -0500
 Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao09.cox.net
+          by fed1rmmtao07.cox.net
           (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070110005554.UCML18767.fed1rmmtao09.cox.net@fed1rmimpo01.cox.net>;
-          Tue, 9 Jan 2007 19:55:54 -0500
+          id <20070110005712.QIS3976.fed1rmmtao07.cox.net@fed1rmimpo01.cox.net>;
+          Tue, 9 Jan 2007 19:57:12 -0500
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo01.cox.net with bizsmtp
-	id 9Cv31W0131kojtg0000000; Tue, 09 Jan 2007 19:55:04 -0500
-To: David Woodhouse <dwmw2@infradead.org>
-In-Reply-To: <1168386544.14763.407.camel@shinybook.infradead.org> (David
-	Woodhouse's message of "Wed, 10 Jan 2007 07:49:04 +0800")
+	id 9CwM1W00q1kojtg0000000; Tue, 09 Jan 2007 19:56:22 -0500
+To: Jeff King <peff@peff.net>
+In-Reply-To: <20070110004633.GA14345@coredump.intra.peff.net> (Jeff King's
+	message of "Tue, 9 Jan 2007 19:46:33 -0500")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36450>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36451>
 
-David Woodhouse <dwmw2@infradead.org> writes:
+Jeff King <peff@peff.net> writes:
 
-> On Tue, 2007-01-09 at 10:46 -0800, Junio C Hamano wrote:
->> I do not think you would want to make '-n' in the third point
->> sound so negative 
->
-> No, I really _do_ want that.
->
->> and make people on projects that chose to use
->> legacy encoding for whatever reasons feel _dirty_. 
->
-> ... but not that, because it wasn't aimed at them.
->
->>  If the natural language in project's log is limited and a legacy
->> encoding is sufficient, and if all the participants agree on a
->> legacy encoding to use...
-> (...for git's own purely internal storage format).
->
-> That's not the use case for the -n option. Their case is what the
-> i18n.commitencoding configuration option exists for.
+>  - git-archive feeds the 'prefix' variable to get_tree_entry; it works
+>    fine in the root with or without the patch. I seem to be getting an
+>    error, with or without my patch, when doing a git-archive from a
+>    subdirectory:
+>      $ git-archive --format=tar origin >/dev/null
+>      $ cd Documentation
+>      $ git-archive --format=tar origin >/dev/null
+>      fatal: cannot read c87c61af00c6d2cd7212240e260809000000aaab
+>    but I haven't been able to track it down further. It's clearly
+>    unrelated to my patch, though.
 
-I think you missed a subtle difference.
-
-For a project that is latin-1 only (or ISO-2022 only, for that
-matter -- 'only' is the real keyword here), users did not have
-to do anything, and happily kept using git, and that includes
-that they did not have to set i18n.commitencoding to anything.
-
-Defaulting to -u now means disrupt their established workflows
-are disrupted by people coming from UTF-8 only world.  They now
-are forced to set i18n.commitencoding to latin-1 and/or use -n.
-
-When we inconvenience others by making changes to make our own
-life easier, it is not a good idea to insult them at the same
-time; rather, we should be asking forgiveness from them.
+I've noticed this while looking at your patch and fixed it in my
+tree already.
