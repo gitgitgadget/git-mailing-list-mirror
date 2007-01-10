@@ -1,104 +1,52 @@
-From: Fengguang Wu <fengguang.wu@gmail.com>
-Subject: Re: How git affects kernel.org performance
-Date: Wed, 10 Jan 2007 09:57:39 +0800
-Message-ID: <20070110015739.GA26978__11276.4408383102$1168394293$gmane$org@mail.ustc.edu.cn>
-References: <1168140954.2153.1.camel@nigel.suspend2.net> <45A08269.4050504@zytor.com> <45A083F2.5000000@zytor.com> <Pine.LNX.4.64.0701062130260.3661@woody.osdl.org> <20070107085526.GR24090@1wt.eu> <20070107011542.3496bc76.akpm@osdl.org> <20070108030555.GA7289@in.ibm.com> <20070108125819.GA32756@thunk.org> <368329554.17014@ustc.edu.cn> <Pine.LNX.4.64.0701090821550.3661@woody.osdl.org>
+From: David Lang <david.lang@digitalinsight.com>
+Subject: Re: Using GIT to store /etc (Or: How to make GIT store all file 
+ permission bits)
+Date: Tue, 9 Jan 2007 17:39:35 -0800 (PST)
+Message-ID: <Pine.LNX.4.63.0701091735490.7747@qynat.qvtvafvgr.pbz>
+References: <787BE48C-1808-4A33-A368-5E8A3F00C787@mac.com>
+ <8aa486160612100706y92bc722n93374e394fc58005@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Theodore Tso <tytso@mit.edu>,
-	Suparna Bhattacharya <suparna@in.ibm.com>,
-	Andrew Morton <akpm@osdl.org>, Willy Tarreau <w@1wt.eu>,
-	"H. Peter Anvin" <hpa@zytor.com>, git@vger.kernel.org,
-	nigel@nigel.suspend2.net, "J.H." <warthog9@kernel.org>,
-	Randy Dunlap <randy.dunlap@oracle.com>,
-	Pavel Machek <pavel@ucw.cz>,
-	kernel list <linux-kernel@vger.kernel.org>,
-	webmaster@kernel.org,
-	"linux-ext4@vger.kernel.org" <linux-ext4@vger.kernel.org>
-X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S932653AbXAJB5d@vger.kernel.org Wed Jan 10 02:58:10 2007
-Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S932653AbXAJB5d@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@gmane.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+X-From: git-owner@vger.kernel.org Wed Jan 10 03:01:55 2007
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H4Sj4-0005fc-6P
-	for glk-linux-kernel-3@gmane.org; Wed, 10 Jan 2007 02:58:02 +0100
+	id 1H4Smk-0006Ua-N2
+	for gcvg-git@gmane.org; Wed, 10 Jan 2007 03:01:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932653AbXAJB5d (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Tue, 9 Jan 2007 20:57:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932658AbXAJB5c
-	(ORCPT <rfc822;linux-kernel-outgoing>);
-	Tue, 9 Jan 2007 20:57:32 -0500
-Received: from smtp.ustc.edu.cn ([202.38.64.16]:58521 "HELO ustc.edu.cn"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
-	id S932653AbXAJB5b (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
-	Tue, 9 Jan 2007 20:57:31 -0500
-Received: (eyou send program); Wed, 10 Jan 2007 09:57:06 +0800
-X-EYOUMAIL-SMTPAUTH: wfg@mail.ustc.edu.cn
-Received: from unknown (HELO localhost) (210.45.70.10)
- by 202.38.64.8 with SMTP; Wed, 10 Jan 2007 09:57:06 +0800
-Received: from wfg by localhost with local (Exim 4.63)
-	(envelope-from <wfg@localhost>)
-	id 1H4Sih-0006ek-Hc; Wed, 10 Jan 2007 09:57:39 +0800
-To: Linus Torvalds <torvalds@osdl.org>
-Message-ID: <20070110015739.GA26978@mail.ustc.edu.cn>
-Mail-Followup-To: Linus Torvalds <torvalds@osdl.org>,
-	Theodore Tso <tytso@mit.edu>,
-	Suparna Bhattacharya <suparna@in.ibm.com>,
-	Andrew Morton <akpm@osdl.org>, Willy Tarreau <w@1wt.eu>,
-	"H. Peter Anvin" <hpa@zytor.com>, git@vger.kernel.org,
-	nigel@nigel.suspend2.net, "J.H." <warthog9@kernel.org>,
-	Randy Dunlap <randy.dunlap@oracle.com>, Pavel Machek <pavel@ucw.cz>,
-	kernel list <linux-kernel@vger.kernel.org>, webmaster@kernel.org,
-	"linux-ext4@vger.kernel.org" <linux-ext4@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0701090821550.3661@woody.osdl.org>
-X-GPG-Fingerprint: 53D2 DDCE AB5C 8DC6 188B  1CB1 F766 DA34 8D8B 1C6D
-User-Agent: Mutt/1.5.13 (2006-08-11)
-Sender: linux-kernel-owner@vger.kernel.org
+	id S932658AbXAJCBs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 9 Jan 2007 21:01:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932663AbXAJCBs
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jan 2007 21:01:48 -0500
+Received: from warden-p.diginsite.com ([208.29.163.248]:55346 "HELO
+	warden.diginsite.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with SMTP id S932658AbXAJCBr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Jan 2007 21:01:47 -0500
+X-Greylist: delayed 1001 seconds by postgrey-1.27 at vger.kernel.org; Tue, 09 Jan 2007 21:01:47 EST
+Received: from no.name.available by warden.diginsite.com
+          via smtpd (for vger.kernel.org [209.132.176.167]) with SMTP; Tue, 9 Jan 2007 18:01:47 -0800
+Received: from wlvims02.corp.ad.diginsite.com (wlvims02.diginsite.com [10.201.10.79]) by blackbird.diginsite.com (Tablus Interceptor) for <git@vger.kernel.org>; Tue, 9 Jan 2007 17:45:05 -0800
+Received: from dlang.diginsite.com ([10.201.10.67]) by wlvims02.corp.ad.diginsite.com with InterScan Message Security Suite; Tue, 09 Jan 2007 17:45:04 -0800
+X-X-Sender: dlang@dlang.diginsite.com
+To: git@vger.kernel.org
+In-Reply-To: <8aa486160612100706y92bc722n93374e394fc58005@mail.gmail.com>
+X-Tablus-Inspected: yes
+X-Tablus-Classifications: public
+X-Tablus-Action: allow
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36470>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36471>
 
-On Tue, Jan 09, 2007 at 08:23:32AM -0800, Linus Torvalds wrote:
->
->
-> On Tue, 9 Jan 2007, Fengguang Wu wrote:
-> > >
-> > > The fastest and probably most important thing to add is some readahead
-> > > smarts to directories --- both to the htree and non-htree cases.  If
-> >
-> > Here's is a quick hack to practice the directory readahead idea.
-> > Comments are welcome, it's a freshman's work :)
->
-> Well, I'd probably have done it differently, but more important is whether
-> this actually makes a difference performance-wise. Have you benchmarked it
-> at all?
+I want to have a tripwire-like system checking the files to make sure that they 
+haven't changed unexpectedly. the program I'm looking at notices inode as well 
+as timestamp and content changed.
 
-Yes, a trivial test shows a marginal improvement, on a minimal debian system:
+when you checkout a file from git will it re-write/overwrite a file that hasn't 
+changed or will it realize there is no change and leave it as-is?
 
-# find / | wc -l
-13641
+does this answer change if there is a trigger on checkout (to change permissions 
+or otherwise manipulate the file)?
 
-# time find / > /dev/null
-
-real    0m10.000s
-user    0m0.210s
-sys     0m4.370s
-
-# time find / > /dev/null
-
-real    0m9.890s
-user    0m0.160s
-sys     0m3.270s
-
-> Doing an
->
-> 	echo 3 > /proc/sys/vm/drop_caches
->
-> is your friend for testing things like this, to force cold-cache
-> behaviour..
-
-Thanks, I'll work out numbers on large/concurrent dir accesses soon.
-
-Regards,
-Wu
+David Lang
