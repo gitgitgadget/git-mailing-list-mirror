@@ -1,145 +1,71 @@
-From: Steven Grimm <sgrimm@sgrimm-mbp.local>
-Subject: [PATCH] Update git-svn manpage to remove the implication that SVN::* is optional.
-Date: Tue, 9 Jan 2007 16:20:17 -0800
-Message-ID: <20070110002017.GA11564@midwinter.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Replacing the system call pread() with lseek()/xread()/lseek() sequence.
+Date: Tue, 09 Jan 2007 16:21:24 -0800
+Message-ID: <7v7ivvivej.fsf@assigned-by-dhcp.cox.net>
+References: <45A40C15.1070200@shadowen.org>
+	<20070109232540.GA30023@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Wed Jan 10 01:20:30 2007
+X-From: git-owner@vger.kernel.org Wed Jan 10 01:21:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H4RCZ-0006q0-8E
-	for gcvg-git@gmane.org; Wed, 10 Jan 2007 01:20:23 +0100
+	id 1H4RDe-00076G-VB
+	for gcvg-git@gmane.org; Wed, 10 Jan 2007 01:21:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932580AbXAJAUT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 9 Jan 2007 19:20:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932578AbXAJAUT
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jan 2007 19:20:19 -0500
-Received: from tater.midwinter.com ([216.32.86.90]:59403 "HELO midwinter.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932580AbXAJAUS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Jan 2007 19:20:18 -0500
-Received: (qmail 11696 invoked by uid 1001); 10 Jan 2007 00:20:17 -0000
+	id S932582AbXAJAV2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 9 Jan 2007 19:21:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932581AbXAJAV2
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jan 2007 19:21:28 -0500
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:35258 "EHLO
+	fed1rmmtao12.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932578AbXAJAV2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Jan 2007 19:21:28 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20070110002125.DWEG19398.fed1rmmtao12.cox.net@fed1rmimpo01.cox.net>;
+          Tue, 9 Jan 2007 19:21:25 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id 9CLa1W01u1kojtg0000000; Tue, 09 Jan 2007 19:20:35 -0500
 To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <20070109232540.GA30023@spearce.org> (Shawn O. Pearce's message
+	of "Tue, 9 Jan 2007 18:25:41 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36437>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36438>
 
-Now that git-svn requires the SVN::* Perl library, the manpage doesn't need
-to describe what happens when you don't have it.
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-Signed-off-by: Steven Grimm <koreth@midwinter.com>
----
- Documentation/git-svn.txt |   65 ++++----------------------------------------
- 1 files changed, 6 insertions(+), 59 deletions(-)
+> With the exception of this style difference, the patch looked
+> pretty good.  Nice work Stefan.  Andy's right, we do tend to prefer
+> "rc = read_in_full" over "rc=read_in_full".  Quite a bit actually,
+> though Junio is the final decider on all such matters as he gets
+> to choose to accept or reject the patch.  ;-)
 
-diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
-index 8df43cb..1b01313 100644
---- a/Documentation/git-svn.txt
-+++ b/Documentation/git-svn.txt
-@@ -249,8 +249,7 @@ repo-config key: svn.authorsfile
- 
- -q::
- --quiet::
--	Make git-svn less verbose.  This only affects git-svn if you
--	have the SVN::* libraries installed and are using them.
-+	Make git-svn less verbose.
- 
- --repack[=<n>]::
- --repack-flags=<flags>
-@@ -321,8 +320,6 @@ for more information on using GIT_SVN_ID.
- 	started tracking a branch and never tracked the trunk it was
- 	descended from.
- 
--	This relies on the SVN::* libraries to work.
--
- repo-config key: svn.followparent
- 
- --no-metadata::
-@@ -350,25 +347,6 @@ Run this if you used an old version of git-svn that used
- "git-svn-HEAD" instead of "remotes/git-svn" as the branch
- for tracking the remote.
- 
----no-ignore-externals::
--Only used with the 'fetch' and 'rebuild' command.
--
--This command has no effect when you are using the SVN::*
--libraries with git, svn:externals are always avoided.
--
--By default, git-svn passes --ignore-externals to svn to avoid
--fetching svn:external trees into git.  Pass this flag to enable
--externals tracking directly via git.
--
--Versions of svn that do not support --ignore-externals are
--automatically detected and this flag will be automatically
--enabled for them.
--
--Otherwise, do not enable this flag unless you know what you're
--doing.
--
--repo-config key: svn.noignoreexternals
--
- --ignore-nodate::
- Only used with the 'fetch' command.
- 
-@@ -486,49 +464,18 @@ This allows you to tie unfetched SVN revision 375 to your current HEAD:
- 	git-svn fetch 375=$(git-rev-parse HEAD)
- ------------------------------------------------
- 
--Advanced Example: Tracking a Reorganized Repository
--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
--Note: this example is now obsolete if you have SVN::* libraries
--installed.  Simply use --follow-parent when fetching.
--
- If you're tracking a directory that has moved, or otherwise been
- branched or tagged off of another directory in the repository and you
--care about the full history of the project, then you can read this
--section.
--
--This is how Yann Dirson tracked the trunk of the ufoai directory when
--the /trunk directory of his repository was moved to /ufoai/trunk and
--he needed to continue tracking /ufoai/trunk where /trunk left off.
-+care about the full history of the project, then you can use
-+the --follow-parent option.
- 
--------------------------------------------------------------------------
--	# This log message shows when the repository was reorganized:
--	r166 | ydirson | 2006-03-02 01:36:55 +0100 (Thu, 02 Mar 2006) | 1 line
--	Changed paths:
--	   D /trunk
--	   A /ufoai/trunk (from /trunk:165)
--
--	# First we start tracking the old revisions:
--	GIT_SVN_ID=git-oldsvn git-svn init \
--			https://svn.sourceforge.net/svnroot/ufoai/trunk
--	GIT_SVN_ID=git-oldsvn git-svn fetch -r1:165
--
--	# And now, we continue tracking the new revisions:
--	GIT_SVN_ID=git-newsvn git-svn init \
--	      https://svn.sourceforge.net/svnroot/ufoai/ufoai/trunk
--	GIT_SVN_ID=git-newsvn git-svn fetch \
--	      166=`git-rev-parse refs/remotes/git-oldsvn`
--------------------------------------------------------------------------
-+------------------------------------------------
-+	git-svn fetch --follow-parent
-+------------------------------------------------
- 
- BUGS
- ----
- 
--If you are not using the SVN::* Perl libraries and somebody commits a
--conflicting changeset to SVN at a bad moment (right before you commit)
--causing a conflict and your commit to fail, your svn working tree
--($GIT_DIR/git-svn/tree) may be dirtied.  The easiest thing to do is
--probably just to rm -rf $GIT_DIR/git-svn/tree and run 'rebuild'.   You
--can avoid this problem entirely by using 'dcommit'.
--
- We ignore all SVN properties except svn:executable.  Too difficult to
- map them since we rely heavily on git write-tree being _exactly_ the
- same on both the SVN and git working trees and I prefer not to clutter
--- 
-1.5.0.rc0.g244a7
+I am a nice guy and do not reject a patch for missing two SP
+characters which means I have to --amend it which takes time
+away from me.  Maybe I should stop being nice ;-).
+
+>> > +
+>> > +        if (current_offset != lseek(fd, current_offset, SEEK_SET))
+>> > +                return -1;
+>> 
+>> How likely are we ever to be in the right place here?  Seems vanishingly
+>> small putting us firmly in the four syscalls per call space.  I wonder
+>> if git ever actually cares about the seek location.  ie if we could stop
+>> reading and resetting it.  Probabally not worth working it out I guess
+>> as any _sane_ system has one.
+>
+> Andy's right actually.  If we are using pread() we aren't relying
+> on the current file pointer.  Which means its unnecessary to get
+> the current pointer before seeking to the requested offset, and its
+> unnecessary to restore it before the git_pread() function returns.
+
+The caller of pread() does not care the current position, but
+that is not to mean it does not care the position after pread()
+returns.  The current callers do not care, though.
