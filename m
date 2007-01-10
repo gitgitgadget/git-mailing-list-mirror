@@ -1,74 +1,145 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] Detached HEAD (experimental)
-Date: Tue, 9 Jan 2007 19:18:22 -0500
-Message-ID: <20070110001822.GG30023@spearce.org>
-References: <87odphgfzz.wl%cworth@cworth.org> <7vbql9ydd7.fsf@assigned-by-dhcp.cox.net> <20070108131735.GA2647@coredump.intra.peff.net> <7vzm8tt5kf.fsf@assigned-by-dhcp.cox.net> <20070109142130.GA10633@coredump.intra.peff.net> <7virffkick.fsf@assigned-by-dhcp.cox.net> <20070109213117.GB25012@fieldses.org> <7vy7obj07k.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0701091539050.3594@woody.osdl.org> <7vd55nivx7.fsf@assigned-by-dhcp.cox.net>
+From: Steven Grimm <sgrimm@sgrimm-mbp.local>
+Subject: [PATCH] Update git-svn manpage to remove the implication that SVN::* is optional.
+Date: Tue, 9 Jan 2007 16:20:17 -0800
+Message-ID: <20070110002017.GA11564@midwinter.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	"J. Bruce Fields" <bfields@fieldses.org>,
-	Jeff King <peff@peff.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 10 01:18:36 2007
+X-From: git-owner@vger.kernel.org Wed Jan 10 01:20:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H4RAp-0006Ka-0I
-	for gcvg-git@gmane.org; Wed, 10 Jan 2007 01:18:35 +0100
+	id 1H4RCZ-0006q0-8E
+	for gcvg-git@gmane.org; Wed, 10 Jan 2007 01:20:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932577AbXAJASb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 9 Jan 2007 19:18:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932578AbXAJASb
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jan 2007 19:18:31 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:36250 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932577AbXAJASa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Jan 2007 19:18:30 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1H4RAU-0000uk-EU; Tue, 09 Jan 2007 19:18:14 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id E700B20FBAE; Tue,  9 Jan 2007 19:18:22 -0500 (EST)
-To: Junio C Hamano <junkio@cox.net>
+	id S932580AbXAJAUT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 9 Jan 2007 19:20:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932578AbXAJAUT
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jan 2007 19:20:19 -0500
+Received: from tater.midwinter.com ([216.32.86.90]:59403 "HELO midwinter.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932580AbXAJAUS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Jan 2007 19:20:18 -0500
+Received: (qmail 11696 invoked by uid 1001); 10 Jan 2007 00:20:17 -0000
+To: git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <7vd55nivx7.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36436>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36437>
 
-Junio C Hamano <junkio@cox.net> wrote:
-> Linus Torvalds <torvalds@osdl.org> writes:
-> >  - git checkout will refuse to switch AWAY from a detached head unless the 
-> >    SHA1 of the detached head exactly matches some other branch.
-> 
-> ... or an existing "ref^{commit}".
+Now that git-svn requires the SVN::* Perl library, the manpage doesn't need
+to describe what happens when you don't have it.
 
-I think that was implied.  ;-)
+Signed-off-by: Steven Grimm <koreth@midwinter.com>
+---
+ Documentation/git-svn.txt |   65 ++++----------------------------------------
+ 1 files changed, 6 insertions(+), 59 deletions(-)
+
+diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
+index 8df43cb..1b01313 100644
+--- a/Documentation/git-svn.txt
++++ b/Documentation/git-svn.txt
+@@ -249,8 +249,7 @@ repo-config key: svn.authorsfile
  
-> > I'd love to see the detached HEAD series move into "master", but I do 
-> > think we should make sure that people can't drop their work easily by 
-> > mistake, and I think the above suggestion is both simple and workable.
-> >
-> > Comments?
-> 
-> I agree with the "reachability is wrong -- you would lose the
-> point in the middle" reasoning.
-
-I have no problem with that.  Forget the reachability thing entirely.
-
-My point about reset --hard/--soft probably also needing this check
-still stands however.
-
+ -q::
+ --quiet::
+-	Make git-svn less verbose.  This only affects git-svn if you
+-	have the SVN::* libraries installed and are using them.
++	Make git-svn less verbose.
+ 
+ --repack[=<n>]::
+ --repack-flags=<flags>
+@@ -321,8 +320,6 @@ for more information on using GIT_SVN_ID.
+ 	started tracking a branch and never tracked the trunk it was
+ 	descended from.
+ 
+-	This relies on the SVN::* libraries to work.
+-
+ repo-config key: svn.followparent
+ 
+ --no-metadata::
+@@ -350,25 +347,6 @@ Run this if you used an old version of git-svn that used
+ "git-svn-HEAD" instead of "remotes/git-svn" as the branch
+ for tracking the remote.
+ 
+---no-ignore-externals::
+-Only used with the 'fetch' and 'rebuild' command.
+-
+-This command has no effect when you are using the SVN::*
+-libraries with git, svn:externals are always avoided.
+-
+-By default, git-svn passes --ignore-externals to svn to avoid
+-fetching svn:external trees into git.  Pass this flag to enable
+-externals tracking directly via git.
+-
+-Versions of svn that do not support --ignore-externals are
+-automatically detected and this flag will be automatically
+-enabled for them.
+-
+-Otherwise, do not enable this flag unless you know what you're
+-doing.
+-
+-repo-config key: svn.noignoreexternals
+-
+ --ignore-nodate::
+ Only used with the 'fetch' command.
+ 
+@@ -486,49 +464,18 @@ This allows you to tie unfetched SVN revision 375 to your current HEAD:
+ 	git-svn fetch 375=$(git-rev-parse HEAD)
+ ------------------------------------------------
+ 
+-Advanced Example: Tracking a Reorganized Repository
+-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-Note: this example is now obsolete if you have SVN::* libraries
+-installed.  Simply use --follow-parent when fetching.
+-
+ If you're tracking a directory that has moved, or otherwise been
+ branched or tagged off of another directory in the repository and you
+-care about the full history of the project, then you can read this
+-section.
+-
+-This is how Yann Dirson tracked the trunk of the ufoai directory when
+-the /trunk directory of his repository was moved to /ufoai/trunk and
+-he needed to continue tracking /ufoai/trunk where /trunk left off.
++care about the full history of the project, then you can use
++the --follow-parent option.
+ 
+-------------------------------------------------------------------------
+-	# This log message shows when the repository was reorganized:
+-	r166 | ydirson | 2006-03-02 01:36:55 +0100 (Thu, 02 Mar 2006) | 1 line
+-	Changed paths:
+-	   D /trunk
+-	   A /ufoai/trunk (from /trunk:165)
+-
+-	# First we start tracking the old revisions:
+-	GIT_SVN_ID=git-oldsvn git-svn init \
+-			https://svn.sourceforge.net/svnroot/ufoai/trunk
+-	GIT_SVN_ID=git-oldsvn git-svn fetch -r1:165
+-
+-	# And now, we continue tracking the new revisions:
+-	GIT_SVN_ID=git-newsvn git-svn init \
+-	      https://svn.sourceforge.net/svnroot/ufoai/ufoai/trunk
+-	GIT_SVN_ID=git-newsvn git-svn fetch \
+-	      166=`git-rev-parse refs/remotes/git-oldsvn`
+-------------------------------------------------------------------------
++------------------------------------------------
++	git-svn fetch --follow-parent
++------------------------------------------------
+ 
+ BUGS
+ ----
+ 
+-If you are not using the SVN::* Perl libraries and somebody commits a
+-conflicting changeset to SVN at a bad moment (right before you commit)
+-causing a conflict and your commit to fail, your svn working tree
+-($GIT_DIR/git-svn/tree) may be dirtied.  The easiest thing to do is
+-probably just to rm -rf $GIT_DIR/git-svn/tree and run 'rebuild'.   You
+-can avoid this problem entirely by using 'dcommit'.
+-
+ We ignore all SVN properties except svn:executable.  Too difficult to
+ map them since we rely heavily on git write-tree being _exactly_ the
+ same on both the SVN and git working trees and I prefer not to clutter
 -- 
-Shawn.
+1.5.0.rc0.g244a7
