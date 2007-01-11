@@ -1,75 +1,79 @@
-From: Martin Langhoff <martin@catalyst.net.nz>
-Subject: Re: [PATCH] cvsimport: skip commits that are too recent
-Date: Fri, 12 Jan 2007 09:18:09 +1300
-Message-ID: <45A69B81.40306@catalyst.net.nz>
-References: <11682386193246-git-send-email-martin@catalyst.net.nz> <200701110922.07997.robin.rosenberg.lists@dewire.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Speedup recursive by flushing index only once for all entries
+Date: Thu, 11 Jan 2007 12:23:45 -0800
+Message-ID: <7vfyah48j2.fsf@assigned-by-dhcp.cox.net>
+References: <81b0412b0701040247k47e398e6q34dd5233bb5706f6@mail.gmail.com>
+	<Pine.LNX.4.63.0701041327490.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<81b0412b0701040447u329dcf9bvcd7adb9e9d199f18@mail.gmail.com>
+	<7v8xgileza.fsf@assigned-by-dhcp.cox.net>
+	<81b0412b0701050322u67131900xea969b2da9981a94@mail.gmail.com>
+	<20070107163112.GA9336@steel.home>
+	<7vr6u2adgx.fsf@assigned-by-dhcp.cox.net>
+	<81b0412b0701101507n764aed73p31c7533e743283f0@mail.gmail.com>
+	<Pine.LNX.4.64.0701101521410.3594@woody.osdl.org>
+	<81b0412b0701110102m5264696dg68a573e9d5f2a17c@mail.gmail.com>
+	<Pine.LNX.4.64.0701110823300.3594@woody.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, junkio@cox.net
-X-From: git-owner@vger.kernel.org Thu Jan 11 21:18:28 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 11 21:24:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H56NS-00056p-Bv
-	for gcvg-git@gmane.org; Thu, 11 Jan 2007 21:18:22 +0100
+	id 1H56T2-0006YU-V3
+	for gcvg-git@gmane.org; Thu, 11 Jan 2007 21:24:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751484AbXAKUST (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 11 Jan 2007 15:18:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751486AbXAKUST
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jan 2007 15:18:19 -0500
-Received: from godel.catalyst.net.nz ([202.78.240.40]:56780 "EHLO
-	mail1.catalyst.net.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751484AbXAKUSS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Jan 2007 15:18:18 -0500
-Received: from leibniz.catalyst.net.nz ([202.78.240.7] helo=[192.168.2.69])
-	by mail1.catalyst.net.nz with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1H56NJ-0004qt-I7; Fri, 12 Jan 2007 09:18:13 +1300
-User-Agent: Thunderbird 1.5.0.9 (X11/20070103)
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-In-Reply-To: <200701110922.07997.robin.rosenberg.lists@dewire.com>
+	id S1751485AbXAKUYF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 11 Jan 2007 15:24:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751486AbXAKUYF
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jan 2007 15:24:05 -0500
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:52589 "EHLO
+	fed1rmmtao01.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751485AbXAKUYD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Jan 2007 15:24:03 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao01.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20070111202401.LBBL9173.fed1rmmtao01.cox.net@fed1rmimpo01.cox.net>;
+          Thu, 11 Jan 2007 15:24:01 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id 9wP91W00a1kojtg0000000; Thu, 11 Jan 2007 15:23:10 -0500
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0701110823300.3594@woody.osdl.org> (Linus
+	Torvalds's message of "Thu, 11 Jan 2007 08:38:51 -0800 (PST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36606>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36607>
 
-Robin Rosenberg wrote:
-> The idea is nice,  but the downside of this patch is that I (and presumably 
-> others) have to rewrite the scripts to invoke cvsps explicitly now. 
+Linus Torvalds <torvalds@osdl.org> writes:
 
-This patch did _not_ change how we invoke cvsps at all. It did change
-that we now ignore the very recent commits (and pick them up in the next
-run), unless you pass -a.
+> That said, I think we actually have another problem entirely:
+>
+> Look at "write_cache()", Junio: isn't it leaking memory like mad?
+>
+> Shouldn't we have something like this?
+>
+> It's entirely possible that the _real_ problem with the "flush the index 
+> all the time" was that it just caused this bug: tons and tons of lost 
+> memory, causing git-merge-recursive to grow explosively (~6MB per 
+> cache flush, and a _lot_ of cache flushes), which on a 384MB machine 
+> quickly uses up memory and causes totally unnecessary swapping.
 
-> The fix
-> should really be in cvsps, not git-cvsimport (which is the reason I haven't 
-> fixed this). Running a full cvsps takes two hours and consumes more than a 
-> gigabyte of memory for me, which makes it impossible to run on all but one 
-> machine, wheras the incremental import runs in less than five minutes on any 
-> machine.
+You are right -- there is absolutely no reason to retain this
+memory.  It is a serialized representation of cache-tree data
+only to be stored in the index, and no other user of this data
+exists.  Thanks for spotting this.
 
-Many things would need fixing in cvsps. This aspect [that commits we do
-not know if recent activty belongs to a finished commit or a commit that
-is still happening], is not cvsps' fault. It is due to the lack of
-atomicity in CVS, combined with its rather bad network protocol.
+Writing out 6MB per every path changed in a merge would still be
+an unnecessary overhead over the one in 'next', so there is no
+reason to replace 'next' with this single liner of yours, but I
+am interested in seeing how much of the 20-minute vs 1-minute
+difference is attributable to this leak, just out of curiosity.
 
-> Add to that the risk that the buggy nature of cvsps probably increases the 
-> risk of errors, so please make the old behaviour the default (import all, 
-> retain cvsps cache) and make the changed behaviour the result of an explicit 
-> switch.
-
-What seems to concern you is the "retain cvsps cache" -- which we do.
-
-I did comment later in the thread that we should consider rebuilding the
-cvsps cache. The reason for that is that I am seeing LESS breakage than
-maintaining the cache. Significantly less.
-
-As you say, however, it is a major change, so I'm still evaluating options.
-
-cheers
-
-
-
-martin
+Alex, if you have a chance, could you apply Linus's single-liner
+on top of 'master', without either of the merge-recursive
+patches in 'next', and see what kind of numbers you would get?
