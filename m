@@ -1,88 +1,105 @@
-From: Andy Whitcroft <apw@shadowen.org>
-Subject: Re: tree corrupted on disk quota full
-Date: Thu, 11 Jan 2007 22:10:44 +0000
-Message-ID: <45A6B5E4.3050007@shadowen.org>
-References: <20070111125726.GJ1759@mellanox.co.il> <Pine.LNX.4.64.0701111023090.3594@woody.osdl.org> <Pine.LNX.4.64.0701111109070.3594@woody.osdl.org> <45A6A97F.5080008@shadowen.org> <Pine.LNX.4.64.0701111353030.3594@woody.osdl.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Better error messages for corrupt databases
+Date: Thu, 11 Jan 2007 14:09:31 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0701111400031.3594@woody.osdl.org>
+References: <20070111125726.GJ1759@mellanox.co.il>
+ <Pine.LNX.4.64.0701111023090.3594@woody.osdl.org>
+ <Pine.LNX.4.64.0701111109070.3594@woody.osdl.org> <45A6A97F.5080008@shadowen.org>
+ <7vodp52qzz.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Michael S. Tsirkin" <mst@mellanox.co.il>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 11 23:11:16 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Andy Whitcroft <apw@shadowen.org>,
+	"Michael S. Tsirkin" <mst@mellanox.co.il>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 11 23:11:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H588b-0001x1-9r
-	for gcvg-git@gmane.org; Thu, 11 Jan 2007 23:11:09 +0100
+	id 1H5892-00024b-Ik
+	for gcvg-git@gmane.org; Thu, 11 Jan 2007 23:11:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932108AbXAKWLG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 11 Jan 2007 17:11:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932142AbXAKWLG
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jan 2007 17:11:06 -0500
-Received: from hellhawk.shadowen.org ([80.68.90.175]:3435 "EHLO
-	hellhawk.shadowen.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932108AbXAKWLE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Jan 2007 17:11:04 -0500
-Received: from localhost ([127.0.0.1])
-	by hellhawk.shadowen.org with esmtp (Exim 4.50)
-	id 1H587M-0007Mn-SN; Thu, 11 Jan 2007 22:09:53 +0000
-User-Agent: Icedove 1.5.0.9 (X11/20061220)
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0701111353030.3594@woody.osdl.org>
-X-Enigmail-Version: 0.94.1.0
-OpenPGP: url=http://www.shadowen.org/~apw/public-key
+	id S1751487AbXAKWLe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 11 Jan 2007 17:11:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751460AbXAKWLe
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jan 2007 17:11:34 -0500
+Received: from smtp.osdl.org ([65.172.181.24]:38531 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751487AbXAKWLd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Jan 2007 17:11:33 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l0BM9WWi007460
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 11 Jan 2007 14:09:33 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l0BM9WXk004450;
+	Thu, 11 Jan 2007 14:09:32 -0800
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vodp52qzz.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=-0.663 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.107__
+X-MIMEDefang-Filter: osdl$Revision: 1.170 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36622>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36623>
 
-Linus Torvalds wrote:
-> 
-> On Thu, 11 Jan 2007, Andy Whitcroft wrote:
->> The call was intended to replace a common idiom:
->>
->> if (xwrite(fd, buf, size) != size)
->> 	error
-> 
-> I really don't agree.
-> 
-> You should use "write_or_die()" for this idiom.
-> 
-> There really is two cases:
->  - the complex and robust one: "we will keep writing even in the presense 
->    of partial writes".
-> 
->    This is "xwrite()". 
-> 
->  - the simple case: "write everything", anything else is an error. This is 
->    "write_or_die()", or "write_in_full()".
-> 
-> And I claim, that for the "write_in_full()" case, if you EVER get anything 
-> but the full length back, that's an error.
-> 
-> And it should be treated as such. There is NO POINT in write_in_full() 
-> ever returning a partial result. It's unrecoverable by design - and if it 
-> wasn't, you wouldn't use "write_in_full()" in the first place, you'd just 
-> use "xwrite()".
-> 
-> And returning a partial result in that case is just a recipe for disaster. 
-> I already pointed to one real bug due to this: write_buffer() was (and 
-> currently is) simply buggy. And it's buggy EXACTLY becaue 
-> "write_in_full()" was doing the wrong thing, and just made it easy to 
-> write buggy code - it was no easier to use than xwrite(), and thus there 
-> was no point to it. Might as well have just used xwrite() in the first 
-> place.
-> 
-> So I repeat: either you use "xwrite()" (and handle the partial case), or 
-> you use "write_in_full()" (and the partial case is an *ERROR*). There is 
-> no sane middle ground in between those cases.
 
-Things should be safe in general with the code as it is as we are
-checking the write length.  But it is clear that converting to an error
-would simplify and clean up the code.  Should have done that the first
-time.
 
-If its not done in the morning, I'll fix it up.
+This fixes another problem that Andy's case showed: git-fsck-objects 
+reports nonsensical results for corrupt objects.
 
--apw
+There were actually two independent and confusing problems:
+
+ - when we had a zero-sized file and used map_sha1_file, mmap() would 
+   return EINVAL, and git-fsck-objects would report that as an insane and 
+   confusing error. I don't know when this was introduced, it might have 
+   been there forever.
+
+ - when "parse_object()" returned NULL, fsck would say "object not found", 
+   which can be very confusing, since obviously the object might "exist", 
+   it's just unparseable because it's totally corrupt.
+
+So this just makes "xmmap()" return NULL for a zero-sized object (which is 
+a valid thing pointer, exactly the same way "malloc()" can return NULL for 
+a zero-sized allocation). That fixes the first problem (but we could have 
+fixed it in the caller too - I don't personally much care whichever way it 
+goes, but maybe somebody should check that the NO_MMAP case does 
+something sane in this case too?).
+
+And the second problem is solved by just making the error message slightly 
+clearer - the failure to parse an object may be because it's missing or 
+corrupt, not necessarily because it's not "found".
+
+Signed-off-by: Linus Torvalds <torvalds@osdl.org>
+---
+
+This would hopefully have made the error case Andy had a bit more readable 
+and understandable.
+
+diff --git a/fsck-objects.c b/fsck-objects.c
+index 0d8a8eb..81f00db 100644
+--- a/fsck-objects.c
++++ b/fsck-objects.c
+@@ -290,7 +290,7 @@ static int fsck_sha1(unsigned char *sha1)
+ {
+ 	struct object *obj = parse_object(sha1);
+ 	if (!obj)
+-		return error("%s: object not found", sha1_to_hex(sha1));
++		return error("%s: object corrupt or missing", sha1_to_hex(sha1));
+ 	if (obj->flags & SEEN)
+ 		return 0;
+ 	obj->flags |= SEEN;
+diff --git a/git-compat-util.h b/git-compat-util.h
+index f8d46d5..8781e8e 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -202,6 +202,8 @@ static inline void *xmmap(void *start, size_t length,
+ {
+ 	void *ret = mmap(start, length, prot, flags, fd, offset);
+ 	if (ret == MAP_FAILED) {
++		if (!length)
++			return NULL;
+ 		release_pack_memory(length);
+ 		ret = mmap(start, length, prot, flags, fd, offset);
+ 		if (ret == MAP_FAILED)
