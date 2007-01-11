@@ -1,79 +1,143 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Bug-ish: CRLF endings and conflict markers
-Date: Thu, 11 Jan 2007 09:41:17 +0000
-Message-ID: <200701110941.22024.andyparkins@gmail.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH] Detached HEAD (experimental)
+Date: Thu, 11 Jan 2007 10:45:26 +0100
+Message-ID: <45A60736.4050503@op5.se>
+References: <7vac11yirf.fsf@assigned-by-dhcp.cox.net> <87ps9xgkjo.wl%cworth@cworth.org> <7virfprquo.fsf@assigned-by-dhcp.cox.net> <87odphgfzz.wl%cworth@cworth.org> <7vbql9ydd7.fsf@assigned-by-dhcp.cox.net> <20070108131735.GA2647@coredump.intra.peff.net> <7vzm8tt5kf.fsf@assigned-by-dhcp.cox.net> <20070109142130.GA10633@coredump.intra.peff.net> <7virffkick.fsf@assigned-by-dhcp.cox.net> <20070109213117.GB25012@fieldses.org> <87zm8ryiyz.wl%cworth@cworth.org> <45A4AD08.1020002@op5.se> <7vwt3vb4ev.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0701101041210.20138@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Thu Jan 11 10:41:30 2007
+Cc: Junio C Hamano <junkio@cox.net>,
+	"J. Bruce Fields" <bfields@fieldses.org>,
+	Jeff King <peff@peff.net>, Carl Worth <cworth@cworth.org>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 11 10:45:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H4wR7-0000Dv-TA
-	for gcvg-git@gmane.org; Thu, 11 Jan 2007 10:41:30 +0100
+	id 1H4wV2-0001CE-Dz
+	for gcvg-git@gmane.org; Thu, 11 Jan 2007 10:45:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965356AbXAKJl1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 11 Jan 2007 04:41:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965358AbXAKJl1
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jan 2007 04:41:27 -0500
-Received: from ug-out-1314.google.com ([66.249.92.171]:48985 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965356AbXAKJl0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Jan 2007 04:41:26 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so404529uga
-        for <git@vger.kernel.org>; Thu, 11 Jan 2007 01:41:25 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=KxZrT9UkhZ1sF7K8dWk933sDYBVy5qSTwGIRq0dl2+37YpRWOhIR0Re7+VErqziupMSE0jrouk23AHCbeXb86khhSMZHR0hj3w4GOMg/imH2/u1F+b5gUP3nnlCE7iRl3ucvwTusmNn8jkUso61s33otasCt1It80BoM1lPjddo=
-Received: by 10.67.22.2 with SMTP id z2mr1452217ugi.1168508485407;
-        Thu, 11 Jan 2007 01:41:25 -0800 (PST)
-Received: from dvr.360vision.com ( [194.70.53.227])
-        by mx.google.com with ESMTP id 5sm449961ugc.2007.01.11.01.41.24;
-        Thu, 11 Jan 2007 01:41:24 -0800 (PST)
-To: git@vger.kernel.org
-User-Agent: KMail/1.9.5
-Content-Disposition: inline
+	id S965348AbXAKJp3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 11 Jan 2007 04:45:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965359AbXAKJp3
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jan 2007 04:45:29 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:51081 "EHLO
+	smtp-gw1.op5.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965348AbXAKJp2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Jan 2007 04:45:28 -0500
+Received: from [192.168.1.20] (unknown [213.88.215.14])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id 209046BCBC; Thu, 11 Jan 2007 10:45:27 +0100 (CET)
+User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
+To: Daniel Barkalow <barkalow@iabervon.org>
+In-Reply-To: <Pine.LNX.4.64.0701101041210.20138@iabervon.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36566>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36567>
 
-Hello,
+Daniel Barkalow wrote:
+> On Wed, 10 Jan 2007, Junio C Hamano wrote:
+> 
+>> Andreas Ericsson <ae@op5.se> writes:
+>>
+>>> ... Since committing on
+>>> detached heads really should be a very rare case I don't think many
+>>> people will find this terribly annoying.
+>> Quite the contrary, I would imagine it would be quite natural to
+>> do throw-away commits and merges on detached head while
+>> bisecting the history (e.g. commit small fixup to make it
+>> compile and then mark the result for bisection to hunt for real
+>> bugs that are hidden by silly compilation problems).  
+> 
+> I don't think this would actually work. If you commit your build fix, and 
+> then mark the result as bad, won't bisect skew its choices due to 
+> suspecting that your build fix is the real bug?
+> 
+> I'd think that, if you make changes while bisecting, you probably want to 
+> leave those changes uncommitted, and merge or discard them when testing 
+> other commits.
+> 
+> If anything, I'd think you'd want a rather different sort of commit 
+> mechanism than the usual commit, which says, "whenever you consider commit 
+> {sha1-from-real-history}, use {tree-with-local-changes} instead of 
+> {tree-in-real-commit}." Or, more generally, "in order to get the trees 
+> I want to actually use, this patch (git diff HEAD) needs to be applied to 
+> every commit in some portion of the history including, at least, 
+> get_sha1(HEAD)".
+> 
+> I'm not seeing any actual benefit to causing the history to contain a 
+> dead-end fork off of an antique commit, and then throwing this away. And 
+> committing your change so that it won't get lost, with the intention of 
+> losing it in a little while, doesn't seem to make any sense, either.
+> 
 
-I am sure the response to this will be "tough", however I'll mention it 
-anyway.  It wasn't a problem for me, as I know git is LF endings only, but 
-others might be a bit confused.
+Same here. I'd imagine temporary build-fixes to live as a patch-file 
+generated by
 
- * Track a file that has CR-LF endings.  Not a problem, git works fine with 
-   these and treats the CR as an extra character at the end of the line.
- * Have two branches make conflicting changes to that file
- * Merge, conflict
- * Open the file
- * Find that (almost) every line now displays with a "^M" at the end.  vim has
-   found some lines that don't have CR-LF ends so dropped back to UNIX mode.
- * Be careful that your conflict resolution doesn't introduce any new lines as 
-   they will not have CR-LF endings.
+	git diff > build-fixes.diff
 
-The "(almost)" above refers of course to the conflict markers.  These have LF 
-endings only so force the editor into UNIX mode.  Assuming a binary safe 
-editor, things will be fine if the conflict resolution is simply to remove 
-the markers, and edit the existing lines.  However, if the user adds any 
-lines during conflict resolution, those new lines will only have LF ends.
-
-This is a problem for compilers that are expecting CR-LF input.
-
-Note: this is not on Windows (spit), this is simply editing a CR-LF file on 
-UNIX.
-
-The best solution is probably to use the line ending of the conflicted lines.  
-I've had a look, but I can only fine builtin-rerere.c that generates the 
-markers - would that be the place to make this change?
+after having hacked on the tree. There's no sane way of inserting 
+commits into the middle of the DAG, so committing on something that 
+isn't a branch with the intention of losing it is just plain weird.
 
 
-Andy
+> (Of course, it also makes sense to do merges, but again, you probably want 
+> to create and temporarily use the working tree resulting from the merge, 
+> not create the commit.)
+> 
+
+Yes. I'd imagine "git merge --no-commit" could be used for this, to 
+merge things only in the working directory.
+
+
+> I think that the workflow that uses regular commits with a detached HEAD 
+> is this: do a series of commits representing real work on top of a remote 
+> branch or a tag, and decide later (once you've tested the results for 
+> worthiness) whether to turn this into a topic branch or throw it away.
+> 
+
+Perhaps, but this is also a bit weird, as you would normally hack things 
+up to fit on top of some already existing branch, so then you'd detach 
+the head but point it to something that already has a branch-name 
+associated with it.
+
+Otoh, I could imagine this would be sort of nifty for applying bugfixes 
+on top of old tags, so perhaps it's not so weird after all. Then you'd 
+probably want to create a new tag before releasing the bugfixed version, 
+so Linus suggestion makes sense in this case (assuming it doesn't fsck 
+up the bisect case, ofc).
+
+
+> But I don't think this is a good match for detached HEAD, because you may 
+> want to do exactly the same thing, but start with a regular local head. I 
+> think the right thing to do is something like "git checkout --anon", which 
+> puts you on a new branch with no name, which will evaporate if you leave 
+> it (as per "git branch -d"; you need to force it if it isn't fully 
+> merged).
+> 
+
+
+Yes. I'd imagine "git merge --no-commit" could be used for this, to 
+merge things only in the working directory. We could easily create a 
+hack for this by doing a "git reset --mixed HEAD^1" after the merge is 
+complete.
+
+> So I think the feature which lets you make commits without being on a 
+> branch from refs/heads is actually a different feature from "detached 
+> HEAD", which only shares the aspect that "git branch" has no line with a 
+> "*", because there is no name for what HEAD points to.
+> 
+
+
+Agreed. They really are two completely different things. I see no harm 
+in splitting them up codewise. Bisect could start working without its 
+protected branch straight away, but commits (and merges) to detached 
+heads wouldn't work at all. Then we can see what use people put this to 
+and what walls they run into and make the feature accordingly.
+
 -- 
-Dr Andy Parkins, M Eng (hons), MIEE
-andyparkins@gmail.com
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
