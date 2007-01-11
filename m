@@ -1,68 +1,69 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: [RFC] Adding stack-level logging/undo to StGIT
-Date: Thu, 11 Jan 2007 00:06:55 +0000
-Message-ID: <b0943d9e0701101606w649fc26ara73f2c9212de4a33@mail.gmail.com>
-References: <20070105231944.GB6179@nan92-1-81-57-214-146.fbx.proxad.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Speedup recursive by flushing index only once for all entries
+Date: Wed, 10 Jan 2007 16:34:11 -0800
+Message-ID: <7v4pqy8kqk.fsf@assigned-by-dhcp.cox.net>
+References: <81b0412b0701040247k47e398e6q34dd5233bb5706f6@mail.gmail.com>
+	<Pine.LNX.4.63.0701041327490.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<81b0412b0701040447u329dcf9bvcd7adb9e9d199f18@mail.gmail.com>
+	<7v8xgileza.fsf@assigned-by-dhcp.cox.net>
+	<81b0412b0701050322u67131900xea969b2da9981a94@mail.gmail.com>
+	<20070107163112.GA9336@steel.home>
+	<7vr6u2adgx.fsf@assigned-by-dhcp.cox.net>
+	<81b0412b0701101507n764aed73p31c7533e743283f0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "GIT list" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jan 11 01:07:10 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: "Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 11 01:34:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H4nTI-0004DR-9D
-	for gcvg-git@gmane.org; Thu, 11 Jan 2007 01:07:08 +0100
+	id 1H4ntn-0002Cr-4Q
+	for gcvg-git@gmane.org; Thu, 11 Jan 2007 01:34:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965198AbXAKAG4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 10 Jan 2007 19:06:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965263AbXAKAG4
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Jan 2007 19:06:56 -0500
-Received: from nz-out-0506.google.com ([64.233.162.233]:31038 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965198AbXAKAG4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Jan 2007 19:06:56 -0500
-Received: by nz-out-0506.google.com with SMTP id s1so216012nze
-        for <git@vger.kernel.org>; Wed, 10 Jan 2007 16:06:55 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=KRLbP/3zgg0VdC5PRcCFO3JYlvwUKE8M2Vc3GgrzxBQcp6uX4W7Q6TSNbhmO8FuUs2kr021AFcQAyBnJW/EkJZCc9VL6IMJsvl1wb5kBifElTQ78gX9kbq90ZGaMKYtLxXPKKHjWG30IKyapZHDF9dEQKeap8jlAd+/u7EnelGs=
-Received: by 10.65.240.5 with SMTP id s5mr1316509qbr.1168474015382;
-        Wed, 10 Jan 2007 16:06:55 -0800 (PST)
-Received: by 10.65.133.13 with HTTP; Wed, 10 Jan 2007 16:06:55 -0800 (PST)
-To: "Yann Dirson" <ydirson@altern.org>
-In-Reply-To: <20070105231944.GB6179@nan92-1-81-57-214-146.fbx.proxad.net>
-Content-Disposition: inline
+	id S965257AbXAKAe2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 10 Jan 2007 19:34:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965253AbXAKAe2
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Jan 2007 19:34:28 -0500
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:41677 "EHLO
+	fed1rmmtao09.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965257AbXAKAe2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Jan 2007 19:34:28 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20070111003427.HJCC18767.fed1rmmtao09.cox.net@fed1rmimpo01.cox.net>;
+          Wed, 10 Jan 2007 19:34:27 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id 9cZc1W00J1kojtg0000000; Wed, 10 Jan 2007 19:33:37 -0500
+To: "Alex Riesen" <raa.lkml@gmail.com>
+In-Reply-To: <81b0412b0701101507n764aed73p31c7533e743283f0@mail.gmail.com>
+	(Alex Riesen's message of "Thu, 11 Jan 2007 00:07:39 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36541>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36542>
 
-On 05/01/07, Yann Dirson <ydirson@altern.org> wrote:
-> This mail is a draft collection of design ideas to hopefully progress
-> towards full "undo" functionnality in StGIT.  The issue is not
-> trivial, so I'd prefer to hear from users before starting to code
-> anything :)
+"Alex Riesen" <raa.lkml@gmail.com> writes:
 
-(couldn't finish reading all the e-mail, too long :-) and I'm too tired)
+> On 1/10/07, Junio C Hamano <junkio@cox.net> wrote:
+>> This comes on top of yours.
+>>
+>> I'm reproducing all the merges in linux-2.6 history to make sure
+>> the base one, yours and this produce the same result (the same
+>> clean merge, or the same unmerged index and the same diff from
+>> HEAD).  So far it is looking good.
+>
+> Yep. Tried the monster merge on it: 1m15sec on that small laptop.
 
-The idea of transactions and unified undo/redo is very good but it's a
-bit more complicated with the current structure, which I admit isn't a
-good design (too many files and metadata; I initially started StGIT as
-shell script prototype and moved to Python without re-designing the
-structure). Ideally, we would have the full stack state in a single
-file that could be stored as git object and get unlimited undo
-facilities or history tracking.
+Is that supposed to be a good news?  It sounds awfully slow.
 
-But this is part of a post 1.0 development. I plan to fix some of the
-outstanding issues (still need to create the TODO wiki page) and go
-towards a first 1.0 release candidate (and release 1.0 sometime this
-spring). I think StGIT now has most of the features I initially
-planned for 1.0. After that we can re-design the current structure and
-make it simpler to support transactions and full history for both
-patches and the stack as a whole.
+> For whatever reason your patch left an "if (cache_dirty) flush_cache()",
+> that's after my patch + yours. Had it removed.
 
--- 
-Catalin
+That's because my copy of "your patch" has the fix-up I
+suggested to remove the flush from process_renames() already --
+the removal of that one and removal from process_entry() you did
+logically belong to each other.
