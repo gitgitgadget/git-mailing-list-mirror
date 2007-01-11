@@ -1,93 +1,75 @@
-From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
-Subject: Removing files
-Date: Thu, 11 Jan 2007 21:10:20 +0100
-Message-ID: <87bql5cok3.fsf@morpheus.local>
+From: Martin Langhoff <martin@catalyst.net.nz>
+Subject: Re: [PATCH] cvsimport: skip commits that are too recent
+Date: Fri, 12 Jan 2007 09:18:09 +1300
+Message-ID: <45A69B81.40306@catalyst.net.nz>
+References: <11682386193246-git-send-email-martin@catalyst.net.nz> <200701110922.07997.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Thu Jan 11 21:10:53 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, junkio@cox.net
+X-From: git-owner@vger.kernel.org Thu Jan 11 21:18:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H56G9-00035H-Mb
-	for gcvg-git@gmane.org; Thu, 11 Jan 2007 21:10:50 +0100
+	id 1H56NS-00056p-Bv
+	for gcvg-git@gmane.org; Thu, 11 Jan 2007 21:18:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751453AbXAKUKr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 11 Jan 2007 15:10:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751469AbXAKUKr
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jan 2007 15:10:47 -0500
-Received: from main.gmane.org ([80.91.229.2]:54212 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751453AbXAKUKq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Jan 2007 15:10:46 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1H56Fq-0004W5-Iq
-	for git@vger.kernel.org; Thu, 11 Jan 2007 21:10:30 +0100
-Received: from c83-253-22-207.bredband.comhem.se ([83.253.22.207])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 11 Jan 2007 21:10:30 +0100
-Received: from davidk by c83-253-22-207.bredband.comhem.se with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 11 Jan 2007 21:10:30 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: c83-253-22-207.bredband.comhem.se
-User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (gnu/linux)
-Cancel-Lock: sha1:3Dbevxw41vZqQQf9fAt5s9VnQGQ=
+	id S1751484AbXAKUST (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 11 Jan 2007 15:18:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751486AbXAKUST
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jan 2007 15:18:19 -0500
+Received: from godel.catalyst.net.nz ([202.78.240.40]:56780 "EHLO
+	mail1.catalyst.net.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751484AbXAKUSS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Jan 2007 15:18:18 -0500
+Received: from leibniz.catalyst.net.nz ([202.78.240.7] helo=[192.168.2.69])
+	by mail1.catalyst.net.nz with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1H56NJ-0004qt-I7; Fri, 12 Jan 2007 09:18:13 +1300
+User-Agent: Thunderbird 1.5.0.9 (X11/20070103)
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+In-Reply-To: <200701110922.07997.robin.rosenberg.lists@dewire.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36605>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36606>
 
-I'm wondering what the best way to commit the removal of a file is.
+Robin Rosenberg wrote:
+> The idea is nice,  but the downside of this patch is that I (and presumably 
+> others) have to rewrite the scripts to invoke cvsps explicitly now. 
 
-Let's assume that I have a file "foo" in my tree, that I have removed
-from my working tree (e.g. by using patch -E).
+This patch did _not_ change how we invoke cvsps at all. It did change
+that we now ignore the very recent commits (and pick them up in the next
+run), unless you pass -a.
 
-git status shows:
+> The fix
+> should really be in cvsps, not git-cvsimport (which is the reason I haven't 
+> fixed this). Running a full cvsps takes two hours and consumes more than a 
+> gigabyte of memory for me, which makes it impossible to run on all but one 
+> machine, wheras the incremental import runs in less than five minutes on any 
+> machine.
 
-  $ git status
-  # On branch refs/heads/messages
-  # Changed but not added:
-  #   (use "git add <file>..." to incrementally add content to commit)
-  #
-  #       deleted:    foo
+Many things would need fixing in cvsps. This aspect [that commits we do
+not know if recent activty belongs to a finished commit or a commit that
+is still happening], is not cvsps' fault. It is due to the lack of
+atomicity in CVS, combined with its rather bad network protocol.
 
-Ok, so I try to follow the instructions in the message:
+> Add to that the risk that the buggy nature of cvsps probably increases the 
+> risk of errors, so please make the old behaviour the default (import all, 
+> retain cvsps cache) and make the changed behaviour the result of an explicit 
+> switch.
 
-  $ git add foo
-  fatal: pathspec 'foo' did not match any files
+What seems to concern you is the "retain cvsps cache" -- which we do.
 
-Ok, so that didn't work.  Let's try rm instead:
+I did comment later in the thread that we should consider rebuilding the
+cvsps cache. The reason for that is that I am seeing LESS breakage than
+maintaining the cache. Significantly less.
 
-  $ git rm foo
-  fatal: pathspec 'foo' did not match any files
+As you say, however, it is a major change, so I'm still evaluating options.
 
-Hm, something is wrong here.  But hey, there's a -f option to rm that
-claims to prevent the "up-do-date check"
+cheers
 
-  $ git rm -f foo
-  fatal: pathspec 'foo' did not match any files
 
-=46inally, I have to resort to using update-index.
 
-  $ git update-index --remove foo
-  fatal: pathspec 'foo' did not match any files
-
-Since I believe that the idea is to move to an interface where you use
-e.g. "git add" instead of explicitly mentioning the index, I think
-this is bad.
-
-What could be the correct command for this situation.  Some suggestions=
-:
-
-  $ git add foo
-  $ git add --remove foo
-  $ git rm foo
-  $ git rm -f foo
-
---=20
-David K=C3=A5gedal
+martin
