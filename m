@@ -1,154 +1,51 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: tree corrupted on disk quota full
-Date: Thu, 11 Jan 2007 13:27:44 -0800
-Message-ID: <7vodp52qzz.fsf@assigned-by-dhcp.cox.net>
-References: <20070111125726.GJ1759@mellanox.co.il>
-	<Pine.LNX.4.64.0701111023090.3594@woody.osdl.org>
-	<Pine.LNX.4.64.0701111109070.3594@woody.osdl.org>
-	<45A6A97F.5080008@shadowen.org>
+From: fork0@t-online.de (Alex Riesen)
+Subject: Re: Removing files
+Date: Thu, 11 Jan 2007 22:36:45 +0100
+Message-ID: <20070111213645.GA6058@steel.home>
+References: <87bql5cok3.fsf@morpheus.local>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Michael S. Tsirkin" <mst@mellanox.co.il>,
-	Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 11 22:28:14 2007
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 11 22:37:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H57Sw-0006zY-F7
-	for gcvg-git@gmane.org; Thu, 11 Jan 2007 22:28:06 +0100
+	id 1H57bf-00012v-CG
+	for gcvg-git@gmane.org; Thu, 11 Jan 2007 22:37:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751469AbXAKV2D (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 11 Jan 2007 16:28:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751453AbXAKV2D
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jan 2007 16:28:03 -0500
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:36969 "EHLO
-	fed1rmmtao09.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751484AbXAKV2B (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Jan 2007 16:28:01 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070111212800.NYUO18767.fed1rmmtao09.cox.net@fed1rmimpo01.cox.net>;
-          Thu, 11 Jan 2007 16:28:00 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id 9xT91W00A1kojtg0000000; Thu, 11 Jan 2007 16:27:09 -0500
-To: Andy Whitcroft <apw@shadowen.org>
-In-Reply-To: <45A6A97F.5080008@shadowen.org> (Andy Whitcroft's message of
-	"Thu, 11 Jan 2007 21:17:51 +0000")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751460AbXAKVgv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Thu, 11 Jan 2007 16:36:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751487AbXAKVgv
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jan 2007 16:36:51 -0500
+Received: from mailout02.sul.t-online.com ([194.25.134.17]:53925 "EHLO
+	mailout02.sul.t-online.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751460AbXAKVgu (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 11 Jan 2007 16:36:50 -0500
+Received: from fwd26.aul.t-online.de 
+	by mailout02.sul.t-online.com with smtp 
+	id 1H57bN-0004ql-00; Thu, 11 Jan 2007 22:36:49 +0100
+Received: from tigra.home (SgON-gZ6QeyyusMFrSkBpLV1ab6qwKLUDSJRm5eYlI6iCL+qg731Z2@[84.163.96.128]) by fwd26.sul.t-online.de
+	with esmtp id 1H57bK-1w3UsC0; Thu, 11 Jan 2007 22:36:46 +0100
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id CDBAF277B6;
+	Thu, 11 Jan 2007 22:36:45 +0100 (CET)
+Received: by steel.home (Postfix, from userid 1000)
+	id 4D5EAC166; Thu, 11 Jan 2007 22:36:45 +0100 (CET)
+To: David =?iso-8859-15?Q?K=E5gedal?= <davidk@lysator.liu.se>
+Content-Disposition: inline
+In-Reply-To: <87bql5cok3.fsf@morpheus.local>
+User-Agent: Mutt/1.5.12-2006-07-14
+X-ID: SgON-gZ6QeyyusMFrSkBpLV1ab6qwKLUDSJRm5eYlI6iCL+qg731Z2
+X-TOI-MSGID: 90c5962e-4096-4e66-8f09-dad51ac18fd3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36612>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36613>
 
-Andy Whitcroft <apw@shadowen.org> writes:
+David K=E5gedal, Thu, Jan 11, 2007 21:10:20 +0100:
+> I'm wondering what the best way to commit the removal of a file is.
 
-> The call was intended to replace a common idiom:
->
-> if (xwrite(fd, buf, size) != size)
-> 	error
->
-> write_in_full() is intended as a drop in replacement for that.  On a
-> short write we will return a short count and that will fail such a test.
-> The call basically implements the standard write() call semantic with
-> maximum attempts to complete.
-
-You are both right ;-).  I would have these fixups on top of
-Linus's.
-
----
-
-diff --git a/config.c b/config.c
-index 2cd0263..733fb1a 100644
---- a/config.c
-+++ b/config.c
-@@ -694,11 +694,9 @@ int git_config_set_multivar(const char* key, const char* value,
- 
- 		store.key = (char*)key;
- 		if (!store_write_section(fd, key) ||
--		    !store_write_pair(fd, key, value)) {
--			ret = write_error();
--			goto out_free;
--		}
--	} else{
-+		    !store_write_pair(fd, key, value))
-+			goto write_err_out;
-+	} else {
- 		struct stat st;
- 		char* contents;
- 		int i, copy_begin, copy_end, new_line = 0;
-@@ -777,31 +775,33 @@ int git_config_set_multivar(const char* key, const char* value,
- 
- 			/* write the first part of the config */
- 			if (copy_end > copy_begin) {
--				write_in_full(fd, contents + copy_begin,
--				copy_end - copy_begin);
--				if (new_line)
--					write_in_full(fd, "\n", 1);
-+				if (write_in_full(fd, contents + copy_begin,
-+						  copy_end - copy_begin) <
-+				    copy_end - copy_begin)
-+					goto write_err_out;
-+				if (new_line &&
-+				    write_in_full(fd, "\n", 1) != 1)
-+					goto write_err_out;
- 			}
- 			copy_begin = store.offset[i];
- 		}
- 
- 		/* write the pair (value == NULL means unset) */
- 		if (value != NULL) {
--			if (store.state == START)
--				if (!store_write_section(fd, key)) {
--					ret = write_error();
--					goto out_free;
--				}
--			if (!store_write_pair(fd, key, value)) {
--				ret = write_error();
--				goto out_free;
-+			if (store.state == START) {
-+				if (!store_write_section(fd, key))
-+					goto write_err_out;
- 			}
-+			if (!store_write_pair(fd, key, value))
-+				goto write_err_out;
- 		}
- 
- 		/* write the rest of the config */
- 		if (copy_begin < st.st_size)
--			write_in_full(fd, contents + copy_begin,
--				st.st_size - copy_begin);
-+			if (write_in_full(fd, contents + copy_begin,
-+					  st.st_size - copy_begin) <
-+			    st.st_size - copy_begin)
-+				goto write_err_out;
- 
- 		munmap(contents, st.st_size);
- 		unlink(config_filename);
-@@ -824,6 +824,11 @@ out_free:
- 		free(lock_file);
- 	}
- 	return ret;
-+
-+write_err_out:
-+	ret = write_error();
-+	goto out_free;
-+
- }
- 
- int git_config_rename_section(const char *old_name, const char *new_name)
-diff --git a/index-pack.c b/index-pack.c
-index 8d10d6b..72e0962 100644
---- a/index-pack.c
-+++ b/index-pack.c
-@@ -814,7 +814,7 @@ static void final(const char *final_pack_name, const char *curr_pack_name,
- 		char buf[48];
- 		int len = snprintf(buf, sizeof(buf), "%s\t%s\n",
- 				   report, sha1_to_hex(sha1));
--		write_in_full(1, buf, len);
-+		write_or_die(1, buf, len);
- 
- 		/*
- 		 * Let's just mimic git-unpack-objects here and write
+git commit -a :)
