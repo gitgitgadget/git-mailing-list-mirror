@@ -1,55 +1,87 @@
-From: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
-Subject: git master (2a3a3) build failure
-Date: Thu, 11 Jan 2007 11:13:13 -0300
-Message-ID: <200701111413.l0BEDDJv024060@laptop13.inf.utfsm.cl>
-X-From: git-owner@vger.kernel.org Thu Jan 11 15:13:34 2007
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: tree corrupted on disk quota full
+Date: Thu, 11 Jan 2007 15:28:23 +0100
+Message-ID: <45A64987.60200@op5.se>
+References: <45A63E59.7030009@op5.se> <20070111135918.GO1759@mellanox.co.il>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 11 15:28:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H50gA-0004I0-L6
-	for gcvg-git@gmane.org; Thu, 11 Jan 2007 15:13:19 +0100
+	id 1H50uq-0008MJ-QM
+	for gcvg-git@gmane.org; Thu, 11 Jan 2007 15:28:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030378AbXAKONQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 11 Jan 2007 09:13:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030450AbXAKONQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jan 2007 09:13:16 -0500
-Received: from inti.inf.utfsm.cl ([200.1.21.155]:46478 "EHLO inti.inf.utfsm.cl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1030378AbXAKONP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Jan 2007 09:13:15 -0500
-Received: from laptop13.inf.utfsm.cl (laptop13.inf.utfsm.cl [200.1.19.201])
-	by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id l0BEDDtl006905
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Thu, 11 Jan 2007 11:13:13 -0300
-Received: from laptop13.inf.utfsm.cl (laptop13.inf.utfsm.cl [127.0.0.1])
-	by laptop13.inf.utfsm.cl (8.13.8/8.13.8) with ESMTP id l0BEDDJv024060
-	for <git@vger.kernel.org>; Thu, 11 Jan 2007 11:13:13 -0300
-To: git@vger.kernel.org
-X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.5  (beta27)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (inti.inf.utfsm.cl [200.1.21.155]); Thu, 11 Jan 2007 11:13:13 -0300 (CLST)
-X-Virus-Scanned: ClamAV 0.88.7/2436/Thu Jan 11 08:48:19 2007 on inti.inf.utfsm.cl
-X-Virus-Status: Clean
+	id S1030200AbXAKO20 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 11 Jan 2007 09:28:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030196AbXAKO20
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jan 2007 09:28:26 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:55705 "EHLO
+	smtp-gw1.op5.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030200AbXAKO2Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Jan 2007 09:28:25 -0500
+Received: from [192.168.1.20] (unknown [213.88.215.14])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id DE34F6BCBC; Thu, 11 Jan 2007 15:28:23 +0100 (CET)
+User-Agent: Thunderbird 1.5.0.9 (X11/20070102)
+To: "Michael S. Tsirkin" <mst@mellanox.co.il>
+In-Reply-To: <20070111135918.GO1759@mellanox.co.il>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36593>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36594>
 
-I'm getting:
+Michael S. Tsirkin wrote:
+>>> I hit a quota limit on a disk my tree was on, but did not notice.
+>>> Doing git pull on a tree seems to have corrupted it.
+>>> Now I have:
+>>>
+>>> $ git-fsck-objects
+>>> error: 4d4d30be967d3284cbf59afd4fba6ab536e295f5: object not found
+>>> error: c03590b581d51d5fa43adbef9415e935d0229412: object not found
+>>> missing tree 10147d79b2418168d9433067b6439971bd4f1261
+>>> broken link from  commit 322a6c93ad86d2a151dd97a4c6b0e014a4893437
+>>>               to    tree 10147d79b2418168d9433067b6439971bd4f1261
+>>> dangling commit 322a6c93ad86d2a151dd97a4c6b0e014a4893437
+>>>
+>>> The tree can not be pulled into, or from.
+>>>
+>> Can you do a "git rev-list" on the commit pointing to this tree?
+> 
+> On which commit?
+> 
 
-  install: cannot stat `git-init.1': No such file or directory
-  make[1]: *** [install] Error 1
+322a6c93ad86d2a151dd97a4c6b0e014a4893437
 
-In Documentation/git-init.txt just includes git-init-db.txt, asciidoc
-creates a git-init.xml, and from this xmlto generates git-init-db.1 (the
-XML says the refentrytitle is git-init-db).
+>> If so, you should be able to do "git reset HEAD~1" and re-do the fetch.
+> 
+> $ git reset --hard HEAD~1
+> HEAD is now at 2d41bf8... Remove svn keywords
+> $ git-fsck-objects
+> error: 4d4d30be967d3284cbf59afd4fba6ab536e295f5: object not found
+> error: c03590b581d51d5fa43adbef9415e935d0229412: object not found
+> missing tree 10147d79b2418168d9433067b6439971bd4f1261
+> broken link from  commit 322a6c93ad86d2a151dd97a4c6b0e014a4893437
+>               to    tree 10147d79b2418168d9433067b6439971bd4f1261
+> dangling commit 322a6c93ad86d2a151dd97a4c6b0e014a4893437
+> 
 
-Fedora rawhide, asciidoc-7.0.2-3.fc6, xmlto-0.0.18-13.1
+Humm... Seems there are other problems here.
 
+Try
 
-Is git-init-db going away for git-init?
+$ git reset --hard 322a6c93ad86d2a151dd97a4c6b0e014a4893437~1
+$ git fsck-objects HEAD
+
+If this tells you your repo is clean, you should be able to redo 
+whatever fetches you did on top of that to get a working repository 
+again. If you have objects that got half-written due to end-of-disk 
+errors, you'd have to do "git prune" after resetting.
+
 -- 
-Dr. Horst H. von Brand                   User #22616 counter.li.org
-Departamento de Informatica                    Fono: +56 32 2654431
-Universidad Tecnica Federico Santa Maria             +56 32 2654239
-Casilla 110-V, Valparaiso, Chile               Fax:  +56 32 2797513
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
