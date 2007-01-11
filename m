@@ -1,66 +1,70 @@
-From: Seth Falcon <sethfalcon@gmail.com>
-Subject: Re: Removing files
-Date: Thu, 11 Jan 2007 14:25:46 -0800
-Message-ID: <m2k5ztciad.fsf@gmail.com>
-References: <87bql5cok3.fsf@morpheus.local> <20070111213645.GA6058@steel.home>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] Speedup recursive by flushing index only once for all
+ entries
+Date: Thu, 11 Jan 2007 14:28:21 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0701111424400.3594@woody.osdl.org>
+References: <81b0412b0701040447u329dcf9bvcd7adb9e9d199f18@mail.gmail.com>
+ <7v8xgileza.fsf@assigned-by-dhcp.cox.net> <81b0412b0701050322u67131900xea969b2da9981a94@mail.gmail.com>
+ <20070107163112.GA9336@steel.home> <7vr6u2adgx.fsf@assigned-by-dhcp.cox.net>
+ <81b0412b0701101507n764aed73p31c7533e743283f0@mail.gmail.com>
+ <Pine.LNX.4.64.0701101521410.3594@woody.osdl.org>
+ <81b0412b0701110102m5264696dg68a573e9d5f2a17c@mail.gmail.com>
+ <Pine.LNX.4.64.0701110823300.3594@woody.osdl.org> <7vfyah48j2.fsf@assigned-by-dhcp.cox.net>
+ <20070111221053.GD6058@steel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: David =?iso-8859-1?Q?K=E5gedal?= <davidk@lysator.liu.se>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 11 23:26:02 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 11 23:28:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H58Mu-0005o4-L6
-	for gcvg-git@gmane.org; Thu, 11 Jan 2007 23:25:57 +0100
+	id 1H58PO-0006Vc-OM
+	for gcvg-git@gmane.org; Thu, 11 Jan 2007 23:28:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932657AbXAKWZy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 11 Jan 2007 17:25:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932666AbXAKWZy
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jan 2007 17:25:54 -0500
-Received: from wx-out-0506.google.com ([66.249.82.239]:9597 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932657AbXAKWZx convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 11 Jan 2007 17:25:53 -0500
-Received: by wx-out-0506.google.com with SMTP id h31so643920wxd
-        for <git@vger.kernel.org>; Thu, 11 Jan 2007 14:25:52 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:to:cc:subject:references:from:date:in-reply-to:message-id:user-agent:mime-version:content-type:content-transfer-encoding;
-        b=Z9RTGPeN02N6X8CRz2uB3jM/kg+vyfcWbftINK6Gpam+2pyy42XYHC9NwVq0lm6RPcdDCxi5FUYKFV6NDO8JQVSMjJBBrvhXwv0ofXT5XsWukrnf5UWsXEJ2E8FXEBViDxYxIDO4mXRLvT9w6c6npe8QDzSwSBvfvClpNeyy7qw=
-Received: by 10.70.80.6 with SMTP id d6mr3832514wxb.1168554352810;
-        Thu, 11 Jan 2007 14:25:52 -0800 (PST)
-Received: from ziti ( [140.107.181.15])
-        by mx.google.com with ESMTP id 11sm2555813wrl.2007.01.11.14.25.51;
-        Thu, 11 Jan 2007 14:25:52 -0800 (PST)
+	id S932670AbXAKW22 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 11 Jan 2007 17:28:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932667AbXAKW22
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jan 2007 17:28:28 -0500
+Received: from smtp.osdl.org ([65.172.181.24]:39480 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932651AbXAKW21 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Jan 2007 17:28:27 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l0BMSMWi008014
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 11 Jan 2007 14:28:22 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l0BMSLDv005066;
+	Thu, 11 Jan 2007 14:28:22 -0800
 To: Alex Riesen <raa.lkml@gmail.com>
-In-Reply-To: <20070111213645.GA6058@steel.home> (Alex Riesen's message of "Thu, 11 Jan 2007 22:36:45 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (darwin)
+In-Reply-To: <20070111221053.GD6058@steel.home>
+X-Spam-Status: No, hits=-2.663 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.107__
+X-MIMEDefang-Filter: osdl$Revision: 1.170 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36626>
-
-fork0@t-online.de (Alex Riesen) writes:
-
-> David K=E5gedal, Thu, Jan 11, 2007 21:10:20 +0100:
->> I'm wondering what the best way to commit the removal of a file is.
->
-> git commit -a :)
-
-:-(
-
-I just ran into this very same thing.  I would vote for 'git rm'
-and/or 'git add' doing the right thing here.  I'm probably missing the
-reason they don't already.
-
-Perhaps the doc should also highlight git's globbing, as opposed to
-shell globbing as it is particularly useful when you have already
-removed files and want to do:
-
-git update-index --remove 'the-old-place/*.txt'=20
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36627>
 
 
-+ seth
+
+On Thu, 11 Jan 2007, Alex Riesen wrote:
+> 
+> It must have been large leak, as I really have seen the memory usage
+> dropping down significantly.
+
+I really think it was about 6MB (or whatever your index file size was) per 
+every single resolved file. I think merge-recursive used to flush the 
+index file every time it resolved something, and every flush would 
+basically leak the whole buffer used to write the index.
+
+Anyway, 40-50 sec on a fairly weak laptop for a 44k-file merge sounds like 
+git doesn't have to be totally embarrassed. I'm not saying we shouldn't be 
+able to do it faster, but it's at least _possible_ that a lot of the time 
+spent is now spent doing real work (ie maybe you actually have a fair 
+amount of file-level merging? Maybe it's 40-50 sec because there's some 
+amount of real IO going on, and a fair amount of real work done too?)
+
+			Linus
