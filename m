@@ -1,68 +1,70 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: [PATCH] Speedup recursive by flushing index only once for all entries
-Date: Thu, 11 Jan 2007 13:11:28 +0100
-Message-ID: <81b0412b0701110411s7ccb45c1t9ececa9301760bae@mail.gmail.com>
-References: <81b0412b0701040247k47e398e6q34dd5233bb5706f6@mail.gmail.com>
-	 <81b0412b0701040447u329dcf9bvcd7adb9e9d199f18@mail.gmail.com>
-	 <7v8xgileza.fsf@assigned-by-dhcp.cox.net>
-	 <81b0412b0701050322u67131900xea969b2da9981a94@mail.gmail.com>
-	 <20070107163112.GA9336@steel.home>
-	 <7vr6u2adgx.fsf@assigned-by-dhcp.cox.net>
-	 <81b0412b0701101507n764aed73p31c7533e743283f0@mail.gmail.com>
-	 <Pine.LNX.4.64.0701101521410.3594@woody.osdl.org>
-	 <Pine.LNX.4.63.0701110913140.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <81b0412b0701110103p5f67b955gee6ff6194e6ea68d@mail.gmail.com>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: [ANNOUNCE] qgit4 aka qgit ported to Windows
+Date: Thu, 11 Jan 2007 13:19:56 +0100
+Message-ID: <e5bfff550701110419v3508e9d5gbc206b7d0fa320ae@mail.gmail.com>
+References: <e5bfff550701091314k71e282e8x125db65d5c287a94@mail.gmail.com>
+	 <46a038f90701101517s1d5e818eq2fba220d17a6aa03@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Linus Torvalds" <torvalds@osdl.org>,
-	"Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 11 13:11:39 2007
+Cc: "GIT list" <git@vger.kernel.org>, "Petr Baudis" <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Thu Jan 11 13:20:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H4ymM-0005hV-B1
-	for gcvg-git@gmane.org; Thu, 11 Jan 2007 13:11:34 +0100
+	id 1H4yuW-0007zl-TR
+	for gcvg-git@gmane.org; Thu, 11 Jan 2007 13:20:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030281AbXAKMLa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 11 Jan 2007 07:11:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030291AbXAKMLa
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jan 2007 07:11:30 -0500
-Received: from ug-out-1314.google.com ([66.249.92.173]:16976 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030281AbXAKML3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Jan 2007 07:11:29 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so444110uga
-        for <git@vger.kernel.org>; Thu, 11 Jan 2007 04:11:28 -0800 (PST)
+	id S1030305AbXAKMT6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 11 Jan 2007 07:19:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030307AbXAKMT6
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jan 2007 07:19:58 -0500
+Received: from wr-out-0506.google.com ([64.233.184.231]:3619 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030305AbXAKMT5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Jan 2007 07:19:57 -0500
+Received: by wr-out-0506.google.com with SMTP id i30so308458wra
+        for <git@vger.kernel.org>; Thu, 11 Jan 2007 04:19:57 -0800 (PST)
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
         h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=aiCYIvFAJjUHC4lN8xznkXp3bYv0nyouJmfChJX0XpEwBt26qbDOXhobkO2MmIHb2zfYuF/PIbFhNEOSR42CnRKSqZL8j20C6NJPsOaqyqE1pyFWgtTZ4f+6sZmAGTvApmHkZFHwTEEfV0V/QYLTDpkqqovvUTXbKRw4MHY/N1w=
-Received: by 10.78.131.8 with SMTP id e8mr396643hud.1168517488298;
-        Thu, 11 Jan 2007 04:11:28 -0800 (PST)
-Received: by 10.78.135.3 with HTTP; Thu, 11 Jan 2007 04:11:28 -0800 (PST)
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-In-Reply-To: <81b0412b0701110103p5f67b955gee6ff6194e6ea68d@mail.gmail.com>
+        b=Omv1coTAb2NIBhffK17C0XiC+SSihH+r8ETHta3cU+H+jiVceaIYlmYxnnPrMsHMtWfXGxsYDKyYJgOSQevpnTohpCdspLWoWzdgZbEnK3FXyeryfG3YZ8WzWPoA4Xj08GxAHbcWigfnBLD/yZ+gHppvkg+9Aqrq74wOIxnak9o=
+Received: by 10.35.110.13 with SMTP id n13mr2459776pym.1168517996935;
+        Thu, 11 Jan 2007 04:19:56 -0800 (PST)
+Received: by 10.35.42.4 with HTTP; Thu, 11 Jan 2007 04:19:56 -0800 (PST)
+To: "Martin Langhoff" <martin.langhoff@gmail.com>
+In-Reply-To: <46a038f90701101517s1d5e818eq2fba220d17a6aa03@mail.gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36583>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36584>
 
-On 1/11/07, Alex Riesen <raa.lkml@gmail.com> wrote:
-> > > > Yep. Tried the monster merge on it: 1m15sec on that small laptop.
-> > >
-> > > Is that supposed to be good? That still sounds really slow to me. What
-> > > kind of nasty project are you doing? Is this the 44k file project, and
-> > > under cygwin? Or is it that bad even under Linux?
-> >
-> > This _is_ cygwin. And 1m15sec is actually very, very good, if you happen
+On 1/11/07, Martin Langhoff <martin.langhoff@gmail.com> wrote:
+> On 1/10/07, Marco Costalba <mcostalba@gmail.com> wrote:
+> > 6) Start qgit.exe
+> > 7) Have fun
 >
-> No, this is linux, in a very constrained conditions. On cygwin I
-> haven't tried it yet.
+> Great!
+>
+> How much does qgit4 depend on using commandline git? IOWs, how far
+> from not needing cygwin+git, and shipping a git+qgit compiled against
+> the MinGW that QT4 has?
+>
 
-Well, tried it now. Strangely enough - there is almost no speedup with
-Junio's patch on top of mine. I must have done something stupid,
-but cannot find what. And the times reported by time on cygwin jump
-wildly: from 29 to 38 sec!
+qgit4 does not depends on  commandline git environment at all. You can
+start qgit4 also without a git installation, also without a cygwin
+installation either. Of course it's not useful in that cases.
+
+I had no time to fix some rogh edges regarding launching qgit4 with
+proper paths set. What I plan to do this week end is to find an 'easy
+to use recipe' to start qgit4 from cmd.exe, from desktop icon and also
+from cygwin shell.
+
+I need to experiment a little bit with this but I would like to add
+internal automatic recognizing of environment at least for cmd.exe vs
+cygwin shell launching case so to let user have a nice experience in
+both cases.
+
+  Marco
