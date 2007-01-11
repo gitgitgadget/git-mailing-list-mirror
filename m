@@ -1,143 +1,58 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH] Detached HEAD (experimental)
-Date: Thu, 11 Jan 2007 10:45:26 +0100
-Message-ID: <45A60736.4050503@op5.se>
-References: <7vac11yirf.fsf@assigned-by-dhcp.cox.net> <87ps9xgkjo.wl%cworth@cworth.org> <7virfprquo.fsf@assigned-by-dhcp.cox.net> <87odphgfzz.wl%cworth@cworth.org> <7vbql9ydd7.fsf@assigned-by-dhcp.cox.net> <20070108131735.GA2647@coredump.intra.peff.net> <7vzm8tt5kf.fsf@assigned-by-dhcp.cox.net> <20070109142130.GA10633@coredump.intra.peff.net> <7virffkick.fsf@assigned-by-dhcp.cox.net> <20070109213117.GB25012@fieldses.org> <87zm8ryiyz.wl%cworth@cworth.org> <45A4AD08.1020002@op5.se> <7vwt3vb4ev.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0701101041210.20138@iabervon.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Bug-ish: CRLF endings and conflict markers
+Date: Thu, 11 Jan 2007 10:46:51 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0701111043440.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <200701110941.22024.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>,
-	"J. Bruce Fields" <bfields@fieldses.org>,
-	Jeff King <peff@peff.net>, Carl Worth <cworth@cworth.org>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 11 10:45:37 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 11 10:46:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H4wV2-0001CE-Dz
-	for gcvg-git@gmane.org; Thu, 11 Jan 2007 10:45:32 +0100
+	id 1H4wWN-0001WK-IS
+	for gcvg-git@gmane.org; Thu, 11 Jan 2007 10:46:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965348AbXAKJp3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 11 Jan 2007 04:45:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965359AbXAKJp3
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jan 2007 04:45:29 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:51081 "EHLO
-	smtp-gw1.op5.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965348AbXAKJp2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Jan 2007 04:45:28 -0500
-Received: from [192.168.1.20] (unknown [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id 209046BCBC; Thu, 11 Jan 2007 10:45:27 +0100 (CET)
-User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
-To: Daniel Barkalow <barkalow@iabervon.org>
-In-Reply-To: <Pine.LNX.4.64.0701101041210.20138@iabervon.org>
+	id S965358AbXAKJqx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 11 Jan 2007 04:46:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965341AbXAKJqx
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jan 2007 04:46:53 -0500
+Received: from mail.gmx.net ([213.165.64.20]:48068 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S965358AbXAKJqw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Jan 2007 04:46:52 -0500
+Received: (qmail invoked by alias); 11 Jan 2007 09:46:51 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp012) with SMTP; 11 Jan 2007 10:46:51 +0100
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Andy Parkins <andyparkins@gmail.com>
+In-Reply-To: <200701110941.22024.andyparkins@gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36567>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36568>
 
-Daniel Barkalow wrote:
-> On Wed, 10 Jan 2007, Junio C Hamano wrote:
+Hi,
+
+On Thu, 11 Jan 2007, Andy Parkins wrote:
+
+> [describes that conflict markers have LF-only line ending, even if file 
+>  has CR-LF line endings]
 > 
->> Andreas Ericsson <ae@op5.se> writes:
->>
->>> ... Since committing on
->>> detached heads really should be a very rare case I don't think many
->>> people will find this terribly annoying.
->> Quite the contrary, I would imagine it would be quite natural to
->> do throw-away commits and merges on detached head while
->> bisecting the history (e.g. commit small fixup to make it
->> compile and then mark the result for bisection to hunt for real
->> bugs that are hidden by silly compilation problems).  
-> 
-> I don't think this would actually work. If you commit your build fix, and 
-> then mark the result as bad, won't bisect skew its choices due to 
-> suspecting that your build fix is the real bug?
-> 
-> I'd think that, if you make changes while bisecting, you probably want to 
-> leave those changes uncommitted, and merge or discard them when testing 
-> other commits.
-> 
-> If anything, I'd think you'd want a rather different sort of commit 
-> mechanism than the usual commit, which says, "whenever you consider commit 
-> {sha1-from-real-history}, use {tree-with-local-changes} instead of 
-> {tree-in-real-commit}." Or, more generally, "in order to get the trees 
-> I want to actually use, this patch (git diff HEAD) needs to be applied to 
-> every commit in some portion of the history including, at least, 
-> get_sha1(HEAD)".
-> 
-> I'm not seeing any actual benefit to causing the history to contain a 
-> dead-end fork off of an antique commit, and then throwing this away. And 
-> committing your change so that it won't get lost, with the intention of 
-> losing it in a little while, doesn't seem to make any sense, either.
-> 
+> The best solution is probably to use the line ending of the conflicted 
+> lines.
 
-Same here. I'd imagine temporary build-fixes to live as a patch-file 
-generated by
+Question is: how to find out. Especially if your file already has mixed 
+line endings...
 
-	git diff > build-fixes.diff
+> I've had a look, but I can only fine builtin-rerere.c that generates the 
+> markers - would that be the place to make this change?
 
-after having hacked on the tree. There's no sane way of inserting 
-commits into the middle of the DAG, so committing on something that 
-isn't a branch with the intention of losing it is just plain weird.
+No. It would be in xdiff/xmerge.c:{139,147,160}. But I think that xdiff 
+really is LF-only throughout, so you'd have to do much more work anyway.
 
-
-> (Of course, it also makes sense to do merges, but again, you probably want 
-> to create and temporarily use the working tree resulting from the merge, 
-> not create the commit.)
-> 
-
-Yes. I'd imagine "git merge --no-commit" could be used for this, to 
-merge things only in the working directory.
-
-
-> I think that the workflow that uses regular commits with a detached HEAD 
-> is this: do a series of commits representing real work on top of a remote 
-> branch or a tag, and decide later (once you've tested the results for 
-> worthiness) whether to turn this into a topic branch or throw it away.
-> 
-
-Perhaps, but this is also a bit weird, as you would normally hack things 
-up to fit on top of some already existing branch, so then you'd detach 
-the head but point it to something that already has a branch-name 
-associated with it.
-
-Otoh, I could imagine this would be sort of nifty for applying bugfixes 
-on top of old tags, so perhaps it's not so weird after all. Then you'd 
-probably want to create a new tag before releasing the bugfixed version, 
-so Linus suggestion makes sense in this case (assuming it doesn't fsck 
-up the bisect case, ofc).
-
-
-> But I don't think this is a good match for detached HEAD, because you may 
-> want to do exactly the same thing, but start with a regular local head. I 
-> think the right thing to do is something like "git checkout --anon", which 
-> puts you on a new branch with no name, which will evaporate if you leave 
-> it (as per "git branch -d"; you need to force it if it isn't fully 
-> merged).
-> 
-
-
-Yes. I'd imagine "git merge --no-commit" could be used for this, to 
-merge things only in the working directory. We could easily create a 
-hack for this by doing a "git reset --mixed HEAD^1" after the merge is 
-complete.
-
-> So I think the feature which lets you make commits without being on a 
-> branch from refs/heads is actually a different feature from "detached 
-> HEAD", which only shares the aspect that "git branch" has no line with a 
-> "*", because there is no name for what HEAD points to.
-> 
-
-
-Agreed. They really are two completely different things. I see no harm 
-in splitting them up codewise. Bisect could start working without its 
-protected branch straight away, but commits (and merges) to detached 
-heads wouldn't work at all. Then we can see what use people put this to 
-and what walls they run into and make the feature accordingly.
-
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Ciao,
+Dscho
