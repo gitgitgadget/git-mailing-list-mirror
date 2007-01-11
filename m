@@ -1,90 +1,61 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [BUG] OSX ends with "install: git-init.1: No such file or directory"
-Date: Wed, 10 Jan 2007 22:47:33 -0800
-Message-ID: <7vmz4q5abe.fsf@assigned-by-dhcp.cox.net>
-References: <8664bedsbc.fsf@blue.stonehenge.com>
+From: Juergen Ruehle <j.ruehle@bmiag.de>
+Subject: Re: [PATCH] Provide better feedback for the untracked only case in status output
+Date: Thu, 11 Jan 2007 08:17:12 +0100
+Message-ID: <17829.58488.697000.282686@lapjr.intranet.kiel.bmiag.de>
+References: <1168452977.19643.57.camel@ibook.zvpunry.de>
+	<11684679032630-git-send-email-j.ruehle@bmiag.de>
+	<20070110222914.GA22838@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Thu Jan 11 07:48:17 2007
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 11 08:17:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H4tjP-00025F-PB
-	for gcvg-git@gmane.org; Thu, 11 Jan 2007 07:48:12 +0100
+	id 1H4uBz-0008PT-6v
+	for gcvg-git@gmane.org; Thu, 11 Jan 2007 08:17:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965295AbXAKGrv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 11 Jan 2007 01:47:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965302AbXAKGrv
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jan 2007 01:47:51 -0500
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:41520 "EHLO
-	fed1rmmtao12.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965295AbXAKGru (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Jan 2007 01:47:50 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070111064749.EVZV19398.fed1rmmtao12.cox.net@fed1rmimpo01.cox.net>;
-          Thu, 11 Jan 2007 01:47:49 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id 9imy1W0081kojtg0000000; Thu, 11 Jan 2007 01:46:58 -0500
-To: merlyn@stonehenge.com (Randal L. Schwartz)
-In-Reply-To: <8664bedsbc.fsf@blue.stonehenge.com> (Randal L. Schwartz's
-	message of "10 Jan 2007 21:51:35 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S965316AbXAKHR3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 11 Jan 2007 02:17:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965317AbXAKHR3
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jan 2007 02:17:29 -0500
+Received: from bilbo.bmiag.de ([62.154.210.131]:3197 "HELO bilbo.bmiag.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S965316AbXAKHR2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Jan 2007 02:17:28 -0500
+Received: (qmail 21024 invoked by uid 106); 11 Jan 2007 07:17:26 -0000
+Received: from eorl.intranet.kiel.bmiag.de(10.131.2.1)
+ via SMTP by bilbo.bmiag.de, id smtpdp2C7sA; Thu Jan 11 08:17:26 2007
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by eorl.intranet.kiel.bmiag.de (Postfix) with ESMTP id B1EBB3ADC8;
+	Thu, 11 Jan 2007 08:17:25 +0100 (CET)
+Received: from eorl.intranet.kiel.bmiag.de ([127.0.0.1])
+	by localhost (eorl [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+	id 30245-10; Thu, 11 Jan 2007 08:17:21 +0100 (CET)
+Received: from LAPJR (dialin5.galadriel.bmiag.de [192.168.251.5])
+	by eorl.intranet.kiel.bmiag.de (Postfix) with ESMTP id D78D43ADC6;
+	Thu, 11 Jan 2007 08:17:14 +0100 (CET)
+To: Jeff King <peff@peff.net>
+In-Reply-To: <20070110222914.GA22838@coredump.intra.peff.net>
+X-Mailer: VM 7.19 under Emacs 22.0.92.1
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at eorl.intranet.kiel.bmiag.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36550>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36551>
 
-merlyn@stonehenge.com (Randal L. Schwartz) writes:
+Jeff King writes:
+ > On Wed, Jan 10, 2007 at 11:25:03PM +0100, Juergen Ruehle wrote:
+ > 
+ > >    - Patches to other files that contain these messages verbatim
+ > >      (AFAICS this affects only the git-reset man page, tutorial-2 and the VIM
+ > >       syntax highlighting)
+ > 
+ > I have been tracking these changes for the vim highlighting, but have
+ > been waiting for things to settle before sending a patch (which should
+ > hopefully go into v1.5.0, but I will wait until this is finalized).
 
-> If I cd into Documentation, and try to make "git-init.1", I get this:
->
->     % make git-init.1
->     asciidoc -b docbook -d manpage -f asciidoc.conf git-init.txt
->     xmlto -m callouts.xsl man git-init.xml
->     Note: meta date   : No date. Using generated date       git-init-db
->     Note: meta source : No productname or alternative       git-init-db
->     Note: meta source : No refmiscinfo@class=source         git-init-db
->     Note: meta version: No productnumber or alternative     git-init-db
->     Note: meta version: No refmiscinfo@class=version        git-init-db
->     Warn: meta source : No valid fallback. Leaving empty    git-init-db
->     Note: meta manual : No ancestor with title              git-init-db
->     Note: meta manual : No refmiscinfo@class=manual         git-init-db
->     Warn: meta manual : No valid fallback. Leaving empty    git-init-db
->     Note: Writing git-init-db.1
->     rm git-init.xml
->
-> That's not good. Making git-init-db when it wants git-init.
-
-Not good.  I am _very_ tempted to do this.
-
-;-)
-
----
-diff --git a/Documentation/git-init.txt b/Documentation/git-init.txt
-index 36838c7..30d9834 100644
---- a/Documentation/git-init.txt
-+++ b/Documentation/git-init.txt
-@@ -1 +1,17 @@
--include::git-init-db.txt[]
-+git-init(1)
-+===========
-+
-+NAME
-+----
-+git-init - Creates an empty git repository
-+
-+SYNOPSIS
-+--------
-+'git-init' [--template=<template_directory>] [--shared[=<permissions>]]
-+
-+
-+DESCRIPTION
-+-----------
-+
-+This is a silly synonym for gitlink:git-init-db[1].  Learn to use that
-+command instead.
+Thanks for tracking this. It would be nice if we could make the
+syntax highlighting less dependent on the exact wording.
