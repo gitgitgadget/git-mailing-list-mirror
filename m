@@ -1,36 +1,36 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: What's cooking in git.git (topics)
-Date: Thu, 11 Jan 2007 05:08:00 -0500
-Message-ID: <20070111100800.GB28309@spearce.org>
-References: <7vr6u3cmsi.fsf@assigned-by-dhcp.cox.net> <7v3b6i75i5.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0701102241230.4964@xanadu.home> <20070111080035.GA28222@spearce.org> <7v1wm16gyd.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: Bug-ish: CRLF endings and conflict markers
+Date: Thu, 11 Jan 2007 05:16:53 -0500
+Message-ID: <20070111101653.GC28309@spearce.org>
+References: <200701110941.22024.andyparkins@gmail.com> <20070111095046.GA28309@spearce.org> <Pine.LNX.4.63.0701111057110.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 11 11:08:30 2007
+Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 11 11:17:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H4wrB-0007Lh-OX
-	for gcvg-git@gmane.org; Thu, 11 Jan 2007 11:08:26 +0100
+	id 1H4wzV-0001AJ-Qt
+	for gcvg-git@gmane.org; Thu, 11 Jan 2007 11:17:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030247AbXAKKIJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 11 Jan 2007 05:08:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030248AbXAKKIJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jan 2007 05:08:09 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:37900 "EHLO
+	id S965341AbXAKKQ7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 11 Jan 2007 05:16:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965353AbXAKKQ7
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jan 2007 05:16:59 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:38113 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030247AbXAKKIG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Jan 2007 05:08:06 -0500
+	with ESMTP id S965341AbXAKKQ6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Jan 2007 05:16:58 -0500
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.63)
 	(envelope-from <spearce@spearce.org>)
-	id 1H4wqr-0005Jn-OC; Thu, 11 Jan 2007 05:08:05 -0500
+	id 1H4wzS-0005sj-SQ; Thu, 11 Jan 2007 05:16:58 -0500
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 45A8A20FBAE; Thu, 11 Jan 2007 05:08:01 -0500 (EST)
-To: Junio C Hamano <junkio@cox.net>
+	id 58D1820FBAE; Thu, 11 Jan 2007 05:16:54 -0500 (EST)
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Content-Disposition: inline
-In-Reply-To: <7v1wm16gyd.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <Pine.LNX.4.63.0701111057110.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -43,59 +43,45 @@ X-Source-Dir:
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36574>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36575>
 
-Junio C Hamano <junkio@cox.net> wrote:
-> I looked at the algorithm, and after scratching my head for a
-> while, I finally found it sane (modulo leaks, which I think I
-> fixed with the attached patch).
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> On Thu, 11 Jan 2007, Shawn O. Pearce wrote:
+> 
+> > That said I don't really care about this problem that much. The problem 
+> > that I care about is its far too easy to convert the lineendings in a 
+> > file (e.g. CRLF->LF, LF->CRLF).  This causes the entire file to differ, 
+> > making merges very difficult.  I really should just fix it (in the one 
+> > place where it matters to me) by modifying the pre-commit hook to look 
+> > for such a case and abort.
+> 
+> Why not just introduce a config variable, and do the conversion in-flight?
 
-Thanks.  I don't think it says much for the quality of my code
-if you had to scratch your head before you understood it.  But
-at least you finally got it.  :)
+That's a lot of work and goes very much against the Git mindset that
+we never alter content, just store it as-is.  If Linus sees this
+thread I'm suspecting he will jump in and point out that altering
+content transparently like this just wrong.  I think he's stated
+something like that in the past.  :-)
+
+All I want is to make the user realize what they have done.  "Hey
+dummy, you just changed the entire file and the only difference I see
+for most lines is simply the addition/removal of a CR.  You shouldn't
+do that!".  The pre-commit hook is the perfect place for that.
+
+It should be pretty easy to do.  For every line in the diff stuff
+it into a perl hash after removing any trailing CR.  If both an
+add and a delete for the exact same line of text appear in the diff
+(with the only difference being the CR on the end) and the number
+of such lines number is at least 50% of the modified lines in the
+file, something's amiss.  Smack the user and tell them to fix the
+file.
  
-> One minor problem that you inherited from the original algorithm
-> is the name priority.  If you have an annotated tag A and a
-> lightweight tag b, and ask "git describe --tags" in this graph:
-> 
->     ---o---o---o---o---x
->            A   b
-> 
-> you would still want to describe 'x' with A, not b.
-> Unfortunately you don't (and the original doesn't either).
+> Or, alternatively, do the merge ignoring white space? (Of course, this is 
+> somewhat pointless when merging whitespace fixes...)
 
-Actually I think you want to describe it with b.  If you ask
-'--tags' then you want the lightweight ones too.  In the case above
-the lightweight tag b better describes x as it has more in common
-with x than A has.
-
-> I think this is probably easy to solve in the loop that finds
-> "all_matches"; once you hit an annotated tag, your traversal
-> should stop in any case.  But if you were asked for --tags, and
-> if your "initialized" piece did find both lightweight and
-> annotated tags, you do not stop when you saw a lightweight one,
-> but keep looking for an annotated one, ignoring any further
-> lightweight ones.
-
-I just implemented this in that loop, and then realized what
-I wrote above.  The lower loop that performs the revision list
-traversal would have both A and b in all_matches and b would win,
-as its closer to x.  So having the first loop abort when it does
-is the right thing to do, and so is describing x with b.
-
-> Another thought.  I often do "git describe maint master next
-> pu", and I see an opportunity for optimizing for such a
-> multi-ref query.  Once you traversed the commits in
-> "all_matches" loop, you know which strands of pearls are
-> reachable to what tags, so you could hang that information
-> somewhere (perhaps ->utils) in each commit.  But I think
-> optimizing for a multi-ref query is probably not worth it.
-
-Without my patch its ~170ms; with my patch its ~1000ms.  That is
-a huge difference for such a simple program.  I'm not sure your
-optimization will make a big difference.  The bulk of the cost
-appears to be in the later loop, not in the earlier one that
-produces all_matches.
+Lets not go down that road.  That's just asking for trouble.
+And it sounds like a lot of work from what you pointed out in
+another message.
 
 -- 
 Shawn.
