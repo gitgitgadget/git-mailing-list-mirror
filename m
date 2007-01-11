@@ -1,57 +1,104 @@
-From: fork0@t-online.de (Alex Riesen)
-Subject: Re: [PATCH] Makefile: add clean-obsolete-scripts target
-Date: Thu, 11 Jan 2007 22:41:43 +0100
-Message-ID: <20070111214143.GB6058@steel.home>
-References: <Pine.LNX.4.63.0701101319480.22628@wbgn013.biozentrum.uni-wuerzburg.de> <7vhcuyaaxq.fsf@assigned-by-dhcp.cox.net> <81b0412b0701101326p11069c76w2873106cb2d46ebf@mail.gmail.com> <7vy7oa765a.fsf@assigned-by-dhcp.cox.net>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [PATCH] Avoid errors and warnings when attempting to do I/O on zero bytes
+Date: Thu, 11 Jan 2007 13:43:40 -0800
+Message-ID: <20070111214340.GA25445@mayonaise.dyndns.org>
+References: <1cb8699724ff000fbf0c14ba3e15031e@pinky> <7vvejlg1pg.fsf@assigned-by-dhcp.cox.net> <459E4270.9090307@shadowen.org> <45A2699F.5060100@shadowen.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 11 22:42:07 2007
+Cc: Andy Whitcroft <apw@shadowen.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 11 22:43:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H57gI-0002No-Sc
-	for gcvg-git@gmane.org; Thu, 11 Jan 2007 22:41:55 +0100
+	id 1H57i7-0002wd-KF
+	for gcvg-git@gmane.org; Thu, 11 Jan 2007 22:43:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932071AbXAKVlv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 11 Jan 2007 16:41:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932103AbXAKVlv
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jan 2007 16:41:51 -0500
-Received: from mailout11.sul.t-online.com ([194.25.134.85]:42372 "EHLO
-	mailout11.sul.t-online.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932071AbXAKVlu (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 11 Jan 2007 16:41:50 -0500
-Received: from fwd28.aul.t-online.de 
-	by mailout11.sul.t-online.com with smtp 
-	id 1H57gB-0008N4-00; Thu, 11 Jan 2007 22:41:47 +0100
-Received: from tigra.home (Vmf8giZv8e9gykV3vbL4wknYT1TfGY-s40grgxt-Sl4y2x26h9vCYs@[84.163.96.128]) by fwd28.sul.t-online.de
-	with esmtp id 1H57g8-12Y5nU0; Thu, 11 Jan 2007 22:41:44 +0100
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id E746F277B6;
-	Thu, 11 Jan 2007 22:41:43 +0100 (CET)
-Received: by steel.home (Postfix, from userid 1000)
-	id A746BC166; Thu, 11 Jan 2007 22:41:43 +0100 (CET)
+	id S932103AbXAKVnp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 11 Jan 2007 16:43:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932105AbXAKVnp
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jan 2007 16:43:45 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:36725 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932103AbXAKVno (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Jan 2007 16:43:44 -0500
+Received: from hand.yhbt.net (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with SMTP id AB9A37DC094;
+	Thu, 11 Jan 2007 13:43:40 -0800 (PST)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Thu, 11 Jan 2007 13:43:40 -0800
 To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
-In-Reply-To: <7vy7oa765a.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.12-2006-07-14
-X-ID: Vmf8giZv8e9gykV3vbL4wknYT1TfGY-s40grgxt-Sl4y2x26h9vCYs
-X-TOI-MSGID: a7516cad-7ccb-42fa-9e8d-4e62bae241a6
+In-Reply-To: <45A2699F.5060100@shadowen.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36614>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36615>
 
-Junio C Hamano, Thu, Jan 11, 2007 01:34:41 +0100:
-> >> I would prefer it to be rather automatic -- how about this instead?
-> > ...
-> >> +ifneq (,$X)
-> >
-> > Perfect! :)
-> 
-> Heh, you couldn't have tested -- I still had "echo rm -f" in the
-> patch ;-).
+Unfortunately, while {read,write}_in_full do take into account
+zero-sized reads/writes; their die and whine variants do not.
 
-Didn't. Just liked the approach :)
+I have a repository where there are zero-sized files in
+the history that was triggering these things.
+
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
+---
+ sha1_file.c    |    2 ++
+ write_or_die.c |    8 ++++++++
+ 2 files changed, 10 insertions(+), 0 deletions(-)
+
+diff --git a/sha1_file.c b/sha1_file.c
+index 53e25f2..18dd89b 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -1620,6 +1620,8 @@ static int write_buffer(int fd, const void *buf, size_t len)
+ {
+ 	ssize_t size;
+ 
++	if (!len)
++		return 0;
+ 	size = write_in_full(fd, buf, len);
+ 	if (!size)
+ 		return error("file write: disk full");
+diff --git a/write_or_die.c b/write_or_die.c
+index a119e1d..700ccd1 100644
+--- a/write_or_die.c
++++ b/write_or_die.c
+@@ -26,6 +26,8 @@ void read_or_die(int fd, void *buf, size_t count)
+ {
+ 	ssize_t loaded;
+ 
++	if (!count)
++		return;
+ 	loaded = read_in_full(fd, buf, count);
+ 	if (loaded == 0)
+ 		die("unexpected end of file");
+@@ -59,6 +61,8 @@ void write_or_die(int fd, const void *buf, size_t count)
+ {
+ 	ssize_t written;
+ 
++	if (!count)
++		return;
+ 	written = write_in_full(fd, buf, count);
+ 	if (written == 0)
+ 		die("disk full?");
+@@ -73,6 +77,8 @@ int write_or_whine_pipe(int fd, const void *buf, size_t count, const char *msg)
+ {
+ 	ssize_t written;
+ 
++	if (!count)
++		return 1;
+ 	written = write_in_full(fd, buf, count);
+ 	if (written == 0) {
+ 		fprintf(stderr, "%s: disk full?\n", msg);
+@@ -93,6 +99,8 @@ int write_or_whine(int fd, const void *buf, size_t count, const char *msg)
+ {
+ 	ssize_t written;
+ 
++	if (!count)
++		return 1;
+ 	written = write_in_full(fd, buf, count);
+ 	if (written == 0) {
+ 		fprintf(stderr, "%s: disk full?\n", msg);
+-- 
+Eric Wong
