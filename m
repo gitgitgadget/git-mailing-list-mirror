@@ -1,58 +1,123 @@
-From: Junio C Hamano <junkio@cox.net>
+From: "Michael S. Tsirkin" <mst@mellanox.co.il>
 Subject: Re: tree corrupted on disk quota full
-Date: Thu, 11 Jan 2007 13:02:13 -0800
-Message-ID: <7vtzyx2s6i.fsf@assigned-by-dhcp.cox.net>
-References: <20070111125726.GJ1759@mellanox.co.il>
-	<Pine.LNX.4.64.0701111023090.3594@woody.osdl.org>
-	<Pine.LNX.4.64.0701111109070.3594@woody.osdl.org>
+Date: Thu, 11 Jan 2007 23:11:43 +0200
+Message-ID: <20070111211143.GG17999@mellanox.co.il>
+References: <Pine.LNX.4.64.0701111023090.3594@woody.osdl.org>
+Reply-To: "Michael S. Tsirkin" <mst@mellanox.co.il>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Michael S. Tsirkin" <mst@mellanox.co.il>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 11 22:02:37 2007
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 11 22:11:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H574G-00008o-0g
-	for gcvg-git@gmane.org; Thu, 11 Jan 2007 22:02:36 +0100
+	id 1H57Cw-0002e6-JR
+	for gcvg-git@gmane.org; Thu, 11 Jan 2007 22:11:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751456AbXAKVCa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 11 Jan 2007 16:02:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751460AbXAKVCa
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jan 2007 16:02:30 -0500
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:36890 "EHLO
-	fed1rmmtao05.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751456AbXAKVC3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Jan 2007 16:02:29 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070111210229.XHO15640.fed1rmmtao05.cox.net@fed1rmimpo01.cox.net>;
-          Thu, 11 Jan 2007 16:02:29 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id 9x1d1W00f1kojtg0000000; Thu, 11 Jan 2007 16:01:38 -0500
+	id S1751456AbXAKVLb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 11 Jan 2007 16:11:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751492AbXAKVLb
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jan 2007 16:11:31 -0500
+Received: from p02c11o143.mxlogic.net ([208.65.145.66]:51385 "EHLO
+	p02c11o143.mxlogic.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751456AbXAKVLa (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Jan 2007 16:11:30 -0500
+Received: from unknown [194.90.237.34] (EHLO p02c11o143.mxlogic.net)
+	by p02c11o143.mxlogic.net (mxl_mta-4.0.1-4)
+	with ESMTP id 208a6a54.2704460720.6362.00-501.p02c11o143.mxlogic.net (envelope-from <mst@mellanox.co.il>);
+	Thu, 11 Jan 2007 14:11:30 -0700 (MST)
+Received: from unknown [194.90.237.34]
+	by p02c11o143.mxlogic.net (mxl_mta-4.0.1-4)
+	with SMTP id ff7a6a54.2599562160.6345.00-003.p02c11o143.mxlogic.net (envelope-from <mst@mellanox.co.il>);
+	Thu, 11 Jan 2007 14:11:27 -0700 (MST)
+Received: from mellanox.co.il ([10.4.4.6]) by mtlexch01.mtl.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Thu, 11 Jan 2007 23:13:02 +0200
+Received: by mellanox.co.il (sSMTP sendmail emulation); Thu, 11 Jan 2007 23:09:58 +0200
 To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0701111109070.3594@woody.osdl.org> (Linus
-	Torvalds's message of "Thu, 11 Jan 2007 11:19:36 -0800 (PST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0701111023090.3594@woody.osdl.org>
+User-Agent: Mutt/1.5.11
+X-OriginalArrivalTime: 11 Jan 2007 21:13:02.0314 (UTC) FILETIME=[4739ACA0:01C735C5]
+X-TM-AS-Product-Ver: SMEX-7.0.0.1526-3.6.1039-14930.000
+X-TM-AS-Result: No--10.776600-4.000000-31
+X-Spam: [F=0.0100000000; S=0.010(2007010901)]
+X-MAIL-FROM: <mst@mellanox.co.il>
+X-SOURCE-IP: [194.90.237.34]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36609>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36610>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+> >
+> > I hit a quota limit on a disk my tree was on, but did not notice.
+> > Doing git pull on a tree seems to have corrupted it.
+> > Now I have:
+> > 
+> > $ git-fsck-objects
+> > error: 4d4d30be967d3284cbf59afd4fba6ab536e295f5: object not found
+> > error: c03590b581d51d5fa43adbef9415e935d0229412: object not found
+> > missing tree 10147d79b2418168d9433067b6439971bd4f1261
+> > broken link from  commit 322a6c93ad86d2a151dd97a4c6b0e014a4893437
+> >               to    tree 10147d79b2418168d9433067b6439971bd4f1261
+> > dangling commit 322a6c93ad86d2a151dd97a4c6b0e014a4893437
+> > 
+> > The tree can not be pulled into, or from.
+> 
+> That's nasty, but something as simple a "git reset --hard ORIG_HEAD" 
+> should fix it (of course, if the disk-full happened earlier, or you've 
+> done some other reset or something else that over-write your ORIG_HEAD, 
+> you'd need to find the most recent commit that wasn't broken).
+> 
+> The good news is that there's no way your old data got corrupted. You just 
+> need to _find_ it (and normally ORIG_HEAD points to it, so it's trivial to 
+> find).
 
-> I personally think write_in_full() is totally mis-designed. If you are 
-> ready to handle partial writes, you should use "xwrite()". If you're not 
-> ready to handle partial writes, you should either use "write_or_die()", 
-> _or_ you should expect a partial write to at least return an error code 
-> (which is how "write_buffer()" works).
+I did lots of resets and they did not seems to help.
 
-> But that's not how write_in_full() actually works. Write-in-full does not 
-> return an error for a partial write, it returns the partial size.
->
-> Which is idiotic. It makes the function pointless. Just use xwrite() for 
-> that.
+Then, on a hunch, I just did git prune and
+it cleaned the tree so I can pull/push fine.
 
-I agree 100% with the above reasoning.
+How come?
+
+mst@mst-lt:~/tmp/libmthca_bad$ git --version
+git version 1.5.0.rc0.g244a7
+mst@mst-lt:~/tmp/libmthca_bad$ git pull ~/scm/libmthca/
+remote: Generating pack...
+remote: Done counting 18 objects.
+Result has 11 objects.
+remote: Deltifying 11 objects.
+remote:  100% (11/11) done
+remote: Total 11 (delta 8), reused 1 (delta 1)
+Unpacking 11 objects
+error: failed to read delta-pack base object 4d4d30be967d3284cbf59afd4fba6ab536e295f5
+fatal: unpack-objects died with error code 1
+Fetch failure: /home/mst/scm/libmthca/
+mst@mst-lt:~/tmp/libmthca_bad$ git prune
+mst@mst-lt:~/tmp/libmthca_bad$ git pull ~/scm/libmthca/
+remote: Generating pack...
+remote: Done counting 18 objects.
+Result has 11 objects.
+Deltifying 11 objects.
+ 10remote: 0% (11/11) done
+Total 11 (delta 8), reused 1 (delta 1)
+Unpacking 11 objects
+ 100% (11/11) done
+Updating 732a507..322a6c9
+Fast forward
+ Makefile.am      |   25 +++++++++++++++++--------
+ configure.in     |   16 ++++++++++++++--
+ debian/changelog |    4 +---
+ mthca.driver     |    1 +
+ src/mthca.c      |   23 ++++++++++++-----------
+ 5 files changed, 45 insertions(+), 24 deletions(-)
+ create mode 100644 mthca.driver
+
+So it seems the tree was more or less fine (it just has some useless objects
+because of the disk full failure), the bug seems to be that pull/push fail.
+
+I made a backup of the bad tree so that if someone wants to play with it, here it is:
+http://www.openfabrics.org/~mst/libmthca_bad.tgz
+
+-- 
+MST
