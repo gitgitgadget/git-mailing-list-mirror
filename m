@@ -1,68 +1,70 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Bug-ish: CRLF endings and conflict markers
-Date: Thu, 11 Jan 2007 04:50:46 -0500
-Message-ID: <20070111095046.GA28309@spearce.org>
-References: <200701110941.22024.andyparkins@gmail.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [BUG] OSX ends with "install: git-init.1: No such file or directory"
+Date: Thu, 11 Jan 2007 10:57:31 +0100
+Message-ID: <45A60A0B.5000001@op5.se>
+References: <8664bedsbc.fsf@blue.stonehenge.com> <7vmz4q5abe.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 11 10:50:57 2007
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>, git@vger.kernel.org,
+	Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Thu Jan 11 10:57:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H4waD-0002Wa-Ru
-	for gcvg-git@gmane.org; Thu, 11 Jan 2007 10:50:54 +0100
+	id 1H4wgl-0004PQ-0a
+	for gcvg-git@gmane.org; Thu, 11 Jan 2007 10:57:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965341AbXAKJuv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 11 Jan 2007 04:50:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965359AbXAKJuv
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jan 2007 04:50:51 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:37556 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965341AbXAKJuu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Jan 2007 04:50:50 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1H4waB-0004NM-IQ; Thu, 11 Jan 2007 04:50:51 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id F333620FBAE; Thu, 11 Jan 2007 04:50:46 -0500 (EST)
-To: Andy Parkins <andyparkins@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <200701110941.22024.andyparkins@gmail.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S965336AbXAKJ5e (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 11 Jan 2007 04:57:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965353AbXAKJ5e
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jan 2007 04:57:34 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:51266 "EHLO
+	smtp-gw1.op5.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965336AbXAKJ5d (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Jan 2007 04:57:33 -0500
+Received: from [192.168.1.20] (unknown [213.88.215.14])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id E5D5A6BCBE; Thu, 11 Jan 2007 10:57:31 +0100 (CET)
+User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vmz4q5abe.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36570>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36571>
 
-Andy Parkins <andyparkins@gmail.com> wrote:
-> The best solution is probably to use the line ending of the conflicted lines.  
-> I've had a look, but I can only fine builtin-rerere.c that generates the 
-> markers - would that be the place to make this change?
+Junio C Hamano wrote:
+> merlyn@stonehenge.com (Randal L. Schwartz) writes:
+> 
+>> If I cd into Documentation, and try to make "git-init.1", I get this:
+>>
+>>     % make git-init.1
+>>     asciidoc -b docbook -d manpage -f asciidoc.conf git-init.txt
+>>     xmlto -m callouts.xsl man git-init.xml
+>>     Note: meta date   : No date. Using generated date       git-init-db
+>>     Note: meta source : No productname or alternative       git-init-db
+>>     Note: meta source : No refmiscinfo@class=source         git-init-db
+>>     Note: meta version: No productnumber or alternative     git-init-db
+>>     Note: meta version: No refmiscinfo@class=version        git-init-db
+>>     Warn: meta source : No valid fallback. Leaving empty    git-init-db
+>>     Note: meta manual : No ancestor with title              git-init-db
+>>     Note: meta manual : No refmiscinfo@class=manual         git-init-db
+>>     Warn: meta manual : No valid fallback. Leaving empty    git-init-db
+>>     Note: Writing git-init-db.1
+>>     rm git-init.xml
+>>
+>> That's not good. Making git-init-db when it wants git-init.
+> 
+> Not good.  I am _very_ tempted to do this.
+> 
 
-builtin-rerere may need to change but the code that's actually
-creating the conflict markers isn't there.  Its somewhere in
-xdiff/xmerge.c.  I say somewhere as I haven't dredged down into
-that code myself, but I know that's where xdl_merge() is and I
-know its xdl_merge() that actually created the content of the
-conflict file during the merge.
-
-That said I don't really care about this problem that much.
-The problem that I care about is its far too easy to convert the
-lineendings in a file (e.g. CRLF->LF, LF->CRLF).  This causes the
-entire file to differ, making merges very difficult.  I really
-should just fix it (in the one place where it matters to me) by
-modifying the pre-commit hook to look for such a case and abort.
+Perhaps, but "git init-db" does a lot more than just initialise the 
+object database (such as setting default config-variables, installing 
+template hooks...). "git init" is actually a more sensible name now adays.
 
 -- 
-Shawn.
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
