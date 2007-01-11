@@ -1,68 +1,78 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: [PATCH] Speedup recursive by flushing index only once for all entries
-Date: Thu, 11 Jan 2007 10:03:48 +0100
-Message-ID: <81b0412b0701110103p5f67b955gee6ff6194e6ea68d@mail.gmail.com>
-References: <81b0412b0701040247k47e398e6q34dd5233bb5706f6@mail.gmail.com>
-	 <Pine.LNX.4.63.0701041327490.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <81b0412b0701040447u329dcf9bvcd7adb9e9d199f18@mail.gmail.com>
-	 <7v8xgileza.fsf@assigned-by-dhcp.cox.net>
-	 <81b0412b0701050322u67131900xea969b2da9981a94@mail.gmail.com>
-	 <20070107163112.GA9336@steel.home>
-	 <7vr6u2adgx.fsf@assigned-by-dhcp.cox.net>
-	 <81b0412b0701101507n764aed73p31c7533e743283f0@mail.gmail.com>
-	 <Pine.LNX.4.64.0701101521410.3594@woody.osdl.org>
-	 <Pine.LNX.4.63.0701110913140.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: What's cooking in git.git (topics)
+Date: Thu, 11 Jan 2007 10:20:43 +0100
+Message-ID: <45A6016B.4030800@op5.se>
+References: <7vr6u3cmsi.fsf@assigned-by-dhcp.cox.net> <7v3b6i75i5.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0701102241230.4964@xanadu.home> <20070111080035.GA28222@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Linus Torvalds" <torvalds@osdl.org>,
-	"Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 11 10:04:00 2007
+Cc: Nicolas Pitre <nico@cam.org>, Junio C Hamano <junkio@cox.net>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 11 10:20:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H4vqp-0007QX-Vh
-	for gcvg-git@gmane.org; Thu, 11 Jan 2007 10:04:00 +0100
+	id 1H4w7B-0003Vo-Kj
+	for gcvg-git@gmane.org; Thu, 11 Jan 2007 10:20:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030216AbXAKJD5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 11 Jan 2007 04:03:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030220AbXAKJD4
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jan 2007 04:03:56 -0500
-Received: from ug-out-1314.google.com ([66.249.92.168]:57228 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030216AbXAKJDt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Jan 2007 04:03:49 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so394954uga
-        for <git@vger.kernel.org>; Thu, 11 Jan 2007 01:03:48 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=lZVgBvxlUkLJIrS7FIDTZd8gxVevwP5cBKN2tM7ORC8FAk6taMD33vM8aGFsNoIhMqUudUTE0MT71IXVAGkY64c3XN9ji+PX5xW/rP+gQijUL4Zv6lsZW5qOcrG7Bd/NWY1DW4VG02sbzpN91MyXDKHCxSomMsCOGtwNnxekdvs=
-Received: by 10.78.164.13 with SMTP id m13mr361053hue.1168506228340;
-        Thu, 11 Jan 2007 01:03:48 -0800 (PST)
-Received: by 10.78.135.3 with HTTP; Thu, 11 Jan 2007 01:03:48 -0800 (PST)
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0701110913140.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-Content-Disposition: inline
+	id S965341AbXAKJUt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 11 Jan 2007 04:20:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965343AbXAKJUt
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jan 2007 04:20:49 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:50664 "EHLO
+	smtp-gw1.op5.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965341AbXAKJUs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Jan 2007 04:20:48 -0500
+Received: from [192.168.1.20] (unknown [213.88.215.14])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id 68C116BCBC; Thu, 11 Jan 2007 10:20:46 +0100 (CET)
+User-Agent: Thunderbird 1.5.0.7 (X11/20060913)
+To: "Shawn O. Pearce" <spearce@spearce.org>
+In-Reply-To: <20070111080035.GA28222@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36561>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36562>
 
-On 1/11/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > > Yep. Tried the monster merge on it: 1m15sec on that small laptop.
-> >
-> > Is that supposed to be good? That still sounds really slow to me. What
-> > kind of nasty project are you doing? Is this the 44k file project, and
-> > under cygwin? Or is it that bad even under Linux?
->
-> This _is_ cygwin. And 1m15sec is actually very, very good, if you happen
+Shawn O. Pearce wrote:
+> Nicolas Pitre <nico@cam.org> wrote:
+>> On Wed, 10 Jan 2007, Junio C Hamano wrote:
+>>> * sp/describe (Wed Jan 10 06:39:47 2007 -0500) 1 commit
+>>>  - Chose better tag names in git-describe after merges.
+>>>
+>>> Slowing it down by 4x is very unfortunate.  I think there is a
+>>> better way to walk the ancestry than doing one at a time to
+>>> count the commits, but I did not have enough time to look at
+>>> this today.
+>> However git-describe is certainly not a frequent and speed critical 
+>> operation, and 
+>> even if it cannot be sped up then waiting 300 ms more won't really 
+>> affect one's workflow that badly.
+> 
+> My thoughts exactly.  I spent a few hours trying to determine
+> an algorithm that produced the right answer and did not require
+> generating the revlist between the tag and the requested commit
+> for every possibly matching tag.  I did not come up with one.
+> If someone else does it would obviously be a welcome replacement
+> to my own patch.  :-)
+> 
+> There is almost no additional penalty for a simple strand of pearls
+> with the tag placed along that strand; only one possible tag will be
+> found.  But my code does an unnecessary revision list in this case.
+> 
+> Where we really get hit is the large number of possible tags.  The
+> master branch is turning up 14 tags, some dating back to v1.4.1-rc1.
+> I do try to abort the revision list as soon as one of those tags
+> cannot give me a better selection than the one I have currently,
+> but I still had to generate a revision list to reach that point.
+> 
 
-No, this is linux, in a very constrained conditions. On cygwin I
-haven't tried it yet.
+It could be worth skipping tags more than 6 months older than current 
+branch-head. That would, at least for the git case, cut the number of 
+tags down by a considerable amount.
 
-> to know that it took more than 10 minutes(!) when we started our quest of
-> inbuilding recursive merge.
-
-Right.
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
