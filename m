@@ -1,86 +1,88 @@
-From: "Michael S. Tsirkin" <mst@mellanox.co.il>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: tree corrupted on disk quota full
-Date: Thu, 11 Jan 2007 23:58:12 +0200
-Message-ID: <20070111215812.GK17999@mellanox.co.il>
-References: <Pine.LNX.4.64.0701111324350.3594@woody.osdl.org>
-Reply-To: "Michael S. Tsirkin" <mst@mellanox.co.il>
+Date: Thu, 11 Jan 2007 13:59:39 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0701111353030.3594@woody.osdl.org>
+References: <20070111125726.GJ1759@mellanox.co.il>
+ <Pine.LNX.4.64.0701111023090.3594@woody.osdl.org>
+ <Pine.LNX.4.64.0701111109070.3594@woody.osdl.org> <45A6A97F.5080008@shadowen.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 11 22:58:28 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "Michael S. Tsirkin" <mst@mellanox.co.il>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 11 23:00:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H57w9-0006yl-Gs
-	for gcvg-git@gmane.org; Thu, 11 Jan 2007 22:58:17 +0100
+	id 1H57yN-0007a0-Tm
+	for gcvg-git@gmane.org; Thu, 11 Jan 2007 23:00:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932071AbXAKV6P (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 11 Jan 2007 16:58:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932094AbXAKV6P
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jan 2007 16:58:15 -0500
-Received: from p02c11o141.mxlogic.net ([208.65.145.64]:42232 "EHLO
-	p02c11o141.mxlogic.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932071AbXAKV6O (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Jan 2007 16:58:14 -0500
-Received: from unknown [194.90.237.34] (EHLO p02c11o141.mxlogic.net)
-	by p02c11o141.mxlogic.net (mxl_mta-4.0.1-4)
-	with ESMTP id 6f2b6a54.2002836400.11751.00-501.p02c11o141.mxlogic.net (envelope-from <mst@mellanox.co.il>);
-	Thu, 11 Jan 2007 14:58:14 -0700 (MST)
-Received: from unknown [194.90.237.34] (EHLO mtlexch01.mtl.com)
-	by p02c11o141.mxlogic.net (mxl_mta-4.0.1-4)
-	with ESMTP id 0f2b6a54.2023816112.11697.00-022.p02c11o141.mxlogic.net (envelope-from <mst@mellanox.co.il>);
-	Thu, 11 Jan 2007 14:58:08 -0700 (MST)
-Received: from mellanox.co.il ([10.4.4.6]) by mtlexch01.mtl.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Thu, 11 Jan 2007 23:59:30 +0200
-Received: by mellanox.co.il (sSMTP sendmail emulation); Thu, 11 Jan 2007 23:56:26 +0200
-To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0701111324350.3594@woody.osdl.org>
-User-Agent: Mutt/1.5.11
-X-OriginalArrivalTime: 11 Jan 2007 21:59:30.0955 (UTC) FILETIME=[C56285B0:01C735CB]
-X-TM-AS-Product-Ver: SMEX-7.0.0.1526-3.6.1039-14930.000
-X-TM-AS-Result: No--11.779600-4.000000-31
-X-Spam: [F=0.2763370120; S=0.276(2007010901)]
-X-MAIL-FROM: <mst@mellanox.co.il>
-X-SOURCE-IP: [194.90.237.34]
+	id S932094AbXAKWAd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 11 Jan 2007 17:00:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932103AbXAKWAd
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jan 2007 17:00:33 -0500
+Received: from smtp.osdl.org ([65.172.181.24]:38002 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932094AbXAKWAc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Jan 2007 17:00:32 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l0BLxhWi007156
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 11 Jan 2007 13:59:46 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l0BLxem2004214;
+	Thu, 11 Jan 2007 13:59:42 -0800
+To: Andy Whitcroft <apw@shadowen.org>
+In-Reply-To: <45A6A97F.5080008@shadowen.org>
+X-Spam-Status: No, hits=-0.663 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.107__
+X-MIMEDefang-Filter: osdl$Revision: 1.170 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36619>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36620>
 
->  - your "git pull" failed, because it was fetching objects that were 
->    corrupt in your local database - and the rule is that local objects 
->    ALWAYS override remote objects. That's an important security thing (a 
->    "pull" is _never_ allowed to overwrite something you already have, and 
->    it doesn't matter if it's corrupt or not, you're not ever going to have 
->    a "git pull" overwriting old data)
 
-...
 
-> That's true robustness.
+On Thu, 11 Jan 2007, Andy Whitcroft wrote:
 > 
-> 			Linus
-
-OK, now that I know what happened, this makes sense to me.
-But I'd like to understand whether what created this in the first place:
-
+> The call was intended to replace a common idiom:
 > 
->  - you had gotten some corrupt objects due to the disk filling up 
->    (probably during the pull that thus populated the object database with
->    partially written objects)
-> 
->    In particular, the 4d4d30be967d3284cbf59afd4fba6ab536e295f5 object was 
->    corrupt. fsck gave a confusing error message:
-> 
-> 	error: 4d4d30be967d3284cbf59afd4fba6ab536e295f5: object not found
-> 	error: c03590b581d51d5fa43adbef9415e935d0229412: object not found
-> 
->    which is really because the _file_ for that object does exist, but the 
->    file doesn't actually contain the object it expects (due to 
->    corruption), so the object wasn't "found". 
+> if (xwrite(fd, buf, size) != size)
+> 	error
 
-is something expected?
+I really don't agree.
 
--- 
-MST
+You should use "write_or_die()" for this idiom.
+
+There really is two cases:
+ - the complex and robust one: "we will keep writing even in the presense 
+   of partial writes".
+
+   This is "xwrite()". 
+
+ - the simple case: "write everything", anything else is an error. This is 
+   "write_or_die()", or "write_in_full()".
+
+And I claim, that for the "write_in_full()" case, if you EVER get anything 
+but the full length back, that's an error.
+
+And it should be treated as such. There is NO POINT in write_in_full() 
+ever returning a partial result. It's unrecoverable by design - and if it 
+wasn't, you wouldn't use "write_in_full()" in the first place, you'd just 
+use "xwrite()".
+
+And returning a partial result in that case is just a recipe for disaster. 
+I already pointed to one real bug due to this: write_buffer() was (and 
+currently is) simply buggy. And it's buggy EXACTLY becaue 
+"write_in_full()" was doing the wrong thing, and just made it easy to 
+write buggy code - it was no easier to use than xwrite(), and thus there 
+was no point to it. Might as well have just used xwrite() in the first 
+place.
+
+So I repeat: either you use "xwrite()" (and handle the partial case), or 
+you use "write_in_full()" (and the partial case is an *ERROR*). There is 
+no sane middle ground in between those cases.
+
+			Linus
