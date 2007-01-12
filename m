@@ -1,76 +1,344 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: 1.5.0.rc1.g4494: Can't use a bare GIT_DIR to add
-Date: Fri, 12 Jan 2007 13:33:33 -0800
-Message-ID: <7vps9kq6aa.fsf@assigned-by-dhcp.cox.net>
-References: <junkio@cox.net>
-	<200701122015.l0CKFB8j022355@laptop13.inf.utfsm.cl>
+From: Stelian Pop <stelian@popies.net>
+Subject: [PATCH] Add hg-to-git conversion utility.
+Date: Fri, 12 Jan 2007 22:57:03 +0100
+Message-ID: <1168639023.13640.2.camel@localhost.localdomain>
+References: <1168537766.22649.19.camel@localhost.localdomain>
+	 <eo8ngk$ja$1@sea.gmane.org>  <1168632860.29218.5.camel@voyager.dsnet>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 12 22:33:41 2007
+X-From: git-owner@vger.kernel.org Fri Jan 12 22:57:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H5U1q-0005oz-9P
-	for gcvg-git@gmane.org; Fri, 12 Jan 2007 22:33:38 +0100
+	id 1H5UOg-000379-4S
+	for gcvg-git@gmane.org; Fri, 12 Jan 2007 22:57:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161006AbXALVdf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 12 Jan 2007 16:33:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161080AbXALVdf
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jan 2007 16:33:35 -0500
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:59163 "EHLO
-	fed1rmmtao02.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161006AbXALVdf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Jan 2007 16:33:35 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070112213334.BNRS97.fed1rmmtao02.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 12 Jan 2007 16:33:34 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id AMYi1W00X1kojtg0000000; Fri, 12 Jan 2007 16:32:43 -0500
-To: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
-In-Reply-To: <200701122015.l0CKFB8j022355@laptop13.inf.utfsm.cl> (Horst H. von
-	Brand's message of "Fri, 12 Jan 2007 17:15:11 -0300")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1161109AbXALV5K (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 12 Jan 2007 16:57:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161106AbXALV5K
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jan 2007 16:57:10 -0500
+Received: from sd291.sivit.org ([194.146.225.122]:2675 "EHLO sd291.sivit.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1161117AbXALV5J (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Jan 2007 16:57:09 -0500
+Received: from [192.168.6.104] (deep-space-9.popies.net [82.225.86.56])
+	(using SSLv3 with cipher RC4-MD5 (128/128 bits))
+	(No client certificate requested)
+	by sd291.sivit.org (Postfix) with ESMTP id 5C8BC58122;
+	Fri, 12 Jan 2007 22:57:05 +0100 (CET)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <1168632860.29218.5.camel@voyager.dsnet>
+X-Mailer: Evolution 2.8.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36714>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36715>
 
-"Horst H. von Brand" <vonbrand@inf.utfsm.cl> writes:
+hg-to-git.py  is able to convert a Mercurial repository into a git one,
+and preserves the branches in the process (unlike tailor)
 
-> Junio C Hamano <junkio@cox.net> wrote:
-> ...
->> This _is_ a regression, as we are checking something we did not
->> check before and refusing to work in cases where we did.  But I
->> am not sure if reverting to lift the safety (for that matter,
->> introducing the third "depends" alternative) is better than the
->> latest behaviour.
->
-> It grates me somewhat that there isn't a clean way of saying "My .git stuff
-> is over there". No big deal, really.
->
-> And it is not a "depends", AFAICS: GIT_DIR says where to stash stuff, users
-> had better know what they are doing in that case... so perhaps allow
-> anything if GIT_DIR is set?
+hg-to-git.py can probably be greatly improved (it's a rather crude
+combination of shell and python) but it does already work quite well for
+me. Features:
+	- supports incremental conversion
+	  (for keeping a git repo in sync with a hg one)
+	- supports hg branches
+	- converts hg tags
 
-One problem I have with that is that doing so would make it
-harder to prevent pushing into the current branch of a
-repository with working tree from happening later.
+Signed-off-by: Stelian Pop <stelian@popies.net>
+---
+ Documentation/git-tools.txt     |    7 +
+ contrib/hg-to-git/hg-to-git.py  |  233 +++++++++++++++++++++++++++++++++++++++
+ contrib/hg-to-git/hg-to-git.txt |   22 ++++
+ 3 files changed, 262 insertions(+), 0 deletions(-)
 
-In the "sequence of tarballs" example, I wonder why you cannot
-do something like:
-
-	git init-db
-	for tarball
-        do
-        	tar xf $tarball
-                # if it extracts in a wrong directory, move them
-                # up first ...
-                git add .
-                git commit -a
-		git rm -r .
-	done
+diff --git a/Documentation/git-tools.txt b/Documentation/git-tools.txt
+index 0914cbb..4d245d5 100644
+--- a/Documentation/git-tools.txt
++++ b/Documentation/git-tools.txt
+@@ -68,6 +68,13 @@ History Viewers
+ Foreign SCM interface
+ ---------------------
+ 
++   - *hg-to-git* (contrib/)
++
++   hg-to-git converts a Mercurial repository into a git one, and
++   preserves the full branch history in the process. hg-to-git can
++   also be used in an incremental way to keep the git repository
++   in sync with the master Mercurial repository.
++
+    - *git-svn* (contrib/)
+ 
+    git-svn is a simple conduit for changesets between a single Subversion
+diff --git a/contrib/hg-to-git/hg-to-git.py b/contrib/hg-to-git/hg-to-git.py
+new file mode 100755
+index 0000000..37337ff
+--- /dev/null
++++ b/contrib/hg-to-git/hg-to-git.py
+@@ -0,0 +1,233 @@
++#! /usr/bin/python
++
++""" hg-to-svn.py - A Mercurial to GIT converter
++
++    Copyright (C)2007 Stelian Pop <stelian@popies.net>
++
++    This program is free software; you can redistribute it and/or modify
++    it under the terms of the GNU General Public License as published by
++    the Free Software Foundation; either version 2, or (at your option)
++    any later version.
++
++    This program is distributed in the hope that it will be useful,
++    but WITHOUT ANY WARRANTY; without even the implied warranty of
++    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++    GNU General Public License for more details.
++
++    You should have received a copy of the GNU General Public License
++    along with this program; if not, write to the Free Software
++    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
++"""
++
++import os, os.path, sys
++import tempfile, popen2, pickle, getopt
++import re
++
++# Maps hg version -> git version
++hgvers = {}
++# List of children for each hg revision
++hgchildren = {}
++# Current branch for each hg revision
++hgbranch = {}
++
++#------------------------------------------------------------------------------
++
++def usage():
++
++        print """\
++%s: [OPTIONS] <hgprj>
++
++options:
++    -s, --gitstate=FILE: name of the state to be saved/read
++                         for incrementals
++
++required:
++    hgprj:  name of the HG project to import (directory)
++""" % sys.argv[0]
++
++#------------------------------------------------------------------------------
++
++def getgitenv(user, date):
++    env = ''
++    elems = re.compile('(.*?)\s+<(.*)>').match(user)
++    if elems:
++        env += 'export GIT_AUTHOR_NAME="%s" ;' % elems.group(1)
++        env += 'export GIT_COMMITER_NAME="%s" ;' % elems.group(1)
++        env += 'export GIT_AUTHOR_EMAIL="%s" ;' % elems.group(2)
++        env += 'export GIT_COMMITER_EMAIL="%s" ;' % elems.group(2)
++    else:
++        env += 'export GIT_AUTHOR_NAME="%s" ;' % user
++        env += 'export GIT_COMMITER_NAME="%s" ;' % user
++        env += 'export GIT_AUTHOR_EMAIL= ;'
++        env += 'export GIT_COMMITER_EMAIL= ;'
++
++    env += 'export GIT_AUTHOR_DATE="%s" ;' % date
++    env += 'export GIT_COMMITTER_DATE="%s" ;' % date
++    return env
++
++#------------------------------------------------------------------------------
++
++state = ''
++
++try:
++    opts, args = getopt.getopt(sys.argv[1:], 's:t:', ['gitstate=', 'tempdir='])
++    for o, a in opts:
++        if o in ('-s', '--gitstate'):
++            state = a
++            state = os.path.abspath(state)
++
++    if len(args) != 1:
++        raise('params')
++except:
++    usage()
++    sys.exit(1)
++
++hgprj = args[0]
++os.chdir(hgprj)
++
++if state:
++    if os.path.exists(state):
++        print 'State does exist, reading'
++        f = open(state, 'r')
++        hgvers = pickle.load(f)
++    else:
++        print 'State does not exist, first run'
++
++tip = os.popen('hg tip | head -1 | cut -f 2 -d :').read().strip()
++print 'tip is', tip
++
++# Calculate the branches
++print 'analysing the branches...'
++hgchildren["0"] = ()
++hgbranch["0"] = "master"
++for cset in range(1, int(tip) + 1):
++    hgchildren[str(cset)] = ()
++    prnts = os.popen('hg log -r %d | grep ^parent: | cut -f 2 -d :' % cset).readlines()
++    if len(prnts) > 0:
++        parent = prnts[0].strip()
++    else:
++        parent = str(cset - 1)
++    hgchildren[parent] += ( str(cset), )
++    if len(prnts) > 1:
++        mparent = prnts[1].strip()
++        hgchildren[mparent] += ( str(cset), )
++    else:
++        mparent = None
++
++    if mparent:
++        # For merge changesets, take either one, preferably the 'master' branch
++        if hgbranch[mparent] == 'master':
++            hgbranch[str(cset)] = 'master'
++        else:
++            hgbranch[str(cset)] = hgbranch[parent]
++    else:
++        # Normal changesets
++        # For first children, take the parent branch, for the others create a new branch
++        if hgchildren[parent][0] == str(cset):
++            hgbranch[str(cset)] = hgbranch[parent]
++        else:
++            hgbranch[str(cset)] = "branch-" + str(cset)
++
++if not hgvers.has_key("0"):
++    print 'creating repository'
++    os.system('git-init-db')
++
++# loop through every hg changeset
++for cset in range(int(tip) + 1):
++
++    # incremental, already seen
++    if hgvers.has_key(str(cset)):
++        continue
++
++    # get info
++    prnts = os.popen('hg log -r %d | grep ^parent: | cut -f 2 -d :' % cset).readlines()
++    if len(prnts) > 0:
++        parent = prnts[0].strip()
++    else:
++        parent = str(cset - 1)
++    if len(prnts) > 1:
++        mparent = prnts[1].strip()
++    else:
++        mparent = None
++
++    (fdcomment, filecomment) = tempfile.mkstemp()
++    csetcomment = os.popen('hg log -r %d -v | grep -v ^changeset: | grep -v ^parent: | grep -v ^user: | grep -v ^date | grep -v ^files: | grep -v ^description: | grep -v ^tag:' % cset).read().strip()
++    os.write(fdcomment, csetcomment)
++    os.close(fdcomment)
++
++    date = os.popen('hg log -r %d | grep ^date: | cut -f 2- -d :' % cset).read().strip()
++
++    tag = os.popen('hg log -r %d | grep ^tag: | cut -f 2- -d :' % cset).read().strip()
++
++    user = os.popen('hg log -r %d | grep ^user: | cut -f 2- -d :' % cset).read().strip()
++
++    print '-----------------------------------------'
++    print 'cset:', cset
++    print 'branch:', hgbranch[str(cset)]
++    print 'user:', user
++    print 'date:', date
++    print 'comment:', csetcomment
++    print 'parent:', parent
++    if mparent:
++        print 'mparent:', mparent
++    if tag:
++        print 'tag:', tag
++    print '-----------------------------------------'
++
++    # checkout the parent if necessary
++    if cset != 0:
++        if hgbranch[str(cset)] == "branch-" + str(cset):
++            print 'creating new branch', hgbranch[str(cset)]
++            os.system('git-checkout -b %s %s' % (hgbranch[str(cset)], hgvers[parent]))
++        else:
++            print 'checking out branch', hgbranch[str(cset)]
++            os.system('git-checkout %s' % hgbranch[str(cset)])
++
++    # merge
++    if mparent:
++        if hgbranch[parent] == hgbranch[str(cset)]:
++            otherbranch = hgbranch[mparent]
++        else:
++            otherbranch = hgbranch[parent]
++        print 'merging', otherbranch, 'into', hgbranch[str(cset)]
++        os.system(getgitenv(user, date) + 'git-merge --no-commit -s ours "" %s %s' % (hgbranch[str(cset)], otherbranch))
++
++    # remove everything except .git and .hg directories
++    os.system('find . \( -path "./.hg" -o -path "./.git" \) -prune -o ! -name "." -print | xargs rm -rf')
++
++    # repopulate with checkouted files
++    os.system('hg update -C %d' % cset)
++
++    # add new files
++    os.system('git-ls-files -x .hg --others | git-update-index --add --stdin')
++    # delete removed files
++    os.system('git-ls-files -x .hg --deleted | git-update-index --remove --stdin')
++
++    # commit
++    os.system(getgitenv(user, date) + 'git-commit -a -F %s' % filecomment)
++    os.unlink(filecomment)
++
++    # tag
++    if tag and tag != 'tip':
++        os.system(getgitenv(user, date) + 'git-tag %s' % tag)
++
++    # delete branch if not used anymore...
++    if mparent and len(hgchildren[str(cset)]):
++        print "Deleting unused branch:", otherbranch
++        os.system('git-branch -d %s' % otherbranch)
++
++    # retrieve and record the version
++    vvv = os.popen('git-show | head -1').read()
++    vvv = vvv[vvv.index(' ') + 1 : ].strip()
++    print 'record', cset, '->', vvv
++    hgvers[str(cset)] = vvv
++
++os.system('git-repack -a -d')
++
++# write the state for incrementals
++if state:
++    print 'Writing state'
++    f = open(state, 'w')
++    pickle.dump(hgvers, f)
++
++# vim: et ts=8 sw=4 sts=4
+diff --git a/contrib/hg-to-git/hg-to-git.txt b/contrib/hg-to-git/hg-to-git.txt
+new file mode 100644
+index 0000000..cf1c735
+--- /dev/null
++++ b/contrib/hg-to-git/hg-to-git.txt
+@@ -0,0 +1,22 @@
++hg-to-git.py is able to convert a Mercurial repository into a git one,
++and preserves the branches in the process (unlike tailor)
++
++hg-to-git.py can probably be greatly improved (it's a rather crude
++combination of shell and python) but it does already work quite well for
++me. Features:
++	- supports incremental conversion
++	  (for keeping a git repo in sync with a hg one)
++        - supports hg branches
++        - converts hg tags 
++
++Note that the git repository will be created 'in place' (at the same
++location as the source hg repo). You will have to manually remove the
++'.hg' directory after the conversion.
++
++Also note that the incremental conversion uses 'simple' hg changesets
++identifiers (ordinals, as opposed to SHA-1 ids), and since these ids
++are not stable across different repositories the hg-to-git.py state file
++is forever tied to one hg repository.
++
++-- 
++Stelian Pop <stelian@popies.net>
+-- 
+1.4.4.4
