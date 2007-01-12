@@ -1,77 +1,131 @@
-From: Nigel Cunningham <nigel@nigel.suspend2.net>
-Subject: Re: How git affects kernel.org performance
-Date: Fri, 12 Jan 2007 21:54:43 +1100
-Message-ID: <1168599283.2744.5.camel@nigel.suspend2.net>
-References: <45A083F2.5000000@zytor.com>
-	 <Pine.LNX.4.64.0701062130260.3661@woody.osdl.org>
-	 <20070107085526.GR24090@1wt.eu> <20070107011542.3496bc76.akpm@osdl.org>
-	 <20070108030555.GA7289@in.ibm.com> <20070108125819.GA32756@thunk.org>
-	 <368329554.17014@ustc.edu.cn>
-	 <Pine.LNX.4.64.0701090821550.3661@woody.osdl.org>
-	 <20070110015739.GA26978@mail.ustc.edu.cn>
-	 <1168399249.2585.6.camel@nigel.suspend2.net>
-	 <20070110140730.GA986@mail.ustc.edu.cn>
-Reply-To: nigel@nigel.suspend2.net
+From: =?utf-8?Q?Santi_B=C3=A9jar?= <sbejar@gmail.com>
+Subject: [PATCH 1/2] tutorial: Use "git remote add"
+Date: Fri, 12 Jan 2007 12:57:28 +0100
+Message-ID: <87sleg31av.fsf@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@osdl.org>, Theodore Tso <tytso@mit.edu>,
-	Suparna Bhattacharya <suparna@in.ibm.com>,
-	Andrew Morton <akpm@osdl.org>, Willy Tarreau <w@1wt.eu>,
-	"H. Peter Anvin" <hpa@zytor.com>, git@vger.kernel.org,
-	"J.H." <warthog9@kernel.org>,
-	Randy Dunlap <randy.dunlap@oracle.com>,
-	Pavel Machek <pavel@ucw.cz>,
-	kernel list <linux-kernel@vger.kernel.org>,
-	webmaster@kernel.org,
-	"linux-ext4@vger.kernel.org" <linux-ext4@vger.kernel.org>
-X-From: linux-ext4-owner@vger.kernel.org Fri Jan 12 11:55:06 2007
-Return-path: <linux-ext4-owner@vger.kernel.org>
-Envelope-to: gcfe-linux-ext4@gmane.org
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Fri Jan 12 11:58:12 2007
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H5K3q-0000oV-Q9
-	for gcfe-linux-ext4@gmane.org; Fri, 12 Jan 2007 11:55:03 +0100
+	id 1H5K6t-0001df-Uc
+	for gcvg-git@gmane.org; Fri, 12 Jan 2007 11:58:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161080AbXALKy6 (ORCPT <rfc822;gcfe-linux-ext4@m.gmane.org>);
-	Fri, 12 Jan 2007 05:54:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161079AbXALKyr
-	(ORCPT <rfc822;linux-ext4-outgoing>);
-	Fri, 12 Jan 2007 05:54:47 -0500
-Received: from nigel.suspend2.net ([203.171.70.205]:37849 "EHLO
-	nigel.suspend2.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161037AbXALKyp (ORCPT
-	<rfc822;linux-ext4@vger.kernel.org>); Fri, 12 Jan 2007 05:54:45 -0500
-Received: from [127.0.0.1] (nigel.suspend2.net [127.0.0.1])
-	by nigel.suspend2.net (Postfix) with ESMTP id 569EDE8D42;
-	Fri, 12 Jan 2007 21:54:43 +1100 (EST)
-To: Fengguang Wu <fengguang.wu@gmail.com>
-In-Reply-To: <20070110140730.GA986@mail.ustc.edu.cn>
-X-Mailer: Evolution 2.8.1 
-Sender: linux-ext4-owner@vger.kernel.org
+	id S932829AbXALK6J convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 12 Jan 2007 05:58:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932828AbXALK6I
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jan 2007 05:58:08 -0500
+Received: from ifae-s0.ifae.es ([192.101.162.68]:42315 "EHLO ifae-s0.ifae.es"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932666AbXALK6H (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Jan 2007 05:58:07 -0500
+Received: from bela (caronte.ifae.es [192.101.162.199])
+	by ifae-s0.ifae.es (8.11.6/8.11.6) with ESMTP id l0CAw3e22974
+	for <git@vger.kernel.org>; Fri, 12 Jan 2007 11:58:04 +0100
+To: Git Mailing List <git@vger.kernel.org>
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/22.0.92 (gnu/linux)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: linux-ext4@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36667>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36668>
 
-Hi.
 
-On Wed, 2007-01-10 at 22:07 +0800, Fengguang Wu wrote:
-> Thanks, Nigel.
-> But I'm very sorry that the calculation in the patch was wrong.
-> 
-> Would you give this new patch a run?
+This way all the branches are in the separate layout,
+so the newbies only have to understand one layout.
 
-Sorry for my slowness. I just did
+Signed-off-by: Santi B=C3=A9jar <sbejar@gmail.com>
+---
+ Hi *,
 
-time find /usr/src | wc -l
+   I've used:
 
-again:
+$ git pull . remotes/bob/master
 
-Without patch: 35.137, 35.104, 35.351 seconds
-With patch: 34.518, 34.376, 34.489 seconds
+   instead of:
 
-So there's about .8 seconds saved.
+$ git pull . bob/master
 
-Regards,
+   because the latter does not work. I think it's a bug, because
 
-Nigel
+$ git show bob/master
+$ git merge bob/master
+
+   work as expected.
+
+ Documentation/tutorial.txt |   26 +++++++++++++-------------
+ 1 files changed, 13 insertions(+), 13 deletions(-)
+
+diff --git a/Documentation/tutorial.txt b/Documentation/tutorial.txt
+index d2bf0b9..4b7eba3 100644
+--- a/Documentation/tutorial.txt
++++ b/Documentation/tutorial.txt
+@@ -285,10 +285,12 @@ at /home/bob/myrepo.  She does this with:
+=20
+ ------------------------------------------------
+ $ cd /home/alice/project
+-$ git pull /home/bob/myrepo master
++$ git remote add bob /home/bob/myrepo
++$ git pull bob master
+ ------------------------------------------------
+=20
+-This merges the changes from Bob's "master" branch into Alice's
++First it adds the "remote" Bob's repository with the name "bob" and
++then it merges the changes from Bob's "master" branch into Alice's
+ current branch.  If Alice has made her own changes in the meantime,
+ then she may need to manually fix any conflicts.  (Note that the
+ "master" argument in the above command is actually unnecessary, as it
+@@ -298,18 +300,16 @@ The "pull" command thus performs two operations: =
+it fetches changes
+ from a remote branch, then merges them into the current branch.
+=20
+ You can perform the first operation alone using the "git fetch"
+-command.  For example, Alice could create a temporary branch just to
+-track Bob's changes, without merging them with her own, using:
++command without merging them with her own branch, using:
+=20
+ -------------------------------------
+-$ git fetch /home/bob/myrepo master:bob-incoming
++$ git fetch bob
+ -------------------------------------
+=20
+-which fetches the changes from Bob's master branch into a new branch
+-named bob-incoming.  Then
++which fetches the changes from Bob's branches.  Then
+=20
+ -------------------------------------
+-$ git log -p master..bob-incoming
++$ git log -p master..bob/master
+ -------------------------------------
+=20
+ shows a list of all the changes that Bob made since he branched from
+@@ -320,21 +320,21 @@ could pull the changes into her master branch:
+=20
+ -------------------------------------
+ $ git checkout master
+-$ git pull . bob-incoming
++$ git pull . remotes/bob/master
+ -------------------------------------
+=20
+-The last command is a pull from the "bob-incoming" branch in Alice's
++The last command is a pull from the "bob/master" branch in Alice's
+ own repository.
+=20
+ Alice could also perform both steps at once with:
+=20
+ -------------------------------------
+-$ git pull /home/bob/myrepo master:bob-incoming
++$ git pull bob
+ -------------------------------------
+=20
+-This is just like the "git pull /home/bob/myrepo master" that we saw
++This is just like the "git pull bob master" that we saw
+ before, except that it also stores the unmerged changes from bob's
+-master branch in bob-incoming before merging them into Alice's
++master branch in bob/master before merging them into Alice's
+ current branch.  Note that git pull always merges into the current
+ branch, regardless of what else is given on the commandline.
+=20
+--=20
+1.5.0-rc1.GIT
