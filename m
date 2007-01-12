@@ -1,85 +1,113 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] Add hg-to-git conversion utility.
-Date: Fri, 12 Jan 2007 17:15:25 -0500
-Message-ID: <20070112221525.GA20956@spearce.org>
-References: <1168537766.22649.19.camel@localhost.localdomain> <eo8ngk$ja$1@sea.gmane.org> <1168632860.29218.5.camel@voyager.dsnet> <1168639023.13640.2.camel@localhost.localdomain>
+From: Yann Dirson <ydirson@altern.org>
+Subject: Re: [PATCH] Add contrib/stg-gitk: helper script to run gitk
+Date: Fri, 12 Jan 2007 23:47:33 +0100
+Message-ID: <20070112224733.GA9761@nan92-1-81-57-214-146.fbx.proxad.net>
+References: <20070108220918.18329.30083.stgit@gandelf.nowhere.earth> <b0943d9e0701090202v7951076cg7c86c0f5499c7d60@mail.gmail.com> <20070109220332.GD17093@nan92-1-81-57-214-146.fbx.proxad.net> <b0943d9e0701101547v5e18bdf8xcc34cf78ea5f1f9f@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 12 23:15:39 2007
+Cc: GIT list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jan 12 23:47:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H5UgO-0007a2-QA
-	for gcvg-git@gmane.org; Fri, 12 Jan 2007 23:15:33 +0100
+	id 1H5VBU-0006ti-L9
+	for gcvg-git@gmane.org; Fri, 12 Jan 2007 23:47:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161135AbXALWPa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 12 Jan 2007 17:15:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161136AbXALWPa
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jan 2007 17:15:30 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:53814 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161135AbXALWP3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Jan 2007 17:15:29 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1H5UgA-00062i-Js; Fri, 12 Jan 2007 17:15:18 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id A807820FBAE; Fri, 12 Jan 2007 17:15:25 -0500 (EST)
-To: Stelian Pop <stelian@popies.net>
+	id S1161130AbXALWrh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 12 Jan 2007 17:47:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161137AbXALWrh
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jan 2007 17:47:37 -0500
+Received: from smtp5-g19.free.fr ([212.27.42.35]:54304 "EHLO smtp5-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1161130AbXALWrg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Jan 2007 17:47:36 -0500
+Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
+	by smtp5-g19.free.fr (Postfix) with ESMTP id BFF1227A94;
+	Fri, 12 Jan 2007 23:47:34 +0100 (CET)
+Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
+	id 02B7A2015; Fri, 12 Jan 2007 23:47:33 +0100 (CET)
+To: Catalin Marinas <catalin.marinas@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <1168639023.13640.2.camel@localhost.localdomain>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+In-Reply-To: <b0943d9e0701101547v5e18bdf8xcc34cf78ea5f1f9f@mail.gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36720>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36721>
 
-Stelian Pop <stelian@popies.net> wrote:
-> hg-to-git.py  is able to convert a Mercurial repository into a git one,
-> and preserves the branches in the process (unlike tailor)
+On Wed, Jan 10, 2007 at 11:47:33PM +0000, Catalin Marinas wrote:
+> On 09/01/07, Yann Dirson <ydirson@altern.org> wrote:
+> >On Tue, Jan 09, 2007 at 10:02:06AM +0000, Catalin Marinas wrote:
+> >> There is 'stg series --graphical' that invokes gitk.
+> >
+> >For some reason I did not look for this functionality in that place :)
+> >
+> >But it is a bit different, in that unapplied patches appear detached
+> >from the whole history.  Possibly out of personal taste, I do not find
+> >this very useful, and prefer to see them as "gitk --all" shows them.
+> 
+> I've never tried 'gitk --all' but I'm OK with changing the way
+> --graphical option displays the patches.
 
-Cool!
-
-You've already written the converter, but you may want to look at
-using git-fast-import as the backend interface to Git.  I think
-your code may come out shorter, be clearer, and will run faster.
-
-For example Simon Schubert's cvs -> git converter was written in
-one night (last night) in Ruby using git-fast-import as the backend
-(Simon already had the heavy lifting CVS portions done).  I peeked
-at his source and its quite readable, though maybe that's just the
-Ruby talking.  ;-) Simon is apparently trying to import FreeBSD's
-CVS repository to Git.  A non-trivial task.
-
-Chris Lee also has an svn -> git converter that uses gfi as its
-backend. Its only 150 or so lines of Python and is also quite
-readable.  Chris is apparently trying to import KDE to Git.
-An equally non-trivial task.
-
-I think the common thread between the two implementations is
-that there's less process forking and less manipulation of ugly
-environment variables.  So the import runs faster and its a little
-easier to organize the code.
+Indeed "stg series -g" may differ too much from "stg-gitk" to plug the
+functionnality at this place: "stg series" is a command acting on one
+stack, whereas stg-gitk is a repository-wide command, allowing to draw
+several stacks, and also includes anything below stack base, which
+looks also out of the scope of "stg series -g".  Maybe a new command
+is called for - possibly as something like
+"stg repo graph [<branch>...]" ?
 
 
-The gitweb (and mirror URLs) for gfi is available here:
+> >That makes me think that such command names like "show" are a bit too
+> >general: stgit uses "show" for patches, but nothing says it is for a
+> >patch and not a series.
+> 
+> This was initially a re-implementation of 'git show' that was able to
+> understand patch names (you can also give any commit id as argument).
+> I later extended it to accept patch ranges.
+> 
+> >Also, when presenting GIT/StGIT to co-workers, I found them to be
+> >confused by eg. "stg push" and "stg commit" having different semantics
+> >than "git push" and "git commit".
+> 
+> As I said in a different e-mail, push/pop were the command names used
+> by quilt. I agree that they are confusing. Maybe we could change
+> commit/uncommit to store/unstore or something else (but I would like
+> to keep push/pop).
 
-  http://repo.or.cz/w/git/fastimport.git
+OK, the command names were borrowed from tools which provide a
+fraction of the functionnality stgit (not exactly so in the case of
+GIT, OK ;).  That makes it easy for people used to those commands that
+served as inspiration to the stgit ones, I know that (I used quilt
+before stgit).  But I do feel that having a more consistent command
+set would help - remember quilt has no idea of branches, multiple
+repositories and history, stgit is in many ways a very different beast :)
 
-Post 1.5.0 I'm going to nudge Junio to get gfi added to the main
-git.git repository.  (Right now I don't want to distract him from
-the release.)
+> You can use the bash aliases if you want (i.e.  'alias
+> stg-ppush="stg push"').
 
+The argument is not about *me*, I can happily use "stg push".  It is
+about smoothing the learning curve by providing a command set that
+would be easier to dive in.  One where, for example, the user wanting
+to do some action on a patch, but not remembering the exact command,
+could confidently use bash completion with "stg patch <TAB>" and get
+the list of patch commands.  That would be easier than having to "stg
+--help" and find the command in the full list.
+
+And then, legacy commands like "stg push" would be better implemented
+as stgit aliases, since an "stg-push" shell alias as replacement would
+break scripts.
+
+
+> I don't like the idea of command aliases that much, it looks like
+> unneeded complexity.
+
+There are already aliases in GIT itself, they are quite simple to
+understand, and would probably require very little code in python.
+I'll have a look at that, unless you would veto integration of such a
+patch.
+
+Best regards,
 -- 
-Shawn.
+Yann.
