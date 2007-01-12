@@ -1,142 +1,67 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Make git-repack explain what it's doing during prune
-Date: Fri, 12 Jan 2007 14:55:43 -0800
-Message-ID: <7v8xg7rh1s.fsf@assigned-by-dhcp.cox.net>
-References: <20070112024623.GA9787@midwinter.com>
+From: Stelian Pop <stelian@popies.net>
+Subject: Re: [PATCH] Add hg-to-git conversion utility.
+Date: Sat, 13 Jan 2007 00:00:56 +0100
+Message-ID: <45A81328.9030109@popies.net>
+References: <1168537766.22649.19.camel@localhost.localdomain> <eo8ngk$ja$1@sea.gmane.org> <1168632860.29218.5.camel@voyager.dsnet> <1168639023.13640.2.camel@localhost.localdomain> <20070112221525.GA20956@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 12 23:56:19 2007
+X-From: git-owner@vger.kernel.org Sat Jan 13 00:01:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H5VJk-0000OW-SE
-	for gcvg-git@gmane.org; Fri, 12 Jan 2007 23:56:13 +0100
+	id 1H5VOR-0001Nm-Ct
+	for gcvg-git@gmane.org; Sat, 13 Jan 2007 00:01:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161155AbXALWzq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 12 Jan 2007 17:55:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161161AbXALWzq
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jan 2007 17:55:46 -0500
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:43874 "EHLO
-	fed1rmmtao11.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161155AbXALWzp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Jan 2007 17:55:45 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070112225544.VZVK25875.fed1rmmtao11.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 12 Jan 2007 17:55:44 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id ANus1W00u1kojtg0000000; Fri, 12 Jan 2007 17:54:53 -0500
-To: Steven Grimm <koreth@midwinter.com>
-In-Reply-To: <20070112024623.GA9787@midwinter.com> (Steven Grimm's message of
-	"Thu, 11 Jan 2007 18:46:23 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1161162AbXALXBA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 12 Jan 2007 18:01:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161161AbXALXBA
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jan 2007 18:01:00 -0500
+Received: from sd291.sivit.org ([194.146.225.122]:1807 "EHLO sd291.sivit.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1161162AbXALXA7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Jan 2007 18:00:59 -0500
+Received: from [192.168.6.104] (deep-space-9.popies.net [82.225.86.56])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by sd291.sivit.org (Postfix) with ESMTP id 03B2658122;
+	Sat, 13 Jan 2007 00:00:57 +0100 (CET)
+User-Agent: Thunderbird 1.5.0.9 (Macintosh/20061207)
+To: "Shawn O. Pearce" <spearce@spearce.org>
+In-Reply-To: <20070112221525.GA20956@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36723>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36724>
 
-Steven Grimm <koreth@midwinter.com> writes:
+Shawn O. Pearce a =E9crit :
+> Stelian Pop <stelian@popies.net> wrote:
+>> hg-to-git.py  is able to convert a Mercurial repository into a git o=
+ne,
+>> and preserves the branches in the process (unlike tailor)
+>=20
+> Cool!
+>=20
+> You've already written the converter, but you may want to look at
+> using git-fast-import as the backend interface to Git.  I think
+> your code may come out shorter, be clearer, and will run faster.
+[...]
+> Post 1.5.0 I'm going to nudge Junio to get gfi added to the main
+> git.git repository.  (Right now I don't want to distract him from
+> the release.)
 
-> git-pack-objects reports its progress as it runs, but as soon as it
-> finishes and git-repack (with -d option) runs git-prune-packed, the
-> user is left in the dark about what's going on. That makes git-repack
-> feel inconsistent: it starts off with a bunch of progress reports then
-> appears to just sit there for a while before finishing.
+Rebasing hg-to-git.py on gfi will probably be a very good idea once gfi=
+=20
+is in the tree.
 
-I think this is a very good idea, but why don't we go all the
-way?  Perhaps like this?
+But I wrote this since I had a need for it, and once my repositories=20
+converted to git I'm not sure I'll need it again :) So don't count too=20
+much on me to do this rebasing :)
 
--- >8 --
+But who knows, on a cold rainy day...
 
-diff --git a/git-repack.sh b/git-repack.sh
-index 375434b..da8e67f 100755
---- a/git-repack.sh
-+++ b/git-repack.sh
-@@ -110,7 +110,7 @@ then
- 		  done
- 		)
- 	fi
--	git-prune-packed
-+	git-prune-packed $quiet
- fi
- 
- case "$no_update_info" in
-diff --git a/builtin-prune-packed.c b/builtin-prune-packed.c
-index 24e3b0a..e67d371 100644
---- a/builtin-prune-packed.c
-+++ b/builtin-prune-packed.c
-@@ -4,7 +4,10 @@
- static const char prune_packed_usage[] =
- "git-prune-packed [-n]";
- 
--static void prune_dir(int i, DIR *dir, char *pathname, int len, int dryrun)
-+#define DRY_RUN 01
-+#define VERBOSE 02
-+
-+static void prune_dir(int i, DIR *dir, char *pathname, int len, int opts)
- {
- 	struct dirent *de;
- 	char hex[40];
-@@ -20,7 +23,7 @@ static void prune_dir(int i, DIR *dir, char *pathname, int len, int dryrun)
- 		if (!has_sha1_pack(sha1, NULL))
- 			continue;
- 		memcpy(pathname + len, de->d_name, 38);
--		if (dryrun)
-+		if (opts & DRY_RUN)
- 			printf("rm -f %s\n", pathname);
- 		else if (unlink(pathname) < 0)
- 			error("unable to unlink %s", pathname);
-@@ -29,7 +32,7 @@ static void prune_dir(int i, DIR *dir, char *pathname, int len, int dryrun)
- 	rmdir(pathname);
- }
- 
--void prune_packed_objects(int dryrun)
-+void prune_packed_objects(int opts)
- {
- 	int i;
- 	static char pathname[PATH_MAX];
-@@ -48,22 +51,29 @@ void prune_packed_objects(int dryrun)
- 		d = opendir(pathname);
- 		if (!d)
- 			continue;
--		prune_dir(i, d, pathname, len + 3, dryrun);
-+		prune_dir(i, d, pathname, len + 3, opts);
- 		closedir(d);
-+		if (opts == VERBOSE)
-+			fprintf(stderr, "Prune-packed %d%%...\015",
-+				((i+1) * 100) / 256);
- 	}
-+	if (opts == VERBOSE)
-+		fprintf(stderr, "\nDone.\n");
- }
- 
- int cmd_prune_packed(int argc, const char **argv, const char *prefix)
- {
- 	int i;
--	int dryrun = 0;
-+	int opts = VERBOSE;
- 
- 	for (i = 1; i < argc; i++) {
- 		const char *arg = argv[i];
- 
- 		if (*arg == '-') {
- 			if (!strcmp(arg, "-n"))
--				dryrun = 1;
-+				opts |= DRY_RUN;
-+			else if (!strcmp(arg, "-q"))
-+				opts &= ~VERBOSE;
- 			else
- 				usage(prune_packed_usage);
- 			continue;
-@@ -72,6 +82,6 @@ int cmd_prune_packed(int argc, const char **argv, const char *prefix)
- 		usage(prune_packed_usage);
- 	}
- 	sync();
--	prune_packed_objects(dryrun);
-+	prune_packed_objects(opts);
- 	return 0;
- }
+--=20
+Stelian Pop <stelian@popies.net>
