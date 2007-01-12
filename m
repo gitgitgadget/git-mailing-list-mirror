@@ -1,75 +1,142 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: [BUG] a couple of stgit bugs
-Date: Fri, 12 Jan 2007 23:52:16 +0100
-Message-ID: <20070112225216.GB9761@nan92-1-81-57-214-146.fbx.proxad.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Make git-repack explain what it's doing during prune
+Date: Fri, 12 Jan 2007 14:55:43 -0800
+Message-ID: <7v8xg7rh1s.fsf@assigned-by-dhcp.cox.net>
+References: <20070112024623.GA9787@midwinter.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: GIT list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jan 12 23:52:28 2007
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 12 23:56:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H5VG1-0007xu-VP
-	for gcvg-git@gmane.org; Fri, 12 Jan 2007 23:52:22 +0100
+	id 1H5VJk-0000OW-SE
+	for gcvg-git@gmane.org; Fri, 12 Jan 2007 23:56:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161151AbXALWwT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 12 Jan 2007 17:52:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161153AbXALWwT
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jan 2007 17:52:19 -0500
-Received: from smtp6-g19.free.fr ([212.27.42.36]:47314 "EHLO smtp6-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1161151AbXALWwS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Jan 2007 17:52:18 -0500
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp6-g19.free.fr (Postfix) with ESMTP id DB249435A7;
-	Fri, 12 Jan 2007 23:52:16 +0100 (CET)
-Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
-	id 207CC2015; Fri, 12 Jan 2007 23:52:16 +0100 (CET)
-To: Catalin Marinas <catalin.marinas@gmail.com>
-Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1161155AbXALWzq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 12 Jan 2007 17:55:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161161AbXALWzq
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jan 2007 17:55:46 -0500
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:43874 "EHLO
+	fed1rmmtao11.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161155AbXALWzp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Jan 2007 17:55:45 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20070112225544.VZVK25875.fed1rmmtao11.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 12 Jan 2007 17:55:44 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id ANus1W00u1kojtg0000000; Fri, 12 Jan 2007 17:54:53 -0500
+To: Steven Grimm <koreth@midwinter.com>
+In-Reply-To: <20070112024623.GA9787@midwinter.com> (Steven Grimm's message of
+	"Thu, 11 Jan 2007 18:46:23 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36722>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36723>
 
-Here are another couple of (probably long-standing) bugs I noticed
-today on 0.11, but which still hold on current HEAD:
+Steven Grimm <koreth@midwinter.com> writes:
 
-- "stg status <files>" does not restrict output to listed files/dirs:
+> git-pack-objects reports its progress as it runs, but as soon as it
+> finishes and git-repack (with -d option) runs git-prune-packed, the
+> user is left in the dark about what's going on. That makes git-repack
+> feel inconsistent: it starts off with a bunch of progress reports then
+> appears to just sit there for a while before finishing.
 
-yann/git/stgit$ ./stg status stgit/
-? contrib/stg-cvs.new
-? contrib/stg-cvs.orig
-? contrib/stg-cvs.rej
-? stgit/commands/pick.py.orig
-? stgit/stack.py.orig
+I think this is a very good idea, but why don't we go all the
+way?  Perhaps like this?
 
+-- >8 --
 
-- "stg refresh" still does not work in subdir:
-
-git/stgit/examples$ ../stg refresh
-Checking for changes in the working directory... done
-Refreshing patch "test"...error: examples/examples/gitconfig: does not exist and --remove not passed
-fatal: Unable to process file examples/gitconfig
-stg refresh: Failed git-update-index
-
-Traceback (most recent call last):
-  File "../stg", line 43, in ?
-    main()
-  File "/export/work/yann/git/stgit/stgit/main.py", line 262, in main
-    command.func(parser, options, args)
-  File "/export/work/yann/git/stgit/stgit/commands/refresh.py", line 145, in func
-    backup = True, sign_str = sign_str)
-  File "/export/work/yann/git/stgit/stgit/stack.py", line 667, in refresh_patch
-    committer_email = committer_email)
-  File "/export/work/yann/git/stgit/stgit/git.py", line 540, in commit
-    changes = update_cache(files)
-  File "/export/work/yann/git/stgit/stgit/git.py", line 523, in update_cache
-    raise GitException, 'Failed git-update-index'
-stgit.git.GitException: Failed git-update-index
-
-Best regards,
--- 
-Yann.
+diff --git a/git-repack.sh b/git-repack.sh
+index 375434b..da8e67f 100755
+--- a/git-repack.sh
++++ b/git-repack.sh
+@@ -110,7 +110,7 @@ then
+ 		  done
+ 		)
+ 	fi
+-	git-prune-packed
++	git-prune-packed $quiet
+ fi
+ 
+ case "$no_update_info" in
+diff --git a/builtin-prune-packed.c b/builtin-prune-packed.c
+index 24e3b0a..e67d371 100644
+--- a/builtin-prune-packed.c
++++ b/builtin-prune-packed.c
+@@ -4,7 +4,10 @@
+ static const char prune_packed_usage[] =
+ "git-prune-packed [-n]";
+ 
+-static void prune_dir(int i, DIR *dir, char *pathname, int len, int dryrun)
++#define DRY_RUN 01
++#define VERBOSE 02
++
++static void prune_dir(int i, DIR *dir, char *pathname, int len, int opts)
+ {
+ 	struct dirent *de;
+ 	char hex[40];
+@@ -20,7 +23,7 @@ static void prune_dir(int i, DIR *dir, char *pathname, int len, int dryrun)
+ 		if (!has_sha1_pack(sha1, NULL))
+ 			continue;
+ 		memcpy(pathname + len, de->d_name, 38);
+-		if (dryrun)
++		if (opts & DRY_RUN)
+ 			printf("rm -f %s\n", pathname);
+ 		else if (unlink(pathname) < 0)
+ 			error("unable to unlink %s", pathname);
+@@ -29,7 +32,7 @@ static void prune_dir(int i, DIR *dir, char *pathname, int len, int dryrun)
+ 	rmdir(pathname);
+ }
+ 
+-void prune_packed_objects(int dryrun)
++void prune_packed_objects(int opts)
+ {
+ 	int i;
+ 	static char pathname[PATH_MAX];
+@@ -48,22 +51,29 @@ void prune_packed_objects(int dryrun)
+ 		d = opendir(pathname);
+ 		if (!d)
+ 			continue;
+-		prune_dir(i, d, pathname, len + 3, dryrun);
++		prune_dir(i, d, pathname, len + 3, opts);
+ 		closedir(d);
++		if (opts == VERBOSE)
++			fprintf(stderr, "Prune-packed %d%%...\015",
++				((i+1) * 100) / 256);
+ 	}
++	if (opts == VERBOSE)
++		fprintf(stderr, "\nDone.\n");
+ }
+ 
+ int cmd_prune_packed(int argc, const char **argv, const char *prefix)
+ {
+ 	int i;
+-	int dryrun = 0;
++	int opts = VERBOSE;
+ 
+ 	for (i = 1; i < argc; i++) {
+ 		const char *arg = argv[i];
+ 
+ 		if (*arg == '-') {
+ 			if (!strcmp(arg, "-n"))
+-				dryrun = 1;
++				opts |= DRY_RUN;
++			else if (!strcmp(arg, "-q"))
++				opts &= ~VERBOSE;
+ 			else
+ 				usage(prune_packed_usage);
+ 			continue;
+@@ -72,6 +82,6 @@ int cmd_prune_packed(int argc, const char **argv, const char *prefix)
+ 		usage(prune_packed_usage);
+ 	}
+ 	sync();
+-	prune_packed_objects(dryrun);
++	prune_packed_objects(opts);
+ 	return 0;
+ }
