@@ -1,74 +1,83 @@
-From: Jeff King <peff@peff.net>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: [PATCH] git-status: wording update to deal with deleted files.
-Date: Thu, 11 Jan 2007 19:07:01 -0500
-Message-ID: <20070112000701.GC16042@coredump.intra.peff.net>
-References: <87bql5cok3.fsf@morpheus.local> <7vejq12nlu.fsf@assigned-by-dhcp.cox.net> <7vsleh16ey.fsf_-_@assigned-by-dhcp.cox.net>
+Date: Thu, 11 Jan 2007 16:13:06 -0800
+Message-ID: <7v1wm114rx.fsf@assigned-by-dhcp.cox.net>
+References: <87bql5cok3.fsf@morpheus.local>
+	<7vejq12nlu.fsf@assigned-by-dhcp.cox.net>
+	<7vsleh16ey.fsf_-_@assigned-by-dhcp.cox.net>
+	<87ac0pxgl2.wl%cworth@cworth.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: David =?iso-8859-1?Q?K=E5gedal?= <davidk@lysator.liu.se>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 12 01:07:16 2007
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 12 01:13:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H59ws-0007aD-IW
-	for gcvg-git@gmane.org; Fri, 12 Jan 2007 01:07:10 +0100
+	id 1H5A31-0000Yd-3V
+	for gcvg-git@gmane.org; Fri, 12 Jan 2007 01:13:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751460AbXALAHH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 11 Jan 2007 19:07:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751510AbXALAHH
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jan 2007 19:07:07 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2510 "HELO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751460AbXALAHF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Jan 2007 19:07:05 -0500
-Received: (qmail 32156 invoked from network); 11 Jan 2007 19:07:17 -0500
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
-  by 66-23-211-5.clients.speedfactory.net with SMTP; 11 Jan 2007 19:07:16 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 11 Jan 2007 19:07:01 -0500
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vsleh16ey.fsf_-_@assigned-by-dhcp.cox.net>
+	id S1751531AbXALAN2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 11 Jan 2007 19:13:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751533AbXALAN2
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jan 2007 19:13:28 -0500
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:37288 "EHLO
+	fed1rmmtao06.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751531AbXALAN1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Jan 2007 19:13:27 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20070112001326.ZTDH2628.fed1rmmtao06.cox.net@fed1rmimpo01.cox.net>;
+          Thu, 11 Jan 2007 19:13:26 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id A0Cb1W0091kojtg0000000; Thu, 11 Jan 2007 19:12:35 -0500
+To: Carl Worth <cworth@cworth.org>
+In-Reply-To: <87ac0pxgl2.wl%cworth@cworth.org> (Carl Worth's message of "Thu,
+	11 Jan 2007 15:56:57 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36639>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36640>
 
-On Thu, Jan 11, 2007 at 03:37:41PM -0800, Junio C Hamano wrote:
+Carl Worth <cworth@cworth.org> writes:
 
->  - The section header is the old "Changed but not updated",
->    instead of "Changed but not added";
+> ... So conceptually, the user can be left
+> with, "hmm... it's not updated, but how the heck do I update it?".
+>
+>>  - Suggestion is "git add ... to update what will be committed",
+>>    instead of "... to add content to commit";
+>>
+>>  - If there are removed paths, the above suggestion becomes "git
+>>    add/rm ... to update what will be committed";
+>
+> Here now we do start providing the user with some mechanisms for
+> "update". Sometimes we suggest using "add" to update, and sometimes we
+> suggest using "add" or "rm" to update. But as you yourself have
+> pointed out, you consider "rm" a totally pointless command.
 
-Isn't that the original wording that we recently got rid of? I think
-it's a bit confusing, given that "changed" and "updated" really mean the
-same thing (we tend to use 'updated' only to refer to the index, but new
-users don't know that). How about "Changed but not marked for commit"?
-Or even "Files with changes that are not marked for commit" (which is
-longer, but more precise).
+You are twisting my words ;-).
 
-Maybe it would be clearer to split the section (and only show those
-sections which are applicable):
+"rm" is pointless for a workflow that always uses "commit -a".
+In the same sense, the three categorization "git-status" gives
+is pointless -- "changed but not updated" class does not have
+any significance if you always do "commit -a".
 
-  Files with changes that have are not marked for commit:
-    (use "git add <file>" to mark changes)
+But that is not the only workflow we encourage.
 
-  Files that have been removed but not marked for commit:
-    (use "git rm <file>" to mark for commit)
+I do encourage "commit -a" or "commit after update-index" and
+frown upon but tolerate "commit <paths>..." --- all of the above
+is in line with this world view.   And the categorization and
+suggestions are about the latter: "commit after update-index".
 
-  Files that exist but have not been marked for commit:
-    (use "git add <file>" to mark for commit)
+Then the issue is how to expose update-index to the end users.
+"add" is about adding the content.  What's unfortunate is that
+adding a file as zero-length content is still different from
+removing it.
 
-The latter being the current untracked files. And potentially even:
-
-  Files that have merge conflicts:
-    (use "git add <file>" to mark as resolved)
-
-And yet another option would be to individually mark each file:
-  #  deleted: foo  (use "git rm" to mark for deletion)
-but I think that is probably too verbose.
-
-Anyway, please consider my first wording change, if not the more radical
-splitting.
-
--Peff
+Honestly, removing is so different from the norm that I do not
+see major inconsistency nor inconvenience, practically nor in
+philosophy, to have two separate Porcelain-ish commands, add and
+rm, to perform content additions and removal.
