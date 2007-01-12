@@ -1,344 +1,166 @@
-From: Stelian Pop <stelian@popies.net>
-Subject: [PATCH] Add hg-to-git conversion utility.
-Date: Fri, 12 Jan 2007 22:57:03 +0100
-Message-ID: <1168639023.13640.2.camel@localhost.localdomain>
-References: <1168537766.22649.19.camel@localhost.localdomain>
-	 <eo8ngk$ja$1@sea.gmane.org>  <1168632860.29218.5.camel@voyager.dsnet>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 1/2] tutorial: Use "git remote add"
+Date: Fri, 12 Jan 2007 13:58:25 -0800
+Message-ID: <7virfbrjpa.fsf@assigned-by-dhcp.cox.net>
+References: <87sleg31av.fsf@gmail.com>
+	<7vmz4ot7x5.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 12 22:57:19 2007
+X-From: git-owner@vger.kernel.org Fri Jan 12 22:58:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H5UOg-000379-4S
-	for gcvg-git@gmane.org; Fri, 12 Jan 2007 22:57:14 +0100
+	id 1H5UPv-0003Pp-Dr
+	for gcvg-git@gmane.org; Fri, 12 Jan 2007 22:58:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161109AbXALV5K (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 12 Jan 2007 16:57:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161106AbXALV5K
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jan 2007 16:57:10 -0500
-Received: from sd291.sivit.org ([194.146.225.122]:2675 "EHLO sd291.sivit.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1161117AbXALV5J (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Jan 2007 16:57:09 -0500
-Received: from [192.168.6.104] (deep-space-9.popies.net [82.225.86.56])
-	(using SSLv3 with cipher RC4-MD5 (128/128 bits))
-	(No client certificate requested)
-	by sd291.sivit.org (Postfix) with ESMTP id 5C8BC58122;
-	Fri, 12 Jan 2007 22:57:05 +0100 (CET)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <1168632860.29218.5.camel@voyager.dsnet>
-X-Mailer: Evolution 2.8.1 
+	id S1161099AbXALV62 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 12 Jan 2007 16:58:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161108AbXALV62
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jan 2007 16:58:28 -0500
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:59899 "EHLO
+	fed1rmmtao11.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161099AbXALV61 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 12 Jan 2007 16:58:27 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20070112215827.TUGO25875.fed1rmmtao11.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 12 Jan 2007 16:58:27 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id AMxb1W00A1kojtg0000000; Fri, 12 Jan 2007 16:57:35 -0500
+To: Santi =?iso-8859-1?Q?B=E9jar?= <sbejar@gmail.com>
+In-Reply-To: <7vmz4ot7x5.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Fri, 12 Jan 2007 10:29:58 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36715>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36716>
 
-hg-to-git.py  is able to convert a Mercurial repository into a git one,
-and preserves the branches in the process (unlike tailor)
+Junio C Hamano <junkio@cox.net> writes:
 
-hg-to-git.py can probably be greatly improved (it's a rather crude
-combination of shell and python) but it does already work quite well for
-me. Features:
-	- supports incremental conversion
-	  (for keeping a git repo in sync with a hg one)
-	- supports hg branches
-	- converts hg tags
+> Santi B=E9jar <sbejar@gmail.com> writes:
+>
+>> @@ -285,10 +285,12 @@ at /home/bob/myrepo.  She does this with:
+>> =20
+>>  ------------------------------------------------
+>>  $ cd /home/alice/project
+>> -$ git pull /home/bob/myrepo master
+>> +$ git remote add bob /home/bob/myrepo
+>> +$ git pull bob master
+>>  ------------------------------------------------
+>
+> I'd prefer to leave this as is, because I think ad-hoc
+> promiscous pull shows the distributed nature of git better, and
+> add a new step after that to teach "remote add", telling the
+> user that "having to use longhand every time is tiresome, so
+> there is a nifty way to define a shorthand for a remote
+> repository you interact with often".
 
-Signed-off-by: Stelian Pop <stelian@popies.net>
----
- Documentation/git-tools.txt     |    7 +
- contrib/hg-to-git/hg-to-git.py  |  233 +++++++++++++++++++++++++++++++++++++++
- contrib/hg-to-git/hg-to-git.txt |   22 ++++
- 3 files changed, 262 insertions(+), 0 deletions(-)
+I'm thinking about committing something like this on top of
+yours (commentary interspersed in the diff so you cannot apply
+without enhanced git-apply).
 
-diff --git a/Documentation/git-tools.txt b/Documentation/git-tools.txt
-index 0914cbb..4d245d5 100644
---- a/Documentation/git-tools.txt
-+++ b/Documentation/git-tools.txt
-@@ -68,6 +68,13 @@ History Viewers
- Foreign SCM interface
- ---------------------
- 
-+   - *hg-to-git* (contrib/)
+diff --git a/Documentation/tutorial.txt b/Documentation/tutorial.txt
+index 4b7eba3..7770b57 100644
+--- a/Documentation/tutorial.txt
++++ b/Documentation/tutorial.txt
+@@ -285,12 +285,10 @@ at /home/bob/myrepo.  She does this with:
+=20
+ ------------------------------------------------
+ $ cd /home/alice/project
+-$ git remote add bob /home/bob/myrepo
+-$ git pull bob master
++$ git pull /home/bob/myrepo master
+ ------------------------------------------------
+=20
+-First it adds the "remote" Bob's repository with the name "bob" and
+-then it merges the changes from Bob's "master" branch into Alice's
++This merges the changes from Bob's "master" branch into Alice's
+ current branch.  If Alice has made her own changes in the meantime,
+ then she may need to manually fix any conflicts.  (Note that the
+ "master" argument in the above command is actually unnecessary, as it
+|
+| This hunk essentially reverts your change to this section.
+|
+@@ -299,14 +297,27 @@ is the default.)
+ The "pull" command thus performs two operations: it fetches changes
+ from a remote branch, then merges them into the current branch.
+=20
+-You can perform the first operation alone using the "git fetch"
+-command without merging them with her own branch, using:
++When you are working in a small closely knit group, it is not
++unusual to interact with the same repository over and over
++again.  By defining 'remote' repository shorthand, you can make
++it easier:
 +
-+   hg-to-git converts a Mercurial repository into a git one, and
-+   preserves the full branch history in the process. hg-to-git can
-+   also be used in an incremental way to keep the git repository
-+   in sync with the master Mercurial repository.
++------------------------------------------------
++$ git remote add bob /home/bob/myrepo
++------------------------------------------------
 +
-    - *git-svn* (contrib/)
- 
-    git-svn is a simple conduit for changesets between a single Subversion
-diff --git a/contrib/hg-to-git/hg-to-git.py b/contrib/hg-to-git/hg-to-git.py
-new file mode 100755
-index 0000000..37337ff
---- /dev/null
-+++ b/contrib/hg-to-git/hg-to-git.py
-@@ -0,0 +1,233 @@
-+#! /usr/bin/python
-+
-+""" hg-to-svn.py - A Mercurial to GIT converter
-+
-+    Copyright (C)2007 Stelian Pop <stelian@popies.net>
-+
-+    This program is free software; you can redistribute it and/or modify
-+    it under the terms of the GNU General Public License as published by
-+    the Free Software Foundation; either version 2, or (at your option)
-+    any later version.
-+
-+    This program is distributed in the hope that it will be useful,
-+    but WITHOUT ANY WARRANTY; without even the implied warranty of
-+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+    GNU General Public License for more details.
-+
-+    You should have received a copy of the GNU General Public License
-+    along with this program; if not, write to the Free Software
-+    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
-+"""
-+
-+import os, os.path, sys
-+import tempfile, popen2, pickle, getopt
-+import re
-+
-+# Maps hg version -> git version
-+hgvers = {}
-+# List of children for each hg revision
-+hgchildren = {}
-+# Current branch for each hg revision
-+hgbranch = {}
-+
-+#------------------------------------------------------------------------------
-+
-+def usage():
-+
-+        print """\
-+%s: [OPTIONS] <hgprj>
-+
-+options:
-+    -s, --gitstate=FILE: name of the state to be saved/read
-+                         for incrementals
-+
-+required:
-+    hgprj:  name of the HG project to import (directory)
-+""" % sys.argv[0]
-+
-+#------------------------------------------------------------------------------
-+
-+def getgitenv(user, date):
-+    env = ''
-+    elems = re.compile('(.*?)\s+<(.*)>').match(user)
-+    if elems:
-+        env += 'export GIT_AUTHOR_NAME="%s" ;' % elems.group(1)
-+        env += 'export GIT_COMMITER_NAME="%s" ;' % elems.group(1)
-+        env += 'export GIT_AUTHOR_EMAIL="%s" ;' % elems.group(2)
-+        env += 'export GIT_COMMITER_EMAIL="%s" ;' % elems.group(2)
-+    else:
-+        env += 'export GIT_AUTHOR_NAME="%s" ;' % user
-+        env += 'export GIT_COMMITER_NAME="%s" ;' % user
-+        env += 'export GIT_AUTHOR_EMAIL= ;'
-+        env += 'export GIT_COMMITER_EMAIL= ;'
-+
-+    env += 'export GIT_AUTHOR_DATE="%s" ;' % date
-+    env += 'export GIT_COMMITTER_DATE="%s" ;' % date
-+    return env
-+
-+#------------------------------------------------------------------------------
-+
-+state = ''
-+
-+try:
-+    opts, args = getopt.getopt(sys.argv[1:], 's:t:', ['gitstate=', 'tempdir='])
-+    for o, a in opts:
-+        if o in ('-s', '--gitstate'):
-+            state = a
-+            state = os.path.abspath(state)
-+
-+    if len(args) != 1:
-+        raise('params')
-+except:
-+    usage()
-+    sys.exit(1)
-+
-+hgprj = args[0]
-+os.chdir(hgprj)
-+
-+if state:
-+    if os.path.exists(state):
-+        print 'State does exist, reading'
-+        f = open(state, 'r')
-+        hgvers = pickle.load(f)
-+    else:
-+        print 'State does not exist, first run'
-+
-+tip = os.popen('hg tip | head -1 | cut -f 2 -d :').read().strip()
-+print 'tip is', tip
-+
-+# Calculate the branches
-+print 'analysing the branches...'
-+hgchildren["0"] = ()
-+hgbranch["0"] = "master"
-+for cset in range(1, int(tip) + 1):
-+    hgchildren[str(cset)] = ()
-+    prnts = os.popen('hg log -r %d | grep ^parent: | cut -f 2 -d :' % cset).readlines()
-+    if len(prnts) > 0:
-+        parent = prnts[0].strip()
-+    else:
-+        parent = str(cset - 1)
-+    hgchildren[parent] += ( str(cset), )
-+    if len(prnts) > 1:
-+        mparent = prnts[1].strip()
-+        hgchildren[mparent] += ( str(cset), )
-+    else:
-+        mparent = None
-+
-+    if mparent:
-+        # For merge changesets, take either one, preferably the 'master' branch
-+        if hgbranch[mparent] == 'master':
-+            hgbranch[str(cset)] = 'master'
-+        else:
-+            hgbranch[str(cset)] = hgbranch[parent]
-+    else:
-+        # Normal changesets
-+        # For first children, take the parent branch, for the others create a new branch
-+        if hgchildren[parent][0] == str(cset):
-+            hgbranch[str(cset)] = hgbranch[parent]
-+        else:
-+            hgbranch[str(cset)] = "branch-" + str(cset)
-+
-+if not hgvers.has_key("0"):
-+    print 'creating repository'
-+    os.system('git-init-db')
-+
-+# loop through every hg changeset
-+for cset in range(int(tip) + 1):
-+
-+    # incremental, already seen
-+    if hgvers.has_key(str(cset)):
-+        continue
-+
-+    # get info
-+    prnts = os.popen('hg log -r %d | grep ^parent: | cut -f 2 -d :' % cset).readlines()
-+    if len(prnts) > 0:
-+        parent = prnts[0].strip()
-+    else:
-+        parent = str(cset - 1)
-+    if len(prnts) > 1:
-+        mparent = prnts[1].strip()
-+    else:
-+        mparent = None
-+
-+    (fdcomment, filecomment) = tempfile.mkstemp()
-+    csetcomment = os.popen('hg log -r %d -v | grep -v ^changeset: | grep -v ^parent: | grep -v ^user: | grep -v ^date | grep -v ^files: | grep -v ^description: | grep -v ^tag:' % cset).read().strip()
-+    os.write(fdcomment, csetcomment)
-+    os.close(fdcomment)
-+
-+    date = os.popen('hg log -r %d | grep ^date: | cut -f 2- -d :' % cset).read().strip()
-+
-+    tag = os.popen('hg log -r %d | grep ^tag: | cut -f 2- -d :' % cset).read().strip()
-+
-+    user = os.popen('hg log -r %d | grep ^user: | cut -f 2- -d :' % cset).read().strip()
-+
-+    print '-----------------------------------------'
-+    print 'cset:', cset
-+    print 'branch:', hgbranch[str(cset)]
-+    print 'user:', user
-+    print 'date:', date
-+    print 'comment:', csetcomment
-+    print 'parent:', parent
-+    if mparent:
-+        print 'mparent:', mparent
-+    if tag:
-+        print 'tag:', tag
-+    print '-----------------------------------------'
-+
-+    # checkout the parent if necessary
-+    if cset != 0:
-+        if hgbranch[str(cset)] == "branch-" + str(cset):
-+            print 'creating new branch', hgbranch[str(cset)]
-+            os.system('git-checkout -b %s %s' % (hgbranch[str(cset)], hgvers[parent]))
-+        else:
-+            print 'checking out branch', hgbranch[str(cset)]
-+            os.system('git-checkout %s' % hgbranch[str(cset)])
-+
-+    # merge
-+    if mparent:
-+        if hgbranch[parent] == hgbranch[str(cset)]:
-+            otherbranch = hgbranch[mparent]
-+        else:
-+            otherbranch = hgbranch[parent]
-+        print 'merging', otherbranch, 'into', hgbranch[str(cset)]
-+        os.system(getgitenv(user, date) + 'git-merge --no-commit -s ours "" %s %s' % (hgbranch[str(cset)], otherbranch))
-+
-+    # remove everything except .git and .hg directories
-+    os.system('find . \( -path "./.hg" -o -path "./.git" \) -prune -o ! -name "." -print | xargs rm -rf')
-+
-+    # repopulate with checkouted files
-+    os.system('hg update -C %d' % cset)
-+
-+    # add new files
-+    os.system('git-ls-files -x .hg --others | git-update-index --add --stdin')
-+    # delete removed files
-+    os.system('git-ls-files -x .hg --deleted | git-update-index --remove --stdin')
-+
-+    # commit
-+    os.system(getgitenv(user, date) + 'git-commit -a -F %s' % filecomment)
-+    os.unlink(filecomment)
-+
-+    # tag
-+    if tag and tag != 'tip':
-+        os.system(getgitenv(user, date) + 'git-tag %s' % tag)
-+
-+    # delete branch if not used anymore...
-+    if mparent and len(hgchildren[str(cset)]):
-+        print "Deleting unused branch:", otherbranch
-+        os.system('git-branch -d %s' % otherbranch)
-+
-+    # retrieve and record the version
-+    vvv = os.popen('git-show | head -1').read()
-+    vvv = vvv[vvv.index(' ') + 1 : ].strip()
-+    print 'record', cset, '->', vvv
-+    hgvers[str(cset)] = vvv
-+
-+os.system('git-repack -a -d')
-+
-+# write the state for incrementals
-+if state:
-+    print 'Writing state'
-+    f = open(state, 'w')
-+    pickle.dump(hgvers, f)
-+
-+# vim: et ts=8 sw=4 sts=4
-diff --git a/contrib/hg-to-git/hg-to-git.txt b/contrib/hg-to-git/hg-to-git.txt
-new file mode 100644
-index 0000000..cf1c735
---- /dev/null
-+++ b/contrib/hg-to-git/hg-to-git.txt
-@@ -0,0 +1,22 @@
-+hg-to-git.py is able to convert a Mercurial repository into a git one,
-+and preserves the branches in the process (unlike tailor)
-+
-+hg-to-git.py can probably be greatly improved (it's a rather crude
-+combination of shell and python) but it does already work quite well for
-+me. Features:
-+	- supports incremental conversion
-+	  (for keeping a git repo in sync with a hg one)
-+        - supports hg branches
-+        - converts hg tags 
-+
-+Note that the git repository will be created 'in place' (at the same
-+location as the source hg repo). You will have to manually remove the
-+'.hg' directory after the conversion.
-+
-+Also note that the incremental conversion uses 'simple' hg changesets
-+identifiers (ordinals, as opposed to SHA-1 ids), and since these ids
-+are not stable across different repositories the hg-to-git.py state file
-+is forever tied to one hg repository.
-+
-+-- 
-+Stelian Pop <stelian@popies.net>
--- 
-1.4.4.4
++With this, you can perform the first operation alone using the
++"git fetch" command without merging them with her own branch,
++using:
+=20
+ -------------------------------------
+ $ git fetch bob
+ -------------------------------------
+=20
+-which fetches the changes from Bob's branches.  Then
++Unlike the longhand form, when Alice fetches from Bob using a
++remote repository shorthand set up with `git remote`, what was
++fetched is stored in a remote tracking branch, in this case
++`bob/master`.  So after this:
+=20
+ -------------------------------------
+ $ git log -p master..bob/master
+|
+| And highlight that with the shorthand defined you will get
+| remote tracking branches for free (the original form doesn't
+| clutter your refs/remotes/).
+|
+@@ -315,28 +326,22 @@ $ git log -p master..bob/master
+ shows a list of all the changes that Bob made since he branched from
+ Alice's master branch.
+=20
+-After examining those changes, and possibly fixing things, Alice
+-could pull the changes into her master branch:
++After examining those changes, Alice
++could merge the changes into her master branch:
+|=20
+| No way Alice can _fix_ things -- the original was wrong to begin
+| with from the workflow point of view, but now this uses remote
+| tracking branch that Alice cannot even checkout and modify.
+|=20
+ -------------------------------------
+-$ git checkout master
+-$ git pull . remotes/bob/master
++$ git merge bob/master
+ -------------------------------------
+=20
+-The last command is a pull from the "bob/master" branch in Alice's
+-own repository.
+-
+-Alice could also perform both steps at once with:
++This `merge` can also be done by 'pulling from her own remote
++tracking branch', like this:
+=20
+ -------------------------------------
+-$ git pull bob
++$ git pull . remotes/bob/master
+ -------------------------------------
+=20
+-This is just like the "git pull bob master" that we saw
+-before, except that it also stores the unmerged changes from bob's
+-master branch in bob/master before merging them into Alice's
+-current branch.  Note that git pull always merges into the current
+-branch, regardless of what else is given on the commandline.
++Note that git pull always merges into the current branch,
++regardless of what else is given on the commandline.
+=20
+ Later, Bob can update his repo with Alice's latest changes using
+=20
