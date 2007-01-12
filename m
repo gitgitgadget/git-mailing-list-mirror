@@ -1,55 +1,63 @@
-From: Stelian Pop <stelian@popies.net>
-Subject: Re: [PATCH] Add hg-to-git conversion utility.
-Date: Sat, 13 Jan 2007 00:18:22 +0100
-Message-ID: <45A8173E.5060804@popies.net>
-References: <1168537766.22649.19.camel@localhost.localdomain>	<eo8ngk$ja$1@sea.gmane.org> <1168632860.29218.5.camel@voyager.dsnet>	<1168639023.13640.2.camel@localhost.localdomain>	<20070112221525.GA20956@spearce.org> <45A81328.9030109@popies.net> <7vzm8nq1lb.fsf@assigned-by-dhcp.cox.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Importing from tarballs; add, rm, update-index?
+Date: Sat, 13 Jan 2007 00:28:29 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0701130023330.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <6efbd9b70701120541n5dc4d0e1va50ae96543d8c80@mail.gmail.com>
+ <7virfct737.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 13 00:18:35 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Chris Riddoch <riddochc@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 13 00:28:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H5VfJ-0005CD-N5
-	for gcvg-git@gmane.org; Sat, 13 Jan 2007 00:18:30 +0100
+	id 1H5Vp5-0007YD-Em
+	for gcvg-git@gmane.org; Sat, 13 Jan 2007 00:28:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161147AbXALXS1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 12 Jan 2007 18:18:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161149AbXALXS1
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jan 2007 18:18:27 -0500
-Received: from sd291.sivit.org ([194.146.225.122]:4789 "EHLO sd291.sivit.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1161147AbXALXS1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Jan 2007 18:18:27 -0500
-Received: from [192.168.6.104] (deep-space-9.popies.net [82.225.86.56])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by sd291.sivit.org (Postfix) with ESMTP id 36D3F58122;
-	Sat, 13 Jan 2007 00:18:25 +0100 (CET)
-User-Agent: Thunderbird 1.5.0.9 (Macintosh/20061207)
+	id S1161156AbXALX2d (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 12 Jan 2007 18:28:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161159AbXALX2d
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jan 2007 18:28:33 -0500
+Received: from mail.gmx.net ([213.165.64.20]:36994 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1161156AbXALX2c (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Jan 2007 18:28:32 -0500
+Received: (qmail invoked by alias); 12 Jan 2007 23:28:29 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp049) with SMTP; 13 Jan 2007 00:28:29 +0100
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vzm8nq1lb.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <7virfct737.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36728>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36729>
 
-Junio C Hamano a =E9crit :
-> Stelian Pop <stelian@popies.net> writes:
->=20
->> But I wrote this since I had a need for it, and once my repositories
->> converted to git I'm not sure I'll need it again :)
->=20
-> It is not a good strategy to say upfront that you are not going
-> to maintain it, when you are submitting something for inclusion.
+Hi,
 
-Hey, I didn't say I won't fix it if it breaks !
+On Fri, 12 Jan 2007, Junio C Hamano wrote:
 
-I may not have the time and need to make it better than it already is=20
-though.
+> "Chris Riddoch" <riddochc@gmail.com> writes:
+>
+> > First, specifying extra files after 'git commit' bypasses the index.
+> 
+> Which I happen to think is a misfeature.
 
---=20
-Stelian Pop <stelian@popies.net>
+You probably should not teach people about that feature right away, 
+because it has huge potential of shooting-yourself-in-your-own-foot.
+
+But darn it, it's _useful_.
+
+Very often I happen to find a subtle bug in the middle of my work. Which 
+basically means that I have a dirty working tree, a dirty index, and I 
+_need_ to commit something completely different. Usually it is a 
+one-liner, which I don't even have to test in isolation, but with my dirty 
+working tree. And usually it is in a file which was non-dirty until I 
+put in a fix, so committing specific files -- bypassing the current index 
+-- _is_ useful.
+
+Ciao,
+Dscho
