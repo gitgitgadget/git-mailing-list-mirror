@@ -1,72 +1,52 @@
-From: Johannes Sixt <J.Sixt@eudaptics.com>
+From: "Morten Welinder" <mwelinder@gmail.com>
 Subject: Re: Importing from tarballs; add, rm, update-index?
-Date: Fri, 12 Jan 2007 15:39:56 +0100
-Organization: eudaptics software gmbh
-Message-ID: <45A79DBC.1795F5C4@eudaptics.com>
-References: <riddochc@gmail.com> <200701121409.l0CE9923015123@laptop13.inf.utfsm.cl>
+Date: Fri, 12 Jan 2007 09:40:41 -0500
+Message-ID: <118833cc0701120640o3cae8c14t5b5ba6ee6f022b53@mail.gmail.com>
+References: <6efbd9b70701120541n5dc4d0e1va50ae96543d8c80@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Chris Riddoch <riddochc@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 12 15:40:23 2007
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 12 15:40:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H5NZp-0006G7-J1
-	for gcvg-git@gmane.org; Fri, 12 Jan 2007 15:40:17 +0100
+	id 1H5NaI-0006Nq-IA
+	for gcvg-git@gmane.org; Fri, 12 Jan 2007 15:40:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750918AbXALOjj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 12 Jan 2007 09:39:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751093AbXALOjj
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jan 2007 09:39:39 -0500
-Received: from main.gmane.org ([80.91.229.2]:57830 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750918AbXALOji (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Jan 2007 09:39:38 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1H5NYy-0002ri-Up
-	for git@vger.kernel.org; Fri, 12 Jan 2007 15:39:25 +0100
-Received: from cm56-163-160.liwest.at ([86.56.163.160])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 12 Jan 2007 15:39:24 +0100
-Received: from J.Sixt by cm56-163-160.liwest.at with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 12 Jan 2007 15:39:24 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: cm56-163-160.liwest.at
-X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
-X-Accept-Language: en
+	id S1751059AbXALOkn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 12 Jan 2007 09:40:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751142AbXALOkn
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jan 2007 09:40:43 -0500
+Received: from wx-out-0506.google.com ([66.249.82.236]:2579 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751059AbXALOkm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Jan 2007 09:40:42 -0500
+Received: by wx-out-0506.google.com with SMTP id h31so854364wxd
+        for <git@vger.kernel.org>; Fri, 12 Jan 2007 06:40:42 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Dw0X/KvBKhYkIsyPs7E2TV6Rb5ytzYm0UIuSlvfVAXqA76b0pVpqDsLwPzUcD6pW8Cm1GoyQ/ex+HkZqPf+ctHOmC/wqBuQYcdc6JrbalfjI806zQS3fq1fdm5fyKOxYxjbRdl9I9LPxmlMTRTY2b/GGaabl1mq6396Rhfs59c4=
+Received: by 10.90.72.10 with SMTP id u10mr554845aga.1168612841800;
+        Fri, 12 Jan 2007 06:40:41 -0800 (PST)
+Received: by 10.70.95.5 with HTTP; Fri, 12 Jan 2007 06:40:41 -0800 (PST)
+To: "Chris Riddoch" <riddochc@gmail.com>
+In-Reply-To: <6efbd9b70701120541n5dc4d0e1va50ae96543d8c80@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36675>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36676>
 
-"Horst H. von Brand" wrote:
-> Hum... something like the following (completely untested!) should do the
-> trick:
-> 
->   cd /basedir
->   mkdir codebase; cd codebase; git init-db
->   for version in 1.0 1.1 1.1a 1.1b 2.0.0 ...; do
->      cd /basedir
->      tar xf tarball-$version.tar
->      mv codebase-$version/* codebase    # Take care to move everything!
->      cd codebase
->      git add .
->      git commit -a -m "Updated to $version"
->      rm -rf *                  # Delete everything except for git stuff
->   done
+I did this with a large pile of tarballs, see
 
-You can let GIT_DIR point somewhere outside the extracted directory.
+    http://blogs.gnome.org/view/mortenw/2007/01/07/0
 
-If the dates of your tarballs are meaningful, you can use something like
-this:
+for the script.
 
-export GIT_AUTHOR_DATE="$(date --reference=foo-1.1.tar +%s) -07:00"
+Bottom line: git is very, very good at compressing a pile of related tarballs.
+In fact, about 10x better than gzip.
 
-   
--- Hannes
+(Not really surprising, of course.)
