@@ -1,88 +1,74 @@
-From: "Michael S. Tsirkin" <mst@mellanox.co.il>
-Subject: [PATCH] fix documentation for git-commit --no-verify
-Date: Fri, 12 Jan 2007 09:49:35 +0200
-Message-ID: <20070112074935.GB1049@mellanox.co.il>
-References: <20070111221211.GM17999@mellanox.co.il>
-Reply-To: "Michael S. Tsirkin" <mst@mellanox.co.il>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: How to commit removed file?
+Date: Fri, 12 Jan 2007 11:42:54 +0100
+Organization: At home
+Message-ID: <eo7omq$1ap$1@sea.gmane.org>
+References: <20061231102444.GD26552@mellanox.co.il> <20070102201041.GB10451@mellanox.co.il> <Pine.LNX.4.63.0701022211100.22628@wbgn013.biozentrum.uni-wuerzburg.de> <7vfyatt8di.fsf@assigned-by-dhcp.cox.net> <87lkklgc8v.wl%cworth@cworth.org> <7vzm8wapdv.fsf@assigned-by-dhcp.cox.net> <877ivtxbt2.wl%cworth@cworth.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 12 08:49:35 2007
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Fri Jan 12 11:43:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H5HAK-0007j1-0P
-	for gcvg-git@gmane.org; Fri, 12 Jan 2007 08:49:32 +0100
+	id 1H5JsO-0006WR-Ob
+	for gcvg-git@gmane.org; Fri, 12 Jan 2007 11:43:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161024AbXALHt3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 12 Jan 2007 02:49:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161025AbXALHt3
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jan 2007 02:49:29 -0500
-Received: from p02c11o146.mxlogic.net ([208.65.145.69]:46507 "EHLO
-	p02c11o146.mxlogic.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161024AbXALHt2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Jan 2007 02:49:28 -0500
-Received: from unknown [194.90.237.34] (EHLO p02c11o146.mxlogic.net)
-	by p02c11o146.mxlogic.net (mxl_mta-4.0.1-4)
-	with ESMTP id 88d37a54.2182552496.19691.00-500.p02c11o146.mxlogic.net (envelope-from <mst@mellanox.co.il>);
-	Fri, 12 Jan 2007 00:49:28 -0700 (MST)
-Received: from unknown [194.90.237.34] (EHLO mtlexch01.mtl.com)
-	by p02c11o146.mxlogic.net (mxl_mta-4.0.1-4)
-	with ESMTP id 08d37a54.1962265520.19681.00-001.p02c11o146.mxlogic.net (envelope-from <mst@mellanox.co.il>);
-	Fri, 12 Jan 2007 00:49:20 -0700 (MST)
-Received: from mellanox.co.il ([10.4.4.6]) by mtlexch01.mtl.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Fri, 12 Jan 2007 09:50:54 +0200
-Received: by mellanox.co.il (sSMTP sendmail emulation); Fri, 12 Jan 2007 09:47:50 +0200
-To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <20070111221211.GM17999@mellanox.co.il>
-User-Agent: Mutt/1.5.11
-X-OriginalArrivalTime: 12 Jan 2007 07:50:54.0065 (UTC) FILETIME=[62F76E10:01C7361E]
-X-TM-AS-Product-Ver: SMEX-7.0.0.1526-3.6.1039-14930.001
-X-TM-AS-Result: No--11.392300-4.000000-31
-X-Spam: [F=0.0100000000; S=0.010(2007010901)]
-X-MAIL-FROM: <mst@mellanox.co.il>
-X-SOURCE-IP: [194.90.237.34]
+	id S1161068AbXALKnJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 12 Jan 2007 05:43:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161072AbXALKnJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jan 2007 05:43:09 -0500
+Received: from main.gmane.org ([80.91.229.2]:32833 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1161068AbXALKnI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Jan 2007 05:43:08 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1H5Js7-0004lL-Oe
+	for git@vger.kernel.org; Fri, 12 Jan 2007 11:42:55 +0100
+Received: from host-81-190-18-73.torun.mm.pl ([81.190.18.73])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 12 Jan 2007 11:42:55 +0100
+Received: from jnareb by host-81-190-18-73.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 12 Jan 2007 11:42:55 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-18-73.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36665>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36666>
 
-Despite what the documentation claims, git-commit does not check commit
-for suspicious lines: all hooks are disabled by default,
-and the pre-comit hook could be changed to do something else.
+Carl Worth wrote:
 
-Signed-off-by: Michael S. Tsirkin <mst@mellanox.co.il>
+> But now that I tried this case with a recent git (2a3a3c247) for whic=
+h
+> git-rm does working-tree removal without -f, I see that it does
+> irretrievably destroy information in this case:
+>=20
+> =A0=A0=A0=A0=A0=A0=A0=A0$ echo "important stuff" > new-file
+> =A0=A0=A0=A0=A0=A0=A0=A0$ git add new-file
+> =A0=A0=A0=A0=A0=A0=A0=A0$ git rm new-file
+>=20
+> This now deletes new-file from the working tree and there's no copy o=
+f
+> the data inside git. The old git-rm would just return the file to it'=
+s
+> "untracked" state in this case.
+>=20
+> I had thought the safety check was going to be that the index state
+> matched the HEAD state before git-rm would delete from the working
+> tree.
 
----
+That is certainly bug in new git-rm; it should remove file _only_
+if it can be recovered with the same state as it was before git-rm.=20
 
-> Quoting Michael S. Tsirkin <mst@mellanox.co.il>:
-> Subject: git-commit/git-applypatch whitespace rules different?
-> 
-> git-commit/git-applypatch whitespace rules seem to be different.
-> Is this expected?
-
-OK I found out why this happens, but the documentation can be improved.
-
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-index a7adf24..cb081cd 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -72,12 +72,8 @@ OPTIONS
- 	Add Signed-off-by line at the end of the commit message.
- 
- --no-verify::
--	By default, the command looks for suspicious lines the
--	commit introduces, and aborts committing if there is one.
--	The definition of 'suspicious lines' is currently the
--	lines that has trailing whitespaces, and the lines whose
--	indentation has a SP character immediately followed by a
--	TAB character.  This option turns off the check.
-+	This option bypasses the pre-commit hook.
-+	See also link:hooks.html[hooks].
- 
- -e|--edit::
- 	The message taken from file with `-F`, command line with
--- 
-MST
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
