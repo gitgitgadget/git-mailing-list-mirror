@@ -1,89 +1,59 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] Explain "Not a git repository: '.git'".
-Date: Fri, 12 Jan 2007 12:26:15 -0800
-Message-ID: <7vy7o8rnyw.fsf_-_@assigned-by-dhcp.cox.net>
-References: <7v8xg9x8uu.fsf@assigned-by-dhcp.cox.net>
-	<200701121501.24642.andyparkins@gmail.com>
+From: fork0@t-online.de (Alex Riesen)
+Subject: Re: [PATCH] Speedup recursive by flushing index only once for all entries
+Date: Fri, 12 Jan 2007 21:30:42 +0100
+Message-ID: <20070112203042.GA8127@steel.home>
+References: <81b0412b0701040247k47e398e6q34dd5233bb5706f6@mail.gmail.com> <Pine.LNX.4.63.0701041327490.22628@wbgn013.biozentrum.uni-wuerzburg.de> <81b0412b0701040447u329dcf9bvcd7adb9e9d199f18@mail.gmail.com> <7v8xgileza.fsf@assigned-by-dhcp.cox.net> <81b0412b0701050322u67131900xea969b2da9981a94@mail.gmail.com> <20070107163112.GA9336@steel.home> <7vr6u2adgx.fsf@assigned-by-dhcp.cox.net> <20070112184839.9431ddff.vsu@altlinux.ru> <7vr6u0t87q.fsf@assigned-by-dhcp.cox.net>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 12 21:26:34 2007
+Cc: Sergey Vlasov <vsu@altlinux.ru>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 12 21:31:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H5Sym-00056z-NS
-	for gcvg-git@gmane.org; Fri, 12 Jan 2007 21:26:25 +0100
+	id 1H5T3L-0006Kn-Om
+	for gcvg-git@gmane.org; Fri, 12 Jan 2007 21:31:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030255AbXALU0R (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 12 Jan 2007 15:26:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030197AbXALU0R
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jan 2007 15:26:17 -0500
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:53637 "EHLO
-	fed1rmmtao05.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030255AbXALU0Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Jan 2007 15:26:16 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070112202616.MNHL15640.fed1rmmtao05.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 12 Jan 2007 15:26:16 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id ALRQ1W00D1kojtg0000000; Fri, 12 Jan 2007 15:25:24 -0500
-To: Andy Parkins <andyparkins@gmail.com>
-In-Reply-To: <200701121501.24642.andyparkins@gmail.com> (Andy Parkins's
-	message of "Fri, 12 Jan 2007 15:01:07 +0000")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1030197AbXALUbE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 12 Jan 2007 15:31:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030226AbXALUbE
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jan 2007 15:31:04 -0500
+Received: from mailout03.sul.t-online.com ([194.25.134.81]:36761 "EHLO
+	mailout03.sul.t-online.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1030197AbXALUbD (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 12 Jan 2007 15:31:03 -0500
+Received: from fwd31.aul.t-online.de 
+	by mailout03.sul.t-online.com with smtp 
+	id 1H5T3A-0003A3-01; Fri, 12 Jan 2007 21:30:56 +0100
+Received: from tigra.home (SrAFfwZpgeVCRpeHM+p7lXhZPQ7UPb+vuFXDb28DCtupx4-LbND5ET@[84.163.80.148]) by fwd31.sul.t-online.de
+	with esmtp id 1H5T2x-0vDGu80; Fri, 12 Jan 2007 21:30:43 +0100
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 2E3D7277B6;
+	Fri, 12 Jan 2007 21:30:43 +0100 (CET)
+Received: by steel.home (Postfix, from userid 1000)
+	id DDB51C1E5; Fri, 12 Jan 2007 21:30:42 +0100 (CET)
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vr6u0t87q.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.12-2006-07-14
+X-ID: SrAFfwZpgeVCRpeHM+p7lXhZPQ7UPb+vuFXDb28DCtupx4-LbND5ET
+X-TOI-MSGID: cf302c35-ce85-4d37-93ea-7fc78917fc17
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36703>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36704>
 
-Andy Parkins noticed that the error message some "whole tree"
-oriented commands emit is stated misleadingly when they refused
-to run from a subdirectory.
+Junio C Hamano, Fri, Jan 12, 2007 19:23:37 +0100:
+> > ...and it is still used here - however, after the patch *result is
+> > uninitialized at this point.
+> 
+> Very true.  This untested patch should fix it.
+> 
 
-We could probably allow some of them to work from a subdirectory
-but that is a semantic change that could have unintended side
-effects, so let's start at first by rewording the error message
-to be easier to read without doing anything else to be safe.
+I had to initialize mrtree of merge() with NULL to reproduce it.
+Sneaky bastard...
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
+> We could even remove the whole printf(), which I tend to prefer.
 
- Andy Parkins <andyparkins@gmail.com> writes:
-
- > Minor thing: git-rebase, git-cherry-pick and git-pull (and
- > presumably git-merge) all need to be the repository root to
- > work.  If that is intentional, a better message than "fatal:
- > Not a git repository: '.git'" would be appropriate.
- >
- > For me, I'd prefer that they worked in subdirectories.  I do
- > all almost all development in "src/" and having to change up a
- > directory just to run git commands is inconvenient.
-
- Thanks; let's do this for now.
-
- git-sh-setup.sh |    6 +++++-
- 1 files changed, 5 insertions(+), 1 deletions(-)
-
-diff --git a/git-sh-setup.sh b/git-sh-setup.sh
-index 4a02b38..57f7f77 100755
---- a/git-sh-setup.sh
-+++ b/git-sh-setup.sh
-@@ -60,7 +60,11 @@ esac
- if [ -z "$SUBDIRECTORY_OK" ]
- then
- 	: ${GIT_DIR=.git}
--	GIT_DIR=$(GIT_DIR="$GIT_DIR" git-rev-parse --git-dir) || exit
-+	GIT_DIR=$(GIT_DIR="$GIT_DIR" git-rev-parse --git-dir) || {
-+		exit=$?
-+		echo >&2 "You need to run this command from the toplevel of the working tree."
-+		exit $exit
-+	}
- else
- 	GIT_DIR=$(git-rev-parse --git-dir) || exit
- fi
--- 
-1.5.0.rc1.g397d
+I agree. The merges of this kind a rare in comparison to simple ones.
