@@ -1,68 +1,70 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Better error messages for corrupt databases
-Date: Thu, 11 Jan 2007 19:40:44 -0500
-Message-ID: <20070112004044.GA23864@spearce.org>
-References: <20070111125726.GJ1759@mellanox.co.il> <Pine.LNX.4.64.0701111023090.3594@woody.osdl.org> <Pine.LNX.4.64.0701111109070.3594@woody.osdl.org> <45A6A97F.5080008@shadowen.org> <7vodp52qzz.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0701111400031.3594@woody.osdl.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: tree corrupted on disk quota full
+Date: Thu, 11 Jan 2007 16:42:04 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0701111452340.3594@woody.osdl.org>
+References: <Pine.LNX.4.64.0701111410420.3594@woody.osdl.org>
+ <20070111223905.GP17999@mellanox.co.il>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, Andy Whitcroft <apw@shadowen.org>,
-	"Michael S. Tsirkin" <mst@mellanox.co.il>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 12 01:41:09 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>,
+	Andy Whitcroft <apw@shadowen.org>
+X-From: git-owner@vger.kernel.org Fri Jan 12 01:42:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H5ATb-0007RZ-OL
-	for gcvg-git@gmane.org; Fri, 12 Jan 2007 01:41:00 +0100
+	id 1H5AV9-0007m2-Nq
+	for gcvg-git@gmane.org; Fri, 12 Jan 2007 01:42:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751547AbXALAk5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 11 Jan 2007 19:40:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751528AbXALAk5
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jan 2007 19:40:57 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:42118 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751460AbXALAk4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Jan 2007 19:40:56 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1H5ATJ-0005zJ-80; Thu, 11 Jan 2007 19:40:41 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 6B9B720FBAE; Thu, 11 Jan 2007 19:40:44 -0500 (EST)
-To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0701111400031.3594@woody.osdl.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1751519AbXALAmd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 11 Jan 2007 19:42:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751535AbXALAmd
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jan 2007 19:42:33 -0500
+Received: from smtp.osdl.org ([65.172.181.24]:47853 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751519AbXALAmc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Jan 2007 19:42:32 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l0C0g5Wi012261
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 11 Jan 2007 16:42:06 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l0C0g5xm008124;
+	Thu, 11 Jan 2007 16:42:05 -0800
+To: "Michael S. Tsirkin" <mst@mellanox.co.il>
+In-Reply-To: <20070111223905.GP17999@mellanox.co.il>
+X-Spam-Status: No, hits=-0.663 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.108__
+X-MIMEDefang-Filter: osdl$Revision: 1.170 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36643>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36644>
 
-Linus Torvalds <torvalds@osdl.org> wrote:
-> So this just makes "xmmap()" return NULL for a zero-sized object (which is 
-> a valid thing pointer, exactly the same way "malloc()" can return NULL for 
-> a zero-sized allocation). That fixes the first problem (but we could have 
-> fixed it in the caller too - I don't personally much care whichever way it 
-> goes, but maybe somebody should check that the NO_MMAP case does 
-> something sane in this case too?).
 
-All calls to perform any sort of mmap go through xmmap().  If NO_MMAP
-was defined at compile time than the mmap() call within xmmap() is
-redefined to invoke git_mmap() via a preprocessor define slightly
-earlier in git-compat-util.h.
 
-So your patch will also automatically do the right thing in the
-NO_MMAP case.
+On Fri, 12 Jan 2007, Michael S. Tsirkin wrote:
+> 
+> Weird. I think the system where the tree got corrupted had git 1.4.4.4.
 
-BTW, I like your solution of just fixing it here in xmmap().  Good idea.
+Ok, you had an email with "git version" that said 1.5.0-rc0-g<something>, 
+but that may have been after you already upgraded for other reasons.
 
--- 
-Shawn.
+It would definitely be good to reproduce this - there are multiple places 
+where we could screw up in the presense of a short write. It's also 
+entirely possible that the core code doesn't screw up, but if some of the 
+higher-level scripts don't always check the error code, an error at 
+unpacking time (or some other time) could just go unnoticed.
+
+That said, even though I complain about the "write_in_full()" bug, I think 
+that with the "return error even for partial writes" change it actually 
+_does_ end up being a safer way to do things, so it's entirely possible 
+that while it introduced one bug, it could have fixed another one. The 
+call chain I looked at was just one particular one (it's the most 
+fundamental one for writing out individual objects, so in that sense it's 
+the most likely one, but it's certainly possible that something else 
+happened)
+
+		Linus
