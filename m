@@ -1,113 +1,95 @@
-From: "Chris Riddoch" <riddochc@gmail.com>
-Subject: Importing from tarballs; add, rm, update-index?
-Date: Fri, 12 Jan 2007 06:41:21 -0700
-Message-ID: <6efbd9b70701120541n5dc4d0e1va50ae96543d8c80@mail.gmail.com>
+From: Julian Phillips <julian@quantumfyre.co.uk>
+Subject: Re: Restraining git pull/fetch to the current branch
+Date: Fri, 12 Jan 2007 14:08:28 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0701121332100.1493@reaper.quantumfyre.co.uk>
+References: <Pine.LNX.4.64.0701112127000.12870@beast.quantumfyre.co.uk>
+ <7vejq1yrt2.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Fri Jan 12 14:41:26 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 12 15:08:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H5Mer-0007yh-Lt
-	for gcvg-git@gmane.org; Fri, 12 Jan 2007 14:41:26 +0100
+	id 1H5N58-0006SA-51
+	for gcvg-git@gmane.org; Fri, 12 Jan 2007 15:08:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751384AbXALNlX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 12 Jan 2007 08:41:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751442AbXALNlX
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jan 2007 08:41:23 -0500
-Received: from wx-out-0506.google.com ([66.249.82.229]:41083 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751384AbXALNlW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Jan 2007 08:41:22 -0500
-Received: by wx-out-0506.google.com with SMTP id h31so840167wxd
-        for <git@vger.kernel.org>; Fri, 12 Jan 2007 05:41:22 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=JWFST9d5eIZRndIxRW4W9NXXwOL9yNUuB/6UizqxphhC+YYGPA5OLbC7Zd0Zcoks+TiUuoifIbO0raCMBZ+D+SwCc+G6OH94j1FVVSXqP9ktMAjJ6j9AUJbpXRYRaf1QqxP/tOBg8INLNMLIuW9BnjG9DKZiRfRnvAcTrMo0h1Y=
-Received: by 10.70.115.17 with SMTP id n17mr1303948wxc.1168609281642;
-        Fri, 12 Jan 2007 05:41:21 -0800 (PST)
-Received: by 10.70.61.5 with HTTP; Fri, 12 Jan 2007 05:41:21 -0800 (PST)
-To: git@vger.kernel.org
-Content-Disposition: inline
+	id S1750918AbXALOIb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 12 Jan 2007 09:08:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750924AbXALOIb
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jan 2007 09:08:31 -0500
+Received: from neutron.datavampyre.co.uk ([212.159.54.235]:36772 "EHLO
+	neutron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750918AbXALOIa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Jan 2007 09:08:30 -0500
+Received: (qmail 27208 invoked by uid 103); 12 Jan 2007 14:09:09 +0000
+Received: from 192.168.0.16 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
+ (clamdscan: 0.88.7/2437. spamassassin: 3.1.3. perlscan: 1.25st.  
+ Clear:RC:1(192.168.0.16):. 
+ Processed in 0.032454 secs); 12 Jan 2007 14:09:09 -0000
+Received: from unknown (HELO reaper.quantumfyre.co.uk) (192.168.0.16)
+  by neutron.datavampyre.co.uk with SMTP; 12 Jan 2007 14:09:09 +0000
+X-X-Sender: jp3@reaper.quantumfyre.co.uk
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vejq1yrt2.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36671>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36672>
 
-Hi, folks.
+On Thu, 11 Jan 2007, Junio C Hamano wrote:
 
-I've got a very, very old codebase I'm trying to wrap my head around.
-It was apparently once tracked with RCS, but the ,v files are long
-gone and all that remains are a series of tarballs on an FTP site
-containing alpha, beta, and final releases of various versions of the
-project.  There's a logical progression, but between each there are
-new files, deleted files, and lots of changed files.  gitk will at
-least help me make sense of the actual changes.  I've got part of a
-shell script to automate this process.
+> Julian Phillips <julian@quantumfyre.co.uk> writes:
+>
+>> While trying out git on a large repository (10000s of commits, 1000s
+>> of branches, ~2.5Gb when packed) at work I noticed that doing a pull
+>> was taking a long time (longer than I was prepared to wait anyway).
+>
+> Are they all real branches?  In other words, does your project
+> have 1000s of active parallel development?
 
-Here's the problem.
+(Oops, over enthusiastic with the 0 there, I mean 100s of branches, about 
+880 atm).
 
-I have tried to follow the debate on git add, rm, commit -a, etc.  But
-I can't figure out how to simply say, take the full state of the
-working directory, and make the index directly reflect that state.
-Additions, removals, and differences alike.  One step, preferably.
+They are mostly topic style branches, with only 20 or so in active use at 
+any one time.  The idea of having to cope with 100s of active branches at 
+the same time (given that we currently are using subversion) is quite 
+frankly terrifying.
 
-My 2 cents on recent UI changes: I'm quite uncertain about the correct
-(future 1.5.0) way of handling this kind of change to the index.  To
-elaborate:
+> Also, assuming the answer to the above question is yes, will you
+> have 1000s of branches on your end and will work on any one of
+> them?
 
-First, specifying extra files after 'git commit' bypasses the index.
-If I remove foo.txt, and want to make a new commit reflecting only
-that removal, would 'git commit foo.txt' do what I mean?  Apparently
-so; I had to test it to find out, though.  It is a little surprising.
+It would be necessary to have access to all of the currently active 
+branches at least, with the added complication that the set of current 
+active branches changes quite rapidly.
 
-Using the 'add' command to really mean 'record the state of this file'
-is confusing.  It makes me think of CVS's add (predictably), which
-makes note of a new file and I think, "Well, I read on the list that
-this is just another kind of 'adding content to the index,' right?"
-Okay, I can accept that.  But using the 'git add .' idiom makes me
-wonder whether the subdirectories are also supposed to be added, or
-whether I need to worry about a recursive option.  Oddly, 'git pull .'
-doesn't make me blink.  But then I need to remember to use 'git add'
-to keep track of most changes in the index, new files and edits alike.
- I suspect a newbie coming from CVS might even use the word "re-add"
-in their head to understand 'add'.
+> If you do not care all 1000s branches but only are interested in
+> selected few, you could change that configuration to suit your
+> needs better.
 
-But this makes 'git rm' quite confusing.  After thinking I finally
-understand 'git add', I think 'git rm' would mean "record the new
-(nonexistent) state of this file in the index."  And then I'm
-surprised to discover the file in my working directory actually
-removed.  No, I guess I needed --cached.  Oops.  Wait a minute.
-Cache?  The same cache mentioned in glossary.txt as being "Obsolete
-for index?"
+I think the problem here would be keeping track of which branches are 
+currently active.  Some scheme could probably be derived, but I was hoping 
+that fetching an unchanged branch would be sufficently fast that it would 
+be necessary.  I appear to have been wrong :(
 
-If rm is the opposite of add, shouldn't it work on the index by
-default?  Hmm... "adding content to the index."  This file being
-removed is new information that needs to be added to the index, like a
-modification.  Removing a file is a kind of modification, after all.
-I think this was the logic behind someone's suggestion of 'git add
---remove' which is quite ridiculous but follows somewhat naturally
-from the idea that 'git add' is supposed to add information about
-changes in the working directory to the index.
+> I suspect most of the time is being spent in the
+> append-fetch-head loop in fetch_main shell function in
+> git-fetch.sh The true fix would not be to limit the number of
+> branches updated, but to speed that part of the code up.
 
-At this point, I think the behavior of 'git add' is as ridiculous as
-that of 'git rm'.  Recent changes to 'git add' and 'git rm' make me
-believe we're indecisive about whether we want people to think in
-terms of the index or not.  I get the impression we're leaning towards
-encouraging awareness of the index, because it's so helpful with
-merges.
-
-You know what I think we need?  A good command for updating the index.
- It could even be both porcelain and plumbing, if it had the right
-error-checking.
-
-I suggest calling it something like update-index.  ;)
-
-Unless I'm completely misunderstanding git?
+Indeed, each call to append_fetch_head is taking ~1.7s (~1.5s user, ~0.2s 
+sys).  So simply looping over all the branches explains the ~27m that a 
+complete fetch takes. (This is for fetch with no updates).  Given that a 
+"clone orig new" takes ~8m30 (half of which would seem to be IO), it looks 
+like it may be faster to create a new repository each time instead of 
+updating the old one, which is certainly a viable workaround - but might 
+imply that fetch has some room for improvement?
 
 -- 
-epistemological humility
-  Chris Riddoch
+Julian
+
+  ---
+There is nothing stranger in a strange land than the stranger who comes
+to visit.
