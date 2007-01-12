@@ -1,51 +1,74 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] gitk errors out if launched in a subdirectory
-Date: Fri, 12 Jan 2007 09:59:39 -0800
-Message-ID: <7vvejct9bo.fsf@assigned-by-dhcp.cox.net>
-References: <20070109143019.GA24688@xp.machine.xx>
-	<20070112174340.GA6262@xp.machine.xx>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: What's cooking in git.git (topics)
+Date: Fri, 12 Jan 2007 19:16:14 +0100
+Organization: At home
+Message-ID: <eo8j8o$ahq$1@sea.gmane.org>
+References: <7vr6u3cmsi.fsf@assigned-by-dhcp.cox.net> <7v3b6i75i5.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0701102241230.4964@xanadu.home> <20070111080035.GA28222@spearce.org> <7v1wm16gyd.fsf@assigned-by-dhcp.cox.net> <20070111100800.GB28309@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Paul Mackerras <paulus@samba.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 12 18:59:49 2007
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Fri Jan 12 19:16:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H5Qgq-0001ht-9d
-	for gcvg-git@gmane.org; Fri, 12 Jan 2007 18:59:44 +0100
+	id 1H5Qwt-0005yJ-4q
+	for gcvg-git@gmane.org; Fri, 12 Jan 2007 19:16:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964801AbXALR7l (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 12 Jan 2007 12:59:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964812AbXALR7l
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jan 2007 12:59:41 -0500
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:43787 "EHLO
-	fed1rmmtao10.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964801AbXALR7k (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Jan 2007 12:59:40 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao10.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070112175940.MONV20715.fed1rmmtao10.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 12 Jan 2007 12:59:40 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id AHyo1W00T1kojtg0000000; Fri, 12 Jan 2007 12:58:48 -0500
-To: Peter Baumann <siprbaum@stud.informatik.uni-erlangen.de>
-In-Reply-To: <20070112174340.GA6262@xp.machine.xx> (Peter Baumann's message of
-	"Fri, 12 Jan 2007 18:43:40 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S964843AbXALSQR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 12 Jan 2007 13:16:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964856AbXALSQR
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jan 2007 13:16:17 -0500
+Received: from main.gmane.org ([80.91.229.2]:41210 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S964843AbXALSQQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Jan 2007 13:16:16 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1H5Qwb-000826-MS
+	for git@vger.kernel.org; Fri, 12 Jan 2007 19:16:01 +0100
+Received: from host-81-190-18-73.torun.mm.pl ([81.190.18.73])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 12 Jan 2007 19:16:01 +0100
+Received: from jnareb by host-81-190-18-73.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 12 Jan 2007 19:16:01 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-18-73.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36686>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36687>
 
-Peter Baumann <siprbaum@stud.informatik.uni-erlangen.de> writes:
+Shawn O. Pearce wrote:
 
-> Is there something obviously wrong with this patch? It is the second
-> time I send this (or a slight variant; last time I even removed the
-> enviroment checking) and nobody answered.
->
-> Please say so if it is NAKed.
+>> One minor problem that you inherited from the original algorithm
+>> is the name priority. =A0If you have an annotated tag A and a
+>> lightweight tag b, and ask "git describe --tags" in this graph:
+>>=20
+>> =A0 =A0 ---o---o---o---o---x
+>> =A0 =A0 =A0 =A0 =A0 =A0A =A0 b
+>>=20
+>> you would still want to describe 'x' with A, not b.
+>> Unfortunately you don't (and the original doesn't either).
+>=20
+> Actually I think you want to describe it with b. =A0If you ask
+> '--tags' then you want the lightweight ones too. =A0In the case above
+> the lightweight tag b better describes x as it has more in common
+> with x than A has.
 
-I am Ok with it if Paul is.  I think it makes sense.
+Actually I very often want to describe with _annotated_ tags only.
+I have few lightweight tags which are former heads (former branches),
+few lightweight tags which are branch points or before-merge points,
+and are _not_ version tags.
+
+Although perhaps command line switch (to prefer annotated tags to
+lightweight tags) would be better...
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
