@@ -1,81 +1,135 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Clean up write_in_full() users
-Date: Thu, 11 Jan 2007 20:43:50 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0701112039100.3594@woody.osdl.org>
-References: <Pine.LNX.4.64.0701112014050.3594@woody.osdl.org>
- <20070112043346.GB24195@spearce.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: What's cooking in git.git (topics)
+Date: Thu, 11 Jan 2007 22:15:07 -0800
+Message-ID: <7vr6u0wz2s.fsf@assigned-by-dhcp.cox.net>
+References: <7vr6u3cmsi.fsf@assigned-by-dhcp.cox.net>
+	<7v3b6i75i5.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0701102241230.4964@xanadu.home>
+	<20070111080035.GA28222@spearce.org> <45A6016B.4030800@op5.se>
+	<Pine.LNX.4.64.0701110955100.4964@xanadu.home>
+	<45A65F15.6040606@op5.se> <20070112004927.GB23864@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri Jan 12 05:44:03 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 12 07:15:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H5EGm-0003gb-Gm
-	for gcvg-git@gmane.org; Fri, 12 Jan 2007 05:44:00 +0100
+	id 1H5Fh3-0004RD-Ph
+	for gcvg-git@gmane.org; Fri, 12 Jan 2007 07:15:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030478AbXALEn6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 11 Jan 2007 23:43:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030489AbXALEn6
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jan 2007 23:43:58 -0500
-Received: from smtp.osdl.org ([65.172.181.24]:60315 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1030478AbXALEn5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Jan 2007 23:43:57 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l0C4hpWi018542
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 11 Jan 2007 20:43:51 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l0C4honX012172;
-	Thu, 11 Jan 2007 20:43:51 -0800
+	id S1160995AbXALGPK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 12 Jan 2007 01:15:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161006AbXALGPK
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jan 2007 01:15:10 -0500
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:51407 "EHLO
+	fed1rmmtao09.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1160995AbXALGPJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Jan 2007 01:15:09 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20070112061508.GTGR18767.fed1rmmtao09.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 12 Jan 2007 01:15:08 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id A6EG1W00K1kojtg0000000; Fri, 12 Jan 2007 01:14:17 -0500
 To: "Shawn O. Pearce" <spearce@spearce.org>
-In-Reply-To: <20070112043346.GB24195@spearce.org>
-X-Spam-Status: No, hits=-0.662 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.108__
-X-MIMEDefang-Filter: osdl$Revision: 1.170 $
-X-Scanned-By: MIMEDefang 2.36
+In-Reply-To: <20070112004927.GB23864@spearce.org> (Shawn O. Pearce's message
+	of "Thu, 11 Jan 2007 19:49:27 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36661>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36662>
 
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
+> Only on tags which are considered possible matches.  What we do
+> now is we walk back along the commit history until we find a commit
+> which has a tag pointing at it.  As soon as we find that commit we
+> enqueue its corresponding tag into a list and completely ignore its
+> parents, aborting listing any further back.  So we really only pay
+> the bare minimum price here.
 
-On Thu, 11 Jan 2007, Shawn O. Pearce wrote:
-> 
-> AFAIK the only user of read_or_die is sha1_file.c when it reads in
-> the 12 byte pack header and the 20 byte pack trailer to "quickly"
-> verify the packfile is sane before using it.  If I recall correctly
-> it was correct when I created it, but the read_in_full refactoring
-> changed it.
+This actually is QUITE bad.
 
-Well, I just sent a patch to hopefully fix it, but I also think that the 
-whole function is really misdesigned.
+With the tip of linux-2.6 repository, v1.4.4 series takes 0.03s
+while v1.5.0-rc1 takes about 3.6s.  That is 100x fold, not just
+4x.
 
-The thing is, "write_or_die()" actually makes sense. If you get a write 
-error, things are really seriously broken, and it makes a lot of sense to 
-just say "things are totally broken".
+It turns out that to describe 0404f87f (tip of linux-2.6) the
+new one picks up 61 tags in the posible-tag loop.
 
-HOWEVER. The same thing is not true of a partial read. If a read doesn't 
-succeed fully, the most _common_ case is that a file is truncated, and it 
-does generally NOT make sense to just die and say "partial file".
+Since this loop uses the usual date-order, we can limit the
+number of candidate tags without losing too much precision.
+When limiting the candidates to only 6 (attached patch), the
+time drops to 0.25s.
 
-So for a write error, it's ok to say "ok, I can't write, I'm dead". 
-
-For a read error, at the very least you have to say WHICH FILE couldn't be 
-read, because it's usually a matter of some file just being too short, not 
-some system-wide problem.
-
-Looking at the two call-sites of "read_or_die()", they really are better 
-off not dying, or if they died, the caller should have passed in the 
-_reason_ (ie the name of the pack-file), or should have just used a 
-non-dying version and tested the return value and written a message of its 
-own.
-
-But at least the function now WORKS after the patch I just sent out. Which 
-it didn't do before. 
-
-			Linus
+--- 
+diff --git a/builtin-describe.c b/builtin-describe.c
+index a8c98ce..a1ecec2 100644
+--- a/builtin-describe.c
++++ b/builtin-describe.c
+@@ -12,6 +12,7 @@ static const char describe_usage[] =
+ 
+ static int all;	/* Default to annotated tags only */
+ static int tags;	/* But allow any tags if --tags is specified */
++static int debug;
+ 
+ static int abbrev = DEFAULT_ABBREV;
+ 
+@@ -113,6 +114,7 @@ static void describe(const char *arg, int last_one)
+ 	static int initialized = 0;
+ 	struct commit_name *n;
+ 	struct possible_tag *all_matches, *min_match, *cur_match;
++	int cnt;
+ 
+ 	if (get_sha1(arg, sha1))
+ 		die("Not a valid object name %s", arg);
+@@ -136,6 +138,7 @@ static void describe(const char *arg, int last_one)
+ 	all_matches = NULL;
+ 	cur_match = NULL;
+ 	commit_list_insert(cmit, &list);
++	cnt = 6;
+ 	while (list) {
+ 		struct commit *c = pop_commit(&list);
+ 		n = match(c);
+@@ -148,6 +151,8 @@ static void describe(const char *arg, int last_one)
+ 			else
+ 				all_matches = p;
+ 			cur_match = p;
++			if (--cnt <= 0)
++				break;
+ 		} else {
+ 			struct commit_list *parents = c->parents;
+ 			while (parents) {
+@@ -161,6 +166,18 @@ static void describe(const char *arg, int last_one)
+ 			}
+ 		}
+ 	}
++	if (list)
++		free_commit_list(list);
++
++	if (debug) {
++		int cnt = 0;
++		for (cur_match = all_matches;
++		     cur_match;
++		     cur_match = cur_match->next)
++			cnt++;
++		fprintf(stderr, "%d candidates for %s\n", cnt,
++			sha1_to_hex(cmit->object.sha1));
++	}
+ 
+ 	if (!all_matches)
+ 		die("cannot describe '%s'", sha1_to_hex(cmit->object.sha1));
+@@ -210,6 +227,8 @@ int cmd_describe(int argc, const char **argv, const char *prefix)
+ 			all = 1;
+ 		else if (!strcmp(arg, "--tags"))
+ 			tags = 1;
++		else if (!strcmp(arg, "--debug"))
++			debug = 1;
+ 		else if (!strncmp(arg, "--abbrev=", 9)) {
+ 			abbrev = strtoul(arg + 9, NULL, 10);
+ 			if (abbrev < MINIMUM_ABBREV || 40 < abbrev)
