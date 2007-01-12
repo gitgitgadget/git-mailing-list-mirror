@@ -1,74 +1,96 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: What's cooking in git.git (topics)
-Date: Fri, 12 Jan 2007 19:16:14 +0100
-Organization: At home
-Message-ID: <eo8j8o$ahq$1@sea.gmane.org>
-References: <7vr6u3cmsi.fsf@assigned-by-dhcp.cox.net> <7v3b6i75i5.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0701102241230.4964@xanadu.home> <20070111080035.GA28222@spearce.org> <7v1wm16gyd.fsf@assigned-by-dhcp.cox.net> <20070111100800.GB28309@spearce.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Speedup recursive by flushing index only once for all entries
+Date: Fri, 12 Jan 2007 10:23:37 -0800
+Message-ID: <7vr6u0t87q.fsf@assigned-by-dhcp.cox.net>
+References: <81b0412b0701040247k47e398e6q34dd5233bb5706f6@mail.gmail.com>
+	<Pine.LNX.4.63.0701041327490.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<81b0412b0701040447u329dcf9bvcd7adb9e9d199f18@mail.gmail.com>
+	<7v8xgileza.fsf@assigned-by-dhcp.cox.net>
+	<81b0412b0701050322u67131900xea969b2da9981a94@mail.gmail.com>
+	<20070107163112.GA9336@steel.home>
+	<7vr6u2adgx.fsf@assigned-by-dhcp.cox.net>
+	<20070112184839.9431ddff.vsu@altlinux.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Fri Jan 12 19:16:21 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 12 19:24:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H5Qwt-0005yJ-4q
-	for gcvg-git@gmane.org; Fri, 12 Jan 2007 19:16:19 +0100
+	id 1H5R4T-0007tA-3v
+	for gcvg-git@gmane.org; Fri, 12 Jan 2007 19:24:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964843AbXALSQR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 12 Jan 2007 13:16:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964856AbXALSQR
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jan 2007 13:16:17 -0500
-Received: from main.gmane.org ([80.91.229.2]:41210 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S964843AbXALSQQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Jan 2007 13:16:16 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1H5Qwb-000826-MS
-	for git@vger.kernel.org; Fri, 12 Jan 2007 19:16:01 +0100
-Received: from host-81-190-18-73.torun.mm.pl ([81.190.18.73])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 12 Jan 2007 19:16:01 +0100
-Received: from jnareb by host-81-190-18-73.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 12 Jan 2007 19:16:01 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-18-73.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S964925AbXALSXj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 12 Jan 2007 13:23:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964947AbXALSXj
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jan 2007 13:23:39 -0500
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:46592 "EHLO
+	fed1rmmtao05.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964927AbXALSXi (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Jan 2007 13:23:38 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20070112182338.IBKL15640.fed1rmmtao05.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 12 Jan 2007 13:23:38 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id AJNm1W00R1kojtg0000000; Fri, 12 Jan 2007 13:22:46 -0500
+To: Sergey Vlasov <vsu@altlinux.ru>
+In-Reply-To: <20070112184839.9431ddff.vsu@altlinux.ru> (Sergey Vlasov's
+	message of "Fri, 12 Jan 2007 18:48:39 +0300")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36687>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36688>
 
-Shawn O. Pearce wrote:
+Sergey Vlasov <vsu@altlinux.ru> writes:
 
->> One minor problem that you inherited from the original algorithm
->> is the name priority. =A0If you have an annotated tag A and a
->> lightweight tag b, and ask "git describe --tags" in this graph:
->>=20
->> =A0 =A0 ---o---o---o---o---x
->> =A0 =A0 =A0 =A0 =A0 =A0A =A0 b
->>=20
->> you would still want to describe 'x' with A, not b.
->> Unfortunately you don't (and the original doesn't either).
->=20
-> Actually I think you want to describe it with b. =A0If you ask
-> '--tags' then you want the lightweight ones too. =A0In the case above
-> the lightweight tag b better describes x as it has more in common
-> with x than A has.
+> On Wed, 10 Jan 2007 11:28:14 -0800 Junio C Hamano wrote:
+>
+>> This revamps the merge-recursive implementation following the
+>> outline in:
+>> ...
+> This commit broke t3401-rebase-partial.sh:
+> ...
+> ...and it is still used here - however, after the patch *result is
+> uninitialized at this point.
 
-Actually I very often want to describe with _annotated_ tags only.
-I have few lightweight tags which are former heads (former branches),
-few lightweight tags which are branch points or before-merge points,
-and are _not_ version tags.
+Very true.  This untested patch should fix it.
 
-Although perhaps command line switch (to prefer annotated tags to
-lightweight tags) would be better...
---=20
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Note that this stops (relative to the older
+version of merge-recursive that always wrote a tree even when it
+was not needed) reporting the tree object name for outermost
+merge, but I think that reporting was primarily meant for people
+who are debugging merge-recursive and did not have a real
+value.  We could even remove the whole printf(), which I tend to
+prefer.
+
+--
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 5237021..40c12aa 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -1066,15 +1066,17 @@ static int merge_trees(struct tree *head,
+ 		path_list_clear(re_head, 0);
+ 		path_list_clear(entries, 1);
+ 
+-	} else {
++	}
++	else
+ 		clean = 1;
++
++	if (index_only) {
++		*result = git_write_tree();
+ 		printf("merging of trees %s and %s resulted in %s\n",
+ 		       sha1_to_hex(head->object.sha1),
+ 		       sha1_to_hex(merge->object.sha1),
+ 		       sha1_to_hex((*result)->object.sha1));
+ 	}
+-	if (index_only)
+-		*result = git_write_tree();
+ 
+ 	return clean;
+ }
