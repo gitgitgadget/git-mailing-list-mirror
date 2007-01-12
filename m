@@ -1,131 +1,70 @@
 From: =?utf-8?Q?Santi_B=C3=A9jar?= <sbejar@gmail.com>
-Subject: [PATCH 1/2] tutorial: Use "git remote add"
-Date: Fri, 12 Jan 2007 12:57:28 +0100
-Message-ID: <87sleg31av.fsf@gmail.com>
+Subject: [PATCH 2/2] tutorial: Use "git merge" instead of "git pull ."
+Date: Fri, 12 Jan 2007 12:58:21 +0100
+Message-ID: <87odp4319e.fsf@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Fri Jan 12 11:58:12 2007
+X-From: git-owner@vger.kernel.org Fri Jan 12 11:59:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H5K6t-0001df-Uc
-	for gcvg-git@gmane.org; Fri, 12 Jan 2007 11:58:12 +0100
+	id 1H5K84-0001x7-CC
+	for gcvg-git@gmane.org; Fri, 12 Jan 2007 11:59:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932829AbXALK6J convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 12 Jan 2007 05:58:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932828AbXALK6I
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jan 2007 05:58:08 -0500
-Received: from ifae-s0.ifae.es ([192.101.162.68]:42315 "EHLO ifae-s0.ifae.es"
+	id S1161053AbXALK67 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 12 Jan 2007 05:58:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932833AbXALK66
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jan 2007 05:58:58 -0500
+Received: from ifae-s0.ifae.es ([192.101.162.68]:42342 "EHLO ifae-s0.ifae.es"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932666AbXALK6H (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Jan 2007 05:58:07 -0500
+	id S932827AbXALK66 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Jan 2007 05:58:58 -0500
 Received: from bela (caronte.ifae.es [192.101.162.199])
-	by ifae-s0.ifae.es (8.11.6/8.11.6) with ESMTP id l0CAw3e22974
-	for <git@vger.kernel.org>; Fri, 12 Jan 2007 11:58:04 +0100
+	by ifae-s0.ifae.es (8.11.6/8.11.6) with ESMTP id l0CAwte23072
+	for <git@vger.kernel.org>; Fri, 12 Jan 2007 11:58:56 +0100
 To: Git Mailing List <git@vger.kernel.org>
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/22.0.92 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36668>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36669>
 
 
-This way all the branches are in the separate layout,
-so the newbies only have to understand one layout.
 
 Signed-off-by: Santi B=C3=A9jar <sbejar@gmail.com>
 ---
- Hi *,
-
-   I've used:
-
-$ git pull . remotes/bob/master
-
-   instead of:
-
-$ git pull . bob/master
-
-   because the latter does not work. I think it's a bug, because
-
-$ git show bob/master
-$ git merge bob/master
-
-   work as expected.
-
- Documentation/tutorial.txt |   26 +++++++++++++-------------
- 1 files changed, 13 insertions(+), 13 deletions(-)
+ Documentation/tutorial.txt |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/Documentation/tutorial.txt b/Documentation/tutorial.txt
-index d2bf0b9..4b7eba3 100644
+index 4b7eba3..45abfa5 100644
 --- a/Documentation/tutorial.txt
 +++ b/Documentation/tutorial.txt
-@@ -285,10 +285,12 @@ at /home/bob/myrepo.  She does this with:
+@@ -211,7 +211,7 @@ at this point the two branches have diverged, with =
+different changes
+ made in each.  To merge the changes made in experimental into master, =
+run
 =20
  ------------------------------------------------
- $ cd /home/alice/project
--$ git pull /home/bob/myrepo master
-+$ git remote add bob /home/bob/myrepo
-+$ git pull bob master
+-$ git pull . experimental
++$ git merge experimental
  ------------------------------------------------
 =20
--This merges the changes from Bob's "master" branch into Alice's
-+First it adds the "remote" Bob's repository with the name "bob" and
-+then it merges the changes from Bob's "master" branch into Alice's
- current branch.  If Alice has made her own changes in the meantime,
- then she may need to manually fix any conflicts.  (Note that the
- "master" argument in the above command is actually unnecessary, as it
-@@ -298,18 +300,16 @@ The "pull" command thus performs two operations: =
-it fetches changes
- from a remote branch, then merges them into the current branch.
-=20
- You can perform the first operation alone using the "git fetch"
--command.  For example, Alice could create a temporary branch just to
--track Bob's changes, without merging them with her own, using:
-+command without merging them with her own branch, using:
-=20
- -------------------------------------
--$ git fetch /home/bob/myrepo master:bob-incoming
-+$ git fetch bob
- -------------------------------------
-=20
--which fetches the changes from Bob's master branch into a new branch
--named bob-incoming.  Then
-+which fetches the changes from Bob's branches.  Then
-=20
- -------------------------------------
--$ git log -p master..bob-incoming
-+$ git log -p master..bob/master
- -------------------------------------
-=20
- shows a list of all the changes that Bob made since he branched from
-@@ -320,21 +320,21 @@ could pull the changes into her master branch:
+ If the changes don't conflict, you're done.  If there are conflicts,
+@@ -320,10 +320,10 @@ could pull the changes into her master branch:
 =20
  -------------------------------------
  $ git checkout master
--$ git pull . bob-incoming
-+$ git pull . remotes/bob/master
+-$ git pull . remotes/bob/master
++$ git merge bob/master
  -------------------------------------
 =20
--The last command is a pull from the "bob-incoming" branch in Alice's
-+The last command is a pull from the "bob/master" branch in Alice's
+-The last command is a pull from the "bob/master" branch in Alice's
++The last command is a merge of the "bob/master" branch in Alice's
  own repository.
 =20
  Alice could also perform both steps at once with:
-=20
- -------------------------------------
--$ git pull /home/bob/myrepo master:bob-incoming
-+$ git pull bob
- -------------------------------------
-=20
--This is just like the "git pull /home/bob/myrepo master" that we saw
-+This is just like the "git pull bob master" that we saw
- before, except that it also stores the unmerged changes from bob's
--master branch in bob-incoming before merging them into Alice's
-+master branch in bob/master before merging them into Alice's
- current branch.  Note that git pull always merges into the current
- branch, regardless of what else is given on the commandline.
-=20
 --=20
 1.5.0-rc1.GIT
