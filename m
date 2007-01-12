@@ -1,53 +1,99 @@
-From: Steven Grimm <koreth@midwinter.com>
-Subject: Re: What's in git.git and announcing GIT v1.5.0-rc1
-Date: Fri, 12 Jan 2007 10:39:50 -0800
-Message-ID: <45A7D5F6.9020606@midwinter.com>
-References: <7v8xg9x8uu.fsf@assigned-by-dhcp.cox.net> <200701121501.24642.andyparkins@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Importing from tarballs; add, rm, update-index?
+Date: Fri, 12 Jan 2007 10:47:56 -0800
+Message-ID: <7virfct737.fsf@assigned-by-dhcp.cox.net>
+References: <6efbd9b70701120541n5dc4d0e1va50ae96543d8c80@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 12 19:39:27 2007
+X-From: git-owner@vger.kernel.org Fri Jan 12 19:48:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H5RJE-0003Fd-3J
-	for gcvg-git@gmane.org; Fri, 12 Jan 2007 19:39:24 +0100
+	id 1H5RRa-0005PE-Ap
+	for gcvg-git@gmane.org; Fri, 12 Jan 2007 19:48:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964851AbXALSjV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 12 Jan 2007 13:39:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964915AbXALSjV
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jan 2007 13:39:21 -0500
-Received: from tater.midwinter.com ([216.32.86.90]:43584 "HELO midwinter.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S964851AbXALSjU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Jan 2007 13:39:20 -0500
-Received: (qmail 4254 invoked from network); 12 Jan 2007 18:39:20 -0000
-Received: from c-76-21-17-123.hsd1.ca.comcast.net (HELO ?192.168.0.130?) (koreth@76.21.17.123)
-  by tater.midwinter.com with SMTP; 12 Jan 2007 18:39:20 -0000
-User-Agent: Mail/News 1.5.0.9 (Macintosh/20070108)
-To: Andy Parkins <andyparkins@gmail.com>
-In-Reply-To: <200701121501.24642.andyparkins@gmail.com>
+	id S964851AbXALSr7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 12 Jan 2007 13:47:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964925AbXALSr7
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jan 2007 13:47:59 -0500
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:64761 "EHLO
+	fed1rmmtao03.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964851AbXALSr6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Jan 2007 13:47:58 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20070112184757.YOEJ29122.fed1rmmtao03.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 12 Jan 2007 13:47:57 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id AJn51W00Y1kojtg0000000; Fri, 12 Jan 2007 13:47:06 -0500
+To: "Chris Riddoch" <riddochc@gmail.com>
+In-Reply-To: <6efbd9b70701120541n5dc4d0e1va50ae96543d8c80@mail.gmail.com>
+	(Chris Riddoch's message of "Fri, 12 Jan 2007 06:41:21 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36691>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36692>
 
-Andy Parkins wrote:
-> For me, I'd prefer that they worked in subdirectories.  I do all almost all 
-> development in "src/" and having to change up a directory just to run git 
-> commands is inconvenient.
->   
+"Chris Riddoch" <riddochc@gmail.com> writes:
 
-I agree; I find that inconvenient too. The only catch I can see is that 
-there might be an expectation that if you run, say, "git-pull" in the 
-src directory, it will only update the files in src and will leave the 
-ones in the other top-level directories alone. For example, "svn update" 
-works that way.
+> I suggest calling it something like update-index.  ;)
 
-But honestly I think touching files outside the current subdirectory is 
-much less of an inconvenience (and it's something you only get surprised 
-by once, if at all) than not working in subdirectories at all.
+Exactly.
 
--Steve
+People new to git need to learn that the next commit is prepared
+not in the working tree but in a separate entity (staging area),
+and there are ways to update what it consists of.  If that
+concept is new for people coming from other SCM, renaming
+"index" to "staging area" only reduces potential confusion
+(because "index" is too generic word that can mean anything) --
+it does not remove the need to learn the new concept.
+
+And we have called that staging area "the index", and the act of
+updating what it consists of has been called "updating the
+index" for a long time.  The primary command to do so has been
+"git-update-index" plumbing, but we added some sugarcoating and
+now "git-add" and "git-rm" (also "git-merge", "git-am" and
+friends "updates the index" for automatable cases) are two most
+visible ways for the users.
+
+The logical name for the operation, if we _were_ to have only
+one command for "updating the index", is "git-update" or
+"git-update-index".  I do not have anything against "git stage"
+but I simply do not see the point, other than "git update" would
+imply something entirely different to people coming from other
+SCM so we would want to avoid the word, and "git update-index"
+is too long to type every day.
+
+In any case, there are valid reasons that update-index has --add
+and --remove options to force callers to specifically say "Yes I
+know I am talking about unusual things, please".  If we _were_
+to do a single command (be it "git-update" or "git-stage"), it
+needs the same --add/--remove safety, which makes "it's too long
+to type every day -- let's have a single Porcelain-ish" argument
+somewhat moot.  We can have "git-add" and "git-rm" instead.
+
+And indeed we do.  That's where we currently stand.
+
+> First, specifying extra files after 'git commit' bypasses the index.
+
+Which I happen to think is a misfeature.
+
+> If I remove foo.txt, and want to make a new commit reflecting only
+> that removal, 
+
+If you try latest 'git status' in that situation, it would say
+foo.txt is deleted but not updated and suggests to use git-add or
+git-rm to include it in the commit you are creating.
+
+> ...  But then I need to remember to use 'git add'
+> to keep track of most changes in the index, new files and edits alike.
+
+"git commit -a" is your friend.  I think new people should be
+taught that form first, and then "git status" output, and then
+what "git status" suggests them to do (which is "git add" or
+"git rm").
