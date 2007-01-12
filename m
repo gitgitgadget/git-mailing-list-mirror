@@ -1,62 +1,55 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Change to the repository's root directory if needed.
-Date: Fri, 12 Jan 2007 15:17:38 -0800
-Message-ID: <7vvejbq1gt.fsf@assigned-by-dhcp.cox.net>
-References: <7v8xg9x8uu.fsf@assigned-by-dhcp.cox.net>
-	<200701121501.24642.andyparkins@gmail.com>
-	<20070112191044.GA5113@midwinter.com>
-	<7vtzywq703.fsf@assigned-by-dhcp.cox.net>
-	<45A807A9.3090402@midwinter.com>
+From: Stelian Pop <stelian@popies.net>
+Subject: Re: [PATCH] Add hg-to-git conversion utility.
+Date: Sat, 13 Jan 2007 00:18:22 +0100
+Message-ID: <45A8173E.5060804@popies.net>
+References: <1168537766.22649.19.camel@localhost.localdomain>	<eo8ngk$ja$1@sea.gmane.org> <1168632860.29218.5.camel@voyager.dsnet>	<1168639023.13640.2.camel@localhost.localdomain>	<20070112221525.GA20956@spearce.org> <45A81328.9030109@popies.net> <7vzm8nq1lb.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 13 00:17:42 2007
+X-From: git-owner@vger.kernel.org Sat Jan 13 00:18:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H5VeY-00050j-7u
-	for gcvg-git@gmane.org; Sat, 13 Jan 2007 00:17:42 +0100
+	id 1H5VfJ-0005CD-N5
+	for gcvg-git@gmane.org; Sat, 13 Jan 2007 00:18:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161130AbXALXRj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 12 Jan 2007 18:17:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161143AbXALXRj
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jan 2007 18:17:39 -0500
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:43722 "EHLO
-	fed1rmmtao03.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161130AbXALXRj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Jan 2007 18:17:39 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070112231738.IFVF29122.fed1rmmtao03.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 12 Jan 2007 18:17:38 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id APGm1W00g1kojtg0000000; Fri, 12 Jan 2007 18:16:47 -0500
-To: Steven Grimm <koreth@midwinter.com>
-In-Reply-To: <45A807A9.3090402@midwinter.com> (Steven Grimm's message of "Fri,
-	12 Jan 2007 14:11:53 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1161147AbXALXS1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 12 Jan 2007 18:18:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161149AbXALXS1
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jan 2007 18:18:27 -0500
+Received: from sd291.sivit.org ([194.146.225.122]:4789 "EHLO sd291.sivit.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1161147AbXALXS1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Jan 2007 18:18:27 -0500
+Received: from [192.168.6.104] (deep-space-9.popies.net [82.225.86.56])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by sd291.sivit.org (Postfix) with ESMTP id 36D3F58122;
+	Sat, 13 Jan 2007 00:18:25 +0100 (CET)
+User-Agent: Thunderbird 1.5.0.9 (Macintosh/20061207)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vzm8nq1lb.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36727>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36728>
 
-Steven Grimm <koreth@midwinter.com> writes:
+Junio C Hamano a =E9crit :
+> Stelian Pop <stelian@popies.net> writes:
+>=20
+>> But I wrote this since I had a need for it, and once my repositories
+>> converted to git I'm not sure I'll need it again :)
+>=20
+> It is not a good strategy to say upfront that you are not going
+> to maintain it, when you are submitting something for inclusion.
 
-> Junio C Hamano wrote:
->> Porcelains that define SUBDIRECTORY_OK but do not do cdup are
->> very valid, and they should not be cd'ed up automatically.
->>
->
-> My patch doesn't do the cd if SUBDIRECTORY_OK is defined, for exactly
-> that reason.
+Hey, I didn't say I won't fix it if it breaks !
 
-Ah, I misread the patch.  Sorry.
+I may not have the time and need to make it better than it already is=20
+though.
 
-But the point is that the scripts that do not currently say
-SUBDIRECTORY_OK have not even been audited to see if it makes
-sense to always cd to the top.  Isn't your patch making as if
-they are saying SUBDIRECTORY_OK=Yes and cd to the top upfront is
-the right thing to do?
+--=20
+Stelian Pop <stelian@popies.net>
