@@ -1,57 +1,64 @@
-From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
-Subject: Re: [PATCH 1/2] tutorial: Use "git remote add"
-Date: Sat, 13 Jan 2007 11:52:22 +0100
-Message-ID: <8aa486160701130252s4a91a0d1y773f6c6d12a8663f@mail.gmail.com>
-References: <87sleg31av.fsf@gmail.com>
-	 <7vmz4ot7x5.fsf@assigned-by-dhcp.cox.net>
-	 <7virfbrjpa.fsf@assigned-by-dhcp.cox.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] merge-recursive: do not report the resulting tree object
+ name
+Date: Sat, 13 Jan 2007 12:01:27 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0701131159510.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <81b0412b0701040247k47e398e6q34dd5233bb5706f6@mail.gmail.com>
+ <Pine.LNX.4.63.0701041327490.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <81b0412b0701040447u329dcf9bvcd7adb9e9d199f18@mail.gmail.com>
+ <7v8xgileza.fsf@assigned-by-dhcp.cox.net> <81b0412b0701050322u67131900xea969b2da9981a94@mail.gmail.com>
+ <20070107163112.GA9336@steel.home> <7vr6u2adgx.fsf@assigned-by-dhcp.cox.net>
+ <20070112184839.9431ddff.vsu@altlinux.ru> <7vr6u0t87q.fsf@assigned-by-dhcp.cox.net>
+ <7v8xg8t3aj.fsf_-_@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0701130034000.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vbql3pxz8.fsf@assigned-by-dhcp.cox.net> <eo9apg$sqo$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 13 11:52:52 2007
+X-From: git-owner@vger.kernel.org Sat Jan 13 12:01:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H5gVA-0005f4-U4
-	for gcvg-git@gmane.org; Sat, 13 Jan 2007 11:52:45 +0100
+	id 1H5gdl-0007R1-7k
+	for gcvg-git@gmane.org; Sat, 13 Jan 2007 12:01:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161197AbXAMKwZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sat, 13 Jan 2007 05:52:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161311AbXAMKwZ
-	(ORCPT <rfc822;git-outgoing>); Sat, 13 Jan 2007 05:52:25 -0500
-Received: from nf-out-0910.google.com ([64.233.182.189]:16971 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161197AbXAMKwY convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 13 Jan 2007 05:52:24 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so1483673nfa
-        for <git@vger.kernel.org>; Sat, 13 Jan 2007 02:52:23 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=UXqPJd9CcwCwRPupbsQbE55tqxLsfZQQdqf+N5jPgA5QcduYhBCEA5i08jfZODdvEt/jzD7zxgNRWjOAn2oQPtPe+LGj+2TijoW9Gly/FavBaoloJ4U3+leieqYTxkXwN8xBq9iewxls2gUOPKr/75qloZSkNpnmsr9j/WYW5oU=
-Received: by 10.78.47.15 with SMTP id u15mr1110748huu.1168685542583;
-        Sat, 13 Jan 2007 02:52:22 -0800 (PST)
-Received: by 10.78.68.8 with HTTP; Sat, 13 Jan 2007 02:52:21 -0800 (PST)
-To: "Junio C Hamano" <junkio@cox.net>
-In-Reply-To: <7virfbrjpa.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S1161204AbXAMLBa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 13 Jan 2007 06:01:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161223AbXAMLBa
+	(ORCPT <rfc822;git-outgoing>); Sat, 13 Jan 2007 06:01:30 -0500
+Received: from mail.gmx.net ([213.165.64.20]:33842 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1161204AbXAMLB3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Jan 2007 06:01:29 -0500
+Received: (qmail invoked by alias); 13 Jan 2007 11:01:28 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp030) with SMTP; 13 Jan 2007 12:01:28 +0100
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <eo9apg$sqo$1@sea.gmane.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36746>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36747>
 
-On 1/12/07, Junio C Hamano <junkio@cox.net> wrote:
->
-> I'm thinking about committing something like this on top of
-> yours (commentary interspersed in the diff so you cannot apply
-> without enhanced git-apply).
->
+Hi,
 
-Yes, I think it make sense.
+On Sat, 13 Jan 2007, Jakub Narebski wrote:
 
-Santi
+> Junio C Hamano wrote:
+> 
+> > I do not think we need to show 1..15 at all, perhaps without
+> > "export GIT_MERGE_BASE_DEBUG=YesPlease".
+> 
+> Or a -v/--verbose (or even -v -v -v) flag set.
 
-Acked-by: Santi B=E9jar <sbejar@gmail.com>
+... and you'd pass them from git-pull to git-merge to git-merge-recursive? 
+Three different programs parse the same option? And worse, the other 
+strategies ignore the setting? What about strategies people implemented 
+on _their_ side, which do not know about the "-v" flag? I don't think so.
+
+Ciao,
+Dscho
