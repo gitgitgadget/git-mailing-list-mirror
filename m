@@ -1,71 +1,106 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Reencode committer info to utf-8 before formatting mail header
-Date: Sat, 13 Jan 2007 14:18:20 -0800
-Message-ID: <7vfyaek1ub.fsf@assigned-by-dhcp.cox.net>
-References: <871wm08kcu.fsf@morpheus.local>
-	<7vd55jrj38.fsf@assigned-by-dhcp.cox.net>
-	<7vr6tzogp4.fsf@assigned-by-dhcp.cox.net>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [PATCH 1/4] Always perfer annotated tags in git-describe.
+Date: Sat, 13 Jan 2007 17:27:52 -0500
+Message-ID: <20070113222752.GA18011@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: David =?iso-8859-1?Q?K=E5gedal?= <davidk@lysator.liu.se>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Jan 13 23:18:38 2007
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 13 23:28:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H5rCr-0008V3-Pd
-	for gcvg-git@gmane.org; Sat, 13 Jan 2007 23:18:34 +0100
+	id 1H5rM3-00025F-0F
+	for gcvg-git@gmane.org; Sat, 13 Jan 2007 23:28:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422805AbXAMWSX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 13 Jan 2007 17:18:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422806AbXAMWSX
-	(ORCPT <rfc822;git-outgoing>); Sat, 13 Jan 2007 17:18:23 -0500
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:45234 "EHLO
-	fed1rmmtao02.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1422805AbXAMWSW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Jan 2007 17:18:22 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070113221821.FKMB97.fed1rmmtao02.cox.net@fed1rmimpo02.cox.net>;
-          Sat, 13 Jan 2007 17:18:21 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id AmJd1W00g1kojtg0000000; Sat, 13 Jan 2007 17:18:38 -0500
-To: git@vger.kernel.org
-In-Reply-To: <7vr6tzogp4.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Fri, 12 Jan 2007 17:31:35 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1030514AbXAMW14 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 13 Jan 2007 17:27:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030521AbXAMW14
+	(ORCPT <rfc822;git-outgoing>); Sat, 13 Jan 2007 17:27:56 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:35985 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030514AbXAMW1z (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Jan 2007 17:27:55 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1H5rLk-0000He-S6; Sat, 13 Jan 2007 17:27:44 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id A72A820FBAE; Sat, 13 Jan 2007 17:27:52 -0500 (EST)
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36777>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36778>
 
-On this topic, along with the "format-patch" fix (which
-automatically makes "rebase without --merge" do the right thing
-because it is "format-patch piped to am" in essence), I have
-another commit to make "cherry-pick", "rebase --merge" and
-"commit -c/-C" do the right thing according to the
-commitencoding specified in the repository the new commit is
-being created.
+Several people have suggested that its always better to describe
+a commit using an annotated tag, and to only use a lightweight tag
+if absolutely no annotated tag matches the input commit.
 
-The issue is that an existing commit might have come from a
-different repository or from the past when this repository had
-commitencoding that was different from the current value.
-Running "cat-file commit" to extract the old commit log message
-and feeding it directly to create the new commit would not work,
-because the value of commitencoding in this repository may be
-different.
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ builtin-describe.c |   24 +++++++++++++-----------
+ 1 files changed, 13 insertions(+), 11 deletions(-)
 
-This should not affect old encoding-unaware setup where people
-use _only_ a legacy encoding and do not bother to specify any
-commitencoding.  In such a case, both input and output are the
-same and while we pretend both are UTF-8, we actually do not
-trigger conversion.  To support such a configuration is one
-reason I did not actually take Johannes's suggestion to error
-out on an existing commit that does _not_ have encoding header
-but the contents does not look like a valid UTF-8.
-
-The series is currently sitting in 'next'.  If people do not see
-problem with it, I think it should go in v1.5.0.
+diff --git a/builtin-describe.c b/builtin-describe.c
+index a8c98ce..ad672aa 100644
+--- a/builtin-describe.c
++++ b/builtin-describe.c
+@@ -138,6 +138,7 @@ static void describe(const char *arg, int last_one)
+ 	commit_list_insert(cmit, &list);
+ 	while (list) {
+ 		struct commit *c = pop_commit(&list);
++		struct commit_list *parents = c->parents;
+ 		n = match(c);
+ 		if (n) {
+ 			struct possible_tag *p = xmalloc(sizeof(*p));
+@@ -148,17 +149,17 @@ static void describe(const char *arg, int last_one)
+ 			else
+ 				all_matches = p;
+ 			cur_match = p;
+-		} else {
+-			struct commit_list *parents = c->parents;
+-			while (parents) {
+-				struct commit *p = parents->item;
+-				parse_commit(p);
+-				if (!(p->object.flags & SEEN)) {
+-					p->object.flags |= SEEN;
+-					insert_by_date(p, &list);
+-				}
+-				parents = parents->next;
++			if (n->prio == 2)
++				continue;
++		}
++		while (parents) {
++			struct commit *p = parents->item;
++			parse_commit(p);
++			if (!(p->object.flags & SEEN)) {
++				p->object.flags |= SEEN;
++				insert_by_date(p, &list);
+ 			}
++			parents = parents->next;
+ 		}
+ 	}
+ 
+@@ -181,7 +182,8 @@ static void describe(const char *arg, int last_one)
+ 		while ((!min_match || cur_match->depth < min_match->depth)
+ 			&& get_revision(&revs))
+ 			cur_match->depth++;
+-		if (!min_match || cur_match->depth < min_match->depth)
++		if (!min_match || (cur_match->depth < min_match->depth
++			&& cur_match->name->prio >= min_match->name->prio))
+ 			min_match = cur_match;
+ 		free_commit_list(revs.commits);
+ 	}
+-- 
+1.5.0.rc1.g4494
