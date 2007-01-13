@@ -1,131 +1,64 @@
-From: Peter Baumann <siprbaum@stud.informatik.uni-erlangen.de>
-Subject: Re: Importing from tarballs; add, rm, update-index?
-Date: Sat, 13 Jan 2007 17:48:11 +0100
-Message-ID: <20070113164811.GC4825@xp.machine.xx>
-References: <6efbd9b70701120541n5dc4d0e1va50ae96543d8c80@mail.gmail.com> <7virfct737.fsf@assigned-by-dhcp.cox.net> <slrneqfnb8.a6s.Peter.B.Baumann@xp.machine.xx> <7vejq0t4ij.fsf@assigned-by-dhcp.cox.net> <20070112210403.GB6262@xp.machine.xx> <7v7ivrpx9y.fsf@assigned-by-dhcp.cox.net> <87y7o6x60w.wl%cworth@cworth.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Reencode committer info to utf-8 before formatting mail header
+Date: Sat, 13 Jan 2007 09:54:40 -0800
+Message-ID: <7vd55ilsm7.fsf@assigned-by-dhcp.cox.net>
+References: <871wm08kcu.fsf@morpheus.local>
+	<7vr6tzogp4.fsf@assigned-by-dhcp.cox.net>
+	<7vmz4nog5b.fsf@assigned-by-dhcp.cox.net>
+	<200701131323.53121.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 13 17:47:24 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: David =?iso-8859-1?Q?K=E5gedal?= <davidk@lysator.liu.se>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 13 18:55:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H5m2K-0004p4-HT
-	for gcvg-git@gmane.org; Sat, 13 Jan 2007 17:47:20 +0100
+	id 1H5n5j-0002PR-Q0
+	for gcvg-git@gmane.org; Sat, 13 Jan 2007 18:54:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422716AbXAMQrS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 13 Jan 2007 11:47:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422719AbXAMQrS
-	(ORCPT <rfc822;git-outgoing>); Sat, 13 Jan 2007 11:47:18 -0500
-Received: from matlock.hofmann.stw.uni-erlangen.de ([131.188.24.35]:43164 "HELO
-	mail.hofmann.stw.uni-erlangen.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1422716AbXAMQrR (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 13 Jan 2007 11:47:17 -0500
-Received: (qmail 7613 invoked by uid 0); 13 Jan 2007 16:47:13 -0000
-Received: from p54aaa36b.dip0.t-ipconnect.de (HELO localhost) (p.b@hofmann.stw.uni-erlangen.de@84.170.163.107)
-  by mail.hofmann.stw.uni-erlangen.de with SMTP; 13 Jan 2007 16:47:13 -0000
-To: Carl Worth <cworth@cworth.org>
-Mail-Followup-To: Carl Worth <cworth@cworth.org>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <87y7o6x60w.wl%cworth@cworth.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1422739AbXAMRyn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sat, 13 Jan 2007 12:54:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422738AbXAMRyn
+	(ORCPT <rfc822;git-outgoing>); Sat, 13 Jan 2007 12:54:43 -0500
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:33600 "EHLO
+	fed1rmmtao12.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1422737AbXAMRym convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 13 Jan 2007 12:54:42 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20070113175441.LAMQ19398.fed1rmmtao12.cox.net@fed1rmimpo02.cox.net>;
+          Sat, 13 Jan 2007 12:54:41 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id Ahux1W00X1kojtg0000000; Sat, 13 Jan 2007 12:54:58 -0500
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+In-Reply-To: <200701131323.53121.robin.rosenberg.lists@dewire.com> (Robin
+	Rosenberg's message of "Sat, 13 Jan 2007 13:23:52 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36760>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36761>
 
-On Sat, Jan 13, 2007 at 08:09:35AM -0800, Carl Worth wrote:
-> On Fri, 12 Jan 2007 16:48:09 -0800, Junio C Hamano wrote:
-> > Peter Baumann <waste.manager@gmx.de> writes:
-> >
-> > > Yes. I fully second Linus opinion. But I think there should be
-> > > a difference in adding completly new content to the index
-> > > (number of entries in the index grows) or replacing content in
-> > > the index.
-> >
-> > Huh?
-> 
-> Here's an easy way to see the difference that Peter is trying to point
-> out, (and it really has nothing to do with whether "git add" for a new
-> file should add the content of that file to the index---that's a
-> totally separate issue that Linus was talking about in that other
-> message).
-> 
-> Just look at "commit -a" and how its documented right now. Currently
-> it's documented as doing an automatic "add" to all known files. That
-> descriptions is unsatisfactory for two reasons:
-> 
-> 1. "commit -a" will also commit the removal of files---which requires
->    an index modification that "git add" cannot do
-> 
-> 2. "add" can cause an entirely new path (with content, Vader!) to be
->    added to the index. So the user has to carefully separate out this
->    behavior of "add" to properly understand what "commit -a" is
->    doing. The documentation tries to help here with "known files", but
->    the talk of an "automatic 'add'" that never adds any new paths
->    really goes against the primary functionality of "git add".
-> 
->    I say "primary functionality" because the 'commit -a' workflow,
->    (which we've all agreed should be the thing that is taught first),
->    requires users to use 'git add' when adding a new path to the
->    index, but never requires the user to use the 'update the index'
->    sense of 'git add', (instead, the user just needs to _learn_ this
->    sense to understand commit -a).
-> 
-> So there's lots of room for potential confusion there, and we've got
-> evidence of that confusion in the messages that started this an other
-> recent threads about how to remove files.
-> 
-> I like the idea of adding a porcelain command for update-index, and
-> it's nice to try to describe "commit -a" in terms of the new porcelain
-> command. But, to make that really work, I think that porcelain for
-> update-index should really match the semantics needed by "commit
-> -a". That is, it should never add new paths to the index, but it
-> should update content for existing paths, and it should remove paths
-> >from the index when files have been removed from the working tree.
-> 
-> Let's call this new command "refresh", just to experiment with another
-> name. If it existed, then "commit -a" could be described as simply
-> doing "refresh" on all files, (with no need to have a notion of
-> "tracked files", nor any extra language about file removal). That is,
-> "commit -a" could be understood as something like:
-> 
-> 	git refresh -a
-> 	git commit
-> 
-> (or maybe "git refresh .; git commit" if one prefers that, but I think
-> it'd be nice to carry the -a option over to the new porcelain).
-> 
-> Also, this would even make it possible to provide an accurate
-> index-based description of "commit paths...". Namely, something like:
-> 
-> 	commit paths...
-> 
-> 	This command starts with a new index initialized from the
-> 	contents of the current commit (HEAD). It then performs the
-> 	following commands:
-> 
-> 		git refresh paths...
-> 		git commit
-> 
-> 	[Some extra language needed here about restoring into the
-> 	index other changes that were "skipped over".]
-> 
-> So, someone might like to have that kind of description somewhere in
-> the technical documentation of git. (I'd still prefer to see "commit
-> paths..." documented as simply "commits the working-tree content of
-> all specified paths").
-> 
-> Anyway, did I succeed in pointing out why some of us think that the
-> "add a new path (with content) to the index" and the "update content
-> for existing path" really shouldn't be mixed up in the same "add"
-> command?
-> 
+Robin Rosenberg <robin.rosenberg.lists@dewire.com> writes:
 
-Yes. At least for me :-)
+> l=F6rdag 13 januari 2007 02:43 skrev Junio C Hamano:
+>> Side note.  The previous patch does not help if your commit were
+>> made in non UTF-8 with not too recent git; the code assumes that
+>> commit messages without the new "encoding" headers are in UTF-8.
+>
+> Wasn't there a repository option, "commitencoding"?  I can't see it b=
+eing
+> used here.
 
--Peter
+commitencoding is about what encoding the commit newly created
+in this repository right now should claim to have -- in other
+words what is fed to commit-tree.
 
-> -Carl
+We are talking about examining existing commit that might have
+come from another repository or created some time ago when the
+repository configuration was set differently.
