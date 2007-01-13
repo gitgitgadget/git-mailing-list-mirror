@@ -1,115 +1,80 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] merge-recursive: do not report the resulting tree object name
-Date: Fri, 12 Jan 2007 16:32:59 -0800
-Message-ID: <7vbql3pxz8.fsf@assigned-by-dhcp.cox.net>
-References: <81b0412b0701040247k47e398e6q34dd5233bb5706f6@mail.gmail.com>
-	<Pine.LNX.4.63.0701041327490.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	<81b0412b0701040447u329dcf9bvcd7adb9e9d199f18@mail.gmail.com>
-	<7v8xgileza.fsf@assigned-by-dhcp.cox.net>
-	<81b0412b0701050322u67131900xea969b2da9981a94@mail.gmail.com>
-	<20070107163112.GA9336@steel.home>
-	<7vr6u2adgx.fsf@assigned-by-dhcp.cox.net>
-	<20070112184839.9431ddff.vsu@altlinux.ru>
-	<7vr6u0t87q.fsf@assigned-by-dhcp.cox.net>
-	<7v8xg8t3aj.fsf_-_@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0701130034000.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+Subject: Re: Importing from tarballs; add, rm, update-index?
+Date: Fri, 12 Jan 2007 16:48:09 -0800
+Message-ID: <7v7ivrpx9y.fsf@assigned-by-dhcp.cox.net>
+References: <6efbd9b70701120541n5dc4d0e1va50ae96543d8c80@mail.gmail.com>
+	<7virfct737.fsf@assigned-by-dhcp.cox.net>
+	<slrneqfnb8.a6s.Peter.B.Baumann@xp.machine.xx>
+	<7vejq0t4ij.fsf@assigned-by-dhcp.cox.net>
+	<20070112210403.GB6262@xp.machine.xx>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 13 01:33:11 2007
+X-From: git-owner@vger.kernel.org Sat Jan 13 01:48:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H5WpY-0004bH-Ls
-	for gcvg-git@gmane.org; Sat, 13 Jan 2007 01:33:09 +0100
+	id 1H5X4G-0007hR-8T
+	for gcvg-git@gmane.org; Sat, 13 Jan 2007 01:48:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161141AbXAMAdB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 12 Jan 2007 19:33:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030459AbXAMAdB
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jan 2007 19:33:01 -0500
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:45234 "EHLO
-	fed1rmmtao02.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030331AbXAMAdA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Jan 2007 19:33:00 -0500
+	id S1161156AbXAMAsN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 12 Jan 2007 19:48:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161162AbXAMAsN
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jan 2007 19:48:13 -0500
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:39973 "EHLO
+	fed1rmmtao10.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161156AbXAMAsL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Jan 2007 19:48:11 -0500
 Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao02.cox.net
+          by fed1rmmtao10.cox.net
           (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070113003300.IGAC97.fed1rmmtao02.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 12 Jan 2007 19:33:00 -0500
+          id <20070113004810.BRNC20715.fed1rmmtao10.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 12 Jan 2007 19:48:10 -0500
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo01.cox.net with bizsmtp
-	id AQY81W00K1kojtg0000000; Fri, 12 Jan 2007 19:32:08 -0500
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0701130034000.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	(Johannes Schindelin's message of "Sat, 13 Jan 2007 00:36:09 +0100
-	(CET)")
+	id AQnJ1W00P1kojtg0000000; Fri, 12 Jan 2007 19:47:18 -0500
+To: Peter Baumann <waste.manager@gmx.de>
+In-Reply-To: <20070112210403.GB6262@xp.machine.xx> (Peter Baumann's message of
+	"Fri, 12 Jan 2007 22:04:03 +0100")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36732>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36733>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Peter Baumann <waste.manager@gmx.de> writes:
 
-> I like this patch. merge-recursive is very talkative, to the intimidating 
-> astonishment of unsuspecting users.
+> Yes. I fully second Linus opinion. But I think there should be
+> a difference in adding completly new content to the index
+> (number of entries in the index grows) or replacing content in
+> the index.
 
-This is a smallish example:
+Huh?
 
-        $ git merge jc/merge-base
-     1	Trying really trivial in-index merge...
-     2	fatal: Merge requires file-level merging
-     3	Nope.
-     4	Merging HEAD with jc/merge-base
-     5	Merging:
-     6	b60daf0 Make git-prune-packed a bit more chatty.
-     7	5b75a55 Teach "git-merge-base --check-ancestry" about refs.
-     8	found 1 common ancestor(s):
-     9	1c23d79 Don't die in git-http-fetch when fetching packs.
-    10	Auto-merging Makefile
-    11	Auto-merging builtin-branch.c
-    12	Auto-merging builtin-reflog.c
-    13	CONFLICT (content): Merge conflict in builtin-reflog.c
-    14	Auto-merging builtin.h
-    15	Auto-merging git.c
-    16	Removing merge-base.c
-    17	Resolved 'builtin-reflog.c' using previous resolution.
-    18	Automatic merge failed; fix conflicts and then commit the result.
+> ? So take five minutes to really think about that. Take an hour. Take a 
+> ? week. Ponder it.
 
-Among these, I think lines 2..3 are somewhat confusing but I am
-used to seeing them and do not mind them too much.
+I'd second this ;-).
 
-Lines 4..9 do not have any real information that helps the end
-user (even though it would be a very good debugging aid for
-merge-recursive developers).
+> ? What does it mean to "add" something to a project? It has _nothing_ to do 
+> ? with "filenames". Yeah, the filename obviously exists, but it's not 
+> ? something that exists on its own. You add the ONLY thing that git tracks. 
+> ? 
+> ? You add CONTENT.
+> ? 
+> ? When you do "git add file.c" you aren't adding a filename to the list of 
+> ? files that git knows about. Not even CLOSE. No. You are really adding 
+> ? _content_ to the project you are tracking.
 
-Lines 10..16 are useful, but I think we probably should show
-them only for outermost merges.
+Read this again, please.  Ponder it if you may.
 
-An multi-base example:
+> ? So even without an index, "git add" should work the way it works, once you 
+> ? can just let go of the broken model that is CVS.
+> ? 
+> ? Please. Join me, Luke. The power of the git side is stronger. I am your 
+> ? father. 
+> ? 
+> ?			Linus
 
-        $ git merge 82560983997c961d9deafe0074b787c8484c2e1d
-     1	Merging HEAD with 82560983997c961d9deafe0074b787c8484c2e1d
-     2	Merging:
-     3	9ee93dc Merge for-each-ref to sync gitweb fully with 'next'...
-     4	8256098 gitweb: Print commit message without title in commi...
-     5	found 2 common ancestor(s):
-     6	b2d3476 Gitweb - provide site headers and footers
-     7	1259404 Merge branch 'maint'
-     8	  Merging:
-     9	  b2d3476 Gitweb - provide site headers and footers
-    10	  1259404 Merge branch 'maint'
-    11	  found 1 common ancestor(s):
-    12	  128eead gitweb: document webserver configuration for comm...
-    13	  Auto-merging Makefile
-    14	  Auto-merging gitweb/gitweb.perl
-    15	  CONFLICT (content): Merge conflict in gitweb/gitweb.perl
-    16	Auto-merging gitweb/gitweb.perl
-    17	Merge made by recursive.
-    18	 gitweb/gitweb.css  |    2 +
-    19	 gitweb/gitweb.perl |  165 ++++++++++++++++++++++++++++++++...
-    20	 2 files changed, 117 insertions(+), 50 deletions(-)
-
-I do not think we need to show 1..15 at all, perhaps without
-"export GIT_MERGE_BASE_DEBUG=YesPlease".
+And probably I am your uncle ;-).
