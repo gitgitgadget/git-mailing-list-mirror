@@ -1,95 +1,90 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Alan Chandler <alan@chandlerfamily.org.uk>
 Subject: Re: Importing from tarballs; add, rm, update-index?
-Date: Sat, 13 Jan 2007 10:01:51 -0800
-Message-ID: <7v1wlylsa8.fsf@assigned-by-dhcp.cox.net>
-References: <6efbd9b70701120541n5dc4d0e1va50ae96543d8c80@mail.gmail.com>
-	<7virfct737.fsf@assigned-by-dhcp.cox.net>
-	<slrneqfnb8.a6s.Peter.B.Baumann@xp.machine.xx>
-	<7vejq0t4ij.fsf@assigned-by-dhcp.cox.net>
-	<20070112210403.GB6262@xp.machine.xx>
-	<7v7ivrpx9y.fsf@assigned-by-dhcp.cox.net>
-	<20070113093322.GA4825@xp.machine.xx>
+Date: Sat, 13 Jan 2007 18:15:27 +0000
+Message-ID: <200701131815.27481.alan@chandlerfamily.org.uk>
+References: <6efbd9b70701120541n5dc4d0e1va50ae96543d8c80@mail.gmail.com> <slrneqha0g.5sa.Peter.B.Baumann@xp.machine.xx> <E5A7E6A8-45FF-4A7A-A31E-DFEBAD48DF1C@silverinsanity.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 13 19:02:01 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Sat Jan 13 19:15:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H5nCV-0003zX-ED
-	for gcvg-git@gmane.org; Sat, 13 Jan 2007 19:01:55 +0100
+	id 1H5nPs-00074W-Ef
+	for gcvg-git@gmane.org; Sat, 13 Jan 2007 19:15:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422739AbXAMSBx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 13 Jan 2007 13:01:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422743AbXAMSBx
-	(ORCPT <rfc822;git-outgoing>); Sat, 13 Jan 2007 13:01:53 -0500
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:64889 "EHLO
-	fed1rmmtao07.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1422739AbXAMSBw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Jan 2007 13:01:52 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao07.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070113180151.GOKN3976.fed1rmmtao07.cox.net@fed1rmimpo02.cox.net>;
-          Sat, 13 Jan 2007 13:01:51 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id Ai281W0051kojtg0000000; Sat, 13 Jan 2007 13:02:08 -0500
-To: Peter Baumann <waste.manager@gmx.de>
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1422737AbXAMSPe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 13 Jan 2007 13:15:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422744AbXAMSPe
+	(ORCPT <rfc822;git-outgoing>); Sat, 13 Jan 2007 13:15:34 -0500
+Received: from 82-44-22-127.cable.ubr06.croy.blueyonder.co.uk ([82.44.22.127]:60521
+	"EHLO home.chandlerfamily.org.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1422737AbXAMSPd (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 13 Jan 2007 13:15:33 -0500
+Received: from kanger.home ([192.168.0.21])
+	by home.chandlerfamily.org.uk with esmtp (Exim 4.63)
+	(envelope-from <alan@chandlerfamily.org.uk>)
+	id 1H5nPg-0005rm-7d
+	for git@vger.kernel.org; Sat, 13 Jan 2007 18:15:32 +0000
+To: git@vger.kernel.org
+User-Agent: KMail/1.9.5
+In-Reply-To: <E5A7E6A8-45FF-4A7A-A31E-DFEBAD48DF1C@silverinsanity.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36763>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36764>
 
-Peter Baumann <waste.manager@gmx.de> writes:
+> I was referring to adding Linus' rant...  And maybe several others.
+> I tend to find his rants at least slightly amusing, highly
+> informative, and I tend to end up agreeing.  I have very little
+> opinion on your complaint so long as the system works consistently.
+> "git commit -a" is still my most common workflow.  I've used git-add
+> (and prior to that git-update-index) from time to time when I fix
+> bugs that need to be separate from my current work, but far far more
+> common is "I finished this chunk of functionality, add all the
+> changes I did to make it happen".
 
-> Yes. I am adding content. And not a file. But at least to me, it makes a
-> *BIG* difference if I'm adding totally new content (reserving one more
-> bucket where to place to content) or just replacing the content *in* one
-> of those already reserved buckets. And that has nothing to do with
-> files (or at least the silly me can't grok it).
+I think the fact that this thread has come alive again implies we didn't 
+bottom it last time through.
 
-To put this silly naming argument to the rest for now, because I
-am not going to change add/rm nor introduce refresh, at least
-during this round, so keeping this thread alive would just waste
-everybody's time doing mental masturbation.
+One thing, in particular, has been bugging me with the hide the index 
+concept - that is, its still necessary to git add files for them to be 
+picked up with git commit -a
 
-Physically the index is represented as a list of <blob object
-name, pathname> tuples.  When we say "git tracks contents",
-however, we look at it as if content of each blob object is just
-a bytestream labeled with the pathname.
+My (albeit limited) experience with using git is at home coding a java 
+application for my web site using eclipse.  During the application 
+development when I am initially coding the application, or when I am 
+doing a major update that adds new pages to my site then I have to 
+remember to git add files.  My immediate instinct is do do commands of 
+the form
 
-When you say "git-update-index file" (without --add/--remove),
-what happens is "UPDATE" (in SQL sense).  The part of the data
-recorded in the current index that is labeled with "file" is
-replaced with what is from the working tree.
+git add 
+Javasource/uk/org/chandlerfamily/appname/tapestry/pages/subdir/xxx.java
 
-The --add option changes the "UPDATE" to "INSERT OR REPLACE".
-It allows contents that are labelled with a pathname that does
-not yet exist in the index.  What --remove does is to allow it
-to also "DELETE".
+and
+git add Webcontent/subdir/xxx.html
 
-So there _is_ a distinction between adding new pathname and
-updating the contents at the low level.
+which even with bash completion is a pain to enter.
 
-However, if you look at the way 'git-update-index' is used in
-the Porcelain-ish scripts (now you would need to go back and
-examine a bit older versions of git, since many commands have
-been rewritten in C to become built-in and we use update-index
-in much fewer places in today's version), we almost always used
-update-index with --add when talking about the set of paths the
-end user talks about ('am' and 'applypatch' uses --index-info;
-this is also "INSERT OR REPLACE" operation primarily).  The
-places we did not, we knew we were only dealing with known set
-of paths taken from the current index, so they also could have
-had --add without any ill effects.  
+(although that is probably harder than it needs to be - can't I just do 
+git add . ?)
 
-In other words, there was not much need for "UPDATE only, please
-do not INSERT" in practice.
+I don't know whether we have had the debate here - if we have done it 
+would have been in the very very early days, but subject to 
+the .gitignore rules what would be the implications of a git commit -a 
+that automatically adds any files within the directory (and 
+subdirectories) in which it is issued.
 
-That's primarily why the higher level interface git-add / git-mv
-does not expose that distinction; git-add will do "INSERT OR
-REPLACE".  git-rm will do "DELETE", and there will be no higher
-level to only do "UPDATE".
+Then I think you don't even have to get into what is git add all about 
+until you get to the "use the index" stage.
+
+I am (at the moment - but I am good at changing my mind) in the side of 
+giit add for both adding new paths and updating content.  This is 
+purely  pragmatic - don't have to remember which one I am trying to do.
+
+-- 
+Alan Chandler
+http://www.chandlerfamily.org.uk
