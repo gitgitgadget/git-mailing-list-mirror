@@ -1,80 +1,80 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: [PATCH 3/3] Allow whole-tree operations to be started from a subdirectory
-Date: Sat, 13 Jan 2007 16:42:15 +0000
-Message-ID: <200701131642.16824.andyparkins@gmail.com>
-References: <7v8xg9x8uu.fsf@assigned-by-dhcp.cox.net> <7vy7o8rnyw.fsf_-_@assigned-by-dhcp.cox.net> <7vac0orml9.fsf_-_@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="ansi_x3.4-1968"
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: Re: Importing from tarballs; add, rm, update-index?
+Date: Sat, 13 Jan 2007 11:45:29 -0500
+Message-ID: <6C7B9A8F-122D-446A-AF25-409C9DCAA592@silverinsanity.com>
+References: <6efbd9b70701120541n5dc4d0e1va50ae96543d8c80@mail.gmail.com> <7virfct737.fsf@assigned-by-dhcp.cox.net> <slrneqfnb8.a6s.Peter.B.Baumann@xp.machine.xx> <7vejq0t4ij.fsf@assigned-by-dhcp.cox.net> <20070112210403.GB6262@xp.machine.xx> <7v7ivrpx9y.fsf@assigned-by-dhcp.cox.net> <87y7o6x60w.wl%cworth@cworth.org>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sat Jan 13 17:45:21 2007
+Cc: Junio C Hamano <junkio@cox.net>,
+	Peter Baumann <waste.manager@gmx.de>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 13 17:45:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H5m0K-0004Ou-U0
-	for gcvg-git@gmane.org; Sat, 13 Jan 2007 17:45:17 +0100
+	id 1H5m0e-0004TX-3b
+	for gcvg-git@gmane.org; Sat, 13 Jan 2007 17:45:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422711AbXAMQpI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 13 Jan 2007 11:45:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422712AbXAMQpI
-	(ORCPT <rfc822;git-outgoing>); Sat, 13 Jan 2007 11:45:08 -0500
-Received: from ug-out-1314.google.com ([66.249.92.175]:33731 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1422711AbXAMQpG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Jan 2007 11:45:06 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so1021210uga
-        for <git@vger.kernel.org>; Sat, 13 Jan 2007 08:45:05 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=iuDYlIobICymK6ad+LFLw1Vb2on3HobaaN6uVEUvYiiaMu+y6ft/OatJLZkeutXg3PFmoWOg68sqsvWdDR6IIicAN7SNvybkfOHqptO7Gq8ZrTgGfnj+vNPi4f/zU+/kBulvpu0V6383DVZpR5y/t1wTvBbsqmYJ6i5F2lSsZpk=
-Received: by 10.78.118.19 with SMTP id q19mr1243675huc.1168706704939;
-        Sat, 13 Jan 2007 08:45:04 -0800 (PST)
-Received: from grissom.internal.parkins.org.uk ( [84.201.153.164])
-        by mx.google.com with ESMTP id 33sm2480308hue.2007.01.13.08.45.01;
-        Sat, 13 Jan 2007 08:45:01 -0800 (PST)
-To: git@vger.kernel.org
-User-Agent: KMail/1.9.5
-In-Reply-To: <7vac0orml9.fsf_-_@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S1422712AbXAMQpd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 13 Jan 2007 11:45:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422716AbXAMQpd
+	(ORCPT <rfc822;git-outgoing>); Sat, 13 Jan 2007 11:45:33 -0500
+Received: from vs072.rosehosting.com ([216.114.78.72]:42975 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1422712AbXAMQpd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Jan 2007 11:45:33 -0500
+Received: from [IPv6???1] (localhost [127.0.0.1])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTP id 36DD61FFC02B;
+	Sat, 13 Jan 2007 16:45:32 +0000 (UTC)
+In-Reply-To: <87y7o6x60w.wl%cworth@cworth.org>
+To: Carl Worth <cworth@cworth.org>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36758>
-
-On Friday 2007, January 12 20:56, Junio C Hamano wrote:
-
-> This may not actually be what we want to do.  These commands are
-> inherently whole-tree operations, and an inexperienced user may
-> mistakenly expect a "git pull" from a subdirectory would merge
-> only the subdirectory the command started from.
-
-You're right it might be confusing at first, however, I still think it's the 
-right thing to do.
-
-Here's my reasoning: for a while, with subversion as a user you feel all warm 
-inside that commands only work on the current subdirectory, so "svn update" 
-would only update the current subdirectory to the latest revision.  Of course 
-as git users we all see the horrendous potential errors that behaviour can 
-induce.  It creates subdirectories with mixed versions from the repository - 
-absolute disaster pends.
-
-Git is of course far more sensible, if you checkout in a subdirectory the 
-whole working directory changes, meaning everything is always nicely in sync 
-and really does represent a snapshot at any time.
-
-Now; once you (as a new user) accept that git checkout should (and does) 
-checkout the whole working directory regardless of where you are, then by 
-extension every other working-directory-wide command should do the same.
-
-Phew.  I'm too noisy.  What a verbose way of saying
-   fromAOL("me too");
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36759>
 
 
-Andy
+On Jan 13, 2007, at 11:09 AM, Carl Worth wrote:
 
--- 
-Dr Andrew Parkins, M Eng (Hons), AMIEE
-andyparkins@gmail.com
+> Also, this would even make it possible to provide an accurate
+> index-based description of "commit paths...". Namely, something like:
+>
+> 	commit paths...
+>
+> 	This command starts with a new index initialized from the
+> 	contents of the current commit (HEAD). It then performs the
+> 	following commands:
+>
+> 		git refresh paths...
+> 		git commit
+>
+> 	[Some extra language needed here about restoring into the
+> 	index other changes that were "skipped over".]
+>
+> So, someone might like to have that kind of description somewhere in
+> the technical documentation of git. (I'd still prefer to see "commit
+> paths..." documented as simply "commits the working-tree content of
+> all specified paths").
+
+I fail to see why this description can't be used with s/refresh/ 
+add/.  I also don't think it's a very clear description because of  
+the "starting with a new index" and the hand-waving involved in  
+"restoring into the index other changes".
+
+I can somewhat understand the desire to split git-add (although I  
+don't share it).  But I don't see the need for it to be a new git- 
+refresh, since that functionality already exists as git-update- 
+index.  Is using git-add to add to the index a conceptual problem or  
+is it causing actual problems in people's usage of git?  If it's an  
+issue of teaching new users, I _think_ that could be resolved very  
+simply as "git add adds content to the index" when we explain the  
+index as the staging area for a new commit and wean people off of  
+"git commit -a".  A short discussion of "tracking content vs. files"  
+is probably also a good idea.  (I honestly haven't read the tutorials  
+in a long long time, so this may already be in there.)
+
+~~ Brian
