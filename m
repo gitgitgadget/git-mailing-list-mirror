@@ -1,92 +1,57 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH] git-svn: fix tests to work with older svn
-Date: Sat, 13 Jan 2007 02:47:53 -0800
-Message-ID: <20070113104753.GA19580@localdomain>
+From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
+Subject: Re: [PATCH 1/2] tutorial: Use "git remote add"
+Date: Sat, 13 Jan 2007 11:52:22 +0100
+Message-ID: <8aa486160701130252s4a91a0d1y773f6c6d12a8663f@mail.gmail.com>
+References: <87sleg31av.fsf@gmail.com>
+	 <7vmz4ot7x5.fsf@assigned-by-dhcp.cox.net>
+	 <7virfbrjpa.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 13 11:48:15 2007
+X-From: git-owner@vger.kernel.org Sat Jan 13 11:52:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H5gQl-0004k1-Eo
-	for gcvg-git@gmane.org; Sat, 13 Jan 2007 11:48:11 +0100
+	id 1H5gVA-0005f4-U4
+	for gcvg-git@gmane.org; Sat, 13 Jan 2007 11:52:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161296AbXAMKr4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 13 Jan 2007 05:47:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161307AbXAMKr4
-	(ORCPT <rfc822;git-outgoing>); Sat, 13 Jan 2007 05:47:56 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:37839 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1161296AbXAMKrz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Jan 2007 05:47:55 -0500
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id CEAC27DC094;
-	Sat, 13 Jan 2007 02:47:53 -0800 (PST)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Sat, 13 Jan 2007 02:47:53 -0800
-To: Junio C Hamano <junkio@cox.net>
+	id S1161197AbXAMKwZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sat, 13 Jan 2007 05:52:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161311AbXAMKwZ
+	(ORCPT <rfc822;git-outgoing>); Sat, 13 Jan 2007 05:52:25 -0500
+Received: from nf-out-0910.google.com ([64.233.182.189]:16971 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161197AbXAMKwY convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 13 Jan 2007 05:52:24 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so1483673nfa
+        for <git@vger.kernel.org>; Sat, 13 Jan 2007 02:52:23 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=UXqPJd9CcwCwRPupbsQbE55tqxLsfZQQdqf+N5jPgA5QcduYhBCEA5i08jfZODdvEt/jzD7zxgNRWjOAn2oQPtPe+LGj+2TijoW9Gly/FavBaoloJ4U3+leieqYTxkXwN8xBq9iewxls2gUOPKr/75qloZSkNpnmsr9j/WYW5oU=
+Received: by 10.78.47.15 with SMTP id u15mr1110748huu.1168685542583;
+        Sat, 13 Jan 2007 02:52:22 -0800 (PST)
+Received: by 10.78.68.8 with HTTP; Sat, 13 Jan 2007 02:52:21 -0800 (PST)
+To: "Junio C Hamano" <junkio@cox.net>
+In-Reply-To: <7virfbrjpa.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36745>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36746>
 
-Some of the recent changes and shortcuts to the tests broke
-things for people using older versions of svn:
+On 1/12/07, Junio C Hamano <junkio@cox.net> wrote:
+>
+> I'm thinking about committing something like this on top of
+> yours (commentary interspersed in the diff so you cannot apply
+> without enhanced git-apply).
+>
 
-t9104-git-svn-follow-parent.sh:
-  v1.2.3 (from SuSE 10.0 as reported by riddochc on #git
-  (thanks!)) required an extra 'svn up'.  I was also able to
-  reproduce this with v1.1.4 (Debian Sarge).
+Yes, I think it make sense.
 
-lib-git-svn.sh:
-  SVN::Repos bindings in versions up to and including 1.1.4
-  (Sarge again) do not pass fs-config options to the underlying
-  library.  BerkeleyDB repositories also seem completely broken
-  on all my Sarge machines; so not using FSFS does not seem to
-  be an option for most people.
+Santi
 
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
----
- t/lib-git-svn.sh                 |    5 +++--
- t/t9104-git-svn-follow-parent.sh |    1 +
- 2 files changed, 4 insertions(+), 2 deletions(-)
-
-diff --git a/t/lib-git-svn.sh b/t/lib-git-svn.sh
-index af42ccc..a0f2814 100644
---- a/t/lib-git-svn.sh
-+++ b/t/lib-git-svn.sh
-@@ -25,14 +25,15 @@ perl -w -e "
- use SVN::Core;
- use SVN::Repos;
- \$SVN::Core::VERSION gt '1.1.0' or exit(42);
--SVN::Repos::create('$svnrepo', undef, undef, undef,
--                           { 'fs-config' => 'fsfs'});
-+system(qw/svnadmin create --fs-type fsfs/, '$svnrepo') == 0 or exit(41);
- "
- x=$?
- if test $x -ne 0
- then
- 	if test $x -eq 42; then
- 		err='Perl SVN libraries must be >= 1.1.0'
-+	elif test $x -eq 41; then
-+		err='svnadmin failed to create fsfs repository'
- 	else
- 		err='Perl SVN libraries not found or unusable, skipping test'
- 	fi
-diff --git a/t/t9104-git-svn-follow-parent.sh b/t/t9104-git-svn-follow-parent.sh
-index 400c21c..8d2e2fe 100755
---- a/t/t9104-git-svn-follow-parent.sh
-+++ b/t/t9104-git-svn-follow-parent.sh
-@@ -17,6 +17,7 @@ test_expect_success 'initialize repo' "
- 	cd wc &&
- 	echo world >> trunk/readme &&
- 	svn commit -m 'another commit' &&
-+	svn up &&
- 	svn mv -m 'rename to thunk' trunk thunk &&
- 	svn up &&
- 	echo goodbye >> thunk/readme &&
--- 
-Eric Wong
+Acked-by: Santi B=E9jar <sbejar@gmail.com>
