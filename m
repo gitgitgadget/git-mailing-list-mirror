@@ -1,79 +1,76 @@
-From: Josef Sipek <jsipek@cs.sunysb.edu>
-Subject: [ANNOUNCE] Guilt v0.18
-Date: Sun, 14 Jan 2007 20:02:39 -0500
-Message-ID: <20070115010239.GB9484@filer.fsl.cs.sunysb.edu>
+From: lamikr <lamikr@cc.jyu.fi>
+Subject: Re: What's in git.git and announcing GIT v1.5.0-rc1
+Date: Mon, 15 Jan 2007 01:36:09 +0200
+Message-ID: <45AABE69.1070505@cc.jyu.fi>
+References: <7v8xg9x8uu.fsf@assigned-by-dhcp.cox.net>
+Reply-To: lamikr@cc.jyu.fi
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: linux-kernel@vger.kernel.org
-X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1751771AbXAOBCn@vger.kernel.org Mon Jan 15 19:13:49 2007
-Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1751771AbXAOBCn@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@m.gmane.org
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 15 19:14:34 2007
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git@m.gmane.org
 Received: from main.gmane.org ([80.91.229.2] helo=ciao.gmane.org)
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H6Vbk-0003BJ-Ds
-	for glk-linux-kernel-3@m.gmane.org; Mon, 15 Jan 2007 18:26:56 +0100
+	id 1H6VbT-00037T-4y
+	for gcvg-git@m.gmane.org; Mon, 15 Jan 2007 18:26:39 +0100
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1H6V8h-0003eK-3M
-	for glk-linux-kernel-3@m.gmane.org; Mon, 15 Jan 2007 17:56:55 +0100
+	id 1H6V8j-0003eK-2y
+	for gcvg-git@m.gmane.org; Mon, 15 Jan 2007 17:56:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751771AbXAOBCn (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Sun, 14 Jan 2007 20:02:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751770AbXAOBCn
-	(ORCPT <rfc822;linux-kernel-outgoing>);
-	Sun, 14 Jan 2007 20:02:43 -0500
-Received: from filer.fsl.cs.sunysb.edu ([130.245.126.2]:50599 "EHLO
-	filer.fsl.cs.sunysb.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751768AbXAOBCm (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Sun, 14 Jan 2007 20:02:42 -0500
-Received: from filer.fsl.cs.sunysb.edu (IDENT:AK7ZcEitXiQssrMLje2XctiNdpAoSwFS@localhost.localdomain [127.0.0.1])
-	by filer.fsl.cs.sunysb.edu (8.12.11.20060308/8.13.1) with ESMTP id l0F12egl013351;
-	Sun, 14 Jan 2007 20:02:40 -0500
-Received: (from jsipek@localhost)
-	by filer.fsl.cs.sunysb.edu (8.12.11.20060308/8.13.1/Submit) id l0F12dKr013349;
-	Sun, 14 Jan 2007 20:02:39 -0500
-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.4.1i
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1751770AbXAOB06 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 14 Jan 2007 20:26:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751773AbXAOB06
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 Jan 2007 20:26:58 -0500
+Received: from posti5.jyu.fi ([130.234.4.34]:59822 "EHLO posti5.jyu.fi"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751770AbXAOB06 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Jan 2007 20:26:58 -0500
+X-Greylist: delayed 6680 seconds by postgrey-1.27 at vger.kernel.org; Sun, 14 Jan 2007 20:26:57 EST
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by posti5.jyu.fi (8.13.6/8.13.6) with ESMTP id l0ENZYBe010142;
+	Mon, 15 Jan 2007 01:35:34 +0200
+X-Virus-Scanned: amavisd-new at cc.jyu.fi
+Received: from posti5.jyu.fi ([127.0.0.1])
+	by localhost (posti5.jyu.fi [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id bARBg1FRLS0h; Mon, 15 Jan 2007 01:35:33 +0200 (EET)
+Received: from aragorn.kortex.jyu.fi (aragorn.kortex.jyu.fi [130.234.182.120])
+	by posti5.jyu.fi (8.13.6/8.13.6) with ESMTP id l0ENZWDE010137;
+	Mon, 15 Jan 2007 01:35:33 +0200
+Received: from [127.0.0.1] (aragorn2.kortex.jyu.fi [127.0.0.1])
+	by aragorn.kortex.jyu.fi (Postfix) with ESMTP id 6B2E34680B1;
+	Mon, 15 Jan 2007 01:36:09 +0200 (EET)
+User-Agent: Thunderbird 1.5.0.9 (X11/20070111)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v8xg9x8uu.fsf@assigned-by-dhcp.cox.net>
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36820>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36821>
 
-Guilt v0.18 is available for download.
+Junio C Hamano wrote:
+> The tip of 'master' branch is tagged as v1.5.0-rc1; this means a
+> few things:
+>   
+Hi
 
-Guilt (Git Quilt) is a series of bash scripts which add a Mercurial
-queues-like functionality and interface to git.
+Would it make sense to add something like this to the announcements as
+it is not very easy to find references to the git-repository itself from
+the net.
 
-Tarballs:
-http://www.kernel.org/pub/linux/kernel/people/jsipek/guilt/
+   You can get the git repository-itself by using a following commands
 
-Git repo:
-git://git.kernel.org/pub/scm/linux/kernel/git/jsipek/guilt.git
+           git-clone git://git.kernel.org/pub/scm/git/git.git git_repo
 
+   After that you can switch to tagged version <v1.5.0-rc1> or sources
+from the repository by using command
 
-The majority of changes is in greater sanity checking - before a patch is
-pushed/popped/refreshed, we check the HEAD hash with that in the status file.
-guilt-pop now does only one git-reset instead of n (n == number of patches
-to pop). This should greatly increase the speed of popping patches.
+          git-checkout -f v1.5.0-rc1 master
 
-Josef "Jeff" Sipek.
+   Alternatively you can download the tar packed version of sources from
+      
+          http://www.kernel.org/pub/software/scm/git/
 
-----------
-
-Josef 'Jeff' Sipek (10):
-      push_patch should be more careful when applying patches
-      pop_patch should be quieter
-      Removed debug line out of push_patch
-      guilt-pop is now less brain damaged
-      Add -m & -s args to guilt-new
-      push_patch: look at diff stats instead of number of lines in patch
-      Check HEAD hash against what we expect before push/pop/refresh
-      Small cleanup in push_patch
-      TODO moved to a separate branch
-      Guilt v0.18
-
--- 
-All science is either physics or stamp collecting.
-		- Ernest Rutherford
+Mika
