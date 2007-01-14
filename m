@@ -1,83 +1,56 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH] Use nice names in conflict markers during cherry-pick/revert.
-Date: Mon, 15 Jan 2007 01:41:22 -0500
-Message-ID: <20070115064122.GA12372@spearce.org>
+From: fork0@t-online.de (Alex Riesen)
+Subject: Re: [PATCH 1/4] Remove unnecessary call_depth parameter in merge-recursive.
+Date: Sun, 14 Jan 2007 20:35:03 +0100
+Message-ID: <20070114193503.GB2378@steel.home>
+References: <20070114052832.GA19113@spearce.org>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 15 20:18:13 2007
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 15 20:18:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@m.gmane.org
 Received: from main.gmane.org ([80.91.229.2] helo=ciao.gmane.org)
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H6W2J-0000NL-04
-	for gcvg-git@m.gmane.org; Mon, 15 Jan 2007 18:54:23 +0100
+	id 1H6W2B-0000IT-J3
+	for gcvg-git@m.gmane.org; Mon, 15 Jan 2007 18:54:15 +0100
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1H6V93-0003eK-LC
-	for gcvg-git@m.gmane.org; Mon, 15 Jan 2007 17:57:18 +0100
+	id 1H6V7z-0003eK-UR
+	for gcvg-git@m.gmane.org; Mon, 15 Jan 2007 17:56:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751828AbXAOGl3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 15 Jan 2007 01:41:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751826AbXAOGl3
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Jan 2007 01:41:29 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:40977 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751828AbXAOGl2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Jan 2007 01:41:28 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1H6LX4-0000ZA-7s; Mon, 15 Jan 2007 01:41:26 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 2A61A20FBAE; Mon, 15 Jan 2007 01:41:23 -0500 (EST)
-To: Junio C Hamano <junkio@cox.net>
+	id S1751622AbXANTfV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 14 Jan 2007 14:35:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751641AbXANTfV
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 Jan 2007 14:35:21 -0500
+Received: from mailout01.sul.t-online.com ([194.25.134.80]:57524 "EHLO
+	mailout01.sul.t-online.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751622AbXANTfU (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 14 Jan 2007 14:35:20 -0500
+Received: from fwd26.aul.t-online.de 
+	by mailout01.sul.t-online.com with smtp 
+	id 1H6B8N-0007DN-00; Sun, 14 Jan 2007 20:35:15 +0100
+Received: from tigra.home (G59O1YZJweJOKM1pKq7clNQ7TZH6HUcOTokD3idcu6UegxWPPBh5Ej@[84.163.118.52]) by fwd26.sul.t-online.de
+	with esmtp id 1H6B8B-2CDG2i0; Sun, 14 Jan 2007 20:35:03 +0100
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 76B7A277B6;
+	Sun, 14 Jan 2007 20:35:03 +0100 (CET)
+Received: by steel.home (Postfix, from userid 1000)
+	id 62622C79D; Sun, 14 Jan 2007 20:35:03 +0100 (CET)
+To: "Shawn O. Pearce" <spearce@spearce.org>
 Content-Disposition: inline
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+In-Reply-To: <20070114052832.GA19113@spearce.org>
+User-Agent: Mutt/1.5.12-2006-07-14
+X-ID: G59O1YZJweJOKM1pKq7clNQ7TZH6HUcOTokD3idcu6UegxWPPBh5Ej
+X-TOI-MSGID: f9e1df73-4f22-4c03-87fe-8b89f9e4b5d3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36871>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36872>
 
-Always call the current HEAD 'HEAD', and name the patch being
-cherry-picked or reverted by its oneline subject rather than
-its SHA1.  This matches git am's behavior and is done because
-users most commonly are cherry-picking by SHA1 rather than by
-ref name.
+Shawn O. Pearce, Sun, Jan 14, 2007 06:28:33 +0100:
+> Because the output_indent always matches the call_depth value
+> there is no reason to pass around the call_depth to the merge
+> function during each recursive invocation.
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
-
- This is on top of your prior patch "Use merge-recursive in
- git-revert/git-cherry-pick".
-
- git-revert.sh |    6 ++++++
- 1 files changed, 6 insertions(+), 0 deletions(-)
-
-diff --git a/git-revert.sh b/git-revert.sh
-index c74af99..bb8f1ca 100755
---- a/git-revert.sh
-+++ b/git-revert.sh
-@@ -146,6 +146,12 @@ cherry-pick)
- 
- esac >.msg
- 
-+eval GITHEAD_$head=HEAD
-+eval GITHEAD_$next='`git show -s \
-+	--pretty=oneline --encoding="$encoding" "$commit" |
-+	sed -e "s/^[^ ]* //"`'
-+export GITHEAD_$head GITHEAD_$next
-+
- # This three way merge is an interesting one.  We are at
- # $head, and would want to apply the change between $commit
- # and $prev on top of us (when reverting), or the change between
--- 
-1.5.0.rc1.g4494
+Actually, you removed output_indent, not call_depth.
