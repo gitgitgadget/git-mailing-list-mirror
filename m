@@ -1,54 +1,64 @@
-From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-Subject: Re: [PATCH 3/3] Allow whole-tree operations to be started from a subdirectory
-Date: Sun, 14 Jan 2007 01:39:25 +0100
-Message-ID: <200701140139.26120.Josef.Weidendorfer@gmx.de>
-References: <7v8xg9x8uu.fsf@assigned-by-dhcp.cox.net> <200701140111.20671.Josef.Weidendorfer@gmx.de> <20070114002152.GA18277@spearce.org>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
+From: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
+Subject: Re: [PATCH] Reencode committer info to utf-8 before formatting mail header
+Date: Sat, 13 Jan 2007 21:42:57 -0300
+Message-ID: <200701140042.l0E0gvMT005024@laptop13.inf.utfsm.cl>
+References: <20070113110238.GA2795@steel.home>
 Cc: Junio C Hamano <junkio@cox.net>,
-	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 14 01:39:40 2007
+	David =?iso-8859-15?Q?K=E5gedal?= <davidk@lysator.liu.se>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jan 14 01:43:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H5tPM-0006xQ-GC
-	for gcvg-git@gmane.org; Sun, 14 Jan 2007 01:39:36 +0100
+	id 1H5tSp-0007ig-Gj
+	for gcvg-git@gmane.org; Sun, 14 Jan 2007 01:43:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750869AbXANAje (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 13 Jan 2007 19:39:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750899AbXANAje
-	(ORCPT <rfc822;git-outgoing>); Sat, 13 Jan 2007 19:39:34 -0500
-Received: from mail.gmx.net ([213.165.64.20]:48255 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750869AbXANAjd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Jan 2007 19:39:33 -0500
-Received: (qmail invoked by alias); 14 Jan 2007 00:39:32 -0000
-Received: from p5496ACD6.dip0.t-ipconnect.de (EHLO noname) [84.150.172.214]
-  by mail.gmx.net (mp017) with SMTP; 14 Jan 2007 01:39:32 +0100
-X-Authenticated: #352111
-To: "Shawn O. Pearce" <spearce@spearce.org>
-User-Agent: KMail/1.9.5
-In-Reply-To: <20070114002152.GA18277@spearce.org>
-Content-Disposition: inline
-X-Y-GMX-Trusted: 0
+	id S1750866AbXANAnI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 13 Jan 2007 19:43:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750933AbXANAnI
+	(ORCPT <rfc822;git-outgoing>); Sat, 13 Jan 2007 19:43:08 -0500
+Received: from inti.inf.utfsm.cl ([200.1.21.155]:42663 "EHLO inti.inf.utfsm.cl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750915AbXANAnH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Jan 2007 19:43:07 -0500
+Received: from laptop13.inf.utfsm.cl (pc-173-245-83-200.cm.vtr.net [200.83.245.173])
+	by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id l0E0h0g5000832
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 13 Jan 2007 21:43:01 -0300
+Received: from laptop13.inf.utfsm.cl (laptop13.inf.utfsm.cl [127.0.0.1])
+	by laptop13.inf.utfsm.cl (8.13.8/8.13.8) with ESMTP id l0E0gvMT005024;
+	Sat, 13 Jan 2007 21:42:58 -0300
+To: Alex Riesen <raa.lkml@gmail.com>
+In-Reply-To: Message from fork0@t-online.de (Alex Riesen) 
+   of "Sat, 13 Jan 2007 12:02:38 BST." <20070113110238.GA2795@steel.home> 
+X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.5  (beta27)
+X-Greylist: Delayed for 00:44:27 by milter-greylist-3.0 (inti.inf.utfsm.cl [200.1.19.1]); Sat, 13 Jan 2007 21:43:02 -0300 (CLST)
+X-Virus-Scanned: ClamAV 0.88.7/2439/Sat Jan 13 17:33:25 2007 on inti.inf.utfsm.cl
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36784>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36785>
 
-On Sunday 14 January 2007 01:21, Shawn O. Pearce wrote:
-> Josef Weidendorfer <Josef.Weidendorfer@gmx.de> wrote:
-> > The wish to allow git-fetch from subdirectories is the
-> > inconvenience to have to cd up, and later down. This is
-> > avoided by running "git --top fetch", and theses people
-> > should be happy.
+Alex Riesen <fork0@t-online.de> wrote:
+> Junio C Hamano, Sat, Jan 13, 2007 02:31:35 +0100:
+> > +/* High bit set, or ISO-2022-INT */
+> > +static int non_ascii(int ch)
+> > +{
+> > +	ch = (ch & 0xff);
+> > +	return ((ch & 0x80) || (ch == 0x1b));
+> > +}
+> > +
 > 
-> But not only that, git-fetch *never* alters the working directory.
+> "return (ch & 0x0x80) || (ch & 0xff) == 0x1b;" :)
+                ^^
 
-Ah, typo.
-s/fetch/merge/ (or pull, rebase, ...)
+Is the same, if ch == 0x9b, it will match the first part anyway.
 
-Josef
+The outer parentesis can (should?) go.
+-- 
+Dr. Horst H. von Brand                   User #22616 counter.li.org
+Departamento de Informatica                    Fono: +56 32 2654431
+Universidad Tecnica Federico Santa Maria             +56 32 2654239
+Casilla 110-V, Valparaiso, Chile               Fax:  +56 32 2797513
