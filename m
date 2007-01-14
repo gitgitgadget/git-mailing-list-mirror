@@ -1,171 +1,75 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] Use merge-recursive in git-revert/git-cherry-pick
-Date: Sun, 14 Jan 2007 22:00:02 -0800
-Message-ID: <7vk5zoesnx.fsf@assigned-by-dhcp.cox.net>
+From: fork0@t-online.de (Alex Riesen)
+Subject: Re: [PATCH] Reencode committer info to utf-8 before formatting mail header
+Date: Sun, 14 Jan 2007 20:25:57 +0100
+Message-ID: <20070114192557.GA2378@steel.home>
+References: <20070113110238.GA2795@steel.home> <200701140042.l0E0gvMT005024@laptop13.inf.utfsm.cl>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Mon Jan 15 20:09:40 2007
+Cc: Junio C Hamano <junkio@cox.net>,
+	David =?iso-8859-15?Q?K=E5gedal?= <davidk@lysator.liu.se>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 15 20:11:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@m.gmane.org
 Received: from main.gmane.org ([80.91.229.2] helo=ciao.gmane.org)
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H6Vhx-0006Y8-II
-	for gcvg-git@m.gmane.org; Mon, 15 Jan 2007 18:33:21 +0100
+	id 1H6W2B-0000IP-D8
+	for gcvg-git@m.gmane.org; Mon, 15 Jan 2007 18:54:15 +0100
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1H6V91-0003eK-EC
-	for gcvg-git@m.gmane.org; Mon, 15 Jan 2007 17:57:15 +0100
+	id 1H6V7w-0003eK-Ut
+	for gcvg-git@m.gmane.org; Mon, 15 Jan 2007 17:56:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751827AbXAOGAF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 15 Jan 2007 01:00:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751826AbXAOGAF
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Jan 2007 01:00:05 -0500
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:62147 "EHLO
-	fed1rmmtao07.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751824AbXAOGAE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Jan 2007 01:00:04 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao07.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070115060003.CLEQ3976.fed1rmmtao07.cox.net@fed1rmimpo02.cox.net>;
-          Mon, 15 Jan 2007 01:00:03 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id BJ0K1W00Q1kojtg0000000; Mon, 15 Jan 2007 01:00:19 -0500
-To: git@vger.kernel.org
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751617AbXANT0N (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 14 Jan 2007 14:26:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751630AbXANT0N
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 Jan 2007 14:26:13 -0500
+Received: from mailout08.sul.t-online.com ([194.25.134.20]:57945 "EHLO
+	mailout08.sul.t-online.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751617AbXANT0N (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 14 Jan 2007 14:26:13 -0500
+Received: from fwd34.aul.t-online.de 
+	by mailout08.sul.t-online.com with smtp 
+	id 1H6AzQ-00066A-04; Sun, 14 Jan 2007 20:26:00 +0100
+Received: from tigra.home (S+bU5iZYoeCOl7GizECgGY3uTh9GAqReCWNHVzjknRj3ztxwrQk7cR@[84.163.118.52]) by fwd34.sul.t-online.de
+	with esmtp id 1H6AzN-2I5bqS0; Sun, 14 Jan 2007 20:25:57 +0100
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id DE900277B6;
+	Sun, 14 Jan 2007 20:25:56 +0100 (CET)
+Received: by steel.home (Postfix, from userid 1000)
+	id 93C92C79D; Sun, 14 Jan 2007 20:25:57 +0100 (CET)
+To: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
+Content-Disposition: inline
+In-Reply-To: <200701140042.l0E0gvMT005024@laptop13.inf.utfsm.cl>
+User-Agent: Mutt/1.5.12-2006-07-14
+X-ID: S+bU5iZYoeCOl7GizECgGY3uTh9GAqReCWNHVzjknRj3ztxwrQk7cR
+X-TOI-MSGID: 37eb3b20-69e8-41da-a182-43a905466c36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36866>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36867>
 
-This makes revert and cherry-pick to use merge-recursive, to
-allow them to notice renames.  A pair of test scripts
-demonstrate that an old change before a rename happened can be
-applied (reverted) after a rename with cherry-pick (with revert).
+Horst H. von Brand, Sun, Jan 14, 2007 01:42:57 +0100:
+> Alex Riesen <fork0@t-online.de> wrote:
+> > Junio C Hamano, Sat, Jan 13, 2007 02:31:35 +0100:
+> > > +/* High bit set, or ISO-2022-INT */
+> > > +static int non_ascii(int ch)
+> > > +{
+> > > +	ch = (ch & 0xff);
+> > > +	return ((ch & 0x80) || (ch == 0x1b));
+> > > +}
+> > > +
+> > 
+> > "return (ch & 0x0x80) || (ch & 0xff) == 0x1b;" :)
+>                 ^^
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
- git-revert.sh                 |   29 ++++++++-----------
- t/t3501-revert-cherry-pick.sh |   62 +++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 74 insertions(+), 17 deletions(-)
+Oops :)
 
-diff --git a/git-revert.sh b/git-revert.sh
-index 71cbcbc..c74af99 100755
---- a/git-revert.sh
-+++ b/git-revert.sh
-@@ -151,32 +151,27 @@ esac >.msg
- # and $prev on top of us (when reverting), or the change between
- # $prev and $commit on top of us (when cherry-picking or replaying).
- 
--echo >&2 "First trying simple merge strategy to $me."
--git-read-tree -m -u --aggressive $base $head $next &&
-+git-merge-recursive $base -- $head $next &&
- result=$(git-write-tree 2>/dev/null) || {
--    echo >&2 "Simple $me fails; trying Automatic $me."
--    git-merge-index -o git-merge-one-file -a || {
--	    mv -f .msg "$GIT_DIR/MERGE_MSG"
--	    {
--		echo '
-+	mv -f .msg "$GIT_DIR/MERGE_MSG"
-+	{
-+	    echo '
- Conflicts:
- '
- 		git ls-files --unmerged |
- 		sed -e 's/^[^	]*	/	/' |
- 		uniq
--	    } >>"$GIT_DIR/MERGE_MSG"
--	    echo >&2 "Automatic $me failed.  After resolving the conflicts,"
--	    echo >&2 "mark the corrected paths with 'git-add <paths>'"
--	    echo >&2 "and commit the result."
--	    case "$me" in
--	    cherry-pick)
-+	} >>"$GIT_DIR/MERGE_MSG"
-+	echo >&2 "Automatic $me failed.  After resolving the conflicts,"
-+	echo >&2 "mark the corrected paths with 'git-add <paths>'"
-+	echo >&2 "and commit the result."
-+	case "$me" in
-+	cherry-pick)
- 		echo >&2 "You may choose to use the following when making"
- 		echo >&2 "the commit:"
- 		echo >&2 "$set_author_env"
--	    esac
--	    exit 1
--    }
--    result=$(git-write-tree) || exit
-+	esac
-+	exit 1
- }
- echo >&2 "Finished one $me."
- 
-diff --git a/t/t3501-revert-cherry-pick.sh b/t/t3501-revert-cherry-pick.sh
-new file mode 100755
-index 0000000..552af1c
---- /dev/null
-+++ b/t/t3501-revert-cherry-pick.sh
-@@ -0,0 +1,62 @@
-+#!/bin/sh
-+
-+test_description='test cherry-pick and revert with renames
-+
-+  --
-+   + rename2: renames oops to opos
-+  +  rename1: renames oops to spoo
-+  +  added:   adds extra line to oops
-+  ++ initial: has lines in oops
-+
-+'
-+
-+. ./test-lib.sh
-+
-+test_expect_success setup '
-+
-+	for l in a b c d e f g h i j k l m n o
-+	do
-+		echo $l$l$l$l$l$l$l$l$l
-+	done >oops &&
-+
-+	test_tick &&
-+	git add oops &&
-+	git commit -m initial &&
-+	git tag initial &&
-+
-+	test_tick &&
-+	echo "Add extra line at the end" >>oops &&
-+	git commit -a -m added &&
-+	git tag added &&
-+
-+	test_tick &&
-+	git mv oops spoo &&
-+	git commit -m rename1 &&
-+	git tag rename1 &&
-+
-+	test_tick &&
-+	git checkout -b side initial &&
-+	git mv oops opos &&
-+	git commit -m rename2 &&
-+	git tag rename2
-+'
-+
-+test_expect_success 'cherry-pick after renaming branch' '
-+
-+	git checkout rename2 &&
-+	EDITOR=: VISUAL=: git cherry-pick added &&
-+	test -f opos &&
-+	grep "Add extra line at the end" opos
-+
-+'
-+
-+test_expect_success 'revert after renaming branch' '
-+
-+	git checkout rename1 &&
-+	EDITOR=: VISUAL=: git revert added &&
-+	test -f spoo &&
-+	! grep "Add extra line at the end" spoo
-+
-+'
-+
-+test_done
--- 
-1.5.0.rc1.gf4b6c
+> Is the same, if ch == 0x9b, it will match the first part anyway.
+
+So it should. 0x9b isn't ASCII.
+
+> The outer parentesis can (should?) go.
+
+It's "question of style", I'm afraid :)
