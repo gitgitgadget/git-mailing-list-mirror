@@ -1,40 +1,40 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Commit signing
-Date: Mon, 15 Jan 2007 05:56:16 -0500
-Message-ID: <20070115105616.GE12257@spearce.org>
-References: <200701151000.58609.andyparkins@gmail.com> <20070115101529.GB12257@spearce.org> <200701151042.12753.andyparkins@gmail.com>
+Subject: Re: [PATCH 2/2] Correct priority of lightweight tags in git-describe.
+Date: Sun, 14 Jan 2007 18:17:49 -0500
+Message-ID: <20070114231749.GE10888@spearce.org>
+References: <2a044746b474f7c1840116762e79481b4669900e.1168767397.git.spearce@spearce.org> <20070114093744.GB15007@spearce.org> <7vodp1flrt.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 15 19:51:32 2007
+X-From: git-owner@vger.kernel.org Mon Jan 15 19:58:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@m.gmane.org
 Received: from main.gmane.org ([80.91.229.2] helo=ciao.gmane.org)
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H6VVr-0000SF-AT
-	for gcvg-git@m.gmane.org; Mon, 15 Jan 2007 18:20:51 +0100
+	id 1H6Vhm-0006S3-Un
+	for gcvg-git@m.gmane.org; Mon, 15 Jan 2007 18:33:10 +0100
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1H6V9i-0003eK-13
-	for gcvg-git@m.gmane.org; Mon, 15 Jan 2007 17:57:58 +0100
+	id 1H6V8P-0003eK-HB
+	for gcvg-git@m.gmane.org; Mon, 15 Jan 2007 17:56:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932209AbXAOK4U (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 15 Jan 2007 05:56:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932214AbXAOK4U
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Jan 2007 05:56:20 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:47919 "EHLO
+	id S1751706AbXANXRz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 14 Jan 2007 18:17:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751714AbXANXRz
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 Jan 2007 18:17:55 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:56686 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932209AbXAOK4T (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Jan 2007 05:56:19 -0500
+	with ESMTP id S1751706AbXANXRy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Jan 2007 18:17:54 -0500
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.63)
 	(envelope-from <spearce@spearce.org>)
-	id 1H6PVe-00082W-JT; Mon, 15 Jan 2007 05:56:14 -0500
+	id 1H6Ebe-0002C7-2S; Sun, 14 Jan 2007 18:17:42 -0500
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 31EE420FBAE; Mon, 15 Jan 2007 05:56:16 -0500 (EST)
-To: Andy Parkins <andyparkins@gmail.com>
+	id 07EB020FBAE; Sun, 14 Jan 2007 18:17:49 -0500 (EST)
+To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
-In-Reply-To: <200701151042.12753.andyparkins@gmail.com>
+In-Reply-To: <7vodp1flrt.fsf@assigned-by-dhcp.cox.net>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -47,73 +47,54 @@ X-Source-Dir:
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36852>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36853>
 
-Andy Parkins <andyparkins@gmail.com> wrote:
-> On Monday 2007 January 15 10:15, Shawn O. Pearce wrote:
-> As an added extra, the host of the central repository could have a list 
-> of "allowed keys" so that only correctly signed commits would be allowed into 
-> the repository.
-
-But that might reject cases where one commit has been brought up
-from other repositories yet its part of a chain of 1,000 commits
-now being pushed into the central repository.  You need to allow
-the head that is coming in, and everything in its past.
- 
-> As an example of why this would be useful: let's say we have a developer 
-> committing to a maintainer repository who then merges those changes into 
-> mainline and pushes up to the central repository (like what happens with 
-> Linux).  The commits to the central repository are made using the ssh login 
-> of the maintainer, but they are adding commits by someone else.  What if that 
-> someone else isn't allowed to commit to the central?  With signed commits the 
-> option is available to exclude them.
-
-You can't just clip commits out during a push!  Are you going to
-reject the push because the trusted SSH-logged in maintainer has
-pulled in changes from elsewhere and has decided that they are good
-enough for inclusion?
-
-> I don't think the argument that Matthias offered ("You just explained why no 
-> one should pull from people he does not trust.") is a good one.  One might 
-> not want trust to be transitive.  Just because I trust you, doesn't not mean 
-> that I trust those who you trust.  The path of getting commits in via a 
-> trusted person, perhaps even via multiple levels of transitive trust might 
-> not be something that is wanted in every project.  Having signed commits 
-> would at least give the option.
-
-Yes, that's very valid.  But if you trust me and I've gone and
-built 100 commits on top of something I got from someone else I
-trust but that you don't trust, you are going to reject all of my
-changes and ask that I rewrite them?  That's quite paranoid.
- 
-> > What I'm actually doing in one particular environment is checking
-> > the committer string against a database of known committer strings
-> > associated with the current UNIX uid.
+Junio C Hamano <junkio@cox.net> wrote:
+> How about this on top?
 > 
-> This addresses the problem somewhat.  However, the problem I'm talking about 
-> is where a commit identity has been faked by someone committing to a 
-> secondary (or tertiary) level repository.  While you are ensuring that the 
-> current user is allowed to commit on behalf of someone else to your 
-> repository, you haven't protected anything, because they could simply fake 
-> their ID to one of the "allowed" set and your test will pass.
+>  * We seem to do "a_" more often than "_a" for parameter names
+>    we type-cast.
 
-Actually I'm checking for exact matching against the committer
-string.  Every UNIX uid has exactly one (and only one) committer
-string associated with it.  The name on their payroll and security
-paperwork, and the corporate email that was assigned to them.
-So you *cannot* push something which was committed by another user
-or which you committed for them on their behalf.  But you can set
-the author field to anything you want; indeeded I often copy in
-changes from other people and mark them as the author will retaining
-the committer line as myself.
+I copied the header from the compare_names routine in
+builtin-describe.c.  Maybe apply this too?
 
-This causes a huge problem with our local mirror of git.git.
-Normally I would just run git-fetch on the server to update the
-mirror (thus bypassing the update hook, which screams out that I'm
-not Junio) but that system doesn't have cURL or expat built and I
-can only fetch over HTTP from there.  So I wind up having to go
-through extra hoops to update commits which came from someone I
-trust, but which ain't me.
+-- >8 --
+diff --git a/builtin-describe.c b/builtin-describe.c
+index e38c899..e514bc3 100644
+--- a/builtin-describe.c
++++ b/builtin-describe.c
+@@ -104,10 +104,10 @@ static int get_name(const char *path, const unsigned char *sha1, int flag, void
+ 	return 0;
+ }
+ 
+-static int compare_names(const void *_a, const void *_b)
++static int compare_names(const void *a_, const void *b_)
+ {
+-	struct commit_name *a = *(struct commit_name **)_a;
+-	struct commit_name *b = *(struct commit_name **)_b;
++	struct commit_name *a = *(struct commit_name **)a_;
++	struct commit_name *b = *(struct commit_name **)b_;
+ 	unsigned long a_date = a->commit->date;
+ 	unsigned long b_date = b->commit->date;
+ 	int cmp = hashcmp(a->commit->object.sha1, b->commit->object.sha1);
+-- <8 --
+
+>  * int would be enough for 'depth', not long.  Also, "return
+>    (a->depth - b->depth)" is kosher only when it is signed,
+>    although it works in practice on sane platforms.
+
+I originally went with unsigned long as that matches the size
+of a packfile, and I wasn't using depth in a signed way.  Until
+that patch.  Good catch.
+
+>  * I did not find mergesort(); if we want stable, explicitly do
+>    so.  In practice, qsort() seems stable (as you know qsort()
+>    does not have to be implemented as quicksort).
+
+Must be a *BSD extension.  Oops.
+
+
+Patch looked good.  Thanks.
 
 -- 
 Shawn.
