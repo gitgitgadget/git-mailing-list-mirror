@@ -1,67 +1,102 @@
-From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
-Subject: Re: [PATCH] Reencode committer info to utf-8 before formatting mail header
-Date: Mon, 15 Jan 2007 17:57:12 +0100
-Message-ID: <87bql0449j.fsf@morpheus.local>
-References: <871wm08kcu.fsf@morpheus.local> <7vd55jrj38.fsf@assigned-by-dhcp.cox.net> <7vr6tzogp4.fsf@assigned-by-dhcp.cox.net>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] git-pull: disallow implicit merging to detached HEAD
+Date: Mon, 15 Jan 2007 17:25:33 -0500
+Message-ID: <20070115222533.GA12928@coredump.intra.peff.net>
+References: <7vk5zo0ws1.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Mon Jan 15 23:25:18 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 15 23:25:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H6aGP-0006OJ-6z
-	for gcvg-git@gmane.org; Mon, 15 Jan 2007 23:25:13 +0100
+	id 1H6aGp-0006Wm-By
+	for gcvg-git@gmane.org; Mon, 15 Jan 2007 23:25:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751425AbXAOWZJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 15 Jan 2007 17:25:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751453AbXAOWZJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Jan 2007 17:25:09 -0500
-Received: from main.gmane.org ([80.91.229.2]:34549 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751425AbXAOWZI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Jan 2007 17:25:08 -0500
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1H6aGE-0003fA-Bn
-	for git@vger.kernel.org; Mon, 15 Jan 2007 23:25:02 +0100
-Received: from c83-253-22-207.bredband.comhem.se ([83.253.22.207])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 15 Jan 2007 23:25:02 +0100
-Received: from davidk by c83-253-22-207.bredband.comhem.se with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 15 Jan 2007 23:25:02 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: c83-253-22-207.bredband.comhem.se
-User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (gnu/linux)
-Cancel-Lock: sha1:Q7tU5X4dWJY3vDXBus3+dX9u/xg=
+	id S1751453AbXAOWZg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 15 Jan 2007 17:25:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751454AbXAOWZg
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Jan 2007 17:25:36 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2838 "HELO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751453AbXAOWZf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Jan 2007 17:25:35 -0500
+Received: (qmail 1288 invoked from network); 15 Jan 2007 17:25:51 -0500
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
+  by 66-23-211-5.clients.speedfactory.net with SMTP; 15 Jan 2007 17:25:51 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 15 Jan 2007 17:25:33 -0500
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vk5zo0ws1.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36894>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36895>
 
-Junio C Hamano <junkio@cox.net> writes:
+Instead, we complain to the user and suggest that they explicitly
+specify the remote and branch. We depend on the exit status of
+git-symbolic-ref, so let's go ahead and document that.
 
-> -static int add_rfc2047(char *buf, const char *line, int len)
-> +static int add_rfc2047(char *buf, const char *line, int len,
-> +		       const char *encoding)
->  {
->  	char *bp =3D buf;
->  	int i, needquote;
-> -	static const char q_utf8[] =3D "=3D?utf-8?q?";
-> +	char q_encoding[128];
-> +	const char *q_encoding_fmt =3D "=3D?%s?q?";
+Signed-off-by: Jeff King <peff@peff.net>
+---
 
-This goes against the old principle of being forgiving in what you
-accept, and strict in what you send.  The names of the encoding in the
-headers should probably be normalized before putting them in an
-e-mail.  I.e. we might accept "utf-8", "utf8", "UTF-8", and "UTF8"
-(this depends on iconv, I suppose), but the RFC2047 encoding should be
-the one blessed by RFC4027.  But I admit that I haven't read the RFC,
-and I'm writing this offline so I can't check right now.
+This is on top of your other patch.
 
---=20
-David K=C3=A5gedal
+> I think what I sent out was a moral equivalent, but generally
+> speaking I do not think we should discard stderr output
+> indiscriminatingly.
+
+Agreed.
+
+> I think it makes more sense to say "your HEAD is detached and
+> you need to explicitly say which branch you would want to merge
+> in" in this case.
+
+Something like this?
+
+ Documentation/git-symbolic-ref.txt |    4 ++++
+ git-pull.sh                        |   13 +++++++++++--
+ 2 files changed, 15 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/git-symbolic-ref.txt b/Documentation/git-symbolic-ref.txt
+index 1e818bb..fec3b4f 100644
+--- a/Documentation/git-symbolic-ref.txt
++++ b/Documentation/git-symbolic-ref.txt
+@@ -44,6 +44,10 @@ cumbersome.  On some platforms, `ln -sf` does not even work as
+ advertised (horrors).  Therefore symbolic links are now deprecated
+ and symbolic refs are used by default.
+ 
++git-symbolic-ref will exit with status 0 if the contents of the
++symbolic ref were printed correctly, with status 1 if the requested
++name is not a symbolic ref, or 128 if another error occurs.
++
+ Author
+ ------
+ Written by Junio C Hamano <junkio@cox.net>
+diff --git a/git-pull.sh b/git-pull.sh
+index 9592617..3e96569 100755
+--- a/git-pull.sh
++++ b/git-pull.sh
+@@ -83,8 +83,17 @@ merge_head=$(sed -e '/	not-for-merge	/d' \
+ 
+ case "$merge_head" in
+ '')
+-	curr_branch=$(git-symbolic-ref HEAD | \
+-		sed -e 's|^refs/heads/||')
++	curr_branch=$(git-symbolic-ref -q HEAD)
++	case $? in
++	  0) ;;
++	  1) echo >&2 "You are not currently on a branch; you must explicitly"
++	     echo >&2 "indicate which branch you wish to merge with"
++	     echo >&2 "  git pull <remote> <branch>"
++	     exit 1;;
++	  *) exit $?;;
++	esac
++	curr_branch=${curr_branch#refs/heads/}
++
+ 	echo >&2 "Warning: No merge candidate found because value of config option
+          \"branch.${curr_branch}.merge\" does not match any remote branch fetched."
+ 	echo >&2 "No changes."
+-- 
+1.5.0.rc1.gb329-dirty
