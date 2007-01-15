@@ -1,63 +1,75 @@
-From: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
-Subject: Re: Commit signing
-Date: Mon, 15 Jan 2007 10:14:50 -0300
-Message-ID: <200701151314.l0FDEohv008222@laptop13.inf.utfsm.cl>
-References: <andyparkins@gmail.com>
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Jan 15 19:34:05 2007
+From: "Nikolai Weibull" <now@bitwi.se>
+Subject: Re: [RFC] Git config file reader in Perl (WIP)
+Date: Mon, 15 Jan 2007 16:34:26 +0100
+Message-ID: <dbfc82860701150734j7322de15v30dc6822b456ea66@mail.gmail.com>
+References: <200701150144.56793.jnareb@gmail.com>
+	 <200701151003.44498.jnareb@gmail.com>
+	 <20070115095613.GA4037@localdomain>
+	 <200701151132.00971.jnareb@gmail.com>
+	 <20070115112635.GA5134@localdomain>
+	 <Pine.LNX.4.63.0701151313050.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Eric Wong" <normalperson@yhbt.net>,
+	"Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 15 19:34:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@m.gmane.org
 Received: from main.gmane.org ([80.91.229.2] helo=ciao.gmane.org)
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H6VVl-0000Oa-FG
-	for gcvg-git@m.gmane.org; Mon, 15 Jan 2007 18:20:45 +0100
+	id 1H6VVd-0000J2-Es
+	for gcvg-git@m.gmane.org; Mon, 15 Jan 2007 18:20:37 +0100
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1H6VA9-0003eK-52
-	for gcvg-git@m.gmane.org; Mon, 15 Jan 2007 17:58:25 +0100
+	id 1H6VAg-0003eK-TP
+	for gcvg-git@m.gmane.org; Mon, 15 Jan 2007 17:58:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932313AbXAONPA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 15 Jan 2007 08:15:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932314AbXAONPA
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Jan 2007 08:15:00 -0500
-Received: from inti.inf.utfsm.cl ([200.1.21.155]:59403 "EHLO inti.inf.utfsm.cl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932313AbXAONO7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Jan 2007 08:14:59 -0500
-Received: from laptop13.inf.utfsm.cl (laptop13.inf.utfsm.cl [200.1.19.201])
-	by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id l0FDEoA7029188
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 15 Jan 2007 10:14:50 -0300
-Received: from laptop13.inf.utfsm.cl (laptop13.inf.utfsm.cl [127.0.0.1])
-	by laptop13.inf.utfsm.cl (8.13.8/8.13.8) with ESMTP id l0FDEohv008222;
-	Mon, 15 Jan 2007 10:14:50 -0300
-To: Andy Parkins <andyparkins@gmail.com>
-In-Reply-To: Message from Andy Parkins <andyparkins@gmail.com> 
-   of "Mon, 15 Jan 2007 11:41:43 -0000." <200701151141.51659.andyparkins@gmail.com> 
-X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.5  (beta27)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (inti.inf.utfsm.cl [200.1.21.155]); Mon, 15 Jan 2007 10:14:51 -0300 (CLST)
-X-Virus-Scanned: ClamAV 0.88.7/2451/Mon Jan 15 07:27:30 2007 on inti.inf.utfsm.cl
-X-Virus-Status: Clean
+	id S1750858AbXAOPeq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 15 Jan 2007 10:34:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750859AbXAOPeq
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Jan 2007 10:34:46 -0500
+Received: from wr-out-0506.google.com ([64.233.184.232]:22907 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750863AbXAOPeo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Jan 2007 10:34:44 -0500
+Received: by wr-out-0506.google.com with SMTP id i30so1049250wra
+        for <git@vger.kernel.org>; Mon, 15 Jan 2007 07:34:43 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=MirxqEusp+WQyuXiiLPt00Dj3tsS+gUuoFsKg7DWl9+OZdUOmA1Fm6zDNMa2/uiK/PKaTf3taulbvjdTZxR9hH8aj8lzvt3Wra30HnHo+K8c9IbXDOHRoJpl58CaSPIFo/R2ZoBMGFhhHChWsqzoSC5y1WUjO4GJAn9nlkIaLN4=
+Received: by 10.78.118.19 with SMTP id q19mr2584990huc.1168875276773;
+        Mon, 15 Jan 2007 07:34:36 -0800 (PST)
+Received: by 10.78.200.7 with HTTP; Mon, 15 Jan 2007 07:34:26 -0800 (PST)
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0701151313050.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+Content-Disposition: inline
+X-Google-Sender-Auth: d43d774197166d70
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36844>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36845>
 
-Andy Parkins <andyparkins@gmail.com> wrote:
+On 1/15/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
 
-[...]
+> On Mon, 15 Jan 2007, Eric Wong wrote:
 
-> The answer is: no, you can't put your 100+X commits in my repository
-> because I don't trust the person who wrote X of them.  It is paranoid,
-> and it is overkill, but it is also /my/ repository.  It might also be
-> that you are my employee and you will do as you are damn well told.
+> > > Would you write "git repo-config --perl", then? ;-)
 
-There is another angle to this: Currently, the "Signed-off-by:" lines give
-no reliable way of authenticating the origin of a patch, which is needed
-for traceability of authorship (for which they were introduced in the first
-place).
--- 
-Dr. Horst H. von Brand                   User #22616 counter.li.org
-Departamento de Informatica                    Fono: +56 32 2654431
-Universidad Tecnica Federico Santa Maria             +56 32 2654239
-Casilla 110-V, Valparaiso, Chile               Fax:  +56 32 2797513
+> > The below patch should be a start (only tested on my fairly standard
+> > .git/config).  A --python option should be easy, too :)
+
+> A bit shorter (and gets the booleans right, plus being even easier
+> towards --python extension):
+
+If we're going down this slippery slope, why not just give up and add
+a --xml switch instead?  Readable by all and a lot more flexible than
+--perl, --python, --ruby, --tcl, --sh, --c++, --fortran, --lisp,
+--html, --that-next-silver-bullet-language-that-hasnt-been-invented-yet-but-will-need-its-own-switch-once-it-has-been.
+
+That said, parsing the config file as-is can't be so difficult that we
+need to export it to separate files with a different syntax, now can
+it?
+
+  nikolai
