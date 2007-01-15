@@ -1,150 +1,78 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [RFC] Git config file reader in Perl (WIP)
-Date: Mon, 15 Jan 2007 03:26:35 -0800
-Message-ID: <20070115112635.GA5134@localdomain>
-References: <200701150144.56793.jnareb@gmail.com> <200701151003.44498.jnareb@gmail.com> <20070115095613.GA4037@localdomain> <200701151132.00971.jnareb@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 15 19:33:45 2007
+From: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
+Subject: Re: Commit signing
+Date: Mon, 15 Jan 2007 09:37:24 -0300
+Message-ID: <200701151237.l0FCbOYK007378@laptop13.inf.utfsm.cl>
+References: <spearce@spearce.org>
+Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 15 19:33:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@m.gmane.org
 Received: from main.gmane.org ([80.91.229.2] helo=ciao.gmane.org)
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H6VVp-0000R2-C3
-	for gcvg-git@m.gmane.org; Mon, 15 Jan 2007 18:20:49 +0100
+	id 1H6VVn-0000Pq-2z
+	for gcvg-git@m.gmane.org; Mon, 15 Jan 2007 18:20:47 +0100
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1H6V9n-0003eK-LI
-	for gcvg-git@m.gmane.org; Mon, 15 Jan 2007 17:58:04 +0100
+	id 1H6V9z-0003eK-4m
+	for gcvg-git@m.gmane.org; Mon, 15 Jan 2007 17:58:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932231AbXAOL0i (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 15 Jan 2007 06:26:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932235AbXAOL0h
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Jan 2007 06:26:37 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:38877 "EHLO hand.yhbt.net"
+	id S932289AbXAOMhf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 15 Jan 2007 07:37:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932293AbXAOMhf
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Jan 2007 07:37:35 -0500
+Received: from inti.inf.utfsm.cl ([200.1.21.155]:58025 "EHLO inti.inf.utfsm.cl"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932231AbXAOL0h (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Jan 2007 06:26:37 -0500
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id 64D3D7DC094;
-	Mon, 15 Jan 2007 03:26:35 -0800 (PST)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Mon, 15 Jan 2007 03:26:35 -0800
-To: Jakub Narebski <jnareb@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <200701151132.00971.jnareb@gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S932289AbXAOMhe (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Jan 2007 07:37:34 -0500
+Received: from laptop13.inf.utfsm.cl (laptop13.inf.utfsm.cl [200.1.19.201])
+	by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id l0FCbOTS026286
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 15 Jan 2007 09:37:24 -0300
+Received: from laptop13.inf.utfsm.cl (laptop13.inf.utfsm.cl [127.0.0.1])
+	by laptop13.inf.utfsm.cl (8.13.8/8.13.8) with ESMTP id l0FCbOYK007378;
+	Mon, 15 Jan 2007 09:37:24 -0300
+To: "Shawn O. Pearce" <spearce@spearce.org>
+In-Reply-To: Message from "Shawn O. Pearce" <spearce@spearce.org> 
+   of "Mon, 15 Jan 2007 05:15:29 CDT." <20070115101529.GB12257@spearce.org> 
+X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.5  (beta27)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (inti.inf.utfsm.cl [200.1.21.155]); Mon, 15 Jan 2007 09:37:24 -0300 (CLST)
+X-Virus-Scanned: ClamAV 0.88.7/2451/Mon Jan 15 07:27:30 2007 on inti.inf.utfsm.cl
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36841>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36842>
 
-Jakub Narebski <jnareb@gmail.com> wrote:
-> Eric Wong wrote:
-> > Jakub Narebski <jnareb@gmail.com> wrote:
-> >> Eric Wong wrote:
-> >>> Jakub Narebski <jnareb@gmail.com> wrote:
-> >>>> To make gitweb faster I thought about adding to it, or to Git.pm,
-> >>>> simple nonvalidation config file reader. Nonvalidating means that
-> >>>> it would accept some input which git-repo-config considers invalid.
-> >>> 
-> >>> How about something like git-for-each-ref that dumps the entire output
-> >>> of a config file into an eval()-able string?  That way we don't have to
-> >>> deal with corner-cases and subtle differences between C and Perl
-> >>> implementations.
-> >> 
-> >> The idea is (at least for gitweb) to avoid cost of fork. And I think
-> >> if the format gets documented properly, there should be no differences
-> >> in config file parsing.
-> > 
-> > If the Perl output is redirected to a file (say .git/config.perl) and
-> > only regenerated when .git/config changes, `do(".git/config.perl")' will
-> > likely be faster since all the parsing will be done by Perl itself.
-> 
-> Would you write "git repo-config --perl", then? ;-)
+Shawn O. Pearce <spearce@spearce.org> wrote:
+> Andy Parkins <andyparkins@gmail.com> wrote:
 
-The below patch should be a start (only tested on my fairly standard
-.git/config).  A --python option should be easy, too :)
+[...]
 
-> Besides, I'd rather avoid the need for /tmp/gitweb, and I think usually
-> gitweb do not have (and should not have) write access to repository.
+> > The more I think about it, the more it could be a reasonable question.
+> > In my own repository I can obviously create whatever commits i like,
+> > claiming them to be from whomever I like just by altering a few config
+> > settings.  If I put a few of those in my own repository and then
+> > managed to persuade Junio to pull from me - wouldn't I have faked
+> > commits from another developer? However, I wouldn't be able to fake a
+> > gpg signature.
 
-Good point.  Having to maintain a .git/config.perl in the repository
-would be a pain from an administrative standpoint; but on the other hand
-.git/config is not often regenerated.
+[...]
 
-I don't think giving gitweb write access to a repo is a good idea;
-either.  Perhaps it would be updated via hook like the HTTP stuff.
-IMHO, there is nothing wrong with gitweb writing to /tmp; however.
+> What I'm actually doing in one particular environment is checking
+> the committer string against a database of known committer strings
+> associated with the current UNIX uid.  My update hook[*1*] performs
+> a `git log --pretty=raw $3 --not --all` query to determine any
+> commits which are coming in as part of this push and which are not
+> already referenced by an existing head or tag in this repository.
+> For each of those the committer line *must* match one stored in
+> the allowed-committers file for the current user, as these are
+> brand new commits being introduced to the repository.
 
-diff --git a/builtin-repo-config.c b/builtin-repo-config.c
-index 9063311..a9ef358 100644
---- a/builtin-repo-config.c
-+++ b/builtin-repo-config.c
-@@ -1,5 +1,6 @@
- #include "builtin.h"
- #include "cache.h"
-+#include "quote.h"
- 
- static const char git_config_set_usage[] =
- "git-repo-config [ --global ] [ --bool | --int ] [--get | --get-all | --get-regexp | --replace-all | --add | --unset | --unset-all] name [value [value_regex]] | --rename-section old_name new_name | --list";
-@@ -13,6 +14,7 @@ static int do_all;
- static int do_not_match;
- static int seen;
- static enum { T_RAW, T_INT, T_BOOL } type = T_RAW;
-+static char *last_key;
- 
- static int show_all_config(const char *key_, const char *value_)
- {
-@@ -23,6 +25,30 @@ static int show_all_config(const char *key_, const char *value_)
- 	return 0;
- }
- 
-+static int show_perl_config(const char *key_, const char *value_)
-+{
-+	if (last_key) {
-+		if (strcmp(last_key, key_)) {
-+			free(last_key);
-+			last_key = xstrdup(key_);
-+			fputs("\t],\n\t", stdout);
-+			perl_quote_print(stdout, key_);
-+			fputs(" => [\n", stdout);
-+		}
-+	} else {
-+		last_key = xstrdup(key_);
-+		fputc('\t', stdout);
-+		perl_quote_print(stdout, key_);
-+		fputs(" => [\n", stdout);
-+	}
-+	if (value_) {
-+		fputs("\t\t", stdout);
-+		perl_quote_print(stdout, value_);
-+		fputs(",\n", stdout);
-+	}
-+	return 0;
-+}
-+
- static int show_config(const char* key_, const char* value_)
- {
- 	char value[256];
-@@ -138,6 +164,17 @@ int cmd_repo_config(int argc, const char **argv, const char *prefix)
- 			type = T_BOOL;
- 		else if (!strcmp(argv[1], "--list") || !strcmp(argv[1], "-l"))
- 			return git_config(show_all_config);
-+		else if (!strcmp(argv[1], "--perl")) {
-+			int rv;
-+			puts("\%git_config = (");
-+			rv = git_config(show_perl_config);
-+			if (last_key) {
-+				puts("\t]\n);\n");
-+				free(last_key);
-+				last_key = NULL;
-+			}
-+			return rv;
-+		}
- 		else if (!strcmp(argv[1], "--global")) {
- 			char *home = getenv("HOME");
- 			if (home) {
-
+This only covers the "pure star" (centralized, CVS-like) topology: Each one
+only pushes their own changes, nobody collects changes from others and
+pushes the sum.
 -- 
-Eric Wong
+Dr. Horst H. von Brand                   User #22616 counter.li.org
+Departamento de Informatica                    Fono: +56 32 2654431
+Universidad Tecnica Federico Santa Maria             +56 32 2654239
+Casilla 110-V, Valparaiso, Chile               Fax:  +56 32 2797513
