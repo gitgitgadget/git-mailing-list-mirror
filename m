@@ -1,76 +1,66 @@
-From: lamikr <lamikr@cc.jyu.fi>
-Subject: Re: What's in git.git and announcing GIT v1.5.0-rc1
-Date: Mon, 15 Jan 2007 01:36:09 +0200
-Message-ID: <45AABE69.1070505@cc.jyu.fi>
-References: <7v8xg9x8uu.fsf@assigned-by-dhcp.cox.net>
-Reply-To: lamikr@cc.jyu.fi
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Commit signing
+Date: Mon, 15 Jan 2007 13:02:18 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0701151255530.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <200701151000.58609.andyparkins@gmail.com> <20070115105616.GE12257@spearce.org>
+ <Pine.LNX.4.63.0701151201100.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <200701151150.28082.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 15 19:14:34 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon Jan 15 19:23:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@m.gmane.org
 Received: from main.gmane.org ([80.91.229.2] helo=ciao.gmane.org)
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H6VbT-00037T-4y
-	for gcvg-git@m.gmane.org; Mon, 15 Jan 2007 18:26:39 +0100
+	id 1H6VXn-0001fS-1v
+	for gcvg-git@m.gmane.org; Mon, 15 Jan 2007 18:22:51 +0100
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1H6V8j-0003eK-2y
-	for gcvg-git@m.gmane.org; Mon, 15 Jan 2007 17:56:57 +0100
+	id 1H6V9t-0003eK-4S
+	for gcvg-git@m.gmane.org; Mon, 15 Jan 2007 17:58:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751770AbXAOB06 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 14 Jan 2007 20:26:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751773AbXAOB06
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 Jan 2007 20:26:58 -0500
-Received: from posti5.jyu.fi ([130.234.4.34]:59822 "EHLO posti5.jyu.fi"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751770AbXAOB06 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Jan 2007 20:26:58 -0500
-X-Greylist: delayed 6680 seconds by postgrey-1.27 at vger.kernel.org; Sun, 14 Jan 2007 20:26:57 EST
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by posti5.jyu.fi (8.13.6/8.13.6) with ESMTP id l0ENZYBe010142;
-	Mon, 15 Jan 2007 01:35:34 +0200
-X-Virus-Scanned: amavisd-new at cc.jyu.fi
-Received: from posti5.jyu.fi ([127.0.0.1])
-	by localhost (posti5.jyu.fi [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id bARBg1FRLS0h; Mon, 15 Jan 2007 01:35:33 +0200 (EET)
-Received: from aragorn.kortex.jyu.fi (aragorn.kortex.jyu.fi [130.234.182.120])
-	by posti5.jyu.fi (8.13.6/8.13.6) with ESMTP id l0ENZWDE010137;
-	Mon, 15 Jan 2007 01:35:33 +0200
-Received: from [127.0.0.1] (aragorn2.kortex.jyu.fi [127.0.0.1])
-	by aragorn.kortex.jyu.fi (Postfix) with ESMTP id 6B2E34680B1;
-	Mon, 15 Jan 2007 01:36:09 +0200 (EET)
-User-Agent: Thunderbird 1.5.0.9 (X11/20070111)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v8xg9x8uu.fsf@assigned-by-dhcp.cox.net>
+	id S932255AbXAOMCV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 15 Jan 2007 07:02:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932258AbXAOMCV
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Jan 2007 07:02:21 -0500
+Received: from mail.gmx.net ([213.165.64.20]:35035 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932255AbXAOMCU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Jan 2007 07:02:20 -0500
+Received: (qmail invoked by alias); 15 Jan 2007 12:02:18 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp012) with SMTP; 15 Jan 2007 13:02:18 +0100
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Andy Parkins <andyparkins@gmail.com>
+In-Reply-To: <200701151150.28082.andyparkins@gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36821>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36822>
 
-Junio C Hamano wrote:
-> The tip of 'master' branch is tagged as v1.5.0-rc1; this means a
-> few things:
->   
-Hi
+Hi,
 
-Would it make sense to add something like this to the announcements as
-it is not very easy to find references to the git-repository itself from
-the net.
+On Mon, 15 Jan 2007, Andy Parkins wrote:
 
-   You can get the git repository-itself by using a following commands
+> It is certainly true that signed commits /is/ a feature.  And it's a 
+> feature that some people might want.  If there isn't a technical 
+> argument against it, what does it matter?
+> 
+> (Note: it doesn't matter enough to me that I would put the time in, I'm 
+> arguing in the abstract really - should features be kept out because 
+> they allow a development method we would find distasteful?)
 
-           git-clone git://git.kernel.org/pub/scm/git/git.git git_repo
+You gave the answer yourself: until there is somebody who needs it, I 
+guess it will not be there.
 
-   After that you can switch to tagged version <v1.5.0-rc1> or sources
-from the repository by using command
+Note that it would be relatively easy: I already gave the location where 
+the hook should go (builtin-commit-tree.c, line 151), and you can see an 
+example how to execute a hook in receive-pack.c, lines 67ff.
 
-          git-checkout -f v1.5.0-rc1 master
+Ciao,
+Dscho
 
-   Alternatively you can download the tar packed version of sources from
-      
-          http://www.kernel.org/pub/software/scm/git/
-
-Mika
+P.S.: Yes, I am encouraging you to implement it.
