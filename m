@@ -1,100 +1,69 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH 2/2] Correct priority of lightweight tags in git-describe.
-Date: Sun, 14 Jan 2007 18:17:49 -0500
-Message-ID: <20070114231749.GE10888@spearce.org>
-References: <2a044746b474f7c1840116762e79481b4669900e.1168767397.git.spearce@spearce.org> <20070114093744.GB15007@spearce.org> <7vodp1flrt.fsf@assigned-by-dhcp.cox.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Commit signing
+Date: Mon, 15 Jan 2007 11:43:45 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0701151137430.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <200701151000.58609.andyparkins@gmail.com> <20070115101529.GB12257@spearce.org>
+ <20070115102727.GC12257@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 15 19:58:25 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 15 19:58:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@m.gmane.org
 Received: from main.gmane.org ([80.91.229.2] helo=ciao.gmane.org)
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H6Vhm-0006S3-Un
-	for gcvg-git@m.gmane.org; Mon, 15 Jan 2007 18:33:10 +0100
+	id 1H6Vi5-0006dM-0M
+	for gcvg-git@m.gmane.org; Mon, 15 Jan 2007 18:33:29 +0100
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1H6V8P-0003eK-HB
-	for gcvg-git@m.gmane.org; Mon, 15 Jan 2007 17:56:37 +0100
+	id 1H6V9e-0003eK-GF
+	for gcvg-git@m.gmane.org; Mon, 15 Jan 2007 17:57:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751706AbXANXRz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 14 Jan 2007 18:17:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751714AbXANXRz
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 Jan 2007 18:17:55 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:56686 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751706AbXANXRy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Jan 2007 18:17:54 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1H6Ebe-0002C7-2S; Sun, 14 Jan 2007 18:17:42 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 07EB020FBAE; Sun, 14 Jan 2007 18:17:49 -0500 (EST)
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vodp1flrt.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S932197AbXAOKnr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 15 Jan 2007 05:43:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932202AbXAOKnr
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Jan 2007 05:43:47 -0500
+Received: from mail.gmx.net ([213.165.64.20]:59931 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932197AbXAOKnr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Jan 2007 05:43:47 -0500
+Received: (qmail invoked by alias); 15 Jan 2007 10:43:45 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp017) with SMTP; 15 Jan 2007 11:43:45 +0100
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: "Shawn O. Pearce" <spearce@spearce.org>
+In-Reply-To: <20070115102727.GC12257@spearce.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36853>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36854>
 
-Junio C Hamano <junkio@cox.net> wrote:
-> How about this on top?
-> 
->  * We seem to do "a_" more often than "_a" for parameter names
->    we type-cast.
+Hi,
 
-I copied the header from the compare_names routine in
-builtin-describe.c.  Maybe apply this too?
+On Mon, 15 Jan 2007, Shawn O. Pearce wrote:
 
--- >8 --
-diff --git a/builtin-describe.c b/builtin-describe.c
-index e38c899..e514bc3 100644
---- a/builtin-describe.c
-+++ b/builtin-describe.c
-@@ -104,10 +104,10 @@ static int get_name(const char *path, const unsigned char *sha1, int flag, void
- 	return 0;
- }
- 
--static int compare_names(const void *_a, const void *_b)
-+static int compare_names(const void *a_, const void *b_)
- {
--	struct commit_name *a = *(struct commit_name **)_a;
--	struct commit_name *b = *(struct commit_name **)_b;
-+	struct commit_name *a = *(struct commit_name **)a_;
-+	struct commit_name *b = *(struct commit_name **)b_;
- 	unsigned long a_date = a->commit->date;
- 	unsigned long b_date = b->commit->date;
- 	int cmp = hashcmp(a->commit->object.sha1, b->commit->object.sha1);
--- <8 --
+> I've never met anyone on this mailing list in person, but the quality 
+> (or lack thereof sometimes) is evident in my work, and since its all 
+> peer-reviewed anyway Junio finds little risk in incorporating the good 
+> stuff into git.git.  No certificate required.
 
->  * int would be enough for 'depth', not long.  Also, "return
->    (a->depth - b->depth)" is kosher only when it is signed,
->    although it works in practice on sane platforms.
+Exactly. I think it is one of the reasons monotone is so unpopular (at 
+least as far as I am concerned): it makes the start really cumbersome. And 
+in the end you gain nothing.
 
-I originally went with unsigned long as that matches the size
-of a packfile, and I wasn't using depth in a signed way.  Until
-that patch.  Good catch.
+And you see what the result is when looking into corporate projects. More 
+often than not, bureaucratic procedures (e.g. tracking time, meetings, 
+specifications) supersede quality-assuring procedures (e.g. permanent 
+updates on the TODO list, code review, discussion on implementation 
+details), and quite often, the code just sucks.
 
->  * I did not find mergesort(); if we want stable, explicitly do
->    so.  In practice, qsort() seems stable (as you know qsort()
->    does not have to be implemented as quicksort).
+My favourite example is when I found 34 different (!) implementations of a 
+tree structure in the same project.
 
-Must be a *BSD extension.  Oops.
+So, if you start relying on the validity of code just because somebody 
+signed it, you will reap trouble.
 
-
-Patch looked good.  Thanks.
-
--- 
-Shawn.
+Ciao,
+Dscho
