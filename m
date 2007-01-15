@@ -1,85 +1,76 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Commit signing
-Date: Mon, 15 Jan 2007 15:25:52 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0701151430170.20138@iabervon.org>
-References: <200701151000.58609.andyparkins@gmail.com> <20070115101529.GB12257@spearce.org>
- <20070115102727.GC12257@spearce.org>
+From: lamikr <lamikr@cc.jyu.fi>
+Subject: Re: What's in git.git and announcing GIT v1.5.0-rc1
+Date: Mon, 15 Jan 2007 22:54:21 +0200
+Message-ID: <45ABE9FD.4050601@cc.jyu.fi>
+References: <200701150221.l0F2LlwJ016982@laptop13.inf.utfsm.cl>
+Reply-To: lamikr@cc.jyu.fi
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 15 21:50:49 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 15 21:53:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H6YOy-0001dB-OU
-	for gcvg-git@gmane.org; Mon, 15 Jan 2007 21:25:57 +0100
+	id 1H6YlX-0006ex-Qe
+	for gcvg-git@gmane.org; Mon, 15 Jan 2007 21:49:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751468AbXAOUZy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 15 Jan 2007 15:25:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751469AbXAOUZy
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Jan 2007 15:25:54 -0500
-Received: from iabervon.org ([66.92.72.58]:2860 "EHLO iabervon.org"
+	id S1751510AbXAOUtN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 15 Jan 2007 15:49:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751482AbXAOUtN
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Jan 2007 15:49:13 -0500
+Received: from posti6.jyu.fi ([130.234.4.43]:44794 "EHLO posti6.jyu.fi"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751468AbXAOUZx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Jan 2007 15:25:53 -0500
-Received: (qmail 22117 invoked by uid 1000); 15 Jan 2007 15:25:52 -0500
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 15 Jan 2007 15:25:52 -0500
-To: "Shawn O. Pearce" <spearce@spearce.org>
-In-Reply-To: <20070115102727.GC12257@spearce.org>
+	id S1751510AbXAOUtM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Jan 2007 15:49:12 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by posti6.jyu.fi (8.13.6/8.13.6) with ESMTP id l0FKmsnm001455;
+	Mon, 15 Jan 2007 22:48:54 +0200
+X-Virus-Scanned: amavisd-new at cc.jyu.fi
+Received: from posti6.jyu.fi ([127.0.0.1])
+	by localhost (posti6.jyu.fi [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id qa4QznLpwKx3; Mon, 15 Jan 2007 22:48:54 +0200 (EET)
+Received: from aragorn.kortex.jyu.fi (aragorn.kortex.jyu.fi [130.234.182.120])
+	by posti6.jyu.fi (8.13.6/8.13.6) with ESMTP id l0FKmpBE001450;
+	Mon, 15 Jan 2007 22:48:52 +0200
+Received: from [127.0.0.1] (aragorn2.kortex.jyu.fi [127.0.0.1])
+	by aragorn.kortex.jyu.fi (Postfix) with ESMTP id 55071468194;
+	Mon, 15 Jan 2007 22:54:22 +0200 (EET)
+User-Agent: Thunderbird 1.5.0.9 (X11/20070111)
+To: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
+In-Reply-To: <200701150221.l0F2LlwJ016982@laptop13.inf.utfsm.cl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36882>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36883>
 
-On Mon, 15 Jan 2007, Shawn O. Pearce wrote:
 
-> "Shawn O. Pearce" <spearce@spearce.org> wrote:
-> > Andy Parkins <andyparkins@gmail.com> wrote:
-> > > Of course my favourite is git, but we were talking about the certificates 
-> > > needed by monotone for each developer.
-> 
-> One problem here is a certificate does not make a security system.
-> Obviously anyone can generate a certificate and claim anything they
-> want within it, just the same as you can claim anything you want in
-> a Git commit or tag.  What's needed is some external method that
-> all interested parties trust to verify a given certificate is
-> associated with a given entity.
-> 
-> > What I'm actually doing in one particular environment is checking
-> > the committer string against a database of known committer strings
-> > associated with the current UNIX uid.
-> 
-> In this particular case access to the UNIX system is tightly
-> controlled.  Much paperwork must be filled out and signed by multiple
-> people, all of whom recognize the user on sight and know why they
-> need access to that system.  They also have checked the user's
-> identity through multiple background checks, fingerprinting, etc.
-> 
-> In other words the entire authentication problem was already solved,
-> trusting the UNIX uid just let Git plug into that seamlessly.
-> 
-> The problem is obviously harder on the Internet.  I've never
-> met anyone on this mailing list in person, but the quality (or
-> lack thereof sometimes) is evident in my work, and since its all
-> peer-reviewed anyway Junio finds little risk in incorporating the
-> good stuff into git.git.  No certificate required.
+>> Would it make sense to add something like this to the announcements as
+>> it is not very easy to find references to the git-repository itself from
+>> the net.
+>>
+>>    You can get the git repository-itself by using a following commands
+>>
+>>            git-clone git://git.kernel.org/pub/scm/git/git.git git_repo
+>>
+>>    After that you can switch to tagged version <v1.5.0-rc1> or sources
+>> from the repository by using command
+>>
+>>           git-checkout -f v1.5.0-rc1 master
+>>
+>>    Alternatively you can download the tar packed version of sources from
+>>       
+>>           http://www.kernel.org/pub/software/scm/git/
+>>     
+>
+> Be careful, this gives you a old-fashioned repository, the repositories
+> created by 1.5.0-rc are different, and 1.4.4.4 doesn't grok them:
+>
+>    * refusing to create funny ref 'remotes/origin/*' locally
+>   
+So that would also not work if one uses git-1.4.4 client for fetching
+from the git-1.5.x repository?
+How one is then supposed to jump from head/master to tagged version?
 
-In theory, we could put certificates as blobs in the repository and 
-reference them in the commit header. The names and such in the certificate 
-would, of course, not be verified in any particular way, but the 
-fingerprint would be an effective identity. We'd be able to tell that a 
-commit was prepared by someone with access to the same certificate that 
-was used to build the reputation.
-
-If we saw certificates with different fingerprints with the same name, 
-we'd know to ask what was going on, because that's suspicious.
-
-Of course, there would be no requirement to sign commits, or to have a 
-certificate, or to get anyone in particular to say anything in particular 
-about a certificate. But you'd be able to create a pseudonym if you 
-wanted and have cryptographicly secure access to it.
-
-	-Daniel
-*This .sig left intentionaly blank*
+Mika
