@@ -1,70 +1,101 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC] Git config file reader in Perl (WIP)
-Date: Mon, 15 Jan 2007 10:03:43 +0100
-Message-ID: <200701151003.44498.jnareb@gmail.com>
-References: <200701150144.56793.jnareb@gmail.com> <20070115070826.GB939@localdomain>
+From: "Guilhem Bonnefille" <guilhem.bonnefille@gmail.com>
+Subject: Re: Howto use StGit and git-svn at same time
+Date: Mon, 15 Jan 2007 14:26:36 +0100
+Message-ID: <8b65902a0701150526j5a954529xf45b2d0348a77573@mail.gmail.com>
+References: <8b65902a0701091335u160c6dfl81a523e4cd5adbee@mail.gmail.com>
+	 <8b65902a0701091341v5983c113tc5cd32c6c4c57719@mail.gmail.com>
+	 <20070109224125.GF17093@nan92-1-81-57-214-146.fbx.proxad.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 15 20:06:10 2007
+X-From: git-owner@vger.kernel.org Mon Jan 15 20:07:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@m.gmane.org
 Received: from main.gmane.org ([80.91.229.2] helo=ciao.gmane.org)
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H6W2M-0000Qa-Lw
-	for gcvg-git@m.gmane.org; Mon, 15 Jan 2007 18:54:26 +0100
+	id 1H6VVl-0000O6-07
+	for gcvg-git@m.gmane.org; Mon, 15 Jan 2007 18:20:45 +0100
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1H6V9I-0003eK-6A
-	for gcvg-git@m.gmane.org; Mon, 15 Jan 2007 17:57:32 +0100
+	id 1H6VAA-0003eK-RB
+	for gcvg-git@m.gmane.org; Mon, 15 Jan 2007 17:58:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932118AbXAOJDa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 15 Jan 2007 04:03:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932125AbXAOJDa
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Jan 2007 04:03:30 -0500
-Received: from ug-out-1314.google.com ([66.249.92.172]:53150 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932118AbXAOJD3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Jan 2007 04:03:29 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so1293241uga
-        for <git@vger.kernel.org>; Mon, 15 Jan 2007 01:03:27 -0800 (PST)
+	id S932321AbXAON0i (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 15 Jan 2007 08:26:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932317AbXAON0i
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Jan 2007 08:26:38 -0500
+Received: from wx-out-0506.google.com ([66.249.82.226]:53250 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932323AbXAON0h (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Jan 2007 08:26:37 -0500
+Received: by wx-out-0506.google.com with SMTP id h31so1757547wxd
+        for <git@vger.kernel.org>; Mon, 15 Jan 2007 05:26:37 -0800 (PST)
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=akUjFRtI4tBJ/RIapJsUtGT2bcpgxXbN6D9O44kNwXMkVrn17rz8h+EwVO23ufDrVmmzFQHSsu9C07zRn5Wnd0hfKlT7csVnmiC1Q0ByLQ9rD7IsqvhUMfNQ2Z2OrdI4AS8+SNCdFLYhORP6t74uWq1FUkvP83MEXSx0NFKGvzI=
-Received: by 10.66.216.20 with SMTP id o20mr5070776ugg.1168851807730;
-        Mon, 15 Jan 2007 01:03:27 -0800 (PST)
-Received: from host-81-190-20-200.torun.mm.pl ( [81.190.20.200])
-        by mx.google.com with ESMTP id w40sm5295444ugc.2007.01.15.01.03.20;
-        Mon, 15 Jan 2007 01:03:21 -0800 (PST)
-To: Eric Wong <normalperson@yhbt.net>
-User-Agent: KMail/1.9.3
-In-Reply-To: <20070115070826.GB939@localdomain>
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Ty29u/lrRmovBjxKXULR/DhCKw6MAxzni+R3pgDzMEhY2OMfA9lqhDLYMrg0+LM3SX2oxE6iodwCSLFn1g+2kdXC6ItmVfgayCjn3a4Fx7b3mXHIpibj99Nd8ELz3Kf3+SsXOKoF24PJBcTCecYpWuL87Mk3YVLO04qfvEvMZPw=
+Received: by 10.90.86.10 with SMTP id j10mr2783389agb.1168867596495;
+        Mon, 15 Jan 2007 05:26:36 -0800 (PST)
+Received: by 10.90.51.4 with HTTP; Mon, 15 Jan 2007 05:26:36 -0800 (PST)
+To: "Yann Dirson" <ydirson@altern.org>
+In-Reply-To: <20070109224125.GF17093@nan92-1-81-57-214-146.fbx.proxad.net>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36860>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36861>
 
-Eric Wong wrote:
-> Jakub Narebski <jnareb@gmail.com> wrote:
->> To make gitweb faster I thought about adding to it, or to Git.pm,
->> simple nonvalidation config file reader. Nonvalidating means that
->> it would accept some input which git-repo-config considers invalid.
-> 
-> How about something like git-for-each-ref that dumps the entire output
-> of a config file into an eval()-able string?  That way we don't have to
-> deal with corner-cases and subtle differences between C and Perl
-> implementations.
+Ok, thanks for the reminder: I forgot "stg pop/push".
 
-The idea is (at least for gitweb) to avoid cost of fork. And I think
-if the format gets documented properly, there should be no differences
-in config file parsing.
+I redo whole job as this:
+- git-svn -i trunk fetch
+- stg pop -a
+- git-rebase remotes/trunk # as recommended by git-svn manual
+- stg push -a
+- playing another merging game as my patches submissions were modified
+since archived
 
-Please remember also that is first draft of git config file reader
-in perl; an alpha version.
+Thanks.
+
+On 1/9/07, Yann Dirson <ydirson@altern.org> wrote:
+> On Tue, Jan 09, 2007 at 10:41:20PM +0100, Guilhem Bonnefille wrote:
+> > Humh...
+> > I finished the conflicts solving game. I think the way I choosed is
+> > incorrect. Following gitk, it is now a big big bazaar in my commits
+> > history.
+>
+> Right, you should not use git-rebase on a StGIT branch :)
+>
+> What you should have done is moving your stack base from your old
+> origin branch to remotes/trunk - something that StGIT does not support
+> yet from command-line, but I've done this manually in the past
+> (migrating an StGIT stack after re-running a full git-cvsimport after
+> the original cvs branch got corrupted).
+>
+> Something along the line of (untested, off the top of my head):
+>
+> $ stg pop -a
+> $ echo <TARGET-SHA1>  >  .git/refs/heads/<BRANCH>
+> $ echo <TARGET-SHA1>  >  .git/refs/bases/<BRANCH>
+>
+> And then use "stg push" and "stg resolved -i" to resolve the conflicts.
+>
+> But always be sure of backing up your .git before doing such by-hand
+> experiments.
+>
+> Best regards,
+> --
+> Yann.
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
+
+
 -- 
-Jakub Narebski
-Poland
+Guilhem BONNEFILLE
+-=- #UIN: 15146515 JID: guyou@im.apinc.org MSN: guilhem_bonnefille@hotmail.com
+-=- mailto:guilhem.bonnefille@gmail.com
+-=- http://nathguil.free.fr/
