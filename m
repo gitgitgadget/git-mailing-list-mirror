@@ -1,75 +1,83 @@
-From: "Nikolai Weibull" <now@bitwi.se>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: [RFC] Git config file reader in Perl (WIP)
-Date: Mon, 15 Jan 2007 16:34:26 +0100
-Message-ID: <dbfc82860701150734j7322de15v30dc6822b456ea66@mail.gmail.com>
-References: <200701150144.56793.jnareb@gmail.com>
-	 <200701151003.44498.jnareb@gmail.com>
-	 <20070115095613.GA4037@localdomain>
-	 <200701151132.00971.jnareb@gmail.com>
-	 <20070115112635.GA5134@localdomain>
-	 <Pine.LNX.4.63.0701151313050.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+Date: Mon, 15 Jan 2007 17:00:47 +0100
+Message-ID: <200701151700.48159.jnareb@gmail.com>
+References: <200701150144.56793.jnareb@gmail.com> <Pine.LNX.4.63.0701151313050.22628@wbgn013.biozentrum.uni-wuerzburg.de> <dbfc82860701150734j7322de15v30dc6822b456ea66@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: "Eric Wong" <normalperson@yhbt.net>,
-	"Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 15 19:34:47 2007
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Eric Wong" <normalperson@yhbt.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 15 19:34:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@m.gmane.org
 Received: from main.gmane.org ([80.91.229.2] helo=ciao.gmane.org)
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H6VVd-0000J2-Es
-	for gcvg-git@m.gmane.org; Mon, 15 Jan 2007 18:20:37 +0100
+	id 1H6VVc-0000Hj-Hu
+	for gcvg-git@m.gmane.org; Mon, 15 Jan 2007 18:20:36 +0100
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1H6VAg-0003eK-TP
-	for gcvg-git@m.gmane.org; Mon, 15 Jan 2007 17:58:59 +0100
+	id 1H6VAl-0003eK-8Z
+	for gcvg-git@m.gmane.org; Mon, 15 Jan 2007 17:59:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750858AbXAOPeq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 15 Jan 2007 10:34:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750859AbXAOPeq
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Jan 2007 10:34:46 -0500
-Received: from wr-out-0506.google.com ([64.233.184.232]:22907 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750863AbXAOPeo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Jan 2007 10:34:44 -0500
-Received: by wr-out-0506.google.com with SMTP id i30so1049250wra
-        for <git@vger.kernel.org>; Mon, 15 Jan 2007 07:34:43 -0800 (PST)
+	id S1750889AbXAOQAc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 15 Jan 2007 11:00:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750897AbXAOQAc
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Jan 2007 11:00:32 -0500
+Received: from ug-out-1314.google.com ([66.249.92.169]:56591 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750882AbXAOQAb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Jan 2007 11:00:31 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so1386907uga
+        for <git@vger.kernel.org>; Mon, 15 Jan 2007 08:00:30 -0800 (PST)
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=MirxqEusp+WQyuXiiLPt00Dj3tsS+gUuoFsKg7DWl9+OZdUOmA1Fm6zDNMa2/uiK/PKaTf3taulbvjdTZxR9hH8aj8lzvt3Wra30HnHo+K8c9IbXDOHRoJpl58CaSPIFo/R2ZoBMGFhhHChWsqzoSC5y1WUjO4GJAn9nlkIaLN4=
-Received: by 10.78.118.19 with SMTP id q19mr2584990huc.1168875276773;
-        Mon, 15 Jan 2007 07:34:36 -0800 (PST)
-Received: by 10.78.200.7 with HTTP; Mon, 15 Jan 2007 07:34:26 -0800 (PST)
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0701151313050.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=uYAPQrdorMohtjvFtNeOlNN2wmpJxEBytEUPD7CaN5r4ge/Q1O7SquG48oMgpq3dCkXyIRtY4r3tezKRGbe+YRZanL2hOTC+XKRVsKl3rOMlQnwj8L+A8nV5bvMC0UWSvLZUenQ1Cd+UQnJQ/o9ZWCtyCVrmUfIyGuHBEYxW878=
+Received: by 10.67.103.7 with SMTP id f7mr5612205ugm.1168876829800;
+        Mon, 15 Jan 2007 08:00:29 -0800 (PST)
+Received: from host-81-190-20-200.torun.mm.pl ( [81.190.20.200])
+        by mx.google.com with ESMTP id j1sm7006940ugf.2007.01.15.08.00.29;
+        Mon, 15 Jan 2007 08:00:29 -0800 (PST)
+To: "Nikolai Weibull" <now@bitwi.se>
+User-Agent: KMail/1.9.3
+In-Reply-To: <dbfc82860701150734j7322de15v30dc6822b456ea66@mail.gmail.com>
 Content-Disposition: inline
-X-Google-Sender-Auth: d43d774197166d70
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36845>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36846>
 
-On 1/15/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+Nikolai Weibull wrote:
+> On 1/15/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+>> On Mon, 15 Jan 2007, Eric Wong wrote:
+> 
+>>>> Would you write "git repo-config --perl", then? ;-)
+> 
+>>> The below patch should be a start (only tested on my fairly standard
+>>> .git/config).  A --python option should be easy, too :)
+> 
+>> A bit shorter (and gets the booleans right, plus being even easier
+>> towards --python extension):
+> 
+> If we're going down this slippery slope, why not just give up and add
+> a --xml switch instead?  Readable by all and a lot more flexible than
+> --perl, --python, --ruby, --tcl, --sh, --c++, --fortran, --lisp,
+> --html, --that-next-silver-bullet-language [...].
+> 
+> That said, parsing the config file as-is can't be so difficult that we
+> need to export it to separate files with a different syntax, now can
+> it?
 
-> On Mon, 15 Jan 2007, Eric Wong wrote:
+Parsing the config file is not _that_ difficult (the first post in this 
+thread had config reader in Perl), but it is not that easy: case 
+(in)setiviness, quoting, escaping, comments, removing leading and 
+trailing whitespace when not quoted...
 
-> > > Would you write "git repo-config --perl", then? ;-)
-
-> > The below patch should be a start (only tested on my fairly standard
-> > .git/config).  A --python option should be easy, too :)
-
-> A bit shorter (and gets the booleans right, plus being even easier
-> towards --python extension):
-
-If we're going down this slippery slope, why not just give up and add
-a --xml switch instead?  Readable by all and a lot more flexible than
---perl, --python, --ruby, --tcl, --sh, --c++, --fortran, --lisp,
---html, --that-next-silver-bullet-language-that-hasnt-been-invented-yet-but-will-need-its-own-switch-once-it-has-been.
-
-That said, parsing the config file as-is can't be so difficult that we
-need to export it to separate files with a different syntax, now can
-it?
-
-  nikolai
+P.S. I'd rather have an additional implementation (in Perl) conforming 
+to yet to be written git ini-like config file specs, to find places 
+where canonic parser, git-repo-config, doesn't conform to the specs.
+-- 
+Jakub Narebski
+Poland
