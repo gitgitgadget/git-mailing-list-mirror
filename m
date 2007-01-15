@@ -1,176 +1,67 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [RFC] Git config file reader in Perl (WIP)
-Date: Mon, 15 Jan 2007 01:44:56 +0100
-Message-ID: <200701150144.56793.jnareb@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Importing from tarballs; add, rm, update-index?
+Date: Sun, 14 Jan 2007 17:06:26 -0800
+Message-ID: <7v4pqtf699.fsf@assigned-by-dhcp.cox.net>
+References: <6efbd9b70701120541n5dc4d0e1va50ae96543d8c80@mail.gmail.com>
+	<slrneqha0g.5sa.Peter.B.Baumann@xp.machine.xx>
+	<E5A7E6A8-45FF-4A7A-A31E-DFEBAD48DF1C@silverinsanity.com>
+	<200701131815.27481.alan@chandlerfamily.org.uk>
+	<8E585186-FC3F-473B-BA1F-91CFEF1A63F4@silverinsanity.com>
+	<20070113203456.GA17648@spearce.org>
+	<Pine.LNX.4.63.0701141340020.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<20070114224204.GA10888@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Mon Jan 15 19:31:56 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Brian Gernhardt <benji@silverinsanity.com>,
+	Alan Chandler <alan@chandlerfamily.org.uk>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 15 19:32:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@m.gmane.org
 Received: from main.gmane.org ([80.91.229.2] helo=ciao.gmane.org)
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H6VWI-0000iR-Ok
+	id 1H6VWH-0000hV-Vr
 	for gcvg-git@m.gmane.org; Mon, 15 Jan 2007 18:21:18 +0100
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1H6V8g-0003eK-1M
-	for gcvg-git@m.gmane.org; Mon, 15 Jan 2007 17:56:54 +0100
+	id 1H6V8h-0003eK-VB
+	for gcvg-git@m.gmane.org; Mon, 15 Jan 2007 17:56:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751761AbXAOAo6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 14 Jan 2007 19:44:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751767AbXAOAo5
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 Jan 2007 19:44:57 -0500
-Received: from ug-out-1314.google.com ([66.249.92.174]:36797 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751761AbXAOAo5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Jan 2007 19:44:57 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so1224598uga
-        for <git@vger.kernel.org>; Sun, 14 Jan 2007 16:44:55 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=bJs/olHi7GiDPGjyAR5pK4JM3fVd2FxHNrpq7GHUvDXn2j+Sz3jX8qf+0SeA2Sry09OI5XmJ7uos3acgY14zb3Cs+6zQ2ePUJp4vWQdyokZUx1SXOdVMsiYuITzAx9DmyzoGBjiZ/SvmcU3hf6WaOgcp23Vc+GxnrONMp8XZON4=
-Received: by 10.67.101.10 with SMTP id d10mr4625403ugm.1168821895541;
-        Sun, 14 Jan 2007 16:44:55 -0800 (PST)
-Received: from host-81-190-20-200.torun.mm.pl ( [81.190.20.200])
-        by mx.google.com with ESMTP id w40sm4936892ugc.2007.01.14.16.44.55;
-        Sun, 14 Jan 2007 16:44:55 -0800 (PST)
-To: git@vger.kernel.org
-User-Agent: KMail/1.9.3
-Content-Disposition: inline
+	id S1751766AbXAOBG3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 14 Jan 2007 20:06:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751769AbXAOBG3
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 Jan 2007 20:06:29 -0500
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:64626 "EHLO
+	fed1rmmtao03.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751766AbXAOBG2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Jan 2007 20:06:28 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20070115010627.IGLE29122.fed1rmmtao03.cox.net@fed1rmimpo01.cox.net>;
+          Sun, 14 Jan 2007 20:06:27 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id BD5a1W0101kojtg0000000; Sun, 14 Jan 2007 20:05:35 -0500
+To: "Shawn O. Pearce" <spearce@spearce.org>
+In-Reply-To: <20070114224204.GA10888@spearce.org> (Shawn O. Pearce's message
+	of "Sun, 14 Jan 2007 17:42:04 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36831>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36832>
 
-To make gitweb faster I thought about adding to it, or to Git.pm,
-simple nonvalidation config file reader. Nonvalidating means that
-it would accept some input which git-repo-config considers invalid.
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-Some of the trouble is caused because of coner cases like this 
-example
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+>> You mean, you _ignored_ the text "git commit -a" gives you? It really 
+>> shows you the output of "git status", exactly so you know what you 
+>> committed, and sometimes more importantly, what you didn't.
+>
+> Because I'm a moron and forgot what files I had created recently.
+> Consequently I don't see them missing from the output of git commit.
+> Consequently I think the commit is OK.  :-)
 
-[section "sub ; # sect \" ion\\"] ; "]
-	key = a " b ; " ; " c ; "
-
-which is valid, but strange.
-
-I'm not proficent in Perl, so help is appreciated.
-
--- >8 --
-#!/usr/bin/perl
-
-use strict;
-use warnings;
-
-use Text::Balanced qw(extract_delimited);
-
-
-sub read_config {
-	my $configfile = shift;
-	my $section = shift;
-	my %config;
-
-	open my $fd, $configfile
-		or die "Cannot open $configfile: $!";
-
-	my $sectfull;
-	while (my $line = <$fd>) {
-		chomp $line;
-
-		if ($line =~ m/^\s*\[\s*([^][:space:]]*)\s*\](.*)$/) {
-			# section without subsection
-
-			my $sect = lc($1);
-
-			$sectfull = $sect;
-
-		} elsif ($line =~ m/\s*\[([^][:space:]]*)\s"((?:\\.|[^"])*)"\](.*)$/) {
-			# section with subsection
-
-			my $sect = lc($1);
-			my $subsect = $2;
-			$subsect =~ s/\\(.)/$1/g;
-
-			$sectfull = "$sect.$subsect";
-
-		} elsif ($line =~ m/\s*(\w+)\s*=\s*(.*?)\s*$/) {
-			# variable assignment
-
-			my $key = lc($1);
-			my $rhs = $2;
-
-			my $value = '';
-			my ($next, $remainder, $prefix) = qw();
-		DELIM: {
-				do {
-					($next, $remainder, $prefix) =
-						extract_delimited($rhs, '"', qr/(?:\\.|[^"])*/);
-
-					if ($prefix =~ s/\s*[;#].*$//) {
-						# comment in unquoted part
-						$value .= $prefix;
-						last DELIM;
-					} else {
-						$value .= $prefix if $prefix;
-						if ($next && $next =~ s/^"(.*)"$/$1/) {
-							$value .= $next;
-						}
-					}
-
-					$rhs = $remainder;
-				} while ($rhs && $next);
-			} # DELIM:
-
-			if ($remainder) {
-				$remainder =~ s/\s*[;#].*$//;
-				$value .= $remainder;
-			}
-
-			$value =~ s/\\(.)/$1/g;
-
-			if (exists $config{"$sectfull.$key"}) {
-				push @{$config{"$sectfull.$key"}}, $value;
-			} else {
-				$config{"$sectfull.$key"} = [ $value ];
-			}
-
-		} elsif ($line =~ m/^\s*(\w+)\s*(:?[;#].*)?$/) {
-			# boolean variable without value
-
-			my $key = lc($1);
-
-			if (exists $config{"$sectfull.$key"}) {
-				push @{$config{"$sectfull.$key"}}, undef;
-			} else {
-				$config{"$sectfull.$key"} = [ undef ];
-			}
-		} # end if
-	}
-
-	close $fd
-		or die "Cannot close $configfile: $!";
-
-	return wantarray ? %config : \%config;
-}
-
-# --------------------------------------------------------------------------
-
-my %config;
-
-%config = read_config("~/git/.git/config");
-%config = read_config("/tmp/jnareb/gitconfig");
-
-foreach my $ckey (sort keys %config) {
-	foreach my $cvalue (@{$config{$ckey}}) {
-		if (defined $cvalue) {
-			print "$ckey=$cvalue\n";
-		} else {
-			print "$ckey\n";
-		}
-	}
-}
-
-__END__
+I think Johannes is refering you to the "Untracked files"
+section.
