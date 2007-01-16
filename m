@@ -1,78 +1,144 @@
-From: Steven Grimm <koreth@midwinter.com>
-Subject: Re: [RFC] Replace rebase with filtering
-Date: Tue, 16 Jan 2007 11:43:35 -0800
-Message-ID: <45AD2AE7.2010908@midwinter.com>
-References: <45AC3B5D.6080700@midwinter.com> <Pine.LNX.4.63.0701161216440.22628@wbgn013.biozentrum.uni-wuerzburg.de> <45AD2568.4040408@midwinter.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] document --exec for git-push
+Date: Tue, 16 Jan 2007 11:45:20 -0800
+Message-ID: <7vk5zmycvj.fsf@assigned-by-dhcp.cox.net>
+References: <20070116150201.GA2427@cepheus>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 16 20:43:55 2007
+X-From: git-owner@vger.kernel.org Tue Jan 16 20:45:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H6uDe-00058M-Hg
-	for gcvg-git@gmane.org; Tue, 16 Jan 2007 20:43:42 +0100
+	id 1H6uFJ-0005eu-Po
+	for gcvg-git@gmane.org; Tue, 16 Jan 2007 20:45:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751304AbXAPTnh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 16 Jan 2007 14:43:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751332AbXAPTnh
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Jan 2007 14:43:37 -0500
-Received: from tater.midwinter.com ([216.32.86.90]:42924 "HELO midwinter.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751304AbXAPTng (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Jan 2007 14:43:36 -0500
-Received: (qmail 27247 invoked from network); 16 Jan 2007 19:43:35 -0000
-Received: from c-76-21-17-123.hsd1.ca.comcast.net (HELO ?192.168.0.131?) (koreth@76.21.17.123)
-  by tater.midwinter.com with SMTP; 16 Jan 2007 19:43:35 -0000
-User-Agent: Thunderbird 1.5.0.9 (Macintosh/20061207)
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <45AD2568.4040408@midwinter.com>
+	id S1751332AbXAPTpX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 16 Jan 2007 14:45:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751128AbXAPTpX
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Jan 2007 14:45:23 -0500
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:34245 "EHLO
+	fed1rmmtao12.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751332AbXAPTpW convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 16 Jan 2007 14:45:22 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20070116194521.IAEN19398.fed1rmmtao12.cox.net@fed1rmimpo01.cox.net>;
+          Tue, 16 Jan 2007 14:45:21 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id BvkU1W0041kojtg0000000; Tue, 16 Jan 2007 14:44:28 -0500
+To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<zeisberg@informatik.uni-freiburg.de>
+In-Reply-To: <20070116150201.GA2427@cepheus> (Uwe =?iso-8859-1?Q?Kleine-K?=
+ =?iso-8859-1?Q?=F6nig's?= message of
+	"Tue, 16 Jan 2007 16:02:02 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36955>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36956>
 
-Steven Grimm wrote:
-> Johannes Schindelin wrote:
->> I had the impression that the use of "--ignore-if-in-upstream" in 
->> git-rebase avoids exactly this case: re-applying changes which are 
->> already in upstream.  
-> Where's that option documented? The manpage makes no mention of it at 
-> all.
+Uwe Kleine-K=F6nig  <zeisberg@informatik.uni-freiburg.de> writes:
 
-Ah, okay, poking around in the git-rebase source, I see you mean that 
-git-format-patch is called with that option. Gotcha. The problem is that 
-after a rebase, the revisions in question *aren't* in the upstream. 
-Here's my understanding of why. Say I have this in my integration 
-repository:
+> The text is just copied from git-send-pack.txt.
 
-a---b---c---d (master)
- \
-  e---f---g   (integration)
+Thanks.
 
-Now, I rebase the integration branch onto master:
+> There are still some options undocumented, but I don't know what they
+> do exacly:
+>
+> 	--thin
+> 	--no-thin
+> 	--repo=3D
+> 	-v
 
-a---b---c---d
-             \
-              e'---f'---g'
+Usually a good way to answer that question is:
 
-The problem is that, since e' contains all the changes in e *and* in 
-b/c/d, it does not have the same SHA1 as the original e revision, nor in 
-fact the same hash as any of the revisions in the pre-rebase tree. And 
-after rebase succeeds, it wipes the original e, f, and g from the 
-history of the integration branch.
+	$ git blame -C -L'/^int cmd_push/,/^}/' builtin-push.c
 
-When a clone fetches e', f', and g' from this repo and tries to rebase 
-onto the integration branch, git-format-patch will think b, c, and d are 
-new (correct) but also that e', f', and g' are new. Since they have 
-previously unknown hashes and there's no record of the original e, f, 
-and g or their relation to the new revisions -- at least, no record that 
-gets pulled down to the clone when it fetches -- there's no way for 
-git-format-patch to know that it has already applied those changes.
+and then run "git show" on the commit that introduces the option
+parsing, e.g. commit bcc785f6 for --repo.
 
-As always, correct me if I'm wrong -- that's my understanding of the 
-problem with rebasing in a parent repository.
+----------------------------------------------------------------
+commit bcc785f611dc6084be75999a3b6bafcc950e21d6
+Author: Linus Torvalds <torvalds@osdl.org>
+Date:   Mon Oct 30 08:28:59 2006 -0800
 
--Steve
+git push: add verbose flag and allow overriding of default target repos=
+itory
+
+This adds a command line flag "-v" to enable a more verbose mode, and
+"--repo=3D" to override the default target repository for "git push" (w=
+hich
+otherwise always defaults to "origin").
+
+This, together with the patch to allow dashes in config variable names,
+allows me to do
+
+	[alias]
+		push-all =3D push -v --repo=3Dall
+
+in my user-global config file, and then I can (for any project I mainta=
+in)
+add to the project-local config file
+
+	[remote "all"]
+		url=3Done.target.repo:/directory
+		url=3Danother.target:/pub/somewhere/else
+
+and now "git push-all" just updates all the target repositories, and sh=
+ows
+me what it does - regardless of which repo I am in.
+
+----------------------------------------------------------------
+
+But now I wonder why Linus couldn't have just done:
+
+	[alias]
+		push-all =3D push -v all
+
+-- >8 --
+git-push documentation: remaining bits
+
+Mention --thin, --no-thin, --repo and -v.=20
+
+---
+diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+index a19631d..3e8dbcf 100644
+--- a/Documentation/git-push.txt
++++ b/Documentation/git-push.txt
+@@ -8,7 +8,7 @@ git-push - Update remote refs along with associated obj=
+ects
+=20
+ SYNOPSIS
+ --------
+-'git-push' [--all] [--tags] [--exec=3D<receive-pack>] [-f | --force] <=
+repository> <refspec>...
++'git-push' [--all] [--tags] [--exec=3D<receive-pack>]  [--repo=3Dall] =
+[-f | --force] [--thin | --no-thin] [-v] [<repository> <refspec>...]
+=20
+ DESCRIPTION
+ -----------
+@@ -79,6 +79,18 @@ the remote repository.
+ 	This flag disables the check.  This can cause the
+ 	remote repository to lose commits; use it with care.
+=20
++\--repo=3D<repo>::
++	When no repository is specified the command defaults to
++	"origin"; this overrides it.
++
++\--thin, \--no-thin::
++	These options are passed to `git-send-pack`.  Thin
++	transfer spends extra cycles to minimize the number of
++	objects to be sent and meant to be used on slower connection.
++
++-v::
++	Run verbosely.
++
+ include::urls.txt[]
+=20
+ Author
