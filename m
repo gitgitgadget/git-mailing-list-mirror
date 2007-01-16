@@ -1,71 +1,90 @@
-From: "Christian MICHON" <christian.michon@gmail.com>
-Subject: Re: Importing from tarballs; add, rm, update-index?
-Date: Tue, 16 Jan 2007 13:12:12 +0100
-Message-ID: <46d6db660701160412v6de41281sf167f23e7045017e@mail.gmail.com>
-References: <6efbd9b70701120541n5dc4d0e1va50ae96543d8c80@mail.gmail.com>
-	 <8E585186-FC3F-473B-BA1F-91CFEF1A63F4@silverinsanity.com>
-	 <20070113203456.GA17648@spearce.org>
-	 <Pine.LNX.4.63.0701141340020.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <20070114224204.GA10888@spearce.org>
-	 <7v4pqtf699.fsf@assigned-by-dhcp.cox.net>
-	 <20070115011217.GA11240@spearce.org>
-	 <Pine.LNX.4.64.0701151727310.20138@iabervon.org>
-	 <200701160034.l0G0YC5J005016@laptop13.inf.utfsm.cl>
-	 <Pine.LNX.4.64.0701152154030.20138@iabervon.org>
+From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
+Subject: Re: [PATCH] Reencode committer info to utf-8 before formatting mail header
+Date: Tue, 16 Jan 2007 13:43:39 +0100
+Message-ID: <873b6b87lw.fsf@morpheus.local>
+References: <871wm08kcu.fsf@morpheus.local> <7vd55jrj38.fsf@assigned-by-dhcp.cox.net> <7vr6tzogp4.fsf@assigned-by-dhcp.cox.net> <7vmz4nog5b.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0701131217410.22628@wbgn013.biozentrum.uni-wuerzburg.de> <877ivo446n.fsf@morpheus.local> <Pine.LNX.4.63.0701161239590.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Tue Jan 16 13:12:25 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Tue Jan 16 13:44:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H6nAn-0005yp-DF
-	for gcvg-git@gmane.org; Tue, 16 Jan 2007 13:12:17 +0100
+	id 1H6nfs-0007Ix-Bq
+	for gcvg-git@gmane.org; Tue, 16 Jan 2007 13:44:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751066AbXAPMMO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 16 Jan 2007 07:12:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751116AbXAPMMO
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Jan 2007 07:12:14 -0500
-Received: from wr-out-0506.google.com ([64.233.184.224]:28705 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751069AbXAPMMO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Jan 2007 07:12:14 -0500
-Received: by wr-out-0506.google.com with SMTP id i20so163562wra
-        for <git@vger.kernel.org>; Tue, 16 Jan 2007 04:12:13 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=RYz+9jQDsey8MvvToF4GS7wjkXslvvQEKdSCCY3RhYgbchMzf1nFXHzPli4nNvSosX0L2T7JE6RBPLXiz1MUxM0Ielj4txOxncg7j/tIUl1NGuGbDPjs7pWqB7sMb2c1DnTvvydsyV9jsQ3ybwcyU48WRJdjZjgaGgcJTcOgquE=
-Received: by 10.35.43.10 with SMTP id v10mr9859599pyj.1168949532431;
-        Tue, 16 Jan 2007 04:12:12 -0800 (PST)
-Received: by 10.35.30.9 with HTTP; Tue, 16 Jan 2007 04:12:12 -0800 (PST)
+	id S1750915AbXAPMoH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 16 Jan 2007 07:44:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751027AbXAPMoH
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Jan 2007 07:44:07 -0500
+Received: from main.gmane.org ([80.91.229.2]:57954 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750915AbXAPMoG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Jan 2007 07:44:06 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1H6nfR-0003RS-GX
+	for git@vger.kernel.org; Tue, 16 Jan 2007 13:43:57 +0100
+Received: from c83-253-22-207.bredband.comhem.se ([83.253.22.207])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 16 Jan 2007 13:43:57 +0100
+Received: from davidk by c83-253-22-207.bredband.comhem.se with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 16 Jan 2007 13:43:57 +0100
+X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
-In-Reply-To: <Pine.LNX.4.64.0701152154030.20138@iabervon.org>
-Content-Disposition: inline
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: c83-253-22-207.bredband.comhem.se
+User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (gnu/linux)
+Cancel-Lock: sha1:rlDGlVL4D6qq1txBN0ubYwyErGs=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36934>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36935>
 
-This is an interesting idea... so I went through the <<silly>> exercise of
-downloading 117 tar bzipped versions of the kernel 2.6 (from 2.6.0 to
-2.6.19.2, without the release candidates). Quite an interesting
-benchmark.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Then I started importing them, through a similar script, creating a
-branch for each version (for easy checkout). It takes around
-1.5 hours to complete.
+> Hi,
+>
+> On Mon, 15 Jan 2007, David K=C3=A5gedal wrote:
+>
+>> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>>=20
+>> > On Fri, 12 Jan 2007, Junio C Hamano wrote:
+>> >
+>> >> Side note.  The previous patch does not help if your commit were
+>> >> made in non UTF-8 with not too recent git; the code assumes that
+>> >> commit messages without the new "encoding" headers are in UTF-8.
+>> >
+>> > Why not just use is_utf8() and warn, or error out, if the message =
+is not=20
+>> > UTF-8? (I tend towards the erroring out, since this _is_ a new fea=
+ture,=20
+>> > and gives undesired results with "old" commits.)
+>>=20
+>> What do you mean? I have an old repository with latin1 commits witho=
+ut
+>> any encoding markers.  I want to be able to use format-patch from th=
+at
+>> and at least get a From: line with something readable.  You can't ju=
+st
+>> barf and say "This isn't UTF-8, go away".
+>
+> So what do you want to do instead? Just pretend that the unrecoded --=
+=20
+> Latin-1 encoded -- text is UTF-8? That's plain wrong.
 
-Results:
-======
+That is what git did before I wrote my patch, so it obviously not what
+I want.  I want to be able to tell git what encoding it is.
 
-initial point: 4.3Gb of tar.bz2 files
+My patch reused the i18n.commitencoding configuration parameter for
+that, but Junio is probably right in that that is only meant for new
+commits, and an evironment variable makes more sense.
 
-intermediate: ~800Mb with ~120000 git objects
+So just barfing on a commit that isn't utf-8 isn't a complete
+solution.  But maybe there was some context to your comment above that
+I missed.
 
-final point: 100Mb with prune-packed objects
-(so it's about 2.5x the average tar.bz2 size of just a single kernel)
-
---
-Christian
+--=20
+David K=C3=A5gedal
