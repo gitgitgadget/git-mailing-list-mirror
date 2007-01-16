@@ -1,70 +1,75 @@
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: Re: [RFC] Replace rebase with filtering
-Date: Tue, 16 Jan 2007 17:31:15 -0500
-Message-ID: <2696299C-A54D-4A7E-BA3B-029C8E4B278D@silverinsanity.com>
-References: <45AC3B5D.6080700@midwinter.com> <Pine.LNX.4.63.0701161216440.22628@wbgn013.biozentrum.uni-wuerzburg.de> <45AD2568.4040408@midwinter.com> <45AD2AE7.2010908@midwinter.com> <Pine.LNX.4.63.0701162131130.22628@wbgn013.biozentrum.uni-wuerzburg.de> <45AD383E.50105@midwinter.com> <Pine.LNX.4.63.0701162218070.22628@wbgn013.biozentrum.uni-wuerzburg.de> <eojh8r$9e6$1@sea.gmane.org>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC] Git config file reader in Perl (WIP)
+Date: Tue, 16 Jan 2007 23:37:31 +0100
+Message-ID: <200701162337.32759.jnareb@gmail.com>
+References: <200701150144.56793.jnareb@gmail.com> <200701161514.47908.jnareb@gmail.com> <dbfc82860701161417r650bc47fva92fa940b4e2cfc0@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 16 23:31:45 2007
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Junio C Hamano" <junkio@cox.net>,
+	"Eric Wong" <normalperson@yhbt.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 16 23:37:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H6wq8-0007oz-3Z
-	for gcvg-git@gmane.org; Tue, 16 Jan 2007 23:31:36 +0100
+	id 1H6wvX-0000qB-Cs
+	for gcvg-git@gmane.org; Tue, 16 Jan 2007 23:37:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751744AbXAPWb3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 16 Jan 2007 17:31:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751745AbXAPWb3
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Jan 2007 17:31:29 -0500
-Received: from vs072.rosehosting.com ([216.114.78.72]:53510 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751742AbXAPWb2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Jan 2007 17:31:28 -0500
-Received: from [10.0.0.93] (unknown [64.241.37.140])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTP id 82B531FFC02B;
-	Tue, 16 Jan 2007 22:31:24 +0000 (UTC)
-In-Reply-To: <eojh8r$9e6$1@sea.gmane.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-Mailer: Apple Mail (2.752.3)
+	id S1751662AbXAPWhI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 16 Jan 2007 17:37:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751736AbXAPWhI
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Jan 2007 17:37:08 -0500
+Received: from ug-out-1314.google.com ([66.249.92.171]:38418 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751662AbXAPWhG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Jan 2007 17:37:06 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so1824755uga
+        for <git@vger.kernel.org>; Tue, 16 Jan 2007 14:37:05 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=HI16zJWl5lFrDbFSggzZqU3XtXfnQGhO+RHVi46IZpV5C3T/rFfCN0yzZv/ImwHg0YAKEpZxX9AxB5jB3umpIxEHh+qdogCkuNdaWwYksoU3vX+xm91EOl6MunAi92bSk3lY8FLk6MOXoZgoqudB44e3m0KwLnnssclk/sjQb1g=
+Received: by 10.67.119.13 with SMTP id w13mr8418916ugm.1168987024346;
+        Tue, 16 Jan 2007 14:37:04 -0800 (PST)
+Received: from host-81-190-20-200.torun.mm.pl ( [81.190.20.200])
+        by mx.google.com with ESMTP id j2sm7820616ugf.2007.01.16.14.37.03;
+        Tue, 16 Jan 2007 14:37:04 -0800 (PST)
+To: "Nikolai Weibull" <now@bitwi.se>
+User-Agent: KMail/1.9.3
+In-Reply-To: <dbfc82860701161417r650bc47fva92fa940b4e2cfc0@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36973>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36974>
 
+Nikolai Weibull wrote:
+> On 1/16/07, Jakub Narebski <jnareb@gmail.com> wrote:
 
-On Jan 16, 2007, at 4:49 PM, Jakub Narebski wrote:
+>> But I agree that XML is serious overkill...
+> 
+> I don't know if it was clear from my first mail, but I wasn't
+> suggesting --xml as a serious alternative.  My point was that if we're
+> going to go through all the fuss of adding all these switches for
+> outputting the configuration file in some fixed format, why not go
+> with one that at least is universal in some sense (not necessarily
+> XML).  And, as Johannes already pointed out, it's very disturbing
+> having to dump a configuration file so that it is more easily read by
+> other programs.  That would suggest that the ini-based format for
+> git's configuration file is suboptimal.
 
-> Johannes Schindelin wrote:
->
->> Usually, however, this results in a conflict which you have to  
->> resolve.
->> And _you_ do not have a hard time verifying that the patch already  
->> went
->> in, and you just say "git rebase --skip" and the rebasing will  
->> continue
->> _without_ having committed the now obsolete patch.
->
-> Unfortunately, at least with git 1.4.4.x, not quite. You have to have
-> index clean to do "git rebase --skip", while usually there would be
-> conflict when applying patch that is already present some deeper.
->
-> I think that is a bug in git-rebase.
+No, ini-based, or rather ini-like format for git configuration
+is nice, but I think git is too forgiving in accepting input.
+Examples: section header and key/value pair in the same line,
+allowing multiple quotes in in value part.
 
-Agreed.  I tend to "git checkout HEAD -- files" before a "git rebase  
---skip" to fix that, although I guess "git reset --hard" would work  
-just the same.  But by saying "--skip" means "these changes are  
-irrelevant", so it should clean up after itself.  It's a definite  
-usability snafu.
+Well, the idea I had was to have --dump switch to git-repo-config
+to dump init file as if it was created by git-repo-config invocations,
+without any hand editing (canonical format).
 
-I'd put a simple patch to add the reset to git-merge.sh, but I'm not  
-sure I understand what --skip is doing in there with a 30 second  
-peek.  Maybe if I get more tuits, I'll do it, but someone more  
-familiar with it can probably do it much faster (and be more certain  
-it's the right thing to do).
-
-~~ Brian
+-- 
+Jakub Narebski
+Poland
