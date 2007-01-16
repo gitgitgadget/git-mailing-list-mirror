@@ -1,70 +1,87 @@
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: Re: [PATCH RFC] new config option remote.<name>.pushexec
-Date: Tue, 16 Jan 2007 11:27:05 -0500
-Message-ID: <E8FAB100-0E5B-4C3E-A0AB-34699CBBD148@silverinsanity.com>
-References: <20070116150259.GA2439@cepheus> <Pine.LNX.4.63.0701161614070.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=ISO-8859-1;
-	delsp=yes	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?ISO-8859-1?Q?Uwe_Kleine-K=F6nig?= 
-	<zeisberg@informatik.uni-freiburg.de>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 16 17:27:23 2007
+From: "Deepak Barua" <dbbarua@gmail.com>
+Subject: Re: Adding spell checker to GIT
+Date: Tue, 16 Jan 2007 23:04:29 +0530
+Message-ID: <b5a19cd20701160934s16b8717er69b950cff055a5ae@mail.gmail.com>
+References: <b5a19cd20701041246we052685hd700580df2cc120d@mail.gmail.com>
+	 <Pine.LNX.4.63.0701052147070.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <b5a19cd20701051921j69f1a85bo97e39db7d8401222@mail.gmail.com>
+	 <Pine.LNX.4.63.0701161709570.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 16 18:35:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H6r9X-0001H7-Id
-	for gcvg-git@gmane.org; Tue, 16 Jan 2007 17:27:15 +0100
+	id 1H6sCq-0003jQ-Pw
+	for gcvg-git@gmane.org; Tue, 16 Jan 2007 18:34:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751295AbXAPQ1N convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 16 Jan 2007 11:27:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751294AbXAPQ1N
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Jan 2007 11:27:13 -0500
-Received: from vs072.rosehosting.com ([216.114.78.72]:53564 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751295AbXAPQ1M convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 16 Jan 2007 11:27:12 -0500
-Received: from [IPv6???1] (localhost [127.0.0.1])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTP id C46221FFC02B;
-	Tue, 16 Jan 2007 16:27:10 +0000 (UTC)
-In-Reply-To: <Pine.LNX.4.63.0701161614070.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-Mailer: Apple Mail (2.752.3)
+	id S1751949AbXAPRel (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 16 Jan 2007 12:34:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751955AbXAPRel
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Jan 2007 12:34:41 -0500
+Received: from nf-out-0910.google.com ([64.233.182.186]:48010 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751949AbXAPRek (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Jan 2007 12:34:40 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so2472875nfa
+        for <git@vger.kernel.org>; Tue, 16 Jan 2007 09:34:38 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=WjwicQ5vzlTQ+Nm6pH5yrGiJV4H1RgG99Pjg4j+n0Z0Xjm5S+qR0eIZMOJ/XoY0uyiWcZKZB6T60NlAatQ3+M9a8J+3ZkbPcB75GhwR+NFIA9fnFo/hGXucs4xFpRgTZZS2JWYOgUShhj5IxLrBqDjJncWCHymeOWKg3Fi8qn2o=
+Received: by 10.49.13.14 with SMTP id q14mr6213356nfi.1168968869689;
+        Tue, 16 Jan 2007 09:34:29 -0800 (PST)
+Received: by 10.49.60.3 with HTTP; Tue, 16 Jan 2007 09:34:29 -0800 (PST)
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0701161709570.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36948>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36949>
 
+Hi Johannes,
+                  It's okay take your time and suggest any changes and
+teach me how to make this code into a proper patch.
 
-On Jan 16, 2007, at 10:16 AM, Johannes Schindelin wrote:
+Regards
+Deepak
 
+On 1/16/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
 > Hi,
 >
-> On Tue, 16 Jan 2007, Uwe Kleine-K=F6nig wrote:
+> On Sat, 6 Jan 2007, Deepak Barua wrote:
 >
->> git push --exec=3D... is fine, but having it to specify every time i=
-s
->> annoying.
+> > Hi Johannes,
+> >                    I spell check "//" comments in
+> > in find_ext()
+> >
+> > if($_[0] =~ /\.cc|\.java/) {
+> >
+> >                $start_pattern  = qr!\s/\*\s|\s//\s!;
+> >        }
+> >
+> > and
+> >
+> > $chosen_pattern eq qq!\s//\s! ? $end_pattern=qq!\s\014\s! : "End
+> > Pattern Not Found" ;
+> >
+> > Also yes i didnt include to use spell checking in string literals , i
+> > thought that would be irregular and cumbersome.
+> >
+> > Could you please test the code then i can include it in a seperate file ..?
 >
-> What would you specify? The only sensible thing would be "--=20
-> exec=3Dblabla"
-> where "blabla" is a workalike to git-receive-pack.
+> Sorry, I am a little bit stressed at the moment... And I don't have the
+> required dependencies installed.
 >
-> IMHO this is just an obscure option for obscure _really_ low-level gi=
-t
-> debugging, so it should not even be mentioned in the man page, let =20
-> alone
-> encouraged.
+> Ciao,
+> Dscho
+>
+>
 
-It should be documented somewhere so that for the few odd cases where =20
-you need it you can find it.  The most likely case I can think of is =20
-an SSH push where git isn't in your path for some reason.
 
-Undocumented options are a bane to users.  Document everything, and =20
-put BIG WARNINGS on things that shouldn't be used.  Or put them in =20
-their own man page.
-
-~~ Brian
+-- 
+Code Code Code Away
