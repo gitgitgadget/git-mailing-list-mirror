@@ -1,42 +1,54 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Start all test scripts with /bin/sh.
-Date: Mon, 15 Jan 2007 18:57:40 -0800
-Message-ID: <7vodozzniz.fsf@assigned-by-dhcp.cox.net>
-References: <17448.1168911109@lotus.CS.Berkeley.EDU>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+From: Jason Riedy <ejr@cs.berkeley.edu>
+Subject: Re: [PATCH] Replace "echo -n" with printf in shell scripts.
+Date: Mon, 15 Jan 2007 19:03:53 -0800
+Message-ID: <18039.1168916633@lotus.CS.Berkeley.EDU>
+References: <7v1wlv1yeh.fsf@assigned-by-dhcp.cox.net>
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 16 03:58:12 2007
+X-From: git-owner@vger.kernel.org Tue Jan 16 04:04:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H6eWV-0003Ud-Mg
-	for gcvg-git@gmane.org; Tue, 16 Jan 2007 03:58:08 +0100
+	id 1H6ecB-0004tb-Eb
+	for gcvg-git@gmane.org; Tue, 16 Jan 2007 04:03:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751459AbXAPC5n (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 15 Jan 2007 21:57:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751460AbXAPC5m
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Jan 2007 21:57:42 -0500
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:37609 "EHLO
-	fed1rmmtao02.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751459AbXAPC5m (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Jan 2007 21:57:42 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070116025741.TZQI97.fed1rmmtao02.cox.net@fed1rmimpo01.cox.net>;
-          Mon, 15 Jan 2007 21:57:41 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id Bewo1W0041kojtg0000000; Mon, 15 Jan 2007 21:56:48 -0500
-To: Jason Riedy <ejr@EECS.Berkeley.EDU>
-In-Reply-To: <17448.1168911109@lotus.CS.Berkeley.EDU> (Jason Riedy's message
-	of "Mon, 15 Jan 2007 17:31:49 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751468AbXAPDD5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 15 Jan 2007 22:03:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751462AbXAPDD5
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Jan 2007 22:03:57 -0500
+Received: from lotus.CS.Berkeley.EDU ([128.32.36.222]:45220 "EHLO
+	lotus.CS.Berkeley.EDU" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751468AbXAPDD4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Jan 2007 22:03:56 -0500
+Received: from lotus.CS.Berkeley.EDU (localhost [127.0.0.1])
+	by lotus.CS.Berkeley.EDU (8.12.8/8.12.8/3.141592645) with ESMTP id l0G33rSH018051;
+	Mon, 15 Jan 2007 19:03:53 -0800 (PST)
+Received: from lotus.CS.Berkeley.EDU (ejr@localhost)
+	by lotus.CS.Berkeley.EDU (8.12.8/8.12.8/Submit) with ESMTP id l0G33rZE018048;
+	Mon, 15 Jan 2007 19:03:53 -0800 (PST)
+To: Junio C Hamano <junkio@cox.net>
+In-reply-to: <7v1wlv1yeh.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: MH-E 8.0.3; nmh 1.1; GNU Emacs 22.0.91
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36914>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36915>
 
-Thanks.
+And Junio C Hamano writes:
+> We have done this already so it might be too late to raise this
+> question, but does everybody have printf?
+
+It's in the Single Unix Spec as the alternative to non-portable
+echo uses:
+  http://opengroup.org/onlinepubs/007908799/xcu/echo.html#tag_001_014_525
+And no one has complained so far...
+
+> > -			name=$(echo -n "$f" | tr -c "A-Za-z0-9" ".")
+> > +			name=$(printf "$f" | tr -c "A-Za-z0-9" ".")
+
+> This should almost be safe as no sane person would have a remote
+> whose name is 'foo%s'...
+
+Forgot about that, thanks.  It should be printf "%s" "$f".
+
+Jason
