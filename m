@@ -1,137 +1,89 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: Re: Rebasing stgit stacks
-Date: Wed, 17 Jan 2007 00:17:35 +0100
-Message-ID: <20070116231735.GF7029@nan92-1-81-57-214-146.fbx.proxad.net>
-References: <8b65902a0701091335u160c6dfl81a523e4cd5adbee@mail.gmail.com> <8b65902a0701091341v5983c113tc5cd32c6c4c57719@mail.gmail.com> <20070109224125.GF17093@nan92-1-81-57-214-146.fbx.proxad.net> <8b65902a0701150526j5a954529xf45b2d0348a77573@mail.gmail.com> <20070115202412.GE9761@nan92-1-81-57-214-146.fbx.proxad.net> <b0943d9e0701151446l45eff9dbgcae718c1461d0725@mail.gmail.com> <20070115233958.GF9761@nan92-1-81-57-214-146.fbx.proxad.net> <b0943d9e0701161442t6b93e0d6nd88364600f2809ee@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC] Git config file reader in Perl (WIP)
+Date: Wed, 17 Jan 2007 00:24:10 +0100
+Message-ID: <200701170024.10640.jnareb@gmail.com>
+References: <200701150144.56793.jnareb@gmail.com> <200701162337.32759.jnareb@gmail.com> <Pine.LNX.4.63.0701162352400.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Guilhem Bonnefille <guilhem.bonnefille@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 17 00:18:02 2007
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Nikolai Weibull <now@bitwi.se>, Junio C Hamano <junkio@cox.net>,
+	Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 17 00:23:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H6xYu-0003Vs-82
-	for gcvg-git@gmane.org; Wed, 17 Jan 2007 00:17:52 +0100
+	id 1H6xef-0005BB-5z
+	for gcvg-git@gmane.org; Wed, 17 Jan 2007 00:23:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751736AbXAPXRu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 16 Jan 2007 18:17:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751662AbXAPXRu
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Jan 2007 18:17:50 -0500
-Received: from smtp7-g19.free.fr ([212.27.42.64]:38850 "EHLO smtp7-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751419AbXAPXRt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Jan 2007 18:17:49 -0500
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp7-g19.free.fr (Postfix) with ESMTP id 5FC7F540E;
-	Wed, 17 Jan 2007 00:17:47 +0100 (CET)
-Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
-	id 7EB3B2013; Wed, 17 Jan 2007 00:17:35 +0100 (CET)
-To: Catalin Marinas <catalin.marinas@gmail.com>
+	id S1751771AbXAPXXr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 16 Jan 2007 18:23:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751778AbXAPXXr
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Jan 2007 18:23:47 -0500
+Received: from ug-out-1314.google.com ([66.249.92.174]:28271 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751771AbXAPXXq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Jan 2007 18:23:46 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so1833898uga
+        for <git@vger.kernel.org>; Tue, 16 Jan 2007 15:23:45 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=Ze8zohjgPLTr+aWnM4Pelt3FexILogPZgPTevhQ48/cqWSWrE0fkG8yl/Tb5zzNOxa9P1Jk4b1NAqsqSoQ2xoJ8rkH3ne8Gc1K3ODcn06sQ9mDeRTykuzQN0Kv7oaMkRP8Sq48dINqbajuvkpYJvWspQzOxUNgyHZwX7ioRRjLs=
+Received: by 10.67.19.13 with SMTP id w13mr8487192ugi.1168989825065;
+        Tue, 16 Jan 2007 15:23:45 -0800 (PST)
+Received: from host-81-190-20-200.torun.mm.pl ( [81.190.20.200])
+        by mx.google.com with ESMTP id l33sm7810601ugc.2007.01.16.15.23.44;
+        Tue, 16 Jan 2007 15:23:44 -0800 (PST)
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+User-Agent: KMail/1.9.3
+In-Reply-To: <Pine.LNX.4.63.0701162352400.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Content-Disposition: inline
-In-Reply-To: <b0943d9e0701161442t6b93e0d6nd88364600f2809ee@mail.gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36981>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36982>
 
-On Tue, Jan 16, 2007 at 10:42:17PM +0000, Catalin Marinas wrote:
-> >The idea is that we pull our stack from one place (current base) to
-> >another.  Another possiblity would have been "stg rebase", but I'm not
-> >very keen on adding another command to do a very similar job.
-> 
-> Can you give a typical example of what <newbase> argument for --to is
-> and what you repository looks like? I just want make sure I correctly
-> understand the problem.
+Dnia wtorek 16. stycznia 2007 23:56, Johannes Schindelin napisa=B3:
+>=20
+> On Tue, 16 Jan 2007, Jakub Narebski wrote:
 
-My example is quite similar to the one given by Guilhem: I had a git
-branch coming from git-cvsimport, and my stgit stack forked atop that
-branch.  At some point git-cvsimport fucked something, and I
-regenerated a new mirror branch using it in a fresh repo.  Then I
-wanted to rebase my stack on that new branch.
+>> Well, the idea I had was to have --dump switch to git-repo-config to=
+=20
+>> dump init file as if it was created by git-repo-config invocations,=20
+>> without any hand editing (canonical format).
+>=20
+> My point still stands: if you already parse the user-friendly format,=
+ why=20
+> not dump a parse friendly format? If it weren't for those darn non-al=
+nums=20
+> in the keys, out put of "git repo-config -l" would be perfectly=20
+> acceptable.
+>=20
+> So, how about a "git repo-config --dump" which outputs a stream of NU=
+L=20
+> separated keys and values? This should be really easy to "parse", and=
+=20
+> there are no ambiguities: No key or value can contain a NUL.
 
+Good idea, although "\n" would work as well as NUL.
 
-> I see the 'pull' command as a way to fetch the latest remote changes
-> and merge them into the current branch (which would usually be a
-> fast-forward). This command was meant as a stgit-aware 'git pull'.
+The only problem is with "key without value" case, i.e. something like
 
-Do you have an example of use where we would need a non-fast-forward
-pull (supposing we have the "pull --to" functionality already, since I
-shall find time to finish soon).
+  [section]
+  	noval
 
+which shows as
 
-> >> As Petr suggested at the OLS last year, I added the possibility to
-> >> configure the 'git pull' command so that people use whatever script
-> >> they like.
-> >
-> >Right.  Maybe different workflows should have this option set to
-> >different values in different repos ?  I'm merely trying to get the
-> >best default :)
-> 
-> But you want to replace the call to 'git pull' with 'git fetch'. I
-> think this is fine with my workflow but some people might actually
-> rely on calling 'git pull' (or cg-pull).
+  section.noval
 
-Right, it may be possible (and I'd be interested in seeing such a
-workflow).  Maybe we could keep support for git-pull as an
-alternative.
+in "git repo-config -l" output (note missing '=3D' !), and I guess diff=
+ers
+for some case from
 
-This could be done, eg. by letting the user use "pullcmd=git-pull" and
-introduce a new option like "fastforward=<bool>" triggering the
-fast-forward needed after git-fetch, with the default being "true",
-and the current behaviour being obtained by changing it to "false".
+  [section]
+  	noval =3D=20
 
-That would not add too much complexity, while setting the default to
-what I believe to match the most common workflows, and allow anyone
-relying on the current behaviour to get it back.
-
-
-> >> I was working on a set of patches (mainly picking from other
-> >> branches and minor modifications) and just committing them when
-> >> finishing. Further updates from kernel.org triggered full merges
-> >> with the base.
-> >
-> >But doing this means that you can end with a base that is not any more
-> >on the parent branch, but on a local merge, right ?  I'm not sure it
-> >is an easy thing to work with.
-> 
-> Yes, indeed, but this is probably the only way you can publish a
-> branch and still partially manage it with StGIT.
-
-Well, I'd think that automatic rebasing would be a more elegant
-solution.
-
-> >On the StGIT front, we could have "stg clone" look at
-> >patches/<branch>/current or so, and then modify the
-> >remote.<name>.fetch entry accordingly.  Or do you think of any
-> >workflow that would break under this change ?
-> 
-> Currently, 'stg clone' just calls 'git clone' and initializes the
-> master branch. There is no patches/<branch>/current file as there is
-> no current patch.
-
-I meant, the patches/<branch>/current in the remote repo.  If that one
-exist, then we should pull it with "+" as we should do for any
-rebasing remote branch.
-
-> >Even if we would not need it here, it would be good to have those 2
-> >parameters set when we can infer them.  That reminds me that "stg
-> >clone" does not appear to allow selecting a specific branch in the
-> >parent repo (which explains why the .merge parameter is not so
-> >crucially needed yet: we always clone the main branch).
-> 
-> I haven't looked at 'git clone' recently, can you select a specific branch?
-
-I had assumed so without looking, but it looks like you cannot select
-much.  When using separate remotes, the HEAD in the clone is taken
-from the HEAD in the remote, and bears the same name.  It is the only
-ref created under heads/.
-
-Would there be some missing functionnality in git-clone, or am I just
-missing something obvious ?
-
-Best regards,
--- 
-Yann.
+--=20
+Jakub Narebski
+Poland
