@@ -1,85 +1,65 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC] Git config file reader in Perl (WIP)
-Date: Tue, 16 Jan 2007 23:56:13 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0701162352400.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <200701150144.56793.jnareb@gmail.com> <200701161514.47908.jnareb@gmail.com>
- <dbfc82860701161417r650bc47fva92fa940b4e2cfc0@mail.gmail.com>
- <200701162337.32759.jnareb@gmail.com>
+Subject: Re: [RFC] Replace rebase with filtering
+Date: Tue, 16 Jan 2007 23:57:38 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0701162357270.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <45AC3B5D.6080700@midwinter.com>
+ <Pine.LNX.4.63.0701161216440.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <45AD2568.4040408@midwinter.com> <45AD2AE7.2010908@midwinter.com>
+ <Pine.LNX.4.63.0701162131130.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <45AD383E.50105@midwinter.com> <Pine.LNX.4.63.0701162218070.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <eojh8r$9e6$1@sea.gmane.org> <2696299C-A54D-4A7E-BA3B-029C8E4B278D@silverinsanity.com>
+ <Pine.LNX.4.63.0701162350150.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vwt3mwpll.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Nikolai Weibull <now@bitwi.se>, Junio C Hamano <junkio@cox.net>,
-	Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 16 23:56:28 2007
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 16 23:57:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H6xE2-00069u-BU
-	for gcvg-git@gmane.org; Tue, 16 Jan 2007 23:56:18 +0100
+	id 1H6xFO-0006Xm-J4
+	for gcvg-git@gmane.org; Tue, 16 Jan 2007 23:57:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751736AbXAPW4Q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 16 Jan 2007 17:56:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751735AbXAPW4Q
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Jan 2007 17:56:16 -0500
-Received: from mail.gmx.net ([213.165.64.20]:57848 "HELO mail.gmx.net"
+	id S1751419AbXAPW5k (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 16 Jan 2007 17:57:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751735AbXAPW5k
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Jan 2007 17:57:40 -0500
+Received: from mail.gmx.net ([213.165.64.20]:41899 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751419AbXAPW4P (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Jan 2007 17:56:15 -0500
-Received: (qmail invoked by alias); 16 Jan 2007 22:56:14 -0000
+	id S1751419AbXAPW5j (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Jan 2007 17:57:39 -0500
+Received: (qmail invoked by alias); 16 Jan 2007 22:57:38 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp035) with SMTP; 16 Jan 2007 23:56:14 +0100
+  by mail.gmx.net (mp042) with SMTP; 16 Jan 2007 23:57:38 +0100
 X-Authenticated: #1490710
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <200701162337.32759.jnareb@gmail.com>
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vwt3mwpll.fsf@assigned-by-dhcp.cox.net>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36979>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36980>
 
 Hi,
 
-On Tue, 16 Jan 2007, Jakub Narebski wrote:
+On Tue, 16 Jan 2007, Junio C Hamano wrote:
 
-> Nikolai Weibull wrote:
-> > On 1/16/07, Jakub Narebski <jnareb@gmail.com> wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> >> But I agree that XML is serious overkill...
-> > 
-> > I don't know if it was clear from my first mail, but I wasn't
-> > suggesting --xml as a serious alternative.  My point was that if we're
-> > going to go through all the fuss of adding all these switches for
-> > outputting the configuration file in some fixed format, why not go
-> > with one that at least is universal in some sense (not necessarily
-> > XML).  And, as Johannes already pointed out, it's very disturbing
-> > having to dump a configuration file so that it is more easily read by
-> > other programs.  That would suggest that the ini-based format for
-> > git's configuration file is suboptimal.
+> >> I'd put a simple patch to add the reset to git-merge.sh, but I'm not sure I
+> >> understand what --skip is doing in there with a 30 second peek.
+> >
+> > Better put "git reset --hard" into git-rebase.sh... Just search for 
+> > "--skip" and you will find where it has to go.
 > 
-> No, ini-based, or rather ini-like format for git configuration
-> is nice,
+> I'd later want to allow starting rebase from a dirty working
+> tree as long as the rebasing of the entire series would not
+> conflict with the local changes, so I would seriously prefer a
+> solution without "reset --hard".
 
-Exactly.
-
-> but I think git is too forgiving in accepting input. Examples: section 
-> header and key/value pair in the same line, allowing multiple quotes in 
-> in value part.
-
-But this is nice to the user!
-
-> Well, the idea I had was to have --dump switch to git-repo-config to 
-> dump init file as if it was created by git-repo-config invocations, 
-> without any hand editing (canonical format).
-
-My point still stands: if you already parse the user-friendly format, why 
-not dump a parse friendly format? If it weren't for those darn non-alnums 
-in the keys, out put of "git repo-config -l" would be perfectly 
-acceptable.
-
-So, how about a "git repo-config --dump" which outputs a stream of NUL 
-separated keys and values? This should be really easy to "parse", and 
-there are no ambiguities: No key or value can contain a NUL.
+Fair enough.
 
 Ciao,
 Dscho
