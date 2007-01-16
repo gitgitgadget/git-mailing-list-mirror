@@ -1,59 +1,76 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: git-show ignores --pretty
-Date: Tue, 16 Jan 2007 10:58:11 +0000
-Message-ID: <200701161058.15725.andyparkins@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [RFC] Git config file reader in Perl (WIP)
+Date: Tue, 16 Jan 2007 12:12:45 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0701161206050.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <200701150144.56793.jnareb@gmail.com> <200701151003.44498.jnareb@gmail.com>
+ <20070115095613.GA4037@localdomain> <200701151132.00971.jnareb@gmail.com>
+ <20070115112635.GA5134@localdomain> <Pine.LNX.4.63.0701151313050.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <dbfc82860701150734j7322de15v30dc6822b456ea66@mail.gmail.com>
+ <7vwt3nxnak.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Tue Jan 16 11:58:39 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Nikolai Weibull <now@bitwi.se>, Eric Wong <normalperson@yhbt.net>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 16 12:13:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H6m1O-0001H6-Ai
-	for gcvg-git@gmane.org; Tue, 16 Jan 2007 11:58:30 +0100
+	id 1H6mFL-0005UX-Ik
+	for gcvg-git@gmane.org; Tue, 16 Jan 2007 12:12:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750749AbXAPK6V (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 16 Jan 2007 05:58:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750771AbXAPK6V
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Jan 2007 05:58:21 -0500
-Received: from ug-out-1314.google.com ([66.249.92.170]:53858 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750749AbXAPK6U (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Jan 2007 05:58:20 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so1635446uga
-        for <git@vger.kernel.org>; Tue, 16 Jan 2007 02:58:19 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=BKA1ayA5P4Alo+O0gWx8m0YqaivkrzzpTUKSCyYpfyj1z/6MqLc5Ozli1qHdtj9muiLQSETRM1IpUaMXqXGYSUOtvD34C+ubL/P0l8BjOpVWgzMdGiYTVswlPXFMl2Sgfz8neYSMZLqtVsJdeA1KCx34a3OiUyHUUwTf6ygFBdM=
-Received: by 10.66.219.11 with SMTP id r11mr7164066ugg.1168945098848;
-        Tue, 16 Jan 2007 02:58:18 -0800 (PST)
-Received: from davejones ( [194.70.53.227])
-        by mx.google.com with ESMTP id l33sm6801521ugc.2007.01.16.02.58.18;
-        Tue, 16 Jan 2007 02:58:18 -0800 (PST)
-To: git@vger.kernel.org
-User-Agent: KMail/1.9.5
-Content-Disposition: inline
+	id S1750726AbXAPLMs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 16 Jan 2007 06:12:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750860AbXAPLMs
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Jan 2007 06:12:48 -0500
+Received: from mail.gmx.net ([213.165.64.20]:55642 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750726AbXAPLMs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Jan 2007 06:12:48 -0500
+Received: (qmail invoked by alias); 16 Jan 2007 11:12:46 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp051) with SMTP; 16 Jan 2007 12:12:46 +0100
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vwt3nxnak.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36926>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36927>
 
-Hello,
+Hi,
 
-$ git --version
-git version 1.5.0.rc1.gf4b6c
+On Tue, 16 Jan 2007, Junio C Hamano wrote:
 
-Running git-show with a --pretty format is no different from without 
-a --pretty.
+> "Nikolai Weibull" <now@bitwi.se> writes:
+> 
+> > If we're going down this slippery slope, why not just give up and add
+> > a --xml switch instead?  Readable by all...
+> 
+> Perhaps all except humans.
+> 
+> At least YAML, please...
 
-Doesn't seem to matter what format you pick, you always get medium/full.
+I am _strongly_ opposed to all that rubbish. _If_ we want to use 
+repo-config to preformat the config variables, we should either
 
+1) just use "git repo-config -l" and STFU, or
+2) introduce something like "--dump" which Eric implemented.
 
+Everything else is just _complicating_ matters, and for _what_? _Nothing_ 
+at all. If we use repo-config for that task, it should cater for parsing 
+by _script languages_, not _users_.
 
-Andy
--- 
-Dr Andy Parkins, M Eng (hons), MIEE
-andyparkins@gmail.com
+I work with XML everyday. It has its uses. But this here problem is _not_ 
+one of them. How silly would that be: we parse an easy-to-read format, 
+munge the easy-to-handle internal data format into another "easy-to-read" 
+format which is then parsed by a script language into an easy-to-handle 
+internal data format? No. NO.
+
+Ciao,
+Dscho
+
+P.S.: The more I think about it, we should just use the output of 
+"repo-config -l".
