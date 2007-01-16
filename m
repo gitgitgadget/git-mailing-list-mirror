@@ -1,67 +1,84 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Adding spell checker to GIT
-Date: Tue, 16 Jan 2007 17:10:35 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0701161709570.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <b5a19cd20701041246we052685hd700580df2cc120d@mail.gmail.com> 
- <Pine.LNX.4.63.0701052147070.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <b5a19cd20701051921j69f1a85bo97e39db7d8401222@mail.gmail.com>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<zeisberg@informatik.uni-freiburg.de>
+Subject: Re: [PATCH RFC] new config option remote.<name>.pushexec
+Date: Tue, 16 Jan 2007 17:26:45 +0100
+Organization: Universitaet Freiburg, Institut f. Informatik
+Message-ID: <20070116162645.GA18894@informatik.uni-freiburg.de>
+References: <20070116150259.GA2439@cepheus> <Pine.LNX.4.63.0701161614070.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 16 17:10:59 2007
+X-From: git-owner@vger.kernel.org Tue Jan 16 17:26:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H6qtZ-0004T2-QW
-	for gcvg-git@gmane.org; Tue, 16 Jan 2007 17:10:46 +0100
+	id 1H6r9B-000193-Q4
+	for gcvg-git@gmane.org; Tue, 16 Jan 2007 17:26:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751293AbXAPQKh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 16 Jan 2007 11:10:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751294AbXAPQKh
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Jan 2007 11:10:37 -0500
-Received: from mail.gmx.net ([213.165.64.20]:42996 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751293AbXAPQKh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Jan 2007 11:10:37 -0500
-Received: (qmail invoked by alias); 16 Jan 2007 16:10:35 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp032) with SMTP; 16 Jan 2007 17:10:35 +0100
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Deepak Barua <dbbarua@gmail.com>
-In-Reply-To: <b5a19cd20701051921j69f1a85bo97e39db7d8401222@mail.gmail.com>
-X-Y-GMX-Trusted: 0
+	id S1751284AbXAPQ0u convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 16 Jan 2007 11:26:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751294AbXAPQ0u
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Jan 2007 11:26:50 -0500
+Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:44742 "EHLO
+	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751284AbXAPQ0t (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 16 Jan 2007 11:26:49 -0500
+Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
+	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
+	(Exim 4.60)
+	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
+	id 1H6r96-0007OT-9a; Tue, 16 Jan 2007 17:26:48 +0100
+Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
+	by login.informatik.uni-freiburg.de (8.13.7+Sun/8.12.11) with ESMTP id l0GGQkab018986;
+	Tue, 16 Jan 2007 17:26:46 +0100 (MET)
+Received: (from zeisberg@localhost)
+	by login.informatik.uni-freiburg.de (8.13.7+Sun/8.12.11/Submit) id l0GGQjbw018985;
+	Tue, 16 Jan 2007 17:26:45 +0100 (MET)
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <zeisberg@informatik.uni-freiburg.de>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0701161614070.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36946>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36947>
 
-Hi,
+Hi Johannes,
 
-On Sat, 6 Jan 2007, Deepak Barua wrote:
+Johannes Schindelin wrote:
+> On Tue, 16 Jan 2007, Uwe Kleine-K=F6nig wrote:
+>=20
+> > git push --exec=3D... is fine, but having it to specify every time =
+is
+> > annoying.
+>=20
+> What would you specify? The only sensible thing would be "--exec=3Dbl=
+abla"=20
+> where "blabla" is a workalike to git-receive-pack.
+Exactly.  Quoting git-send-pack(1):
 
-> Hi Johannes,
->                    I spell check "//" comments in
-> in find_ext()
-> 
-> if($_[0] =~ /\.cc|\.java/) {
-> 
->                $start_pattern  = qr!\s/\*\s|\s//\s!;
->        }
-> 
-> and
-> 
-> $chosen_pattern eq qq!\s//\s! ? $end_pattern=qq!\s\014\s! : "End
-> Pattern Not Found" ;
-> 
-> Also yes i didnt include to use spell checking in string literals , i
-> thought that would be irregular and cumbersome.
-> 
-> Could you please test the code then i can include it in a seperate file ..?
+	Path to the git-receive-pack program on the remote end.
+	Sometimes useful when pushing to a remote repository over ssh,
+	and you do not have the program in a directory on the default
+	$PATH.
 
-Sorry, I am a little bit stressed at the moment... And I don't have the 
-required dependencies installed.
+=46or me it would be:
 
-Ciao,
-Dscho
+	pushexec =3D /home/zeisberg/usr/bin/git-receive-pack
+
+While having /home/zeisberg/usr/bin only in my PATH for interactive
+shells.  (Yes I know I could expand my PATH which .<someshrc>, but I'd
+prefer it that way.)
+
+Best regards
+Uwe
+
+--=20
+Uwe Kleine-K=F6nig
+
+http://www.google.com/search?q=3D1+newton+in+kg*m+%2F+s%5E2
