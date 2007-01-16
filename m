@@ -1,48 +1,62 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: How to merge FETCH_HEAD?
-Date: Tue, 16 Jan 2007 22:36:12 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0701162235200.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20070116195914.GA29100@spearce.org> <20070116213340.GB4329@mellanox.co.il>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC] Replace rebase with filtering
+Date: Tue, 16 Jan 2007 22:49:45 +0100
+Organization: At home
+Message-ID: <eojh8r$9e6$1@sea.gmane.org>
+References: <45AC3B5D.6080700@midwinter.com> <Pine.LNX.4.63.0701161216440.22628@wbgn013.biozentrum.uni-wuerzburg.de> <45AD2568.4040408@midwinter.com> <45AD2AE7.2010908@midwinter.com> <Pine.LNX.4.63.0701162131130.22628@wbgn013.biozentrum.uni-wuerzburg.de> <45AD383E.50105@midwinter.com> <Pine.LNX.4.63.0701162218070.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 16 22:36:29 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Tue Jan 16 22:49:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H6vyc-0001h5-BD
-	for gcvg-git@gmane.org; Tue, 16 Jan 2007 22:36:18 +0100
+	id 1H6wBS-0005B2-Ge
+	for gcvg-git@gmane.org; Tue, 16 Jan 2007 22:49:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751419AbXAPVgQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 16 Jan 2007 16:36:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751443AbXAPVgQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Jan 2007 16:36:16 -0500
-Received: from mail.gmx.net ([213.165.64.20]:46207 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751419AbXAPVgP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Jan 2007 16:36:15 -0500
-Received: (qmail invoked by alias); 16 Jan 2007 21:36:13 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp031) with SMTP; 16 Jan 2007 22:36:13 +0100
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: "Michael S. Tsirkin" <mst@mellanox.co.il>
-In-Reply-To: <20070116213340.GB4329@mellanox.co.il>
-X-Y-GMX-Trusted: 0
+	id S1751663AbXAPVtc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 16 Jan 2007 16:49:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751660AbXAPVtc
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Jan 2007 16:49:32 -0500
+Received: from main.gmane.org ([80.91.229.2]:48681 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751446AbXAPVtb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Jan 2007 16:49:31 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1H6wBI-0006gQ-BB
+	for git@vger.kernel.org; Tue, 16 Jan 2007 22:49:24 +0100
+Received: from host-81-190-20-200.torun.mm.pl ([81.190.20.200])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 16 Jan 2007 22:49:24 +0100
+Received: from jnareb by host-81-190-20-200.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 16 Jan 2007 22:49:24 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-20-200.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36970>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36971>
 
-Hi,
+Johannes Schindelin wrote:
 
-On Tue, 16 Jan 2007, Michael S. Tsirkin wrote:
+> Usually, however, this results in a conflict which you have to resolve. 
+> And _you_ do not have a hard time verifying that the patch already went 
+> in, and you just say "git rebase --skip" and the rebasing will continue 
+> _without_ having committed the now obsolete patch.
 
-> Would it be useful to have git-pull . FETCH_HEAD work?
+Unfortunately, at least with git 1.4.4.x, not quite. You have to have
+index clean to do "git rebase --skip", while usually there would be
+conflict when applying patch that is already present some deeper.
 
-No. FETCH_HEAD is local. And for local merges, you should use git-merge, 
-not git-pull.
-
-Ciao,
-Dscho
+I think that is a bug in git-rebase.
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
