@@ -1,68 +1,80 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [RFC] Replace rebase with filtering
-Date: Tue, 16 Jan 2007 16:22:19 -0500
-Message-ID: <20070116212219.GA29434@spearce.org>
-References: <45AC3B5D.6080700@midwinter.com> <Pine.LNX.4.63.0701161216440.22628@wbgn013.biozentrum.uni-wuerzburg.de> <45AD2568.4040408@midwinter.com> <45AD2AE7.2010908@midwinter.com> <Pine.LNX.4.63.0701162131130.22628@wbgn013.biozentrum.uni-wuerzburg.de> <45AD383E.50105@midwinter.com> <eojf73$1f4$1@sea.gmane.org>
+From: "Michael S. Tsirkin" <mst@mellanox.co.il>
+Subject: Re: How to merge FETCH_HEAD?
+Date: Tue, 16 Jan 2007 23:33:40 +0200
+Message-ID: <20070116213340.GB4329@mellanox.co.il>
+References: <20070116195914.GA29100@spearce.org>
+Reply-To: "Michael S. Tsirkin" <mst@mellanox.co.il>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 16 22:23:42 2007
+X-From: git-owner@vger.kernel.org Tue Jan 16 22:33:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H6vmB-0006di-TH
-	for gcvg-git@gmane.org; Tue, 16 Jan 2007 22:23:28 +0100
+	id 1H6vvm-0000tT-8M
+	for gcvg-git@gmane.org; Tue, 16 Jan 2007 22:33:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751300AbXAPVXS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 16 Jan 2007 16:23:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751304AbXAPVXS
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Jan 2007 16:23:18 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:53288 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751300AbXAPVXR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Jan 2007 16:23:17 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1H6vl7-0001W3-Q2; Tue, 16 Jan 2007 16:22:21 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 216D220FBAE; Tue, 16 Jan 2007 16:22:19 -0500 (EST)
-To: Jakub Narebski <jnareb@gmail.com>
+	id S1751418AbXAPVdT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 16 Jan 2007 16:33:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751443AbXAPVdS
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Jan 2007 16:33:18 -0500
+Received: from p02c11o143.mxlogic.net ([208.65.145.66]:52550 "EHLO
+	p02c11o143.mxlogic.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751419AbXAPVdS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Jan 2007 16:33:18 -0500
+Received: from unknown [194.90.237.34] (EHLO mtlexch01.mtl.com)
+	by p02c11o143.mxlogic.net (mxl_mta-4.0.2-1)
+	with ESMTP id d944da54.2617514928.12733.00-003.p02c11o143.mxlogic.net (envelope-from <mst@mellanox.co.il>);
+	Tue, 16 Jan 2007 14:33:17 -0700 (MST)
+Received: from mellanox.co.il ([10.4.4.6]) by mtlexch01.mtl.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Tue, 16 Jan 2007 23:35:00 +0200
+Received: by mellanox.co.il (sSMTP sendmail emulation); Tue, 16 Jan 2007 23:32:02 +0200
+To: "Shawn O. Pearce" <spearce@spearce.org>
 Content-Disposition: inline
-In-Reply-To: <eojf73$1f4$1@sea.gmane.org>
+In-Reply-To: <20070116195914.GA29100@spearce.org>
 User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+X-OriginalArrivalTime: 16 Jan 2007 21:35:00.0783 (UTC) FILETIME=[2D28D3F0:01C739B6]
+X-TM-AS-Product-Ver: SMEX-7.0.0.1526-3.6.1039-14940.000
+X-TM-AS-Result: No--12.850600-4.000000-31
+X-Spam: [F=0.0100000000; S=0.010(2007010901)]
+X-MAIL-FROM: <mst@mellanox.co.il>
+X-SOURCE-IP: [194.90.237.34]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36968>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36969>
 
-Jakub Narebski <jnareb@gmail.com> wrote:
-> Steven Grimm wrote:
-> > Okay, great, that is certainly an improvement over what I thought was 
-> > happening. But it won't work if you had to manually resolve a conflict 
-> > during the rebase, yes? In that case the diffs would presumably not match.
+> Quoting Shawn O. Pearce <spearce@spearce.org>:
+> Subject: Re: How to merge FETCH_HEAD?
 > 
-> Then git-rerere would help, I think.
+> "Michael S. Tsirkin" <mst@mellanox.co.il> wrote:
+> > OK, I did a fetch and now I can see remote history by
+> > 
+> > $git log FETCH_HEAD
+> 
+> Wow, I'm suprised that works.  Handy feature.  Too bad rev-parse
+> --verify then chokes on it when we'll somehow consider it a ref
+> otherwise...
+>  
+> > But, how to merge it?
+> 
+> Look at git-pull.sh:
+> 
+> 	merge_head=$(sed -e '/  not-for-merge   /d' \
+> 		-e 's/  .*//' "$GIT_DIR"/FETCH_HEAD | \
+> 			tr '\012' ' ')
+> 	merge_name=$(git-fmt-merge-msg <"$GIT_DIR/FETCH_HEAD")
+> 	git-merge "$merge_name" HEAD $merge_head
+> 
+> The not-for-merge keyword is included on lines that were fetched
+> into tracking branches during the last fetch and which you don't
+> want to merge right now.  So those lines get dropped.  Then the
+> remainder of the line is stripped away, leaving you with only
+> the sha1 sum.  merge_name is computed from the FETCH_HEAD file,
+> to get the pretty log message for git-merge.
 
-No, because rerere only helps to recall a prior conflict resolution.
-Here Steven is talking about having rebase intelligently realize that
-the upstream has accepted a patch, but did so by modifying it first.
-There really isn't a solution to the problem.
-
-pg tried to do this by applying several patches at once until
-something matched.  If the upstream fixed a line like "a=b" to
-be "a = b" then this would *never* match, and pg would abort.
-StGIT runs the patches backwards.  A much smarter approach then
-what pg tried to do, but again, "a = b" would never match.
+Would it be useful to have git-pull . FETCH_HEAD work?
 
 -- 
-Shawn.
+MST
