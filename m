@@ -1,180 +1,172 @@
 From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: git-svn - username/password
-Date: Mon, 15 Jan 2007 20:20:08 -0800
-Message-ID: <20070116042008.GA19873@localdomain>
-References: <8664b73maf.fsf@blue.stonehenge.com> <20070116004137.GA10706@localdomain> <86sleb23vs.fsf@blue.stonehenge.com>
+Subject: Re: [RFC] Git config file reader in Perl (WIP)
+Date: Tue, 16 Jan 2007 01:51:51 -0800
+Message-ID: <20070116095150.GA31467@localdomain>
+References: <200701150144.56793.jnareb@gmail.com> <200701151003.44498.jnareb@gmail.com> <20070115095613.GA4037@localdomain> <200701151132.00971.jnareb@gmail.com> <20070115112635.GA5134@localdomain> <Pine.LNX.4.63.0701151313050.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 16 05:20:24 2007
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 16 10:52:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H6fo3-0005mS-6j
-	for gcvg-git@gmane.org; Tue, 16 Jan 2007 05:20:19 +0100
+	id 1H6kyy-00086K-IC
+	for gcvg-git@gmane.org; Tue, 16 Jan 2007 10:51:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932197AbXAPEUO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 15 Jan 2007 23:20:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932287AbXAPEUO
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Jan 2007 23:20:14 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:39274 "EHLO hand.yhbt.net"
+	id S932067AbXAPJvy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 16 Jan 2007 04:51:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751517AbXAPJvy
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Jan 2007 04:51:54 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:39421 "EHLO hand.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932197AbXAPEUM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Jan 2007 23:20:12 -0500
+	id S1751479AbXAPJvx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Jan 2007 04:51:53 -0500
 Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id D7C777DC094;
-	Mon, 15 Jan 2007 20:20:08 -0800 (PST)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Mon, 15 Jan 2007 20:20:08 -0800
-To: "Randal L. Schwartz" <merlyn@stonehenge.com>,
-	Junio C Hamano <junkio@cox.net>
+	by hand.yhbt.net (Postfix) with SMTP id 7712D7DC094;
+	Tue, 16 Jan 2007 01:51:51 -0800 (PST)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Tue, 16 Jan 2007 01:51:51 -0800
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Content-Disposition: inline
-In-Reply-To: <86sleb23vs.fsf@blue.stonehenge.com>
+In-Reply-To: <Pine.LNX.4.63.0701151313050.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36921>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36922>
 
-"Randal L. Schwartz" <merlyn@stonehenge.com> wrote:
-> >>>>> "Eric" == Eric Wong <normalperson@yhbt.net> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> Hi,
 > 
-> Eric> git-svn fetch --username <username> should work with recent-ish git-svn
-> Eric> (since around Thanksgiving); and eventually prompt you for the password
-> Eric> (just like svn does).
+> On Mon, 15 Jan 2007, Eric Wong wrote:
 > 
-> The prompts are broken... they're not being flushed properly.
-> Once I knew it was talking to me, and not just stalled, I could
-> type in the password at the right time.
+> > > Would you write "git repo-config --perl", then? ;-)
+> > 
+> > The below patch should be a start (only tested on my fairly standard 
+> > .git/config).  A --python option should be easy, too :)
+> 
+> A bit shorter (and gets the booleans right, plus being even easier 
+> towards --python extension):
 
-That's odd.  I have $| = 1; at the beginning of git-svn.  Maybe
-some module somewhere is unsetting $|...
+Your version doesn't get arrays right, however.
 
-Anyways, I think STDERR is more correct for prompts.
+Here's a Perl/Python/Ruby version below.  It should be extendable for
+other languages; feedback and additions appreciated:
 
-From: Eric Wong <normalperson@yhbt.net>
-Date: Mon, 15 Jan 2007 20:15:55 -0800
-Subject: [PATCH] git-svn: print and flush authentication prompts to STDERR
+Note that usage has been changed to --dump=(perl|python|ruby)
 
-People that redirect STDOUT output should always see STDERR
-prompts interactively.
+I may add key_suffix to lang_dump just to be consistent with pairings,
+but array_start seems to handle all cases of it and it would be
+redundant...
 
-STDERR should always be flushed without buffering, so
-they should always show up.  If that is unset, we still
-explicitly flush by calling STDERR->flush.
-
-The svn command-line client prompts to STDERR, too.
-
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
-
-diff --git a/git-svn.perl b/git-svn.perl
-index 9986a0c..b8ede9c 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -1918,7 +1918,8 @@ sub _simple_prompt {
- 	$default_username = $_username if defined $_username;
- 	if (defined $default_username && length $default_username) {
- 		if (defined $realm && length $realm) {
--			print "Authentication realm: $realm\n";
-+			print STDERR "Authentication realm: $realm\n";
-+			STDERR->flush;
- 		}
- 		$cred->username($default_username);
- 	} else {
-@@ -1933,36 +1934,38 @@ sub _simple_prompt {
- sub _ssl_server_trust_prompt {
- 	my ($cred, $realm, $failures, $cert_info, $may_save, $pool) = @_;
- 	$may_save = undef if $_no_auth_cache;
--	print "Error validating server certificate for '$realm':\n";
-+	print STDERR "Error validating server certificate for '$realm':\n";
- 	if ($failures & $SVN::Auth::SSL::UNKNOWNCA) {
--		print " - The certificate is not issued by a trusted ",
-+		print STDERR " - The certificate is not issued by a trusted ",
- 		      "authority. Use the\n",
- 	              "   fingerprint to validate the certificate manually!\n";
- 	}
- 	if ($failures & $SVN::Auth::SSL::CNMISMATCH) {
--		print " - The certificate hostname does not match.\n";
-+		print STDERR " - The certificate hostname does not match.\n";
- 	}
- 	if ($failures & $SVN::Auth::SSL::NOTYETVALID) {
--		print " - The certificate is not yet valid.\n";
-+		print STDERR " - The certificate is not yet valid.\n";
- 	}
- 	if ($failures & $SVN::Auth::SSL::EXPIRED) {
--		print " - The certificate has expired.\n";
-+		print STDERR " - The certificate has expired.\n";
- 	}
- 	if ($failures & $SVN::Auth::SSL::OTHER) {
--		print " - The certificate has an unknown error.\n";
-+		print STDERR " - The certificate has an unknown error.\n";
- 	}
--	printf( "Certificate information:\n".
-+	printf STDERR
-+	        "Certificate information:\n".
- 	        " - Hostname: %s\n".
- 	        " - Valid: from %s until %s\n".
- 	        " - Issuer: %s\n".
- 	        " - Fingerprint: %s\n",
- 	        map $cert_info->$_, qw(hostname valid_from valid_until
--	                               issuer_dname fingerprint) );
-+	                               issuer_dname fingerprint);
- 	my $choice;
- prompt:
--	print $may_save ?
-+	print STDERR $may_save ?
- 	      "(R)eject, accept (t)emporarily or accept (p)ermanently? " :
- 	      "(R)eject or accept (t)emporarily? ";
-+	STDERR->flush;
- 	$choice = lc(substr(<STDIN> || 'R', 0, 1));
- 	if ($choice =~ /^t$/i) {
- 		$cred->may_save(undef);
-@@ -1980,7 +1983,8 @@ prompt:
- sub _ssl_client_cert_prompt {
- 	my ($cred, $realm, $may_save, $pool) = @_;
- 	$may_save = undef if $_no_auth_cache;
--	print "Client certificate filename: ";
-+	print STDERR "Client certificate filename: ";
-+	STDERR->flush;
- 	chomp(my $filename = <STDIN>);
- 	$cred->cert_file($filename);
- 	$cred->may_save($may_save);
-@@ -1999,13 +2003,14 @@ sub _username_prompt {
- 	my ($cred, $realm, $may_save, $pool) = @_;
- 	$may_save = undef if $_no_auth_cache;
- 	if (defined $realm && length $realm) {
--		print "Authentication realm: $realm\n";
-+		print STDERR "Authentication realm: $realm\n";
- 	}
- 	my $username;
- 	if (defined $_username) {
- 		$username = $_username;
- 	} else {
--		print "Username: ";
-+		print STDERR "Username: ";
-+		STDERR->flush;
- 		chomp($username = <STDIN>);
- 	}
- 	$cred->username($username);
-@@ -2015,7 +2020,8 @@ sub _username_prompt {
+--- a/builtin-repo-config.c
++++ b/builtin-repo-config.c
+@@ -1,5 +1,6 @@
+ #include "builtin.h"
+ #include "cache.h"
++#include "quote.h"
  
- sub _read_password {
- 	my ($prompt, $realm) = @_;
--	print $prompt;
-+	print STDERR $prompt;
-+	STDERR->flush;
- 	require Term::ReadKey;
- 	Term::ReadKey::ReadMode('noecho');
- 	my $password = '';
-@@ -2024,7 +2030,8 @@ sub _read_password {
- 		$password .= $key;
- 	}
- 	Term::ReadKey::ReadMode('restore');
--	print "\n";
-+	print STDERR "\n";
-+	STDERR->flush;
- 	$password;
- }
+ static const char git_config_set_usage[] =
+ "git-repo-config [ --global ] [ --bool | --int ] [--get | --get-all | --get-regexp | --replace-all | --add | --unset | --unset-all] name [value [value_regex]] | --rename-section old_name new_name | --list";
+@@ -14,6 +15,90 @@ static int do_not_match;
+ static int seen;
+ static enum { T_RAW, T_INT, T_BOOL } type = T_RAW;
  
++struct lang_dump {
++	const char *name;
++	const char *decl_start;
++	const char *decl_end;
++	const char *key_prefix;
++	const char *array_start;
++	const char *array_end;
++	const char *val_prefix;
++	const char *val_suffix;
++	const char *true_val; /* should already be quoted, if needed */
++	void (*quote_key_fn)(FILE *, const char*);
++	void (*quote_val_fn)(FILE *, const char*);
++};
++static char *last_key;
++static struct lang_dump *lang;
++static struct lang_dump lang_dump_defs[] = {
++	{ "perl",
++		"\%git_config = (\n", ");\n",
++		"\t",
++		" => [\n", "\t],\n",
++		"\t\t", ",\n",
++		"'true'",
++		perl_quote_print, perl_quote_print },
++	{ "python",
++		"git_config = {\n", "}\n",
++		"    ",
++		" : [\n", "    ],\n",
++		"        ", ",\n",
++		"True",
++		python_quote_print, python_quote_print },
++	{ "ruby", /* Ruby is very Perl-like */
++		"git_config = {\n", "}\n",
++		"  ",
++		" => [\n", "  ],\n",
++		"    ", ",\n",
++		"true",
++		perl_quote_print, perl_quote_print },
++};
++
++static int show_lang_config(const char *key_, const char *value_)
++{
++	if (last_key) {
++		if (strcmp(last_key, key_)) {
++			free(last_key);
++			fputs(lang->array_end, stdout);
++			goto new_key;
++		}
++	} else {
++new_key:
++		last_key = xstrdup(key_);
++		fputs(lang->key_prefix, stdout);
++		lang->quote_key_fn(stdout, key_);
++		fputs(lang->array_start, stdout);
++	}
++	fputs(lang->val_prefix, stdout);
++	if (value_)
++		lang->quote_val_fn(stdout, value_);
++	else
++		fputs(lang->true_val, stdout);
++	fputs(lang->val_suffix, stdout);
++	return 0;
++}
++
++static int show_lang_config_all(const char *lang_name)
++{
++	int i, rv;
++	for (i = ARRAY_SIZE(lang_dump_defs); --i >= 0; ) {
++		if (strcmp(lang_name, lang_dump_defs[i].name))
++			continue;
++		lang = lang_dump_defs + i;
++		fputs(lang->decl_start, stdout);
++		rv = git_config(show_lang_config);
++		if (last_key) {
++			free(last_key);
++			last_key = NULL;
++			fputs(lang->array_end, stdout);
++			fputs(lang->decl_end, stdout);
++		}
++		return rv;
++	}
++	fputs("Dumping config to '%s' is not yet supported", stderr);
++	return -1;
++}
++
+ static int show_all_config(const char *key_, const char *value_)
+ {
+ 	if (value_)
+@@ -138,6 +223,8 @@ int cmd_repo_config(int argc, const char **argv, const char *prefix)
+ 			type = T_BOOL;
+ 		else if (!strcmp(argv[1], "--list") || !strcmp(argv[1], "-l"))
+ 			return git_config(show_all_config);
++		else if (!strncmp(argv[1], "--dump=", 7))
++			return show_lang_config_all(argv[1] + 7);
+ 		else if (!strcmp(argv[1], "--global")) {
+ 			char *home = getenv("HOME");
+ 			if (home) {
 -- 
 Eric Wong
