@@ -1,89 +1,70 @@
-From: "Nikolai Weibull" <now@bitwi.se>
-Subject: Re: [RFC] Git config file reader in Perl (WIP)
-Date: Tue, 16 Jan 2007 23:17:46 +0100
-Message-ID: <dbfc82860701161417r650bc47fva92fa940b4e2cfc0@mail.gmail.com>
-References: <200701150144.56793.jnareb@gmail.com>
-	 <7vwt3nxnak.fsf@assigned-by-dhcp.cox.net>
-	 <Pine.LNX.4.63.0701161206050.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <200701161514.47908.jnareb@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: Re: [RFC] Replace rebase with filtering
+Date: Tue, 16 Jan 2007 17:31:15 -0500
+Message-ID: <2696299C-A54D-4A7E-BA3B-029C8E4B278D@silverinsanity.com>
+References: <45AC3B5D.6080700@midwinter.com> <Pine.LNX.4.63.0701161216440.22628@wbgn013.biozentrum.uni-wuerzburg.de> <45AD2568.4040408@midwinter.com> <45AD2AE7.2010908@midwinter.com> <Pine.LNX.4.63.0701162131130.22628@wbgn013.biozentrum.uni-wuerzburg.de> <45AD383E.50105@midwinter.com> <Pine.LNX.4.63.0701162218070.22628@wbgn013.biozentrum.uni-wuerzburg.de> <eojh8r$9e6$1@sea.gmane.org>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Junio C Hamano" <junkio@cox.net>,
-	"Eric Wong" <normalperson@yhbt.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 16 23:18:37 2007
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 16 23:31:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H6wdS-0004Av-2X
-	for gcvg-git@gmane.org; Tue, 16 Jan 2007 23:18:30 +0100
+	id 1H6wq8-0007oz-3Z
+	for gcvg-git@gmane.org; Tue, 16 Jan 2007 23:31:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751400AbXAPWRu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 16 Jan 2007 17:17:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751451AbXAPWRu
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Jan 2007 17:17:50 -0500
-Received: from nf-out-0910.google.com ([64.233.182.190]:5176 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751722AbXAPWRt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Jan 2007 17:17:49 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so14102nfa
-        for <git@vger.kernel.org>; Tue, 16 Jan 2007 14:17:48 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=PDvPpMgl/HWhwRFFQ4Groe8MD90hLLfyoaoSAGxWVU6efM6tzifJQNQmjx/35KiJQO1Ws7fiikYGrREg9NgbD0ugRMdBMgDIONPkFEzi+oU8y0DkTTNByev8G12uaPolzb+dF5MBzXZEebuYJy9g1IpVlxYHpCLYgswSII7im0s=
-Received: by 10.78.201.2 with SMTP id y2mr843193huf.1168985867076;
-        Tue, 16 Jan 2007 14:17:47 -0800 (PST)
-Received: by 10.78.200.7 with HTTP; Tue, 16 Jan 2007 14:17:46 -0800 (PST)
-To: "Jakub Narebski" <jnareb@gmail.com>
-In-Reply-To: <200701161514.47908.jnareb@gmail.com>
-Content-Disposition: inline
-X-Google-Sender-Auth: 81937e54151c69bb
+	id S1751744AbXAPWb3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 16 Jan 2007 17:31:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751745AbXAPWb3
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Jan 2007 17:31:29 -0500
+Received: from vs072.rosehosting.com ([216.114.78.72]:53510 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751742AbXAPWb2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Jan 2007 17:31:28 -0500
+Received: from [10.0.0.93] (unknown [64.241.37.140])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTP id 82B531FFC02B;
+	Tue, 16 Jan 2007 22:31:24 +0000 (UTC)
+In-Reply-To: <eojh8r$9e6$1@sea.gmane.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36972>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36973>
 
-On 1/16/07, Jakub Narebski <jnareb@gmail.com> wrote:
+
+On Jan 16, 2007, at 4:49 PM, Jakub Narebski wrote:
+
 > Johannes Schindelin wrote:
 >
-> > On Tue, 16 Jan 2007, Junio C Hamano wrote:
-> >
-> >> "Nikolai Weibull" <now@bitwi.se> writes:
-> >>
-> >>> If we're going down this slippery slope, why not just give up and add
-> >>> a --xml switch instead?  Readable by all...
-> >>
-> >> Perhaps all except humans.
-> >>
-> >> At least YAML, please...
+>> Usually, however, this results in a conflict which you have to  
+>> resolve.
+>> And _you_ do not have a hard time verifying that the patch already  
+>> went
+>> in, and you just say "git rebase --skip" and the rebasing will  
+>> continue
+>> _without_ having committed the now obsolete patch.
+>
+> Unfortunately, at least with git 1.4.4.x, not quite. You have to have
+> index clean to do "git rebase --skip", while usually there would be
+> conflict when applying patch that is already present some deeper.
+>
+> I think that is a bug in git-rebase.
 
-> > P.S.: The more I think about it, we should just use the output of
-> > "repo-config -l".
+Agreed.  I tend to "git checkout HEAD -- files" before a "git rebase  
+--skip" to fix that, although I guess "git reset --hard" would work  
+just the same.  But by saying "--skip" means "these changes are  
+irrelevant", so it should clean up after itself.  It's a definite  
+usability snafu.
 
-> It wouldn't work. Subsection and value are (almost) free form, and
-> they can contain '=' in them.
+I'd put a simple patch to add the reset to git-merge.sh, but I'm not  
+sure I understand what --skip is doing in there with a 30 second  
+peek.  Maybe if I get more tuits, I'll do it, but someone more  
+familiar with it can probably do it much faster (and be more certain  
+it's the right thing to do).
 
-Sadly, yes.  It would be very nice if -l gave unambiguous output for
-all cases, but perhaps -l is more for parsing by people than by seds.
-
-> But I agree that XML is serious overkill...
-
-I don't know if it was clear from my first mail, but I wasn't
-suggesting --xml as a serious alternative.  My point was that if we're
-going to go through all the fuss of adding all these switches for
-outputting the configuration file in some fixed format, why not go
-with one that at least is universal in some sense (not necessarily
-XML).  And, as Johannes already pointed out, it's very disturbing
-having to dump a configuration file so that it is more easily read by
-other programs.  That would suggest that the ini-based format for
-git's configuration file is suboptimal.
-
-Of course, once git is librified (which is still a long-term goal,
-right?), languages could create bindings to the git library, which
-would provide access functions to the configuration file.  Then we
-would truly have that one parser to rule them all.
-
-  nikolai
+~~ Brian
