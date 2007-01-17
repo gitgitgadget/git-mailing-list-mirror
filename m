@@ -1,108 +1,114 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [RFC] Git config file reader in Perl (WIP)
-Date: Wed, 17 Jan 2007 10:48:02 +0100
-Message-ID: <200701171048.03686.jnareb@gmail.com>
-References: <200701150144.56793.jnareb@gmail.com> <200701170024.10640.jnareb@gmail.com> <Pine.LNX.4.63.0701170948420.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+Date: Wed, 17 Jan 2007 11:44:04 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0701171138371.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <200701150144.56793.jnareb@gmail.com> <200701170024.10640.jnareb@gmail.com>
+ <Pine.LNX.4.63.0701170948420.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <200701171048.03686.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Nikolai Weibull <now@bitwi.se>, Junio C Hamano <junkio@cox.net>,
 	Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 17 10:47:52 2007
+X-From: git-owner@vger.kernel.org Wed Jan 17 11:44:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H77OR-0000aP-AU
-	for gcvg-git@gmane.org; Wed, 17 Jan 2007 10:47:43 +0100
+	id 1H78H5-0007OS-Sa
+	for gcvg-git@gmane.org; Wed, 17 Jan 2007 11:44:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932173AbXAQJrj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 17 Jan 2007 04:47:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932175AbXAQJrj
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Jan 2007 04:47:39 -0500
-Received: from ug-out-1314.google.com ([66.249.92.173]:39872 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932173AbXAQJri (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Jan 2007 04:47:38 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so1941666uga
-        for <git@vger.kernel.org>; Wed, 17 Jan 2007 01:47:37 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=dfrLpO8lXnZ2R86iObg0AEaxX2cJgUz/suVfrkz0VZM/oUEkc3+1uvLWdU2q2lKLzvnXQcAONDzvow1Seoq0wqM3/LR2JgSIi4om8jvzp+46HB+O2y6vSKgOuNPjV4Uz+P/ybWvTREe/+CinfLwv+OOpydpavAHnjOqZ6/68XPQ=
-Received: by 10.67.121.15 with SMTP id y15mr9171233ugm.1169027256806;
-        Wed, 17 Jan 2007 01:47:36 -0800 (PST)
-Received: from host-81-190-20-200.torun.mm.pl ( [81.190.20.200])
-        by mx.google.com with ESMTP id s7sm10152779uge.2007.01.17.01.47.36;
-        Wed, 17 Jan 2007 01:47:36 -0800 (PST)
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-User-Agent: KMail/1.9.3
-In-Reply-To: <Pine.LNX.4.63.0701170948420.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-Content-Disposition: inline
+	id S932231AbXAQKoJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 17 Jan 2007 05:44:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932270AbXAQKoJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Jan 2007 05:44:09 -0500
+Received: from mail.gmx.net ([213.165.64.20]:41724 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932231AbXAQKoI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Jan 2007 05:44:08 -0500
+Received: (qmail invoked by alias); 17 Jan 2007 10:44:04 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp051) with SMTP; 17 Jan 2007 11:44:04 +0100
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Jakub Narebski <jnareb@gmail.com>
+In-Reply-To: <200701171048.03686.jnareb@gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36992>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36993>
 
-Johannes Schindelin wrote:
+Hi,
+
+On Wed, 17 Jan 2007, Jakub Narebski wrote:
+
+> Johannes Schindelin wrote:
+> > 
+> > On Wed, 17 Jan 2007, Jakub Narebski wrote:
+> > 
+> >> Dnia wtorek 16. stycznia 2007 23:56, Johannes Schindelin napisa?:
 > 
-> On Wed, 17 Jan 2007, Jakub Narebski wrote:
+> >>> So, how about a "git repo-config --dump" which outputs a stream of NUL 
+> >>> separated keys and values? This should be really easy to "parse", and 
+> >>> there are no ambiguities: No key or value can contain a NUL.
+> >> 
+> >> Good idea, although "\n" would work as well as NUL.
+> > 
+> > No it would not:
+> > 
+> > 	[someSection]
+> > 		thisKey = has\na\nvalue\with\nseveral\nnewlines
 > 
->> Dnia wtorek 16. stycznia 2007 23:56, Johannes Schindelin napisa?:
+> $ fatal: bad config file line <nn> in <config>
 
->>> So, how about a "git repo-config --dump" which outputs a stream of NUL 
->>> separated keys and values? This should be really easy to "parse", and 
->>> there are no ambiguities: No key or value can contain a NUL.
->> 
->> Good idea, although "\n" would work as well as NUL.
+Yeah, sorry. But you got the point.
+
+> The same with quoted:
 > 
-> No it would not:
+>  	[someSection]
+>  		qthisKey = "has\na\nvalue\with\nseveral\nnewlines"
 > 
-> 	[someSection]
-> 		thisKey = has\na\nvalue\with\nseveral\nnewlines
+> There is no escaping besides escaping " and escape character
+> i.e. escaping \ in git config. Se "\n" would work as well as NUL.
+> (It is said explicitely that subsection names cannot contain "\n").
 
-$ fatal: bad config file line <nn> in <config>
+So you want "git-repo-config --dump" to output something which has to be 
+scanned for escaping sequences?
 
-The same with quoted:
+If you call
 
- 	[someSection]
- 		qthisKey = "has\na\nvalue\with\nseveral\nnewlines"
+	$ git repo-config -l
 
-There is no escaping besides escaping " and escape character
-i.e. escaping \ in git config. Se "\n" would work as well as NUL.
-(It is said explicitely that subsection names cannot contain "\n").
+you will _no longer_ see "\n"s, but rather newlines.
 
->> The only problem is with "key without value" case, i.e. something like
->> 
->>   [section]
->>   	noval
->> 
->> which shows as
->> 
->>   section.noval
+I don't know why you insist on newlines, when a NUL makes perfect sense: 
+Take everything until the next NUL. This is the key. Then take everything 
+until the next NUL. This is the value. Repeat until EOF.
+
+> >> The only problem is with "key without value" case, i.e. something like
+> >> 
+> >>   [section]
+> >>   	noval
+> >> 
+> >> which shows as
+> >> 
+> >>   section.noval
+> > 
+> > but is equivalent to
+> > 
+> > 	[section]
+> > 		noval = true
+> > 
+> > Since it is by definition a boolean value.
 > 
-> but is equivalent to
+> But only for "git repo-config --bool --get section.noval" output.
+> Semantically equivalent to "true".
 > 
-> 	[section]
-> 		noval = true
-> 
-> Since it is by definition a boolean value.
+> But without --bool it returns like it was "".
 
-But only for "git repo-config --bool --get section.noval" output.
-Semantically equivalent to "true".
+Yes, it returns "", but this is _wrong_. A single "[section] noval" _only_ 
+makes sense as a boolean. The information lies in its _presence_, which is 
+as good as saying "true".
 
-But without --bool it returns like it was "".
-
->> in "git repo-config -l" output (note missing '=' !), and I guess differs
->> for some case from
->> 
->>   [section]
->>   	noval = 
-> 
-> Yes, this is not a boolean. The difference is that the callback function 
-> is called with NULL in the former case, and with "" in the latter.
-
--- 
-Jakub Narebski
-Poland
+Ciao,
+Dscho
