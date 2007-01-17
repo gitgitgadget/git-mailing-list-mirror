@@ -1,61 +1,76 @@
-From: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
-Subject: Re: [PATCH] Replace "echo -n" with printf in shell scripts.
-Date: Wed, 17 Jan 2007 17:17:18 -0300
-Message-ID: <200701172017.l0HKHIA8032440@laptop13.inf.utfsm.cl>
-References: <17437.1168911089@lotus.CS.Berkeley.EDU> <7v1wlv1yeh.fsf@assigned-by-dhcp.cox.net> <200701171629.l0HGTCE3019292@laptop13.inf.utfsm.cl> <7vk5zlsglk.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0701171804260.26185@reaper.quantumfyre.co.uk>
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 17 21:17:47 2007
+From: "Josh Boyer" <jwboyer@gmail.com>
+Subject: Re: [RFC] Add a suffix option to git-format-patch
+Date: Wed, 17 Jan 2007 14:18:57 -0600
+Message-ID: <625fc13d0701171218i31585558wf89374eae9485341@mail.gmail.com>
+References: <625fc13d0701170510x8883539g93f43d9ddffe56f0@mail.gmail.com>
+	 <87ps9d7j6t.fsf@morpheus.local>
+	 <7vejptsglj.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "=?ISO-8859-1?Q?David_K=E5gedal?=" <davidk@lysator.liu.se>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 17 21:19:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H7HE3-0006ah-NH
-	for gcvg-git@gmane.org; Wed, 17 Jan 2007 21:17:40 +0100
+	id 1H7HFQ-0006x5-II
+	for gcvg-git@gmane.org; Wed, 17 Jan 2007 21:19:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932734AbXAQURg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 17 Jan 2007 15:17:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932735AbXAQURg
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Jan 2007 15:17:36 -0500
-Received: from inti.inf.utfsm.cl ([200.1.21.155]:57628 "EHLO inti.inf.utfsm.cl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932734AbXAQURg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Jan 2007 15:17:36 -0500
-Received: from laptop13.inf.utfsm.cl (laptop13.inf.utfsm.cl [200.1.19.201])
-	by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id l0HKHKat029676
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 17 Jan 2007 17:17:20 -0300
-Received: from laptop13.inf.utfsm.cl (laptop13.inf.utfsm.cl [127.0.0.1])
-	by laptop13.inf.utfsm.cl (8.13.8/8.13.8) with ESMTP id l0HKHIA8032440;
-	Wed, 17 Jan 2007 17:17:19 -0300
-To: Julian Phillips <julian@quantumfyre.co.uk>
-In-reply-to: <Pine.LNX.4.64.0701171804260.26185@reaper.quantumfyre.co.uk>
-Comments: In-reply-to Julian Phillips <julian@quantumfyre.co.uk>
-   message dated "Wed, 17 Jan 2007 18:07:20 -0000."
-X-Mailer: MH-E 7.4.2; nmh 1.2-20070115cvs; XEmacs 21.5  (beta27)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (inti.inf.utfsm.cl [200.1.19.1]); Wed, 17 Jan 2007 17:17:20 -0300 (CLST)
-X-Virus-Scanned: ClamAV 0.88.7/2460/Wed Jan 17 14:26:31 2007 on inti.inf.utfsm.cl
-X-Virus-Status: Clean
+	id S932735AbXAQUTA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 17 Jan 2007 15:19:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932736AbXAQUTA
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Jan 2007 15:19:00 -0500
+Received: from ug-out-1314.google.com ([66.249.92.171]:34182 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932735AbXAQUS7 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 17 Jan 2007 15:18:59 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so2083154uga
+        for <git@vger.kernel.org>; Wed, 17 Jan 2007 12:18:58 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=NeMdhzJy22NSNHbLbm/bQRCDvQ4eEBpyLRmZn6mRPOnJeSDwwKEsaevBFExxGjkUoMA4W/wJ6PCufjShd9fr8KnxYadT3OJEApAaQ/Oz+3i1V4QMg2ipiCRfjPnPlmKuE9Id3mZDvsEwcXgoQwBK9+2dEnjfqm26EMHLp89MuRc=
+Received: by 10.82.120.15 with SMTP id s15mr1616242buc.1169065137744;
+        Wed, 17 Jan 2007 12:18:57 -0800 (PST)
+Received: by 10.82.107.1 with HTTP; Wed, 17 Jan 2007 12:18:57 -0800 (PST)
+To: "Junio C Hamano" <junkio@cox.net>
+In-Reply-To: <7vejptsglj.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37036>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37037>
 
-Julian Phillips <julian@quantumfyre.co.uk> wrote:
+On 1/17/07, Junio C Hamano <junkio@cox.net> wrote:
+> David K=E5gedal <davidk@lysator.liu.se> writes:
+>
+> > "Josh Boyer" <jwboyer@gmail.com> writes:
+> >
+> >> I use git quite a bit to track my changes and then use
+> >> git-format-patch to generate patches to send on to others.  For th=
+e
+> >> most part, it works great but I find myself constantly doing:
+> >>
+> >> mv xxxx-foo.txt xxxx-foo.patch
+> >
+> > Seconded. I would even prefer .patch to be default, but I guess a
+> > config parameter would help me there.
+>
+> Two minor objections to changing the default are: (1) it's a
+> change and any change is bad ;-) and (2) the reason I changed it
+> to .txt before submitting the original format-patch to Linus was
+> because Emacs wanted to go into its "diff" mode when files are
+> named with .patch suffix, which had two annoyances (read-only by
+> default, and editing patch tried to automatically recount diff
+> and its recounting screwed up in some cases I do not remember
+> the details about).
 
-[...]
+Well there's your problem.  You're using Emacs.  ;)
 
-> printf is a bash builtin ... not sure about other shells.
+Seriously though, I'll try and fix up the patch a bit soon and resubmit=
+=2E
 
-It's a builtin in zsh and in ksh, and /not/ in tcsh here (Fedora rawhide)
-
-zsh-4.2.6-3.fc7
-ksh-20060214-1.1
-tcsh-6.14-13
-
-It might be special configuration, but as they are mentioned in the manpages
-I'd guess not.
--- 
-Dr. Horst H. von Brand                   User #22616 counter.li.org
-Departamento de Informatica                    Fono: +56 32 2654431
-Universidad Tecnica Federico Santa Maria             +56 32 2654239
-Casilla 110-V, Valparaiso, Chile               Fax:  +56 32 2797513
+josh
