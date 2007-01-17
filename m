@@ -1,63 +1,69 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC] Git config file reader in Perl (WIP)
-Date: Wed, 17 Jan 2007 20:25:14 +0100
-Message-ID: <200701172025.14870.jnareb@gmail.com>
-References: <200701150144.56793.jnareb@gmail.com> <Pine.LNX.4.63.0701162337330.22628@wbgn013.biozentrum.uni-wuerzburg.de> <dbfc82860701171008r65006b60vf81df9f82ab25712@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Introduce 'git-format-patch --suffix=patch'
+Date: Wed, 17 Jan 2007 11:27:07 -0800
+Message-ID: <7vzm8hqws4.fsf@assigned-by-dhcp.cox.net>
+References: <625fc13d0701170510x8883539g93f43d9ddffe56f0@mail.gmail.com>
+	<Pine.LNX.4.63.0701171446410.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7v4pqpsbre.fsf_-_@assigned-by-dhcp.cox.net>
+	<45AE7710.40503@shadowen.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Junio C Hamano" <junkio@cox.net>,
-	"Eric Wong" <normalperson@yhbt.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 17 20:25:07 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 17 20:27:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H7GOv-0000V3-9y
-	for gcvg-git@gmane.org; Wed, 17 Jan 2007 20:24:49 +0100
+	id 1H7GRD-00018b-R2
+	for gcvg-git@gmane.org; Wed, 17 Jan 2007 20:27:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932663AbXAQTYr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 17 Jan 2007 14:24:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932659AbXAQTYr
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Jan 2007 14:24:47 -0500
-Received: from ug-out-1314.google.com ([66.249.92.170]:25566 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932663AbXAQTYq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Jan 2007 14:24:46 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so2070676uga
-        for <git@vger.kernel.org>; Wed, 17 Jan 2007 11:24:45 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=MX41TPMp4w9GI3RrkaHAg6nbooETb8GdMTI8Qz8y9lYB8WDHa+Ze7biz+b7HVSru+Z+1cwrM3+k4t0pcFho2wcXNvg99d5ZCN+RF+Yja4ahKeEcEMu0dZ3RFw2sy1BCoS1yLWDkEuuUG6Dh2hZe3pqLZYYp4QrLlVtwXkTAChYk=
-Received: by 10.67.119.9 with SMTP id w9mr10041734ugm.1169061885177;
-        Wed, 17 Jan 2007 11:24:45 -0800 (PST)
-Received: from host-81-190-20-200.torun.mm.pl ( [81.190.20.200])
-        by mx.google.com with ESMTP id 53sm8933152ugd.2007.01.17.11.24.43;
-        Wed, 17 Jan 2007 11:24:44 -0800 (PST)
-To: "Nikolai Weibull" <now@bitwi.se>
-User-Agent: KMail/1.9.3
-In-Reply-To: <dbfc82860701171008r65006b60vf81df9f82ab25712@mail.gmail.com>
-Content-Disposition: inline
+	id S932666AbXAQT1J (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 17 Jan 2007 14:27:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932667AbXAQT1J
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Jan 2007 14:27:09 -0500
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:49101 "EHLO
+	fed1rmmtao06.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932666AbXAQT1I (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Jan 2007 14:27:08 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20070117192707.OCIQ2628.fed1rmmtao06.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 17 Jan 2007 14:27:07 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id CKTQ1W01M1kojtg0000000; Wed, 17 Jan 2007 14:27:25 -0500
+To: Andy Whitcroft <apw@shadowen.org>
+In-Reply-To: <45AE7710.40503@shadowen.org> (Andy Whitcroft's message of "Wed,
+	17 Jan 2007 19:20:48 +0000")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37028>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37029>
 
-Nikolai Weibull wrote:
-> On 1/16/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+Andy Whitcroft <apw@shadowen.org> writes:
 
->> I was not happy when we introduced more relaxed section titles, and I am
->> not happy now that I see what problems we introduced with that.
-> 
-> I'm with you on this one.
+>> -	strcpy(filename + len, ".txt");
+>> +	sprintf(filename + len, ".%s", fmt_patch_suffix);
+>
+> This doesn't give us any possibility of not having a suffix.  Can we not
+> include the . in the suffix here so that we can specify it as "".
 
-More relaxed section (actually _sub_section) titles are not the problem.
-The fact that they are case sensitive (where section and key names
-are not) can be.
+I've considered it, but I do not think it is worth it.  
 
--- 
-Jakub Narebski
-Poland
+If we did so, the configuration would look like:
+
+	[format]
+		suffix = .txt
+
+which has a certain "Huh?" factor, and more importantly, a
+careless user would end up with a patchfile that is named:
+
+	0001-Introduce-git-format-patch-suffix-patchtxt
+
+which is I think much worse than not being able to say:
+
+	0001-Introduce-git-format-patch-suffix-patch
+
+But I do not care that much either way.
