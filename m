@@ -1,56 +1,64 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Introduce 'git-format-patch --suffix=patch'
-Date: Wed, 17 Jan 2007 11:57:21 -0800
-Message-ID: <7vps9dqvdq.fsf@assigned-by-dhcp.cox.net>
-References: <625fc13d0701170510x8883539g93f43d9ddffe56f0@mail.gmail.com>
-	<Pine.LNX.4.63.0701171446410.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7v4pqpsbre.fsf_-_@assigned-by-dhcp.cox.net>
-	<45AE7710.40503@shadowen.org>
-	<7vzm8hqws4.fsf@assigned-by-dhcp.cox.net>
-	<D085A8A2-F1EC-47EC-8D96-B8A06E483BDB@silverinsanity.com>
+From: "Nikolai Weibull" <now@bitwi.se>
+Subject: Re: [RFC] Git config file reader in Perl (WIP)
+Date: Wed, 17 Jan 2007 21:01:45 +0100
+Message-ID: <dbfc82860701171201k3131e42flf03b129e39167c9c@mail.gmail.com>
+References: <200701150144.56793.jnareb@gmail.com>
+	 <Pine.LNX.4.63.0701162337330.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <dbfc82860701171008r65006b60vf81df9f82ab25712@mail.gmail.com>
+	 <200701172022.52015.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 17 20:57:37 2007
+X-From: git-owner@vger.kernel.org Wed Jan 17 21:01:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H7GuT-0001Gp-MU
-	for gcvg-git@gmane.org; Wed, 17 Jan 2007 20:57:26 +0100
+	id 1H7Gyp-0002SP-KG
+	for gcvg-git@gmane.org; Wed, 17 Jan 2007 21:01:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932695AbXAQT5Y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 17 Jan 2007 14:57:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932711AbXAQT5Y
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Jan 2007 14:57:24 -0500
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:61117 "EHLO
-	fed1rmmtao02.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932695AbXAQT5X (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Jan 2007 14:57:23 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070117195722.IZRM97.fed1rmmtao02.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 17 Jan 2007 14:57:22 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id CKxf1W00e1kojtg0000000; Wed, 17 Jan 2007 14:57:40 -0500
-To: Brian Gernhardt <benji@silverinsanity.com>
-In-Reply-To: <D085A8A2-F1EC-47EC-8D96-B8A06E483BDB@silverinsanity.com> (Brian
-	Gernhardt's message of "Wed, 17 Jan 2007 14:51:57 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932711AbXAQUBv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 17 Jan 2007 15:01:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932715AbXAQUBv
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Jan 2007 15:01:51 -0500
+Received: from wx-out-0506.google.com ([66.249.82.229]:60319 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932711AbXAQUBu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Jan 2007 15:01:50 -0500
+Received: by wx-out-0506.google.com with SMTP id h31so2594728wxd
+        for <git@vger.kernel.org>; Wed, 17 Jan 2007 12:01:49 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=neMtsX9KhUvjtV/rlWeh4Gip+YbXXn5pXSUPSIhkfPO4wIRTwWshVpsumDuRkzXsHnBx7yDVLRPL4phrTKBY/Mj9Bkw9WO6l6BSArSrF/2dRCssRwtXyh0kQ+8luE8I/JL7jS9e4rytD3E+QRGUXzylOmPftd6ywuHwXKrO867E=
+Received: by 10.70.125.11 with SMTP id x11mr13332153wxc.1169064107198;
+        Wed, 17 Jan 2007 12:01:47 -0800 (PST)
+Received: by 10.70.111.12 with HTTP; Wed, 17 Jan 2007 12:01:45 -0800 (PST)
+To: "Jakub Narebski" <jnareb@gmail.com>
+In-Reply-To: <200701172022.52015.jnareb@gmail.com>
+Content-Disposition: inline
+X-Google-Sender-Auth: 5565a55f8b645d69
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37033>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37034>
 
-Brian Gernhardt <benji@silverinsanity.com> writes:
+On 1/17/07, Jakub Narebski <jnareb@gmail.com> wrote:
+> Nikolai Weibull wrote:
+>
+> > I maintain the git completion-definition for Zsh.
+>
+> Could you add it to contrib/completion/ or at least put link
+> in http://git.or.cz/gitwiki/InterfacesFrontendsAndTools ?
 
-> I think that the best form of DWIM is that if the suffix is "", then
-> you simply skip the entire sprintf.  Then any suffix has to have the
-> '.', but no suffix doesn't have it.  Additional DWIMMmery could
-> remove an initial '.' from the suffix so that users expecting it to
-> be there don't get ".." in their file.
+I did announce it way back when, but since it's included with new
+releases of Zsh there's really nothing interesting to add or link to.
+It's also in Zsh's CVS repository, but I do my updates here:
 
-I think it is generally accepted on this list that that kind of
-DWIMmery is bad.
+  http://git.bitwi.se/?p=dot-home.git;a=tree
+
+although I now realize that I haven't pushed some recent updates to
+that repository yet.
+
+  nikolai
