@@ -1,65 +1,80 @@
-From: Quy Tonthat <qtonthat@gmail.com>
-Subject: Re: [PATCH] git-remote exclude
-Date: Thu, 18 Jan 2007 01:13:12 +1100
-Message-ID: <45AE2EF8.50403@gmail.com>
-References: <45AA44D6.6080605@gmail.com> <Pine.LNX.4.63.0701151118400.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: "Josh Boyer" <jwboyer@gmail.com>
+Subject: Re: [RFC] Add a suffix option to git-format-patch
+Date: Wed, 17 Jan 2007 08:50:36 -0600
+Message-ID: <625fc13d0701170650j5a9eb7dbyc7527d9c2b999076@mail.gmail.com>
+References: <625fc13d0701170510x8883539g93f43d9ddffe56f0@mail.gmail.com>
+	 <Pine.LNX.4.63.0701171446410.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 17 15:13:58 2007
+Cc: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jan 17 15:51:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H7BXz-0004ji-Qf
-	for gcvg-git@gmane.org; Wed, 17 Jan 2007 15:13:52 +0100
+	id 1H7C89-0006qH-0I
+	for gcvg-git@gmane.org; Wed, 17 Jan 2007 15:51:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932293AbXAQONt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 17 Jan 2007 09:13:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932323AbXAQONt
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Jan 2007 09:13:49 -0500
-Received: from pecan-mail.exetel.com.au ([220.233.0.8]:40755 "EHLO
-	pecan.exetel.com.au" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932293AbXAQONs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Jan 2007 09:13:48 -0500
-Received: from [220.233.69.95] (helo=[192.168.64.35])
-	by pecan.exetel.com.au with esmtp (Exim 4.63)
-	(envelope-from <qtonthat@gmail.com>)
-	id 1H7BXs-00030R-TE; Thu, 18 Jan 2007 01:13:45 +1100
-User-Agent: Thunderbird 1.5.0.9 (X11/20070102)
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0701151118400.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-X-Enigmail-Version: 0.94.1.1
+	id S932437AbXAQOvK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 17 Jan 2007 09:51:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932444AbXAQOvK
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Jan 2007 09:51:10 -0500
+Received: from nf-out-0910.google.com ([64.233.182.190]:22042 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932437AbXAQOvI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Jan 2007 09:51:08 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so212127nfa
+        for <git@vger.kernel.org>; Wed, 17 Jan 2007 06:51:07 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=OlvLsujeXKcqVw8F7hVpk8AySqAyb50nrMHw5Lh2eJnaSZsWyZHMIxMH3q4IJbsKMhWLngM9T+0ZYCAbyiaO2X2DEZTtLGNFE/A0TBWp6faKuzU6fwYKVUsU2UKpptV8fYcLsXnMUR0Cmk+bgJB1EOQVPst6y4uloED3G8LDBfA=
+Received: by 10.82.138.6 with SMTP id l6mr1541531bud.1169045436966;
+        Wed, 17 Jan 2007 06:50:36 -0800 (PST)
+Received: by 10.82.107.18 with HTTP; Wed, 17 Jan 2007 06:50:36 -0800 (PST)
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0701171446410.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37005>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37006>
 
-Johannes Schindelin wrote:
+On 1/17/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
 > Hi,
-> 
-> On Mon, 15 Jan 2007, Quy Tonthat wrote:
-> 
->> "git-remote exclude" can be used to prevent one or more unwanted remote 
->> branches from being tracked. After, for example,
->>     $ git-remote origin exclude man html
->> "git-fetch origin" will no longer fetch origin/man and origin/html.
-> 
-> That is not what your patch does.
-> 
-> It rewrites the "remote.$name.fetch" entries so that those branches are 
-> not _updated_, but they are _fetched_ nevertheless.
+>
+> On Wed, 17 Jan 2007, Josh Boyer wrote:
+>
+> > Could we add an option to git-format-patch to use ".patch" as the file
+> > suffix instead of ".txt"?  Something like the below?
+> >
+> > diff --git a/builtin-log.c b/builtin-log.c
+> > index a59b4ac..4eb2d32 100644
+> > --- a/builtin-log.c
+> > +++ b/builtin-log.c
+> > @@ -217,6 +217,7 @@ static int git_format_config(const char *var,
+> > const char *value)
+> >
+> > static FILE *realstdout = NULL;
+> > static const char *output_directory = NULL;
+> > +static int psuffix = 0;
+>
+> Why not
+>
+>         static const char *file_extension = ".txt"
+>
+> Hmm?
 
-I meant to say "track", but somehow "fetch" got to my fingers. Old ages, perhaps.
-You are right, "update" is _the_ word. Thanks.
+Yes, that's better.  I was more going for "would something like this
+option be accepted" to start with.  And I'm lazy, so the patch I wrote
+was just an example for my specific use case :).
 
-> But then, I don't really see _why_ you would want such a solution.
-> After all, you are more likely to be interested in _specific_ branches, rather 
-> than all branches _except_ a few.
+> You'd call it with "--extension=.patch", and if you really want, you can
+> make a config variable from it.
 
-For different situations, there are different paths to choose to reach that
-ultimate "After All" (Zen? NO!). I offered one (little) path and expect to see
-more of bigger ones. That's the _why_ (and/or, the _why_ not).
+Good idea.  I'll try and get this done soon-ish.  I'm not very
+familiar with the git code, so if someone beats me to it, I won't be
+disappointed in the least ;)
 
-Quy
+josh
