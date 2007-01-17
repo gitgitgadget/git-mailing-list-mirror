@@ -1,114 +1,95 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC] Git config file reader in Perl (WIP)
-Date: Wed, 17 Jan 2007 11:44:04 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0701171138371.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <200701150144.56793.jnareb@gmail.com> <200701170024.10640.jnareb@gmail.com>
- <Pine.LNX.4.63.0701170948420.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <200701171048.03686.jnareb@gmail.com>
+From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
+Subject: Re: Rebasing stgit stacks
+Date: Wed, 17 Jan 2007 12:07:45 +0100
+Message-ID: <87y7o17vy6.fsf@morpheus.local>
+References: <8b65902a0701091335u160c6dfl81a523e4cd5adbee@mail.gmail.com> <8b65902a0701091341v5983c113tc5cd32c6c4c57719@mail.gmail.com> <20070109224125.GF17093@nan92-1-81-57-214-146.fbx.proxad.net> <8b65902a0701150526j5a954529xf45b2d0348a77573@mail.gmail.com> <20070115202412.GE9761@nan92-1-81-57-214-146.fbx.proxad.net> <b0943d9e0701151446l45eff9dbgcae718c1461d0725@mail.gmail.com> <20070115233958.GF9761@nan92-1-81-57-214-146.fbx.proxad.net> <b0943d9e0701161442t6b93e0d6nd88364600f2809ee@mail.gmail.com> <20070116231735.GF7029@nan92-1-81-57-214-146.fbx.proxad.net> <eojn5c$v9u$1@sea.gmane.org> <20070117090313.GA9283@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Nikolai Weibull <now@bitwi.se>, Junio C Hamano <junkio@cox.net>,
-	Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 17 11:44:19 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Wed Jan 17 12:08:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H78H5-0007OS-Sa
-	for gcvg-git@gmane.org; Wed, 17 Jan 2007 11:44:12 +0100
+	id 1H78ea-0005ad-Tl
+	for gcvg-git@gmane.org; Wed, 17 Jan 2007 12:08:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932231AbXAQKoJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 17 Jan 2007 05:44:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932270AbXAQKoJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Jan 2007 05:44:09 -0500
-Received: from mail.gmx.net ([213.165.64.20]:41724 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932231AbXAQKoI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Jan 2007 05:44:08 -0500
-Received: (qmail invoked by alias); 17 Jan 2007 10:44:04 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp051) with SMTP; 17 Jan 2007 11:44:04 +0100
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <200701171048.03686.jnareb@gmail.com>
-X-Y-GMX-Trusted: 0
+	id S932311AbXAQLI0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 17 Jan 2007 06:08:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932321AbXAQLI0
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Jan 2007 06:08:26 -0500
+Received: from main.gmane.org ([80.91.229.2]:57968 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932311AbXAQLIZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Jan 2007 06:08:25 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1H78eI-0005VD-7B
+	for git@vger.kernel.org; Wed, 17 Jan 2007 12:08:10 +0100
+Received: from c83-253-22-207.bredband.comhem.se ([83.253.22.207])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 17 Jan 2007 12:08:10 +0100
+Received: from davidk by c83-253-22-207.bredband.comhem.se with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 17 Jan 2007 12:08:10 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: c83-253-22-207.bredband.comhem.se
+User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (gnu/linux)
+Cancel-Lock: sha1:nIetTA4YB4hnL9/eVBd27A/VGBk=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36993>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36994>
 
-Hi,
+Karl Hasselstr=C3=B6m <kha@treskal.com> writes:
 
-On Wed, 17 Jan 2007, Jakub Narebski wrote:
+> On 2007-01-17 00:30:18 +0100, Jakub Narebski wrote:
+>
+>> Yann Dirson wrote:
+>>
+>> > My example is quite similar to the one given by Guilhem: I had a
+>> > git branch coming from git-cvsimport, and my stgit stack forked
+>> > atop that branch. =C2=A0At some point git-cvsimport fucked somethi=
+ng,
+>> > and I regenerated a new mirror branch using it in a fresh repo.
+>> > Then I wanted to rebase my stack on that new branch.
+>>
+>> I'm all for calling this command "stg rebase". Currently you can do
+>> "stg push -a; stg commit -a; git rebase; stg uncommit -n <n>"...
+>
+> Or simpler,
+>
+>   stg pop -a
+>   git reset --hard <new_base>
+>   stg push -n <n>
+>
+> This uses stgit for all operations that can conflict.
+>
+> (BTW, I've never seriously tried git rebase; does anyone have an
+> opinion of how convenient its conflict handling is, compared to
+> stgit's?)
 
-> Johannes Schindelin wrote:
-> > 
-> > On Wed, 17 Jan 2007, Jakub Narebski wrote:
-> > 
-> >> Dnia wtorek 16. stycznia 2007 23:56, Johannes Schindelin napisa?:
-> 
-> >>> So, how about a "git repo-config --dump" which outputs a stream of NUL 
-> >>> separated keys and values? This should be really easy to "parse", and 
-> >>> there are no ambiguities: No key or value can contain a NUL.
-> >> 
-> >> Good idea, although "\n" would work as well as NUL.
-> > 
-> > No it would not:
-> > 
-> > 	[someSection]
-> > 		thisKey = has\na\nvalue\with\nseveral\nnewlines
-> 
-> $ fatal: bad config file line <nn> in <config>
+I have used it a little (together with git-svn), and one thing that
+confused me was that when I got a conflict to resolve, it looked like
+this:
 
-Yeah, sorry. But you got the point.
+    ...
+    <<<<<<
+    base version
+    =3D=3D=3D=3D=3D=3D
+    my version
+    >>>>>>
+    ...
 
-> The same with quoted:
-> 
->  	[someSection]
->  		qthisKey = "has\na\nvalue\with\nseveral\nnewlines"
-> 
-> There is no escaping besides escaping " and escape character
-> i.e. escaping \ in git config. Se "\n" would work as well as NUL.
-> (It is said explicitely that subsection names cannot contain "\n").
+Where "my version" is the code in the branch I'm rebasing, and
+"base version" is the code in the branch I'm rebasing on.
 
-So you want "git-repo-config --dump" to output something which has to be 
-scanned for escaping sequences?
+This is kind of opposite of how e.g. "git pull" works, where the first
+alternative is "my version".  I guess it is an effect of the fact that
+you are actually merging your branch into another, instead of the
+other way around.
 
-If you call
-
-	$ git repo-config -l
-
-you will _no longer_ see "\n"s, but rather newlines.
-
-I don't know why you insist on newlines, when a NUL makes perfect sense: 
-Take everything until the next NUL. This is the key. Then take everything 
-until the next NUL. This is the value. Repeat until EOF.
-
-> >> The only problem is with "key without value" case, i.e. something like
-> >> 
-> >>   [section]
-> >>   	noval
-> >> 
-> >> which shows as
-> >> 
-> >>   section.noval
-> > 
-> > but is equivalent to
-> > 
-> > 	[section]
-> > 		noval = true
-> > 
-> > Since it is by definition a boolean value.
-> 
-> But only for "git repo-config --bool --get section.noval" output.
-> Semantically equivalent to "true".
-> 
-> But without --bool it returns like it was "".
-
-Yes, it returns "", but this is _wrong_. A single "[section] noval" _only_ 
-makes sense as a boolean. The information lies in its _presence_, which is 
-as good as saying "true".
-
-Ciao,
-Dscho
+--=20
+David K=C3=A5gedal
