@@ -1,59 +1,56 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Brian Gernhardt <benji@silverinsanity.com>
 Subject: Re: [PATCH] Replace "echo -n" with printf in shell scripts.
-Date: Wed, 17 Jan 2007 09:33:43 -0800
-Message-ID: <7vk5zlsglk.fsf@assigned-by-dhcp.cox.net>
-References: <17437.1168911089@lotus.CS.Berkeley.EDU>
-	<7v1wlv1yeh.fsf@assigned-by-dhcp.cox.net>
-	<200701171629.l0HGTCE3019292@laptop13.inf.utfsm.cl>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 17 18:33:55 2007
+Date: Wed, 17 Jan 2007 13:00:31 -0500
+Message-ID: <F850C6F1-EFDC-4D37-90B4-27D8982BA086@silverinsanity.com>
+References: <17437.1168911089@lotus.CS.Berkeley.EDU> <7v1wlv1yeh.fsf@assigned-by-dhcp.cox.net> <200701171629.l0HGTCE3019292@laptop13.inf.utfsm.cl> <7vk5zlsglk.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 17 19:01:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H7EfX-0003ul-Ax
-	for gcvg-git@gmane.org; Wed, 17 Jan 2007 18:33:51 +0100
+	id 1H7F5g-0002hi-NN
+	for gcvg-git@gmane.org; Wed, 17 Jan 2007 19:00:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932590AbXAQRdr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 17 Jan 2007 12:33:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932593AbXAQRdr
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Jan 2007 12:33:47 -0500
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:56710 "EHLO
-	fed1rmmtao10.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932590AbXAQRdq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Jan 2007 12:33:46 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao10.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070117173345.XNDH20715.fed1rmmtao10.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 17 Jan 2007 12:33:45 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id CHa11W00F1kojtg0000000; Wed, 17 Jan 2007 12:34:01 -0500
-To: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932526AbXAQSAi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 17 Jan 2007 13:00:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932546AbXAQSAi
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Jan 2007 13:00:38 -0500
+Received: from vs072.rosehosting.com ([216.114.78.72]:49160 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932526AbXAQSAh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Jan 2007 13:00:37 -0500
+Received: from [IPv6???1] (localhost [127.0.0.1])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTP id 8F5741FFC02B;
+	Wed, 17 Jan 2007 18:00:35 +0000 (UTC)
+In-Reply-To: <7vk5zlsglk.fsf@assigned-by-dhcp.cox.net>
+To: Junio C Hamano <junkio@cox.net>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37019>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37020>
 
-"Horst H. von Brand" <vonbrand@inf.utfsm.cl> writes:
 
-> Junio C Hamano <junkio@cox.net> wrote:
->> Jason Riedy <ejr@EECS.Berkeley.EDU> writes:
->> > Not all echos know -n.  This was causing a test failure in
->> > t5401-update-hooks.sh, but not t3800-mktag.sh for some reason.
->> 
->> We have done this already so it might be too late to raise this
->> question, but does everybody have printf?
->
-> Here (Fedora rawhide) /usr/bin/printf is part of coreutils.
+On Jan 17, 2007, at 12:33 PM, Junio C Hamano wrote:
 
-I am reasonably sure people on Linux land would be fine
-regardless of distros, but thanks anyway.
+> The problematic are less common ones, ranging from (not so less
+> common) OSX, Solaris to (much less common) AIX that some people
+> seem to run git on (or at least compile git for).
 
-The problematic are less common ones, ranging from (not so less
-common) OSX, Solaris to (much less common) AIX that some people
-seem to run git on (or at least compile git for).
+At least as far a OS X goes, it's installed on my machine (10.4.8)  
+as /usr/bin/printf.  I don't know if it's part of the Xcode packages,  
+the "BSD Subsystem", or the core OS but I have a hard time imagining  
+someone who didn't have them all installed using GIT.
+
+Also, it's man page identifies itself as
+"PRINTF(1)                 BSD General Commands Manual                 
+PRINTF(1)"
+so most, if not all, flavors of BSD and BSD-like should be alright.
+
+~~ Brian
