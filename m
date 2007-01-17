@@ -1,89 +1,82 @@
-From: "Josh Boyer" <jwboyer@gmail.com>
-Subject: [RFC] Add a suffix option to git-format-patch
-Date: Wed, 17 Jan 2007 07:10:03 -0600
-Message-ID: <625fc13d0701170510x8883539g93f43d9ddffe56f0@mail.gmail.com>
+From: =?utf-8?Q?Santi_B=C3=A9jar?= <sbejar@gmail.com>
+Subject: [PATCH] git-reset: make the output as the fetch output
+Date: Wed, 17 Jan 2007 13:56:15 +0100
+Message-ID: <87odox23u9.fsf@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Wed Jan 17 14:10:35 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Wed Jan 17 14:14:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H7AYZ-0003uP-Vt
-	for gcvg-git@gmane.org; Wed, 17 Jan 2007 14:10:24 +0100
+	id 1H7AcW-0004zW-VD
+	for gcvg-git@gmane.org; Wed, 17 Jan 2007 14:14:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751225AbXAQNKL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 17 Jan 2007 08:10:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751286AbXAQNKK
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Jan 2007 08:10:10 -0500
-Received: from ug-out-1314.google.com ([66.249.92.174]:17915 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751225AbXAQNKJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Jan 2007 08:10:09 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so1981740uga
-        for <git@vger.kernel.org>; Wed, 17 Jan 2007 05:10:07 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=C+Y7RyUPDV18v4oGYH4V3pRlS3JK2LdIhHhJEI+AWevfjIfrGaro3wVhluW8IuhTUNMeqP85upAu3hJJxvwF6NQdOQyn+RMVxaxt4k09iW6u/clASDxU2pg/3aB7W0w2g646PUgHNA8dZJGQIcWqTG2WHY9RuX+58yhchOQBMac=
-Received: by 10.82.183.19 with SMTP id g19mr1520622buf.1169039403888;
-        Wed, 17 Jan 2007 05:10:03 -0800 (PST)
-Received: by 10.82.107.18 with HTTP; Wed, 17 Jan 2007 05:10:03 -0800 (PST)
-To: "Git Mailing List" <git@vger.kernel.org>
-Content-Disposition: inline
+	id S1751073AbXAQNO0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 17 Jan 2007 08:14:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751338AbXAQNO0
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Jan 2007 08:14:26 -0500
+Received: from ifae-s0.ifae.es ([192.101.162.68]:50274 "EHLO ifae-s0.ifae.es"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751073AbXAQNO0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Jan 2007 08:14:26 -0500
+Received: from bela (caronte.ifae.es [192.101.162.199])
+	by ifae-s0.ifae.es (8.11.6/8.11.6) with ESMTP id l0HDEMe21105
+	for <git@vger.kernel.org>; Wed, 17 Jan 2007 14:14:24 +0100
+To: Git Mailing List <git@vger.kernel.org>
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/22.0.92 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36997>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36998>
 
-Hi All,
 
-I use git quite a bit to track my changes and then use
-git-format-patch to generate patches to send on to others.  For the
-most part, it works great but I find myself constantly doing:
+=2E.. and only when HEAD is changed.
 
-mv xxxx-foo.txt xxxx-foo.patch
+Signed-off-by: Santi B=C3=A9jar <sbejar@gmail.com>
+---
+ git-reset.sh |   19 +++++++++++++------
+ 1 files changed, 13 insertions(+), 6 deletions(-)
 
-Could we add an option to git-format-patch to use ".patch" as the file
-suffix instead of ".txt"?  Something like the below?
-
-josh
-
-diff --git a/builtin-log.c b/builtin-log.c
-index a59b4ac..4eb2d32 100644
---- a/builtin-log.c
-+++ b/builtin-log.c
-@@ -217,6 +217,7 @@ static int git_format_config(const char *var,
-const char *value)
-
- static FILE *realstdout = NULL;
- static const char *output_directory = NULL;
-+static int psuffix = 0;
-
- static void reopen_stdout(struct commit *commit, int nr, int keep_subject)
- {
-@@ -265,7 +266,11 @@ static void reopen_stdout(struct commit *commit,
-int nr, int keep_subject)
- 		while (filename[len - 1] == '.' || filename[len - 1] == '-')
- 			len--;
- 	}
--	strcpy(filename + len, ".txt");
+diff --git a/git-reset.sh b/git-reset.sh
+index bf2a058..acefddc 100755
+--- a/git-reset.sh
++++ b/git-reset.sh
+@@ -24,6 +24,7 @@ do
+ 		usage
+ 		;;
+ 	*)
++		commit=3D"$1"
+ 		rev=3D$(git-rev-parse --verify "$1") || exit
+ 		shift
+ 		break
+@@ -84,14 +85,20 @@ fi
+ git-update-ref -m "$GIT_REFLOG_ACTION" HEAD "$rev"
+ update_ref_status=3D$?
+=20
++if test $update_ref_status =3D 0 && test "$orig" !=3D "$rev"
++then
++    revshort=3D$(git-rev-parse --short $rev)
++    echo "* HEAD: reset to $commit"
++    if test "$orig" ; then
++	echo "  old..new: $(git-rev-parse --short $orig)..$revshort"
++    else
++	echo "  commit: $revshort"
++    fi
++fi
 +
-+	if (psuffix)
-+		strcpy(filename + len, ".patch");
-+	else
-+		strcpy(filename + len, ".txt");
- 	fprintf(realstdout, "%s\n", filename);
- 	freopen(filename, "w", stdout);
- }
-@@ -436,6 +441,8 @@ int cmd_format_patch(int argc, const char **argv,
-const char *prefix)
- 				die("Need a Message-Id for --in-reply-to");
- 			in_reply_to = argv[i];
- 		}
-+		else if (!strcmp(argv[i], "--psuffix"))
-+			psuffix = 1;
- 		else
- 			argv[j++] = argv[i];
- 	}
+ case "$reset_type" in
+ --hard )
+-	test $update_ref_status =3D 0 && {
+-		printf "HEAD is now at "
+-		GIT_PAGER=3D git log --max-count=3D1 --pretty=3Doneline \
+-			--abbrev-commit HEAD
+-	}
+-	;;
++	;; # Nothing else to do
+ --soft )
+ 	;; # Nothing else to do
+ --mixed )
+--=20
+1.5.0.rc1.g0dee5
