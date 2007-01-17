@@ -1,65 +1,108 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: Rebasing stgit stacks
-Date: Wed, 17 Jan 2007 10:03:13 +0100
-Message-ID: <20070117090313.GA9283@diana.vm.bytemark.co.uk>
-References: <8b65902a0701091335u160c6dfl81a523e4cd5adbee@mail.gmail.com> <8b65902a0701091341v5983c113tc5cd32c6c4c57719@mail.gmail.com> <20070109224125.GF17093@nan92-1-81-57-214-146.fbx.proxad.net> <8b65902a0701150526j5a954529xf45b2d0348a77573@mail.gmail.com> <20070115202412.GE9761@nan92-1-81-57-214-146.fbx.proxad.net> <b0943d9e0701151446l45eff9dbgcae718c1461d0725@mail.gmail.com> <20070115233958.GF9761@nan92-1-81-57-214-146.fbx.proxad.net> <b0943d9e0701161442t6b93e0d6nd88364600f2809ee@mail.gmail.com> <20070116231735.GF7029@nan92-1-81-57-214-146.fbx.proxad.net> <eojn5c$v9u$1@sea.gmane.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC] Git config file reader in Perl (WIP)
+Date: Wed, 17 Jan 2007 10:48:02 +0100
+Message-ID: <200701171048.03686.jnareb@gmail.com>
+References: <200701150144.56793.jnareb@gmail.com> <200701170024.10640.jnareb@gmail.com> <Pine.LNX.4.63.0701170948420.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 17 10:04:11 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Nikolai Weibull <now@bitwi.se>, Junio C Hamano <junkio@cox.net>,
+	Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 17 10:47:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H76i6-0005hs-CU
-	for gcvg-git@gmane.org; Wed, 17 Jan 2007 10:03:58 +0100
+	id 1H77OR-0000aP-AU
+	for gcvg-git@gmane.org; Wed, 17 Jan 2007 10:47:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932105AbXAQJDW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 17 Jan 2007 04:03:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932107AbXAQJDW
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Jan 2007 04:03:22 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2541 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932106AbXAQJDT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Jan 2007 04:03:19 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1H76hN-0002WO-00; Wed, 17 Jan 2007 09:03:13 +0000
-To: Jakub Narebski <jnareb@gmail.com>
+	id S932173AbXAQJrj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 17 Jan 2007 04:47:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932175AbXAQJrj
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Jan 2007 04:47:39 -0500
+Received: from ug-out-1314.google.com ([66.249.92.173]:39872 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932173AbXAQJri (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Jan 2007 04:47:38 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so1941666uga
+        for <git@vger.kernel.org>; Wed, 17 Jan 2007 01:47:37 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=dfrLpO8lXnZ2R86iObg0AEaxX2cJgUz/suVfrkz0VZM/oUEkc3+1uvLWdU2q2lKLzvnXQcAONDzvow1Seoq0wqM3/LR2JgSIi4om8jvzp+46HB+O2y6vSKgOuNPjV4Uz+P/ybWvTREe/+CinfLwv+OOpydpavAHnjOqZ6/68XPQ=
+Received: by 10.67.121.15 with SMTP id y15mr9171233ugm.1169027256806;
+        Wed, 17 Jan 2007 01:47:36 -0800 (PST)
+Received: from host-81-190-20-200.torun.mm.pl ( [81.190.20.200])
+        by mx.google.com with ESMTP id s7sm10152779uge.2007.01.17.01.47.36;
+        Wed, 17 Jan 2007 01:47:36 -0800 (PST)
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+User-Agent: KMail/1.9.3
+In-Reply-To: <Pine.LNX.4.63.0701170948420.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Content-Disposition: inline
-In-Reply-To: <eojn5c$v9u$1@sea.gmane.org>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36991>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/36992>
 
-On 2007-01-17 00:30:18 +0100, Jakub Narebski wrote:
+Johannes Schindelin wrote:
+> 
+> On Wed, 17 Jan 2007, Jakub Narebski wrote:
+> 
+>> Dnia wtorek 16. stycznia 2007 23:56, Johannes Schindelin napisa?:
 
-> Yann Dirson wrote:
->
-> > My example is quite similar to the one given by Guilhem: I had a
-> > git branch coming from git-cvsimport, and my stgit stack forked
-> > atop that branch. =A0At some point git-cvsimport fucked something,
-> > and I regenerated a new mirror branch using it in a fresh repo.
-> > Then I wanted to rebase my stack on that new branch.
->
-> I'm all for calling this command "stg rebase". Currently you can do
-> "stg push -a; stg commit -a; git rebase; stg uncommit -n <n>"...
+>>> So, how about a "git repo-config --dump" which outputs a stream of NUL 
+>>> separated keys and values? This should be really easy to "parse", and 
+>>> there are no ambiguities: No key or value can contain a NUL.
+>> 
+>> Good idea, although "\n" would work as well as NUL.
+> 
+> No it would not:
+> 
+> 	[someSection]
+> 		thisKey = has\na\nvalue\with\nseveral\nnewlines
 
-Or simpler,
+$ fatal: bad config file line <nn> in <config>
 
-  stg pop -a
-  git reset --hard <new_base>
-  stg push -n <n>
+The same with quoted:
 
-This uses stgit for all operations that can conflict.
+ 	[someSection]
+ 		qthisKey = "has\na\nvalue\with\nseveral\nnewlines"
 
-(BTW, I've never seriously tried git rebase; does anyone have an
-opinion of how convenient its conflict handling is, compared to
-stgit's?)
+There is no escaping besides escaping " and escape character
+i.e. escaping \ in git config. Se "\n" would work as well as NUL.
+(It is said explicitely that subsection names cannot contain "\n").
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+>> The only problem is with "key without value" case, i.e. something like
+>> 
+>>   [section]
+>>   	noval
+>> 
+>> which shows as
+>> 
+>>   section.noval
+> 
+> but is equivalent to
+> 
+> 	[section]
+> 		noval = true
+> 
+> Since it is by definition a boolean value.
+
+But only for "git repo-config --bool --get section.noval" output.
+Semantically equivalent to "true".
+
+But without --bool it returns like it was "".
+
+>> in "git repo-config -l" output (note missing '=' !), and I guess differs
+>> for some case from
+>> 
+>>   [section]
+>>   	noval = 
+> 
+> Yes, this is not a boolean. The difference is that the callback function 
+> is called with NULL in the former case, and with "" in the latter.
+
+-- 
+Jakub Narebski
+Poland
