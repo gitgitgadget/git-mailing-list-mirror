@@ -1,61 +1,92 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: Re: Rebasing stgit stacks
-Date: Wed, 17 Jan 2007 20:34:06 +0100
-Message-ID: <20070117193406.GG9761@nan92-1-81-57-214-146.fbx.proxad.net>
-References: <8b65902a0701091341v5983c113tc5cd32c6c4c57719@mail.gmail.com> <20070109224125.GF17093@nan92-1-81-57-214-146.fbx.proxad.net> <8b65902a0701150526j5a954529xf45b2d0348a77573@mail.gmail.com> <20070115202412.GE9761@nan92-1-81-57-214-146.fbx.proxad.net> <b0943d9e0701151446l45eff9dbgcae718c1461d0725@mail.gmail.com> <20070115233958.GF9761@nan92-1-81-57-214-146.fbx.proxad.net> <b0943d9e0701161442t6b93e0d6nd88364600f2809ee@mail.gmail.com> <20070116231735.GF7029@nan92-1-81-57-214-146.fbx.proxad.net> <eojn5c$v9u$1@sea.gmane.org> <20070117090313.GA9283@diana.vm.bytemark.co.uk>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] sanitize content of README file
+Date: Wed, 17 Jan 2007 11:39:55 -0800
+Message-ID: <7vtzypqw6s.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0701171255150.2577@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 17 20:34:26 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 17 20:40:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H7GYD-000389-H0
-	for gcvg-git@gmane.org; Wed, 17 Jan 2007 20:34:25 +0100
+	id 1H7Gdb-0004aH-LM
+	for gcvg-git@gmane.org; Wed, 17 Jan 2007 20:40:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932669AbXAQTeW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 17 Jan 2007 14:34:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932670AbXAQTeW
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Jan 2007 14:34:22 -0500
-Received: from smtp6-g19.free.fr ([212.27.42.36]:40773 "EHLO smtp6-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932669AbXAQTeW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Jan 2007 14:34:22 -0500
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp6-g19.free.fr (Postfix) with ESMTP id 7AA7143934;
-	Wed, 17 Jan 2007 20:34:20 +0100 (CET)
-Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
-	id 621681F073; Wed, 17 Jan 2007 20:34:06 +0100 (CET)
-To: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Content-Disposition: inline
-In-Reply-To: <20070117090313.GA9283@diana.vm.bytemark.co.uk>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S932600AbXAQTj5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 17 Jan 2007 14:39:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932694AbXAQTj5
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Jan 2007 14:39:57 -0500
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:47360 "EHLO
+	fed1rmmtao09.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932600AbXAQTj4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Jan 2007 14:39:56 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20070117193955.THSR18767.fed1rmmtao09.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 17 Jan 2007 14:39:55 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id CKgC1W00m1kojtg0000000; Wed, 17 Jan 2007 14:40:13 -0500
+To: Nicolas Pitre <nico@cam.org>
+In-Reply-To: <Pine.LNX.4.64.0701171255150.2577@xanadu.home> (Nicolas Pitre's
+	message of "Wed, 17 Jan 2007 13:04:39 -0500 (EST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37030>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37031>
 
-On Wed, Jan 17, 2007 at 10:03:13AM +0100, Karl Hasselstr=F6m wrote:
-> (BTW, I've never seriously tried git rebase; does anyone have an
-> opinion of how convenient its conflict handling is, compared to
-> stgit's?)
+I do not think it is a bad idea to make the top-level README
+concise and sweet, but this has fallout in Documentation/git.txt
+which includes README and makes it into the Discussion section.
 
-When I was using it, it was much less convenient than stgit - required
-to forge a git-am command-line to continue after a conflict
-(--continue was added in April '06 - I had switched to StGIT before
-implementing it myself ;).  My evaluation at that point was that it
-required too much understanding of the plumbing issues to be shown to
-a newbie - a problem which StGIT does not have.  But I have not used
-it any more since then, and did not follow any improvements in this
-field.
+The attached patch on top of yours would resurrect it.
 
-StGIT features like "push --undo" also make it much easier to delay
-merge of a given patch, and stack handling makes it easier to continue
-your work after a night-break.  Not to mention all goodies like patch
-reordering.
+---
 
-Best regards,
---=20
-Yann.
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index 93c7024..9f2d242 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -71,14 +71,11 @@ doc.dep : $(wildcard *.txt) build-docdep.perl
+ 
+ -include doc.dep
+ 
+-git.7: README
+-
+-README: ../README
+-	cp $< $@
++git.7 git.html: git.txt core-intro.txt
+ 
+ 
+ clean:
+-	rm -f *.xml *.html *.1 *.7 howto-index.txt howto/*.html doc.dep README
++	rm -f *.xml *.html *.1 *.7 howto-index.txt howto/*.html doc.dep
+ 
+ %.html : %.txt
+ 	asciidoc -b xhtml11 -d manpage -f asciidoc.conf $<
+@@ -89,8 +86,6 @@ clean:
+ %.xml : %.txt
+ 	asciidoc -b docbook -d manpage -f asciidoc.conf $<
+ 
+-git.html: git.txt README
+-
+ glossary.html : glossary.txt sort_glossary.pl
+ 	cat $< | \
+ 	perl sort_glossary.pl | \
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index 6a82803..a0bcef7 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -699,7 +699,7 @@ other
+ 
+ Discussion[[Discussion]]
+ ------------------------
+-include::README[]
++include::core-intro.txt[]
+ 
+ Authors
+ -------
