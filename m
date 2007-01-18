@@ -1,55 +1,71 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Lose perl dependency. (fwd)
-Date: Thu, 18 Jan 2007 11:49:49 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0701181149260.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
+Subject: [PATCH] Shell syntax fix in git-reset
+Date: Thu, 18 Jan 2007 12:15:13 +0100
+Message-ID: <87ac0gfuwu.fsf@morpheus.local>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Thu Jan 18 11:49:57 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Thu Jan 18 12:16:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H7Uq9-0004Ci-J3
-	for gcvg-git@gmane.org; Thu, 18 Jan 2007 11:49:53 +0100
+	id 1H7VFu-0002Wc-0z
+	for gcvg-git@gmane.org; Thu, 18 Jan 2007 12:16:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751023AbXARKtw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 18 Jan 2007 05:49:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751901AbXARKtv
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Jan 2007 05:49:51 -0500
-Received: from mail.gmx.net ([213.165.64.20]:49011 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751023AbXARKtv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jan 2007 05:49:51 -0500
-Received: (qmail invoked by alias); 18 Jan 2007 10:49:49 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp008) with SMTP; 18 Jan 2007 11:49:49 +0100
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+	id S1751023AbXARLQ2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Thu, 18 Jan 2007 06:16:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751990AbXARLQ2
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Jan 2007 06:16:28 -0500
+Received: from main.gmane.org ([80.91.229.2]:42896 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751023AbXARLQ1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jan 2007 06:16:27 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1H7VFF-00089k-Gu
+	for git@vger.kernel.org; Thu, 18 Jan 2007 12:15:49 +0100
+Received: from vtab.com ([62.20.90.195])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 18 Jan 2007 12:15:49 +0100
+Received: from davidk by vtab.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 18 Jan 2007 12:15:49 +0100
+X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
-X-Y-GMX-Trusted: 0
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: vtab.com
+User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (gnu/linux)
+Cancel-Lock: sha1:ToKOFMHbDjjlC4BlWP57N+g+Qpk=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37078>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37079>
 
-Forwarded, since I forgot to add the list
 
----------- Forwarded message ----------
-Date: Thu, 18 Jan 2007 11:46:05 +0100 (CET)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
-Subject: Re: [PATCH] Lose perl dependency.
+---
+ git-reset.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-Hi,
+My /bin/sh is a symlink to dash, which is probably why I got this and
+few others.
 
-On Thu, 18 Jan 2007, Simon 'corecode' Schubert wrote:
+diff --git a/git-reset.sh b/git-reset.sh
+index bf2a058..fee6d98 100755
+--- a/git-reset.sh
++++ b/git-reset.sh
+@@ -43,7 +43,7 @@ case "$1" in --) shift ;; esac
+ # affecting the working tree nor HEAD.
+ if test $# !=3D 0
+ then
+-	test "$reset_type" =3D=3D "--mixed" ||
++	test "$reset_type" =3D "--mixed" ||
+ 		die "Cannot do partial $reset_type reset."
+=20
+ 	git-diff-index --cached $rev -- "$@" |
+--=20
+1.5.0.rc1.g04f3-dirty
 
->  for cmt in `git-rev-list --no-merges "$upstream"..ORIG_HEAD \
-> -			| @@PERL@@ -e 'print reverse <>'`
-> +			| sed -ne '1!G;$p;h'`
 
-Why not teach the revision machinery to output in reverse with 
-"--reverse"?
-
-Ciao,
-Dscho
+--=20
+David K=C3=A5gedal
