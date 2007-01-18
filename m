@@ -1,92 +1,68 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: Rebasing stgit stacks
-Date: Thu, 18 Jan 2007 09:05:47 +0000
-Message-ID: <b0943d9e0701180105t7b01cb4di43b4db1fdc314bb7@mail.gmail.com>
-References: <8b65902a0701091335u160c6dfl81a523e4cd5adbee@mail.gmail.com>
-	 <8b65902a0701091341v5983c113tc5cd32c6c4c57719@mail.gmail.com>
-	 <20070109224125.GF17093@nan92-1-81-57-214-146.fbx.proxad.net>
-	 <8b65902a0701150526j5a954529xf45b2d0348a77573@mail.gmail.com>
-	 <20070115202412.GE9761@nan92-1-81-57-214-146.fbx.proxad.net>
-	 <b0943d9e0701151446l45eff9dbgcae718c1461d0725@mail.gmail.com>
-	 <20070115233958.GF9761@nan92-1-81-57-214-146.fbx.proxad.net>
-	 <b0943d9e0701161442t6b93e0d6nd88364600f2809ee@mail.gmail.com>
-	 <20070116231735.GF7029@nan92-1-81-57-214-146.fbx.proxad.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH/POLL] git-format-patch: the default suffix is now .patch, not .txt
+Date: Thu, 18 Jan 2007 01:10:38 -0800
+Message-ID: <7vps9cn1ip.fsf@assigned-by-dhcp.cox.net>
+References: <625fc13d0701170510x8883539g93f43d9ddffe56f0@mail.gmail.com>
+	<87ps9d7j6t.fsf@morpheus.local>
+	<7vejptsglj.fsf@assigned-by-dhcp.cox.net>
+	<625fc13d0701171218i31585558wf89374eae9485341@mail.gmail.com>
+	<7vsle9p8pg.fsf@assigned-by-dhcp.cox.net>
+	<7vd55dp5a3.fsf_-_@assigned-by-dhcp.cox.net>
+	<81b0412b0701172359y1ef4f936pcdcb2de53d6bd468@mail.gmail.com>
+	<20070118080613.GE23124@spearce.org>
+	<81b0412b0701180018i208e4158k2dd3e9ecdfa79b13@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	"Guilhem Bonnefille" <guilhem.bonnefille@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 18 10:05:59 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	"Josh Boyer" <jwboyer@gmail.com>, git@vger.kernel.org,
+	davidk@lysator.liu.se
+X-From: git-owner@vger.kernel.org Thu Jan 18 10:11:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H7TDV-000345-AA
-	for gcvg-git@gmane.org; Thu, 18 Jan 2007 10:05:53 +0100
+	id 1H7TIY-0004Bn-B9
+	for gcvg-git@gmane.org; Thu, 18 Jan 2007 10:11:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752024AbXARJFu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 18 Jan 2007 04:05:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752026AbXARJFu
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Jan 2007 04:05:50 -0500
-Received: from nz-out-0506.google.com ([64.233.162.234]:18278 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752024AbXARJFt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jan 2007 04:05:49 -0500
-Received: by nz-out-0506.google.com with SMTP id s1so87409nze
-        for <git@vger.kernel.org>; Thu, 18 Jan 2007 01:05:47 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=l3kCXivWe8MNiXT1faZDceJmldsrA5RRq2i7qH7GCRGP7uhh/loqo11kZ02GtSjQFycunaBONCg8elAWeCW/aEP6ykVpm1ljXPP86BCfH0fxocrD037ezniaE1yneZmvl+fvITziPZ02mxZR2XatiLSN7kJjZUXiOPzs4huJrWw=
-Received: by 10.64.180.4 with SMTP id c4mr468516qbf.1169111147700;
-        Thu, 18 Jan 2007 01:05:47 -0800 (PST)
-Received: by 10.65.133.13 with HTTP; Thu, 18 Jan 2007 01:05:47 -0800 (PST)
-To: "Yann Dirson" <ydirson@altern.org>
-In-Reply-To: <20070116231735.GF7029@nan92-1-81-57-214-146.fbx.proxad.net>
-Content-Disposition: inline
+	id S932082AbXARJKm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 18 Jan 2007 04:10:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932100AbXARJKm
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Jan 2007 04:10:42 -0500
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:44255 "EHLO
+	fed1rmmtao07.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932082AbXARJKk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jan 2007 04:10:40 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20070118091039.PZGW3976.fed1rmmtao07.cox.net@fed1rmimpo01.cox.net>;
+          Thu, 18 Jan 2007 04:10:39 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id CZ9l1W0041kojtg0000000; Thu, 18 Jan 2007 04:09:45 -0500
+To: "Alex Riesen" <raa.lkml@gmail.com>
+In-Reply-To: <81b0412b0701180018i208e4158k2dd3e9ecdfa79b13@mail.gmail.com>
+	(Alex Riesen's message of "Thu, 18 Jan 2007 09:18:47 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37069>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37070>
 
-On 16/01/07, Yann Dirson <ydirson@altern.org> wrote:
-> My example is quite similar to the one given by Guilhem: I had a git
-> branch coming from git-cvsimport, and my stgit stack forked atop that
-> branch.  At some point git-cvsimport fucked something, and I
-> regenerated a new mirror branch using it in a fresh repo.  Then I
-> wanted to rebase my stack on that new branch.
+"Alex Riesen" <raa.lkml@gmail.com> writes:
 
-As Jakub said, I would also call this command 'rebase' instead of
-'pull --to', even if we duplicate a bit of code. It would make the
-implementation even simpler as you won't break other people's
-workflows using git-pull or cg-pull. The main feature of the 'pull'
-command is to fetch the latest changes from a remote repository and
-merge (fast-forward) them into current base.
+> On 1/18/07, Shawn O. Pearce <spearce@spearce.org> wrote:
 
-> > But you want to replace the call to 'git pull' with 'git fetch'. I
-> > think this is fine with my workflow but some people might actually
-> > rely on calling 'git pull' (or cg-pull).
+>> Thus the file extension has no impact on how the mail client should
+>> treat it.
 >
-> Right, it may be possible (and I'd be interested in seeing such a
-> workflow).  Maybe we could keep support for git-pull as an
-> alternative.
+> He will attach it. It's typical for outlook users.
 
-As I said, I use this myself on an exported branch.
+If that is the case, I highly suspect that it is one more reason
+not to mark the file with .txt; Outlook may say "Hey, it's TEXT,
+so let's linewrap it, quote-balance it and add all sorts of nice
+frills to make it easier to read for human consumption".  
 
-> This could be done, eg. by letting the user use "pullcmd=git-pull" and
-> introduce a new option like "fastforward=<bool>" triggering the
-> fast-forward needed after git-fetch, with the default being "true",
-> and the current behaviour being obtained by changing it to "false".
-
-But isn't this too complicated when all you need is a 'rebase'-like command?
-
-> That would not add too much complexity, while setting the default to
-> what I believe to match the most common workflows, and allow anyone
-> relying on the current behaviour to get it back.
-
-The problem is that I may use different workflows in the same
-repository (but on different branches). Any new config options would
-have to be per branch.
-
--- 
-Catalin
+Assuming that it does not understand what a .patch is, we would
+have a better chance to force it not to look at nor touch the
+contents, and not getting our patches corrupted.
