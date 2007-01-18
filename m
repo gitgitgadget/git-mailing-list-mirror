@@ -1,65 +1,68 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: Preserving ownership and set*id bits
-Date: Thu, 18 Jan 2007 20:10:39 +0000
-Message-ID: <200701182010.41183.andyparkins@gmail.com>
-References: <769697AE3E25EF4FBC0763CD91AB1B0201D49679@MBGMail01.mobot.org>
+From: Timur Tabi <timur@freescale.com>
+Subject: Re: [PATCH] git-send-email: default value for "From:" field.
+Date: Thu, 18 Jan 2007 14:39:06 -0600
+Organization: Freescale
+Message-ID: <45AFDAEA.607@freescale.com>
+References: <200612271343.kBRDhKfA009927@laptop13.inf.utfsm.cl> <45928035.6000605@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="ansi_x3.4-1968"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Thu Jan 18 21:13:37 2007
+Cc: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 18 21:40:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H7ddg-0001pJ-AU
-	for gcvg-git@gmane.org; Thu, 18 Jan 2007 21:13:36 +0100
+	id 1H7e3I-0008Sy-LA
+	for gcvg-git@gmane.org; Thu, 18 Jan 2007 21:40:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932583AbXARUNe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 18 Jan 2007 15:13:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932587AbXARUNe
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Jan 2007 15:13:34 -0500
-Received: from ug-out-1314.google.com ([66.249.92.175]:37665 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932583AbXARUNd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jan 2007 15:13:33 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so273536uga
-        for <git@vger.kernel.org>; Thu, 18 Jan 2007 12:13:32 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=TSPeyTexk/94D7aLO1Jkc0XHEecUzBFiwyZNz/toydffDe9MaeCKFYHTCiJU2Rq/gD7geMgoJYjqQV6387/ASL9dYt8jjFknnLUkz4iDMrIkHWXzIxqLiBiV7aZdIBUcZ2vxeDVAoVSNnS+6s9/9Ye4ZU1hvSxC9JIC08C8pvi4=
-Received: by 10.66.243.4 with SMTP id q4mr1899417ugh.1169151211968;
-        Thu, 18 Jan 2007 12:13:31 -0800 (PST)
-Received: from grissom.internal.parkins.org.uk ( [84.201.153.164])
-        by mx.google.com with ESMTP id q40sm1546442ugc.2007.01.18.12.13.28;
-        Thu, 18 Jan 2007 12:13:28 -0800 (PST)
-To: git@vger.kernel.org
-User-Agent: KMail/1.9.5
-In-Reply-To: <769697AE3E25EF4FBC0763CD91AB1B0201D49679@MBGMail01.mobot.org>
-Content-Disposition: inline
+	id S932600AbXARUkA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 18 Jan 2007 15:40:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932617AbXARUkA
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Jan 2007 15:40:00 -0500
+Received: from de01egw02.freescale.net ([192.88.165.103]:41252 "EHLO
+	de01egw02.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932600AbXARUkA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jan 2007 15:40:00 -0500
+Received: from de01smr01.freescale.net (de01smr01.freescale.net [10.208.0.31])
+	by de01egw02.freescale.net (8.12.11/de01egw02) with ESMTP id l0IKd7OQ005416;
+	Thu, 18 Jan 2007 13:39:07 -0700 (MST)
+Received: from [10.82.19.119] (ld0169-tx32.am.freescale.net [10.82.19.119])
+	by de01smr01.freescale.net (8.13.1/8.13.0) with ESMTP id l0IKd6Zl014033;
+	Thu, 18 Jan 2007 14:39:07 -0600 (CST)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.8.1) Gecko/20061101 SeaMonkey/1.1b
+To: Quy Tonthat <qtonthat@gmail.com>
+In-Reply-To: <45928035.6000605@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37137>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37138>
 
-On Thursday 2007, January 18 17:09, Ron Parker wrote:
+Quy Tonthat wrote:
+> If user hits enter at the prompt for
+> "Who should the emails appear to be from?",
+> the value for "From:" field was emptied instead of GIT_COMMITER_IDENT.
+> 
+> Signed-off-by: Quy Tonthat <qtonthat@gmail.com>
+> ---
+> It seems the original code assumes readline to accept
+> an extra argument for default value. I don't remember I ever encountered
+> that feature from readline. Is there anything like that out there ?
 
-> Anyway, I'm not here to complain, but I am looking for suggestions of
-> how I might store and preserve this information as well.
+I was thinking the same thing.  Almost every call to readline() in 
+git-send-email is like that, so could your patch below could be expanded to 
+include the other instances?
 
-Storing it is fairly easy.  You can use getfacl in the pre-commit hook to 
-record all the file information you want.
+         $_ = $term->readline("Who should the emails be sent to? ",
+                         "");
 
-The hard part (at the moment) is that there is no post-checkout hook that you 
-could use to restore those attributes.
+         $_ = $term->readline("What subject should the emails start with? ",
+                 $initial_subject);
 
-If you were willing to manually run that restoration script after every 
-checkout then there is your answer.
-
-
-Andy
+         $_= $term->readline("Message-ID to be used as In-Reply-To for the first 
+email? ",
+                 $initial_reply_to);
 
 -- 
-Dr Andrew Parkins, M Eng (Hons), AMIEE
-andyparkins@gmail.com
+Timur Tabi
+Linux Kernel Developer @ Freescale
