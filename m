@@ -1,67 +1,83 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: [PATCH/POLL] git-format-patch: the default suffix is now .patch, not .txt
-Date: Thu, 18 Jan 2007 16:37:50 +0100
-Message-ID: <81b0412b0701180737m49895d24td104b8dd2579de44@mail.gmail.com>
-References: <625fc13d0701170510x8883539g93f43d9ddffe56f0@mail.gmail.com>
-	 <7v64b4ohcj.fsf@assigned-by-dhcp.cox.net>
-	 <81b0412b0701180135r505a75a5j172c70792d6569c0@mail.gmail.com>
-	 <625fc13d0701180352m151cceb3lf9c00b6cf0ae937b@mail.gmail.com>
-	 <81b0412b0701180540x15d20453s3dbc0c061fd06d50@mail.gmail.com>
-	 <45AF7FE8.5060003@op5.se>
-	 <81b0412b0701180641v55987657t331d6a1868dabee0@mail.gmail.com>
-	 <Pine.LNX.4.63.0701181547440.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <81b0412b0701180653i7cc0c87md7a9c94a10fa3b24@mail.gmail.com>
-	 <Pine.LNX.4.63.0701181615360.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: =?ISO-8859-15?Q?Lukas_Sandstr=F6m?= <lukass@etek.chalmers.se>
+Subject: Re: [PATCH/POLL] git-format-patch: the default suffix is now .patch,
+   not .txt
+Date: Thu, 18 Jan 2007 16:10:02 +0100
+Message-ID: <45AF8DCA.9030008@etek.chalmers.se>
+References: <625fc13d0701170510x8883539g93f43d9ddffe56f0@mail.gmail.com>	<87ps9d7j6t.fsf@morpheus.local>	<7vejptsglj.fsf@assigned-by-dhcp.cox.net>	<625fc13d0701171218i31585558wf89374eae9485341@mail.gmail.com>	<7vsle9p8pg.fsf@assigned-by-dhcp.cox.net>	<7vd55dp5a3.fsf_-_@assigned-by-dhcp.cox.net>	<81b0412b0701172359y1ef4f936pcdcb2de53d6bd468@mail.gmail.com> <7v64b4ohcj.fsf@assigned-by-dhcp.cox.net> <45AF6AC6.2060206@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 18 16:38:15 2007
+Cc: Alex Riesen <raa.lkml@gmail.com>, Josh Boyer <jwboyer@gmail.com>,
+	git@vger.kernel.org, davidk@lysator.liu.se
+X-From: git-owner@vger.kernel.org Thu Jan 18 16:39:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H7ZL0-00053r-Aq
-	for gcvg-git@gmane.org; Thu, 18 Jan 2007 16:38:02 +0100
+	id 1H7ZLr-0005Ie-Md
+	for gcvg-git@gmane.org; Thu, 18 Jan 2007 16:38:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752043AbXARPhx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 18 Jan 2007 10:37:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752053AbXARPhx
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Jan 2007 10:37:53 -0500
-Received: from wr-out-0506.google.com ([64.233.184.237]:12817 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752043AbXARPhw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jan 2007 10:37:52 -0500
-Received: by wr-out-0506.google.com with SMTP id i22so191296wra
-        for <git@vger.kernel.org>; Thu, 18 Jan 2007 07:37:52 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=QM1kNm/euEnd92a+zNqUnKDMBfNEkIXCPl7qwRqFsbeQnVxA/RPy190PcKlvp2z/THMb7g5Ti0fRyEa9Mi+hQygQvNcoTHtweKRD9V0bewmN3yYd8CIMkDLaSHnsKv3K1dRFdGH5aVisgEx/6coofG42XSufXNdEESzy+gULr2w=
-Received: by 10.78.122.11 with SMTP id u11mr1006593huc.1169134670414;
-        Thu, 18 Jan 2007 07:37:50 -0800 (PST)
-Received: by 10.78.135.3 with HTTP; Thu, 18 Jan 2007 07:37:50 -0800 (PST)
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0701181615360.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-Content-Disposition: inline
+	id S1752029AbXARPiw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 18 Jan 2007 10:38:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752040AbXARPiw
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Jan 2007 10:38:52 -0500
+Received: from anubis.medic.chalmers.se ([129.16.30.218]:39505 "EHLO
+	anubis.medic.chalmers.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752029AbXARPiv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jan 2007 10:38:51 -0500
+X-Greylist: delayed 1727 seconds by postgrey-1.27 at vger.kernel.org; Thu, 18 Jan 2007 10:38:51 EST
+Received: from [192.168.0.82] (153.29.227.87.static.kba.siw.siwnet.net [87.227.29.153])
+	(Authenticated sender: lukass)
+	by anubis.medic.chalmers.se (Postfix) with ESMTP id 081198C00;
+	Thu, 18 Jan 2007 16:10:02 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.8.0.9) Gecko/20070101 Thunderbird/1.5.0.9 Mnenhy/0.7.4.666
+To: Andreas Ericsson <ae@op5.se>
+In-Reply-To: <45AF6AC6.2060206@op5.se>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37110>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37111>
 
-On 1/18/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > > > BTW, Junio, how about making the _default_ settable at compile time?
-> > > > It'd be reasonable to allow local installations choose to default to what
-> > > > they find the most paranoid?
-> > >
-> > > Better control that with templates.
-> > >
-> >
-> > Do we have a template for config already? I thought they were only for
-> > hooks...
->
-> The template mechanism can handle _all_ files in GIT_DIR. Just drop a
-> "config" into the templates directory, and you're settled.
+Andreas Ericsson wrote:
+> Most have only "attach" through various means of point-and-click and
+> drag-and-drop. Thunderbird too lacks the very basic ability of "include
+> this file as part of the message". I still haven't been able to find an
+> addon for it that does just that.
 
-I'm settled! From now on I will never have any objections regarding
-any defaults as long as they have a config option :)
+I use the External Editor extension with Thunderbird (it's mentioned in SubmittingPatches).
+
+The script below is used as the external editor, which gives me an easy way to send patches
+inline with Thunderbird.
+
+/Lukas
+
+#!/bin/bash
+
+CONFFILE=~/.appprc
+
+if [ -e "$CONFFILE" ] ; then
+	LAST_DIR=`grep "^LAST_DIR=" $CONFFILE|sed -e 's/^LAST_DIR=//'`
+	cd $LAST_DIR
+else
+	cd > /dev/null
+fi
+
+PATCH=$(zenity --file-selection)
+
+if [ "$?" != "0" ] ; then
+	#zenity --error --text "No patchfile given."
+	exit 1
+fi
+
+cd - > /dev/null
+
+SUBJECT=`sed -n -e '/^Subject: /p' $PATCH`
+HEADERS=`sed -e '/^Subject: /d' $1`
+
+echo "$SUBJECT" > $1
+echo "$HEADERS" >> $1
+sed -e '1,/^$/d' $PATCH >> $1
+
+LAST_DIR=`dirname $PATCH`
+sed -e 's@^LAST_DIR=.*@LAST_DIR='$LAST_DIR'@' $CONFFILE > $CONFFILE"_"
+mv $CONFFILE"_" $CONFFILE
