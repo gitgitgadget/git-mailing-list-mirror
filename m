@@ -1,57 +1,53 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH 1/2] Document the master@{n} reflog query syntax.
-Date: Thu, 18 Jan 2007 11:33:03 +0100
-Message-ID: <45AF4CDF.5010406@op5.se>
-References: <20070118020804.GA23488@spearce.org> <Pine.LNX.4.64.0701171829240.27034@elephant.stardot-tech.com> <20070118025003.GC23124@spearce.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Use standard -t option for touch.
+Date: Thu, 18 Jan 2007 11:49:09 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0701181147500.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20070118102814.0C32FA914@diphong.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Jim Treadway <jim@stardot-tech.com>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 18 11:33:23 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 18 11:49:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H7Ua8-0008El-3v
-	for gcvg-git@gmane.org; Thu, 18 Jan 2007 11:33:20 +0100
+	id 1H7UpW-00042a-8P
+	for gcvg-git@gmane.org; Thu, 18 Jan 2007 11:49:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932160AbXARKdJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 18 Jan 2007 05:33:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932163AbXARKdJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Jan 2007 05:33:09 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:38038 "EHLO
-	smtp-gw1.op5.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932160AbXARKdH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jan 2007 05:33:07 -0500
-Received: from [192.168.1.20] (unknown [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id 1A6A36BCC8; Thu, 18 Jan 2007 11:33:06 +0100 (CET)
-User-Agent: Thunderbird 1.5.0.9 (X11/20070102)
-To: "Shawn O. Pearce" <spearce@spearce.org>
-In-Reply-To: <20070118025003.GC23124@spearce.org>
+	id S1751990AbXARKtM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 18 Jan 2007 05:49:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751993AbXARKtM
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Jan 2007 05:49:12 -0500
+Received: from mail.gmx.net ([213.165.64.20]:53978 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751990AbXARKtL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jan 2007 05:49:11 -0500
+Received: (qmail invoked by alias); 18 Jan 2007 10:49:10 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp029) with SMTP; 18 Jan 2007 11:49:10 +0100
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
+In-Reply-To: <20070118102814.0C32FA914@diphong.localdomain>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37076>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37077>
 
-Shawn O. Pearce wrote:
-> Jim Treadway <jim@stardot-tech.com> wrote:
->> On Wed, 17 Jan 2007, Shawn O. Pearce wrote:
->>> -  of the ref at a prior point in time.  This suffix may only be
->>> +  of the ref at a prior point in time.This suffix may only be
->> I'm guessing that the above was unintentional?
-> 
-> Yes.  Danngit.  Junio, can you hand edit that patch?
-> 
+Hi,
 
-I'm starting to see --amend as an extremely useful thing to have, and 
-I'm sure Junio thinks the same. For fixes this small, it sure is easier 
-to just --amend the commit than to ask for a new patch to apply.
+Simon, please don't use "undisclosed recipients". After all, this is 
+_open_ source, and you make it really inconvenient to reply.
 
-Out of curiousity, how many other SCM's allow you to --amend a commit?
+On Thu, 18 Jan 2007, Simon 'corecode' Schubert wrote:
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+> Non-GNU touch do not have the -d option to take free form
+> date strings.  The POSIX -t option should be more widespread.
+> For this to work, date needs to output YYYYMMDDHHMM.SS date strings.
+
+I just checked on an SGI machine, and it has "-t". In related news, it 
+also has /usr/bin/printf.
+
+Ciao,
+Dscho
