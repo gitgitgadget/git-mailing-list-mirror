@@ -1,73 +1,65 @@
-From: "Josh Boyer" <jwboyer@gmail.com>
-Subject: Re: [PATCH/POLL] git-format-patch: the default suffix is now .patch, not .txt
-Date: Thu, 18 Jan 2007 05:52:38 -0600
-Message-ID: <625fc13d0701180352m151cceb3lf9c00b6cf0ae937b@mail.gmail.com>
-References: <625fc13d0701170510x8883539g93f43d9ddffe56f0@mail.gmail.com>
-	 <87ps9d7j6t.fsf@morpheus.local>
-	 <7vejptsglj.fsf@assigned-by-dhcp.cox.net>
-	 <625fc13d0701171218i31585558wf89374eae9485341@mail.gmail.com>
-	 <7vsle9p8pg.fsf@assigned-by-dhcp.cox.net>
-	 <7vd55dp5a3.fsf_-_@assigned-by-dhcp.cox.net>
-	 <81b0412b0701172359y1ef4f936pcdcb2de53d6bd468@mail.gmail.com>
-	 <7v64b4ohcj.fsf@assigned-by-dhcp.cox.net>
-	 <81b0412b0701180135r505a75a5j172c70792d6569c0@mail.gmail.com>
+From: Catalin Marinas <catalin.marinas@arm.com>
+Subject: Re: Rebasing stgit stacks
+Date: Thu, 18 Jan 2007 12:06:20 +0000
+Message-ID: <tnxmz4gv8sj.fsf@arm.com>
+References: <8b65902a0701091335u160c6dfl81a523e4cd5adbee@mail.gmail.com>
+	<8b65902a0701091341v5983c113tc5cd32c6c4c57719@mail.gmail.com>
+	<20070109224125.GF17093@nan92-1-81-57-214-146.fbx.proxad.net>
+	<8b65902a0701150526j5a954529xf45b2d0348a77573@mail.gmail.com>
+	<20070115202412.GE9761@nan92-1-81-57-214-146.fbx.proxad.net>
+	<b0943d9e0701151446l45eff9dbgcae718c1461d0725@mail.gmail.com>
+	<20070115233958.GF9761@nan92-1-81-57-214-146.fbx.proxad.net>
+	<b0943d9e0701161442t6b93e0d6nd88364600f2809ee@mail.gmail.com>
+	<20070116231735.GF7029@nan92-1-81-57-214-146.fbx.proxad.net>
+	<eojn5c$v9u$1@sea.gmane.org>
+	<20070117205301.GH9761@nan92-1-81-57-214-146.fbx.proxad.net>
+Reply-To: Catalin Marinas <catalin.marinas@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org,
-	davidk@lysator.liu.se
-X-From: git-owner@vger.kernel.org Thu Jan 18 12:52:48 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 18 13:30:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H7Vov-0003Op-RW
-	for gcvg-git@gmane.org; Thu, 18 Jan 2007 12:52:42 +0100
+	id 1H7WP9-0004mu-Em
+	for gcvg-git@gmane.org; Thu, 18 Jan 2007 13:30:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932185AbXARLwl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 18 Jan 2007 06:52:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932195AbXARLwl
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Jan 2007 06:52:41 -0500
-Received: from ug-out-1314.google.com ([66.249.92.172]:3097 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932185AbXARLwk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jan 2007 06:52:40 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so157224uga
-        for <git@vger.kernel.org>; Thu, 18 Jan 2007 03:52:39 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=GLzNZ76w+40Rtu7BgZt9Hwk3d4iQQSEtntcWrjBBkL4TIu4yGBz8tS13oB6jwSh41EG4vcrNp4QNu/EIQZMUpoMYDY7ki4INh+pB3rT3UPcqcgw3V88NSgcbHSrjcfkRPJiwZcRXJN/eqBKcKdYR3TgraQocBhlRplgGmZkAYgM=
-Received: by 10.82.113.6 with SMTP id l6mr156885buc.1169121158335;
-        Thu, 18 Jan 2007 03:52:38 -0800 (PST)
-Received: by 10.82.107.1 with HTTP; Thu, 18 Jan 2007 03:52:38 -0800 (PST)
-To: "Alex Riesen" <raa.lkml@gmail.com>
-In-Reply-To: <81b0412b0701180135r505a75a5j172c70792d6569c0@mail.gmail.com>
-Content-Disposition: inline
+	id S932185AbXARMaB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 18 Jan 2007 07:30:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932228AbXARMaB
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Jan 2007 07:30:01 -0500
+Received: from cam-admin0.cambridge.arm.com ([193.131.176.58]:41737 "EHLO
+	cam-admin0.cambridge.arm.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932220AbXARMaA (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 18 Jan 2007 07:30:00 -0500
+X-Greylist: delayed 1413 seconds by postgrey-1.27 at vger.kernel.org; Thu, 18 Jan 2007 07:29:59 EST
+Received: from cam-owa2.Emea.Arm.com (cam-owa2.emea.arm.com [10.1.105.18])
+	by cam-admin0.cambridge.arm.com (8.12.6/8.12.6) with ESMTP id l0IC6MYo012044;
+	Thu, 18 Jan 2007 12:06:23 GMT
+Received: from localhost.localdomain ([10.1.255.211]) by cam-owa2.Emea.Arm.com with Microsoft SMTPSVC(6.0.3790.0);
+	 Thu, 18 Jan 2007 12:07:03 +0000
+To: Yann Dirson <ydirson@altern.org>
+In-Reply-To: <20070117205301.GH9761@nan92-1-81-57-214-146.fbx.proxad.net> (Yann
+ Dirson's message of "Wed, 17 Jan 2007 21:53:01 +0100")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+X-OriginalArrivalTime: 18 Jan 2007 12:07:03.0293 (UTC) FILETIME=[2A3802D0:01C73AF9]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37083>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37084>
 
-On 1/18/07, Alex Riesen <raa.lkml@gmail.com> wrote:
-> I think we'd raising the entry barrier with choosing the defaults
-> being so convenient for us. Well, the real-life programmers
-> are less of Unix-liking kind. They are more lazy and demotivated
-> kind, and Git will be _forced_ on them. It almost certainly
-> will not be their choice. Not always, some'll like it (heck, I know
-> people who swear by Perforce!), but most have a job, source
-> of income, and not the profession (like in professional pride).
+Yann Dirson <ydirson@altern.org> wrote:
+> On Wed, Jan 17, 2007 at 12:30:18AM +0100, Jakub Narebski wrote:
+>> I'm all for calling this command "stg rebase".
+>
+> After all, my current implementation as "pull --to" mostly bypasses
+> the fetch, so it probably makes sense to use a new command.
+>
+> However, "stg rebase <target>" does not sound right.  I'm not very
+> happy with "stg rebaseto <target>" (or rebase-to) either.
 
-real-life programmers?  Please don't generalize.  It's insulting.
+I think something 'stg rebase <newbase>' sounds OK.
 
-> As much as like Unix and everything related, I think it is
-> not reasonable to try to change the majority. Not unless
-> we have something earth-shattering. Well, git is, but
-> 0001-fix....patch in email attachment probably not.
-
-I would venture to say that the _majority_ of git users are not using
-Windows.  In this enviroment, Linux is likely the dominant OS,
-followed by other *nix.  So changing the extention to benefit the
-majorit of _git's_ users is a good thing.
-
-josh
+-- 
+Catalin
