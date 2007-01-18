@@ -1,147 +1,71 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH/POLL] git-format-patch: the default suffix is now .patch, not .txt
-Date: Wed, 17 Jan 2007 16:06:28 -0800
-Message-ID: <7vd55dp5a3.fsf_-_@assigned-by-dhcp.cox.net>
-References: <625fc13d0701170510x8883539g93f43d9ddffe56f0@mail.gmail.com>
-	<87ps9d7j6t.fsf@morpheus.local>
-	<7vejptsglj.fsf@assigned-by-dhcp.cox.net>
-	<625fc13d0701171218i31585558wf89374eae9485341@mail.gmail.com>
-	<7vsle9p8pg.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: [PATCH] Replace "echo -n" with printf in shell scripts.
+Date: Wed, 17 Jan 2007 16:13:43 -0800
+Message-ID: <7v7ivlp4y0.fsf@assigned-by-dhcp.cox.net>
+References: <17437.1168911089@lotus.CS.Berkeley.EDU>
+	<7v1wlv1yeh.fsf@assigned-by-dhcp.cox.net>
+	<200701171629.l0HGTCE3019292@laptop13.inf.utfsm.cl>
+	<7vk5zlsglk.fsf@assigned-by-dhcp.cox.net>
+	<45AEB932.3060509@fs.ei.tum.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, <davidk@lysator.liu.se>
-X-From: git-owner@vger.kernel.org Thu Jan 18 01:06:42 2007
+Cc: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 18 01:13:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H7KnY-00076W-R0
-	for gcvg-git@gmane.org; Thu, 18 Jan 2007 01:06:33 +0100
+	id 1H7Kua-0000cF-BI
+	for gcvg-git@gmane.org; Thu, 18 Jan 2007 01:13:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751867AbXARAGa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 17 Jan 2007 19:06:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751861AbXARAGa
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Jan 2007 19:06:30 -0500
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:64230 "EHLO
-	fed1rmmtao10.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751867AbXARAGa (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Jan 2007 19:06:30 -0500
+	id S1751023AbXARANq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 17 Jan 2007 19:13:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751425AbXARANq
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Jan 2007 19:13:46 -0500
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:50237 "EHLO
+	fed1rmmtao02.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751023AbXARANp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Jan 2007 19:13:45 -0500
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao10.cox.net
+          by fed1rmmtao02.cox.net
           (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070118000629.OJRM20715.fed1rmmtao10.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 17 Jan 2007 19:06:29 -0500
+          id <20070118001344.TZRE97.fed1rmmtao02.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 17 Jan 2007 19:13:44 -0500
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id CQ6m1W0011kojtg0000000; Wed, 17 Jan 2007 19:06:46 -0500
-To: "Josh Boyer" <jwboyer@gmail.com>
-In-Reply-To: <7vsle9p8pg.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Wed, 17 Jan 2007 14:52:27 -0800")
+	id CQE11W0131kojtg0000000; Wed, 17 Jan 2007 19:14:02 -0500
+To: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
+In-Reply-To: <45AEB932.3060509@fs.ei.tum.de> (Simon Schubert's message of
+	"Thu, 18 Jan 2007 01:02:58 +0100")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37047>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37048>
 
-Editors often give easier handling of patch files if the
-filename ends with .patch, so use it instead of .txt.
+Simon 'corecode' Schubert <corecode@fs.ei.tum.de> writes:
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
+> Junio C Hamano wrote:
+>>>> We have done this already so it might be too late to raise this
+>>>> question, but does everybody have printf?
+>> The problematic are less common ones, ranging from (not so less
+>> common) OSX, Solaris to (much less common) AIX that some people
+>> seem to run git on (or at least compile git for).
+>
+> printf(1) is part of POSIX/SUSv3, so systems *should* have it.
 
-  Junio C Hamano <junkio@cox.net> writes:
+A lot of the portability problem we suffered were about the
+things that systems *should* have it.
 
-  > "Josh Boyer" <jwboyer@gmail.com> writes:
-  >
-  >> On 1/17/07, Junio C Hamano <junkio@cox.net> wrote:
-  >>
-  >>> Two minor objections to changing the default are: (1) it's a
-  >>> change and any change is bad ;-) and (2) the reason I changed it
-  >>> to .txt before submitting the original format-patch to Linus was
-  >>> because Emacs wanted to go into its "diff" mode when files are
-  >>> named with .patch suffix, which had two annoyances (read-only by
-  >>> default, and editing patch tried to automatically recount diff
-  >>> and its recounting screwed up in some cases I do not remember
-  >>> the details about).
-  >>
-  >> Well there's your problem.  You're using Emacs.  ;)
-  >
-  > Fair enough.  Its probably that there is something wrong in the
-  > way I am using Emacs diff/patch editing mode.  Even if the
-  > problem I had were because of bugs in Emacs, the users of git
-  > should not have to suffer from "unusual" suffixes to work them
-  > around.
-  >
-  > So that lifts one of the objections.  What should be done to the
-  > other one --- time for a quick poll?
+Unfortunately a standard does not matter a whit on its own when
+dealing with the real world.  That's why I muttered the above
+even though I knew POSIX says you should have one.
 
- Documentation/git-format-patch.txt                 |   15 +++++++--------
- .../howto/rebase-from-internal-branch.txt          |    2 +-
- builtin-log.c                                      |    2 +-
- 3 files changed, 9 insertions(+), 10 deletions(-)
+We use POSIX as one of the yardsticks to see what we should stay
+away (i.e. "that is not even in POSIX so let's not use it for
+now"), and also how far we are willing to bend over (i.e. "any
+reasonable system should have it; besides, it is in POSIX.
+Let's use it -- it is so convenient -- and insane platforms can
+screw themselves").
 
-diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
-index c0ffe99..49f51bb 100644
---- a/Documentation/git-format-patch.txt
-+++ b/Documentation/git-format-patch.txt
-@@ -79,9 +79,9 @@ OPTIONS
- 	provide a new patch series.
- 
- --suffix=.<sfx>::
--	Instead of using `.txt` as the suffix for generated
-+	Instead of using `.patch` as the suffix for generated
- 	filenames, use specifed suffix.  A common alternative is
--	`--suffix=.patch`.
-+	`--suffix=.txt`.
- +
- Note that you would need to include the leading dot `.` if you
- want a filename like `0001-description-of-my-change.patch`, and
-@@ -91,15 +91,14 @@ not add any suffix.
- CONFIGURATION
- -------------
- You can specify extra mail header lines to be added to each
--message in the repository configuration as follows:
-+message in the repository configuration.  Also you can specify
-+the default suffix different from the built-in one:
- 
-+------------
- [format]
-         headers = "Organization: git-foo\n"
--
--You can specify default suffix used:
--
--[format]
--        suffix = .patch
-+        suffix = .txt
-+------------
- 
- 
- EXAMPLES
-diff --git a/Documentation/howto/rebase-from-internal-branch.txt b/Documentation/howto/rebase-from-internal-branch.txt
-index fcd64e9..3b3a5c2 100644
---- a/Documentation/howto/rebase-from-internal-branch.txt
-+++ b/Documentation/howto/rebase-from-internal-branch.txt
-@@ -106,7 +106,7 @@ prepare #2 and #3 for e-mail submission.
- 
-     $ git format-patch master^^ master
- 
--This creates two files, 0001-XXXX.txt and 0002-XXXX.txt.  Send
-+This creates two files, 0001-XXXX.patch and 0002-XXXX.patch.  Send
- them out "To: " your project maintainer and "Cc: " your mailing
- list.  You could use contributed script git-send-email if
- your host has necessary perl modules for this, but your usual
-diff --git a/builtin-log.c b/builtin-log.c
-index 930cc04..f3cff13 100644
---- a/builtin-log.c
-+++ b/builtin-log.c
-@@ -197,7 +197,7 @@ static int istitlechar(char c)
- 
- static char *extra_headers = NULL;
- static int extra_headers_size = 0;
--static const char *fmt_patch_suffix = ".txt";
-+static const char *fmt_patch_suffix = ".patch";
- 
- static int git_format_config(const char *var, const char *value)
- {
--- 
-1.5.0.rc1.gde38
+The key point in the latter is that "besides" is not "because".
