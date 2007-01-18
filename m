@@ -1,78 +1,58 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: [PATCH/POLL] git-format-patch: the default suffix is now .patch, not .txt
-Date: Fri, 19 Jan 2007 08:30:07 +1300
-Message-ID: <46a038f90701181130p72e11368sbe61de9ceb0eada3@mail.gmail.com>
-References: <625fc13d0701171218i31585558wf89374eae9485341@mail.gmail.com>
-	 <7vd55dp5a3.fsf_-_@assigned-by-dhcp.cox.net>
-	 <81b0412b0701172359y1ef4f936pcdcb2de53d6bd468@mail.gmail.com>
-	 <7v64b4ohcj.fsf@assigned-by-dhcp.cox.net>
-	 <81b0412b0701180135r505a75a5j172c70792d6569c0@mail.gmail.com>
-	 <625fc13d0701180352m151cceb3lf9c00b6cf0ae937b@mail.gmail.com>
-	 <81b0412b0701180540x15d20453s3dbc0c061fd06d50@mail.gmail.com>
-	 <20070118154257.GC15428@spearce.org> <45AFA083.9050004@op5.se>
-	 <20070118165107.GF15428@spearce.org>
+From: Yann Dirson <ydirson@altern.org>
+Subject: Re: Rebasing stgit stacks
+Date: Thu, 18 Jan 2007 20:42:23 +0100
+Message-ID: <20070118194208.GJ9761@nan92-1-81-57-214-146.fbx.proxad.net>
+References: <20070109224125.GF17093@nan92-1-81-57-214-146.fbx.proxad.net> <8b65902a0701150526j5a954529xf45b2d0348a77573@mail.gmail.com> <20070115202412.GE9761@nan92-1-81-57-214-146.fbx.proxad.net> <b0943d9e0701151446l45eff9dbgcae718c1461d0725@mail.gmail.com> <20070115233958.GF9761@nan92-1-81-57-214-146.fbx.proxad.net> <b0943d9e0701161442t6b93e0d6nd88364600f2809ee@mail.gmail.com> <20070116231735.GF7029@nan92-1-81-57-214-146.fbx.proxad.net> <eojn5c$v9u$1@sea.gmane.org> <20070117205301.GH9761@nan92-1-81-57-214-146.fbx.proxad.net> <tnxmz4gv8sj.fsf@arm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Andreas Ericsson" <ae@op5.se>, "Alex Riesen" <raa.lkml@gmail.com>,
-	"Josh Boyer" <jwboyer@gmail.com>,
-	"Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org,
-	davidk@lysator.liu.se
-X-From: git-owner@vger.kernel.org Thu Jan 18 20:31:01 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 18 20:43:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H7cyH-0007cy-IJ
-	for gcvg-git@gmane.org; Thu, 18 Jan 2007 20:30:49 +0100
+	id 1H7dAM-0002OX-De
+	for gcvg-git@gmane.org; Thu, 18 Jan 2007 20:43:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932474AbXARTaO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 18 Jan 2007 14:30:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932477AbXARTaO
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Jan 2007 14:30:14 -0500
-Received: from nf-out-0910.google.com ([64.233.182.185]:57423 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932463AbXARTaM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jan 2007 14:30:12 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so271961nfa
-        for <git@vger.kernel.org>; Thu, 18 Jan 2007 11:30:10 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=koLfoDQ39llgD0A4ViXfWS2Uoc8h1r6Xx8MyBjTbaun9SjGEXVY8czONorB68ZROiwnk5Bky/roaXZkNNBwoolRW27fWkTUFG8J1oYx/OXzf/1jVIqv3bBX2NJBcrBG04/I2NO1LSNVEcY6iS5mTKPwdHyi0Uz4ZFOoZ/SuBhqk=
-Received: by 10.49.29.2 with SMTP id g2mr1247261nfj.1169148607643;
-        Thu, 18 Jan 2007 11:30:07 -0800 (PST)
-Received: by 10.49.35.7 with HTTP; Thu, 18 Jan 2007 11:30:07 -0800 (PST)
-To: "Shawn O. Pearce" <spearce@spearce.org>
-In-Reply-To: <20070118165107.GF15428@spearce.org>
+	id S932428AbXARTm6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 18 Jan 2007 14:42:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932460AbXARTm6
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Jan 2007 14:42:58 -0500
+Received: from smtp6-g19.free.fr ([212.27.42.36]:43252 "EHLO smtp6-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932428AbXARTm6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jan 2007 14:42:58 -0500
+Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
+	by smtp6-g19.free.fr (Postfix) with ESMTP id 400A243A66;
+	Thu, 18 Jan 2007 20:42:56 +0100 (CET)
+Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
+	id 895CB1F073; Thu, 18 Jan 2007 20:42:23 +0100 (CET)
+To: Catalin Marinas <catalin.marinas@gmail.com>
 Content-Disposition: inline
+In-Reply-To: <tnxmz4gv8sj.fsf@arm.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37132>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37133>
 
-On 1/19/07, Shawn O. Pearce <spearce@spearce.org> wrote:
-> Wishful thinking.  Back to reality.
+On Thu, Jan 18, 2007 at 12:06:20PM +0000, Catalin Marinas wrote:
+> Yann Dirson <ydirson@altern.org> wrote:
+> > On Wed, Jan 17, 2007 at 12:30:18AM +0100, Jakub Narebski wrote:
+> >> I'm all for calling this command "stg rebase".
+> >
+> > After all, my current implementation as "pull --to" mostly bypasses
+> > the fetch, so it probably makes sense to use a new command.
+> >
+> > However, "stg rebase <target>" does not sound right.  I'm not very
+> > happy with "stg rebaseto <target>" (or rebase-to) either.
+> 
+> I think something 'stg rebase <newbase>' sounds OK.
 
-Not necessarily ;-) but I'm not sure if the time is right for an
-independend services company doing _only_ git.
+It's just that it sounds more natural to me to give as instruction "do
+rebase (current stack) to that point" than "do rebase that point",
+which "rebase <newbase>" would seem to imply.
 
-However, git is the kind of SCM that a big distro needs to keep track
-of all their "vendor branches" or "patches against upstream". Ubuntu
-pays at least one full-time SCM developer, Martin Pool, to maintain
-Bazaar NG and accesory tools.
-
-IIRC MySQL was looking quite seriously to drop BK and with the savings
-in licenses, can surely affort to hire a GIT guru to "train the
-trainer", solve problems/bugs and write internal support tools. Others
-will follow. It shouldn't be too hard to find the right place.
-
-Or a large FOSS services focused company (like Catalyst) that uses git
-and offers support as part of a larger bundle. (<spam>we're hiring,
-and putting git hackery in your cv is a winner</spam>). There are
-plenty of gaps and places for git hackers.
-
-cheers
-
-
-martin
+Best reagards,
+-- 
+Yann.
