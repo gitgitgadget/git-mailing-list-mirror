@@ -1,72 +1,67 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/2] Use fixed-size integers for .idx file I/O
-Date: Thu, 18 Jan 2007 16:30:52 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0701181630070.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <7vd55col04.fsf@assigned-by-dhcp.cox.net>
- <118833cc0701180651w3b5ac164m4e396399f1d58cb7@mail.gmail.com>
- <45AF8A86.7070101@fs.ei.tum.de> <20070118152107.GA15428@spearce.org>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: [PATCH/POLL] git-format-patch: the default suffix is now .patch, not .txt
+Date: Thu, 18 Jan 2007 16:37:50 +0100
+Message-ID: <81b0412b0701180737m49895d24td104b8dd2579de44@mail.gmail.com>
+References: <625fc13d0701170510x8883539g93f43d9ddffe56f0@mail.gmail.com>
+	 <7v64b4ohcj.fsf@assigned-by-dhcp.cox.net>
+	 <81b0412b0701180135r505a75a5j172c70792d6569c0@mail.gmail.com>
+	 <625fc13d0701180352m151cceb3lf9c00b6cf0ae937b@mail.gmail.com>
+	 <81b0412b0701180540x15d20453s3dbc0c061fd06d50@mail.gmail.com>
+	 <45AF7FE8.5060003@op5.se>
+	 <81b0412b0701180641v55987657t331d6a1868dabee0@mail.gmail.com>
+	 <Pine.LNX.4.63.0701181547440.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <81b0412b0701180653i7cc0c87md7a9c94a10fa3b24@mail.gmail.com>
+	 <Pine.LNX.4.63.0701181615360.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>,
-	Morten Welinder <mwelinder@gmail.com>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 18 16:31:00 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 18 16:38:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H7ZE8-0003GG-EX
-	for gcvg-git@gmane.org; Thu, 18 Jan 2007 16:30:56 +0100
+	id 1H7ZL0-00053r-Aq
+	for gcvg-git@gmane.org; Thu, 18 Jan 2007 16:38:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932462AbXARPaz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 18 Jan 2007 10:30:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932463AbXARPaz
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Jan 2007 10:30:55 -0500
-Received: from mail.gmx.net ([213.165.64.20]:43289 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932462AbXARPay (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jan 2007 10:30:54 -0500
-Received: (qmail invoked by alias); 18 Jan 2007 15:30:53 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp048) with SMTP; 18 Jan 2007 16:30:53 +0100
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: "Shawn O. Pearce" <spearce@spearce.org>
-In-Reply-To: <20070118152107.GA15428@spearce.org>
-X-Y-GMX-Trusted: 0
+	id S1752043AbXARPhx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 18 Jan 2007 10:37:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752053AbXARPhx
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Jan 2007 10:37:53 -0500
+Received: from wr-out-0506.google.com ([64.233.184.237]:12817 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752043AbXARPhw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jan 2007 10:37:52 -0500
+Received: by wr-out-0506.google.com with SMTP id i22so191296wra
+        for <git@vger.kernel.org>; Thu, 18 Jan 2007 07:37:52 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=QM1kNm/euEnd92a+zNqUnKDMBfNEkIXCPl7qwRqFsbeQnVxA/RPy190PcKlvp2z/THMb7g5Ti0fRyEa9Mi+hQygQvNcoTHtweKRD9V0bewmN3yYd8CIMkDLaSHnsKv3K1dRFdGH5aVisgEx/6coofG42XSufXNdEESzy+gULr2w=
+Received: by 10.78.122.11 with SMTP id u11mr1006593huc.1169134670414;
+        Thu, 18 Jan 2007 07:37:50 -0800 (PST)
+Received: by 10.78.135.3 with HTTP; Thu, 18 Jan 2007 07:37:50 -0800 (PST)
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0701181615360.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37109>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37110>
 
-Hi,
-
-On Thu, 18 Jan 2007, Shawn O. Pearce wrote:
-
-> Simon 'corecode' Schubert <corecode@fs.ei.tum.de> wrote:
-> > Morten Welinder wrote:
-> > >>-                       return ntohl(*((unsigned int *) ((char *) 
-> > >>index + (24 * mi))));
-> > >>+                       return ntohl(*((uint32_t *)((char *)index + 
-> > >>(24 * mi))));
+On 1/18/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > > > BTW, Junio, how about making the _default_ settable at compile time?
+> > > > It'd be reasonable to allow local installations choose to default to what
+> > > > they find the most paranoid?
 > > >
-> > >Is that pointer gymnastics guaranteed to work?  I.e., how do we know
-> > >that we can access an uint32_t (or unsigned) at such an address?
-> > 
-> > if index is always aligned to a 4-byte boundary, this is safe.  apart from 
-> > that, the problem already existed.
-> 
-> Its always 4-byte aligned here.  The index is mmap()'d as one huge
-> chunk so the first byte of the index is page aligned.  The index
-> starts out with 256 4-byte words, then is composed of 24 byte units
-> (20 byte SHA1, 4 byte offset).  So no worries with the current file
-> format, or code.
-> 
-> Yes, we're taking the leap of faith that any currently-used processor
-> will work on 32 bit unsigned integers if they are 4 byte aligned in
-> memory.
+> > > Better control that with templates.
+> > >
+> >
+> > Do we have a template for config already? I thought they were only for
+> > hooks...
+>
+> The template mechanism can handle _all_ files in GIT_DIR. Just drop a
+> "config" into the templates directory, and you're settled.
 
-Actually, it's even valid in 8 byte aligned mode. (24 is divisible by 8.)
-
-Ciao,
-Dscho
+I'm settled! From now on I will never have any objections regarding
+any defaults as long as they have a config option :)
