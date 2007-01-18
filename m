@@ -1,57 +1,75 @@
 From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: git-cvsserver won't add new content on update
-Date: Fri, 19 Jan 2007 08:01:56 +1300
-Message-ID: <46a038f90701181101w1ea300b6lb4d7e4354d89be95@mail.gmail.com>
-References: <200701181616.38318.andyparkins@gmail.com>
-	 <20070118162222.GE15428@spearce.org>
+Subject: Re: [PATCH/POLL] git-format-patch: the default suffix is now .patch, not .txt
+Date: Fri, 19 Jan 2007 08:19:44 +1300
+Message-ID: <46a038f90701181119v47d24b28n92973c60ae74e0e7@mail.gmail.com>
+References: <87ps9d7j6t.fsf@morpheus.local>
+	 <7vsle9p8pg.fsf@assigned-by-dhcp.cox.net>
+	 <7vd55dp5a3.fsf_-_@assigned-by-dhcp.cox.net>
+	 <81b0412b0701172359y1ef4f936pcdcb2de53d6bd468@mail.gmail.com>
+	 <7v64b4ohcj.fsf@assigned-by-dhcp.cox.net>
+	 <81b0412b0701180135r505a75a5j172c70792d6569c0@mail.gmail.com>
+	 <625fc13d0701180352m151cceb3lf9c00b6cf0ae937b@mail.gmail.com>
+	 <81b0412b0701180540x15d20453s3dbc0c061fd06d50@mail.gmail.com>
+	 <20070118154257.GC15428@spearce.org> <45AFA083.9050004@op5.se>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Andy Parkins" <andyparkins@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 18 20:02:04 2007
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	"Alex Riesen" <raa.lkml@gmail.com>,
+	"Josh Boyer" <jwboyer@gmail.com>,
+	"Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org,
+	davidk@lysator.liu.se
+X-From: git-owner@vger.kernel.org Thu Jan 18 20:19:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H7cWR-0000BT-KR
-	for gcvg-git@gmane.org; Thu, 18 Jan 2007 20:02:03 +0100
+	id 1H7cnf-0004lY-L7
+	for gcvg-git@gmane.org; Thu, 18 Jan 2007 20:19:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932348AbXARTCA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 18 Jan 2007 14:02:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932333AbXARTCA
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Jan 2007 14:02:00 -0500
-Received: from nf-out-0910.google.com ([64.233.182.190]:26509 "EHLO
+	id S932428AbXARTTs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 18 Jan 2007 14:19:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932348AbXARTTs
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Jan 2007 14:19:48 -0500
+Received: from nf-out-0910.google.com ([64.233.182.190]:45728 "EHLO
 	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932348AbXARTB7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jan 2007 14:01:59 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so265545nfa
-        for <git@vger.kernel.org>; Thu, 18 Jan 2007 11:01:58 -0800 (PST)
+	with ESMTP id S932428AbXARTTr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jan 2007 14:19:47 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so269638nfa
+        for <git@vger.kernel.org>; Thu, 18 Jan 2007 11:19:46 -0800 (PST)
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
         h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=hPsy3eqy5F1AiZGK2IgSrb6TOL789Mz1Xr/2FTox6lz7qFXn65mCok1xMPCxoYmTIulzRTakSNROtWRHseU+nu9oTsxRfCpBj8sljqov2N3Et88RvWqyF3kMElXjV95QirfbebxBZ9sWaHuQke3c2jG1D8iCVLSR65Wq34q9oSY=
-Received: by 10.49.57.3 with SMTP id j3mr1174590nfk.1169146916887;
-        Thu, 18 Jan 2007 11:01:56 -0800 (PST)
-Received: by 10.49.35.7 with HTTP; Thu, 18 Jan 2007 11:01:56 -0800 (PST)
-To: "Shawn O. Pearce" <spearce@spearce.org>
-In-Reply-To: <20070118162222.GE15428@spearce.org>
+        b=IA3jnlBbctYq1s4O6UPqC9LNGPdxvsCX0+7g4iX63vrKgW9Z5UjzdRP5Q6iMoHDAqzKkuUzKDkHYdlZ4JfhyfO6qp1QCGsAUeUiMTwUyKzchjufoOMp0Y92Qt8C/SMQfubRCgWyH6D6mWsPv3eoyx20hgPPJSoONrx3KYyEHDI4=
+Received: by 10.48.202.11 with SMTP id z11mr1244284nff.1169147985620;
+        Thu, 18 Jan 2007 11:19:45 -0800 (PST)
+Received: by 10.49.35.7 with HTTP; Thu, 18 Jan 2007 11:19:44 -0800 (PST)
+To: "Andreas Ericsson" <ae@op5.se>
+In-Reply-To: <45AFA083.9050004@op5.se>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37129>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37130>
 
-On 1/19/07, Shawn O. Pearce <spearce@spearce.org> wrote:
-> You need to commit first to get the file completely added.
-> What you are seeing above is that the file was listed in
-> some/sub/directory/CVS/Entries so that the next commit will
-> know to upload the file to the server.  Until then its not
-> actually going to do that...
+On 1/19/07, Andreas Ericsson <ae@op5.se> wrote:
+> On a serious note, it's probably about time the world saw its first
+> commercial git support company. It's legal to package and sell GPL'd
+> code. Many companies have already proven that it can be a very
+> lucrative business.
 
-yup. Also make sure you are using a really recent git-cvsserver, I
-recently fixed a couple of problems related to file adds.
+<spam, but on topic >
+At Catalyst (~70 perl/java/php/c/c++ developers, mostly foss
+development) we have switched internally to git for 80% of our active
+projects and we do offer commercial support for a couple of clients.
+It's not the only thing we do for those clients, but if an
+organisation needed specifically support for git, we can help.
 
-cheers.
+We aren't pushing/packaging/selling it because it doesn't work well
+that way (for us at least). When it's about new tools, we prefer to
+work with people who already know what they want ;-)
+
+cheers,
 
 
 martin
