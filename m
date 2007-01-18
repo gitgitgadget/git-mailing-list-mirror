@@ -1,63 +1,81 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: [PATCH - todo] Changes to e-mailed patch handling in v1.5.0
-Date: Thu, 18 Jan 2007 08:18:08 +0000
-Message-ID: <200701180818.12372.andyparkins@gmail.com>
-References: <7vk5zlqqum.fsf@assigned-by-dhcp.cox.net> <7vwt3lp97c.fsf_-_@assigned-by-dhcp.cox.net> <7vhcupp81v.fsf_-_@assigned-by-dhcp.cox.net>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: [PATCH/POLL] git-format-patch: the default suffix is now .patch, not .txt
+Date: Thu, 18 Jan 2007 09:18:47 +0100
+Message-ID: <81b0412b0701180018i208e4158k2dd3e9ecdfa79b13@mail.gmail.com>
+References: <625fc13d0701170510x8883539g93f43d9ddffe56f0@mail.gmail.com>
+	 <87ps9d7j6t.fsf@morpheus.local>
+	 <7vejptsglj.fsf@assigned-by-dhcp.cox.net>
+	 <625fc13d0701171218i31585558wf89374eae9485341@mail.gmail.com>
+	 <7vsle9p8pg.fsf@assigned-by-dhcp.cox.net>
+	 <7vd55dp5a3.fsf_-_@assigned-by-dhcp.cox.net>
+	 <81b0412b0701172359y1ef4f936pcdcb2de53d6bd468@mail.gmail.com>
+	 <20070118080613.GE23124@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Thu Jan 18 09:18:24 2007
+Cc: "Junio C Hamano" <junkio@cox.net>,
+	"Josh Boyer" <jwboyer@gmail.com>, git@vger.kernel.org,
+	davidk@lysator.liu.se
+X-From: git-owner@vger.kernel.org Thu Jan 18 09:19:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H7STW-00010m-BO
-	for gcvg-git@gmane.org; Thu, 18 Jan 2007 09:18:22 +0100
+	id 1H7SUU-0001Dl-N0
+	for gcvg-git@gmane.org; Thu, 18 Jan 2007 09:19:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751874AbXARIST (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 18 Jan 2007 03:18:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751950AbXARIST
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Jan 2007 03:18:19 -0500
-Received: from ug-out-1314.google.com ([66.249.92.168]:62150 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751874AbXARISS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jan 2007 03:18:18 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so113747uga
-        for <git@vger.kernel.org>; Thu, 18 Jan 2007 00:18:17 -0800 (PST)
+	id S1751950AbXARITV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 18 Jan 2007 03:19:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751990AbXARITV
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Jan 2007 03:19:21 -0500
+Received: from wr-out-0506.google.com ([64.233.184.233]:44845 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751950AbXARITU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jan 2007 03:19:20 -0500
+Received: by wr-out-0506.google.com with SMTP id i22so102180wra
+        for <git@vger.kernel.org>; Thu, 18 Jan 2007 00:19:19 -0800 (PST)
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=smZILe/zi4h59z9V/mvEyTyHgf9nUvU1/g2JYDTwsxZnUrkqDusdFUwqE402rVy+lIjKo1mHhPneSsb3W4AHQJgZ0mbVjIMvIFZ9zRpEEHagE+BNrAU1gZyc7q0ONTNKLrNLHhnYWNNFWOWw4arhIx5HMNNsGYxT1mw5FjULWaY=
-Received: by 10.67.19.20 with SMTP id w20mr881157ugi.1169108297185;
-        Thu, 18 Jan 2007 00:18:17 -0800 (PST)
-Received: from 360run094l ( [194.70.53.227])
-        by mx.google.com with ESMTP id j34sm500006ugc.2007.01.18.00.18.15;
-        Thu, 18 Jan 2007 00:18:15 -0800 (PST)
-To: git@vger.kernel.org
-User-Agent: KMail/1.9.5
-In-Reply-To: <7vhcupp81v.fsf_-_@assigned-by-dhcp.cox.net>
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=d+qqDSLfteZezn25s5651eDcCSB5k1b87rxDXOIx6VZVmDZ0m1UKvrPbTXpyZZm/2ZrPph15n7DSj1yWx8yKtEu3ofQtOtE+fkZDV1+dWncFYa4KOJftF8A7NSezGgF+RQomFfDs5yEyuzVTBKrocB1baUtZRBK2JGtQ1FdWvwo=
+Received: by 10.78.181.13 with SMTP id d13mr589015huf.1169108327630;
+        Thu, 18 Jan 2007 00:18:47 -0800 (PST)
+Received: by 10.78.135.3 with HTTP; Thu, 18 Jan 2007 00:18:47 -0800 (PST)
+To: "Shawn O. Pearce" <spearce@spearce.org>
+In-Reply-To: <20070118080613.GE23124@spearce.org>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37066>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37067>
 
-On Wednesday 2007 January 17 23:06, Junio C Hamano wrote:
+On 1/18/07, Shawn O. Pearce <spearce@spearce.org> wrote:
+> Alex Riesen <raa.lkml@gmail.com> wrote:
+> > Also, how many mail clients know that .patch is actually
+> > a text and not application/binary? It'll make patch
+> > reviewing harder for some (not sure if I'd like a review
+> > of such a person, though).
+>
+> Patches intended for review should be sent inline, not attached.
 
-> I am neutral about changing the default suffix from .txt to .patch;
-> comments?
+There is again this word "should". Are you sure it has any _real_
+meaning? For a person who knows about revision management
+from something like Perforce?
 
-I'm in favour.  The extension indicates file type, and gives guidance on the 
-tool that can read it. Though .patch is stored in text it's more than that 
-(c.f. .html) - the text inside it has meaning beyond just the text.
+> Thus the file extension has no impact on how the mail client should
+> treat it.
 
-To me, .txt would implies that the file format is in human-language format 
-(i.e. words, sentences, and paragraphs).
+He will attach it. It's typical for outlook users. He will even put it
+in HTML-formatted mail, because that's the default format for
+outlook messages.
 
+> Don't count people out just because they cannot read a *.patch file
 
-Andy
--- 
-Dr Andy Parkins, M Eng (hons), MIEE
-andyparkins@gmail.com
+I don't. I just know how hard is it to explain what source is and
+why it is better than a "C++ file".
+
+> All constructive feedback is valuable, no matter its source.  Of
+> course I did qualify that with "constructive"... ;-)
+
+It is. That's why I did try to explain it to some. That's how I know
+about explaining. I'm very pessimistic now, sorry.
