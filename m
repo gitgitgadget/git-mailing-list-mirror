@@ -1,59 +1,49 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH/POLL] git-format-patch: the default suffix is now .patch,
- not .txt
-Date: Thu, 18 Jan 2007 15:49:28 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0701181547440.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <625fc13d0701170510x8883539g93f43d9ddffe56f0@mail.gmail.com> 
- <625fc13d0701171218i31585558wf89374eae9485341@mail.gmail.com> 
- <7vsle9p8pg.fsf@assigned-by-dhcp.cox.net>  <7vd55dp5a3.fsf_-_@assigned-by-dhcp.cox.net>
-  <81b0412b0701172359y1ef4f936pcdcb2de53d6bd468@mail.gmail.com> 
- <7v64b4ohcj.fsf@assigned-by-dhcp.cox.net>  <81b0412b0701180135r505a75a5j172c70792d6569c0@mail.gmail.com>
-  <625fc13d0701180352m151cceb3lf9c00b6cf0ae937b@mail.gmail.com> 
- <81b0412b0701180540x15d20453s3dbc0c061fd06d50@mail.gmail.com> 
- <45AF7FE8.5060003@op5.se> <81b0412b0701180641v55987657t331d6a1868dabee0@mail.gmail.com>
+From: "Morten Welinder" <mwelinder@gmail.com>
+Subject: Re: [PATCH 2/2] Use fixed-size integers for .idx file I/O
+Date: Thu, 18 Jan 2007 09:51:37 -0500
+Message-ID: <118833cc0701180651w3b5ac164m4e396399f1d58cb7@mail.gmail.com>
+References: <7vd55col04.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 18 15:49:40 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Simon Schubert" <corecode@fs.ei.tum.de>
+X-From: git-owner@vger.kernel.org Thu Jan 18 15:51:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H7Ya6-0000Zk-Sv
-	for gcvg-git@gmane.org; Thu, 18 Jan 2007 15:49:35 +0100
+	id 1H7Yc8-0001B7-P6
+	for gcvg-git@gmane.org; Thu, 18 Jan 2007 15:51:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752054AbXAROtb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 18 Jan 2007 09:49:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752055AbXAROtb
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Jan 2007 09:49:31 -0500
-Received: from mail.gmx.net ([213.165.64.20]:55862 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752054AbXAROta (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jan 2007 09:49:30 -0500
-Received: (qmail invoked by alias); 18 Jan 2007 14:49:28 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp040) with SMTP; 18 Jan 2007 15:49:28 +0100
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Alex Riesen <raa.lkml@gmail.com>
-In-Reply-To: <81b0412b0701180641v55987657t331d6a1868dabee0@mail.gmail.com>
-X-Y-GMX-Trusted: 0
+	id S1752053AbXAROvj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 18 Jan 2007 09:51:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752056AbXAROvj
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Jan 2007 09:51:39 -0500
+Received: from an-out-0708.google.com ([209.85.132.242]:59172 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752055AbXAROvi (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jan 2007 09:51:38 -0500
+Received: by an-out-0708.google.com with SMTP id b33so82531ana
+        for <git@vger.kernel.org>; Thu, 18 Jan 2007 06:51:38 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=iIXzHISK7I996Vzyh6cEZePD/5hZw/hY3vA0MXMHZjVgzNtwblpaWx0TL2BvZ5d4wpg4vuYNveq4wM0S53m3WZz4Hxd4ppNfA9OJtxtkGy+v5TOki8XxhiyXYmJGAuMVzAtzct+LBbCTohfazrXfhkb6xjqvkZ5jR3jPfuXw7po=
+Received: by 10.100.48.7 with SMTP id v7mr200355anv.1169131898025;
+        Thu, 18 Jan 2007 06:51:38 -0800 (PST)
+Received: by 10.70.95.5 with HTTP; Thu, 18 Jan 2007 06:51:37 -0800 (PST)
+To: "Junio C Hamano" <junkio@cox.net>
+In-Reply-To: <7vd55col04.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37097>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37098>
 
-Hi,
+> -                       return ntohl(*((unsigned int *) ((char *) index + (24 * mi))));
+> +                       return ntohl(*((uint32_t *)((char *)index + (24 * mi))));
 
-On Thu, 18 Jan 2007, Alex Riesen wrote:
+Is that pointer gymnastics guaranteed to work?  I.e., how do we know
+that we can access an uint32_t (or unsigned) at such an address?
 
-> [discussion about suffix being "patch" or "txt" per default]
->
-> BTW, Junio, how about making the _default_ settable at compile time?
-> It'd be reasonable to allow local installations choose to default to what
-> they find the most paranoid?
-
-Better control that with templates.
-
-Ciao,
-Dscho
+M.
