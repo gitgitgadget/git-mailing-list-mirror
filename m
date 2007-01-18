@@ -1,60 +1,90 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: [PATCH/POLL] git-format-patch: the default suffix is now .patch, not .txt
-Date: Thu, 18 Jan 2007 15:53:29 +0100
-Message-ID: <81b0412b0701180653i7cc0c87md7a9c94a10fa3b24@mail.gmail.com>
-References: <625fc13d0701170510x8883539g93f43d9ddffe56f0@mail.gmail.com>
-	 <7vd55dp5a3.fsf_-_@assigned-by-dhcp.cox.net>
-	 <81b0412b0701172359y1ef4f936pcdcb2de53d6bd468@mail.gmail.com>
-	 <7v64b4ohcj.fsf@assigned-by-dhcp.cox.net>
-	 <81b0412b0701180135r505a75a5j172c70792d6569c0@mail.gmail.com>
-	 <625fc13d0701180352m151cceb3lf9c00b6cf0ae937b@mail.gmail.com>
-	 <81b0412b0701180540x15d20453s3dbc0c061fd06d50@mail.gmail.com>
-	 <45AF7FE8.5060003@op5.se>
-	 <81b0412b0701180641v55987657t331d6a1868dabee0@mail.gmail.com>
-	 <Pine.LNX.4.63.0701181547440.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
+Subject: Re: [PATCH 2/2] Use fixed-size integers for .idx file I/O
+Date: Thu, 18 Jan 2007 15:56:06 +0100
+Message-ID: <45AF8A86.7070101@fs.ei.tum.de>
+References: <7vd55col04.fsf@assigned-by-dhcp.cox.net> <118833cc0701180651w3b5ac164m4e396399f1d58cb7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 18 15:53:39 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enigB50F2212BF79AAC4D8727F40"
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 18 15:56:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H7Ye1-0001iv-3t
-	for gcvg-git@gmane.org; Thu, 18 Jan 2007 15:53:37 +0100
+	id 1H7Ygb-0002Um-9D
+	for gcvg-git@gmane.org; Thu, 18 Jan 2007 15:56:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752055AbXAROxf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 18 Jan 2007 09:53:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752056AbXAROxf
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Jan 2007 09:53:35 -0500
-Received: from an-out-0708.google.com ([209.85.132.248]:60509 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752055AbXAROxe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jan 2007 09:53:34 -0500
-Received: by an-out-0708.google.com with SMTP id b33so83073ana
-        for <git@vger.kernel.org>; Thu, 18 Jan 2007 06:53:34 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=LLa6c5ruIJfFBWJobBopxJ6HHYM7hW+B2gUwcp/DMj4CLswFgUdYs+3k1dSsRtAMIucO9c7Ik8Zj6VRwaXL1RDSTeqLf2SsL65a/4PCTOnNPOrVT3ai4JJXYXs1ye+s01boJPzUp2qQqM0vQ44zuufRWTdC1hGu/FKghKltLHqs=
-Received: by 10.78.193.19 with SMTP id q19mr946814huf.1169132009497;
-        Thu, 18 Jan 2007 06:53:29 -0800 (PST)
-Received: by 10.78.135.3 with HTTP; Thu, 18 Jan 2007 06:53:29 -0800 (PST)
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0701181547440.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-Content-Disposition: inline
+	id S1752056AbXARO4P (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 18 Jan 2007 09:56:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752057AbXARO4P
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Jan 2007 09:56:15 -0500
+Received: from stella.fs.ei.tum.de ([129.187.54.7]:39242 "EHLO
+	stella.fs.ei.tum.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752056AbXARO4O (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jan 2007 09:56:14 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by localhost.fs.ei.tum.de (Postfix) with ESMTP id 395BA28162;
+	Thu, 18 Jan 2007 15:56:13 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at fs.ei.tum.de
+Received: from stella.fs.ei.tum.de ([127.0.0.1])
+	by localhost (stella.fs.ei.tum.de [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 9qMTeaVLbyXq; Thu, 18 Jan 2007 15:56:12 +0100 (CET)
+Received: from [192.168.10.124] (ppp-62-216-203-232.dynamic.mnet-online.de [62.216.203.232])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	by stella.fs.ei.tum.de (Postfix) with ESMTP id 8AD1928120;
+	Thu, 18 Jan 2007 15:56:12 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; U; DragonFly pc32; en-US; rv:1.8.0.8) Gecko/20061212 Thunderbird/1.5.0.8 Mnenhy/0.7.4.666
+To: Morten Welinder <mwelinder@gmail.com>
+In-Reply-To: <118833cc0701180651w3b5ac164m4e396399f1d58cb7@mail.gmail.com>
+X-Enigmail-Version: 0.94.2.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37099>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37100>
 
-On 1/18/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > BTW, Junio, how about making the _default_ settable at compile time?
-> > It'd be reasonable to allow local installations choose to default to what
-> > they find the most paranoid?
->
-> Better control that with templates.
->
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enigB50F2212BF79AAC4D8727F40
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
 
-Do we have a template for config already? I thought they were only for hooks...
+Morten Welinder wrote:
+>> -                       return ntohl(*((unsigned int *) ((char *)=20
+>> index + (24 * mi))));
+>> +                       return ntohl(*((uint32_t *)((char *)index +=20
+>> (24 * mi))));
+>=20
+> Is that pointer gymnastics guaranteed to work?  I.e., how do we know
+> that we can access an uint32_t (or unsigned) at such an address?
+
+if index is always aligned to a 4-byte boundary, this is safe.  apart fro=
+m that, the problem already existed.
+
+cheers
+  simon
+
+--=20
+Serve - BSD     +++  RENT this banner advert  +++    ASCII Ribbon   /"\
+Work - Mac      +++  space for low =E2=82=AC=E2=82=AC=E2=82=AC NOW!1  +++=
+      Campaign     \ /
+Party Enjoy Relax   |   http://dragonflybsd.org      Against  HTML   \
+Dude 2c 2 the max   !   http://golden-apple.biz       Mail + News   / \
+
+
+--------------enigB50F2212BF79AAC4D8727F40
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (DragonFly)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+
+iD8DBQFFr4qLr5S+dk6z85oRAqL0AJsG6W/yOWqkvz3kBfqLyB1oaQfQewCfYvXZ
+k2zmLgwCBcqbpz8gA1PDNFE=
+=kA9m
+-----END PGP SIGNATURE-----
+
+--------------enigB50F2212BF79AAC4D8727F40--
