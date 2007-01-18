@@ -1,73 +1,151 @@
-From: Timur Tabi <timur@freescale.com>
-Subject: git-send-email --suppress-from option doesn't work.
-Date: Thu, 18 Jan 2007 15:07:24 -0600
-Organization: Freescale
-Message-ID: <45AFE18C.2020303@freescale.com>
+From: Bart Trojanowski <bart@jukie.net>
+Subject: git push problem with v1.5.0-rc1
+Date: Thu, 18 Jan 2007 16:26:15 -0500
+Message-ID: <20070118212615.GO8624@jukie.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Thu Jan 18 22:07:41 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="QmMh2VKaunwcDwPx"
+X-From: git-owner@vger.kernel.org Thu Jan 18 22:55:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H7eTp-00076Y-D3
-	for gcvg-git@gmane.org; Thu, 18 Jan 2007 22:07:29 +0100
+	id 1H7fDt-0001pu-8q
+	for gcvg-git@gmane.org; Thu, 18 Jan 2007 22:55:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751307AbXARVH0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 18 Jan 2007 16:07:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751400AbXARVH0
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Jan 2007 16:07:26 -0500
-Received: from de01egw02.freescale.net ([192.88.165.103]:44404 "EHLO
-	de01egw02.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751307AbXARVH0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jan 2007 16:07:26 -0500
-Received: from de01smr01.freescale.net (de01smr01.freescale.net [10.208.0.31])
-	by de01egw02.freescale.net (8.12.11/de01egw02) with ESMTP id l0IL7PHi013724
-	for <git@vger.kernel.org>; Thu, 18 Jan 2007 14:07:25 -0700 (MST)
-Received: from [10.82.19.119] (ld0169-tx32.am.freescale.net [10.82.19.119])
-	by de01smr01.freescale.net (8.13.1/8.13.0) with ESMTP id l0IL7OTE023191
-	for <git@vger.kernel.org>; Thu, 18 Jan 2007 15:07:24 -0600 (CST)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.8.1) Gecko/20061101 SeaMonkey/1.1b
+	id S932472AbXARVzA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 18 Jan 2007 16:55:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932516AbXARVzA
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Jan 2007 16:55:00 -0500
+Received: from bart.ott.istop.com ([66.11.172.99]:57216 "EHLO jukie.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932472AbXARVy7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jan 2007 16:54:59 -0500
+X-Greylist: delayed 1719 seconds by postgrey-1.27 at vger.kernel.org; Thu, 18 Jan 2007 16:54:58 EST
+Received: from tau.jukie.net ([10.10.10.211]:39579)
+	by jukie.net with esmtp (Exim 4.50)
+	id 1H7em0-0005Yc-0S
+	for git@vger.kernel.org; Thu, 18 Jan 2007 16:26:16 -0500
+Received: by tau.jukie.net (Postfix, from userid 1000)
+	id 70CBB2DC0BD; Thu, 18 Jan 2007 16:26:15 -0500 (EST)
 To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.12-2006-07-14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37140>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37141>
 
-The --suppress-from option doesn't work for me because the comparison is too strict.
 
-Here's an example usage of git-send-email:
+--QmMh2VKaunwcDwPx
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-git-send-email --suppress-from --from timur@freescale.com --to timur@tabi.org 
---smtp-server remotesmtp.freescale.net 0001-Add-support-for-the-MPC8349E-mITX-GP.txt
+I just stared using 1.5.0-rc yesterday, and ran into a problem with
+git-push.
 
-I need to specify the --from option, because otherwise git-send-email will 
-prompt me for a From address, and I don't want it to prompt me for anything.
+I am running vanilla 2.6.19 on amd64 SMP box.  For this project I am
+working in a 32bit chroot -- the 64/32bit setup is part of the problem.
 
-The problem is that the patchfile contains this line:
+There are 3 repositories involved here:
 
-From: Timur Tabi <timur@freescale.com>
+linux-2.6.git     =20
+    - clone of a few branches from kernel.org
 
-That means that the patchfile contains the string "Timur Tabi 
-<timur@freescale.com>", but the --from specifies the string 
-"timur@freescale.com".  The code which checks the suppress-from option is here:
+klips-vault.git
+    - linux tree from project upstream
+    - alternates =3D /.../linux-2.6.git/.git/objects
 
-                         } elsif (/^(Cc|From):\s+(.*)$/) {
-                                 if ($2 eq $from) {
-                                         next if ($suppress_from);
-                                 }
+working dir:
+    - clone of klips-vault.git
+    - alternates =3D /.../klips-vault.git/.git/objects
 
-I don't know Perl, but I'm guess the The "$2 eq $from" is a strict comparison 
-that fails in my case.
+    - I made a new branch
+    - applied ~100 patches
 
-Some of you might say at this point, "Why don't you  just specify --from "Timur 
-Tabi <timur@freescale.com>"?  I tried that, and it still doesn't work.
+    - went to push and...
 
-Basically, what I want is to prevent git-send-email from CC'ing me on my own 
-patches.  No matter what I do, I can't prevent it from adding "Cc: Timur Tabi 
-<timur@freescale.com>" to the email header.
+      $ git version=20
+      git version 1.5.0.rc1.gdf1b=20
+      =20
+      $ cat .git/config=20
+      [core]=20
+              repositoryformatversion =3D 0=20
+              filemode =3D true=20
+              logallrefupdates =3D true=20
+      [remote "origin"]=20
+              url =3D /home/jukie/bart/work/xelerance/klips-vault.git/.git=
+=20
+              fetch =3D +refs/heads/*:refs/remotes/origin/*=20
+              push =3D refs/heads/my-ocf+fsm_v2.6.18:refs/heads/my-ocf+fsm_=
+v2.6.18=20
+      [branch "master"]=20
+              remote =3D origin=20
+              merge =3D refs/heads/master=20
+      =20
+      $ git branch=20
+        master=20
+      * my-ocf+fsm_v2.6.18=20
+      =20
+      $ git push origin=20
+      updating 'refs/heads/my-ocf+fsm_v2.6.18'=20
+        from 0000000000000000000000000000000000000000=20
+        to   380541e91358d7a5e2fe37c81c520c92a3094951=20
+      Generating pack...=20
+      Done counting 727 objects.=20
+      Result has 708 objects.=20
+      Deltifying 708 objects.=20
+       100% (708/708) done=20
+      Writing 708 objects.=20
+       100% (708/708) done=20
+      Total 708 (delta 535), reused 275 (delta 218)=20
+      fatal: cannot fstat packfile: Value too large for defined data type=
+=20
+      unpack index-pack exited with error code=20
+      ng refs/heads/my-ocf+fsm_v2.6.18 n/a (unpacker error)=20
 
--- 
-Timur Tabi
-Linux Kernel Developer @ Freescale
+There was some question as to why fstat fails in the chroot... I don't
+have any 2TB pack files.  The above repos are relatively small.  All
+=2Egit directories sum up to about 500M.
+
+I got some help from Shawn Pearce on #git.  He told me to set the
+[receive] unpackLimit=3D5000 in .git/config on the remote.  That did
+work, and I could push.
+
+The conclusion was that my "chroot is broken".  It's Ubuntu, so it
+should Just Work(TM) :D
+
+I have tested a few configurations:
+
+git 1.4.4.4                       - push OK
+git 1.4.4.4 w/unpackLimit=3D100     - push fails
+
+git 1.5.0-rc0                     - push fails
+git 1.5.0-rc1                     - push fails
+git 1.5.0-rc1 w/unpackLimit=3D5000  - push OK
+
+I am not sure why 1.4.4.4 works w/o limit changes.
+
+I will try not to touch anything for a while, and would be glad to help
+further if I can.
+
+-Bart
+
+--=20
+				WebSig: http://www.jukie.net/~bart/sig/
+
+--QmMh2VKaunwcDwPx
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFFr+X3/zRZ1SKJaI8RAgLgAKCzdNcioMK3kdSn1ODZarVOimjB8ACeKVNm
+IkeSP41nFRlyGfyYbcsVm8k=
+=/tW7
+-----END PGP SIGNATURE-----
+
+--QmMh2VKaunwcDwPx--
