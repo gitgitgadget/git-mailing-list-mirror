@@ -1,60 +1,63 @@
-From: Alexandre Julliard <julliard@winehq.org>
-Subject: Re: [PATCH/POLL] git-format-patch: the default suffix is now .patch, not .txt
-Date: Thu, 18 Jan 2007 10:57:17 +0100
-Message-ID: <87y7o0mzcy.fsf@wine.dyndns.org>
-References: <625fc13d0701170510x8883539g93f43d9ddffe56f0@mail.gmail.com>
-	<87ps9d7j6t.fsf@morpheus.local>
-	<7vejptsglj.fsf@assigned-by-dhcp.cox.net>
-	<625fc13d0701171218i31585558wf89374eae9485341@mail.gmail.com>
-	<7vsle9p8pg.fsf@assigned-by-dhcp.cox.net>
-	<7vd55dp5a3.fsf_-_@assigned-by-dhcp.cox.net>
-	<81b0412b0701172359y1ef4f936pcdcb2de53d6bd468@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Junio C Hamano" <junkio@cox.net>,
-	"Josh Boyer" <jwboyer@gmail.com>, git@vger.kernel.org,
-	davidk@lysator.liu.se
-X-From: git-owner@vger.kernel.org Thu Jan 18 10:57:34 2007
+From: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
+Subject: [PATCH] Lose perl dependency.
+Date: Thu, 18 Jan 2007 11:21:30 +0100
+Message-ID: <20070118102800.30B38A90C@diphong.localdomain>
+X-From: git-owner@vger.kernel.org Thu Jan 18 11:28:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H7U1Q-0007RE-W0
-	for gcvg-git@gmane.org; Thu, 18 Jan 2007 10:57:29 +0100
+	id 1H7UV6-0006hd-BY
+	for gcvg-git@gmane.org; Thu, 18 Jan 2007 11:28:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932123AbXARJ5Z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 18 Jan 2007 04:57:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932147AbXARJ5Z
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Jan 2007 04:57:25 -0500
-Received: from mail.codeweavers.com ([216.251.189.131]:43727 "EHLO
-	mail.codeweavers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932123AbXARJ5Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jan 2007 04:57:24 -0500
-Received: from adsl-89-217-12-128.adslplus.ch ([89.217.12.128] helo=wine.dyndns.org)
-	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1H7U1I-0006sB-Ha; Thu, 18 Jan 2007 03:57:21 -0600
-Received: by wine.dyndns.org (Postfix, from userid 1000)
-	id 15B044F8E3; Thu, 18 Jan 2007 10:57:18 +0100 (CET)
-To: "Alex Riesen" <raa.lkml@gmail.com>
-In-Reply-To: <81b0412b0701172359y1ef4f936pcdcb2de53d6bd468@mail.gmail.com> (Alex Riesen's message of "Thu\, 18 Jan 2007 08\:59\:21 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.92 (gnu/linux)
+	id S1751867AbXARK2F (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 18 Jan 2007 05:28:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751901AbXARK2F
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Jan 2007 05:28:05 -0500
+Received: from stella.fs.ei.tum.de ([129.187.54.7]:49123 "EHLO
+	stella.fs.ei.tum.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751023AbXARK2E (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jan 2007 05:28:04 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by localhost.fs.ei.tum.de (Postfix) with ESMTP id E08DD2815D;
+	Thu, 18 Jan 2007 11:28:00 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at fs.ei.tum.de
+Received: from stella.fs.ei.tum.de ([127.0.0.1])
+	by localhost (stella.fs.ei.tum.de [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 3yy81hvfb7se; Thu, 18 Jan 2007 11:28:00 +0100 (CET)
+Received: from diphong.localdomain (ppp-62-216-203-232.dynamic.mnet-online.de [62.216.203.232])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	by stella.fs.ei.tum.de (Postfix) with ESMTP id B763D28133;
+	Thu, 18 Jan 2007 11:28:00 +0100 (CET)
+Received: by diphong.localdomain (Postfix, from userid 1001)
+	id 30B38A90C; Thu, 18 Jan 2007 11:28:00 +0100 (CET)
+To: undisclosed-recipients:;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37073>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37074>
 
-"Alex Riesen" <raa.lkml@gmail.com> writes:
+Perl is just used to reverse stdin, which can be done with a simple
+sed construct as well.
 
-> Also, how many mail clients know that .patch is actually
-> a text and not application/binary? It'll make patch
-> reviewing harder for some (not sure if I'd like a review
-> of such a person, though).
+Signed-off-by: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
+---
+ git-rebase.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-OTOH such mail clients usually also think they can freely reformat
-text files, leading to unusable patches.  A .patch extension would
-help avoid that type of breakage, so I think it's a good idea.
-
+diff --git a/git-rebase.sh b/git-rebase.sh
+index c8bd0f9..c34a0d2 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -332,7 +332,7 @@ echo "$prev_head" > "$dotest/prev_head"
+ 
+ msgnum=0
+ for cmt in `git-rev-list --no-merges "$upstream"..ORIG_HEAD \
+-			| @@PERL@@ -e 'print reverse <>'`
++			| sed -ne '1!G;$p;h'`
+ do
+ 	msgnum=$(($msgnum + 1))
+ 	echo "$cmt" > "$dotest/cmt.$msgnum"
 -- 
-Alexandre Julliard
-julliard@winehq.org
+1.5.0.rc1.g8bef
