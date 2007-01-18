@@ -1,103 +1,57 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH/POLL] git-format-patch: the default suffix is now .patch,
- not .txt
-Date: Thu, 18 Jan 2007 18:03:17 +0100
-Message-ID: <45AFA855.6050804@op5.se>
-References: <625fc13d0701171218i31585558wf89374eae9485341@mail.gmail.com> <7vsle9p8pg.fsf@assigned-by-dhcp.cox.net> <7vd55dp5a3.fsf_-_@assigned-by-dhcp.cox.net> <81b0412b0701172359y1ef4f936pcdcb2de53d6bd468@mail.gmail.com> <7v64b4ohcj.fsf@assigned-by-dhcp.cox.net> <81b0412b0701180135r505a75a5j172c70792d6569c0@mail.gmail.com> <625fc13d0701180352m151cceb3lf9c00b6cf0ae937b@mail.gmail.com> <81b0412b0701180540x15d20453s3dbc0c061fd06d50@mail.gmail.com> <20070118154257.GC15428@spearce.org> <45AFA083.9050004@op5.se> <20070118165107.GF15428@spearce.org>
+From: "Ron Parker" <ron.parker@mobot.org>
+Subject: Preserving ownership and set*id bits
+Date: Thu, 18 Jan 2007 11:09:33 -0600
+Message-ID: <769697AE3E25EF4FBC0763CD91AB1B0201D49679@MBGMail01.mobot.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Alex Riesen <raa.lkml@gmail.com>, Josh Boyer <jwboyer@gmail.com>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
-	davidk@lysator.liu.se
-X-From: git-owner@vger.kernel.org Thu Jan 18 18:03:25 2007
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+X-From: git-owner@vger.kernel.org Thu Jan 18 18:09:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H7afZ-0003Xn-Mu
-	for gcvg-git@gmane.org; Thu, 18 Jan 2007 18:03:22 +0100
+	id 1H7alc-0005A1-So
+	for gcvg-git@gmane.org; Thu, 18 Jan 2007 18:09:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752064AbXARRDU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 18 Jan 2007 12:03:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752060AbXARRDU
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Jan 2007 12:03:20 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:44951 "EHLO
-	smtp-gw1.op5.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752064AbXARRDT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jan 2007 12:03:19 -0500
-Received: from [192.168.1.20] (unknown [213.88.215.14])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id AA2F66BCBE; Thu, 18 Jan 2007 18:03:17 +0100 (CET)
-User-Agent: Thunderbird 1.5.0.9 (X11/20070102)
-To: "Shawn O. Pearce" <spearce@spearce.org>
-In-Reply-To: <20070118165107.GF15428@spearce.org>
+	id S1752071AbXARRJf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 18 Jan 2007 12:09:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752073AbXARRJf
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Jan 2007 12:09:35 -0500
+Received: from mbgmail01.mobot.org ([4.36.133.74]:11961 "EHLO
+	mbgmail01.mobot.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752071AbXARRJe convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 18 Jan 2007 12:09:34 -0500
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: Preserving ownership and set*id bits
+Thread-Index: Acc7I2zW0xO26nH/QKS1cZF6biFxNg==
+To: <git@vger.kernel.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37123>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37124>
 
-Shawn O. Pearce wrote:
-> Andreas Ericsson <ae@op5.se> wrote:
->> Would a +46-31 number work? If so, you could give me a call when you're
->> having trouble. I'd probably end up asking the list, or bribing Junio
->> with beer to answer for me, but the fee would be low (how much is a
->> dozen beers in Japan?), so perhaps it'd be worth it ;-)
-> 
-> Heh.  The thing is, with me "on staff" I doubt you can get much
-> better support.  I know Git very well, almost as well as Linus,
-> Junio, Nico, and Johannes (sorry, no particular order there).
-> What I don't know off the top of my head, I know where the source
-> code for it is, and I can read and understand it rather quickly.
-> 
+I am tracking a development web server in git.  The problem is that some
+of the scripts I am tracing are setgid.  And certain files must have
+different ownership.
 
-Ya, I knows. :)
+I assumed that git would preserve the setgid bit as well as the user and
+group of the files.  Since it is described as the "stupid directory
+content manager" that just tracks the content of directories, I expected
+it would maintain at least as much information as tar.  Oops.  Color me
+stupid.
 
-> When something breaks, I can usually fix it myself, and that usually
-> results in a patch to Junio just hours after I discover the problem.
-> Most of the time the patch is worthy of inclusion and Junio picks
-> it up.  You can't get that kind of response from a commerical vendor,
-> at least not without forking over bucket loads of cash first.
-> 
-> The problem is, the organization has strict rules about recommending
-> yourself as a vendor.  But recommending a guy half way around the
-> world who works for beer is probably in compliance.  :-)
->  
+Anyway, I'm not here to complain, but I am looking for suggestions of
+how I might store and preserve this information as well.  
 
-That was my devilishly clever plan; To provide support to someone who
-knows the thing I'm supposed to support a lot better than myself, while
-getting some free beer in the process ;-)
+I got bit when I did something equivalent to "git reset --hard HEAD^",
+to back out a change.  I need someway of preserving this information
+across commits, clones, pushes, pulls, etc.
 
->> On a serious note, it's probably about time the world saw its first
->> commercial git support company. It's legal to package and sell GPL'd
->> code. Many companies have already proven that it can be a very
->> lucrative business.
-> 
-> I've thought about doing this myself.  I'm just so short on time
-> that developing a business providing support would probably push me
-> way over the edge.  Ideally I'd love to have such a venture make its
-> money off support contracts and a small markup on dead-tree forms of
-> open-source Git documentation.  I'd also love to see such a venture
-> be able to support a Git developer or two full-time, making sure that
-> all of their work is getting folded back into the main git.git tree.
-> Which of course implies they can't be heading off in directions
-> that the rest of the group finds useless/pointless/stupid/etc.
-> 
-> Wishful thinking.  Back to reality.
-> 
-
-This is a case where "Think Big" isn't enough, and you need to "Think
-Bigger". Don't settle for shipping help-docs on git and answering the
-phone. Sell pre-packaged versions of git, with a pre-installed Linux
-server with raided disks and a nifty backup-solution (just sell a second
-server and use an update-hook to replicate everything to that one, then
-you're done). You could easily charge up to $2,500 / user for providing
-"A fully integrated VCS / backup solution, with full failover to ensure
-100% efficiency in your day-to-day job". Tack on another 10k for the
-two servers and another 1k / dev to go to a training seminar and you're
-good to go.
-
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Our development has been centered around the idea of using git to track
+the changes to our development server and later "git pull" those changes
+to the production server with GIT_DIR pointing to an out-of-directory
+clone.
