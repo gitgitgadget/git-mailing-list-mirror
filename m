@@ -1,79 +1,70 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Lose perl dependency. (fwd)
-Date: Fri, 19 Jan 2007 11:56:47 -0800
-Message-ID: <7vps9ag58g.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.63.0701181149260.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	<45AF5F83.6090207@fs.ei.tum.de>
-	<Pine.LNX.4.63.0701181441010.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
+Subject: Re: [PATCH] Documentation: Fix git.7 dependencies.
+Date: Fri, 19 Jan 2007 21:20:22 +0100
+Message-ID: <8aa486160701191220v73836c20h74e044f7d2dcfd7d@mail.gmail.com>
+References: <873b67735m.fsf@gmail.com>
+	 <7vbqkuhlhi.fsf@assigned-by-dhcp.cox.net>
+	 <8aa486160701191138v7fc29e53xbf809b1495e30b3d@mail.gmail.com>
+	 <7vtzymg5dg.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 19 20:57:03 2007
+X-From: git-owner@vger.kernel.org Fri Jan 19 21:20:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H7zr3-0005jm-0C
-	for gcvg-git@gmane.org; Fri, 19 Jan 2007 20:56:53 +0100
+	id 1H80Dr-0003ZK-UT
+	for gcvg-git@gmane.org; Fri, 19 Jan 2007 21:20:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964852AbXAST4t (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 19 Jan 2007 14:56:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932868AbXAST4t
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Jan 2007 14:56:49 -0500
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:33203 "EHLO
-	fed1rmmtao11.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932864AbXAST4s (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Jan 2007 14:56:48 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070119195648.IKCH25875.fed1rmmtao11.cox.net@fed1rmimpo02.cox.net>;
-          Fri, 19 Jan 2007 14:56:48 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id D7x51W0061kojtg0000000; Fri, 19 Jan 2007 14:57:05 -0500
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0701181441010.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	(Johannes Schindelin's message of "Thu, 18 Jan 2007 14:57:15 +0100
-	(CET)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S964899AbXASUUZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 19 Jan 2007 15:20:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964907AbXASUUZ
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Jan 2007 15:20:25 -0500
+Received: from wr-out-0506.google.com ([64.233.184.236]:60175 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964899AbXASUUY convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 19 Jan 2007 15:20:24 -0500
+Received: by wr-out-0506.google.com with SMTP id i22so499625wra
+        for <git@vger.kernel.org>; Fri, 19 Jan 2007 12:20:23 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=gCjS3VJk+CzNwtzDQBJDcq+2V/cCHhX/Y/2VL6MSrN4TCgcSlLCP3YFH8rcmP5BDcuajjPcrn4J0DnsNcRVpvhyP+swg49CV1WrdhdAJ9RX7XKxdRElArvCATQreNTegbbmTfVcJOOC/Dh84XlImudmcJVtcw6YxtSij0H6xS40=
+Received: by 10.82.120.14 with SMTP id s14mr1031516buc.1169238022321;
+        Fri, 19 Jan 2007 12:20:22 -0800 (PST)
+Received: by 10.78.68.8 with HTTP; Fri, 19 Jan 2007 12:20:22 -0800 (PST)
+To: "Junio C Hamano" <junkio@cox.net>
+In-Reply-To: <7vtzymg5dg.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37199>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37200>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On 1/19/07, Junio C Hamano <junkio@cox.net> wrote:
+> "Santi B=E9jar" <sbejar@gmail.com> writes:
+>
+> > On 1/19/07, Junio C Hamano <junkio@cox.net> wrote:
+> >> > -git.7 git.html: git.txt core-intro.txt
+> >> > +git.7 git.html: git.txt core-intro.txt $(cmds_txt)
+> >>
+> >> I do not think this is needed; doesn't doc.dep catch cmds_txt as
+> >> well?
+> >
+> > It's not needed. I didn't see the doc.dep.
+>
+> Thanks for sanity-checking.
+>
+> The reason for the first hunk I gave in my previous message was
+> wrong, by the way; there is no circular dependency.  The first
+> hunk is a good change nevertheless, because what will be in
+> cmds-*.txt command list does not depend on what is in git.txt.
 
-> Hi,
->
-> On Thu, 18 Jan 2007, Simon 'corecode' Schubert wrote:
->
->> Johannes Schindelin wrote:
->> > On Thu, 18 Jan 2007, Simon 'corecode' Schubert wrote:
->> > 
->> > >  for cmt in `git-rev-list --no-merges "$upstream"..ORIG_HEAD \
->> > > -			| @@PERL@@ -e 'print reverse <>'`
->> > > +			| sed -ne '1!G;$p;h'`
->> > 
->> > Why not teach the revision machinery to output in reverse with "--reverse"?
->> 
->> I'm more in favour of "small is beautiful".  Also from looking at the code,
->> this seems to be a bit complicated.
->
-> I'm more in favour of "less shell dependecy is beautiful". And from what I 
-> can tell, it should be relatively easy:
->
-> ---
->
-> 	14 insertions and 11 deletions stem from moving (and extern'ing) 
-> 	reverse_commit_list() from merge-recursive.c to commit.c
->
-> 	So the change is actually 9 insertions and one deletion.
+I can not reproduce it, but I got a circular depencency. This was my
+motivation for the patch. Anyway, at least there is a usefull hunk in
+my patch :)
 
-I think this is sane but I hate to having to worry about
-possible fallouts from giving --reverse in setup_revisions() to
-make it available to everybody.  E.g. things like "what happens
-when you say "git format-patch --reverse HEAD~3".
-
-Nevertheless, moving reverse_commit_list out of merge-recursive
-is a good clean-up.
+Santi
