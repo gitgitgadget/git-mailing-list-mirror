@@ -1,91 +1,257 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC] Git config file reader in Perl (WIP)
-Date: Fri, 19 Jan 2007 13:25:05 +0100
-Message-ID: <200701191325.06337.jnareb@gmail.com>
-References: <200701150144.56793.jnareb@gmail.com> <200701171500.33220.jnareb@gmail.com> <200701191310.32417.jnareb@gmail.com>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<zeisberg@informatik.uni-freiburg.de>
+Subject: [PATCH] Update documentation of fetch-pack, push and send-pack
+Date: Fri, 19 Jan 2007 13:43:00 +0100
+Organization: Universitaet Freiburg, Institut f. Informatik
+Message-ID: <20070119124300.GA2995@cepheus>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Nikolai Weibull <now@bitwi.se>, Junio C Hamano <junkio@cox.net>,
-	Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 19 13:24:43 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Fri Jan 19 13:43:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H7snL-0005Z0-Nm
-	for gcvg-git@gmane.org; Fri, 19 Jan 2007 13:24:36 +0100
+	id 1H7t5Y-0001Vp-05
+	for gcvg-git@gmane.org; Fri, 19 Jan 2007 13:43:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965095AbXASMYd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 19 Jan 2007 07:24:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965098AbXASMYd
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Jan 2007 07:24:33 -0500
-Received: from ug-out-1314.google.com ([66.249.92.171]:46325 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965095AbXASMYc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 19 Jan 2007 07:24:32 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so444657uga
-        for <git@vger.kernel.org>; Fri, 19 Jan 2007 04:24:31 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=GVH2wgK5AOVqyakIryG31ZV4MrcMR6c2e3kj4egKlLiqAU7lVV1e2zMCBDdmBv2ps6J/oZ5PtarLiM2SNXG/xqPqO0iQQQyeSKiaX8bkK5O7/HnX85ZkuGTwkOqcDlidtqaIWABFf/mQO70kpnUd9/Un7hOk0AUgJbQ9U/z6I24=
-Received: by 10.67.93.6 with SMTP id v6mr2919825ugl.1169209471079;
-        Fri, 19 Jan 2007 04:24:31 -0800 (PST)
-Received: from host-81-190-20-200.torun.mm.pl ( [81.190.20.200])
-        by mx.google.com with ESMTP id 72sm2072357ugb.2007.01.19.04.24.29;
-        Fri, 19 Jan 2007 04:24:30 -0800 (PST)
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-User-Agent: KMail/1.9.3
-In-Reply-To: <200701191310.32417.jnareb@gmail.com>
+	id S965108AbXASMnU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 19 Jan 2007 07:43:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965109AbXASMnU
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Jan 2007 07:43:20 -0500
+Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:34934 "EHLO
+	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S965108AbXASMnT (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 19 Jan 2007 07:43:19 -0500
+Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
+	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
+	(Exim 4.60)
+	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
+	id 1H7t5S-00016V-9U; Fri, 19 Jan 2007 13:43:18 +0100
+Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
+	by login.informatik.uni-freiburg.de (8.13.7+Sun/8.12.11) with ESMTP id l0JChFEZ012593;
+	Fri, 19 Jan 2007 13:43:15 +0100 (MET)
+Received: (from zeisberg@localhost)
+	by login.informatik.uni-freiburg.de (8.13.7+Sun/8.12.11/Submit) id l0JCh0SM012592;
+	Fri, 19 Jan 2007 13:43:00 +0100 (MET)
+To: git@vger.kernel.org
+Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <zeisberg@informatik.uni-freiburg.de>,
+	git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37176>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37177>
 
-Jakub Narebski wrote:
-> Jakub Narebski wrote:
-> 
->> BTW. it looks like C escape sequences are parsed, but not octal
->> escape sequences, nor no-op escaping other character.
->  
-> From a bit of testing, as documentation of config file format
-> is woefully incomplete, (yes, I know I should use the source)
-> _some_ of C escape sequences aka. character escape codes (CEC)
-> are parsed:
->  - "\t", tab character (HT, TAB)
->  - "\n", newline (NL)
->  - "\b", backspace (BS)
-> It's a bit strange that "\b" is parsed...
-[...]
-> Values of configuration variables can span multiple lines by escaping
-> newline, i.e. putting \ as the last character. Nice.
+add all supported options to Documentation/git-....txt and the usage st=
+rings.
 
->From config.c:parse_value:73
+Signed-off-by: Uwe Kleine-K=F6nig <zeisberg@informatik.uni-freiburg.de>
+---
 
-		if (c == '\\') {
-			c = get_next_char();
-			switch (c) {
-			case '\n':
-				continue;
-			case 't':
-				c = '\t';
-				break;
-			case 'b':
-				c = '\b';
-				break;
-			case 'n':
-				c = '\n';
-				break;
-			/* Some characters escape as themselves */
-			case '\\': case '"':
-				break;
-			/* Reject unknown escape sequences */
-			default:
-				return NULL;
-			}
+This patch is included in this series to have the later patches only
+updating the documentation to follow the code changes.
 
--- 
-Jakub Narebski
-Poland
+@Junio:  If you take this (or one of the following) patch(es), could yo=
+u
+please give me feedback on how my '=F6' got to you?
+
+ Documentation/git-fetch-pack.txt |   21 +++++++++++++++++----
+ Documentation/git-push.txt       |    2 +-
+ Documentation/git-send-pack.txt  |   15 +++++++++++----
+ builtin-push.c                   |    2 +-
+ fetch-pack.c                     |    2 +-
+ send-pack.c                      |    4 ++--
+ 6 files changed, 33 insertions(+), 13 deletions(-)
+
+
+diff --git a/Documentation/git-fetch-pack.txt b/Documentation/git-fetch=
+-pack.txt
+index 90ef127..bd8ebac 100644
+--- a/Documentation/git-fetch-pack.txt
++++ b/Documentation/git-fetch-pack.txt
+@@ -8,7 +8,7 @@ git-fetch-pack - Receive missing objects from another r=
+epository
+=20
+ SYNOPSIS
+ --------
+-'git-fetch-pack' [-q] [-k] [--exec=3D<git-upload-pack>] [<host>:]<dire=
+ctory> [<refs>...]
++'git-fetch-pack' [--all] [--quiet|-q] [--keep|-k] [--thin] [--exec=3D<=
+git-upload-pack>] [--depth=3D<n>] [-v] [<host>:]<directory> [<refs>...]
+=20
+ DESCRIPTION
+ -----------
+@@ -28,17 +28,24 @@ have a common ancestor commit.
+=20
+ OPTIONS
+ -------
+--q::
++\--all::
++	Fetch all remote refs.
++
++\--quiet, \-q::
+ 	Pass '-q' flag to 'git-unpack-objects'; this makes the
+ 	cloning process less verbose.
+=20
+--k::
++\--keep, \-k::
+ 	Do not invoke 'git-unpack-objects' on received data, but
+ 	create a single packfile out of it instead, and store it
+ 	in the object database. If provided twice then the pack is
+ 	locked against repacking.
+=20
+---exec=3D<git-upload-pack>::
++\--thin::
++	Spend extra cycles to minimize the number of objects to be sent.
++	Use it on slower connection.
++
++\--exec=3D<git-upload-pack>::
+ 	Use this to specify the path to 'git-upload-pack' on the
+ 	remote side, if is not found on your $PATH.
+ 	Installations of sshd ignores the user's environment
+@@ -50,6 +57,12 @@ OPTIONS
+ 	shells by having a lean .bashrc file (they set most of
+ 	the things up in .bash_profile).
+=20
++\--depth=3D<n>::
++	Limit fetching to ancestor-chains not longer than n.
++
++\-v::
++	Run verbosely.
++
+ <host>::
+ 	A remote host that houses the repository.  When this
+ 	part is specified, 'git-upload-pack' is invoked via
+diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+index 3e8dbcf..7a2e503 100644
+--- a/Documentation/git-push.txt
++++ b/Documentation/git-push.txt
+@@ -8,7 +8,7 @@ git-push - Update remote refs along with associated obj=
+ects
+=20
+ SYNOPSIS
+ --------
+-'git-push' [--all] [--tags] [--exec=3D<receive-pack>] [--repo=3Dall] [=
+-f | --force] [-v] [<repository> <refspec>...]
++'git-push' [--all] [--tags] [--exec=3D<git-receive-pack>] [--repo=3Dal=
+l] [-f | --force] [-v] [<repository> <refspec>...]
+=20
+ DESCRIPTION
+ -----------
+diff --git a/Documentation/git-send-pack.txt b/Documentation/git-send-p=
+ack.txt
+index eea8fe8..dee43a9 100644
+--- a/Documentation/git-send-pack.txt
++++ b/Documentation/git-send-pack.txt
+@@ -8,7 +8,7 @@ git-send-pack - Push objects over git protocol to anoth=
+er reposiotory
+=20
+ SYNOPSIS
+ --------
+-'git-send-pack' [--all] [--force] [--exec=3D<git-receive-pack>] [<host=
+>:]<directory> [<ref>...]
++'git-send-pack' [--all] [--force] [--exec=3D<git-receive-pack>] [--ver=
+bose] [--thin] [<host>:]<directory> [<ref>...]
+=20
+ DESCRIPTION
+ -----------
+@@ -21,23 +21,30 @@ updates it from the current repository, sending nam=
+ed refs.
+=20
+ OPTIONS
+ -------
+---exec=3D<git-receive-pack>::
++\--exec=3D<git-receive-pack>::
+ 	Path to the 'git-receive-pack' program on the remote
+ 	end.  Sometimes useful when pushing to a remote
+ 	repository over ssh, and you do not have the program in
+ 	a directory on the default $PATH.
+=20
+---all::
++\--all::
+ 	Instead of explicitly specifying which refs to update,
+ 	update all refs that locally exist.
+=20
+---force::
++\--force::
+ 	Usually, the command refuses to update a remote ref that
+ 	is not an ancestor of the local ref used to overwrite it.
+ 	This flag disables the check.  What this means is that
+ 	the remote repository can lose commits; use it with
+ 	care.
+=20
++\--verbose::
++	Run verbosely.
++
++\--thin::
++	Spend extra cycles to minimize the number of objects to be sent.
++	Use it on slower connection.
++
+ <host>::
+ 	A remote host to house the repository.  When this
+ 	part is specified, 'git-receive-pack' is invoked via
+diff --git a/builtin-push.c b/builtin-push.c
+index 7a3d2bb..ba7981f 100644
+--- a/builtin-push.c
++++ b/builtin-push.c
+@@ -8,7 +8,7 @@
+=20
+ #define MAX_URI (16)
+=20
+-static const char push_usage[] =3D "git-push [--all] [--tags] [-f | --=
+force] <repository> [<refspec>...]";
++static const char push_usage[] =3D "git-push [--all] [--tags] [--exec=3D=
+<git-receive-pack>] [--repo=3Dall] [-f | --force] [-v] [<repository> <r=
+efspec>...]";
+=20
+ static int all, tags, force, thin =3D 1, verbose;
+ static const char *execute;
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 1530a94..726140a 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -12,7 +12,7 @@ static int verbose;
+ static int fetch_all;
+ static int depth;
+ static const char fetch_pack_usage[] =3D
+-"git-fetch-pack [--all] [-q] [-v] [-k] [--thin] [--exec=3Dupload-pack]=
+ [--depth=3D<n>] [host:]directory <refs>...";
++"git-fetch-pack [--all] [--quiet|-q] [--keep|-k] [--thin] [--exec=3D<g=
+it-upload-pack>] [--depth=3D<n>] [-v] [<host>:]<directory> [<refs>...]"=
+;
+ static const char *exec =3D "git-upload-pack";
+=20
+ #define COMPLETE	(1U << 0)
+diff --git a/send-pack.c b/send-pack.c
+index 6756264..ec2c108 100644
+--- a/send-pack.c
++++ b/send-pack.c
+@@ -6,8 +6,8 @@
+ #include "exec_cmd.h"
+=20
+ static const char send_pack_usage[] =3D
+-"git-send-pack [--all] [--exec=3Dgit-receive-pack] <remote> [<head>...=
+]\n"
+-"  --all and explicit <head> specification are mutually exclusive.";
++"git-send-pack [--all] [--force] [--exec=3D<git-receive-pack>] [--verb=
+ose] [--thin] [<host>:]<directory> [<ref>...]\n"
++"  --all and explicit <ref> specification are mutually exclusive.";
+ static const char *exec =3D "git-receive-pack";
+ static int verbose;
+ static int send_all;
+--=20
+1.5.0.rc1.g581a
+
+
+--=20
+Uwe Kleine-K=F6nig
+
+primes where sieve (p:xs) =3D [ x | x<-xs, x `rem` p /=3D 0 ]; \
+primes =3D map head (iterate sieve [2..])
