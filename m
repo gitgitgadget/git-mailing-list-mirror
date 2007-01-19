@@ -1,70 +1,49 @@
-From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
-Subject: Re: [PATCH] Documentation: Fix git.7 dependencies.
-Date: Fri, 19 Jan 2007 21:20:22 +0100
-Message-ID: <8aa486160701191220v73836c20h74e044f7d2dcfd7d@mail.gmail.com>
-References: <873b67735m.fsf@gmail.com>
-	 <7vbqkuhlhi.fsf@assigned-by-dhcp.cox.net>
-	 <8aa486160701191138v7fc29e53xbf809b1495e30b3d@mail.gmail.com>
-	 <7vtzymg5dg.fsf@assigned-by-dhcp.cox.net>
+From: Luben Tuikov <ltuikov@yahoo.com>
+Subject: Packfile SHA1 mismatch with itself
+Date: Fri, 19 Jan 2007 12:35:09 -0800 (PST)
+Message-ID: <510820.93884.qm@web31802.mail.mud.yahoo.com>
+Reply-To: ltuikov@yahoo.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 19 21:20:33 2007
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Fri Jan 19 21:35:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H80Dr-0003ZK-UT
-	for gcvg-git@gmane.org; Fri, 19 Jan 2007 21:20:28 +0100
+	id 1H80SQ-0007sm-1P
+	for gcvg-git@gmane.org; Fri, 19 Jan 2007 21:35:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964899AbXASUUZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 19 Jan 2007 15:20:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964907AbXASUUZ
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Jan 2007 15:20:25 -0500
-Received: from wr-out-0506.google.com ([64.233.184.236]:60175 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964899AbXASUUY convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 19 Jan 2007 15:20:24 -0500
-Received: by wr-out-0506.google.com with SMTP id i22so499625wra
-        for <git@vger.kernel.org>; Fri, 19 Jan 2007 12:20:23 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=gCjS3VJk+CzNwtzDQBJDcq+2V/cCHhX/Y/2VL6MSrN4TCgcSlLCP3YFH8rcmP5BDcuajjPcrn4J0DnsNcRVpvhyP+swg49CV1WrdhdAJ9RX7XKxdRElArvCATQreNTegbbmTfVcJOOC/Dh84XlImudmcJVtcw6YxtSij0H6xS40=
-Received: by 10.82.120.14 with SMTP id s14mr1031516buc.1169238022321;
-        Fri, 19 Jan 2007 12:20:22 -0800 (PST)
-Received: by 10.78.68.8 with HTTP; Fri, 19 Jan 2007 12:20:22 -0800 (PST)
-To: "Junio C Hamano" <junkio@cox.net>
-In-Reply-To: <7vtzymg5dg.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S964867AbXASUfM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 19 Jan 2007 15:35:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964852AbXASUfM
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Jan 2007 15:35:12 -0500
+Received: from web31802.mail.mud.yahoo.com ([68.142.207.65]:47091 "HELO
+	web31802.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S932846AbXASUfK (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 19 Jan 2007 15:35:10 -0500
+Received: (qmail 93920 invoked by uid 60001); 19 Jan 2007 20:35:09 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=X-YMail-OSG:Received:Date:From:Reply-To:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
+  b=cfJELPyhgNKCrK/1mc9bArnZyEqT5bVpULbGNWGmrDkgNrNBErN7jQ/j/jSiTTWocezb80BoD1ljnB7XI9n2mI8cihGTv0QiAEaDKU6J7fH6sQDblt2Dx8rrVf2vWvzJZ4rc5Qs8iNyBJqANgL5GkHyhqmfJWg4Iv8VCu40YXm8=;
+X-YMail-OSG: F319dK4VM1nOngA8kKMWMuO9mi27L.1h2O5IbdAxcVwLB0Pm54xReRwmDQ4uY2OUCXApc5cObQ--
+Received: from [64.215.88.90] by web31802.mail.mud.yahoo.com via HTTP; Fri, 19 Jan 2007 12:35:09 PST
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37200>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37201>
 
-On 1/19/07, Junio C Hamano <junkio@cox.net> wrote:
-> "Santi B=E9jar" <sbejar@gmail.com> writes:
->
-> > On 1/19/07, Junio C Hamano <junkio@cox.net> wrote:
-> >> > -git.7 git.html: git.txt core-intro.txt
-> >> > +git.7 git.html: git.txt core-intro.txt $(cmds_txt)
-> >>
-> >> I do not think this is needed; doesn't doc.dep catch cmds_txt as
-> >> well?
-> >
-> > It's not needed. I didn't see the doc.dep.
->
-> Thanks for sanity-checking.
->
-> The reason for the first hunk I gave in my previous message was
-> wrong, by the way; there is no circular dependency.  The first
-> hunk is a good change nevertheless, because what will be in
-> cmds-*.txt command list does not depend on what is in git.txt.
+$GIT_DIR=. git-fsck-objects --full
+error: Packfile ./objects/pack/pack-8cafdff4eb66bb2219016e4c0817cdb5cb326ab6.pack SHA1 mismatch
+with itself
+fatal: unknown object type 0 in ./objects/pack/pack-8cafdff4eb66bb2219016e4c0817cdb5cb326ab6.pack
 
-I can not reproduce it, but I got a circular depencency. This was my
-motivation for the patch. Anyway, at least there is a usefull hunk in
-my patch :)
+So,... anyone seen this?
 
-Santi
+Is there a way to fix it, other than blowing away the repo and
+recreating it?
+
+Thanks,
+   Luben
