@@ -1,191 +1,138 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Decoding git show-branch output
-Date: Fri, 19 Jan 2007 14:26:50 -0800
-Message-ID: <7v64b2fyad.fsf@assigned-by-dhcp.cox.net>
-References: <17840.50115.999227.260259@lisa.zopyra.com>
-	<8aa486160701190613j6493daccofc259a8b17c0f1d1@mail.gmail.com>
-	<17841.13791.627478.602602@lisa.zopyra.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC] Git config file reader in Perl (WIP)
+Date: Fri, 19 Jan 2007 23:44:11 +0100
+Message-ID: <200701192344.11972.jnareb@gmail.com>
+References: <200701150144.56793.jnareb@gmail.com> <200701191310.32417.jnareb@gmail.com> <Pine.LNX.4.63.0701191420000.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 19 23:27:12 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Nikolai Weibull <now@bitwi.se>, Junio C Hamano <junkio@cox.net>,
+	Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 19 23:43:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H82CQ-0006RE-0u
-	for gcvg-git@gmane.org; Fri, 19 Jan 2007 23:27:06 +0100
+	id 1H82SV-0002XL-KN
+	for gcvg-git@gmane.org; Fri, 19 Jan 2007 23:43:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964939AbXASW0w (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 19 Jan 2007 17:26:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964942AbXASW0w
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Jan 2007 17:26:52 -0500
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:50944 "EHLO
-	fed1rmmtao04.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964939AbXASW0v (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Jan 2007 17:26:51 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070119222651.PMNC7494.fed1rmmtao04.cox.net@fed1rmimpo02.cox.net>;
-          Fri, 19 Jan 2007 17:26:51 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id DAT81W0011kojtg0000000; Fri, 19 Jan 2007 17:27:08 -0500
-To: Bill Lear <rael@zopyra.com>
-In-Reply-To: <17841.13791.627478.602602@lisa.zopyra.com> (Bill Lear's message
-	of "Fri, 19 Jan 2007 15:19:27 -0600")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932503AbXASWnf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 19 Jan 2007 17:43:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932617AbXASWnf
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Jan 2007 17:43:35 -0500
+Received: from ug-out-1314.google.com ([66.249.92.172]:31474 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932503AbXASWne (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Jan 2007 17:43:34 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so572137uga
+        for <git@vger.kernel.org>; Fri, 19 Jan 2007 14:43:33 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=e9en6VNDoDFIl6BNkZZhQxn88symuYEhPd5e1qAeKehJMxizUzZFdy78L1c7gW99y/GMdQaQ7Lw/bPpY+GKTRdi8fpMgDUAPJrff+xPH3Mj11qZwv5mNm6acytnNfQBxhEL5YDMboAy3EnT1oncTO/MShZRXPxpsS1Vi5yr87+I=
+Received: by 10.67.20.3 with SMTP id x3mr3838844ugi.1169246612937;
+        Fri, 19 Jan 2007 14:43:32 -0800 (PST)
+Received: from host-81-190-20-200.torun.mm.pl ( [81.190.20.200])
+        by mx.google.com with ESMTP id 53sm3171094ugn.2007.01.19.14.43.32;
+        Fri, 19 Jan 2007 14:43:32 -0800 (PST)
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+User-Agent: KMail/1.9.3
+In-Reply-To: <Pine.LNX.4.63.0701191420000.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37213>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37214>
 
-Bill Lear <rael@zopyra.com> writes:
+Johannes Schindelin wrote:
+> 
+> On Fri, 19 Jan 2007, Jakub Narebski wrote:
+> 
+>> From a bit of testing, as documentation of config file format is 
+>> woefully incomplete, (yes, I know I should use the source) _some_ of C 
+>> escape sequences aka. character escape codes (CEC) are parsed:
+> 
+> No, you should not just use the source. You should use the source _and_ 
+> complete the documentation.
 
-> master~3 ^2 ~2
->
-> Means the 2nd (first generation) parent of the second parent of the
-> 3rd (first generation) parent?  Is there a way to simply state this in
-> plain words, say in terms of commits/merges?
+Something like the patch below? Untested! ("make doc" up to 
+git-repo-config.txt compiles, though).
 
-You had one commit (master~3^2~2).  You built one commit on top
-of it (master~3^2~1) and another (master~3^2).
+I'm not sure how to tell that you can have [section] if you have
+[section "subsection"], but you don't need to. And I probably forgot
+to add some information.
 
-That one was merged into something else as the second parent,
-and the merge result is master~3 (that "something else" is
-master~4 aka master~3^ aka master~3^1).
+And I'm not sure if some behavior should not be changed, for example
+allowing _any_ line to be continued with `\`, or that other character
+escape sequences and perhaps also octal character sequences should be
+allowed (either that or `\b` should not be parsed).
 
-You built three commits on top of that, and that is where your
-master currently is.
+I can send proper patch if requested, but I'd rather above issues
+were resolved first.
 
-> I'm unsure how to
-> interpret the above, especially since none of us has been developing
-> on a branch (I see no other branch names except master, also).
-
-But you are.  Each repository are independent and the branches
-your developers have, even though each of them have only one,
-are separate branches.  You are exercising the distributedness
-of git development model.
-
-> I'm not sure if this is sane: is it ok to clone the company repo,
-> then push from that clone into a bare repo, then from there to
-> the company one?
-
-That's essentially everybody doing distributed development does
-in git land -- it is very sane.
-
-> Is git doing some sort of weird, silent pseudo-merge
-> that we don't understand, thus generated what appears to be a very
-> tangled, albeit brief, history, when we examine it?
-
-I do not think so, but the person creating a commit may first be
-pulling from the central location, which needs a merge and
-results in one.  That's very common in centralized workflow
-modelled after how CVS is used.
-
-Let's say you have the central (perhaps bare but it does not
-matter if it is bare or not) repository and two workers, Alice
-and Bob.  They both clone from it and make one commit each in
-their repositories.  The commit ancestries in the entire world
-would look like this:
-
-          .---o Alice's 'master'
-         /
- ---o---o-------o Bob's 'master'
-        ^
-        central repo's 'master'
-
-Then Bob pushes to the central repo.  Since it is a
-fast-forward, his push is accpeted and the picture would become
-like this:
-
-          .---o Alice's 'master'
-         /
- ---o---o-------o Bob's 'master'
-                ^
-                central repo's 'master'
-
-When Alice wants to push her changes back to the central repo,
-it is not a fast-forward and is refused.  We currently suggest
-Alice to first pull from the central repo (this is how CVS is
-used -- you try "cvs commit" and get complaints, then you say
-"cvs update" and retry).
-
-What happens is that in Alice's repository, if Bob's change and
-Alice's change does not conflict, this "pull" creates a merge
-commit.
-
-          .---o---o Alice's 'master'
-         /       /
- ---o---o-------o Bob's 'master'
-                ^
-                central repo's 'master'
-
-Then Alice can push out her changes.
-
-          .---o---o Alice's 'master' == central repo's 'master'
-         /       /
- ---o---o-------o Bob's 'master'
-                
-If Bob pulls from the central repo at this point, it will also
-fast-forward and these three repositories end up with
-
-
-          .---o---o Alice's 'master' == central repo's 'master'
-         /       /  == Bob's 'master'
- ---o---o-------o
-
-One thing you _could_ do is to train your users to rebase after
-push fails, if you do not want these merges.
-
-After her push fails here...
-
-          .---o Alice's 'master'
-         /
- ---o---o-------o Bob's 'master'
-                ^
-                central repo's 'master'
-
-Alice could rebase by:
-
-	$ git fetch
-	$ git rebase origin
-
-The first "git fetch" (if Alice is using the default
-configuration created by recent "git clone") fetches from the
-central repo and stores the 'master' branch at the central repo
-as her tracking branch (.git/refs/remotes/origin/master).  This
-can be referenced on the command line as 'origin' (again, if
-Alice is using the default configuration created by recent "git
-clone").  What these commands do is:
-
-(1) git-fetch makes central repo's 'master' locally available to
-    Alice as 'origin'
-
-          .---o Alice's 'master'
-         /
- ---o---o-------o Bob's 'master'
-                ^
-                central repo's 'master' == Alice's 'origin'
-
-(2) git-rebase forward ports the commits on Alice's 'master'
-    since it forked from the central repo, and creates this
-    graph:
-
-
-                  .---o Alice's 'master', updated
-                 /
- ---o---o-------o Bob's 'master'
-                ^
-                central repo's 'master' == Alice's 'origin'
-
-After these, 'master' in Alice's repository is a fast-forward
-and she can now push to update the central repository.
-
-It would be usually a good idea to rebase if Alice's work is
-trivial since she synchronized with the central repository the
-last time.  If it is a very involved changes, however, it often
-is not worth worrying about keeping merges out of the history.
-Your developers _are_ working in parallel and there is not much
-point in insisting to lineralize the history too much.
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index da7fde5..9544308 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -14,14 +14,53 @@ dot-separated segment and the section name is everything before the last
+ dot. The variable names are case-insensitive and only alphanumeric
+ characters are allowed. Some variables may appear multiple times.
+ 
++Syntax
++~~~~~~
++
+ The syntax is fairly flexible and permissive; whitespaces are mostly
+-ignored. The '#' and ';' characters begin comments to the end of line,
+-blank lines are ignored, lines containing strings enclosed in square
+-brackets start sections and all the other lines are recognized
+-as setting variables, in the form 'name = value'. If there is no equal
+-sign on the line, the entire line is taken as 'name' and the variable
+-is recognized as boolean "true". String values may be entirely or partially
+-enclosed in double quotes; some variables may require special value format.
++ignored.  The '#' and ';' characters begin comments to the end of line,
++blank lines are ignored.
++
++The file consists of sections and variables.  A section begins with
++the name of the section in square brackets and continues until the next
++section begins.  Section names are not case sensitive.  Each variable
++must belong to some section, which means that there must be section
++header before first setting of a variable.
++
++Sections can be further divided into subsections.  To begin a subsection
++put it name in double quotes, separated by space from the section name,
++in the section header, like in example below
++
++	[section "subsection"]
++
++Subsection names can contain whitespace and are case sensitive.  Variables
++may belong directly to a section, or to a given subsection.
++
++All the other lines are recognized as setting variables, in the form
++'name = value'. If there is no equal sign on the line, the entire line
++is taken as 'name' and the variable is recognized as boolean "true".
++Variable names are case insensitive.  There can be more than one value
++for a given variable; we say then that variable is multivalued.
++
++Leading and trailing whitespace in a variable value is discarded.
++Internal whitespace within a variable value is retained verbatim.
++
++String values may be entirely or partially enclosed in double quotes.
++You need to enclose variable value in double quotes if you want to
++preserve leading or trailing whitespace, or if variable value contains
++beginning of comment characters, it means if it contains `#` or `;`.
++Double quote `"` and backslash `\` characters in variable value must
++be escaped: use `\"` for `"`, and `\\` for `\`.
++
++The following escape sequences (beside `\"` and `\\`) are recognized:
++`\n` for newline character (NL), `\t` for horizontal tabulation (HT, TAB)
++and `\b` for backspace (BS).  No other character escape codes, nor octal
++char sequences are valid.
++
++Variable value ending in a `\` is continued on the next line in the 
++customary UNIX fashion.
++
++Some variables may require special value format.
+ 
+ Example
+ ~~~~~~~
