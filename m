@@ -1,49 +1,44 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] prune: --expire=time
-Date: Fri, 19 Jan 2007 10:41:34 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0701191039420.3011@xanadu.home>
-References: <20070118171830.GA13521@moooo.ath.cx>
- <20070118172408.GG15428@spearce.org> <20070118174244.GA14287@moooo.ath.cx>
- <20070118175134.GH15428@spearce.org> <20070118222919.GA22060@moooo.ath.cx>
- <7vy7o0klt1.fsf@assigned-by-dhcp.cox.net> <20070119034404.GA17521@spearce.org>
- <20070119104935.GA5189@moooo.ath.cx>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Shell syntax fix in git-reset
+Date: Fri, 19 Jan 2007 08:58:11 -0800
+Message-ID: <7vr6trhs2k.fsf@assigned-by-dhcp.cox.net>
+References: <87ac0gfuwu.fsf@morpheus.local>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 19 16:42:14 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 19 17:58:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H7vsL-0004iY-JS
-	for gcvg-git@gmane.org; Fri, 19 Jan 2007 16:41:57 +0100
+	id 1H7x4c-0000gO-A3
+	for gcvg-git@gmane.org; Fri, 19 Jan 2007 17:58:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932566AbXASPlg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 19 Jan 2007 10:41:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932549AbXASPlg
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Jan 2007 10:41:36 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:26872 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932510AbXASPlf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Jan 2007 10:41:35 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JC400EYMGXACYB0@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 19 Jan 2007 10:41:35 -0500 (EST)
-In-reply-to: <20070119104935.GA5189@moooo.ath.cx>
-X-X-Sender: nico@xanadu.home
-To: Matthias Lederhofer <matled@gmx.net>
+	id S932579AbXASQ6O (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 19 Jan 2007 11:58:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932602AbXASQ6O
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Jan 2007 11:58:14 -0500
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:57852 "EHLO
+	fed1rmmtao02.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932579AbXASQ6N (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Jan 2007 11:58:13 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20070119165813.LEIL26900.fed1rmmtao02.cox.net@fed1rmimpo02.cox.net>;
+          Fri, 19 Jan 2007 11:58:13 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id D4yV1W00b1kojtg0000000; Fri, 19 Jan 2007 11:58:30 -0500
+To: David =?iso-8859-1?Q?K=E5gedal?= <davidk@lysator.liu.se>
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37187>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37188>
 
-On Fri, 19 Jan 2007, Matthias Lederhofer wrote:
+Thanks for catching this.  With your fix,
 
-> Ah, git repack -a -d is safe now too?
+    $ git grep -e 'test .*==' -e '\[ .*==' -- '*.sh'
 
-Yes.
-
-
-Nicolas
+does not seem to hit anything else.
