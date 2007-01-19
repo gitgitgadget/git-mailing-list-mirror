@@ -1,100 +1,57 @@
-From: Bill Lear <rael@zopyra.com>
-Subject: Re: Decoding git show-branch output
-Date: Fri, 19 Jan 2007 15:19:27 -0600
-Message-ID: <17841.13791.627478.602602@lisa.zopyra.com>
-References: <17840.50115.999227.260259@lisa.zopyra.com>
-	<8aa486160701190613j6493daccofc259a8b17c0f1d1@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Packfile SHA1 mismatch with itself
+Date: Fri, 19 Jan 2007 13:22:10 -0800
+Message-ID: <7vlkjyg1a5.fsf@assigned-by-dhcp.cox.net>
+References: <510820.93884.qm@web31802.mail.mud.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 19 22:19:40 2007
+X-From: git-owner@vger.kernel.org Fri Jan 19 22:22:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H8195-0003uT-CE
-	for gcvg-git@gmane.org; Fri, 19 Jan 2007 22:19:35 +0100
+	id 1H81Bf-0004cZ-By
+	for gcvg-git@gmane.org; Fri, 19 Jan 2007 22:22:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964915AbXASVTc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 19 Jan 2007 16:19:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964902AbXASVTc
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Jan 2007 16:19:32 -0500
-Received: from mail.zopyra.com ([65.68.225.25]:60384 "EHLO zopyra.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S964865AbXASVTb convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 19 Jan 2007 16:19:31 -0500
-Received: (from rael@localhost)
-	by zopyra.com (8.11.6/8.11.6) id l0JLJVY05130;
-	Fri, 19 Jan 2007 15:19:31 -0600
-To: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
-In-Reply-To: <8aa486160701190613j6493daccofc259a8b17c0f1d1@mail.gmail.com>
-X-Mailer: VM 7.18 under Emacs 21.1.1
+	id S964867AbXASVWM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 19 Jan 2007 16:22:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964916AbXASVWM
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Jan 2007 16:22:12 -0500
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:39368 "EHLO
+	fed1rmmtao05.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964867AbXASVWL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Jan 2007 16:22:11 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20070119212210.KHMD15640.fed1rmmtao05.cox.net@fed1rmimpo02.cox.net>;
+          Fri, 19 Jan 2007 16:22:10 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id D9NT1W00m1kojtg0000000; Fri, 19 Jan 2007 16:22:28 -0500
+To: ltuikov@yahoo.com
+In-Reply-To: <510820.93884.qm@web31802.mail.mud.yahoo.com> (Luben Tuikov's
+	message of "Fri, 19 Jan 2007 12:35:09 -0800 (PST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37203>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37204>
 
-On Friday, January 19, 2007 at 15:13:30 (+0100) Santi B=E9jar writes:
->On 1/19/07, Bill Lear <rael@zopyra.com> wrote:
->
->[...]
->
->> I'm very confused by the syntax above.  What does "[master^2^]" mean=
-?
->> Ditto with things like "[master~3^2^2]" and "[master~3^2~2]".
->
->They explain the relation between commits:
->
->^ -> first parent
->^n -> n-th parent
->~n -> <n>th generation parent, following only the first parent.
->
->See the manual page of git-rev-parse (or the tutorial for some simple =
-examples).
+Luben Tuikov <ltuikov@yahoo.com> writes:
 
-I did.  Still don't understand.  So, following your explanation,
+> $GIT_DIR=. git-fsck-objects --full
+> error: Packfile ./objects/pack/pack-8cafdff4eb66bb2219016e4c0817cdb5cb326ab6.pack SHA1 mismatch
+> with itself
 
-master~3 ^2 ~2
+Nothing rings a bell other than:
 
-Means the 2nd (first generation) parent of the second parent of the
-3rd (first generation) parent?  Is there a way to simply state this in
-plain words, say in terms of commits/merges?  I'm unsure how to
-interpret the above, especially since none of us has been developing
-on a branch (I see no other branch names except master, also).
+commit 8977c110b5bbd230c28c727ddb85856067d55cfb
+Author: Junio C Hamano <junkio@cox.net>
+Date:   Wed Jan 3 23:09:08 2007 -0800
 
-I'm currently running qgit/gitk to try to figure this all out.  It
-appears that somehow we generated way more branches than we thought we
-were.
+    pack-check.c::verify_packfile(): don't run SHA-1 update on huge data
 
-Our basic work-flow for a developer is to set up one or more "private"
-repositories on our machines, by issuing a git-clone of our company rep=
-o.
-
-Then we set up a "public" repo on our machine by issuing a "git --bare
-init-db --shared".  We then push into this repo when ready, and from
-there other developers pull.
-
-Then, it seems that we push to our company repository both from our
-private repos and our public ones, as we see fit.
-
-I'm not sure if this is sane: is it ok to clone the company repo,
-then push from that clone into a bare repo, then from there to
-the company one?  Is git doing some sort of weird, silent pseudo-merge
-that we don't understand, thus generated what appears to be a very
-tangled, albeit brief, history, when we examine it?
-
-I have read about 8 documents on git, experimented with it
-extensively, and, at our company, I am arguably the "git expert"; I
-thought that I had done all of my work on my local repo's master
-branch, and only pushed from that branch up to our company repo.  Yet,
-qgit shows that one of my first commits (to fix a few simply typos in
-documentation) goes off onto another branch.  git-show-branch shows
-"[master~3^2~9] Fix a few typos" for this.  I'm very confused how this
-could have happened, and I want to ensure we are doing things in a way
-that is predictable...
-
-Thank you again.
-
-
-Bill
+which is in 1.4.4.4.  'master' has an equilvalent due to the use
+of sliding mmap.
