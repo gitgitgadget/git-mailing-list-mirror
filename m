@@ -1,96 +1,89 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: git ls-files -o under .git/ prints all repository files
-Date: Fri, 19 Jan 2007 09:32:02 +0100
-Message-ID: <81b0412b0701190032w686c9403uacd9b3e1e44be307@mail.gmail.com>
+Date: Fri, 19 Jan 2007 00:32:38 -0800
+Message-ID: <7vfya7ju1l.fsf@assigned-by-dhcp.cox.net>
 References: <87r6trsu7n.wl@mail2.atmark-techno.com>
-	 <7vwt3jjywc.fsf@assigned-by-dhcp.cox.net>
-	 <45B07875.9030506@fs.ei.tum.de>
-	 <81b0412b0701182357l3a6d44fel58da50c7895fb6b4@mail.gmail.com>
-	 <45B07C26.4000008@fs.ei.tum.de>
+	<7vwt3jjywc.fsf@assigned-by-dhcp.cox.net>
+	<200701190727.26505.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <junkio@cox.net>,
-	"Yasushi SHOJI" <yashi@atmark-techno.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 19 09:32:19 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 19 09:32:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H7pAV-0002Nf-7N
-	for gcvg-git@gmane.org; Fri, 19 Jan 2007 09:32:15 +0100
+	id 1H7pAx-0002Tp-KC
+	for gcvg-git@gmane.org; Fri, 19 Jan 2007 09:32:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964942AbXASIcI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 19 Jan 2007 03:32:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964940AbXASIcI
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Jan 2007 03:32:08 -0500
-Received: from hu-out-0506.google.com ([72.14.214.232]:58084 "EHLO
-	hu-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964939AbXASIcF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Jan 2007 03:32:05 -0500
-Received: by hu-out-0506.google.com with SMTP id 36so391096hui
-        for <git@vger.kernel.org>; Fri, 19 Jan 2007 00:32:03 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=pV4quORuBUxVuBXZe0IPsjkOka2P7+fgRngQ+iRJU50qHKWFQA7FUMtlZCoCQMZJ07+/gU6sJKMI1Fgv7s5UtebpJMQd5CLDnMkCNTGv+vIYo3Au7su28gdwsOwCHTGLnm06Peizxa4WinYManx46dHuEYNZf4lrUK3VHCIvTRM=
-Received: by 10.78.17.1 with SMTP id 1mr1761440huq.1169195522843;
-        Fri, 19 Jan 2007 00:32:02 -0800 (PST)
-Received: by 10.78.135.3 with HTTP; Fri, 19 Jan 2007 00:32:02 -0800 (PST)
-To: "Simon 'corecode' Schubert" <corecode@fs.ei.tum.de>
-In-Reply-To: <45B07C26.4000008@fs.ei.tum.de>
-Content-Disposition: inline
+	id S964939AbXASIck (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 19 Jan 2007 03:32:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964940AbXASIck
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Jan 2007 03:32:40 -0500
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:36066 "EHLO
+	fed1rmmtao02.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964939AbXASIcj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Jan 2007 03:32:39 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20070119083239.DEQX26900.fed1rmmtao02.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 19 Jan 2007 03:32:39 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id CwXk1W00B1kojtg0000000; Fri, 19 Jan 2007 03:31:44 -0500
+To: Andy Parkins <andyparkins@gmail.com>
+In-Reply-To: <200701190727.26505.andyparkins@gmail.com> (Andy Parkins's
+	message of "Fri, 19 Jan 2007 07:27:24 +0000")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37162>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37163>
 
-On 1/19/07, Simon 'corecode' Schubert <corecode@fs.ei.tum.de> wrote:
-> >> I guess you are not serious.  I wonder, why does git-ls-files ever
-> >> list files under .git?  I'd just say:  fail if you want to list $GIT_DIR.
-> >
-> > Not list. Clean. What's wrong with listing them?
+Andy Parkins <andyparkins@gmail.com> writes:
+
+> On Friday 2007, January 19 06:47, Junio C Hamano wrote:
 >
-> i would claim .git to be off limits and unrelated to the working dir
-> (file-wise).  if you want to list files there, do a find . or so.
->  After all you wouldn't expect cd /usr && git-ls-files -o work there
-> unless you have a /.git or /usr/.git, right?
-
-Right, just see no practical point changing ls-file for that.
-
-> >>  Maybe other tools should do so as well.
-> >>
-> >> % cd .hg && hg status -A .
-> >> abort: path contains illegal component: .hg
-> >>
-> >> I think this is a sensible thing to do.
-> >
-> > No, it isn't. It is not unlikely to have repo in repo
-> > (and some people already have them).
-> > Mercurial is wrong here.
+>> +	mode = share ? 0777 : 0333;
 >
-> what do you mean with repo-in-repo?  something like .git/.git?
+> So if the repository is shared we're allowed to shoot ourselves in the foot?
 
-Actually, I meant a/b/, with existing a/.git and b/.git, which is
-obviously is not a case here (nor in mercurial). Stupid me
+Have you actually read the code to see what 'share' variable
+means there?  It is only false when creating the toplevel .git
+directory and always true for its subdirectories.
 
->  My suggestion does not break this:
+> Also; what does this do to .git/config .git/description?
+
+Nothing unusual.  The code explicitly asks for .git/config by
+name, so that does not involve readdir(".git"), which is what
+the 0333 change prevents from running.
+
+> On ocassion I've found myself doing
+>   mv .git/refs/remotes/origin .git/refs/remotes/up
 >
-> % mkdir foo && cd foo && git init
-> % cd .git && git init
-> % git ls-files -o
-> HEAD
-> config
-> description
-> hooks/applypatch-msg
+> Which this patch would break.
 
-I can imagine keeping hooks under git control.
-In this case path(pwd) does contain .git component
-(as in .hg example).
+Does it?
 
-> Here the repo root is "foo/.git" and not "foo".
->
-> So my suggestion still stands:  .git is off limits.
->
+And everybody commented on this thread,
 
-Ok. Have nothing strong against this
+	EASY.
+
+You all should not take "amusing" too seriously.  That was a
+tongue-in-cheek patch.
+
+I am very inclined to say
+
+	$ cd .git && git clean
+
+or
+
+	$ cd .git/objects && git clean        
+
+falls into the same category as
+
+	$ su
+	# cd / && git-init-db && git clean
+
+In other words, I am not sure if there is anything worth fixing.
