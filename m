@@ -1,50 +1,53 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Update documentation of fetch-pack, push and send-pack
-Date: Fri, 19 Jan 2007 11:22:37 -0800
-Message-ID: <7v7ivihldu.fsf@assigned-by-dhcp.cox.net>
-References: <20070119124300.GA2995@cepheus>
+From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
+Subject: Re: [PATCH] Documentation: Fix git.7 dependencies.
+Date: Fri, 19 Jan 2007 20:38:52 +0100
+Message-ID: <8aa486160701191138v7fc29e53xbf809b1495e30b3d@mail.gmail.com>
+References: <873b67735m.fsf@gmail.com>
+	 <7vbqkuhlhi.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Jan 19 20:22:49 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jan 19 20:39:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H7zJy-0005FZ-Mc
-	for gcvg-git@gmane.org; Fri, 19 Jan 2007 20:22:43 +0100
+	id 1H7zZh-000154-UL
+	for gcvg-git@gmane.org; Fri, 19 Jan 2007 20:38:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964865AbXASTWk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 19 Jan 2007 14:22:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932858AbXASTWk
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Jan 2007 14:22:40 -0500
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:34304 "EHLO
-	fed1rmmtao09.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932856AbXASTWj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Jan 2007 14:22:39 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070119192238.DHUB18767.fed1rmmtao09.cox.net@fed1rmimpo02.cox.net>;
-          Fri, 19 Jan 2007 14:22:38 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id D7Nv1W0121kojtg0000000; Fri, 19 Jan 2007 14:22:56 -0500
-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<zeisberg@informatik.uni-freiburg.de>
-In-Reply-To: <20070119124300.GA2995@cepheus> (Uwe =?iso-8859-1?Q?Kleine-K?=
- =?iso-8859-1?Q?=F6nig's?= message of
-	"Fri, 19 Jan 2007 13:43:00 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932862AbXASTiz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 19 Jan 2007 14:38:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932844AbXASTiz
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Jan 2007 14:38:55 -0500
+Received: from ug-out-1314.google.com ([66.249.92.170]:22352 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932862AbXASTiy (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Jan 2007 14:38:54 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so535652uga
+        for <git@vger.kernel.org>; Fri, 19 Jan 2007 11:38:53 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=q4kQTPJkrRQpGye7bGOj3ZUPyA51wsmttx2Ieio4jSA6cdKKrF7sVj+Nm4o8WaOhsRgSKnfMnmZrfuBb+hnMhRVkFzDNgONHTSL5S43S3UxAgsuyUtB/drCJGlW68s+6gYfnvpP1oAqaoqicgWFwWmMMdoLJFyENROvC8GVT2UY=
+Received: by 10.82.162.14 with SMTP id k14mr962831bue.1169235532805;
+        Fri, 19 Jan 2007 11:38:52 -0800 (PST)
+Received: by 10.78.68.8 with HTTP; Fri, 19 Jan 2007 11:38:52 -0800 (PST)
+To: "Junio C Hamano" <junkio@cox.net>
+In-Reply-To: <7vbqkuhlhi.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37194>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37195>
 
-I think this series, including the last RFC one, is very
-sensible.  Even though, strictly speaking, this is a new
-feature, I think we should have it in 1.5.0.
+On 1/19/07, Junio C Hamano <junkio@cox.net> wrote:
+> > -git.7 git.html: git.txt core-intro.txt
+> > +git.7 git.html: git.txt core-intro.txt $(cmds_txt)
+>
+> I do not think this is needed; doesn't doc.dep catch cmds_txt as
+> well?
 
-We would need a similar change on fetch-pack and peek-remote
-side.
+It's not needed. I didn't see the doc.dep.
+
+Santi
