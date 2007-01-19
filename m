@@ -1,53 +1,58 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC] Git config file reader in Perl (WIP)
-Date: Fri, 19 Jan 2007 14:20:40 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0701191420000.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <200701150144.56793.jnareb@gmail.com>
- <Pine.LNX.4.63.0701171334410.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <200701171500.33220.jnareb@gmail.com> <200701191310.32417.jnareb@gmail.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: git ls-files -o under .git/ prints all repository files
+Date: Fri, 19 Jan 2007 14:30:14 +0100
+Message-ID: <45B0C7E6.4020509@op5.se>
+References: <87r6trsu7n.wl@mail2.atmark-techno.com>	 <7vwt3jjywc.fsf@assigned-by-dhcp.cox.net>	 <45B07875.9030506@fs.ei.tum.de> <81b0412b0701182357l3a6d44fel58da50c7895fb6b4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Nikolai Weibull <now@bitwi.se>, Junio C Hamano <junkio@cox.net>,
-	Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 19 14:21:02 2007
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>,
+	Junio C Hamano <junkio@cox.net>,
+	Yasushi SHOJI <yashi@atmark-techno.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 19 14:30:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H7tfi-0002Ex-DD
-	for gcvg-git@gmane.org; Fri, 19 Jan 2007 14:20:46 +0100
+	id 1H7toz-0004QB-QN
+	for gcvg-git@gmane.org; Fri, 19 Jan 2007 14:30:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965122AbXASNUn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 19 Jan 2007 08:20:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965128AbXASNUn
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Jan 2007 08:20:43 -0500
-Received: from mail.gmx.net ([213.165.64.20]:46700 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S965122AbXASNUm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Jan 2007 08:20:42 -0500
-Received: (qmail invoked by alias); 19 Jan 2007 13:20:40 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp018) with SMTP; 19 Jan 2007 14:20:40 +0100
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <200701191310.32417.jnareb@gmail.com>
-X-Y-GMX-Trusted: 0
+	id S965129AbXASNaS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 19 Jan 2007 08:30:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965125AbXASNaS
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Jan 2007 08:30:18 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:59222 "EHLO
+	smtp-gw1.op5.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965129AbXASNaR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Jan 2007 08:30:17 -0500
+Received: from [192.168.1.20] (unknown [213.88.215.14])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id 0DC286BCC1; Fri, 19 Jan 2007 14:30:15 +0100 (CET)
+User-Agent: Thunderbird 1.5.0.9 (X11/20070102)
+To: Alex Riesen <raa.lkml@gmail.com>
+In-Reply-To: <81b0412b0701182357l3a6d44fel58da50c7895fb6b4@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37181>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37182>
 
-Hi,
+Alex Riesen wrote:
+> On 1/19/07, Simon 'corecode' Schubert <corecode@fs.ei.tum.de> wrote:
+>> >
+>>
+>> % cd .hg && hg status -A .
+>> abort: path contains illegal component: .hg
+>>
+>> I think this is a sensible thing to do.
+> 
+> No, it isn't. It is not unlikely to have repo in repo
+> (and some people already have them).
+> Mercurial is wrong here.
 
-On Fri, 19 Jan 2007, Jakub Narebski wrote:
+For managing repos inside repos (onion repos?) I think it should
+be safe to abort if we're not at top-level.
 
-> From a bit of testing, as documentation of config file format is 
-> woefully incomplete, (yes, I know I should use the source) _some_ of C 
-> escape sequences aka. character escape codes (CEC) are parsed:
-
-No, you should not just use the source. You should use the source _and_ 
-complete the documentation.
-
-Ciao,
-Dscho
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
