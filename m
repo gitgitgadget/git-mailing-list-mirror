@@ -1,64 +1,87 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: git-cvsserver won't add new content on update
-Date: Fri, 19 Jan 2007 09:54:53 +0000
-Message-ID: <200701190955.00335.andyparkins@gmail.com>
-References: <200701181616.38318.andyparkins@gmail.com> <20070118162222.GE15428@spearce.org> <46a038f90701181101w1ea300b6lb4d7e4354d89be95@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] fix reflog entries for "git-branch"
+Date: Fri, 19 Jan 2007 11:51:29 -0800
+Message-ID: <7vy7nyg5ha.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: "Martin Langhoff" <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 19 20:46:37 2007
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Fri Jan 19 20:51:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H7zgw-00030R-Q6
-	for gcvg-git@gmane.org; Fri, 19 Jan 2007 20:46:27 +0100
+	id 1H7zlv-0004Jb-0L
+	for gcvg-git@gmane.org; Fri, 19 Jan 2007 20:51:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932844AbXASTqT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 19 Jan 2007 14:46:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932846AbXASTqT
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Jan 2007 14:46:19 -0500
-Received: from an-out-0708.google.com ([209.85.132.240]:35551 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932844AbXASTqS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Jan 2007 14:46:18 -0500
-Received: by an-out-0708.google.com with SMTP id b33so298618ana
-        for <git@vger.kernel.org>; Fri, 19 Jan 2007 11:46:17 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=iycjf/1d/65Z8v8qGPVOCLbJv3WaV6SFknIzvpsL49ZFkN1CjcQNGMrT76z/s0VABazNgN9fS/ZewNNUDHoPefYv3INBv7ChYM3nTi2gQ3Exwie7YuYRPEVHBeQ/ZRfC9rQGtqPhoROdYhWxF7a/BxRlRBFV2KyIT/PBOxGggMM=
-Received: by 10.78.185.16 with SMTP id i16mr196240huf.1169200680468;
-        Fri, 19 Jan 2007 01:58:00 -0800 (PST)
-Received: from ?192.168.1.48? ( [84.201.153.164])
-        by mx.google.com with ESMTP id 33sm2194628hue.2007.01.19.01.57.58;
-        Fri, 19 Jan 2007 01:57:59 -0800 (PST)
+	id S932863AbXASTvb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 19 Jan 2007 14:51:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932854AbXASTvb
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Jan 2007 14:51:31 -0500
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:49506 "EHLO
+	fed1rmmtao07.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932862AbXASTvb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Jan 2007 14:51:31 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20070119195130.XXHM3976.fed1rmmtao07.cox.net@fed1rmimpo02.cox.net>;
+          Fri, 19 Jan 2007 14:51:30 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id D7rn1W00m1kojtg0000000; Fri, 19 Jan 2007 14:51:48 -0500
 To: git@vger.kernel.org
-User-Agent: KMail/1.9.5
-In-Reply-To: <46a038f90701181101w1ea300b6lb4d7e4354d89be95@mail.gmail.com>
-Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37196>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37197>
 
-On Thursday 2007, January 18 19:01, Martin Langhoff wrote:
+Even when -l is not given from the command line, the repository
+may have the configuration variable core.logallrefupdates set,
+or an old-timer might have done ": >.git/logs/refs/heads/new"
+before running "git branch new".  In these cases, the code gave
+an uninitialized msg[] from the stack to be written out as the
+reflog message.
 
-> yup. Also make sure you are using a really recent git-cvsserver, I
-> recently fixed a couple of problems related to file adds.
+This also passes a different message when '-f' option is used.
+Saying "git branch -f branch some-commit" is a moral equilvalent
+of doing "git-reset some-commit" while on the branch.
 
-I've just tried again with the git-cvsserver from current next, with the same 
-result.
-
-I also repeated with pu and got the same result.  In all cases, the log is 
-showing the "Tell the client the file will be added" message; which seems 
-correct.
-
-
-Andy
-
--- 
-Dr Andrew Parkins, M Eng (Hons), AMIEE
-andyparkins@gmail.com
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
+diff --git a/builtin-branch.c b/builtin-branch.c
+index c760e18..bbac9dc 100644
+--- a/builtin-branch.c
++++ b/builtin-branch.c
+@@ -316,6 +316,7 @@ static void create_branch(const char *name, const char *start_name,
+ 	struct commit *commit;
+ 	unsigned char sha1[20];
+ 	char ref[PATH_MAX], msg[PATH_MAX + 20];
++	int forcing = 0;
+ 
+ 	snprintf(ref, sizeof ref, "refs/heads/%s", name);
+ 	if (check_ref_format(ref))
+@@ -326,6 +327,7 @@ static void create_branch(const char *name, const char *start_name,
+ 			die("A branch named '%s' already exists.", name);
+ 		else if (!strcmp(head, name))
+ 			die("Cannot force update the current branch.");
++		forcing = 1;
+ 	}
+ 
+ 	if (start_sha1)
+@@ -342,11 +344,15 @@ static void create_branch(const char *name, const char *start_name,
+ 	if (!lock)
+ 		die("Failed to lock ref for update: %s.", strerror(errno));
+ 
+-	if (reflog) {
++	if (reflog)
+ 		log_all_ref_updates = 1;
++
++	if (forcing)
++		snprintf(msg, sizeof msg, "branch: Reset from %s",
++			 start_name);
++	else
+ 		snprintf(msg, sizeof msg, "branch: Created from %s",
+ 			 start_name);
+-	}
+ 
+ 	if (write_ref_sha1(lock, sha1, msg) < 0)
+ 		die("Failed to write ref: %s.", strerror(errno));
