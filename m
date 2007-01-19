@@ -1,98 +1,90 @@
-From: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
+From: Andy Parkins <andyparkins@gmail.com>
 Subject: Re: git ls-files -o under .git/ prints all repository files
-Date: Fri, 19 Jan 2007 10:04:11 +0100
-Message-ID: <45B0898B.5040804@fs.ei.tum.de>
-References: <87r6trsu7n.wl@mail2.atmark-techno.com>	 <7vwt3jjywc.fsf@assigned-by-dhcp.cox.net>	 <45B07875.9030506@fs.ei.tum.de>	 <81b0412b0701182357l3a6d44fel58da50c7895fb6b4@mail.gmail.com>	 <45B07C26.4000008@fs.ei.tum.de> <81b0412b0701190032w686c9403uacd9b3e1e44be307@mail.gmail.com>
+Date: Fri, 19 Jan 2007 09:04:53 +0000
+Message-ID: <200701190904.58515.andyparkins@gmail.com>
+References: <87r6trsu7n.wl@mail2.atmark-techno.com> <200701190727.26505.andyparkins@gmail.com> <7vfya7ju1l.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enig2D8538C964BB55305BEEB6A1"
-Cc: Junio C Hamano <junkio@cox.net>,
-	Yasushi SHOJI <yashi@atmark-techno.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 19 10:04:27 2007
+Content-Type: text/plain;
+  charset="ansi_x3.4-1968"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 19 10:08:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H7pfd-0000m5-2q
-	for gcvg-git@gmane.org; Fri, 19 Jan 2007 10:04:25 +0100
+	id 1H7pj5-0001V9-8U
+	for gcvg-git@gmane.org; Fri, 19 Jan 2007 10:07:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964982AbXASJEV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 19 Jan 2007 04:04:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964996AbXASJEV
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Jan 2007 04:04:21 -0500
-Received: from stella.fs.ei.tum.de ([129.187.54.7]:48743 "EHLO
-	stella.fs.ei.tum.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964982AbXASJET (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Jan 2007 04:04:19 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by localhost.fs.ei.tum.de (Postfix) with ESMTP id A464828178;
-	Fri, 19 Jan 2007 10:04:15 +0100 (CET)
-X-Virus-Scanned: by amavisd-new at fs.ei.tum.de
-Received: from stella.fs.ei.tum.de ([127.0.0.1])
-	by localhost (stella.fs.ei.tum.de [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id xnAPXnKWcoSa; Fri, 19 Jan 2007 10:04:15 +0100 (CET)
-Received: from [192.168.10.124] (ppp-62-216-208-62.dynamic.mnet-online.de [62.216.208.62])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	by stella.fs.ei.tum.de (Postfix) with ESMTP id 2C96E28156;
-	Fri, 19 Jan 2007 10:04:15 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; U; DragonFly pc32; en-US; rv:1.8.0.8) Gecko/20061212 Thunderbird/1.5.0.8 Mnenhy/0.7.4.666
-To: Alex Riesen <raa.lkml@gmail.com>
-In-Reply-To: <81b0412b0701190032w686c9403uacd9b3e1e44be307@mail.gmail.com>
-X-Enigmail-Version: 0.94.2.0
+	id S964996AbXASJH4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 19 Jan 2007 04:07:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964998AbXASJH4
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Jan 2007 04:07:56 -0500
+Received: from ug-out-1314.google.com ([66.249.92.170]:12413 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964996AbXASJHy (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Jan 2007 04:07:54 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so406423uga
+        for <git@vger.kernel.org>; Fri, 19 Jan 2007 01:07:53 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=fwAFN2lb38CE107x9VoF9oP11NblNeaU4GqBe9dyGvYssunnXa9SLGz54wGelRcdH4svk1TeA9doB8+v2xGrgyeXUyYrE89lVDIIUzSTDUXr08ha8ktjHSikatacCIcrId+I9YB+UuA453B42s8PNC88bueHXTPsWL6X+FSGibQ=
+Received: by 10.67.20.3 with SMTP id x3mr2684626ugi.1169197673461;
+        Fri, 19 Jan 2007 01:07:53 -0800 (PST)
+Received: from ?192.168.1.48? ( [84.201.153.164])
+        by mx.google.com with ESMTP id k28sm2258579ugd.2007.01.19.01.07.52;
+        Fri, 19 Jan 2007 01:07:52 -0800 (PST)
+To: Junio C Hamano <junkio@cox.net>
+User-Agent: KMail/1.9.5
+In-Reply-To: <7vfya7ju1l.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37164>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37165>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig2D8538C964BB55305BEEB6A1
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
+On Friday 2007, January 19 08:32, Junio C Hamano wrote:
 
-Alex Riesen wrote:
->> i would claim .git to be off limits and unrelated to the working dir
->> (file-wise).  if you want to list files there, do a find . or so.
->>  After all you wouldn't expect cd /usr && git-ls-files -o work there
->> unless you have a /.git or /usr/.git, right?
-> Right, just see no practical point changing ls-file for that.
+> Have you actually read the code to see what 'share' variable
+> means there?  It is only false when creating the toplevel .git
 
-right.  .git should be forbidden in higher layers already.
+Nope.  I'm an idiot :-) I assumed it was from the --shared command line 
+argument.  What they say about assumptions is true isn't it?
 
-> I can imagine keeping hooks under git control.
-> In this case path(pwd) does contain .git component
-> (as in .hg example).
+> Nothing unusual.  The code explicitly asks for .git/config by
+> name, so that does not involve readdir(".git"), which is what
+> the 0333 change prevents from running.
 
-doesn't work either:
+In this case I was talking more about the user editing those files than the 
+code looking for them.  I suppose if you know its there then a 
+vim .git/config will be fine.
 
-% cd .git/hooks
-% git add *
-fatal: unable to add .git/hooks/applypatch-msg to index
+> > On ocassion I've found myself doing
+> >   mv .git/refs/remotes/origin .git/refs/remotes/up
+> >
+> > Which this patch would break.
+>
+> Does it?
 
-cheers
-  simon
+You're right it doesn't.  As long as you know the refs directory is there it 
+doesn't stop you changing into it, and messing about in any way you want.  I 
+was looking at it from the point of view of how I originally found out about 
+these git inner workings - I did it by poking around in the .git directory.
 
---=20
-Serve - BSD     +++  RENT this banner advert  +++    ASCII Ribbon   /"\
-Work - Mac      +++  space for low =E2=82=AC=E2=82=AC=E2=82=AC NOW!1  +++=
-      Campaign     \ /
-Party Enjoy Relax   |   http://dragonflybsd.org      Against  HTML   \
-Dude 2c 2 the max   !   http://golden-apple.biz       Mail + News   / \
+> You all should not take "amusing" too seriously.  That was a
+> tongue-in-cheek patch.
+
+Fair enough.  I took it more as meaning,  "this would fix this problem /and/ 
+it's funny too".  Apologies.
+
+> In other words, I am not sure if there is anything worth fixing.
+
+After a bit of thought; I think I agree.
 
 
---------------enig2D8538C964BB55305BEEB6A1
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+Andy
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (DragonFly)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
-
-iD8DBQFFsImOr5S+dk6z85oRAq9xAJ419Datl/Og795uV7ej+ogByLW/sgCeN95R
-0q8DyGrCLdnR4NQiLwxjHqk=
-=6vHs
------END PGP SIGNATURE-----
-
---------------enig2D8538C964BB55305BEEB6A1--
+-- 
+Dr Andrew Parkins, M Eng (Hons), AMIEE
+andyparkins@gmail.com
