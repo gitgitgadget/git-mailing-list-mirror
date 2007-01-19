@@ -1,110 +1,102 @@
-From: Bart Trojanowski <bart@jukie.net>
-Subject: [PATCH] Don't call fstat() on stdin in index-pack.
-Date: Thu, 18 Jan 2007 21:44:36 -0500
-Message-ID: <20070119024436.GQ8624@jukie.net>
-References: <20070118212615.GO8624@jukie.net>
+From: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
+Subject: Re: [PATCH] Don't call fstat() on stdin in index-pack.
+Date: Fri, 19 Jan 2007 04:02:42 +0100
+Message-ID: <45B034D2.6010007@fs.ei.tum.de>
+References: <20070118212615.GO8624@jukie.net> <20070119024436.GQ8624@jukie.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-X-From: git-owner@vger.kernel.org Fri Jan 19 03:44:52 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enig3F8E2F1BF32D739B4DE523FE"
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 19 04:03:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H7jkH-0008LF-R4
-	for gcvg-git@gmane.org; Fri, 19 Jan 2007 03:44:50 +0100
+	id 1H7k1x-0003Lh-Vg
+	for gcvg-git@gmane.org; Fri, 19 Jan 2007 04:03:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932856AbXASCoj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 18 Jan 2007 21:44:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932857AbXASCoi
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Jan 2007 21:44:38 -0500
-Received: from bart.ott.istop.com ([66.11.172.99]:36361 "EHLO jukie.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932856AbXASCoi convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 18 Jan 2007 21:44:38 -0500
-Received: from tau.jukie.net ([10.10.10.211]:34328)
-	by jukie.net with esmtp (Exim 4.50)
-	id 1H7jk5-0002Gj-5b
-	for git@vger.kernel.org; Thu, 18 Jan 2007 21:44:37 -0500
-Received: by tau.jukie.net (Postfix, from userid 1000)
-	id C084E2DC03A; Thu, 18 Jan 2007 21:44:36 -0500 (EST)
-To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20070118212615.GO8624@jukie.net>
-User-Agent: Mutt/1.5.12-2006-07-14
+	id S964774AbXASDCu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 18 Jan 2007 22:02:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964777AbXASDCu
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Jan 2007 22:02:50 -0500
+Received: from stella.fs.ei.tum.de ([129.187.54.7]:42652 "EHLO
+	stella.fs.ei.tum.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964774AbXASDCt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jan 2007 22:02:49 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by localhost.fs.ei.tum.de (Postfix) with ESMTP id 885112816B;
+	Fri, 19 Jan 2007 04:02:47 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at fs.ei.tum.de
+Received: from stella.fs.ei.tum.de ([127.0.0.1])
+	by localhost (stella.fs.ei.tum.de [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id gUglOWLCA9Vg; Fri, 19 Jan 2007 04:02:46 +0100 (CET)
+Received: from [62.216.208.62] (ppp-62-216-208-62.dynamic.mnet-online.de [62.216.208.62])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	by stella.fs.ei.tum.de (Postfix) with ESMTP id 9226C28156;
+	Fri, 19 Jan 2007 04:02:46 +0100 (CET)
+User-Agent: Mail/News 1.5.0.4 (X11/20060619)
+To: Bart Trojanowski <bart@jukie.net>
+In-Reply-To: <20070119024436.GQ8624@jukie.net>
+X-Enigmail-Version: 0.94.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37148>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37149>
 
-* Bart Trojanowski <bart@jukie.net> [070118 16:26]:
->       $ git push origin 
->       updating 'refs/heads/my-ocf+fsm_v2.6.18' 
->         from 0000000000000000000000000000000000000000 
->         to   380541e91358d7a5e2fe37c81c520c92a3094951 
->       Generating pack... 
->       Done counting 727 objects. 
->       Result has 708 objects. 
->       Deltifying 708 objects. 
->        100% (708/708) done 
->       Writing 708 objects. 
->        100% (708/708) done 
->       Total 708 (delta 535), reused 275 (delta 218) 
->       fatal: cannot fstat packfile: Value too large for defined data type 
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enig3F8E2F1BF32D739B4DE523FE
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
 
-I had a look at the code in index-pack.c and noticed that this error is
-printed input_fd is set to 0 in open_pack_file().
+Bart Trojanowski wrote:
+>  	/* If input_fd is a file, we should have reached its end now. */
+> -	if (fstat(input_fd, &st))
+> -		die("cannot fstat packfile: %s", strerror(errno));
+> -	if (S_ISREG(st.st_mode) && st.st_size !=3D consumed_bytes)
+> -		die("pack has junk at the end");
+> +        if (input_fd) {
+> +                if (fstat(input_fd, &st))
+> +                        die("cannot fstat packfile: %s", strerror(errn=
+o));
+> +                if (S_ISREG(st.st_mode) && st.st_size !=3D consumed_by=
+tes)
+> +                        die("pack has junk at the end");
+> +        }
 
-|           if (fstat(input_fd, &st))
-|                   die("cannot fstat packfile: %s", strerror(errno));
-|           if (S_ISREG(st.st_mode) && st.st_size != consumed_bytes)
-|                   die("pack has junk at the end");
+This is clearly the wrong fix.  input_fd being 0 doesn't mean that it is =
+*not* a regular file.  Only doing a fstat can tell.  You are simply hidin=
+g your real issue there, which is that you can't fstat on a pipe or whate=
+ver input_fd is.
 
-It seems strange to me to call fstat on fd 0 to get st_size info.
+The problem here is that your 64bit kernel can't fit the data into your s=
+truct stat provided by your 32bit libc.  Not a problem of git.  However, =
+it would be interesting to know what exactly produces the EOVERFLOW.
 
-Granted, st_mode should tell us that it's not a regular file, but
-already know it's not a regular file.
+cheers
+  simon
 
-So I removed it.  And now it works (I verified that the git-diff output
-on both sides matches).
+--=20
+Serve - BSD     +++  RENT this banner advert  +++    ASCII Ribbon   /"\
+Work - Mac      +++  space for low =E2=82=AC=E2=82=AC=E2=82=AC NOW!1  +++=
+      Campaign     \ /
+Party Enjoy Relax   |   http://dragonflybsd.org      Against  HTML   \
+Dude 2c 2 the max   !   http://golden-apple.biz       Mail + News   / \
 
--Bart
 
-----
+--------------enig3F8E2F1BF32D739B4DE523FE
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
->From fcd359655e12a4b6424f989b7c01cbbb8a551287 Mon Sep 17 00:00:00 2001
-From: Bart Trojanowski <bart@jukie.net>
-Date: Fri, 19 Jan 2007 02:39:27 +0000
-Subject: [PATCH] Don't call fstat() on stdin in index-pack.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.3 (DragonFly)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
 
-This fixes a issues with a large git-push with a
-32bit git on a 64bit kernel.
+iD8DBQFFsDTVr5S+dk6z85oRApUzAKCXvJHk+iq6JErb0ZcphyEeupCy8gCggM+Z
+Q30cOdx+k8u9Fafth1ksAWk=
+=qQN3
+-----END PGP SIGNATURE-----
 
-Signed-off-by: Bart Trojanowski <bart@jukie.net>
----
- index-pack.c |   10 ++++++----
- 1 files changed, 6 insertions(+), 4 deletions(-)
-
-diff --git a/index-pack.c b/index-pack.c
-index 72e0962..e7870a9 100644
---- a/index-pack.c
-+++ b/index-pack.c
-@@ -455,10 +455,12 @@ static void parse_pack_objects(unsigned char *sha1)
- 	use(20);
- 
- 	/* If input_fd is a file, we should have reached its end now. */
--	if (fstat(input_fd, &st))
--		die("cannot fstat packfile: %s", strerror(errno));
--	if (S_ISREG(st.st_mode) && st.st_size != consumed_bytes)
--		die("pack has junk at the end");
-+        if (input_fd) {
-+                if (fstat(input_fd, &st))
-+                        die("cannot fstat packfile: %s", strerror(errno));
-+                if (S_ISREG(st.st_mode) && st.st_size != consumed_bytes)
-+                        die("pack has junk at the end");
-+        }
- 
- 	if (!nr_deltas)
- 		return;
--- 
-1.5.0.rc1.gdf1b-dirty
+--------------enig3F8E2F1BF32D739B4DE523FE--
