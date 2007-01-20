@@ -1,65 +1,81 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Lose perl dependency. (fwd)
-Date: Sat, 20 Jan 2007 02:31:13 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0701200230550.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0701181149260.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <45AF5F83.6090207@fs.ei.tum.de> <Pine.LNX.4.63.0701181441010.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vps9ag58g.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0701200052210.12889@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vvej2bkn2.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0701200213020.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vbqkubiir.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 3/3] show-branch --reflog: show the reflog message at the top.
+Date: Fri, 19 Jan 2007 17:32:35 -0800
+Message-ID: <7v4pqmbhzg.fsf@assigned-by-dhcp.cox.net>
+References: <7virf2d190.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0701200116280.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7v4pqmczqa.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0701200135500.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7vr6tqbjt8.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0701200218290.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 20 02:31:27 2007
+X-From: git-owner@vger.kernel.org Sat Jan 20 02:32:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H854g-0004Fd-FP
-	for gcvg-git@gmane.org; Sat, 20 Jan 2007 02:31:18 +0100
+	id 1H855z-0004ZQ-NS
+	for gcvg-git@gmane.org; Sat, 20 Jan 2007 02:32:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965011AbXATBbP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 19 Jan 2007 20:31:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965040AbXATBbP
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Jan 2007 20:31:15 -0500
-Received: from mail.gmx.net ([213.165.64.20]:42577 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S965011AbXATBbO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Jan 2007 20:31:14 -0500
-Received: (qmail invoked by alias); 20 Jan 2007 01:31:13 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp022) with SMTP; 20 Jan 2007 02:31:13 +0100
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vbqkubiir.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S965040AbXATBch (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 19 Jan 2007 20:32:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965051AbXATBch
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Jan 2007 20:32:37 -0500
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:36138 "EHLO
+	fed1rmmtao11.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965040AbXATBcg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Jan 2007 20:32:36 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20070120013236.UKBW25875.fed1rmmtao11.cox.net@fed1rmimpo02.cox.net>;
+          Fri, 19 Jan 2007 20:32:36 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id DDYt1W00U1kojtg0000000; Fri, 19 Jan 2007 20:32:53 -0500
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0701200218290.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Sat, 20 Jan 2007 02:19:43 +0100
+	(CET)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37244>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37245>
 
-Hi,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On Fri, 19 Jan 2007, Junio C Hamano wrote:
+> How about failing if there are _uninteresting_ commits? So,
+>
+> 	git log --walk-reflogs next master
+>
+> still works?
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > OTOH we can expect people _not_ to use --reverse with format-patch when 
-> > they don't know what it does! I mean, I don't go and use "ls" with an 
-> > option I saw in the man page, just because it has a cool ring to it.
-> >
-> > P.S.: Perhaps you should just stop worrying and learn to love --reverse 
-> 
-> I usually do not worry, especially while I am running 'next'
-> myself.
-> 
-> It's just unintended consequences I am worried about by touching
-> somewhere deep in the revision machinery after -rc1.
+That feels like a good way to deal with it.  I think people may
+also appreciate timestamps on Reflog headers you add to the
+output.
 
-I have no problem resending after 1.5.0 if you prefer that.
+That change makes
 
-Ciao,
-Dscho
+	$ git log --walk-reflogs master..next
+        fatal: No reflogs found for 'master..next'
+
+a non issue, for one thing.
+
+Unfortunately,
+
+	$ git log --walk-reflogs ^master next 
+
+is not something I can read and make heads or tails of it.  So
+I'll try something smaller:
+
+	$ git log --walk-reflogs ^master jc/show-reflog
+
+shows only three commits (the same as without --walk-reflogs),
+although I have tons of rewinds and rebases.  There is something
+broken, or perhaps the semantics of --walk-reflogs does not
+match what humans would expect when interacting with revision
+limiting.  This would also become an non-issue if we do not
+allow negative ones.
