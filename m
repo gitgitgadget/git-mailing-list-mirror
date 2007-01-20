@@ -1,123 +1,93 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Lose perl dependency. (fwd)
-Date: Sat, 20 Jan 2007 10:31:01 -0800
-Message-ID: <7vwt3h7dp6.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.63.0701181149260.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	<45AF5F83.6090207@fs.ei.tum.de>
-	<Pine.LNX.4.63.0701181441010.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7vps9ag58g.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0701200052210.12889@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7vvej2bkn2.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0701200213020.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7vfya69xym.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0701201025070.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Martin Waitz <tali@admingilde.org>
+Subject: Re: SEGV in git-apply
+Date: Sat, 20 Jan 2007 19:36:15 +0100
+Message-ID: <20070120183615.GA6459@admingilde.org>
+References: <20070120014851.GF5231@admingilde.org> <Pine.LNX.4.63.0701200312000.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="NzB8fVQJ5HfG6fxh"
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 20 19:31:12 2007
+X-From: git-owner@vger.kernel.org Sat Jan 20 19:36:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H8Kzf-0003PA-Oy
-	for gcvg-git@gmane.org; Sat, 20 Jan 2007 19:31:12 +0100
+	id 1H8L4f-0004fn-Fp
+	for gcvg-git@gmane.org; Sat, 20 Jan 2007 19:36:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965284AbXATSbF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 20 Jan 2007 13:31:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965263AbXATSbF
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 Jan 2007 13:31:05 -0500
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:51763 "EHLO
-	fed1rmmtao09.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965284AbXATSbD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Jan 2007 13:31:03 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070120183102.ISLK18767.fed1rmmtao09.cox.net@fed1rmimpo02.cox.net>;
-          Sat, 20 Jan 2007 13:31:02 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id DWXK1W00a1kojtg0000000; Sat, 20 Jan 2007 13:31:19 -0500
+	id S965297AbXATSgQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 20 Jan 2007 13:36:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965339AbXATSgQ
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 Jan 2007 13:36:16 -0500
+Received: from mail.admingilde.org ([213.95.32.147]:52810 "EHLO
+	mail.admingilde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965297AbXATSgQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Jan 2007 13:36:16 -0500
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
+	id 1H8L4Z-0000bC-9D; Sat, 20 Jan 2007 19:36:15 +0100
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0701200312000.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37279>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37280>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
->> I think there are two very valid ways.  You determine what you
->> would spit out as if there is no --reverse, and then reverse the
->> result, or you do not limit with them to get everthing, reverse
->> the result and do the counting limit on that reversed list.
-> ...
->> I do not think you would need to artificially make it limited like your 
->> patch does if you go this route
->
-> Why? To see the last commit (which should be output first), I _have_ to 
-> traverse them first, before reversing the order. I thought revs->limited 
-> does exactly that -- traverse all commits first. Am I mistaken?
+--NzB8fVQJ5HfG6fxh
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I think you are talking about the second semantics; I was
-talking about the first one.  In other words, the one whose
-semantics of:
+hoi :)
 
-	$ git log --max-count=10 --skip=5 --reverse HEAD
+On Sat, Jan 20, 2007 at 03:14:46AM +0100, Johannes Schindelin wrote:
+> But without that patch I cannot tell.
 
-is to first internally run
+patch was this one:
 
-	$ git log --max-count=10 --skip=5 HEAD
-
-then reverse the resulting 10 commits and spit them out.
-
-Now, "git log --max-count=10 --skip=5" does not need to call
-limit_list().  It needs to traverse the usual date-sorted
-revs->commits for fifteen rounds.
-
-Looking at your patch again,...
-
-@@ -1155,6 +1160,8 @@ void prepare_revision_walk(struct rev_info *revs)
- 		sort_in_topological_order_fn(&revs->commits, revs->lifo,
- 					     revs->topo_setter,
- 					     revs->topo_getter);
-+	if (revs->reverse)
-+		revs->commits = reverse_commit_list(revs->commits);
+------------------ 8< -------------------------------
+--- src/callbacks.cc	2006-11-02 10:16:50.000000000 +0100
++++ src/callbacks.cc	2007-01-17 20:47:00.000000000 +0100
+@@ -12890,12 +12890,11 @@ void on_unknown_edit_optionmenu_sign_cha
+ 	}
  }
- 
- static int rewrite_one(struct rev_info *revs, struct commit **pp)
+=20
+-gboolean on_key_press_event(GtkWidget*, GdkEventKey *event, gpointer) {
++gboolean on_key_press_event(GtkWidget *o, GdkEventKey *event, gpointer) {
+ 	if(!GTK_WIDGET_HAS_FOCUS(expression) && (event->keyval > GDK_Hyper_R || e=
+vent->keyval < GDK_Shift_L)) {
+-		bool return_val =3D FALSE;
+ 		GtkWidget *w =3D gtk_window_get_focus(GTK_WINDOW(glade_xml_get_widget (m=
+ain_glade, "main_window")));
+-		if(w) g_signal_emit_by_name((gpointer) w, "key_press_event", event, &ret=
+urn_val);
+-		if(return_val) return TRUE;
++		if(gtk_bindings_activate_event(GTK_OBJECT(o), event)) return TRUE;
++		if(w && gtk_bindings_activate_event(GTK_OBJECT(w), event)) return TRUE;
+ 		focus_keeping_selection();
+ 	}
+ 	return FALSE;
+------------------ 8< -------------------------------
 
-This makes the code traverse and grab everything and then
-reverse; the later get_revision() -> get_revision_1() loop skips
-5, returns 10 and then finally stops.  In other words, this
-gives 10 old commits counting from the 6th oldest one in the
-history.
+git-apply inside the "src" directory segfaulted.
 
-If we prefer the first semantics, we do not have to traverse and
-grab everything.  That is what I was getting at.
+--=20
+Martin Waitz
 
-That is, something like this, with your option parsing change
-(modulo we _might_ want to explicitly mark some of the users
-incompatible), addition of reverse field to struct rev_info,
-moving reverse_commit_list() to a more public place, but without
-making the reverse to imply limited traversal.
+--NzB8fVQJ5HfG6fxh
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
 
-diff --git a/revision.c b/revision.c
-index f2ddd95..161c4c0 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1274,6 +1274,14 @@ struct commit *get_revision(struct rev_info *revs)
- {
- 	struct commit *c = NULL;
- 
-+	if (revs->reverse) {
-+		/* we were asked to reverse, but haven't reversed the
-+		 * result, yet, so do it here once
-+		 */
-+		revs->commits = reverse_commit_list(revs->commits);
-+		revs->reverse = 0;
-+	}
-+
- 	if (0 < revs->skip_count) {
- 		while ((c = get_revision_1(revs)) != NULL) {
- 			if (revs->skip_count-- <= 0)
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFFsmEfj/Eaxd/oD7IRAl2aAJsHCixSUxlgCwb1qcgLtSxg+44m5QCfY8Oo
+0K/Q0mKa+17kzFWfkb0m9b4=
+=EvPq
+-----END PGP SIGNATURE-----
+
+--NzB8fVQJ5HfG6fxh--
