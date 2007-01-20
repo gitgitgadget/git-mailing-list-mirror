@@ -1,102 +1,72 @@
-From: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
-Subject: Re: [PATCH] prune: --expire=time
-Date: Sat, 20 Jan 2007 13:06:19 +0100
-Message-ID: <45B205BB.7010101@fs.ei.tum.de>
-References: <20070118171830.GA13521@moooo.ath.cx>	<20070118172408.GG15428@spearce.org>	<20070118174244.GA14287@moooo.ath.cx>	<20070118175134.GH15428@spearce.org>	<20070118222919.GA22060@moooo.ath.cx>	<7vy7o0klt1.fsf@assigned-by-dhcp.cox.net>	<20070119034404.GA17521@spearce.org>	<20070119104935.GA5189@moooo.ath.cx> <7vfya6hll3.fsf@assigned-by-dhcp.cox.net>
+From: Yann Dirson <ydirson@altern.org>
+Subject: Re: Rebasing stgit stacks
+Date: Sat, 20 Jan 2007 14:17:17 +0100
+Message-ID: <20070120131716.GA4684@nan92-1-81-57-214-146.fbx.proxad.net>
+References: <8b65902a0701091335u160c6dfl81a523e4cd5adbee@mail.gmail.com> <eojn5c$v9u$1@sea.gmane.org> <20070117205301.GH9761@nan92-1-81-57-214-146.fbx.proxad.net> <200701191040.17476.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enigF66167E1F2D4CE8F498305F8"
-Cc: Matthias Lederhofer <matled@gmx.net>, git@vger.kernel.org,
-	"Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sat Jan 20 13:06:34 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 20 14:17:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H8EzN-0001vk-Ix
-	for gcvg-git@gmane.org; Sat, 20 Jan 2007 13:06:29 +0100
+	id 1H8G6S-0001gM-BP
+	for gcvg-git@gmane.org; Sat, 20 Jan 2007 14:17:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965264AbXATMG2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 20 Jan 2007 07:06:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965266AbXATMG2
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 Jan 2007 07:06:28 -0500
-Received: from stella.fs.ei.tum.de ([129.187.54.7]:52704 "EHLO
-	stella.fs.ei.tum.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965264AbXATMG1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Jan 2007 07:06:27 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by localhost.fs.ei.tum.de (Postfix) with ESMTP id A832F280D2;
-	Sat, 20 Jan 2007 13:06:25 +0100 (CET)
-X-Virus-Scanned: by amavisd-new at fs.ei.tum.de
-Received: from stella.fs.ei.tum.de ([127.0.0.1])
-	by localhost (stella.fs.ei.tum.de [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id tw-iL7cmLyRZ; Sat, 20 Jan 2007 13:06:25 +0100 (CET)
-Received: from [192.168.10.124] (ppp-62-216-203-207.dynamic.mnet-online.de [62.216.203.207])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	by stella.fs.ei.tum.de (Postfix) with ESMTP id 31F6E280A7;
-	Sat, 20 Jan 2007 13:06:25 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; U; DragonFly pc32; en-US; rv:1.8.0.8) Gecko/20061212 Thunderbird/1.5.0.8 Mnenhy/0.7.4.666
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vfya6hll3.fsf@assigned-by-dhcp.cox.net>
-X-Enigmail-Version: 0.94.2.0
+	id S932889AbXATNRi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 20 Jan 2007 08:17:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932882AbXATNRi
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 Jan 2007 08:17:38 -0500
+Received: from smtp1-g19.free.fr ([212.27.42.27]:37869 "EHLO smtp1-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932889AbXATNRi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Jan 2007 08:17:38 -0500
+Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 1098DA6B;
+	Sat, 20 Jan 2007 14:17:36 +0100 (CET)
+Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
+	id 267B02014; Sat, 20 Jan 2007 14:17:17 +0100 (CET)
+To: Jakub Narebski <jnareb@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <200701191040.17476.jnareb@gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37270>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37271>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enigF66167E1F2D4CE8F498305F8
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
+On Fri, Jan 19, 2007 at 10:40:16AM +0100, Jakub Narebski wrote:
+> First, "stg rebase" when on some git branch might mean rebase StGIT
+> stack to head of current branch (because there were some git commits
+> on top of this branch). So it would be "stg rebase [--onto <target>]";
+> it would be command without non-option arg, but this arg would be
+> optional.
 
-Junio C Hamano wrote:
->> Things I'm not sure about, any further comments/discussion?
->> - default value for gc.pruneexpire
->> - special value(s) for gc.pruneexpire/--expire which mean 'do not
->>   check for the age', currently it is 'off'
->=20
-> No single timeout value can be the right timeout for everybody,
-> so a big debate is not useful here.  I think 1 day as you and
-> Shawn did makes sense.
+I'm not sure I understand.  Since the "current StGIT stack" is the one
+pointed to by HEAD, how do you specify, when HEAD points to the target
+branch, which stack to rebase ?
 
-Not that I want to sabotage this discussion, but you have a very valid po=
-int.  A timeout can always be crossed, and then bad things[tm] happen.
+> Second, if you were to implement separating commands into subcommands
+> (perhaps just as alternative names) depending on what they act on:
+> "stg stack <subcommand>", "stg patch <subcommand>" etc., this would
+> I think belong to "stg base <subcommand>".
 
-My idea is to create a marker file when creating (yet) unconnected loose =
-objects, i.e. on commit/push/fetch.  After the ref was updated or on abor=
-t, this marker would be removed.  Prune then can simply search for the ol=
-dest marker and only remove objects older than this marker.
+Hm, the operation is not just about moving the stack base, it also has
+to reapply patches, so, whereas the central concept is about moving
+the base, the whole operation is indeed about the rebaseing the whole
+stack.
 
-Of course this also can mean that a marker file somehow stays and prune f=
-ails to clean properly, but that's still better than accidentially cleani=
-ng too much.  In the case of dangling marker files, the admin would simpl=
-y remove them.  rm .git/marker/* when the repo is quiet.
+I'm not sure we need to expose the "stack base" to the user as an
+object she could manipulate all alone, I'd rather think it should only
+be kept a read-only attribute of the stack, which gets changed when
+the user rebases the stack.
 
-cheers
-  simon
+IOW, the conceptual base object is private to the stack object, (it is
+indeed just a simple text attribute) and only stack methods are
+allowed to call base.move(), when they have ensured it can be done
+safely (ie. popping all patches first).
 
---=20
-Serve - BSD     +++  RENT this banner advert  +++    ASCII Ribbon   /"\
-Work - Mac      +++  space for low =E2=82=AC=E2=82=AC=E2=82=AC NOW!1  +++=
-      Campaign     \ /
-Party Enjoy Relax   |   http://dragonflybsd.org      Against  HTML   \
-Dude 2c 2 the max   !   http://golden-apple.biz       Mail + News   / \
-
-
---------------enigF66167E1F2D4CE8F498305F8
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (DragonFly)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
-
-iD8DBQFFsgW+r5S+dk6z85oRAjubAKCDKTVmfGS8efRvnUclylIu0Jxb3ACfVDXI
-8HJQJw8mjUhRnpUn8v8aqOc=
-=SoXV
------END PGP SIGNATURE-----
-
---------------enigF66167E1F2D4CE8F498305F8--
+Best regards,
+-- 
+Yann.
