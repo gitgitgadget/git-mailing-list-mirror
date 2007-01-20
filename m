@@ -1,93 +1,100 @@
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: SEGV in git-apply
-Date: Sat, 20 Jan 2007 19:36:15 +0100
-Message-ID: <20070120183615.GA6459@admingilde.org>
-References: <20070120014851.GF5231@admingilde.org> <Pine.LNX.4.63.0701200312000.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Rebasing stgit stacks
+Date: Sat, 20 Jan 2007 20:16:15 +0100
+Message-ID: <200701202016.16333.jnareb@gmail.com>
+References: <8b65902a0701091335u160c6dfl81a523e4cd5adbee@mail.gmail.com> <200701191040.17476.jnareb@gmail.com> <20070120131716.GA4684@nan92-1-81-57-214-146.fbx.proxad.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="NzB8fVQJ5HfG6fxh"
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 20 19:36:22 2007
+X-From: git-owner@vger.kernel.org Sat Jan 20 20:15:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H8L4f-0004fn-Fp
-	for gcvg-git@gmane.org; Sat, 20 Jan 2007 19:36:21 +0100
+	id 1H8Lgk-00065q-6f
+	for gcvg-git@gmane.org; Sat, 20 Jan 2007 20:15:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965297AbXATSgQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 20 Jan 2007 13:36:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965339AbXATSgQ
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 Jan 2007 13:36:16 -0500
-Received: from mail.admingilde.org ([213.95.32.147]:52810 "EHLO
-	mail.admingilde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965297AbXATSgQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Jan 2007 13:36:16 -0500
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
-	id 1H8L4Z-0000bC-9D; Sat, 20 Jan 2007 19:36:15 +0100
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+	id S965297AbXATTPj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 20 Jan 2007 14:15:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965350AbXATTPj
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 Jan 2007 14:15:39 -0500
+Received: from ug-out-1314.google.com ([66.249.92.169]:32404 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965297AbXATTPi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Jan 2007 14:15:38 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so728743uga
+        for <git@vger.kernel.org>; Sat, 20 Jan 2007 11:15:36 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=ByNqNnbXfTUh9OJ+3ZwOISjnp1kPlnUP7wa3DUZNmKjXK2fJz28q0FtkLmA8Kva+4FpB0R0wSE9KDLBPGs5ssdBAsqa18frQVbU8q6a1fZKWHpLpLTjL085hJNkJgyKqp0GBHkbZUjfYokZtJ4dInWDyaO/KkplOSn5vrWQzVMs=
+Received: by 10.67.117.18 with SMTP id u18mr5003028ugm.1169320536778;
+        Sat, 20 Jan 2007 11:15:36 -0800 (PST)
+Received: from host-81-190-20-200.torun.mm.pl ( [81.190.20.200])
+        by mx.google.com with ESMTP id l33sm3647774ugc.2007.01.20.11.15.36;
+        Sat, 20 Jan 2007 11:15:36 -0800 (PST)
+To: Yann Dirson <ydirson@altern.org>,
+	Catalin Marinas <catalin.marinas@gmail.com>
+User-Agent: KMail/1.9.3
+In-Reply-To: <20070120131716.GA4684@nan92-1-81-57-214-146.fbx.proxad.net>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0701200312000.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37280>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37281>
+
+Yann Dirson wrote:
+> On Fri, Jan 19, 2007 at 10:40:16AM +0100, Jakub Narebski wrote:
+
+>> First, "stg rebase" when on some git branch might mean rebase StGIT
+>> stack to head of current branch (because there were some git commits
+>> on top of this branch). So it would be "stg rebase [--onto <target>]";
+>> it would be command without non-option arg, but this arg would be
+>> optional.
+> 
+> I'm not sure I understand.  Since the "current StGIT stack" is the one
+> pointed to by HEAD, how do you specify, when HEAD points to the target
+> branch, which stack to rebase ?
+
+Well, I haven't thought this through. I was thinking about situation
+where there are no applied patches, and some commits were done without
+StGIT (pure git), i.e. we had
+
+                  ..1...2...3  <-- unapplied (deck) [ branch ]
+                 /
+    a---b---c---d   <-- HEAD [ branch ]
+
+There were some git commits (for example fetch, or cherry-pick, or ...)
 
 
---NzB8fVQJ5HfG6fxh
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+                  ..1...2...3  <-- unapplied (deck) [ branch ]
+                 /
+    a---b---c---d---e---f   <-- HEAD [ branch ]
 
-hoi :)
+And after "stg rebase" I want to have:
 
-On Sat, Jan 20, 2007 at 03:14:46AM +0100, Johannes Schindelin wrote:
-> But without that patch I cannot tell.
 
-patch was this one:
+                          ..1...2...3  <-- unapplied (deck) [ branch ]
+                         /
+    a---b---c---d---e---f   <-- HEAD [ branch ]
 
------------------- 8< -------------------------------
---- src/callbacks.cc	2006-11-02 10:16:50.000000000 +0100
-+++ src/callbacks.cc	2007-01-17 20:47:00.000000000 +0100
-@@ -12890,12 +12890,11 @@ void on_unknown_edit_optionmenu_sign_cha
- 	}
- }
-=20
--gboolean on_key_press_event(GtkWidget*, GdkEventKey *event, gpointer) {
-+gboolean on_key_press_event(GtkWidget *o, GdkEventKey *event, gpointer) {
- 	if(!GTK_WIDGET_HAS_FOCUS(expression) && (event->keyval > GDK_Hyper_R || e=
-vent->keyval < GDK_Shift_L)) {
--		bool return_val =3D FALSE;
- 		GtkWidget *w =3D gtk_window_get_focus(GTK_WINDOW(glade_xml_get_widget (m=
-ain_glade, "main_window")));
--		if(w) g_signal_emit_by_name((gpointer) w, "key_press_event", event, &ret=
-urn_val);
--		if(return_val) return TRUE;
-+		if(gtk_bindings_activate_event(GTK_OBJECT(o), event)) return TRUE;
-+		if(w && gtk_bindings_activate_event(GTK_OBJECT(w), event)) return TRUE;
- 		focus_keeping_selection();
- 	}
- 	return FALSE;
------------------- 8< -------------------------------
 
-git-apply inside the "src" directory segfaulted.
+I'm not sure how should the above work with applied patches
+(non-empty stack), i.e. with the following:
 
---=20
-Martin Waitz
+                          ..3...4...5  <-- unapplied (deck) [ branch ]
+                         /
+    a---b---c---d-.-1-.-2   <-- HEAD [ branch ]
+                  \--v--/
 
---NzB8fVQJ5HfG6fxh
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
+                  (stack)  
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
+Or for example git branch got rebased, and I want to move also deck
+(unapplied patches), because "git rebase" don't move them... unless
+this is not needed. Probably it is not needed.
 
-iD8DBQFFsmEfj/Eaxd/oD7IRAl2aAJsHCixSUxlgCwb1qcgLtSxg+44m5QCfY8Oo
-0K/Q0mKa+17kzFWfkb0m9b4=
-=EvPq
------END PGP SIGNATURE-----
-
---NzB8fVQJ5HfG6fxh--
+-- 
+Jakub Narebski
+Poland
