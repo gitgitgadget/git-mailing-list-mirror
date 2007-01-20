@@ -1,60 +1,93 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] honor GIT_REFLOG_ACTION in git-commit
-Date: Fri, 19 Jan 2007 18:22:06 -0800
-Message-ID: <7vvej2a14h.fsf@assigned-by-dhcp.cox.net>
-References: <7vfya6bixg.fsf@assigned-by-dhcp.cox.net>
-	<20070120021557.GB11073@spearce.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] --walk-reflogs: disallow uninteresting commits
+Date: Sat, 20 Jan 2007 03:28:19 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0701200325380.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <7virf2d190.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0701200116280.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7v4pqmczqa.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0701200135500.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vr6tqbjt8.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0701200218290.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7v4pqmbhzg.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 20 03:22:20 2007
+X-From: git-owner@vger.kernel.org Sat Jan 20 03:28:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H85s0-0007mp-T8
-	for gcvg-git@gmane.org; Sat, 20 Jan 2007 03:22:17 +0100
+	id 1H85xw-0000kJ-Nq
+	for gcvg-git@gmane.org; Sat, 20 Jan 2007 03:28:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932869AbXATCWJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 19 Jan 2007 21:22:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932807AbXATCWJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Jan 2007 21:22:09 -0500
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:36742 "EHLO
-	fed1rmmtao01.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932869AbXATCWI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Jan 2007 21:22:08 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070120022207.BMVC9173.fed1rmmtao01.cox.net@fed1rmimpo02.cox.net>;
-          Fri, 19 Jan 2007 21:22:07 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id DENQ1W0181kojtg0000000; Fri, 19 Jan 2007 21:22:25 -0500
-To: "Shawn O. Pearce" <spearce@spearce.org>
-In-Reply-To: <20070120021557.GB11073@spearce.org> (Shawn O. Pearce's message
-	of "Fri, 19 Jan 2007 21:15:58 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932871AbXATC2V (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 19 Jan 2007 21:28:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932876AbXATC2V
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Jan 2007 21:28:21 -0500
+Received: from mail.gmx.net ([213.165.64.20]:50951 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932874AbXATC2V (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Jan 2007 21:28:21 -0500
+Received: (qmail invoked by alias); 20 Jan 2007 02:28:19 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp019) with SMTP; 20 Jan 2007 03:28:19 +0100
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v4pqmbhzg.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37252>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37253>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-> Junio C Hamano <junkio@cox.net> wrote:
->> This allows git-cherry-pick and git-revert to properly identify
->> themselves in the resulting reflog entries.  Earlier they were
->> recorded as what git-commit has done.
->
-> Not sure how I missed that one when I introduced GIT_REFLOG_ACTION,
-> but thanks for finding and fixing it.  :-)
+Do not allow uninteresting commits with --walk-reflogs, since it is
+not clear what should be shown in these cases:
 
-The fact that it went unnoticed for this long time shows how we
-lack proper tools to read the message part of the reflog,
-although we use @{N} and @{ago} notation every day and some
-people might even rely on it.  I'd like to do something about
-it, and my earlier "show-branch --reflog" enhancement series
-(I'll park that in 'next' for now) was my attempt for that goal.
+	$ git log --walk-reflogs master..next
+	$ git log --walk-reflogs ^master
 
-I found this out by accident while working on it.
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+---
+
+	On Fri, 19 Jan 2007, Junio C Hamano wrote:
+	
+	> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+	> 
+	> > How about failing if there are _uninteresting_ commits? So,
+	> >
+	> > 	git log --walk-reflogs next master
+	> >
+	> > still works?
+	> 
+	> That feels like a good way to deal with it.
+
+	Here you are.
+
+	> I think people may also appreciate timestamps on Reflog headers 
+	> you add to the output.
+
+	At the moment, if you ask for @{1} (or leave it out), you will see 
+	them enumerated by number. If you ask for @{now}, you will see 
+	them identified by date...
+
+ reflog-walk.c |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
+
+diff --git a/reflog-walk.c b/reflog-walk.c
+index d4b49c7..2d97411 100644
+--- a/reflog-walk.c
++++ b/reflog-walk.c
+@@ -145,6 +145,9 @@ void add_reflog_for_walk(struct reflog_walk_info *info,
+ 	char *branch, *at = strchr(name, '@');
+ 	struct commit_reflog *commit_reflog;
+ 
++	if (commit->object.flags & UNINTERESTING)
++		die ("Cannot walk reflogs for %s", name);
++
+ 	branch = xstrdup(name);
+ 	if (at && at[1] == '{') {
+ 		char *ep;
+-- 
+1.5.0.rc1.g5a400-dirty
