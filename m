@@ -1,182 +1,86 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: [PATCH] Add new 'rebase' command.
-Date: Sat, 20 Jan 2007 16:46:50 +0100
-Message-ID: <20070120154504.19466.87132.stgit@gandelf.nowhere.earth>
+From: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
+Subject: Re: [PATCH] Don't call fstat() on stdin in index-pack.
+Date: Sat, 20 Jan 2007 19:00:54 +0100
+Message-ID: <45B258D6.8090602@fs.ei.tum.de>
+References: <20070118212615.GO8624@jukie.net>	<20070119024436.GQ8624@jukie.net>	<45B034D2.6010007@fs.ei.tum.de> <20070120183519.3a182064.vsu@altlinux.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 20 16:48:24 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enig4B000DD23103AAEE3A153F4D"
+Cc: Bart Trojanowski <bart@jukie.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 20 19:01:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H8IS2-00049B-5i
-	for gcvg-git@gmane.org; Sat, 20 Jan 2007 16:48:18 +0100
+	id 1H8KWX-0005FV-Dl
+	for gcvg-git@gmane.org; Sat, 20 Jan 2007 19:01:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965297AbXATPsO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 20 Jan 2007 10:48:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965298AbXATPsO
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 Jan 2007 10:48:14 -0500
-Received: from postfix2-g20.free.fr ([212.27.60.43]:52503 "EHLO
-	postfix2-g20.free.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965297AbXATPsN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Jan 2007 10:48:13 -0500
-Received: from smtp3-g19.free.fr (smtp3-g19.free.fr [212.27.42.29])
-	by postfix2-g20.free.fr (Postfix) with ESMTP id D271D9456E2
-	for <git@vger.kernel.org>; Sat, 20 Jan 2007 15:48:19 +0100 (CET)
-Received: from bylbo.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id B99F449F5D;
-	Sat, 20 Jan 2007 16:47:10 +0100 (CET)
-Received: from gandelf.nowhere.earth ([10.0.0.5] ident=dwitch)
-	by bylbo.nowhere.earth with esmtp (Exim 4.62)
-	(envelope-from <ydirson@altern.org>)
-	id 1H8IQw-0000PG-AO; Sat, 20 Jan 2007 16:47:10 +0100
-To: Catalin Marinas <catalin.marinas@gmail.com>
-User-Agent: StGIT/0.11
+	id S965342AbXATSBB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 20 Jan 2007 13:01:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965343AbXATSBB
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 Jan 2007 13:01:01 -0500
+Received: from stella.fs.ei.tum.de ([129.187.54.7]:41852 "EHLO
+	stella.fs.ei.tum.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965342AbXATSBA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Jan 2007 13:01:00 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by localhost.fs.ei.tum.de (Postfix) with ESMTP id 82791280D2;
+	Sat, 20 Jan 2007 19:00:58 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at fs.ei.tum.de
+Received: from stella.fs.ei.tum.de ([127.0.0.1])
+	by localhost (stella.fs.ei.tum.de [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id MG0ePvkacAhE; Sat, 20 Jan 2007 19:00:58 +0100 (CET)
+Received: from [62.216.203.207] (ppp-62-216-203-207.dynamic.mnet-online.de [62.216.203.207])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	by stella.fs.ei.tum.de (Postfix) with ESMTP id DEA18280BD;
+	Sat, 20 Jan 2007 19:00:57 +0100 (CET)
+User-Agent: Mail/News 1.5.0.4 (X11/20060619)
+To: Sergey Vlasov <vsu@altlinux.ru>
+In-Reply-To: <20070120183519.3a182064.vsu@altlinux.ru>
+X-Enigmail-Version: 0.94.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37276>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37277>
+
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enig4B000DD23103AAEE3A153F4D
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+
+Sergey Vlasov wrote:
+> Compiling git with -D_FILE_OFFSET_BITS=3D64 will make ino_t 64-bit and
+> therefore will fix the problem (however, I'm not sure whether the git
+> code is ready for this).
+
+It better be :)  My OS of choice has 64bit off_t and ino_t since a long t=
+ime now...
+
+cheers
+  simon
+
+--=20
+Serve - BSD     +++  RENT this banner advert  +++    ASCII Ribbon   /"\
+Work - Mac      +++  space for low =E2=82=AC=E2=82=AC=E2=82=AC NOW!1  +++=
+      Campaign     \ /
+Party Enjoy Relax   |   http://dragonflybsd.org      Against  HTML   \
+Dude 2c 2 the max   !   http://golden-apple.biz       Mail + News   / \
 
 
+--------------enig4B000DD23103AAEE3A153F4D
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.3 (DragonFly)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
 
-Signed-off-by: Yann Dirson <ydirson@altern.org>
----
+iD8DBQFFsljZr5S+dk6z85oRAlsfAKCxuVoibBC8ApzH5bpq1FVCCoyE6gCgks2p
+d4qOSOHxvwaqV0qXXOa/C3Q=
+=vYdy
+-----END PGP SIGNATURE-----
 
-This patch uses the "rebase --to <target>" syntax, which leaves room
-for the feature suggeted by Jakub to use "rebase <stack>" to rebase a
-stack onto current branch.
-
- stgit/commands/rebase.py |   69 ++++++++++++++++++++++++++++++++++++++++++++++
- stgit/main.py            |    1 +
- t/t2200-rebase.sh        |   33 ++++++++++++++++++++++
- 3 files changed, 103 insertions(+), 0 deletions(-)
-
-diff --git a/stgit/commands/rebase.py b/stgit/commands/rebase.py
-new file mode 100644
-index 0000000..79d67a7
---- /dev/null
-+++ b/stgit/commands/rebase.py
-@@ -0,0 +1,69 @@
-+__copyright__ = """
-+Copyright (C) 2005, Catalin Marinas <catalin.marinas@gmail.com>
-+
-+This program is free software; you can redistribute it and/or modify
-+it under the terms of the GNU General Public License version 2 as
-+published by the Free Software Foundation.
-+
-+This program is distributed in the hope that it will be useful,
-+but WITHOUT ANY WARRANTY; without even the implied warranty of
-+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+GNU General Public License for more details.
-+
-+You should have received a copy of the GNU General Public License
-+along with this program; if not, write to the Free Software
-+Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
-+"""
-+
-+import sys, os
-+from optparse import OptionParser, make_option
-+
-+from stgit.commands.common import *
-+from stgit.utils import *
-+from stgit import stack, git
-+
-+
-+help = 'move the stack base to another point in history'
-+usage = """%prog [options] --to <target-commit>
-+
-+Pop all patches from current stack, move the stack base to the
-+given <target-commit>, and push the patches back."""
-+
-+options = [make_option('-n', '--nopush',
-+                       help = 'do not push the patches back after pulling',
-+                       action = 'store_true'),
-+           make_option('--to', metavar = 'COMMITID',
-+                       help = 'move the stack base to COMMITID')]
-+
-+def func(parser, options, args):
-+    """Rebase the current stack
-+    """
-+    if len(args) > 0:
-+        parser.error('incorrect number of arguments')
-+
-+    if not options.to:
-+        parser.error('rebase requires option --to')
-+
-+    if crt_series.get_protected():
-+        raise CmdException, 'This branch is protected. Rebase is not permitted'
-+
-+    check_local_changes()
-+    check_conflicts()
-+    check_head_top_equal()
-+
-+    # pop all patches
-+    applied = crt_series.get_applied()
-+    if len(applied) > 0:
-+        print 'Popping all applied patches...',
-+        sys.stdout.flush()
-+        crt_series.pop_patch(applied[0])
-+        print 'done'
-+
-+    print 'Rebasing to "%s"...' % options.to
-+    git.reset(tree_id = git_id(options.to))
-+
-+    # push the patches back
-+    if not options.nopush:
-+        push_patches(applied)
-+
-+    print_crt_patch()
-diff --git a/stgit/main.py b/stgit/main.py
-index 0f92f75..8bf233c 100644
---- a/stgit/main.py
-+++ b/stgit/main.py
-@@ -80,6 +80,7 @@ commands = Commands({
-     'pop':              'pop',
-     'pull':             'pull',
-     'push':             'push',
-+    'rebase':           'rebase',
-     'refresh':          'refresh',
-     'rename':           'rename',
-     'resolved':         'resolved',
-diff --git a/t/t2200-rebase.sh b/t/t2200-rebase.sh
-new file mode 100755
-index 0000000..6211cbd
---- /dev/null
-+++ b/t/t2200-rebase.sh
-@@ -0,0 +1,33 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2007 Yann Dirson
-+#
-+
-+test_description='Test the "rebase" command.'
-+
-+. ./test-lib.sh
-+
-+test_expect_success \
-+	'Setup a multi-commit branch and fork an stgit stack' \
-+	'
-+	echo foo > file1 &&
-+	git add file1 &&
-+	git commit -m a &&
-+	echo foo > file2 &&
-+	git add file2 &&
-+	git commit -m b &&
-+
-+	stg branch --create stack &&
-+	stg new p -m . &&
-+	echo bar >> file1 &&
-+	stg refresh
-+	'
-+
-+test_expect_success \
-+	'Rebase to previous commit' \
-+	'
-+	stg rebase --to master~1 &&
-+	test `git rev-parse bases/stack` = `git rev-parse master~1`
-+	'
-+
-+test_done
+--------------enig4B000DD23103AAEE3A153F4D--
