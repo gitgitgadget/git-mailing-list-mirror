@@ -1,70 +1,57 @@
-From: Johannes Sixt <johannes.sixt@telecom.at>
-Subject: Re: MinGW port - initial work uploaded
-Date: Sat, 20 Jan 2007 21:05:23 +0100
-Message-ID: <200701202105.23861.johannes.sixt@telecom.at>
-References: <200701192148.20206.johannes.sixt@telecom.at> <20070120033149.GB11200@spearce.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Meaning of "fatal: protocol error: bad line length character"?
+Date: Sat, 20 Jan 2007 21:07:11 +0100
+Organization: At home
+Message-ID: <eotso5$9fa$1@sea.gmane.org>
+References: <17842.1385.366750.915767@lisa.zopyra.com> <7vk5zh7b7d.fsf@assigned-by-dhcp.cox.net> <7vfya57ast.fsf@assigned-by-dhcp.cox.net> <17842.29542.229557.460473@lisa.zopyra.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sat Jan 20 21:05:36 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Sat Jan 20 21:07:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H8MSy-0001Nt-A0
-	for gcvg-git@gmane.org; Sat, 20 Jan 2007 21:05:32 +0100
+	id 1H8MUO-0001qx-GO
+	for gcvg-git@gmane.org; Sat, 20 Jan 2007 21:07:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965363AbXATUF3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 20 Jan 2007 15:05:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965365AbXATUF3
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 Jan 2007 15:05:29 -0500
-Received: from smtp3.noc.eunet-ag.at ([193.154.160.89]:44294 "EHLO
-	smtp3.noc.eunet-ag.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965363AbXATUF2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Jan 2007 15:05:28 -0500
-Received: from dx.sixt.local (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
-	by smtp3.noc.eunet-ag.at (Postfix) with ESMTP
-	id A0D293410E; Sat, 20 Jan 2007 21:05:26 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by dx.sixt.local (Postfix) with ESMTP id 15F81121CF;
-	Sat, 20 Jan 2007 21:05:25 +0100 (CET)
+	id S965362AbXATUG5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 20 Jan 2007 15:06:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965365AbXATUG5
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 Jan 2007 15:06:57 -0500
+Received: from main.gmane.org ([80.91.229.2]:45430 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965362AbXATUG4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Jan 2007 15:06:56 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1H8MUA-0003cO-LO
+	for git@vger.kernel.org; Sat, 20 Jan 2007 21:06:46 +0100
+Received: from host-81-190-20-200.torun.mm.pl ([81.190.20.200])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 20 Jan 2007 21:06:46 +0100
+Received: from jnareb by host-81-190-20-200.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 20 Jan 2007 21:06:46 +0100
+X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
-User-Agent: KMail/1.9.3
-In-Reply-To: <20070120033149.GB11200@spearce.org>
-Content-Disposition: inline
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-20-200.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37285>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37286>
 
-On Saturday 20 January 2007 04:31, Shawn O. Pearce wrote:
-> Base your branch on Junio's 'master', not 'next'.  This looks like
-> its going to be a fairly long-running topic with a large number
-> of commits.  It will be easier to convince Junio to pull the topic
-> in if its based solely on 'master' than if its based on 'next'.
+Bill Lear wrote:
 
-I consider this branch only the sandbox for the MinGW port.
+> We are using git 1.4.4.1, the latest I thought available, not 1.4.4.4
+> (perhaps you mis-typed?).
 
-Although I've tried to make the branch as clean as possible, it is still a bit 
-messy, and not everything is #ifdef'd that should be. For this reason I will 
-not try to convince Junio to pull this topic directly. The goal is rather to 
-work towards a complete port, then later factor out patches that 
-bring 'master' or 'next' closer to this branch so that finally only at most a 
-small patch series is needed that contains this topic.
-
-> 	git-compat-util:
-> 	#ifdef __MINGW32__
-> 	#define is_mingw32 1
-> 	#else
-> 	#define is_mingw32 0
-> 	#endif
->
-> 	everywhere else:
-> 	if (is_mingw32) {
-> 	}
-
-I like this idea.
-
--- Hannes
+The latest is git 1.4.4.4. Available for example from
+http://kernel.org/pub/software/scm/git/
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
