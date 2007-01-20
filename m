@@ -1,86 +1,70 @@
-From: Bill Lear <rael@zopyra.com>
-Subject: Re: Meaning of "fatal: protocol error: bad line length character"?
-Date: Sat, 20 Jan 2007 13:54:14 -0600
-Message-ID: <17842.29542.229557.460473@lisa.zopyra.com>
-References: <17842.1385.366750.915767@lisa.zopyra.com>
-	<7vk5zh7b7d.fsf@assigned-by-dhcp.cox.net>
-	<7vfya57ast.fsf@assigned-by-dhcp.cox.net>
+From: Johannes Sixt <johannes.sixt@telecom.at>
+Subject: Re: MinGW port - initial work uploaded
+Date: Sat, 20 Jan 2007 21:05:23 +0100
+Message-ID: <200701202105.23861.johannes.sixt@telecom.at>
+References: <200701192148.20206.johannes.sixt@telecom.at> <20070120033149.GB11200@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 20 20:54:44 2007
+Cc: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sat Jan 20 21:05:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H8MIO-0007F5-CB
-	for gcvg-git@gmane.org; Sat, 20 Jan 2007 20:54:36 +0100
+	id 1H8MSy-0001Nt-A0
+	for gcvg-git@gmane.org; Sat, 20 Jan 2007 21:05:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965360AbXATTy1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 20 Jan 2007 14:54:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965361AbXATTy1
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 Jan 2007 14:54:27 -0500
-Received: from mail.zopyra.com ([65.68.225.25]:60711 "EHLO zopyra.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965360AbXATTy1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Jan 2007 14:54:27 -0500
-Received: (from rael@localhost)
-	by zopyra.com (8.11.6/8.11.6) id l0KJsOE01234;
-	Sat, 20 Jan 2007 13:54:24 -0600
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vfya57ast.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: VM 7.18 under Emacs 21.1.1
+	id S965363AbXATUF3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 20 Jan 2007 15:05:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965365AbXATUF3
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 Jan 2007 15:05:29 -0500
+Received: from smtp3.noc.eunet-ag.at ([193.154.160.89]:44294 "EHLO
+	smtp3.noc.eunet-ag.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965363AbXATUF2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Jan 2007 15:05:28 -0500
+Received: from dx.sixt.local (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
+	by smtp3.noc.eunet-ag.at (Postfix) with ESMTP
+	id A0D293410E; Sat, 20 Jan 2007 21:05:26 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by dx.sixt.local (Postfix) with ESMTP id 15F81121CF;
+	Sat, 20 Jan 2007 21:05:25 +0100 (CET)
+To: git@vger.kernel.org
+User-Agent: KMail/1.9.3
+In-Reply-To: <20070120033149.GB11200@spearce.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37284>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37285>
 
-We are using git 1.4.4.1, the latest I thought available, not 1.4.4.4
-(perhaps you mis-typed?).
+On Saturday 20 January 2007 04:31, Shawn O. Pearce wrote:
+> Base your branch on Junio's 'master', not 'next'.  This looks like
+> its going to be a fairly long-running topic with a large number
+> of commits.  It will be easier to convince Junio to pull the topic
+> in if its based solely on 'master' than if its based on 'next'.
 
-In any case, I personally would love to try the latest build of git,
-but I don't think I can convince the rest of the company to do so.
+I consider this branch only the sandbox for the MinGW port.
 
-I just got an email from one of the developers.  He seems to think
-this is alleviated by using bash instead of tcsh.  He said he is
-debugging his environment to see if he can isolate the problem.  I
-have asked for more details and if I can find out more, I will
-certainly communicate it here.
+Although I've tried to make the branch as clean as possible, it is still a bit 
+messy, and not everything is #ifdef'd that should be. For this reason I will 
+not try to convince Junio to pull this topic directly. The goal is rather to 
+work towards a complete port, then later factor out patches that 
+bring 'master' or 'next' closer to this branch so that finally only at most a 
+small patch series is needed that contains this topic.
 
-If I were to get people to agree to try the latest git build, would I
-be able to just let the developer install and use it on his machine,
-or would I need to also update our company repo?  If the former, I
-would have a much easier time convincing them.
-
-Thanks.
-
-
-Bill
-
-On Saturday, January 20, 2007 at 11:33:38 (-0800) Junio C Hamano writes:
->Junio C Hamano <junkio@cox.net> writes:
+> 	git-compat-util:
+> 	#ifdef __MINGW32__
+> 	#define is_mingw32 1
+> 	#else
+> 	#define is_mingw32 0
+> 	#endif
 >
->> Bill Lear <rael@zopyra.com> writes:
->>
->>> % git push
->>> updating 'refs/heads/master'
->>>   from 6b421066e842203e383e1dc466c1cdef10de56b1
->>>   to   2a8e554ae0c99d44988690c9fce693b3f5f128fa
->>> Generating pack...
->>> Done counting 61 objects.
->>> Result has 32 objects.
->>> Deltifying 32 objects.
->>>  100% (32/32) done
->>> Writing 32 objects.
->>>  100% (32/32) done
->>> Total 32, written 32 (delta 18), reused 0 (delta 0)
->>> Unpacking 32 objects
->>> fatal: protocol error: bad line length character
->
->By the way, I can see from the pack-objects output above that
->you seem to be using git before commit 67c08ce1 (Nov 29, 2006);
->most likely you are using the official 1.4.4.4?
->
->Is it possible for you to try git built from the tip of 'master'
->to see if it reproduces?
+> 	everywhere else:
+> 	if (is_mingw32) {
+> 	}
+
+I like this idea.
+
+-- Hannes
