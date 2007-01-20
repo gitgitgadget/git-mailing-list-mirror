@@ -1,85 +1,91 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Meaning of "fatal: protocol error: bad line length character"?
-Date: Sat, 20 Jan 2007 12:42:18 -0800
-Message-ID: <7v7ivh77md.fsf@assigned-by-dhcp.cox.net>
-References: <17842.1385.366750.915767@lisa.zopyra.com>
-	<7vk5zh7b7d.fsf@assigned-by-dhcp.cox.net>
-	<7vfya57ast.fsf@assigned-by-dhcp.cox.net>
-	<17842.29542.229557.460473@lisa.zopyra.com>
-	<7vbqkt78n7.fsf@assigned-by-dhcp.cox.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] show_date(): fix relative dates
+Date: Sat, 20 Jan 2007 22:21:38 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0701202203260.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 20 21:42:25 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Sat Jan 20 22:21:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H8N2e-00028A-54
-	for gcvg-git@gmane.org; Sat, 20 Jan 2007 21:42:24 +0100
+	id 1H8Nen-00035M-CZ
+	for gcvg-git@gmane.org; Sat, 20 Jan 2007 22:21:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965379AbXATUmV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 20 Jan 2007 15:42:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965380AbXATUmU
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 Jan 2007 15:42:20 -0500
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:39786 "EHLO
-	fed1rmmtao12.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965379AbXATUmU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Jan 2007 15:42:20 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070120204219.YSWT19398.fed1rmmtao12.cox.net@fed1rmimpo02.cox.net>;
-          Sat, 20 Jan 2007 15:42:19 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id DYic1W0121kojtg0000000; Sat, 20 Jan 2007 15:42:37 -0500
-To: Bill Lear <rael@zopyra.com>
-In-Reply-To: <7vbqkt78n7.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Sat, 20 Jan 2007 12:20:12 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S965392AbXATVVl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 20 Jan 2007 16:21:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965394AbXATVVl
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 Jan 2007 16:21:41 -0500
+Received: from mail.gmx.net ([213.165.64.20]:53707 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S965392AbXATVVk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Jan 2007 16:21:40 -0500
+Received: (qmail invoked by alias); 20 Jan 2007 21:21:38 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp035) with SMTP; 20 Jan 2007 22:21:38 +0100
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: git@vger.kernel.org, junkio@cox.net
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37290>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37291>
 
-Junio C Hamano <junkio@cox.net> writes:
 
-> Bill Lear <rael@zopyra.com> writes:
->
->> We are using git 1.4.4.1, the latest I thought available, not 1.4.4.4
->> (perhaps you mis-typed?).
->>
->> In any case, I personally would love to try the latest build of git,
->> but I don't think I can convince the rest of the company to do so.
->>
->> I just got an email from one of the developers.  He seems to think
->> this is alleviated by using bash instead of tcsh.
->
-> Heh, you'll never know what you would get until you ask.  I
-> temporarily run chsh on myself to use tcsh as my login shell,
-> and sure enough I am getting the error.
->
-> fatal: protocol error: bad line length character: 75 70 64 61
->
-> It reads "u p d a"; most likely the command name we are running,
-> which is "update".  I think it is spitting out an error message
-> or something silly like that saying "update hook is not
-> executable".  Let me dig a bit further and report later.
+We pass a timestamp (i.e. number of seconds elapsed since Jan 1 1970,
+00:00:00 GMT) to the function. So there is no need to "fix" the
+timestamp according to the timezone.
 
-That was output to stdout made from the update hook in my case.
-I do not know your setup, but if you make sure your update hook
-does not spit out anything to its stdout (diag can go to stderr),
-you should be able to work it around.
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+---
 
-Funny thing is, at least in recent enough git, I think we set up
-redirection to force output from hook scripts to stderr, but I
-do not remember when it happened.  Let's see...
+	Just compile & run this little test program to see what I mean:
 
-	...goes and looks...
+	#include "cache.h"
 
-That was supposed to have been fixed with commit cd83c74c (Dec
-30, 2006), but this indicates the fix is not working at all when
-your login shell is tcsh.
+	int main(int argc, char **argv)
+	{
+		time_t t = time(NULL);
+		printf("%s\n", show_rfc2822_date(t, 100));
+		printf("%s\n", show_date(t, 100, 0));
+		printf("%s\n", show_date(t, 0, 0));
+		printf("%s\n", show_date(t, 100, 1));
+		printf("%s\n", show_date(t, 0, 1));
+		return 0;
+	}
 
-Hmmmmmm.....
+	Here, it outputs this:
+
+	Sat, 20 Jan 2007 22:20:42 +0100
+	Sat Jan 20 22:20:42 2007 +0100
+	Sat Jan 20 21:20:42 2007 +0000
+	in the future
+	0 seconds ago
+
+	Noticed that "in the future"?
+
+ date.c |    5 ++---
+ 1 files changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/date.c b/date.c
+index 7acb8cb..542c004 100644
+--- a/date.c
++++ b/date.c
+@@ -62,12 +62,11 @@ const char *show_date(unsigned long time, int tz, int relative)
+ 
+ 	if (relative) {
+ 		unsigned long diff;
+-		time_t t = gm_time_t(time, tz);
+ 		struct timeval now;
+ 		gettimeofday(&now, NULL);
+-		if (now.tv_sec < t)
++		if (now.tv_sec < time)
+ 			return "in the future";
+-		diff = now.tv_sec - t;
++		diff = now.tv_sec - time;
+ 		if (diff < 90) {
+ 			snprintf(timebuf, sizeof(timebuf), "%lu seconds ago", diff);
+ 			return timebuf;
+-- 
+1.5.0.rc1.g956c1-dirty
