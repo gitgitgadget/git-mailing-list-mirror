@@ -1,187 +1,123 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: [PATCH] Add new 'rebase' command.
-Date: Sat, 20 Jan 2007 19:04:21 +0100
-Message-ID: <20070120180329.22621.30534.stgit@gandelf.nowhere.earth>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Lose perl dependency. (fwd)
+Date: Sat, 20 Jan 2007 10:31:01 -0800
+Message-ID: <7vwt3h7dp6.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.63.0701181149260.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<45AF5F83.6090207@fs.ei.tum.de>
+	<Pine.LNX.4.63.0701181441010.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7vps9ag58g.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0701200052210.12889@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7vvej2bkn2.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0701200213020.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7vfya69xym.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0701201025070.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 20 19:05:00 2007
+X-From: git-owner@vger.kernel.org Sat Jan 20 19:31:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H8KaH-0006AV-9C
-	for gcvg-git@gmane.org; Sat, 20 Jan 2007 19:04:57 +0100
+	id 1H8Kzf-0003PA-Oy
+	for gcvg-git@gmane.org; Sat, 20 Jan 2007 19:31:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965353AbXATSEp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 20 Jan 2007 13:04:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965351AbXATSEp
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 Jan 2007 13:04:45 -0500
-Received: from smtp3-g19.free.fr ([212.27.42.29]:38690 "EHLO smtp3-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965344AbXATSEo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Jan 2007 13:04:44 -0500
-X-Greylist: delayed 8252 seconds by postgrey-1.27 at vger.kernel.org; Sat, 20 Jan 2007 13:04:44 EST
-Received: from bylbo.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id 27E1B4A1E7;
-	Sat, 20 Jan 2007 19:04:43 +0100 (CET)
-Received: from gandelf.nowhere.earth ([10.0.0.5] ident=dwitch)
-	by bylbo.nowhere.earth with esmtp (Exim 4.62)
-	(envelope-from <ydirson@altern.org>)
-	id 1H8Ka2-0000Si-FP; Sat, 20 Jan 2007 19:04:42 +0100
-To: Catalin Marinas <catalin.marinas@gmail.com>
-User-Agent: StGIT/0.11
+	id S965284AbXATSbF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 20 Jan 2007 13:31:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965263AbXATSbF
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 Jan 2007 13:31:05 -0500
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:51763 "EHLO
+	fed1rmmtao09.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965284AbXATSbD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Jan 2007 13:31:03 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20070120183102.ISLK18767.fed1rmmtao09.cox.net@fed1rmimpo02.cox.net>;
+          Sat, 20 Jan 2007 13:31:02 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id DWXK1W00a1kojtg0000000; Sat, 20 Jan 2007 13:31:19 -0500
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37278>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37279>
 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
+>> I think there are two very valid ways.  You determine what you
+>> would spit out as if there is no --reverse, and then reverse the
+>> result, or you do not limit with them to get everthing, reverse
+>> the result and do the counting limit on that reversed list.
+> ...
+>> I do not think you would need to artificially make it limited like your 
+>> patch does if you go this route
+>
+> Why? To see the last commit (which should be output first), I _have_ to 
+> traverse them first, before reversing the order. I thought revs->limited 
+> does exactly that -- traverse all commits first. Am I mistaken?
 
+I think you are talking about the second semantics; I was
+talking about the first one.  In other words, the one whose
+semantics of:
 
-Signed-off-by: Yann Dirson <ydirson@altern.org>
----
+	$ git log --max-count=10 --skip=5 --reverse HEAD
 
-Take two: I had forgotten to add "rebase" to the list of stack
-commands for the purpose of help.
+is to first internally run
 
- stgit/commands/rebase.py |   69 ++++++++++++++++++++++++++++++++++++++++++++++
- stgit/main.py            |    2 +
- t/t2200-rebase.sh        |   33 ++++++++++++++++++++++
- 3 files changed, 104 insertions(+), 0 deletions(-)
+	$ git log --max-count=10 --skip=5 HEAD
 
-diff --git a/stgit/commands/rebase.py b/stgit/commands/rebase.py
-new file mode 100644
-index 0000000..79d67a7
---- /dev/null
-+++ b/stgit/commands/rebase.py
-@@ -0,0 +1,69 @@
-+__copyright__ = """
-+Copyright (C) 2005, Catalin Marinas <catalin.marinas@gmail.com>
+then reverse the resulting 10 commits and spit them out.
+
+Now, "git log --max-count=10 --skip=5" does not need to call
+limit_list().  It needs to traverse the usual date-sorted
+revs->commits for fifteen rounds.
+
+Looking at your patch again,...
+
+@@ -1155,6 +1160,8 @@ void prepare_revision_walk(struct rev_info *revs)
+ 		sort_in_topological_order_fn(&revs->commits, revs->lifo,
+ 					     revs->topo_setter,
+ 					     revs->topo_getter);
++	if (revs->reverse)
++		revs->commits = reverse_commit_list(revs->commits);
+ }
+ 
+ static int rewrite_one(struct rev_info *revs, struct commit **pp)
+
+This makes the code traverse and grab everything and then
+reverse; the later get_revision() -> get_revision_1() loop skips
+5, returns 10 and then finally stops.  In other words, this
+gives 10 old commits counting from the 6th oldest one in the
+history.
+
+If we prefer the first semantics, we do not have to traverse and
+grab everything.  That is what I was getting at.
+
+That is, something like this, with your option parsing change
+(modulo we _might_ want to explicitly mark some of the users
+incompatible), addition of reverse field to struct rev_info,
+moving reverse_commit_list() to a more public place, but without
+making the reverse to imply limited traversal.
+
+diff --git a/revision.c b/revision.c
+index f2ddd95..161c4c0 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1274,6 +1274,14 @@ struct commit *get_revision(struct rev_info *revs)
+ {
+ 	struct commit *c = NULL;
+ 
++	if (revs->reverse) {
++		/* we were asked to reverse, but haven't reversed the
++		 * result, yet, so do it here once
++		 */
++		revs->commits = reverse_commit_list(revs->commits);
++		revs->reverse = 0;
++	}
 +
-+This program is free software; you can redistribute it and/or modify
-+it under the terms of the GNU General Public License version 2 as
-+published by the Free Software Foundation.
-+
-+This program is distributed in the hope that it will be useful,
-+but WITHOUT ANY WARRANTY; without even the implied warranty of
-+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+GNU General Public License for more details.
-+
-+You should have received a copy of the GNU General Public License
-+along with this program; if not, write to the Free Software
-+Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
-+"""
-+
-+import sys, os
-+from optparse import OptionParser, make_option
-+
-+from stgit.commands.common import *
-+from stgit.utils import *
-+from stgit import stack, git
-+
-+
-+help = 'move the stack base to another point in history'
-+usage = """%prog [options] --to <target-commit>
-+
-+Pop all patches from current stack, move the stack base to the
-+given <target-commit>, and push the patches back."""
-+
-+options = [make_option('-n', '--nopush',
-+                       help = 'do not push the patches back after pulling',
-+                       action = 'store_true'),
-+           make_option('--to', metavar = 'COMMITID',
-+                       help = 'move the stack base to COMMITID')]
-+
-+def func(parser, options, args):
-+    """Rebase the current stack
-+    """
-+    if len(args) > 0:
-+        parser.error('incorrect number of arguments')
-+
-+    if not options.to:
-+        parser.error('rebase requires option --to')
-+
-+    if crt_series.get_protected():
-+        raise CmdException, 'This branch is protected. Rebase is not permitted'
-+
-+    check_local_changes()
-+    check_conflicts()
-+    check_head_top_equal()
-+
-+    # pop all patches
-+    applied = crt_series.get_applied()
-+    if len(applied) > 0:
-+        print 'Popping all applied patches...',
-+        sys.stdout.flush()
-+        crt_series.pop_patch(applied[0])
-+        print 'done'
-+
-+    print 'Rebasing to "%s"...' % options.to
-+    git.reset(tree_id = git_id(options.to))
-+
-+    # push the patches back
-+    if not options.nopush:
-+        push_patches(applied)
-+
-+    print_crt_patch()
-diff --git a/stgit/main.py b/stgit/main.py
-index 0f92f75..ca2bbde 100644
---- a/stgit/main.py
-+++ b/stgit/main.py
-@@ -80,6 +80,7 @@ commands = Commands({
-     'pop':              'pop',
-     'pull':             'pull',
-     'push':             'push',
-+    'rebase':           'rebase',
-     'refresh':          'refresh',
-     'rename':           'rename',
-     'resolved':         'resolved',
-@@ -110,6 +111,7 @@ stackcommands = (
-     'init',
-     'pop',
-     'push',
-+    'rebase',
-     'series',
-     'top',
-     'unapplied',
-diff --git a/t/t2200-rebase.sh b/t/t2200-rebase.sh
-new file mode 100755
-index 0000000..6211cbd
---- /dev/null
-+++ b/t/t2200-rebase.sh
-@@ -0,0 +1,33 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2007 Yann Dirson
-+#
-+
-+test_description='Test the "rebase" command.'
-+
-+. ./test-lib.sh
-+
-+test_expect_success \
-+	'Setup a multi-commit branch and fork an stgit stack' \
-+	'
-+	echo foo > file1 &&
-+	git add file1 &&
-+	git commit -m a &&
-+	echo foo > file2 &&
-+	git add file2 &&
-+	git commit -m b &&
-+
-+	stg branch --create stack &&
-+	stg new p -m . &&
-+	echo bar >> file1 &&
-+	stg refresh
-+	'
-+
-+test_expect_success \
-+	'Rebase to previous commit' \
-+	'
-+	stg rebase --to master~1 &&
-+	test `git rev-parse bases/stack` = `git rev-parse master~1`
-+	'
-+
-+test_done
+ 	if (0 < revs->skip_count) {
+ 		while ((c = get_revision_1(revs)) != NULL) {
+ 			if (revs->skip_count-- <= 0)
