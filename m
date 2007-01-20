@@ -1,112 +1,160 @@
 From: Yann Dirson <ydirson@altern.org>
-Subject: [BUG] Problem with "stgit push" causing data loss
-Date: Sat, 20 Jan 2007 16:01:13 +0100
-Message-ID: <20070120150113.GB4665@nan92-1-81-57-214-146.fbx.proxad.net>
+Subject: Re: [BUG] Problem with "stgit push" causing data loss
+Date: Sat, 20 Jan 2007 16:09:49 +0100
+Message-ID: <20070120150949.GB4684@nan92-1-81-57-214-146.fbx.proxad.net>
+References: <20070120150113.GB4665@nan92-1-81-57-214-146.fbx.proxad.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/mixed; boundary="G4iJoqBmSsgzjUCe"
 Cc: GIT list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jan 20 16:01:46 2007
+X-From: git-owner@vger.kernel.org Sat Jan 20 16:10:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H8Hiy-0001Bk-1P
-	for gcvg-git@gmane.org; Sat, 20 Jan 2007 16:01:44 +0100
+	id 1H8HrR-0003Ew-1U
+	for gcvg-git@gmane.org; Sat, 20 Jan 2007 16:10:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965263AbXATPBg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 20 Jan 2007 10:01:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965273AbXATPBg
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 Jan 2007 10:01:36 -0500
-Received: from smtp3-g19.free.fr ([212.27.42.29]:42260 "EHLO smtp3-g19.free.fr"
+	id S965284AbXATPKM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 20 Jan 2007 10:10:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965280AbXATPKM
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 Jan 2007 10:10:12 -0500
+Received: from smtp1-g19.free.fr ([212.27.42.27]:37687 "EHLO smtp1-g19.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965263AbXATPBg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Jan 2007 10:01:36 -0500
+	id S965284AbXATPKK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Jan 2007 10:10:10 -0500
 Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id 713904A077;
-	Sat, 20 Jan 2007 16:01:32 +0100 (CET)
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 19D1F9B64F;
+	Sat, 20 Jan 2007 16:10:09 +0100 (CET)
 Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
-	id 491D21F07A; Sat, 20 Jan 2007 16:01:13 +0100 (CET)
+	id E53F41F07A; Sat, 20 Jan 2007 16:09:49 +0100 (CET)
 To: Catalin Marinas <catalin.marinas@gmail.com>
 Content-Disposition: inline
+In-Reply-To: <20070120150113.GB4665@nan92-1-81-57-214-146.fbx.proxad.net>
 User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37273>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37274>
 
-Well, "data loss" is a bit strong, since the data is still available
-to find using git-lost-found.
 
-I first tried to reproduce with a simple test-case, but could not, so
-here is my way to reproduce it, on a clone of the stgit official
-workspace.
+--G4iJoqBmSsgzjUCe
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-stgit$ stg branch --create test origin
-Branch "test" created.
+On Sat, Jan 20, 2007 at 04:01:13PM +0100, Yann Dirson wrote:
+>  The test patch is my previous work on "pull --to", now superceded
+>  by "rebase".  Patch to reproduce attached to this mail
 
- The test patch is my previous work on "pull --to", now superceded
- by "rebase".  Patch to reproduce attached to this mail - I just use
- "pick" since it's easier for me:
+Well... to *this* mail indeed :}
 
-stgit$ ./stg pick -n pull-to 9abaec589753ab190d378b534ceaa6a5af5d0dd3
-Checking for changes in the working directory... done
-Importing commit 9abaec589753ab190d378b534ceaa6a5af5d0dd3... done
-Now at patch "pull-to"
-stgit$ stg files pull-to
-M stgit/commands/pull.py
-A t/t2100-pull-to.sh
+--G4iJoqBmSsgzjUCe
+Content-Type: text/x-diff; charset=us-ascii
+Content-Disposition: attachment; filename="pull-to.patch"
 
- Now move the testcase in a new patch below, using my
- stg-fold-files-from already sent to the list:
+commit 9abaec589753ab190d378b534ceaa6a5af5d0dd3
+Author: Yann Dirson <ydirson@altern.org>
+Date:   Wed Jan 17 22:11:58 2007 +0100
 
-stgit$ stg pop
-Popping patch "pull-to"... done
-No patches applied
-stgit$ stg new test -m test
-stgit$ stg-fold-files-from pull-to 't/*'
-Folding patch from stdin... done
-stgit$ stg refresh
-Refreshing patch "test"... done
-stgit$ stg files
-A t/t2100-pull-to.sh
+    Pull to arbitrary commit
 
- And then push the old file over that:
+diff --git a/stgit/commands/pull.py b/stgit/commands/pull.py
+index 7c5db22..865bfd6 100644
+--- a/stgit/commands/pull.py
++++ b/stgit/commands/pull.py
+@@ -42,7 +42,9 @@ options = [make_option('-n', '--nopush',
+                        action = 'store_true'),
+            make_option('-m', '--merged',
+                        help = 'check for patches merged upstream',
+-                       action = 'store_true')]
++                       action = 'store_true'),
++           make_option('--to', metavar = 'COMMITID',
++                       help = 'move the stack base to COMMITID')]
+ 
+ def func(parser, options, args):
+     """Pull the changes from a remote repository
+@@ -78,10 +80,15 @@ def func(parser, options, args):
+         crt_series.pop_patch(applied[0])
+         print 'done'
+ 
+-    # pull the remote changes
+-    print 'Pulling from "%s"...' % repository
+-    git.pull(repository, refspec)
+-    print 'done'
++    # FIXME: check git_id/rev_parse(options.to) first and maybe try to fetch if not found
++    if options.to:
++        print 'Rebasing to "%s"...' % options.to
++        git.move_branch(options.to)
++    else:
++        # pull the remote changes
++        print 'Pulling from "%s"...' % repository
++        git.pull(repository, refspec)
++        print 'done'
+ 
+     # push the patches back
+     if not options.nopush:
+diff --git a/t/t2100-pull-to.sh b/t/t2100-pull-to.sh
+new file mode 100755
+index 0000000..0bf5f16
+--- /dev/null
++++ b/t/t2100-pull-to.sh
+@@ -0,0 +1,58 @@
++#!/bin/sh
++#
++# Copyright (c) 2007 Yann Dirson
++#
++
++test_description='Test the "pull --to" command.'
++
++. ./test-lib.sh
++
++# don't need this repo, but better not drop it, see t1100
++#rm -rf .git
++
++# Need a repo to clone
++test_create_repo foo
++
++test_expect_success \
++    'Setup and clone tree, and setup changes' \
++    'cd foo &&
++      stg init && stg new patch -m . &&
++      printf "a\nb\n" > file && stg add file && stg refresh &&
++      cd .. &&
++     stg clone foo bar &&
++     cd bar &&
++      stg new p1 -m p1 &&
++      echo "c" > file2 && stg add file2 && stg refresh &&
++      cd .. &&
++     cp -a bar bar2
++'
++
++test_expect_success \
++    'Modify original stack' \
++    '(cd foo && echo "c" >> file && stg refresh)'
++
++#test_debug bash
++#test_done
++
++#test_debug "cd foo && gitk --all && cd .."
++
++test_expect_success \
++    'Pull without --to' \
++    '(cd bar &&
++     a=$(git rev-parse HEAD) &&
++     stg pull &&
++     test "$a" == $(git rev-parse HEAD))'
++
++#test_debug "cd bar && gitk --all && cd .."
++
++test_expect_success \
++    'Pull with --to' \
++    '(cd bar2 &&
++     a=$(git rev-parse HEAD) &&
++     git fetch origin +refs/heads/master:refs/heads/origin &&
++     stg pull --to origin &&
++     test "$a" != $(git rev-parse HEAD) )'
++
++test_debug "cd bar2 && gitk --all && cd .."
++
++test_done
 
-$ stg push
-Pushing patch "pull-to"...
-Traceback (most recent call last):
-  File "/usr/bin/stg", line 43, in ?
-    main()
-  File "/var/lib/python-support/python2.4/stgit/main.py", line 261, in main
-    command.func(parser, options, args)
-  File "/var/lib/python-support/python2.4/stgit/commands/push.py", line 101, in func
-    push_patches(patches, options.merged)
-  File "/var/lib/python-support/python2.4/stgit/commands/common.py", line 190, in push_patches
-    modified = crt_series.push_patch(p)
-  File "/var/lib/python-support/python2.4/stgit/stack.py", line 916, in push_patch
-    git.merge(bottom, head, top)
-  File "/var/lib/python-support/python2.4/stgit/git.py", line 535, in merge
-    stages['2'][0], stages['3'][0]) != 0:
-  File "/var/lib/python-support/python2.4/stgit/gitmergeonefile.py", line 203, in merge
-    print >> sys.stderr, \
-TypeError: not all arguments converted during string formatting
-
- State of things now:
-
-stgit$ stg status
-? t/t2100-pull-to.sh.current
-? t/t2100-pull-to.sh.patched
-M stgit/commands/pull.py
-stgit$ diff t/t2100-pull-to.sh.*; echo $?
-0
-stgit$ stg files pull-to
-stgit$ stg top
-test
-
- As you can see, the pull-to patch is now in a situation that's not
- obvious to untangle by hand.  Also "stg push -m" exhibits the same
- issue.
-
-Best regards,
--- 
-Yann.
+--G4iJoqBmSsgzjUCe--
