@@ -1,94 +1,61 @@
-From: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
-Subject: Re: [PATCH] New files in git weren't being downloaded during CVS
- update
-Date: Sat, 20 Jan 2007 02:19:37 +0100
-Message-ID: <45B16E29.7000607@fs.ei.tum.de>
-References: <200701191049.40833.andyparkins@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Lose perl dependency. (fwd)
+Date: Fri, 19 Jan 2007 17:21:00 -0800
+Message-ID: <7vbqkubiir.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.63.0701181149260.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<45AF5F83.6090207@fs.ei.tum.de>
+	<Pine.LNX.4.63.0701181441010.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7vps9ag58g.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0701200052210.12889@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7vvej2bkn2.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0701200213020.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enig896F05B87E76DE23F4C3C669"
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 20 02:19:54 2007
+X-From: git-owner@vger.kernel.org Sat Jan 20 02:21:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H84tZ-0001T9-Co
-	for gcvg-git@gmane.org; Sat, 20 Jan 2007 02:19:49 +0100
+	id 1H84up-0001mz-MP
+	for gcvg-git@gmane.org; Sat, 20 Jan 2007 02:21:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965098AbXATBTq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 19 Jan 2007 20:19:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965099AbXATBTq
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Jan 2007 20:19:46 -0500
-Received: from stella.fs.ei.tum.de ([129.187.54.7]:57123 "EHLO
-	stella.fs.ei.tum.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965098AbXATBTo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Jan 2007 20:19:44 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by localhost.fs.ei.tum.de (Postfix) with ESMTP id 167CD280A7;
-	Sat, 20 Jan 2007 02:19:42 +0100 (CET)
-X-Virus-Scanned: by amavisd-new at fs.ei.tum.de
-Received: from stella.fs.ei.tum.de ([127.0.0.1])
-	by localhost (stella.fs.ei.tum.de [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id CgNQWC9s1qJO; Sat, 20 Jan 2007 02:19:41 +0100 (CET)
-Received: from [192.168.10.124] (ppp-62-216-212-125.dynamic.mnet-online.de [62.216.212.125])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	by stella.fs.ei.tum.de (Postfix) with ESMTP id 9ECB4280A5;
-	Sat, 20 Jan 2007 02:19:41 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; U; DragonFly pc32; en-US; rv:1.8.0.8) Gecko/20061212 Thunderbird/1.5.0.8 Mnenhy/0.7.4.666
-To: Andy Parkins <andyparkins@gmail.com>
-In-Reply-To: <200701191049.40833.andyparkins@gmail.com>
-X-Enigmail-Version: 0.94.2.0
+	id S965099AbXATBVE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 19 Jan 2007 20:21:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965108AbXATBVE
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Jan 2007 20:21:04 -0500
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:43890 "EHLO
+	fed1rmmtao06.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965099AbXATBVB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Jan 2007 20:21:01 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20070120012101.IMCY2628.fed1rmmtao06.cox.net@fed1rmimpo02.cox.net>;
+          Fri, 19 Jan 2007 20:21:01 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id DDMJ1W00J1kojtg0000000; Fri, 19 Jan 2007 20:21:18 -0500
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0701200213020.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Sat, 20 Jan 2007 02:18:08 +0100
+	(CET)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37241>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37242>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig896F05B87E76DE23F4C3C669
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Andy Parkins wrote:
-> diff --git a/git-cvsserver.perl b/git-cvsserver.perl
-> index a33a876..c370a53 100755
-> --- a/git-cvsserver.perl
-> +++ b/git-cvsserver.perl
-> @@ -882,7 +882,6 @@ sub req_update
->  		print "MT text A \n";
->                  print "MT fname $filename\n";
->                  print "MT newline\n";
-> -		next;
+> OTOH we can expect people _not_ to use --reverse with format-patch when 
+> they don't know what it does! I mean, I don't go and use "ls" with an 
+> option I saw in the man page, just because it has a cool ring to it.
+>
+> P.S.: Perhaps you should just stop worrying and learn to love --reverse 
 
-I think this is the wrong fix.  Reading cvs's classify.c, T_ADDED is only=
- generated for *locally* added files, never for added files in the repo. =
- The correct status would be "U" as well.
+I usually do not worry, especially while I am running 'next'
+myself.
 
-cheers
-  simon
-
---=20
-Serve - BSD     +++  RENT this banner advert  +++    ASCII Ribbon   /"\
-Work - Mac      +++  space for low =E2=82=AC=E2=82=AC=E2=82=AC NOW!1  +++=
-      Campaign     \ /
-Party Enjoy Relax   |   http://dragonflybsd.org      Against  HTML   \
-Dude 2c 2 the max   !   http://golden-apple.biz       Mail + News   / \
-
-
---------------enig896F05B87E76DE23F4C3C669
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (DragonFly)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
-
-iD8DBQFFsW4rr5S+dk6z85oRAkhmAKCRs5y9esZ3fh/CJlpjuTMZxGA52QCggbcL
-9huOF0+mzAgZ44UC2APVMmM=
-=eBHK
------END PGP SIGNATURE-----
-
---------------enig896F05B87E76DE23F4C3C669--
+It's just unintended consequences I am worried about by touching
+somewhere deep in the revision machinery after -rc1.
