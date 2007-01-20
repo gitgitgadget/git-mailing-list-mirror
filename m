@@ -1,160 +1,97 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: Re: [BUG] Problem with "stgit push" causing data loss
-Date: Sat, 20 Jan 2007 16:09:49 +0100
-Message-ID: <20070120150949.GB4684@nan92-1-81-57-214-146.fbx.proxad.net>
-References: <20070120150113.GB4665@nan92-1-81-57-214-146.fbx.proxad.net>
+From: Sergey Vlasov <vsu@altlinux.ru>
+Subject: Re: [PATCH] Don't call fstat() on stdin in index-pack.
+Date: Sat, 20 Jan 2007 18:35:19 +0300
+Message-ID: <20070120183519.3a182064.vsu@altlinux.ru>
+References: <20070118212615.GO8624@jukie.net>
+	<20070119024436.GQ8624@jukie.net>
+	<45B034D2.6010007@fs.ei.tum.de>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="G4iJoqBmSsgzjUCe"
-Cc: GIT list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jan 20 16:10:32 2007
+Content-Type: multipart/signed; protocol="application/pgp-signature";
+ micalg="PGP-SHA1";
+ boundary="Signature=_Sat__20_Jan_2007_18_35_19_+0300_sR+Fsda=WE+FiXkh"
+Cc: Bart Trojanowski <bart@jukie.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 20 16:36:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H8HrR-0003Ew-1U
-	for gcvg-git@gmane.org; Sat, 20 Jan 2007 16:10:29 +0100
+	id 1H8IGF-00011a-28
+	for gcvg-git@gmane.org; Sat, 20 Jan 2007 16:36:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965284AbXATPKM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 20 Jan 2007 10:10:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965280AbXATPKM
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 Jan 2007 10:10:12 -0500
-Received: from smtp1-g19.free.fr ([212.27.42.27]:37687 "EHLO smtp1-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965284AbXATPKK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Jan 2007 10:10:10 -0500
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 19D1F9B64F;
-	Sat, 20 Jan 2007 16:10:09 +0100 (CET)
-Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
-	id E53F41F07A; Sat, 20 Jan 2007 16:09:49 +0100 (CET)
-To: Catalin Marinas <catalin.marinas@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <20070120150113.GB4665@nan92-1-81-57-214-146.fbx.proxad.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S965291AbXATPgE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 20 Jan 2007 10:36:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965295AbXATPgE
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 Jan 2007 10:36:04 -0500
+Received: from master.altlinux.org ([62.118.250.235]:4382 "EHLO
+	master.altlinux.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965291AbXATPgD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Jan 2007 10:36:03 -0500
+Received: by master.altlinux.org (Postfix, from userid 584)
+	id 00CE9E31F9; Sat, 20 Jan 2007 18:36:00 +0300 (MSK)
+To: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
+In-Reply-To: <45B034D2.6010007@fs.ei.tum.de>
+X-Mailer: Sylpheed version 2.2.9 (GTK+ 2.10.2; x86_64-alt-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37274>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37275>
 
-
---G4iJoqBmSsgzjUCe
-Content-Type: text/plain; charset=us-ascii
+--Signature=_Sat__20_Jan_2007_18_35_19_+0300_sR+Fsda=WE+FiXkh
+Content-Type: text/plain; charset=US-ASCII
 Content-Disposition: inline
+Content-Transfer-Encoding: 7bit
 
-On Sat, Jan 20, 2007 at 04:01:13PM +0100, Yann Dirson wrote:
->  The test patch is my previous work on "pull --to", now superceded
->  by "rebase".  Patch to reproduce attached to this mail
+On Fri, 19 Jan 2007 04:02:42 +0100 Simon 'corecode' Schubert wrote:
 
-Well... to *this* mail indeed :}
+> Bart Trojanowski wrote:
+> >  	/* If input_fd is a file, we should have reached its end now. */
+> > -	if (fstat(input_fd, &st))
+> > -		die("cannot fstat packfile: %s", strerror(errno));
+> > -	if (S_ISREG(st.st_mode) && st.st_size != consumed_bytes)
+> > -		die("pack has junk at the end");
+> > +        if (input_fd) {
+> > +                if (fstat(input_fd, &st))
+> > +                        die("cannot fstat packfile: %s", strerror(errno));
+> > +                if (S_ISREG(st.st_mode) && st.st_size != consumed_bytes)
+> > +                        die("pack has junk at the end");
+> > +        }
+>
+> This is clearly the wrong fix.  input_fd being 0 doesn't mean that
+> it is *not* a regular file.  Only doing a fstat can tell.  You are
+> simply hiding your real issue there, which is that you can't fstat
+> on a pipe or whatever input_fd is.
+>
+> The problem here is that your 64bit kernel can't fit the data into
+> your struct stat provided by your 32bit libc.  Not a problem of git.
+> However, it would be interesting to know what exactly produces the
+> EOVERFLOW.
 
---G4iJoqBmSsgzjUCe
-Content-Type: text/x-diff; charset=us-ascii
-Content-Disposition: attachment; filename="pull-to.patch"
+Most likely it is the st_ino field - the kernel assigns unique inode
+numbers for pipes from an "unsigned long" counter, which is 64-bit in
+this case, and *stat() calls must fail with EOVERFLOW if the inode
+number does not fit into ino_t, which is 32-bit here.  This problem is
+known for some time, and there is even a kernel patch proposed as a
+workaround (which makes the counter 32-bit):
 
-commit 9abaec589753ab190d378b534ceaa6a5af5d0dd3
-Author: Yann Dirson <ydirson@altern.org>
-Date:   Wed Jan 17 22:11:58 2007 +0100
+http://permalink.gmane.org/gmane.linux.file-systems/12526
 
-    Pull to arbitrary commit
+AFAIK, that patch is not upstream yet - so upgrading the kernel did
+not really fix the issue, it will appear again once the system will
+use more than 4G of pipe inodes.
 
-diff --git a/stgit/commands/pull.py b/stgit/commands/pull.py
-index 7c5db22..865bfd6 100644
---- a/stgit/commands/pull.py
-+++ b/stgit/commands/pull.py
-@@ -42,7 +42,9 @@ options = [make_option('-n', '--nopush',
-                        action = 'store_true'),
-            make_option('-m', '--merged',
-                        help = 'check for patches merged upstream',
--                       action = 'store_true')]
-+                       action = 'store_true'),
-+           make_option('--to', metavar = 'COMMITID',
-+                       help = 'move the stack base to COMMITID')]
- 
- def func(parser, options, args):
-     """Pull the changes from a remote repository
-@@ -78,10 +80,15 @@ def func(parser, options, args):
-         crt_series.pop_patch(applied[0])
-         print 'done'
- 
--    # pull the remote changes
--    print 'Pulling from "%s"...' % repository
--    git.pull(repository, refspec)
--    print 'done'
-+    # FIXME: check git_id/rev_parse(options.to) first and maybe try to fetch if not found
-+    if options.to:
-+        print 'Rebasing to "%s"...' % options.to
-+        git.move_branch(options.to)
-+    else:
-+        # pull the remote changes
-+        print 'Pulling from "%s"...' % repository
-+        git.pull(repository, refspec)
-+        print 'done'
- 
-     # push the patches back
-     if not options.nopush:
-diff --git a/t/t2100-pull-to.sh b/t/t2100-pull-to.sh
-new file mode 100755
-index 0000000..0bf5f16
---- /dev/null
-+++ b/t/t2100-pull-to.sh
-@@ -0,0 +1,58 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2007 Yann Dirson
-+#
-+
-+test_description='Test the "pull --to" command.'
-+
-+. ./test-lib.sh
-+
-+# don't need this repo, but better not drop it, see t1100
-+#rm -rf .git
-+
-+# Need a repo to clone
-+test_create_repo foo
-+
-+test_expect_success \
-+    'Setup and clone tree, and setup changes' \
-+    'cd foo &&
-+      stg init && stg new patch -m . &&
-+      printf "a\nb\n" > file && stg add file && stg refresh &&
-+      cd .. &&
-+     stg clone foo bar &&
-+     cd bar &&
-+      stg new p1 -m p1 &&
-+      echo "c" > file2 && stg add file2 && stg refresh &&
-+      cd .. &&
-+     cp -a bar bar2
-+'
-+
-+test_expect_success \
-+    'Modify original stack' \
-+    '(cd foo && echo "c" >> file && stg refresh)'
-+
-+#test_debug bash
-+#test_done
-+
-+#test_debug "cd foo && gitk --all && cd .."
-+
-+test_expect_success \
-+    'Pull without --to' \
-+    '(cd bar &&
-+     a=$(git rev-parse HEAD) &&
-+     stg pull &&
-+     test "$a" == $(git rev-parse HEAD))'
-+
-+#test_debug "cd bar && gitk --all && cd .."
-+
-+test_expect_success \
-+    'Pull with --to' \
-+    '(cd bar2 &&
-+     a=$(git rev-parse HEAD) &&
-+     git fetch origin +refs/heads/master:refs/heads/origin &&
-+     stg pull --to origin &&
-+     test "$a" != $(git rev-parse HEAD) )'
-+
-+test_debug "cd bar2 && gitk --all && cd .."
-+
-+test_done
+Compiling git with -D_FILE_OFFSET_BITS=64 will make ino_t 64-bit and
+therefore will fix the problem (however, I'm not sure whether the git
+code is ready for this).
 
---G4iJoqBmSsgzjUCe--
+--Signature=_Sat__20_Jan_2007_18_35_19_+0300_sR+Fsda=WE+FiXkh
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFFsja6W82GfkQfsqIRAlBJAJ97n/aimshcIdgqpl2bqrTYu4kTVQCeMvOo
+Vx7TB6lEga4wsmlDj3HTP9A=
+=kiIC
+-----END PGP SIGNATURE-----
+
+--Signature=_Sat__20_Jan_2007_18_35_19_+0300_sR+Fsda=WE+FiXkh--
