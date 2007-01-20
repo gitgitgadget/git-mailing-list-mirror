@@ -1,83 +1,84 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] Do not verify filenames in a bare repository
-Date: Sat, 20 Jan 2007 01:52:16 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0701200149010.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <eoqc09$454$2@sea.gmane.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 3/3] show-branch --reflog: show the reflog message at the top.
+Date: Fri, 19 Jan 2007 16:53:07 -0800
+Message-ID: <7vr6tqbjt8.fsf@assigned-by-dhcp.cox.net>
+References: <7virf2d190.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0701200116280.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7v4pqmczqa.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0701200135500.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 20 01:52:29 2007
+X-From: git-owner@vger.kernel.org Sat Jan 20 01:53:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H84T0-0002m0-Lm
-	for gcvg-git@gmane.org; Sat, 20 Jan 2007 01:52:23 +0100
+	id 1H84Tp-000300-Eq
+	for gcvg-git@gmane.org; Sat, 20 Jan 2007 01:53:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965048AbXATAwS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 19 Jan 2007 19:52:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965051AbXATAwS
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Jan 2007 19:52:18 -0500
-Received: from mail.gmx.net ([213.165.64.20]:37883 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S965048AbXATAwR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Jan 2007 19:52:17 -0500
-Received: (qmail invoked by alias); 20 Jan 2007 00:52:16 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp039) with SMTP; 20 Jan 2007 01:52:16 +0100
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Han-Wen Nienhuys <hanwen@xs4all.nl>
-In-Reply-To: <eoqc09$454$2@sea.gmane.org>
-X-Y-GMX-Trusted: 0
+	id S965051AbXATAxK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 19 Jan 2007 19:53:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965056AbXATAxK
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Jan 2007 19:53:10 -0500
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:35948 "EHLO
+	fed1rmmtao12.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965051AbXATAxJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Jan 2007 19:53:09 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20070120005308.RRYX19398.fed1rmmtao12.cox.net@fed1rmimpo02.cox.net>;
+          Fri, 19 Jan 2007 19:53:08 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id DCtR1W00c1kojtg0000000; Fri, 19 Jan 2007 19:53:26 -0500
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0701200135500.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Sat, 20 Jan 2007 01:42:31 +0100
+	(CET)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37233>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37234>
 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-For example, it makes no sense to check the presence of a file
-named "HEAD" when calling "git log HEAD" in a bare repository.
+> On Fri, 19 Jan 2007, Junio C Hamano wrote:
+>
+>> I still am having a hard time trying to explain what these
+>> commands would do, and why they might be useful:
+>> 
+>> 	git-log --walk-reflogs master..next
+>
+> I had less problems explaining that when walking fell back to walking the 
+> parents.
+>
+> It could even make sense to...
 
-Noticed by Han-Wen Nienhuys.
+(meaning that is not what the code does...)
 
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
----
+> Of course, you could always say: if you ask for strange things, you will 
+> get strange things.
 
-	On Fri, 19 Jan 2007, Han-Wen Nienhuys wrote:
+But if you have to say that, doesn't it suggest that accepting
+the option --walk-reflogs when you have anything other than one
+single positive commit in revs.pending leads to end user
+confusion?
 
-	> of course, when --bare is used, then HEAD is not ambiguous.
-	> 
-	> 
-	> [lilydev@haring .git]$ git --bare log HEAD
-	> fatal: ambiguous argument 'HEAD': both revision and filename
-	> Use '--' to separate filenames from revisions
+That's what I was after.  The theme is the same about my
+hesitation against --reverse.
 
-	Note that it would still fail in your case, since saying "--bare" 
-	does not get picked up if the current directory is named ".git".
+On the other hand,
 
-	I was close to sending a patch which sets the environment variable
-	"GIT_IS_BARE" when calling git with "--bare", and checking that, 
-	but decided against it: it is more likely you are about to shoot 
-	yourself in the foot, because real bare repositories are not named 
-	".git".
+>> 	git-log --walk-reflogs master -- Documentation/
+>
+> Ah, but that is way easier!
+>
+> For example: I _know_ that something worked some time ago, and it was 
+> probably in git.c. So ask "git-log --walk-reflogs -- git.c", and you will 
+> soon find out where to start bisecting.
 
- setup.c |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
-
-diff --git a/setup.c b/setup.c
-index cc97f9f..7181560 100644
---- a/setup.c
-+++ b/setup.c
-@@ -95,6 +95,9 @@ void verify_non_filename(const char *prefix, const char *arg)
- 	const char *name;
- 	struct stat st;
- 
-+	if (is_bare_repository())
-+		return;
-+
- 	if (*arg == '-')
- 		return; /* flag */
- 	name = prefix ? prefix_filename(prefix, strlen(prefix), arg) : arg;
--- 
-1.5.0.rc1.g38843-dirty
+there is no reason to forbid pathspec when --walk-reflogs is in
+effect, which I agree.
