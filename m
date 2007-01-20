@@ -1,90 +1,58 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [RFC] Git config file reader in Perl (WIP)
-Date: Fri, 19 Jan 2007 16:19:37 -0800
-Message-ID: <7v8xfyczxi.fsf@assigned-by-dhcp.cox.net>
-References: <200701150144.56793.jnareb@gmail.com>
-	<200701191310.32417.jnareb@gmail.com>
-	<Pine.LNX.4.63.0701191420000.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	<200701192344.11972.jnareb@gmail.com>
+Subject: Re: [PATCH 3/3] show-branch --reflog: show the reflog message at the top.
+Date: Fri, 19 Jan 2007 16:23:57 -0800
+Message-ID: <7v4pqmczqa.fsf@assigned-by-dhcp.cox.net>
+References: <7virf2d190.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0701200116280.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Nikolai Weibull <now@bitwi.se>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 20 01:19:44 2007
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 20 01:24:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H83xP-0002rN-IN
-	for gcvg-git@gmane.org; Sat, 20 Jan 2007 01:19:43 +0100
+	id 1H841a-00041q-6v
+	for gcvg-git@gmane.org; Sat, 20 Jan 2007 01:24:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932825AbXATATk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 19 Jan 2007 19:19:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964983AbXATATj
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Jan 2007 19:19:39 -0500
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:60731 "EHLO
-	fed1rmmtao10.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932844AbXATATj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Jan 2007 19:19:39 -0500
+	id S932807AbXATAX7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 19 Jan 2007 19:23:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964983AbXATAX7
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Jan 2007 19:23:59 -0500
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:60308 "EHLO
+	fed1rmmtao03.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932807AbXATAX6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Jan 2007 19:23:58 -0500
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao10.cox.net
+          by fed1rmmtao03.cox.net
           (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070120001938.TKBB20715.fed1rmmtao10.cox.net@fed1rmimpo02.cox.net>;
-          Fri, 19 Jan 2007 19:19:38 -0500
+          id <20070120002358.BQKX29122.fed1rmmtao03.cox.net@fed1rmimpo02.cox.net>;
+          Fri, 19 Jan 2007 19:23:58 -0500
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id DCKv1W00M1kojtg0000000; Fri, 19 Jan 2007 19:19:56 -0500
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <200701192344.11972.jnareb@gmail.com> (Jakub Narebski's message
-	of "Fri, 19 Jan 2007 23:44:11 +0100")
+	id DCQF1W00P1kojtg0000000; Fri, 19 Jan 2007 19:24:16 -0500
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0701200116280.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Sat, 20 Jan 2007 01:16:51 +0100
+	(CET)")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37227>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37228>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> I'm not sure how to tell that you can have [section] if you have
-> [section "subsection"], but you don't need to.
+> does this mean you did not get used to "--walk-reflogs"? Just wanna know.
 
-s/I'm not .*that//; would be enough, I think.
+That's independent.
 
-> And I'm not sure if some behavior should not be changed, for example
-> allowing _any_ line to be continued with `\`, or that other character
-> escape sequences and perhaps also octal character sequences should be
-> allowed (either that or `\b` should not be parsed).
+I still am having a hard time trying to explain what these
+commands would do, and why they might be useful:
 
-I do not think we need continuation line for [] headers, if that
-is what you mean.  I offhand do not think anybody would scream
-if we start parsing full c-quote.
+	git-log --walk-reflogs master..next
+	git-log --walk-reflogs master -- Documentation/
 
-One thing that left me puzzled after reading the description was
-what a user can do with "subsection".  It is unclear from the
-description if [section "sub.section"], [section"sub.sec=ti.on"]
-or worse yet, [section "sub\nsection with an embbedded LF"] are
-allowed.  The rest seemed sane.
+On the other hand I can understand why this might be useful:
 
-I think the current repo-config handles sane cases alright, but
-it is still fragile in error cases.  For example:
-
-	$ git repo-config 'foo.bar=bzz
-          baz.boo' foobar
-
-does not currently barf, but results in a corrupted config file.
-
-	$ git repo-config 'foo.bar=bzz
-          baz.boo'
-	fatal: bad config file line 56 in .git/config
-
-        $ sed -ne '55,$p' .git/config
-        [foo "bar=bzz
-        baz"]
-                boo = foobar
-
-The only way we use the subsection names for (almost arbitrary)
-end user string is to store branch names, so LF is not an issue
-and we could forbid it (if need arises loosening the restriction
-while updating the code to behave sanely is easier than leaving
-it open without properly checking).
+	git-log --walk-reflogs master
