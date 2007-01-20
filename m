@@ -1,94 +1,106 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: MinGW port - initial work uploaded
-Date: Fri, 19 Jan 2007 22:31:49 -0500
-Message-ID: <20070120033149.GB11200@spearce.org>
-References: <200701192148.20206.johannes.sixt@telecom.at>
+From: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
+Subject: Re: [PATCH] Lose perl dependency. (fwd)
+Date: Sat, 20 Jan 2007 05:02:34 +0100
+Message-ID: <45B1945A.1000400@fs.ei.tum.de>
+References: <Pine.LNX.4.63.0701181149260.22628@wbgn013.biozentrum.uni-wuerzburg.de>	<45AF5F83.6090207@fs.ei.tum.de>	<Pine.LNX.4.63.0701181441010.22628@wbgn013.biozentrum.uni-wuerzburg.de>	<7vps9ag58g.fsf@assigned-by-dhcp.cox.net>	<Pine.LNX.4.63.0701200052210.12889@wbgn013.biozentrum.uni-wuerzburg.de>	<7vvej2bkn2.fsf@assigned-by-dhcp.cox.net>	<Pine.LNX.4.63.0701200213020.22628@wbgn013.biozentrum.uni-wuerzburg.de> <7vfya69xym.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 20 04:31:57 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enigE42851C50FF3AC17605CB77B"
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 20 05:02:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H86xQ-0006z0-EK
-	for gcvg-git@gmane.org; Sat, 20 Jan 2007 04:31:56 +0100
+	id 1H87RE-0005of-KM
+	for gcvg-git@gmane.org; Sat, 20 Jan 2007 05:02:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932892AbXATDby (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 19 Jan 2007 22:31:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965098AbXATDby
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Jan 2007 22:31:54 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:44474 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932892AbXATDbx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Jan 2007 22:31:53 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1H86x9-0008GA-WF; Fri, 19 Jan 2007 22:31:40 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 2ADBF20FBAE; Fri, 19 Jan 2007 22:31:50 -0500 (EST)
-To: Johannes Sixt <johannes.sixt@telecom.at>
-Content-Disposition: inline
-In-Reply-To: <200701192148.20206.johannes.sixt@telecom.at>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S965130AbXATECl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 19 Jan 2007 23:02:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965138AbXATECl
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Jan 2007 23:02:41 -0500
+Received: from stella.fs.ei.tum.de ([129.187.54.7]:33206 "EHLO
+	stella.fs.ei.tum.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965130AbXATECl (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Jan 2007 23:02:41 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by localhost.fs.ei.tum.de (Postfix) with ESMTP id ADA78280FB;
+	Sat, 20 Jan 2007 05:02:39 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at fs.ei.tum.de
+Received: from stella.fs.ei.tum.de ([127.0.0.1])
+	by localhost (stella.fs.ei.tum.de [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id exHcpaQAdtRB; Sat, 20 Jan 2007 05:02:39 +0100 (CET)
+Received: from [192.168.10.124] (ppp-62-216-212-125.dynamic.mnet-online.de [62.216.212.125])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	by stella.fs.ei.tum.de (Postfix) with ESMTP id 1EB22280BD;
+	Sat, 20 Jan 2007 05:02:39 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; U; DragonFly pc32; en-US; rv:1.8.0.8) Gecko/20061212 Thunderbird/1.5.0.8 Mnenhy/0.7.4.666
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vfya69xym.fsf@assigned-by-dhcp.cox.net>
+X-Enigmail-Version: 0.94.2.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37256>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37257>
 
-Johannes Sixt <johannes.sixt@telecom.at> wrote:
-> I've been working on a MinGW port for some time now. I've pushed out what I 
-> have so far to a git.git fork at repo.or.cz. For details on how and what to 
-> clone, please look at the top of
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enigE42851C50FF3AC17605CB77B
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
 
-Can I make a few suggestions?
+Junio C Hamano wrote:
+> I think there are two very valid ways.  You determine what you
+> would spit out as if there is no --reverse, and then reverse the
+> result, or you do not limit with them to get everthing, reverse
+> the result and do the counting limit on that reversed list.
 
-Base your branch on Junio's 'master', not 'next'.  This looks like
-its going to be a fairly long-running topic with a large number
-of commits.  It will be easier to convince Junio to pull the topic
-in if its based solely on 'master' than if its based on 'next'.
+We were originally coming from replacing a perl -e 'print reverse <>' in =
+git-rebase.  So I'd say the former. =20
 
-I made the mistake of building my git-fast-import topic on top of
-'next' back in Aug. 2006.  Its still going and has not yet merged
-into git.git.  I finally went through the pain of rebasing it onto
-'master' to make the merge easier for Junio post 1.5.0.  Of course
-gfi is also less intrusive than this topic will be.
+> If you do the latter, you would be able to get the first four
+> commits in the chronological order.  I do not think that is
+> usually of much practical value (although people new to git
+> always seem to ask "how do I get to the root commit" at least
+> once), but there may be some valid uses for that kind of
+> behaviour.
+
+But I doubt that "--reverse" would suggest that.
+
+   Commit Ordering
+       By default, the commits are shown in reverse chronological order.
+
+so --reverse would mean no-reverse, i.e. forward.  well, acceptable :)  S=
+o if --reverse is an option to influence the output after the commit orde=
+ring, it is clearly the former.
+
+I don't think the latter makes much sense, anyways.
+
+cheers
+  simon
+
+--=20
+Serve - BSD     +++  RENT this banner advert  +++    ASCII Ribbon   /"\
+Work - Mac      +++  space for low =E2=82=AC=E2=82=AC=E2=82=AC NOW!1  +++=
+      Campaign     \ /
+Party Enjoy Relax   |   http://dragonflybsd.org      Against  HTML   \
+Dude 2c 2 the max   !   http://golden-apple.biz       Mail + News   / \
 
 
-The other is maybe try to avoid:
+--------------enigE42851C50FF3AC17605CB77B
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-	#ifndef __MINGW32__
-	...
-	#endif
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (DragonFly)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
 
-instead try to use something like:
+iD8DBQFFsZRdr5S+dk6z85oRAnkdAJ96sKf+WY+OK8TqbxnjCBQ/E1XDqwCeN7tn
+6HlFiY+m65Oedx2pq6HkZU4=
+=X3GK
+-----END PGP SIGNATURE-----
 
-	git-compat-util:
-	#ifdef __MINGW32__
-	#define is_mingw32 1
-	#else
-	#define is_mingw32 0
-	#endif
-
-	everywhere else:
-	if (is_mingw32) {
-	}
-
-This way the code within the block can be syntax checked, etc. on
-non-MinGW platforms but will be removed by the compiler on those
-non-MinGW systems.  I just went through trying to do a #ifndef thing
-for Windows (1510fea7 in git.git, aka the NO_FAST_WORKING_DIRECTORY
-flag) and Junio rightly rejected my first attempt which used #ifndef,
-and instead used something like the above.
- 
--- 
-Shawn.
+--------------enigE42851C50FF3AC17605CB77B--
