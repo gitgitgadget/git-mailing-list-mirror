@@ -1,99 +1,58 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] --walk-reflogs: disallow uninteresting commits
-Date: Fri, 19 Jan 2007 23:21:01 -0800
-Message-ID: <7v64b29naa.fsf@assigned-by-dhcp.cox.net>
-References: <7virf2d190.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0701200116280.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7v4pqmczqa.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0701200135500.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7vr6tqbjt8.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0701200218290.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7v4pqmbhzg.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0701200325380.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: MinGW port - initial work uploaded
+Date: Sat, 20 Jan 2007 10:24:49 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0701201023460.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <200701192148.20206.johannes.sixt@telecom.at>
+ <20070120033149.GB11200@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 20 08:21:18 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johannes Sixt <johannes.sixt@telecom.at>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 20 10:25:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H8AXM-0005Wp-6z
-	for gcvg-git@gmane.org; Sat, 20 Jan 2007 08:21:16 +0100
+	id 1H8CTH-00078b-N2
+	for gcvg-git@gmane.org; Sat, 20 Jan 2007 10:25:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965158AbXATHVE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 20 Jan 2007 02:21:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965133AbXATHVE
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 Jan 2007 02:21:04 -0500
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:38571 "EHLO
-	fed1rmmtao02.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965158AbXATHVD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Jan 2007 02:21:03 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070120072101.MOAJ26900.fed1rmmtao02.cox.net@fed1rmimpo02.cox.net>;
-          Sat, 20 Jan 2007 02:21:01 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id DKMK1W00F1kojtg0000000; Sat, 20 Jan 2007 02:21:19 -0500
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0701200325380.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	(Johannes Schindelin's message of "Sat, 20 Jan 2007 03:28:19 +0100
-	(CET)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S965234AbXATJYw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 20 Jan 2007 04:24:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965236AbXATJYw
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 Jan 2007 04:24:52 -0500
+Received: from mail.gmx.net ([213.165.64.20]:34981 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S965234AbXATJYv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Jan 2007 04:24:51 -0500
+Received: (qmail invoked by alias); 20 Jan 2007 09:24:49 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp024) with SMTP; 20 Jan 2007 10:24:49 +0100
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: "Shawn O. Pearce" <spearce@spearce.org>
+In-Reply-To: <20070120033149.GB11200@spearce.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37258>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37259>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hi,
 
-> 	> I think people may also appreciate timestamps on Reflog headers 
-> 	> you add to the output.
->
-> 	At the moment, if you ask for @{1} (or leave it out), you will see 
-> 	them enumerated by number. If you ask for @{now}, you will see 
-> 	them identified by date...
+On Fri, 19 Jan 2007, Shawn O. Pearce wrote:
 
-Thanks.  This certainly needs a better documentation -- the attached is
-my try.
+> Johannes Sixt <johannes.sixt@telecom.at> wrote:
+> > I've been working on a MinGW port for some time now. I've pushed out what I 
+> > have so far to a git.git fork at repo.or.cz. For details on how and what to 
+> > clone, please look at the top of
+> 
+> Can I make a few suggestions?
+> 
+> Base your branch on Junio's 'master', not 'next'.
 
-By the way, I haven't looked into it, but does this ring a bell?
+Blame me, not Johannes ;-)
 
-    $ git-log --walk-reflogs -1 --pretty=s master@{1.day}
-    commit 72fe6a59890870ed9c3e9e1e6381fc0d7ba75fe4
-    Reflog: master@{Thu, 1 Jan 1970 00:00:00 +0000} ((null))
-    Reflog message: (null)Author: Junio C Hamano <junkio@cox.net>
+As for the #ifdef stuff, I'd rather have a look if it can't be done 
+cleanly by conditional compiling, like we do for NO_MMAP, for example.
 
-        Documentation: Generate command lists.
-
-
----
-
-diff --git a/Documentation/git-rev-list.txt b/Documentation/git-rev-list.txt
-index 86c94e7..fcc540b 100644
---- a/Documentation/git-rev-list.txt
-+++ b/Documentation/git-rev-list.txt
-@@ -190,6 +190,21 @@ limiting may be applied.
- 	In addition to the '<commit>' listed on the command
- 	line, read them from the standard input.
- 
-+--walk-reflogs::
-+
-+	Instead of walking the commit ancestry chain, walk
-+	reflog entries from the most recent one to older ones.
-+	When this option is used you cannot specify commits to
-+	exclude (that is, '{caret}commit', 'commit1..commit2',
-+	nor 'commit1...commit2' notations cannot be used).
-++
-+With '\--pretty' format other than oneline (for obvious reasons),
-+this causes the output to have two extra lines of information
-+taken from the reflog.  By default, 'commit@{Nth}' notation is
-+used in the output.  When the starting commit is specified as
-+'commit@{now}', output also uses 'commit@{timestamp}' notation
-+instead.
-+
- --merge::
- 
- 	After a failed merge, show refs that touch files having a
+Ciao,
+Dscho
