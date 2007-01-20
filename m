@@ -1,68 +1,85 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] Documentation/git.txt: command re-classification
-Date: Fri, 19 Jan 2007 20:44:01 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0701192040130.3011@xanadu.home>
-References: <Pine.LNX.4.64.0701181713200.2577@xanadu.home>
- <7v1wlrle61.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0701191437450.3011@xanadu.home>
- <7vbqkufyhy.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0701191729060.3011@xanadu.home>
- <7vps9aeghh.fsf@assigned-by-dhcp.cox.net>
+From: Martin Waitz <tali@admingilde.org>
+Subject: SEGV in git-apply
+Date: Sat, 20 Jan 2007 02:48:52 +0100
+Message-ID: <20070120014851.GF5231@admingilde.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 20 02:44:09 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="+JUInw4efm7IfTNU"
+X-From: git-owner@vger.kernel.org Sat Jan 20 02:49:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H85H6-0007Ls-EO
-	for gcvg-git@gmane.org; Sat, 20 Jan 2007 02:44:08 +0100
+	id 1H85Ln-0008W8-DZ
+	for gcvg-git@gmane.org; Sat, 20 Jan 2007 02:48:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965094AbXATBoF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 19 Jan 2007 20:44:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965098AbXATBoF
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Jan 2007 20:44:05 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:39905 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965094AbXATBoE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Jan 2007 20:44:04 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JC5001LH8TDLWE0@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 19 Jan 2007 20:44:02 -0500 (EST)
-In-reply-to: <7vps9aeghh.fsf@assigned-by-dhcp.cox.net>
-X-X-Sender: nico@xanadu.home
-To: Junio C Hamano <junkio@cox.net>
+	id S965081AbXATBs5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 19 Jan 2007 20:48:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965098AbXATBs5
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Jan 2007 20:48:57 -0500
+Received: from mail.admingilde.org ([213.95.32.147]:53242 "EHLO
+	mail.admingilde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965081AbXATBs4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Jan 2007 20:48:56 -0500
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
+	id 1H85Li-0001dQ-KH
+	for git@vger.kernel.org; Sat, 20 Jan 2007 02:48:54 +0100
+To: git@vger.kernel.org
+Content-Disposition: inline
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37247>
-
-On Fri, 19 Jan 2007, Junio C Hamano wrote:
-
-> annotate is already ancillary and blame also is.  Do you want to
-> promote one of them to mainporcelain?
-
-I'd think so.
-
-> > Is git-show-branch really a primary command?
-> 
-> Ah, I didn't notice that you wanted to move it out of
-> mainporcelain in your patch.
-> 
-> I personally use it quite often while juggling topics,
-> especially since I do not usually work inside X, but I'm fine
-> either way -- ancillaryinterrogators?
-
-Sure.
-
-> Ok, then how about this on top of what you saw on the list.
-
-I'd put fsck-objects in  ancillaryinterrogators.
-
-Otherwise it looks fine.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37248>
 
 
-Nicolas
+--+JUInw4efm7IfTNU
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+hoi :)
+
+I just hit this bug in git-apply, while executing it in a subdirectory.
+At the moment I am using some mixture of next and some own changes
+(mostly submodule support, should not affect this bug).
+
+I am afraid that I don't have the time to fix it myself atm, so I am simply
+attaching the backtrace here:
+
+Program received signal SIGSEGV, Segmentation fault.
+0x080500fa in apply_patch (fd=3D5, filename=3D0xbf821b4d "/tmp/404241.patch=
+",
+    inaccurate_eof=3D<value optimized out>) at builtin-apply.c:2504
+2504                    if (pathlen <=3D prefix_length ||
+(gdb) bt
+#0  0x080500fa in apply_patch (fd=3D5, filename=3D0xbf821b4d "/tmp/404241.p=
+atch",
+    inaccurate_eof=3D<value optimized out>) at builtin-apply.c:2504
+#1  0x0805147a in cmd_apply (argc=3D3, argv=3D0xbf8201e4, prefix=3D0x80e75c=
+6 "src/")
+    at builtin-apply.c:2719
+#2  0x0804ab55 in handle_internal_command (argc=3D3, argv=3D0xbf8201e4,
+    envp=3D<value optimized out>) at git.c:304
+#3  0x0804b1f8 in main (argc=3D3, argv=3DCannot access memory at address 0x8
+) at git.c:341
+
+
+--=20
+Martin Waitz
+
+--+JUInw4efm7IfTNU
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFFsXUDj/Eaxd/oD7IRAhLvAJ0fXLbWBmFi2KyjWszI7C4QSsI3ZwCfWv8R
+A9hfAQm+clZ+I6vJENUgjS0=
+=v5fU
+-----END PGP SIGNATURE-----
+
+--+JUInw4efm7IfTNU--
