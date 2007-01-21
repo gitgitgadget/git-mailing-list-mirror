@@ -1,60 +1,68 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: Re: [BUG] Problem with "stgit push" causing data loss
-Date: Mon, 22 Jan 2007 00:27:45 +0100
-Message-ID: <20070121232745.GE4665@nan92-1-81-57-214-146.fbx.proxad.net>
-References: <20070120150113.GB4665@nan92-1-81-57-214-146.fbx.proxad.net> <b0943d9e0701211442q503396ack2bf2d088325fc4a0@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [Announce] GIT v1.5.0-rc2
+Date: Mon, 22 Jan 2007 00:36:09 +0100
+Message-ID: <200701220036.10127.jnareb@gmail.com>
+References: <7v64b04v2e.fsf@assigned-by-dhcp.cox.net> <200701220008.49158.jnareb@gmail.com> <Pine.LNX.4.63.0701220012580.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: GIT list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jan 22 00:28:44 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Mon Jan 22 00:35:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H8m77-0000JZ-Vn
-	for gcvg-git@gmane.org; Mon, 22 Jan 2007 00:28:42 +0100
+	id 1H8mDk-0001q8-PA
+	for gcvg-git@gmane.org; Mon, 22 Jan 2007 00:35:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751785AbXAUX2O (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 21 Jan 2007 18:28:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751793AbXAUX2N
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 Jan 2007 18:28:13 -0500
-Received: from smtp8-g19.free.fr ([212.27.42.65]:55594 "EHLO smtp8-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751785AbXAUX2N (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Jan 2007 18:28:13 -0500
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp8-g19.free.fr (Postfix) with ESMTP id 63A4454F4;
-	Mon, 22 Jan 2007 00:28:11 +0100 (CET)
-Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
-	id 6EF402014; Mon, 22 Jan 2007 00:27:45 +0100 (CET)
-To: Catalin Marinas <catalin.marinas@gmail.com>
+	id S1751786AbXAUXf3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 21 Jan 2007 18:35:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751794AbXAUXf3
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 Jan 2007 18:35:29 -0500
+Received: from ug-out-1314.google.com ([66.249.92.171]:24463 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751786AbXAUXf2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Jan 2007 18:35:28 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so909773uga
+        for <git@vger.kernel.org>; Sun, 21 Jan 2007 15:35:27 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=GUUpf8PPIjkEcIg2FzlSDT0+BIz+OuK1FeaFYtSpFHH//TqDT5EDHWcfFViBjFcKBJtSapXSKXyDw7Ml+W2jaxinyMxIe+b0Bv3VH9UhPFn1WoAkigeyws9nXX+bTnIQCQDuaegqeXOX6AwWROmECNPuCX5Q44gwn1fAigIiquA=
+Received: by 10.66.250.17 with SMTP id x17mr6610219ugh.1169422527293;
+        Sun, 21 Jan 2007 15:35:27 -0800 (PST)
+Received: from host-81-190-20-200.torun.mm.pl ( [81.190.20.200])
+        by mx.google.com with ESMTP id k1sm5929916ugf.2007.01.21.15.35.26;
+        Sun, 21 Jan 2007 15:35:27 -0800 (PST)
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+User-Agent: KMail/1.9.3
+In-Reply-To: <Pine.LNX.4.63.0701220012580.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Content-Disposition: inline
-In-Reply-To: <b0943d9e0701211442q503396ack2bf2d088325fc4a0@mail.gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37362>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37363>
 
-On Sun, Jan 21, 2007 at 10:42:18PM +0000, Catalin Marinas wrote:
-> On 20/01/07, Yann Dirson <ydirson@altern.org> wrote:
-> >Well, "data loss" is a bit strong, since the data is still available
-> >to find using git-lost-found.
-> >
-> >I first tried to reproduce with a simple test-case, but could not, so
-> >here is my way to reproduce it, on a clone of the stgit official
-> >workspace.
+Johannes Schindelin wrote:
+> On Mon, 22 Jan 2007, Jakub Narebski wrote:
 > 
-> I tried to somehow emulate this without the fold script but didn't
-> manage to trigger the bug. I'll try with your script tomorrow but
-> first:
+>> So I'd say:
+>> 
+>>   - Reflog records local history of where the tip of each branch
+>>     was at each moment.
+>> 
+>> I think both "local" and "tip of branch" are important
+>> for understanding reflog.
 > 
-> Do you use the latest HEAD in the StGIT repository? I'm asking because
-> the line numbers reported in your backtrace are different from mine. I
-> also made some changes in this area in the past couple of weeks which
-> might have fixed or broken things.
+> 'kay. Probably the simple addition of "local" is enough. Like it.
 
-Here is where I am:
+Or perhaps this would be better:
 
-stgit$ git-rev-parse origin
-0f4eba6a37c1a5454560b097873e5a22bfcde908
+   - Reflog records the history of where the tip of each branch
+     was at each moment in given repository.
+
+Just nitpicking.
+-- 
+Jakub Narebski
+Poland
