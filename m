@@ -1,99 +1,77 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: git-push through git protocol
-Date: Sun, 21 Jan 2007 11:04:13 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0701211034490.14248@woody.osdl.org>
-References: <17843.29798.866272.414435@lisa.zopyra.com> <ep00nl$mop$1@sea.gmane.org>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: [Announce] GIT v1.5.0-rc2
+Date: Sun, 21 Jan 2007 11:49:08 -0800
+Message-ID: <45B3C3B4.6000706@zytor.com>
+References: <7v64b04v2e.fsf@assigned-by-dhcp.cox.net>	<7v3b6439uh.fsf@assigned-by-dhcp.cox.net>	<20070121134308.GA24090@1wt.eu> <7v7ivg1a25.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Jan 21 20:04:34 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Willy Tarreau <w@1wt.eu>, git@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jan 21 20:49:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H8hzJ-0007Xr-Be
-	for gcvg-git@gmane.org; Sun, 21 Jan 2007 20:04:21 +0100
+	id 1H8igw-0001O1-0P
+	for gcvg-git@gmane.org; Sun, 21 Jan 2007 20:49:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751333AbXAUTES (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 21 Jan 2007 14:04:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751363AbXAUTES
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 Jan 2007 14:04:18 -0500
-Received: from smtp.osdl.org ([65.172.181.24]:58246 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751333AbXAUTER (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Jan 2007 14:04:17 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l0LJ4EhB031586
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 21 Jan 2007 11:04:14 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l0LJ4Dhb008072;
-	Sun, 21 Jan 2007 11:04:13 -0800
-To: Jakub Narebski <jnareb@gmail.com>, Bill Lear <rael@zopyra.com>
-In-Reply-To: <ep00nl$mop$1@sea.gmane.org>
-X-Spam-Status: No, hits=-0.66 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.108__
-X-MIMEDefang-Filter: osdl$Revision: 1.170 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751448AbXAUTtU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 21 Jan 2007 14:49:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751451AbXAUTtU
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 Jan 2007 14:49:20 -0500
+Received: from terminus.zytor.com ([192.83.249.54]:43629 "EHLO
+	terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751448AbXAUTtT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Jan 2007 14:49:19 -0500
+Received: from [172.27.0.16] (c-67-180-238-27.hsd1.ca.comcast.net [67.180.238.27])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.8/8.13.7) with ESMTP id l0LJn8Ch013464
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sun, 21 Jan 2007 11:49:09 -0800
+User-Agent: Thunderbird 1.5.0.9 (X11/20061219)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v7ivg1a25.fsf@assigned-by-dhcp.cox.net>
+X-Virus-Scanned: ClamAV 0.88.7/2476/Sun Jan 21 08:22:33 2007 on terminus.zytor.com
+X-Virus-Status: Clean
+X-Spam-Status: No, score=0.8 required=5.0 tests=AWL,BAYES_00,
+	DATE_IN_FUTURE_12_24,RCVD_IN_SORBS_DUL autolearn=no version=3.1.7
+X-Spam-Checker-Version: SpamAssassin 3.1.7 (2006-10-05) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37337>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37338>
 
-
-
-On Sun, 21 Jan 2007, Jakub Narebski wrote:
-> > 
-> > It seems there should be a way to configure a repo or the git daemon
-> > to say "Allow push operations".
-> > 
-> > I looked through the release notes Junio posted for 1.5.0-rc2, but
-> > found no reference to the git daemon.
+Junio C Hamano wrote:
 > 
-> git:// protocol is not authenticated. git by design allow push only through
-> authenticated protocols, i.e. local, ssh:// (git+ssh://), http(s):// with
-> WebDAV, probably in the future ftps://. 
+> One worry I had about releasing git-1.5.0-rc2-1.rpm and friends
+> just like the "official" ones was that people might have scripts
+> to automate downloading & updating of packages, and they may not
+> like to get "beta" installed for them.
+> 
+> I wonder if kernel.org machines are also affected...
+> 
 
-Well, it _should_ actually be truly fairly trivial to allow pushing over 
-the git:// protocol, and while it's not authenticated, I could well 
-imagine that it would make sense from within a firewalled setup (where 
-nobody but trusted internal people can reach the git port anyway).
+Put them in a different directory hierarchy if you don't want to make 
+them installed.
 
-So in that sense, I do think Bill's request makes some amount of sense.
+>> I know it's a bit late to ask, but if new on-disk format changes, isn't
+>> it time to bump the version to 2.0? It would be easier for many people to
+>> remember that GIT 1.X uses format version 1 and that GIT 2.X uses format
+>> version 2 with backwards compatibility with 1.X. I also think that 1.5
+>> is much more different from 1.0 than a mid-term 2.0 would be from current
+>> 1.5.
+> 
+> I think we could have gone either way (as you said, it is
+> probably a bit too late to discuss this), but it should probably
+> be Ok to stay at 1.X as long as these one-way-street format
+> updates are turned off by default.
+> 
+> And the above happened way before this round and people have
+> hopefully been happily using.  For example, v1.4.2 was done
+> early August 2006.
 
-At the same time, I suspect it's not a great idea, unless you also add 
-*some* kind of logging facility to git-daemon.
+In general, though, I would agree that the major number should change if 
+there is an incompatible change.
 
-But here is a trivial patch that *MAY* do what Bill wants.
-
-NOTE! "git-receive-pack" is disabled by default, so you need to enable it 
-explicitly by starting git-daemon with the "--enable=receive-pack" command  
-line argument, or by having your config enable it automatically.
-
-And a second note: I obviously didn't test it. I'm Linus. I don't do no 
-steenking testing..
-
-		Linus
-
----
-diff --git a/daemon.c b/daemon.c
-index f039534..9590372 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -372,9 +372,16 @@ static int upload_archive(void)
- 	return -1;
- }
- 
-+static int receive_pack(void)
-+{
-+	execl_git_cmd("receive-pack", ".", NULL);
-+	return -1;
-+}
-+
- static struct daemon_service daemon_service[] = {
- 	{ "upload-archive", "uploadarch", upload_archive, 0, 1 },
- 	{ "upload-pack", "uploadpack", upload_pack, 1, 1 },
-+	{ "receive-pack", "receivepack", receive_pack, 0, 1 },
- };
- 
- static void enable_service(const char *name, int ena) {
+	-hpa
