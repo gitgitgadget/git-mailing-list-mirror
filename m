@@ -1,73 +1,89 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [Announce] GIT v1.5.0-rc2
-Date: Sun, 21 Jan 2007 23:24:18 +0100
-Organization: At home
-Message-ID: <ep0p55$6ko$1@sea.gmane.org>
-References: <7v64b04v2e.fsf@assigned-by-dhcp.cox.net> <7v3b6439uh.fsf@assigned-by-dhcp.cox.net> <17843.28128.851749.558017@lisa.zopyra.com> <17843.28673.205993.946369@lisa.zopyra.com> <Pine.LNX.4.63.0701212225350.22628@wbgn013.biozentrum.uni-wuerzburg.de> <ep0m67$so8$1@sea.gmane.org> <Pine.LNX.4.63.0701212300130.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Lose perl dependency. (fwd)
+Date: Sun, 21 Jan 2007 23:35:21 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0701212323580.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0701181149260.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vwt3h7dp6.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0701202240210.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <200701210137.41219.robin.rosenberg.lists@dewire.com>
+ <Pine.LNX.4.63.0701210234350.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <17842.53449.35322.514320@lisa.zopyra.com> <7vr6tp5aqq.fsf@assigned-by-dhcp.cox.net>
+ <87vej0gh4k.fsf@morpheus.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-Cc: linux-kernel@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 21 23:23:53 2007
+Content-Type: MULTIPART/MIXED; BOUNDARY="-1148973799-1078644059-1169418921=:22628"
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jan 21 23:35:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H8l6O-0002vw-K2
-	for gcvg-git@gmane.org; Sun, 21 Jan 2007 23:23:52 +0100
+	id 1H8lHc-0005bs-JP
+	for gcvg-git@gmane.org; Sun, 21 Jan 2007 23:35:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751725AbXAUWXq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 21 Jan 2007 17:23:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751726AbXAUWXq
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 Jan 2007 17:23:46 -0500
-Received: from main.gmane.org ([80.91.229.2]:33402 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751722AbXAUWXq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Jan 2007 17:23:46 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1H8l6D-0001qe-IJ
-	for git@vger.kernel.org; Sun, 21 Jan 2007 23:23:41 +0100
-Received: from host-81-190-20-200.torun.mm.pl ([81.190.20.200])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 21 Jan 2007 23:23:41 +0100
-Received: from jnareb by host-81-190-20-200.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 21 Jan 2007 23:23:41 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-Followup-To: gmane.comp.version-control.git
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-20-200.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1751730AbXAUWfX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 21 Jan 2007 17:35:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751736AbXAUWfX
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 Jan 2007 17:35:23 -0500
+Received: from mail.gmx.net ([213.165.64.20]:48570 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751733AbXAUWfW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Jan 2007 17:35:22 -0500
+Received: (qmail invoked by alias); 21 Jan 2007 22:35:21 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp031) with SMTP; 21 Jan 2007 23:35:21 +0100
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
+In-Reply-To: <87vej0gh4k.fsf@morpheus.local>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37353>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37354>
 
-Johannes Schindelin wrote:
-> On Sun, 21 Jan 2007, Jakub Narebski wrote:
->> Johannes Schindelin wrote:
->>> On Sun, 21 Jan 2007, Bill Lear wrote:
->>> 
->>>> Also (apologies for the ignorance), how do I get the 1.5.0-rc2 release?
->>> 
->>> Direct your browser to
->>> 
->>> http://repo.or.cz/w/git.git?a=snapshot;h=eaf6459e4d482af51429f9464125621b805eb5f
->> 
->> Better URL is
->> 
->>   http://repo.or.cz/w/git.git?a=snapshot;h=v1.5.0-rc2
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+---1148973799-1078644059-1169418921=:22628
+Content-Type: TEXT/PLAIN; charset=iso-8859-1
+Content-Transfer-Encoding: 8BIT
+
+Hi,
+
+On Sun, 21 Jan 2007, David Kågedal wrote:
+
+> Junio C Hamano <junkio@cox.net> writes:
 > 
-> It is a better URL. Somehow I fscked up when I tried it, so I had the 
-> impression that does not work. But it does.
+> > I only speak for myself, but I always prefer to address my message's 
+> > To: header to the person I am primarily talking to, while leaving 
+> > other people on Cc: line (which usually includes the list address).
 
-Most probably you wrote '1.5.0-rc2' instead of 'v1.5.0-rc2'
-(with 'v' prefix).
+I have to agree: if the mail is adressed directly to me, I am much more 
+likely to read it. So I am quite annoyed by answers to my emails, which 
+do not have me in To: or Cc:.
 
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+> I, on the other hand, have recently been annoyed by having my inbox 
+> filled with mails that I already can read on the list (actually the 
+> gmane newsgruop).  So there is probably not a single good answer.
+
+Well, RFC 1855 "Netiquette guidelines" states in 2.1.2 "for mail:":
+
+    - Watch cc's when replying.  Don't continue to include
+      people if the messages have become a 2-way conversation.
+
+(I myself am guilty of not culling people when no longer quoting them.)
+
+The statement from the RFC obviously assumes that you reply to the author 
+of the message (and since it came from a mailing list, if it is of 
+interest to the list, you should Cc: that, too).
+
+IMHO it is all to easy to filter duplicate messages, and generally not 
+possible to identify replies to _your_ mails when the reply is not sent to 
+_you_, but to the list.
+
+IOW I agree with Junio.
+
+Ciao,
+Dscho
+
+---1148973799-1078644059-1169418921=:22628--
