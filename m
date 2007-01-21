@@ -1,66 +1,82 @@
-From: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
-Subject: Re: [Announce] GIT v1.5.0-rc2
-Date: Sun, 21 Jan 2007 17:01:50 -0300
-Message-ID: <200701212001.l0LK1ofV022758@laptop13.inf.utfsm.cl>
-References: <7v64b04v2e.fsf@assigned-by-dhcp.cox.net> <7v3b6439uh.fsf@assigned-by-dhcp.cox.net> <20070121134308.GA24090@1wt.eu> <7v7ivg1a25.fsf@assigned-by-dhcp.cox.net>
-Cc: Willy Tarreau <w@1wt.eu>, git@vger.kernel.org,
-	linux-kernel@vger.kernel.org, hpa@zytor.com
-X-From: git-owner@vger.kernel.org Sun Jan 21 21:03:08 2007
+From: Bill Lear <rael@zopyra.com>
+Subject: Re: git-push through git protocol
+Date: Sun, 21 Jan 2007 14:09:19 -0600
+Message-ID: <17843.51311.784904.54317@lisa.zopyra.com>
+References: <17843.29798.866272.414435@lisa.zopyra.com>
+	<ep00nl$mop$1@sea.gmane.org>
+	<Pine.LNX.4.64.0701211034490.14248@woody.osdl.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Jan 21 21:09:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H8iu9-0004dw-2O
-	for gcvg-git@gmane.org; Sun, 21 Jan 2007 21:03:05 +0100
+	id 1H8j0O-0006Eg-Gl
+	for gcvg-git@gmane.org; Sun, 21 Jan 2007 21:09:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751482AbXAUUCU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 21 Jan 2007 15:02:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751481AbXAUUCU
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 Jan 2007 15:02:20 -0500
-Received: from pincoya.inf.utfsm.cl ([200.1.19.3]:42137 "EHLO
-	pincoya.inf.utfsm.cl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751468AbXAUUCT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Jan 2007 15:02:19 -0500
-X-Greylist: delayed 919 seconds by postgrey-1.27 at vger.kernel.org; Sun, 21 Jan 2007 15:02:18 EST
-Received: from laptop13.inf.utfsm.cl (pc-173-245-83-200.cm.vtr.net [200.83.245.173])
-	by pincoya.inf.utfsm.cl (8.14.0.Beta5/8.14.0.Beta5) with ESMTP id l0LK1rT9021744;
-	Sun, 21 Jan 2007 17:01:53 -0300
-Received: from laptop13.inf.utfsm.cl (laptop13.inf.utfsm.cl [127.0.0.1])
-	by laptop13.inf.utfsm.cl (8.13.8/8.13.8) with ESMTP id l0LK1ofV022758;
-	Sun, 21 Jan 2007 17:01:50 -0300
-To: Junio C Hamano <junkio@cox.net>
-In-reply-to: <7v7ivg1a25.fsf@assigned-by-dhcp.cox.net>
-Comments: In-reply-to Junio C Hamano <junkio@cox.net>
-   message dated "Sun, 21 Jan 2007 10:58:26 -0800."
-X-Mailer: MH-E 7.4.2; nmh 1.2-20070115cvs; XEmacs 21.5  (beta27)
-X-Virus-Scanned: ClamAV 0.88.7/2476/Sun Jan 21 13:22:33 2007 on pincoya.inf.utfsm.cl
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-2.5 required=5.0 tests=AWL,BAYES_00,
-	UNPARSEABLE_RELAY autolearn=ham version=3.1.4
-X-Spam-Checker-Version: SpamAssassin 3.1.4 (2006-07-25) on 
-	pincoya.inf.utfsm.cl
+	id S1751492AbXAUUJa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 21 Jan 2007 15:09:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751438AbXAUUJa
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 Jan 2007 15:09:30 -0500
+Received: from mail.zopyra.com ([65.68.225.25]:61254 "EHLO zopyra.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751492AbXAUUJ3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Jan 2007 15:09:29 -0500
+Received: (from rael@localhost)
+	by zopyra.com (8.11.6/8.11.6) id l0LK9Lt14981;
+	Sun, 21 Jan 2007 14:09:21 -0600
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0701211034490.14248@woody.osdl.org>
+X-Mailer: VM 7.18 under Emacs 21.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37340>
 
-Junio C Hamano <junkio@cox.net> wrote:
-> Willy Tarreau <w@1wt.eu> writes:
-> > Anything you can do to make tester's life easier will always slightly
-> > increase the number of testers.
-> > ...
-> > Pre-release tar.gz and rpms coupled with a freshmeat announcement should
-> > get you a bunch of testers and newcomers. This will give the new doc a
-> > real trial, and will help discover traps in which beginners often fall.
-> 
-> One worry I had about releasing git-1.5.0-rc2-1.rpm and friends
-> just like the "official" ones was that people might have scripts
-> to automate downloading & updating of packages, and they may not
-> like to get "beta" installed for them.
+Interesting.  This is exactly (if memory serves) the patch that I
+tried myself, but in retrospect, I think I only tried it on the client
+side, for some idiotic reason (I'll plead cold weather here in
+Austin).  I'll see if I can get this installed and tested.
 
-Then put them into a "testing" or "pre-release" directory...
--- 
-Dr. Horst H. von Brand                   User #22616 counter.li.org
-Departamento de Informatica                    Fono: +56 32 2654431
-Universidad Tecnica Federico Santa Maria             +56 32 2654239
-Casilla 110-V, Valparaiso, Chile               Fax:  +56 32 2797513
+Thanks Linus.
+
+
+Bill
+
+On Sunday, January 21, 2007 at 11:04:13 (-0800) Linus Torvalds writes:
+>
+>
+>On Sun, 21 Jan 2007, Jakub Narebski wrote:
+>> > 
+>> > It seems there should be a way to configure a repo or the git daemon
+>> > to say "Allow push operations".
+>> > 
+>> > I looked through the release notes Junio posted for 1.5.0-rc2, but
+>> > found no reference to the git daemon.
+>> 
+>> git:// protocol is not authenticated. git by design allow push only through
+>> authenticated protocols, i.e. local, ssh:// (git+ssh://), http(s):// with
+>> WebDAV, probably in the future ftps://. 
+>
+>Well, it _should_ actually be truly fairly trivial to allow pushing over 
+>the git:// protocol, and while it's not authenticated, I could well 
+>imagine that it would make sense from within a firewalled setup (where 
+>nobody but trusted internal people can reach the git port anyway).
+>
+>So in that sense, I do think Bill's request makes some amount of sense.
+>
+>At the same time, I suspect it's not a great idea, unless you also add 
+>*some* kind of logging facility to git-daemon.
+>
+>But here is a trivial patch that *MAY* do what Bill wants.
+>
+>NOTE! "git-receive-pack" is disabled by default, so you need to enable it 
+>explicitly by starting git-daemon with the "--enable=receive-pack" command  
+>line argument, or by having your config enable it automatically.
+>
+>And a second note: I obviously didn't test it. I'm Linus. I don't do no 
+>steenking testing..
