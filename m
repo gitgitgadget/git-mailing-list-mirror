@@ -1,54 +1,46 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [Announce] GIT v1.5.0-rc2
-Date: Sun, 21 Jan 2007 10:40:05 +0100
-Organization: At home
-Message-ID: <eovccc$usc$1@sea.gmane.org>
-References: <7v64b04v2e.fsf@assigned-by-dhcp.cox.net>
+From: Matthias Lederhofer <matled@gmx.net>
+Subject: Re: [PATCH] prune: --expire=time
+Date: Sun, 21 Jan 2007 11:37:24 +0100
+Message-ID: <20070121103724.GA23256@moooo.ath.cx>
+References: <20070118172408.GG15428@spearce.org> <20070118174244.GA14287@moooo.ath.cx> <20070118175134.GH15428@spearce.org> <20070118222919.GA22060@moooo.ath.cx> <7vy7o0klt1.fsf@assigned-by-dhcp.cox.net> <20070119034404.GA17521@spearce.org> <20070119104935.GA5189@moooo.ath.cx> <7vfya6hll3.fsf@assigned-by-dhcp.cox.net> <20070120111832.GA30368@moooo.ath.cx> <7vlkjw50nl.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Sun Jan 21 10:39:58 2007
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jan 21 11:37:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H8ZB2-0001aN-Lk
-	for gcvg-git@gmane.org; Sun, 21 Jan 2007 10:39:53 +0100
+	id 1H8a4z-00063k-2X
+	for gcvg-git@gmane.org; Sun, 21 Jan 2007 11:37:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751298AbXAUJjh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 21 Jan 2007 04:39:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751315AbXAUJjg
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 Jan 2007 04:39:36 -0500
-Received: from main.gmane.org ([80.91.229.2]:47973 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751298AbXAUJjg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Jan 2007 04:39:36 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1H8ZAi-0006Ug-IJ
-	for git@vger.kernel.org; Sun, 21 Jan 2007 10:39:32 +0100
-Received: from host-81-190-20-200.torun.mm.pl ([81.190.20.200])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 21 Jan 2007 10:39:32 +0100
-Received: from jnareb by host-81-190-20-200.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 21 Jan 2007 10:39:32 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-20-200.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1751391AbXAUKh3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 21 Jan 2007 05:37:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751399AbXAUKh3
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 Jan 2007 05:37:29 -0500
+Received: from mail.gmx.net ([213.165.64.20]:46251 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751391AbXAUKh2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Jan 2007 05:37:28 -0500
+Received: (qmail invoked by alias); 21 Jan 2007 10:37:26 -0000
+Received: from pD9EBAE7B.dip0.t-ipconnect.de (EHLO moooo.ath.cx) [217.235.174.123]
+  by mail.gmx.net (mp030) with SMTP; 21 Jan 2007 11:37:26 +0100
+X-Authenticated: #5358227
+To: Junio C Hamano <junkio@cox.net>
+Mail-Followup-To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <7vlkjw50nl.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37313>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37314>
 
-By the way, was the pager configured to saner values, so "git diff"
-on a repository with no changes does not output empty page?
-
-What about my Documentation/config.txt changes?
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Junio C Hamano <junkio@cox.net> wrote:
+> I am considering to commit the attached instead.
+Looks fine.  Just one question:  You said normally unsigned long would
+be used for time_t but time_t itself seems to be signed.  Using
+unsigned long instead of int for prune_grace_period (which is used as
+time_t here) results in 'warning: comparison between signed and
+unsigned'.  Perhaps you want to change it here anyway to be consistent
+with the rest of the code (approxidate returns unsigned long too).
