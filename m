@@ -1,74 +1,75 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] apply --cached: fix crash in subdirectory
-Date: Sun, 21 Jan 2007 02:17:19 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0701210212410.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20070120014851.GF5231@admingilde.org>
- <Pine.LNX.4.63.0701200312000.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <20070120183615.GA6459@admingilde.org>
+Subject: Re: [PATCH] show_date(): fix relative dates
+Date: Sun, 21 Jan 2007 02:34:21 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0701210219400.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0701202203260.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7v3b656vq5.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, junkio@cox.net
-X-From: git-owner@vger.kernel.org Sun Jan 21 02:17:38 2007
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jan 21 02:34:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H8RKx-0000fp-K0
-	for gcvg-git@gmane.org; Sun, 21 Jan 2007 02:17:35 +0100
+	id 1H8RbQ-0004P7-4V
+	for gcvg-git@gmane.org; Sun, 21 Jan 2007 02:34:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751057AbXAUBRW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 20 Jan 2007 20:17:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751062AbXAUBRW
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 Jan 2007 20:17:22 -0500
-Received: from mail.gmx.net ([213.165.64.20]:43658 "HELO mail.gmx.net"
+	id S1750979AbXAUBeY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 20 Jan 2007 20:34:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751041AbXAUBeY
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 Jan 2007 20:34:24 -0500
+Received: from mail.gmx.net ([213.165.64.20]:38623 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751057AbXAUBRW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Jan 2007 20:17:22 -0500
-Received: (qmail invoked by alias); 21 Jan 2007 01:17:20 -0000
+	id S1750979AbXAUBeX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Jan 2007 20:34:23 -0500
+Received: (qmail invoked by alias); 21 Jan 2007 01:34:22 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp027) with SMTP; 21 Jan 2007 02:17:20 +0100
+  by mail.gmx.net (mp047) with SMTP; 21 Jan 2007 02:34:22 +0100
 X-Authenticated: #1490710
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Martin Waitz <tali@admingilde.org>
-In-Reply-To: <20070120183615.GA6459@admingilde.org>
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v3b656vq5.fsf@assigned-by-dhcp.cox.net>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37300>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37301>
 
+Hi,
 
-The static variable "prefix" was shadowed by an unused parameter
-of the same name. In case of execution in a subdirectory, the
-static variable was accessed, leading to a crash.
+On Sat, 20 Jan 2007, Junio C Hamano wrote:
 
-Signed-off-by: Knoppix User <knoppix@zweitrechner.(none)>
----
+> I noticed this and have a different solution in the show-branch
+> --reflog code (it does not pass tz).
 
-	On Sat, 20 Jan 2007, Martin Waitz wrote:
-	
-	> git-apply inside the "src" directory segfaulted.
+Actually, you do pass tz, but with a fixed value of 0. But this is only a 
+workaround.
 
-	Well, that was not the complete truth now, was it? Cannily, you 
-	avoided mentioning the use of the "--cached" argument...
+The thing is, if you pass the same timestamp with a different timezone, 
+absolute (non-relative) date will show the same time, i.e. 22:24 +0000 
+is the same as 23:24 +0100.
 
-	But as you see, your evil plan failed ;-)
+Now I expect the same of relative mode, only that the timezone does not 
+matter for relative mode _at all_.
 
- builtin-apply.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+As you can see in my patch for --walk-reflogs (to honour --relative-date), 
+it can make sense to pass make the choice whether to show a relative or an 
+absolute date a runtime option (where you don't want to set tz to 0 
+depending on relativa_date).
 
-diff --git a/builtin-apply.c b/builtin-apply.c
-index 54fd2cb..ef927f8 100644
---- a/builtin-apply.c
-+++ b/builtin-apply.c
-@@ -2589,7 +2589,7 @@ static int git_apply_config(const char *var, const char *value)
- }
- 
- 
--int cmd_apply(int argc, const char **argv, const char *prefix)
-+int cmd_apply(int argc, const char **argv, const char *prefix2)
- {
- 	int i;
- 	int read_stdin = 1;
--- 
-1.5.0.rc1.gd85c
+I guess nobody realized that "git log --relative-date" does not work 
+correctly (for all commits which were not committed in tz +0000), is due 
+to its narrowspread use, or that it is not all that obviously wrong.
+
+However, I was very surprised when "git log --walk-reflogs 
+--relative-date" showed me "in the future" for my last commits.
+
+If you don't want to think it through, please just verify my reasoning by 
+compiling the script I gave with the patch both before and after applying 
+the patch. The absolute dates _and_ the relative dates should be all the 
+same, but the relative date with non-zero timezone is displayed as "in the 
+future" withouth the patch.
+
+Ciao,
+Dscho
