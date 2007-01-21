@@ -1,47 +1,74 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] show_date(): fix relative dates
-Date: Sat, 20 Jan 2007 16:59:14 -0800
-Message-ID: <7v3b656vq5.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.63.0701202203260.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] apply --cached: fix crash in subdirectory
+Date: Sun, 21 Jan 2007 02:17:19 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0701210212410.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20070120014851.GF5231@admingilde.org>
+ <Pine.LNX.4.63.0701200312000.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20070120183615.GA6459@admingilde.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org, junkio@cox.net
-X-From: git-owner@vger.kernel.org Sun Jan 21 01:59:36 2007
+X-From: git-owner@vger.kernel.org Sun Jan 21 02:17:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H8R3Y-00050W-3W
-	for gcvg-git@gmane.org; Sun, 21 Jan 2007 01:59:36 +0100
+	id 1H8RKx-0000fp-K0
+	for gcvg-git@gmane.org; Sun, 21 Jan 2007 02:17:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750979AbXAUA7Q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 20 Jan 2007 19:59:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751041AbXAUA7Q
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 Jan 2007 19:59:16 -0500
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:39414 "EHLO
-	fed1rmmtao01.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750979AbXAUA7P (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Jan 2007 19:59:15 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070121005914.BGEV9173.fed1rmmtao01.cox.net@fed1rmimpo01.cox.net>;
-          Sat, 20 Jan 2007 19:59:14 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id DcyK1W00E1kojtg0000000; Sat, 20 Jan 2007 19:58:20 -0500
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0701202203260.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	(Johannes Schindelin's message of "Sat, 20 Jan 2007 22:21:38 +0100
-	(CET)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751057AbXAUBRW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 20 Jan 2007 20:17:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751062AbXAUBRW
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 Jan 2007 20:17:22 -0500
+Received: from mail.gmx.net ([213.165.64.20]:43658 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751057AbXAUBRW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Jan 2007 20:17:22 -0500
+Received: (qmail invoked by alias); 21 Jan 2007 01:17:20 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp027) with SMTP; 21 Jan 2007 02:17:20 +0100
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Martin Waitz <tali@admingilde.org>
+In-Reply-To: <20070120183615.GA6459@admingilde.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37299>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37300>
 
-I noticed this and have a different solution in the show-branch
---reflog code (it does not pass tz).  I haven't thought about
-which solution is the correct one (and do not have time to think
-about it now while writing this message, sorry -- will do the
-thinking later unless you beat me to it).
+
+The static variable "prefix" was shadowed by an unused parameter
+of the same name. In case of execution in a subdirectory, the
+static variable was accessed, leading to a crash.
+
+Signed-off-by: Knoppix User <knoppix@zweitrechner.(none)>
+---
+
+	On Sat, 20 Jan 2007, Martin Waitz wrote:
+	
+	> git-apply inside the "src" directory segfaulted.
+
+	Well, that was not the complete truth now, was it? Cannily, you 
+	avoided mentioning the use of the "--cached" argument...
+
+	But as you see, your evil plan failed ;-)
+
+ builtin-apply.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/builtin-apply.c b/builtin-apply.c
+index 54fd2cb..ef927f8 100644
+--- a/builtin-apply.c
++++ b/builtin-apply.c
+@@ -2589,7 +2589,7 @@ static int git_apply_config(const char *var, const char *value)
+ }
+ 
+ 
+-int cmd_apply(int argc, const char **argv, const char *prefix)
++int cmd_apply(int argc, const char **argv, const char *prefix2)
+ {
+ 	int i;
+ 	int read_stdin = 1;
+-- 
+1.5.0.rc1.gd85c
