@@ -1,44 +1,66 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: make rpm
-Date: Sun, 21 Jan 2007 13:27:47 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0701211325250.3011@xanadu.home>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: make rpm
+Date: Sun, 21 Jan 2007 19:44:41 +0100
+Organization: At home
+Message-ID: <ep0c9d$tph$1@sea.gmane.org>
+References: <Pine.LNX.4.64.0701211325250.3011@xanadu.home>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Sun Jan 21 19:28:02 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Sun Jan 21 19:44:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H8hQ8-0007By-2q
-	for gcvg-git@gmane.org; Sun, 21 Jan 2007 19:28:00 +0100
+	id 1H8hgF-0002fR-Eg
+	for gcvg-git@gmane.org; Sun, 21 Jan 2007 19:44:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751300AbXAUS1t (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 21 Jan 2007 13:27:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751308AbXAUS1t
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 Jan 2007 13:27:49 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:45837 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751300AbXAUS1s (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Jan 2007 13:27:48 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JC800EMLDYDWRF0@VL-MO-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Sun, 21 Jan 2007 13:27:49 -0500 (EST)
-X-X-Sender: nico@xanadu.home
+	id S1751314AbXAUSog (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 21 Jan 2007 13:44:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751318AbXAUSog
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 Jan 2007 13:44:36 -0500
+Received: from main.gmane.org ([80.91.229.2]:51468 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751314AbXAUSog (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Jan 2007 13:44:36 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1H8hfy-0008Bf-Mm
+	for git@vger.kernel.org; Sun, 21 Jan 2007 19:44:22 +0100
+Received: from host-81-190-20-200.torun.mm.pl ([81.190.20.200])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 21 Jan 2007 19:44:22 +0100
+Received: from jnareb by host-81-190-20-200.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 21 Jan 2007 19:44:22 +0100
+X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-20-200.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37334>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37335>
 
-I just tried 'make rpm' and it died with:
+[Cc: git@vger.kernel.org]
 
-|rpmbuild -ta git-1.5.0.rc2.tar.gz
-|error: Failed build dependencies:
-|        perl(Error) is needed by git-1.5.0.rc2-1.i386
+Nicolas Pitre wrote:
 
-Of course I have perl installed.  But what is that "perl(Error)" about?
+> I just tried 'make rpm' and it died with:
+> 
+> |rpmbuild -ta git-1.5.0.rc2.tar.gz
+> |error: Failed build dependencies:
+> |        perl(Error) is needed by git-1.5.0.rc2-1.i386
+> 
+> Of course I have perl installed.  But what is that "perl(Error)" about?
 
+You don't have Error.pm perl module (in perl-Error package in Fedora Core).
+Git distributes it's own copy, but I guess rpm target requires to have it
+installed rather than provide it ourself.
 
-Nicolas
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
