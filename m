@@ -1,83 +1,47 @@
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: [PATCH] apply --cached: fix crash in subdirectory
-Date: Sun, 21 Jan 2007 15:40:50 +0100
-Message-ID: <20070121144050.GB6459@admingilde.org>
-References: <20070120014851.GF5231@admingilde.org> <Pine.LNX.4.63.0701200312000.22628@wbgn013.biozentrum.uni-wuerzburg.de> <20070120183615.GA6459@admingilde.org> <Pine.LNX.4.63.0701210212410.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Michael <barra_cuda@katamail.com>
+Subject: Re: [Announce] GIT v1.5.0-rc2
+Date: Sun, 21 Jan 2007 16:02:58 +0100
+Message-ID: <200701211602.59130.barra_cuda@katamail.com>
+References: <7v64b04v2e.fsf@assigned-by-dhcp.cox.net> <17843.28128.851749.558017@lisa.zopyra.com> <17843.28673.205993.946369@lisa.zopyra.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="i0/AhcQY5QxfSsSZ"
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 21 15:41:04 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Bill Lear <rael@zopyra.com>
+X-From: git-owner@vger.kernel.org Sun Jan 21 15:58:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H8dsT-0002oS-Dq
-	for gcvg-git@gmane.org; Sun, 21 Jan 2007 15:41:01 +0100
+	id 1H8e9E-0006Xx-5D
+	for gcvg-git@gmane.org; Sun, 21 Jan 2007 15:58:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750845AbXAUOkw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 21 Jan 2007 09:40:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750857AbXAUOkw
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 Jan 2007 09:40:52 -0500
-Received: from mail.admingilde.org ([213.95.32.147]:46971 "EHLO
-	mail.admingilde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750845AbXAUOkw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Jan 2007 09:40:52 -0500
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
-	id 1H8dsI-0003Sv-UE; Sun, 21 Jan 2007 15:40:50 +0100
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+	id S1750823AbXAUO6M (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 21 Jan 2007 09:58:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750696AbXAUO6M
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 Jan 2007 09:58:12 -0500
+Received: from slim-3c.inet.it ([213.92.5.125]:65157 "EHLO slim-3c.inet.it"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750823AbXAUO6L (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Jan 2007 09:58:11 -0500
+Received: from dial-up-mi-352.lombardiacom.it ([::ffff:212.34.226.98]) by slim-3c.inet.it via I-SMTP-5.4.4-547
+	id ::ffff:212.34.226.98+G9RWkUla9fx; Sun, 21 Jan 2007 15:58:05 +0100
+To: git@vger.kernel.org
+User-Agent: KMail/1.9.4
+In-Reply-To: <17843.28673.205993.946369@lisa.zopyra.com>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0701210212410.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+Message-ID: <20070121145805.735815@dial-up-mi-352.lombardiacom.it>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37327>
 
+Bill Lear:
+> Also (apologies for the ignorance), how do I get the 1.5.0-rc2 release?
 
---i0/AhcQY5QxfSsSZ
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+git clone git://git.kernel.org/pub/scm/git/git.git
 
-hoi :)
+Then checkout the commit tagged 'v1.5.0-rc2'.
 
-On Sun, Jan 21, 2007 at 02:17:19AM +0100, Johannes Schindelin wrote:
-> 	On Sat, 20 Jan 2007, Martin Waitz wrote:
-> =09
-> 	> git-apply inside the "src" directory segfaulted.
->=20
-> 	Well, that was not the complete truth now, was it? Cannily, you=20
-> 	avoided mentioning the use of the "--cached" argument...
+There are no such tarballs (yet) on:
 
-You are right.  I forgot to mention that in the bug report.
-Well, I was in a hurry...
-
-Thanks for being faster in fixing the bug than I am in getting some
-spare time!
-
-> 	But as you see, your evil plan failed ;-)
-
-Damn!
-I'll need a better plan next time...
-
-;-)
-
---=20
-Martin Waitz
-
---i0/AhcQY5QxfSsSZ
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFFs3tyj/Eaxd/oD7IRAsqtAJ9zVB9Y4xlSjxHon1h+whu3427QbACfXtz+
-XCL6H0wywsRlf0Cj7Qs+kVA=
-=R/n9
------END PGP SIGNATURE-----
-
---i0/AhcQY5QxfSsSZ--
+http://www.kernel.org/pub/software/scm/git/
