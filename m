@@ -1,68 +1,66 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [Announce] GIT v1.5.0-rc2
-Date: Mon, 22 Jan 2007 00:36:09 +0100
-Message-ID: <200701220036.10127.jnareb@gmail.com>
-References: <7v64b04v2e.fsf@assigned-by-dhcp.cox.net> <200701220008.49158.jnareb@gmail.com> <Pine.LNX.4.63.0701220012580.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: [PATCH] Add new 'rebase' command.
+Date: Sun, 21 Jan 2007 23:37:14 +0000
+Message-ID: <b0943d9e0701211537oac61eceq48d45501193e6790@mail.gmail.com>
+References: <20070120180329.22621.30534.stgit@gandelf.nowhere.earth>
+	 <b0943d9e0701211500v2f54aa61k2592ba060131318@mail.gmail.com>
+	 <20070121232618.GD4665@nan92-1-81-57-214-146.fbx.proxad.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon Jan 22 00:35:37 2007
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 22 00:37:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H8mDk-0001q8-PA
-	for gcvg-git@gmane.org; Mon, 22 Jan 2007 00:35:33 +0100
+	id 1H8mFT-0002Hc-Uo
+	for gcvg-git@gmane.org; Mon, 22 Jan 2007 00:37:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751786AbXAUXf3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 21 Jan 2007 18:35:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751794AbXAUXf3
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 Jan 2007 18:35:29 -0500
-Received: from ug-out-1314.google.com ([66.249.92.171]:24463 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751786AbXAUXf2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Jan 2007 18:35:28 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so909773uga
-        for <git@vger.kernel.org>; Sun, 21 Jan 2007 15:35:27 -0800 (PST)
+	id S1751794AbXAUXhQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 21 Jan 2007 18:37:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751791AbXAUXhQ
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 Jan 2007 18:37:16 -0500
+Received: from nz-out-0506.google.com ([64.233.162.237]:39998 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751794AbXAUXhP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Jan 2007 18:37:15 -0500
+Received: by nz-out-0506.google.com with SMTP id s1so785781nze
+        for <git@vger.kernel.org>; Sun, 21 Jan 2007 15:37:14 -0800 (PST)
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=GUUpf8PPIjkEcIg2FzlSDT0+BIz+OuK1FeaFYtSpFHH//TqDT5EDHWcfFViBjFcKBJtSapXSKXyDw7Ml+W2jaxinyMxIe+b0Bv3VH9UhPFn1WoAkigeyws9nXX+bTnIQCQDuaegqeXOX6AwWROmECNPuCX5Q44gwn1fAigIiquA=
-Received: by 10.66.250.17 with SMTP id x17mr6610219ugh.1169422527293;
-        Sun, 21 Jan 2007 15:35:27 -0800 (PST)
-Received: from host-81-190-20-200.torun.mm.pl ( [81.190.20.200])
-        by mx.google.com with ESMTP id k1sm5929916ugf.2007.01.21.15.35.26;
-        Sun, 21 Jan 2007 15:35:27 -0800 (PST)
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-User-Agent: KMail/1.9.3
-In-Reply-To: <Pine.LNX.4.63.0701220012580.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=kr+dwKznve5DobcxFqjUzzsWX9/YbCy214zpemWRMLeXatYvXYFqVLQVe4z1zujBzqjr2i7YL7K5X4Mt6UEOudW40kH2a3sXf9w8g1LaKmxkNXS4ZqCZWatRRht47LHzOX7Z1yQpLeWqu0PHKX061UOpte3KwfTuGq7g6lOGDUc=
+Received: by 10.65.236.14 with SMTP id n14mr6413722qbr.1169422634484;
+        Sun, 21 Jan 2007 15:37:14 -0800 (PST)
+Received: by 10.65.133.13 with HTTP; Sun, 21 Jan 2007 15:37:14 -0800 (PST)
+To: "Yann Dirson" <ydirson@altern.org>
+In-Reply-To: <20070121232618.GD4665@nan92-1-81-57-214-146.fbx.proxad.net>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37363>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37364>
 
-Johannes Schindelin wrote:
-> On Mon, 22 Jan 2007, Jakub Narebski wrote:
-> 
->> So I'd say:
->> 
->>   - Reflog records local history of where the tip of each branch
->>     was at each moment.
->> 
->> I think both "local" and "tip of branch" are important
->> for understanding reflog.
-> 
-> 'kay. Probably the simple addition of "local" is enough. Like it.
+On 21/01/07, Yann Dirson <ydirson@altern.org> wrote:
+> On Sun, Jan 21, 2007 at 11:00:57PM +0000, Catalin Marinas wrote:
+> > I applied it but changed the patch a bit so that there is no need for
+> > the --to option. I understood your point but I find it a bit strange
+> > to have this mandatory option. Anyway, command line syntax doesn't
+> > have to follow the natural language exactly :-).
+>
+> Well, I thought the natural next patch to this command would be,
+> according to the discussions with Jakub, to make first "--to target"
+> optional, as a natural replacement for "stg pull . <target>" when the
+> target is the parent branch, and then possibly add the ability of
+> running rebase from the target branch as also sugested by Jakub,
+> leading to the natural "rebase [<stack>|--to <target>]" syntax.
+>
+> Although I'm not sure we'll do that in the near future, removing the
+> need for --to would somewhat get in the way of this possibility.
 
-Or perhaps this would be better:
+I'll go through the other e-mails tomorrow (too late here) and either
+add the option back or come with counter arguments :-)
 
-   - Reflog records the history of where the tip of each branch
-     was at each moment in given repository.
-
-Just nitpicking.
 -- 
-Jakub Narebski
-Poland
+Catalin
