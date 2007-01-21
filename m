@@ -1,69 +1,75 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] prune: --expire=time
-Date: Sun, 21 Jan 2007 02:53:39 -0500
-Message-ID: <20070121075339.GA10632@spearce.org>
-References: <20070118172408.GG15428@spearce.org> <20070118174244.GA14287@moooo.ath.cx> <20070118175134.GH15428@spearce.org> <20070118222919.GA22060@moooo.ath.cx> <7vy7o0klt1.fsf@assigned-by-dhcp.cox.net> <20070119034404.GA17521@spearce.org> <20070119104935.GA5189@moooo.ath.cx> <7vfya6hll3.fsf@assigned-by-dhcp.cox.net> <20070120111832.GA30368@moooo.ath.cx> <7vlkjw50nl.fsf@assigned-by-dhcp.cox.net>
+From: Liraz Siri <liraz.siri@gmail.com>
+Subject: git merge bug: creating new files in one branch in a directory that
+ is renamed in another
+Date: Sun, 21 Jan 2007 10:20:27 +0200
+Message-ID: <45B3224B.3020800@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matthias Lederhofer <matled@gmx.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 21 08:53:55 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Sun Jan 21 09:22:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H8XWS-0003yd-AP
-	for gcvg-git@gmane.org; Sun, 21 Jan 2007 08:53:52 +0100
+	id 1H8Xxu-0001X4-Em
+	for gcvg-git@gmane.org; Sun, 21 Jan 2007 09:22:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751294AbXAUHxq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 21 Jan 2007 02:53:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751296AbXAUHxq
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 Jan 2007 02:53:46 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:60218 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751294AbXAUHxp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Jan 2007 02:53:45 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1H8XVe-0002O9-Mu; Sun, 21 Jan 2007 02:53:02 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id CD26A20FBAE; Sun, 21 Jan 2007 02:53:39 -0500 (EST)
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vlkjw50nl.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1751287AbXAUIWF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 21 Jan 2007 03:22:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751281AbXAUIWF
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 Jan 2007 03:22:05 -0500
+Received: from nf-out-0910.google.com ([64.233.182.187]:15000 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751287AbXAUIWE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Jan 2007 03:22:04 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so971680nfa
+        for <git@vger.kernel.org>; Sun, 21 Jan 2007 00:22:01 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:disposition-notification-to:date:from:user-agent:mime-version:to:subject:content-type:content-transfer-encoding;
+        b=dVEcZi6YrMY8jYabSH5Uqe8WXXlDGRLBEidWCCBnONmfXncxq3+9JXN/oXKLZbz1oPfz4AnyQAOF7NFkKGhFv44YX3jT3kx3B8W7DEZefdCDxIX4BRAOC6HVaRKsEb4oFiEl1ToCUTD9j6/1Ve5O+1QAiGVcVXvmbiqGk4BrB2A=
+Received: by 10.49.41.18 with SMTP id t18mr4695864nfj.1169367721507;
+        Sun, 21 Jan 2007 00:22:01 -0800 (PST)
+Received: from ?10.0.0.253? ( [88.152.176.182])
+        by mx.google.com with ESMTP id k23sm10940994nfc.2007.01.21.00.22.00;
+        Sun, 21 Jan 2007 00:22:01 -0800 (PST)
+User-Agent: Thunderbird 1.5.0.9 (X11/20061206)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37309>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37310>
 
-Junio C Hamano <junkio@cox.net> wrote:
-> The way we might want to address this would be when 'clone -s'
-> makes a new repository that borrows from an existing repository,
-> we could make a symlink under .git/refs/borrowers/ in the
-> original repository that points at .git/refs directory of the
-> cloned repository -- you can do that by hand today and it would
-> be much nicer than having to specify the other repository when
-> running 'git prune' as the example suggests.
+Hey all,
 
-Unrelated topic: We may also want to consider doing the reverse,
-that is symlink '.git/refs/borrows-from' of the cloned repository
-to '.git/refs' in the original repository.  This way pushing into
-the cloned repository can avoid uploading objects which the cloned
-repository already has access to via its objects/info/alternates
-setup.
+I'm running a few tests to figure out when git does the right thing on
+merges, and I've discovered that git does not do the right thing if you
+are creating new files in one branch in a directory that is renamed in
+another.
 
-This would especially be nice with project forks, such as on
-repo.or.cz.  I don't need to upload all of 'master' if it has
-already been uploaded by pasky's mirror job, for example.
+Merging edits of files in dir/ in one branch and renaming dir/ to
+newdir/ in another branch works, but if you create files in the renamed
+dir/ then after the merge they will still remain in dir/, rather than
+newdir/.
 
--- 
-Shawn.
+Here is some example output from a test merge:
+
+$ git-merge XXX HEAD fork
+Trying really trivial in-index merge...
+fatal: Merge requires file-level merging
+Nope.
+Merging HEAD with 68aaa44a864cde7a1b83a65a8d5c70cc6c42ac7b
+Merging:
+85ba656 liraz renamed t to t2
+68aaa44 created t/newfile
+found 1 common ancestor(s):
+9e42cd6 xxx
+Merge made by recursive.
+ t/newfile |    1 +
+ t2/liraz1 |    1 +
+ 2 files changed, 2 insertions(+), 0 deletions(-)
+ create mode 100644 t/newfile
+
+
+Cheers,
+Liraz
