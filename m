@@ -1,75 +1,83 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] show_date(): fix relative dates
-Date: Sun, 21 Jan 2007 02:34:21 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0701210219400.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0701202203260.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <7v3b656vq5.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: [PATCH] Lose perl dependency. (fwd)
+Date: Sun, 21 Jan 2007 02:39:59 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0701210234350.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0701181149260.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vwt3h7dp6.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0701202240210.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <200701210137.41219.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 21 02:34:45 2007
+Content-Type: MULTIPART/MIXED; BOUNDARY="-1148973799-1794508947-1169343599=:22628"
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jan 21 02:40:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H8RbQ-0004P7-4V
-	for gcvg-git@gmane.org; Sun, 21 Jan 2007 02:34:36 +0100
+	id 1H8Rgv-0005jA-Ay
+	for gcvg-git@gmane.org; Sun, 21 Jan 2007 02:40:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750979AbXAUBeY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 20 Jan 2007 20:34:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751041AbXAUBeY
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 Jan 2007 20:34:24 -0500
+	id S1751062AbXAUBkD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 20 Jan 2007 20:40:03 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751065AbXAUBkD
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 Jan 2007 20:40:03 -0500
 Received: from mail.gmx.net ([213.165.64.20]:38623 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750979AbXAUBeX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Jan 2007 20:34:23 -0500
-Received: (qmail invoked by alias); 21 Jan 2007 01:34:22 -0000
+	id S1751062AbXAUBkB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Jan 2007 20:40:01 -0500
+Received: (qmail invoked by alias); 21 Jan 2007 01:39:59 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp047) with SMTP; 21 Jan 2007 02:34:22 +0100
+  by mail.gmx.net (mp036) with SMTP; 21 Jan 2007 02:39:59 +0100
 X-Authenticated: #1490710
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v3b656vq5.fsf@assigned-by-dhcp.cox.net>
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+In-Reply-To: <200701210137.41219.robin.rosenberg.lists@dewire.com>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37301>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37302>
+
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+---1148973799-1794508947-1169343599=:22628
+Content-Type: TEXT/PLAIN; charset=iso-8859-1
+Content-Transfer-Encoding: 8BIT
 
 Hi,
 
-On Sat, 20 Jan 2007, Junio C Hamano wrote:
+On Sun, 21 Jan 2007, Robin Rosenberg wrote:
 
-> I noticed this and have a different solution in the show-branch
-> --reflog code (it does not pass tz).
+> lördag 20 januari 2007 23:04 skrev Johannes Schindelin:
+> > +--reverse::
+> > +
+> > +	Output the commits in reverse order.
+> > +
+> 
+> The --reverse is really bad naming since the default *is* to list 
+> commits in reverse order.
 
-Actually, you do pass tz, but with a fixed value of 0. But this is only a 
-workaround.
+Easy. In my worldview it is _not_ the reverse order. It is the most 
+useful order, and thus straight-forward.
 
-The thing is, if you pass the same timestamp with a different timezone, 
-absolute (non-relative) date will show the same time, i.e. 22:24 +0000 
-is the same as 23:24 +0100.
+> Name it "--chronological" or something to indicate that you do not want 
+> the default reverse order.
 
-Now I expect the same of relative mode, only that the timezone does not 
-matter for relative mode _at all_.
+But it is not chronological. Take for example "git log --topo-order 
+--reverse". See? Not chronological. Not even reverse chronological.
 
-As you can see in my patch for --walk-reflogs (to honour --relative-date), 
-it can make sense to pass make the choice whether to show a relative or an 
-absolute date a runtime option (where you don't want to set tz to 0 
-depending on relativa_date).
+> Some suggestions:
+> 	--chronological
+> 	--forward
+> 	--noreverse
+> 	--commit-order
 
-I guess nobody realized that "git log --relative-date" does not work 
-correctly (for all commits which were not committed in tz +0000), is due 
-to its narrowspread use, or that it is not all that obviously wrong.
-
-However, I was very surprised when "git log --walk-reflogs 
---relative-date" showed me "in the future" for my last commits.
-
-If you don't want to think it through, please just verify my reasoning by 
-compiling the script I gave with the patch both before and after applying 
-the patch. The absolute dates _and_ the relative dates should be all the 
-same, but the relative date with non-zero timezone is displayed as "in the 
-future" withouth the patch.
+All of these have a high "Huh?" effect on me. "forward" is wrong, 
+"noreverse" is confusing at best, and commit-order is anything but 
+obvious. IOW those names don't solve a problem.
 
 Ciao,
 Dscho
+
+---1148973799-1794508947-1169343599=:22628--
