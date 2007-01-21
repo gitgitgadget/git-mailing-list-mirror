@@ -1,93 +1,162 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] prune: --expire=time
-Date: Sun, 21 Jan 2007 03:17:07 -0800
-Message-ID: <7vejpo39zg.fsf@assigned-by-dhcp.cox.net>
-References: <20070118172408.GG15428@spearce.org>
-	<20070118174244.GA14287@moooo.ath.cx>
-	<20070118175134.GH15428@spearce.org>
-	<20070118222919.GA22060@moooo.ath.cx>
-	<7vy7o0klt1.fsf@assigned-by-dhcp.cox.net>
-	<20070119034404.GA17521@spearce.org>
-	<20070119104935.GA5189@moooo.ath.cx>
-	<7vfya6hll3.fsf@assigned-by-dhcp.cox.net>
-	<20070120111832.GA30368@moooo.ath.cx>
-	<7vlkjw50nl.fsf@assigned-by-dhcp.cox.net>
-	<20070121103724.GA23256@moooo.ath.cx>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] Teach revision machinery about --reverse
+Date: Sun, 21 Jan 2007 12:19:10 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0701211154320.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0701181149260.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <45AF5F83.6090207@fs.ei.tum.de> <Pine.LNX.4.63.0701181441010.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vps9ag58g.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0701200052210.12889@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vvej2bkn2.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0701200213020.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vfya69xym.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0701201025070.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vwt3h7dp6.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0701202240210.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <45B2D651.7010606@fs.ei.tum.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 21 12:17:18 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jan 21 12:19:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H8ahH-0006Uk-FH
-	for gcvg-git@gmane.org; Sun, 21 Jan 2007 12:17:15 +0100
+	id 1H8ajE-00070C-Ic
+	for gcvg-git@gmane.org; Sun, 21 Jan 2007 12:19:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751294AbXAULRK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 21 Jan 2007 06:17:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751298AbXAULRK
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 Jan 2007 06:17:10 -0500
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:41634 "EHLO
-	fed1rmmtao07.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751294AbXAULRJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Jan 2007 06:17:09 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao07.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070121111708.ZCKF3976.fed1rmmtao07.cox.net@fed1rmimpo01.cox.net>;
-          Sun, 21 Jan 2007 06:17:08 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id DnGD1W0031kojtg0000000; Sun, 21 Jan 2007 06:16:13 -0500
-To: Matthias Lederhofer <matled@gmx.net>
-In-Reply-To: <20070121103724.GA23256@moooo.ath.cx> (Matthias Lederhofer's
-	message of "Sun, 21 Jan 2007 11:37:24 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751356AbXAULTN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 21 Jan 2007 06:19:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751298AbXAULTN
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 Jan 2007 06:19:13 -0500
+Received: from mail.gmx.net ([213.165.64.20]:57407 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751356AbXAULTM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Jan 2007 06:19:12 -0500
+Received: (qmail invoked by alias); 21 Jan 2007 11:19:10 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp002) with SMTP; 21 Jan 2007 12:19:10 +0100
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
+In-Reply-To: <45B2D651.7010606@fs.ei.tum.de>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37318>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37319>
 
-Matthias Lederhofer <matled@gmx.net> writes:
 
-> Junio C Hamano <junkio@cox.net> wrote:
->> I am considering to commit the attached instead.
-> Looks fine.  Just one question:  You said normally unsigned long would
-> be used for time_t but time_t itself seems to be signed.  Using
-> unsigned long instead of int for prune_grace_period (which is used as
-> time_t here) results in 'warning: comparison between signed and
-> unsigned'.  Perhaps you want to change it here anyway to be consistent
-> with the rest of the code (approxidate returns unsigned long too).
+The option --reverse reverses the order of the commits.
 
-Although I've merged this and pushed out v1.5.0-rc2, I am
-starting to think this whole implementation of grace period is
-unfortunately busted and does not buy us much.  Running
-git-prune in an uncontrolled way from a cron job is still not
-safe.
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+---
 
-Suppose there is a repository that has one old blob that is not
-referenced from any existing ref (in other words, its been more
-than the grace period since 'prune' was run in the repository,
-and one of its heads were rewound which lost the last reference
-to the blob).  You are pushing a new commit into it, whose tree
-has that blob as one of the files.
+	On Sun, 21 Jan 2007, Simon 'corecode' Schubert wrote:
+	
+	> > [the --reverse patch]
+	
+	Please do not quote parts of the mail you don't really refer to.
+	
+	> I like this.  However, rev_info.reverse needs some 
+	> documentation.  Or the block in get_revision does:
+	> 
+	> /*
+	> * rev_info.reverse is used to note the fact that we want to output the list
+	> * of revisions in reverse order.  To accomplish this goal, reverse can have
+	> * different values:
+	> *  0  do nothing
+	> *  1  reverse the list
+	> *  2  internal use:  we have already obtained and reversed the list,
+	> *     now we only need to yield its items.
+	> */
+	
+	I liked the comment in get_revision() better.
+	
+	But then an idea just hit me: it might make sense to introduce 
+	another flag instead, "no_walk", which says that revs->commits 
+	should be walked as is, not walking parents.
+	
+	And then I saw it already exists. D'oh.
 
-You construct a pack, and unpack-objects starts to run to
-extract the objects you send in the said repository.  The pack
-you are sending does contain the blob (because no refs reached
-it in the repository), but unpack-objects safety measure means
-the blob is not re-extracted to overwrite the existing old blob.
+ Documentation/git-rev-list.txt |    5 +++++
+ revision.c                     |   20 ++++++++++++++++++++
+ revision.h                     |    3 ++-
+ 3 files changed, 27 insertions(+), 1 deletions(-)
 
-Now, an automated prune runs and finishes reading the available
-refs before your push concludes and updates the ref with your
-new commit.
-
-What happens?
-
-If we wanted to apply this grace period conservatively,
-protecting young objects is not enough.  You need to protect
-everything they refer to as well.  In the above scenario, you
-would protect the new commit object and probably the tree
-objects contained within, but the code happily will lose the
-blob that was already sitting there.
+diff --git a/Documentation/git-rev-list.txt b/Documentation/git-rev-list.txt
+index 86c94e7..6bb9f51 100644
+--- a/Documentation/git-rev-list.txt
++++ b/Documentation/git-rev-list.txt
+@@ -27,6 +27,7 @@ SYNOPSIS
+ 	     [ \--pretty | \--header ]
+ 	     [ \--bisect ]
+ 	     [ \--merge ]
++	     [ \--reverse ]
+ 	     <commit>... [ \-- <paths>... ]
+ 
+ DESCRIPTION
+@@ -249,6 +250,10 @@ By default, the commits are shown in reverse chronological order.
+ 	parent comes before all of its children, but otherwise things
+ 	are still ordered in the commit timestamp order.
+ 
++--reverse::
++
++	Output the commits in reverse order.
++
+ Object Traversal
+ ~~~~~~~~~~~~~~~~
+ 
+diff --git a/revision.c b/revision.c
+index ebd0250..6d512ff 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1057,6 +1057,10 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, const ch
+ 					git_log_output_encoding = "";
+ 				continue;
+ 			}
++			if (!strcmp(arg, "--reverse")) {
++				revs->reverse ^= 1;
++				continue;
++			}
+ 
+ 			opts = diff_opt_parse(&revs->diffopt, argv+i, argc-i);
+ 			if (opts > 0) {
+@@ -1285,6 +1289,22 @@ struct commit *get_revision(struct rev_info *revs)
+ {
+ 	struct commit *c = NULL;
+ 
++	if (revs->reverse) {
++		struct commit_list *list;
++
++		revs->reverse = 0;
++		list = NULL;
++		while ((c = get_revision(revs)))
++			commit_list_insert(c, &list);
++		revs->commits = list;
++		revs->no_walk = 1;
++		/* reset flags */
++		while (list) {
++			list->item->object.flags &= ~(ADDED | SEEN | SHOWN);
++			list = list->next;
++		}
++	}
++
+ 	if (0 < revs->skip_count) {
+ 		while ((c = get_revision_1(revs)) != NULL) {
+ 			if (revs->skip_count-- <= 0)
+diff --git a/revision.h b/revision.h
+index d93481f..3eb1ce4 100644
+--- a/revision.h
++++ b/revision.h
+@@ -42,7 +42,8 @@ struct rev_info {
+ 			unpacked:1, /* see also ignore_packed below */
+ 			boundary:1,
+ 			left_right:1,
+-			parents:1;
++			parents:1,
++			reverse:1;
+ 
+ 	/* Diff flags */
+ 	unsigned int	diff:1,
+-- 
+1.5.0.rc1.g956c1-dirty
