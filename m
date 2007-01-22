@@ -1,84 +1,69 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: git-push through git protocol
-Date: Sun, 21 Jan 2007 17:52:22 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0701211749140.14248@woody.osdl.org>
-References: <17843.29798.866272.414435@lisa.zopyra.com> <ep00nl$mop$1@sea.gmane.org>
- <Pine.LNX.4.64.0701211034490.14248@woody.osdl.org> <17843.55730.456139.247155@lisa.zopyra.com>
- <Pine.LNX.4.64.0701211341300.14248@woody.osdl.org> <17844.5120.316805.794579@lisa.zopyra.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] prune: --expire=time
+Date: Sun, 21 Jan 2007 20:52:52 -0500
+Message-ID: <20070122015252.GA26934@coredump.intra.peff.net>
+References: <7vy7o0klt1.fsf@assigned-by-dhcp.cox.net> <20070119034404.GA17521@spearce.org> <20070119104935.GA5189@moooo.ath.cx> <7vfya6hll3.fsf@assigned-by-dhcp.cox.net> <20070120111832.GA30368@moooo.ath.cx> <7vlkjw50nl.fsf@assigned-by-dhcp.cox.net> <20070121103724.GA23256@moooo.ath.cx> <7vejpo39zg.fsf@assigned-by-dhcp.cox.net> <20070121220114.GA24729@coredump.intra.peff.net> <45B415B1.30407@midwinter.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jan 22 02:52:32 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>,
+	Matthias Lederhofer <matled@gmx.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 22 02:53:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H8oMI-0004Zm-5C
-	for gcvg-git@gmane.org; Mon, 22 Jan 2007 02:52:30 +0100
+	id 1H8oMj-0004fy-ON
+	for gcvg-git@gmane.org; Mon, 22 Jan 2007 02:52:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751859AbXAVBw1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 21 Jan 2007 20:52:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751866AbXAVBw1
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 Jan 2007 20:52:27 -0500
-Received: from smtp.osdl.org ([65.172.181.24]:49449 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751859AbXAVBw0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Jan 2007 20:52:26 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l0M1qNhB010315
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 21 Jan 2007 17:52:24 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l0M1qMPk014303;
-	Sun, 21 Jan 2007 17:52:23 -0800
-To: Bill Lear <rael@zopyra.com>
-In-Reply-To: <17844.5120.316805.794579@lisa.zopyra.com>
-X-Spam-Status: No, hits=-0.66 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.108__
-X-MIMEDefang-Filter: osdl$Revision: 1.170 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751868AbXAVBwz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 21 Jan 2007 20:52:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751869AbXAVBwy
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 Jan 2007 20:52:54 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4837 "HELO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751868AbXAVBwy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Jan 2007 20:52:54 -0500
+Received: (qmail 21588 invoked from network); 21 Jan 2007 20:53:13 -0500
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
+  by 66-23-211-5.clients.speedfactory.net with SMTP; 21 Jan 2007 20:53:13 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 21 Jan 2007 20:52:52 -0500
+To: Steven Grimm <koreth@midwinter.com>
+Content-Disposition: inline
+In-Reply-To: <45B415B1.30407@midwinter.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37382>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37383>
 
+On Sun, Jan 21, 2007 at 05:38:57PM -0800, Steven Grimm wrote:
 
-
-On Sun, 21 Jan 2007, Bill Lear wrote:
+> >before B). However, that doesn't make sense for the commit operation, in
+> >which you add blobs (with git-add), and then eventually construct a
+> >tree.
+> >  
 > 
-> I applied the patches and I get failure.  I have appended the entire
-> test case after my sig.  The last part reads:
+> Shouldn't the repository be locked against operations like prune while a 
+> commit is in progress anyway? That seems like it's pretty prudent and 
+> reasonable to me -- doing otherwise is just asking for a zillion little 
+> race conditions. Prune should be a rare enough operation that having it 
+> abort (or better, block) while a commit is going on wouldn't be a big 
+> problem, I'd think.
 
-Ok, that's different. It worked for me, several times. As far as I can 
-tell, the biggest thing is just a difference in OS and the fact that I'm 
-not running the git daemon from xinetd, but directly by hand as myself.
+I was a bit loose with my phrase 'commit operation'. What I really mean
+is:
 
-> % git push
-> updating 'refs/heads/master'
->   from fee4efae4f3b98cce0fe85efc746291157fffbcd
->   to   e1179a3bf842ddcf4643740a396b46ce7ebd4ada
-> Generating pack...
-> Done counting 5 objects.
-> Result has 3 objects.
-> Deltifying 3 objects.
->  100% (3/3) done
-> Writing 3 objects.
->  100% (3/3) done
-> Total 3 (delta 0), reused 0 (delta 0)
-> unpack unpacker exited with error code
-> ng refs/heads/master n/a (unpacker error)
+$ git add file   ;# (1)
+$ hack hack hack ;# (2)
+$ git commit     ;# (3)
 
-Umm. Your git daemon is probably running as "nobody", and simply doesn't 
-have write permissions to the archive, does it?
+After step (1), you have a blob in your db. If you already had that
+blob, then you have the old blob. You don't get the updated tree and
+commit until step (3). Step (2) can be hours or days. Do you really want
+to lock the repository that long?
 
-> % cat /etc/xinet.d/git-daemon
-> service git
-> {
->         user            = nobody
+Potentially we could 'touch' the blob in step (1) to update its
+timestamp. But if we update timestamps for things like commit, then that
+might mean 'touch'ing tens of thousands of objects for a commit which
+_should_ only require making a few objects.
 
-iow, I think you simply need to make sure that git-daemon will have write 
-permission to the thing. Either by making the whole repository writable by 
-nobody, or by running git-daemon as the proper user.
-
-		Linus
+-Peff
