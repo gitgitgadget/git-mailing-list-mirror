@@ -1,67 +1,84 @@
-From: calmar <mac@calmar.ws>
-Subject: error in tuto2?
-Date: Mon, 22 Jan 2007 03:04:14 +0100
-Organization: calmar.ws
-Message-ID: <20070122020414.GA2399@localhost>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: git-push through git protocol
+Date: Sun, 21 Jan 2007 19:01:45 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0701211858340.14248@woody.osdl.org>
+References: <17843.29798.866272.414435@lisa.zopyra.com>  <ep00nl$mop$1@sea.gmane.org>
+  <Pine.LNX.4.64.0701211034490.14248@woody.osdl.org> 
+ <17843.55730.456139.247155@lisa.zopyra.com>  <Pine.LNX.4.64.0701211341300.14248@woody.osdl.org>
+  <17844.5120.316805.794579@lisa.zopyra.com>  <Pine.LNX.4.64.0701211749140.14248@woody.osdl.org>
+ <46a038f90701211826v54340352lf4376db41ad5be37@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Mon Jan 22 03:58:57 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Bill Lear <rael@zopyra.com>, Jakub Narebski <jnareb@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jan 22 04:01:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H8pOY-0001cn-RK
-	for gcvg-git@gmane.org; Mon, 22 Jan 2007 03:58:55 +0100
+	id 1H8pRQ-0002Hf-NR
+	for gcvg-git@gmane.org; Mon, 22 Jan 2007 04:01:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751887AbXAVC6p (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 21 Jan 2007 21:58:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751890AbXAVC6p
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 Jan 2007 21:58:45 -0500
-Received: from mxout.hispeed.ch ([62.2.95.247]:42063 "EHLO smtp.hispeed.ch"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751887AbXAVC6o (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Jan 2007 21:58:44 -0500
-X-Greylist: delayed 3267 seconds by postgrey-1.27 at vger.kernel.org; Sun, 21 Jan 2007 21:58:44 EST
-Received: from news.calmar.ws (84-73-253-92.dclient.hispeed.ch [84.73.253.92])
-	(authenticated bits=0)
-	by smtp.hispeed.ch (8.12.11.20060308/8.12.11/taifun-1.0) with ESMTP id l0M24Eek015253
-	(version=TLSv1/SSLv3 cipher=DES-CBC3-SHA bits=168 verify=NO)
-	for <git@vger.kernel.org>; Mon, 22 Jan 2007 03:04:15 +0100
-Received: from calmar by news.calmar.ws with local (Exim 4.63)
-	(envelope-from <calmar@localhost>)
-	id 1H8oXe-0002eE-G7
-	for git@vger.kernel.org; Mon, 22 Jan 2007 03:04:14 +0100
-To: git@vger.kernel.org
-Content-Disposition: inline
-X-Homepage: http://www.calmar.ws
-X-PGP-Key: http://www.calmar.ws/calmar.asc
-X-Operating-System: Debian Sarge, LinuxFromScratch.org 5.0
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-Virus-Scanned: ClamAV version 0.88.7, clamav-milter version 0.88.7 on smtp-07.tornado.cablecom.ch
-X-Virus-Status: Clean
-X-DCC-spamcheck-02.tornado.cablecom.ch-Metrics: smtp-07.tornado.cablecom.ch 1378;
-	Body=1 Fuz1=1 Fuz2=1
+	id S1751889AbXAVDBt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 21 Jan 2007 22:01:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751890AbXAVDBt
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 Jan 2007 22:01:49 -0500
+Received: from smtp.osdl.org ([65.172.181.24]:53453 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751889AbXAVDBs (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Jan 2007 22:01:48 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l0M31khB012013
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sun, 21 Jan 2007 19:01:46 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l0M31jgL015380;
+	Sun, 21 Jan 2007 19:01:45 -0800
+To: Martin Langhoff <martin.langhoff@gmail.com>
+In-Reply-To: <46a038f90701211826v54340352lf4376db41ad5be37@mail.gmail.com>
+X-Spam-Status: No, hits=-0.66 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.108__
+X-MIMEDefang-Filter: osdl$Revision: 1.170 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37391>
-
-hi,
-
-hi, isn't there a little error:
-http://www.kernel.org/pub/software/scm/git/docs/tutorial-2.html
-
-close at the end: git cat-file blob a6b11f7a
-
-shouldn't that be: git cat-file blob 8b9743b  ?
-
-anyway,
-cheers
-marco candrian
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37392>
 
 
 
--- 
-   (o_  It rocks: LINUX + Command-Line-Interface
-   //\
-   V_/_                     http://www.calmar.ws
+On Mon, 22 Jan 2007, Martin Langhoff wrote:
+
+> On 1/22/07, Linus Torvalds <torvalds@osdl.org> wrote:
+> > Umm. Your git daemon is probably running as "nobody", and simply doesn't
+> > have write permissions to the archive, does it?
+> > 
+> > > % cat /etc/xinet.d/git-daemon
+> > > service git
+> > > {
+> > >         user            = nobody
+> > 
+> > iow, I think you simply need to make sure that git-daemon will have write
+> > permission to the thing. Either by making the whole repository writable by
+> > nobody, or by running git-daemon as the proper user.
+> 
+> Whereby I personaly run back quickly to cover under my git-over-ssh
+> safety blanket.
+
+Sure. 
+
+I suspect that git-daemon is possibly easier and faster to set up in the 
+kind of situation where you set up git instead of CVS inside a company, 
+though.
+
+In that situation, you could just say: "machine X is the central CVS 
+repository, and now it also contains a set of git repositories, all owned 
+by nobody:nobody".
+
+That way, you basically get the exact same situation as you had with CVS, 
+with minimal setup.
+
+If the alternative is some NFS thing, I'd take that writing git-daemon 
+over shared NFS-access from everybody any day..
+
+		Linus
