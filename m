@@ -1,104 +1,101 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] New files in git weren't being downloaded during CVS update
-Date: Sun, 21 Jan 2007 18:35:47 -0800
-Message-ID: <7vmz4bwzy4.fsf@assigned-by-dhcp.cox.net>
-References: <200701211425.12971.andyparkins@gmail.com>
+Subject: Re: [PATCH] prune: --expire=time
+Date: Sun, 21 Jan 2007 18:40:40 -0800
+Message-ID: <7virezwzpz.fsf@assigned-by-dhcp.cox.net>
+References: <7vy7o0klt1.fsf@assigned-by-dhcp.cox.net>
+	<20070119034404.GA17521@spearce.org>
+	<20070119104935.GA5189@moooo.ath.cx>
+	<7vfya6hll3.fsf@assigned-by-dhcp.cox.net>
+	<20070120111832.GA30368@moooo.ath.cx>
+	<7vlkjw50nl.fsf@assigned-by-dhcp.cox.net>
+	<20070121103724.GA23256@moooo.ath.cx>
+	<7vejpo39zg.fsf@assigned-by-dhcp.cox.net>
+	<20070121220114.GA24729@coredump.intra.peff.net>
+	<45B415B1.30407@midwinter.com>
+	<20070122015252.GA26934@coredump.intra.peff.net>
+	<7vwt3fx1am.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0701211813410.14248@woody.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 22 03:35:57 2007
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 22 03:40:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H8p2G-00055B-Lx
-	for gcvg-git@gmane.org; Mon, 22 Jan 2007 03:35:53 +0100
+	id 1H8p70-00067q-Nl
+	for gcvg-git@gmane.org; Mon, 22 Jan 2007 03:40:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751878AbXAVCft (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 21 Jan 2007 21:35:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751880AbXAVCft
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 Jan 2007 21:35:49 -0500
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:55811 "EHLO
-	fed1rmmtao01.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751878AbXAVCfs (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Jan 2007 21:35:48 -0500
+	id S1751881AbXAVCkm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 21 Jan 2007 21:40:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751883AbXAVCkm
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 Jan 2007 21:40:42 -0500
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:46503 "EHLO
+	fed1rmmtao04.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751881AbXAVCkl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Jan 2007 21:40:41 -0500
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao01.cox.net
+          by fed1rmmtao04.cox.net
           (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070122023547.COWB9173.fed1rmmtao01.cox.net@fed1rmimpo02.cox.net>;
-          Sun, 21 Jan 2007 21:35:47 -0500
+          id <20070122024041.YQPX7494.fed1rmmtao04.cox.net@fed1rmimpo02.cox.net>;
+          Sun, 21 Jan 2007 21:40:41 -0500
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id E2c51W00X1kojtg0000000; Sun, 21 Jan 2007 21:36:06 -0500
-To: "Martin Langhoff" <martin.langhoff@gmail.com>
-In-Reply-To: <200701211425.12971.andyparkins@gmail.com> (Andy Parkins's
-	message of "Sun, 21 Jan 2007 14:25:12 +0000")
+	id E2gy1W00n1kojtg0000000; Sun, 21 Jan 2007 21:40:59 -0500
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0701211813410.14248@woody.osdl.org> (Linus
+	Torvalds's message of "Sun, 21 Jan 2007 18:23:29 -0800 (PST)")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37388>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37389>
 
-Andy Parkins <andyparkins@gmail.com> writes:
+Linus Torvalds <torvalds@osdl.org> writes:
 
-> If a repository was checked out via git-cvsserver and then later a new
-> file is added to the git repository via some other method; a CVS update
-> wasn't fetching the new file.
+> However, now that rebasing ends up being visible in the branch reflog, 
+> we're back to the "normally nothing to ever prune" situation, and as such, 
+> the only object pruning that _should_ take place is basically as part of 
+> "git repack -a -d" (which unlike a prune is actually safe, since it only 
+> prunes objects that are reachable from a pack).
 >
-> It would be reported as a new file as
->  A some/dir/newfile.c
-> but would never appear in the directory.
->
-> The problem (I think) is that when git-cvsserver detected a new file, it
-> was issuing the new file message then skipping the actual file send part
-> and moving to the next file its list.  In fact only an updated file
-> would be transmitted.
->
-> The fix is to make the added file section identical to the udpated file
-> section.  This additionally makes git-cvsserver behave like a
-> traditional CVS server and will now output
->  U some/dir/newfile.c
-> for an added file.
->
-> Signed-off-by: Andy Parkins <andyparkins@gmail.com>
-> ---
-> This is in response to Simon Schubert's suggestion that T_ADDED is an
-> inappropriate category for a remotely added file.  Instead this treats
-> remotely added files the same as remotely changed files.
+> So to recap: "git prune" simply isn't a safe thing to do. Don't do it 
+> without thinking. I'm not at all sure it's a good idea that "git gc" does 
+> it for you, since it just encourages mindless pruning that probably 
+> shouldn't happen in the first place.
 
-Martin, I think this looks like a sane change.  
+I guess we are in agreement on this.
 
-I do not have anything other than the real CVS running on a
-Linux box to try this change (most notably I do not do Eclipse
-nor Tortoise) myself and I am reluctant to touch things I cannot
-personally test at this stage near the release.  I am sure Andy
-tested this for his own use in his environment, but I would
-really appreciate a third party Ack from an environment
-different from the originator of the patch.
+-- >8 --
+[PATCH] git-gc: do not run prune mindlessly.
 
->  git-cvsserver.perl |   10 +++++-----
->  1 files changed, 5 insertions(+), 5 deletions(-)
->
-> diff --git a/git-cvsserver.perl b/git-cvsserver.perl
-> index a33a876..501c182 100755
-> --- a/git-cvsserver.perl
-> +++ b/git-cvsserver.perl
-> @@ -879,11 +879,11 @@ sub req_update
->  	    elsif ( !defined($wrev) || $wrev == 0 )
->  	    {
->  	        $log->info("Tell the client the file will be added");
-> -		print "MT text A \n";
-> -                print "MT fname $filename\n";
-> -                print "MT newline\n";
-> -		next;
-> -
-> +			print "MT +updated\n";
-> +			print "MT text U \n";
-> +			print "MT fname $filename\n";
-> +			print "MT newline\n";
-> +			print "MT -updated\n";
->  	    }
->  	    else {
->                  $log->info("Updating '$filename' $wrev");
-> -- 
-> 1.5.0.rc1.gf4b6c
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
+ Documentation/git-gc.txt |    1 -
+ git-gc.sh                |    1 -
+ 2 files changed, 0 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/git-gc.txt b/Documentation/git-gc.txt
+index 2bcc949..f53ca97 100644
+--- a/Documentation/git-gc.txt
++++ b/Documentation/git-gc.txt
+@@ -50,7 +50,6 @@ kept.  This defaults to 15 days.
+ 
+ See Also
+ --------
+-gitlink:git-prune[1]
+ gitlink:git-reflog[1]
+ gitlink:git-repack[1]
+ gitlink:git-rerere[1]
+diff --git a/git-gc.sh b/git-gc.sh
+index 6de55f7..7716f62 100755
+--- a/git-gc.sh
++++ b/git-gc.sh
+@@ -11,5 +11,4 @@ SUBDIRECTORY_OK=Yes
+ git-pack-refs --prune &&
+ git-reflog expire --all &&
+ git-repack -a -d -l &&
+-git-prune &&
+ git-rerere gc || exit
+-- 
+1.5.0.rc2
