@@ -1,57 +1,65 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: modifying commit's author
-Date: Mon, 22 Jan 2007 16:04:00 -0500
-Message-ID: <20070122210400.GB6614@fieldses.org>
-References: <20070122203734.GB23187@fieldses.org> <200701222150.16465.robin.rosenberg.lists@dewire.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] sha1_file.c: Avoid multiple calls to find_pack_entry().
+Date: Mon, 22 Jan 2007 16:07:19 -0500
+Message-ID: <20070122210719.GA29975@spearce.org>
+References: <20070122202945.GA29297@bohr.gbar.dtu.dk> <45B524E1.5060205@fs.ei.tum.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 22 22:06:41 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Peter Eriksen <s022018@student.dtu.dk>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 22 22:09:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H96Lg-0003XM-Nk
-	for gcvg-git@gmane.org; Mon, 22 Jan 2007 22:05:14 +0100
+	id 1H96O1-0003xO-RN
+	for gcvg-git@gmane.org; Mon, 22 Jan 2007 22:07:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932658AbXAVVEF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 22 Jan 2007 16:04:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932669AbXAVVEE
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Jan 2007 16:04:04 -0500
-Received: from mail.fieldses.org ([66.93.2.214]:53121 "EHLO fieldses.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932658AbXAVVED (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Jan 2007 16:04:03 -0500
-Received: from bfields by fieldses.org with local (Exim 4.63)
-	(envelope-from <bfields@fieldses.org>)
-	id 1H96Ke-0001wv-QZ; Mon, 22 Jan 2007 16:04:00 -0500
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+	id S932669AbXAVVH1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 22 Jan 2007 16:07:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932675AbXAVVH0
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Jan 2007 16:07:26 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:39955 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932669AbXAVVH0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Jan 2007 16:07:26 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1H96Nk-0006ID-VK; Mon, 22 Jan 2007 16:07:13 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id A1BB720FBAE; Mon, 22 Jan 2007 16:07:19 -0500 (EST)
+To: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
 Content-Disposition: inline
-In-Reply-To: <200701222150.16465.robin.rosenberg.lists@dewire.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <45B524E1.5060205@fs.ei.tum.de>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37455>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37456>
 
-On Mon, Jan 22, 2007 at 09:50:16PM +0100, Robin Rosenberg wrote:
-> m=E5ndag 22 januari 2007 21:37 skrev J. Bruce Fields:
-> > If I got the author wrong on a commit, is there a quick way to fix =
-it
-> > (e.g. by passing the right arguments or environment variables to co=
-mmit
-> > --amend)?
->=20
-> Set these:
-> GIT_AUTHOR_EMAIL
-> GIT_AUTHOR_NAME
-> GIT_COMMITTER_EMAIL
-> GIT_COMMITTER_NAME
+Simon 'corecode' Schubert <corecode@fs.ei.tum.de> wrote:
+> Peter Eriksen wrote:
+> >We used to call find_pack_entry() twice from read_sha1_file() in order
+> >to avoid printing an error message, when the object did not exist.  This
+> >is fixed by moving the call to error() to the only place it really
+> >could be called.
+> >
+> >Signed-off-by: Peter Eriksen <s022018@student.dtu.dk>
+> 
+> I noticed this originally, Peter was so kind to come up with a patch.  
+> Reviewed and found +1, so:
+> 
+> Signed-off-by: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
 
-That doesn't seem to work in this case, since with the commands that
-take an existing commit as a model (like commit --amend and commit -c),
-the author information from the existing commit overrides those
-environment variables.  Which is normally what you want.
+Wow.  That's ugly.  Thanks for finding and patching it.
 
---b.
+-- 
+Shawn.
