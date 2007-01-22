@@ -1,84 +1,107 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Meaning of "fatal: protocol error: bad line length character"?
-Date: Mon, 22 Jan 2007 11:45:29 -0800
-Message-ID: <7vy7nusv52.fsf@assigned-by-dhcp.cox.net>
-References: <17842.1385.366750.915767@lisa.zopyra.com>
-	<7vk5zh7b7d.fsf@assigned-by-dhcp.cox.net>
-	<7vfya57ast.fsf@assigned-by-dhcp.cox.net>
-	<17842.29542.229557.460473@lisa.zopyra.com>
-	<7vbqkt78n7.fsf@assigned-by-dhcp.cox.net>
-	<7v7ivh77md.fsf@assigned-by-dhcp.cox.net>
-	<17845.2402.105688.56648@lisa.zopyra.com>
+From: Yann Dirson <ydirson@altern.org>
+Subject: Re: Rebasing stgit stacks
+Date: Mon, 22 Jan 2007 20:47:56 +0100
+Message-ID: <20070122194756.GA4083@nan92-1-81-57-214-146.fbx.proxad.net>
+References: <8b65902a0701150526j5a954529xf45b2d0348a77573@mail.gmail.com> <20070115202412.GE9761@nan92-1-81-57-214-146.fbx.proxad.net> <b0943d9e0701151446l45eff9dbgcae718c1461d0725@mail.gmail.com> <20070115233958.GF9761@nan92-1-81-57-214-146.fbx.proxad.net> <b0943d9e0701161442t6b93e0d6nd88364600f2809ee@mail.gmail.com> <20070116231735.GF7029@nan92-1-81-57-214-146.fbx.proxad.net> <b0943d9e0701180105t7b01cb4di43b4db1fdc314bb7@mail.gmail.com> <20070118205233.GK9761@nan92-1-81-57-214-146.fbx.proxad.net> <eoq439$7ml$1@sea.gmane.org> <tnxirezueui.fsf@arm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 22 20:45:50 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 22 20:48:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H956v-0007ax-AT
-	for gcvg-git@gmane.org; Mon, 22 Jan 2007 20:45:45 +0100
+	id 1H959j-0008K0-VG
+	for gcvg-git@gmane.org; Mon, 22 Jan 2007 20:48:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932147AbXAVTpd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 22 Jan 2007 14:45:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932393AbXAVTpc
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Jan 2007 14:45:32 -0500
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:61202 "EHLO
-	fed1rmmtao01.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932137AbXAVTpa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Jan 2007 14:45:30 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070122194530.BBSU9173.fed1rmmtao01.cox.net@fed1rmimpo02.cox.net>;
-          Mon, 22 Jan 2007 14:45:30 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id EKlo1W0041kojtg0000000; Mon, 22 Jan 2007 14:45:48 -0500
-To: Bill Lear <rael@zopyra.com>
-In-Reply-To: <17845.2402.105688.56648@lisa.zopyra.com> (Bill Lear's message of
-	"Mon, 22 Jan 2007 12:58:42 -0600")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932405AbXAVTsc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 22 Jan 2007 14:48:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932411AbXAVTsc
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Jan 2007 14:48:32 -0500
+Received: from smtp7-g19.free.fr ([212.27.42.64]:51202 "EHLO smtp7-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932405AbXAVTsb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Jan 2007 14:48:31 -0500
+Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
+	by smtp7-g19.free.fr (Postfix) with ESMTP id 569D957D4;
+	Mon, 22 Jan 2007 20:48:29 +0100 (CET)
+Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
+	id 2ADD01F088; Mon, 22 Jan 2007 20:47:56 +0100 (CET)
+To: Catalin Marinas <catalin.marinas@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <tnxirezueui.fsf@arm.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37439>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37440>
 
-Bill Lear <rael@zopyra.com> writes:
+On Mon, Jan 22, 2007 at 05:54:29PM +0000, Catalin Marinas wrote:
+> Jakub Narebski <jnareb@gmail.com> wrote:
+> > Yann Dirson wrote:
+> >> On Thu, Jan 18, 2007 at 09:05:47AM +0000, Catalin Marinas wrote:
+> >
+> >>> As Jakub said, I would also call this command 'rebase' instead of
+> >>> 'pull --to', even if we duplicate a bit of code.
+> >>> It would make the implementation even simpler
+> >>=20
+> >> A new command is fine with me, it's just that I feel "rebase <targ=
+et>"
+> >> may be confusing to beginners. =A0I'd rather say "rebase [<stack>]=
+ --to
+> >> <target>", but it's just that I don't see the case for specifying =
+a
+> >> different stack than the current one.
+> >
+> > If you want to move some stack from one branch to other, for exampl=
+e
+> > from 'next' or next-based branch to 'origin'/'master' or origin-bas=
+ed
+> > branch you could do either:
+> >
+> >   $ git checkout <newbase>
+> >   $ stg rebase <stack>
+>=20
+> Currently, in the StGIT terminology stack and branch are about the
+> same. If you want to move to a different stack, just use the "stg
+> branch" command.
 
-> He has an active update hook in his public repo, to send notices to
-> his collaborators when his work is ready for them to pull, but we
-> looked through it and don't see any printing to stdout.
-
-Just a hunch.
-
-Does the bash start-up sequence for the user emit something to
-stdout?
-
-The attached patch on the local side (i.e. the one that pushes)
-dumps "garbage" you are getting on the line from the remote
-side, to help diagnosing the problem.
+I think you missed the point.  StGIT stacks are usually forked off
+another branch.  As I understand it, Jakub talks about standard
+rebasing, ie. moving the stack base from its current parent branch to
+a new one.
 
 
-diff --git a/pkt-line.c b/pkt-line.c
-index b4cb7e2..9bb1c90 100644
---- a/pkt-line.c
-+++ b/pkt-line.c
-@@ -101,6 +101,16 @@ int packet_read_line(int fd, char *buffer, unsigned size)
- 			len += c - 'A' + 10;
- 			continue;
- 		}
-+		error("protocol error: bad line length character");
-+		fprintf(stderr, "<<<<<\n%.*s", 4, linelen);
-+		while (1) {
-+			char buf[1024];
-+			int cnt = xread(fd, buf, sizeof(buf));
-+			if (cnt <= 0)
-+				break;
-+			fprintf(stderr, "%.*s", cnt, buf);
-+		}
-+		fprintf(stderr, "\n>>>>>\n");
- 		die("protocol error: bad line length character");
- 	}
- 	if (!len)
+> A stack is just a branch with stgit-specific metadata.
+
+I would rather say that an StGIT stacks uses a branch, but the stack
+is not the branch - eg, unapplied patches do not belong to the branch.
+
+Indeed I was thinking about that today, and thought that maybe it
+would make sense not to use a head ref (and thus not using a real
+branch), which would minimize the risk of someone committing by error
+(and thus minimize the need to use "assimilate"), since porcelainish
+commit tools would then refuse to commit there.
+
+
+> What you'd probably want is a way to import patches from a different
+> branch/stack onto the newly checked out branch.
+
+Sometimes you just want to throw out an obsolete branch and move your
+stack to a new baseline.  That said, being able to duplicate a stack
+(and possibly rebasing it afterwards) would be useful as well.
+
+
+> > Although usually you have separate branch as StGIT stack "base", an=
+d
+> > you can simply rebase git branch, then do
+> >
+> >   $ stg rebase
+
+Oh, I think I understand - he probably uses "base" to refer to what I
+call "parent branch", and not to the refs/bases/<branch> reference...
+
+Best regards,
+--=20
+yann.
