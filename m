@@ -1,53 +1,95 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [Announce] GIT v1.5.0-rc2
-Date: Mon, 22 Jan 2007 10:46:22 -0800
-Message-ID: <7vodoqucg1.fsf@assigned-by-dhcp.cox.net>
-References: <7v64b04v2e.fsf@assigned-by-dhcp.cox.net>
-	<7v3b6439uh.fsf@assigned-by-dhcp.cox.net> <ep2vb2$p9s$1@sea.gmane.org>
+From: Bill Lear <rael@zopyra.com>
+Subject: Re: Meaning of "fatal: protocol error: bad line length character"?
+Date: Mon, 22 Jan 2007 12:58:42 -0600
+Message-ID: <17845.2402.105688.56648@lisa.zopyra.com>
+References: <17842.1385.366750.915767@lisa.zopyra.com>
+	<7vk5zh7b7d.fsf@assigned-by-dhcp.cox.net>
+	<7vfya57ast.fsf@assigned-by-dhcp.cox.net>
+	<17842.29542.229557.460473@lisa.zopyra.com>
+	<7vbqkt78n7.fsf@assigned-by-dhcp.cox.net>
+	<7v7ivh77md.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 22 19:46:41 2007
+X-From: git-owner@vger.kernel.org Mon Jan 22 19:59:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H94Bc-0000xy-61
-	for gcvg-git@gmane.org; Mon, 22 Jan 2007 19:46:32 +0100
+	id 1H94Nd-000473-Cl
+	for gcvg-git@gmane.org; Mon, 22 Jan 2007 19:58:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932207AbXAVSqY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 22 Jan 2007 13:46:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932221AbXAVSqY
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Jan 2007 13:46:24 -0500
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:48421 "EHLO
-	fed1rmmtao10.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932207AbXAVSqX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Jan 2007 13:46:23 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao10.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070122184623.UHRC20715.fed1rmmtao10.cox.net@fed1rmimpo02.cox.net>;
-          Mon, 22 Jan 2007 13:46:23 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id EJmg1W0121kojtg0000000; Mon, 22 Jan 2007 13:46:41 -0500
-To: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <ep2vb2$p9s$1@sea.gmane.org> (Jakub Narebski's message of "Mon,
-	22 Jan 2007 19:22:08 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932235AbXAVS6x (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 22 Jan 2007 13:58:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932248AbXAVS6x
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Jan 2007 13:58:53 -0500
+Received: from mail.zopyra.com ([65.68.225.25]:61403 "EHLO zopyra.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932235AbXAVS6w (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Jan 2007 13:58:52 -0500
+Received: (from rael@localhost)
+	by zopyra.com (8.11.6/8.11.6) id l0MIwnI23065;
+	Mon, 22 Jan 2007 12:58:49 -0600
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v7ivh77md.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: VM 7.18 under Emacs 21.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37436>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37437>
 
-Jakub Narebski <jnareb@gmail.com> writes:
-
-> Junio C Hamano wrote:
+On Saturday, January 20, 2007 at 12:42:18 (-0800) Junio C Hamano writes:
+>Junio C Hamano <junkio@cox.net> writes:
+>...
+>That was output to stdout made from the update hook in my case.
+>I do not know your setup, but if you make sure your update hook
+>does not spit out anything to its stdout (diag can go to stderr),
+>you should be able to work it around.
 >
->> GIT v1.5.0 Release Notes (draft)
->> ================================
+>Funny thing is, at least in recent enough git, I think we set up
+>redirection to force output from hook scripts to stderr, but I
+>do not remember when it happened.  Let's see...
 >
-> Would they be somewhere besides todo branch of git.git repository, like the
-> v1.5.0 tag comment (content), or the NEWS file?
+>	...goes and looks...
+>
+>That was supposed to have been fixed with commit cd83c74c (Dec
+>30, 2006), but this indicates the fix is not working at all when
+>your login shell is tcsh. ...
 
-Most likely the former would happen when the real thing is made.
+One of our developers who uses bash is seeing this error in his pushes
+from his private repo to his public repo, through the file system.
+
+Here is one example he conveyed:
+
+% git push
+error: remote 'refs/heads/master' is not a strict subset of local ref 'refs/heads/master'. maybe you are not up-to-date and need to pull first?
+error: remote 'refs/heads/origin' is not a strict subset of local ref 'refs/heads/origin'. maybe you are not up-to-date and need to pull first?
+updating 'refs/heads/fig_mt_1'
+  from 85f1ff556f95b0177e69f99d1196a2db26213812
+  to   0a5a7ac9b81a90500b9c9c44a22793890513cd5a
+Generating pack...
+Done counting 16 objects.
+Result has 10 objects.
+Deltifying 10 objects.
+ 100% (10/10) done
+Writing 10 objects.
+ 100% (10/10) done
+Total 10, written 10 (delta 6), reused 0 (delta 0)
+Unpacking 10 objects
+ 100% (10/10) done
+fatal: protocol error: bad line length character
+xiphi:~/devel/fig_mt_1/fusion | fig_mt_1 % refs/heads/fig_mt_1: 85f1ff556f95b01
+77e69f99d1196a2db26213812 -> 0a5a7ac9b81a90500b9c9c44a22793890513cd5a
+
+In this case, he forgot to limit the push to his fig_mt_1 branch, but
+last night he did a similar push (git push origin fig_mt_1), and got
+the same bad line length character error report.  His pushes seem to
+be propagating, but he's a bit nervous nonetheless.
+
+He has an active update hook in his public repo, to send notices to
+his collaborators when his work is ready for them to pull, but we
+looked through it and don't see any printing to stdout.
+
+
+Bill
