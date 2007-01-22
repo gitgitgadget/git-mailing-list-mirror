@@ -1,69 +1,104 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: git-push through git protocol
-Date: Mon, 22 Jan 2007 15:26:18 +1300
-Message-ID: <46a038f90701211826v54340352lf4376db41ad5be37@mail.gmail.com>
-References: <17843.29798.866272.414435@lisa.zopyra.com>
-	 <ep00nl$mop$1@sea.gmane.org>
-	 <Pine.LNX.4.64.0701211034490.14248@woody.osdl.org>
-	 <17843.55730.456139.247155@lisa.zopyra.com>
-	 <Pine.LNX.4.64.0701211341300.14248@woody.osdl.org>
-	 <17844.5120.316805.794579@lisa.zopyra.com>
-	 <Pine.LNX.4.64.0701211749140.14248@woody.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] New files in git weren't being downloaded during CVS update
+Date: Sun, 21 Jan 2007 18:35:47 -0800
+Message-ID: <7vmz4bwzy4.fsf@assigned-by-dhcp.cox.net>
+References: <200701211425.12971.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Bill Lear" <rael@zopyra.com>, "Jakub Narebski" <jnareb@gmail.com>,
-	"Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jan 22 03:26:30 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 22 03:35:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H8ot9-0002yj-Gz
-	for gcvg-git@gmane.org; Mon, 22 Jan 2007 03:26:27 +0100
+	id 1H8p2G-00055B-Lx
+	for gcvg-git@gmane.org; Mon, 22 Jan 2007 03:35:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751879AbXAVC0W (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 21 Jan 2007 21:26:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751880AbXAVC0W
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 Jan 2007 21:26:22 -0500
-Received: from nf-out-0910.google.com ([64.233.182.190]:16627 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751879AbXAVC0V (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Jan 2007 21:26:21 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so1177505nfa
-        for <git@vger.kernel.org>; Sun, 21 Jan 2007 18:26:19 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=qozJX5r+lBMsFoo5n6v6Prj9dVp1kqCRa9lRsMtKzV1y/9dcrub+4fJIYeH1siDrRUj/igfp6w0LxezztUmZuWkDHVfkAeoLaHDqEAaFyBWYTOrWlHDmqhM5GnqcKhqn3WzIDDPynLFeia45pgE6jLax81CNNitRg8Y2IaR/Yms=
-Received: by 10.48.48.1 with SMTP id v1mr5976169nfv.1169432778730;
-        Sun, 21 Jan 2007 18:26:18 -0800 (PST)
-Received: by 10.49.35.7 with HTTP; Sun, 21 Jan 2007 18:26:18 -0800 (PST)
-To: "Linus Torvalds" <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.64.0701211749140.14248@woody.osdl.org>
-Content-Disposition: inline
+	id S1751878AbXAVCft (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 21 Jan 2007 21:35:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751880AbXAVCft
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 Jan 2007 21:35:49 -0500
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:55811 "EHLO
+	fed1rmmtao01.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751878AbXAVCfs (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Jan 2007 21:35:48 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao01.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20070122023547.COWB9173.fed1rmmtao01.cox.net@fed1rmimpo02.cox.net>;
+          Sun, 21 Jan 2007 21:35:47 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id E2c51W00X1kojtg0000000; Sun, 21 Jan 2007 21:36:06 -0500
+To: "Martin Langhoff" <martin.langhoff@gmail.com>
+In-Reply-To: <200701211425.12971.andyparkins@gmail.com> (Andy Parkins's
+	message of "Sun, 21 Jan 2007 14:25:12 +0000")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37387>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37388>
 
-On 1/22/07, Linus Torvalds <torvalds@osdl.org> wrote:
-> Umm. Your git daemon is probably running as "nobody", and simply doesn't
-> have write permissions to the archive, does it?
+Andy Parkins <andyparkins@gmail.com> writes:
+
+> If a repository was checked out via git-cvsserver and then later a new
+> file is added to the git repository via some other method; a CVS update
+> wasn't fetching the new file.
 >
-> > % cat /etc/xinet.d/git-daemon
-> > service git
-> > {
-> >         user            = nobody
+> It would be reported as a new file as
+>  A some/dir/newfile.c
+> but would never appear in the directory.
 >
-> iow, I think you simply need to make sure that git-daemon will have write
-> permission to the thing. Either by making the whole repository writable by
-> nobody, or by running git-daemon as the proper user.
+> The problem (I think) is that when git-cvsserver detected a new file, it
+> was issuing the new file message then skipping the actual file send part
+> and moving to the next file its list.  In fact only an updated file
+> would be transmitted.
+>
+> The fix is to make the added file section identical to the udpated file
+> section.  This additionally makes git-cvsserver behave like a
+> traditional CVS server and will now output
+>  U some/dir/newfile.c
+> for an added file.
+>
+> Signed-off-by: Andy Parkins <andyparkins@gmail.com>
+> ---
+> This is in response to Simon Schubert's suggestion that T_ADDED is an
+> inappropriate category for a remotely added file.  Instead this treats
+> remotely added files the same as remotely changed files.
 
-Whereby I personaly run back quickly to cover under my git-over-ssh
-safety blanket.
+Martin, I think this looks like a sane change.  
 
-:-)
+I do not have anything other than the real CVS running on a
+Linux box to try this change (most notably I do not do Eclipse
+nor Tortoise) myself and I am reluctant to touch things I cannot
+personally test at this stage near the release.  I am sure Andy
+tested this for his own use in his environment, but I would
+really appreciate a third party Ack from an environment
+different from the originator of the patch.
 
-
-martin
+>  git-cvsserver.perl |   10 +++++-----
+>  1 files changed, 5 insertions(+), 5 deletions(-)
+>
+> diff --git a/git-cvsserver.perl b/git-cvsserver.perl
+> index a33a876..501c182 100755
+> --- a/git-cvsserver.perl
+> +++ b/git-cvsserver.perl
+> @@ -879,11 +879,11 @@ sub req_update
+>  	    elsif ( !defined($wrev) || $wrev == 0 )
+>  	    {
+>  	        $log->info("Tell the client the file will be added");
+> -		print "MT text A \n";
+> -                print "MT fname $filename\n";
+> -                print "MT newline\n";
+> -		next;
+> -
+> +			print "MT +updated\n";
+> +			print "MT text U \n";
+> +			print "MT fname $filename\n";
+> +			print "MT newline\n";
+> +			print "MT -updated\n";
+>  	    }
+>  	    else {
+>                  $log->info("Updating '$filename' $wrev");
+> -- 
+> 1.5.0.rc1.gf4b6c
