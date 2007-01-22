@@ -1,78 +1,95 @@
 From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: [PATCH] Force Activestate Perl to tie git command pipe handle to a handle class
-Date: Mon, 22 Jan 2007 15:42:26 +0100
-Message-ID: <81b0412b0701220642u2aecc782m295a9b2a06a3611b@mail.gmail.com>
+Subject: [PATCH] Insert ACTIVESTATE_STRING in Git.pm
+Date: Mon, 22 Jan 2007 15:43:48 +0100
+Message-ID: <81b0412b0701220643s3d337664jcddfffd35071b08e@mail.gmail.com>
+References: <81b0412b0701220632t50ad42c4ucb0ebae140a9706a@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: multipart/mixed; 
-	boundary="----=_Part_154937_5321891.1169476946129"
+	boundary="----=_Part_154969_23026467.1169477028804"
 Cc: "Junio C Hamano" <junkio@cox.net>, "Petr Baudis" <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Mon Jan 22 15:42:51 2007
+X-From: git-owner@vger.kernel.org Mon Jan 22 15:44:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H90NX-0002We-EW
-	for gcvg-git@gmane.org; Mon, 22 Jan 2007 15:42:35 +0100
+	id 1H90Op-0002rD-NQ
+	for gcvg-git@gmane.org; Mon, 22 Jan 2007 15:43:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751847AbXAVOm3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 22 Jan 2007 09:42:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751850AbXAVOm3
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Jan 2007 09:42:29 -0500
-Received: from nf-out-0910.google.com ([64.233.182.186]:22569 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751847AbXAVOm2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Jan 2007 09:42:28 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so1334039nfa
-        for <git@vger.kernel.org>; Mon, 22 Jan 2007 06:42:26 -0800 (PST)
+	id S1751851AbXAVOnv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 22 Jan 2007 09:43:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751857AbXAVOnv
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Jan 2007 09:43:51 -0500
+Received: from wr-out-0506.google.com ([64.233.184.239]:51685 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751854AbXAVOnu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Jan 2007 09:43:50 -0500
+Received: by wr-out-0506.google.com with SMTP id i22so672647wra
+        for <git@vger.kernel.org>; Mon, 22 Jan 2007 06:43:49 -0800 (PST)
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:mime-version:content-type;
-        b=uZ0z6yZCv5BOSYs+d0kyPTwpxRy06XApDP+HwMO5re6SstipXwRTxtuckGwISvcJ2b5j4myyXLMWRAKnTm7qjG8z5W3tYOuID36rFrQwLRCVvi3CyzjD8m54SEDCmdxDwsBtFQaFi/FPTKtDA32K+e0ubE3ENaurOxAxG/XuYvU=
-Received: by 10.82.167.5 with SMTP id p5mr6846459bue.1169476946376;
-        Mon, 22 Jan 2007 06:42:26 -0800 (PST)
-Received: by 10.78.135.3 with HTTP; Mon, 22 Jan 2007 06:42:26 -0800 (PST)
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:references;
+        b=PlINKRJBzQw1eUOXz+14AHKUkz1WTYG2CwOVYMOJ+pDwAJLLtxudThwEeZTv5PrrWzZXmAr1aUCfWRWK+IOoDz2LL7uptocrgVEnB0WuFSEqFKLoE5AOxRjaQGTaSBUox6jBjOF30QMoSfqunDpb1I06DnaaOobPaflq4itvdsA=
+Received: by 10.90.68.15 with SMTP id q15mr6293366aga.1169477029555;
+        Mon, 22 Jan 2007 06:43:49 -0800 (PST)
+Received: by 10.78.135.3 with HTTP; Mon, 22 Jan 2007 06:43:48 -0800 (PST)
 To: "Git Mailing List" <git@vger.kernel.org>
+In-Reply-To: <81b0412b0701220632t50ad42c4ucb0ebae140a9706a@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37412>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37413>
 
-------=_Part_154937_5321891.1169476946129
+------=_Part_154969_23026467.1169477028804
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Content-Disposition: inline
 
-Otherwise it tries to tie it to a scalar and complains about missing
-method. Dunno why, may be ActiveState brokenness again.
+Also add "git" to the pipe parameters, otherwise it does not work at all, as
+no git commands are usable out of git context.
+
 ---
 
-Now git-remote.perl compiles and does something. If you are careful
-and not forget to fill GITPERLLIB with cygwin path, of course.
+Oh, fine, just what I needed... Forgot to attach the patch!
 
- perl/Git.pm |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
+> This is not enough to make it work on ActiveState. It's just to
+> fix obvious TODOs, which should help someone to get it going.
+> The other problems are:
+>  - tie refuses to bind a handle class activestate_pipe to a scalar $fh
+>    (a patch follows)
+>  - there are some unexplained warnings about uninitialized values
+>  - cygwin-windows pathname conversion (not fixable at all)
+>
+>  perl/Git.pm |    7 ++++---
+>  1 files changed, 4 insertions(+), 3 deletions(-)
+>
 
-------=_Part_154937_5321891.1169476946129
-Content-Type: application/xxxxx; name="0002-Force-Activestate-Perl-to-tie-git-command-pipe-handle-to-a-handle-class.patch"
+------=_Part_154969_23026467.1169477028804
+Content-Type: application/xxxxx; 
+	name=0001-Insert-ACTIVESTATE_STRING-in-Git.pm.patch
 Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="0002-Force-Activestate-Perl-to-tie-git-command-pipe-handle-to-a-handle-class.patch"
-X-Attachment-Id: f_ex90elhl
+X-Attachment-Id: f_ex90f2pe
+Content-Disposition: attachment; filename="0001-Insert-ACTIVESTATE_STRING-in-Git.pm.patch"
 
-RnJvbSAwN2ViODhlYjY3YjFhYzZhOTZhN2ExMzY0NGFiZjNmY2E0MjgxMTgyIE1vbiBTZXAgMTcg
+RnJvbSBkY2ZmOTYyYWE5YmY0M2VhMTA3MzA0MTcyZGU2YjBhNTAzMjIxM2MyIE1vbiBTZXAgMTcg
 MDA6MDA6MDAgMjAwMQpGcm9tOiBBbGV4IFJpZXNlbiA8cmFhLmxrbWxAZ21haWwuY29tPgpEYXRl
-OiBNb24sIDIyIEphbiAyMDA3IDE1OjI1OjQxICswMTAwClN1YmplY3Q6IFtQQVRDSF0gRm9yY2Ug
-QWN0aXZlc3RhdGUgUGVybCB0byB0aWUgZ2l0IGNvbW1hbmQgcGlwZSBoYW5kbGUgdG8gYSBoYW5k
-bGUgY2xhc3MKCk90aGVyd2lzZSBpdCB0cmllcyB0byB0aWUgaXQgdG8gYSBzY2FsYXIgYW5kIGNv
-bXBsYWlucyBhYm91dCBtaXNzaW5nCm1ldGhvZC4gRHVubm8gd2h5LCBtYXkgYmUgQWN0aXZlU3Rh
-dGUgYnJva2VubmVzcyBhZ2Fpbi4KLS0tCiBwZXJsL0dpdC5wbSB8ICAgIDMgKystCiAxIGZpbGVz
-IGNoYW5nZWQsIDIgaW5zZXJ0aW9ucygrKSwgMSBkZWxldGlvbnMoLSkKCmRpZmYgLS1naXQgYS9w
-ZXJsL0dpdC5wbSBiL3BlcmwvR2l0LnBtCmluZGV4IDU4NDE0ZTMuLjNiMzJhMjggMTAwNjQ0Ci0t
-LSBhL3BlcmwvR2l0LnBtCisrKyBiL3BlcmwvR2l0LnBtCkBAIC03NDIsNyArNzQyLDggQEAgc3Vi
-IF9jb21tYW5kX2NvbW1vbl9waXBlIHsKIAkJIwl3YXJuICdpZ25vcmluZyBTVERFUlIgb3B0aW9u
-IC0gcnVubmluZyB3LyBBY3RpdmVTdGF0ZSc7CiAJCSRkaXJlY3Rpb24gZXEgJy18JyBvcgogCQkJ
-ZGllICdpbnB1dCBwaXBlIGZvciBBY3RpdmVTdGF0ZSBub3QgaW1wbGVtZW50ZWQnOwotCQl0aWUg
-KCRmaCwgJ0dpdDo6YWN0aXZlc3RhdGVfcGlwZScsICRjbWQsIEBhcmdzKTsKKwkJdGllICgqQUNQ
-SVBFLCAnR2l0OjphY3RpdmVzdGF0ZV9waXBlJywgJGNtZCwgQGFyZ3MpOworCQkkZmggPSAqQUNQ
-SVBFOwogCiAJfSBlbHNlIHsKIAkJbXkgJHBpZCA9IG9wZW4oJGZoLCAkZGlyZWN0aW9uKTsKLS0g
-CjEuNS4wLnJjMi5nM2YxYQoK
-------=_Part_154937_5321891.1169476946129--
+OiBNb24sIDIyIEphbiAyMDA3IDE1OjIxOjMzICswMTAwClN1YmplY3Q6IFtQQVRDSF0gSW5zZXJ0
+IEFDVElWRVNUQVRFX1NUUklORyBpbiBHaXQucG0KCkFsc28gYWRkICJnaXQiIHRvIHRoZSBwaXBl
+IHBhcmFtZXRlcnMsIG90aGVyd2lzZSBpdCBkb2VzIG5vdCB3b3JrIGF0IGFsbCwgYXMKbm8gZ2l0
+IGNvbW1hbmRzIGFyZSB1c2FibGUgb3V0IG9mIGdpdCBjb250ZXh0LgotLS0KIHBlcmwvR2l0LnBt
+IHwgICAgNyArKysrLS0tCiAxIGZpbGVzIGNoYW5nZWQsIDQgaW5zZXJ0aW9ucygrKSwgMyBkZWxl
+dGlvbnMoLSkKCmRpZmYgLS1naXQgYS9wZXJsL0dpdC5wbSBiL3BlcmwvR2l0LnBtCmluZGV4IDM0
+NzRhZDMuLjU4NDE0ZTMgMTAwNjQ0Ci0tLSBhL3BlcmwvR2l0LnBtCisrKyBiL3BlcmwvR2l0LnBt
+CkBAIC03MzYsNyArNzM2LDcgQEAgc3ViIF9jb21tYW5kX2NvbW1vbl9waXBlIHsKIAlfY2hlY2tf
+dmFsaWRfY21kKCRjbWQpOwogCiAJbXkgJGZoOwotCWlmICgkXk8gZXEgJyMjSU5TRVJUX0FDVElW
+RVNUQVRFX1NUUklOR19IRVJFIyMnKSB7CisJaWYgKCReTyBlcSAnTVNXaW4zMicpIHsKIAkJIyBB
+Y3RpdmVTdGF0ZSBQZXJsCiAJCSNkZWZpbmVkICRvcHRze1NUREVSUn0gYW5kCiAJCSMJd2FybiAn
+aWdub3JpbmcgU1RERVJSIG9wdGlvbiAtIHJ1bm5pbmcgdy8gQWN0aXZlU3RhdGUnOwpAQCAtODA5
+LDggKzgwOSw5IEBAIHN1YiBUSUVIQU5ETEUgewogCSMgRklYTUU6IFRoaXMgaXMgcHJvYmFibHkg
+aG9ycmlibGUgaWRlYSBhbmQgdGhlIHRoaW5nIHdpbGwgZXhwbG9kZQogCSMgYXQgdGhlIG1vbWVu
+dCB5b3UgZ2l2ZSBpdCBhcmd1bWVudHMgdGhhdCByZXF1aXJlIHNvbWUgcXVvdGluZywKIAkjIGJ1
+dCBJIGhhdmUgbm8gQWN0aXZlU3RhdGUgY2x1ZS4uLiAtLXBhc2t5Ci0JbXkgJGNtZGxpbmUgPSBq
+b2luICIgIiwgQHBhcmFtczsKLQlteSBAZGF0YSA9IHF4eyRjbWRsaW5lfTsKKwkjIExldCdzIGp1
+c3QgaG9wZSBBY3RpdmVTdGF0ZSBQZXJsIGRvZXMgYXQgbGVhc3QgdGhlIHF1b3RpbmcKKwkjIGNv
+cnJlY3RseS4KKwlteSBAZGF0YSA9IHF4e2dpdCBAcGFyYW1zfTsKIAlibGVzcyB7IGkgPT4gMCwg
+ZGF0YSA9PiBcQGRhdGEgfSwgJGNsYXNzOwogfQogCi0tIAoxLjUuMC5yYzIuZzNmMWEKCg==
+------=_Part_154969_23026467.1169477028804--
