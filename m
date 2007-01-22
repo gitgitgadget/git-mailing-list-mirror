@@ -1,55 +1,74 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: [PATCH] Insert ACTIVESTATE_STRING in Git.pm
-Date: Mon, 22 Jan 2007 15:32:28 +0100
-Message-ID: <81b0412b0701220632t50ad42c4ucb0ebae140a9706a@mail.gmail.com>
+From: Bill Lear <rael@zopyra.com>
+Subject: Re: git-push through git protocol
+Date: Mon, 22 Jan 2007 08:41:11 -0600
+Message-ID: <17844.52487.646049.902119@lisa.zopyra.com>
+References: <17843.29798.866272.414435@lisa.zopyra.com>
+	<ep00nl$mop$1@sea.gmane.org>
+	<Pine.LNX.4.64.0701211034490.14248@woody.osdl.org>
+	<17843.55730.456139.247155@lisa.zopyra.com>
+	<Pine.LNX.4.64.0701211341300.14248@woody.osdl.org>
+	<17844.5120.316805.794579@lisa.zopyra.com>
+	<Pine.LNX.4.64.0701211749140.14248@woody.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <junkio@cox.net>, "Petr Baudis" <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Mon Jan 22 15:32:45 2007
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jan 22 15:41:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H90Dv-0008Kk-8b
-	for gcvg-git@gmane.org; Mon, 22 Jan 2007 15:32:39 +0100
+	id 1H90MS-0002BM-S3
+	for gcvg-git@gmane.org; Mon, 22 Jan 2007 15:41:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751707AbXAVOcc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 22 Jan 2007 09:32:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751833AbXAVOcc
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Jan 2007 09:32:32 -0500
-Received: from wr-out-0506.google.com ([64.233.184.233]:46487 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751707AbXAVOcb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Jan 2007 09:32:31 -0500
-Received: by wr-out-0506.google.com with SMTP id i22so669528wra
-        for <git@vger.kernel.org>; Mon, 22 Jan 2007 06:32:30 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=SIIp3K/qP8kuknBlci31vwBCj4qFtOsTwXIm8gHEp2q/t6dwdr4ot8/FSIfanF5CF/Bny4e28RNTd6NxrTh6QdE3q6OJUzjzJLqyfqRM2N9E61MWL+CkqZEU25vM/T6NNtrVBOnLpyefRMuWxrqra7ITWMW66v8nSaJm39mbb/c=
-Received: by 10.82.113.6 with SMTP id l6mr6787294buc.1169476348941;
-        Mon, 22 Jan 2007 06:32:28 -0800 (PST)
-Received: by 10.78.135.3 with HTTP; Mon, 22 Jan 2007 06:32:28 -0800 (PST)
-To: "Git Mailing List" <git@vger.kernel.org>
-Content-Disposition: inline
+	id S1751838AbXAVOlZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 22 Jan 2007 09:41:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751845AbXAVOlZ
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Jan 2007 09:41:25 -0500
+Received: from mail.zopyra.com ([65.68.225.25]:61056 "EHLO zopyra.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751838AbXAVOlZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Jan 2007 09:41:25 -0500
+Received: (from rael@localhost)
+	by zopyra.com (8.11.6/8.11.6) id l0MEfHR26939;
+	Mon, 22 Jan 2007 08:41:17 -0600
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.64.0701211749140.14248@woody.osdl.org>
+X-Mailer: VM 7.18 under Emacs 21.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37410>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37411>
 
-Also add "git" to the pipe parameters, otherwise it does not work at all, as
-no git commands are usable out of git context.
+On Sunday, January 21, 2007 at 17:52:22 (-0800) Linus Torvalds writes:
+>...
+>iow, I think you simply need to make sure that git-daemon will have write 
+>permission to the thing. Either by making the whole repository writable by 
+>nobody, or by running git-daemon as the proper user.
 
----
+This now works:
 
-This is not enough to make it work on ActiveState. It's just to
-fix obvious TODOs, which should help someone to get it going.
-The other problems are:
- - tie refuses to bind a handle class activestate_pipe to a scalar $fh
-   (a patch follows)
- - there are some unexplained warnings about uninitialized values
- - cygwin-windows pathname conversion (not fixable at all)
+% perl -pi -e 's/nobody/blear/' /etc/xinetd.d/git-daemon
+% /etc/init.d/xinetd restart
+% cd test/foo
+% cat .git/remotes/origin
+URL: git://blake/foo
+Pull: refs/heads/master:refs/heads/origin
+% git push
+updating 'refs/heads/master'
+  from fee4efae4f3b98cce0fe85efc746291157fffbcd
+  to   73167c1dbcd08ef290f9ead5eef1808236e728b3
+Generating pack...
+Done counting 5 objects.
+Result has 3 objects.
+Deltifying 3 objects.
+ 100% (3/3) done
+Writing 3 objects.
+ 100% (3/3) done
+Total 3 (delta 0), reused 0 (delta 0)
 
- perl/Git.pm |    7 ++++---
- 1 files changed, 4 insertions(+), 3 deletions(-)
+Thanks for the help.
+
+
+Bill
